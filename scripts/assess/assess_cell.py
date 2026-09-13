@@ -109,7 +109,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 
 from schemas.directness import (  # noqa: E402
-    NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
+    GRAIN_AGGREGATE, NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
     SD_NON_ANCHORING,
     COND_DIRECT, COND_DOWN_WEIGHTED, COND_DISCOUNTED, COND_NON_ANCHORING,
     consolidate, grain_for, population_directness_from_match_grade, scale_directness,
@@ -123,7 +123,17 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-MANIFEST §7):
+RULE_VERSION = "pilot-3"  # 077: derivation_sha hashes the GRADED LINK SET, not the
+#   governing ref list plus an unfiltered extraction count. Bumped from pilot-2 because
+#   the sha PAYLOAD FORMAT changed: `rule_version` is what tells a verifier which format
+#   to recompute, so K01 dispatches on it and pilot-2 rows replayed from migration
+#   history still verify against the old format. Nothing else about the rule changed.
+#   The predicate that made this necessary: since 075 only figure_role IN
+#   ('claim','derived') governs, so re-grading a row flipped a cell's STATE while
+#   leaving the old payload byte-identical -- a BLOCKING check (K01) reporting CLEAN
+#   over a determination whose inputs had changed.
+#
+# pilot-1 + adversarial-review corrections (see PILOT-MANIFEST §7):
 #   tier_basis now describes the GOVERNING set only (supporting strata listed separately);
 #   derivation_sha includes cell identity (pending cells no longer share one constant sha);
 #   has_unverified_sources / all_sources_disqualified implemented per §2.8;
@@ -188,7 +198,11 @@ def _is_disqualified(rec) -> bool:
 # vocabulary (CLAUDE.md §4).
 LENS_COLUMNS = {
     "identity_code": ("populations", "population_code"),
-    "icf_code": ("axes", "axis_code"),
+    # RE-POINTED 2026-09-13 (owner ruling; migration 081). Was ("axes", "axis_code"),
+    # i.e. the ICF lens resolving to an AX- demand code -- the state the same day's
+    # ruling bans. db._LENS_COLUMNS carries the identical pair; the extraction and the
+    # determination it feeds must name the lens the same way.
+    "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
@@ -239,6 +253,33 @@ def gather_sources(conn, parameter_id):
     not merely forbidden, it is unconstructible. Every ref_id in the governing set
     came out of this query, and this query returns only sources that hold an
     extraction for the parameter being determined.
+
+    ONLY VALUE-SUPPLYING ROWS GOVERN (added 2026-09-13, migration 075's whole point).
+    Holding an extraction for the parameter was never enough. Measured on the live
+    corpus the day the grading landed: specification 1 was `stated` at T1 -- the
+    strongest claim this project makes -- on four rows of which TWO WERE CONDITIONS
+    (the slopes a treadmill was set to; the ADA range a study tested) and two were
+    findings, one of them `claim_type='absent'`, asserting nothing whatever. Not one
+    governing row was a claim. Specification 2 was the same shape.
+
+    So the predicate is `figure_role IN ('claim','derived')`:
+
+      claim     -- the row states a value for the parameter. Governs.
+      derived   -- the row's value was computed from other rows. Governs; its band
+                   is the floored mean of its inputs' (owner ruling 2026-09-13).
+      finding   -- the row reports something ABOUT the parameter without asserting a
+                   value: "code-compliant width fails 10-100% of users". Supplies
+                   DIRECTION, never value (owner ruling 2026-09-13). Not gathered here.
+      condition -- a rig setting or a limit the value is conditioned by. Never anchors.
+      NULL      -- ungraded. Not a value-supplier: a row nobody has stated the kind of
+                   cannot be read as a claim, which is exactly how a tested slope came
+                   to govern a `stated` cell.
+
+    A cell whose value-supplying set is empty now comes out `pending`, which for both
+    live cells is the truth -- not one retrieved source states a corridor width or a
+    ramp gradient value. Gathering `finding` rows for direction, and the `confirms`
+    edge that upgrades a code value, build ON this predicate and are not required by
+    it.
     """
     # verification_disposition arrived with migration 049 (D-0157). This script
     # is run against scratch and fixture databases as well as the canonical one
@@ -253,11 +294,385 @@ def gather_sources(conn, parameter_id):
             FROM source_value_extractions x
             JOIN evidence_sources e ON e.ref_id = x.ref_id
             WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
+              AND x.figure_role IN ('claim', 'derived')
             ORDER BY e.ref_id"""
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
                       "verification_status", "verification_disposition",
                       "scope", "jurisdiction"), r))
             for r in conn.execute(q, (parameter_id,))]
+
+
+#: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
+#: `gather_sources` filters on it, `gather_extraction_links` grades on it, and K01
+#: recomputes the sha from the links this produces -- so the three cannot disagree.
+#: Before 077 the predicate lived only inside gather_sources' SQL while the sha hashed an
+#: UNFILTERED count, which is how re-grading a row could flip a cell from `stated` to
+#: `pending` without moving its attestation.
+VALUE_SUPPLYING_ROLES = ("claim", "derived")
+CONDITIONING_ROLES = ("condition",)
+
+
+def gather_extraction_links(conn, parameter_id, governing_refs):
+    """Every extraction for this parameter, graded by the part it played.
+
+    THE BACKWARD WALK STARTS HERE (migration 077). `gather_sources` returns SOURCES and
+    its DISTINCT is load-bearing -- collapsing the 1:N fan-out is what stops one document
+    corroborating itself -- so it cannot also tell us WHICH rows governed. This does, and
+    the two are deliberately separate functions rather than one that returns both: the
+    first answers "how many independent sources", the second "which sentences", and
+    conflating them is how the fan-out collapse would leak into the provenance record.
+
+    Returns one dict per extraction, with `role` in:
+
+      governing     figure_role supplies a value AND the row's source survived the tier,
+                    verification and supersession gates -- i.e. its ref_id is in the
+                    governing set this determination actually used.
+      conditioning  figure_role='condition'. Qualifies a governing row. Carried onto the
+                    determination so a slope arrives with its run length attached.
+      excluded      everything else, with a MANDATORY reason. This is the row that makes
+                    a `pending` cell legible: "examined, and here is why it did not
+                    answer" reads differently from silence, and the two were previously
+                    indistinguishable to everything except a hash collision.
+
+    `governing_refs` is passed in rather than re-derived because the caller has already
+    applied the tier/verification/supersession gates; re-deriving them here would be a
+    second implementation of the anchoring rule, free to drift from the first.
+    """
+    # Positional, not by name: this module's connection carries no row_factory, and
+    # assuming one made the first cut of this function raise `tuple indices must be
+    # integers`. The column order here is the SELECT's, which is the only contract.
+    rows = conn.execute(
+        "SELECT extraction_id, ref_id, figure_role, claim_type FROM "
+        "source_value_extractions WHERE parameter_id = ? ORDER BY extraction_id",
+        (parameter_id,)).fetchall()
+    gov = set(governing_refs or ())
+    out = []
+    for eid, ref, frole, ctype in rows:
+        if frole in VALUE_SUPPLYING_ROLES and ref in gov:
+            role, why = "governing", None
+        elif frole in CONDITIONING_ROLES:
+            role, why = "conditioning", None
+        elif frole in VALUE_SUPPLYING_ROLES:
+            # Value-supplying, but its source did not survive the anchoring gates.
+            role, why = "excluded", (
+                f"figure_role={frole!r} supplies a value, but {ref} is not in the "
+                f"governing set: it was disqualified on tier, verification or "
+                f"supersession before the value was reached")
+        elif frole is None:
+            role, why = "excluded", (
+                "figure_role IS NULL -- ungraded, so nothing states whether this row "
+                "asserts a value, reports a finding, or states a condition")
+        else:
+            role, why = "excluded", (
+                f"figure_role={frole!r} reports something ABOUT the parameter without "
+                f"asserting a value for it"
+                + (f" (claim_type={ctype!r})" if ctype == "absent" else ""))
+        out.append({"extraction_id": eid, "ref_id": ref, "figure_role": frole,
+                    "role": role, "exclusion_reason": why})
+    return out
+
+
+def parse_bound(claimed_value, comparator, claim_type):
+    """One governing claim -> (lo, hi) in its own unit, or None if it states no number.
+
+    The comparator IS the bound, which is why migration 075 added it: "more than thirty
+    centimetres" stored as a bare 30 turns a floor into a point, and a determination built
+    from points is a determination that has quietly dropped every inequality its sources
+    stated.
+
+      =, approx, or no comparator on a numerical claim -> a point:   (v, v)
+      >=, >                                            -> a floor:   (v, None)
+      <=, <                                            -> a ceiling: (None, v)
+      between, or a range claim written "a to b"       -> (a, b)
+
+    STRICTNESS IS NOT MODELLED, deliberately. `>` and `>=` both land as (v, None): the
+    columns are REAL and carry no open/closed flag, and inventing one here would put a
+    distinction in the determination that no render surface can show and no source states
+    precisely enough to defend. The comparator stays on the extraction, which is where a
+    reader can see it.
+
+    Returns None for anything that is not a number -- a qualitative claim, a ratio like
+    '1:12', a value with words in it. Those govern the STATE of a cell (they are still
+    `figure_role='claim'`) without contributing a numeric bound, and the caller says so
+    rather than silently treating them as zero.
+    """
+    raw = (claimed_value or "").strip()
+    if not raw:
+        return None
+    cmp_ = (comparator or "").strip()
+
+    def num(tok):
+        try:
+            return float(tok)
+        except (TypeError, ValueError):
+            return None
+
+    if cmp_ == "between" or claim_type == "range":
+        parts = re.split(r"\s+to\s+|\s*-\s*|\s*–\s*", raw)
+        if len(parts) == 2:
+            lo, hi = num(parts[0]), num(parts[1])
+            if lo is not None and hi is not None:
+                return (min(lo, hi), max(lo, hi))
+        return None
+    v = num(raw)
+    if v is None:
+        return None
+    if cmp_ in (">=", ">"):
+        return (v, None)
+    if cmp_ in ("<=", "<"):
+        return (None, v)
+    return (v, v)
+
+
+def derivation_handshake(conn, parameter_id, lens, sources):
+    """H2/H3/H4 — which paths this value was derived along, and what gates it.
+
+    THE RULE (DR-2026-07-13, ratified; evidence-architecture.md section 5.5). The corpus
+    derives values along two paths that have never been required to meet: TOP-DOWN from
+    population and community, BOTTOM-UP from function (the ICF-indexed references/fdr/
+    corpus, population-blind at collection). "No mechanism requires the paths to agree
+    before a value ships, and dual derivation is undetectable by query."
+
+    BOTH PATHS ARE DERIVED, NOT ASKED FOR (CLAUDE.md rule 8). The population path is present
+    when governing evidence exists -- that is what the rest of this engine computes. The
+    function path is present when the cell's identity lens has rows in `population_icf_links`
+    -- migration 080's promotion of the functional-deficit-auditor's mapping out of skill
+    prose. So `functional_basis` is READ from that table rather than typed onto the
+    determination, and `derivation_paths` follows from the pair. Nothing here is a judgment
+    a session could get wrong by assertion.
+
+    THE CULTURAL/DIGNITY PROTECTION, and it is the reason this function is careful rather
+    than clever. Claims whose normative force is community-rooted remain FULLY ASSERTABLE as
+    `population_only`; no functional derivation may flatten, reduce or override a community
+    claim; THERE IS NO BOTTOM-UP OVERRIDE OF Co-1. "A signing-space corridor width is not a
+    wheelchair-envelope calculation that came out wrong; it is a different claim, held by the
+    community whose language it serves."
+
+    So the absence of a function path NEVER downgrades a cell here, and a culturally
+    anchored population_only cell owes no rationale. The anchor is checked, not asserted:
+    per the ratified boundary criterion, "community-rooted" means anchored by
+    Co-1/participatory provenance per `co1_source_type`, and a population_only claim without
+    such an anchor "is simply a single-path claim owing the standard named-path rationale;
+    it gains no cultural exemption by assertion". That criterion "exists so the protection
+    cannot become a route around the mechanism requirement".
+
+    H4 GATES, with the deadlock discipline doctrine specifies:
+      * they bind ONLY where a check has actually run -- so this reads gate ROWS, and no
+        rows means no gating, which is the correct reading of "no silent pretence of
+        coverage" rather than a gap;
+      * a gate forces `provisional`, NEVER `stated`, and never below that;
+      * the ladder cannot be inverted: a gate binds only when its trigger is at least as
+        strong as the cell's best anchor, so "a grey-tier CONTRADICTS cannot pin a
+        T1-anchored cell indefinitely".
+
+    Returns (functional_basis_json, derivation_paths, rationale, cultural_anchor_json, gates).
+    """
+    identity = lens.get("identity_code")
+
+    # --- the function path: the promoted population<->ICF map -------------------
+    fb_rows = []
+    if identity and _table_exists(conn, "population_icf_links"):
+        fb_rows = conn.execute(
+            "SELECT icf_code, mechanism, mapping_confidence, provenance "
+            "FROM population_icf_links WHERE population_code = ? ORDER BY icf_code",
+            (identity,)).fetchall()
+    functional_basis = json.dumps(
+        [{"icf_code": r[0], "mechanism": r[1], "mapping_confidence": r[2],
+          "provenance": r[3]} for r in fb_rows]) if fb_rows else None
+
+    # --- the population path ----------------------------------------------------
+    has_population = bool(sources)
+    has_function = bool(fb_rows)
+
+    # --- the cultural anchor, and it is G3's predicate rather than a new one -----
+    #
+    # THE RATIFIED BOUNDARY CRITERION (evidence-architecture.md section 6.2, "the
+    # protection is anchored, not self-declared"): "community-rooted" means anchored by
+    # Co-1/participatory provenance per `co1_source_type` -- `dpo_research`,
+    # `advocacy_position`, participatory peer-reviewed work -- or an equivalent
+    # documented community process.
+    #
+    # THAT SET IS ALREADY IMPLEMENTED, ONCE, and it is not re-typed here. G3 grades
+    # `dpo_research` and `advocacy_position` as population-grain COMMUNITY CONSENSUS and
+    # everything else Co-1 as individual-grain, and `schemas/directness.grain_for()` is
+    # that rule's ONE home -- its own comment says so, in the change that closed a
+    # finding about two implementations of it disagreeing. Restating the tuple here
+    # would reopen exactly that (CLAUDE.md rule 5).
+    #
+    # WHERE THIS IS NARROWER THAN THE DOCTRINE, STATED RATHER THAN SMOOTHED OVER.
+    # "Participatory peer-reviewed work" anchors under the criterion, but nothing in the
+    # schema distinguishes a participatory peer-reviewed Co-1 source from any other:
+    # `co1_source_type` carries one value, `peer_reviewed_literature`, for both, and it
+    # has no CHECK to widen. So such a source does NOT anchor here and owes the standard
+    # named-path rationale instead. That is the conservative direction on purpose. The
+    # cost is a sentence on a claim that would have been exempt; the cost of erring the
+    # other way is every Co-1 claim inheriting the exemption by tier alone, which is the
+    # "route around the mechanism requirement" the criterion was written to close. When a
+    # participatory flag exists, widen HERE and record it.
+    anchors = sorted({r["ref_id"] for r in sources
+                      if r.get("evidence_type") == "co1"
+                      and grain_for("co1", r.get("tier"),
+                                    r.get("co1_source_type"))[0] == GRAIN_AGGREGATE})
+    cultural_anchor = json.dumps(anchors) if anchors else None
+
+    if has_population and has_function:
+        paths, rationale = "dual", None
+    elif has_population:
+        paths = "population_only"
+        rationale = None if cultural_anchor else (
+            "no population_icf_links row characterises %s, so no function path exists to "
+            "meet the population path; recorded as a single-path determination per H2. "
+            "This is NOT a downgrade: the absence of a functional derivation never reduces "
+            "a population-derived claim (DR-2026-07-13, the cultural-claim protection)."
+            % (identity or "this lens"))
+    elif has_function:
+        paths = "function_only"
+        rationale = ("no governing population evidence for this cell; the determination "
+                     "rests on the functional mapping alone")
+    else:
+        return functional_basis, None, None, cultural_anchor, []
+
+    # --- H4 ---------------------------------------------------------------------
+    gates = []
+    if _table_exists(conn, "determination_gates"):
+        best = min((r["tier"] for r in sources if r.get("tier")), default=6)
+        for g in conn.execute(
+                "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
+                "trigger_ref_id, detail, identity_code FROM v_open_determination_gates "
+                "WHERE parameter_id = ?", (parameter_id,)):
+            if g[6] and identity and g[6] != identity:
+                continue                      # a gate on another lens
+            if g[2] > best:
+                # LADDER-INVERSION GUARD. The trigger is weaker than the cell's best
+                # anchor; recorded as not-binding rather than dropped, so a reader can
+                # see the gate exists and why it did not bite.
+                gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": g[2],
+                              "binds": False,
+                              "why": "trigger is T%d against a T%d anchor -- binding it "
+                                     "would invert the ladder" % (g[2], best)})
+                continue
+            gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": g[2],
+                          "binds": True, "why": g[5]})
+    return functional_basis, paths, rationale, cultural_anchor, gates
+
+
+def _table_exists(conn, name):
+    """Fixture tolerance, as everywhere else in this engine."""
+    return conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type IN ('table','view') AND name = ?",
+        (name,)).fetchone() is not None
+
+
+def compose_value(conn, links, direction):
+    """The determination's value, selected MOST-ACCOMMODATINGLY (owner, 2026-07-21).
+
+    Ratified rule, `governance/evidence-architecture.md`: a determination anchors on "the
+    MOST ACCOMMODATING available value, read per the parameter's accessibility direction --
+    best-for-the-user, not largest-number: the widest minimum corridor, but the LOWEST
+    maximum threshold height and the GENTLEST maximum ramp slope." That bullet has carried
+    an `[ENGINE-LAG -> DR-2026-07-21 section 5]` marker since it was written, and this
+    function is the half that removes it: every `specifications.value_min/value_max/
+    value_unit` since the 057 baseline has been NULL because the engine passed literal None
+    into those three slots, having no rule it could apply.
+
+    Returns (value_min, value_max, value_unit, note). A NULL triple always arrives with a
+    note saying WHY, because "no value" and "no rule to pick one" are different facts and a
+    determination that cannot tell them apart is the pending-versus-never-read collision
+    again, one column along.
+
+    THE FOUR WAYS IT DECLINES, each reported rather than defaulted:
+      * no governing claim states a number (every one is qualitative or a ratio);
+      * the governing claims are in DIFFERENT UNITS, so there is no common interval and
+        converting them here would invent a figure no source stated;
+      * `direction` is NULL -- nobody has recorded which way is better for a disabled
+        person on this parameter, so "most accommodating" has no meaning yet
+        (`db.py set-parameter-direction` is the remedy, and the note says so);
+      * `direction` is `contested` -- DR-2026-07-21 section 5: where the direction is
+        population-contested, most-accommodating selection is INAPPLICABLE, no single value
+        is anchored, and the spread is rendered with each population's direction stated.
+        Anchoring one number here would silently pick a winner between two groups of
+        disabled people, which is the whole thing that safeguard exists to prevent.
+
+    SCOPE, STATED BECAUSE IT IS AN EXTENSION. The owner's wording is about jurisdictions'
+    CODE FLOORS differing. This applies the same selection to any divergent governing set,
+    because it is the only composition rule this project has ruled and the alternative is
+    no value at all. Recorded here rather than assumed so it can be vetoed.
+    """
+    gov = [l for l in links if l["role"] == "governing"]
+    if not gov:
+        return None, None, None, None          # `pending` already says this
+
+    ids = [l["extraction_id"] for l in gov]
+    # Same fixture tolerance as the direction lookup: the pilot test builds a synthetic
+    # source_value_extractions with only the columns its own assertions need. A fixture
+    # that cannot state a value is a fixture with no value to compose, which is a true
+    # answer rather than a crash.
+    _cols = {r[1] for r in conn.execute("PRAGMA table_info(source_value_extractions)")}
+    if not {"claimed_value", "claimed_unit", "comparator", "claim_type"} <= _cols:
+        return None, None, None, (
+            "this database's source_value_extractions carries no value columns, so no "
+            "interval can be composed from it")
+    rows = conn.execute(
+        "SELECT extraction_id, claimed_value, claimed_unit, comparator, claim_type "
+        "FROM source_value_extractions WHERE extraction_id IN (%s)"
+        % ",".join("?" * len(ids)), ids).fetchall()
+
+    bounds, units = [], set()
+    for _eid, val, unit, cmp_, ctype in rows:
+        b = parse_bound(val, cmp_, ctype)
+        if b is None:
+            continue
+        bounds.append(b)
+        units.add((unit or "").strip())
+    if not bounds:
+        return None, None, None, (
+            "no governing claim states a numeric value (all are qualitative, or a ratio "
+            "this engine does not parse into a bound)")
+    if len(units) > 1:
+        return None, None, None, (
+            "governing claims are stated in different units (%s); composing an interval "
+            "would require a conversion no source stated"
+            % ", ".join(sorted(repr(u) for u in units)))
+    unit = next(iter(units)) or None
+
+    if direction is None:
+        return None, None, unit, (
+            "no accessibility_direction recorded for this parameter, so the "
+            "most-accommodating rule (owner 2026-07-21) has nothing to read: record it "
+            "with db.py set-parameter-direction")
+    if direction == "contested":
+        return None, None, unit, (
+            "accessibility_direction is CONTESTED -- most-accommodating selection is "
+            "inapplicable (DR-2026-07-21 section 5) and no single value is anchored; the "
+            "spread is rendered with each population's direction stated")
+
+    los = [lo for lo, _ in bounds if lo is not None]
+    his = [hi for _, hi in bounds if hi is not None]
+    if direction == "higher_is_better":
+        # The widest minimum: the most demanding floor is the one that serves most people.
+        vmin = max(los) if los else None
+        vmax = max(his) if his else None
+    else:                                        # lower_is_better
+        # The gentlest maximum, the lowest ceiling.
+        vmin = min(los) if los else None
+        vmax = min(his) if his else None
+    return vmin, vmax, unit, None
+
+
+def link_payload(links):
+    """The governing set as `derivation_sha` hashes it, and as K01 recomputes it.
+
+    ONE STRING, ONE FORMAT, TWO CALLERS -- this module and test_db_integrity's K01. The
+    previous payload used the governing REF list plus an unfiltered extraction COUNT, and
+    the count was there (per sha()'s own docstring) because the ref list alone could not
+    distinguish a parameter never read from one read and rejected. Storing the graded
+    links makes the real set recomputable in one query, which is the thing that docstring
+    wanted and ruled out only because nothing stored it.
+
+    Role is inside the hash, not just the id: a row moving excluded -> governing is
+    EXACTLY the change that must move the attestation, and it moves no id.
+    """
+    return "|".join(sorted(f"{l['role']}:{l['extraction_id']}" for l in links))
 
 
 def count_extractions(conn, parameter_id):
@@ -458,7 +873,7 @@ def regulatory_richness(t45, t6):
     return False, "below §2.3 richness"
 
 
-def sha(parameter_id, lens, refs, n_extractions):
+def sha(parameter_id, lens, links):
     """Cell-scoped derivation sha: identity + governing set + EVIDENCE READ + rule
     version, so pending cells do not all share one constant hash (staleness stays
     checkable).
@@ -502,8 +917,7 @@ def sha(parameter_id, lens, refs, n_extractions):
     same rule_version ⇒ same state + same derivation_sha". A determination stamped
     before an extraction arrived IS stale, and K01 saying so is the check working.
     """
-    payload = (f"{parameter_id}|{lens}|" + "|".join(sorted(refs))
-               + f"|x{n_extractions}::" + RULE_VERSION)
+    payload = f"{parameter_id}|{lens}|" + link_payload(links) + "::" + RULE_VERSION
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -683,7 +1097,70 @@ def determine(conn, parameter_id, lens, slug, note):
         state = "pending"
         gap_needed = True
 
+    # THE PROVENANCE RECORD (migration 077). Graded AFTER the state is settled, because
+    # `governing` means "its source survived the anchoring gates this determination
+    # applied" -- which is not knowable until those gates have run. Every extraction for
+    # the parameter appears exactly once, so a `pending` cell carries the reasons it is
+    # pending rather than leaving a reader to infer them from an absence.
+    links = gather_extraction_links(conn, parameter_id, governing)
+
+    # THE VALUE (078). Selected most-accommodatingly per the parameter's recorded
+    # accessibility direction -- the ratified rule the engine has been unable to obey
+    # since 2026-07-21 for want of that one piece of metadata.
+    # TOLERANT OF A FIXTURE DATABASE, the same way `gather_sources` is tolerant of a
+    # pre-049 one: this engine is run against scratch and synthetic databases as well as
+    # the canonical schema, and `scripts/tests/test_assess_cell_pilot.py` builds one with
+    # no `base_parameters` at all. A missing table means no direction is recorded, which
+    # `compose_value` already handles and reports -- degrading to "cannot select" is
+    # correct; raising would make the engine untestable on a fixture.
+    _has_params = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='base_parameters'"
+    ).fetchone() is not None
+    _direction = None
+    if _has_params:
+        _cols = {r[1] for r in conn.execute("PRAGMA table_info(base_parameters)")}
+        if "accessibility_direction" in _cols:
+            _dir_row = conn.execute(
+                "SELECT accessibility_direction FROM base_parameters "
+                "WHERE parameter_id = ?", (parameter_id,)).fetchone()
+            _direction = _dir_row[0] if _dir_row else None
+    value_min, value_max, value_unit, value_note = compose_value(conn, links, _direction)
+
+    # THE DERIVATION HANDSHAKE (080). H2/H3/H4 of DR-2026-07-13, whose
+    # `[ENGINE-LAG 2026-08-15]` marker has named this absence ever since: "`specifications`
+    # carries neither `functional_basis` nor `derivation_paths`; `population_icf_links` does
+    # not exist; `assess_cell.py` implements no H4 gate." All three now exist, so the engine
+    # reads them.
+    #
+    # BOTH PATHS ARE DERIVED, NEVER ASSERTED (CLAUDE.md rule 8). The population path is the
+    # governing evidence this function has already computed; the function path is whatever
+    # `population_icf_links` records for this cell's identity lens. An author cannot get
+    # either wrong by typing, because neither is typed.
+    functional_basis, derivation_paths, derivation_rationale, cultural_claim_anchor, gates = \
+        derivation_handshake(conn, parameter_id, lens, sources)
+
+    # H4, AND IT MOVES IN EXACTLY ONE DIRECTION. Doctrine: FDA verdicts UNLINKED /
+    # MISLINKED / UNDER-CONSERVATIVE and FDR delta-classification CONTRADICTS "force the
+    # affected cell to `provisional` -- never `stated` -- until resolved." That is a CAP,
+    # not a downgrade ladder: a gate never lifts a `pending` cell up to provisional, and
+    # never pushes a provisional cell lower. The ladder-inversion guard is upstream, in
+    # derivation_handshake(), which marks a gate weaker than the cell's best anchor
+    # `binds: False` rather than dropping it -- so a grey-tier CONTRADICTS cannot pin a
+    # T1-anchored cell, and a reader can still see the gate existed and why it did not bite.
+    #
+    # THE GATE IS NOT COPIED ONTO THE DETERMINATION, and that is rule 5 rather than an
+    # omission. A gate row is addressed by (parameter_id, identity_code) and reachable
+    # through `v_open_determination_gates`; writing its id into `specifications` as well
+    # would build the second home that a parity check can only make permanent. What the
+    # row carries is the EFFECT -- a cell with anchors in `tier_basis` sitting at
+    # `provisional` -- and `derivation_handshake_integrity` is what holds the two in step.
+    if state == "stated" and any(g["binds"] for g in gates):
+        state = "provisional"
+
     return {
+        "links": links,
+        "value_min": value_min, "value_max": value_max, "value_unit": value_unit,
+        "value_note": value_note, "accessibility_direction": _direction,
         "n_extractions": n_extractions,
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
@@ -695,7 +1172,12 @@ def determine(conn, parameter_id, lens, slug, note):
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(parameter_id, lens_key(lens), governing, n_extractions),
+        "derivation_sha": sha(parameter_id, lens_key(lens), links),
+        "functional_basis": functional_basis,
+        "derivation_paths": derivation_paths,
+        "derivation_rationale": derivation_rationale,
+        "cultural_claim_anchor": cultural_claim_anchor,
+        "gates": gates,
         "n_sources": len(sources),
         "needs_population_assessment": sorted(r["ref_id"] for r in recs
                                               if r["needs_population_assessment"]),
@@ -923,7 +1405,7 @@ def main():
                          "select evidence -- sources are gathered by the extractions "
                          "they hold for --parameter-id.")
     ap.add_argument("--identity", help="populations.population_code")
-    ap.add_argument("--icf", help="axes.axis_code")
+    ap.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     ap.add_argument("--needs", help="access_needs.need_code")
     ap.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     ap.add_argument("--note", default="", help="why this cell is being determined")
@@ -1076,10 +1558,21 @@ def main():
                 det["tier_basis"],
                 json.dumps(det["governing_refs"]) if det["governing_refs"] else None,
                 RULE_VERSION, det["derivation_sha"], det["code_floor_only"],
-                None, None, None,
+                # value_min, value_max, value_unit -- literal None here from the 057
+                # baseline until 078, which is why the specification stage emitted the
+                # marker and never the millimetres.
+                det["value_min"], det["value_max"], det["value_unit"],
+                det["value_note"],
                 det["falsification"],
                 det["has_unverified_sources"], det["all_sources_disqualified"],
                 det["regulatory_stratum_only"],
+                # 080. `derivation_paths` carries a CHECK that a single-path row owes
+                # either a rationale or a cultural anchor, so these four are written
+                # together or the database refuses the row -- which is the dignity line
+                # ceasing to be "doctrine binding on authors" and becoming a state the
+                # schema will not hold.
+                det["functional_basis"], det["derivation_paths"],
+                det["derivation_rationale"], det["cultural_claim_anchor"],
                 STAMP, SESSION, STAMP, SESSION)
         cols = ("specification_id, parameter_id, "
                 "identity_code, icf_code, needs_code, medical_code, "
@@ -1087,8 +1580,10 @@ def main():
                 "confidence_dimensions_present, confidence_dimensions_absent, "
                 "confidence_synthesis_basis, gap_register_id, not_applicable_rationale, "
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
-                "value_min, value_max, value_unit, falsification_condition, "
+                "value_min, value_max, value_unit, value_note, falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
+                "functional_basis, derivation_paths, derivation_rationale, "
+                "cultural_claim_anchor, "
                 "created_at, created_by_session, updated_at, updated_by_session")
         conn.execute(f"INSERT INTO specifications ({cols}) VALUES ("
                      + ",".join("?" * len(vals)) + ")", vals)
@@ -1119,8 +1614,26 @@ def main():
             sql_lines.append(f"INSERT INTO specification_source_links ({_lcols}) VALUES (" +
                              ", ".join(q(v) for v in _link) + ");")
 
+        # THE PROVENANCE JUNCTION (migration 077). Not a parallel copy of the one above:
+        # that one records which SOURCES anchored, this one records which ROWS did, and
+        # a source carries many rows that played different parts. It is also what
+        # `derivation_sha` now hashes, so writing it is not optional bookkeeping -- the
+        # attestation is unverifiable without it, and K01 recomputes the payload from
+        # exactly these rows.
+        _xcols = ("specification_id, extraction_id, role, exclusion_reason, "
+                  "created_at, created_by_session")
+        for _l in det["links"]:
+            _xlink = (specification_id, _l["extraction_id"], _l["role"],
+                      _l["exclusion_reason"], STAMP, SESSION)
+            conn.execute(f"INSERT INTO specification_extraction_links ({_xcols}) "
+                         f"VALUES (?,?,?,?,?,?)", _xlink)
+            sql_lines.append(f"INSERT INTO specification_extraction_links ({_xcols}) "
+                             f"VALUES (" + ", ".join(q(v) for v in _xlink) + ");")
+
         report.append({k: det[k] for k in
-                       ("parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
+                       ("value_min", "value_max", "value_unit", "value_note",
+                        "accessibility_direction",
+                        "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
                         "regulatory_stratum_only", "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",

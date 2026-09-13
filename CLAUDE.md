@@ -103,6 +103,34 @@ state, the active plan — from the live repo.
 false within a fortnight, and one contradicted the list beneath it.*
 → **NOT ENFORCED — you are the gate.**
 
+**8. DERIVE IT, OR NAME WHO JUDGED IT. Never curate a fact the machine can compute.** Rule 7
+generalised from documents to everything. A vocabulary comes from the column's own CHECK; an
+ordering from the live FK graph; an identifier from the union of its homes; a tier from the
+ladder; the set of writable tables from the writers. None of these is ever a list maintained
+alongside the thing it describes, because the list and the thing drift and only the list is
+checked.
+
+**Where judgment IS genuinely required, the script asks for it** — constraining the answer to the
+live vocabulary, demanding the evidence for it, and recording the answer and its warrant in named
+columns. The model fills a field. It never invents a value, never invents a vocabulary term, and
+never supplies a number the schema could have computed. `add-source --tier` asking an operator to
+retype what `derive_tier(evidence_type, scope)` already knows is the anti-pattern in one line: a
+field that can only be right or wrong, never informative.
+*Proof: `dbcore.WRITABLE_TABLES` was a curated list of the tables a session may write. It went
+blind EIGHT times — its own comments record seven, and the eighth was added by the author who was
+reading those comments at the time. A `gap_mining` row written through the sanctioned CLI was
+captured as nothing, and the session was told "no delta — nothing to emit". The 2026-08-25 fix
+consolidated two copies into one constant and claimed the class was closed; four tables were
+already in the failure state when that comment was written. It is now derived
+(`dbcore.writable_tables(conn)`), and the burden of proof moved to the exclusions.*
+→ **PARTLY ENFORCED.** `dbcore.check_values()` holds it for vocabularies, `identifier_floor_audit`
+for identifiers, `dbcore.writable_tables()` for the capture set, `adjudication_integrity` for
+tiers. **As a general rule you are the gate**, and the known outstanding violations are: twelve
+argparse `choices=` lists that duplicate a column's CHECK, `add-source --ref-id` and
+`amend-source --tier` asking for values the machine can derive, `validate_pydantic_schemas`'
+curated `MODEL_TABLE_MAP`, and the hand-written "N today" counts throughout
+`governance/check-registry.yaml`.
+
 ---
 
 ## 3. The layers, and the spine

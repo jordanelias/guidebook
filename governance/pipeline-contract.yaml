@@ -66,6 +66,34 @@ stages:
     references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a
       determination); owner ruling 2026-08-26 (base_parameters is items's replacement subject)
     check: scripts/validate_parameters.py
+  - id: base-derived-not-curated
+    kind: integrity
+    criterion: 'A vocabulary, an ordering, an identifier or a set that the schema or the code
+      can compute is never also maintained as a list beside it. The list and the thing drift, and
+      only the list is read. Mechanically decidable instances are enforced; the rest is CLAUDE.md
+      rule 8, where you are the gate.'
+    references: 'CLAUDE.md rule 8 (recorded 2026-09-13, generalising rule 7 from documents to
+      everything). Proof: dbcore.WRITABLE_TABLES went blind eight times and a row written through
+      the sanctioned CLI was captured as nothing; db.py --verification-method refused a value the
+      schema admits because its choices list had not followed the CHECK.'
+    check: scripts/audit/derived_not_curated_audit.py
+  - id: base-identifier-never-reissued
+    kind: integrity
+    criterion: 'An identifier the permanent record has already used is spent, whatever the live
+      tables say. ref_id is computed as MAX+1 over the live tables (dbcore.ref_id_high_water) and
+      parameter_id/specification_id are rowid aliases, so DELETING ROWS SILENTLY FREES IDENTIFIERS
+      that immutable records -- committed data migrations, retrieval-log manifests, session records,
+      attestations -- still name. Established by the 2026-09-13 circulation clear, which dropped the
+      ref_id mark REF-00982 -> REF-00970 with every gate green, because the database was internally
+      consistent and the contradiction lived between the database and the record of what it had held.
+      The floor is derived from the committed migrations rather than from a table, because a counter
+      table would be both a second home (rule 5) and destroyable by the same DELETE it guards.'
+    references: 'Adversarial pass 2026-09-13; CLAUDE.md rule 3 (migrations are append-only and
+      immutable once committed), rule 5 (point, do not copy), 5(c) (a citation that names one work
+      and resolves to another). Repairs: migration 076 (AUTOINCREMENT on the two integer keys) and
+      data_20260913050221 (retired ref_ids retained as RETIRED source_locators rows carrying their
+      own DOI, so a re-admission cross-files to the original under R9).'
+    check: scripts/audit/identifier_floor_audit.py
   - id: base-retired-vocabulary-not-taught
     kind: integrity
     criterion: No retired base token survives in live prose, skills or code outside the exempt paths.
@@ -150,6 +178,38 @@ stages:
       those rows were deleted by the 2026-08-06 clean-room reset.
     references: evidence-methodology.md §3; DR-2026-07-13 H1 (v_value_independence)
     check: null
+  - id: comparator-recorded
+    kind: completeness
+    criterion: A figure stated relative to something else carries that relation as a row in
+      extraction_relations (migration 075, 2026-09-13), not only as a number. A ramp slope given as a
+      bare ratio with no linked run-length/landing condition, or a T1 finding recorded as an independent
+      measurement when the source actually tested subjects against a code's own stated limit
+      (audited_against), is content the book can print wrong rather than merely incomplete. condition_on
+      and derived_from both require a resolvable to_extraction_id; v_derived_figure_check recomputes any
+      row graded figure_role='derived' from its linked base/delta inputs rather than trusting the stored
+      value on faith, the same posture derivation_sha and K01 (scripts/tests/test_db_integrity.py) already
+      take toward a determination. Grading figure_role/comparator on existing rows, and writing the
+      relations themselves, has no writer yet as of this migration — CLAUDE.md section 8 (nothing is added
+      without naming what reads it) is why the CLI verb is owed to whichever change first needs it, not
+      built speculatively here.
+    references: scripts/migrations/075_extraction_relations.sql; CLAUDE.md section 5 (point, do not copy)
+    check: null
+  - id: figure-role-stated
+    kind: integrity
+    criterion: Every source_value_extractions row created after migration 075 applied states
+      what kind of number it is (figure_role IS NOT NULL) once a grading writer exists; the
+      eight rows that predate the migration are reported UNGRADED, not failed, until a
+      backfill lands. A row graded figure_role='derived' carries a derived_from edge with
+      input_role='base' naming what it is computed from, and its stored value must agree with
+      what v_derived_figure_check recomputes from that row's own linked base+delta inputs — a
+      derived figure is an attestation a check recomputes, never a number trusted on faith,
+      same posture as derivation_sha/K01. A row graded figure_role='condition' is neither the
+      target of any extraction_relations edge nor the source of a condition_on edge is an
+      orphan — a qualifier attached to nothing, the exact shape 075 exists to prevent.
+    references: scripts/migrations/075_extraction_relations.sql; scripts/audit/extraction_relations_integrity.py;
+      CLAUDE.md section 5(c) (a fabricated/unstated relative figure passes green gates when
+      every field is populated and none is individually false)
+    check: scripts/audit/extraction_relations_integrity.py
 - id: synthesis
   anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'
   entry:
@@ -204,7 +264,7 @@ stages:
       assertion carries a named-path rationale; advisory CONTRADICTS/UNLINKED checks force `provisional`
       (never `stated`) until resolved.
     references: DR-2026-07-13-value-genealogy-and-derivation-handshake (A6) H2/H4
-    check: null
+    check: scripts/audit/derivation_handshake_integrity.py
 - id: render
   anchor: renderers + the claim-strength register map (evidence-architecture.md §6)
   entry:

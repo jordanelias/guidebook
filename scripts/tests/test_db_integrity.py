@@ -1174,12 +1174,32 @@ def run_checks(db_path):
         if not sha_rec or not rv:
             unattested += 1
             continue
-        refs = sorted(_json.loads(gr or "[]"))
-        n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
-                           "WHERE parameter_id = ?", (pid,)).fetchone()[0]
-        payload = f"{pid}|{lens}|" + "|".join(refs) + f"|x{n_x}::" + rv
+        # THE PAYLOAD FORMAT IS VERSIONED BY rule_version, and that is what
+        # rule_version is for. Migration 077 re-keyed the sha onto the graded
+        # link set; pilot-2 rows replayed from migration history still carry the
+        # old format and must still verify, so this dispatches rather than
+        # assuming one shape. A verifier that recomputed only the current format
+        # would turn every historical determination stale on a rebuild.
+        if rv == "pilot-3":
+            # The set the determination actually rested on, with each row's part
+            # in it. Recomputed from specification_extraction_links, which is the
+            # ONE home of that fact (pre-077 it was not stored at all, which is
+            # why the old payload had to approximate it with a count).
+            links = conn.execute(
+                "SELECT role, extraction_id FROM specification_extraction_links "
+                "WHERE specification_id = ?", (cid,)).fetchall()
+            body = "|".join(sorted(f"{r[0]}:{r[1]}" for r in links))
+        else:
+            # pilot-2 and earlier: governing ref list + an UNFILTERED count of the
+            # parameter's extractions. The count could not see a re-grading, which
+            # is the blind spot 077 closed.
+            refs = sorted(_json.loads(gr or "[]"))
+            n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
+                               "WHERE parameter_id = ?", (pid,)).fetchone()[0]
+            body = "|".join(refs) + f"|x{n_x}"
+        payload = f"{pid}|{lens}|" + body + "::" + rv
         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
-            stale.append(f"{cid} (param {pid}×{lens})")
+            stale.append(f"{cid} (param {pid}×{lens}, {rv})")
     record("K01", "every recorded derivation_sha verifies against its own row",
            not stale,
            f"{len(stale)} stale: {', '.join(stale)} — the row, or the evidence read "
@@ -1192,6 +1212,69 @@ def run_checks(db_path):
            subject=subj("SELECT COUNT(*) FROM specifications "
                         "WHERE COALESCE(derivation_sha,'') <> '' "
                         "AND COALESCE(rule_version,'') <> ''"))
+
+    # K02 — THE PROVENANCE JUNCTION ACCOUNTS FOR EVERY ROW IT COULD HAVE USED.
+    #
+    # NOT A PARITY CHECK. It does not compare two homes of one fact (H03/H04 were
+    # deleted for being that shape). It asserts COMPLETENESS of the one home: for a
+    # pilot-3 determination, every extraction that exists for its parameter appears
+    # in specification_extraction_links exactly once, with a role.
+    #
+    # WHAT REACHES THE GUIDEBOOK WITHOUT IT. A `pending` cell whose junction is
+    # partial reads as "these rows were examined" while silently omitting the ones
+    # that were not — which is the same silence 077 exists to break, one level in.
+    # And because derivation_sha now hashes this set, an incomplete junction makes
+    # the attestation verify against a subset of the evidence rather than all of it:
+    # K01 would pass on a determination that had quietly forgotten half its inputs.
+    unaccounted = []
+    for cid, pid in conn.execute(
+            "SELECT specification_id, parameter_id FROM specifications "
+            "WHERE rule_version = 'pilot-3'"):
+        have = {r[0] for r in conn.execute(
+            "SELECT extraction_id FROM specification_extraction_links "
+            "WHERE specification_id = ?", (cid,))}
+        want = {r[0] for r in conn.execute(
+            "SELECT extraction_id FROM source_value_extractions "
+            "WHERE parameter_id = ?", (pid,))}
+        if have != want:
+            missing, extra = sorted(want - have), sorted(have - want)
+            unaccounted.append(
+                f"spec {cid} (param {pid}): "
+                + (f"{len(missing)} extraction(s) unaccounted {missing[:5]} " if missing else "")
+                + (f"{len(extra)} linked row(s) not for this parameter {extra[:5]}" if extra else ""))
+
+        # THE LINK IS A SNAPSHOT, AND A SNAPSHOT CAN GO STALE. K01 verifies that the
+        # stored sha matches the stored links — internally consistent, and blind to the
+        # world moving underneath both. Found by fault injection while building 077:
+        # re-grading a governing claim to a condition (the change that flips a cell from
+        # provisional to pending) left the links untouched, so K01 still reported CLEAN.
+        # That is the SAME defect 077 exists to close, one level in.
+        #
+        # So this asserts the stored grade still agrees with the live figure_role. It is
+        # not a second implementation of the grading rule: the anchoring half (did the
+        # source survive tier/verification/supersession) needs the engine and is not
+        # re-derived here. The value-supplying half is a direct correspondence, and it is
+        # the half that moves when someone re-grades a row.
+        for eid, role, frole in conn.execute(
+                "SELECT l.extraction_id, l.role, x.figure_role "
+                "FROM specification_extraction_links l "
+                "JOIN source_value_extractions x ON x.extraction_id = l.extraction_id "
+                "WHERE l.specification_id = ?", (cid,)):
+            if role == "governing" and frole not in ("claim", "derived"):
+                unaccounted.append(
+                    f"spec {cid}: extraction {eid} is linked 'governing' but its "
+                    f"figure_role is now {frole!r}, which supplies no value — the "
+                    f"determination rests on a row that has since been re-graded")
+            elif role == "conditioning" and frole != "condition":
+                unaccounted.append(
+                    f"spec {cid}: extraction {eid} is linked 'conditioning' but its "
+                    f"figure_role is now {frole!r}")
+    record("K02", "every pilot-3 determination accounts for every extraction of its parameter",
+           not unaccounted,
+           f"{len(unaccounted)}: {'; '.join(unaccounted)} — the junction is what "
+           f"derivation_sha hashes, so an incomplete one attests a subset of the "
+           f"evidence while reading as the whole of it" if unaccounted else "",
+           subject=subj("SELECT COUNT(*) FROM specifications WHERE rule_version = 'pilot-3'"))
 
     # Reported, not enforced. Whether an unattested determination is acceptable
     # is an owner call — these rows were hand-migrated, not produced by an
@@ -1485,6 +1568,50 @@ def run_checks(db_path):
                # another gate has a subject. Its own subject is the pointer it read
                # — one, and only when a pointer was found at all.
                subject=1 if _ptr else 0)
+
+    # ── M: dbcore.check_values() parses CHECK constraints, not comment prose ──
+    #
+    # Regression for the 2026-09-13 defect: check_values() pulled quoted strings
+    # out of a column's raw CHECK-clause DDL without first removing `-- prose`
+    # line comments, so comment text that happened to contain an apostrophe (or
+    # that merely sat on the line before a real quoted value) was returned as a
+    # vocabulary member. Measured before the fix: evidence_sources.verification_method
+    # returned 3 "values", 2 of them comment fragments; processing_blocked_reason
+    # returned 9 of which 8 were contaminated; gap_mining.outcome 2 of which 1.
+    # CLAUDE.md §4 is explicit that vocabularies come from the schema's own CHECK
+    # via this exact function, never a list in code — a parser that mistakes
+    # comment prose for data makes that mechanism unreliable everywhere it reads
+    # a `-- ...` annotated CHECK, not just on the three columns first measured.
+    #
+    # This walks every table/column pair in the LIVE schema (not a fixed list —
+    # a fixed list here would be exactly the second-home rule 5 forbids) and
+    # asserts that whatever check_values() parses out never contains the two
+    # signatures a comment leaves behind: a literal `--` or an embedded newline.
+    # Neither can appear in a real vocabulary token in this schema (they are all
+    # short lower/upper-case enum words), so either signature in a parsed value
+    # is conclusive evidence the parser walked past a comment.
+    print("\n[M] dbcore.check_values() vocabulary parsing")
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import dbcore as _dbcore
+
+    _tables = [r[0] for r in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")]
+    _contaminated = []
+    _cols_examined = 0
+    for _t in _tables:
+        for _c in (r[1] for r in conn.execute(f'PRAGMA table_info("{_t}")')):
+            _cols_examined += 1
+            for _v in _dbcore.check_values(conn, _t, _c):
+                if "--" in _v or "\n" in _v:
+                    _contaminated.append((_t, _c, _v))
+    record("M01", "check_values() never returns a comment fragment as a value",
+           not _contaminated,
+           "contaminated: " + "; ".join(f"{t}.{c}={v!r}" for t, c, v in _contaminated[:8])
+           + (", ..." if len(_contaminated) > 8 else "") if _contaminated else "",
+           # Subject is every column in the live schema, because check_values()
+           # is called per-column and any one of them could hide an unstripped
+           # comment — not just the three the defect was first measured on.
+           subject=_cols_examined)
 
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()

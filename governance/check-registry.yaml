@@ -1431,6 +1431,138 @@ checks:
   note: 'Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. The subject table holds 0 rows, so
     every other gate is blind to a regression here (CLAUDE.md rule 4). Mutation-tested 2026-08-27: injecting
     UNIQUE(ref_id) on a scratch copy turns it red.'
+- id: extraction_relations_integrity
+  cmd:
+  - python3
+  - scripts/audit/extraction_relations_integrity.py
+  battery: db_integrity
+  kinds:
+  - data
+  - schema
+  - governance
+  level: blocking
+  basis: judgment/figure-role-stated
+  cost: fast
+  no_floor: empty-by-decision — the circulation corpus was cleared by owner ruling 2026-09-13
+    ("all the circulation rows that have been produced are not able to be trusted"), so this
+    check's three subjects are 0/0/0 by decision, not by accident. Same posture and same reason
+    as validate_evidence_state. RATCHET BACK TO min_items 1 when the re-run lands its first
+    extraction; the corpus refilling is what makes this floor meaningful again.
+  note: 'NEW 2026-09-13, migration 075 (figure_role/comparator on source_value_extractions,
+    extraction_relations junction, v_derived_figure_check view). EXAMINED sums three subjects
+    it actually reads: source_value_extractions rows, extraction_relations edges, and
+    v_derived_figure_check rows.
+
+
+    THE GRANDFATHER CLAUSE IS DELETED, not merely off. It shipped as a
+    MAX(data_migrations.applied_at) boundary that floated forward and could un-fail the very
+    rows it existed to catch (demonstrated un-firing itself, then replaced by a frozen id
+    list {1..8}); the backfill graded those eight and the 2026-09-13 corpus clear deleted
+    them. extraction_id is AUTOINCREMENT and the sequence was not reset, so re-enabling the
+    clause would have excused the FIRST EIGHT ROWS OF THE NEXT CORPUS — rows it never meant.
+    A switch whose off position is correct and whose on position has become actively wrong is
+    not a switch. Every figure_role-NULL row now fails unconditionally, whenever written.
+
+
+    WRITERS, since a check with no writer is measuring nothing: `db.py relate-extraction`,
+    `amend-extraction` and `derive-extraction` all write this junction, and `add-extraction`
+    takes --figure-role as a required flag. `derive-extraction` is the one that produces
+    figure_role=''derived'' rows with the two derived_from edges v_derived_figure_check
+    recomputes against.
+
+
+    CHECK 3 CARRIES THE WRITER''S TOLERANCE AND NAMES WHAT IT CANNOT SEE (both fixed
+    2026-09-13 after an adversarial pass). It compared with SQL `<>` while `derive-extraction`
+    accepts within 1e-9, so 0.1 + 0.2 = 0.30000000000000004 turned this BLOCKING gate red over
+    a row the sanctioned writer had just accepted; it now compares with the same epsilon. And
+    `v_derived_figure_check` joins on equal units, so a unit-converted derived row — exactly
+    what `--claimed-unit --conversion-note` writes, and the kind most likely to be wrong — was
+    silently absent from the view and check 3 reported CLEAN over it (a 999 cm row against a
+    0.3 m base+delta). The view is committed in migration 075 and migrations are immutable, so
+    the fix-forward is an UNCHECKED: line naming the derived rows the view cannot cover. That
+    is CLAUDE.md 5(a) applied to this check''s own subject.
+
+
+    FAULT-INJECTED on a scratch copy, all four ways, each shown red then green again: (1) a
+    row with figure_role NULL — added, FAILED; graded, CLEAN. (2) figure_role=''derived'' with
+    no derived_from/input_role=''base'' edge — graded, FAILED; base edge added, CLEAN. (3) a
+    v_derived_figure_check disagreement — stored value set to disagree with linked base+delta,
+    FAILED (`stored=100.0, recomputed=70.0`); corrected to 70, CLEAN. (4) an orphan
+    figure_role=''condition'' row (target of nothing, source of no condition_on edge) — graded,
+    FAILED; a condition_on edge added, CLEAN. Re-confirmed 2026-09-13 during the verification
+    pass on a live derived row: tampering extraction 15''s stored value from 10 to 42 produced
+    `stored=42.0, recomputed=10.0` and exit 1. Canonical data/guidebook.db sha256 unmoved
+    throughout — every mutation above was against a scratch copy only.'
+- id: derived_not_curated_audit
+  cmd:
+  - python3
+  - scripts/audit/derived_not_curated_audit.py
+  battery: schema
+  kinds:
+  - schema
+  - governance
+  level: blocking
+  basis: base/base-derived-not-curated
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-09-13 with CLAUDE.md rule 8. EXAMINED counts argparse choices= LITERALS
+    inspected -- the ones still hardcoded -- not files read and not the derived calls, because
+    the literals are the subject. It therefore counts DOWN as the rule is applied, and reaching
+    0 would make it vacuous rather than passing: min_items 1 is a floor on the inspection, and
+    the 91 live CHECK vocabularies it compares against are printed beside it.
+
+
+    SCOPE IS ONE MECHANICALLY DECIDABLE CLASS, deliberately. Rule 8 is mostly judgement and a
+    script cannot police judgement. An argparse choices= list whose values are EXACTLY a live
+    column CHECK is the one case with a first home sitting next to the second and a fix that is
+    always the same. The other violations rule 8 names -- --ref-id and --tier asking for values
+    the machine derives, MODEL_TABLE_MAP, the registry''s own "N today" counts -- need a decision
+    about what the single home should be, so they are listed in the rule for a reader.
+
+
+    IT GREPS RATHER THAN IMPORTS, because importing db.py to inspect its parser would run
+    module-level code and couple this gate to the writer it polices -- what dbcore''s docstring
+    says a gate must not do.
+
+
+    FAULT-INJECTED 2026-09-13: twenty literals were derived, run CLEAN (EXAMINED 5, the survivors
+    being non-vocabulary lists such as tier 1-6 integers); re-curating one (gaps.priority) turned
+    it FAIL/exit 1 naming the file, line, owning column and the exact replacement; restored, CLEAN.'
+- id: identifier_floor_audit
+  cmd:
+  - python3
+  - scripts/audit/identifier_floor_audit.py
+  battery: db_integrity
+  kinds:
+  - data
+  - schema
+  - governance
+  level: blocking
+  basis: base/base-identifier-never-reissued
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-09-13, after an adversarial pass found that the circulation-corpus clear had
+    dropped the ref_id high-water REF-00982 -> REF-00970 with every gate green. EXAMINED counts
+    identifier floors compared (3: ref_id, base_parameters, specifications), not migration files
+    read -- the file count is printed beside it as context.
+
+
+    THE FLOOR IS DERIVED FROM THE COMMITTED MIGRATIONS, NOT FROM A TABLE, and that is the whole
+    design. A counter column or a retired_identifiers table would be a second home for a fact
+    (rule 5) and — the reason that matters here — a home the very DELETE this check guards could
+    empty. scripts/migrations/ is append-only and immutable once committed (rule 3), and every
+    identifier this project has minted passed through one, because the migration path is the only
+    sanctioned route into the canonical database. It is slower than a counter and it is the only
+    source that cannot be destroyed by the operation it polices.
+
+
+    FAULT-INJECTED AGAINST THE REAL DEFECT, not a synthetic one: run against canonical BEFORE the
+    repairs landed it reported VERDICT FAIL, exit 1, naming all three regressions (ref_id
+    REF-00970 against a historical REF-00982; base_parameters and specifications at 0 against a
+    historical 2, and both flagged for having no AUTOINCREMENT). After migration 076 and
+    data_20260913050221: VERDICT CLEAN, all three floors level. min_items 1 rather than no_floor
+    because the three floors exist whether or not any corpus does -- this check has a subject on
+    an empty database, which is exactly when it matters most.'
 - id: source_locators_integrity
   cmd:
   - python3
@@ -1457,6 +1589,51 @@ checks:
     wrong. The 17 "unprovable" rows are reported and never failed: a title embedding a DOI on a
     row that carries none is suspect, not proven, and failing on suspicion is how a gate starts
     lying.'
+- id: derivation_handshake_integrity
+  cmd:
+  - python3
+  - scripts/audit/derivation_handshake_integrity.py
+  battery: schema
+  kinds:
+  - schema
+  - data
+  - governance
+  level: advisory
+  basis: specification/derivation-handshake
+  cost: fast
+  no_floor: 'ZERO DETERMINATIONS IS THE CORPUS STATE, not a blocked check. `specifications`
+    cannot accept a row until a parameter is minted (CLAUDE.md §4 — `parameter_id NOT NULL`
+    into a `base_parameters` that the 2026-09-13 circulation clear left empty), so every
+    subject here is unreachable today. That is also why the check is advisory rather than
+    blocking: `run_checks.py` already prints five BLOCKING-and-vacuous gates as a defect,
+    and a sixth would make the battery worse rather than safer. Its failure paths are
+    exercised by FAULT INJECTION against a scratch copy instead — eight of them, plus two
+    controls that must stay silent (a T6 gate that must not bind a T1-anchored cell, and a
+    properly Co-1-anchored population_only cell). RATCHET TO level: blocking WITH min_items:
+    1 in the same change that writes the first determination; determinations are never
+    deleted, so the floor holds once set.'
+  note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a `stated` determination
+    sitting under an open, binding H4 gate — the book asserting a best-practice value while
+    an audit of equal or greater strength has already contested it, which is H4''s cap
+    failing silently; and a CULTURAL CLAIM ANCHOR THAT ANCHORS NOTHING, which is the subject
+    the schema structurally cannot reach. Migration 080''s CHECK lets a `population_only`
+    row skip its named-path rationale when `cultural_claim_anchor` is non-NULL, and it can
+    only test that the value is valid JSON — so a row naming a code document, a dead ref_id,
+    or an empty list satisfies the constraint and inherits the dignity exemption BY
+    ASSERTION. The ratified boundary criterion exists to stop exactly that ("the protection
+    is anchored, not self-declared … it gains no cultural exemption by assertion"), and
+    nothing but this check enforces it. Three further subjects: the single-path obligation
+    as a backstop for rows arriving by a route that bypassed the CHECK (the division of
+    labour `medical_lens_integrity` has with `add-medical`); `functional_basis` naming a
+    mapping `population_icf_links` does not hold, which justifies a determination by a
+    functional basis no reader can reach; and a gate whose stored `trigger_tier` has drifted
+    from its own source, which leaves the ladder-inversion guard deciding on a stale
+    strength — the same snapshot-versus-live shape as K02.
+
+    G3''s community-provenance predicate is IMPORTED from `schemas/directness.grain_for()`,
+    never retyped. That function is the one home of the rule, made so by the change that
+    closed a finding about two implementations of it disagreeing, and
+    `assess_cell.derivation_handshake()` decides the anchor with the same call.'
 - id: medical_lens_integrity
   cmd:
   - python3
@@ -1563,7 +1740,17 @@ quarantine:
   - python3
   - scripts/audit/adjudication_integrity.py
   status: quarantined
-  reason: 'RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
+  reason: 'RE-MEASURED 2026-09-12: VERDICT PASS -- all 11 evidence_sources are tier-consistent and
+    NOT ONE carries a NULL scope. The four rows this entry named were resolved that day by owner ruling
+    on the B5(b) escalation: REF-00971 / REF-00972 to lower_control on the design-control reading, and
+    REF-00784 / REF-00976 from payloads retrieved under the same ruling. PMID 20434614 states its design
+    as Case series with a sample of convenience, which moved REF-00784 to tier 3 -- the tier the
+    2026-07-20 anchor sweep had recorded as correct fifty-four days earlier. STILL QUARANTINED, and the
+    reason has inverted: the gate is GREEN now, not red. The promotion clause at the foot of this entry
+    waits on OD-E, which was ruled on 2026-08-31 (D-0179) and whose subject REF-00967 holds 0 rows
+    today -- so nothing mechanical blocks promotion and it is an owner call only. Do not promote it
+    without one. The superseded measurement, kept because this entry is a record of its own staleness:
+    RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
     REF-00784, REF-00971, REF-00972, REF-00976, every one of them scope NULL. That supersedes the
     2026-08-22 measurement recorded below (1 of 5), which was correct on its date and is wrong today:
     the corpus grew from 5 admitted sources to 9, and B5(b) on 2026-09-10 wrote scope on five of the

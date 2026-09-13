@@ -363,6 +363,54 @@ def live_vocab(conn, table: str, column: str) -> set:
     )}
 
 
+def _strip_sql_line_comments(sql: str) -> str:
+    """Drop `-- ...` line comments from a DDL fragment, respecting quoted strings.
+
+    Found 2026-09-13: `check_values` below pulled quoted values out of the raw CHECK
+    text without removing `-- explanatory prose` comments first, so a comment fragment
+    that happened to contain an apostrophe (`the document's...`) or that simply sat
+    before a real quoted value on the next line was captured as if it were a
+    vocabulary member -- 8 of `processing_blocked_reason`'s 9 "values" were comment
+    text, not data. The comments also embed bare parens ("(DR 3.1)"), which truncated
+    check_values' own `[^)]*` scan early and silently dropped the tail of the
+    vocabulary (`tool` in verification_method); stripping the comment text removes
+    those stray parens too, so the caller's paren-scan reaches the real close.
+
+    A `--` INSIDE a quoted string literal is data, not comment syntax, and must
+    survive (a legitimate vocabulary value could contain it) -- so this walks the
+    fragment tracking single-quote string state rather than regexing line by line.
+    SQL's own escape for an embedded quote is a doubled `''`, which is tracked here
+    so the second quote of an escape is never mistaken for the string's end.
+    """
+    out = []
+    in_string = False
+    i, n = 0, len(sql)
+    while i < n:
+        ch = sql[i]
+        if in_string:
+            out.append(ch)
+            if ch == "'":
+                if i + 1 < n and sql[i + 1] == "'":
+                    out.append(sql[i + 1])
+                    i += 2
+                    continue
+                in_string = False
+            i += 1
+            continue
+        if ch == "'":
+            in_string = True
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "-" and i + 1 < n and sql[i + 1] == "-":
+            j = sql.find("\n", i)
+            i = n if j == -1 else j  # leave the newline for the next pass to append
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
 def check_values(conn, table: str, column: str) -> set:
     """The value set a column's own CHECK constraint declares, or empty if none.
 
@@ -400,9 +448,19 @@ def check_values(conn, table: str, column: str) -> set:
     # first, which is how a guard comes to permit anything while looking like it reads
     # the schema (CLAUDE.md §4: "Vocabularies come from the schema, not a list in
     # code"). It read the schema for 92 of 108 and guessed for the rest.
+    ddl = _strip_sql_line_comments(row[0])
+    # AN OPTIONAL OPENING PAREN AFTER `IS NULL OR`, added 2026-09-13. Migration 078
+    # writes `CHECK (c IS NULL OR (c IN (...) AND sibling IS NOT NULL))` -- the only way
+    # SQLite lets an ALTER TABLE ADD COLUMN require a value and its warrant together,
+    # since a table-level CHECK cannot be added that way. Without the `\(?` this reader
+    # returned the empty set for that column, and an empty set means "no vocabulary
+    # declared", which `check_declared` treats as UNCONSTRAINED -- the guard silently off,
+    # which is the exact failure this function's own docstring records. Deliberately
+    # narrow: it still requires the CHECK to OPEN by naming this column, so a constraint
+    # belonging to a different column cannot be mistaken for this one's vocabulary.
     m = re.search(
-        r"CHECK\s*\(\s*(?:%s\s+IS\s+NULL\s+OR\s+)?%s\s+IN\s*\(([^)]*)\)"
-        % (re.escape(column), re.escape(column)), row[0], re.I)
+        r"CHECK\s*\(\s*(?:%s\s+IS\s+NULL\s+OR\s+)?\(?\s*%s\s+IN\s*\(([^)]*)\)"
+        % (re.escape(column), re.escape(column)), ddl, re.I)
     if not m:
         return set()
     return {v.strip().strip("'\"") for v in m.group(1).split(",") if v.strip()}
@@ -416,6 +474,40 @@ def check_declared(conn, table: str, column: str, value, context: str):
             "%s: %s.%s does not accept %r. The schema's own CHECK declares: %s. "
             "Nothing was written."
             % (context, table, column, value, sorted(allowed)))
+
+
+def schema_choices(table: str, column: str):
+    """argparse `choices=` READ FROM THE COLUMN'S OWN CHECK (CLAUDE.md rule 8).
+
+    Twenty `choices=` lists in db.py restated a vocabulary the schema already declares.
+    Each was a second home, and one had already drifted: `--verification-method` was
+    missing `direct-render` for as long as that value had existed, so the CLI refused a
+    value the schema admits -- the safe-looking direction of the failure, which is why
+    nobody noticed. The comment added when it was fixed said "the schema is the authority
+    (CLAUDE.md section 4), so the CLI's list was the thing out of date", and then kept the
+    list.
+
+    WHY choices AT ALL, rather than deleting it and validating only at runtime: `--help`
+    and shell completion read it, and a refusal that arrives before the command runs is
+    cheaper for an operator than one that arrives after. Deriving keeps the affordance and
+    removes the drift, which is the whole of rule 8 in one function.
+
+    RETURNS None RATHER THAN RAISING when the schema cannot be read -- a missing or
+    unreadable database must not make `db.py --help` fail, and the vocabulary is not lost
+    by returning None: `check_declared()` refuses the same values at write time, with a
+    better message. Degraded, never wrong.
+    """
+    try:
+        conn = sqlite3.connect("file:%s?mode=ro" % db_path(), uri=True)
+    except sqlite3.Error:
+        return None
+    try:
+        vals = check_values(conn, table, column)
+        return sorted(vals) or None
+    except sqlite3.Error:
+        return None
+    finally:
+        conn.close()
 
 
 def check_vocab(conn, table: str, column: str, value, context: str):
@@ -454,112 +546,127 @@ def check_vocab(conn, table: str, column: str, value, context: str):
 
 
 # ---------------------------------------------------------------------------
-# The one list of tables a session may write
+# WHICH TABLES A SESSION MAY WRITE — DERIVED, NOT CURATED
 # ---------------------------------------------------------------------------
-# MOVED HERE FROM scripts/research/emit_batch_sql.py 2026-08-25, comments intact.
+# THE LIST THAT USED TO LIVE HERE WENT BLIND EIGHT TIMES. Its own comments recorded
+# seven: evidence_source_authors (where the 2026-08-19 author fabrication happened, so
+# the repair had to be hand-written through the same channel the fabrication entered
+# by), source_locators, observed_terms/term_adjudications, terms,
+# base_parameters/specifications, base_taxonomy_medical with the two medical crossing
+# maps, and extraction_relations. The eighth was found on 2026-09-13 by an audit and
+# then immediately reproduced: the orchestrator added `specification_extraction_links`
+# in migration 077 and did not add it here — while reading the comment that recorded
+# the previous seven. Four further tables had been writable and invisible for longer
+# (connections, connection_targets, conflicts, bpc_metadata, gap_mining,
+# item_audit_runs, supersession_check).
 #
-# WHY IT MOVED, and this is the structural point of the consolidation: the CLI and
-# the capture tool used to carry SEPARATE knowledge of which tables exist. That is
-# how a table became writable-but-invisible to capture -- a rescue wrote 8
-# source_locators rows and the capture emitted 32 statements instead of 40, losing
-# them with no error raised. One constant, two importers: a table cannot again be
-# writable by one and unknown to the other.
-TABLES = [
-    "evidence_sources",
-    # ADDED 2026-08-22. Its absence was not neutral: evidence_source_authors is
-    # where the 2026-08-19 fabrication happened (12 of 19 author rows named
-    # non-authors, including the deletion of the autistic community co-authors
-    # from the paper whose Co-1 warrant IS their co-authorship), and because this
-    # capture path could not see the table, that repair had to be hand-written —
-    # the same hand-SQL channel the fabrication entered through. PK is `id`
-    # (INTEGER PRIMARY KEY AUTOINCREMENT), so the generic PK diff below applies
-    # unchanged. What reads it: this script, invoked by the DR-2026-08-19 runbook
-    # at step 11.
-    "evidence_source_authors",
-    # ADDED 2026-08-23, and it is the THIRD tool found blind to this one table in a
-    # single day. source_locators is the identifier stash — 835 rows, 441 DOIs. R9
-    # could not see it (fixed the same morning as R9a/R9b); validate_jurisdiction.py
-    # never opens the DB at all; and this capture path silently DROPPED every
-    # source_locators row a session wrote. That last one was found by counting: a
-    # rescue that inserted 8 locator rows emitted 32 statements, not 40, and the
-    # eight would have been lost between the scratch DB and the migration with no
-    # error raised. A table the tooling cannot see is a table the project does not
-    # really have. What reads it: this script, invoked by the DR-2026-08-19 runbook.
-    "source_locators",
-    # ADDED 2026-09-02 with migration 066. The research-stage home for code and
-    # standard leads, restored by owner ruling after the item-layer deletion took
-    # jurisdictional_values with it. No FK, so position is free; kept beside
-    # source_locators because both are lead stores and a reader looking for one
-    # should meet the other.
-    "research_code_leads",
-    "source_slug_links",
-    "search_executions",
-    "search_admissions",
-    "search_candidates",
-    "evidence_population_match",
-    "citation_mining",
-    "jurisdictional_values",
-    "economics_entries",
-    "case_studies",
-    "gaps",
-    # ADDED 2026-09-03, one day after migration 068 created them. The D-0173
-    # harvest shipped a writer (`db.py observe-term` / `adjudicate-term`) and a
-    # contract line telling agents to harvest as they go, and this capture path
-    # could see NEITHER table — so the first real harvest, 33 observations over
-    # batch 05's nine sources, hit "no delta ... across all 14 tables" and could
-    # not be shipped at all. That is the same blindness recorded twice above for
-    # evidence_source_authors and source_locators, and it is the reason CLAUDE.md
-    # §4 rule 4 says a view is a caller and so is a skill: this emitter is a
-    # caller too, and creating a table is not done until it can be captured.
-    # FK-safe here: observed_terms points at evidence_sources (head of this list)
-    # and term_adjudications points at observed_terms, so parents precede both.
-    # What reads them: this script, and judgment when it adjudicates the harvest.
-    "observed_terms",
-    # ADDED 2026-09-09 with `db.py add-term`, and this is the FOURTH tool found blind
-    # to a live table by the same mechanism — after evidence_source_authors,
-    # source_locators, and observed_terms/term_adjudications one week ago. The owner
-    # ruled the naming vocabulary runs through `terms`; `add-term` mints a term and its
-    # NAMES-NEW adjudication together, so a harvest that minted a term would have
-    # shipped the adjudication and SILENTLY DROPPED the term it points at — leaving a
-    # migration whose term_adjudications.term_id violates its own foreign key.
-    # MUST precede term_adjudications: that table's term_id references this one, and
-    # this list is replayed in order.
-    "terms",
-    "term_adjudications",
-    # ADDED 2026-09-09, and this is the FIFTH time this list has been blind to a live
-    # table -- after evidence_source_authors, source_locators, observed_terms/
-    # term_adjudications, and terms EARLIER THE SAME DAY. Migration 071 created
-    # base_parameters and re-keyed specifications; neither was added here, so a session
-    # that adjudicated a parameter or wrote a determination into a scratch would have
-    # emitted "no delta" and lost it silently. The pattern is now explicit: CREATING A
-    # TABLE IS NOT DONE UNTIL THE CAPTURE PATH CAN SEE IT, and the migration that
-    # creates it should edit this list in the same change.
-    # FK order, parents first: base_parameters -> terms (above); specifications ->
-    # base_parameters, convergence_assessment, gaps and the four lens registries;
-    # specification_source_links -> specifications, evidence_sources (head of list).
-    # ADDED 2026-09-11, and this is the SIXTH time this list has been blind to a live
-    # table -- after evidence_source_authors, source_locators, observed_terms/
-    # term_adjudications, terms, and base_parameters/specifications two days ago. The
-    # comment above already said "CREATING A TABLE IS NOT DONE UNTIL THE CAPTURE PATH CAN
-    # SEE IT", and base_taxonomy_medical was created by migration 065 and sat unlisted
-    # regardless -- so the rule was written down and then not applied to the very next
-    # table. Migration 074 adds the two crossing maps and edits this list in the same
-    # change, which is what that comment asked for.
-    # FK order, parents first: base_taxonomy_medical is the parent of BOTH maps and of
-    # specifications.medical_code and source_value_extractions.medical_code, so it must
-    # precede all four. The maps reference populations(population_code) and
-    # axes(axis_code), which are base vocabularies no batch writes.
-    "base_taxonomy_medical",
-    "identity_medical_map",
-    "icf_medical_map",
-    "base_parameters",
-    "source_value_extractions",
-    "convergence_assessment",
-    "specifications",
-    "specification_source_links",
-]
+# WHAT THAT COSTS, precisely, because it is silent. `emit_batch_sql.py` diffs only the
+# tables this names, and reports "no delta — nothing to emit" when it finds none.
+# Reproduced 2026-09-13: a `gap_mining` row written through `db.py add-gap-mining` —
+# the sanctioned writer, on the sanctioned path — was captured as NOTHING, and the
+# session was told nothing had happened. The migration path is the ONLY route into the
+# canonical database, so a table this list cannot see is a table whose rows cannot be
+# committed.
+#
+# THE PREVIOUS FIX WAS THE WRONG SHAPE. Consolidating two copies into one constant
+# (2026-08-25) stopped the CLI and the capture tool disagreeing WITH EACH OTHER. It did
+# nothing about the list disagreeing with `db.py`'s actual write surface, which is
+# where every one of the eight failures lived. The comment above the consolidation
+# claimed "a table cannot again be writable by one and unknown to the other"; four
+# tables were already in exactly that state when it was written.
+#
+# SO THE SET IS DERIVED FROM THE WRITERS. `_writer_tables()` reads the modules that
+# write — scripts/db.py and scripts/assess/assess_cell.py — and takes every table named
+# by an INSERT. Verified 2026-09-13 that neither module builds a table name
+# dynamically, so a literal scan is complete rather than approximate. The failure mode
+# inverts: a new table is captured the moment something can write it, and a table can
+# only escape by being argued into NOT_CAPTURED below.
+#
+# ORDER IS DERIVED TOO, and that fixed a live defect the hand list carried: it placed
+# `evidence_population_match` (index 8) ahead of `gaps` (index 13), which it references
+# via gap_id. The list is replayed in order, so a batch touching both would have
+# emitted the child before the parent. Latent only because they had not been co-emitted
+# — CLAUDE.md rule 4's "treat a 0-row object as unproven, not clean", inside this
+# module's own load-bearing list.
 
-WRITABLE_TABLES = TABLES          # the name this module exports; TABLES is the moved original
+#: Tables a writer touches that must NOT be captured into a batch migration, each with
+#: the reason it is excluded. This is the ONLY hand-maintained half, and the burden of
+#: proof now sits here: a table is captured unless someone argues it out.
+NOT_CAPTURED = {
+    "data_migrations": "migrate_db.py's own ledger — written BY the replay, never in it",
+    "sqlite_sequence": "SQLite internal; AUTOINCREMENT state, maintained by the engine",
+    "pipeline_runs": (
+        "written directly into the blob by the scheduled source-verification workflow, "
+        "not through the migration path (CLAUDE.md rule 3 names this as the repository "
+        "breaking its own rule on a timer); it is also in migration_reproducibility's "
+        "EXEMPT_TABLES for the same reason"),
+}
+
+_INSERT_RE = re.compile(r'INSERT\s+(?:OR\s+\w+\s+)?INTO\s+"?(\w+)"?', re.I)
+
+#: The modules that write rows a session captures. Paths are relative to scripts/.
+_WRITER_MODULES = ("db.py", "assess/assess_cell.py")
+
+
+def _writer_tables() -> set:
+    """Every table a sanctioned writer INSERTs into, read from the writers themselves."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    found = set()
+    for rel in _WRITER_MODULES:
+        path = os.path.join(here, rel)
+        try:
+            with open(path, encoding="utf-8") as fh:
+                found |= set(_INSERT_RE.findall(fh.read()))
+        except OSError:
+            # A writer module that cannot be read is a real problem, but this module is
+            # imported by the CLI itself; raising here would make every db.py invocation
+            # fail on an unrelated missing file. Report by omission and let the selftest
+            # catch it, which it does by asserting the result is non-empty.
+            continue
+    return found
+
+
+def writable_tables(conn) -> list:
+    """Tables a session may write, in an order safe to replay: parents before children.
+
+    Takes a connection because the ORDER is a property of the live schema, not of this
+    module. A hardcoded order is a second home for the FK graph (rule 5) and is what
+    carried the evidence_population_match-before-gaps defect.
+    """
+    live = {t for (t,) in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    wanted = (_writer_tables() & live) - set(NOT_CAPTURED)
+
+    # Kahn's algorithm over the FK graph restricted to `wanted`. Self-references
+    # (base_parameters.merged_into) are skipped: a row pointing at its own table is an
+    # intra-table ordering question, not a table-level one, and counting it would make
+    # the graph falsely cyclic.
+    deps = {t: set() for t in wanted}
+    for t in wanted:
+        for fk in conn.execute('PRAGMA foreign_key_list("%s")' % t):
+            parent = fk[2]
+            if parent != t and parent in wanted:
+                deps[t].add(parent)
+
+    ordered, remaining = [], dict(deps)
+    while remaining:
+        ready = sorted(t for t, d in remaining.items() if not (d & set(remaining)))
+        if not ready:
+            # A genuine cycle. Emit the rest alphabetically so capture still happens and
+            # the caller is told, rather than silently dropping tables — losing rows is
+            # the failure this whole module exists to prevent.
+            ordered.extend(sorted(remaining))
+            break
+        ordered.extend(ready)
+        for t in ready:
+            remaining.pop(t)
+    return ordered
+
+
+# WRITABLE_TABLES and TABLES are GONE, deliberately. Both were module-level constants,
+# and a constant is exactly what let a snapshot of the write surface drift from the
+# write surface eight times. `writable_tables(conn)` needs a connection, so a caller
+# cannot hold a stale copy without noticing it is holding one.
 
 
 def _selftest() -> int:
@@ -612,8 +719,33 @@ def _selftest() -> int:
     check("is_canonical identifies the committed database", is_canonical(CANONICAL_DB))
     check("is_canonical is False for a scratch path", not is_canonical("/tmp/scratch-xyz.db"))
 
-    check("WRITABLE_TABLES is the moved list, non-empty and FK-ordered at the head",
-          WRITABLE_TABLES[0] == "evidence_sources" and "source_locators" in WRITABLE_TABLES)
+    # THE CAPTURE SET, DERIVED. The assertion this replaces checked that the hand list
+    # started with "evidence_sources" and contained "source_locators" -- which is to say
+    # it verified the shape of a snapshot, and passed on every one of the eight occasions
+    # the snapshot was missing a live table. These assert the properties that actually
+    # matter, against the live schema.
+    _st_con = sqlite3.connect("file:%s?mode=ro" % CANONICAL_DB, uri=True)
+    try:
+        _tbls = writable_tables(_st_con)
+        check("writable_tables() is non-empty", bool(_tbls))
+        check("writable_tables() covers every table a writer INSERTs into",
+              not ((_writer_tables()
+                    & {t for (t,) in _st_con.execute(
+                        "SELECT name FROM sqlite_master WHERE type='table'")})
+                   - set(NOT_CAPTURED) - set(_tbls)))
+        # Parents before children, so a replay in this order never violates an FK. This
+        # is the property the hand list silently broke (evidence_population_match ahead
+        # of gaps, which it references via gap_id).
+        _pos = {t: i for i, t in enumerate(_tbls)}
+        _viol = [f"{t} before {fk[2]}" for t in _tbls
+                 for fk in _st_con.execute('PRAGMA foreign_key_list("%s")' % t)
+                 if fk[2] != t and fk[2] in _pos and _pos[fk[2]] > _pos[t]]
+        check("writable_tables() is FK-ordered: every parent precedes its children",
+              not _viol, "; ".join(_viol))
+        check("every NOT_CAPTURED entry states a reason",
+              all(isinstance(v, str) and v.strip() for v in NOT_CAPTURED.values()))
+    finally:
+        _st_con.close()
 
     # DERIVED, never written by hand. The first draft of this line hardcoded "12"
     # over 11 assertions -- CLAUDE.md §2(b)'s exact defect, in the selftest of the

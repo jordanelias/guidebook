@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-13-clear-circulation-corpus",
+  "artifact": "sessions/session_2026-09-13-clear-circulation-corpus.md",
+  "doctrine_sha": "969e00c",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260913040739_2026-09-13-clear-circulation-corpus.sql",
+      "reason": "The canonical DB was never written directly. One compensating data migration, emitted through emit_data_migration.py and applied through migrate_db.py, rehearsed against a scratch copy first. The batch migrations that wrote these rows stay on disk and stay applied; this migration undoes their effect forward, which is what rule 3's append-only clause requires."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-13-clear-circulation-corpus.md",
+      "reason": "Session record written before the migration was emitted, and it records the ordering defect the rehearsal caught rather than only the outcome."
+    }
+  },
+  "deviations": [],
+  "bias_direction": "The bias available here is scoping the delete to what is convenient rather than to what the owner said. I authored batches 06 and 07 and the migration-075 machinery on this same branch, so the self-interested cut is a narrow one that spares my own recent work and leaves batches 04 and 05 standing. The owner said all circulation rows, and the closure was derived from the slug rather than from the session stamps, which widened the delete to 229 rows including 33 observed_terms and one source_locators row that no session-scoped reading would have reached.",
+  "independent_reviewer_counterclaim": "A reviewer would press on the keep-list rather than the delete-list, because everything kept is a judgement call I made unreviewed. The weakest of them is base_parameters: I deleted the TERM-001/TERM-002 promotions as research output while keeping the terms themselves, and a reviewer could argue the promotion is base-stage vocabulary that survives a research clear. The second is that clearing the specifications rows incidentally unfreezes the pending cells that the verification pass flagged as un-redeterminable, which means a real blocker has been dissolved by a side effect rather than answered, and the underlying supersede question remains open and unowned.",
+  "verdict": "CLEAN"
+}

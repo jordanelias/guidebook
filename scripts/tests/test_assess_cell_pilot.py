@@ -50,7 +50,8 @@ def _default_scope(evidence_type, tier):
     return None
 
 
-def synth_db(sources, parameter_id=1, extractions_per_source=1):
+def synth_db(sources, parameter_id=1, extractions_per_source=1,
+             icf_links=(), gates=()):
     """Minimal in-memory schema for determine(): evidence_sources +
     source_value_extractions + evidence_population_match.
 
@@ -75,10 +76,36 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1):
         extraction_id INTEGER PRIMARY KEY AUTOINCREMENT,
         ref_id TEXT, slug TEXT, parameter_id INTEGER,
         identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
-        claim_type TEXT, claimed_value TEXT);
+        claim_type TEXT, claimed_value TEXT, figure_role TEXT, comparator TEXT);
       CREATE TABLE evidence_population_match (
         match_id TEXT, ref_id TEXT, match_grade TEXT, target_population TEXT);
+      -- 080. CREATED UNCONDITIONALLY, EVEN EMPTY, for the reason this docstring
+      -- already gives about source_slug_links: a fixture laxer than the database it
+      -- stands for is how an engine passes its tests and fails on replay. An empty
+      -- population_icf_links is also the honest default -- it is what a cell whose
+      -- identity lens has no promoted functional mapping actually looks like.
+      CREATE TABLE population_icf_links (
+        link_id INTEGER PRIMARY KEY AUTOINCREMENT, population_code TEXT, icf_code TEXT,
+        mechanism TEXT, mapping_confidence TEXT, provenance TEXT, notes TEXT,
+        created_at TEXT, created_by_session TEXT);
+      CREATE TABLE determination_gates (
+        gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
+        identity_code TEXT, verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
+        trigger_evidence_type TEXT, detail TEXT, raised_at TEXT, raised_by_session TEXT,
+        resolved_at TEXT, resolved_by_session TEXT, resolution_rationale TEXT);
+      CREATE VIEW v_open_determination_gates AS
+        SELECT g.gate_id, g.parameter_id, g.identity_code, g.verdict, g.trigger_ref_id,
+               g.trigger_tier, g.trigger_evidence_type, g.detail, g.raised_at,
+               g.raised_by_session
+          FROM determination_gates g WHERE g.resolved_at IS NULL;
     """)
+    for L in icf_links:
+        conn.execute("INSERT INTO population_icf_links (population_code, icf_code, "
+                     "mechanism, mapping_confidence, provenance) VALUES (?,?,?,?,?)", L)
+    for g in gates:
+        conn.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, "
+                     "trigger_tier, trigger_evidence_type, detail, raised_at, "
+                     "raised_by_session) VALUES (?,?,?,?,?,?,'2026-09-13','syn')", g)
     for i, s in enumerate(sources):
         ref = s.get("ref_id", f"REF-SYN-{i:03d}")
         scope = s["scope"] if "scope" in s else _default_scope(s["evidence_type"], s["tier"])
@@ -89,9 +116,17 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1):
         conn.execute("INSERT INTO source_slug_links VALUES (?, 'syn-slug')", (ref,))
         for _ in range(s.get("extractions", extractions_per_source)):
             conn.execute(
+                # figure_role='claim' because these fixtures exist to exercise the
+                # TIER/GRAIN logic, and gather_sources now returns only rows that
+                # supply a value (migration 075). A fixture row left ungraded would
+                # be filtered out before the logic under test ever ran, and every
+                # assertion here would pass over an empty governing set -- the
+                # vacuity CLAUDE.md 5(a) names, hidden inside the engine's own tests.
                 "INSERT INTO source_value_extractions "
-                "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value) "
-                "VALUES (?, 'syn-slug', ?, 'MOB', 'numerical', '1')", (ref, parameter_id))
+                "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value, "
+                " figure_role) "
+                "VALUES (?, 'syn-slug', ?, 'MOB', 'numerical', '1', 'claim')",
+                (ref, parameter_id))
     return conn
 
 
@@ -273,6 +308,158 @@ def main():
         expect("divergent without synthesis_approach rejected", False)
     except Exception:
         expect("divergent without synthesis_approach rejected", True)
+
+    # ── 8. THE DERIVATION HANDSHAKE (migration 080) — H2, H3, H4 ──────────────
+    # DR-2026-07-13, carrying an `[ENGINE-LAG 2026-08-15]` marker whose own text named
+    # what was missing. Every branch below has NO live cell to exercise it —
+    # `base_parameters` is empty after the 2026-09-13 circulation clear — which is the
+    # condition this whole file exists for.
+    MOB_LINK = [("MOB", "d450", "Biomechanical — ambulation", "high_predictive", "fda-skill")]
+    # Tier 1 is (evidence_type=clinical, scope=high_control) per schemas.tier_derivation
+    # .TIER_MAP; _default_scope() supplies the scope, and B5a makes an underivable tier
+    # non-anchoring, so naming the wrong evidence_type here would send every assertion
+    # below through `pending` and prove nothing.
+    T1 = {"tier": 1, "evidence_type": "clinical"}
+
+    # 8a. DUAL: the population path (governing evidence) meets the function path (a
+    # promoted population_icf_links row for this cell's identity lens).
+    d = determine(synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK),
+                  1, {"identity_code": "MOB"}, "syn-slug", "dual")
+    expect("H2: both paths present => dual", d["derivation_paths"] == "dual",
+           str(d["derivation_paths"]))
+    expect("H3: functional_basis is READ from population_icf_links, never typed",
+           bool(d["functional_basis"]) and "d450" in d["functional_basis"])
+    expect("H2: a dual determination owes no named-path rationale",
+           d["derivation_rationale"] is None)
+
+    # 8b. POPULATION_ONLY with no functional mapping: the rationale is OWED, and is
+    # generated rather than asked for.
+    d = determine(synth_db([dict(T1)]), 1, {"identity_code": "MOB"}, "syn-slug", "pop-only")
+    expect("H2: no icf link => population_only",
+           d["derivation_paths"] == "population_only", str(d["derivation_paths"]))
+    expect("H2: an unanchored single-path claim owes a rationale",
+           bool(d["derivation_rationale"]))
+    expect("H3: no mapping => functional_basis absent, not empty JSON",
+           d["functional_basis"] is None)
+
+    # 8c. THE DIGNITY LINE. A community-rooted claim stays fully assertable as
+    # population_only and owes NO rationale: "there is no bottom-up override of Co-1."
+    d = determine(synth_db([{"tier": 1, "evidence_type": "co1",
+                             "co1_source_type": "dpo_research"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "co1-anchored")
+    expect("H2: Co-1 community provenance => cultural_claim_anchor recorded",
+           bool(d["cultural_claim_anchor"]))
+    expect("H2: a culturally anchored claim owes no rationale",
+           d["derivation_rationale"] is None)
+    expect("H2: the anchor does not upgrade the path — still population_only",
+           d["derivation_paths"] == "population_only")
+
+    # 8d. THE ANCHOR IS CHECKED, NOT SELF-DECLARED. Same Co-1 tier, individual-grain
+    # provenance (G3) -> no anchor, so the standard rationale is owed after all. This is
+    # the criterion that stops the protection becoming a route around the mechanism.
+    d = determine(synth_db([{"tier": 1, "evidence_type": "co1",
+                             "co1_source_type": "academic_narrative"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "co1-unanchored")
+    expect("H2: Co-1 tier ALONE does not anchor the protection",
+           d["cultural_claim_anchor"] is None)
+    expect("H2: so the unanchored Co-1 claim owes the rationale",
+           bool(d["derivation_rationale"]))
+
+    # 8e. H4: an open gate CAPS a stated cell at provisional.
+    d = determine(synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK,
+                           gates=[(1, "MOB", "MISLINKED", 1, "primary_research",
+                                   "population links omit DEAF")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "gated")
+    expect("H4: an open gate forces provisional", d["state"] == "provisional", d["state"])
+    expect("H4: the gate is reported as binding", any(g["binds"] for g in d["gates"]))
+    expect("H4: a gate CAPS — the cell keeps its anchors",
+           d["tier_basis"] == "T1" and bool(d["governing_refs"]), str(d["tier_basis"]))
+
+    # 8f. THE LADDER-INVERSION GUARD: "a grey-tier CONTRADICTS cannot pin a T1-anchored
+    # cell indefinitely". The weaker gate is kept and REPORTED, never silently dropped.
+    d = determine(synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK,
+                           gates=[(1, "MOB", "CONTRADICTS", 6, "code", "a code disagrees")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "weak-gate")
+    expect("H4: a T6 gate does not bind a T1-anchored cell",
+           d["state"] == "stated", d["state"])
+    expect("H4: the non-binding gate is reported, not dropped",
+           len(d["gates"]) == 1 and not d["gates"][0]["binds"])
+
+    # 8g. A gate raised on another identity lens does not reach this cell.
+    d = determine(synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK,
+                           gates=[(1, "DEAF", "UNLINKED", 1, "primary_research", "other lens")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "other-lens")
+    expect("H4: a gate on another lens does not bind", d["state"] == "stated", d["state"])
+
+    # 8h. Resolution is a NAMED PATH, and the view is what enforces it: a resolved gate
+    # stops binding, so no cell sits at provisional with no owner of resolution.
+    c = synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK,
+                 gates=[(1, "MOB", "UNLINKED", 1, "primary_research", "d")])
+    c.execute("UPDATE determination_gates SET resolved_at='2026-09-13', "
+              "resolved_by_session='syn', resolution_rationale='adjudicated'")
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "resolved")
+    expect("H4: a resolved gate no longer binds", d["state"] == "stated", d["state"])
+
+    # 8i. THE DIGNITY LINE IS A DATABASE CONSTRAINT, not doctrine binding on authors.
+    # The LIVE DDL is read rather than restated: a CHECK copied into this file would be a
+    # second home for the rule and would keep passing after the real constraint drifted.
+    live_db = os.path.join(REPO_ROOT, "data", "guidebook.db")
+    if os.path.exists(live_db):
+        live = sqlite3.connect(f"file:{live_db}?mode=ro", uri=True)
+        ddl = live.execute("SELECT sql FROM sqlite_master WHERE type='table' "
+                           "AND name='specifications'").fetchone()[0]
+        probe = sqlite3.connect(":memory:")
+        probe.executescript(ddl)
+        # The UNIQUE row identity comes with the table, so each probe row below takes a
+        # distinct lens. Without the index the fixture would be laxer than the object it
+        # stands for, which is how a test passes over a state the database refuses.
+        for (isql,) in live.execute(
+                "SELECT sql FROM sqlite_master WHERE type='index' "
+                "AND tbl_name='specifications' AND sql IS NOT NULL"):
+            probe.executescript(isql)
+        base = {"parameter_id": 1, "state": "stated", "code_floor_only": 0,
+                "has_unverified_sources": 0, "all_sources_disqualified": 0,
+                "regulatory_stratum_only": 0}
+        seq = [0]
+
+        def try_row(**extra):
+            seq[0] += 1
+            # D-0182: at least one lens column. A row with none is refused by a DIFFERENT
+            # CHECK, and supplying the lens is what keeps the assertions below about the
+            # constraint they name.
+            row = dict(base, identity_code=f"LENS{seq[0]}", **extra)
+            cols = ", ".join(row)
+            try:
+                probe.execute(f"INSERT INTO specifications ({cols}) VALUES ("
+                              + ",".join("?" * len(row)) + ")", tuple(row.values()))
+                return None
+            except sqlite3.IntegrityError as e:
+                return str(e)
+
+        # THE POSITIVE CONTROL FIRST, and it is not ceremony. Every other assertion here
+        # expects a REFUSAL, so a fixture that refuses everything would pass them all
+        # while testing nothing -- the vacuous-gate failure CLAUDE.md 5(a) names, inside
+        # the test written to prove a constraint works. If this line fails, the fixture is
+        # wrong and the refusals below mean nothing.
+        _control = try_row()
+        expect("H2 CHECK: control — a row with no derivation_paths is accepted",
+               _control is None, str(_control))
+        expect("H2 CHECK: population_only with neither rationale nor anchor is REFUSED",
+               try_row(derivation_paths="population_only") is not None)
+        expect("H2 CHECK: population_only WITH a cultural anchor is accepted",
+               try_row(derivation_paths="population_only",
+                       cultural_claim_anchor='["REF-1"]') is None)
+        expect("H2 CHECK: population_only WITH a rationale is accepted",
+               try_row(derivation_paths="population_only",
+                       derivation_rationale="no function path") is None)
+        expect("H2 CHECK: function_only without a rationale is REFUSED",
+               try_row(derivation_paths="function_only") is not None)
+        expect("H2 CHECK: dual owes neither", try_row(derivation_paths="dual") is None)
+        expect("H2 CHECK: cultural_claim_anchor must be valid JSON",
+               try_row(derivation_paths="dual", cultural_claim_anchor="not json") is not None)
+    else:
+        expect("H2 CHECK: live DDL available to test against", False,
+               "data/guidebook.db absent")
 
     if FAILED:
         print(f"\nFAIL: {len(FAILED)} test(s): {FAILED}")

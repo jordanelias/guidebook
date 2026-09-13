@@ -140,7 +140,7 @@ class EvidenceStateRecord(BaseModel):
     # NOT validated here, because a vocabulary belongs to the schema's CHECK and
     # its FK, never to a list in Python (CLAUDE.md §4).
     identity_code: Optional[str] = None   # populations.population_code
-    icf_code: Optional[str] = None        # axes.axis_code
+    icf_code: Optional[str] = None        # base_icf.icf_code (was axes.axis_code until migration 081)
     needs_code: Optional[str] = None      # access_needs.need_code
     medical_code: Optional[str] = None    # base_taxonomy_medical.medical_code
 

@@ -59,6 +59,24 @@ import dbcore                                                      # noqa: E402
 # ValueError -- in short, so that a defect keeps the traceback a refusal does not need.
 from dbcore import Refusal                                         # noqa: E402
 
+
+def _ladder_evidence_types():
+    """The evidence-type vocabulary, from the ratified ladder (CLAUDE.md rule 8).
+
+    `schemas/tier_derivation.TIER_MAP`'s keys are the authority `add-source` already
+    validates against. Used for argparse `choices=` where the column being written
+    declares no CHECK of its own, so `dbcore.schema_choices()` has nothing to read.
+
+    Returns None rather than raising if schemas is not importable: a parser that cannot
+    be built is worse than one without a choices constraint, and the writer refuses the
+    same values at run time either way.
+    """
+    try:
+        from schemas.tier_derivation import TIER_MAP                 # noqa: E402
+        return sorted({et for et, _ in TIER_MAP})
+    except Exception:
+        return None
+
 # DB_PATH stays a module attribute because callers and tests read it. It is resolved
 # through dbcore so there is one resolution, not two.
 DB_PATH = dbcore.db_path()
@@ -458,6 +476,29 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             f"--admitted-ref-id repeated: {', '.join(dupes)}. One admission edge "
             f"per (search, source); a repeat is a miscount, not two admissions "
             f"(invariant H07).")
+    if results_admitted and not ids:
+        # THE DIRECTION THE CHECK BELOW COULD NOT SEE, closed 2026-09-13.
+        # That check is conditioned on `ids`, so it fires only when SOME edges
+        # were named. An admission count with NO --admitted-ref-id at all --
+        # the emptiest violation of the same invariant -- passed silently and
+        # wrote a row claiming admissions it has no junction edges for. Found
+        # by tripping it while logging batch 07, then measured against
+        # canonical: 8 of the 13 executions claiming admissions carry 0 edges,
+        # and one of them (exec 44) is batch 06, which the definition-of-done
+        # gate had passed COMPLIANT. This is CLAUDE.md 5(a) inside the refusal
+        # that exists to prevent it -- a guard that examined nothing.
+        #
+        # It matters because the junction is the ONE carrier (see the comment
+        # at the INSERT below): admitted_ref_ids is deliberately not written,
+        # so with no edge there is no path at all from a source back to the
+        # search that admitted it.
+        raise Refusal(
+            f"--results-admitted {results_admitted} with no --admitted-ref-id. "
+            f"The count and the edges are the same fact (invariant H05), and "
+            f"search_admissions is the only carrier of it -- admitted_ref_ids "
+            f"is deliberately not written. A count with no edge claims an "
+            f"admission nothing can trace. Name the ref_id(s) admitted, or "
+            f"record 0 and say why in --findings-note.")
     if ids and results_admitted and results_admitted != len(ids):
         raise Refusal(
             f"--results-admitted {results_admitted} disagrees with "
@@ -868,7 +909,7 @@ def main():
 
     # gaps
     p_gaps = sub.add_parser("gaps", help="Query gaps")
-    p_gaps.add_argument("--priority", choices=["P1", "P2", "P3"])
+    p_gaps.add_argument("--priority", choices=dbcore.schema_choices("gaps", "priority"))
     p_gaps.add_argument("--status")
 
     # connections
@@ -1043,6 +1084,11 @@ def main():
     p_ams.add_argument("--reason", required=True,
                        help="Why the previous text was wrong. Recorded in "
                             "metadata_integrity_detail with the replaced text.")
+    p_ams.add_argument("--tier", type=int, default=None,
+                       help="Only with --field scope, and only when the new scope "
+                            "derives a different tier: moves the tier to the one value "
+                            "the ratified ladder produces, in the same statement. The "
+                            "tier is never set on its own.")
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
@@ -1088,6 +1134,23 @@ def main():
 
     # add-parameter — the writer base_parameters shipped without. See insert_parameter
     # for the four refusals and for why --status/--merged-into are deliberately absent.
+    p_spd = sub.add_parser(
+        "set-parameter-direction",
+        help="Record which way is better for a disabled person on this parameter "
+             "(the most-accommodating rule, owner directive 2026-07-21)")
+    p_spd.add_argument("--parameter-id", type=int, required=True)
+    p_spd.add_argument("--direction", required=True,
+                       choices=dbcore.schema_choices("base_parameters",
+                                                     "accessibility_direction"),
+                       help="higher_is_better (widest minimum corridor) / "
+                            "lower_is_better (lowest maximum threshold height, gentlest "
+                            "maximum ramp slope) / contested (population-contested: no "
+                            "single value is anchored, DR-2026-07-21 section 5)")
+    p_spd.add_argument("--rationale", required=True,
+                       help="WHY, for a disabled person. Required by the schema too.")
+    p_spd.add_argument("--session", required=True)
+    p_spd.add_argument("--dry-run", action="store_true")
+
     p_ap = sub.add_parser("add-parameter",
                           help="Promote an adjudicated term into base_parameters "
                                "(THE SUBJECT of a determination)")
@@ -1096,6 +1159,96 @@ def main():
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
+
+    # add-population-icf-link / raise-determination-gate / resolve-determination-gate —
+    # the writers migration 080's two tables shipped without. See the functions for the
+    # refusals, and for the two that are DELIBERATELY ABSENT (a second link for the same
+    # population under a different mechanism, and a resolved-on-creation gate).
+    # add-icf-code / set-icf-title — the writers `base_icf` needs to grow after migration
+    # 081 seeded it. See the functions for the refusals, and for why a title may never
+    # arrive without a source.
+    p_icf = sub.add_parser(
+        "add-icf-code",
+        help="Mint one ICF code into base_icf — the registry the ICF lens points at")
+    p_icf.add_argument("--icf-code", dest="icf_code", required=True,
+                       help="b/d/e/s + digits, optionally a range (d450, b1342, "
+                            "d310–d329). `component` and `is_range` are DERIVED from it")
+    p_icf.add_argument("--title", help="the classification's own wording. Needs a source")
+    p_icf.add_argument("--title-source", dest="title_source",
+                       help="the document stating the title — weaker than a payload, and "
+                            "meant to read as weaker")
+    p_icf.add_argument("--title-payload", dest="title_payload",
+                       help="path under retrieval-log/ whose BYTES contain --title. ONLY "
+                            "this makes the title verified rather than recorded")
+    p_icf.add_argument("--notes")
+    p_icf.add_argument("--session", required=True)
+    p_icf.add_argument("--dry-run", action="store_true")
+
+    p_sit = sub.add_parser(
+        "set-icf-title",
+        help="Name a seeded ICF code (GAP-ICF-TITLES); refuses to overwrite a title")
+    p_sit.add_argument("--icf-code", dest="icf_code", required=True)
+    p_sit.add_argument("--title", required=True)
+    p_sit.add_argument("--title-source", dest="title_source")
+    p_sit.add_argument("--title-payload", dest="title_payload",
+                       help="path under retrieval-log/ whose BYTES contain --title")
+    p_sit.add_argument("--session", required=True)
+    p_sit.add_argument("--dry-run", action="store_true")
+
+    p_pil = sub.add_parser(
+        "add-population-icf-link",
+        help="Map a population to an ICF activity it has a functional deficit in (H3)")
+    p_pil.add_argument("--population", required=True,
+                       help="populations.population_code — LIVE code, not a retired one")
+    p_pil.add_argument("--icf-code", dest="icf_code", required=True,
+                       help="d### or a range d###–d###. Free text by design: there is no "
+                            "d-code registry to point at yet (080)")
+    p_pil.add_argument("--mechanism", required=True,
+                       help="HOW the deficit arises — biomechanical, sensory, autonomic, "
+                            "cognitive. The same population may reach one code by two "
+                            "mechanisms and both are real rows")
+    p_pil.add_argument("--mapping-confidence", dest="mapping_confidence", required=True,
+                       choices=dbcore.schema_choices("population_icf_links",
+                                                     "mapping_confidence"))
+    p_pil.add_argument("--provenance", required=True,
+                       help="WHERE this row came from: a ref_id, or the promotion that "
+                            "produced it. A mapping with no provenance is skill prose "
+                            "in a table")
+    p_pil.add_argument("--notes")
+    p_pil.add_argument("--session", required=True)
+    p_pil.add_argument("--dry-run", action="store_true")
+
+    p_gate = sub.add_parser(
+        "raise-determination-gate",
+        help="Raise an H4 gate: cap a cell at provisional until it is resolved")
+    p_gate.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_gate.add_argument("--identity",
+                        help="populations.population_code. OMIT to gate every lens on "
+                             "this parameter — what an audit that does not yet know "
+                             "which cells exist should do")
+    p_gate.add_argument("--verdict", required=True,
+                        choices=dbcore.schema_choices("determination_gates", "verdict"))
+    p_gate.add_argument("--trigger-ref-id", dest="trigger_ref_id",
+                        help="the source that raised it. Its tier and evidence_type are "
+                             "READ from it; passing them too is refused")
+    p_gate.add_argument("--trigger-tier", dest="trigger_tier", type=int,
+                        help="required ONLY without --trigger-ref-id: an audit-raised "
+                             "gate has no source, so the strength is asserted")
+    p_gate.add_argument("--trigger-evidence-type", dest="trigger_evidence_type",
+                        help="required ONLY without --trigger-ref-id")
+    p_gate.add_argument("--detail", required=True, help="WHAT was found")
+    p_gate.add_argument("--session", required=True)
+    p_gate.add_argument("--dry-run", action="store_true")
+
+    p_rg = sub.add_parser(
+        "resolve-determination-gate",
+        help="Close an H4 gate by the named path, with the rationale the schema requires")
+    p_rg.add_argument("--gate-id", dest="gate_id", type=int, required=True)
+    p_rg.add_argument("--rationale", required=True,
+                      help="the adjudication. A gate released with no stated reason is a "
+                           "cell let through by nobody")
+    p_rg.add_argument("--session", required=True)
+    p_rg.add_argument("--dry-run", action="store_true")
 
     # add-medical — the writer base_taxonomy_medical shipped without, and went on
     # shipping without for the two weeks between migration 065 creating the table and
@@ -1115,14 +1268,14 @@ def main():
                            "code. ONLY this sets icd11_verified_at; absent means NULL, "
                            "and NULL means not verified")
     p_md.add_argument("--identity", help="populations.population_code to cross to")
-    p_md.add_argument("--relationship", choices=["names", "member_of", "identity_first"],
+    p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
                       help="required with --identity")
     p_md.add_argument("--icf", help="axes.axis_code to cross to")
-    p_md.add_argument("--role", choices=["PRIMARY", "SECONDARY", "SITUATIONAL"],
+    p_md.add_argument("--role", choices=dbcore.schema_choices("icf_medical_map", "role"),
                       help="required with --icf. No ALIAS: a diagnosis is never an alias "
                            "of a functional demand (074)")
     p_md.add_argument("--mapping-confidence", dest="mapping_confidence",
-                      choices=["high_predictive", "moderate", "low", "minimal"],
+                      choices=dbcore.schema_choices("icf_medical_map", "mapping_confidence"),
                       help="required with --icf; functional-taxonomy §3.2")
     p_md.add_argument("--note")
     p_md.add_argument("--session", required=True)
@@ -1142,7 +1295,7 @@ def main():
     # The four lenses. At least one is required (D-0182); the CLI names them by lens
     # rather than by column so the operator is choosing a LENS, not filling a field.
     p_ax.add_argument("--identity", help="populations.population_code")
-    p_ax.add_argument("--icf", help="axes.axis_code")
+    p_ax.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     p_ax.add_argument("--needs", help="access_needs.need_code")
     p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     p_ax.add_argument("--claim-type", dest="claim_type", required=True,
@@ -1160,6 +1313,11 @@ def main():
     # cannot be tightened without a compensating migration; the writer can, in one
     # line, and this is it. The guarantee is therefore the CLI's, not the schema's:
     # a row written by any other path can still carry none.
+    p_ax.add_argument("--verbatim-exempt", dest="verbatim_exempt",
+                      help="Reason this --claim-text cannot be verified against a "
+                           "persisted artefact (a clause read from a standards PDF that "
+                           "was never retrieved as JSON/XML, say). LEDGERED onto the "
+                           "row's notes, and REFUSED if the text would have verified.")
     p_ax.add_argument("--claim-text", dest="claim_text", required=True,
                       help="REQUIRED. The source's exact phrasing of the claim, "
                            "verbatim. This is the row's only guaranteed verbatim "
@@ -1202,8 +1360,151 @@ def main():
                           help=f"end of a span, e.g. ADA 2010 §604-608")
     p_ax.add_argument("--loc-note", dest="loc_note")
     p_ax.add_argument("--notes")
+    # figure_role / comparator (migration 075) and the comparator junction they imply
+    # a row into -- extraction_relations. See insert_extraction and _write_relation_edge
+    # for the refusals; this parser only names the shape.
+    p_ax.add_argument("--figure-role", dest="figure_role", required=True,
+                      help="REQUIRED. Live vocabulary, read from "
+                           "source_value_extractions.figure_role's own CHECK "
+                           "('claim'/'finding'/'condition'/'derived'). A value with "
+                           "no role reads as a claim, and a tested slope read as a "
+                           "claim is how '1:20, 1:16, 1:12, 1:8' became a range no "
+                           "source ever asserted (extraction_id 1).")
+    p_ax.add_argument("--comparator",
+                      help="Live vocabulary, read from the column's own CHECK "
+                           "('='/'<'/'<='/'>'/'>='/'between'/'approx'). Omit when "
+                           "the figure carries no stated arithmetic relation.")
+    p_ax.add_argument("--relation", action="append", dest="relations", required=True,
+                      help="REQUIRED, repeatable -- one per comparator edge, aligned "
+                           "by position with --to-extraction/--to-label/--to-kind/"
+                           "--stated/--quote/--input-role/--cross-source below. Pass "
+                           "the literal 'none' -- alone, exactly once, no other "
+                           "relation flag -- to say the source states its figure "
+                           "ABSOLUTELY. Silence is not the same claim: five of five "
+                           "corridor-width sources in the live corpus state theirs "
+                           "against a reference they name or invoke. Otherwise live "
+                           "vocabulary, read from extraction_relations.relation's own "
+                           "CHECK.")
+    p_ax.add_argument("--to-extraction", action="append", dest="to_extractions",
+                      default=[], help="Repeatable, aligned by position with "
+                           "--relation. A row this project already holds. Pass '-' "
+                           "for an edge that uses --to-label instead.")
+    p_ax.add_argument("--to-label", action="append", dest="to_labels", default=[],
+                      help="Repeatable, aligned by position with --relation. Prose "
+                           "naming a referent this project has not captured as a "
+                           "row. Pass '-' for an edge that uses --to-extraction "
+                           "instead.")
+    p_ax.add_argument("--to-kind", action="append", dest="to_kinds", default=[],
+                      help="Repeatable, aligned by position with --relation. "
+                           "Required alongside --to-label. Live vocabulary from the "
+                           "column's own CHECK ('standard'/'own_sample'/"
+                           "'prior_source'/'unnamed').")
+    p_ax.add_argument("--stated", action="append", dest="stateds", default=[],
+                      help="Repeatable, aligned by position with --relation. Live "
+                           "vocabulary ('named'/'unnamed'/'inferred').")
+    p_ax.add_argument("--quote", action="append", dest="quotes", default=[],
+                      help="Repeatable, aligned by position with --relation. The "
+                           "source's own words for the comparison -- must occur "
+                           "byte-for-byte in a persisted retrieval artefact "
+                           "(CLAUDE.md 5(c)); a quote from memory is refused.")
+    p_ax.add_argument("--input-role", action="append", dest="input_roles", default=[],
+                      help="Repeatable, aligned by position with --relation. "
+                           "Required iff the paired --relation is derived_from "
+                           "('base'/'delta'/'factor').")
+    p_ax.add_argument("--cross-source", action="append", dest="cross_sources",
+                      default=[], help="Repeatable, aligned by position with "
+                           "--relation. A REASON, required when a condition_on/"
+                           "derived_from edge's --to-extraction was extracted from a "
+                           "DIFFERENT --ref-id than this row: a condition drawn from "
+                           "another document is a synthesis act, made explicit here.")
     p_ax.add_argument("--session", required=True)
     p_ax.add_argument("--dry-run", action="store_true")
+
+    # relate-extraction -- add ONE comparator edge to an EXISTING row (migration 075).
+    p_rx = sub.add_parser("relate-extraction",
+                          help="Add a comparator edge to an existing extraction row, "
+                               "or repoint a label edge onto a newly-extracted row")
+    p_rx.add_argument("--from", dest="from_extraction", type=int, required=True,
+                      help="source_value_extractions.extraction_id -- the figure "
+                           "this edge qualifies")
+    p_rx.add_argument("--relation", required=True,
+                      help="Live vocabulary, read from extraction_relations."
+                           "relation's own CHECK")
+    p_rx.add_argument("--to-extraction", dest="to_extraction", type=int,
+                      help="A row this project already holds")
+    p_rx.add_argument("--to-label", dest="to_label",
+                      help="Prose naming a referent this project has not captured "
+                           "as a row")
+    p_rx.add_argument("--to-kind", dest="to_kind",
+                      help="Required alongside --to-label")
+    p_rx.add_argument("--stated", help="'named'/'unnamed'/'inferred'. Required "
+                      "unless --repoint")
+    p_rx.add_argument("--quote", help="The source's own words, verbatim -- must "
+                      "occur byte-for-byte in a persisted retrieval artefact. "
+                      "Required unless --repoint")
+    p_rx.add_argument("--input-role", dest="input_role",
+                      help="Required iff --relation is derived_from")
+    p_rx.add_argument("--cross-source", dest="cross_source_reason",
+                      help="A reason, required when --relation is condition_on/"
+                           "derived_from and --to-extraction was extracted from a "
+                           "DIFFERENT ref_id than --from")
+    p_rx.add_argument("--notes")
+    p_rx.add_argument("--repoint", action="store_true",
+                      help="Given an existing --from/--relation LABEL edge, NULL "
+                           "the label and kind, point it at --to-extraction instead, "
+                           "and ledger the old label into notes. How an 'ADAAG' "
+                           "label edge becomes a real row pointer once ADA 405 is "
+                           "admitted and extracted.")
+    p_rx.add_argument("--old-label", dest="old_label",
+                      help="Disambiguates --repoint when --from/--relation matches "
+                           "more than one label edge")
+    p_rx.add_argument("--session", required=True)
+    p_rx.add_argument("--dry-run", action="store_true")
+
+    # amend-extraction -- figure_role / comparator ONLY. Everything else is a second
+    # row and a contest (D-0168), not an overwrite.
+    p_amx = sub.add_parser("amend-extraction",
+                           help="Change figure_role or comparator on an existing "
+                                "row, with a reason ledgered into notes")
+    p_amx.add_argument("--extraction-id", dest="extraction_id", type=int,
+                       required=True)
+    p_amx.add_argument("--field", required=True, choices=["figure_role", "comparator"],
+                       help="ONLY these two. A wrong claimed_value or claim_text is "
+                            "a SECOND ROW and a contest (D-0168), not an overwrite.")
+    p_amx.add_argument("--value", required=True)
+    p_amx.add_argument("--reason", required=True,
+                       help="Why. Appended to notes, never overwriting it.")
+    p_amx.add_argument("--session", required=True)
+    p_amx.add_argument("--dry-run", action="store_true")
+
+    # derive-extraction -- a figure_role='derived' row, computed base+delta, plus
+    # the two derived_from edges v_derived_figure_check re-verifies it against.
+    p_dx = sub.add_parser("derive-extraction",
+                          help="Write a computed (base+delta) extraction and the "
+                               "derived_from edges that prove it")
+    p_dx.add_argument("--ref-id", required=True)
+    p_dx.add_argument("--slug", required=True)
+    p_dx.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_dx.add_argument("--identity")
+    p_dx.add_argument("--icf")
+    p_dx.add_argument("--needs")
+    p_dx.add_argument("--medical")
+    p_dx.add_argument("--base", type=int, required=True,
+                      help="extraction_id of the base figure")
+    p_dx.add_argument("--delta", type=int, required=True,
+                      help="extraction_id of the delta figure")
+    p_dx.add_argument("--claimed-value", dest="claimed_value",
+                      help="Omit to compute base + delta")
+    p_dx.add_argument("--claimed-unit", dest="claimed_unit",
+                      help="Overrides the base figure's unit -- requires "
+                           "--conversion-note")
+    p_dx.add_argument("--comparator")
+    p_dx.add_argument("--conversion-note", dest="conversion_note",
+                      help="Required when --claimed-unit overrides the base/delta "
+                           "unit")
+    p_dx.add_argument("--claim-text", dest="claim_text", required=True)
+    p_dx.add_argument("--session", required=True)
+    p_dx.add_argument("--dry-run", action="store_true")
 
     p_adj = sub.add_parser("adjudicate-term",
                            help="Decide whether an observed phrase names our concept "
@@ -1253,7 +1554,7 @@ def main():
     # add-gap
     p_ag = sub.add_parser("add-gap", help="Insert a new gap record")
     p_ag.add_argument("--category", required=True)
-    p_ag.add_argument("--priority", required=True, choices=["P1", "P2", "P3"])
+    p_ag.add_argument("--priority", required=True, choices=dbcore.schema_choices("gaps", "priority"))
     p_ag.add_argument("--description", required=True)
     p_ag.add_argument("--session", required=True)
     p_ag.add_argument("--skill")
@@ -1273,7 +1574,7 @@ def main():
     p_ac.add_argument("--con-id", required=True)
     p_ac.add_argument("--status", default="PENDING")
     p_ac.add_argument("--confidence", required=True,
-                      choices=["HIGH", "MODERATE", "SPECULATIVE"])
+                      choices=dbcore.schema_choices("connections", "confidence"))
     p_ac.add_argument("--connection-type", required=True)
     p_ac.add_argument("--filed-in", required=True)
     p_ac.add_argument("--description", required=True)
@@ -1337,28 +1638,26 @@ def main():
     # A citation chase is `--mining-direction backward|forward|both`, which is
     # the column that already means it; the depth axis is scoping vs systematic.
     p_ls.add_argument("--depth-method", required=True,
-                      choices=["scoping", "systematic"])
+                      choices=dbcore.schema_choices("search_executions", "depth_method"))
     p_ls.add_argument("--session", required=True)
     p_ls.add_argument("--jurisdiction", help="omit for a search not scoped to one")
     p_ls.add_argument("--target-tier", type=int, choices=range(1, 7))
     p_ls.add_argument("--target-evidence-type",
-                      choices=["clinical", "sr_meta", "standard_eb", "national_fw",
-                               "code", "co1", "co2", "grey"])
+                      choices=dbcore.schema_choices("search_executions", "target_evidence_type"))
     p_ls.add_argument("--target-scope",
-                      choices=["intrinsic", "lower_control", "high_control",
-                               "national", "international"])
+                      choices=dbcore.schema_choices("search_executions", "target_scope"))
     p_ls.add_argument("--terms-used",
                       help="JSON array of the aliases actually fired — the column "
                            "is json_valid-checked, and it is 0%% populated today, "
                            "so no logged search can yet show which terms it used")
     p_ls.add_argument("--mining-direction",
-                      choices=["none", "backward", "forward", "both"])
+                      choices=dbcore.schema_choices("search_executions", "mining_direction"))
     p_ls.add_argument("--results-found", type=int, default=0)
     p_ls.add_argument("--results-screened", type=int, default=0)
     p_ls.add_argument("--results-admitted", type=int, default=0)
     p_ls.add_argument("--admitted-ref-id", action="append", dest="admitted_ref_ids",
                       help="repeatable; also written to the search_admissions junction")
-    p_ls.add_argument("--saturation-signal", choices=["none", "partial", "saturated"])
+    p_ls.add_argument("--saturation-signal", choices=dbcore.schema_choices("search_executions", "saturation_signal"))
     p_ls.add_argument("--findings-note")
     p_ls.add_argument("--harm-finding", type=int, default=0,
                       help="R7: failure/harm/inadequacy is first-class evidence")
@@ -1381,7 +1680,7 @@ def main():
     # DR-2026-05-24 supersession protocol
     p_ubpc.add_argument("--supersession-check-complete", type=int, choices=[0, 1],
                         help="DR-2026-05-24: set when all cited anchor sources have terminal supersession outcomes")
-    p_ubpc.add_argument("--closure-definition-version", choices=["v1", "v2"],
+    p_ubpc.add_argument("--closure-definition-version", choices=dbcore.schema_choices("bpc_metadata", "closure_definition_version"),
                         help="DR-2026-05-24: v2 requires citation_mining_complete=1 AND supersession_check_complete=1")
     p_ubpc.add_argument("--dry-run", action="store_true")
 
@@ -1460,8 +1759,12 @@ def main():
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
     p_as.add_argument("--verification-method",
-                      choices=["tool", "corroborated-not-retrieved",
-                               "co1-attestation", "citing-bibliography"],
+                      # 'direct-render' was missing here until 2026-09-13 even though
+                      # evidence_sources.verification_method's own CHECK admits it
+                      # (dbcore.check_values(con, "evidence_sources", "verification_method")
+                      # returns all five) -- the schema is the authority (CLAUDE.md §4),
+                      # so the CLI's list was the thing out of date, not the column.
+                      choices=dbcore.schema_choices("evidence_sources", "verification_method"),
                       help="REQUIRED when --verification-status VERIFIED. How the "
                            "standing was established (D-0157).")
     p_as.add_argument("--verified-by-tool",
@@ -1581,11 +1884,22 @@ def main():
     p_asc.add_argument("--local-ref", required=True, help="Local ref id, e.g. RAP-23")
     p_asc.add_argument("--ref", required=True, help="Global ref_id, e.g. REF-00064")
     p_asc.add_argument("--tier", required=True, type=int, choices=[1,2,3,4,5,6])
+    # THE LADDER IS THE AUTHORITY HERE, not another table's CHECK. This flag writes
+    # `supersession_check.anchor_evidence_type`, which declares NO CHECK -- so the
+    # mechanical sweep that derived the other nineteen choices lists had nothing local to
+    # read and pointed this one at `search_executions.target_evidence_type`, whose
+    # vocabulary happens to be identical. That would have made a foreign column
+    # authoritative for one it does not govern: correct today, silently wrong the day
+    # either CHECK moves. `TIER_MAP`'s keys ARE the evidence-type vocabulary (the ratified
+    # ladder `add-source` already validates against), and verified equal to that column's
+    # CHECK when this was written. The real gap -- that `anchor_evidence_type`,
+    # `evidence_sources.tier` and `evidence_sources.evidence_type` declare no CHECK at all,
+    # so CLAUDE.md rule 8's "vocabularies come from the schema" has nothing to come from --
+    # is recorded, not closed here: adding those CHECKs is a schema change against the
+    # ladder and wants its own migration.
     p_asc.add_argument("--evidence-type", required=True,
-                       choices=["clinical","co1","co2","sr_meta","standard_eb","national_fw","code","grey"])
-    p_asc.add_argument("--outcome", required=True, choices=[
-        "current_best","superseded_by","refined_by","divergent_no_supersession",
-        "co1_addition_logged","pending"])
+                       choices=_ladder_evidence_types())
+    p_asc.add_argument("--outcome", required=True, choices=dbcore.schema_choices("supersession_check", "outcome"))
     p_asc.add_argument("--superseding-refs", default="[]",
                        help="JSON array of FK ref_ids (for already-verified candidates)")
     p_asc.add_argument("--superseding-dois", default="[]",
@@ -1596,9 +1910,7 @@ def main():
                        help="Required when outcome=divergent_no_supersession; summarizes divergence")
     p_asc.add_argument("--search-strategy", required=True,
                        help="JSON object: {tool, query, date_filter, candidates_returned, candidates_reviewed}")
-    p_asc.add_argument("--check-method", required=True, choices=[
-        "pubmed_search","scholar_gateway","cochrane_direct","standards_body_direct",
-        "multilingual_research","composite"])
+    p_asc.add_argument("--check-method", required=True, choices=dbcore.schema_choices("supersession_check", "check_method"))
     p_asc.add_argument("--notes")
     p_asc.add_argument("--session", required=True)
     p_asc.add_argument("--dry-run", action="store_true")
@@ -1612,16 +1924,12 @@ def main():
                        help="JSON object: {\"strategies\":[{\"tool\":...,\"query\":...,\"candidates_returned\":N},...]}")
     p_agm.add_argument("--candidates-returned", required=True, type=int)
     p_agm.add_argument("--candidates-reviewed", required=True, type=int)
-    p_agm.add_argument("--outcome", required=True, choices=[
-        "closure_evidence_found","partial_evidence_found","null_result",
-        "gap_recategorized","deferred"])
+    p_agm.add_argument("--outcome", required=True, choices=dbcore.schema_choices("gap_mining", "outcome"))
     p_agm.add_argument("--discoveries", default="[]",
                        help="JSON array of FK ref_ids INSERTed this attempt")
     p_agm.add_argument("--candidate-dois", default="[]",
                        help="JSON array of DOIs of unverified candidates (PI rule #10 gate)")
-    p_agm.add_argument("--check-method", required=True, choices=[
-        "pubmed_cluster","scholar_gateway_lived_experience","cochrane_direct",
-        "standards_body_direct","multilingual_research","composite"])
+    p_agm.add_argument("--check-method", required=True, choices=dbcore.schema_choices("gap_mining", "check_method"))
     p_agm.add_argument("--notes")
     p_agm.add_argument("--session", required=True)
     p_agm.add_argument("--dry-run", action="store_true")
@@ -1630,8 +1938,7 @@ def main():
     p_uga = sub.add_parser("update-gap-addressability",
                             help="Set gaps.mining_addressability per DR-2026-05-26")
     p_uga.add_argument("--gap-id", required=True)
-    p_uga.add_argument("--addressability", required=True, choices=[
-        "ADDRESSABLE","NOT-ADDRESSABLE","TRIAGE-NEEDED"])
+    p_uga.add_argument("--addressability", required=True, choices=dbcore.schema_choices("gaps", "mining_addressability"))
     p_uga.add_argument("--session", required=True)
     p_uga.add_argument("--dry-run", action="store_true")
 
@@ -1639,7 +1946,7 @@ def main():
     p_ung = sub.add_parser("unmined-gaps",
                             help="Query gaps eligible for gap-driven mining")
     p_ung.add_argument("--gap-id", help="Filter to a specific gap_id (returns its state)")
-    p_ung.add_argument("--priority", choices=["P1","P2","P3"],
+    p_ung.add_argument("--priority", choices=dbcore.schema_choices("gaps", "priority"),
                        help="Filter to priority")
     p_ung.add_argument("--include-not-addressable", action="store_true",
                        help="Include NOT-ADDRESSABLE gaps in results (default: ADDRESSABLE only)")
@@ -1885,7 +2192,8 @@ def main():
 
     elif args.command == "amend-source":
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
-                           session=args.session, dry_run=args.dry_run))
+                           session=args.session, dry_run=args.dry_run,
+                           tier=args.tier))
 
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
@@ -1910,6 +2218,11 @@ def main():
             dry_run=args.dry_run,
         ))
 
+    elif args.command == "set-parameter-direction":
+        _emit(set_parameter_direction(
+            parameter_id=args.parameter_id, direction=args.direction,
+            rationale=args.rationale, session=args.session, dry_run=args.dry_run))
+
     elif args.command == "add-parameter":
         _emit(insert_parameter(
             term_id=args.term_id,
@@ -1917,6 +2230,37 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "add-icf-code":
+        _emit(insert_icf_code(
+            icf_code=args.icf_code, title=args.title, title_source=args.title_source,
+            title_payload=args.title_payload, notes=args.notes,
+            session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "set-icf-title":
+        _emit(set_icf_title(
+            icf_code=args.icf_code, title=args.title, title_source=args.title_source,
+            title_payload=args.title_payload, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "add-population-icf-link":
+        _emit(insert_population_icf_link(
+            population=args.population, icf_code=args.icf_code,
+            mechanism=args.mechanism, mapping_confidence=args.mapping_confidence,
+            provenance=args.provenance, notes=args.notes,
+            session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "raise-determination-gate":
+        _emit(raise_determination_gate(
+            parameter_id=args.parameter_id, identity=args.identity,
+            verdict=args.verdict, trigger_ref_id=args.trigger_ref_id,
+            trigger_tier=args.trigger_tier,
+            trigger_evidence_type=args.trigger_evidence_type,
+            detail=args.detail, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "resolve-determination-gate":
+        _emit(resolve_determination_gate(
+            gate_id=args.gate_id, rationale=args.rationale,
+            session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-medical":
         out = insert_medical(
@@ -1948,12 +2292,66 @@ def main():
                "root_classification_basis": args.root_classification_basis,
                "contested": args.contested, "file_anchor": args.file_anchor,
                "locator_scheme": args.locator_scheme, "loc_note": args.loc_note,
-               "notes": args.notes}
+               "notes": args.notes,
+               "figure_role": args.figure_role, "comparator": args.comparator}
         for _lvl in ("division", "part", "section", "subsection", "paragraph",
                      "clause", "subclause"):
             _ax[f"loc_{_lvl}"] = getattr(args, f"loc_{_lvl}")
             _ax[f"loc_{_lvl}_end"] = getattr(args, f"loc_{_lvl}_end")
-        _emit(insert_extraction(_ax, session=args.session, dry_run=args.dry_run))
+        _relations = _build_relation_groups(
+            args.relations, args.to_extractions, args.to_labels, args.to_kinds,
+            args.stateds, args.quotes, args.input_roles, args.cross_sources)
+        _emit(insert_extraction(_ax, session=args.session, dry_run=args.dry_run,
+                                relations=_relations,
+                                verbatim_exempt=args.verbatim_exempt))
+
+    elif args.command == "relate-extraction":
+        if args.repoint:
+            # REFUSE THE FLAGS --repoint CANNOT HONOUR, rather than dropping them.
+            # `repoint_extraction_relation` takes from/relation/to-extraction/old-label
+            # and nothing else -- it NULLs the label and kind and ledgers the old label,
+            # by definition leaving the edge's own assertion untouched. The subparser is
+            # shared with the create path, so seven of its flags were accepted here and
+            # silently discarded: an operator typing `--repoint --quote "..."` got no
+            # quote and no complaint. CLAUDE.md section 8: "an unread field, an uncalled
+            # script and an unregistered check are the same defect."
+            _ignored = [n for n, v in (
+                ("--to-label", args.to_label), ("--to-kind", args.to_kind),
+                ("--stated", args.stated), ("--quote", args.quote),
+                ("--input-role", args.input_role), ("--notes", args.notes),
+                ("--cross-source", args.cross_source_reason)) if v]
+            if _ignored:
+                raise Refusal(
+                    f"relate-extraction --repoint does not accept "
+                    f"{', '.join(_ignored)}. Repointing turns an existing LABEL edge "
+                    f"into a ROW pointer; it does not restate what the edge asserts, "
+                    f"so those values would be silently dropped. Repoint first, then "
+                    f"amend the edge if its assertion is also wrong. Nothing was "
+                    f"written.")
+            _emit(repoint_extraction_relation(
+                args.from_extraction, args.relation, args.to_extraction,
+                old_label=args.old_label, session=args.session, dry_run=args.dry_run))
+        else:
+            _emit(relate_extraction(
+                args.from_extraction, args.relation, session=args.session,
+                dry_run=args.dry_run, to_extraction=args.to_extraction,
+                to_label=args.to_label, to_kind=args.to_kind, stated=args.stated,
+                quote=args.quote, input_role=args.input_role, notes=args.notes,
+                cross_source_reason=args.cross_source_reason))
+
+    elif args.command == "amend-extraction":
+        _emit(amend_extraction(args.extraction_id, args.field, args.value,
+                               args.reason, session=args.session,
+                               dry_run=args.dry_run))
+
+    elif args.command == "derive-extraction":
+        _emit(derive_extraction(
+            ref_id=args.ref_id, slug=args.slug, parameter_id=args.parameter_id,
+            identity=args.identity, icf=args.icf, needs=args.needs,
+            medical=args.medical, base=args.base, delta=args.delta,
+            claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
+            comparator=args.comparator, conversion_note=args.conversion_note,
+            claim_text=args.claim_text, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "adjudicate-term":
         _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
@@ -2597,14 +2995,33 @@ def insert_evidence_source(data: dict, session: str,
                 f"{data['ref_id']} already exists. R9: cross-file the existing "
                 f"ref_id rather than duplicating. To amend it, ship a migration.")
         if data.get("doi"):
-            dupe = conn.execute(
-                "SELECT ref_id FROM evidence_sources WHERE doi = ? "
-                "AND COALESCE(superseded_by_ref_id,'') = ''", [data["doi"]]).fetchone()
-            if dupe:
-                raise Refusal(
-                    f"DOI {data['doi']} is already filed as {dupe[0]} (R9: "
-                    f"pre-check the DOI, cross-file rather than duplicate). "
-                    f"Link that ref_id to your slug instead.")
+            # THE DUPLICATE-IDENTITY REFUSAL, case-folded and cross-filed against BOTH
+            # ref_id homes. Measured 2026-09-13 (REF-00784's DOI): this compared
+            # `doi = ?` on the RAW argument, so a case-variant DOI -- `= upper(doi)`
+            # matches 0 rows, `lower()=lower()` matches 1 -- passed the check as a new
+            # DOI and filed a duplicate, exactly the identity split dbcore.norm_doi's
+            # own docstring warns about ("stored as two ... case-folded they match; to
+            # `=` they do not"). It also queried evidence_sources alone, so a DOI
+            # already staged in the clue store (source_locators, via add-locator) was
+            # invisible here -- and a promotion (the SAME ref_id being inserted here
+            # after add-locator staged it) must not trip on its own locator row, which
+            # is what the `ref_id<>?` exclusion is for. insert_locator (add-locator,
+            # below) already gets this right; this copies that shape rather than
+            # inventing a second one.
+            doi = dbcore.norm_doi(data["doi"])
+            for table, extra in (
+                ("evidence_sources", "AND COALESCE(superseded_by_ref_id,'') = ''"),
+                ("source_locators", ""),
+            ):
+                dupe = conn.execute(
+                    'SELECT ref_id FROM "%s" WHERE LOWER(TRIM(doi))=? AND ref_id<>? %s'
+                    % (table, extra),
+                    (doi, data["ref_id"])).fetchone()
+                if dupe:
+                    raise Refusal(
+                        f"DOI {data['doi']!r} is already filed as {dupe[0]} in {table} "
+                        f"(R9: cross-file the existing ref_id, never duplicate). Link "
+                        f"that ref_id to your slug instead. Nothing was written.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
@@ -2878,7 +3295,7 @@ _AMENDABLE = (
 
 
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
-                 session: str, dry_run: bool = False):
+                 session: str, dry_run: bool = False, tier=None):
     """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
 
     Replaces rather than appends, and that is the opposite of what resolve-candidate
@@ -2915,6 +3332,13 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
+    if tier is not None and field != "scope":
+        raise Refusal(
+            f"{ref_id}: --tier is only admissible beside --field scope. The tier is "
+            f"DERIVED from (evidence_type, scope) by the ratified ladder; it is never "
+            f"set on its own, because a tier with no derivation input is exactly the "
+            f"state B5(b) found on all nine sources and could not check.")
+    new_tier = old_tier = None
     with connect(dry_run) as conn:
         row = conn.execute(f"SELECT ref_id, {field}, metadata_integrity_detail "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
@@ -2946,24 +3370,63 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"evidence_type {_et!r}; valid: {sorted(_valid)}")
             _derived = derive_tier(_et, replacement)
             if cur["tier"] != _derived:
+                # PAIRED CHANGE, added 2026-09-12. Until now this was a flat refusal,
+                # and `tier` was reachable by NO sanctioned writer: `_AMENDABLE` omits
+                # it and `correct-source` takes bibliographic fields from a payload.
+                # So the only way to re-tier a source was hand SQL against a table the
+                # CLI can reach, which CLAUDE.md 4 calls a coverage bug to fix rather
+                # than a licence to bypass. The wrong thing that reached the guidebook
+                # without it (the 8 bar): REF-00784 stood at Tier 1 -- co-primary
+                # anchoring strength -- on a design its own abstract calls "Case
+                # series" with a "sample of convenience", recorded as wrong by the
+                # 2026-07-20 anchor sweep and unfixable for fifty-four days.
+                #
+                # The refusal is kept and NARROWED rather than removed. A tier still
+                # cannot be asserted: it can only be moved to the one value the ladder
+                # derives from the new scope, in the same statement as that scope, with
+                # a reason. There is no path here that writes a row the ladder cannot
+                # produce -- which was the original refusal's whole point.
+                if tier is None:
+                    raise Refusal(
+                        f"{ref_id}: amending scope to {replacement!r} would make the "
+                        f"stored tier {cur['tier']} contradict the ratified ladder, "
+                        f"which derives {_derived} from ({_et}, {replacement}).\n"
+                        f"Amending the scope is amending the tier. If the scope is what "
+                        f"the bytes say, re-run with --tier {_derived} and the two move "
+                        f"together; this path will not write a row the ladder cannot "
+                        f"produce.")
+                if int(tier) != _derived:
+                    raise Refusal(
+                        f"{ref_id}: --tier {tier} is not derivable from "
+                        f"({_et}, {replacement}); the ladder derives {_derived}. The "
+                        f"tier is not a free field -- correct the scope instead.")
+                new_tier, old_tier = _derived, cur["tier"]
+            elif tier is not None and int(tier) != _derived:
                 raise Refusal(
-                    f"{ref_id}: amending scope to {replacement!r} would make the stored "
-                    f"tier {cur['tier']} contradict the ratified ladder, which derives "
-                    f"{_derived} from ({_et}, {replacement}).\n"
-                    f"Amending the scope is amending the tier. Say which is wrong; this "
-                    f"path will not write a row the ladder cannot produce.")
+                    f"{ref_id}: --tier {tier} contradicts the ladder, which derives "
+                    f"{_derived} from ({_et}, {replacement}).")
         stamp = audit(session)
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
         ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
                    f"Replaced text was: {was!r}")
+        if new_tier is not None:
+            ledger += (f" || {stamp['created_at'][:10]} tier CORRECTED {old_tier} -> "
+                       f"{new_tier}, derived from (evidence_type, scope) by the "
+                       f"ratified ladder in the same statement as the scope.")
+        _sets, _vals = [f"{field}=?"], [replacement]
+        if new_tier is not None:
+            _sets.append("tier=?"); _vals.append(new_tier)
         conn.execute(
-            f"UPDATE evidence_sources SET {field}=?, metadata_integrity_status=?, "
-            f"metadata_integrity_detail=?, updated_at=?, updated_by_session=? "
-            f"WHERE ref_id=?",
-            [replacement, "CORRECTED", ledger.lstrip(" |"),
-             stamp["created_at"], stamp["created_by_session"], ref_id])
-        return {"ref_id": ref_id, "field": field, "changed": True,
-                "was_chars": len(was or ""), "now_chars": len(replacement)}
+            f"UPDATE evidence_sources SET {', '.join(_sets)}, "
+            f"metadata_integrity_status=?, metadata_integrity_detail=?, "
+            f"updated_at=?, updated_by_session=? WHERE ref_id=?",
+            _vals + ["CORRECTED", ledger.lstrip(" |"),
+                     stamp["created_at"], stamp["created_by_session"], ref_id])
+        out = {"ref_id": ref_id, "field": field, "changed": True,
+               "was_chars": len(was or ""), "now_chars": len(replacement)}
+        if new_tier is not None:
+            out["tier_was"], out["tier_now"] = old_tier, new_tier
+        return out
 
 
 def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False):
@@ -3269,13 +3732,6 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
     verified_at = None
     if icd11_payload:
         pay = Path(icd11_payload)
-        if "retrieval-log" not in pay.parts:
-            raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: must live under "
-                          f"retrieval-log/, which is the only store a later audit can diff "
-                          f"against.")
-        if not pay.exists():
-            raise Refusal(f"--icd11-payload {icd11_payload!r} REFUSED: file does not exist. "
-                          f"icd11_verified_at is set from BYTES or not at all.")
         # READ ARCHIVE MEMBERS, NOT JUST RAW BYTES. The first version of this check
         # substring-matched `pay.read_bytes()`, and the only artefact it will ever be
         # pointed at is WHO's release file — a DEFLATE-COMPRESSED ZIP, in which no code
@@ -3284,17 +3740,8 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         # and the ruling it enforces ("verified against the persisted release file at write
         # time") was unexecutable. The MB5 verification of 2026-09-11 02:47 was done by
         # hand in Python and never through this writer, while the record claimed otherwise.
-        raw = pay.read_bytes()
-        bodies = [raw.decode("utf-8", errors="replace")]
-        if zipfile.is_zipfile(pay):
-            with zipfile.ZipFile(pay) as zf:
-                for member in zf.namelist():
-                    # Bounded: a release file's members are text tabulations. A member
-                    # larger than 64 MiB is not what this check is for, and decompressing
-                    # it blindly is how a zip becomes a denial of service.
-                    info = zf.getinfo(member)
-                    if info.file_size <= 64 * 1024 * 1024:
-                        bodies.append(zf.read(member).decode("utf-8", errors="replace"))
+        bodies = _payload_bodies(pay, "--icd11-payload",
+                                 "icd11_verified_at is set from BYTES or not at all")
         missing = [c.strip() for c in icd11.split(",")
                    if c.strip() and not any(c.strip() in b for b in bodies)]
         if missing:
@@ -3336,12 +3783,22 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
                     f"--identity {identity!r} REFUSED: not a population_code. The identity "
                     f"lens is `populations`, and its live vocabulary is: {', '.join(near)}")
         if icf:
-            if not conn.execute("SELECT 1 FROM axes WHERE axis_code = ?", (icf,)).fetchone():
-                near = [r[0] for r in conn.execute("SELECT axis_code FROM axes ORDER BY axis_code")]
+            # INVERTED 2026-09-13, and the old message is worth remembering because it
+            # stated the ruled-out state as doctrine: it read "specifications.icf_code FKs
+            # to `axes`, NOT to raw ICF b/d/e codes … a raw code would be refused by the
+            # FK". That was true of the schema and is now exactly backwards. Owner ruling,
+            # same day: "'AX-' for ICF should never ever exist anywhere", then "keep the
+            # ICF lens, give it real ICF codes". Migration 081 re-pointed all six icf_code
+            # columns at `base_icf`, so a raw ICF code is the ONLY thing accepted here and
+            # an AX- demand code is what the FK now refuses.
+            if not dbcore.exists(conn, "base_icf", "icf_code", icf):
                 raise Refusal(
-                    f"--icf {icf!r} REFUSED: not an axis_code. specifications.icf_code FKs to "
-                    f"`axes`, NOT to raw ICF b/d/e codes (CLAUDE.md: a raw code would be refused "
-                    f"by the FK). Live vocabulary: {', '.join(near)}")
+                    f"--icf {icf!r} REFUSED: not in `base_icf`, the ICF registry the lens "
+                    f"points at since migration 081.\n"
+                    f"If this is a real ICF code the registry does not yet hold, mint it:\n"
+                    f"  db.py add-icf-code --icf-code {icf} --session ...\n"
+                    f"If it is an AX- demand code, it is not an ICF code and never was "
+                    f"(owner ruling 2026-09-13).")
         row = {"medical_code": code, "display_name": display_name,
                "description": description, "icd11_anchors": icd11,
                "icd11_verified_at": verified_at, "notes": note}
@@ -3460,6 +3917,449 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "dry_run": dry_run}
 
 
+def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str,
+                           session: str, dry_run: bool = False):
+    """Record which way is BETTER FOR A DISABLED PERSON on this parameter.
+
+    THE JUDGMENT THE ENGINE CANNOT MAKE, and the one it has been blocked on since
+    2026-07-21. The most-accommodating rule (evidence-architecture.md, owner directive,
+    Option A) says a determination anchors on the best-for-the-user value "read per the
+    parameter's accessibility direction -- the widest minimum corridor, but the LOWEST
+    maximum threshold height and the GENTLEST maximum ramp slope". Which of those a
+    parameter is cannot be derived from its name, its unit, or its values: it is a fact
+    about what the parameter means for a person, and somebody has to state it.
+
+    So this is CLAUDE.md rule 8's other half in one verb. The vocabulary comes from the
+    schema (`dbcore.check_declared`), the answer is a judgment, and the WARRANT is required
+    beside it -- a direction with no stated reason is an assertion about disabled people's
+    needs with nothing behind it, and the schema refuses that pair too (migration 078).
+
+    `contested` IS AN ANSWER, not a refusal to answer. DR-2026-07-21 section 5: where the
+    direction is population-contested -- flush thresholds aid wheeled mobility but remove
+    the tactile cues cane users rely on, brighter light aids low vision but harms
+    photosensitive users -- most-accommodating selection is INAPPLICABLE and no single value
+    is anchored. Recording `contested` is what stops the engine silently picking a winner
+    between two populations; leaving the field NULL would let a later session mistake "not
+    yet examined" for "nothing to see".
+
+    RE-STATING A DIRECTION IS REFUSED. The direction conditions every determination already
+    computed for the parameter, so changing it silently re-points those determinations at a
+    rule they were not computed under. Retire the parameter or open a decision; do not
+    overwrite.
+    """
+    if not (rationale or "").strip():
+        raise Refusal(
+            "--rationale is required: a direction is a claim about what serves disabled "
+            "people on this parameter, and one with no stated reason cannot be reviewed, "
+            "disputed or superseded. The schema refuses the pair too (migration 078).")
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT p.parameter_id, t.canonical_en, p.accessibility_direction, "
+            "p.direction_rationale FROM base_parameters p JOIN terms t "
+            "ON t.term_id = p.term_id WHERE p.parameter_id = ?", [parameter_id]).fetchone()
+        if row is None:
+            raise Refusal(
+                f"parameter_id {parameter_id}: no such parameter. Mint one from a term "
+                f"first: db.py add-parameter --term-id TERM-NNN --session ...")
+        if row["accessibility_direction"]:
+            raise Refusal(
+                f"parameter {parameter_id} ({row['canonical_en']!r}) already carries "
+                f"direction {row['accessibility_direction']!r}: "
+                f"{row['direction_rationale']!r}.\nA direction conditions every "
+                f"determination computed for the parameter, so overwriting it silently "
+                f"re-points those at a rule they were not computed under. If it is wrong, "
+                f"that is a decision (governance/decision-protocol.md), not an amendment.")
+        dbcore.check_declared(conn, "base_parameters", "accessibility_direction",
+                              direction, "set-parameter-direction")
+        stamp = dbcore.stamp_for(conn, "base_parameters", session)
+        sets = ["accessibility_direction = ?", "direction_rationale = ?"]
+        vals = [direction, rationale.strip()]
+        for k, v in stamp.items():
+            if k.startswith("updated"):
+                sets.append(f"{k} = ?")
+                vals.append(v)
+        conn.execute("UPDATE base_parameters SET " + ", ".join(sets)
+                     + " WHERE parameter_id = ?", vals + [parameter_id])
+        return {"parameter_id": parameter_id, "canonical_en": row["canonical_en"],
+                "accessibility_direction": direction, "direction_rationale": rationale.strip(),
+                "dry_run": dry_run}
+
+
+# --- H3/H4: the two tables migration 080 created ---------------------------------
+# Both shipped with no writer, which is the defect `insert_parameter` and
+# `insert_medical` were each written to close on their own table: a capturable table
+# with nothing that can write it is unreachable through the sanctioned path, and the
+# next session reaches for hand SQL (CLAUDE.md section 4 -- "if you find one it cannot,
+# that is a coverage bug to fix, not a licence to bypass").
+
+#: The shape an ICF code takes, kept ONLY to tell a new mint from a typo in
+#: `add-icf-code`. It is no longer the membership test anywhere: migration 081 created
+#: `base_icf` and re-pointed all six `icf_code` columns at it, so membership is the FK's
+#: job now -- which is exactly what the block this replaced promised would happen ("when
+#: an ICF registry lands, this becomes an FK and the guard goes").
+#:
+#: Owner rulings 2026-09-13, both: "'AX-' for ICF should never ever exist anywhere", and
+#: then, on the fork that opened, "keep the ICF lens, give it real ICF codes".
+_ICF_CODE_RE = re.compile(r"^[bdes]\d{3}[0-9]*(?:\s*[-\u2013\u2014]\s*[bdes]\d{3}[0-9]*)?$")
+
+
+def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str,
+                               mapping_confidence: str, provenance: str,
+                               notes: str = None, session: str, dry_run: bool = False):
+    """Record that a population has a functional deficit in an ICF activity (H3).
+
+    THE TABLE IS SIMULTANEOUSLY THE FORWARD MAP AND THE SUBSTRATE FOR REVERSE-MAPPING,
+    which is doctrine's argument for it: reverse-mapping "is what would have flagged
+    DEAF's absence from the corridor item's population links MECHANICALLY rather than
+    by eye". A forward map with no writer can only ever hold what one migration put
+    there, so the reverse direction would go stale the first time the taxonomy moved.
+
+    WHAT IT REFUSES:
+
+    * A population that is not live. The FK says `FOREIGN KEY constraint failed`, which
+      names neither the code nor the fix -- and the codes that fail here are usually
+      RETIRED ones (the pre-DR-2026-07-23 set the functional-deficit-auditor taught for
+      fourteen months), so the refusal points at the crosswalk rather than at the FK.
+    * An `icf_code` that is not in `base_icf`. REWRITTEN 2026-09-13: this was a shape
+      guard, because at the time there was no ICF registry to point at and free text is
+      where a code from another lens gets pasted by accident. Migration 081 created the
+      registry and gave this column its FK, so membership is now a real check rather than
+      a plausibility one -- and the refusal names the mint verb, because a bare
+      `FOREIGN KEY constraint failed` names neither the code nor the fix.
+    * An empty `provenance`. The column is NOT NULL, so the database catches a missing
+      one -- but not `''`, and a mapping with no provenance is the skill prose again,
+      in a table. That is the exact state migration 080 moved the mapping OUT of.
+    * A duplicate (population, code, mechanism). UNIQUE catches it; this says which row
+      already holds it, because the fix is to read that row rather than add another.
+
+    DELIBERATELY NOT REFUSED, and it must stay that way: a population that already has
+    links, and a (population, icf_code) pair that already exists under a DIFFERENT
+    mechanism. SCI reaches its codes "biomechanically + autonomically" and both are
+    real; the UNIQUE is on the triple for exactly that reason, and collapsing them
+    would lose the distinction the mechanism column exists for.
+    """
+    population = (population or "").strip()
+    icf_code = (icf_code or "").strip()
+    mechanism = (mechanism or "").strip()
+    provenance = (provenance or "").strip()
+    if not provenance:
+        raise Refusal(
+            "--provenance is required and may not be blank. A mapping with no "
+            "provenance is skill prose in a table, which is the state migration 080 "
+            "moved this mapping out of. Name the source: a ref_id for a row derived "
+            "from a study, or the promotion that produced it.")
+    with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "base_icf", "icf_code", icf_code):
+            raise Refusal(
+                f"{icf_code!r} is not in `base_icf`, the ICF registry this column has FK'd "
+                f"into since migration 081 -- so the bare FK error would say only "
+                f"'FOREIGN KEY constraint failed', which names neither the code nor the "
+                f"fix.\n"
+                f"If it is a real ICF code the registry does not hold yet, mint it first:\n"
+                f"  db.py add-icf-code --icf-code {icf_code} --session ...\n"
+                f"If it is an AX- demand code, it is not an ICF code and never was (owner "
+                f"ruling 2026-09-13).")
+        if not dbcore.exists(conn, "populations", "population_code", population):
+            live = sorted(r[0] for r in
+                          conn.execute("SELECT population_code FROM populations"))
+            raise Refusal(
+                f"{population!r} is not a live population code. The taxonomy was "
+                f"replaced by DR-2026-07-23; a retired code (UPL, VIS, OFS, ABI, ASD, "
+                f"PCS, NEU, DBL, ...) must be crosswalked before it can be written.\n"
+                f"Live codes: {', '.join(live)}")
+        dbcore.check_declared(conn, "population_icf_links", "mapping_confidence",
+                              mapping_confidence, "add-population-icf-link")
+        clash = conn.execute(
+            "SELECT link_id, provenance FROM population_icf_links "
+            "WHERE population_code=? AND icf_code=? AND mechanism=?",
+            [population, icf_code, mechanism]).fetchone()
+        if clash:
+            raise Refusal(
+                f"link {clash['link_id']} already maps {population} -> {icf_code} by "
+                f"this mechanism (provenance {clash['provenance']!r}). One row per "
+                f"(population, code, mechanism) -- a second is the dual home rule 5 "
+                f"forbids. A DIFFERENT mechanism is a different row and is allowed.")
+        row = {"population_code": population, "icf_code": icf_code,
+               "mechanism": mechanism, "mapping_confidence": mapping_confidence,
+               "provenance": provenance, "notes": notes}
+        row.update(dbcore.stamp_for(conn, "population_icf_links", session))
+        cur = conn.execute(f"INSERT INTO population_icf_links ({','.join(row)}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"link_id": cur.lastrowid, "population_code": population,
+                "icf_code": icf_code, "mechanism": mechanism,
+                "mapping_confidence": mapping_confidence, "dry_run": dry_run}
+
+
+def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = None,
+                    title_payload: str = None, notes: str = None, session: str,
+                    dry_run: bool = False):
+    """Mint one ICF code into `base_icf` — the registry the ICF lens points at.
+
+    OWNER RULING 2026-09-13: "keep the ICF lens, give it real ICF codes", answering the
+    fork opened by the same day's "'AX-' for ICF should never ever exist anywhere".
+    Migration 081 built the registry and re-pointed all six `icf_code` columns at it; this
+    is how it grows afterwards.
+
+    WHAT IS DERIVED RATHER THAN ASKED FOR (CLAUDE.md rule 8). `component` is the code's
+    first letter and `is_range` is whether it spans two codes. Both are computable from
+    the code itself, so asking for them would be inviting a row whose component disagrees
+    with its own identifier.
+
+    THE TITLE IS THE PART THAT CANNOT BE TYPED FROM MEMORY, and this is CLAUDE.md 5(c)
+    before the fact rather than after. On 2026-08-19 five sources were stored with invented
+    co-authors and six gates passed them, because each asked whether a field was POPULATED
+    and never whether it was TRUE. An ICF title recalled rather than read is the same act
+    in a smaller field. So `title` may only arrive with a `title_source`, which the schema
+    enforces too — and when that source is a persisted payload, the title is checked
+    against its BYTES here, the same way `add-medical --icd11-payload` checks an ICD-11
+    anchor. A title with no payload is accepted and records its document, which is weaker
+    and is meant to read as weaker.
+
+    A CODE WITH NO TITLE IS FINE and is the honest default: 43 of the 72 seeded codes are
+    in that state because nothing in this repository names them (GAP-ICF-TITLES). CLAUDE.md
+    section 6 wants codes AND names, so an untitled code is a gap — but a gap is not a lie,
+    and `set-icf-title` is how it closes.
+    """
+    icf_code = (icf_code or "").strip()
+    if not _ICF_CODE_RE.match(icf_code):
+        raise Refusal(
+            f"{icf_code!r} is not shaped like an ICF code. Expected b/d/e/s followed by "
+            f"digits, optionally a range (e.g. 'd450', 'b1342', 'd310\u2013d329').\n"
+            f"If this is an AX- demand code: it is not an ICF code and never was (owner "
+            f"ruling 2026-09-13), and `base_icf`'s own CHECK refuses the shape too.")
+    if title and not (title_source or title_payload):
+        raise Refusal(
+            "--title requires --title-source (or --title-payload). A title with no source "
+            "is a title from memory, which is the 2026-08-19 fabrication in a smaller "
+            "field. The schema refuses the pair as well.")
+    with connect(dry_run) as conn:
+        clash = conn.execute("SELECT icf_code, title FROM base_icf WHERE icf_code=?",
+                             [icf_code]).fetchone()
+        if clash:
+            raise Refusal(
+                f"{icf_code} is already in base_icf (title {clash['title']!r}). One row per "
+                f"code — a second is the dual home rule 5 forbids. To add or correct a "
+                f"title, use `db.py set-icf-title`.")
+        if title and title_payload:
+            bodies = _payload_bodies(title_payload, "--title-payload",
+                                     "a title is verified from BYTES or it records a "
+                                     "document instead")
+            if not any(title in b for b in bodies):
+                raise Refusal(
+                    f"--title {title!r} does not appear in {title_payload}. The payload is "
+                    f"what makes this a verified title rather than a remembered one; if the "
+                    f"wording differs, use the payload's wording.")
+            title_source = f"payload:{title_payload}"
+        row = {"icf_code": icf_code, "component": icf_code[0],
+               "is_range": 1 if re.search(r"[-\u2013\u2014]", icf_code) else 0,
+               "title": title, "title_source": title_source, "notes": notes}
+        row.update(dbcore.stamp_for(conn, "base_icf", session))
+        conn.execute(f"INSERT INTO base_icf ({','.join(row)}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"icf_code": icf_code, "component": icf_code[0],
+                "is_range": row["is_range"], "title": title,
+                "title_source": title_source,
+                "title_verified": bool(title and title_payload), "dry_run": dry_run}
+
+
+def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
+                  title_payload: str = None, session: str, dry_run: bool = False):
+    """Give a seeded ICF code the name CLAUDE.md section 6 requires it to be used with.
+
+    GAP-ICF-TITLES is the subject: 43 of the 72 codes migration 081 seeded carry no title,
+    because nothing in this repository states one and supplying it from memory is the act
+    CLAUDE.md 5(c) forbids. This is the named path for closing that — retrieve the titles,
+    persist the payload under `retrieval-log/`, and write them from the bytes.
+
+    OVERWRITING A TITLE IS REFUSED. A title is a fact about an external classification, not
+    a field to keep tidy; replacing one silently would erase whoever established it and the
+    payload they established it from. A correction is a different act and owes its own
+    reason.
+    """
+    icf_code = (icf_code or "").strip()
+    title = (title or "").strip()
+    if not title:
+        raise Refusal("--title is required and may not be blank.")
+    if not (title_source or title_payload):
+        raise Refusal(
+            "--title-source or --title-payload is required. A title with no source is a "
+            "title from memory; the schema refuses the pair too.")
+    with connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT icf_code, title, title_source FROM base_icf WHERE icf_code=?",
+            [icf_code]).fetchone()
+        if row is None:
+            raise Refusal(
+                f"{icf_code!r} is not in base_icf. Mint it first:\n"
+                f"  db.py add-icf-code --icf-code {icf_code} --session ...")
+        if row["title"]:
+            raise Refusal(
+                f"{icf_code} is already titled {row['title']!r} (source "
+                f"{row['title_source']!r}). Overwriting would erase whoever established it "
+                f"and the payload they established it from. A correction is a different "
+                f"act and owes its own reason.")
+        if title_payload:
+            bodies = _payload_bodies(title_payload, "--title-payload",
+                                     "a title is verified from BYTES or it records a "
+                                     "document instead")
+            if not any(title in b for b in bodies):
+                raise Refusal(
+                    f"--title {title!r} does not appear in {title_payload}. If the "
+                    f"classification words it differently, use its wording.")
+            title_source = f"payload:{title_payload}"
+        conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?",
+                     [title, title_source, icf_code])
+        return {"icf_code": icf_code, "title": title, "title_source": title_source,
+                "title_verified": bool(title_payload), "dry_run": dry_run}
+
+
+def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
+                             identity: str = None, trigger_ref_id: str = None,
+                             trigger_tier: int = None, trigger_evidence_type: str = None,
+                             session: str, dry_run: bool = False):
+    """Raise an H4 gate: a finding that caps a cell at `provisional` until resolved.
+
+    THE GATE IS A ROW, NOT A FLAG, and that is the first of doctrine's three
+    disciplines: "the gate binds ONLY WHERE A CHECK HAS ACTUALLY RUN -- no silent
+    pretence of coverage." Zero rows means zero cells gated, which is the correct
+    reading of "no check has run" rather than a gap.
+
+    THE STRENGTH OF THE TRIGGER IS DERIVED WHEREVER IT CAN BE (CLAUDE.md rule 8), and
+    this is the second discipline: "gate rows carry the tier and type of the triggering
+    source, so a grey-tier CONTRADICTS cannot pin a T1-anchored cell indefinitely and
+    thereby INVERT THE LADDER." A tier that an operator typed is a tier that can be
+    typed wrong, and typing it wrong is precisely how the ladder gets inverted. So:
+
+    * with --trigger-ref-id, tier and evidence_type are READ from that source and
+      --trigger-tier / --trigger-evidence-type are REFUSED. The pointer supplies them;
+      passing them too would be a second home for a fact the source already states
+      (rule 5), and the same refusal `insert_economics_entry` makes for --year/--journal
+      on an entry that carries a ref_id.
+    * without one, both are REQUIRED. An audit-raised gate (an FDA UNLINKED on a
+      structural absence) has no source to read, so the operator is stating the strength
+      of their own finding -- explicitly, where a reader can see it was asserted rather
+      than derived.
+
+    RESOLUTION IS A SEPARATE VERB, deliberately. `resolve-determination-gate` exists
+    because resolution "is a NAMED PATH -- evidence-auditor adjudication recorded on the
+    cell together with its rationale -- so no cell sits at `provisional` with no owner of
+    resolution". Letting this verb create an already-resolved row would permit a gate
+    that never bound anything, which the table's own CHECK cannot catch because the shape
+    is legal -- the same reason `add-parameter` takes no --status.
+    """
+    detail = (detail or "").strip()
+    if not detail:
+        raise Refusal(
+            "--detail is required and may not be blank. A gate that cannot say what it "
+            "found is a cell pinned at provisional for no stated reason, which is the "
+            "deadlock the resolution discipline exists to prevent.")
+    if trigger_ref_id and (trigger_tier is not None or trigger_evidence_type):
+        raise Refusal(
+            "--trigger-tier / --trigger-evidence-type are refused alongside "
+            "--trigger-ref-id. The source states both, and this row POINTS at the "
+            "source (rule 5); they are read from it. A typed tier is a tier that can be "
+            "typed wrong, and a wrong one inverts the ladder the gate exists to protect.")
+    if not trigger_ref_id and (trigger_tier is None or not trigger_evidence_type):
+        raise Refusal(
+            "a gate with no --trigger-ref-id must state --trigger-tier and "
+            "--trigger-evidence-type. Doctrine requires every gate to carry the strength "
+            "of what raised it, so a grey-tier finding cannot pin a T1-anchored cell. A "
+            "gate that cannot say how strong its trigger was inverts the ladder by "
+            "omission.")
+    with connect(dry_run) as conn:
+        param = conn.execute(
+            "SELECT parameter_id, status, merged_into FROM base_parameters "
+            "WHERE parameter_id=?", [parameter_id]).fetchone()
+        if param is None:
+            raise Refusal(
+                f"parameter_id {parameter_id}: no such parameter. Mint one from a term:\n"
+                f"  db.py add-parameter --term-id TERM-NNN --session ...")
+        if param["status"] != "active":
+            raise Refusal(
+                f"parameter {parameter_id} is {param['status']}"
+                + (f" (merged into {param['merged_into']})" if param["merged_into"] else "")
+                + ". Gating a parameter that no longer stands on its own pins cells "
+                  "nobody will look at.")
+        if identity and not dbcore.exists(conn, "populations", "population_code", identity):
+            raise Refusal(
+                f"{identity!r} is not a live population code. Omit --identity to raise "
+                f"the gate against EVERY lens on this parameter, which is what an audit "
+                f"that does not yet know which cells exist should do.")
+        dbcore.check_declared(conn, "determination_gates", "verdict", verdict,
+                              "raise-determination-gate")
+        if trigger_ref_id:
+            src = conn.execute(
+                "SELECT ref_id, tier, evidence_type FROM evidence_sources WHERE ref_id=?",
+                [trigger_ref_id]).fetchone()
+            if src is None:
+                raise Refusal(f"{trigger_ref_id!r}: no such source.")
+            if src["tier"] is None or not src["evidence_type"]:
+                raise Refusal(
+                    f"{trigger_ref_id} carries tier={src['tier']!r} "
+                    f"evidence_type={src['evidence_type']!r}. A gate reads its strength "
+                    f"from the source, and this source does not state it -- so the gate "
+                    f"cannot be raised on it without asserting a strength nobody "
+                    f"established. Fix the source, or raise the gate without a ref_id and "
+                    f"state the strength as your own finding.")
+            trigger_tier, trigger_evidence_type = src["tier"], src["evidence_type"]
+        row = {"parameter_id": parameter_id, "identity_code": identity,
+               "verdict": verdict, "trigger_ref_id": trigger_ref_id,
+               "trigger_tier": trigger_tier,
+               "trigger_evidence_type": trigger_evidence_type, "detail": detail,
+               "raised_at": dbcore.now(), "raised_by_session": session}
+        cur = conn.execute(f"INSERT INTO determination_gates ({','.join(row)}) "
+                           f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"gate_id": cur.lastrowid, "parameter_id": parameter_id,
+                "identity_code": identity, "verdict": verdict,
+                "trigger_tier": trigger_tier,
+                "trigger_evidence_type": trigger_evidence_type,
+                "trigger_strength_source": ("read from " + trigger_ref_id
+                                            if trigger_ref_id else "asserted by operator"),
+                "dry_run": dry_run}
+
+
+def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
+                               dry_run: bool = False):
+    """Close an H4 gate by the named path, so the cell it pins has an owner.
+
+    The third discipline, and the one that stops a gate becoming a deadlock: "resolution
+    is a NAMED PATH -- evidence-auditor adjudication recorded on the cell together with
+    its rationale -- so no cell sits at `provisional` with no owner of resolution." The
+    schema already refuses a partial resolution (resolved_at, resolved_by_session and
+    resolution_rationale arrive together or not at all); this verb is what makes the
+    complete one reachable without hand SQL.
+
+    RE-RESOLVING IS REFUSED. A resolved gate that is resolved again would overwrite the
+    rationale of whoever actually adjudicated it, and the history of a cell's release is
+    the only evidence that the release was considered. Reopening is a different act and
+    owes its own verb and its own reason.
+    """
+    rationale = (rationale or "").strip()
+    if not rationale:
+        raise Refusal(
+            "--rationale is required and may not be blank. Resolution is a NAMED PATH; a "
+            "gate released with no stated reason is a cell let through by nobody.")
+    with connect(dry_run) as conn:
+        g = conn.execute(
+            "SELECT gate_id, parameter_id, verdict, resolved_at, resolved_by_session "
+            "FROM determination_gates WHERE gate_id=?", [gate_id]).fetchone()
+        if g is None:
+            raise Refusal(f"gate_id {gate_id}: no such gate.")
+        if g["resolved_at"]:
+            raise Refusal(
+                f"gate {gate_id} was already resolved at {g['resolved_at']} by "
+                f"{g['resolved_by_session']}. Re-resolving would overwrite the rationale "
+                f"of whoever adjudicated it, and that record is the only evidence the "
+                f"release was considered. Reopening is a different act.")
+        conn.execute(
+            "UPDATE determination_gates SET resolved_at=?, resolved_by_session=?, "
+            "resolution_rationale=? WHERE gate_id=?",
+            [dbcore.now(), session, rationale, gate_id])
+        return {"gate_id": gate_id, "parameter_id": g["parameter_id"],
+                "verdict": g["verdict"], "resolved_by_session": session,
+                "dry_run": dry_run}
+
+
 # The four lenses (owner 2026-08-28; CHECK relaxed to "at least one" by D-0182).
 # Each column, the base registry its real FK points into, and that registry's key.
 # DERIVED FROM THE SCHEMA, not a vocabulary restated in code: the registries ARE the
@@ -3468,7 +4368,13 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
 # hand-off needs a translation nobody wrote.
 _LENS_COLUMNS = {
     "identity_code": ("populations", "population_code"),
-    "icf_code": ("axes", "axis_code"),
+    # RE-POINTED 2026-09-13 by owner ruling ("keep the ICF lens, give it real ICF
+    # codes"), executed by migration 081. It read ("axes", "axis_code") until then, so
+    # the column called `icf_code` resolved to an AX- functional-demand code -- which
+    # the same day's ruling bans outright: "'AX-' for ICF should never ever exist
+    # anywhere". The demand layer keeps its rows and its maps; it is simply no longer
+    # a lens.
+    "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
@@ -3483,10 +4389,381 @@ _LENS_COLUMNS = {
 _SVE_VOCAB_COLUMNS = (
     "claim_type", "extraction_method", "extraction_status",
     "root_type", "measurement_paradigm", "device_class",
+    # ADDED 2026-09-13 with migration 075's writer. Read the same way as the six
+    # above -- from the column's own CHECK, never a list restated in code.
+    "figure_role", "comparator",
 )
 
+# The two relations that require a ROW referent, never a label -- the table's own
+# CHECK (`relation NOT IN ('condition_on','derived_from') OR to_extraction_id IS NOT
+# NULL`), mirrored here so the CLI can name the reason instead of letting SQLite say
+# "CHECK constraint failed".
+_ROW_ONLY_RELATIONS = ("condition_on", "derived_from")
 
-def insert_extraction(data: dict, session: str, dry_run: bool = False):
+
+def _fmt_num(x: float) -> str:
+    """Render a float back to a plain value string, without a forced decimal tail."""
+    return str(int(x)) if x == int(x) else repr(x)
+
+
+def _payload_bodies(pay, flag: str, why: str):
+    """Every readable text body inside a persisted payload, for a bytes-not-memory check.
+
+    FACTORED OUT 2026-09-13 so `set-icf-title` verifies an ICF title exactly the way
+    `add-medical --icd11-payload` verifies an ICD-11 anchor. Two copies of a
+    bytes-verification would be two places for the archive-member bug below to come back.
+
+    READS ARCHIVE MEMBERS, NOT JUST RAW BYTES, and that is the whole reason this is more
+    than `read_bytes()`. The first version of the ICD-11 check substring-matched the raw
+    file, and the only artefact it will ever be pointed at is WHO's release file -- a
+    DEFLATE-COMPRESSED ZIP in which no code occurs literally. Measured: b"MB56" in the raw
+    zip -> False; in the decompressed member -> True. So the check refused the very payload
+    that proved the anchor, and the ruling it enforced was unexecutable.
+    """
+    pay = Path(pay)
+    if "retrieval-log" not in pay.parts:
+        raise Refusal(f"{flag} {str(pay)!r} REFUSED: must live under retrieval-log/, which "
+                      f"is the only store a later audit can diff against.")
+    if not pay.exists():
+        raise Refusal(f"{flag} {str(pay)!r} REFUSED: file does not exist. {why}.")
+    bodies = [pay.read_bytes().decode("utf-8", errors="replace")]
+    if zipfile.is_zipfile(pay):
+        with zipfile.ZipFile(pay) as zf:
+            for member in zf.namelist():
+                # Bounded: a release file's members are text tabulations. A member larger
+                # than 64 MiB is not what this check is for, and decompressing it blindly
+                # is how a zip becomes a denial of service.
+                if zf.getinfo(member).file_size <= 64 * 1024 * 1024:
+                    bodies.append(zf.read(member).decode("utf-8", errors="replace"))
+    return bodies
+
+
+def _verbatim(text: str, ref_id: str = None):
+    """Does `text` occur in a persisted retrieval artefact? (found, detail).
+
+    A THIN WRAPPER, AND THAT IS THE POINT. The implementation lived here and walked the
+    manifest itself, which put the byte-matching rule in the write path -- a writer that
+    verifies itself verifies nothing, which is the reason `retrieval_log.py` is
+    deliberately outside that path in the first place (its own module docstring says so).
+    It now lives beside the bytes as `retrieval_log.quote_in_artefacts`, where
+    `--verify-authors` already lives, and where the normalisation it needs can be reused.
+
+    THE OLD IMPLEMENTATION WAS A RAW BYTE SUBSTRING and was anti-correlated with
+    evidential quality: measured across the ten committed extractions, it rejected two
+    genuine quotes -- one because the payload is JATS XML and inline markup splits every
+    sentence citing a figure, one because the publisher wrote a space before a full stop
+    -- while accepting a bibliographic TITLE lifted from an esummary record. The shared
+    function normalises to letters and digits, so a quote must still be a quote but no
+    longer has to survive the publisher's typography.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                          # noqa: E402
+    return retrieval_log.quote_in_artefacts(text, ref_id=ref_id)
+
+
+def _require_verbatim(text: str, ref_id: str, field: str, context: str,
+                      exempt_reason: str = None, claimed_value: str = None):
+    """Refuse a quoted field that is not in the bytes -- ONE RULE, EVERY QUOTED COLUMN.
+
+    The verifier had exactly one call site before 2026-09-13: `extraction_relations.quote`,
+    on comparator edges. Meanwhile `insert_extraction` wrote `claim_text` -- the sentence a
+    determination actually rests on -- behind nothing but a not-blank test. So the strongest
+    guarantee in the writer was attached to the weakest column, and `add-extraction` would
+    accept `--claim-text "the study found corridors of 1200mm"` typed from memory while
+    refusing a `--quote` beside it. Demonstrated during the audit: claimed_value 9999 with
+    an invented claim_text landed and governed a determination.
+
+    IT ALSO MAKES `derive-extraction` HONEST. That verb reasons from the premise that "the
+    base and delta rows' own claim_text values already passed that check when those rows
+    were written". They had not -- nothing verified claim_text -- so the verb succeeded only
+    when a base row's text HAPPENED to be in a payload. Now the premise is true.
+
+    THE NUMBER MUST BE IN THE QUOTE. A numerical claim whose own digits do not appear in the
+    verified sentence is a number attached to a quote rather than read from one, which is
+    exactly how `1525` and `9999` reached the table during the audit -- both with quotes
+    that verified, because the quote was a TITLE and the title was genuinely in the payload.
+
+    EXEMPTION IS EXPLICIT AND LEDGERED, never silent. A clause read from a standards PDF
+    that was never persisted as an artefact is a real case; "I could not be bothered to
+    retrieve it" is not, and the two are indistinguishable unless the operator writes the
+    reason down. An exemption is refused when the text WOULD have verified, so it cannot
+    become the lazy default.
+    """
+    if exempt_reason:
+        found, where = _verbatim(text, ref_id)
+        if found:
+            raise Refusal(
+                f"{context}: --verbatim-exempt was given, but {field} DOES occur in a "
+                f"persisted artefact ({where}). Drop the exemption -- it is for text no "
+                f"retrieval artefact can carry, not for text that verifies.")
+        return f"[VERBATIM-EXEMPT: {exempt_reason}]"
+
+    found, where = _verbatim(text, ref_id)
+    if not found:
+        raise Refusal(
+            f"{context}: {field} does not occur in any persisted retrieval artefact "
+            f"({where}). Either the payload behind it was never retrieved and persisted "
+            f"(R10 -- retrieve it first, retrieval_log.fetch()), or it was typed from "
+            f"memory rather than read off the bytes (CLAUDE.md 5(c)). If no artefact can "
+            f"carry this text -- a clause from a standards PDF, say -- pass "
+            f"--verbatim-exempt with the reason, which is ledgered on the row. "
+            f"Nothing was written.")
+
+    if claimed_value:
+        digits = re.findall(r"\d+", str(claimed_value))
+        if digits:
+            body = _verbatim_norm(text)
+            missing = [d for d in digits if d not in body]
+            if missing:
+                raise Refusal(
+                    f"{context}: claimed_value {claimed_value!r} contains {missing}, which "
+                    f"do not appear in the verified {field}. A number attached to a quote "
+                    f"rather than read from one is the 2026-08-19 fabrication shape with a "
+                    f"figure in place of an author -- and it is how a title, which verifies "
+                    f"because titles really are in the payload, came to carry an invented "
+                    f"measurement. Quote the sentence that states the value. Nothing was "
+                    f"written.")
+    return None
+
+
+def _verbatim_norm(text):
+    """The shared normalisation, for the digit test. One home (retrieval_log)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                          # noqa: E402
+    return retrieval_log.normalise_quote(text)
+
+
+def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
+                         from_figure_role, from_comparator,
+                         relation: str, session: str, context: str,
+                         to_extraction: int = None, to_label: str = None,
+                         to_kind: str = None, stated: str = None, quote: str = None,
+                         input_role: str = None, notes: str = None,
+                         cross_source_reason: str = None) -> int:
+    """Validate and INSERT one `extraction_relations` row. The one place every
+    refusal in this junction's CHECK constraints is restated as a sentence — shared
+    by `add-extraction`, `relate-extraction` and `derive-extraction` so there is one
+    copy of this logic, not three (CLAUDE.md rule 5 applies to a validation rule as
+    much as to a stored fact).
+
+    `from_figure_role` / `from_comparator` are passed in rather than re-queried:
+    `insert_extraction` calls this AFTER inserting the row it qualifies but before
+    that row is necessarily visible to a fresh SELECT in every SQLite build, and the
+    values are already in hand either way.
+    """
+    if not relation:
+        raise Refusal(f"{context}: --relation is required.")
+    dbcore.check_declared(conn, "extraction_relations", "relation", relation, context)
+
+    has_row = to_extraction is not None
+    has_label = to_label is not None
+    if has_row and has_label:
+        raise Refusal(
+            f"{context}: pass --to-extraction OR --to-label, never both -- the "
+            f"referent is a row this project holds, or a label describing one it "
+            f"does not, never both at once.")
+    if not has_row and not has_label:
+        raise Refusal(
+            f"{context}: pass --to-extraction or --to-label -- an edge naming no "
+            f"referent describes nothing.")
+
+    if not (quote or "").strip():
+        raise Refusal(
+            f"{context}: --quote is required. Mirrors the verbatim floor "
+            f"--claim-text already puts on the row itself: a comparator asserted "
+            f"with nothing of the source's own phrasing behind it is not a "
+            f"comparator this project has actually read.")
+
+    if has_row:
+        if to_extraction == from_id:
+            raise Refusal(
+                f"{context}: --to-extraction {to_extraction} is the same row this "
+                f"edge is FROM. A figure cannot be its own comparator.")
+        target = conn.execute(
+            "SELECT ref_id FROM source_value_extractions WHERE extraction_id=?",
+            (to_extraction,)).fetchone()
+        if target is None:
+            raise Refusal(
+                f"{context}: --to-extraction {to_extraction}: no such extraction. "
+                f"condition_on/derived_from name a figure this project actually "
+                f"holds as a row -- extract it first, or use --to-label for a "
+                f"referent that is not yet its own row.")
+        if relation in _ROW_ONLY_RELATIONS and target["ref_id"] != from_ref_id \
+                and not (cross_source_reason or "").strip():
+            raise Refusal(
+                f"{context}: --to-extraction {to_extraction} was extracted from "
+                f"{target['ref_id']}, not {from_ref_id} -- a {relation} edge across "
+                f"sources is a SYNTHESIS act (drawing a condition or a derivation "
+                f"from a different document than the one asserting the figure), "
+                f"not a plain pointer. Pass --cross-source with a reason to make "
+                f"that explicit, or point at a same-source row.")
+        if to_kind is not None:
+            raise Refusal(
+                f"{context}: --to-kind is meaningless with --to-extraction -- a row "
+                f"referent already carries its own kind in its own data. Omit "
+                f"--to-kind, or use --to-label if the referent is not a row.")
+    else:
+        if relation in _ROW_ONLY_RELATIONS:
+            raise Refusal(
+                f"{context}: relation={relation!r} requires --to-extraction (a row "
+                f"this project actually holds), not --to-label -- you cannot be "
+                f"conditioned by, or computed from, a figure that does not exist as "
+                f"a row.")
+        if not to_kind:
+            raise Refusal(
+                f"{context}: --to-label requires --to-kind -- what sort of thing "
+                f"the label names ('standard'/'own_sample'/'prior_source'/"
+                f"'unnamed').")
+        dbcore.check_declared(conn, "extraction_relations", "to_kind", to_kind, context)
+        if stated == "named" and to_label not in quote:
+            raise Refusal(
+                f"{context}: --stated named asserts the source NAMES this referent "
+                f"by the label given ({to_label!r}), but --quote does not contain "
+                f"that label as a substring. Either quote the passage that actually "
+                f"names it, or this referent is --stated unnamed/inferred instead.")
+
+    if not stated:
+        raise Refusal(f"{context}: --stated is required ('named'/'unnamed'/"
+                      f"'inferred').")
+    dbcore.check_declared(conn, "extraction_relations", "stated", stated, context)
+    if stated == "unnamed" and has_row:
+        raise Refusal(
+            f"{context}: stated=unnamed cannot carry a row referent -- an unnamed "
+            f"referent has, by definition, nothing this project could have resolved "
+            f"to a row.")
+    if to_kind == "unnamed" and stated != "unnamed":
+        raise Refusal(
+            f"{context}: to_kind=unnamed requires stated=unnamed -- the two "
+            f"describe the same fact from two columns and must not disagree.")
+
+    is_derivation = relation == "derived_from"
+    if is_derivation and not input_role:
+        raise Refusal(
+            f"{context}: relation=derived_from requires --input-role "
+            f"('base'/'delta'/'factor').")
+    if not is_derivation and input_role:
+        raise Refusal(
+            f"{context}: --input-role is meaningful only with relation=derived_from "
+            f"(this edge is {relation!r}). Omit it.")
+    if input_role:
+        dbcore.check_declared(conn, "extraction_relations", "input_role",
+                              input_role, context)
+
+    if relation in ("insufficient", "audited_against") and from_figure_role == "claim":
+        raise Refusal(
+            f"{context}: figure_role='claim' cannot carry a {relation!r} edge -- a "
+            f"row finding the baseline inadequate, or auditing subjects against it "
+            f"rather than measuring independently, asserts no absolute value of its "
+            f"own; grade it figure_role='finding'. If the source ALSO states an "
+            f"absolute value, that is a SECOND row, not this one relabelled.")
+
+    if relation == "delta_over" and not from_comparator:
+        raise Refusal(
+            f"{context}: relation=delta_over requires --comparator on the row "
+            f"(source_value_extractions.comparator) -- 'more than thirty "
+            f"centimetres' is comparator='>' against 30, and storing a bare 30 "
+            f"turns a floor into a point. Set --comparator when writing the row.")
+
+    verified, where = _verbatim(quote, from_ref_id)
+    if not verified:
+        raise Refusal(
+            f"{context}: --quote does not occur byte-for-byte in any persisted "
+            f"retrieval artefact ({where}). Either the payload behind this quote "
+            f"was never retrieved and persisted (R10 -- retrieve it first, "
+            f"retrieval_log.fetch()), or the quote was typed from memory rather "
+            f"than read off the bytes (CLAUDE.md 5(c)). Nothing was written.")
+
+    dup = conn.execute(
+        "SELECT relation_id FROM extraction_relations WHERE from_extraction_id=? "
+        "AND relation=? AND COALESCE(to_extraction_id,-1)=? "
+        "AND COALESCE(to_label,'')=?",
+        (from_id, relation, to_extraction if has_row else -1,
+         to_label if has_label else "")).fetchone()
+    if dup:
+        raise Refusal(
+            f"{context}: this exact edge already exists (relation_id {dup[0]}). "
+            f"One edge is one fact; writing it twice is a duplicate, not a second "
+            f"fact.")
+
+    edge = {"from_extraction_id": from_id, "relation": relation,
+            "to_extraction_id": to_extraction, "to_label": to_label,
+            "to_kind": to_kind, "stated": stated, "input_role": input_role,
+            "quote": quote, "notes": notes}
+    edge = {k: v for k, v in edge.items() if v is not None}
+    edge.update(dbcore.stamp_for(conn, "extraction_relations", session))
+    cur = conn.execute(
+        f"INSERT INTO extraction_relations ({','.join(edge)}) "
+        f"VALUES ({','.join('?' * len(edge))})", list(edge.values()))
+    return cur.lastrowid
+
+
+def _build_relation_groups(relations, to_extractions, to_labels, to_kinds, stateds,
+                           quotes, input_roles, cross_sources):
+    """Zip `add-extraction`'s repeatable --relation flag with its per-edge
+    companions, aligned by position, into a list of edge dicts for
+    `insert_extraction(..., relations=...)`.
+
+    'none' -- alone, exactly once, with no other relation flag -- means the source
+    states its figure absolutely and no edge is written at all.
+
+    Each companion flag must be given exactly zero times or exactly as many times as
+    --relation; the literal placeholder '-' marks "not set for THIS edge" so a mixed
+    batch (one edge pointing at a row, the next at a label) still aligns positionally
+    without forcing every edge to carry every flag.
+    """
+    n = len(relations)
+    if n == 1 and relations[0] == "none":
+        extra = to_extractions or to_labels or to_kinds or stateds or quotes \
+            or input_roles or cross_sources
+        if extra:
+            raise Refusal(
+                "--relation none states that the source's figure is absolute and "
+                "takes NO other relation flag (--to-extraction/--to-label/"
+                "--to-kind/--stated/--quote/--input-role/--cross-source). Nothing "
+                "was written.")
+        return []
+    if "none" in relations:
+        raise Refusal(
+            "--relation none may only be given alone, exactly once: it says the "
+            "source states its figure absolutely, which cannot also be true of a "
+            "row that carries a real comparator edge.")
+
+    def _spread(name, values):
+        if not values:
+            return [None] * n
+        if len(values) != n:
+            raise Refusal(
+                f"{name} was given {len(values)} time(s) but --relation was given "
+                f"{n} time(s) -- the repeatable relation flags must align "
+                f"positionally, one entry per edge. Pass '-' for an edge that does "
+                f"not use {name}.")
+        return [None if v == "-" else v for v in values]
+
+    to_ext = _spread("--to-extraction", to_extractions)
+    to_lab = _spread("--to-label", to_labels)
+    to_knd = _spread("--to-kind", to_kinds)
+    stat = _spread("--stated", stateds)
+    quo = _spread("--quote", quotes)
+    inp = _spread("--input-role", input_roles)
+    crs = _spread("--cross-source", cross_sources)
+    out = []
+    for i in range(n):
+        if to_ext[i] is not None:
+            try:
+                to_ext[i] = int(to_ext[i])
+            except ValueError:
+                raise Refusal(f"--to-extraction {to_ext[i]!r} is not an integer.")
+        out.append({
+            "relation": relations[i], "to_extraction": to_ext[i],
+            "to_label": to_lab[i], "to_kind": to_knd[i], "stated": stat[i],
+            "quote": quo[i], "input_role": inp[i],
+            "cross_source_reason": crs[i],
+        })
+    return out
+
+
+def insert_extraction(data: dict, session: str, dry_run: bool = False,
+                      relations: list = None, verbatim_exempt: str = None):
     """Record ONE judgment item: what one source asserts for one parameter.
 
     THE WRITER THIS TABLE SHIPPED WITHOUT. `source_value_extractions` has existed
@@ -3585,6 +4862,16 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
     transaction. See the comment at the UPDATE for what breaks without it (blocking
     check C06), what the other three capture-table writers do (nothing), and the
     rule 5 tension it stops rather than cures.
+
+    ADDED 2026-09-13 BY MIGRATION 075's WRITER, and refused the same way as
+    everything above: `--figure-role` (REQUIRED -- a value with no role reads as a
+    claim), `--comparator`, and `relations` -- a list of edge dicts written into
+    `extraction_relations` in this SAME transaction (the `add-term` precedent: a
+    term and its adjudication land together, and here a figure and what it is
+    stated relative to do too). `--relation` is REQUIRED at the CLI; the literal
+    'none' (which arrives here as `relations == []`) says the source states its
+    figure absolutely. See `_write_relation_edge` for the edge-level refusals and
+    `_build_relation_groups` for how the CLI's repeatable flags become this list.
     """
     _COLS = frozenset({
         "ref_id", "slug", "parameter_id",
@@ -3599,6 +4886,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
         "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end",
         "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note",
         "extraction_method", "extraction_status", "notes",
+        "figure_role", "comparator",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
     row = {k: v for k, v in data.items() if v is not None}
@@ -3721,6 +5009,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
                 "words; every remaining verbatim column on this table is nullable, so "
                 "without --claim-text this row would assert a value with nothing of the "
                 "source's own phrasing behind it. Quote the clause you read.")
+
+        # THE QUOTE MUST BE IN THE BYTES (CLAUDE.md 5(c), added 2026-09-13). Blank was
+        # the ONLY thing refused above; the sentence a determination rests on could be
+        # composed from memory and nothing looked. Demonstrated during the audit:
+        # claimed_value 9999 with an invented claim_text landed and governed a cell.
+        # `--verbatim-exempt` is the ledgered escape for text no artefact can carry, and
+        # is itself refused when the text would have verified.
+        _exempt_note = _require_verbatim(
+            str(row["claim_text"]), row.get("ref_id"), "--claim-text",
+            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value)
+        if _exempt_note:
+            row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
         if claim_type == "absent" and value is not None:
             raise Refusal(
                 "claim_type='absent' records that the source asserts NO value for this "
@@ -3732,11 +5032,46 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
                 f"asserts nothing for this parameter, that is claim_type='absent' — a "
                 f"recorded absence, which is evidence, not a missing field.")
 
+        # --- figure_role (migration 075) -------------------------------------
+        figure_role = row.get("figure_role")
+        if not figure_role:
+            raise Refusal(
+                "--figure-role is required. A value with no role reads as a claim, "
+                "and a tested slope read as a claim is how '1:20, 1:16, 1:12, 1:8' "
+                "became a range no source ever asserted (extraction_id 1, the "
+                "worked example migration 075 itself cites).")
+        if claim_type == "absent" and figure_role != "finding":
+            raise Refusal(
+                f"claim_type='absent' with figure_role={figure_role!r} is refused: "
+                f"absence IS a finding -- the source was read for this parameter "
+                f"and stated nothing, which is itself the result, not a claim, a "
+                f"condition or a derivation. Use --figure-role finding.")
+
         # --- the declared vocabularies, read from the schema ------------------
         for col in _SVE_VOCAB_COLUMNS:
             if row.get(col) is not None:
                 dbcore.check_declared(conn, "source_value_extractions", col,
                                       row[col], "insert_extraction")
+
+        # --- the relation edges (migration 075's extraction_relations) --------
+        # REQUIRED, and checked here rather than only at the parser so the PYTHON
+        # API path refuses too -- the same discipline --claim-text already gets.
+        if relations is None:
+            raise Refusal(
+                "--relation is required: pass the literal 'none' (source states "
+                "its figure absolutely) or one or more real relation edges. Five "
+                "of five corridor-width sources in the live corpus state theirs "
+                "against a reference they name or invoke -- silence is not "
+                "'absolute', it is unchecked.")
+        if figure_role == "derived" and not any(
+                e.get("relation") == "derived_from" and e.get("input_role") == "base"
+                for e in relations):
+            raise Refusal(
+                "figure_role='derived' requires at least one derived_from edge "
+                "carrying --input-role base. A derived row with nothing pointing "
+                "at what it was computed FROM is a number trusted on faith, which "
+                "is exactly what v_derived_figure_check (migration 075) exists to "
+                "stop trusting silently.")
 
         # DELIBERATELY NOT REFUSED — see the docstring. Noted so the fan-out is
         # visible in the session log rather than silent.
@@ -3753,6 +5088,25 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
         cur = conn.execute(
             f"INSERT INTO source_value_extractions ({','.join(row)}) "
             f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        extraction_id = cur.lastrowid
+
+        # THE EDGES, IN THIS SAME TRANSACTION -- the `add-term` precedent (a term
+        # and its adjudication land together). `relations` is `[]` for the literal
+        # 'none' (source states its figure absolutely) and a list of edge dicts
+        # otherwise; every refusal for an individual edge lives in
+        # _write_relation_edge so there is one copy of that logic, not one per
+        # caller (add-extraction / relate-extraction / derive-extraction).
+        relation_ids = []
+        for edge in relations:
+            relation_ids.append(_write_relation_edge(
+                conn, from_id=extraction_id, from_ref_id=ref,
+                from_figure_role=figure_role, from_comparator=row.get("comparator"),
+                relation=edge.get("relation"), to_extraction=edge.get("to_extraction"),
+                to_label=edge.get("to_label"), to_kind=edge.get("to_kind"),
+                stated=edge.get("stated"), quote=edge.get("quote"),
+                input_role=edge.get("input_role"), notes=edge.get("notes"),
+                cross_source_reason=edge.get("cross_source_reason"),
+                session=session, context="add-extraction"))
 
         # THE STATUS THIS ROW MAKES TRUE — set in the SAME transaction as the INSERT,
         # so the two can never be observed apart. `dbcore.connect()` commits once at
@@ -3813,16 +5167,317 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False):
             "updated_at=?, updated_by_session=? "
             "WHERE ref_id=? AND data_capture_status<>'captured'",
             (_upd["updated_at"], _upd["updated_by_session"], ref)).rowcount
-        return {"extraction_id": cur.lastrowid, "ref_id": ref, "parameter_id": pid,
+        return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
                 "slug": row.get("slug"),
                 "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
                 "claim_type": claim_type, "claimed_value": value,
+                "figure_role": figure_role, "comparator": row.get("comparator"),
+                "relation_ids": relation_ids,
                 "siblings_for_this_parameter": len(prior),
                 # Reported, not silent: a status change on ANOTHER table is exactly
                 # the kind of side effect an operator should see in the same output
                 # as the write that caused it.
                 "data_capture_status_set_captured": bool(captured),
                 "dry_run": dry_run}
+
+
+def relate_extraction(from_extraction: int, relation: str, session: str,
+                      dry_run: bool = False, to_extraction: int = None,
+                      to_label: str = None, to_kind: str = None, stated: str = None,
+                      quote: str = None, input_role: str = None, notes: str = None,
+                      cross_source_reason: str = None):
+    """Add ONE comparator edge to an EXISTING extraction row (migration 075).
+
+    The companion to `insert_extraction`'s own `relations=` for a figure that was
+    written before this table existed, or before its comparator was known -- 8 rows
+    were already live when migration 075 landed and every refusal below is the one
+    `_write_relation_edge` also runs for an edge written at `add-extraction` time,
+    so a row's edge set cannot depend on which verb happened to write it first.
+    """
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT extraction_id, ref_id, figure_role, comparator "
+            "FROM source_value_extractions WHERE extraction_id=?",
+            (from_extraction,)).fetchone()
+        if row is None:
+            raise Refusal(
+                f"relate-extraction: --from {from_extraction}: no such extraction.")
+        rid = _write_relation_edge(
+            conn, from_id=from_extraction, from_ref_id=row["ref_id"],
+            from_figure_role=row["figure_role"], from_comparator=row["comparator"],
+            relation=relation, to_extraction=to_extraction, to_label=to_label,
+            to_kind=to_kind, stated=stated, quote=quote, input_role=input_role,
+            notes=notes, cross_source_reason=cross_source_reason,
+            session=session, context="relate-extraction")
+    return {"relation_id": rid, "from_extraction_id": from_extraction,
+            "relation": relation, "dry_run": dry_run}
+
+
+def repoint_extraction_relation(from_extraction: int, relation: str,
+                                to_extraction: int, session: str,
+                                dry_run: bool = False, old_label: str = None):
+    """Turn an existing LABEL edge into a real ROW pointer.
+
+    How an 'ADAAG' `to_label` edge becomes a real `to_extraction_id` pointer once
+    ADA §405 is itself admitted and extracted: NULL the label and kind, point the
+    edge at the new row, and ledger the old label into `notes` rather than losing
+    it -- the append discipline `amend-search`/`amend-source` already use, applied
+    to a column instead of a whole row.
+    """
+    with dbcore.connect(dry_run) as conn:
+        if to_extraction == from_extraction:
+            raise Refusal(
+                f"--repoint: --to-extraction {to_extraction} is the same row this "
+                f"edge is FROM. A figure cannot be its own comparator.")
+        if not dbcore.exists(conn, "source_value_extractions",
+                             "extraction_id", to_extraction):
+            raise Refusal(
+                f"--repoint: --to-extraction {to_extraction}: no such extraction. "
+                f"Admit and extract the standard before repointing onto it.")
+        q = ("SELECT relation_id, to_label FROM extraction_relations "
+             "WHERE from_extraction_id=? AND relation=? AND to_extraction_id IS NULL")
+        params = [from_extraction, relation]
+        if old_label:
+            q += " AND to_label=?"
+            params.append(old_label)
+        candidates = conn.execute(q, params).fetchall()
+        if not candidates:
+            raise Refusal(
+                f"--repoint: no LABEL edge found for extraction {from_extraction}, "
+                f"relation {relation!r}"
+                + (f", label {old_label!r}" if old_label else "") +
+                ". Nothing to repoint -- write the edge first with relate-extraction, "
+                "or check --from/--relation/--old-label.")
+        if len(candidates) > 1:
+            raise Refusal(
+                f"--repoint: {len(candidates)} label edges match extraction "
+                f"{from_extraction}, relation {relation!r} -- "
+                f"{[c['to_label'] for c in candidates]}. Disambiguate with "
+                f"--old-label.")
+        rel_id, old_label_val = candidates[0]["relation_id"], candidates[0]["to_label"]
+        dup = conn.execute(
+            "SELECT relation_id FROM extraction_relations WHERE from_extraction_id=? "
+            "AND relation=? AND to_extraction_id=?",
+            (from_extraction, relation, to_extraction)).fetchone()
+        if dup:
+            raise Refusal(
+                f"--repoint: extraction {from_extraction} already carries a "
+                f"{relation!r} edge to extraction {to_extraction} (relation_id "
+                f"{dup[0]}). Repointing would collide with it -- nothing written.")
+        existing_notes = conn.execute(
+            "SELECT notes FROM extraction_relations WHERE relation_id=?",
+            (rel_id,)).fetchone()["notes"]
+        stamp = dbcore.now()
+        marker = (f" || {stamp[:10]} repointed: to_label {old_label_val!r} -> "
+                  f"to_extraction_id {to_extraction}")
+        merged = ((existing_notes or "").rstrip() + marker).strip()
+        conn.execute(
+            "UPDATE extraction_relations SET to_extraction_id=?, to_label=NULL, "
+            "to_kind=NULL, notes=? WHERE relation_id=?",
+            (to_extraction, merged, rel_id))
+    return {"relation_id": rel_id, "repointed_from_label": old_label_val,
+            "to_extraction_id": to_extraction, "dry_run": dry_run}
+
+
+# Only these two, ever. Every other column on this table is a SECOND ROW and a
+# contest (D-0168) when it turns out wrong, not an overwrite -- the same rule
+# `add-population-match` states for itself by deliberately permitting a dissenting
+# second row. figure_role/comparator are GRADING columns migration 075 added NULL
+# onto 8 pre-existing rows ("not yet graded"); filling that in later is not a
+# contest over what the source said.
+_AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator"})
+
+
+def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
+                     session: str, dry_run: bool = False):
+    """Change figure_role or comparator on an EXISTING row -- and ONLY those two.
+
+    Every other refusal here mirrors the one `insert_extraction` runs at write
+    time, because grading a pre-existing row after the fact must not be able to
+    reach a state add-extraction itself refuses to create.
+    """
+    if field not in _AMENDABLE_SVE_FIELDS:
+        raise Refusal(
+            f"amend-extraction: --field {field!r} refused. Only "
+            f"{sorted(_AMENDABLE_SVE_FIELDS)} may be amended here -- a wrong "
+            f"claimed_value or claim_text is a SECOND ROW and a contest (D-0168), "
+            f"not an overwrite. Write another `db.py add-extraction` if the "
+            f"disagreement is over the value or the claim itself.")
+    reason = (reason or "").strip()
+    if not reason:
+        raise Refusal(
+            "amend-extraction: --reason is required. An amendment that cannot say "
+            "why cannot be contested.")
+    value = (value or "").strip()
+    if not value:
+        raise Refusal("amend-extraction: --value is required and must not be blank.")
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT extraction_id, ref_id, figure_role, comparator, claim_type, "
+            "notes FROM source_value_extractions WHERE extraction_id=?",
+            (extraction_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"amend-extraction: extraction_id {extraction_id}: no "
+                          f"such row.")
+        dbcore.check_declared(conn, "source_value_extractions", field, value,
+                              "amend-extraction")
+
+        old = row[field]
+        if field == "figure_role":
+            if row["claim_type"] == "absent" and value != "finding":
+                raise Refusal(
+                    f"amend-extraction: extraction {extraction_id} has "
+                    f"claim_type='absent' -- absence IS a finding, so figure_role "
+                    f"must stay 'finding', not {value!r}.")
+            if value == "derived":
+                base_edge = conn.execute(
+                    "SELECT 1 FROM extraction_relations WHERE from_extraction_id=? "
+                    "AND relation='derived_from' AND input_role='base'",
+                    (extraction_id,)).fetchone()
+                if not base_edge:
+                    raise Refusal(
+                        f"amend-extraction: figure_role='derived' requires at "
+                        f"least one derived_from edge carrying input_role=base. "
+                        f"extraction {extraction_id} has none -- add one with "
+                        f"relate-extraction first.")
+            if value == "claim":
+                bad = conn.execute(
+                    "SELECT relation FROM extraction_relations "
+                    "WHERE from_extraction_id=? AND relation IN "
+                    "('insufficient','audited_against') LIMIT 1",
+                    (extraction_id,)).fetchone()
+                if bad:
+                    raise Refusal(
+                        f"amend-extraction: extraction {extraction_id} carries a "
+                        f"{bad[0]!r} edge -- a row finding the baseline inadequate "
+                        f"or audited against it asserts no absolute value, so "
+                        f"figure_role cannot be 'claim'. Leave it 'finding'.")
+
+        if old == value:
+            return {"extraction_id": extraction_id, "field": field, "changed": False,
+                    "reason": "already this value", "dry_run": dry_run}
+
+        stamp = dbcore.now()
+        old_disp = "NULL" if old is None else old
+        marker = f" || {stamp[:10]} {field} SET {old_disp} -> {value} ({reason})"
+        merged = (row["notes"] or "").rstrip() + marker
+        conn.execute(
+            f"UPDATE source_value_extractions SET {field}=?, notes=?, "
+            f"updated_at=?, updated_by_session=? WHERE extraction_id=?",
+            (value, merged, stamp, session, extraction_id))
+    return {"extraction_id": extraction_id, "field": field, "old": old, "new": value,
+            "changed": True, "dry_run": dry_run}
+
+
+def derive_extraction(*, ref_id: str, slug: str, parameter_id: int, base: int,
+                      delta: int, claim_text: str, session: str,
+                      dry_run: bool = False, identity: str = None, icf: str = None,
+                      needs: str = None, medical: str = None,
+                      claimed_value: str = None, claimed_unit: str = None,
+                      comparator: str = None, conversion_note: str = None):
+    """Write a figure_role='derived' row computed as base + delta, plus the two
+    derived_from edges `v_derived_figure_check` (migration 075) re-verifies it
+    against -- a derived figure is never a number trusted on faith.
+
+    Reads --base/--delta with a READ-ONLY pass first (their claimed_value/unit are
+    needed to compute or check this row's own before `insert_extraction` can be
+    called at all); the actual WRITE -- the row and both derived_from edges -- is
+    the ONE transaction inside that single `insert_extraction` call, the same
+    guarantee every other caller of it gets.
+    """
+    with dbcore.connect(dry_run, readonly=True) as conn:
+        base_row = conn.execute(
+            "SELECT extraction_id, ref_id, claimed_value, claimed_unit, claim_text "
+            "FROM source_value_extractions WHERE extraction_id=?", (base,)).fetchone()
+        if base_row is None:
+            raise Refusal(
+                f"derive-extraction: --base {base}: no such extraction. A derived "
+                f"figure is computed from a row this project actually holds, never "
+                f"invented -- extract the base figure first with add-extraction.")
+        delta_row = conn.execute(
+            "SELECT extraction_id, ref_id, claimed_value, claimed_unit, claim_text "
+            "FROM source_value_extractions WHERE extraction_id=?", (delta,)).fetchone()
+        if delta_row is None:
+            raise Refusal(
+                f"derive-extraction: --delta {delta}: no such extraction. Extract "
+                f"the delta figure first with add-extraction.")
+        if base == delta:
+            raise Refusal("derive-extraction: --base and --delta must be different "
+                          "rows -- a figure cannot be derived from itself twice.")
+
+        base_unit, delta_unit = base_row["claimed_unit"], delta_row["claimed_unit"]
+        # ONE RULE, ONE REFUSAL: if the unit that will be STORED differs from what
+        # either input actually carries, a --claimed-unit and a --conversion-note are
+        # both mandatory. This was two sequential checks with two near-identical
+        # messages -- one for "base and delta disagree", one for "your override
+        # disagrees with base" -- which are the same rule seen from two sides, and
+        # which a later change to the reconciliation policy would have had to find in
+        # two places that only inspection kept in sync.
+        unit = claimed_unit or base_unit
+        if (base_unit != delta_unit or unit != base_unit) and not (
+                claimed_unit and (conversion_note or "").strip()):
+            raise Refusal(
+                f"derive-extraction: the unit this row would store ({unit!r}) is not "
+                f"the unit both inputs carry -- base (extraction {base}) is "
+                f"{base_unit!r}, delta (extraction {delta}) is {delta_unit!r}. Pass "
+                f"--claimed-unit WITH a --conversion-note saying how they reconcile, "
+                f"or fix the mismatched row first. Note that a converted row is "
+                f"invisible to v_derived_figure_check, which joins on equal units, so "
+                f"the conversion note is the only record of the arithmetic.")
+
+        def _num(x):
+            try:
+                return float(x)
+            except (TypeError, ValueError):
+                return None
+        bn, dn = _num(base_row["claimed_value"]), _num(delta_row["claimed_value"])
+        if claimed_value is not None:
+            cn = _num(claimed_value)
+            if bn is not None and dn is not None and cn is not None \
+                    and abs(cn - (bn + dn)) > 1e-9:
+                raise Refusal(
+                    f"derive-extraction: --claimed-value {claimed_value} does not "
+                    f"equal base + delta (base extraction {base} = {base_row['claimed_value']!r}, "
+                    f"delta extraction {delta} = {delta_row['claimed_value']!r}, sum "
+                    f"= {bn + dn}). A derived figure that disagrees with its own "
+                    f"inputs is the defect this verb exists to prevent. Nothing "
+                    f"was written.")
+        elif bn is not None and dn is not None:
+            claimed_value = _fmt_num(bn + dn)
+        else:
+            raise Refusal(
+                f"derive-extraction: --claimed-value is required when base or "
+                f"delta does not parse as a plain number (base extraction {base} "
+                f"= {base_row['claimed_value']!r}, delta extraction {delta} = "
+                f"{delta_row['claimed_value']!r}).")
+
+        data = {"ref_id": ref_id, "slug": slug, "parameter_id": parameter_id,
+                "identity_code": identity, "icf_code": icf, "needs_code": needs,
+                "medical_code": medical, "claim_type": "numerical",
+                "claimed_value": claimed_value, "claimed_unit": unit,
+                "claim_text": claim_text, "figure_role": "derived",
+                "comparator": comparator, "extraction_method": "auto-mined",
+                "root_type": "derived_calculation", "root_ref_id": base_row["ref_id"]}
+        # EACH EDGE CARRIES ITS OWN TARGET'S QUOTE, not this row's claim_text.
+        # Corrected 2026-09-13 before first use. Every edge quote is checked as a
+        # byte-substring of a persisted retrieval artefact, and a derived row's
+        # claim_text is by its nature the analyst's computation statement -- not
+        # something any source said. Passing it as both edge quotes made this verb
+        # STRUCTURALLY UNABLE TO SUCCEED: the only path through it was a refusal,
+        # which is worse than a missing verb because it looks implemented.
+        #
+        # The base and delta rows' own claim_text values already passed that check
+        # when those rows were written, so using them is an APPLICATION of the rule
+        # rather than a carve-out from it -- and it is also the truer record: the
+        # warrant for "this figure derives from that one" is what that one says.
+        relations = [
+            {"relation": "derived_from", "to_extraction": base, "stated": "named",
+             "quote": base_row["claim_text"], "input_role": "base"},
+            {"relation": "derived_from", "to_extraction": delta, "stated": "named",
+             "quote": delta_row["claim_text"], "input_role": "delta"},
+        ]
+    return insert_extraction(data, session=session, dry_run=dry_run,
+                             relations=relations)
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
