@@ -239,6 +239,33 @@ def gather_sources(conn, parameter_id):
     not merely forbidden, it is unconstructible. Every ref_id in the governing set
     came out of this query, and this query returns only sources that hold an
     extraction for the parameter being determined.
+
+    ONLY VALUE-SUPPLYING ROWS GOVERN (added 2026-09-13, migration 075's whole point).
+    Holding an extraction for the parameter was never enough. Measured on the live
+    corpus the day the grading landed: specification 1 was `stated` at T1 -- the
+    strongest claim this project makes -- on four rows of which TWO WERE CONDITIONS
+    (the slopes a treadmill was set to; the ADA range a study tested) and two were
+    findings, one of them `claim_type='absent'`, asserting nothing whatever. Not one
+    governing row was a claim. Specification 2 was the same shape.
+
+    So the predicate is `figure_role IN ('claim','derived')`:
+
+      claim     -- the row states a value for the parameter. Governs.
+      derived   -- the row's value was computed from other rows. Governs; its band
+                   is the floored mean of its inputs' (owner ruling 2026-09-13).
+      finding   -- the row reports something ABOUT the parameter without asserting a
+                   value: "code-compliant width fails 10-100% of users". Supplies
+                   DIRECTION, never value (owner ruling 2026-09-13). Not gathered here.
+      condition -- a rig setting or a limit the value is conditioned by. Never anchors.
+      NULL      -- ungraded. Not a value-supplier: a row nobody has stated the kind of
+                   cannot be read as a claim, which is exactly how a tested slope came
+                   to govern a `stated` cell.
+
+    A cell whose value-supplying set is empty now comes out `pending`, which for both
+    live cells is the truth -- not one retrieved source states a corridor width or a
+    ramp gradient value. Gathering `finding` rows for direction, and the `confirms`
+    edge that upgrades a code value, build ON this predicate and are not required by
+    it.
     """
     # verification_disposition arrived with migration 049 (D-0157). This script
     # is run against scratch and fixture databases as well as the canonical one
@@ -253,6 +280,7 @@ def gather_sources(conn, parameter_id):
             FROM source_value_extractions x
             JOIN evidence_sources e ON e.ref_id = x.ref_id
             WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
+              AND x.figure_role IN ('claim', 'derived')
             ORDER BY e.ref_id"""
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
                       "verification_status", "verification_disposition",

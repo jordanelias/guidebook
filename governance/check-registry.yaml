@@ -1431,6 +1431,68 @@ checks:
   note: 'Pins the 1:N evidence->judgment hand-off ruled 2026-08-27. The subject table holds 0 rows, so
     every other gate is blind to a regression here (CLAUDE.md rule 4). Mutation-tested 2026-08-27: injecting
     UNIQUE(ref_id) on a scratch copy turns it red.'
+- id: extraction_relations_integrity
+  cmd:
+  - python3
+  - scripts/audit/extraction_relations_integrity.py
+  battery: db_integrity
+  kinds:
+  - data
+  - schema
+  - governance
+  level: blocking
+  basis: judgment/figure-role-stated
+  cost: fast
+  no_floor: empty-by-decision — the circulation corpus was cleared by owner ruling 2026-09-13
+    ("all the circulation rows that have been produced are not able to be trusted"), so this
+    check's three subjects are 0/0/0 by decision, not by accident. Same posture and same reason
+    as validate_evidence_state. RATCHET BACK TO min_items 1 when the re-run lands its first
+    extraction; the corpus refilling is what makes this floor meaningful again.
+  note: 'NEW 2026-09-13, migration 075 (figure_role/comparator on source_value_extractions,
+    extraction_relations junction, v_derived_figure_check view). EXAMINED sums three subjects
+    it actually reads: source_value_extractions rows, extraction_relations edges, and
+    v_derived_figure_check rows.
+
+
+    THE GRANDFATHER CLAUSE IS DELETED, not merely off. It shipped as a
+    MAX(data_migrations.applied_at) boundary that floated forward and could un-fail the very
+    rows it existed to catch (demonstrated un-firing itself, then replaced by a frozen id
+    list {1..8}); the backfill graded those eight and the 2026-09-13 corpus clear deleted
+    them. extraction_id is AUTOINCREMENT and the sequence was not reset, so re-enabling the
+    clause would have excused the FIRST EIGHT ROWS OF THE NEXT CORPUS — rows it never meant.
+    A switch whose off position is correct and whose on position has become actively wrong is
+    not a switch. Every figure_role-NULL row now fails unconditionally, whenever written.
+
+
+    WRITERS, since a check with no writer is measuring nothing: `db.py relate-extraction`,
+    `amend-extraction` and `derive-extraction` all write this junction, and `add-extraction`
+    takes --figure-role as a required flag. `derive-extraction` is the one that produces
+    figure_role=''derived'' rows with the two derived_from edges v_derived_figure_check
+    recomputes against.
+
+
+    CHECK 3 CARRIES THE WRITER''S TOLERANCE AND NAMES WHAT IT CANNOT SEE (both fixed
+    2026-09-13 after an adversarial pass). It compared with SQL `<>` while `derive-extraction`
+    accepts within 1e-9, so 0.1 + 0.2 = 0.30000000000000004 turned this BLOCKING gate red over
+    a row the sanctioned writer had just accepted; it now compares with the same epsilon. And
+    `v_derived_figure_check` joins on equal units, so a unit-converted derived row — exactly
+    what `--claimed-unit --conversion-note` writes, and the kind most likely to be wrong — was
+    silently absent from the view and check 3 reported CLEAN over it (a 999 cm row against a
+    0.3 m base+delta). The view is committed in migration 075 and migrations are immutable, so
+    the fix-forward is an UNCHECKED: line naming the derived rows the view cannot cover. That
+    is CLAUDE.md 5(a) applied to this check''s own subject.
+
+
+    FAULT-INJECTED on a scratch copy, all four ways, each shown red then green again: (1) a
+    row with figure_role NULL — added, FAILED; graded, CLEAN. (2) figure_role=''derived'' with
+    no derived_from/input_role=''base'' edge — graded, FAILED; base edge added, CLEAN. (3) a
+    v_derived_figure_check disagreement — stored value set to disagree with linked base+delta,
+    FAILED (`stored=100.0, recomputed=70.0`); corrected to 70, CLEAN. (4) an orphan
+    figure_role=''condition'' row (target of nothing, source of no condition_on edge) — graded,
+    FAILED; a condition_on edge added, CLEAN. Re-confirmed 2026-09-13 during the verification
+    pass on a live derived row: tampering extraction 15''s stored value from 10 to 42 produced
+    `stored=42.0, recomputed=10.0` and exit 1. Canonical data/guidebook.db sha256 unmoved
+    throughout — every mutation above was against a scratch copy only.'
 - id: source_locators_integrity
   cmd:
   - python3
@@ -1563,7 +1625,17 @@ quarantine:
   - python3
   - scripts/audit/adjudication_integrity.py
   status: quarantined
-  reason: 'RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
+  reason: 'RE-MEASURED 2026-09-12: VERDICT PASS -- all 11 evidence_sources are tier-consistent and
+    NOT ONE carries a NULL scope. The four rows this entry named were resolved that day by owner ruling
+    on the B5(b) escalation: REF-00971 / REF-00972 to lower_control on the design-control reading, and
+    REF-00784 / REF-00976 from payloads retrieved under the same ruling. PMID 20434614 states its design
+    as Case series with a sample of convenience, which moved REF-00784 to tier 3 -- the tier the
+    2026-07-20 anchor sweep had recorded as correct fifty-four days earlier. STILL QUARANTINED, and the
+    reason has inverted: the gate is GREEN now, not red. The promotion clause at the foot of this entry
+    waits on OD-E, which was ruled on 2026-08-31 (D-0179) and whose subject REF-00967 holds 0 rows
+    today -- so nothing mechanical blocks promotion and it is an owner call only. Do not promote it
+    without one. The superseded measurement, kept because this entry is a record of its own staleness:
+    RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
     REF-00784, REF-00971, REF-00972, REF-00976, every one of them scope NULL. That supersedes the
     2026-08-22 measurement recorded below (1 of 5), which was correct on its date and is wrong today:
     the corpus grew from 5 admitted sources to 9, and B5(b) on 2026-09-10 wrote scope on five of the

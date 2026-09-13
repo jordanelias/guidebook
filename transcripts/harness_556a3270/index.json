@@ -1,0 +1,107 @@
+[
+  {
+    "started": "2026-09-13T00:51:01",
+    "role": "antagonist",
+    "bytes": 1018566,
+    "agent_id_prefix": "a2b134cc",
+    "file": "2026-09-13T00-51-01_antagonist_a2b134cc.jsonl"
+  },
+  {
+    "started": "2026-09-13T01:08:12",
+    "role": "other",
+    "bytes": 1829997,
+    "agent_id_prefix": "a720c05a",
+    "file": "2026-09-13T01-08-12_other_a720c05a.jsonl"
+  },
+  {
+    "started": "2026-09-13T01:28:06",
+    "role": "other",
+    "bytes": 930240,
+    "agent_id_prefix": "a0a13648",
+    "file": "2026-09-13T01-28-06_other_a0a13648.jsonl"
+  },
+  {
+    "started": "2026-09-13T01:28:29",
+    "role": "other",
+    "bytes": 644821,
+    "agent_id_prefix": "a9688dbd",
+    "file": "2026-09-13T01-28-29_other_a9688dbd.jsonl"
+  },
+  {
+    "started": "2026-09-13T01:44:31",
+    "role": "other",
+    "bytes": 1547528,
+    "agent_id_prefix": "ac5f0070",
+    "file": "2026-09-13T01-44-31_other_ac5f0070.jsonl"
+  },
+  {
+    "started": "2026-09-13T02:18:56",
+    "role": "other",
+    "bytes": 1286634,
+    "agent_id_prefix": "a1f5fb88",
+    "file": "2026-09-13T02-18-56_other_a1f5fb88.jsonl"
+  },
+  {
+    "started": "2026-09-13T02:19:24",
+    "role": "other",
+    "bytes": 1383303,
+    "agent_id_prefix": "a56156d0",
+    "file": "2026-09-13T02-19-24_other_a56156d0.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:18:18",
+    "role": "other",
+    "bytes": 793726,
+    "agent_id_prefix": "af79e6d4",
+    "file": "2026-09-13T04-18-18_other_af79e6d4.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:18:39",
+    "role": "other",
+    "bytes": 923210,
+    "agent_id_prefix": "ab12bd43",
+    "file": "2026-09-13T04-18-39_other_ab12bd43.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:19:03",
+    "role": "other",
+    "bytes": 1311566,
+    "agent_id_prefix": "aff1c277",
+    "file": "2026-09-13T04-19-03_other_aff1c277.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:28:36",
+    "role": "adversarial",
+    "bytes": 1034600,
+    "agent_id_prefix": "a8220c41",
+    "file": "2026-09-13T04-28-36_adversarial_a8220c41.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:33:27",
+    "role": "other",
+    "bytes": 731585,
+    "agent_id_prefix": "a0f80c1e",
+    "file": "2026-09-13T04-33-27_other_a0f80c1e.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:33:52",
+    "role": "other",
+    "bytes": 658865,
+    "agent_id_prefix": "a3136bf4",
+    "file": "2026-09-13T04-33-52_other_a3136bf4.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:34:11",
+    "role": "other",
+    "bytes": 650681,
+    "agent_id_prefix": "aaf22939",
+    "file": "2026-09-13T04-34-11_other_aaf22939.jsonl"
+  },
+  {
+    "started": "2026-09-13T04:34:33",
+    "role": "other",
+    "bytes": 895349,
+    "agent_id_prefix": "a59c0ef6",
+    "file": "2026-09-13T04-34-33_other_a59c0ef6.jsonl"
+  }
+]

@@ -36,8 +36,13 @@ USE
 
 `fetch` returns the parsed JSON *and* writes the raw bytes under
 `retrieval-log/<session>/`, with a manifest line recording url, sha256, byte
-count, and the UTC timestamp. Writes happen BEFORE the caller sees the data, so a
-caller cannot log a different payload than the one it acted on.
+count, HTTP status, and the UTC timestamp. Writes happen BEFORE the caller sees
+the data, so a caller cannot log a different payload than the one it acted on.
+`fetch` returns None -- but STILL writes the artefact and manifest line -- for a
+non-2xx status as well as for a transport failure or an unparseable body: a 404
+or a publisher interstitial is retrieved evidence of a failed retrieval, not
+absence of evidence, and CLAUDE.md 5(c) is the reason that distinction is kept
+rather than dropped along with the rest of the failure.
 
     python3 scripts/research/retrieval_log.py --verify-authors --session <id>
 
@@ -54,6 +59,7 @@ import os
 import sqlite3
 import subprocess
 import sys
+import tempfile
 import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
@@ -195,6 +201,12 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
 
     The write happens before the return, deliberately: the artefact on disk is the
     bytes the caller actually received, not a later re-fetch that may differ.
+
+    Returns None on ANY failure: curl itself failing (no HTTP response at all), an
+    empty body, a body that is not JSON -- OR, as of 2026-09-13, an HTTP status
+    outside 2xx. The artefact and the manifest line are written regardless: a
+    failed retrieval is still evidence of what was attempted and what came back,
+    and CLAUDE.md 5(c) is exactly the case for keeping it (see `status` below).
     """
     # BYTES, NOT TEXT, AND FOLLOW REDIRECTS. Both fixed 2026-09-02 after measurement.
     #
@@ -213,9 +225,37 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
     # This is the ROOT CAUSE of D04-032, which was closed on 2026-09-02 by reconstructing
     # a manifest for 58 unlogged payloads. That fix treated the symptom -- it never asked
     # why the payloads were unlogged. This is why.
-    r = subprocess.run(["curl", "-sS", "-L", "--max-time", str(timeout), url],
-                       capture_output=True)
-    body = r.stdout                        # bytes
+    #
+    # HTTP STATUS, NOT JUST EXIT CODE. Fixed 2026-09-13. `curl` without `--fail` exits 0
+    # for ANY completed HTTP transaction, 404 and publisher interstitial included -- the
+    # body it hands back is an error page, and until now the manifest recorded that as a
+    # successful retrieval indistinguishable from the real thing. `-o <tempfile> -w
+    # '%{http_code}'` sends the body straight to disk untouched and returns ONLY the
+    # final status code (final, because of `-L`: the code after redirects are followed,
+    # which is the code for the bytes actually stored) on stdout -- so the body is never
+    # routed through Python at all before being read back as bytes, and the "capture
+    # bytes exactly" promise above is unaffected by this change; it is the same promise,
+    # applied one file-write earlier. A transport failure that never got an HTTP response
+    # (DNS, TLS, timeout before headers) reports "000" from curl, which is not a status
+    # and is stored as `status: null` rather than invented as 0 or 200.
+    fd, tmp_path = tempfile.mkstemp(prefix="retrieval-log-", suffix=".tmp")
+    os.close(fd)
+    tmp = Path(tmp_path)
+    try:
+        r = subprocess.run(
+            ["curl", "-sS", "-L", "--max-time", str(timeout),
+             "-o", str(tmp), "-w", "%{http_code}", url],
+            capture_output=True)
+        body = tmp.read_bytes() if tmp.exists() else b""  # bytes, straight off disk
+    finally:
+        tmp.unlink(missing_ok=True)
+    code_raw = r.stdout.decode("ascii", errors="replace").strip()
+    # curl's own sentinel for "no HTTP response was ever received" is the literal
+    # string "000" (measured: a proxy CONNECT failure prints it, curl exit 56).
+    # That is not a status code -- 0 is not in any HTTP spec -- so it is None, the
+    # same as a stdout curl could not produce a code for at all.
+    status = (int(code_raw) if code_raw.isdigit() and len(code_raw) == 3
+               and code_raw != "000" else None)
     d = LOG_ROOT / _session_stem(session)
     d.mkdir(parents=True, exist_ok=True)
     sha = hashlib.sha256(body).hexdigest()  # of what arrived, not of a lossy decode
@@ -225,10 +265,12 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
         fh.write(json.dumps({
             "retrieved_at": stamp or _now(), "url": url, "purpose": purpose,
             "sha256": sha, "bytes": len(body), "exit": r.returncode,
-            "artefact": artefact,
+            "status": status, "artefact": artefact,
         }, ensure_ascii=False) + "\n")
     if r.returncode != 0 or not body.strip():
         return None
+    if status is None or not (200 <= status < 300):
+        return None                        # HTTP-layer failure: recorded above, not hidden
     try:
         # Decode ONLY to parse, never to store. A binary body simply is not JSON, and
         # `errors="replace"` keeps that a clean None rather than an exception raised
@@ -320,6 +362,40 @@ def _unparsed_payloads(session):
             ext = p.suffix or "(no extension)"
             why = f"not JSON ({ext}); this module parses Crossref-shaped JSON only"
             out.append((rec["artefact"], rec.get("url", ""), why))
+    return out
+
+
+def _failed_retrievals(session):
+    """Manifest lines whose retrieval did not succeed at the HTTP layer.
+
+    Added 2026-09-13 alongside the `status` field. A record here means the artefact
+    and manifest line exist -- evidence that an attempt was made and exactly what
+    came back -- but the bytes are NOT a usable retrieval: either curl itself never
+    got an HTTP response (`exit` != 0) or it did and the final status (after any
+    redirect -L followed) was outside 2xx.
+
+    Older manifest lines, written before this field existed, carry no `status` key
+    at all. Those are read here as UNKNOWN, never as failed: a missing field is
+    silence, and silence is not evidence of failure any more than it was evidence
+    of success (the defect this whole module exists to correct, one field over).
+
+    Deliberately does NOT change what `_logged_payloads()` returns -- that
+    function's docstring already establishes the pattern this follows: honesty
+    about a payload's status is added BESIDE the parser, never folded inside it,
+    so a caller with an older, narrower notion of what that function returns (see
+    scripts/db.py's correct_source, which depends on its contract) is not silently
+    handed different data.
+    """
+    session = _session_stem(session)
+    out = []
+    for rec in _manifest_records(session):
+        exit_code = rec.get("exit", 0)
+        status = rec.get("status")
+        if exit_code != 0:
+            out.append((rec.get("artefact", ""), rec.get("url", ""),
+                        f"curl exit {exit_code}: no HTTP response reached"))
+        elif status is not None and not (200 <= status < 300):
+            out.append((rec.get("artefact", ""), rec.get("url", ""), f"HTTP {status}"))
     return out
 
 
@@ -516,6 +592,7 @@ def verify_authors(session):
 
     manifest = _manifest_records(session)
     unparsed = _unparsed_payloads(session)
+    failed = _failed_retrievals(session)
 
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
     cx.row_factory = sqlite3.Row
@@ -588,6 +665,14 @@ def verify_authors(session):
         for art, url, why in unparsed:
             print(f"      {art}  {why}")
             print(f"          {url[:96]}")
+    if failed:
+        print(f"\n  FAILED RETRIEVALS — {len(failed)} of {len(manifest)} logged attempt(s) did not")
+        print("  reach a usable HTTP response (see `status`/`exit` on the manifest line). The")
+        print("  artefact and manifest line exist as evidence of the attempt; nothing here is")
+        print("  treated as a payload by any comparison in this module.")
+        for art, url, why in failed:
+            print(f"      {art}  {why}")
+            print(f"          {url[:96]}")
     if unlogged:
         print(f"  NO LOGGED RETRIEVAL for {len(unlogged)} source(s) — not verifiable offline:")
         for ref_id, doi in unlogged[:6]:
@@ -623,7 +708,7 @@ def verify_authors(session):
              if examined != n_rows else f"all {n_rows} source(s)")
     print(f"\n  CLEAN FOR {scope.upper()} — their stored authors and asserted")
     print("  bibliographic fields match the retrieved payloads, byte-for-byte source." + tail)
-    if unexaminable or unlogged or unparsed:
+    if unexaminable or unlogged or unparsed or failed:
         print("  NOT A WHOLE-CORPUS PASS: see the block(s) above for what this verdict")
         print("  does not cover. A source outside the comparison is not a source that agreed.")
     return 0
@@ -713,6 +798,12 @@ def reconstruct_manifest(session):
                         "check only."),
             "sha256": hashlib.sha256(raw.encode("utf-8")).hexdigest(),
             "bytes": len(raw), "exit": 0, "artefact": f.name,
+            # No `status` key. This line was never produced by fetch() reading curl's
+            # -w output -- there is no HTTP status to report, and "200" would be a
+            # fabrication of exactly the kind this module exists to catch. `exit: 0`
+            # is kept as a literal true fact (the file read cleanly), not a stand-in
+            # for a status this path never observed. `_failed_retrievals()` reads a
+            # missing `status` as unknown, never as failed, for the same reason.
             "reconstructed": True,
         }, ensure_ascii=False))
         written += 1

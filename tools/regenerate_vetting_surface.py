@@ -100,6 +100,27 @@ def fetch_backbone(db_path: Path) -> dict:
     for r in q("SELECT extraction_id, population_code FROM extraction_population_links ORDER BY population_code"):
         epl_by[r["extraction_id"]].append(r["population_code"])
 
+    # Migration 075 (2026-09-13): what a figure IS stated relative to, per extraction
+    # row. Keyed by from_extraction_id -> list of edges, so this table's own reader
+    # (this generator) can show a row's relations without a per-row query. Every field
+    # the vetting page needs is carried here rather than re-derived in JS: `relation`,
+    # the referent (`to_extraction_id` XOR `to_label` -- exactly one is set, per the
+    # table's own CHECK), and `stated`, so a reader can tell "row #3" from a bare
+    # label from a source that never named its referent at all.
+    rel_by = defaultdict(list)
+    for r in q(
+        "SELECT from_extraction_id, relation, to_extraction_id, to_label, stated "
+        "FROM extraction_relations ORDER BY relation_id"
+    ):
+        rel_by[r["from_extraction_id"]].append(
+            {
+                "relation": r["relation"],
+                "to_extraction_id": r["to_extraction_id"],
+                "to_label": r["to_label"],
+                "stated": r["stated"],
+            }
+        )
+
     # Canonical populations taxonomy (for UI to label codes + flag drift)
     populations_taxonomy = {
         r["population_code"]: {
@@ -192,7 +213,8 @@ def fetch_backbone(db_path: Path) -> dict:
         """SELECT x.extraction_id, x.slug, x.ref_id, t.canonical_en AS parameter,
                   x.claimed_value, x.claimed_unit, x.jurisdiction,
                   x.identity_code, x.icf_code, x.needs_code, x.medical_code,
-                  x.setting, x.extraction_status, x.source_section
+                  x.setting, x.extraction_status, x.source_section,
+                  x.figure_role, x.comparator
            FROM source_value_extractions x
            JOIN base_parameters p ON p.parameter_id = x.parameter_id
            JOIN terms t           ON t.term_id      = p.term_id"""
@@ -204,6 +226,11 @@ def fetch_backbone(db_path: Path) -> dict:
                 "parameter": r["parameter"],
                 "value": r["claimed_value"],
                 "unit": r["claimed_unit"],
+                # migration 075 -- NULL means genuinely ungraded, not "no role"; the
+                # renderer must show that state rather than leave it blank (an
+                # ungraded row and a graded-but-empty one must not look the same).
+                "figure_role": r["figure_role"],
+                "comparator": r["comparator"],
                 "jurisdiction": r["jurisdiction"],
                 "population": ",".join(junc) if junc else r["identity_code"],
                 "lens": _other_lenses(r),
@@ -301,7 +328,7 @@ def fetch_backbone(db_path: Path) -> dict:
                       x.setting, x.jurisdiction, x.claim_type,
                       x.claimed_value, x.claimed_unit, x.source_section,
                       x.extraction_method, x.extraction_status, x.promoted_to_rdc_id,
-                      x.notes
+                      x.notes, x.figure_role, x.comparator
                FROM source_value_extractions x
                JOIN base_parameters p ON p.parameter_id = x.parameter_id
                JOIN terms t           ON t.term_id      = p.term_id
@@ -312,6 +339,11 @@ def fetch_backbone(db_path: Path) -> dict:
             j = epl_by.get(row["extraction_id"], [])
             row["lens"] = _other_lenses(row)
             row["population_code"] = ",".join(j) if j else row["identity_code"]
+            # migration 075 -- what this row's figure is stated relative to, if
+            # anything. Empty list (not None) when the row carries no comparator
+            # edge, so the renderer can tell "no relations recorded" from "relations
+            # not fetched".
+            row["relations"] = rel_by.get(row["extraction_id"], [])
         items_here = [ic for ic, sg in item_slug.items() if sg == slug]
         bb[slug] = {
             "linked_sources": linked,
@@ -391,6 +423,15 @@ td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
 .b-id{background:#e3e9ef;color:#3a566e} .b-noid{background:#eee5d4;color:var(--muted)}
 .m-exact{background:var(--strong);color:#fff} .m-tol{background:#dde9d4;color:var(--strong)} .m-other{background:#f0d9d4;color:var(--weak)}
 .s-prel{background:#eee5d4;color:var(--ok)} .s-rev{background:#f0e6c8;color:var(--ok)} .s-ver{background:var(--strong);color:#fff} .s-con{background:#f0d9d4;color:var(--weak)} .s-abs{background:#e7ddcb;color:var(--muted)}
+/* migration 075: figure_role badges. r-none doubles as the UNGRADED marker -- an
+   ungraded row must look visibly unresolved, not blank, so it gets the same
+   attention-red family as a contradicted status rather than a neutral grey. */
+.r-claim{background:#dbe2ec;color:var(--syn)} .r-finding{background:#dde9d4;color:var(--strong)}
+.r-condition{background:#f0e6c8;color:var(--ok)} .r-derived{background:#e3e9ef;color:#3a566e}
+.r-none{background:#f0d9d4;color:var(--weak)}
+.rel-list{display:flex;flex-direction:column;gap:2px}
+.rel-row{font-size:10px;color:var(--muted)}
+.rel-stated{font-style:italic}
 .tier{font-weight:600;font-family:var(--serif)}
 .val{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--accent)}
 .empty{padding:18px;background:var(--panel);border:1px dashed var(--weak);color:var(--weak);font-size:12px;border-radius:3px}
@@ -547,6 +588,30 @@ function depth(d){if(d.value_extractions.length)return['full','d-full'];
 function esc(s){return (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 function matchClass(m){if(m==='EXACT')return'm-exact';if(m==='WITHIN-TOLERANCE')return'm-tol';return'm-other';}
 function statClass(s){return{'preliminary':'s-prel','reviewed':'s-rev','verified':'s-ver','contradicted':'s-con','absent-confirmed':'s-abs'}[s]||'s-prel';}
+// migration 075 (2026-09-13): figure_role / comparator / extraction_relations.
+// roleCell renders NULL as a VISIBLE "UNGRADED" badge -- a row nobody has graded
+// yet must never look like a row that was graded empty. valCell prefixes the raw
+// comparator token (already the operator itself -- '>', '<=', 'between', ... --
+// per the migration's own CHECK) ahead of the value, so "more than thirty
+// centimetres" renders as "> 30 cm" rather than a bare, uncontextualised "30 cm".
+function roleClass(r){return{'claim':'r-claim','finding':'r-finding','condition':'r-condition','derived':'r-derived'}[r]||'r-none';}
+function roleCell(r){return r?'<span class="badge '+roleClass(r)+'">'+esc(r)+'</span>':'<span class="badge r-none" title="figure_role is NULL -- not yet graded">UNGRADED</span>';}
+function valCell(value,unit,cmp,cls){
+ const v=(value==null||value==='')?'&mdash;':esc(value);
+ const u=unit?' '+esc(unit):'';
+ const c=cmp?esc(cmp)+' ':'';
+ return '<span class="'+(cls||'val')+'">'+c+v+u+'</span>';
+}
+// relCell: one line per OUTGOING edge, 'relation &rarr; (row #M | "label") [stated]'.
+// Incoming edges (what points AT this row) are not shown here -- they show up as
+// this same column on the row at the OTHER end of the edge.
+function relCell(rels){
+ if(!rels||!rels.length) return '<span class="note">&mdash;</span>';
+ return '<div class="rel-list">'+rels.map(e=>{
+   const target=e.to_extraction_id!=null?('row #'+e.to_extraction_id):('&quot;'+esc(e.to_label)+'&quot;');
+   return '<div class="rel-row">'+esc(e.relation)+' &rarr; '+target+' <span class="rel-stated">['+esc(e.stated)+']</span></div>';
+ }).join('')+'</div>';
+}
 function idCell(s){const id=s.doi?('doi:'+s.doi):(s.pmid?('PMID:'+s.pmid):null);
  return id?('<span class="badge b-id">'+esc(id)+'</span>'):'<span class="badge b-noid">no id</span>';}
 // author_display holds a name; author_display_note holds the prose that used to
@@ -584,12 +649,14 @@ function renderDetail(slug){
  let h='<h2>'+esc(slug)+'</h2><div class="slug">'+ls.length+' linked sources &middot; '+sx.length+' per-source extractions &middot; '+ve.length+' synthesis verifications &middot; '+steps[3].n+' walk(s)</div>';
  h+='<div class="chain">'+steps.map(s=>'<span'+(s.n?' class="here"':' class="empty-step"')+'>'+s.l+': '+s.n+'</span>').join(' &rarr; ')+'</div>';
  h+='<div class="sec"><div class="sec-h">Per-source extractions <em>what each source asserts &middot; per population &middot; pre-synthesis</em></div>';
- if(sx.length){h+='<table><tr><th>source</th><th>parameter</th><th>population &middot; setting</th><th>other lenses</th><th>juris.</th><th>value</th><th>section</th><th>status</th><th>&rarr; rdc</th></tr>';
+ if(sx.length){h+='<table><tr><th>source</th><th>parameter</th><th>population &middot; setting</th><th>other lenses</th><th>juris.</th><th>value</th><th>role</th><th>relations</th><th>section</th><th>status</th><th>&rarr; rdc</th></tr>';
   sx.forEach(r=>{h+='<tr><td class="ref">'+esc(r.ref_id)+'</td><td>'+esc(r.parameter)+'</td>'+
    '<td>'+popCell(r.population_code, r.setting)+'</td>'+
    '<td>'+lensCell(r.lens)+'</td>'+
    '<td>'+esc(r.jurisdiction||'')+'</td>'+
-   '<td><span class="val">'+esc(r.claimed_value||'&mdash;')+' '+esc(r.claimed_unit||'')+'</span></td>'+
+   '<td>'+valCell(r.claimed_value, r.claimed_unit, r.comparator)+'</td>'+
+   '<td>'+roleCell(r.figure_role)+'</td>'+
+   '<td>'+relCell(r.relations)+'</td>'+
    '<td><span class="note">'+esc(r.source_section||'')+'</span></td>'+
    '<td><span class="badge '+statClass(r.extraction_status)+'">'+esc(r.extraction_status)+'</span></td>'+
    '<td>'+(r.promoted_to_rdc_id?'<span class="ref">'+esc(r.promoted_to_rdc_id)+'</span>':'<span class="note">&mdash;</span>')+'</td></tr>';});
@@ -660,8 +727,12 @@ function renderDetail(slug){
       const lensH = x.lens ? '<span class="vlens">'+esc(x.lens)+'</span>' : '';
       const setH = x.setting ? '<span class="vsetting">'+esc(x.setting)+'</span>' : '';
       const jurH = x.jurisdiction ? '<span class="vmeta">'+esc(x.jurisdiction)+'</span>' : '';
+      // figure_role/comparator (migration 075) exist only on the extraction layer;
+      // rdc/walk rows carry neither field at all, so roleH stays empty for them
+      // rather than mislabelling a synthesis/walk value as ungraded.
+      const roleH = (lay==='extraction') ? ' '+roleCell(x.figure_role) : '';
       return '<div class="vrow"><span class="layer-pill layer-'+lay+'">'+lay+'</span>'+
-        '<span class="vval">'+esc(x.value||'&mdash;')+' '+esc(x.unit||'')+'</span>'+
+        valCell(x.value, x.unit, x.comparator, 'vval')+roleH+
         '<span class="vmeta">'+esc(x.parameter||'')+'</span>'+jurH+popH+lensH+setH+'</div>';
     }).join('') + '</div>' : '<span class="no-vals">no values extracted from this source yet</span>';
     const relHtml = s.relevance_note

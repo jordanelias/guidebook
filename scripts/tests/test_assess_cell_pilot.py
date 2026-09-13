@@ -75,7 +75,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1):
         extraction_id INTEGER PRIMARY KEY AUTOINCREMENT,
         ref_id TEXT, slug TEXT, parameter_id INTEGER,
         identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
-        claim_type TEXT, claimed_value TEXT);
+        claim_type TEXT, claimed_value TEXT, figure_role TEXT, comparator TEXT);
       CREATE TABLE evidence_population_match (
         match_id TEXT, ref_id TEXT, match_grade TEXT, target_population TEXT);
     """)
@@ -89,9 +89,17 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1):
         conn.execute("INSERT INTO source_slug_links VALUES (?, 'syn-slug')", (ref,))
         for _ in range(s.get("extractions", extractions_per_source)):
             conn.execute(
+                # figure_role='claim' because these fixtures exist to exercise the
+                # TIER/GRAIN logic, and gather_sources now returns only rows that
+                # supply a value (migration 075). A fixture row left ungraded would
+                # be filtered out before the logic under test ever ran, and every
+                # assertion here would pass over an empty governing set -- the
+                # vacuity CLAUDE.md 5(a) names, hidden inside the engine's own tests.
                 "INSERT INTO source_value_extractions "
-                "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value) "
-                "VALUES (?, 'syn-slug', ?, 'MOB', 'numerical', '1')", (ref, parameter_id))
+                "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value, "
+                " figure_role) "
+                "VALUES (?, 'syn-slug', ?, 'MOB', 'numerical', '1', 'claim')",
+                (ref, parameter_id))
     return conn
 
 

@@ -3049,3 +3049,338 @@ block whose title states the presentation regardless of chapter; then on demand.
 device-based finding as a property of the field. Measure demand against the corpus being built, not
 only the committed table.
 DATE: 2026-09-11 — adversarial pass on the same day's ruling.
+
+---
+
+## Owner rulings 2026-09-12 — the four `scope` escalations, closed from bytes
+
+The owner ruled on three of the four questions in
+`workplan/2026-09-10-b5b-scope-owner-escalation.md`, selecting among the options that document
+itself tabled. Recorded as selections, not as quoted speech — the owner wrote no prose here and none
+is invented for them.
+
+**Ruling 1 — REF-00784: retrieve the abstract first, then let scope and tier follow from the bytes**
+rather than from the three prose records that had said so since 2026-07-20. Done: PMID 20434614
+efetch, persisted at `retrieval-log/session_2026-09-12-b5b-scope-rulings/f5d94e0feaa8d48f.xml`,
+`sha256 f5d94e0feaa8d48f…`. Its own structured abstract states the design — **"Case series."** — and
+the sample — **"The sample of convenience included manual wheelchair (MWC; n=109), power wheelchair
+(PWC; n=100), and scooter users (n=14)."** `PublicationType` carries no human-subject design tag,
+and the DOI in the payload is byte-identical to the stored row's. `lower_control` derives **tier 3**.
+**The row moved from tier 1 to tier 3**, fifty-four days after the anchor sweep recorded that tier 1
+was wrong. It governs no determination: `specifications.governing_refs` holds REF-00973/974/979/980,
+checked before the write.
+
+**Ruling 2 — REF-00971 / REF-00972: `lower_control` on both.** `scope` discriminates on study DESIGN
+control, and a device bench measurement with no instrumented human protocol is observational.
+`lower_control` derives tier 3, which is the stored tier, so no tier moved and the rows simply
+stopped being underivable. **This ruling also settles ruling 1's design question independently** —
+REF-00784 varies passageway width in 5-cm increments exactly as the scooter pair decrements room
+size, so the two arrive at `lower_control` by the same reading and not by two.
+
+**Ruling 3 — REF-00976: retrieve the J-STAGE record.** Done:
+`d170cbf86507a07b.html`, `sha256 d170cbf86507a07b…`. The abstract establishes a cross-sectional
+survey of built housing stock — *"clarifying actual features of the orientation to lifetime homes in
+newly built residences in Japan"*, *"Most numbers of investigated residences are not proper…"*.
+Buildings are measured, not participants; no intervention. `lower_control`, tier 3 unchanged.
+
+**Ruling 4 was not put and is still open** — retrospective ratification of the five `scope` values
+B5(b) applied on 2026-09-10.
+
+**THE WRITER THIS NEEDED DID NOT EXIST, which is why the tier sat wrong for fifty-four days.**
+`tier` was reachable by no sanctioned writer: `_AMENDABLE` omits it and `correct-source` takes only
+bibliographic fields from a payload. So the sole route to re-tier a source was hand SQL against a
+table the CLI can reach — `CLAUDE.md` §4's coverage-bug shape. `amend-source` now takes `--tier`,
+admissible **only** beside `--field scope` and **only** equal to the value the ratified ladder
+derives from the new scope, written in the same statement. The original refusal is narrowed, not
+removed: no path here writes a row the ladder cannot produce. Four refusal paths fault-injected
+before use.
+
+**What it unblocks, stated without overclaiming.** All 11 sources are now tier-consistent and none
+carries a NULL scope, so B5a's tier gate no longer makes any of them non-anchoring — including the
+three that measured corridor and passage geometry. They anchor at **T3**, not T1, so the
+corridor-width cell is not thereby a `stated` determination; what changed is that the sources which
+actually measured the parameter now reach the engine at all. Run the engine to find out; do not
+predict the state here.
+
+CONDITION: Any session amending `scope`, reading `adjudication_integrity`'s quarantine entry, or
+planning the corridor-width cell.
+ACTION: Amend scope through `db.py amend-source`, with `--tier` when and only when the ladder
+derives a different tier; never by hand SQL. Read REF-00784 as T3. `adjudication_integrity` is GREEN
+as of this date and stays quarantined — its promotion clause waits on OD-E, which was ruled
+2026-08-31 (D-0179) and whose subject holds 0 rows, so promotion is an owner call with no mechanical
+blocker left.
+DATE: 2026-09-12 — owner rulings on the B5(b) escalation, executed the same day.
+
+---
+
+## Owner ruling 2026-09-13 — a code value confirmed by research is upgraded; the empty circle is for code WITHOUT research backing
+
+> **"Sometimes code standards come from T1. If a code standard is being confirmed as genuine best
+> practice according to studies, then the code/regulatory input can be upgraded."**
+>
+> **"It is when a code/regulatory input does not have research backing that it gets the empty circle."**
+
+**What this settles.** It was put to the owner as one of three band questions raised by the
+2026-09-13 design pass: what strength a cell carries when its *finding* is T1 but its only *value*
+comes from a code. The answer is the upgrade route, and it is ruled — not the two-part rendering
+that was also on the table.
+
+**WHAT IT EXTENDS, AND THE EXTENSION IS THE POINT.** `evidence-architecture.md`'s **G1** re-grains a
+T4/T5 source out of NON-ANCHORING on exactly one trigger: *"its evidence basis is documented as
+traceable to T1/T2 evidence, with that provenance recorded on the source record."* That is a
+**genealogy** test — where the number came from. This ruling adds a second, independent route:
+**confirmation** — a study finding the code's value sound, whether or not anyone can trace how the
+committee reached it. The two are not the same test and the corpus already separates them:
+**REF-00980** concludes *"changes to the technical requirements for ramp slope and length cannot be
+recommended at this time."* It establishes nothing about ADA's provenance. Under G1 as written it
+re-grains nothing. Under this ruling it upgrades the value it confirms.
+
+**And it makes the empty circle CONDITIONAL where it was automatic.** `tier-system.md` §5 maps T6
+(code-floor) to `○` flatly, and §8's band table gives `○ Weak` to "T6 (code-floor)" with a cell whose
+entire basis is T4–T6 taking `○` regardless. After this ruling `○` marks the **unbacked** case
+specifically: a code or regulatory input with no research behind it. A code value a study has
+confirmed is no longer `○` by virtue of being a code.
+
+**WHAT THE RULING DOES NOT SAY, recorded so nobody fills it in silently.** Three things.
+(1) **Which band an upgraded value lands in** — the ruling says "upgraded", not "upgraded to ●". The
+natural reading is that it takes the band of the confirming evidence, so a T1 confirmation yields
+`●`; that is a reading, not the ruling, and it is the next thing to put to the owner.
+(2) **Whether T4/T5 and T6 behave alike here.** The ruling says "code/regulatory input" without
+distinguishing them, while existing doctrine splits them — `◐` for T4/T5 citations, `○` for T6.
+(3) **What counts as confirmation.** REF-00980's non-recommendation of change is the clear case. A
+study that merely *uses* a code value as its rig setting is not confirming it, and that distinction
+is exactly what the `confirms` / `tested_at` edges of migration 075 exist to record.
+
+**Mechanism, so this is executable rather than aspirational.** The 075 design gives the row-level
+vocabulary: a `confirms` edge from a finding row to the code figure it confirms is the upgrade
+trigger; `tested_at` is not; `insufficient` is the opposite and remains an open band question. The
+engine rule that reads those edges is not yet built, so **the upgrade is ruled and unexecuted** —
+which is the state an empty table should be read as, per the 2026-09-11 entry above.
+
+CONDITION: Any session assigning a strength band to a determination whose value comes from a code or
+regulatory source, or citing G1's traceability clause as the only re-graining route.
+ACTION: Treat confirmation-by-study as a second re-graining route alongside documented traceability.
+Read `○` as "no research backing", not as "is a code". Record the confirming relation on the row
+rather than asserting the upgrade in prose. Do not assume which band an upgraded value takes — that
+is unruled.
+DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-13 — a derived figure takes a WEIGHTED AVERAGE of its inputs, not the weakest one
+
+> **"Derived figures are a weighted average of their figures. If something has like two T1 and a
+> single T4...it's probably a half circle."**
+
+**This OVERTURNS the design pass's recommendation**, which was weakest-link: *"a derived figure
+anchors at the weakest band of its inputs; if any input is a regulatory-stratum row the derived value
+is code-derived (○) regardless."* Under that rule the owner's own example lands `○`. Under this
+ruling it lands `◐`. The recommendation is withdrawn; it was session-authored and is not a record
+this ruling has to be weighed against (rule 0).
+
+**It extends a model that already exists.** `tier-system.md` §8, the weighted-strength anchor model
+(DR-2026-07-20, owner directive), already holds that *"every tier can anchor a best-practice claim;
+the strength of the claim is weighted by the tier of its evidence."* Today's ruling applies that
+frame to the composite case — a figure computed from several figures — which §8 never addressed
+because derived figures could not be represented at all.
+
+**THE OPERANDS DO NOT EXIST, and that is the executable gap.** §8 assigns bands by MEMBERSHIP, not
+by magnitude: T1/Co-1/T2/Co-2/T3-clinical → `●`; T4/T5 → `◐`; T3-grey/T6 → `○`. There are no numeric
+tier weights anywhere in the project. **And the one column whose name promises them does not hold
+them:** `weighting_profile.tier_weights` holds audience foregrounding — all five rows are shapes like
+`{"foreground":["T1","CO1","conflict_notes","code_refs"],"delta":"show"}`, i.e. which tiers to surface
+first for a designer as against a policymaker. A future implementer looking for the weights will find
+that column and be misled. Recorded here so they are not.
+
+**The worked example constrains the function, and the obvious implementation fails it.** Scoring the
+bands `●`=3, `◐`=2, `○`=1, two T1 and one T4 average to 2.67, which rounds to `●` — not the half
+circle the owner named. **Rounding DOWN yields `◐` and matches.** So the ruling's example is
+satisfied by *mean of band ordinals, floored*, and is falsified by *mean, rounded to nearest*. That
+is a reading, not the ruling: the owner said "probably", named no weights and no rounding, and the
+choice between floor, a tier-count threshold, or genuine per-tier magnitudes is unsettled.
+
+CONDITION: Any session assigning a band to a `figure_role='derived'` row, or implementing the band
+rule in the determination engine.
+ACTION: Compute from all inputs; never take the weakest. Do not read
+`weighting_profile.tier_weights` as tier weights. Before implementing, put the weighting function
+itself to the owner with the 2×T1 + 1×T4 = `◐` case as the acceptance test, and state which candidate
+function you propose — do not pick one silently, because more than one satisfies the example and they
+diverge on every other combination.
+DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-13 — a finding that a CODE is insufficient supplies no value, and is still first-class evidence
+
+> **"Insufficient findings don't provide anything, do they? They're insufficient. All you do is log
+> you looked at them, I think"**
+>
+> — put back to the owner because the phrase carries two opposite readings, and confirmed as: **the
+> finding supplies no VALUE, but is real evidence.** The cell stays `pending` on value; the finding
+> anchors the cell in DIRECTION, remains first-class R7 harm evidence, and is rendered in the book.
+
+**Why it was queried rather than recorded as first stated.** In the 075 vocabulary `insufficient` is
+a RELATION, not a quality grade: it points from a finding row to *the baseline that finding says is
+inadequate*. So an "insufficient finding" is a finding **that the code is insufficient** — not a
+finding that is itself weak. Read the second way, the ruling would have discarded REF-00784's
+*"Between 10% and 100% of users would not be able to maneuver in spaces that meet current
+Accessibility Guidelines"* and REF-00971's *"None of the scooters tested were capable of completing
+all manoeuvres within the space allowed by existing standards"* as log entries. Those are T1 and T3
+findings that the built environment FAILS people, which the research contract's R7 makes first-class
+evidence rather than a by-product, and which the mission — *"get people to ask the right
+questions"* — points directly at. The clarification preserves them.
+
+**What the ruling settles.** Such a finding cannot say what the right number IS, so it supplies no
+value and cannot move a cell off `pending` on value. It can and does establish that the existing
+value is wrong for these people, and that is rendered.
+
+**The three band questions raised by the 2026-09-13 design pass are now all closed:** a code value
+confirmed by research is upgraded and `○` marks unbacked code (entry above); a derived figure takes a
+weighted average of its inputs, not the weakest (entry above, weighting function still open); and an
+`insufficient` finding supplies direction, not value (this entry).
+
+CONDITION: Any session grading a finding that a code or standard is inadequate, or implementing the
+determination engine's treatment of `insufficient` edges.
+ACTION: Never let such a finding supply `value_min`/`value_max`. Never discard it either — it anchors
+direction at its own source's tier and is rendered. A cell whose only evidence is `insufficient`
+findings is `pending` on value and states the inadequacy.
+DATE: 2026-09-13 — owner ruling, queried and confirmed.
+
+---
+
+## Owner ruling 2026-09-13 — grey literature that states a code's value is regulatory stratum, not independent evidence
+
+> **"If T3-grey is the same value as T6, I think T3-grey is not T3 but T6"**
+
+**What it is really about, and it is not the marker.** `tier-system.md` §5 maps T3-grey and T6 to the
+SAME band — both `○`. So re-tiering such a source changes no marker. What it changes is the
+**stratum** it sits in and, decisively, **whether it counts as an independent root**. Two `○` sources
+stating the same number read as two sources converging; if one is echoing the other's code, they are
+one source counted twice. That is the laundering this project already names
+*convergence-not-evidence*, and it is the consequential half of this ruling.
+
+**Machinery that already exists, so this is not built from nothing.** `v_value_independence` counts
+`DISTINCT COALESCE(root_ref_id, root_id)` and admits only `root_type IN ('measurement_primary',
+'participatory_finding', 'derived_calculation')` — a row recorded as `committee_assertion` or
+`untraced` already corroborates nothing. `echo_of` and `root_id` carry the transmission chain, and
+`references/methodology/value-genealogy-worked-example-corridor-width.md` is the worked precedent
+(1800 mm's zero in-corpus roots against 2440/2400 mm's two independent roots).
+
+**THE GAP THIS RULING FILLS.** All of that machinery tests **recorded provenance** — what an extractor
+wrote down about where a figure came from. The ruling supplies a test for the case where provenance
+was never recorded: **value coincidence with a code**. Grey literature overwhelmingly repeats code
+values, and an unrecorded echo currently reads as independent corroboration.
+
+**THE FALSE POSITIVE, stated because the rule is stated as an identity.** Two genuinely independent
+measurements can land on the same number; a code value is often round and grey fieldwork often
+reports round numbers. A T3-grey field study that independently measured 1500 mm and a code that says
+1500 mm are convergence, not echo, and automatic re-tiering would erase a real corroboration — the
+opposite error to the one the ruling prevents, and the harder one to notice afterwards.
+**Recommended shape, for the owner to confirm or reject:** the coincidence raises a rebuttable
+presumption of echo — the source sits in the regulatory stratum and contributes no independent root
+UNLESS its own recorded provenance shows independent measurement (`root_type='measurement_primary'`
+with a root that is not the code). That keeps the ruling's force, costs nothing when provenance is
+absent, which is the common case, and does not silently delete a genuine second root.
+
+CONDITION: Any session tiering a grey source whose value matches a code, or counting independent
+roots for a parameter.
+ACTION: Do not count a grey source as an independent root on value agreement alone. Check its
+recorded provenance first; where none exists, treat it as regulatory stratum. Expect no marker change
+— both bands are `○` — and expect the change to show up in independence counts and
+`regulatory_stratum_only`, which is where it matters.
+DATE: 2026-09-13 — owner ruling, quoted above. The rebuttable-presumption shape is a proposal, not
+the ruling.
+
+---
+
+## Owner ruling 2026-09-13 — the derived-figure weighting function: mean of band ordinals, ROUNDED DOWN
+
+> **"yeah round down"**
+
+Closing the function left open by the weighted-average ruling above. The band ordinals are the
+weights: `●`=3, `◐`=2, `○`=1; the derived figure's band is the **floor** of the mean across its
+inputs. Verified against the owner's own worked case and its neighbours:
+
+| inputs | mean | band |
+|---|---|---|
+| 2×T1 + 1×T4 — **the owner's example** | 2.667 | **◐** |
+| 3×T1 | 3.000 | ● |
+| 2×T1 + 1×T6 | 2.333 | ◐ |
+| 1×T1 + 2×T6 | 1.667 | ○ |
+| 99×T1 + 1×T4 | 2.990 | ◐ |
+
+**The property that follows from `floor`, recorded so it is a decision and not a surprise.** Only an
+all-`●` input set reaches exactly 3.0, so **a single sub-`●` input caps the result below full circle
+at any scale** — the last row above. The rule is therefore equivalent to: *a derived figure is fully
+anchored only if every input is fully anchored.* That is consistent with the ruling it completes (the
+T4 costs you the full circle), and it is the strongest consequence of rounding down rather than to
+nearest.
+
+**What "weighted" means here, stated because it was ambiguous.** The ordinals carry the weighting —
+inputs are equally weighted and the tiers differ. If per-input weighting by something else was
+intended (sample size, source count, directness), that is a different function and is NOT ruled.
+
+**Note for the implementer.** `v_best_practice.strength_band` computes a two-value band today; these
+are the three `●◐○` bands of `tier-system.md` §5/§8, and no numeric ordinal encoding exists anywhere
+in the schema yet. It has to be introduced with the engine rule, not assumed to be present.
+
+CONDITION: Implementing the band of a `figure_role='derived'` row.
+ACTION: floor(mean(ordinal(input bands))), ordinals 3/2/1, inputs equally weighted. Test against the
+five rows above; the owner's example is the acceptance case and it falsifies rounding to nearest.
+DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-13 — the whole circulation corpus is untrusted and is cleared for a re-run
+
+> **"I want you to clear all the recent research performed and how it went down the pipeline"**
+>
+> **"Basically all the circulation rows that have been produced are not able to be trusted, so we
+> have to redo them all from the start"**
+
+The second statement widened the first. "The recent research" read as batches 06 and 07; the ruling
+is the whole slug. Executed as one compensating data migration
+(`scripts/migrations/data_20260913040739_2026-09-13-clear-circulation-corpus.sql`, applied
+2026-09-13 04:15) deleting **229 rows** — every row any stage produced under
+`accessible-circulation-geometry`, reaching back through batches 04 and 05.
+
+**The scope is the slug, not the sessions, and that distinction moved rows.** Deleting by session
+stamp would have left 33 `observed_terms` that `session_2026-09-03-defect-programme` harvested from
+circulation sources under its own name, and one `source_locators` row sitting in an 881-row table —
+the row a re-run's R9 duplicate-DOI pre-check reads, so a stale locator for a deleted source is
+exactly what makes a re-run cross-file against a `ref_id` that no longer exists.
+
+**What was kept, and why none of it is research output.** `terms`, `term_aliases` and `slugs` are
+base vocabulary minted 2026-05-09; TERM-001 `ramp gradient` and TERM-002 `corridor width` survive as
+terms, while `base_parameters` — the *promotion* of those terms into the parameter layer — went, because
+that promotion is research output. `research_code_leads` carries neither `ref_id` nor `slug`. The
+acoustics corpus and `GAP-B01-*`/`GAP-B02-*` are out of scope. `retrieval-log/` is untouched on disk,
+so a re-run verifies against the bytes the first run actually received and re-fetches nothing.
+`sessions/` and `attestations/` stand as written: clearing rows is not erasing the audit trail.
+
+**A CONSEQUENCE THE CLEAR CREATED AND DID NOT RESOLVE — read before the re-run.** Deleting the
+thirteen circulation `ref_id`s dropped the global high-water mark from REF-00982 to REF-00970, because
+the mark is the UNION over every `ref_id`-holding table (`dbcore.ref_id_high_water`) and only
+`source_locators` still carries mintable ids. `dbcore.next_ref_id()` therefore returns **REF-00971** —
+an identifier the batch-07 session record, its attestation, the retrieval-log manifests and PR #136 all
+attribute to a different paper. A re-run will silently reuse REF-00971 … REF-00982 for new sources, and
+`db.py`'s `_relation_quote_verified` searches *every* session's payloads with no structured `ref_id` in
+the manifest, so a new REF-00971's quote can verify against the old REF-00971's bytes and read as
+correct. `reference_stubs` is already in `ref_id_homes` and already carries a `RETIRED` status in its
+CHECK, which makes it the obvious place to park the retired ids — but it was merged into
+`source_locators` by migration 062 and has no writer, so reviving it is a decision, not a sweep.
+
+**A second consequence, recorded not adjudicated.**
+`decisions/DR-2026-08-19-research-restart-operative-instrument.md` records clause (c)'s freeze exit as
+SATISFIED AND SPENT because `evidence_sources >= 1` was met, and `meta_work_freeze` was retired and
+deleted on that basis. `evidence_sources` is 0 again. The DR says the freeze ended by its own terms, so
+this is not a claim that it revives — but the condition that discharged it no longer holds and the gate
+that could observe it no longer exists.
+
+CONDITION: Any re-run of the `accessible-circulation-geometry` slug, or any future corpus clear.
+ACTION: Settle the `ref_id` minting floor BEFORE admitting the first source, so retired identifiers are
+not reissued. Derive the scope of any clear from the slug and its reachable `ref_id`s, never from
+session stamps.
+DATE: 2026-09-13 — owner ruling, quoted above. Recorded 2026-09-13 after an audit found the ruling
+present in the migration, the session record and `governance/check-registry.yaml` but absent from this
+ledger, which CLAUDE.md rule 0 requires ("Record the supersession").
