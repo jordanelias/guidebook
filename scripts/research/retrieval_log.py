@@ -56,6 +56,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sqlite3
 import subprocess
 import sys
@@ -196,7 +197,7 @@ def _extension_for(body):
     return ".txt"
 
 
-def fetch(url, session, purpose="", timeout=40, stamp=None):
+def fetch(url, session, purpose="", timeout=40, stamp=None, ref_id=None):
     """Retrieve a URL, PERSIST the raw response, then return the parsed JSON.
 
     The write happens before the return, deliberately: the artefact on disk is the
@@ -264,6 +265,12 @@ def fetch(url, session, purpose="", timeout=40, stamp=None):
     with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps({
             "retrieved_at": stamp or _now(), "url": url, "purpose": purpose,
+            # STRUCTURED ref_id, added 2026-09-13. Every ref_id the manifest carried
+            # before this was free text inside `purpose`, so nothing downstream could
+            # scope a quote check to the source it is attributed to -- and
+            # `quote_in_artefacts` below says exactly that residual out loud rather
+            # than pretending a corpus-wide byte match proves attribution.
+            "ref_id": ref_id,
             "sha256": sha, "bytes": len(body), "exit": r.returncode,
             "status": status, "artefact": artefact,
         }, ensure_ascii=False) + "\n")
@@ -426,6 +433,106 @@ _BIBLIO_FIELDS = (
 # never as a single column, or every Japanese admission reads as a fabrication.
 _TITLE_COLS = ("pub_title", "pub_title_en", "original_title", "chapter_title", "book_title")
 
+
+
+# ---------------------------------------------------------------------------
+# Is an asserted quote actually in the bytes we received?
+# ---------------------------------------------------------------------------
+
+_TAG = re.compile(r"<[^>]{0,200}>")
+_NOISE = re.compile(r"[^0-9a-z]+")
+
+
+def normalise_quote(text):
+    """Reduce prose to the letters and digits it contains, in order.
+
+    WHY NOT A RAW BYTE SUBSTRING, which is what this replaced. Measured across the ten
+    committed extractions on 2026-09-13: TWO failed a byte-substring check and BOTH were
+    genuine quotes.
+
+      * REF-00973, method `full-read`. The payload is JATS XML, so the sentence reads
+        `<xref rid="..." ref-type="fig">Figure 2</xref> shows that the MD risk is
+        greater...` while the stored quote reads `Figure 2 shows that the MD risk is
+        greater...`. Inline markup splits every sentence that cites a figure, a table or
+        a reference -- which is to say the most citable sentences in the best artefacts.
+      * REF-00979, `Abstract, Results`. The publisher wrote `...between 4 degrees and 10
+        degrees .` with a space before the full stop.
+
+    So the raw check was ANTI-CORRELATED WITH EVIDENTIAL QUALITY: it rejected careful
+    reading of full text and accepted, unchanged, a bibliographic TITLE lifted from an
+    esummary record. Normalising to letters and digits tolerates markup, whitespace and
+    punctuation while still requiring the same words in the same order -- a quote must
+    still BE a quote, it just no longer has to survive the publisher's typography.
+    """
+    return _NOISE.sub("", _TAG.sub(" ", text or "").lower())
+
+
+def quote_in_artefacts(quote, ref_id=None, session=None):
+    """Does `quote` occur in a persisted retrieval artefact? Returns (found, detail).
+
+    THE DISCIPLINE THIS SERVES (CLAUDE.md 5(c)). On 2026-08-19 all five sources in the
+    first research batch were stored with invented co-authors -- including the deletion
+    of the autistic community co-authors from a Co-1 paper whose Co-1 warrant IS their
+    co-authorship. Six gates passed it, because each asked whether the fields were
+    POPULATED, never whether they were TRUE. This is the mechanical form of "never write
+    a field from memory when a payload is in hand", and it lives here rather than in
+    db.py because this module owns the bytes and is deliberately outside the write path.
+
+    SCOPING IS REPORTED, NOT FAKED. When `ref_id` is given, artefacts fetched FOR that
+    ref_id are searched first and a hit there is the strong result. A hit in some other
+    source's payload is still returned as found -- the words really are in the corpus --
+    but the detail says UNSCOPED, because the manifest only began carrying a structured
+    ref_id on 2026-09-13 and every artefact retrieved before that has none. Claiming a
+    corpus-wide match proves attribution would be the same "populated, not true" error one
+    level along; saying which kind of match it was lets a caller decide.
+
+    EXAMINED is in the detail on a miss (CLAUDE.md 5(a)): a check that reports "not found"
+    without saying how much it looked at is indistinguishable from one that looked at
+    nothing.
+    """
+    needle = normalise_quote(quote)
+    if not needle:
+        return False, "the quote contains no letters or digits to match"
+    root = LOG_ROOT
+    if not root.exists():
+        return False, "EXAMINED: 0 -- %s/ does not exist" % root
+
+    scoped_hit = unscoped_hit = None
+    examined = scoped_examined = 0
+    dirs = [root / _session_stem(session)] if session else sorted(
+        p for p in root.iterdir() if p.is_dir())
+    for d in dirs:
+        if not d.is_dir():
+            continue
+        for rec in _manifest_records(d.name):
+            art = d / rec.get("artefact", "")
+            if not art.exists():
+                continue
+            examined += 1
+            rec_ref = rec.get("ref_id")
+            if ref_id and rec_ref == ref_id:
+                scoped_examined += 1
+            try:
+                body = art.read_bytes().decode("utf-8", errors="replace")
+            except OSError:
+                continue
+            if needle in normalise_quote(body):
+                where = "%s/%s" % (d.name, rec["artefact"])
+                if ref_id and rec_ref == ref_id:
+                    scoped_hit = scoped_hit or where
+                else:
+                    unscoped_hit = unscoped_hit or where
+    if scoped_hit:
+        return True, "found in %s, retrieved for %s" % (scoped_hit, ref_id)
+    if unscoped_hit:
+        return True, ("found in %s -- UNSCOPED: that artefact carries no structured "
+                      "ref_id, or one that is not %s, so this proves the words are in "
+                      "the corpus, not that they came from this source"
+                      % (unscoped_hit, ref_id or "(none given)"))
+    return False, ("EXAMINED: %d persisted artefact(s) under %s/*/%s"
+                   % (examined, root,
+                      " (%d retrieved for %s)" % (scoped_examined, ref_id)
+                      if ref_id else ""))
 
 def _index_by_doi(payloads):
     """Every logged payload that identifies a DOI, whatever service produced it.

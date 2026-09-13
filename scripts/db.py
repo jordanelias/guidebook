@@ -1206,6 +1206,11 @@ def main():
     # cannot be tightened without a compensating migration; the writer can, in one
     # line, and this is it. The guarantee is therefore the CLI's, not the schema's:
     # a row written by any other path can still carry none.
+    p_ax.add_argument("--verbatim-exempt", dest="verbatim_exempt",
+                      help="Reason this --claim-text cannot be verified against a "
+                           "persisted artefact (a clause read from a standards PDF that "
+                           "was never retrieved as JSON/XML, say). LEDGERED onto the "
+                           "row's notes, and REFUSED if the text would have verified.")
     p_ax.add_argument("--claim-text", dest="claim_text", required=True,
                       help="REQUIRED. The source's exact phrasing of the claim, "
                            "verbatim. This is the row's only guaranteed verbatim "
@@ -2154,7 +2159,8 @@ def main():
             args.relations, args.to_extractions, args.to_labels, args.to_kinds,
             args.stateds, args.quotes, args.input_roles, args.cross_sources)
         _emit(insert_extraction(_ax, session=args.session, dry_run=args.dry_run,
-                                relations=_relations))
+                                relations=_relations,
+                                verbatim_exempt=args.verbatim_exempt))
 
     elif args.command == "relate-extraction":
         if args.repoint:
@@ -3814,52 +3820,99 @@ def _fmt_num(x: float) -> str:
     return str(int(x)) if x == int(x) else repr(x)
 
 
-def _relation_quote_verified(quote: str):
-    """Does `quote` occur byte-for-byte in some persisted retrieval artefact?
+def _verbatim(text: str, ref_id: str = None):
+    """Does `text` occur in a persisted retrieval artefact? (found, detail).
 
-    THE IMPORTANT REFUSAL (CLAUDE.md 5(c)). On 2026-08-19 all five sources in the
-    first research batch carried invented co-author fields that read as populated
-    and true to every gate that never opened the payload. `retrieval_log.py` exists
-    so a claim can be checked against the bytes actually received instead of trusted
-    on an operator's say-so; this is that discipline applied to a comparator quote
-    instead of a bibliographic field.
+    A THIN WRAPPER, AND THAT IS THE POINT. The implementation lived here and walked the
+    manifest itself, which put the byte-matching rule in the write path -- a writer that
+    verifies itself verifies nothing, which is the reason `retrieval_log.py` is
+    deliberately outside that path in the first place (its own module docstring says so).
+    It now lives beside the bytes as `retrieval_log.quote_in_artefacts`, where
+    `--verify-authors` already lives, and where the normalisation it needs can be reused.
 
-    Reads BYTES off disk directly, via `retrieval_log._manifest_records()` and
-    `Path.read_bytes()` -- NEVER `retrieval_log._logged_payloads()`, which parses
-    JSON only and silently drops every artefact that is not JSON, XML included. The
-    worked example this migration and this writer both cite -- REF-00784's PubMed
-    abstract -- is exactly an `.xml` artefact; `_logged_payloads()` would report zero
-    payloads for that session and the one quote this docstring can point at would
-    fail its own verification.
-
-    Searches EVERY session directory under retrieval-log/, not only the session
-    that is writing this row: a quote retrieved in an earlier session (REF-00784's
-    was fetched 2026-09-12, a day before this table's writer existed) is still
-    genuine evidence. The manifest format carries no structured ref_id field (every
-    ref_id it does carry is free text inside `purpose`), so this cannot also prove
-    the artefact was fetched FOR the ref_id on this row -- that residual is named in
-    the report this writer's own tests were run under, not hidden.
-
-    CLAUDE.md §5(a): a check that passes or fails having examined nothing is a
-    defect. Returns (found, detail) -- detail names the artefact on a hit, or says
-    how many were actually examined on a miss.
+    THE OLD IMPLEMENTATION WAS A RAW BYTE SUBSTRING and was anti-correlated with
+    evidential quality: measured across the ten committed extractions, it rejected two
+    genuine quotes -- one because the payload is JATS XML and inline markup splits every
+    sentence citing a figure, one because the publisher wrote a space before a full stop
+    -- while accepting a bibliographic TITLE lifted from an esummary record. The shared
+    function normalises to letters and digits, so a quote must still be a quote but no
+    longer has to survive the publisher's typography.
     """
     sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
     import retrieval_log                                          # noqa: E402
-    root = retrieval_log.LOG_ROOT
-    if not root.exists():
-        return False, f"EXAMINED: 0 -- {root}/ does not exist"
-    needle = quote.encode("utf-8")
-    examined = 0
-    for d in sorted(p for p in root.iterdir() if p.is_dir()):
-        for rec in retrieval_log._manifest_records(d.name):
-            art = d / rec.get("artefact", "")
-            if not art.exists():
-                continue
-            examined += 1
-            if needle in art.read_bytes():
-                return True, f"{d.name}/{rec['artefact']}"
-    return False, f"EXAMINED: {examined} persisted artefact(s) under {root}/*/"
+    return retrieval_log.quote_in_artefacts(text, ref_id=ref_id)
+
+
+def _require_verbatim(text: str, ref_id: str, field: str, context: str,
+                      exempt_reason: str = None, claimed_value: str = None):
+    """Refuse a quoted field that is not in the bytes -- ONE RULE, EVERY QUOTED COLUMN.
+
+    The verifier had exactly one call site before 2026-09-13: `extraction_relations.quote`,
+    on comparator edges. Meanwhile `insert_extraction` wrote `claim_text` -- the sentence a
+    determination actually rests on -- behind nothing but a not-blank test. So the strongest
+    guarantee in the writer was attached to the weakest column, and `add-extraction` would
+    accept `--claim-text "the study found corridors of 1200mm"` typed from memory while
+    refusing a `--quote` beside it. Demonstrated during the audit: claimed_value 9999 with
+    an invented claim_text landed and governed a determination.
+
+    IT ALSO MAKES `derive-extraction` HONEST. That verb reasons from the premise that "the
+    base and delta rows' own claim_text values already passed that check when those rows
+    were written". They had not -- nothing verified claim_text -- so the verb succeeded only
+    when a base row's text HAPPENED to be in a payload. Now the premise is true.
+
+    THE NUMBER MUST BE IN THE QUOTE. A numerical claim whose own digits do not appear in the
+    verified sentence is a number attached to a quote rather than read from one, which is
+    exactly how `1525` and `9999` reached the table during the audit -- both with quotes
+    that verified, because the quote was a TITLE and the title was genuinely in the payload.
+
+    EXEMPTION IS EXPLICIT AND LEDGERED, never silent. A clause read from a standards PDF
+    that was never persisted as an artefact is a real case; "I could not be bothered to
+    retrieve it" is not, and the two are indistinguishable unless the operator writes the
+    reason down. An exemption is refused when the text WOULD have verified, so it cannot
+    become the lazy default.
+    """
+    if exempt_reason:
+        found, where = _verbatim(text, ref_id)
+        if found:
+            raise Refusal(
+                f"{context}: --verbatim-exempt was given, but {field} DOES occur in a "
+                f"persisted artefact ({where}). Drop the exemption -- it is for text no "
+                f"retrieval artefact can carry, not for text that verifies.")
+        return f"[VERBATIM-EXEMPT: {exempt_reason}]"
+
+    found, where = _verbatim(text, ref_id)
+    if not found:
+        raise Refusal(
+            f"{context}: {field} does not occur in any persisted retrieval artefact "
+            f"({where}). Either the payload behind it was never retrieved and persisted "
+            f"(R10 -- retrieve it first, retrieval_log.fetch()), or it was typed from "
+            f"memory rather than read off the bytes (CLAUDE.md 5(c)). If no artefact can "
+            f"carry this text -- a clause from a standards PDF, say -- pass "
+            f"--verbatim-exempt with the reason, which is ledgered on the row. "
+            f"Nothing was written.")
+
+    if claimed_value:
+        digits = re.findall(r"\d+", str(claimed_value))
+        if digits:
+            body = _verbatim_norm(text)
+            missing = [d for d in digits if d not in body]
+            if missing:
+                raise Refusal(
+                    f"{context}: claimed_value {claimed_value!r} contains {missing}, which "
+                    f"do not appear in the verified {field}. A number attached to a quote "
+                    f"rather than read from one is the 2026-08-19 fabrication shape with a "
+                    f"figure in place of an author -- and it is how a title, which verifies "
+                    f"because titles really are in the payload, came to carry an invented "
+                    f"measurement. Quote the sentence that states the value. Nothing was "
+                    f"written.")
+    return None
+
+
+def _verbatim_norm(text):
+    """The shared normalisation, for the digit test. One home (retrieval_log)."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                          # noqa: E402
+    return retrieval_log.normalise_quote(text)
 
 
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
@@ -3993,7 +4046,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
             f"centimetres' is comparator='>' against 30, and storing a bare 30 "
             f"turns a floor into a point. Set --comparator when writing the row.")
 
-    verified, where = _relation_quote_verified(quote)
+    verified, where = _verbatim(quote, from_ref_id)
     if not verified:
         raise Refusal(
             f"{context}: --quote does not occur byte-for-byte in any persisted "
@@ -4092,7 +4145,7 @@ def _build_relation_groups(relations, to_extractions, to_labels, to_kinds, state
 
 
 def insert_extraction(data: dict, session: str, dry_run: bool = False,
-                      relations: list = None):
+                      relations: list = None, verbatim_exempt: str = None):
     """Record ONE judgment item: what one source asserts for one parameter.
 
     THE WRITER THIS TABLE SHIPPED WITHOUT. `source_value_extractions` has existed
@@ -4338,6 +4391,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "words; every remaining verbatim column on this table is nullable, so "
                 "without --claim-text this row would assert a value with nothing of the "
                 "source's own phrasing behind it. Quote the clause you read.")
+
+        # THE QUOTE MUST BE IN THE BYTES (CLAUDE.md 5(c), added 2026-09-13). Blank was
+        # the ONLY thing refused above; the sentence a determination rests on could be
+        # composed from memory and nothing looked. Demonstrated during the audit:
+        # claimed_value 9999 with an invented claim_text landed and governed a cell.
+        # `--verbatim-exempt` is the ledgered escape for text no artefact can carry, and
+        # is itself refused when the text would have verified.
+        _exempt_note = _require_verbatim(
+            str(row["claim_text"]), row.get("ref_id"), "--claim-text",
+            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value)
+        if _exempt_note:
+            row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
         if claim_type == "absent" and value is not None:
             raise Refusal(
                 "claim_type='absent' records that the source asserts NO value for this "
