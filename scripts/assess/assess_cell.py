@@ -109,7 +109,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 
 from schemas.directness import (  # noqa: E402
-    NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
+    GRAIN_AGGREGATE, NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
     SD_NON_ANCHORING,
     COND_DIRECT, COND_DOWN_WEIGHTED, COND_DISCOUNTED, COND_NON_ANCHORING,
     consolidate, grain_for, population_directness_from_match_grade, scale_directness,
@@ -418,6 +418,145 @@ def parse_bound(claimed_value, comparator, claim_type):
     if cmp_ in ("<=", "<"):
         return (None, v)
     return (v, v)
+
+
+def derivation_handshake(conn, parameter_id, lens, sources):
+    """H2/H3/H4 — which paths this value was derived along, and what gates it.
+
+    THE RULE (DR-2026-07-13, ratified; evidence-architecture.md section 5.5). The corpus
+    derives values along two paths that have never been required to meet: TOP-DOWN from
+    population and community, BOTTOM-UP from function (the ICF-indexed references/fdr/
+    corpus, population-blind at collection). "No mechanism requires the paths to agree
+    before a value ships, and dual derivation is undetectable by query."
+
+    BOTH PATHS ARE DERIVED, NOT ASKED FOR (CLAUDE.md rule 8). The population path is present
+    when governing evidence exists -- that is what the rest of this engine computes. The
+    function path is present when the cell's identity lens has rows in `population_icf_links`
+    -- migration 080's promotion of the functional-deficit-auditor's mapping out of skill
+    prose. So `functional_basis` is READ from that table rather than typed onto the
+    determination, and `derivation_paths` follows from the pair. Nothing here is a judgment
+    a session could get wrong by assertion.
+
+    THE CULTURAL/DIGNITY PROTECTION, and it is the reason this function is careful rather
+    than clever. Claims whose normative force is community-rooted remain FULLY ASSERTABLE as
+    `population_only`; no functional derivation may flatten, reduce or override a community
+    claim; THERE IS NO BOTTOM-UP OVERRIDE OF Co-1. "A signing-space corridor width is not a
+    wheelchair-envelope calculation that came out wrong; it is a different claim, held by the
+    community whose language it serves."
+
+    So the absence of a function path NEVER downgrades a cell here, and a culturally
+    anchored population_only cell owes no rationale. The anchor is checked, not asserted:
+    per the ratified boundary criterion, "community-rooted" means anchored by
+    Co-1/participatory provenance per `co1_source_type`, and a population_only claim without
+    such an anchor "is simply a single-path claim owing the standard named-path rationale;
+    it gains no cultural exemption by assertion". That criterion "exists so the protection
+    cannot become a route around the mechanism requirement".
+
+    H4 GATES, with the deadlock discipline doctrine specifies:
+      * they bind ONLY where a check has actually run -- so this reads gate ROWS, and no
+        rows means no gating, which is the correct reading of "no silent pretence of
+        coverage" rather than a gap;
+      * a gate forces `provisional`, NEVER `stated`, and never below that;
+      * the ladder cannot be inverted: a gate binds only when its trigger is at least as
+        strong as the cell's best anchor, so "a grey-tier CONTRADICTS cannot pin a
+        T1-anchored cell indefinitely".
+
+    Returns (functional_basis_json, derivation_paths, rationale, cultural_anchor_json, gates).
+    """
+    identity = lens.get("identity_code")
+
+    # --- the function path: the promoted population<->ICF map -------------------
+    fb_rows = []
+    if identity and _table_exists(conn, "population_icf_links"):
+        fb_rows = conn.execute(
+            "SELECT icf_code, mechanism, mapping_confidence, provenance "
+            "FROM population_icf_links WHERE population_code = ? ORDER BY icf_code",
+            (identity,)).fetchall()
+    functional_basis = json.dumps(
+        [{"icf_code": r[0], "mechanism": r[1], "mapping_confidence": r[2],
+          "provenance": r[3]} for r in fb_rows]) if fb_rows else None
+
+    # --- the population path ----------------------------------------------------
+    has_population = bool(sources)
+    has_function = bool(fb_rows)
+
+    # --- the cultural anchor, and it is G3's predicate rather than a new one -----
+    #
+    # THE RATIFIED BOUNDARY CRITERION (evidence-architecture.md section 6.2, "the
+    # protection is anchored, not self-declared"): "community-rooted" means anchored by
+    # Co-1/participatory provenance per `co1_source_type` -- `dpo_research`,
+    # `advocacy_position`, participatory peer-reviewed work -- or an equivalent
+    # documented community process.
+    #
+    # THAT SET IS ALREADY IMPLEMENTED, ONCE, and it is not re-typed here. G3 grades
+    # `dpo_research` and `advocacy_position` as population-grain COMMUNITY CONSENSUS and
+    # everything else Co-1 as individual-grain, and `schemas/directness.grain_for()` is
+    # that rule's ONE home -- its own comment says so, in the change that closed a
+    # finding about two implementations of it disagreeing. Restating the tuple here
+    # would reopen exactly that (CLAUDE.md rule 5).
+    #
+    # WHERE THIS IS NARROWER THAN THE DOCTRINE, STATED RATHER THAN SMOOTHED OVER.
+    # "Participatory peer-reviewed work" anchors under the criterion, but nothing in the
+    # schema distinguishes a participatory peer-reviewed Co-1 source from any other:
+    # `co1_source_type` carries one value, `peer_reviewed_literature`, for both, and it
+    # has no CHECK to widen. So such a source does NOT anchor here and owes the standard
+    # named-path rationale instead. That is the conservative direction on purpose. The
+    # cost is a sentence on a claim that would have been exempt; the cost of erring the
+    # other way is every Co-1 claim inheriting the exemption by tier alone, which is the
+    # "route around the mechanism requirement" the criterion was written to close. When a
+    # participatory flag exists, widen HERE and record it.
+    anchors = sorted({r["ref_id"] for r in sources
+                      if r.get("evidence_type") == "co1"
+                      and grain_for("co1", r.get("tier"),
+                                    r.get("co1_source_type"))[0] == GRAIN_AGGREGATE})
+    cultural_anchor = json.dumps(anchors) if anchors else None
+
+    if has_population and has_function:
+        paths, rationale = "dual", None
+    elif has_population:
+        paths = "population_only"
+        rationale = None if cultural_anchor else (
+            "no population_icf_links row characterises %s, so no function path exists to "
+            "meet the population path; recorded as a single-path determination per H2. "
+            "This is NOT a downgrade: the absence of a functional derivation never reduces "
+            "a population-derived claim (DR-2026-07-13, the cultural-claim protection)."
+            % (identity or "this lens"))
+    elif has_function:
+        paths = "function_only"
+        rationale = ("no governing population evidence for this cell; the determination "
+                     "rests on the functional mapping alone")
+    else:
+        return functional_basis, None, None, cultural_anchor, []
+
+    # --- H4 ---------------------------------------------------------------------
+    gates = []
+    if _table_exists(conn, "determination_gates"):
+        best = min((r["tier"] for r in sources if r.get("tier")), default=6)
+        for g in conn.execute(
+                "SELECT gate_id, verdict, trigger_tier, trigger_evidence_type, "
+                "trigger_ref_id, detail, identity_code FROM v_open_determination_gates "
+                "WHERE parameter_id = ?", (parameter_id,)):
+            if g[6] and identity and g[6] != identity:
+                continue                      # a gate on another lens
+            if g[2] > best:
+                # LADDER-INVERSION GUARD. The trigger is weaker than the cell's best
+                # anchor; recorded as not-binding rather than dropped, so a reader can
+                # see the gate exists and why it did not bite.
+                gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": g[2],
+                              "binds": False,
+                              "why": "trigger is T%d against a T%d anchor -- binding it "
+                                     "would invert the ladder" % (g[2], best)})
+                continue
+            gates.append({"gate_id": g[0], "verdict": g[1], "trigger_tier": g[2],
+                          "binds": True, "why": g[5]})
+    return functional_basis, paths, rationale, cultural_anchor, gates
+
+
+def _table_exists(conn, name):
+    """Fixture tolerance, as everywhere else in this engine."""
+    return conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type IN ('table','view') AND name = ?",
+        (name,)).fetchone() is not None
 
 
 def compose_value(conn, links, direction):
@@ -983,6 +1122,37 @@ def determine(conn, parameter_id, lens, slug, note):
             _direction = _dir_row[0] if _dir_row else None
     value_min, value_max, value_unit, value_note = compose_value(conn, links, _direction)
 
+    # THE DERIVATION HANDSHAKE (080). H2/H3/H4 of DR-2026-07-13, whose
+    # `[ENGINE-LAG 2026-08-15]` marker has named this absence ever since: "`specifications`
+    # carries neither `functional_basis` nor `derivation_paths`; `population_icf_links` does
+    # not exist; `assess_cell.py` implements no H4 gate." All three now exist, so the engine
+    # reads them.
+    #
+    # BOTH PATHS ARE DERIVED, NEVER ASSERTED (CLAUDE.md rule 8). The population path is the
+    # governing evidence this function has already computed; the function path is whatever
+    # `population_icf_links` records for this cell's identity lens. An author cannot get
+    # either wrong by typing, because neither is typed.
+    functional_basis, derivation_paths, derivation_rationale, cultural_claim_anchor, gates = \
+        derivation_handshake(conn, parameter_id, lens, sources)
+
+    # H4, AND IT MOVES IN EXACTLY ONE DIRECTION. Doctrine: FDA verdicts UNLINKED /
+    # MISLINKED / UNDER-CONSERVATIVE and FDR delta-classification CONTRADICTS "force the
+    # affected cell to `provisional` -- never `stated` -- until resolved." That is a CAP,
+    # not a downgrade ladder: a gate never lifts a `pending` cell up to provisional, and
+    # never pushes a provisional cell lower. The ladder-inversion guard is upstream, in
+    # derivation_handshake(), which marks a gate weaker than the cell's best anchor
+    # `binds: False` rather than dropping it -- so a grey-tier CONTRADICTS cannot pin a
+    # T1-anchored cell, and a reader can still see the gate existed and why it did not bite.
+    #
+    # THE GATE IS NOT COPIED ONTO THE DETERMINATION, and that is rule 5 rather than an
+    # omission. A gate row is addressed by (parameter_id, identity_code) and reachable
+    # through `v_open_determination_gates`; writing its id into `specifications` as well
+    # would build the second home that a parity check can only make permanent. What the
+    # row carries is the EFFECT -- a cell with anchors in `tier_basis` sitting at
+    # `provisional` -- and `derivation_handshake_integrity` is what holds the two in step.
+    if state == "stated" and any(g["binds"] for g in gates):
+        state = "provisional"
+
     return {
         "links": links,
         "value_min": value_min, "value_max": value_max, "value_unit": value_unit,
@@ -999,6 +1169,11 @@ def determine(conn, parameter_id, lens, slug, note):
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
         "derivation_sha": sha(parameter_id, lens_key(lens), links),
+        "functional_basis": functional_basis,
+        "derivation_paths": derivation_paths,
+        "derivation_rationale": derivation_rationale,
+        "cultural_claim_anchor": cultural_claim_anchor,
+        "gates": gates,
         "n_sources": len(sources),
         "needs_population_assessment": sorted(r["ref_id"] for r in recs
                                               if r["needs_population_assessment"]),
@@ -1387,6 +1562,13 @@ def main():
                 det["falsification"],
                 det["has_unverified_sources"], det["all_sources_disqualified"],
                 det["regulatory_stratum_only"],
+                # 080. `derivation_paths` carries a CHECK that a single-path row owes
+                # either a rationale or a cultural anchor, so these four are written
+                # together or the database refuses the row -- which is the dignity line
+                # ceasing to be "doctrine binding on authors" and becoming a state the
+                # schema will not hold.
+                det["functional_basis"], det["derivation_paths"],
+                det["derivation_rationale"], det["cultural_claim_anchor"],
                 STAMP, SESSION, STAMP, SESSION)
         cols = ("specification_id, parameter_id, "
                 "identity_code, icf_code, needs_code, medical_code, "
@@ -1396,6 +1578,8 @@ def main():
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
                 "value_min, value_max, value_unit, value_note, falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
+                "functional_basis, derivation_paths, derivation_rationale, "
+                "cultural_claim_anchor, "
                 "created_at, created_by_session, updated_at, updated_by_session")
         conn.execute(f"INSERT INTO specifications ({cols}) VALUES ("
                      + ",".join("?" * len(vals)) + ")", vals)
