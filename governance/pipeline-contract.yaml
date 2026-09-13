@@ -66,6 +66,23 @@ stages:
     references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a
       determination); owner ruling 2026-08-26 (base_parameters is items's replacement subject)
     check: scripts/validate_parameters.py
+  - id: base-identifier-never-reissued
+    kind: integrity
+    criterion: 'An identifier the permanent record has already used is spent, whatever the live
+      tables say. ref_id is computed as MAX+1 over the live tables (dbcore.ref_id_high_water) and
+      parameter_id/specification_id are rowid aliases, so DELETING ROWS SILENTLY FREES IDENTIFIERS
+      that immutable records -- committed data migrations, retrieval-log manifests, session records,
+      attestations -- still name. Established by the 2026-09-13 circulation clear, which dropped the
+      ref_id mark REF-00982 -> REF-00970 with every gate green, because the database was internally
+      consistent and the contradiction lived between the database and the record of what it had held.
+      The floor is derived from the committed migrations rather than from a table, because a counter
+      table would be both a second home (rule 5) and destroyable by the same DELETE it guards.'
+    references: 'Adversarial pass 2026-09-13; CLAUDE.md rule 3 (migrations are append-only and
+      immutable once committed), rule 5 (point, do not copy), 5(c) (a citation that names one work
+      and resolves to another). Repairs: migration 076 (AUTOINCREMENT on the two integer keys) and
+      data_20260913050221 (retired ref_ids retained as RETIRED source_locators rows carrying their
+      own DOI, so a re-admission cross-files to the original under R9).'
+    check: scripts/audit/identifier_floor_audit.py
   - id: base-retired-vocabulary-not-taught
     kind: integrity
     criterion: No retired base token survives in live prose, skills or code outside the exempt paths.

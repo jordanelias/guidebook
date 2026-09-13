@@ -1493,6 +1493,41 @@ checks:
     pass on a live derived row: tampering extraction 15''s stored value from 10 to 42 produced
     `stored=42.0, recomputed=10.0` and exit 1. Canonical data/guidebook.db sha256 unmoved
     throughout — every mutation above was against a scratch copy only.'
+- id: identifier_floor_audit
+  cmd:
+  - python3
+  - scripts/audit/identifier_floor_audit.py
+  battery: db_integrity
+  kinds:
+  - data
+  - schema
+  - governance
+  level: blocking
+  basis: base/base-identifier-never-reissued
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-09-13, after an adversarial pass found that the circulation-corpus clear had
+    dropped the ref_id high-water REF-00982 -> REF-00970 with every gate green. EXAMINED counts
+    identifier floors compared (3: ref_id, base_parameters, specifications), not migration files
+    read -- the file count is printed beside it as context.
+
+
+    THE FLOOR IS DERIVED FROM THE COMMITTED MIGRATIONS, NOT FROM A TABLE, and that is the whole
+    design. A counter column or a retired_identifiers table would be a second home for a fact
+    (rule 5) and — the reason that matters here — a home the very DELETE this check guards could
+    empty. scripts/migrations/ is append-only and immutable once committed (rule 3), and every
+    identifier this project has minted passed through one, because the migration path is the only
+    sanctioned route into the canonical database. It is slower than a counter and it is the only
+    source that cannot be destroyed by the operation it polices.
+
+
+    FAULT-INJECTED AGAINST THE REAL DEFECT, not a synthetic one: run against canonical BEFORE the
+    repairs landed it reported VERDICT FAIL, exit 1, naming all three regressions (ref_id
+    REF-00970 against a historical REF-00982; base_parameters and specifications at 0 against a
+    historical 2, and both flagged for having no AUTOINCREMENT). After migration 076 and
+    data_20260913050221: VERDICT CLEAN, all three floors level. min_items 1 rather than no_floor
+    because the three floors exist whether or not any corpus does -- this check has a subject on
+    an empty database, which is exactly when it matters most.'
 - id: source_locators_integrity
   cmd:
   - python3
