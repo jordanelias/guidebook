@@ -3164,3 +3164,46 @@ Read `○` as "no research backing", not as "is a code". Record the confirming r
 rather than asserting the upgrade in prose. Do not assume which band an upgraded value takes — that
 is unruled.
 DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-13 — a derived figure takes a WEIGHTED AVERAGE of its inputs, not the weakest one
+
+> **"Derived figures are a weighted average of their figures. If something has like two T1 and a
+> single T4...it's probably a half circle."**
+
+**This OVERTURNS the design pass's recommendation**, which was weakest-link: *"a derived figure
+anchors at the weakest band of its inputs; if any input is a regulatory-stratum row the derived value
+is code-derived (○) regardless."* Under that rule the owner's own example lands `○`. Under this
+ruling it lands `◐`. The recommendation is withdrawn; it was session-authored and is not a record
+this ruling has to be weighed against (rule 0).
+
+**It extends a model that already exists.** `tier-system.md` §8, the weighted-strength anchor model
+(DR-2026-07-20, owner directive), already holds that *"every tier can anchor a best-practice claim;
+the strength of the claim is weighted by the tier of its evidence."* Today's ruling applies that
+frame to the composite case — a figure computed from several figures — which §8 never addressed
+because derived figures could not be represented at all.
+
+**THE OPERANDS DO NOT EXIST, and that is the executable gap.** §8 assigns bands by MEMBERSHIP, not
+by magnitude: T1/Co-1/T2/Co-2/T3-clinical → `●`; T4/T5 → `◐`; T3-grey/T6 → `○`. There are no numeric
+tier weights anywhere in the project. **And the one column whose name promises them does not hold
+them:** `weighting_profile.tier_weights` holds audience foregrounding — all five rows are shapes like
+`{"foreground":["T1","CO1","conflict_notes","code_refs"],"delta":"show"}`, i.e. which tiers to surface
+first for a designer as against a policymaker. A future implementer looking for the weights will find
+that column and be misled. Recorded here so they are not.
+
+**The worked example constrains the function, and the obvious implementation fails it.** Scoring the
+bands `●`=3, `◐`=2, `○`=1, two T1 and one T4 average to 2.67, which rounds to `●` — not the half
+circle the owner named. **Rounding DOWN yields `◐` and matches.** So the ruling's example is
+satisfied by *mean of band ordinals, floored*, and is falsified by *mean, rounded to nearest*. That
+is a reading, not the ruling: the owner said "probably", named no weights and no rounding, and the
+choice between floor, a tier-count threshold, or genuine per-tier magnitudes is unsettled.
+
+CONDITION: Any session assigning a band to a `figure_role='derived'` row, or implementing the band
+rule in the determination engine.
+ACTION: Compute from all inputs; never take the weakest. Do not read
+`weighting_profile.tier_weights` as tier weights. Before implementing, put the weighting function
+itself to the owner with the 2×T1 + 1×T4 = `◐` case as the acceptance test, and state which candidate
+function you propose — do not pick one silently, because more than one satisfies the example and they
+diverge on every other combination.
+DATE: 2026-09-13 — owner ruling, quoted above.
