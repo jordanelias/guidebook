@@ -3328,3 +3328,59 @@ CONDITION: Implementing the band of a `figure_role='derived'` row.
 ACTION: floor(mean(ordinal(input bands))), ordinals 3/2/1, inputs equally weighted. Test against the
 five rows above; the owner's example is the acceptance case and it falsifies rounding to nearest.
 DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-13 — the whole circulation corpus is untrusted and is cleared for a re-run
+
+> **"I want you to clear all the recent research performed and how it went down the pipeline"**
+>
+> **"Basically all the circulation rows that have been produced are not able to be trusted, so we
+> have to redo them all from the start"**
+
+The second statement widened the first. "The recent research" read as batches 06 and 07; the ruling
+is the whole slug. Executed as one compensating data migration
+(`scripts/migrations/data_20260913040739_2026-09-13-clear-circulation-corpus.sql`, applied
+2026-09-13 04:15) deleting **229 rows** — every row any stage produced under
+`accessible-circulation-geometry`, reaching back through batches 04 and 05.
+
+**The scope is the slug, not the sessions, and that distinction moved rows.** Deleting by session
+stamp would have left 33 `observed_terms` that `session_2026-09-03-defect-programme` harvested from
+circulation sources under its own name, and one `source_locators` row sitting in an 881-row table —
+the row a re-run's R9 duplicate-DOI pre-check reads, so a stale locator for a deleted source is
+exactly what makes a re-run cross-file against a `ref_id` that no longer exists.
+
+**What was kept, and why none of it is research output.** `terms`, `term_aliases` and `slugs` are
+base vocabulary minted 2026-05-09; TERM-001 `ramp gradient` and TERM-002 `corridor width` survive as
+terms, while `base_parameters` — the *promotion* of those terms into the parameter layer — went, because
+that promotion is research output. `research_code_leads` carries neither `ref_id` nor `slug`. The
+acoustics corpus and `GAP-B01-*`/`GAP-B02-*` are out of scope. `retrieval-log/` is untouched on disk,
+so a re-run verifies against the bytes the first run actually received and re-fetches nothing.
+`sessions/` and `attestations/` stand as written: clearing rows is not erasing the audit trail.
+
+**A CONSEQUENCE THE CLEAR CREATED AND DID NOT RESOLVE — read before the re-run.** Deleting the
+thirteen circulation `ref_id`s dropped the global high-water mark from REF-00982 to REF-00970, because
+the mark is the UNION over every `ref_id`-holding table (`dbcore.ref_id_high_water`) and only
+`source_locators` still carries mintable ids. `dbcore.next_ref_id()` therefore returns **REF-00971** —
+an identifier the batch-07 session record, its attestation, the retrieval-log manifests and PR #136 all
+attribute to a different paper. A re-run will silently reuse REF-00971 … REF-00982 for new sources, and
+`db.py`'s `_relation_quote_verified` searches *every* session's payloads with no structured `ref_id` in
+the manifest, so a new REF-00971's quote can verify against the old REF-00971's bytes and read as
+correct. `reference_stubs` is already in `ref_id_homes` and already carries a `RETIRED` status in its
+CHECK, which makes it the obvious place to park the retired ids — but it was merged into
+`source_locators` by migration 062 and has no writer, so reviving it is a decision, not a sweep.
+
+**A second consequence, recorded not adjudicated.**
+`decisions/DR-2026-08-19-research-restart-operative-instrument.md` records clause (c)'s freeze exit as
+SATISFIED AND SPENT because `evidence_sources >= 1` was met, and `meta_work_freeze` was retired and
+deleted on that basis. `evidence_sources` is 0 again. The DR says the freeze ended by its own terms, so
+this is not a claim that it revives — but the condition that discharged it no longer holds and the gate
+that could observe it no longer exists.
+
+CONDITION: Any re-run of the `accessible-circulation-geometry` slug, or any future corpus clear.
+ACTION: Settle the `ref_id` minting floor BEFORE admitting the first source, so retired identifiers are
+not reissued. Derive the scope of any clear from the slug and its reachable `ref_id`s, never from
+session stamps.
+DATE: 2026-09-13 — owner ruling, quoted above. Recorded 2026-09-13 after an audit found the ruling
+present in the migration, the session record and `governance/check-registry.yaml` but absent from this
+ledger, which CLAUDE.md rule 0 requires ("Record the supersession").
