@@ -3207,3 +3207,41 @@ itself to the owner with the 2×T1 + 1×T4 = `◐` case as the acceptance test, 
 function you propose — do not pick one silently, because more than one satisfies the example and they
 diverge on every other combination.
 DATE: 2026-09-13 — owner ruling, quoted above.
+
+---
+
+## Owner ruling 2026-09-13 — a finding that a CODE is insufficient supplies no value, and is still first-class evidence
+
+> **"Insufficient findings don't provide anything, do they? They're insufficient. All you do is log
+> you looked at them, I think"**
+>
+> — put back to the owner because the phrase carries two opposite readings, and confirmed as: **the
+> finding supplies no VALUE, but is real evidence.** The cell stays `pending` on value; the finding
+> anchors the cell in DIRECTION, remains first-class R7 harm evidence, and is rendered in the book.
+
+**Why it was queried rather than recorded as first stated.** In the 075 vocabulary `insufficient` is
+a RELATION, not a quality grade: it points from a finding row to *the baseline that finding says is
+inadequate*. So an "insufficient finding" is a finding **that the code is insufficient** — not a
+finding that is itself weak. Read the second way, the ruling would have discarded REF-00784's
+*"Between 10% and 100% of users would not be able to maneuver in spaces that meet current
+Accessibility Guidelines"* and REF-00971's *"None of the scooters tested were capable of completing
+all manoeuvres within the space allowed by existing standards"* as log entries. Those are T1 and T3
+findings that the built environment FAILS people, which the research contract's R7 makes first-class
+evidence rather than a by-product, and which the mission — *"get people to ask the right
+questions"* — points directly at. The clarification preserves them.
+
+**What the ruling settles.** Such a finding cannot say what the right number IS, so it supplies no
+value and cannot move a cell off `pending` on value. It can and does establish that the existing
+value is wrong for these people, and that is rendered.
+
+**The three band questions raised by the 2026-09-13 design pass are now all closed:** a code value
+confirmed by research is upgraded and `○` marks unbacked code (entry above); a derived figure takes a
+weighted average of its inputs, not the weakest (entry above, weighting function still open); and an
+`insufficient` finding supplies direction, not value (this entry).
+
+CONDITION: Any session grading a finding that a code or standard is inadequate, or implementing the
+determination engine's treatment of `insufficient` edges.
+ACTION: Never let such a finding supply `value_min`/`value_max`. Never discard it either — it anchors
+direction at its own source's tier and is rendered. A cell whose only evidence is `insufficient`
+findings is `pending` on value and states the inadequacy.
+DATE: 2026-09-13 — owner ruling, queried and confirmed.
