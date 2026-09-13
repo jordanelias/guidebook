@@ -24,11 +24,11 @@ today. `workplan/2026-09-10-road-to-batch-06.md` listed B1–B7. Six and a half 
 | B3 — the cron's wake condition reachable by a batch | **closed** — DoD rule **R10b** fires on a URL-bearing admission left `verification_status NULL` |
 | B4 — no extraction writer; engine gathered by slug | **closed** — `db.py add-extraction` exists; `gather_sources(conn, parameter_id)` (`scripts/assess/assess_cell.py:212`) joins on the extraction, not the slug |
 | B5a — engine anchored `stated` on underivable tiers | **closed** — the tier gate conditions `COND_NON_ANCHORING` inside `anchoring()` (`:332-353`) |
-| B5b — `scope` NULL on every source | **PARTIAL — the one live blocker.** **Seven** of eleven rows carry `scope`; **four are NULL and escalated** (the escalation doc says "five of the nine" — dated 2026-09-10, before batch 06 admitted two more) |
+| B5b — `scope` NULL on every source | **CLOSED 2026-09-12** by the owner's three rulings, executed the same day. All 11 rows carry `scope`; 0 NULL; `adjudication_integrity` VERDICT PASS |
 | B6 — two specification skills teach the retired key | **closed** — both deleted, `ffe6d76` |
 | B7 — regenerate before the gate | **closed** — runbook `:430`, `:485` |
 
-## THE ONE LIVE BLOCKER — four owner rulings on `evidence_sources.scope`
+## ~~THE ONE LIVE BLOCKER~~ — CLOSED 2026-09-12
 
 `schemas/tier_derivation.py:115` keys the ratified tier on `(evidence_type, scope)`. A NULL `scope`
 makes the stored tier underivable, `check_tier_consistency` returns False, and **B5a's tier gate then
@@ -39,19 +39,25 @@ python3 -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',ur
 print(list(c.execute('select ref_id,tier,evidence_type,scope from evidence_sources where scope is null')))"
 ```
 
-→ REF-00784, REF-00971, REF-00972, REF-00976. The evidence for each side is in
-`workplan/2026-09-10-b5b-scope-owner-escalation.md`; the four rulings sought are in §§1–4 there.
+→ **returns nothing today.** The four rows were REF-00784, REF-00971, REF-00972, REF-00976, and the
+owner ruled on all three questions that were put on 2026-09-12: REF-00971/972 to `lower_control` on
+the design-control reading, REF-00784 and REF-00976 from payloads retrieved under the same ruling.
+REF-00784 moved tier 1 → 3 on its own abstract's word ("Case series", "sample of convenience").
+Full record: `references/project-standards.md`, entry dated 2026-09-12. Ruling 4 — retrospective
+ratification of the five scope values applied on 2026-09-10 — was not put and is still open.
 
-**Why this gates the NEXT batch and did not gate the last one.** Batch 06's cell was
+**Why this gated the NEXT batch and did not gate the last one.** Batch 06's cell was
 `ramp gradient (TERM-001) × MOB`, whose two anchors (REF-00973, REF-00974) already carry
 `high_control`. Batch 07's planned cell is `corridor width (TERM-002)`, and REF-00784/971/972 are
-precisely the sources that measured corridor and passage geometry. Until their scope is settled they
-are non-anchoring, so the cell would come out on a Co-1 survey option phrase while the three studies
-that actually measured it sit excluded. Mechanically the batch runs; the determination would not be
-believable.
+precisely the sources that measured corridor and passage geometry. Until their scope was settled they
+were non-anchoring, so the cell would have come out on a Co-1 survey option phrase while the three
+studies that actually measured it sat excluded. They now reach the engine — **at T3, not T1**, so
+this does not by itself make the cell `stated`. Run the engine rather than predicting the state.
 
-**Nothing else in the escalation set blocks a batch.** `adjudication_integrity` is quarantined on
-these same four rows and clears when they do.
+**Nothing else in the escalation set blocks a batch.** `adjudication_integrity` was quarantined on
+these same four rows and is now GREEN (11/11 tier-consistent). It stays quarantined: its promotion
+clause waits on OD-E, ruled 2026-08-31 (D-0179), whose subject holds 0 rows — so promotion has no
+mechanical blocker left and is an owner call.
 
 ## SECOND — a determination has no NUMBER, and this is upstream of a gate
 

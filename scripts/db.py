@@ -1043,6 +1043,11 @@ def main():
     p_ams.add_argument("--reason", required=True,
                        help="Why the previous text was wrong. Recorded in "
                             "metadata_integrity_detail with the replaced text.")
+    p_ams.add_argument("--tier", type=int, default=None,
+                       help="Only with --field scope, and only when the new scope "
+                            "derives a different tier: moves the tier to the one value "
+                            "the ratified ladder produces, in the same statement. The "
+                            "tier is never set on its own.")
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
@@ -1885,7 +1890,8 @@ def main():
 
     elif args.command == "amend-source":
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
-                           session=args.session, dry_run=args.dry_run))
+                           session=args.session, dry_run=args.dry_run,
+                           tier=args.tier))
 
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
@@ -2878,7 +2884,7 @@ _AMENDABLE = (
 
 
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
-                 session: str, dry_run: bool = False):
+                 session: str, dry_run: bool = False, tier=None):
     """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
 
     Replaces rather than appends, and that is the opposite of what resolve-candidate
@@ -2915,6 +2921,13 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
+    if tier is not None and field != "scope":
+        raise Refusal(
+            f"{ref_id}: --tier is only admissible beside --field scope. The tier is "
+            f"DERIVED from (evidence_type, scope) by the ratified ladder; it is never "
+            f"set on its own, because a tier with no derivation input is exactly the "
+            f"state B5(b) found on all nine sources and could not check.")
+    new_tier = old_tier = None
     with connect(dry_run) as conn:
         row = conn.execute(f"SELECT ref_id, {field}, metadata_integrity_detail "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
@@ -2946,24 +2959,63 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"evidence_type {_et!r}; valid: {sorted(_valid)}")
             _derived = derive_tier(_et, replacement)
             if cur["tier"] != _derived:
+                # PAIRED CHANGE, added 2026-09-12. Until now this was a flat refusal,
+                # and `tier` was reachable by NO sanctioned writer: `_AMENDABLE` omits
+                # it and `correct-source` takes bibliographic fields from a payload.
+                # So the only way to re-tier a source was hand SQL against a table the
+                # CLI can reach, which CLAUDE.md 4 calls a coverage bug to fix rather
+                # than a licence to bypass. The wrong thing that reached the guidebook
+                # without it (the 8 bar): REF-00784 stood at Tier 1 -- co-primary
+                # anchoring strength -- on a design its own abstract calls "Case
+                # series" with a "sample of convenience", recorded as wrong by the
+                # 2026-07-20 anchor sweep and unfixable for fifty-four days.
+                #
+                # The refusal is kept and NARROWED rather than removed. A tier still
+                # cannot be asserted: it can only be moved to the one value the ladder
+                # derives from the new scope, in the same statement as that scope, with
+                # a reason. There is no path here that writes a row the ladder cannot
+                # produce -- which was the original refusal's whole point.
+                if tier is None:
+                    raise Refusal(
+                        f"{ref_id}: amending scope to {replacement!r} would make the "
+                        f"stored tier {cur['tier']} contradict the ratified ladder, "
+                        f"which derives {_derived} from ({_et}, {replacement}).\n"
+                        f"Amending the scope is amending the tier. If the scope is what "
+                        f"the bytes say, re-run with --tier {_derived} and the two move "
+                        f"together; this path will not write a row the ladder cannot "
+                        f"produce.")
+                if int(tier) != _derived:
+                    raise Refusal(
+                        f"{ref_id}: --tier {tier} is not derivable from "
+                        f"({_et}, {replacement}); the ladder derives {_derived}. The "
+                        f"tier is not a free field -- correct the scope instead.")
+                new_tier, old_tier = _derived, cur["tier"]
+            elif tier is not None and int(tier) != _derived:
                 raise Refusal(
-                    f"{ref_id}: amending scope to {replacement!r} would make the stored "
-                    f"tier {cur['tier']} contradict the ratified ladder, which derives "
-                    f"{_derived} from ({_et}, {replacement}).\n"
-                    f"Amending the scope is amending the tier. Say which is wrong; this "
-                    f"path will not write a row the ladder cannot produce.")
+                    f"{ref_id}: --tier {tier} contradicts the ladder, which derives "
+                    f"{_derived} from ({_et}, {replacement}).")
         stamp = audit(session)
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
         ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
                    f"Replaced text was: {was!r}")
+        if new_tier is not None:
+            ledger += (f" || {stamp['created_at'][:10]} tier CORRECTED {old_tier} -> "
+                       f"{new_tier}, derived from (evidence_type, scope) by the "
+                       f"ratified ladder in the same statement as the scope.")
+        _sets, _vals = [f"{field}=?"], [replacement]
+        if new_tier is not None:
+            _sets.append("tier=?"); _vals.append(new_tier)
         conn.execute(
-            f"UPDATE evidence_sources SET {field}=?, metadata_integrity_status=?, "
-            f"metadata_integrity_detail=?, updated_at=?, updated_by_session=? "
-            f"WHERE ref_id=?",
-            [replacement, "CORRECTED", ledger.lstrip(" |"),
-             stamp["created_at"], stamp["created_by_session"], ref_id])
-        return {"ref_id": ref_id, "field": field, "changed": True,
-                "was_chars": len(was or ""), "now_chars": len(replacement)}
+            f"UPDATE evidence_sources SET {', '.join(_sets)}, "
+            f"metadata_integrity_status=?, metadata_integrity_detail=?, "
+            f"updated_at=?, updated_by_session=? WHERE ref_id=?",
+            _vals + ["CORRECTED", ledger.lstrip(" |"),
+                     stamp["created_at"], stamp["created_by_session"], ref_id])
+        out = {"ref_id": ref_id, "field": field, "changed": True,
+               "was_chars": len(was or ""), "now_chars": len(replacement)}
+        if new_tier is not None:
+            out["tier_was"], out["tier_now"] = old_tier, new_tier
+        return out
 
 
 def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False):

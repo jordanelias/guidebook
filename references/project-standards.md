@@ -3049,3 +3049,64 @@ block whose title states the presentation regardless of chapter; then on demand.
 device-based finding as a property of the field. Measure demand against the corpus being built, not
 only the committed table.
 DATE: 2026-09-11 — adversarial pass on the same day's ruling.
+
+---
+
+## Owner rulings 2026-09-12 — the four `scope` escalations, closed from bytes
+
+The owner ruled on three of the four questions in
+`workplan/2026-09-10-b5b-scope-owner-escalation.md`, selecting among the options that document
+itself tabled. Recorded as selections, not as quoted speech — the owner wrote no prose here and none
+is invented for them.
+
+**Ruling 1 — REF-00784: retrieve the abstract first, then let scope and tier follow from the bytes**
+rather than from the three prose records that had said so since 2026-07-20. Done: PMID 20434614
+efetch, persisted at `retrieval-log/session_2026-09-12-b5b-scope-rulings/f5d94e0feaa8d48f.xml`,
+`sha256 f5d94e0feaa8d48f…`. Its own structured abstract states the design — **"Case series."** — and
+the sample — **"The sample of convenience included manual wheelchair (MWC; n=109), power wheelchair
+(PWC; n=100), and scooter users (n=14)."** `PublicationType` carries no human-subject design tag,
+and the DOI in the payload is byte-identical to the stored row's. `lower_control` derives **tier 3**.
+**The row moved from tier 1 to tier 3**, fifty-four days after the anchor sweep recorded that tier 1
+was wrong. It governs no determination: `specifications.governing_refs` holds REF-00973/974/979/980,
+checked before the write.
+
+**Ruling 2 — REF-00971 / REF-00972: `lower_control` on both.** `scope` discriminates on study DESIGN
+control, and a device bench measurement with no instrumented human protocol is observational.
+`lower_control` derives tier 3, which is the stored tier, so no tier moved and the rows simply
+stopped being underivable. **This ruling also settles ruling 1's design question independently** —
+REF-00784 varies passageway width in 5-cm increments exactly as the scooter pair decrements room
+size, so the two arrive at `lower_control` by the same reading and not by two.
+
+**Ruling 3 — REF-00976: retrieve the J-STAGE record.** Done:
+`d170cbf86507a07b.html`, `sha256 d170cbf86507a07b…`. The abstract establishes a cross-sectional
+survey of built housing stock — *"clarifying actual features of the orientation to lifetime homes in
+newly built residences in Japan"*, *"Most numbers of investigated residences are not proper…"*.
+Buildings are measured, not participants; no intervention. `lower_control`, tier 3 unchanged.
+
+**Ruling 4 was not put and is still open** — retrospective ratification of the five `scope` values
+B5(b) applied on 2026-09-10.
+
+**THE WRITER THIS NEEDED DID NOT EXIST, which is why the tier sat wrong for fifty-four days.**
+`tier` was reachable by no sanctioned writer: `_AMENDABLE` omits it and `correct-source` takes only
+bibliographic fields from a payload. So the sole route to re-tier a source was hand SQL against a
+table the CLI can reach — `CLAUDE.md` §4's coverage-bug shape. `amend-source` now takes `--tier`,
+admissible **only** beside `--field scope` and **only** equal to the value the ratified ladder
+derives from the new scope, written in the same statement. The original refusal is narrowed, not
+removed: no path here writes a row the ladder cannot produce. Four refusal paths fault-injected
+before use.
+
+**What it unblocks, stated without overclaiming.** All 11 sources are now tier-consistent and none
+carries a NULL scope, so B5a's tier gate no longer makes any of them non-anchoring — including the
+three that measured corridor and passage geometry. They anchor at **T3**, not T1, so the
+corridor-width cell is not thereby a `stated` determination; what changed is that the sources which
+actually measured the parameter now reach the engine at all. Run the engine to find out; do not
+predict the state here.
+
+CONDITION: Any session amending `scope`, reading `adjudication_integrity`'s quarantine entry, or
+planning the corridor-width cell.
+ACTION: Amend scope through `db.py amend-source`, with `--tier` when and only when the ladder
+derives a different tier; never by hand SQL. Read REF-00784 as T3. `adjudication_integrity` is GREEN
+as of this date and stays quarantined — its promotion clause waits on OD-E, which was ruled
+2026-08-31 (D-0179) and whose subject holds 0 rows, so promotion is an owner call with no mechanical
+blocker left.
+DATE: 2026-09-12 — owner rulings on the B5(b) escalation, executed the same day.

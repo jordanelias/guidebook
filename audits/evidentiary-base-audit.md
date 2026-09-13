@@ -1,5 +1,5 @@
 # Per-Slice Evidentiary Audit
-**Data as of:** 2026-09-11 · **Scope:** all 80 ACTIVE research slices (slugs) in `data/guidebook.db` · **Method:** read-only aggregation over `source_slug_links → evidence_sources`, `bpc_metadata`, and the frozen pre-log grids `search_languages` / `search_coverage` (labelled as history wherever used — live coverage comes from `search_executions` via `v_coverage_*`).
+**Data as of:** 2026-09-12 · **Scope:** all 80 ACTIVE research slices (slugs) in `data/guidebook.db` · **Method:** read-only aggregation over `source_slug_links → evidence_sources`, `bpc_metadata`, and the frozen pre-log grids `search_languages` / `search_coverage` (labelled as history wherever used — live coverage comes from `search_executions` via `v_coverage_*`).
 
 This audit scores every research slice on the six requested dimensions — (1) amount of evidence, (2) tiers of evidence, (3) jurisdictions sourced, (4) languages sourced, (5) English/Anglophone bias, and (6) overall quality of the evidentiary base — and rolls them into a transparent 0–100 composite grade. It audits the **raw evidence linked to each slice**, i.e. the material available for (re-)derivation; it does not re-judge synthesis prose.
 
@@ -11,7 +11,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 
 - **11 source-instances** are linked across **1 of 80 slices**; **79 slices carry zero linked evidence**.
 - **Grade distribution:** A=0 · B=0 · C=1 · D=0 · E=0 · F=79  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
-- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=6, T2=1, T3=4, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
+- **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=5, T2=1, T3=5, T4=0, T5=0, T6=0. Only **1 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
 - **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **11/11 (100%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 0 at ◐ partial (T4/T5 standards practice), 0 at ○ weak (T3-grey/T6/grey floor). By slice: **1 full · 0 partial · 0 weak-only** (of 1 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
 - **Anglophone concentration is the dominant quality risk.** **10/11 (91%) of linked sources are English-language**; only 1 are non-English. By jurisdiction, 0 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 0 supranational (INT/EU/ISO), 1 other, 10 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were searched across **0 languages** and ~0 jurisdictions, but 0 searched languages () returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
@@ -66,9 +66,9 @@ Median linked sources among non-empty slices: **11**. Largest bases: `accessible
 ### (2) Tiers of evidence
 | Tier | Instances | Share |
 |---|---|---|
-| T1 | 6 | ███████████········· 55% |
+| T1 | 5 | █████████··········· 45% |
 | T2 | 1 | ██·················· 9% |
-| T3 | 4 | ███████············· 36% |
+| T3 | 5 | █████████··········· 45% |
 | T4 | 0 | ···················· 0% |
 | T5 | 0 | ···················· 0% |
 | T6 | 0 | ···················· 0% |
@@ -112,7 +112,7 @@ Legend: **N** linked sources · **Band** strongest anchoring band (● full / �
 
 | # | Grade | Score | Slice | Topic | N | Band | ● | ◐ | ○ | ⊘ | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **C** | 64.2 | `accessible-circulation-geometry` | entrances-and-circulation | 11 | ● | 11 | 0 | 0 | 0 | T1×6,T2×1,T3×4 | 1 | 2 | 90.9 | 0.0 | 16·30·5·5·8.2 |
+| 1 | **C** | 64.2 | `accessible-circulation-geometry` | entrances-and-circulation | 11 | ● | 11 | 0 | 0 | 0 | T1×5,T2×1,T3×5 | 1 | 2 | 90.9 | 0.0 | 16·30·5·5·8.2 |
 | 2 | **F** | 0 | `accessibility-feature-market-value-uplift-framing` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 3 | **F** | 0 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 4 | **F** | 0 | `accessible-design-economics-cost-premium` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
@@ -321,4 +321,4 @@ The Guidebook’s **0 design specifications** (the `items` table, categories A�
 The full per-specification table (all 0 items with inherited grade and dimension snapshot) is in `evidentiary-base-audit-items.csv` and the `items` array of the JSON; the dashboard’s **Specifications** view filters them by corpus / category / term.
 
 ---
-*Data as of 2026-09-11 · read-only over `data/guidebook.db` · generated by `tools/evidentiary_audit.py`. Independently red-teamed; raw counts reproduce through a second code path. Aligned to `governance/tier-system.md`.*
+*Data as of 2026-09-12 · read-only over `data/guidebook.db` · generated by `tools/evidentiary_audit.py`. Independently red-teamed; raw counts reproduce through a second code path. Aligned to `governance/tier-system.md`.*

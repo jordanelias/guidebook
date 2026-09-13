@@ -1563,7 +1563,17 @@ quarantine:
   - python3
   - scripts/audit/adjudication_integrity.py
   status: quarantined
-  reason: 'RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
+  reason: 'RE-MEASURED 2026-09-12: VERDICT PASS -- all 11 evidence_sources are tier-consistent and
+    NOT ONE carries a NULL scope. The four rows this entry named were resolved that day by owner ruling
+    on the B5(b) escalation: REF-00971 / REF-00972 to lower_control on the design-control reading, and
+    REF-00784 / REF-00976 from payloads retrieved under the same ruling. PMID 20434614 states its design
+    as Case series with a sample of convenience, which moved REF-00784 to tier 3 -- the tier the
+    2026-07-20 anchor sweep had recorded as correct fifty-four days earlier. STILL QUARANTINED, and the
+    reason has inverted: the gate is GREEN now, not red. The promotion clause at the foot of this entry
+    waits on OD-E, which was ruled on 2026-08-31 (D-0179) and whose subject REF-00967 holds 0 rows
+    today -- so nothing mechanical blocks promotion and it is an owner call only. Do not promote it
+    without one. The superseded measurement, kept because this entry is a record of its own staleness:
+    RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
     REF-00784, REF-00971, REF-00972, REF-00976, every one of them scope NULL. That supersedes the
     2026-08-22 measurement recorded below (1 of 5), which was correct on its date and is wrong today:
     the corpus grew from 5 admitted sources to 9, and B5(b) on 2026-09-10 wrote scope on five of the
