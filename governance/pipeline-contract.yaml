@@ -66,6 +66,17 @@ stages:
     references: D-0171 (items is not the building layer); DR-2026-08-19:127 (42 of 93 names carry a
       determination); owner ruling 2026-08-26 (base_parameters is items's replacement subject)
     check: scripts/validate_parameters.py
+  - id: base-derived-not-curated
+    kind: integrity
+    criterion: 'A vocabulary, an ordering, an identifier or a set that the schema or the code
+      can compute is never also maintained as a list beside it. The list and the thing drift, and
+      only the list is read. Mechanically decidable instances are enforced; the rest is CLAUDE.md
+      rule 8, where you are the gate.'
+    references: 'CLAUDE.md rule 8 (recorded 2026-09-13, generalising rule 7 from documents to
+      everything). Proof: dbcore.WRITABLE_TABLES went blind eight times and a row written through
+      the sanctioned CLI was captured as nothing; db.py --verification-method refused a value the
+      schema admits because its choices list had not followed the CHECK.'
+    check: scripts/audit/derived_not_curated_audit.py
   - id: base-identifier-never-reissued
     kind: integrity
     criterion: 'An identifier the permanent record has already used is spent, whatever the live

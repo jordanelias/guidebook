@@ -1493,6 +1493,41 @@ checks:
     pass on a live derived row: tampering extraction 15''s stored value from 10 to 42 produced
     `stored=42.0, recomputed=10.0` and exit 1. Canonical data/guidebook.db sha256 unmoved
     throughout — every mutation above was against a scratch copy only.'
+- id: derived_not_curated_audit
+  cmd:
+  - python3
+  - scripts/audit/derived_not_curated_audit.py
+  battery: schema
+  kinds:
+  - schema
+  - governance
+  level: blocking
+  basis: base/base-derived-not-curated
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-09-13 with CLAUDE.md rule 8. EXAMINED counts argparse choices= LITERALS
+    inspected -- the ones still hardcoded -- not files read and not the derived calls, because
+    the literals are the subject. It therefore counts DOWN as the rule is applied, and reaching
+    0 would make it vacuous rather than passing: min_items 1 is a floor on the inspection, and
+    the 91 live CHECK vocabularies it compares against are printed beside it.
+
+
+    SCOPE IS ONE MECHANICALLY DECIDABLE CLASS, deliberately. Rule 8 is mostly judgement and a
+    script cannot police judgement. An argparse choices= list whose values are EXACTLY a live
+    column CHECK is the one case with a first home sitting next to the second and a fix that is
+    always the same. The other violations rule 8 names -- --ref-id and --tier asking for values
+    the machine derives, MODEL_TABLE_MAP, the registry''s own "N today" counts -- need a decision
+    about what the single home should be, so they are listed in the rule for a reader.
+
+
+    IT GREPS RATHER THAN IMPORTS, because importing db.py to inspect its parser would run
+    module-level code and couple this gate to the writer it polices -- what dbcore''s docstring
+    says a gate must not do.
+
+
+    FAULT-INJECTED 2026-09-13: twenty literals were derived, run CLEAN (EXAMINED 5, the survivors
+    being non-vocabulary lists such as tier 1-6 integers); re-curating one (gaps.priority) turned
+    it FAIL/exit 1 naming the file, line, owning column and the exact replacement; restored, CLEAN.'
 - id: identifier_floor_audit
   cmd:
   - python3

@@ -59,6 +59,24 @@ import dbcore                                                      # noqa: E402
 # ValueError -- in short, so that a defect keeps the traceback a refusal does not need.
 from dbcore import Refusal                                         # noqa: E402
 
+
+def _ladder_evidence_types():
+    """The evidence-type vocabulary, from the ratified ladder (CLAUDE.md rule 8).
+
+    `schemas/tier_derivation.TIER_MAP`'s keys are the authority `add-source` already
+    validates against. Used for argparse `choices=` where the column being written
+    declares no CHECK of its own, so `dbcore.schema_choices()` has nothing to read.
+
+    Returns None rather than raising if schemas is not importable: a parser that cannot
+    be built is worse than one without a choices constraint, and the writer refuses the
+    same values at run time either way.
+    """
+    try:
+        from schemas.tier_derivation import TIER_MAP                 # noqa: E402
+        return sorted({et for et, _ in TIER_MAP})
+    except Exception:
+        return None
+
 # DB_PATH stays a module attribute because callers and tests read it. It is resolved
 # through dbcore so there is one resolution, not two.
 DB_PATH = dbcore.db_path()
@@ -891,7 +909,7 @@ def main():
 
     # gaps
     p_gaps = sub.add_parser("gaps", help="Query gaps")
-    p_gaps.add_argument("--priority", choices=["P1", "P2", "P3"])
+    p_gaps.add_argument("--priority", choices=dbcore.schema_choices("gaps", "priority"))
     p_gaps.add_argument("--status")
 
     # connections
@@ -1143,14 +1161,14 @@ def main():
                            "code. ONLY this sets icd11_verified_at; absent means NULL, "
                            "and NULL means not verified")
     p_md.add_argument("--identity", help="populations.population_code to cross to")
-    p_md.add_argument("--relationship", choices=["names", "member_of", "identity_first"],
+    p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
                       help="required with --identity")
     p_md.add_argument("--icf", help="axes.axis_code to cross to")
-    p_md.add_argument("--role", choices=["PRIMARY", "SECONDARY", "SITUATIONAL"],
+    p_md.add_argument("--role", choices=dbcore.schema_choices("icf_medical_map", "role"),
                       help="required with --icf. No ALIAS: a diagnosis is never an alias "
                            "of a functional demand (074)")
     p_md.add_argument("--mapping-confidence", dest="mapping_confidence",
-                      choices=["high_predictive", "moderate", "low", "minimal"],
+                      choices=dbcore.schema_choices("icf_medical_map", "mapping_confidence"),
                       help="required with --icf; functional-taxonomy §3.2")
     p_md.add_argument("--note")
     p_md.add_argument("--session", required=True)
@@ -1424,7 +1442,7 @@ def main():
     # add-gap
     p_ag = sub.add_parser("add-gap", help="Insert a new gap record")
     p_ag.add_argument("--category", required=True)
-    p_ag.add_argument("--priority", required=True, choices=["P1", "P2", "P3"])
+    p_ag.add_argument("--priority", required=True, choices=dbcore.schema_choices("gaps", "priority"))
     p_ag.add_argument("--description", required=True)
     p_ag.add_argument("--session", required=True)
     p_ag.add_argument("--skill")
@@ -1444,7 +1462,7 @@ def main():
     p_ac.add_argument("--con-id", required=True)
     p_ac.add_argument("--status", default="PENDING")
     p_ac.add_argument("--confidence", required=True,
-                      choices=["HIGH", "MODERATE", "SPECULATIVE"])
+                      choices=dbcore.schema_choices("connections", "confidence"))
     p_ac.add_argument("--connection-type", required=True)
     p_ac.add_argument("--filed-in", required=True)
     p_ac.add_argument("--description", required=True)
@@ -1508,28 +1526,26 @@ def main():
     # A citation chase is `--mining-direction backward|forward|both`, which is
     # the column that already means it; the depth axis is scoping vs systematic.
     p_ls.add_argument("--depth-method", required=True,
-                      choices=["scoping", "systematic"])
+                      choices=dbcore.schema_choices("search_executions", "depth_method"))
     p_ls.add_argument("--session", required=True)
     p_ls.add_argument("--jurisdiction", help="omit for a search not scoped to one")
     p_ls.add_argument("--target-tier", type=int, choices=range(1, 7))
     p_ls.add_argument("--target-evidence-type",
-                      choices=["clinical", "sr_meta", "standard_eb", "national_fw",
-                               "code", "co1", "co2", "grey"])
+                      choices=dbcore.schema_choices("search_executions", "target_evidence_type"))
     p_ls.add_argument("--target-scope",
-                      choices=["intrinsic", "lower_control", "high_control",
-                               "national", "international"])
+                      choices=dbcore.schema_choices("search_executions", "target_scope"))
     p_ls.add_argument("--terms-used",
                       help="JSON array of the aliases actually fired — the column "
                            "is json_valid-checked, and it is 0%% populated today, "
                            "so no logged search can yet show which terms it used")
     p_ls.add_argument("--mining-direction",
-                      choices=["none", "backward", "forward", "both"])
+                      choices=dbcore.schema_choices("search_executions", "mining_direction"))
     p_ls.add_argument("--results-found", type=int, default=0)
     p_ls.add_argument("--results-screened", type=int, default=0)
     p_ls.add_argument("--results-admitted", type=int, default=0)
     p_ls.add_argument("--admitted-ref-id", action="append", dest="admitted_ref_ids",
                       help="repeatable; also written to the search_admissions junction")
-    p_ls.add_argument("--saturation-signal", choices=["none", "partial", "saturated"])
+    p_ls.add_argument("--saturation-signal", choices=dbcore.schema_choices("search_executions", "saturation_signal"))
     p_ls.add_argument("--findings-note")
     p_ls.add_argument("--harm-finding", type=int, default=0,
                       help="R7: failure/harm/inadequacy is first-class evidence")
@@ -1552,7 +1568,7 @@ def main():
     # DR-2026-05-24 supersession protocol
     p_ubpc.add_argument("--supersession-check-complete", type=int, choices=[0, 1],
                         help="DR-2026-05-24: set when all cited anchor sources have terminal supersession outcomes")
-    p_ubpc.add_argument("--closure-definition-version", choices=["v1", "v2"],
+    p_ubpc.add_argument("--closure-definition-version", choices=dbcore.schema_choices("bpc_metadata", "closure_definition_version"),
                         help="DR-2026-05-24: v2 requires citation_mining_complete=1 AND supersession_check_complete=1")
     p_ubpc.add_argument("--dry-run", action="store_true")
 
@@ -1636,9 +1652,7 @@ def main():
                       # (dbcore.check_values(con, "evidence_sources", "verification_method")
                       # returns all five) -- the schema is the authority (CLAUDE.md §4),
                       # so the CLI's list was the thing out of date, not the column.
-                      choices=["tool", "corroborated-not-retrieved",
-                               "co1-attestation", "citing-bibliography",
-                               "direct-render"],
+                      choices=dbcore.schema_choices("evidence_sources", "verification_method"),
                       help="REQUIRED when --verification-status VERIFIED. How the "
                            "standing was established (D-0157).")
     p_as.add_argument("--verified-by-tool",
@@ -1758,11 +1772,22 @@ def main():
     p_asc.add_argument("--local-ref", required=True, help="Local ref id, e.g. RAP-23")
     p_asc.add_argument("--ref", required=True, help="Global ref_id, e.g. REF-00064")
     p_asc.add_argument("--tier", required=True, type=int, choices=[1,2,3,4,5,6])
+    # THE LADDER IS THE AUTHORITY HERE, not another table's CHECK. This flag writes
+    # `supersession_check.anchor_evidence_type`, which declares NO CHECK -- so the
+    # mechanical sweep that derived the other nineteen choices lists had nothing local to
+    # read and pointed this one at `search_executions.target_evidence_type`, whose
+    # vocabulary happens to be identical. That would have made a foreign column
+    # authoritative for one it does not govern: correct today, silently wrong the day
+    # either CHECK moves. `TIER_MAP`'s keys ARE the evidence-type vocabulary (the ratified
+    # ladder `add-source` already validates against), and verified equal to that column's
+    # CHECK when this was written. The real gap -- that `anchor_evidence_type`,
+    # `evidence_sources.tier` and `evidence_sources.evidence_type` declare no CHECK at all,
+    # so CLAUDE.md rule 8's "vocabularies come from the schema" has nothing to come from --
+    # is recorded, not closed here: adding those CHECKs is a schema change against the
+    # ladder and wants its own migration.
     p_asc.add_argument("--evidence-type", required=True,
-                       choices=["clinical","co1","co2","sr_meta","standard_eb","national_fw","code","grey"])
-    p_asc.add_argument("--outcome", required=True, choices=[
-        "current_best","superseded_by","refined_by","divergent_no_supersession",
-        "co1_addition_logged","pending"])
+                       choices=_ladder_evidence_types())
+    p_asc.add_argument("--outcome", required=True, choices=dbcore.schema_choices("supersession_check", "outcome"))
     p_asc.add_argument("--superseding-refs", default="[]",
                        help="JSON array of FK ref_ids (for already-verified candidates)")
     p_asc.add_argument("--superseding-dois", default="[]",
@@ -1773,9 +1798,7 @@ def main():
                        help="Required when outcome=divergent_no_supersession; summarizes divergence")
     p_asc.add_argument("--search-strategy", required=True,
                        help="JSON object: {tool, query, date_filter, candidates_returned, candidates_reviewed}")
-    p_asc.add_argument("--check-method", required=True, choices=[
-        "pubmed_search","scholar_gateway","cochrane_direct","standards_body_direct",
-        "multilingual_research","composite"])
+    p_asc.add_argument("--check-method", required=True, choices=dbcore.schema_choices("supersession_check", "check_method"))
     p_asc.add_argument("--notes")
     p_asc.add_argument("--session", required=True)
     p_asc.add_argument("--dry-run", action="store_true")
@@ -1789,16 +1812,12 @@ def main():
                        help="JSON object: {\"strategies\":[{\"tool\":...,\"query\":...,\"candidates_returned\":N},...]}")
     p_agm.add_argument("--candidates-returned", required=True, type=int)
     p_agm.add_argument("--candidates-reviewed", required=True, type=int)
-    p_agm.add_argument("--outcome", required=True, choices=[
-        "closure_evidence_found","partial_evidence_found","null_result",
-        "gap_recategorized","deferred"])
+    p_agm.add_argument("--outcome", required=True, choices=dbcore.schema_choices("gap_mining", "outcome"))
     p_agm.add_argument("--discoveries", default="[]",
                        help="JSON array of FK ref_ids INSERTed this attempt")
     p_agm.add_argument("--candidate-dois", default="[]",
                        help="JSON array of DOIs of unverified candidates (PI rule #10 gate)")
-    p_agm.add_argument("--check-method", required=True, choices=[
-        "pubmed_cluster","scholar_gateway_lived_experience","cochrane_direct",
-        "standards_body_direct","multilingual_research","composite"])
+    p_agm.add_argument("--check-method", required=True, choices=dbcore.schema_choices("gap_mining", "check_method"))
     p_agm.add_argument("--notes")
     p_agm.add_argument("--session", required=True)
     p_agm.add_argument("--dry-run", action="store_true")
@@ -1807,8 +1826,7 @@ def main():
     p_uga = sub.add_parser("update-gap-addressability",
                             help="Set gaps.mining_addressability per DR-2026-05-26")
     p_uga.add_argument("--gap-id", required=True)
-    p_uga.add_argument("--addressability", required=True, choices=[
-        "ADDRESSABLE","NOT-ADDRESSABLE","TRIAGE-NEEDED"])
+    p_uga.add_argument("--addressability", required=True, choices=dbcore.schema_choices("gaps", "mining_addressability"))
     p_uga.add_argument("--session", required=True)
     p_uga.add_argument("--dry-run", action="store_true")
 
@@ -1816,7 +1834,7 @@ def main():
     p_ung = sub.add_parser("unmined-gaps",
                             help="Query gaps eligible for gap-driven mining")
     p_ung.add_argument("--gap-id", help="Filter to a specific gap_id (returns its state)")
-    p_ung.add_argument("--priority", choices=["P1","P2","P3"],
+    p_ung.add_argument("--priority", choices=dbcore.schema_choices("gaps", "priority"),
                        help="Filter to priority")
     p_ung.add_argument("--include-not-addressable", action="store_true",
                        help="Include NOT-ADDRESSABLE gaps in results (default: ADDRESSABLE only)")

@@ -36,8 +36,6 @@ That relative hop is the one piece of boilerplate consolidation cannot remove. I
 
 import os
 import re
-import re as _re
-import os as _os
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
@@ -469,6 +467,40 @@ def check_declared(conn, table: str, column: str, value, context: str):
             % (context, table, column, value, sorted(allowed)))
 
 
+def schema_choices(table: str, column: str):
+    """argparse `choices=` READ FROM THE COLUMN'S OWN CHECK (CLAUDE.md rule 8).
+
+    Twenty `choices=` lists in db.py restated a vocabulary the schema already declares.
+    Each was a second home, and one had already drifted: `--verification-method` was
+    missing `direct-render` for as long as that value had existed, so the CLI refused a
+    value the schema admits -- the safe-looking direction of the failure, which is why
+    nobody noticed. The comment added when it was fixed said "the schema is the authority
+    (CLAUDE.md section 4), so the CLI's list was the thing out of date", and then kept the
+    list.
+
+    WHY choices AT ALL, rather than deleting it and validating only at runtime: `--help`
+    and shell completion read it, and a refusal that arrives before the command runs is
+    cheaper for an operator than one that arrives after. Deriving keeps the affordance and
+    removes the drift, which is the whole of rule 8 in one function.
+
+    RETURNS None RATHER THAN RAISING when the schema cannot be read -- a missing or
+    unreadable database must not make `db.py --help` fail, and the vocabulary is not lost
+    by returning None: `check_declared()` refuses the same values at write time, with a
+    better message. Degraded, never wrong.
+    """
+    try:
+        conn = sqlite3.connect("file:%s?mode=ro" % db_path(), uri=True)
+    except sqlite3.Error:
+        return None
+    try:
+        vals = check_values(conn, table, column)
+        return sorted(vals) or None
+    except sqlite3.Error:
+        return None
+    finally:
+        conn.close()
+
+
 def check_vocab(conn, table: str, column: str, value, context: str):
     """Refuse a value outside the live vocabulary -- unless there is no vocabulary yet.
 
@@ -561,7 +593,7 @@ NOT_CAPTURED = {
         "EXEMPT_TABLES for the same reason"),
 }
 
-_INSERT_RE = _re.compile(r'INSERT\s+(?:OR\s+\w+\s+)?INTO\s+"?(\w+)"?', _re.I)
+_INSERT_RE = re.compile(r'INSERT\s+(?:OR\s+\w+\s+)?INTO\s+"?(\w+)"?', re.I)
 
 #: The modules that write rows a session captures. Paths are relative to scripts/.
 _WRITER_MODULES = ("db.py", "assess/assess_cell.py")
@@ -569,10 +601,10 @@ _WRITER_MODULES = ("db.py", "assess/assess_cell.py")
 
 def _writer_tables() -> set:
     """Every table a sanctioned writer INSERTs into, read from the writers themselves."""
-    here = _os.path.dirname(_os.path.abspath(__file__))
+    here = os.path.dirname(os.path.abspath(__file__))
     found = set()
     for rel in _WRITER_MODULES:
-        path = _os.path.join(here, rel)
+        path = os.path.join(here, rel)
         try:
             with open(path, encoding="utf-8") as fh:
                 found |= set(_INSERT_RE.findall(fh.read()))

@@ -1229,6 +1229,14 @@ checks:
     - schema
     min_items: null
     cmd: python3 scripts/decision_capture.py
+  - id: derived_not_curated_audit
+    level: blocking
+    battery: schema
+    kinds:
+    - schema
+    - governance
+    min_items: 1
+    cmd: python3 scripts/audit/derived_not_curated_audit.py
   - id: doctrine_recheck
     level: blocking
     battery: governance
