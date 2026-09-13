@@ -3384,3 +3384,71 @@ session stamps.
 DATE: 2026-09-13 — owner ruling, quoted above. Recorded 2026-09-13 after an audit found the ruling
 present in the migration, the session record and `governance/check-registry.yaml` but absent from this
 ledger, which CLAUDE.md rule 0 requires ("Record the supersession").
+
+---
+
+RULE: **`AX-` may never denote an ICF code, anywhere.** Owner ruling 2026-09-13, quoted verbatim:
+*"'AX-' for ICF should never ever exist anywhere."* Recorded on contact per `CLAUDE.md` rule 0.
+
+**This answers the one question the `icf_demands` rename left open, and it answers it against the
+status quo.** The 2026-08-25 RULE above renames `axes` → `icf_demands` and `axes.axis_code` →
+`icf_demands.demand_code`, and the 2026-08-26 §R8 entry states that the rename "is SILENT on whether
+the 17 **code values** are re-minted", that "the migration must state which", and that if they are not
+re-minted then `AX-*` "stays correct live data" and belongs in the retired-vocabulary register's
+`deferred:` section. It is now ruled: the values are re-minted. `AX-` is not correct live data.
+
+**The surface, derived 2026-09-13 against the live database rather than quoted from the 2026-08-26
+count, which predates the circulation clear.** 128 `AX-`-bearing values across fourteen columns:
+
+| | |
+|---|---|
+| key columns | `population_axis_map.axis_code` 53 · `access_need_axis_map.axis_code` 21 · `axes.axis_code` 17 |
+| free text | `terms.scope_note` 17 · `axes.falsification_condition` 8 · `access_need_icf.note` 3 · seven further columns 1 each |
+
+Derive it, never quote it:
+
+```
+python3 - <<'PY'
+import sqlite3; con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+for (t,) in con.execute("select name from sqlite_master where type='table' order by name"):
+    for c in con.execute(f'PRAGMA table_info("{t}")'):
+        try: n = con.execute(f'select count(*) from "{t}" where "{c[1]}" GLOB "*AX-*"').fetchone()[0]
+        except Exception: continue
+        if n: print(f"{t}.{c[1]}: {n}")
+PY
+```
+
+**WHERE THE RULING BITES HARDEST, and it is not the registry — it is four columns literally named
+`icf_code`.** `specifications.icf_code`, `source_value_extractions.icf_code`,
+`item_taxonomy_links.icf_code` and `icf_medical_map.icf_code` each carry a real FK into
+`axes(axis_code)`, so the column called `icf_code` resolves, today, to an `AX-*` value. That is the
+ruled state exactly: `AX-` denoting ICF, in the schema, four times over. Two further columns named
+`icf_code` do NOT do this and must not be swept with them — `access_need_icf.icf_code` and
+`population_icf_links.icf_code` (migration 080) hold real ICF codes and carry no FK into `axes`,
+because there is no ICF registry to point at.
+
+**What the ruling does NOT say, and must not be read to say.** It does not fold `icf_demands` into
+`access_needs` — the 2026-08-25 RULE refuses that and its b/d ÷ e reasoning is untouched. It does not
+retire the demand layer, whose rows anchor to ICF **b** and **d** codes in `icf_b_anchors` /
+`icf_d_anchors`; those anchor columns are the layer's correct relationship to ICF and are not the
+defect. And it does not license re-minting the 17 codes as bare ICF d-codes: an `icf_demands` row
+anchors to both b and d codes, so no single d-code can stand for one, and collapsing the demand layer
+into ICF would destroy the anchor relation the 2026-08-25 table sets out.
+
+**TWO THINGS REMAIN UNDECIDED AND ARE NOT GUESSED HERE.** (1) The replacement code shape — `DM-AMB`
+to match `demand_code` is the obvious reading and is still a minting decision every future row
+carries. (2) Whether the four lens columns named `icf_code` are renamed to `demand_code` with the
+registry, which would rename a LENS the owner ruled on 2026-08-28 (identity / ICF / access-need /
+medical), or whether the ICF lens instead comes to hold real ICF codes and the demand layer becomes a
+fifth thing. Those are put to the owner rather than settled by an implementer.
+
+CONDITION: Any session writing, renaming or reasoning about the demand layer, the ICF lens, or any
+column named `icf_code`; and any session about to add `AX-` to the retired-vocabulary register.
+ACTION: (1) Write no new `AX-` value anywhere, under any column name. (2) Do not execute the re-mint
+piecemeal — the 2026-08-25 RULE's action item 3 stands, and this ruling widens that migration rather
+than replacing it. (3) When it runs, it states the new code shape and the lens-column decision
+explicitly, because this ruling is what made both unavoidable. (4) The retired-vocabulary entry for
+`AX-` still cannot be written in any of the register's three match modes — all require a non-`[\w-]`
+character after the token, so `AX-` never matches `AX-AMB`; that is a matcher fact recorded on
+2026-08-26 and unchanged by this ruling.
+DATE: 2026-09-13 — owner ruling, quoted above.

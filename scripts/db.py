@@ -3957,12 +3957,21 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
 # that is a coverage bug to fix, not a licence to bypass").
 
 #: The shape an ICF activity code takes. NOT a vocabulary -- `population_icf_links.
-#: icf_code` is free text ON PURPOSE (080: the FDA mapping states ranges, the live
-#: `axes` table holds 17 AX- codes rather than d-codes, and fabricating an FK into
-#: `axes` would assert a crossing nobody ruled). A shape guard is the most this can
-#: honestly do: it cannot say the code EXISTS, only that the value is a d-code or a
-#: d-code range rather than a population code or an axis code pasted into the wrong
-#: column. When a d-code registry lands, this becomes an FK and the guard goes.
+#: icf_code` is free text ON PURPOSE (080: the FDA mapping states ranges, and there is
+#: no ICF registry in this schema to point at).
+#:
+#: AND IT IS A TRIPWIRE FOR THE 2026-09-13 OWNER RULING, not only a typo guard.
+#: "'AX-' for ICF should never ever exist anywhere" (references/project-standards.md).
+#: Four columns named `icf_code` currently FK into the demand registry, whose codes
+#: carry that prefix -- so `icf_code` resolves to a demand code in four places in the
+#: live schema. THIS column is not one of them and must never become one: the guard
+#: below refuses the prefix outright, so the ruled state cannot be recreated here while
+#: the wider re-mint is still owner-gated.
+#:
+#: A shape guard is the most this can honestly do -- it cannot say the code EXISTS, only
+#: that the value is an ICF activity code rather than something from another lens pasted
+#: into the wrong column. When an ICF registry lands, this becomes an FK and the guard
+#: goes.
 _ICF_CODE_RE = re.compile(r"^d\d{3}(?:\s*[-\u2013\u2014]\s*d\d{3})?$")
 
 
@@ -4012,9 +4021,12 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
         raise Refusal(
             f"{icf_code!r} is not shaped like an ICF activity code. Expected d### or a "
             f"range d###-d### (e.g. 'd450', 'd310\u2013d329').\n"
-            f"This column is free text because there is no d-code registry to point at "
-            f"yet -- which is precisely why a shape guard sits here. If you meant an "
-            f"AX- functional demand or a population code, this is the wrong column.")
+            f"This column is free text because there is no ICF registry to point at yet "
+            f"-- which is precisely why a shape guard sits here.\n"
+            f"If what you have is a DEMAND code or a population code, this is the wrong "
+            f"column. A demand code in particular: owner ruling 2026-09-13 is that the "
+            f"AX- prefix may never denote an ICF code anywhere, and this column is where "
+            f"that would happen next.")
     with connect(dry_run) as conn:
         if not dbcore.exists(conn, "populations", "population_code", population):
             live = sorted(r[0] for r in
