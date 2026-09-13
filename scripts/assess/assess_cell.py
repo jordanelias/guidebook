@@ -123,7 +123,17 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-2"  # pilot-1 + adversarial-review corrections (see PILOT-MANIFEST §7):
+RULE_VERSION = "pilot-3"  # 077: derivation_sha hashes the GRADED LINK SET, not the
+#   governing ref list plus an unfiltered extraction count. Bumped from pilot-2 because
+#   the sha PAYLOAD FORMAT changed: `rule_version` is what tells a verifier which format
+#   to recompute, so K01 dispatches on it and pilot-2 rows replayed from migration
+#   history still verify against the old format. Nothing else about the rule changed.
+#   The predicate that made this necessary: since 075 only figure_role IN
+#   ('claim','derived') governs, so re-grading a row flipped a cell's STATE while
+#   leaving the old payload byte-identical -- a BLOCKING check (K01) reporting CLEAN
+#   over a determination whose inputs had changed.
+#
+# pilot-1 + adversarial-review corrections (see PILOT-MANIFEST §7):
 #   tier_basis now describes the GOVERNING set only (supporting strata listed separately);
 #   derivation_sha includes cell identity (pending cells no longer share one constant sha);
 #   has_unverified_sources / all_sources_disqualified implemented per §2.8;
@@ -286,6 +296,92 @@ def gather_sources(conn, parameter_id):
                       "verification_status", "verification_disposition",
                       "scope", "jurisdiction"), r))
             for r in conn.execute(q, (parameter_id,))]
+
+
+#: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
+#: `gather_sources` filters on it, `gather_extraction_links` grades on it, and K01
+#: recomputes the sha from the links this produces -- so the three cannot disagree.
+#: Before 077 the predicate lived only inside gather_sources' SQL while the sha hashed an
+#: UNFILTERED count, which is how re-grading a row could flip a cell from `stated` to
+#: `pending` without moving its attestation.
+VALUE_SUPPLYING_ROLES = ("claim", "derived")
+CONDITIONING_ROLES = ("condition",)
+
+
+def gather_extraction_links(conn, parameter_id, governing_refs):
+    """Every extraction for this parameter, graded by the part it played.
+
+    THE BACKWARD WALK STARTS HERE (migration 077). `gather_sources` returns SOURCES and
+    its DISTINCT is load-bearing -- collapsing the 1:N fan-out is what stops one document
+    corroborating itself -- so it cannot also tell us WHICH rows governed. This does, and
+    the two are deliberately separate functions rather than one that returns both: the
+    first answers "how many independent sources", the second "which sentences", and
+    conflating them is how the fan-out collapse would leak into the provenance record.
+
+    Returns one dict per extraction, with `role` in:
+
+      governing     figure_role supplies a value AND the row's source survived the tier,
+                    verification and supersession gates -- i.e. its ref_id is in the
+                    governing set this determination actually used.
+      conditioning  figure_role='condition'. Qualifies a governing row. Carried onto the
+                    determination so a slope arrives with its run length attached.
+      excluded      everything else, with a MANDATORY reason. This is the row that makes
+                    a `pending` cell legible: "examined, and here is why it did not
+                    answer" reads differently from silence, and the two were previously
+                    indistinguishable to everything except a hash collision.
+
+    `governing_refs` is passed in rather than re-derived because the caller has already
+    applied the tier/verification/supersession gates; re-deriving them here would be a
+    second implementation of the anchoring rule, free to drift from the first.
+    """
+    # Positional, not by name: this module's connection carries no row_factory, and
+    # assuming one made the first cut of this function raise `tuple indices must be
+    # integers`. The column order here is the SELECT's, which is the only contract.
+    rows = conn.execute(
+        "SELECT extraction_id, ref_id, figure_role, claim_type FROM "
+        "source_value_extractions WHERE parameter_id = ? ORDER BY extraction_id",
+        (parameter_id,)).fetchall()
+    gov = set(governing_refs or ())
+    out = []
+    for eid, ref, frole, ctype in rows:
+        if frole in VALUE_SUPPLYING_ROLES and ref in gov:
+            role, why = "governing", None
+        elif frole in CONDITIONING_ROLES:
+            role, why = "conditioning", None
+        elif frole in VALUE_SUPPLYING_ROLES:
+            # Value-supplying, but its source did not survive the anchoring gates.
+            role, why = "excluded", (
+                f"figure_role={frole!r} supplies a value, but {ref} is not in the "
+                f"governing set: it was disqualified on tier, verification or "
+                f"supersession before the value was reached")
+        elif frole is None:
+            role, why = "excluded", (
+                "figure_role IS NULL -- ungraded, so nothing states whether this row "
+                "asserts a value, reports a finding, or states a condition")
+        else:
+            role, why = "excluded", (
+                f"figure_role={frole!r} reports something ABOUT the parameter without "
+                f"asserting a value for it"
+                + (f" (claim_type={ctype!r})" if ctype == "absent" else ""))
+        out.append({"extraction_id": eid, "ref_id": ref, "figure_role": frole,
+                    "role": role, "exclusion_reason": why})
+    return out
+
+
+def link_payload(links):
+    """The governing set as `derivation_sha` hashes it, and as K01 recomputes it.
+
+    ONE STRING, ONE FORMAT, TWO CALLERS -- this module and test_db_integrity's K01. The
+    previous payload used the governing REF list plus an unfiltered extraction COUNT, and
+    the count was there (per sha()'s own docstring) because the ref list alone could not
+    distinguish a parameter never read from one read and rejected. Storing the graded
+    links makes the real set recomputable in one query, which is the thing that docstring
+    wanted and ruled out only because nothing stored it.
+
+    Role is inside the hash, not just the id: a row moving excluded -> governing is
+    EXACTLY the change that must move the attestation, and it moves no id.
+    """
+    return "|".join(sorted(f"{l['role']}:{l['extraction_id']}" for l in links))
 
 
 def count_extractions(conn, parameter_id):
@@ -486,7 +582,7 @@ def regulatory_richness(t45, t6):
     return False, "below §2.3 richness"
 
 
-def sha(parameter_id, lens, refs, n_extractions):
+def sha(parameter_id, lens, links):
     """Cell-scoped derivation sha: identity + governing set + EVIDENCE READ + rule
     version, so pending cells do not all share one constant hash (staleness stays
     checkable).
@@ -530,8 +626,7 @@ def sha(parameter_id, lens, refs, n_extractions):
     same rule_version ⇒ same state + same derivation_sha". A determination stamped
     before an extraction arrived IS stale, and K01 saying so is the check working.
     """
-    payload = (f"{parameter_id}|{lens}|" + "|".join(sorted(refs))
-               + f"|x{n_extractions}::" + RULE_VERSION)
+    payload = f"{parameter_id}|{lens}|" + link_payload(links) + "::" + RULE_VERSION
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -711,7 +806,15 @@ def determine(conn, parameter_id, lens, slug, note):
         state = "pending"
         gap_needed = True
 
+    # THE PROVENANCE RECORD (migration 077). Graded AFTER the state is settled, because
+    # `governing` means "its source survived the anchoring gates this determination
+    # applied" -- which is not knowable until those gates have run. Every extraction for
+    # the parameter appears exactly once, so a `pending` cell carries the reasons it is
+    # pending rather than leaving a reader to infer them from an absence.
+    links = gather_extraction_links(conn, parameter_id, governing)
+
     return {
+        "links": links,
         "n_extractions": n_extractions,
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
@@ -723,7 +826,7 @@ def determine(conn, parameter_id, lens, slug, note):
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(parameter_id, lens_key(lens), governing, n_extractions),
+        "derivation_sha": sha(parameter_id, lens_key(lens), links),
         "n_sources": len(sources),
         "needs_population_assessment": sorted(r["ref_id"] for r in recs
                                               if r["needs_population_assessment"]),
@@ -1146,6 +1249,22 @@ def main():
                          f"VALUES (?,?,?,?,?)", _link)
             sql_lines.append(f"INSERT INTO specification_source_links ({_lcols}) VALUES (" +
                              ", ".join(q(v) for v in _link) + ");")
+
+        # THE PROVENANCE JUNCTION (migration 077). Not a parallel copy of the one above:
+        # that one records which SOURCES anchored, this one records which ROWS did, and
+        # a source carries many rows that played different parts. It is also what
+        # `derivation_sha` now hashes, so writing it is not optional bookkeeping -- the
+        # attestation is unverifiable without it, and K01 recomputes the payload from
+        # exactly these rows.
+        _xcols = ("specification_id, extraction_id, role, exclusion_reason, "
+                  "created_at, created_by_session")
+        for _l in det["links"]:
+            _xlink = (specification_id, _l["extraction_id"], _l["role"],
+                      _l["exclusion_reason"], STAMP, SESSION)
+            conn.execute(f"INSERT INTO specification_extraction_links ({_xcols}) "
+                         f"VALUES (?,?,?,?,?,?)", _xlink)
+            sql_lines.append(f"INSERT INTO specification_extraction_links ({_xcols}) "
+                             f"VALUES (" + ", ".join(q(v) for v in _xlink) + ");")
 
         report.append({k: det[k] for k in
                        ("parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
