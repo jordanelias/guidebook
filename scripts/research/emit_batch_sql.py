@@ -43,10 +43,17 @@ DEFAULT_CANONICAL = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 # WHY: this list and db.py's write coverage were two separate homes of one fact --
 # "which tables a session may write" -- and that is exactly how a table became
 # writable-but-invisible to capture. A rescue wrote 8 source_locators rows and this
-# tool emitted 32 statements instead of 40, losing them with NO ERROR RAISED. One
-# constant with two importers means a table can never again be known to one and not
-# the other. The list's own history comments moved with it, unaltered.
-TABLES = dbcore.WRITABLE_TABLES
+# tool emitted 32 statements instead of 40, losing them with NO ERROR RAISED.
+#
+# THAT FIX WAS THE WRONG SHAPE, corrected 2026-09-13. One constant with two importers
+# stopped the CLI and this tool disagreeing WITH EACH OTHER; it did nothing about the
+# constant disagreeing with db.py's actual write surface, which is where all eight
+# blindnesses lived — four of them already present when the comment claiming "a table
+# can never again be known to one and not the other" was written. The set is now
+# DERIVED from the writers by dbcore.writable_tables(conn), so a table is captured the
+# moment something can write it. Ordering comes from the live FK graph, which also
+# retired a real defect: the hand list placed evidence_population_match ahead of gaps,
+# which it references.
 
 
 def ro(path):
@@ -104,8 +111,11 @@ def emit(scratch_path, canonical_path, out_path):
         sys.exit(f"ERROR: schema version mismatch — scratch is {sv}, canonical is {cv}. "
                  "Re-copy the scratch from the current canonical DB.")
 
+    # Derived per run from the live schema and the writers; never a module constant,
+    # because a constant is what drifted eight times.
+    tables = dbcore.writable_tables(ca)
     lines, n_ins, n_upd, missing = [], 0, 0, []
-    for table in TABLES:
+    for table in tables:
         cols = columns(ca, table)
         if not cols:
             sys.exit(f"ERROR: table {table} does not exist in the canonical DB.")
@@ -151,7 +161,10 @@ def emit(scratch_path, canonical_path, out_path):
 
     if not lines:
         sys.exit("ERROR: no delta — the scratch is identical to the canonical DB across "
-                 "all %d tables. Nothing to emit." % len(TABLES))
+                 "all %d writable tables. Nothing to emit.\n"
+                 "         If you believe you wrote rows, check they went to a table a "
+                 "writer can reach: this compares exactly the tables scripts/db.py and "
+                 "assess_cell.py INSERT into, minus %s." % (len(tables), sorted(dbcore.NOT_CAPTURED)))
 
     header = [
         "-- Research batch delta, captured by scripts/research/emit_batch_sql.py",
@@ -206,9 +219,8 @@ def selftest():
         # Narrow the walk to the fixture's two tables, and RESTORE it afterwards --
         # a module-global mutated by a test and left changed is a trap for any
         # caller that imports this module and runs selftest() before emit().
-        global TABLES
-        _real_tables = TABLES
-        TABLES = ["evidence_sources", "source_slug_links"]
+        _real_writable = dbcore.writable_tables
+        dbcore.writable_tables = lambda _conn: ["evidence_sources", "source_slug_links"]
         emit(scratch, canon, out)
         sql = open(out).read()
         check("insert emitted", "INSERT INTO \"evidence_sources\"" in sql)
@@ -256,7 +268,7 @@ def selftest():
             check("deletion refused with a reason", "additive" in str(e), str(e))
         check("deletion refused", rc == 1)
 
-    TABLES = _real_tables
+    dbcore.writable_tables = _real_writable
     print("\n--- emit_batch_sql selftest ---")
     for name, ok, detail in results:
         print("  %s: %s%s" % ("PASS" if ok else "**FAIL**", name,
