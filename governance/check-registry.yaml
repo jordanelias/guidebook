@@ -1443,47 +1443,45 @@ checks:
   level: blocking
   basis: judgment/figure-role-stated
   cost: fast
-  min_items: 1
+  no_floor: empty-by-decision — the circulation corpus was cleared by owner ruling 2026-09-13
+    ("all the circulation rows that have been produced are not able to be trusted"), so this
+    check's three subjects are 0/0/0 by decision, not by accident. Same posture and same reason
+    as validate_evidence_state. RATCHET BACK TO min_items 1 when the re-run lands its first
+    extraction; the corpus refilling is what makes this floor meaningful again.
   note: 'NEW 2026-09-13, migration 075 (figure_role/comparator on source_value_extractions,
     extraction_relations junction, v_derived_figure_check view). EXAMINED sums three subjects
     it actually reads: source_value_extractions rows, extraction_relations edges, and
-    v_derived_figure_check rows (0/0 of the latter two today — the junction has no writer yet).
+    v_derived_figure_check rows.
 
 
-    CARRIES A DELIBERATE, SELF-DOCUMENTING BACKFILL GUARD: module-level `PRE_075_GRANDFATHER =
-    True` in the script. All 8 live extraction rows predate 075 and are ungraded
-    (figure_role IS NULL); while the guard is True they are reported as `UNGRADED: 8` and do
-    NOT fail this BLOCKING check — only a figure_role-NULL row created after the migration-075
-    boundary fails. THE ORCHESTRATOR MUST FLIP THIS GUARD TO False IN THE SAME COMMIT THAT
-    BACKFILLS figure_role ON THE PRE-075 ROWS — after which every NULL row fails unconditionally
-    and the boundary computed below stops being consulted. Do not remove the guard line; flip
-    its literal value only.
+    THE BACKFILL IS DONE AND THE GUARD IS OFF. `PRE_075_GRANDFATHER = False` (flipped
+    2026-09-13 in the commit that graded every pre-075 row), so a figure_role-NULL row fails
+    unconditionally — there is no grandfathered class left. `PRE_075_UNGRADED_IDS` survives as
+    a frozen id list ({1..8}) that the guard would consult if ever flipped back on; it is dead
+    while the guard is off, and it is deliberately a FROZEN LIST rather than the
+    MAX(data_migrations.applied_at) boundary this check shipped with. That boundary FLOATED
+    FORWARD with every subsequent data migration, so it would eventually have swept the very
+    rows it existed to catch under the grandfather clause — demonstrated un-firing itself
+    during the verification pass, then replaced.
 
 
-    THE BOUNDARY ITSELF: migrate_db.py ledgers DATA migrations (`data_migrations.applied_at`)
-    but NOT schema migrations — a schema step only bumps PRAGMA user_version, atomically with
-    its own DDL, and is not otherwise timestamped anywhere in the database (confirmed against
-    sqlite_master: no `schema_migrations` table exists). Git history of the migration file
-    does carry the true instant (075 landed in one isolated commit, 2026-09-13T02:15:07+00:00),
-    but this check''s own CI job (db-integrity:, .github/workflows/ci.yml) checks out at the
-    actions/checkout default fetch-depth (1) with no history to walk — a git-log-based boundary
-    would silently lie in exactly the job that runs this check. So the boundary is
-    MAX(data_migrations.applied_at), a real fact the runner does ledger and a safe (never too
-    early, per migrate_db.py''s documented schema-before-data ordering within a run) lower bound
-    on 075''s true application, converging to it further only as data migrations accrue.
+    WRITERS, since a check with no writer is measuring nothing: `db.py relate-extraction`,
+    `amend-extraction` and `derive-extraction` all write this junction, and `add-extraction`
+    takes --figure-role as a required flag. `derive-extraction` is the one that produces
+    figure_role=''derived'' rows with the two derived_from edges v_derived_figure_check
+    recomputes against.
 
 
     FAULT-INJECTED on a scratch copy, all four ways, each shown red then green again: (1) a
-    post-boundary row with figure_role NULL — added, FAILED (`... created after the
-    migration-075 boundary ...`); removed, CLEAN. (2) figure_role=''derived'' with no
-    derived_from/input_role=''base'' edge — graded, FAILED; base edge added, CLEAN. (3) a
+    row with figure_role NULL — added, FAILED; graded, CLEAN. (2) figure_role=''derived'' with
+    no derived_from/input_role=''base'' edge — graded, FAILED; base edge added, CLEAN. (3) a
     v_derived_figure_check disagreement — stored value set to disagree with linked base+delta,
     FAILED (`stored=100.0, recomputed=70.0`); corrected to 70, CLEAN. (4) an orphan
     figure_role=''condition'' row (target of nothing, source of no condition_on edge) — graded,
-    FAILED; a condition_on edge added, CLEAN. Also confirmed: flipping PRE_075_GRANDFATHER to
-    False on the scratch copy turns all remaining ungraded rows into failures immediately,
-    proving the guard actually gates what it claims to. Canonical data/guidebook.db sha256
-    unmoved throughout — every mutation above was against a scratch copy only.'
+    FAILED; a condition_on edge added, CLEAN. Re-confirmed 2026-09-13 during the verification
+    pass on a live derived row: tampering extraction 15''s stored value from 10 to 42 produced
+    `stored=42.0, recomputed=10.0` and exit 1. Canonical data/guidebook.db sha256 unmoved
+    throughout — every mutation above was against a scratch copy only.'
 - id: source_locators_integrity
   cmd:
   - python3
