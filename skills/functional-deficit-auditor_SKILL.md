@@ -82,26 +82,42 @@ by the item spec, and whether any affected populations are absent.
 This mapping is distinct from FDR's spatial dependency tiers. It answers:
 *Which populations have functional deficits in which ICF activities?*
 
-**Primary ICF codes per population:**
+**Primary ICF codes per population — READ THEM FROM THE TABLE, not from here.**
 
-| Population | Primary ICF codes | Mechanism |
-|---|---|---|
-| UPL (upper limb) | d440, d445, d510, d520, d540, d630 | Biomechanical — grip, force, range of motion, bilateral function |
-| MOB (mobility) | d410, d420, d450, d455, d460, d465, d470, d510, d530 | Biomechanical — ambulation, balance, transfer, wheelchair use |
-| DEM (dementia) | d230, d460, d710–d729 | Cognitive — memory, attention, wayfinding, sequencing |
-| PAIN | d410, d450, d455, d640 | Pain-limited activity endurance; fatigue accumulation |
-| NDV (neurodivergent) | d230, d710–d729, d910–d920 | Sensory processing, predictability, social navigation |
-| VIS (visual impairment) | d460, d310–d329 | Sensory — spatial orientation, information access |
-| DEAF | d310–d329, d330–d349 | Sensory — communication, alert receipt |
-| SCI (spinal cord injury) | d410, d420, d450, d455, d465, d510, d520, d530, d630 | Biomechanical + autonomic |
-| OFS (orthostatic/fatigue syndromes) | d450, d455, d470, d920 | Autonomic — activity tolerance, exertion limits, thermal |
-| ABI (acquired brain injury) | d230, d440, d450, d460, d710–d729 | Cognitive + motor — variable |
-| MH (mental health) | d230, d570, d710–d729, d910 | Psychological — routine, retreat, sensory safety |
-| ASD (autism spectrum) | d230, d710–d729, d910–d920 | Sensory + predictability — environment consistency |
-| LOW-VISION | d460, d310–d329, d620 | Sensory — partial vision, contrast, lighting dependency |
-| PCS (post-COVID syndromes) | d450, d455, d570, d920 | Fatigue + autonomic — exertion limits |
+This mapping used to be a markdown table in this file. It is now `population_icf_links`
+(migration 080), and moving it is what made it checkable: the `population_code` FK means a
+code that no longer exists fails at the database instead of being taught to the next
+session. That is not hypothetical. The table that stood here taught the pre-DR-2026-07-23
+population codes — `UPL`, `VIS`, `OFS`, `ABI`, `ASD`, `LOW-VISION`, `PCS` — for fourteen
+months after that directive replaced them, because `schema_reference_audit` resolves table
+and view names on the skill surface but not vocabulary VALUES, and nothing else looked.
+Promoting the prose into rows on 2026-09-13 made every retired code fail the FK, and the
+owner ruled the crosswalk the same day. Copying the rows back into this file would rebuild
+exactly the second home that hid the drift (CLAUDE.md rule 5: point, do not copy).
 
-**Note:** Most populations have secondary codes beyond those listed. The table shows primary
+```python
+import sqlite3
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+for pop, codes, mech, conf in con.execute("""
+        select population_code, group_concat(icf_code, ', '), mechanism, mapping_confidence
+          from (select * from population_icf_links order by link_id)
+         group by population_code, mechanism
+         order by population_code, mechanism"""):
+    print(f"{pop:10} {codes:52} {mech}  [{conf}]")
+```
+
+**`mapping_confidence` is part of the answer, not metadata.** A `high_predictive` row is the
+FDA's own primary assignment — the characteristic function of that population.
+A `moderate_contextual` row reached its population through the 2026-09-13 crosswalk and
+carries one more inferential step; weight a verdict resting on one accordingly. The
+`provenance` and `notes` columns say which, per row, and why.
+
+**Reverse-mapping is the direction this table was built for.** Given the ICF codes an item
+spec implies, `select distinct population_code from population_icf_links where icf_code in
+(…)` names the populations whose links should be present — which flags an absence
+mechanically rather than by eye. That is Question 2, and it is now a query.
+
+**Note:** Most populations have secondary codes beyond those listed. The table holds primary
 mapping only. Use clinical judgment (Opus) for secondary code assessment in Questions 1–2.
 
 ---
@@ -112,16 +128,16 @@ FDA Question 3 checks whether the claimed mechanism is correct. Valid mechanism 
 
 | Mechanism | Definition | Typical populations |
 |---|---|---|
-| Biomechanical | Force, range of motion, reach, balance, transfer geometry | UPL, MOB, SCI |
-| Sensory-visual | Visual field, acuity, contrast sensitivity, glare | VIS, LOW-VISION, DEM |
+| Biomechanical | Force, range of motion, reach, balance, transfer geometry | LMB, MOB, SCI |
+| Sensory-visual | Visual field, acuity, contrast sensitivity, glare | BLIND, DEM |
 | Sensory-auditory | Sound level, frequency, reverberation, alert type | DEAF, NDV, DEM |
-| Sensory-proprioceptive | Surface texture, vestibular, spatial orientation | MOB, NDV, VIS |
-| Sensory-olfactory | Fragrance, air quality | NDV, OFS |
-| Cognitive | Memory, attention, executive function, sequencing | DEM, ABI, ASD, NDV |
-| Autonomic-thermal | Temperature regulation, heat sensitivity (Uhthoff's) | SCI, OFS, PAIN, MH |
-| Autonomic-orthostatic | Blood pressure regulation, exertion tolerance | OFS, PAIN, PCS |
-| Communication | Information modality, format, density | DEAF, VIS, DEM, NDV |
-| Social | Proximity, eye contact, circulation predictability | ASD, NDV, DEM |
+| Sensory-proprioceptive | Surface texture, vestibular, spatial orientation | MOB, NDV, BLIND |
+| Sensory-olfactory | Fragrance, air quality | NDV, COM |
+| Cognitive | Memory, attention, executive function, sequencing | DEM, BRAIN, AUT, NDV |
+| Autonomic-thermal | Temperature regulation, heat sensitivity (Uhthoff's) | SCI, COM, PAIN, MH |
+| Autonomic-orthostatic | Blood pressure regulation, exertion tolerance | COM, PAIN |
+| Communication | Information modality, format, density | DEAF, BLIND, DEM, NDV |
+| Social | Proximity, eye contact, circulation predictability | AUT, NDV, DEM |
 
 An item spec may legitimately claim multiple mechanisms. The audit checks whether the
 mechanism stated is *real and sufficient* — not merely possible.
@@ -282,7 +298,7 @@ FDR-TRIGGER: {d-code} + {functional constraint} → {environment context} [{popu
 
 Examples:
 ```
-FDR-TRIGGER: d440 + UPL hemiplegia → hardware operability [UPL]
+FDR-TRIGGER: d440 + LMB hemiplegia → hardware operability [LMB]
 FDR-TRIGGER: d450 + PAIN fibromyalgia → corridor rest provision [PAIN]
 ```
 

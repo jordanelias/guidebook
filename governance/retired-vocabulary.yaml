@@ -906,6 +906,30 @@ deferred:
       exempt_paths covering references/**; that would violate the licensed-mention
       rule at the top of this file and hide the larger half of the problem.
 
+      ATTEMPTED AND REVERTED 2026-09-13, recorded because it failed exactly as the
+      `precondition` above forecasts. A session executing the H3 crosswalk registered
+      thirteen of these tokens as entries RV-027..RV-039 — the promotion path minus the
+      owner scoping and minus the `scope_paths` support it names. The check went from 62
+      occurrences to 3,130 in one edit. That is not containment, it is the flood; and a
+      flooding check is an ignored check. The entries were reverted whole.
+      THE ATTEMPT ALSO DESTROYED THIS FILE'S REASONING, which is the part worth a rule.
+      The entries were added by round-tripping the register through `yaml.safe_dump`,
+      which deleted all 222 comment lines — including the four-part ADMISSION TEST at the
+      top, i.e. precisely the doctrine the edit was breaking. The data survived, so the
+      file still parsed, every check still passed, and nothing said a word. EDIT THIS FILE
+      AS TEXT. Never through a YAML writer.
+      WHAT DOES NOW ENFORCE THIS, and it is mechanical rather than textual — the better
+      answer this deferral was holding out for. Migration 080 created
+      `population_icf_links` with an FK to `populations(population_code)`. Promoting the
+      `functional-deficit-auditor` skill's population↔ICF mapping into those rows made
+      every retired code fail at the foreign key, which is how fourteen months of drift in
+      that skill surfaced at all — no grep involved. Under the owner ruling of the same
+      day ("convert these codes into their proper codes according to base stage") that
+      skill's mapping table was retired in favour of a pointer at the rows, and its
+      remaining code uses were crosswalked. THE OTHER SKILLS ARE NOT SWEPT. Derive the
+      residue rather than trusting a figure here:
+        grep -rIlE '(^|[^[:alnum:]_-])(VIS|UPL|DBL|NEU|PCS|OFS|CFS|MCAS|POTS|LCOV|SENS|EXH|IntD|ABI)([^[:alnum:]_-]|$)' skills/
+
   - tokens: [DISPUTED]
     retired_by: "partially — DR-2026-08-04 §4.4"
     precondition: >-
