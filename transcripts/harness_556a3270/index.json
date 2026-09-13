@@ -72,7 +72,7 @@
   {
     "started": "2026-09-13T04:28:36",
     "role": "adversarial",
-    "bytes": 963529,
+    "bytes": 969556,
     "agent_id_prefix": "a8220c41",
     "file": "2026-09-13T04-28-36_adversarial_a8220c41.jsonl"
   },
@@ -93,14 +93,14 @@
   {
     "started": "2026-09-13T04:34:11",
     "role": "other",
-    "bytes": 640401,
+    "bytes": 650681,
     "agent_id_prefix": "aaf22939",
     "file": "2026-09-13T04-34-11_other_aaf22939.jsonl"
   },
   {
     "started": "2026-09-13T04:34:33",
     "role": "other",
-    "bytes": 753061,
+    "bytes": 768769,
     "agent_id_prefix": "a59c0ef6",
     "file": "2026-09-13T04-34-33_other_a59c0ef6.jsonl"
   }
