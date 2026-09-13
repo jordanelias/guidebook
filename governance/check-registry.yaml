@@ -1454,15 +1454,14 @@ checks:
     v_derived_figure_check rows.
 
 
-    THE BACKFILL IS DONE AND THE GUARD IS OFF. `PRE_075_GRANDFATHER = False` (flipped
-    2026-09-13 in the commit that graded every pre-075 row), so a figure_role-NULL row fails
-    unconditionally — there is no grandfathered class left. `PRE_075_UNGRADED_IDS` survives as
-    a frozen id list ({1..8}) that the guard would consult if ever flipped back on; it is dead
-    while the guard is off, and it is deliberately a FROZEN LIST rather than the
-    MAX(data_migrations.applied_at) boundary this check shipped with. That boundary FLOATED
-    FORWARD with every subsequent data migration, so it would eventually have swept the very
-    rows it existed to catch under the grandfather clause — demonstrated un-firing itself
-    during the verification pass, then replaced.
+    THE GRANDFATHER CLAUSE IS DELETED, not merely off. It shipped as a
+    MAX(data_migrations.applied_at) boundary that floated forward and could un-fail the very
+    rows it existed to catch (demonstrated un-firing itself, then replaced by a frozen id
+    list {1..8}); the backfill graded those eight and the 2026-09-13 corpus clear deleted
+    them. extraction_id is AUTOINCREMENT and the sequence was not reset, so re-enabling the
+    clause would have excused the FIRST EIGHT ROWS OF THE NEXT CORPUS — rows it never meant.
+    A switch whose off position is correct and whose on position has become actively wrong is
+    not a switch. Every figure_role-NULL row now fails unconditionally, whenever written.
 
 
     WRITERS, since a check with no writer is measuring nothing: `db.py relate-extraction`,
@@ -1470,6 +1469,18 @@ checks:
     takes --figure-role as a required flag. `derive-extraction` is the one that produces
     figure_role=''derived'' rows with the two derived_from edges v_derived_figure_check
     recomputes against.
+
+
+    CHECK 3 CARRIES THE WRITER''S TOLERANCE AND NAMES WHAT IT CANNOT SEE (both fixed
+    2026-09-13 after an adversarial pass). It compared with SQL `<>` while `derive-extraction`
+    accepts within 1e-9, so 0.1 + 0.2 = 0.30000000000000004 turned this BLOCKING gate red over
+    a row the sanctioned writer had just accepted; it now compares with the same epsilon. And
+    `v_derived_figure_check` joins on equal units, so a unit-converted derived row — exactly
+    what `--claimed-unit --conversion-note` writes, and the kind most likely to be wrong — was
+    silently absent from the view and check 3 reported CLEAN over it (a 999 cm row against a
+    0.3 m base+delta). The view is committed in migration 075 and migrations are immutable, so
+    the fix-forward is an UNCHECKED: line naming the derived rows the view cannot cover. That
+    is CLAUDE.md 5(a) applied to this check''s own subject.
 
 
     FAULT-INJECTED on a scratch copy, all four ways, each shown red then green again: (1) a

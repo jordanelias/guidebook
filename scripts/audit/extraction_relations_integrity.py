@@ -37,108 +37,24 @@ WHAT IT CHECKS
   4. Every figure_role='condition' row is either the target of some edge or the source of
      a condition_on edge. Neither: it is a condition on nothing, an orphan.
 
-HOW THE MIGRATION-075 BOUNDARY IS DERIVED (CLAUDE.md rule 7 — no hand-written dates).
-`scripts/migrate_db.py` was read end to end to answer this (see discover_schema_migrations,
-_apply_atomically, and the `data_migrations` ledger it builds). A SCHEMA migration — 075 is
-one — is applied by bumping `PRAGMA user_version` atomically with its own DDL and nothing
-else; unlike a DATA migration, it gets no row anywhere recording WHEN. There is no
-"schema_migrations" table in this schema (confirmed against sqlite_master) and no other
-timestamped record of a schema migration's application exists in the database.
-
-Git history of the migration file DOES record it (migration 075 landed in one isolated
-commit, 2026-09-13T02:15:07+00:00, touching nothing but the DB blob and its own
-apparatus) — but this check's own registration (battery db_integrity) runs in a CI job
-whose `actions/checkout` step takes the default `fetch-depth: 1` (.github/workflows/ci.yml,
-`db-integrity:` job), a SHALLOW clone with no history to walk. A check that depends on git
-log here would pass locally and lie in exactly the CI job that matters. So this reads the
-one thing migrate_db.py DOES ledger with a timestamp: `data_migrations.applied_at`. Because
-migrate_db.py always finishes every pending SCHEMA step before any pending DATA step in the
-same run (build_plan()'s documented default order), MAX(data_migrations.applied_at) as of
-today is a real fact recorded by the runner and a SAFE (never-too-early) lower bound on when
-075 applied, given 075 has already reached this database (figure_role/comparator exist —
-checked below) and every data migration on disk has already applied (checked separately;
-not assumed here). The bound is conservative in one direction only: a future data migration
-applied after today would push it later, which only widens the grandfather window a little
-further — never turns a genuinely-pre-075 row into a failure, and stops mattering entirely
-the moment the PRE_075_GRANDFATHER guard below is flipped off. It is deliberately not
-pinned to a literal date.
-
-THE GUARD — flip this OFF in the backfill commit; say so in the check-registry.yaml note too.
+GRADING IS UNCONDITIONAL. An earlier cut of this check carried a grandfather clause for
+the eight rows that predated migration 075 -- first as a boundary computed from
+MAX(data_migrations.applied_at), which floated forward and could un-fail the defects it
+existed to catch, then as a frozen id list. The backfill graded those eight and the 2026-09-13
+corpus clear deleted them, so the clause guarded nothing and its "on" position had become
+actively wrong: extraction_id is AUTOINCREMENT and the sequence was not reset, so re-enabling
+it would have excused the first eight rows of the NEXT corpus. Both are gone. Every
+figure_role-NULL row fails, whenever it was written.
 """
 import os
 import sqlite3
 import sys
-from datetime import datetime, timezone
 
 DB = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 TABLE = "source_value_extractions"
 RELATIONS = "extraction_relations"
 VIEW = "v_derived_figure_check"
-LEDGER = "data_migrations"
 
-# ---------------------------------------------------------------------------
-# BACKFILL GUARD (single line, per the orchestrator's own instruction: flip
-# this to False in the commit that backfills figure_role on the pre-075 rows,
-# and nowhere else). While True: a figure_role-NULL row created at-or-before
-# the migration-075 boundary computed below is reported as UNGRADED and does
-# NOT fail this check. Once False: every figure_role-NULL row fails, full
-# stop, and the boundary is never consulted.
-# ---------------------------------------------------------------------------
-PRE_075_GRANDFATHER = False  # flipped 2026-09-13: the backfill landed, all rows graded
-
-# THE GRANDFATHERED SET IS A FROZEN LIST OF ROW IDS, NOT A TIME RANGE.
-#
-# Corrected 2026-09-13 by the orchestrator, before this check was ever committed.
-# The first implementation grandfathered any figure_role-NULL row created at or
-# before MAX(data_migrations.applied_at). That boundary FLOATS FORWARD with every
-# new data migration, and the consequence was demonstrated rather than argued:
-#
-#   an ungraded row created 02:45, boundary 01:10  -> VERDICT: FAIL, exit 1
-#   one unrelated data migration lands at 03:00    -> VERDICT: CLEAN, exit 0
-#
-# The same defect, un-failed by an event that had nothing to do with it. And it
-# is worse than intermittent: a row is written to a scratch DB and the migration
-# carrying it is applied afterwards, so EVERY row written through the sanctioned
-# path has created_at earlier than the applied_at of its own migration. A
-# floating boundary can therefore never catch the case this check exists for,
-# while being a BLOCKING gate that reports CLEAN -- CLAUDE.md 5(a), a gate that
-# passes having examined nothing, inside the check written to enforce 075.
-#
-# The grandfathered set is not a period of time. It is eight specific rows that
-# existed when 075 landed, and it is enumerable, so it is enumerated. Anything
-# not on this list must be graded, whenever it was written. The list only ever
-# shrinks: the backfill grades these rows and the guard above goes False.
-PRE_075_UNGRADED_IDS = frozenset({1, 2, 3, 4, 5, 6, 7, 8})
-
-
-def _parse_ts(raw):
-    """Parse either timestamp form this database actually uses into an aware
-    UTC datetime, or None if it parses as neither.
-
-      - data_migrations.applied_at: ISO-8601 with a UTC offset, e.g.
-        '2026-09-13T01:10:06+00:00' (migrate_db.py: datetime.now(timezone.utc)
-        .isoformat(timespec='seconds')).
-      - source_value_extractions.created_at: naive, minute precision, always
-        UTC, e.g. '2026-09-13 01:07' (scripts/dbcore.py: now() ->
-        strftime("%Y-%m-%d %H:%M")).
-
-    datetime.fromisoformat handles both directly (Python's isoformat parser
-    accepts the space-separated form as well as 'T'); a naive result is
-    stamped UTC rather than left ambiguous, because every writer of either
-    column in this codebase is UTC-only.
-    """
-    if raw is None:
-        return None
-    raw = raw.strip()
-    if not raw:
-        return None
-    try:
-        dt = datetime.fromisoformat(raw)
-    except ValueError:
-        return None
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
-    return dt.astimezone(timezone.utc)
 
 
 def main() -> int:
@@ -150,7 +66,7 @@ def main() -> int:
 
     present = {r[0] for r in con.execute(
         "SELECT name FROM sqlite_master WHERE type IN ('table','view')")}
-    for needed in (TABLE, RELATIONS, VIEW, LEDGER):
+    for needed in (TABLE, RELATIONS, VIEW):
         if needed not in present:
             print(f"FAIL: {needed} does not exist. If it was renamed, this check is a "
                   f"caller and must be swept (CLAUDE.md rule 4).")
@@ -179,36 +95,34 @@ def main() -> int:
 
     failures = []
 
-    # --- 1. figure_role IS NULL: ungraded (excused) vs unheeded (not) -------
-    ungraded, unheeded = [], []
-    for r in sve_rows:
-        if r["figure_role"] is not None:
-            continue
-        eid = r["extraction_id"]
-        if PRE_075_GRANDFATHER and eid in PRE_075_UNGRADED_IDS:
-            ungraded.append(eid)
-        else:
-            unheeded.append(eid)
-
+    # --- 1. figure_role IS NULL is a failure, unconditionally ---------------
+    #
+    # THE GRANDFATHER CLAUSE IS GONE, AND DELETING IT WAS NOT MERELY TIDYING. It was a
+    # module-level `PRE_075_GRANDFATHER` flag plus a frozen id list {1..8} naming the
+    # extraction rows that predated migration 075. The backfill graded all eight and
+    # flipped the flag off the same day; the 2026-09-13 corpus clear then deleted the
+    # rows themselves, and `source_value_extractions.extraction_id` is AUTOINCREMENT,
+    # so the next batch re-mints from 1 into a table whose sequence was not reset.
+    # Turning the flag back on would therefore have excused the FIRST EIGHT ROWS OF THE
+    # NEW CORPUS -- rows it never meant, under the name of rows that no longer exist.
+    #
+    # A switch whose off position is correct and whose on position has become actively
+    # wrong is not a switch. The rule it guarded survives as the general one below, and
+    # git history is the archive for the mechanism (CLAUDE.md section 8).
+    #
+    # THE TRANSFERABLE LESSON, recorded here because it cost two corrections: a
+    # grandfather clause is a FROZEN ENUMERATION or it is not a grandfather clause. This
+    # check originally computed its boundary as MAX(data_migrations.applied_at), which
+    # floated forward with every later migration and would eventually have excused the
+    # very rows it existed to catch -- demonstrated un-firing itself, then replaced by
+    # the frozen list, which has now outlived the rows it froze.
+    unheeded = [r["extraction_id"] for r in sve_rows if r["figure_role"] is None]
     if unheeded:
-        if PRE_075_GRANDFATHER:
-            reason = ("and is not one of the eight rows that predate migration 075, so no "
-                      "writer excuse is left")
-        else:
-            reason = "and PRE_075_GRANDFATHER is off, so every NULL row must be graded now"
         failures.append(
-            f"{len(unheeded)} {TABLE} row(s) carry figure_role IS NULL, {reason}: "
-            f"{unheeded[:10]}" + (" …" if len(unheeded) > 10 else ""))
-
-    if PRE_075_GRANDFATHER:
-        still = sorted(PRE_075_UNGRADED_IDS - {r["extraction_id"] for r in sve_rows
-                                               if r["figure_role"] is not None})
-        print(f"UNGRADED: {len(ungraded)}  (figure_role NULL on rows predating migration "
-              f"075 — grandfathered by the frozen id list, not failed. Still ungraded: "
-              f"{still}. Flip PRE_075_GRANDFATHER off once the backfill lands.)")
-    else:
-        print("UNGRADED: 0  (PRE_075_GRANDFATHER is off — every figure_role-NULL row is "
-              "required to be graded, unconditionally)")
+            f"{len(unheeded)} {TABLE} row(s) carry figure_role IS NULL, so nothing says "
+            f"whether they assert a value, report a finding about someone else's, or "
+            f"state a measurement condition: {unheeded[:10]}"
+            + (" …" if len(unheeded) > 10 else ""))
 
     # --- 2. figure_role='derived' must carry a derived_from/base edge -------
     derived_ids = {r["extraction_id"] for r in sve_rows if r["figure_role"] == "derived"}
@@ -225,15 +139,51 @@ def main() -> int:
 
     # --- 3. v_derived_figure_check: a derived value that disagrees with its --
     #        own recomputed inputs.
-    mismatches = con.execute(
+    #
+    # TOLERANCE MATCHES THE WRITER'S, AND MUST. `db.py derive_extraction` accepts a
+    # supplied --claimed-value within 1e-9 of base+delta (db.py: `abs(cn - (bn + dn))
+    # > 1e-9`). This check compared with SQL `<>`, i.e. exactly. Binary floating point
+    # makes those two rules disagree on ordinary decimals: 0.1 + 0.2 = 0.30000000000000004,
+    # so a row the sanctioned writer had just accepted turned this BLOCKING gate red
+    # with `stored=0.3, recomputed=0.30000000000000004`. A gate that fails what its own
+    # project's writer legitimately produces teaches its reader to route around it.
+    # The comparison is done in Python rather than SQL because SQLite has no ABS-based
+    # epsilon idiom that stays readable, and the row count here is bounded by the number
+    # of derived figures, which is small by construction.
+    EPSILON = 1e-9
+    view_rows_full = con.execute(
         f"SELECT derived_id, stored, recomputed FROM {VIEW} "
-        f"WHERE recomputed IS NOT NULL AND recomputed <> CAST(stored AS REAL)"
-    ).fetchall()
+        f"WHERE recomputed IS NOT NULL").fetchall()
+    mismatches = [m for m in view_rows_full
+                  if abs(float(m["recomputed"]) - float(m["stored"])) > EPSILON]
     if mismatches:
         failures.append(
-            f"{len(mismatches)} {VIEW} row(s) disagree with their own base+delta inputs: "
+            f"{len(mismatches)} {VIEW} row(s) disagree with their own base+delta inputs "
+            f"by more than {EPSILON}: "
             + ", ".join(f"extraction_id {m['derived_id']} (stored={m['stored']}, "
                         f"recomputed={m['recomputed']})" for m in mismatches))
+
+    # --- 3b. derived rows the VIEW CANNOT SEE -------------------------------
+    #
+    # CLAUDE.md 5(a) applied to this check's own subject. `v_derived_figure_check`
+    # (migration 075) narrows itself with `d.claimed_unit = b.claimed_unit AND
+    # d.claimed_unit = e.claimed_unit` and with GLOB tests for plain numerals. Every
+    # other derived row is silently ABSENT from the view, so check 3 above reported
+    # CLEAN over it having examined nothing -- and the excluded set is exactly the
+    # unit-converted rows, which `derive-extraction --claimed-unit --conversion-note`
+    # writes deliberately and which are the derived figures MOST likely to be wrong.
+    # Demonstrated by an adversarial pass 2026-09-13: a derived row stored as 999 cm
+    # against a 0.3 m base+delta produced `VERDICT: CLEAN`.
+    #
+    # The view is committed in migration 075 and migrations are immutable, so this is
+    # the fix-forward: the check derives the full derived set itself and reports the
+    # remainder as UNCHECKED rather than passing over it in silence. It is NOT a
+    # failure -- a converted figure is legitimate and this check cannot arithmetically
+    # verify one without a unit-conversion table the project does not have. Naming the
+    # count is what stops a silent CLEAN from reading as a verified one.
+    derived_ids = {r["extraction_id"] for r in sve_rows if r["figure_role"] == "derived"}
+    covered = {r["derived_id"] for r in con.execute(f"SELECT derived_id FROM {VIEW}")}
+    unchecked = sorted(derived_ids - covered)
 
     # --- 4. orphan figure_role='condition' rows ------------------------------
     condition_ids = {r["extraction_id"] for r in sve_rows if r["figure_role"] == "condition"}
@@ -249,6 +199,11 @@ def main() -> int:
             f"{len(orphan_conditions)} figure_role='condition' row(s) qualify nothing — "
             f"neither the target of any edge nor the source of a condition_on edge: "
             f"extraction_id {orphan_conditions}")
+
+    print(f"UNCHECKED: {len(unchecked)} of {len(derived_ids)} derived row(s) are outside "
+          f"{VIEW} (unit-converted, or a value the view's numeric GLOB rejects) and "
+          f"CANNOT be arithmetically re-verified here"
+          + (f": extraction_id {unchecked}" if unchecked else ""))
 
     print("VERDICT: " + ("FAIL" if failures else "CLEAN"))
     for f in failures:

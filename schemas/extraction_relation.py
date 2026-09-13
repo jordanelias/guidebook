@@ -45,29 +45,6 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, model_validator
 
-# The eight `relation` values, one line of meaning each — copied from the CHECK this
-# migration wrote, not the other way round (CLAUDE.md section 4).
-#   tested_at        subjects were physically measured at/against this referent.
-#   audited_against  tested whether subjects fit within the referent's own stated
-#                    limit, rather than measuring an independent value.
-#   confirms         an independent measurement agrees with the referent's value.
-#   insufficient     the source asserts the referent's value is NOT ENOUGH.
-#   exceeds          the source asserts the referent's value is more than needed.
-#   delta_over       a stated increment over a baseline, not an absolute figure.
-#   condition_on     holds only given a second figure this project also holds as a row.
-#   derived_from     computed from the referent; pairs with input_role.
-RELATION_MEANINGS = {
-    "tested_at": "subjects were physically measured at/against this referent",
-    "audited_against": "tested whether subjects fit the referent's own stated limit",
-    "confirms": "an independent measurement agrees with the referent's value",
-    "insufficient": "the source asserts the referent's value is not enough",
-    "exceeds": "the source asserts the referent's value is more than needed",
-    "delta_over": "a stated increment over a baseline, not an absolute figure",
-    "condition_on": "holds only given a second figure this project also holds as a row",
-    "derived_from": "computed from the referent; pairs with input_role",
-}
-
-
 class ExtractionRelation(BaseModel):
     """One comparator edge: what a figure is stated relative to, and how.
 
@@ -85,7 +62,7 @@ class ExtractionRelation(BaseModel):
         description="FK source_value_extractions.extraction_id — THE FIGURE this "
                     "edge qualifies.",
     )
-    relation: str  # live vocabulary: RELATION_MEANINGS keys / the table's own CHECK
+    relation: str  # live vocabulary: the table's own CHECK, read by dbcore.check_values
 
     # ── The referent: a row, or a label — never both, never neither ──────────
     to_extraction_id: Optional[int] = Field(

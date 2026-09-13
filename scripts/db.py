@@ -2140,6 +2140,27 @@ def main():
 
     elif args.command == "relate-extraction":
         if args.repoint:
+            # REFUSE THE FLAGS --repoint CANNOT HONOUR, rather than dropping them.
+            # `repoint_extraction_relation` takes from/relation/to-extraction/old-label
+            # and nothing else -- it NULLs the label and kind and ledgers the old label,
+            # by definition leaving the edge's own assertion untouched. The subparser is
+            # shared with the create path, so seven of its flags were accepted here and
+            # silently discarded: an operator typing `--repoint --quote "..."` got no
+            # quote and no complaint. CLAUDE.md section 8: "an unread field, an uncalled
+            # script and an unregistered check are the same defect."
+            _ignored = [n for n, v in (
+                ("--to-label", args.to_label), ("--to-kind", args.to_kind),
+                ("--stated", args.stated), ("--quote", args.quote),
+                ("--input-role", args.input_role), ("--notes", args.notes),
+                ("--cross-source", args.cross_source_reason)) if v]
+            if _ignored:
+                raise Refusal(
+                    f"relate-extraction --repoint does not accept "
+                    f"{', '.join(_ignored)}. Repointing turns an existing LABEL edge "
+                    f"into a ROW pointer; it does not restate what the edge asserts, "
+                    f"so those values would be silently dropped. Repoint first, then "
+                    f"amend the edge if its assertion is also wrong. Nothing was "
+                    f"written.")
             _emit(repoint_extraction_relation(
                 args.from_extraction, args.relation, args.to_extraction,
                 old_label=args.old_label, session=args.session, dry_run=args.dry_run))
@@ -3843,11 +3864,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
     """
     if not relation:
         raise Refusal(f"{context}: --relation is required.")
-    allowed = dbcore.check_values(conn, "extraction_relations", "relation")
-    if allowed and relation not in allowed:
-        raise Refusal(
-            f"{context}: relation {relation!r} does not accept that value. The "
-            f"schema's own CHECK declares: {sorted(allowed)}.")
+    dbcore.check_declared(conn, "extraction_relations", "relation", relation, context)
 
     has_row = to_extraction is not None
     has_label = to_label is not None
@@ -3908,11 +3925,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"{context}: --to-label requires --to-kind -- what sort of thing "
                 f"the label names ('standard'/'own_sample'/'prior_source'/"
                 f"'unnamed').")
-        allowed_kind = dbcore.check_values(conn, "extraction_relations", "to_kind")
-        if allowed_kind and to_kind not in allowed_kind:
-            raise Refusal(
-                f"{context}: to_kind {to_kind!r} does not accept that value. The "
-                f"schema's own CHECK declares: {sorted(allowed_kind)}.")
+        dbcore.check_declared(conn, "extraction_relations", "to_kind", to_kind, context)
         if stated == "named" and to_label not in quote:
             raise Refusal(
                 f"{context}: --stated named asserts the source NAMES this referent "
@@ -3923,11 +3936,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
     if not stated:
         raise Refusal(f"{context}: --stated is required ('named'/'unnamed'/"
                       f"'inferred').")
-    allowed_stated = dbcore.check_values(conn, "extraction_relations", "stated")
-    if allowed_stated and stated not in allowed_stated:
-        raise Refusal(
-            f"{context}: stated {stated!r} does not accept that value. The schema's "
-            f"own CHECK declares: {sorted(allowed_stated)}.")
+    dbcore.check_declared(conn, "extraction_relations", "stated", stated, context)
     if stated == "unnamed" and has_row:
         raise Refusal(
             f"{context}: stated=unnamed cannot carry a row referent -- an unnamed "
@@ -3948,11 +3957,8 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
             f"{context}: --input-role is meaningful only with relation=derived_from "
             f"(this edge is {relation!r}). Omit it.")
     if input_role:
-        allowed_ir = dbcore.check_values(conn, "extraction_relations", "input_role")
-        if allowed_ir and input_role not in allowed_ir:
-            raise Refusal(
-                f"{context}: input_role {input_role!r} does not accept that value. "
-                f"The schema's own CHECK declares: {sorted(allowed_ir)}.")
+        dbcore.check_declared(conn, "extraction_relations", "input_role",
+                              input_role, context)
 
     if relation in ("insufficient", "audited_against") and from_figure_role == "claim":
         raise Refusal(
@@ -4522,10 +4528,8 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
             raise Refusal(
                 f"--repoint: --to-extraction {to_extraction} is the same row this "
                 f"edge is FROM. A figure cannot be its own comparator.")
-        target = conn.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE extraction_id=?",
-            (to_extraction,)).fetchone()
-        if target is None:
+        if not dbcore.exists(conn, "source_value_extractions",
+                             "extraction_id", to_extraction):
             raise Refusal(
                 f"--repoint: --to-extraction {to_extraction}: no such extraction. "
                 f"Admit and extract the standard before repointing onto it.")
@@ -4701,20 +4705,24 @@ def derive_extraction(*, ref_id: str, slug: str, parameter_id: int, base: int,
                           "rows -- a figure cannot be derived from itself twice.")
 
         base_unit, delta_unit = base_row["claimed_unit"], delta_row["claimed_unit"]
-        if base_unit != delta_unit and not (
+        # ONE RULE, ONE REFUSAL: if the unit that will be STORED differs from what
+        # either input actually carries, a --claimed-unit and a --conversion-note are
+        # both mandatory. This was two sequential checks with two near-identical
+        # messages -- one for "base and delta disagree", one for "your override
+        # disagrees with base" -- which are the same rule seen from two sides, and
+        # which a later change to the reconciliation policy would have had to find in
+        # two places that only inspection kept in sync.
+        unit = claimed_unit or base_unit
+        if (base_unit != delta_unit or unit != base_unit) and not (
                 claimed_unit and (conversion_note or "").strip()):
             raise Refusal(
-                f"derive-extraction: base (extraction {base}, unit {base_unit!r}) "
-                f"and delta (extraction {delta}, unit {delta_unit!r}) do not share "
-                f"a claimed_unit. Pass --claimed-unit with a --conversion-note "
-                f"explaining how they reconcile, or fix the mismatched row first.")
-        unit = claimed_unit or base_unit
-        if claimed_unit and claimed_unit != base_unit and not (conversion_note or "").strip():
-            raise Refusal(
-                f"derive-extraction: --claimed-unit {claimed_unit!r} differs from "
-                f"the base figure's unit {base_unit!r} -- pass --conversion-note "
-                f"explaining the conversion, or omit --claimed-unit to keep the "
-                f"base's own unit.")
+                f"derive-extraction: the unit this row would store ({unit!r}) is not "
+                f"the unit both inputs carry -- base (extraction {base}) is "
+                f"{base_unit!r}, delta (extraction {delta}) is {delta_unit!r}. Pass "
+                f"--claimed-unit WITH a --conversion-note saying how they reconcile, "
+                f"or fix the mismatched row first. Note that a converted row is "
+                f"invisible to v_derived_figure_check, which joins on equal units, so "
+                f"the conversion note is the only record of the arithmetic.")
 
         def _num(x):
             try:
