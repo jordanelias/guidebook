@@ -3,7 +3,7 @@
 **opus_synthesis:** provisional
 
 Population (coverage): **VES** (vestibular disorders) primary; also serves MOVE, BRAIN, older/ambulant fallers.
-Access need / axis: **A-STABLE** ("hold the visual reference still") / **AX-BAL** (balance & postural demand).
+Access need / axis: **A-STABLE** ("hold the visual reference still") / **DM-BAL** (balance & postural demand).
 
 ## PICO
 - **P** — people with vestibular disorders / impaired balance in the built environment

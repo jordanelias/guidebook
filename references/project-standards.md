@@ -3524,3 +3524,73 @@ add-icf-code`. (2) Do not re-introduce a demand code into any `icf_*` column —
 refuse it. (3) Do not treat the medical lens as retired without an owner ruling that says
 so. (4) `GAP-ICF-TITLES` closes by retrieval and persisted bytes, never by recall.
 DATE: 2026-09-13 — owner ruling and owner statement, both quoted above.
+
+---
+
+RULE: **`AX-` is struck from every code.** Owner ruling 2026-09-15, quoted verbatim: *"we
+should NEVER have AX- as part of a code because axis is a term used to describe
+information"*, followed by *"I have ruled this before"* and *"I thought all instances of AX-
+had been struck"*. Both of those are correct. Executed the same day by
+`scripts/migrations/082_strike_ax_prefix.sql`.
+
+**CROSSWALK — PREFIX ONLY, suffixes unchanged.** `AX-XXX` → `DM-XXX`, for all seventeen:
+AMB · ARO · AUD · BAL · CHM · CNT · COG-L · COG-O · COM-E · PAI · REA · SPR · STA · THR ·
+VIS-L · VIS-N · WHM. `DM-` is derived, not chosen: the 2026-08-25 ruling names the successor
+column `icf_demands.demand_code`. **This ledger is append-only, so every entry above this one
+names these codes as they stood; one mechanical substitution resolves every one of them.**
+
+**IT IS THE FOURTH RULING ON THIS POINT, AND THE FIRST EXECUTION.**
+
+| | |
+|---|---|
+| 2026-08-18 | `axes` ruled a bad coined term, marked "do not relitigate". `CLAUDE.md` rule 0 carries this as its own proof — the next day a batch framed four of five searches on bare `axis_code`. |
+| 2026-08-24 | `DR-2026-08-24` §R8 item 1: *"axis" is descriptive vocabulary, never a domain identifier.* |
+| 2026-08-25 | The `icf_demands` RULE above renames the layer and the column. |
+| 2026-09-13 | *"'AX-' for ICF should never ever exist anywhere"* — migration 081 re-pointed the ICF lens at real ICF codes but left the demand registry's own codes carrying the prefix. |
+
+**WHY IT SURVIVED ALL FOUR, which is the finding worth more than the migration.** The
+2026-08-25 RULE's own ACTION item 3 declared the rename *"scoped and owner-gated, and must
+not be attempted piecemeal"*. No session ever scheduled it. So the gate stopped being a
+safeguard and became **the reason for inaction**: every session that met `AX-` found a
+ratified record saying the fix was owner-gated, and stopped there. That is the same shape
+`DR-2026-08-24`'s own table, row 1, already diagnosed — an implementer abandoning this exact
+ruling because it *"would have overturned DR-2026-07-22-work-from-axes, an ADOPTED owner
+directive"*, treating paperwork as outranking the owner speaking. That row is where
+`CLAUDE.md` rule 0 comes from. **The rule was written from this failure and then the failure
+happened three more times, because rule 0 is NOT ENFORCED and nothing converts "the owner
+ruled" into "a session did it".**
+
+**WHAT WAS STRUCK.** 128 `AX-`-bearing values in the database fell to 5: the 17 registry
+codes and the 74 rows in the two maps that point at them, plus 32 live prose mentions in
+seven columns — falsification conditions, scope notes, a JSON array a renderer reads. On the
+file surface, every live carrier: `governance/functional-taxonomy.md`, `scripts/validate_axes.py`,
+`schemas/slug.py`, `tools/regenerate_vetting_surface.py` and its regenerated HTML, three
+`references/bpc/` documents, and a pilot-test fixture that was passing `AX-AMB` as an
+`icf_code` — wrong twice over since migration 081.
+
+**WHAT DELIBERATELY STILL CARRIES `AX-`, because striking it would be a worse error.** Five
+database values: `decisions.rationale` / `.notes` record what a decision SAID (and the
+decision register is a shadow store a blocking parity check compares against its YAML), and
+three `search_executions` columns record what was searched and what was deliberately not —
+R8 is explicit that a search log is never backfilled. The committed migrations keep every
+`AX-` they have ever held, by rule 3. Past sessions' `scratchpad/` working notes are frozen
+records of what those sessions did, the same class as `sessions/` and `transcripts/`. **So
+`AX-` does not reach zero and should not; what reaches zero is `AX-` as a live code.**
+
+**AND IT CANNOT COME BACK.** Four rulings were not enough, so this stops being something
+anyone has to remember. `axes.axis_code` now carries `CHECK (axis_code NOT GLOB 'AX-*')` —
+written as a negative so it mechanises exactly what was ruled and does not quietly also
+mandate `DM-` forever. All seventeen codes are registered in
+`governance/retired-vocabulary.yaml` as RV-040…RV-056, which is the tripwire that would have
+caught this three weeks ago and could not: the register's matcher has no prefix mode, so a
+bare `AX-` entry never matches `AX-AMB`, and one entry per code is the only form that works.
+
+CONDITION: Any session naming, querying or reasoning about the demand layer; any session
+meeting `AX-` anywhere.
+ACTION: (1) The live codes are `DM-*`; use them WITH their names, never bare (the 2026-08-18
+rule stands). (2) Never write `AX-` into a code — the schema refuses it. (3) A frozen record
+naming `AX-` is correct and must not be edited; apply the prefix crosswalk when reading it.
+(4) The table and column are still named `axes` / `axis_code`: the 2026-08-25 rename to
+`icf_demands` / `demand_code` remains ratified and unexecuted, and is now the ONLY part of
+that ruling outstanding.
+DATE: 2026-09-15 — owner ruling, quoted above.

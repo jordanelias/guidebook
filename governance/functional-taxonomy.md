@@ -147,41 +147,41 @@ queryable coverage hole* — by design.
 
 | Axis | Name (interaction-framed) | ICF anchors (findability) | Demand the environment places | Status |
 |---|---|---|---|---|
-| `AX-AMB` | Ambulant movement | b770, b730 · d450, d455, d460 | Continuous walking, stairs, distance, gradients — incl. **floor-level living: floor-sitting, prostration, and floor-to-standing transitions** [T1] | ESTABLISHED |
-| `AX-WHM` | Wheeled movement & transfer | b730, b710 · d465, d420, d410 | Turning, clearance, transfer geometry — independent **and assisted** (two-person, hoist) [T3][T5] | ESTABLISHED |
-| `AX-REA` | Reach & manipulation | b730, b710 · d440, d445 | Reach envelopes, grip, operating force — at chair, counter, **and floor-level** heights | ESTABLISHED |
-| `AX-BAL` | Balance & postural demand | b235, b240 · d415, d410 | (a) fall-risk under gait/transfer load; (b) **environments that precipitate dizziness**: repeating pattern, specular floors, glazed edges at height, escalators, large uniform visual fields | STUB |
-| `AX-STA` | Sustained-exertion demand | b455, b130 · d230, d450 | Standing, queueing, distance without rest; **grid/lift failure converting routes into exertion cliffs** [T1] | ESTABLISHED |
-| `AX-PAI` | Pain-load demand | b280 · d410, d450, d640 | Impact, vibration, pressure, cold. Mechanism spans **nociceptive and centrally-sensitized pain** — fibromyalgia-type pain is not nociception-dominant, and provisions must not assume load-avoidance alone suffices | ESTABLISHED |
-| `AX-THR` | Thermal demand | b550 · d230 | Heat/cold exposure for impaired thermoregulation — via conditioning **and passive means (shading, mass, ventilation) where grids are intermittent** [T1] | PARTIAL |
-| `AX-CHM` | Airborne-exposure demand | b435, b440 · d230 | VOCs, fragrance, particulates, smoke | PARTIAL |
-| `AX-VIS-L` | Low-vision information demand | b210 · d460, d166 | Environments legible through residual vision: contrast, lighting, glare, size | ESTABLISHED |
-| `AX-VIS-N` | Non-visual information demand | b210 · d460 | Environments legible without vision: tactile, acoustic, layout consistency | ESTABLISHED |
-| `AX-AUD` | Auditory access & alerting demand | b230 · d310, d115 | Speech access, alert receipt, assistive listening infrastructure | ESTABLISHED |
-| `AX-SPR` | Sensory-load demand | b156, b140 · d230, d160 | Stimulus intensity, unpredictability, trigger exposure (incl. photic) — ICF under-represents modulation; anchors are nearest-fit, recorded honestly | ESTABLISHED |
-| `AX-COG-O` | Orientation demand | b114, b144 · d460, d175 | Legible-space demands: memory, sequencing, decision-point load | ESTABLISHED |
-| `AX-COG-L` | Information-access demand | b117, b167 · d166, d310, d315 | Legible-information demands: comprehension load of signage and instructions — **across scripts and literacy levels, not only Easy-Read-genre English** [T1] | STUB |
-| `AX-COM-E` | Expressive-communication demand | b320, b330 · d330, d335, d350 | Environments that require producing speech under time/acoustic pressure: counters, intercoms, service interactions; AAC-user dwell and device acoustics. **Signed languages are languages, not deficits: d340 (sign production) is held by the Deaf-community profile (§4), which this axis serves only for sightline/lighting infrastructure** [T2][T3] | STUB |
-| `AX-ARO` | Arousal-safety demand | b152 · d240 | Threat-appraisal load: exposure, unpredictability, lack of retreat or exit legibility | STUB |
-| `AX-CNT` | Toileting-proximity demand | b620, b525 · d530 | Urgency/frequency as plan-driver: distance, provision count, management space (ostomy/catheter; adult-changing provision as need-driven), **squat and sitting WC typologies both first-class** [T1] | STUB |
+| `DM-AMB` | Ambulant movement | b770, b730 · d450, d455, d460 | Continuous walking, stairs, distance, gradients — incl. **floor-level living: floor-sitting, prostration, and floor-to-standing transitions** [T1] | ESTABLISHED |
+| `DM-WHM` | Wheeled movement & transfer | b730, b710 · d465, d420, d410 | Turning, clearance, transfer geometry — independent **and assisted** (two-person, hoist) [T3][T5] | ESTABLISHED |
+| `DM-REA` | Reach & manipulation | b730, b710 · d440, d445 | Reach envelopes, grip, operating force — at chair, counter, **and floor-level** heights | ESTABLISHED |
+| `DM-BAL` | Balance & postural demand | b235, b240 · d415, d410 | (a) fall-risk under gait/transfer load; (b) **environments that precipitate dizziness**: repeating pattern, specular floors, glazed edges at height, escalators, large uniform visual fields | STUB |
+| `DM-STA` | Sustained-exertion demand | b455, b130 · d230, d450 | Standing, queueing, distance without rest; **grid/lift failure converting routes into exertion cliffs** [T1] | ESTABLISHED |
+| `DM-PAI` | Pain-load demand | b280 · d410, d450, d640 | Impact, vibration, pressure, cold. Mechanism spans **nociceptive and centrally-sensitized pain** — fibromyalgia-type pain is not nociception-dominant, and provisions must not assume load-avoidance alone suffices | ESTABLISHED |
+| `DM-THR` | Thermal demand | b550 · d230 | Heat/cold exposure for impaired thermoregulation — via conditioning **and passive means (shading, mass, ventilation) where grids are intermittent** [T1] | PARTIAL |
+| `DM-CHM` | Airborne-exposure demand | b435, b440 · d230 | VOCs, fragrance, particulates, smoke | PARTIAL |
+| `DM-VIS-L` | Low-vision information demand | b210 · d460, d166 | Environments legible through residual vision: contrast, lighting, glare, size | ESTABLISHED |
+| `DM-VIS-N` | Non-visual information demand | b210 · d460 | Environments legible without vision: tactile, acoustic, layout consistency | ESTABLISHED |
+| `DM-AUD` | Auditory access & alerting demand | b230 · d310, d115 | Speech access, alert receipt, assistive listening infrastructure | ESTABLISHED |
+| `DM-SPR` | Sensory-load demand | b156, b140 · d230, d160 | Stimulus intensity, unpredictability, trigger exposure (incl. photic) — ICF under-represents modulation; anchors are nearest-fit, recorded honestly | ESTABLISHED |
+| `DM-COG-O` | Orientation demand | b114, b144 · d460, d175 | Legible-space demands: memory, sequencing, decision-point load | ESTABLISHED |
+| `DM-COG-L` | Information-access demand | b117, b167 · d166, d310, d315 | Legible-information demands: comprehension load of signage and instructions — **across scripts and literacy levels, not only Easy-Read-genre English** [T1] | STUB |
+| `DM-COM-E` | Expressive-communication demand | b320, b330 · d330, d335, d350 | Environments that require producing speech under time/acoustic pressure: counters, intercoms, service interactions; AAC-user dwell and device acoustics. **Signed languages are languages, not deficits: d340 (sign production) is held by the Deaf-community profile (§4), which this axis serves only for sightline/lighting infrastructure** [T2][T3] | STUB |
+| `DM-ARO` | Arousal-safety demand | b152 · d240 | Threat-appraisal load: exposure, unpredictability, lack of retreat or exit legibility | STUB |
+| `DM-CNT` | Toileting-proximity demand | b620, b525 · d530 | Urgency/frequency as plan-driver: distance, provision count, management space (ostomy/catheter; adult-changing provision as need-driven), **squat and sitting WC typologies both first-class** [T1] | STUB |
 
 **Falsification symmetry [T4].** *Every* axis — established and new alike — carries
-a dissolution condition in the staged schema (e.g., AX-AMB/AX-WHM re-merge if
-evidence shows no parameter divergence; AX-BAL merges into AX-AMB if precipitant
+a dissolution condition in the staged schema (e.g., DM-AMB/DM-WHM re-merge if
+evidence shows no parameter divergence; DM-BAL merges into DM-AMB if precipitant
 guidance reduces to fall-prevention parameters). New categories do not audition for
 existence under a burden established categories are spared.
 
 ### §2.2 New-axis specifications (abbreviated)
 
-`AX-BAL`: both mechanisms currently homeless operationally (§0). Proposed slug
-`vestibular-balance-built-environment`, queued per §8. `AX-COG-L`: un-proxies
+`DM-BAL`: both mechanisms currently homeless operationally (§0). Proposed slug
+`vestibular-balance-built-environment`, queued per §8. `DM-COG-L`: un-proxies
 intellectual disability for information access (GAP-277); armature §5.1 governs the
 IntD treatment (population-level content + axis entry; minimal-predictive mapping).
-`AX-COM-E`: built-environment residual only; the bulk of communication support is
-human/service scope. `AX-ARO`: rescinds the FDA scope-out of b152/d240 for the
+`DM-COM-E`: built-environment residual only; the bulk of communication support is
+human/service scope. `DM-ARO`: rescinds the FDA scope-out of b152/d240 for the
 architecturally actionable subset; trauma-informed design evidence curates here.
-`AX-CNT`: the physiological driver behind provision-count/proximity parameters.
-`AX-CHM`: names the axis the air-quality slug already feeds; re-homes MCAS by
+`DM-CNT`: the physiological driver behind provision-count/proximity parameters.
+`DM-CHM`: names the axis the air-quality slug already feeds; re-homes MCAS by
 mechanism.
 
 ### §2.3 Reconciliation with armature §5 (20-axis candidate set)
@@ -191,18 +191,18 @@ deltas are ratification items, not silent decisions:
 
 | Armature §5 candidate | This register | Note |
 |---|---|---|
-| Ambulatory capacity; Postural control; Transfer capacity | AX-AMB; AX-BAL (postural); AX-WHM (transfer) | Transfer folded into wheeled-movement; **checklist item R6**: keep folded or split per armature |
-| Vestibular function | AX-BAL | Convergent — armature named it first |
-| Limb presence; Reach envelope; Grip & manipulation | AX-REA (+ profile modifier for limb presence) | Limb presence as profile attribute, not axis |
-| Visual acuity / field / processing; Light tolerance | AX-VIS-L, AX-VIS-N, AX-SPR (photic) | Coarser here; armature's finer grain available as axis sub-values at build |
-| Auditory acuity / processing | AX-AUD | Processing sub-values at build |
-| Sensory regulation | AX-SPR | Convergent |
-| Cognitive processing (memory/executive/speed/abstract) | AX-COG-O, AX-COG-L | Armature flags granularity as an A7 decision — unresolved here too; **checklist item R7** |
-| Communication & speech | AX-COM-E | With the d340 carve-out (§2.1) |
-| Pain & fatigue envelope | AX-PAI + AX-STA | Split by mechanism (nociceptive/central vs exertional); both feed pain-ofs slug |
-| Thermoregulation | AX-THR | Convergent |
-| Continence & toileting independence | AX-CNT | Convergent; independence spectrum carried as axis values |
-| **Respiratory / oxygen dependency** | **Divergence — checklist item R8** | v1.0 rejected a respiratory axis (decomposes to AX-STA + AX-CHM + egress thread); armature lists it with concrete spatial consequences (corridor width, bathroom space, lift priority, egress). Both positions are recorded; the owner adjudicates |
+| Ambulatory capacity; Postural control; Transfer capacity | DM-AMB; DM-BAL (postural); DM-WHM (transfer) | Transfer folded into wheeled-movement; **checklist item R6**: keep folded or split per armature |
+| Vestibular function | DM-BAL | Convergent — armature named it first |
+| Limb presence; Reach envelope; Grip & manipulation | DM-REA (+ profile modifier for limb presence) | Limb presence as profile attribute, not axis |
+| Visual acuity / field / processing; Light tolerance | DM-VIS-L, DM-VIS-N, DM-SPR (photic) | Coarser here; armature's finer grain available as axis sub-values at build |
+| Auditory acuity / processing | DM-AUD | Processing sub-values at build |
+| Sensory regulation | DM-SPR | Convergent |
+| Cognitive processing (memory/executive/speed/abstract) | DM-COG-O, DM-COG-L | Armature flags granularity as an A7 decision — unresolved here too; **checklist item R7** |
+| Communication & speech | DM-COM-E | With the d340 carve-out (§2.1) |
+| Pain & fatigue envelope | DM-PAI + DM-STA | Split by mechanism (nociceptive/central vs exertional); both feed pain-ofs slug |
+| Thermoregulation | DM-THR | Convergent |
+| Continence & toileting independence | DM-CNT | Convergent; independence spectrum carried as axis values |
+| **Respiratory / oxygen dependency** | **Divergence — checklist item R8** | v1.0 rejected a respiratory axis (decomposes to DM-STA + DM-CHM + egress thread); armature lists it with concrete spatial consequences (corridor width, bathroom space, lift priority, egress). Both positions are recorded; the owner adjudicates |
 
 ## §3 Layer 2 — Profiles
 
@@ -281,13 +281,13 @@ decomposes into those axes, and any individual overrides the mapping.
 
 | Code (DB) | Canonical | Disposition | Maps to | Rationale / fixes |
 |---|---|---|---|---|
-| MOB | MOB (+MOB/AMB, MOB/UPL) | AXIS-ALIAS | AX-AMB + AX-WHM | Canonical sub-codes already split ambulant/upper-limb; axis layer completes it |
-| UPL | MOB/UPL | AXIS-ALIAS | AX-REA | |
-| VIS | VIS | AXIS-ALIAS | AX-VIS-L + AX-VIS-N | Armature's finer visual axes available at build |
-| DEAF | DEAF | Dual: axis-alias AX-AUD **+ Deaf-community profile** (identity; no ICD) | AX-AUD | Armature §5 poses this exact open question ("identity-recognition question, not just clinical-framing"); this is the proposed answer. DeafSpace corpus and d340 sign-space provisions are held by the profile — signed language as language, with the axis serving infrastructure only |
-| SENS | NDV/SENS | AXIS-ALIAS | AX-SPR | Sub-code was an axis in population clothing; explains its 1-item-link starvation |
-| PAIN | PAIN | AXIS-ALIAS | AX-PAI | Mechanism spans nociceptive + central sensitization (§2.1) |
-| OFS | OFS | AXIS-ALIAS | AX-STA (+AX-THR) | |
+| MOB | MOB (+MOB/AMB, MOB/UPL) | AXIS-ALIAS | DM-AMB + DM-WHM | Canonical sub-codes already split ambulant/upper-limb; axis layer completes it |
+| UPL | MOB/UPL | AXIS-ALIAS | DM-REA | |
+| VIS | VIS | AXIS-ALIAS | DM-VIS-L + DM-VIS-N | Armature's finer visual axes available at build |
+| DEAF | DEAF | Dual: axis-alias DM-AUD **+ Deaf-community profile** (identity; no ICD) | DM-AUD | Armature §5 poses this exact open question ("identity-recognition question, not just clinical-framing"); this is the proposed answer. DeafSpace corpus and d340 sign-space provisions are held by the profile — signed language as language, with the axis serving infrastructure only |
+| SENS | NDV/SENS | AXIS-ALIAS | DM-SPR | Sub-code was an axis in population clothing; explains its 1-item-link starvation |
+| PAIN | PAIN | AXIS-ALIAS | DM-PAI | Mechanism spans nociceptive + central sensitization (§2.1) |
+| OFS | OFS | AXIS-ALIAS | DM-STA (+DM-THR) | |
 | DEM | DEM | PROFILE (diagnostic; low-predictive) | COG-O primary; ARO, VIS-L, AMB | Emergent corpus: dementia-friendly design |
 | NDV | NDV | PROFILE (umbrella; identity-framed; no ICD) | SPR, ARO, COG-O | |
 | AUT | NDV/AUT | PROFILE (diagnostic/identity dual; parent NDV) | SPR primary; ARO, COM-E | Distinct emergent corpus (ASPECTSS); ICD-11 6A02 |
@@ -371,12 +371,12 @@ IBD/ostomy (CNT) — named so their absence is visible.
 |---|---|
 | `ABI` (FDA skill) | NEU umbrella profile |
 | `ASD` (FDA skill) | NDV/AUT |
-| `LOW-VISION` (FDA skill) | AX-VIS-L |
+| `LOW-VISION` (FDA skill) | DM-VIS-L |
 | `PCS` = post-COVID (FDA skill) | LCOV |
 | `PCS` = post-concussion (DB) | PCS-TBI (canon NEU/PCS) |
 | `CFS` (DB) | OFS/ME (display: ME/CFS) |
 | `AUT`,`ADHD`,`SENS`,`POTS`,`MCAS` (DB flat) | canonical sub-codes NDV/AUT, NDV/ADHD, NDV/SENS, OFS/POTS, OFS/MCAS |
-| MOB "balance" (FDA mechanism text) | AX-BAL |
+| MOB "balance" (FDA mechanism text) | DM-BAL |
 
 Post-ratification the FDA skill §§1–2 regenerate from the axis register, ending
 skill↔DB drift; the `PopulationCode` enum change follows population-taxonomy §5's
@@ -395,7 +395,7 @@ texts · all DB rows, item links, and skill files — until ratification.
 
 ## §8 Coverage holes, and the queue rule's honest cost
 
-Ratification creates five STUB axes, one newly named PARTIAL axis (AX-CHM), and
+Ratification creates five STUB axes, one newly named PARTIAL axis (DM-CHM), and
 two evidence-stub profile records (`VES`, `LCOV`) with zero evidence obligations
 attached. Research execution queues behind the existing language/jurisdiction debt
 (AR/HI/BN/SW at zero; ~82% of coverage cells NOT-RUN) unless the owner reorders.
@@ -435,5 +435,5 @@ of priority between people; the checklist (§9) offers the reorder explicitly.
 6. Normalise `evidence_population_match.target_population`.
 7. Extend `db.py validate` with zero-coverage axis queries and profile-layer
    containment rules.
-8. Close GAP-277 (IntD information-access — answered by AX-COG-L + armature §5.1
+8. Close GAP-277 (IntD information-access — answered by DM-COG-L + armature §5.1
    treatment); open gap rows for STUB-axis evidence debts.

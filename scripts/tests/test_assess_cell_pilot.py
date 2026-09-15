@@ -215,7 +215,11 @@ def main():
     # not absent — it caps consolidation at DOWN-WEIGHTED and flags the source. The old
     # engine could not reach this state at all, because population was mandatory.
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"}]),
-                  1, {"icf_code": "AX-AMB"}, "syn-slug", "lens without identity")
+                  # A REAL ICF CODE, not a demand code. Migration 081 re-pointed
+                  # specifications.icf_code at `base_icf` (owner: "keep the ICF lens, give
+                  # it real ICF codes") and 082 struck the AX- prefix entirely, so the
+                  # literal that stood here was wrong twice over.
+                  1, {"icf_code": "d450"}, "syn-slug", "lens without identity")
     expect("no identity lens => every source needs population assessment (G2)",
            d["needs_population_assessment"] == [r["ref_id"] for r in d["source_records"]],
            str(d["needs_population_assessment"]))

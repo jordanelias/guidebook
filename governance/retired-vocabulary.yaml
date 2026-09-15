@@ -814,6 +814,241 @@ entries:
       and must not be flagged. Exempt the FILE, never the token — when the column
       is renamed, delete these exemptions rather than widening them.
 
+# --- RV-040..RV-056: the 17 demand codes, AX- prefix struck ------------------
+# Owner ruling 2026-09-15: "we should NEVER have AX- as part of a code because axis
+# is a term used to describe information" -- followed by "I have ruled this before"
+# and "I thought all instances of AX- had been struck". Both true. It is at least the
+# fourth ruling on the point (2026-08-18, DR-2026-08-24 R8 item 1, 2026-08-25,
+# 2026-09-13) and the first one executed: migration 082 re-minted all 17 codes and
+# gave `axes.axis_code` a CHECK refusing the prefix.
+#
+# ADMISSION TEST, all four, per code:
+#   1. Authority: the ruling above, executed by migration 082.
+#   2. The replacement HAS landed -- 082 is applied, and the live registry holds the
+#      DM- spellings. This is the test that kept these out of the register until now.
+#   3. Live hits are wrong in context: the code no longer resolves.
+#   4. Matchable mechanically, and unusually cleanly. Unlike the population codes in
+#      `deferred:` below -- POTS, MCAS, ABI are clinical terms as well as retired
+#      codes -- `AX-AMB` can only ever have been this identifier. There is no English
+#      sentence it belongs in.
+#
+# WHY SEVENTEEN ENTRIES AND NOT ONE. The matcher has no prefix mode: all three modes
+# require a non-[\w-] character after the token, so a bare `AX-` entry never matches
+# `AX-AMB` at all. That was recorded on 2026-08-26 as the reason `AX-` "cannot be
+# expressed", and it is why the register sat silent through three rulings. One entry
+# per code is the form that works.
+#
+# EXPECT ZERO OCCURRENCES. The live surface was swept in the same change. The frozen
+# carriers -- the committed migrations, the decision register, the search logs and
+# this ledger -- are already covered by the global exempt_paths at the top of this
+# file, and `references/project-standards.md` is deliberately among them: it is an
+# append-only record whose past entries name these codes as they stood, and the
+# 2026-09-15 entry carries the prefix-only crosswalk so every one of them resolves.
+  - id: RV-040
+    token: AX-AMB
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-AMB — Ambulant movement. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-041
+    token: AX-ARO
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-ARO — Arousal-safety demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-042
+    token: AX-AUD
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-AUD — Auditory access & alerting demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-043
+    token: AX-BAL
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-BAL — Balance & postural demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-044
+    token: AX-CHM
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-CHM — Airborne-exposure demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-045
+    token: AX-CNT
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-CNT — Toileting-proximity demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-046
+    token: AX-COG-L
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-COG-L — Information-access demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-047
+    token: AX-COG-O
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-COG-O — Orientation demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-048
+    token: AX-COM-E
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-COM-E — Expressive-communication demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-049
+    token: AX-PAI
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-PAI — Pain-load demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-050
+    token: AX-REA
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-REA — Reach & manipulation. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-051
+    token: AX-SPR
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-SPR — Sensory-load demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-052
+    token: AX-STA
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-STA — Sustained-exertion demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-053
+    token: AX-THR
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-THR — Thermal demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-054
+    token: AX-VIS-L
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-VIS-L — Low-vision information demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-055
+    token: AX-VIS-N
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-VIS-N — Non-visual information demand. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+  - id: RV-056
+    token: AX-WHM
+    match: identifier
+    severity: broken
+    retired_by: >-
+      owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
+      executed by migration 082_strike_ax_prefix.sql
+    replacement: >-
+      DM-WHM — Wheeled movement & transfer. Prefix only; the suffix is unchanged, because the suffix
+      carried the meaning and the prefix carried the retired metaphor.
+    exempt_paths:
+    - scratchpad/**
+
 # --- deferred: correct to retire, NOT YET SAFE TO FLAG ----------------------
 # These fail admission test 2 — the replacement has not landed — so flagging them
 # today would flag accurate descriptions of live data. Each records the precondition

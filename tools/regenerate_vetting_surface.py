@@ -48,7 +48,7 @@ def _other_lenses(row):
     popCell() as `settingLabelFallback`, which that function uses ONLY when `setting`
     is NULL and renders inside `<div class="pop-setting">`. So the fix worked only on
     rows with no setting -- and a spatial extraction usually HAS one. A row with
-    `icf:AX-AMB` and setting='hospital corridor' showed the setting and hid the lens,
+    `icf:DM-AMB` and setting='hospital corridor' showed the setting and hid the lens,
     which is the exact failure the docstring above claims to fix; and a row with
     `needs:A-AT` and no setting put the lens in the slot the legend reserves for
     setting, so the page said something false about a different column. A lens is not
@@ -531,7 +531,7 @@ const BB=DATA.backbone,T=DATA.totals;
 const POPS=DATA.populations||{};
 function lensCell(lensStr){
   // The row's NON-IDENTITY lenses (D-0182: a row may state several at once), e.g.
-  // 'icf:AX-AMB · needs:A-AT'. Its own cell, never the setting slot: a lens folded
+  // 'icf:DM-AMB · needs:A-AT'. Its own cell, never the setting slot: a lens folded
   // into `settingLabelFallback` showed only on rows with no setting, which is the
   // minority for a spatial extraction, and rendered as a setting when it did show.
   if (!lensStr) return '<span class="pop-empty">&mdash;</span>';

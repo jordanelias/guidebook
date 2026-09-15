@@ -110,14 +110,14 @@ def selftest():
         "CREATE TABLE axes(axis_code TEXT);"
         "CREATE TABLE populations(population_code TEXT);"
         "CREATE TABLE population_axis_map(population_code TEXT, axis_code TEXT, role TEXT);"
-        "INSERT INTO axes VALUES('AX-BAL'),('AX-STA');"
+        "INSERT INTO axes VALUES('DM-BAL'),('DM-STA');"
         "INSERT INTO populations VALUES('VES');"
     )
     cases = [
-        ("clean: valid pop+axis+role", "INSERT INTO population_axis_map VALUES('VES','AX-BAL','PRIMARY')", False),
-        ("dangling axis", "INSERT INTO population_axis_map VALUES('VES','AX-NOPE','PRIMARY')", True),
-        ("dangling population", "INSERT INTO population_axis_map VALUES('XX','AX-BAL','PRIMARY')", True),
-        ("bad role", "INSERT INTO population_axis_map VALUES('VES','AX-BAL','BOGUS')", True),
+        ("clean: valid pop+axis+role", "INSERT INTO population_axis_map VALUES('VES','DM-BAL','PRIMARY')", False),
+        ("dangling axis", "INSERT INTO population_axis_map VALUES('VES','DM-NOPE','PRIMARY')", True),
+        ("dangling population", "INSERT INTO population_axis_map VALUES('XX','DM-BAL','PRIMARY')", True),
+        ("bad role", "INSERT INTO population_axis_map VALUES('VES','DM-BAL','BOGUS')", True),
     ]
     ok = True
     for why, sql, expect in cases:

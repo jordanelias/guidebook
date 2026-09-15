@@ -9,7 +9,7 @@
 ```yaml
 slug: energy-conservation-rest-points-seating
 populations: []            # derived through the axis layer, not asserted here
-serves_axes: [AX-STA, AX-PAI, AX-AMB, AX-BAL]
+serves_axes: [DM-STA, DM-PAI, DM-AMB, DM-BAL]
 opus_synthesis: false
 opus_session: null
 status: STUB
@@ -22,7 +22,7 @@ co1_source_count: 1        # the slug's thinnest point, unchanged since batch 1
 ```
 
 **Scope (worked from axes — `DR-2026-07-22-work-from-axes`).** This slug serves the
-**sustained-exertion demand** (`AX-STA`; ICF b455, b130 · d230, d450): the environment-side
+**sustained-exertion demand** (`DM-STA`; ICF b455, b130 · d230, d450): the environment-side
 question of *how far a route requires a person to travel before a usable rest is available, and
 whether that rest is usable once reached*. No population umbrella is coined. Provisions are
 tracked as separable parameters — **interval**, **seat height**, **armrest**, **setback**,
@@ -63,7 +63,7 @@ boundary.**
   journey (REF-00954). See GAP-308.
 - **Exhaustion is documented as an outcome, in disabled people's own words** (REF-00960, n=26 UK
   interviews): *"a recurrent impact of participants feeling exhausted due to the streetscape
-  barriers… participation in society was draining."* This evidences the **demand** (`AX-STA`) that
+  barriers… participation in society was draining."* This evidences the **demand** (`DM-STA`) that
   the slug exists to serve. It does **not** evidence any provision — see conflict note 6.
 - **The dimensional figures are attributed, not primary-verified** (batch 3). The chain behind
   them is now located (REF-00961–00964) but unread. See GAP-310.
@@ -197,7 +197,7 @@ turns on. No parameter for this exists anywhere in the corpus.
 REF-00960 was staged across two batches as probable support for rest-point provision. On reading,
 it contains **no seating finding at all**: "benches" appears twice, both as an example of street
 furniture in definitional text. It is admitted for its *"feeling exhausted"* theme — one of its
-four key impacts — which is lived-experience evidence for the `AX-STA` demand. Its population
+four key impacts — which is lived-experience evidence for the `DM-STA` demand. Its population
 match is **EXACT** (26 disabled people, recruited as such) while its topical contribution to
 seating is **nil**. Population fit and topical fit are separate axes; conflating them is how a
 paper about streetscapes becomes a citation for benches.
