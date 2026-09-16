@@ -330,6 +330,66 @@ def vacuity_failure(check, output):
     return None
 
 
+def floor_claim_contradiction(check, output, no_floor_kinds):
+    """The vacuity guard pointed the other way: a floorless check that examined something.
+
+    `vacuity_failure` catches a check with a floor that examined too little. This catches
+    its mirror — a check that declared it needs NO floor because its subject is empty,
+    over a subject that is not empty.
+
+    THE DEFECT THIS EXISTS FOR. A `no_floor` reason is an assertion about the world, and
+    nothing verified one until 2026-09-16. Eleven of 33 had gone false; three were BLOCKING
+    gates running over live subjects with no floor at all, which is precisely the state
+    where a gate can go vacuous later and pass green forever (CLAUDE.md §5a, produced four
+    times). `extraction_relations_integrity` had even written its own expiry condition into
+    its reason in capitals — "RATCHET BACK TO min_items 1 when the re-run lands its first
+    extraction" — and the trigger fired unnoticed, because a sentence cannot evaluate
+    itself. That is the argument for doing this in code rather than in prose.
+
+    WHAT IT WILL AND WILL NOT CLAIM. Only the `asserts_empty` kinds make a claim a count can
+    refute: the reason says the subject is empty, the check printed a non-zero EXAMINED, and
+    those cannot both be true. The other kinds claim things about a check's SHAPE — its
+    subject is a diff, a session, its own fixtures, or several unlike things — and no count
+    refutes those, so they are surfaced for a human and never failed. Asserting otherwise
+    would be manufacturing findings, which is the failure mode on the opposite side of the
+    one this function exists to close.
+
+    It is deliberately NOT a guarantee that a reason is honest: a corpus check mislabelled
+    `selftest` escapes the test entirely, and two such labels were already wrong when this
+    was written. The token turns that from unreadable prose into one greppable word.
+
+    Returns (severity, message) or None. Severity is "STALE" for a contradiction and
+    "REVIEW" for a floorless check with a live subject whose kind cannot be falsified.
+    """
+    reason = check.get("no_floor")
+    if not reason:
+        return None
+    match = EXAMINED_RE.search(output or "")
+    if not match:
+        # No readable count, so nothing to contradict. Seventeen checks were in this state
+        # when this function was written — they print nothing the runner can parse, so it
+        # reports PASS whether or not they examined anything. That is a real gap and it is
+        # NOT silently swallowed here; `--selftest` C9 reports the population so it stays
+        # visible, rather than this function guessing at a count it cannot see.
+        return None
+    seen = int(match.group(1))
+    if seen == 0:
+        return None
+    token = str(reason).split("—")[0].strip()
+    spec = (no_floor_kinds or {}).get(token) or {}
+    if spec.get("asserts_empty"):
+        return ("STALE",
+                f"declares `no_floor: {token}` — an assertion that its subject is empty — "
+                f"but printed EXAMINED: {seen}. Both cannot be true. Ratchet it to "
+                f"`min_items: 1` (the boundary between examined-something and "
+                f"examined-nothing, never {seen}, which would be stale on the next batch), "
+                f"or correct the kind if the subject is not what the reason says it is.")
+    return ("REVIEW",
+            f"is floorless as `{token}` and examined {seen} item(s). That kind makes no "
+            f"claim a count can refute, so this is not a failure — but a floorless check "
+            f"with a live subject is where the last eleven stale claims came from.")
+
+
 def nothing_in_scope(output):
     """True when a check exited 0 having examined nothing.
 
@@ -488,6 +548,8 @@ def main():
 
     # --- run ----------------------------------------------------------------
     failures, errors, skips, vacuous = [], [], [], []
+    floor_claims = []
+    no_floor_kinds = reg.get("no_floor_kinds") or {}
     for check in active:
         if args.github:
             print(f"::group::{check['id']}")
@@ -507,6 +569,12 @@ def main():
             elif status in ("SKIP", "NONE"):
                 print(f"         {output.splitlines()[-1] if output else 'skipped'}")
 
+        claim = floor_claim_contradiction(check, output, no_floor_kinds)
+        if claim:
+            floor_claims.append((check["id"], level, claim[0], claim[1]))
+            if args.github and claim[0] == "STALE":
+                print(f"::error::{check['id']} declares no_floor over a non-empty subject")
+
         if status == "SKIP":
             skips.append(check["id"])
         elif status == "NONE":
@@ -523,8 +591,18 @@ def main():
                 print(f"::{sev}::{check['id']} failed ({level})")
 
     # --- verdict ------------------------------------------------------------
-    blocking_bad = [i for i, lv in failures + errors if lv == "blocking"]
-    other_bad = [i for i, lv in failures + errors if lv != "blocking"]
+    # A contradicted floor claim fails AT THE DECLARING CHECK'S OWN LEVEL, not as a
+    # separate advisory channel. The eleven stale claims found on 2026-09-16 accumulated
+    # precisely because nothing they were attached to ever went red; adding a twelfth
+    # advisory line would have reproduced that. This can only turn a run red once a
+    # declaration has actually gone false, and every one of them was true when this landed,
+    # so it is not red-by-construction — the state CLAUDE.md rule 6 warns teaches its reader
+    # to ignore it.
+    stale_claims = [(i, lv) for i, lv, sev, _ in floor_claims if sev == "STALE"]
+    review_claims = [(i, lv, msg) for i, lv, sev, msg in floor_claims if sev == "REVIEW"]
+
+    blocking_bad = [i for i, lv in failures + errors + stale_claims if lv == "blocking"]
+    other_bad = [i for i, lv in failures + errors + stale_claims if lv != "blocking"]
 
     print("=" * 78)
     if skips:
@@ -543,6 +621,18 @@ def main():
             print(f"  BLOCKING and vacuous ({len(blocking_vacuous)}): "
                   f"{', '.join(blocking_vacuous)} — a gate that examined nothing "
                   f"gated nothing.")
+    if floor_claims:
+        stale_msgs = [(i, msg) for i, _, sev, msg in floor_claims if sev == "STALE"]
+        if stale_msgs:
+            print(f"STALE FLOOR CLAIM ({len(stale_msgs)}): a `no_floor` reason asserting an "
+                  f"empty subject, over a subject that is not empty.")
+            for ident, msg in stale_msgs:
+                print(f"  {ident} {msg}")
+        if review_claims:
+            print(f"FLOORLESS WITH A LIVE SUBJECT ({len(review_claims)}): not a failure — "
+                  f"these kinds make no claim a count can refute.")
+            for ident, _, msg in review_claims:
+                print(f"  {ident} {msg}")
     if other_bad:
         print(f"NON-BLOCKING failures ({len(other_bad)}): {', '.join(other_bad)}")
     if blocking_bad:
@@ -816,10 +906,47 @@ def selftest(reg):
                       or c["min_items"] < 1)]
     check("C8 every min_items is a positive integer", not bad_floor, str(bad_floor[:5]))
 
+    # --- C9: every no_floor names a kind the runner can act on ---------------
+    # C8 made `no_floor` carry a REASON rather than a bare `true`. That stopped the
+    # emptiest form of the declaration and nothing more: a reason is prose, and prose
+    # cannot be evaluated, so eleven of the 33 drifted into falsehood unnoticed — three on
+    # BLOCKING gates. C9 is the next turn of the same screw. The reason must OPEN with a
+    # token from `no_floor_kinds`, which is what `floor_claim_contradiction` reads to decide
+    # whether the reason makes a claim a count can refute.
+    kinds_declared = reg.get("no_floor_kinds") or {}
+    check("C9 the registry declares a no_floor vocabulary", bool(kinds_declared),
+          "no_floor_kinds is missing or empty")
+
+    def _token(c):
+        return str(c.get("no_floor", "")).split("—")[0].strip()
+
+    untokened = [c["id"] for c in reg["checks"]
+                 if c.get("no_floor") and _token(c) not in kinds_declared]
+    check("C9 every no_floor opens with a declared kind", not untokened,
+          str(untokened[:5]))
+
+    # An `asserts_empty` kind is the only one the runner can falsify, so the flag must be a
+    # real boolean — a string "false" is truthy in Python and would silently arm the
+    # falsification test on a kind that cannot bear it.
+    bad_flag = [k for k, v in kinds_declared.items()
+                if not isinstance((v or {}).get("asserts_empty"), bool)]
+    check("C9 every no_floor kind states asserts_empty as a boolean", not bad_flag,
+          str(bad_flag[:5]))
+
     floored = [c for c in reg["checks"] if "min_items" in c]
     print(f"  [INFO] checks with a real floor: {len(floored)} of "
           f"{len(reg['checks'])} — every no_floor is a corpus that cannot yet "
           f"falsify its check; ratchet this up as the corpus fills")
+
+    # The population `floor_claim_contradiction` is structurally blind to. A check that
+    # prints no line the runner can parse gets PASS whether it examined 500 rows or none,
+    # so neither the floor guard nor the claim detector can see it. Seventeen were in this
+    # state on 2026-09-16. Reported rather than failed: emitting EXAMINED is a per-script
+    # change and failing the registry for a script's output format would be the wrong lever.
+    unreadable = sorted(c["id"] for c in reg["checks"] if c.get("no_floor"))
+    print(f"  [INFO] no_floor checks: {len(unreadable)} — any that print no line-anchored "
+          f"'EXAMINED: <n>' are invisible to both the vacuity guard and the stale-claim "
+          f"detector; `--all` reports which")
 
     unattributed = [c["id"] for c in reg["checks"] if c.get("basis") == "unattributed"]
     print(f"  [INFO] checks with no stated authority: {len(unattributed)} of "

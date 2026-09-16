@@ -44,6 +44,55 @@ kinds:
     - .github/**
     - .claude/**
     - requirements.txt
+# THE ONE HOME OF THE no_floor VOCABULARY. Every `no_floor:` reason must OPEN with one of
+# these tokens followed by an em dash. The token is not decoration: `run_checks.py` reads it
+# to decide whether the reason makes a claim it can falsify.
+#
+# WHY THIS EXISTS. A `no_floor` reason is an ASSERTION ABOUT THE WORLD ("my subject is
+# empty, so a floor would be wrong") and until 2026-09-16 nothing checked it. Eleven of the
+# 33 had gone false, three of them on BLOCKING gates running over live subjects with no
+# floor — the state where a gate can go vacuous and pass green forever (CLAUDE.md §5a).
+#
+# WHAT THE RUNNER CAN AND CANNOT PROVE, stated honestly. Only the `asserts_empty` kinds make
+# a claim a machine can contradict: the reason says the subject is empty, the check prints a
+# non-zero EXAMINED, and those cannot both be true. The other three kinds make claims about
+# a check's SHAPE (its subject is a diff, or fixtures, or several unlike things), which no
+# count can refute. Those are reported, never failed. A detector that pretended otherwise
+# would be manufacturing findings.
+#
+# THIS DOES NOT MAKE A REASON HONEST. A corpus check mislabelled `selftest` escapes the
+# falsification test — and that had already happened twice before this vocabulary existed
+# (test_verification_pipeline and test_directness_2_2 both reach live data while claiming
+# fixtures). What the token buys is that mislabelling is now a single greppable word rather
+# than a paragraph of prose nobody re-reads.
+no_floor_kinds:
+  empty-by-decision:
+    asserts_empty: true
+    description: The subject is empty because the project emptied it — a clean-room reset, an
+      owner ruling, a corpus clear. Falsifiable, because a non-zero EXAMINED contradicts it.
+  vocabulary-owed:
+    asserts_empty: true
+    description: The subject is empty because rows are OWED and unwritten, not because anything
+      was removed. Distinct from empty-by-decision because the remedy is to write the rows, not
+      to wait for a re-run. Equally falsifiable.
+  changeset-scoped:
+    asserts_empty: false
+    description: The subject is a diff, so its size varies per commit and zero is a routine,
+      correct result. A floor here would fail every commit out of scope.
+  session-scoped:
+    asserts_empty: false
+    description: The subject is whatever the CURRENT session touched, so it varies per session
+      and zero is an honest result for a session that touched none of it. Same shape as
+      changeset-scoped, different axis — the commit diff versus the session pointer.
+  selftest:
+    asserts_empty: false
+    description: The subject is the check's own fixtures. A row-count floor would count the
+      wrong thing. NOT a guarantee the check avoids live data — see the header above.
+  not-instrumented:
+    asserts_empty: false
+    description: The check reads several unlike subjects, so no single EXAMINED is honest for
+      it. The remedy is per-subject reporting, not a floor.
+
 batteries:
   syntax:
     deps: []
@@ -402,8 +451,15 @@ checks:
   level: blocking
   basis: unattributed
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
+  no_floor: session-scoped — RELABELLED 2026-09-16. This read "empty-by-decision — instrumented
+    and examining 0" and both halves were wrong. It examines 4 slug-linked T1-2 sources under the
+    current pointer, and that count was invisible to the runner until the same change fixed the
+    output line it prints. The KIND was the more consequential error, because this check is scoped to
+    LATEST-RESEARCH, so its subject is whatever THAT session admitted, and zero is an honest
+    result for a session that admitted nothing. That is why it keeps no_floor while its repo-wide
+    sibling citation_mining_backlog_t2 — same script, no --session — was ratcheted to a floor in
+    the same pass. A floor here would fail a BLOCKING gate for correctly reporting an empty
+    session.
   requires_session: true
   session_pointer: LATEST-RESEARCH
   note: '@SESSION@ is substituted from **sessions/LATEST-RESEARCH**, not LATEST. W4, 2026-08-06. This
@@ -1681,7 +1737,7 @@ checks:
   level: advisory
   basis: base/base-medical-lens-offered-not-adopted
   cost: fast
-  no_floor: 'ZERO ROWS IS THE CORRECT STATE, not a blocked one, and this reason was rewritten
+  no_floor: 'vocabulary-owed — ZERO ROWS IS THE CORRECT STATE, not a blocked one, and this reason was rewritten
     2026-09-11 because its first two versions were both wrong. It read "blocked on an owner
     licensing ruling (DG-NON item 7)"; the owner then ruled "use ICD-11", so licensing stopped
     being the blocker. Its second version said the lens was DEMAND-POPULATED and that 0 measured
