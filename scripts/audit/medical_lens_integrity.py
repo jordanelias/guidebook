@@ -84,7 +84,8 @@ def main(argv=None):
     # frame. assess_cell.py should never emit one; this catches any that arrive otherwise.
     medical_only = [r[0] for r in con.execute(
         "SELECT specification_id FROM specifications "
-        "WHERE medical_code IS NOT NULL AND identity_code IS NULL "
+        "WHERE retired_at IS NULL "
+        "AND medical_code IS NOT NULL AND identity_code IS NULL "
         "AND icf_code IS NULL AND needs_code IS NULL")]
     for sid in medical_only:
         fails.append(f"specification {sid}: medical_code is its ONLY lens. A determination "

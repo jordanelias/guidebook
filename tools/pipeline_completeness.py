@@ -145,22 +145,22 @@ def gather(con: sqlite3.Connection) -> dict:
     )
 
     # Stage 3 -- judgment ------------------------------------------------------
-    cells_total = scalar("SELECT COUNT(*) FROM specifications")
+    cells_total = scalar("SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL")
     state_counts = {s: n for s, n in rows(
-        "SELECT state, COUNT(*) FROM specifications GROUP BY state")}
+        "SELECT state, COUNT(*) FROM specifications WHERE retired_at IS NULL GROUP BY state")}
     F["judgment"] = dict(
         cells=cells_total,
         # Re-keyed by migration 071: the determination is keyed on the parameter.
-        parameters_judged=scalar("SELECT COUNT(DISTINCT parameter_id) FROM specifications"),
+        parameters_judged=scalar("SELECT COUNT(DISTINCT parameter_id) FROM specifications WHERE retired_at IS NULL"),
         stated=state_counts.get("stated", 0),
         provisional=state_counts.get("provisional", 0),
         pending=state_counts.get("pending", 0),
         not_applicable=state_counts.get("not_applicable", 0),
         govrefs_ok=scalar(
-            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') "
+            "SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL AND state IN ('stated','provisional') "
             "AND governing_refs IS NOT NULL AND TRIM(governing_refs)<>''"),
         govrefs_denom=scalar(
-            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional')"),
+            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') AND retired_at IS NULL"),
         convergence=scalar("SELECT COUNT(*) FROM convergence_assessment"),
         value_extractions=scalar("SELECT COUNT(*) FROM source_value_extractions"),
     )
@@ -183,11 +183,11 @@ def gather(con: sqlite3.Connection) -> dict:
     # Stage 5 -- render (render-readiness of determinations) -------------------
     F["render"] = dict(
         render_ready=scalar(
-            "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') "
+            "SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL AND state IN ('stated','provisional') "
             "AND design_scale IS NOT NULL AND TRIM(design_scale)<>''"),
         design_scales=scalar(
             "SELECT COUNT(*) FROM (SELECT DISTINCT design_scale FROM specifications "
-            "WHERE design_scale IS NOT NULL)"),
+            "WHERE retired_at IS NULL AND design_scale IS NOT NULL)"),
     )
 
     # Breakdown by category ----------------------------------------------------
@@ -224,7 +224,7 @@ def gather(con: sqlite3.Connection) -> dict:
             "SELECT COUNT(DISTINCT item_code) FROM item_taxonomy_links WHERE identity_code=?", code)
         # population_code is retired in favour of the four lens columns (owner
         # 2026-08-28); a population is now the IDENTITY lens.
-        det = scalar("SELECT COUNT(*) FROM specifications WHERE identity_code=?", code)
+        det = scalar("SELECT COUNT(*) FROM specifications WHERE identity_code=? AND retired_at IS NULL", code)
         if applies or det:
             pops.append(dict(code=code, cls=cat, name=name, applies=applies, det=det))
     pops.sort(key=lambda p: (-p["applies"], -p["det"], p["code"]))
@@ -240,11 +240,11 @@ def gather(con: sqlite3.Connection) -> dict:
     # minted it, which needs the extraction writer that does not exist yet. Left empty
     # rather than faked, so the surface under-reports visibly instead of inventing.
     judged_items = [r[0] for r in rows(
-        "SELECT DISTINCT parameter_id FROM specifications ORDER BY parameter_id")]
+        "SELECT DISTINCT parameter_id FROM specifications WHERE retired_at IS NULL ORDER BY parameter_id")]
     for item in judged_items:
         cells = rows(
             "SELECT COALESCE(identity_code, icf_code, needs_code, medical_code), state "
-            "FROM specifications WHERE parameter_id=? "
+            "FROM specifications WHERE retired_at IS NULL AND parameter_id=? "
             "ORDER BY CASE state WHEN 'stated' THEN 0 WHEN 'provisional' THEN 1 "
             "WHEN 'pending' THEN 2 ELSE 3 END, 1", item)
         item_slugs = set()

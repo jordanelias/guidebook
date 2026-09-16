@@ -77,6 +77,15 @@ def table_exists(conn, name):
 def count(conn, name):
     if not table_exists(conn, name):
         return None
+    # A RETIRED DETERMINATION IS NOT A RENDERABLE CELL. This helper gates Part-4
+    # rendering and prints a raw count into generated markdown, so a superseded row
+    # counted here would put a determination the project has withdrawn back onto the
+    # reading surface — the exact outcome ACTION item 2 of the 2026-09-16 ruling
+    # exists to prevent. Scoped to this one table: every other caller is a plain
+    # row count where retirement has no meaning.
+    if name == "specifications":
+        return conn.execute(
+            "SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL").fetchone()[0]
     return conn.execute(f"SELECT COUNT(*) FROM {name}").fetchone()[0]
 
 

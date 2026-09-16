@@ -1096,8 +1096,27 @@ def main():
     p_ul.add_argument("--ref-id", required=True)
     p_ul.add_argument("--status", required=True,
                       help="Live vocabulary, read from the column's own CHECK")
+    p_ul.add_argument("--reason",
+                      help="REQUIRED for SCREENED-OUT: why this lead was worked and "
+                           "judged unacceptable. The judgement is what the work bought; "
+                           "a lead dismissed with no record of why is indistinguishable "
+                           "from one nobody examined.")
     p_ul.add_argument("--session", required=True)
     p_ul.add_argument("--dry-run", action="store_true")
+
+    # retire-specification — the supersede path the owner ruled on 2026-09-16.
+    p_rs = sub.add_parser("retire-specification",
+                          help="Retire a determination in place so its cell can be determined again")
+    p_rs.add_argument("--specification-id", required=True, type=int)
+    p_rs.add_argument("--reason",
+                      help="REQUIRED to retire: why this determination no longer stands. "
+                           "The trigger on the table refuses without it.")
+    p_rs.add_argument("--superseded-by", type=int,
+                      help="The specification that replaced it. May be supplied on a "
+                           "LATER call, once the replacement exists — which is the real "
+                           "order of events: retire, re-determine, then link.")
+    p_rs.add_argument("--session", required=True)
+    p_rs.add_argument("--dry-run", action="store_true")
 
     p_obs = sub.add_parser("observe-term",
                            help="Record that a source USES a phrase (evidence stage, D-0173)")
@@ -2195,9 +2214,13 @@ def main():
                            session=args.session, dry_run=args.dry_run,
                            tier=args.tier))
 
+    elif args.command == "retire-specification":
+        _emit(retire_specification(args.specification_id, reason=args.reason,
+                                   superseded_by=args.superseded_by,
+                                   session=args.session, dry_run=args.dry_run))
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
-                             dry_run=args.dry_run))
+                             reason=args.reason, dry_run=args.dry_run))
 
     elif args.command == "observe-term":
         _emit(observe_term({
@@ -3009,9 +3032,19 @@ def insert_evidence_source(data: dict, session: str,
             # below) already gets this right; this copies that shape rather than
             # inventing a second one.
             doi = dbcore.norm_doi(data["doi"])
+            # A RETIRED LOCATOR IS A TOMBSTONE, NOT A FILING, and the exemption is the
+            # exact analogue of `superseded_by_ref_id` on the row above: neither row is a
+            # live claim on the DOI, so neither can be the "existing ref_id" this refusal
+            # tells the caller to cross-file to. Migration 076 retains the thirteen refs
+            # the 2026-09-13 clear deleted as RETIRED `source_locators` rows precisely so
+            # their ids are never reissued; without this clause, cross-filing to one is
+            # both the only route this refusal offers AND the one thing 076 forbids, so
+            # the re-run that same ruling ordered cannot admit a single cleared source.
+            # Found by batch 08 on REF-00973/REF-00974 (`research_batch_dod.py` R9a carried
+            # the identical hole and is fixed in the same commit).
             for table, extra in (
                 ("evidence_sources", "AND COALESCE(superseded_by_ref_id,'') = ''"),
-                ("source_locators", ""),
+                ("source_locators", "AND COALESCE(status,'') <> 'RETIRED'"),
             ):
                 dupe = conn.execute(
                     'SELECT ref_id FROM "%s" WHERE LOWER(TRIM(doi))=? AND ref_id<>? %s'
@@ -3429,7 +3462,82 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         return out
 
 
-def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False):
+def retire_specification(specification_id: int, session: str, reason: str = None,
+                         superseded_by: int = None, dry_run: bool = False):
+    """Retire a determination IN PLACE so its cell can be determined again.
+
+    Owner ruling 2026-09-16, "retire in place, never hard-delete". Until then a
+    determined cell could never be re-determined by any route: `idx_spec_row_identity`
+    was UNIQUE over the whole table and `specifications.state` had no lifecycle value,
+    so the only ways out were deleting the row or inventing a supersede design — the
+    first destroys the record of what was concluded, and the second was an owner
+    decision no component was entitled to make. Migration 083 made that index PARTIAL
+    over live rows; this is the writer that moves a row out of the live set.
+
+    THE ROW DOES NOT LEAVE. It keeps its state, its tier_basis, its derivation_sha and
+    its governing_refs, and it stays linked to the extractions it was computed from.
+    What changes is that it is no longer the cell's answer. That is the difference
+    between a history the project can audit and a hole where a determination used to be.
+
+    LINKING IS A SECOND CALL BY DESIGN. The replacement does not exist at the moment of
+    retirement — the engine refuses to run while a live row stands, so the real order is
+    retire, re-determine, then link. Passing --superseded-by on a later call fills the
+    pointer on an already-retired row; that is the one amendment this writer allows,
+    and only while the pointer is still empty.
+    """
+    with connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT specification_id, parameter_id, state, retired_at, "
+            "superseded_by_specification_id FROM specifications WHERE specification_id=?",
+            [specification_id]).fetchone()
+        if row is None:
+            raise Refusal(f"specification {specification_id}: no such determination.")
+
+        if row["retired_at"]:
+            # Link-only follow-up on an already-retired row.
+            if superseded_by is None:
+                raise Refusal(
+                    f"specification {specification_id} was already retired at "
+                    f"{row['retired_at']}. Retiring it twice records nothing new. If you "
+                    f"meant to record what replaced it, pass --superseded-by.")
+            if row["superseded_by_specification_id"]:
+                raise Refusal(
+                    f"specification {specification_id} already points at "
+                    f"{row['superseded_by_specification_id']} as its replacement. A "
+                    f"determination is superseded once; a second replacement means the "
+                    f"FIRST replacement is what needs retiring, not this row.")
+            if not dbcore.exists(conn, "specifications", "specification_id", superseded_by):
+                raise Refusal(f"--superseded-by {superseded_by}: no such determination.")
+            if superseded_by == specification_id:
+                raise Refusal("a determination cannot supersede itself.")
+            conn.execute("UPDATE specifications SET superseded_by_specification_id=?, "
+                         "updated_at=?, updated_by_session=? WHERE specification_id=?",
+                         [superseded_by, dbcore.now(), session, specification_id])
+            return {"specification_id": specification_id, "superseded_by": superseded_by,
+                    "linked": True}
+
+        if not (reason or "").strip():
+            raise Refusal(
+                f"specification {specification_id}: --reason is required to retire a "
+                f"determination. Retiring one without recording why discards the "
+                f"judgement it cost, and leaves the next reader unable to tell a "
+                f"superseded answer from a mistaken one. (The table's own trigger "
+                f"refuses this too, so there is no way round it.)")
+        conn.execute(
+            "UPDATE specifications SET retired_at=?, retired_by_session=?, "
+            "retirement_reason=?, superseded_by_specification_id=COALESCE(?, "
+            "superseded_by_specification_id), updated_at=?, updated_by_session=? "
+            "WHERE specification_id=?",
+            [dbcore.now(), session, reason.strip(), superseded_by, dbcore.now(), session,
+             specification_id])
+        return {"specification_id": specification_id, "parameter_id": row["parameter_id"],
+                "was_state": row["state"], "retired": True,
+                "superseded_by": superseded_by,
+                "note": "the cell is determinable again; the row stays as history"}
+
+
+def update_locator(ref_id: str, status: str, session: str, reason: str = None,
+                   dry_run: bool = False):
     """Move a lead's status. insert_locator has told callers to "Use update-locator"
     for some time, and there was no such command -- an error message naming a remedy
     that does not exist, which CLAUDE.md 4 treats as an unswept caller.
@@ -3453,11 +3561,38 @@ def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False
             raise Refusal(
                 f"{ref_id}: PROMOTED means this lead became evidence, and there is no "
                 f"evidence_sources row for it. File the source first.")
+        # SCREENED-OUT states WHY (migration 082). The column's CHECK enforces this too,
+        # so the refusal cannot be bypassed by another writer -- this one exists to fail
+        # with a sentence instead of a constraint violation, which is the difference
+        # between an operator who knows what to do next and one reading a stack trace.
+        if status == "SCREENED-OUT" and not (reason or "").strip():
+            raise Refusal(
+                f"{ref_id}: SCREENED-OUT requires --reason. Marking a lead off without "
+                f"recording why discards the only thing the work produced, and leaves it "
+                f"indistinguishable from a lead nobody examined.")
+        if reason and status != "SCREENED-OUT":
+            raise Refusal(
+                f"{ref_id}: --reason is the screening judgement and belongs only to "
+                f"SCREENED-OUT; {status!r} does not take one. Use --notes on add-locator "
+                f"for anything else.")
         if row["status"] == status:
             return {"ref_id": ref_id, "status": status, "changed": False}
-        conn.execute("UPDATE source_locators SET status=? WHERE ref_id=?",
-                     [status, ref_id])
-        return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True}
+        # WHO WORKED THIS LEAD. update_locator has taken `session` since it was written
+        # and stored it nowhere; `batch_capture_report.py` found source_locators
+        # unattributable on its first run for exactly that reason (893 rows, no session
+        # column, no FK path to one). Both terminal transitions record it: PROMOTED and
+        # SCREENED-OUT are equally "this batch worked this lead".
+        terminal = status in ("PROMOTED", "SCREENED-OUT")
+        conn.execute(
+            "UPDATE source_locators SET status=?, screened_reason=?, "
+            "worked_by_session=COALESCE(?, worked_by_session), "
+            "worked_at=COALESCE(?, worked_at) WHERE ref_id=?",
+            [status, (reason or "").strip() or None,
+             session if terminal else None,
+             dbcore.now() if terminal else None, ref_id])
+        return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True,
+                "worked_by_session": session if terminal else None,
+                "screened_reason": (reason or "").strip() or None}
 
 
 def observe_term(data: dict, session: str, dry_run: bool = False):

@@ -492,9 +492,22 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                       f"{escope}", sargs)[0][0]
     n_adm = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE 1=1{escope}", sargs)[0][0]
 
+    # RETIRED STASH ROWS ARE NOT A HELD IDENTITY, AND EXCLUDING THEM IS THE WHOLE POINT
+    # OF THE TOMBSTONE. Migration 076 retains the thirteen refs the 2026-09-13 clear deleted
+    # as `source_locators` rows with status RETIRED, precisely so their ref_ids are never
+    # reissued. R9a's remedy -- "cross-file the held id instead of minting a second" -- is
+    # therefore IMPOSSIBLE against one: cross-filing to REF-00973 would reuse a retired
+    # identifier, which is the one thing 076 exists to prevent. Without this clause the two
+    # requirements contradict each other for exactly the set the clear produced, and the
+    # re-run the same ruling ordered cannot admit a single cleared source by any route.
+    # Found by batch 08, whose cell (TERM-001 ramp gradient) has REF-00979 and REF-00980 --
+    # the two most on-point ramp-slope papers in the prior corpus -- among the tombstones.
+    # R9b IS DELIBERATELY NOT CHANGED. It joins on ref_id, not DOI, and a tombstone blocking
+    # a batch from minting a ref_id the stash still holds is that rule working as intended.
     split = _rows(cx, f"SELECT e.ref_id, sl.ref_id, e.doi FROM evidence_sources e "
                       f"JOIN source_locators sl ON LOWER(TRIM(sl.doi)) = LOWER(TRIM(e.doi)) "
                       f"WHERE COALESCE(e.doi,'') <> '' AND COALESCE(sl.doi,'') <> '' "
+                      f"AND COALESCE(sl.status,'') <> 'RETIRED' "
                       f"AND sl.ref_id <> e.ref_id{escope}", sargs)
     if split:
         fail("R9a", f"{len(split)} source(s) admitted under a ref_id that DIFFERS from the one "
@@ -853,6 +866,15 @@ def selftest():
                "created_by_session) VALUES ('REF-ST5',6,'code','10.9999/split','§5.2',?)", (T,))
     cx.execute("INSERT INTO source_locators (ref_id,doi) VALUES "
                "('REF-STASH-A','10.9999/split')")
+    # R9a NEGATIVE CASE: the same shape against a RETIRED tombstone must NOT fire. A rule
+    # that cannot be shown to stay silent when it should is half-tested; the assertion is
+    # on R9a's COUNT below, not merely on whether it fired, because firing once for the
+    # live stash row above would otherwise mask firing twice.
+    cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
+               "created_by_session) VALUES ('REF-ST5R',6,'code','10.9999/retired-split',"
+               "'§5.2',?)", (T,))
+    cx.execute("INSERT INTO source_locators (ref_id,doi,status) VALUES "
+               "('REF-STASH-R','10.9999/retired-split','RETIRED')")
     # R9b: the mirror -- the batch minted a ref_id the stash already holds against a
     # different DOI. Joins on ref_id, not DOI, so it cannot cross-fire with R9a.
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,doi,article_number,"
@@ -919,7 +941,16 @@ def selftest():
     print()
     for rule in sorted(expected):
         print(f"  {'FIRED' if rule in fired else '**SILENT — RULE NOT DETECTED**'}: {rule}")
-    if rc == 1 and not missed:
+    # NEGATIVE ASSERTION (2026-09-16). R9a is seeded with two same-DOI/different-ref_id
+    # pairs: one live stash row, which must fire, and one RETIRED tombstone, which must not.
+    # A count of 2 means the status clause has been dropped and the corpus re-run is blocked
+    # again; a count of 1 is the fix holding.
+    r9a_n = caught.get("R9a", 0)
+    r9a_bad = r9a_n != 1
+    if r9a_bad:
+        print(f"  **R9a COUNT {r9a_n}, EXPECTED 1** — a RETIRED tombstone is being read as a "
+              f"held identity again; see the status clause in R9a.")
+    if rc == 1 and not missed and not r9a_bad:
         print(f"SELFTEST: PASS — gate rejected the corpus AND all {len(expected)} "
               f"seeded rules fired")
         return 0
