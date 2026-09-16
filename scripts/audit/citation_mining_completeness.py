@@ -265,7 +265,15 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         print(f"  DB: {db_path}")
         print(f"  Session scope: {session or '(all)'}")
         print(f"  Tier scope: 1..{tier_max}")
-        print(f"  Examined (slug-linked T1-{tier_max} sources in scope): {examined}")
+        # `EXAMINED: <n>` verbatim. run_checks.py's EXAMINED_RE is
+        # ^\s*EXAMINED:\s*(\d+) — line-anchored and case-sensitive, with the
+        # colon immediately after the word. This line read "Examined
+        # (slug-linked T1-2 sources in scope): 4", which matches nothing: the
+        # parenthetical sits between the word and the colon. So the runner saw
+        # no count at all — it could neither apply a floor nor call the check
+        # vacuous — while the registry asserted this check examines 0. It
+        # examines 4. The scope stays on the line, after the count.
+        print(f"  EXAMINED: {examined} slug-linked T1-{tier_max} source(s) in scope")
         print(f"  Outstanding (no citation_mining row): {len(rows)}")
         print(f"  VERDICT: {verdict}")
         if session:

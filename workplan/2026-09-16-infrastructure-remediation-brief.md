@@ -1126,66 +1126,103 @@ fabricated citation is §5c, and this repository has a measured history of exact
                     └─────────────────────────────────────────┘
 ```
 
-## §10.1 — SEQUENCING DECISION: RESOLVED BY MEASUREMENT, 2026-09-16
+## §10.1 — SUPERSEDED BY AN INDEPENDENT DERIVATION, 2026-09-16
 
-**The probe below was run. C1 LEADS. This is no longer a judgement call.**
+**This section first reported 9 stale `no_floor` declarations. That figure was WRONG and is
+corrected below to 11. The error and its cause are recorded because the cause is the same
+defect this brief exists to fix, committed by its own author.**
 
-The brief's own rule was: *if more than one `no_floor` declaration is stale, C1 must land
-first and B1/B3/B4/B5 become its output.* Measured across all 33 `no_floor` checks by
-running each and reading its `EXAMINED`:
+An independent Opus agent, given the question and the primitives but not the first analysis,
+re-derived the answer by running all 33 checks **through `run_checks.py`'s own dispatcher**
+(not standalone, which is what the first pass did) and measuring each claimed subject
+separately against the database. Three of its key findings were then verified against
+primaries before being accepted here.
 
-**9 of 33 are stale — their subject is NOT empty, while their registry metadata says it is.**
+### FALSIFIED: 11 of 33 — reason asserts an empty subject, the subject is not empty
 
-| EXAMINED | Check | Level |
+| Check | Level | Measured |
 |---|---|---|
-| 21 | `research_protocol_audit` | advisory |
-| 18 | `extraction_relations_integrity` | **BLOCKING** |
-| 15 | `test_record_command_session` | advisory |
-| 11 | `gap_mining_audit` | advisory |
-| 5 | `source_slug_links_duplicates` | **BLOCKING** |
-| 5 | `research_dod` | advisory |
-| 5 | `metadata_integrity_audit` | advisory |
-| 2 | `validate_evidence_state` | **BLOCKING** |
-| 1 | `derivation_handshake_integrity` | advisory |
+| `extraction_relations_integrity` | **BLOCKING** | `EXAMINED: 18` — its own stated RATCHET trigger has fired and was missed |
+| `validate_evidence_state` | **BLOCKING** | `EXAMINED: 2` |
+| `source_slug_links_duplicates` | **BLOCKING** | `EXAMINED: 5` |
+| `citation_mining_session` | **BLOCKING** | examines **4** — see the instrumentation trap below |
+| `citation_mining_backlog_t2` | informational | examines **4** — same trap |
+| `research_protocol_audit` | advisory | `EXAMINED: 21`, and currently exits 1 |
+| `gap_mining_audit` | advisory | `EXAMINED: 11` |
+| `metadata_integrity_audit` | advisory | `EXAMINED: 5` |
+| `derivation_handshake_integrity` | advisory | `EXAMINED: 1`; its ratchet has also fired |
+| `test_verification_pipeline` | advisory | claims "fixtures, not a corpus" — has a `[G] Live state` section querying the canonical DB |
+| `test_directness_2_2` | advisory | same claim; its live leg always runs because `run_checks` always sets `GUIDEBOOK_DB_PATH` |
 
-**Three are BLOCKING gates running over real subjects with no floor.** If any of their
-subjects silently fell to 0, nothing would catch it — they would pass, green and vacuous,
-which is precisely CLAUDE.md §5a's failure mode that has already been produced four times.
-B3 was not an isolated stale reason; it was the one that happened to be visible.
+### WHAT THE FIRST PASS GOT WRONG, AND WHY IT MATTERS
 
-Genuinely empty (8, floors correctly absent): `validate_verification_consistency`,
-`attestation_presence`, `attestation_schema`, `attestation_verdict`,
+It read the kind off each reason's **prefix** (`empty-by-decision`, `selftest`,
+`not-instrumented`, `changeset-scoped`) and treated the prefix as a fact about the check.
+**A prefix is a claim, not a fact.** Two of the ten `selftest` claims are false — those checks
+do reach live data. The first pass therefore excluded them from scrutiny on the strength of
+the very declaration under audit.
+
+**That is this brief's §4.1 defect committed one level up:** a curated label trusted in place
+of a derived fact. Any C1 design that verifies `no_floor` reasons by reading their declared
+kind inherits the same hole. **The kind must be established from what the check does, not
+from what its reason says it does.**
+
+### THE ROOT DEFECT IS LARGER THAN STALE PROSE
+
+**17 of the 33 print no line `run_checks.py` can read.** No `^\s*EXAMINED:\s*<n>` and no
+`^\s*VERDICT: NOTHING-IN-SCOPE`. For those, `vacuity_failure` returns `None` and
+`nothing_in_scope` returns `False`, so **the runner reports PASS whether or not they examined
+anything.** Half the `no_floor` set sits outside the vacuity apparatus entirely.
+
+Two near-misses are one-line fixes and are the place to start:
+- `citation_mining_*` print `Examined (slug-linked T1-2 sources in scope): 4` — the
+  parenthetical falls between the word and the colon, so the anchor cannot match.
+- `research_dod` prints `EXAMINED: 5` **mid-line**, inside `R10b: PASS — EXAMINED: 5 …`, so
+  the line-start anchor rejects it.
+
+**C1 cannot detect what the runner cannot read.** Closing this gap is therefore step one, not
+a follow-up: a detector built on today's instrumentation would cover 16 of 33 and report the
+other 17 as fine.
+
+### FALSIFIED ON CAUSE OR SCOPE, NOT ON COUNT
+
+- **`validate_verification_consistency`** (BLOCKING): `EXAMINED: 0` is honest, but the stated
+  cause — "the corpus was emptied by decision" — is false. `specifications` holds 2 rows; the
+  zero comes from a **state filter over a non-empty corpus**, which is a different and less
+  safe reason to carry no floor.
+- **`attestation_presence` / `attestation_schema` / `attestation_verdict`**: all name the
+  window as "HEAD~1..HEAD". `scripts/audit/adherence_log_audit.py:73` has read
+  `DEFAULT_BASE = "origin/main"` since 2026-09-11 (**verified**). The changeset *kind* holds;
+  the named window does not. **B2 of this brief repeats the stale window and is corrected by
+  this paragraph.**
+- **"79 attestations on disk"** appears in four reasons. Measured: **128**.
+- `doctrine_recheck` ("158" ACTIVE decisions; measured 185), `decision_capture` ("49 orphan
+  DRs"; measured 51), `research_dod` ("R1 fails NON-COMPLIANT"; now COMPLIANT) each attach a
+  volatile figure as self-justification. The structural claims hold; the evidence offered for
+  them has rotted.
+
+### TRUE, CONFIRMED
+
 `population_integrity_audit`, `pmp_audit`, `reasoning_doc_citations_audit`,
-`medical_lens_integrity`.
+`medical_lens_integrity` (the only ratchet-bearing reason whose trigger has **not** fired),
+`validate_cross_refs`, `pipeline_completeness_fresh`, `attestation_evidence`,
+`research_dod_selftest`, and seven `test_*` checks.
 
-### A second finding the probe turned up, needing confirmation before it is acted on
+**Open caveat, stated rather than papered over:** the four TRUE empty-corpus checks were
+confirmed empty *now*. The clause "emptied **by decision**" was not traced to a migration or
+DR and remains unverified for all four.
 
-**16 of the 33 printed no `EXAMINED:` line at all** when their registry `cmd` was invoked
-directly — among them `pipeline_completeness_fresh`, which is **blocking**, and eight
-`test_*` harnesses that print `RESULTS: n/m` instead.
+### A TRAP THAT WILL MISLEAD THE NEXT AUDITOR
 
-CLAUDE.md §5a states the rule plainly: *"Every check must print `EXAMINED: <n>`"*.
+`gap_mining_audit`'s registry `note` says "EXAMINED prints COUNT(*) FROM gap_mining".
+`gap_mining` holds 0 rows; the script actually prints `EXAMINED: 11`, the `gaps` count.
+**Verifying via the note yields "0, therefore the reason is true" — the exact opposite of the
+measurement.**
 
-**Do not treat this as 16 defects yet.** The probe invoked each `cmd` outside
-`run_checks.py`, which may supply arguments or environment the checks read. **First
-establish whether `run_checks` sees an `EXAMINED` these direct invocations do not** — if it
-does, the finding is about the probe; if it does not, §5a is unenforced on 16 checks and
-that belongs in C1's scope. This distinction is the whole finding; getting it wrong in
-either direction is a fabricated result.
+### The ratchet value, unchanged
 
-### Reproduce
-
-```bash
-python3 - <<'EOF'
-import yaml, subprocess, re
-d = yaml.safe_load(open('governance/check-registry.yaml'))
-for c in [x for x in d['checks'] if x.get('no_floor')]:
-    r = subprocess.run(c['cmd'], capture_output=True, text=True, timeout=180)
-    m = re.findall(r'EXAMINED:\s*(\d+)', r.stdout + r.stderr)
-    n = max(int(x) for x in m) if m else None
-    print(f"{'STALE' if n else ('empty' if n==0 else 'no-EXAMINED'):12s} {c['id']:38s} {n}")
-EOF
-```
+`min_items: 1` in every case. Not a measurement — the boundary between "examined something"
+and "examined nothing". Three registry entries already reached this independently.
 
 ---
 
