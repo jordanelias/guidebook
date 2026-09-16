@@ -1126,6 +1126,69 @@ fabricated citation is §5c, and this repository has a measured history of exact
                     └─────────────────────────────────────────┘
 ```
 
+## §10.1 — SEQUENCING DECISION: RESOLVED BY MEASUREMENT, 2026-09-16
+
+**The probe below was run. C1 LEADS. This is no longer a judgement call.**
+
+The brief's own rule was: *if more than one `no_floor` declaration is stale, C1 must land
+first and B1/B3/B4/B5 become its output.* Measured across all 33 `no_floor` checks by
+running each and reading its `EXAMINED`:
+
+**9 of 33 are stale — their subject is NOT empty, while their registry metadata says it is.**
+
+| EXAMINED | Check | Level |
+|---|---|---|
+| 21 | `research_protocol_audit` | advisory |
+| 18 | `extraction_relations_integrity` | **BLOCKING** |
+| 15 | `test_record_command_session` | advisory |
+| 11 | `gap_mining_audit` | advisory |
+| 5 | `source_slug_links_duplicates` | **BLOCKING** |
+| 5 | `research_dod` | advisory |
+| 5 | `metadata_integrity_audit` | advisory |
+| 2 | `validate_evidence_state` | **BLOCKING** |
+| 1 | `derivation_handshake_integrity` | advisory |
+
+**Three are BLOCKING gates running over real subjects with no floor.** If any of their
+subjects silently fell to 0, nothing would catch it — they would pass, green and vacuous,
+which is precisely CLAUDE.md §5a's failure mode that has already been produced four times.
+B3 was not an isolated stale reason; it was the one that happened to be visible.
+
+Genuinely empty (8, floors correctly absent): `validate_verification_consistency`,
+`attestation_presence`, `attestation_schema`, `attestation_verdict`,
+`population_integrity_audit`, `pmp_audit`, `reasoning_doc_citations_audit`,
+`medical_lens_integrity`.
+
+### A second finding the probe turned up, needing confirmation before it is acted on
+
+**16 of the 33 printed no `EXAMINED:` line at all** when their registry `cmd` was invoked
+directly — among them `pipeline_completeness_fresh`, which is **blocking**, and eight
+`test_*` harnesses that print `RESULTS: n/m` instead.
+
+CLAUDE.md §5a states the rule plainly: *"Every check must print `EXAMINED: <n>`"*.
+
+**Do not treat this as 16 defects yet.** The probe invoked each `cmd` outside
+`run_checks.py`, which may supply arguments or environment the checks read. **First
+establish whether `run_checks` sees an `EXAMINED` these direct invocations do not** — if it
+does, the finding is about the probe; if it does not, §5a is unenforced on 16 checks and
+that belongs in C1's scope. This distinction is the whole finding; getting it wrong in
+either direction is a fabricated result.
+
+### Reproduce
+
+```bash
+python3 - <<'EOF'
+import yaml, subprocess, re
+d = yaml.safe_load(open('governance/check-registry.yaml'))
+for c in [x for x in d['checks'] if x.get('no_floor')]:
+    r = subprocess.run(c['cmd'], capture_output=True, text=True, timeout=180)
+    m = re.findall(r'EXAMINED:\s*(\d+)', r.stdout + r.stderr)
+    n = max(int(x) for x in m) if m else None
+    print(f"{'STALE' if n else ('empty' if n==0 else 'no-EXAMINED'):12s} {c['id']:38s} {n}")
+EOF
+```
+
+---
+
 **The one sequencing decision that matters.** B3 proves at least one `no_floor` reason is
 stale. **Before fixing B3 by hand, run the C1 staleness probe (§11 T2) across all 33.**
 If more than one is stale, C1 must land first and B1/B3/B4/B5 become its output — fixing
