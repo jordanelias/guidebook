@@ -3524,3 +3524,55 @@ add-icf-code`. (2) Do not re-introduce a demand code into any `icf_*` column —
 refuse it. (3) Do not treat the medical lens as retired without an owner ruling that says
 so. (4) `GAP-ICF-TITLES` closes by retrieval and persisted bytes, never by recall.
 DATE: 2026-09-13 — owner ruling and owner statement, both quoted above.
+
+---
+
+## Owner ruling 2026-09-16 — RETIRE IN PLACE, NEVER HARD-DELETE
+
+> **"retire in place then"**
+
+Given in answer to the proposal `scripts/migrations/076_never_reuse_identifiers.sql` named and
+declined to smuggle in: *"The single rule that would make both unnecessary is `retire in place,
+never hard-delete`, for which the mechanism is already half-built (`evidence_sources.superseded_by_ref_id`,
+`base_parameters.status = 'retired'`, `source_locators.status = 'RETIRED'`) … That is a doctrine
+change and an owner decision, so it is named here and not smuggled in."* It is now made. Recorded on
+contact per `CLAUDE.md` rule 0; the paperwork below is what the ruling CHANGES, never an argument
+against it.
+
+**WHAT IT SUPERSEDES.** 076's framing of the two floors as permanent; any future data migration that
+hard-deletes rows to retract them; and `assess_cell`'s re-determination refusal keying on NOT EXISTS,
+which the same comment says "could key on NOT RETIRED" under this rule — that is now the design, not
+a hypothetical.
+
+**WHAT IT DOES NOT TOUCH, stated because the boundary is easy to over-read.** `CLAUDE.md` §8's
+"Code, checks, scripts, dead tables and views: delete them" stands unchanged. This ruling governs
+DATA ROWS AND IDENTIFIERS, where deleting destroys provenance the project cannot reconstruct. Git
+history genuinely is the archive for code, so a deleted script loses nothing; a deleted row loses
+the fact that it existed. The two are different objects and §8's removal-friendly posture on
+apparatus is not weakened.
+
+**WHY IT WAS RULED, in the owner's own framing:** *"This is a recurring provenance and data
+management issue."* The floors 076 built are repairs applied after a delete has already destroyed
+identity. They accumulate, and they collide: batch 08 found the thirteen RETIRED tombstones being
+read as live DOI claims by BOTH `research_batch_dod.py` R9a and `db.py add-source`, so the re-run
+the 2026-09-13 clearing ruling ordered could not admit a single cleared source by any route — the
+only remedy either offered was to cross-file a retired identifier, which is the one thing 076 exists
+to prevent. Both were fixed the same day by exempting RETIRED rows; neither fix would have been
+needed had the rows never left.
+
+**AN EXECUTION CONDITION, NOT A RE-LITIGATION.** An adversarial pass on this proposal was already in
+flight when the ruling landed. Its strongest line: the views (`v_best_practice` and the rest) may not
+filter on status, in which case retire-in-place would keep untrusted rows on the READING SURFACE —
+which would defeat the 2026-09-13 ruling's purpose rather than serve it. That does not reopen this
+ruling; it is a condition of executing it correctly. **No row is retired in place until every reader
+that could surface it filters on status**, and that sweep is rule 4's ("a VIEW IS a caller") applied
+to this ruling.
+
+CONDITION: Any session about to delete a data row, retract a source, clear a corpus, or design a
+supersede path; and any migration that would empty a table.
+ACTION: (1) Retire in place — set the status the table already carries — never hard-delete. (2)
+Before the first retirement, sweep every reader that could surface a retired row and make it filter;
+a view that does not is the defect. (3) Re-key `assess_cell`'s re-determination refusal on NOT
+RETIRED rather than NOT EXISTS. (4) Where a row MUST genuinely leave (owner-ordered destruction,
+fabricated data), that is an exception the owner rules on case by case, and it is recorded here.
+DATE: 2026-09-16 — owner ruling, quoted above.

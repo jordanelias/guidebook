@@ -3009,9 +3009,19 @@ def insert_evidence_source(data: dict, session: str,
             # below) already gets this right; this copies that shape rather than
             # inventing a second one.
             doi = dbcore.norm_doi(data["doi"])
+            # A RETIRED LOCATOR IS A TOMBSTONE, NOT A FILING, and the exemption is the
+            # exact analogue of `superseded_by_ref_id` on the row above: neither row is a
+            # live claim on the DOI, so neither can be the "existing ref_id" this refusal
+            # tells the caller to cross-file to. Migration 076 retains the thirteen refs
+            # the 2026-09-13 clear deleted as RETIRED `source_locators` rows precisely so
+            # their ids are never reissued; without this clause, cross-filing to one is
+            # both the only route this refusal offers AND the one thing 076 forbids, so
+            # the re-run that same ruling ordered cannot admit a single cleared source.
+            # Found by batch 08 on REF-00973/REF-00974 (`research_batch_dod.py` R9a carried
+            # the identical hole and is fixed in the same commit).
             for table, extra in (
                 ("evidence_sources", "AND COALESCE(superseded_by_ref_id,'') = ''"),
-                ("source_locators", ""),
+                ("source_locators", "AND COALESCE(status,'') <> 'RETIRED'"),
             ):
                 dupe = conn.execute(
                     'SELECT ref_id FROM "%s" WHERE LOWER(TRIM(doi))=? AND ref_id<>? %s'
