@@ -781,6 +781,46 @@ def main():
     # "rolled back" failure discarded only the ledger row. --no-transaction is
     # kept as an accepted no-op so existing invocations do not break.
     body = sql
+
+    # A SECOND EMISSION OF THE SAME PAYLOAD IS A DOUBLE-APPLY, NOT A NEW MIGRATION.
+    #
+    # The only prior guard was the filename, and the collision handler above DEFEATS it:
+    # on a clash it sleeps one second and picks a new timestamp, so re-running this
+    # command produces `data_<t>_<slug>.sql` and `data_<t+1>_<slug>.sql` with byte-
+    # identical bodies -- measured 2026-09-16, one second apart, payloads diff-empty.
+    # `migrate_db.py` dedups by migration_id, which is derived from the filename, so it
+    # sees two distinct migrations and applies BOTH: every INSERT in the batch lands
+    # twice in canonical, and CLAUDE.md rule 3 makes that unfixable in place -- it takes
+    # a compensating migration to undo.
+    #
+    # Nothing downstream catches it. `research_batch_dod.py` never reads the migrations
+    # directory, and `migration_reproducibility` compares row COUNTS between canonical
+    # and a rebuild -- a rebuild replays both files, so the doubled counts MATCH and the
+    # blocking check passes green over a corpus inserted twice.
+    #
+    # So the refusal belongs here, at the only point that can still see both payloads.
+    # It compares the SQL BODY and ignores the generated header, because the header
+    # carries the timestamp that makes two identical emissions look different.
+    prior = sorted(Path(args.output_dir).glob(f"data_*_{slug}.sql")) \
+        if Path(args.output_dir).is_dir() else []
+    for old_path in prior:
+        try:
+            old_text = old_path.read_text()
+        except OSError:
+            continue
+        # Strip the leading generated comment block; everything after it is the payload.
+        old_body = "".join(old_text.splitlines(keepends=True)[len(header.splitlines()):])
+        if old_body.strip() == body.strip():
+            print(f"ERROR: this payload is byte-identical to {old_path.name}, already "
+                  f"emitted for session {args.session!r}. Emitting it again would apply "
+                  f"the same batch twice: migrate_db.py keys on the filename, so it "
+                  f"would treat both as distinct migrations and replay both. If this is "
+                  f"a genuine re-emission after the first was discarded, delete the "
+                  f"stale file; if you meant to correct an applied migration, rule 3 "
+                  f"says emit a COMPENSATING migration, which will not be byte-identical "
+                  f"to this one.", file=sys.stderr)
+            sys.exit(1)
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(header + body)
     print(str(out_path))
