@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-16-research-batch-09-ramp-gradient-co1",
+  "artifact": "sessions/session_2026-09-16-research-batch-09-ramp-gradient-co1.md",
+  "doctrine_sha": "fdbc478",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation",
+    "multilingual-research"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-16-research-batch-09-ramp-gradient-co1/manifest.jsonl",
+      "reason": "Every bibliographic field on both admissions was taken from bytes persisted before the field was written. No field was written from a search-engine summary; where a summary asserted figures with nothing behind them (APF France Handicap, exec 39) they were recorded as NOT recorded."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260916232747_2026-09-16-research-batch-09-ramp-gradient-co1.sql",
+      "reason": "Values met in secondary sources were not copied into the corpus. The Barrier-Free Law gradients cited by REF-00989 are filed as a research_code_lead, not as extractions, under rule 5 and the 2026-08-12 REFERENCE-ONLY ruling."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-16-research-batch-09-ramp-gradient-co1.md",
+      "reason": "Priors and the full query plan were committed to git BEFORE the first query ran (commits 45ef1d4, e439566), so the R8 ordering is checkable rather than asserted."
+    },
+    "multilingual-research": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-16-research-batch-09-ramp-gradient-co1.md",
+      "reason": "Six languages executed (EN, DE, FR, NL, ES, JA) against native-language terms and publication pages. Coverage is derivable from v_coverage_language and is NOT claimed to be complete: nine of nineteen languages are unsearched on this parameter and the session record says so."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "multilingual-research",
+      "reason": "The pass ran five English executions before its first non-English one, which inverts Step 1's per-jurisdiction ordering and favours anglophone sources. Caught by the owner mid-session, not by any gate; the non-English block was then run before any further English work. Recorded because the ordering shaped which sources were found first, and because no check in the repository would have caught it."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "The verbatim fidelity check was vacuous for non-Latin scripts for the whole first half of this session: an invented Japanese sentence verified against the artefact, because normalisation reduced any CJK text to its ASCII digits. Both Japanese extractions were composed under that broken check. They were independently re-verified against the persisted bytes after the fix, and the fix itself is in this change, but the rows were written before the guarantee existed."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "REF-00988's claim_text carries a ledgered --verbatim-exempt rather than a byte-level match, because the only artefact that carries the sentence is a compressed PDF and the DGUV HTML surface was retrieved specifically to find a checkable carrier and does not contain it. The exemption is the sanctioned path and names the artefact and sha256, but it is weaker than a match."
+    }
+  ],
+  "bias_direction": "Toward finding that the R1 pass succeeded, because this session both proposed the pass and judged its result, and because a Japanese Co-1 source arriving late in a pass that had so far produced nothing is exactly the result that makes the effort look justified. The two Japanese extractions are the batch's headline and were graded by the same agent that wanted them to matter.",
+  "independent_reviewer_counterclaim": "A reviewer should press hardest on whether REF-00989 is Co-1 at all: it is a web article by one named wheelchair user on a commercial-looking welfare site, and governance/tier-system.md defines Co-1 as DPO and named-ORG outputs. If that definition is read strictly, the batch admitted a grey blog at tier 1 and the headline finding collapses to a staged candidate — which is exactly how the second Japanese source was in fact treated, so the line between them is thin and was drawn by this session alone. A reviewer should also note that the determination did not move: specification 3 is still pending with refs=0, so nothing admitted here has yet changed what the guidebook would say.",
+  "verdict": "DEVIATION-LOGGED"
+}

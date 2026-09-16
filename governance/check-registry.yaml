@@ -127,9 +127,32 @@ batteries:
     - jsonschema
     description: Adherence-log attestations.
   research:
+    # pypdf/cffi ADDED 2026-09-16. THE PROJECT COULD NOT READ THE FORMAT ITS EVIDENCE
+    # ARRIVES IN. retrieval_log.py's own comment says PDF "is the format Co-1 and
+    # disability-led evidence overwhelmingly arrives in", and no sanctioned dependency
+    # could open one: a fresh container has no pypdf, no pdfminer and no pdftotext. The
+    # batch-09 R1 pass hit this on its first non-English source (REF-00988, a DGUV PDF)
+    # and had to install a reader ad hoc to read a document it had already persisted.
+    #
+    # cffi IS NOT OPTIONAL AND IS NOT COSMETIC. The container's Debian cryptography
+    # 41.0.7 is installed WITHOUT its _cffi_backend, so `import pypdf` does not raise
+    # ImportError -- it raises pyo3_runtime.PanicException from a Rust binding, which
+    # `except ImportError` does not catch. pypdf alone therefore installs successfully
+    # and still cannot be imported, and ensure-deps.sh would report it missing forever.
+    # Installing cffi repairs cryptography and pypdf imports clean.
+    #
+    # NO CHECK IMPORTS pypdf TODAY, stated plainly rather than implied. It is declared
+    # here because this file is the one home of the dependency list (CLAUDE.md §1) and
+    # because the research WRITE path needs it: a PDF-only source cannot have its
+    # --claim-text or --quote verified against bytes, so every standards and Co-1 PDF
+    # routes through --verbatim-exempt, and §5(c)'s floor is bypassed structurally
+    # rather than by anyone's choice. Making quote_in_artefacts PDF-aware is the change
+    # that turns this into a dependency a CHECK needs; it is proposed, not made here.
     deps:
     - pydantic
     - jsonschema
+    - cffi
+    - pypdf
     description: Research definition-of-done and its enforcers.
   render:
     deps: []

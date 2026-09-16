@@ -440,7 +440,20 @@ _TITLE_COLS = ("pub_title", "pub_title_en", "original_title", "chapter_title", "
 # ---------------------------------------------------------------------------
 
 _TAG = re.compile(r"<[^>]{0,200}>")
-_NOISE = re.compile(r"[^0-9a-z]+")
+# RETIRED 2026-09-16: `[^0-9a-z]+`. It kept ASCII letters and digits and deleted
+# everything else, which meant it deleted EVERY CHARACTER OF EVERY NON-LATIN SCRIPT.
+# Measured on the Japanese Co-1 source admitted this session (REF-00989): the
+# 45-character sentence 「8分の１より勾配がある場合は、いくらスロープがあっても車椅子を
+# 自走で上るのは不可能に近いです。」 normalised to the single character `8`. So did the
+# INVENTED sentence 「この文章はコーパスに存在しません8」 ("this sentence does not exist
+# in the corpus"), and it therefore VERIFIED against the artefact.
+#
+# That is the 2026-08-19 fabrication passing the check built to stop it (CLAUDE.md
+# §5(c)), for every source in Japanese, Chinese, Korean, Arabic, Hindi or Bengali --
+# six of the nineteen languages skills/multilingual-research_SKILL.md obliges. The
+# check did not merely weaken outside Latin script; it examined nothing and said PASS,
+# which is §5(a) in the one place the project cannot afford it.
+# ---------------------------------------------------------------------------
 
 
 def normalise_quote(text):
@@ -463,8 +476,26 @@ def normalise_quote(text):
     esummary record. Normalising to letters and digits tolerates markup, whitespace and
     punctuation while still requiring the same words in the same order -- a quote must
     still BE a quote, it just no longer has to survive the publisher's typography.
+
+    WHAT "LETTERS AND DIGITS" MEANS, fixed 2026-09-16. It means Unicode's, not ASCII's.
+    See the retired `_NOISE` above for what the ASCII reading did to non-Latin script and
+    why it is a fabrication hole rather than a rough edge. Three properties are kept:
+
+      * NFKC FIRST, so a full-width digit folds to its ASCII twin. A Japanese source
+        writing 8分の１ and a claimed_value written 1/8 are the same number; before this,
+        `re.findall(r"\\d+", ...)` in db.py extracted the full-width １ as a digit (Python's
+        \\d is Unicode-aware) while this function deleted it (this one was not), so the two
+        halves of one check disagreed and no CJK numeral could ever pass.
+      * ACCENTS FOLD rather than vanish. `Pérez` now normalises to `perez`, not `prez`:
+        the old filter DELETED the é, so a quote typed `Perez` (-> `perez`) could not match
+        an artefact reading `Pérez` (-> `prez`). That asymmetry was silent.
+      * Markup, whitespace and punctuation are still discarded, which is the whole reason
+        this replaced a raw byte substring.
     """
-    return _NOISE.sub("", _TAG.sub(" ", text or "").lower())
+    s = unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower()
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return "".join(ch for ch in s if ch.isalnum())
 
 
 def quote_in_artefacts(quote, ref_id=None, session=None):
