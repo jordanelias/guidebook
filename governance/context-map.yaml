@@ -104,9 +104,9 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
 pointers:
-  sessions_latest: session_2026-09-16-research-batch-08-ramp-gradient.md
+  sessions_latest: session_2026-09-16-research-batch-09-ramp-gradient-co1.md
   sessions_latest_resolves: true
-  sessions_latest_research: session_2026-09-16-research-batch-08-ramp-gradient.md
+  sessions_latest_research: session_2026-09-16-research-batch-09-ramp-gradient-co1.md
   sessions_latest_research_resolves: true
   doctrine_sha: 0f2f525
   doctrine_file: governance/mission-and-epistemics.md

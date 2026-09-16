@@ -720,6 +720,28 @@ def verify_authors(session):
     session = _session_stem(session)
     payloads = _logged_payloads(session)
     if not payloads:
+        # TWO DIFFERENT STATES WERE PRINTED AS ONE, and the wrong one is the common
+        # one. `_logged_payloads` is JSON ONLY by contract, so a session whose
+        # payloads are all HTML and PDF lands here with a full retrieval log and was
+        # told "no logged retrievals" — false on its face, and false for precisely the
+        # evidence R1 exists to reach: Co-1, DPO and standards material arrives as a
+        # publication page or a PDF and never as Crossref JSON. Batch 09 hit it with
+        # eight artefacts on disk (2026-09-16). `_unparsed_payloads` already exists to
+        # make this visible and its own docstring says callers MUST consult it; this
+        # branch returned before it ever did.
+        unparsed_only = _unparsed_payloads(session)
+        if unparsed_only:
+            print(f"  {len(unparsed_only)} payload(s) logged for session {session!r}, "
+                  f"NONE of them JSON:")
+            for artefact, url, why in unparsed_only[:10]:
+                print(f"    {artefact}  {why}  {url[:70]}")
+            print(f"  EXAMINED: 0 of {len(unparsed_only)}")
+            print("\n  INDETERMINATE — the payloads exist and cannot be author-diffed.")
+            print("  This module compares against Crossref-shaped JSON, so a corpus of")
+            print("  publication pages and PDFs is outside its reach ENTIRELY, not")
+            print("  partially. Do not read this as a clean session and do not read it")
+            print("  as an unlogged one; the bytes are on disk and unchecked.")
+            return 1
         print(f"  no retrieval log for session {session!r} under {LOG_ROOT}/")
         print("  EXAMINED: 0")
         print("\n  INDETERMINATE — a session with no logged retrievals cannot be")
