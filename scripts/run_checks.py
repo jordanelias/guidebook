@@ -338,7 +338,7 @@ def floor_claim_contradiction(check, output, no_floor_kinds):
     over a subject that is not empty.
 
     THE DEFECT THIS EXISTS FOR. A `no_floor` reason is an assertion about the world, and
-    nothing verified one until 2026-09-16. Eleven of 33 had gone false; three were BLOCKING
+    nothing verified one until 2026-09-16. Eleven of 33 had gone false; four were BLOCKING
     gates running over live subjects with no floor at all, which is precisely the state
     where a gate can go vacuous later and pass green forever (CLAUDE.md §5a, produced four
     times). `extraction_relations_integrity` had even written its own expiry condition into

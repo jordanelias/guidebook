@@ -103,6 +103,35 @@ state, the active plan — from the live repo.
 false within a fortnight, and one contradicted the list beneath it.*
 → **NOT ENFORCED — you are the gate.**
 
+**7a. A NUMBER IS WRITTEN AS THE COMMAND THAT COMPUTES IT, NOT AS ITS RESULT** (owner instruction,
+2026-09-16). The stamp-and-warn branch of rule 7 is the fallback, not the default. Where a document,
+a comment, a registry entry, a commit message or a criterion needs a count, it carries **the command
+that regenerates it** — and where the number must also appear for the prose to be legible, the
+command appears beside it and the reader is told to re-run rather than trust. **Ask of every figure
+you are about to type: could this be wrong tomorrow with nothing going red?** If yes, it is
+hard-coded, whatever its shape — a literal, a threshold, a `min_items`, a list, a glob, or a sentence.
+*Proof, all measured 2026-09-16 — and re-derive rather than trust these, which is the rule applying to
+its own proof: `no_floor` registry reasons asserted "examining 0" over subjects that were not empty,
+several on BLOCKING gates. Count them with T2 in `workplan/2026-09-16-infrastructure-remediation-brief.md`
+§10.1, and cross the result against `level:` in the registry. (This sentence first said "eleven … three
+of them BLOCKING". The eleven traces; the three did not — it was carried over from an earlier nine-item
+probe and silently dropped `citation_mining_session`, which is blocking. The true figure was four. A
+hand-typed count went stale inside the rule against hand-typed counts, within an hour of being written.)
+`test_verification_pipeline` still asserts a corpus of
+`≥50`/`≥30`/`≥100` that an owner ruling deliberately cleared. And the pipeline contract records being
+bitten twice in its own text — `evidence/discovery-provenance` carried "(16/640)" and
+`convergence-independence` carried "8 rows on a single slug", both false after a corpus change, both
+now reading "derive the counts, never quote them".*
+**The third shape has no gate at all: a PROSE CALLER restating a checked fact.** Rule 4 says outright
+that prose callers are not swept, so after changing any checked value, grep `governance/`,
+`references/` and `architecture/` for sentences repeating it — `grep -r` and `git grep` see through
+`.ignore`; the Grep tool does not. *Proof: the 2026-09-16 floor ratchet swept the registry and
+regenerated the context map, both mechanically checked, and still left `evidence-architecture.md`
+asserting `specifications` held 0 rows when it held 2.*
+→ **PARTLY ENFORCED.** `run_checks.py` falsifies a `no_floor` reason that claims an empty subject
+over a live one (`no_floor_kinds`, selftest C9). **Everywhere else you are the gate**, and prose is
+where it has actually failed.
+
 **8. DERIVE IT, OR NAME WHO JUDGED IT. Never curate a fact the machine can compute.** Rule 7
 generalised from documents to everything. A vocabulary comes from the column's own CHECK; an
 ordering from the live FK graph; an identifier from the union of its homes; a tier from the

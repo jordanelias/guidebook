@@ -50,8 +50,12 @@ kinds:
 #
 # WHY THIS EXISTS. A `no_floor` reason is an ASSERTION ABOUT THE WORLD ("my subject is
 # empty, so a floor would be wrong") and until 2026-09-16 nothing checked it. Eleven of the
-# 33 had gone false, three of them on BLOCKING gates running over live subjects with no
-# floor — the state where a gate can go vacuous and pass green forever (CLAUDE.md §5a).
+# 33 had gone false, several on BLOCKING gates running over live subjects with no floor —
+# the state where a gate can go vacuous and pass green forever (CLAUDE.md §5a). Derive the
+# split rather than trusting a number here; this comment said "three" until 2026-09-16, a
+# figure carried over from an earlier nine-item probe that had dropped citation_mining_session
+# (blocking). It was four. A hand-typed count went stale inside the mechanism built to catch
+# hand-typed counts, which is the argument for the mechanism.
 #
 # WHAT THE RUNNER CAN AND CANNOT PROVE, stated honestly. Only the `asserts_empty` kinds make
 # a claim a machine can contradict: the reason says the subject is empty, the check prints a
