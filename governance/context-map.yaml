@@ -111,7 +111,7 @@ pointers:
   doctrine_sha: 0f2f525
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
-  - 2026-09-10-road-to-batch-06.md
+  - 2026-09-16-infrastructure-remediation-brief.md
   live_project_instructions:
   - project-instructions-v10_9.md
 database:
@@ -968,7 +968,7 @@ checks:
     - schema
     - data
     - governance
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/derivation_handshake_integrity.py
   - id: gap_mining_audit
     level: advisory
@@ -976,7 +976,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/gap_mining_audit.py
   - id: graph_audit
     level: advisory
@@ -1009,7 +1009,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/metadata_integrity_audit.py
   - id: migration_reproducibility_deep
     level: advisory
@@ -1080,7 +1080,7 @@ checks:
     kinds:
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/research_protocol_audit.py
   - id: retired_vocabulary
     level: advisory
@@ -1330,7 +1330,7 @@ checks:
     - data
     - schema
     - governance
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/extraction_relations_integrity.py
   - id: identifier_floor_audit
     level: blocking
@@ -1402,7 +1402,7 @@ checks:
     battery: data
     kinds:
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/source_slug_links_duplicates.py
   - id: test_db_integrity
     level: blocking
@@ -1441,7 +1441,7 @@ checks:
     - schema
     - data
     - synthesis
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/validate_evidence_state.py
   - id: validate_jurisdiction
     level: blocking
@@ -1472,7 +1472,7 @@ checks:
     battery: data
     kinds:
     - data
-    min_items: null
+    min_items: 1
     cmd: python3 scripts/audit/citation_mining_completeness.py --tier-max 2
   quarantined:
   - adjudication_integrity

@@ -277,8 +277,13 @@ checks:
   level: blocking
   basis: unattributed
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-16. Replaces a no_floor asserting "examining 0 because the corpus
+    was emptied by decision". Measured through run_checks own dispatcher, source_slug_links holds 5
+    rows and this check prints EXAMINED 5, so the assertion was false and a BLOCKING gate was
+    carrying no floor over a live subject. The floor is 1 — the boundary between examined-something
+    and examined-nothing — never today's count, which would go stale exactly as the sentence it
+    replaces did.
   note: 'EXAMINED line added 2026-08-06: "0 duplicate sets in 1011 rows" and "0 in 0 rows" printed byte-identically,
     and this is blocking, so the pass carried no information about whether the table was intact or gone.
     `min_items: 1` was declared alongside it and RETIRED the same day by the clean-room reset, which emptied
@@ -434,8 +439,14 @@ checks:
   level: informational
   basis: unattributed
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-16. Replaces a no_floor asserting "examining 0". This check is
+    repo-wide (no --session), and it examines 4 slug-linked T1-2 sources. It was invisible to the
+    runner until the same change fixed its output line, which read "Examined (slug-linked T1-2
+    sources in scope) 4" — the parenthetical sat between the word and the colon, so EXAMINED_RE
+    matched nothing and the vacuity apparatus could see neither a count nor an emptiness. Floor is
+    1, not 4; the session-scoped sibling is deliberately NOT ratcheted, because its subject varies
+    by session and zero is an honest state there.
 # DELETED 2026-09-10 (P7): the `validate_schema` id that ran `scripts/validate_schema.py --verbose`
 # (no `--cross-check`). ENTITY_REGISTRY = {} (scripts/validate_schema.py:63) is iterated at :101 and
 # :149 with nothing else gating the `--verbose` path, so this examined ENTITY_REGISTRY's zero entries
@@ -535,8 +546,12 @@ checks:
   - specification/no-regulatory-stratum-stated
   - specification/tier3-alone-threshold
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-16. The note below still says specifications is "genuinely
+    unpopulated pre-Phase-E"; it holds 2 rows and this check prints EXAMINED 2. A parameter was
+    minted 2026-09-16 (base_parameters, 1 row), which is what made specifications writable, so the
+    premise of the old reason expired with that migration rather than with any edit here. BLOCKING,
+    and it was carrying no floor over a live subject. Floor is 1, never the count.
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n_cells+n_conv (specifications + convergence_assessment
     row counts). Both are 0 today — the `specifications` table (per-item×population synthesis record,
     CLAUDE.md §4) is genuinely unpopulated pre-Phase-E per CLAUDE.md §1/§9, not a broken sweep, so empty-by-decision
@@ -1021,8 +1036,12 @@ checks:
   level: advisory
   basis: research/adversarial-fields-complete
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-16. The note below asserts all four source tables are 0 rows post
+    clean-room-reset. Measured, three of the four are not — gaps 11, evidence_sources 5,
+    evidence_population_match 5, search_languages 0 — and this check prints EXAMINED 21 and
+    currently exits 1 on a real finding. The reason described a repository that stopped existing
+    over a month before it was read. Floor is 1, never the count.
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the four source tables checks 1-9 read
     (gaps, evidence_sources, evidence_population_match, search_languages) — all four are 0 rows today
     post clean-room-reset (2026-08-06), so the sum is unambiguous regardless of how it''s combined. empty-by-decision,
@@ -1039,8 +1058,10 @@ checks:
   level: advisory
   basis: evidence/evidence-verification-gate
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-16. The note below says evidence_sources is 0 today; it holds 5
+    rows, admitted by research batch 08 on 2026-09-16, and this check prints EXAMINED 5. Floor is
+    1, never the count.
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM evidence_sources — the single table
     all three checks in this script read. 0 today (clean-room reset, 2026-08-06). empty-by-decision. RED
     on main. Advisory, as it was in research-contract.yml.'
@@ -1055,10 +1076,16 @@ checks:
   level: advisory
   basis: unattributed
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM gap_mining, the table this whole
-    audit walks (already printed as "gap_mining rows" above it). 0 today (clean-room reset). empty-by-decision.'
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-16. Measured, this check prints EXAMINED 11. Floor is 1, never
+    the count.
+  note: 'INSTRUMENTED 2026-08-14 (A5). CORRECTED 2026-09-16, and the correction is the point: this
+    note said "EXAMINED prints COUNT(*) FROM gap_mining". It does not. `gap_mining` holds 0 rows;
+    the script prints the `gaps` count, which is 11. So an auditor who verified the old
+    no_floor claim VIA THIS NOTE reached "0 rows, therefore empty-by-decision holds" — the exact
+    opposite of the measurement, and with the note''s authority behind it. A note that misdescribes
+    its own check''s instrumentation is worse than no note, because it converts a check into a
+    second, wrong source of truth about itself.'
 - id: population_integrity_audit
   cmd:
   - python3
@@ -1443,11 +1470,15 @@ checks:
   level: blocking
   basis: judgment/figure-role-stated
   cost: fast
-  no_floor: empty-by-decision — the circulation corpus was cleared by owner ruling 2026-09-13
-    ("all the circulation rows that have been produced are not able to be trusted"), so this
-    check's three subjects are 0/0/0 by decision, not by accident. Same posture and same reason
-    as validate_evidence_state. RATCHET BACK TO min_items 1 when the re-run lands its first
-    extraction; the corpus refilling is what makes this floor meaningful again.
+  min_items: 1
+  floor_basis: 'RATCHETED 2026-09-16 — BY ITS OWN INSTRUCTION, LATE. The no_floor this replaces
+    ended "RATCHET BACK TO min_items 1 when the re-run lands its first extraction". Batch 08
+    landed 8 extractions and 10 relations on 2026-09-16 and this check prints EXAMINED 18, so
+    the trigger fired and nobody pulled it. This was the best-written reason in the registry —
+    it stated its own expiry condition in capitals — and it still went stale, which is the
+    argument that the defect is structural rather than careless. Nothing evaluates a ratchet
+    trigger, so a trigger is only as good as the next person who happens to re-read the
+    sentence. BLOCKING, and it was carrying no floor over 18 live rows.'
   note: 'NEW 2026-09-13, migration 075 (figure_role/comparator on source_value_extractions,
     extraction_relations junction, v_derived_figure_check view). EXAMINED sums three subjects
     it actually reads: source_value_extractions rows, extraction_relations edges, and
@@ -1601,17 +1632,21 @@ checks:
   level: advisory
   basis: specification/derivation-handshake
   cost: fast
-  no_floor: 'ZERO DETERMINATIONS IS THE CORPUS STATE, not a blocked check. `specifications`
-    cannot accept a row until a parameter is minted (CLAUDE.md §4 — `parameter_id NOT NULL`
-    into a `base_parameters` that the 2026-09-13 circulation clear left empty), so every
-    subject here is unreachable today. That is also why the check is advisory rather than
-    blocking: `run_checks.py` already prints five BLOCKING-and-vacuous gates as a defect,
-    and a sixth would make the battery worse rather than safer. Its failure paths are
-    exercised by FAULT INJECTION against a scratch copy instead — eight of them, plus two
-    controls that must stay silent (a T6 gate that must not bind a T1-anchored cell, and a
-    properly Co-1-anchored population_only cell). RATCHET TO level: blocking WITH min_items:
-    1 in the same change that writes the first determination; determinations are never
-    deleted, so the floor holds once set.'
+  min_items: 1
+  floor_basis: 'RATCHETED 2026-09-16, HALF OF IT. The no_floor this replaces said: "RATCHET TO
+    level blocking WITH min_items 1 in the same change that writes the first determination".
+    Its three factual premises are now all false — `specifications` holds 2 rows, a parameter
+    WAS minted (base_parameters, 1 row, 2026-09-16), and this check prints EXAMINED 1 with
+    `determinations 1`. So the trigger fired and the floor is owed. Applied.
+
+    THE LEVEL PROMOTION IS DELIBERATELY NOT APPLIED HERE. The old reason gave a specific
+    ground for advisory — that run_checks already printed five BLOCKING-and-vacuous gates and
+    a sixth would make the battery worse — and that ground has genuinely expired, since this
+    check is no longer vacuous. But promoting a check to blocking changes what stops the
+    project''s CI, which is a different kind of decision from tightening a floor, and it is
+    not one to take silently inside a floor sweep. Owner call, flagged rather than made. The
+    fault-injection coverage the old reason describes (eight paths plus two silent controls)
+    stands and is unaffected by either half.'
   note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a `stated` determination
     sitting under an open, binding H4 gate — the book asserting a best-practice value while
     an audit of equal or greater strength has already contested it, which is H4''s cap
