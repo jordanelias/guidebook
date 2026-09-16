@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-16-research-batch-08-ramp-gradient",
+  "artifact": "sessions/session_2026-09-16-research-batch-08-ramp-gradient.md",
+  "doctrine_sha": "23b4091",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/data_20260916045959_2026-09-16-research-batch-08-ramp-gradient.sql",
+      "reason": "Every row reached canonical through the sanctioned path: scratch copy -> db.py subcommands -> emit_batch_sql -> emit_data_migration -> migrate_db, five migrations, no hand-written SQL against any table the CLI can reach. The one hand-written statement is the compensating UPDATE fixing the duplicated local_ref_id, written because NO CLI writer can amend a slug link, and it went through emit_data_migration like any other. Canonical's sha was recorded before and after each apply. Every figure in the session record was re-derived by query after the migrations applied, not recalled."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-16-research-batch-08-ramp-gradient/manifest.jsonl",
+      "reason": "Eight payloads persisted before any field was written, four Crossref and four Europe PMC, each with sha256 and byte count. Every bibliographic field was read out of the Crossref artefact programmatically rather than typed; every claim_text and every relation quote was asserted to be a byte-substring of a persisted artefact BEFORE add-extraction was called, and the assertion is in the command log. The adversarial pass independently diffed all 15 author rows against payload bytes and found zero fabrication."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/pr-137-research-batch-08/ANTAGONIST-ERRORS.md",
+      "reason": "Priors for all four searches were written to PRIORS.md BEFORE the first query ran, which is the only moment they can honestly be recorded. An independent adversarial pass armed itself from CLAUDE.md, the contract and the gate before reading any of the batch's conclusions; its two substantive findings were acted on rather than argued with, and both are named in the session record."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "integrity-protocol",
+      "reason": "BOTH GATES WERE FIRST RUN AGAINST THE WRONG DATABASE AND REPORTED GREEN. GUIDEBOOK_DB_PATH was exported to the scratch walk.db earlier in the same shell, so research_batch_dod.py returned COMPLIANT and citation_mining_completeness.py returned CLEAN while canonical was in fact missing two citation_mining rows. Caught by noticing that a migration had thrown an IntegrityError yet the gates were green, and re-checking the data_migrations ledger. Both were re-run with `env -u GUIDEBOOK_DB_PATH` and the DB path printed. This is CLAUDE.md 5(a) in a form the file does not currently name: not a wrong session id scoping a gate to nothing, but a wrong DATABASE."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "REF-00984 and REF-00986 were written with the same per-slug local_ref_id, because the admission ran in two passes and the retry restarted its counter. citation_mining is UNIQUE on (slug, local_ref_id), so REF-00986 could not be given a mining row at all and R2 was unsatisfiable for it by any route. Fixed forward by a compensating migration after a failed migration rolled back cleanly. The failed migration file was deleted rather than left on disk: it was never applied and never committed."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "Two extractions were filed with figure_role='finding' when the schema's own definition makes them 'condition' — they carry a claimed_value, and a finding supplies direction never value. Caught by the adversarial pass, not by me and not by any gate, and corrected by amend-extraction. The determination is unaffected because both roles are excluded from the governing set, so this corrected the record rather than the answer; that it did not change the outcome is luck, not design."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "metadata_quality reads COMPLETE on all four sources while journal_name is NULL, because add-source has no --journal flag and nothing writes that column. COMPLETE is therefore an overclaim for every source in this corpus, not just these four. Recorded rather than quietly downgraded, because the fix is a writer that does not exist."
+    }
+  ],
+  "bias_direction": "The pull was toward wanting the re-run to produce a DETERMINATION. The corpus had been cleared and the owner asked for it redone; a batch that ends 'pending' reads like a batch that failed, and there was a live temptation to grade REF-00985's 0-4.8 degrees or REF-00983's 3.5-15 degrees as a 'claim' and let the engine anchor something. Those are the exact rows the adversarial pass caught me grading one notch too strong — not as claims, but as 'finding' rather than 'condition'. The counter-pressure applied was writing the expected outcome into PRIORS.md before searching, so that a 'stated' cell would have had to argue against my own recorded prior. The opposite distortion was also available: grading everything 'absent' to look rigorous, which would have thrown away two real measured ranges; the two condition rows with their values intact are where that would have shown.",
+  "independent_reviewer_counterclaim": "The strongest objection is that this batch searched ONE index. Four PubMed queries, no Crossref, no Consensus, no grey literature, no non-English, no DPO venues — and it concludes that the literature states no ramp gradient. That conclusion is much broader than the evidence supports: what is actually shown is that PubMed's wheelchair-propulsion biomechanics literature states no gradient, which is close to a tautology since that literature exists to measure effects, not to set standards. A reviewer would say the cell is 'pending' because the search was narrow, and that the session record's framing of this as a substantive finding about the field overstates it. I think the framing survives, because the T2 synthesis leg was run and is also silent, and because the same shape appeared for corridor width in batch 07 from a different query set — but the objection is sound, the single-index limitation is real, and a second index could change this cell.",
+  "verdict": "DEVIATION-LOGGED"
+}
