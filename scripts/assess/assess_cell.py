@@ -1304,20 +1304,33 @@ def validate_cell_undetermined(conn, parameter_id, lens):
     index need COALESCE in the first place. `validate_lens()` has already normalised
     blanks to None by the time this runs, which is what makes that restatement exact.
 
-    THE REFUSAL NAMES NO REMEDY, and that is deliberate. There is no re-determination
-    path: `workplan/2026-09-10-road-to-batch-06.md` ("DELIBERATELY WAITING") and the
-    batch-06 runbook both record that revisiting a determined cell needs a SUPERSEDE
-    DESIGN, which is an owner decision. A helpful-sounding suggestion here — delete the
-    row, re-run against a fresh copy, bump the id — would be that design, written in a
-    help string by the one component that must not make it.
+    THE REFUSAL NOW NAMES A REMEDY, because the owner made the decision it was waiting
+    for. Until 2026-09-16 this asked "does a row exist for this cell" and named no way
+    forward, deliberately: revisiting a determined cell needed a SUPERSEDE DESIGN, and a
+    helpful-sounding suggestion here — delete the row, re-run on a fresh copy, bump the
+    id — would have been that design, written in a help string by the one component that
+    must not make it.
+
+    The owner ruled "retire in place, never hard-delete" on 2026-09-16, which migration
+    076 had already predicted would land here: "assess_cell's re-determination refusal
+    could key on NOT RETIRED rather than NOT EXISTS". Migration 083 made
+    `idx_spec_row_identity` PARTIAL over live rows, so the question this asks is now "is
+    there a LIVE determination for this cell" — one live row per cell, any number of
+    retired ones behind it. The remedy named below is the owner's design, not this
+    function's invention, and the retirement it points at refuses without a reason.
     """
     where = ("parameter_id=? AND COALESCE(identity_code,'')=? "
              "AND COALESCE(icf_code,'')=? AND COALESCE(needs_code,'')=? "
              "AND COALESCE(medical_code,'')=?")
     vals = (parameter_id,) + tuple(lens.get(c) or "" for c in LENS_ORDER)
+    # LIVE rows only. A retired determination is history, not an obstacle — that is the
+    # whole point of retiring in place, and it must match idx_spec_row_identity's own
+    # partial predicate (migration 083) or the two drift apart exactly as the COALESCE
+    # expression above was written to avoid.
     row = conn.execute(
         "SELECT specification_id, state, rule_version, derivation_sha, created_at, "
-        f"created_by_session FROM specifications WHERE {where}", vals).fetchone()
+        f"created_by_session FROM specifications WHERE {where} "
+        "AND retired_at IS NULL", vals).fetchone()
     if not row:
         return
     spec_id, state, rule_version, dsha, created_at, created_by = row
@@ -1329,11 +1342,15 @@ def validate_cell_undetermined(conn, parameter_id, lens):
         f"  Nothing was computed; no SQL artifact was written; the database is "
         f"unchanged.\n"
         f"  This is not a fault in the run. `idx_spec_row_identity` is UNIQUE on "
-        f"(parameter_id, identity_code, icf_code, needs_code, medical_code), and there "
-        f"is no re-determination path: a batch revisiting a determined cell needs a "
-        f"SUPERSEDE DESIGN first, which is an owner decision "
-        f"(workplan/2026-09-10-road-to-batch-06.md, 'DELIBERATELY WAITING'), not a "
-        f"second engine run.\n"
+        f"(parameter_id, identity_code, icf_code, needs_code, medical_code) over LIVE "
+        f"rows, so a cell carries one live determination at a time.\n"
+        f"  TO RE-DETERMINE, retire the standing one first — it stays in the table as "
+        f"history:\n"
+        f"      python3 scripts/db.py retire-specification --specification-id {spec_id} "
+        f"--reason '<why this determination no longer stands>' --session <session>\n"
+        f"  Then run this engine again. Retirement refuses without a reason, and the "
+        f"new determination links back to the retired one. Owner ruling 2026-09-16, "
+        f"'retire in place, never hard-delete'.\n"
         f"  If you meant a DIFFERENT cell, the difference has to be in --parameter-id "
         f"or in --identity/--icf/--needs/--medical. --slug is not part of the cell's "
         f"identity: it records the topic, and changing it changes nothing here.")

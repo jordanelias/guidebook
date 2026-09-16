@@ -1104,6 +1104,20 @@ def main():
     p_ul.add_argument("--session", required=True)
     p_ul.add_argument("--dry-run", action="store_true")
 
+    # retire-specification — the supersede path the owner ruled on 2026-09-16.
+    p_rs = sub.add_parser("retire-specification",
+                          help="Retire a determination in place so its cell can be determined again")
+    p_rs.add_argument("--specification-id", required=True, type=int)
+    p_rs.add_argument("--reason",
+                      help="REQUIRED to retire: why this determination no longer stands. "
+                           "The trigger on the table refuses without it.")
+    p_rs.add_argument("--superseded-by", type=int,
+                      help="The specification that replaced it. May be supplied on a "
+                           "LATER call, once the replacement exists — which is the real "
+                           "order of events: retire, re-determine, then link.")
+    p_rs.add_argument("--session", required=True)
+    p_rs.add_argument("--dry-run", action="store_true")
+
     p_obs = sub.add_parser("observe-term",
                            help="Record that a source USES a phrase (evidence stage, D-0173)")
     p_obs.add_argument("--ref-id", required=True)
@@ -2200,6 +2214,10 @@ def main():
                            session=args.session, dry_run=args.dry_run,
                            tier=args.tier))
 
+    elif args.command == "retire-specification":
+        _emit(retire_specification(args.specification_id, reason=args.reason,
+                                   superseded_by=args.superseded_by,
+                                   session=args.session, dry_run=args.dry_run))
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
                              reason=args.reason, dry_run=args.dry_run))
@@ -3442,6 +3460,80 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         if new_tier is not None:
             out["tier_was"], out["tier_now"] = old_tier, new_tier
         return out
+
+
+def retire_specification(specification_id: int, session: str, reason: str = None,
+                         superseded_by: int = None, dry_run: bool = False):
+    """Retire a determination IN PLACE so its cell can be determined again.
+
+    Owner ruling 2026-09-16, "retire in place, never hard-delete". Until then a
+    determined cell could never be re-determined by any route: `idx_spec_row_identity`
+    was UNIQUE over the whole table and `specifications.state` had no lifecycle value,
+    so the only ways out were deleting the row or inventing a supersede design — the
+    first destroys the record of what was concluded, and the second was an owner
+    decision no component was entitled to make. Migration 083 made that index PARTIAL
+    over live rows; this is the writer that moves a row out of the live set.
+
+    THE ROW DOES NOT LEAVE. It keeps its state, its tier_basis, its derivation_sha and
+    its governing_refs, and it stays linked to the extractions it was computed from.
+    What changes is that it is no longer the cell's answer. That is the difference
+    between a history the project can audit and a hole where a determination used to be.
+
+    LINKING IS A SECOND CALL BY DESIGN. The replacement does not exist at the moment of
+    retirement — the engine refuses to run while a live row stands, so the real order is
+    retire, re-determine, then link. Passing --superseded-by on a later call fills the
+    pointer on an already-retired row; that is the one amendment this writer allows,
+    and only while the pointer is still empty.
+    """
+    with connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT specification_id, parameter_id, state, retired_at, "
+            "superseded_by_specification_id FROM specifications WHERE specification_id=?",
+            [specification_id]).fetchone()
+        if row is None:
+            raise Refusal(f"specification {specification_id}: no such determination.")
+
+        if row["retired_at"]:
+            # Link-only follow-up on an already-retired row.
+            if superseded_by is None:
+                raise Refusal(
+                    f"specification {specification_id} was already retired at "
+                    f"{row['retired_at']}. Retiring it twice records nothing new. If you "
+                    f"meant to record what replaced it, pass --superseded-by.")
+            if row["superseded_by_specification_id"]:
+                raise Refusal(
+                    f"specification {specification_id} already points at "
+                    f"{row['superseded_by_specification_id']} as its replacement. A "
+                    f"determination is superseded once; a second replacement means the "
+                    f"FIRST replacement is what needs retiring, not this row.")
+            if not dbcore.exists(conn, "specifications", "specification_id", superseded_by):
+                raise Refusal(f"--superseded-by {superseded_by}: no such determination.")
+            if superseded_by == specification_id:
+                raise Refusal("a determination cannot supersede itself.")
+            conn.execute("UPDATE specifications SET superseded_by_specification_id=?, "
+                         "updated_at=?, updated_by_session=? WHERE specification_id=?",
+                         [superseded_by, dbcore.now(), session, specification_id])
+            return {"specification_id": specification_id, "superseded_by": superseded_by,
+                    "linked": True}
+
+        if not (reason or "").strip():
+            raise Refusal(
+                f"specification {specification_id}: --reason is required to retire a "
+                f"determination. Retiring one without recording why discards the "
+                f"judgement it cost, and leaves the next reader unable to tell a "
+                f"superseded answer from a mistaken one. (The table's own trigger "
+                f"refuses this too, so there is no way round it.)")
+        conn.execute(
+            "UPDATE specifications SET retired_at=?, retired_by_session=?, "
+            "retirement_reason=?, superseded_by_specification_id=COALESCE(?, "
+            "superseded_by_specification_id), updated_at=?, updated_by_session=? "
+            "WHERE specification_id=?",
+            [dbcore.now(), session, reason.strip(), superseded_by, dbcore.now(), session,
+             specification_id])
+        return {"specification_id": specification_id, "parameter_id": row["parameter_id"],
+                "was_state": row["state"], "retired": True,
+                "superseded_by": superseded_by,
+                "note": "the cell is determinable again; the row stays as history"}
 
 
 def update_locator(ref_id: str, status: str, session: str, reason: str = None,
