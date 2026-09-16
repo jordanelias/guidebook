@@ -144,14 +144,15 @@ def extract(gdb, store):
         # graph has always drawn -- the filter is what keeps an ICF-only row from
         # being emitted as an item->population edge with a NULL target.
         #
-        # The ICF lens is deliberately NOT drawn here. `base_icf_groupings` is absent from
-        # PRIMARY, so no axis node exists, and emitting the edge would make all
-        # 158 folded rows fire ref.dangling_structural as ERRORs -- an instrument
-        # reporting its own blind spot as corruption. Registering `base_icf_groupings` in
-        # PRIMARY is the one-line fix and it changes audit output, so it is
-        # recorded as owed rather than smuggled into a rename sweep. Coverage of
-        # the ICF lens is unchanged by this migration: item_taxonomy_links' ICF lens was never
-        # extracted either.
+        # The ICF lens is deliberately NOT drawn here, and the reason CHANGED on
+        # 2026-09-16. It used to be that the grouping registry was absent from
+        # PRIMARY, so emitting the edge would fire ref.dangling_structural on every
+        # folded row -- an instrument reporting its own blind spot as corruption --
+        # and registering that table was recorded here as a one-line fix owed.
+        # Migration 084 DELETED the grouping layer on owner ruling, so that fix is
+        # void: there is nothing to register. The lens now resolves to
+        # `base_taxonomy_icf`, and drawing it is a real extension rather than a
+        # one-liner, because an ICF code is not an item-level node.
         for item_code, pop in cur.execute(
                 "SELECT item_code, identity_code FROM item_taxonomy_links "
                 "WHERE identity_code IS NOT NULL"):

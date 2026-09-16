@@ -592,22 +592,6 @@ checks:
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of real registry blocks + source-jurisdiction
     fields actually resolved (111 today). min_items:1 — standards-registry.md and data/sources/ are repo
     content, not a corpus that legitimately empties.'
-- id: validate_icf_groupings
-  cmd:
-  - python3
-  - scripts/validate_icf_groupings.py
-  battery: schema
-  kinds:
-  - schema
-  - data
-  level: blocking
-  basis: base/base-icf-grouping-vocabulary
-  cost: fast
-  min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the sum of population_icf_grouping_map
-    + access_need_icf_grouping_map rows walked, not the grouping vocabulary size (17) which would stay
-    non-zero even if every mapping table were empty. min_items:1. Ran in preflight only; no workflow invoked
-    it. Now both do.'
 - id: validate_verification_consistency
   cmd:
   - python3

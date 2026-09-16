@@ -852,8 +852,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-AMB — Ambulant movement. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-041
@@ -864,8 +868,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-ARO — Arousal-safety demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-042
@@ -876,8 +884,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-AUD — Auditory access & alerting demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-043
@@ -888,8 +900,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-BAL — Balance & postural demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-044
@@ -900,8 +916,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-CHM — Airborne-exposure demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-045
@@ -912,8 +932,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-CNT — Toileting-proximity demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-046
@@ -924,8 +948,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-COG-L — Information-access demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-047
@@ -936,8 +964,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-COG-O — Orientation demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-048
@@ -948,8 +980,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-COM-E — Expressive-communication demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-049
@@ -960,8 +996,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-PAI — Pain-load demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-050
@@ -972,8 +1012,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-REA — Reach & manipulation. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-051
@@ -984,8 +1028,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-SPR — Sensory-load demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-052
@@ -996,8 +1044,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-STA — Sustained-exertion demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-053
@@ -1008,8 +1060,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-THR — Thermal demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-054
@@ -1020,8 +1076,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-VIS-L — Low-vision information demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-055
@@ -1032,8 +1092,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-VIS-N — Non-visual information demand. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
   - id: RV-056
@@ -1044,8 +1108,12 @@ entries:
       owner ruling 2026-09-15 ("we should NEVER have AX- as part of a code"),
       executed by migration 082_strike_ax_prefix.sql
     replacement: >-
-      DM-WHM — Wheeled movement & transfer. Prefix only; the suffix is unchanged, because the suffix
-      carried the meaning and the prefix carried the retired metaphor.
+      NONE. The DM- code this pointed at was deleted three weeks later: owner ruling
+      2026-09-16 ("Delete.") retired the whole ICF grouping layer, executed by migration
+      084_retire_icf_grouping_layer.sql. Nothing downstream read it, and its seventeen
+      groupings are also stated in governance/functional-taxonomy.md, which is where the
+      doctrine lives. Use a real ICF code from base_taxonomy_icf; for a population, the
+      surviving map is population_icf_links, written by db.py add-population-icf-link.
     exempt_paths:
     - scratchpad/**
 

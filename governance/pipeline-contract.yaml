@@ -38,14 +38,6 @@ stages:
       retired codes are not taught.
     references: D-0170 (taxonomies are browsing lenses); validate_population.py RETIRED_CROSSWALK
     check: scripts/validate_population.py
-  - id: base-icf-grouping-vocabulary
-    kind: integrity
-    criterion: Every ICF-grouping code referenced downstream resolves to a live row in the grouping
-      registry, and every grouping carries at least one population mapping. The ICF CODE side is a
-      real foreign key into base_taxonomy_icf and is not re-checked here (rule 5).
-    references: 'D-0169 (base_taxonomy_icf; the demand_* family rejected); owner rulings 2026-09-15
-      (AX- struck from every code) and 2026-09-16 (one ICF layer in base)'
-    check: scripts/validate_icf_groupings.py
   - id: base-medical-lens-offered-not-adopted
     kind: integrity
     criterion: Every medical-lens row carries an MD- code with no digit, states no determination in

@@ -71,8 +71,10 @@ binding: no downstream use may read the taxonomy against it.
 2. **Axes describe specifications, not persons.** Per armature §4.2, axes are "the
    dimensions along which built-environment *specifications* vary." They are a
    property of the specification space, not a decomposition of a human being.
-   `population_icf_grouping_map` (§4) is therefore a **retrieval index and navigation
-   hypothesis**, graded by mapping-confidence (§3.2) — **never a portrait**. A person
+   A population-to-function map is therefore a **retrieval index and navigation
+   hypothesis**, graded by mapping-confidence (§3.2) — **never a portrait**. (The table
+   that held it, `population_icf_grouping_map`, was deleted by migration 084 on owner
+   ruling 2026-09-16; the surviving map is `population_icf_links`, population → ICF code.) A person
    is never the join of their axis values, and the taxonomy makes no claim that they
    are.
 
@@ -428,8 +430,10 @@ of priority between people; the checklist (§9) offers the reorder explicitly.
    searched JA/DE/ZH/KO/ES/FR strata — do non-English literatures carve the space
    differently? Divergences are ratification items.
 3. Apply staged DDL + seeds (promoted into `scripts/migrations/` at apply time).
-4. Backfill `slugs.serves_icf_groupings` (79 slugs); harvest ICF-lens links from the 87
-   FDA audit briefs; then re-derive population links.
+4. ~~Backfill `slugs.serves_icf_groupings` (79 slugs)~~ — **VOID.** That column was
+   deleted with the grouping layer by migration 084 (owner ruling 2026-09-16). Harvest
+   ICF-lens links from the 87 FDA audit briefs into `population_icf_links` instead; the
+   slug-level declaration has no home and needs none.
 5. Regenerate FDA skill §§1–2 from the axis register; follow population-taxonomy
    §5 for enum changes.
 6. Normalise `evidence_population_match.target_population`.

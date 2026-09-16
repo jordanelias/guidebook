@@ -398,7 +398,9 @@ candidate set vs PR #52's 17 axes — reconciliation table in PR #52 §2.3, incl
 the respiratory-axis divergence flagged as a checklist item; (c)
 population-taxonomy §3.3 "one slug, one population" vs PR #52's `serves_icf_groupings`
 multi-mapping — reconciled in PR #52 §5 (slugs serve axes; population linkage is
-derived, so the one-population rule is preserved at the population layer).
+derived, so the one-population rule is preserved at the population layer). **MOOT since
+2026-09-16:** migration 084 deleted the grouping layer and that column on owner ruling,
+so the multi-mapping this tension was about no longer exists.
 
 ## §4 Governance bindings (if ratified)
 

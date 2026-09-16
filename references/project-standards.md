@@ -3663,3 +3663,54 @@ OWNER:** whether the grouping layer earns its keep at all. It duplicates prose i
 `functional-taxonomy.md`, nothing downstream reads it, and its only unique asset is population
 coverage the direct ICF map has not yet been given.
 DATE: 2026-09-16 — owner statements, quoted above.
+
+---
+
+RULE: **The ICF grouping layer is deleted.** Owner ruling 2026-09-16: *"Delete."* — answering the
+question left open at the end of the same day's consolidation entry above. Executed by
+`scripts/migrations/084_retire_icf_grouping_layer.sql`.
+
+**WHAT WENT.** `base_icf_groupings` (17 coined groupings over ICF codes, each with a name, the b/d
+codes it spanned, a mechanism, a coverage status and a falsification condition),
+`population_icf_grouping_map` (53 rows), `access_need_icf_grouping_map` (21), the columns
+`slugs.serves_icf_groupings` and `situations.attaches_icf_groupings`, the validator
+`scripts/validate_icf_groupings.py`, its blocking registry entry, and the pipeline-contract criterion
+`base-icf-grouping-vocabulary`.
+
+**THE EVIDENCE, since removal needs evidence rather than permission (`CLAUDE.md` §8).** Nothing
+downstream read it — the determination engine, the writers and every other check go through
+`base_taxonomy_icf` and `population_icf_links`, and the layer's only live consumer was its own
+validator. Its seventeen groupings are also stated in full in `governance/functional-taxonomy.md`,
+which is where the doctrine is actually maintained: a second home under rule 5. And its codes had
+been wrong twice in three days — `AX-*` until migration 082, then `DM-*`, a prefix derived from the
+`demand_*` family D-0169 had already rejected.
+
+**WHAT IS LOST, STATED RATHER THAN IMPLIED.** 53 population assignments covering **20** populations.
+The surviving `population_icf_links` covers **12**, so **eight populations now hold no ICF relation of
+any kind**. That consequence was put to the owner in those terms before the ruling. The repair is not
+an expansion: turning *"MOB is an ALIAS of the ambulant-movement grouping"* into five per-code deficit
+claims asserts five judgments where one was recorded — 5(c)'s fabrication class reached by arithmetic.
+The eight get real rows when a source states them, through `db.py add-population-icf-link`, which
+requires a provenance.
+
+**EVERY DELETED ROW REMAINS RECOVERABLE.** All three tables were populated by
+`scripts/migrations/057_baseline_2026-08-12.sql`, committed and immutable under rule 3. Nothing was
+copied into `_archived/`: §8 is explicit that git history is the archive, and a copy would be a third
+home for data that already has two.
+
+**A REGISTER THAT HAD COME TO GIVE A WRONG ANSWER, corrected in the same change.** RV-040…RV-056
+were written on 2026-09-15 to catch the retired `AX-*` codes, and each named its `DM-*` successor as
+the replacement. Those successors no longer exist. All seventeen now read `NONE` and point at
+`base_taxonomy_icf` and `population_icf_links` instead. A retired-vocabulary entry whose
+*replacement* is stale is the failure that register exists to prevent, committed inside the register
+itself — and it would have been invisible, because the check only counts occurrences of the retired
+token and never reads the replacement it prints beside them.
+
+CONDITION: Any session looking for a functional-grouping layer, or reading a pre-2026-09-16 record
+that names one.
+ACTION: (1) There is no grouping layer; the ICF layer is `base_taxonomy_icf` plus
+`population_icf_links` and `access_need_icf_codes`. (2) The seventeen groupings survive as doctrine in
+`governance/functional-taxonomy.md` and are not a schema object. (3) To give one of the eight
+uncovered populations an ICF relation, write a row with a source behind it — never by expanding a
+grouping. (4) Recover any deleted row from `057_baseline_2026-08-12.sql`.
+DATE: 2026-09-16 — owner ruling, quoted above.
