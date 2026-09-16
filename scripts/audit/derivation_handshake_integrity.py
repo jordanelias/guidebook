@@ -82,7 +82,7 @@ def main(argv=None):
 
     fails, notes = [], []
     specs = [dict(r) for r in con.execute(
-        "SELECT * FROM specifications ORDER BY specification_id")] if _table(con, "specifications") else []
+        "SELECT * FROM specifications WHERE retired_at IS NULL ORDER BY specification_id")] if _table(con, "specifications") else []
     gates = [dict(r) for r in con.execute(
         "SELECT * FROM determination_gates ORDER BY gate_id")] if _table(con, "determination_gates") else []
     links = set()

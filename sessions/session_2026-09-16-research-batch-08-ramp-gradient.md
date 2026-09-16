@@ -128,3 +128,76 @@ python3 scripts/audit/batch_capture_report.py --session session_2026-09-16-resea
 - **`metadata_quality` reads COMPLETE on all four sources while `journal_name` is NULL** — there is
   no `--journal` flag on `add-source` and nothing writes that column, so COMPLETE is currently an
   overclaim for any source in this corpus. A tooling gap, recorded not silently accepted.
+
+---
+
+## Continuation — the threshold half, and the supersede path it forced
+
+The batch above closed `pending` with an empty governing set. The owner then made the
+epistemological point the record had missed: *"even if they aren't asserting a gradient, they are
+examining the impacts of gradients … adjudication will be able to reason that whatever range of
+gradients corresponds to the best outcomes is the best range"* — and, on its limit, *"yes it's not
+perfect it's a proxy."*
+
+**Why `pending` was under-reporting.** `assess_cell.gather_sources()` gathers
+`figure_role IN ('claim','derived')`. A `finding` contributes nothing however much it measured, so
+two studies that measured discomfort rising 14→36% and pushrim force more than doubling registered
+as `refs=0`. That is not "no evidence".
+
+**The threshold half was retrieved.** ADA 2010 §405.2 admitted as **REF-00987** (T6, `code` /
+`intrinsic`), value taken from the persisted bytes: *"Ramp runs shall have a running slope not
+steeper than 1:12."* Its own **Advisory 405.2** is extracted as a separate `finding` — *"To
+accommodate the widest range of users, provide ramps with the least possible running slope"* — which
+is the code stating that its own maximum is not the target, in the same direction the research
+measures.
+
+**The cell is still `pending`, and now says why.** `specification_id 2`, `code_floor_only=1`,
+`regulatory_stratum_only=1`, all 8 extractions accounted. The code source is `NON-ANCHORING`: T6 is
+walled off from full-strength anchoring (§6). The upgrade route that would change this is **ruled and
+unexecuted** — 2026-09-13: *"The engine rule that reads those edges is not yet built."* That ruling
+also disposes of this batch's own evidence: *"A study that merely uses a code value as its rig
+setting is not confirming it"*, which is exactly `tested_at`, and it forbids assuming a band. So the
+determination stops here by doctrine, not by exhaustion.
+
+**Two open owner questions, neither guessed at.** (1) Which band an upgraded code value takes.
+(2) What band `insufficient` carries — research showing harm rising across the code-permitted range.
+
+## The supersede path, built because this batch needed it
+
+Re-determining required retiring the standing determination, and `specifications` had none of the
+mechanism: no lifecycle value in its `state` CHECK, and `idx_spec_row_identity` UNIQUE over the whole
+table. **Migration 083** added `retired_at` / `retired_by_session` / `retirement_reason` /
+`superseded_by_specification_id`, made that index PARTIAL over live rows, and added a trigger
+refusing retirement without a reason. `assess_cell` is re-keyed on *is there a LIVE determination*,
+which migration 076 predicted in so many words, and its refusal now NAMES the remedy because the
+owner made the decision it was waiting for.
+
+**Migration 084 is ACTION item 2**: all seven views reading `specifications` now filter retired rows.
+`v_source_reach_all` takes the predicate **in its LEFT JOIN, not a WHERE** — a WHERE would delete a
+source from the reach audit instead of showing it now reaches nothing. Verified by retiring a row on
+a scratch copy: every reading surface dropped it, `v_source_reach_all` kept all 5 sources at
+`reaches=0`, and the row stayed in the table.
+
+**Two checks were repointed, both because this work invalidated their premise.**
+- **K02** compares a determination's junction against every extraction existing for its parameter
+  *right now*. A retired row would therefore go permanently "unaccounted" the moment new evidence
+  arrived — through no fault of its own, and unfixable, since the engine cannot rewrite a retired
+  row's junction and must not. Now scoped to live rows.
+- **L02** asserted `archived lead count == table count`, silently making the archive a **ceiling**:
+  the register could never hold a lead the restore did not put there, so minting one — which is what
+  research does when it finds a standard needing retrieval — turned a BLOCKING check red. It now
+  compares **sets**, asserting that nothing the restore recovered has gone missing. That is the thing
+  it was for, and it is strictly stronger: equality would also have passed if one archived lead
+  vanished while one new lead appeared.
+
+**A workflow fact worth keeping.** The retirement and its replacement CANNOT ship in one migration.
+`emit_batch_sql` orders inserts before updates, so the new determination would land while the old one
+is still live and the partial index refuses it. Retirement is act one, the replacement act two — the
+same children-to-parents ordering problem the corpus-clear migration hit, in a different guise.
+
+## State at close
+
+`test_db_integrity` **71/71**. Full battery **PASS**, no blocking failures. DoD **COMPLIANT**,
+citation-mining **CLEAN**. `specification_id 1` retired and linked to `specification_id 2`; the
+superseded row is kept, because it correctly accounted for the evidence that existed when it was
+computed.

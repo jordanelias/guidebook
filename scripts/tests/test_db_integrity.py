@@ -556,10 +556,12 @@ def run_checks(db_path):
             JOIN json_each(c.governing_refs) j
             JOIN evidence_sources e ON e.ref_id = j.value
             WHERE c.state IN ('stated','provisional')
+              AND c.retired_at IS NULL
               AND COALESCE(e.verification_status,'') NOT IN ({ph})""",
             OK_VSTATUS).fetchone()[0]
         total_cells = conn.execute("""SELECT COUNT(*) FROM specifications
-            WHERE state IN ('stated','provisional')""").fetchone()[0]
+            WHERE state IN ('stated','provisional')
+              AND retired_at IS NULL""").fetchone()[0]
         record("C10", "no published cell rests on an unverified or disputed source",
                unsound == 0,
                f"{unsound} of {total_cells} published cells cite a source that is "
@@ -1170,7 +1172,8 @@ def run_checks(db_path):
     for cid, pid, lens, gr, rv, sha_rec in conn.execute(
             "SELECT specification_id, parameter_id, "
             "COALESCE(identity_code, icf_code, needs_code, medical_code), "
-            "governing_refs, rule_version, derivation_sha FROM specifications"):
+            "governing_refs, rule_version, derivation_sha FROM specifications "
+            "WHERE retired_at IS NULL"):
         if not sha_rec or not rv:
             unattested += 1
             continue
@@ -1211,7 +1214,8 @@ def run_checks(db_path):
            # nothing to verify.
            subject=subj("SELECT COUNT(*) FROM specifications "
                         "WHERE COALESCE(derivation_sha,'') <> '' "
-                        "AND COALESCE(rule_version,'') <> ''"))
+                        "AND COALESCE(rule_version,'') <> '' "
+                        "AND retired_at IS NULL"))
 
     # K02 — THE PROVENANCE JUNCTION ACCOUNTS FOR EVERY ROW IT COULD HAVE USED.
     #
@@ -1227,9 +1231,18 @@ def run_checks(db_path):
     # the attestation verify against a subset of the evidence rather than all of it:
     # K01 would pass on a determination that had quietly forgotten half its inputs.
     unaccounted = []
+    # LIVE ROWS ONLY, AND THIS ONE IS NOT OPTIONAL HOUSEKEEPING. K02 compares a
+    # determination's junction against every extraction that exists for its parameter
+    # RIGHT NOW, not against a frozen snapshot. So the moment new evidence arrives for a
+    # parameter, every RETIRED determination of it goes permanently "unaccounted" —
+    # through no fault of its own, and with no way to fix it, because the engine cannot
+    # rewrite a retired row's junction and must not. A retired determination is history:
+    # it accounted for the evidence that existed when it was computed, which is exactly
+    # what makes it worth keeping. Found by the reader sweep for the 2026-09-16
+    # retire-in-place ruling, before any row was retired.
     for cid, pid in conn.execute(
             "SELECT specification_id, parameter_id FROM specifications "
-            "WHERE rule_version = 'pilot-3'"):
+            "WHERE rule_version = 'pilot-3' AND retired_at IS NULL"):
         have = {r[0] for r in conn.execute(
             "SELECT extraction_id FROM specification_extraction_links "
             "WHERE specification_id = ?", (cid,))}
@@ -1274,7 +1287,8 @@ def run_checks(db_path):
            f"{len(unaccounted)}: {'; '.join(unaccounted)} — the junction is what "
            f"derivation_sha hashes, so an incomplete one attests a subset of the "
            f"evidence while reading as the whole of it" if unaccounted else "",
-           subject=subj("SELECT COUNT(*) FROM specifications WHERE rule_version = 'pilot-3'"))
+           subject=subj("SELECT COUNT(*) FROM specifications "
+                        "WHERE rule_version = 'pilot-3' AND retired_at IS NULL"))
 
     # Reported, not enforced. Whether an unattested determination is acceptable
     # is an owner call — these rows were hand-migrated, not produced by an
@@ -1496,11 +1510,34 @@ def run_checks(db_path):
                       for fn in os.listdir(jv_dir) if fn.endswith((".yaml", ".yml"))
                       for r in ((_yaml.safe_load(open(os.path.join(jv_dir, fn))) or {})
                                 .get("records") or [])})
+        # SETS, NOT COUNTS, AND THE DIFFERENCE IS THE WHOLE POINT (2026-09-16).
+        # This asserted n_yaml == n_db, which silently made the archive a CEILING: the
+        # table could never hold a lead the 2026-09-02 restore did not put there, so
+        # minting one — which is exactly what research does when it finds a standard it
+        # needs fetched — turned a BLOCKING check red. Batch 08 hit it on the first new
+        # lead in the register's life (INT / ramp gradient ceiling, staged to close
+        # GAP-002).
+        #
+        # What the check is FOR is that nothing the restore recovered goes missing. That
+        # is a containment question, and equality was only ever a proxy for it — a bad
+        # one, because it fails on growth and would also PASS if one archived lead
+        # vanished while one new lead appeared. Comparing the sets tests the real thing
+        # and is strictly stronger in the direction that matters.
+        archived = {(r.get("jurisdiction"), r.get("standard_name"))
+                    for fn in os.listdir(jv_dir) if fn.endswith((".yaml", ".yml"))
+                    for r in ((_yaml.safe_load(open(os.path.join(jv_dir, fn))) or {})
+                              .get("records") or [])}
+        live = {(j, sn) for j, sn in conn.execute(
+            "SELECT jurisdiction, standard_name FROM research_code_leads")}
+        lost = sorted(archived - live)
         n_db = conn.execute("SELECT COUNT(*) FROM research_code_leads").fetchone()[0]
-        record("L02", "research_code_leads: archived lead count matches the table",
-               n_yaml == n_db,
-               f"{n_yaml} archived leads vs {n_db} table rows" if n_yaml != n_db else "",
-               subject=n_yaml + n_db)
+        record("L02", "every archived code lead is still in research_code_leads",
+               not lost,
+               f"{len(lost)} archived lead(s) absent from the table: "
+               f"{lost[:5]} — the 2026-09-02 restore recovered them and something has "
+               f"since dropped them. New leads beyond the archive are expected and are "
+               f"NOT drift ({n_db} rows live, {len(archived)} archived)." if lost else "",
+               subject=len(archived) + n_db)
 
     # L03 (legacy coverage-grid freeze) was RETIRED by the 2026-08-06 clean-room
     # reset. It digest-guarded search_coverage / search_languages as frozen
