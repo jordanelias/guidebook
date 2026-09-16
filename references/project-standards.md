@@ -3576,3 +3576,57 @@ a view that does not is the defect. (3) Re-key `assess_cell`'s re-determination 
 RETIRED rather than NOT EXISTS. (4) Where a row MUST genuinely leave (owner-ordered destruction,
 fabricated data), that is an exception the owner rules on case by case, and it is recorded here.
 DATE: 2026-09-16 — owner ruling, quoted above.
+
+---
+
+## Owner statement 2026-09-16 — dose-response evidence may be reasoned to a range, AS A PROXY
+
+> **"even if they aren't asserting a gradient, they are examining the impacts of gradients … this
+> means that adjudication will be able to reason that whatever range of gradients corresponds to
+> the best outcomes is the best range of gradient"**
+>
+> and, on being shown the limit of that inference:
+>
+> **"yes it's not perfect it's a proxy"**
+
+**WHAT THIS SETTLES.** A source that measures the EFFECT of a parameter without prescribing a value
+is not silent about that parameter, and judgment may reason from it toward a range. Batch 08 graded
+four such sources and the engine returned `pending` with `refs=0`, which reads as "no evidence" over
+two studies that measured articular discomfort rising 14→36% and pushrim force more than doubling.
+That reading is wrong, and the mechanism is what makes it wrong: `assess_cell.gather_sources()`
+gathers `figure_role IN ('claim','derived')` only, so a `finding` contributes nothing to a
+determination however much it measured.
+
+**WHAT IT DOES NOT SETTLE, and the limit is the owner's own word — PROXY.** The inference "best
+outcomes therefore best range" has a degenerate solution on the evidence as it stands: both curves
+are monotonic with no reported plateau, so "best" resolves to 0°, which is not a ramp. A ramp exists
+to change level, so the design question is the MAXIMUM ACCEPTABLE gradient, and that needs a
+threshold of acceptability which no admitted source supplies. Reasoning from dose-response to a
+range is therefore a proxy step and must be marked as one, never recorded as though a source had
+stated the value.
+
+**THE PROJECT ALREADY HAS THE VOCABULARY FOR "PROXY" AND SHOULD USE IT HERE.**
+`evidence_population_match.match_grade` carries PROXY for population-of-study vs population-served;
+`source_value_extractions.value_directness` exists for how directly evidence bears on the claim and
+sits at `NOT_ASSESSED` on every row because no grading rule has been ratified — which
+`workplan/2026-09-10-road-to-batch-06.md` makes STOP CONDITION 4, "inventing one is a stop
+condition". This statement is NOT read as ratifying a directness scale; it is read as ruling that
+the proxy inference is ADMISSIBLE and must be MARKED. The scale itself is still owed.
+
+**A LEAD THIS OPENS, recorded as a lead and not as a finding.** REF-00985 tested `0° to 4.8°`, and
+`arctan(1/12) = 4.76°` — 1:12 being the ramp ceiling in ADA, AS 1428.1, BS 8300-1 and others. If
+that ceiling is why 4.8° was chosen, the study measures discomfort across exactly the code-permitted
+range and finds it climbing throughout, which under the 2026-09-13 ruling ("a finding that a CODE is
+insufficient supplies no value, and is still first-class evidence") makes it a code-insufficiency
+finding rather than a bare dose-response curve. THE ABSTRACT DOES NOT SAY THIS. It is an inference
+from arithmetic and must be confirmed against the full text before it is filed as anything.
+
+CONDITION: Any session determining a cell whose evidence measures effects rather than stating values;
+any session implementing how `finding` rows reach a determination.
+ACTION: (1) A determination may rest on dose-response findings, marked as a proxy, never as a stated
+value. (2) `assess_cell` must be able to reach a determination from findings plus a threshold, not
+only from `claim` rows — today it cannot, and that is why batch 08 reads `refs=0`. (3) The threshold
+half is a code value or an equivalent criterion, and `research_code_leads` names which documents to
+fetch but deliberately holds no values (2026-08-12 REFERENCE-ONLY ruling), so it must be retrieved.
+(4) Do not invent a `value_directness` scale on the strength of this statement.
+DATE: 2026-09-16 — owner statement, quoted above.
