@@ -396,7 +396,7 @@ silently:** (a) `populations` DB table (22 flat codes) vs `population-taxonomy.m
 one reconciliation, proposed in PR #52's amended §4a; (b) armature §5's 20-axis
 candidate set vs PR #52's 17 axes — reconciliation table in PR #52 §2.3, including
 the respiratory-axis divergence flagged as a checklist item; (c)
-population-taxonomy §3.3 "one slug, one population" vs PR #52's `serves_icf_groupings`
+population-taxonomy §3.3 "one slug, one population" vs PR #52's `serves_axes`
 multi-mapping — reconciled in PR #52 §5 (slugs serve axes; population linkage is
 derived, so the one-population rule is preserved at the population layer). **MOOT since
 2026-09-16:** migration 084 deleted the grouping layer and that column on owner ruling,

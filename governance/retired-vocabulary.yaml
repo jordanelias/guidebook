@@ -170,7 +170,8 @@ entries:
     retired_by: "schema migration — column dropped from `items`"
     replacement: "item_taxonomy_links (the junction that replaced the packed column;
       named item_population_links from 2026-05-11 until migration 065 folded the ICF
-      lens in and made the lens a column)"
+      lens in and made the lens a column) [RETIRED-VOCAB-OK] — the interim name is
+      recorded deliberately and does not resolve"
     note: >-
       Not a naming preference: the column DOES NOT EXIST in the live schema
       (verified against data/guidebook.db 2026-08-05 — all 67 tables and all 18
@@ -728,7 +729,16 @@ entries:
     match: literal
     severity: broken
     retired_by: "owner ruling 2026-08-14; schema migration 058"
-    replacement: "UNRESOLVED, with the Person-Mode handoff named in mode_s_trigger"
+    replacement: >-
+      UNRESOLVED. THE SECOND HALF OF THIS REPLACEMENT WAS STALE AND IS CORRECTED
+      2026-09-16: it read "with the Person-Mode handoff named in mode_s_trigger", and no
+      such column exists on the live `conflicts` table. That name survives ONLY on the
+      Pydantic model `schemas/conflict.py` — schemas-to-SQLite drift, a bug by CLAUDE.md
+      section 7, recorded here as a finding rather than repaired in this change. Use
+      UNRESOLVED, and record the Person-Mode handoff in `conflicts.resolution` until the
+      drift is settled. Found by this file's own replacement-staleness check on the day
+      that check was built, in an entry nobody had revisited since 2026-08-15.
+      [RETIRED-VOCAB-OK] — names the absent column deliberately
     exempt_paths:
       - "scripts/db.py"                  # comment on the new set
       - "schemas/conflict.py"            # docstring explaining the rehomed rule

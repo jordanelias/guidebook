@@ -742,7 +742,7 @@ silently misses them**, and most joins in this repository are written with plain
 
 **So walking the pipeline is not univocal.** "What is this source's DOI" has up to four answers, and
 for four sources the answers differ. The same is true one stage earlier: `item_population_links` and
-the `item_axis_links → population_icf_grouping_map` route **differ on 89 of 93 items and agree on 4**
+the `item_axis_links → population_axis_map` route **differ on 89 of 93 items and agree on 4**
 (measured 2026-08-23: 88 disagree outright and 1 exists on the axis route only; `pipeline-map.yaml`
 BRK-20 independently records **89 of 93**, and the two measurements reconcile. An earlier draft of
 this paragraph quoted the narrower "88" without reconciling it against BRK-20 — corrected here.)
@@ -805,7 +805,7 @@ hid that the slug also spanned `AX-SPR` (`sessions/session_2026-08-19-research-b
 should be able to use freely to describe how things are set up."*
 
 **This supersedes the terminology of the RULEs of 2026-07-22/23 and the 2026-08-23 corollary below,
-which frame `item_axis_links → population_icf_grouping_map` as one of "two routes".** It was never a route to
+which frame `item_axis_links → population_axis_map` as one of "two routes".** It was never a route to
 item-population applicability; `item_population_links` is. The 89-of-93 figure stands as a
 measurement of scaffold drift. **Ratified documents that use the old term are superseded by this
 ruling, not authorities against it** — a prior ratification does not outrank the owner.
@@ -1199,7 +1199,7 @@ first while obstructing some wheeled users. The test that forbids this umbrella 
 | Table | MOB rows | of total |
 |---|---:|---:|
 | `item_population_links` | **31** | 372 |
-| `population_icf_grouping_map` | **2** | 53 |
+| `population_axis_map` | **2** | 53 |
 | `evidence_population_match.target_population` | **0** | 25 (all AUT/COM/DEM/NDV) |
 | `specifications`, `item_population_elaborations`, `probe_population_links`, `extraction_population_links`, `citation_population_links`, `case_study_populations` | **0** | 0 |
 
@@ -1239,7 +1239,7 @@ demoted from *identity* to *cross-reference* — one of three, alongside access 
 **Three modes, three junctions.** Only `specification_source_links` exists today. The ruling
 requires a specification to be cross-referenceable against **disability populations**, **access
 needs** and **ICF codes** independently, N:N in each. None of the three can be derived from another:
-`access_need_icf_codes` currently maps 43 need→ICF pairs and is **38 `e`, 3 `d`, 2 `b`** — overwhelmingly
+`access_need_icf` currently maps 43 need→ICF pairs and is **38 `e`, 3 `d`, 2 `b`** — overwhelmingly
 environmental-factor codes, i.e. the environment side. A specification's ICF cross-reference will
 often be `b`/`d` (the person's functioning), which that table does not carry. **Deriving one mode
 from another would collapse exactly the distinction the ruling exists to preserve.**
@@ -1400,7 +1400,7 @@ compiles every mode with a `(?<![\w-])…(?![\w-])` boundary. Two consequences, 
   lookahead. Flagging descriptive English is precisely what `DR-2026-08-24` §R8 forbids: *"Axis is a
   term that we should be able to use freely to describe how things are set up."* The entries are
   therefore **one per retired identifier**: `axes`, `axis_code`, `item_axis_links`,
-  `population_icf_grouping_map`, `access_need_icf_grouping_map`, `serves_icf_groupings`, `attaches_icf_groupings`.
+  `population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`.
 - **`AX-` cannot be expressed at all.** All three modes (`identifier`, `literal`, `phrase`) require a
   non-`[\w-]` character after the token, so `AX-` never matches `AX-AMB`. There is no prefix mode.
 
@@ -1409,9 +1409,9 @@ the *column* to `demand_code` but is silent on whether the 17 **code values** ar
 are not, `AX-*` stays correct live data and fails admission tests 2 and 3, and belongs in the
 register's `deferred:` section with this reasoning. If they are, it is a data migration over **288
 live cells**, counted case-sensitively (`GLOB '*AX-*'`) on 2026-08-26: **249** in the four
-`axis_code` key columns — `item_axis_links` 158, `population_icf_grouping_map` 53, `access_need_icf_grouping_map` 21,
+`axis_code` key columns — `item_axis_links` 158, `population_axis_map` 53, `access_need_axis_map` 21,
 `axes` 17 — and **39 in free text** across twelve further columns, among them `terms.scope_note` 17,
-`axes.falsification_condition` 8, `access_need_icf_codes.note` 3 and `slugs.serves_icf_groupings` 1. **The migration
+`axes.falsification_condition` 8, `access_need_icf.note` 3 and `slugs.serves_axes` 1. **The migration
 must state which, because the register entry the owner ordered cannot be written until it does.**
 
 *Two notes earned in the measuring.* A first pass used `LIKE`, which is case-insensitive for ASCII in
@@ -1421,8 +1421,8 @@ re-pointed by an FK-ordered UPDATE, while `falsification_condition` and `scope_n
 inside sentences and cannot be rewritten mechanically without reading them.
 
 **The caller surface, measured 2026-08-26** by `git grep -lIw` per identifier: `axes` 179 files ·
-`item_axis_links` 60 · `population_icf_grouping_map` 50 · `axis_code` 35 · `access_need_icf_grouping_map` 32 ·
-`serves_icf_groupings` 27 · `attaches_icf_groupings` 6. Whole-token (`axis`/`axes`/`AX-`) across tracked files: **312**,
+`item_axis_links` 60 · `population_axis_map` 50 · `axis_code` 35 · `access_need_axis_map` 32 ·
+`serves_axes` 27 · `attaches_axes` 6. Whole-token (`axis`/`axes`/`AX-`) across tracked files: **312**,
 of which **132** sit outside the register's existing frozen-path exemptions. *(The `icf_demands`
 entry's "297 tracked files" was measured yesterday under a scope it did not record. Neither figure is
 load-bearing; the per-identifier counts are.)* A blocking check, `validate_axes`
@@ -1940,8 +1940,8 @@ commitment applied to the interface. A reader who thinks in diagnoses is not for
 ICF codes to use the book; a reader who refuses the medical frame never sees it. Consistent with
 CRPD Art 4.3.
 
-**Structural consequence.** Lens-switching is only possible through the crossing maps — `population_icf_grouping_map`
-(53 rows), `access_need_icf_grouping_map` (21), `access_need_icf_codes` (43). A medical taxonomy needs the same
+**Structural consequence.** Lens-switching is only possible through the crossing maps — `population_axis_map`
+(53 rows), `access_need_axis_map` (21), `access_need_icf` (43). A medical taxonomy needs the same
 crossings into the other three, or the lens cannot switch. **It is a schema change, not a vocabulary
 addition.**
 
@@ -2097,7 +2097,7 @@ live statement governs, and the supersession is recorded rather than argued. **�
 survives in full** — the retirement of `axes` / `axis_code` / `AX-` and the paired
 `retired-vocabulary.yaml` entry, rename-then-register, remain exactly as ruled. Only the replacement
 noun changes, and the seven register entries (`axes`, `axis_code`, `item_axis_links`,
-`population_icf_grouping_map`, `access_need_icf_grouping_map`, `serves_icf_groupings`, `attaches_icf_groupings`) are unaffected — they
+`population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`) are unaffected — they
 name what is retired, not what replaces it.
 
 **"Respect that" is a bar on folding.** The four are parallel and must not be collapsed into one
@@ -2166,7 +2166,7 @@ Raised by the R2 ruling-precedence audit; appended rather than edited, per appen
 
 **M1 — "§R8's substance survives in full… exactly as ruled" OVERCLAIMS, and the gap would be filled
 silently.** The register-entry half is correct: the seven entries (`axes`, `axis_code`,
-`item_axis_links`, `population_icf_grouping_map`, `access_need_icf_grouping_map`, `serves_icf_groupings`, `attaches_icf_groupings`)
+`item_axis_links`, `population_axis_map`, `access_need_axis_map`, `serves_axes`, `attaches_axes`)
 name what is **retired**, so they are noun-independent and unaffected. **But the 08-25 ruling also
 selected a derived FAMILY of replacement names** — `demand_code`, `item_demand_links`,
 `population_demand_map`, `access_need_demand_map`, `serves_demands`, `attaches_demands`. The owner's
@@ -2349,15 +2349,15 @@ RULE: **Four ratification and naming choices, selected by the owner from options
 | `axes` → | `base_taxonomy_icf` (already ruled) |
 | `axis_code` → | `icf_code` |
 | `item_axis_links` → | `item_icf_links` |
-| `population_icf_grouping_map` → | `population_icf_map` |
-| `access_need_icf_grouping_map` → | `access_need_icf_map` |
-| `slugs.serves_icf_groupings` → | `serves_icf` |
-| `situations.attaches_icf_groupings` → | `attaches_icf` |
-| **`access_need_icf_codes` (43 rows) →** | **`access_need_icf_codes`** |
+| `population_axis_map` → | `population_icf_map` |
+| `access_need_axis_map` → | `access_need_icf_map` |
+| `slugs.serves_axes` → | `serves_icf` |
+| `situations.attaches_axes` → | `attaches_icf` |
+| **`access_need_icf` (43 rows) →** | **`access_need_icf_codes`** |
 
-The last row is the point. `access_need_icf_codes` maps `need_code` → ICF **e**-codes (environment); the
+The last row is the point. `access_need_icf` maps `need_code` → ICF **e**-codes (environment); the
 axes table holds **b**/**d** codes (person functioning). They are different relationships, and
-`access_need_icf_codes` beside `access_need_icf_map` would be two names one letter apart — the `items`
+`access_need_icf` beside `access_need_icf_map` would be two names one letter apart — the `items`
 ambiguity recreated deliberately. **The owner chose to break the collision rather than inherit it**,
 at the cost of one additional table and its callers in the same migration.
 
@@ -2402,7 +2402,7 @@ writes: a YAML append and a data migration. Flagged for a later cull; not touche
 
 CONDITION: Any session ratifying a decision, naming an ICF-layer object, writing a stage id, or
 relying on `decision_capture` to prove the register complete.
-ACTION: (1) Use `icf_*`; rename `access_need_icf_codes` → `access_need_icf_codes` in the same migration.
+ACTION: (1) Use `icf_*`; rename `access_need_icf` → `access_need_icf_codes` in the same migration.
 (2) Stage id `specification`, singular. (3) Write eight DRs plus eight register rows; attestation is
 owed because `decisions/` is a rule-2 path. (4) Do not cite `decision_capture` green as evidence the
 register is complete.
@@ -2512,8 +2512,8 @@ Verified: three rows carrying the same value in three different lenses are accep
 refused. **Every lens column is a real typed foreign key — nothing is polymorphic.**
 
 **Why exactly one lens per row, rather than filling all four.** The base crossing maps already state
-the translation between lenses (`population_icf_grouping_map` 53 rows, `access_need_icf_grouping_map` 21,
-`access_need_icf_codes` 43). A row asserting both `identity_code` and `icf_code` would write a fact those
+the translation between lenses (`population_axis_map` 53 rows, `access_need_axis_map` 21,
+`access_need_icf` 43). A row asserting both `identity_code` and `icf_code` would write a fact those
 maps already hold — rule 5. **The CHECK is rule 5 enforced in DDL.** Browsing a lens is
 `WHERE <lens>_code IS NOT NULL`, and translation is a join through the crossing map.
 
@@ -3402,8 +3402,8 @@ count, which predates the circulation clear.** 128 `AX-`-bearing values across f
 
 | | |
 |---|---|
-| key columns | `population_icf_grouping_map.axis_code` 53 · `access_need_icf_grouping_map.axis_code` 21 · `axes.axis_code` 17 |
-| free text | `terms.scope_note` 17 · `axes.falsification_condition` 8 · `access_need_icf_codes.note` 3 · seven further columns 1 each |
+| key columns | `population_axis_map.axis_code` 53 · `access_need_axis_map.axis_code` 21 · `axes.axis_code` 17 |
+| free text | `terms.scope_note` 17 · `axes.falsification_condition` 8 · `access_need_icf.note` 3 · seven further columns 1 each |
 
 Derive it, never quote it:
 
@@ -3423,7 +3423,7 @@ PY
 `item_taxonomy_links.icf_code` and `icf_medical_map.icf_code` each carry a real FK into
 `axes(axis_code)`, so the column called `icf_code` resolves, today, to an `AX-*` value. That is the
 ruled state exactly: `AX-` denoting ICF, in the schema, four times over. Two further columns named
-`icf_code` do NOT do this and must not be swept with them — `access_need_icf_codes.icf_code` and
+`icf_code` do NOT do this and must not be swept with them — `access_need_icf.icf_code` and
 `population_icf_links.icf_code` (migration 080) hold real ICF codes and carry no FK into `axes`,
 because there is no ICF registry to point at.
 
@@ -3459,11 +3459,11 @@ RULE: **The ICF lens keeps its name and comes to hold real ICF codes.** Owner ru
 2026-09-13, selecting that option over renaming the lens to `demand_code`, and answering the
 fork the same day's `AX-` ruling opened. Recorded on contact per `CLAUDE.md` rule 0.
 
-**Executed the same day by migration 081.** `base_taxonomy_icf` is the registry, and all six columns
+**Executed the same day by migration 081.** `base_icf` is the registry, and all six columns
 named `icf_code` now point at it: the four lens columns that had FK'd into `axes(axis_code)`
 — `specifications`, `source_value_extractions`, `item_taxonomy_links`, `icf_medical_map` —
-plus `access_need_icf_codes` and `population_icf_links`, which already held real ICF codes and
-pointed at nothing. The second pair matters as much as the first: without them `base_taxonomy_icf`
+plus `access_need_icf` and `population_icf_links`, which already held real ICF codes and
+pointed at nothing. The second pair matters as much as the first: without them `base_icf`
 would be a *third* home for ICF codes rather than the one home, which is the whole point
 (rule 5).
 
@@ -3479,17 +3479,17 @@ estimate was made from the 2026-08-26 count of 288 live cells, which predates th
 the owner.
 
 **What the registry holds, and what it deliberately does not.** 72 codes, seeded only from
-codes this repository already held (`access_need_icf_codes`, `population_icf_links`, and the
+codes this repository already held (`access_need_icf`, `population_icf_links`, and the
 `axes` anchor columns) — never from a remembered classification. **29 carry a title and 43
 do not**, because nothing here states them and supplying an ICF title from memory is the
-2026-08-19 fabrication in a smaller field. `base_taxonomy_icf` refuses a title without a
+2026-08-19 fabrication in a smaller field. `base_icf` refuses a title without a
 `title_source`; `db.py set-icf-title --title-payload` verifies one against persisted bytes
 the way `add-medical --icd11-payload` does for ICD-11. The 43 are logged as
 `GAP-ICF-TITLES`, and they are a real gap on this lens: `CLAUDE.md` §6 requires working from
 ICF codes **and names**.
 
 **The demand layer is untouched and is no longer a lens.** `axes` keeps its 17 rows,
-`population_icf_grouping_map` its 53 and `access_need_icf_grouping_map` its 21. The 2026-08-25 RULE's
+`population_axis_map` its 53 and `access_need_axis_map` its 21. The 2026-08-25 RULE's
 refusal to fold the demand layer into `access_needs` stands, and its b/d ÷ e reasoning is
 intact: the ICF lens now holds b and d codes directly, `access_needs` keeps its e-anchors.
 
@@ -3506,7 +3506,7 @@ and whether it survives at all now that real ICF codes carry the lens — is own
 above.
 
 READ AS: the three base vocabularies the pipeline keys on — `access_needs` (17 rows, ICF
-**e**, what the environment must do), `base_taxonomy_icf` (72 rows, ICF **b**/**d**, the person's
+**e**, what the environment must do), `base_icf` (72 rows, ICF **b**/**d**, the person's
 function) and `populations` (23 rows, identity). That reading is what the work above acted
 on, and it is consistent with the ruling it followed: the demand layer is not among them.
 
@@ -3518,8 +3518,8 @@ that the medical lens goes, it needs saying, because `specifications.medical_cod
 `base_taxonomy_medical`, `identity_medical_map`, `icf_medical_map`, `db.py add-medical` and
 the blocking-adjacent `medical_lens_integrity` check all exist to serve it.
 
-CONDITION: Any session reasoning about the lens set, the demand layer, or `base_taxonomy_icf`.
-ACTION: (1) The ICF lens is `base_taxonomy_icf` and holds real ICF codes; mint with `db.py
+CONDITION: Any session reasoning about the lens set, the demand layer, or `base_icf`.
+ACTION: (1) The ICF lens is `base_icf` and holds real ICF codes; mint with `db.py
 add-icf-code`. (2) Do not re-introduce a demand code into any `icf_*` column — six FKs now
 refuse it. (3) Do not treat the medical lens as retired without an owner ruling that says
 so. (4) `GAP-ICF-TITLES` closes by retrieval and persisted bytes, never by recall.
@@ -3594,7 +3594,6 @@ naming `AX-` is correct and must not be edited; apply the prefix crosswalk when 
 `icf_demands` / `demand_code` remains ratified and unexecuted, and is now the ONLY part of
 that ruling outstanding.
 DATE: 2026-09-15 — owner ruling, quoted above.
-
 ---
 
 RULE: **One ICF layer in base, under the names D-0169 already ruled.** Owner, 2026-09-16, three
@@ -3686,8 +3685,13 @@ been wrong twice in three days — `AX-*` until migration 082, then `DM-*`, a pr
 `demand_*` family D-0169 had already rejected.
 
 **WHAT IS LOST, STATED RATHER THAN IMPLIED.** 53 population assignments covering **20** populations.
-The surviving `population_icf_links` covers **12**, so **eight populations now hold no ICF relation of
-any kind**. That consequence was put to the owner in those terms before the ruling. The repair is not
+The surviving `population_icf_links` covers **12 of the 23 live populations**, so **11 populations now
+hold no ICF relation of any kind**. *(This sentence read "eight populations" until 2026-09-16, later
+the same day: eight is 20 − 12, the DROP in coverage, not the number left uncovered, which is 23 − 12.
+The figure was wrong in this entry, in the commit message, and in what was said to the owner. Derived,
+not re-counted by hand:* `select count(*) from populations where population_code not in (select
+population_code from population_icf_links)` *→ ADHD, ALL, BAR, DEAFBLIND, EPI, ID, LPA, MOVE, MS,
+TALL, VES.)* That consequence was put to the owner before the ruling, at the wrong magnitude. The repair is not
 an expansion: turning *"MOB is an ALIAS of the ambulant-movement grouping"* into five per-code deficit
 claims asserts five judgments where one was recorded — 5(c)'s fabrication class reached by arithmetic.
 The eight get real rows when a source states them, through `db.py add-population-icf-link`, which
@@ -3714,3 +3718,54 @@ ACTION: (1) There is no grouping layer; the ICF layer is `base_taxonomy_icf` plu
 uncovered populations an ICF relation, write a row with a source behind it — never by expanding a
 grouping. (4) Recover any deleted row from `057_baseline_2026-08-12.sql`.
 DATE: 2026-09-16 — owner ruling, quoted above.
+
+---
+
+CORRECTION and RULE — 2026-09-16, third entry of the day. **A register is checked on its left-hand
+column only, and that is half a register.** Owner instruction: *"Fix the replacement-staleness hole
+in the register check, resolve the ICF count issues."*
+
+**THE HOLE.** `governance/retired-vocabulary.yaml` pairs a retired token with a `replacement`, and
+`retired_vocabulary_audit.py` counted occurrences of the **token** while never reading the
+**replacement** it printed beside them. So on 2026-09-15 seventeen entries were added naming `DM-*`
+successors, on 2026-09-16 migration 084 deleted every one of those successors, and the register spent
+the interval telling anyone who met `AX-AMB` to use `DM-AMB` — a retired-vocabulary entry that had
+itself become readable and wrong, which is the exact defect the file exists to catch. Nothing
+noticed, because nothing looked.
+
+**THE FIX, CALIBRATED BEFORE IT WAS WIRED.** `stale_replacements()` resolves the two classes of
+reference a machine can check — snake_case identifiers against the live schema's objects and columns,
+and ALL-CAPS hyphenated code values against every value held in a `*_code` or `*_id` column, derived
+from the schema rather than listed (rule 8). Measured against the live register first: **46 of 51
+references resolved**, and of the five that did not, **four were extractor faults** — a SQL alias
+(`es.author_display`), a PRAGMA name, and a deliberately-recorded historical identifier — now fixed or
+escaped, and **one was a real stale pointer**.
+
+**THE REAL ONE, found by the check on the day it was built.** RV-023 told readers to record the
+Person-Mode handoff in `mode_s_trigger`. **No such column exists on the live `conflicts` table.** The
+name survives only on the Pydantic model `schemas/conflict.py` — schemas-to-SQLite drift, which
+`CLAUDE.md` §7 calls a bug rather than a convention. The entry is corrected; **the drift itself is
+recorded here and not repaired**, being a schema question with its own caller sweep.
+
+**TEN CASES PINNED IN THE SELFTEST** (23 → 33), because every one of the seven controls was a false
+positive before the extractor was fixed, and a regression in any of them would otherwise return
+unnoticed. Three are the true-positive shapes that actually occurred: a deleted code value, a deleted
+table, a deleted `table.column`.
+
+**THE COUNT I GOT WRONG, corrected in the entry above and named here so it is not repeated.** I told
+the owner that deleting the grouping layer left **eight** populations with no ICF relation. Eight is
+20 − 12 — the DROP in coverage. The number uncovered is 23 − 12 = **11**. The error was in the ledger
+entry, in the commit message, and in what was said to the owner before the ruling.
+
+**SO THE COUNT NOW LIVES WHERE IT IS RECOMPUTED, not in a sentence.** `validate_population.py` derives
+it every run and reports it as a WARNING — never an error, because an uncovered population is a
+research gap and not a broken row, and reddening a blocking gate over it would make the battery lie
+about what is broken. `architecture/meta-scripts-spec.md`'s L1.6 counts were re-derived the same way
+(**12 raw, 11 after the base-registry exclusion, all 11 at 0 rows**, down from 14/12) and now carry
+their derivation command instead of a figure — that pair moved twice in one week.
+
+CONDITION: Any session editing the retired-vocabulary register, or citing a population/ICF count.
+ACTION: (1) A `replacement` must name things that exist; mark a deliberate dead name with
+`[RETIRED-VOCAB-OK]`. (2) Do not quote the uncovered-population count — run
+`validate_population.py`. (3) `schemas/conflict.py`'s `mode_s_trigger` has no column: open finding.
+DATE: 2026-09-16 — owner instruction, quoted above.

@@ -223,6 +223,31 @@ def validate(verbose=False):
             "empty. This check examined no values."
         )
 
+    # ICF COVERAGE, REPORTED BECAUSE THE NUMBER MOVED AND NOTHING WATCHED IT.
+    # Migration 084 deleted the grouping layer on owner ruling 2026-09-16, and with it 53
+    # population-to-grouping assignments covering 20 populations. The surviving direct map
+    # is `population_icf_links`. The consequence -- how many populations are left with no
+    # ICF relation at all -- existed only as a sentence in a ledger entry, and that
+    # sentence was WRONG: it said eight, which is the drop in coverage (20 - 12), not the
+    # number uncovered (23 - 12). A count that lives in prose is a count nobody recomputes.
+    # This is a WARNING, never an error: an uncovered population is a research gap, not a
+    # broken row, and reddening a blocking gate over it would make the battery lie about
+    # what is broken.
+    coverage_note = None
+    try:
+        uncovered = [r[0] for r in conn.execute(
+            "SELECT population_code FROM populations WHERE population_code NOT IN "
+            "(SELECT population_code FROM population_icf_links) ORDER BY population_code")]
+        total = conn.execute("SELECT COUNT(*) FROM populations").fetchone()[0]
+        if uncovered:
+            coverage_note = (
+                f"WARN: {len(uncovered)} of {total} populations have NO row in "
+                f"population_icf_links, so no ICF relation of any kind: "
+                f"{', '.join(uncovered)}. Write one with a source behind it "
+                f"(db.py add-population-icf-link) -- never by expanding a grouping.")
+    except sqlite3.OperationalError:
+        pass                     # pre-080 database: the table does not exist yet
+
     conn.close()
 
     if errors:
@@ -233,6 +258,8 @@ def validate(verbose=False):
         return 1
     for note in notes:
         print(f"  {note}")
+    if coverage_note:
+        print(f"  {coverage_note}")
     print(f"population validation: PASS ({len(db_codes)} live codes; "
           f"{checked_rows} value(s) across {len(columns)} column(s) all resolve)")
     print(f"EXAMINED: {checked_rows}")

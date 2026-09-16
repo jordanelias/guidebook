@@ -44,7 +44,9 @@ so today that reports without failing the build; the level is a one-word change
 in the registry once the false-positive rate is known (house norm).
 """
 import argparse
+import os
 import re
+import sqlite3
 import sys
 import tempfile
 from pathlib import Path
@@ -223,6 +225,119 @@ def dead_exemptions(root=REPO, register=None):
     return dead
 
 
+# --- replacement staleness ---------------------------------------------------
+# HONOURS GUIDEBOOK_DB_PATH. The blocking db_path_env_audit requires it and its reason
+# applies here: a script that ignores the variable reads the committed database while a
+# test believes it is reading a scratch copy.
+DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
+
+#: Tokens that look like an identifier but are not one. `PRAGMA user_version` is a SQLite
+#: pragma, not a column, and is the only one of its kind in the register today.
+_PRAGMA_PRECEDED = re.compile(r"PRAGMA\s+$", re.I)
+#: A file path is not a schema reference.
+_FILEY = re.compile(r"\.(yml|yaml|py|md|json|sql|html|sh|txt|db|jsonl)\b")
+#: snake_case, optionally table-qualified. Requires an underscore, which is what separates
+#: a schema identifier from an English word or a CI job name (`classify`, `research`).
+_SNAKE = re.compile(r"\b([a-z][a-z0-9_]*\.)?([a-z][a-z0-9]*(?:_[a-z0-9]+)+)\b")
+#: An ALL-CAPS hyphenated code value: DM-AMB, MD-AUTISM, GAP-001, CLOSED-DECIDED.
+_CODEISH = re.compile(r"\b[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\b")
+
+
+def _live_vocabulary(db=None):
+    """What the database can be asked to confirm: object names, column names, code values.
+
+    The code universe is every distinct value held in a `*_code` or `*_id` column. That is
+    derived from the schema, never listed here (rule 8) -- a hand-maintained list of code
+    columns would go blind exactly the way `WRITABLE_TABLES` did eight times.
+    """
+    path = Path(db or DB_PATH)
+    if not path.exists():
+        return None
+    con = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    try:
+        objects = {n for (n,) in con.execute(
+            "SELECT name FROM sqlite_master WHERE type IN ('table','view')")}
+        cols, every_col, codes = {}, set(), set()
+        for t in objects:
+            try:
+                cols[t] = {c[1] for c in con.execute('PRAGMA table_info("%s")' % t)}
+            except sqlite3.Error:
+                cols[t] = set()
+            every_col |= cols[t]
+        for t, cs in cols.items():
+            for c in cs:
+                if not (c.endswith("_code") or c.endswith("_id")):
+                    continue
+                try:
+                    for (v,) in con.execute('SELECT DISTINCT "%s" FROM "%s"' % (c, t)):
+                        if isinstance(v, str):
+                            codes.add(v)
+                except sqlite3.Error:
+                    continue
+        return {"objects": objects, "cols": cols, "every_col": every_col, "codes": codes}
+    finally:
+        con.close()
+
+
+def stale_replacements(register=None, db=None):
+    """Every entry's `replacement` must name things that still exist.
+
+    THE HOLE THIS CLOSES, and it was found the hard way. On 2026-09-15 seventeen entries
+    were added for the retired `AX-*` codes, each naming its `DM-*` successor as the
+    replacement. On 2026-09-16 migration 084 deleted every one of those successors. The
+    register then told anyone who met `AX-AMB` to use `DM-AMB`, which no longer existed --
+    a retired-vocabulary entry that had itself become readable and wrong, which is the
+    precise defect this whole file exists to catch. **Nothing noticed, because the scan
+    counts occurrences of the TOKEN and never reads the REPLACEMENT it prints beside
+    them.** A register that is checked only on its left-hand column is half a register.
+
+    WHAT IS RESOLVABLE IS CHECKED; WHAT IS NOT IS LEFT ALONE. A replacement is prose, and
+    most of it cannot be verified by machine. Two classes can: snake_case identifiers,
+    against the live schema's objects and columns, and ALL-CAPS hyphenated code values,
+    against every value held in a `*_code` or `*_id` column. Calibrated against the live
+    register before it was wired: 46 of 51 references resolved, and of the five that did
+    not, four were extractor faults now fixed here (a SQL alias, a PRAGMA name, a
+    deliberately-named historical identifier) and ONE was a real stale pointer.
+
+    A TABLE-QUALIFIED REFERENCE FALLS BACK TO THE COLUMN. `es.author_display` is a SQL
+    alias for `evidence_sources`, not a table; refusing it would flag correct prose. If
+    the qualifier is not a live object, the column half is checked on its own.
+
+    THE ESCAPE IS THE SAME ONE THE SCAN USES. A replacement that must name a dead
+    identifier -- RV-001 records the junction's interim name between two migrations --
+    carries `[RETIRED-VOCAB-OK]` and is skipped whole, so the licence is visible in the
+    register rather than hidden in this file.
+    """
+    data = register if register is not None else load_register()
+    vocab = _live_vocabulary(db)
+    if vocab is None:
+        return None, 0                      # no database: report, never pretend
+    stale, examined = [], 0
+    for e in data.get("entries") or []:
+        text = str(e.get("replacement") or "")
+        if ESCAPE in text:
+            continue
+        clean = _FILEY.sub("", text)
+        for m in _SNAKE.finditer(clean):
+            if _PRAGMA_PRECEDED.search(clean[:m.start()]):
+                continue
+            qual, ident = m.group(1), m.group(2)
+            if qual:
+                table = qual.rstrip(".")
+                ok = (ident in vocab["cols"].get(table, set())
+                      if table in vocab["objects"] else ident in vocab["every_col"])
+            else:
+                ok = ident in vocab["objects"] or ident in vocab["every_col"]
+            examined += 1
+            if not ok:
+                stale.append((e["id"], e["token"], m.group(0), "no such table or column"))
+        for m in set(_CODEISH.findall(clean)):
+            examined += 1
+            if m not in vocab["codes"] and m != e["token"]:
+                stale.append((e["id"], e["token"], m, "no such code value"))
+    return sorted(set(stale)), examined
+
+
 def scan(root=REPO, register=None):
     """Return {entry_id: [(rel, lineno, line), ...]} plus the entry index."""
     data = register if register is not None else load_register()
@@ -295,6 +410,24 @@ def main(argv=None):
         if len(hits) > args.max_per_entry:
             print(f"          ... and {len(hits) - args.max_per_entry} more")
 
+    stale, stale_examined = stale_replacements()
+    if stale:
+        print()
+        print("-" * 70)
+        print(f"STALE REPLACEMENTS: {len(stale)} reference(s) in a `replacement` field name")
+        print("  something that no longer exists. The entry tells the next reader to use a")
+        print("  table, column or code that is gone — a retired-vocabulary entry that has")
+        print("  itself become readable and wrong, which is what this register exists to")
+        print("  catch. Fix the replacement, or mark a deliberate historical mention with")
+        print(f"  {ESCAPE}.")
+        for eid, token, ref, why in stale:
+            print(f"    {eid} ({token}): {ref}  — {why}")
+    elif stale is None:
+        print()
+        print("  NOTE: replacement staleness NOT CHECKED — no database at "
+              f"{DB_PATH}. Reported rather than passed over: a sub-check that silently")
+        print("  examines nothing is the vacuity failure this repository names first.")
+
     dead = dead_exemptions()
     if dead:
         print()
@@ -310,18 +443,19 @@ def main(argv=None):
                 print(f"        cited by: {w}")
 
     print()
-    if total or dead:
+    if total or dead or stale:
         if total:
             print(f"RESULTS: {total} occurrence(s) of retired vocabulary on the live surface.")
             print("Each is a wrong answer waiting for whoever greps next. Fix the text, or —")
             print("if the occurrence is a licensed mention rather than a use — add the path to")
             print(f"that entry's exempt_paths, or append {ESCAPE} to the line.")
         print(f"EXAMINED: {len(ordered)} register entr(ies) + "
-              f"{len(dead)} dead exemption(s)")
+              f"{len(dead)} dead exemption(s) + {stale_examined} replacement reference(s)")
         return 1
     print(f"RESULTS: {len(ordered)}/{len(ordered)} register entries clean on the live surface, "
-          f"every concrete exemption resolves.")
-    print(f"EXAMINED: {len(ordered)}")
+          f"every concrete exemption resolves, and every resolvable reference in a "
+          f"replacement still exists.")
+    print(f"EXAMINED: {len(ordered)} entr(ies) + {stale_examined} replacement reference(s)")
     return 0
 
 
@@ -442,9 +576,42 @@ def selftest():
     except ValueError:
         pass
 
+    # REPLACEMENT STALENESS, pinned here because the hole it closes was invisible for a
+    # day and the three true-positive shapes are exactly the ones that occurred: a code
+    # value deleted out from under an entry (the `DM-AMB` case), a deleted table, and a
+    # deleted table.column. The seven controls are the extractor faults found while
+    # calibrating against the live register — each one was a false positive before it was
+    # fixed, so each is a regression that would otherwise return unnoticed.
+    REPL_CASES = [
+        ("deleted code value",        "DM-AMB — Ambulant movement",                 True),
+        ("deleted table",             "use base_icf_groupings instead",             True),
+        ("deleted table.column",      "read base_icf_groupings.grouping_code",      True),
+        ("live table",                "use population_icf_links instead",           False),
+        ("live table.column",         "read specifications.icf_code",               False),
+        ("live code value",           "use BLIND for that",                         False),
+        ("SQL alias, column resolves", "es.author_display, or es.first_author_last", False),
+        ("PRAGMA is not a column",    "PRAGMA user_version",                        False),
+        ("CI job name is not schema", "ci.yml — the `classify` job",                False),
+        ("escape suppresses",         "base_icf_groupings " + ESCAPE + " deliberate", False),
+    ]
+    if _live_vocabulary() is None:
+        failures.append("replacement staleness: no database — the sub-check cannot be "
+                        "exercised, and a selftest that skips a case silently is the "
+                        "vacuity this file reports on")
+    else:
+        for label, text, should_flag in REPL_CASES:
+            reg = {"entries": [{"id": "RV-TEST", "token": "SOME-TOKEN",
+                                "match": "identifier", "severity": "broken",
+                                "retired_by": "selftest", "replacement": text}]}
+            flagged, _ = stale_replacements(register=reg)
+            if bool(flagged) != should_flag:
+                failures.append(
+                    f"replacement staleness [{label}]: flagged={bool(flagged)}, "
+                    f"expected {should_flag}")
+
     # 15 content cases + binary skip + register parses + entries non-empty +
-    # deferred present + rejected present + unknown-mode raises.
-    n = len(CASES) + 6
+    # deferred present + rejected present + unknown-mode raises + 10 replacement cases.
+    n = len(CASES) + 6 + len(REPL_CASES)
     if failures:
         print("retired_vocabulary_audit selftest FAILURES:")
         for f in failures:
