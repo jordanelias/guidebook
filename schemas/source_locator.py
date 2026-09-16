@@ -59,4 +59,11 @@ class SourceLocator(GuidebookEntity):
     jurisdiction: Optional[str] = None
     used_in_bpcs: Optional[str] = None
     status: str = "REFERENCE-ONLY"
+    # Migration 082. The queue's terminal states and the record of who reached them.
+    # `screened_reason` is REQUIRED when status is SCREENED-OUT -- enforced by the
+    # column's own CHECK, so the constraint holds whatever writer is used; it is
+    # Optional here because the other three states must not carry one.
+    screened_reason: Optional[str] = None
+    worked_by_session: Optional[str] = None
+    worked_at: Optional[str] = None
     notes: Optional[str] = None

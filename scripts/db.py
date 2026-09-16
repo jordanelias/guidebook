@@ -1096,6 +1096,11 @@ def main():
     p_ul.add_argument("--ref-id", required=True)
     p_ul.add_argument("--status", required=True,
                       help="Live vocabulary, read from the column's own CHECK")
+    p_ul.add_argument("--reason",
+                      help="REQUIRED for SCREENED-OUT: why this lead was worked and "
+                           "judged unacceptable. The judgement is what the work bought; "
+                           "a lead dismissed with no record of why is indistinguishable "
+                           "from one nobody examined.")
     p_ul.add_argument("--session", required=True)
     p_ul.add_argument("--dry-run", action="store_true")
 
@@ -2197,7 +2202,7 @@ def main():
 
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
-                             dry_run=args.dry_run))
+                             reason=args.reason, dry_run=args.dry_run))
 
     elif args.command == "observe-term":
         _emit(observe_term({
@@ -3439,7 +3444,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         return out
 
 
-def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False):
+def update_locator(ref_id: str, status: str, session: str, reason: str = None,
+                   dry_run: bool = False):
     """Move a lead's status. insert_locator has told callers to "Use update-locator"
     for some time, and there was no such command -- an error message naming a remedy
     that does not exist, which CLAUDE.md 4 treats as an unswept caller.
@@ -3463,11 +3469,38 @@ def update_locator(ref_id: str, status: str, session: str, dry_run: bool = False
             raise Refusal(
                 f"{ref_id}: PROMOTED means this lead became evidence, and there is no "
                 f"evidence_sources row for it. File the source first.")
+        # SCREENED-OUT states WHY (migration 082). The column's CHECK enforces this too,
+        # so the refusal cannot be bypassed by another writer -- this one exists to fail
+        # with a sentence instead of a constraint violation, which is the difference
+        # between an operator who knows what to do next and one reading a stack trace.
+        if status == "SCREENED-OUT" and not (reason or "").strip():
+            raise Refusal(
+                f"{ref_id}: SCREENED-OUT requires --reason. Marking a lead off without "
+                f"recording why discards the only thing the work produced, and leaves it "
+                f"indistinguishable from a lead nobody examined.")
+        if reason and status != "SCREENED-OUT":
+            raise Refusal(
+                f"{ref_id}: --reason is the screening judgement and belongs only to "
+                f"SCREENED-OUT; {status!r} does not take one. Use --notes on add-locator "
+                f"for anything else.")
         if row["status"] == status:
             return {"ref_id": ref_id, "status": status, "changed": False}
-        conn.execute("UPDATE source_locators SET status=? WHERE ref_id=?",
-                     [status, ref_id])
-        return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True}
+        # WHO WORKED THIS LEAD. update_locator has taken `session` since it was written
+        # and stored it nowhere; `batch_capture_report.py` found source_locators
+        # unattributable on its first run for exactly that reason (893 rows, no session
+        # column, no FK path to one). Both terminal transitions record it: PROMOTED and
+        # SCREENED-OUT are equally "this batch worked this lead".
+        terminal = status in ("PROMOTED", "SCREENED-OUT")
+        conn.execute(
+            "UPDATE source_locators SET status=?, screened_reason=?, "
+            "worked_by_session=COALESCE(?, worked_by_session), "
+            "worked_at=COALESCE(?, worked_at) WHERE ref_id=?",
+            [status, (reason or "").strip() or None,
+             session if terminal else None,
+             dbcore.now() if terminal else None, ref_id])
+        return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True,
+                "worked_by_session": session if terminal else None,
+                "screened_reason": (reason or "").strip() or None}
 
 
 def observe_term(data: dict, session: str, dry_run: bool = False):
