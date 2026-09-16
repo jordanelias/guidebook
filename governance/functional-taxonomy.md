@@ -71,7 +71,7 @@ binding: no downstream use may read the taxonomy against it.
 2. **Axes describe specifications, not persons.** Per armature §4.2, axes are "the
    dimensions along which built-environment *specifications* vary." They are a
    property of the specification space, not a decomposition of a human being.
-   `population_axis_map` (§4) is therefore a **retrieval index and navigation
+   `population_icf_grouping_map` (§4) is therefore a **retrieval index and navigation
    hypothesis**, graded by mapping-confidence (§3.2) — **never a portrait**. A person
    is never the join of their axis values, and the taxonomy makes no claim that they
    are.
@@ -324,13 +324,13 @@ IBD/ostomy (CNT) — named so their absence is visible.
    cultural design corpora → profiles. Spec values and jurisdictional floors →
    items. First-person accounts → situations. Maintenance/POE/operational evidence
    → operational-access records against items or buildings.
-3. **Slug discipline.** ~~Every slug declares `serves_axes` (≥1).~~ **SUPERSEDED by owner ruling
+3. **Slug discipline.** ~~Every slug declares `serves_icf_groupings` (≥1).~~ **SUPERSEDED by owner ruling
    DR-2026-08-24 §2.4** (annotation added 2026-09-03; the underlying doctrine below is untouched
    and this is a recorded supersession, not a doctrine judgement — CLAUDE.md rule 0). The DR
    makes applicability an **OUTPUT of synthesis, not an input**: *"we are waiting until we have
    finished our syntheses to ensure we define them with evidenced justification, not
    presuppositions."* A slug that declares no axes pre-synthesis is therefore in the **correct**
-   state, not in breach of this clause — measured 2026-09-02, `serves_axes` is populated on 1 of
+   state, not in breach of this clause — measured 2026-09-02, `serves_icf_groupings` is populated on 1 of
    106 rows, which is what the ruling predicts rather than a 105-row backlog. Read the rest of
    this item as describing the layering, not as a per-slug requirement. Reconciliation
    with population-taxonomy §3.3 ("one slug, one population"): slugs serve *axes*;
@@ -428,7 +428,7 @@ of priority between people; the checklist (§9) offers the reorder explicitly.
    searched JA/DE/ZH/KO/ES/FR strata — do non-English literatures carve the space
    differently? Divergences are ratification items.
 3. Apply staged DDL + seeds (promoted into `scripts/migrations/` at apply time).
-4. Backfill `slugs.serves_axes` (79 slugs); harvest ICF-lens links from the 87
+4. Backfill `slugs.serves_icf_groupings` (79 slugs); harvest ICF-lens links from the 87
    FDA audit briefs; then re-derive population links.
 5. Regenerate FDA skill §§1–2 from the axis register; follow population-taxonomy
    §5 for enum changes.

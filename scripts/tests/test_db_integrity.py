@@ -109,10 +109,14 @@ def run_checks(db_path):
 
     # A03b/A03c did not exist before migration 065 because the ICF and needs lenses
     # had no shared home to check. Folding item_axis_links in gave them one.
-    record("A03b", "item_taxonomy_links → axes",
+    # RE-POINTED 2026-09-16. This read `FROM axes a WHERE a.axis_code=l.icf_code` and was
+    # stale TWICE over: migration 081 re-pointed `item_taxonomy_links.icf_code` at the ICF
+    # code registry, and 083 renamed `axes` away entirely — so the check would have raised
+    # `no such table`, not failed. A blocking gate that crashes is not a gate.
+    record("A03b", "item_taxonomy_links → base_taxonomy_icf",
         conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
             WHERE l.icf_code IS NOT NULL
-              AND NOT EXISTS (SELECT 1 FROM axes a WHERE a.axis_code=l.icf_code)
+              AND NOT EXISTS (SELECT 1 FROM base_taxonomy_icf b WHERE b.icf_code=l.icf_code)
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE icf_code IS NOT NULL"))
 

@@ -9,7 +9,7 @@
 ```yaml
 slug: energy-conservation-rest-points-seating
 populations: []            # derived through the axis layer, not asserted here
-serves_axes: [DM-STA, DM-PAI, DM-AMB, DM-BAL]
+serves_icf_groupings: [DM-STA, DM-PAI, DM-AMB, DM-BAL]
 opus_synthesis: false
 opus_session: null
 status: STUB

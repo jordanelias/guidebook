@@ -202,7 +202,7 @@ LENS_COLUMNS = {
     # i.e. the ICF lens resolving to an AX- demand code -- the state the same day's
     # ruling bans. db._LENS_COLUMNS carries the identical pair; the extraction and the
     # determination it feeds must name the lens the same way.
-    "icf_code": ("base_icf", "icf_code"),
+    "icf_code": ("base_taxonomy_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }
@@ -1405,7 +1405,7 @@ def main():
                          "select evidence -- sources are gathered by the extractions "
                          "they hold for --parameter-id.")
     ap.add_argument("--identity", help="populations.population_code")
-    ap.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
+    ap.add_argument("--icf", help="base_taxonomy_icf.icf_code — a real ICF b/d code")
     ap.add_argument("--needs", help="access_needs.need_code")
     ap.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     ap.add_argument("--note", default="", help="why this cell is being determined")

@@ -50,11 +50,11 @@ def schema_ddl():
     live = [r[0] for r in con.execute(
         "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND ("
         "  name = 'specifications' OR tbl_name = 'specifications'"
-        # `axes` -> `base_icf` 2026-09-13: migration 081 re-pointed specifications.icf_code
+        # `axes` -> `base_taxonomy_icf` 2026-09-13: migration 081 re-pointed specifications.icf_code
         # at the ICF registry (owner ruling, "keep the ICF lens, give it real ICF codes"),
         # so a fixture pulling `axes` builds a parent nothing references and misses the one
         # the FK needs. Rule 4: a test fixture is a caller.
-        "  OR name IN ('base_parameters','base_icf','access_needs','base_taxonomy_medical'))")]
+        "  OR name IN ('base_parameters','base_taxonomy_icf','access_needs','base_taxonomy_medical'))")]
     con.close()
     if not live:
         print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",

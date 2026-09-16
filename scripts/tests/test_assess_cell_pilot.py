@@ -216,7 +216,7 @@ def main():
     # engine could not reach this state at all, because population was mandatory.
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"}]),
                   # A REAL ICF CODE, not a demand code. Migration 081 re-pointed
-                  # specifications.icf_code at `base_icf` (owner: "keep the ICF lens, give
+                  # specifications.icf_code at `base_taxonomy_icf` (owner: "keep the ICF lens, give
                   # it real ICF codes") and 082 struck the AX- prefix entirely, so the
                   # literal that stood here was wrong twice over.
                   1, {"icf_code": "d450"}, "syn-slug", "lens without identity")

@@ -1164,12 +1164,12 @@ def main():
     # the writers migration 080's two tables shipped without. See the functions for the
     # refusals, and for the two that are DELIBERATELY ABSENT (a second link for the same
     # population under a different mechanism, and a resolved-on-creation gate).
-    # add-icf-code / set-icf-title — the writers `base_icf` needs to grow after migration
+    # add-icf-code / set-icf-title — the writers `base_taxonomy_icf` needs to grow after migration
     # 081 seeded it. See the functions for the refusals, and for why a title may never
     # arrive without a source.
     p_icf = sub.add_parser(
         "add-icf-code",
-        help="Mint one ICF code into base_icf — the registry the ICF lens points at")
+        help="Mint one ICF code into base_taxonomy_icf — the registry the ICF lens points at")
     p_icf.add_argument("--icf-code", dest="icf_code", required=True,
                        help="b/d/e/s + digits, optionally a range (d450, b1342, "
                             "d310–d329). `component` and `is_range` are DERIVED from it")
@@ -1270,7 +1270,7 @@ def main():
     p_md.add_argument("--identity", help="populations.population_code to cross to")
     p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
                       help="required with --identity")
-    p_md.add_argument("--icf", help="axes.axis_code to cross to")
+    p_md.add_argument("--icf", help="base_taxonomy_icf.icf_code to cross to")
     p_md.add_argument("--role", choices=dbcore.schema_choices("icf_medical_map", "role"),
                       help="required with --icf. No ALIAS: a diagnosis is never an alias "
                            "of a functional demand (074)")
@@ -1295,7 +1295,7 @@ def main():
     # The four lenses. At least one is required (D-0182); the CLI names them by lens
     # rather than by column so the operator is choosing a LENS, not filling a field.
     p_ax.add_argument("--identity", help="populations.population_code")
-    p_ax.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
+    p_ax.add_argument("--icf", help="base_taxonomy_icf.icf_code — a real ICF b/d code")
     p_ax.add_argument("--needs", help="access_needs.need_code")
     p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     p_ax.add_argument("--claim-type", dest="claim_type", required=True,
@@ -3789,11 +3789,11 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
             # FK". That was true of the schema and is now exactly backwards. Owner ruling,
             # same day: "'AX-' for ICF should never ever exist anywhere", then "keep the
             # ICF lens, give it real ICF codes". Migration 081 re-pointed all six icf_code
-            # columns at `base_icf`, so a raw ICF code is the ONLY thing accepted here and
+            # columns at `base_taxonomy_icf`, so a raw ICF code is the ONLY thing accepted here and
             # an AX- demand code is what the FK now refuses.
-            if not dbcore.exists(conn, "base_icf", "icf_code", icf):
+            if not dbcore.exists(conn, "base_taxonomy_icf", "icf_code", icf):
                 raise Refusal(
-                    f"--icf {icf!r} REFUSED: not in `base_icf`, the ICF registry the lens "
+                    f"--icf {icf!r} REFUSED: not in `base_taxonomy_icf`, the ICF registry the lens "
                     f"points at since migration 081.\n"
                     f"If this is a real ICF code the registry does not yet hold, mint it:\n"
                     f"  db.py add-icf-code --icf-code {icf} --session ...\n"
@@ -3994,7 +3994,7 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
 
 #: The shape an ICF code takes, kept ONLY to tell a new mint from a typo in
 #: `add-icf-code`. It is no longer the membership test anywhere: migration 081 created
-#: `base_icf` and re-pointed all six `icf_code` columns at it, so membership is the FK's
+#: `base_taxonomy_icf` and re-pointed all six `icf_code` columns at it, so membership is the FK's
 #: job now -- which is exactly what the block this replaced promised would happen ("when
 #: an ICF registry lands, this becomes an FK and the guard goes").
 #:
@@ -4020,7 +4020,7 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
       names neither the code nor the fix -- and the codes that fail here are usually
       RETIRED ones (the pre-DR-2026-07-23 set the functional-deficit-auditor taught for
       fourteen months), so the refusal points at the crosswalk rather than at the FK.
-    * An `icf_code` that is not in `base_icf`. REWRITTEN 2026-09-13: this was a shape
+    * An `icf_code` that is not in `base_taxonomy_icf`. REWRITTEN 2026-09-13: this was a shape
       guard, because at the time there was no ICF registry to point at and free text is
       where a code from another lens gets pasted by accident. Migration 081 created the
       registry and gave this column its FK, so membership is now a real check rather than
@@ -4049,9 +4049,9 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
             "moved this mapping out of. Name the source: a ref_id for a row derived "
             "from a study, or the promotion that produced it.")
     with connect(dry_run) as conn:
-        if not dbcore.exists(conn, "base_icf", "icf_code", icf_code):
+        if not dbcore.exists(conn, "base_taxonomy_icf", "icf_code", icf_code):
             raise Refusal(
-                f"{icf_code!r} is not in `base_icf`, the ICF registry this column has FK'd "
+                f"{icf_code!r} is not in `base_taxonomy_icf`, the ICF registry this column has FK'd "
                 f"into since migration 081 -- so the bare FK error would say only "
                 f"'FOREIGN KEY constraint failed', which names neither the code nor the "
                 f"fix.\n"
@@ -4093,7 +4093,7 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
 def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = None,
                     title_payload: str = None, notes: str = None, session: str,
                     dry_run: bool = False):
-    """Mint one ICF code into `base_icf` — the registry the ICF lens points at.
+    """Mint one ICF code into `base_taxonomy_icf` — the registry the ICF lens points at.
 
     OWNER RULING 2026-09-13: "keep the ICF lens, give it real ICF codes", answering the
     fork opened by the same day's "'AX-' for ICF should never ever exist anywhere".
@@ -4126,18 +4126,18 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
             f"{icf_code!r} is not shaped like an ICF code. Expected b/d/e/s followed by "
             f"digits, optionally a range (e.g. 'd450', 'b1342', 'd310\u2013d329').\n"
             f"If this is an AX- demand code: it is not an ICF code and never was (owner "
-            f"ruling 2026-09-13), and `base_icf`'s own CHECK refuses the shape too.")
+            f"ruling 2026-09-13), and `base_taxonomy_icf`'s own CHECK refuses the shape too.")
     if title and not (title_source or title_payload):
         raise Refusal(
             "--title requires --title-source (or --title-payload). A title with no source "
             "is a title from memory, which is the 2026-08-19 fabrication in a smaller "
             "field. The schema refuses the pair as well.")
     with connect(dry_run) as conn:
-        clash = conn.execute("SELECT icf_code, title FROM base_icf WHERE icf_code=?",
+        clash = conn.execute("SELECT icf_code, title FROM base_taxonomy_icf WHERE icf_code=?",
                              [icf_code]).fetchone()
         if clash:
             raise Refusal(
-                f"{icf_code} is already in base_icf (title {clash['title']!r}). One row per "
+                f"{icf_code} is already in base_taxonomy_icf (title {clash['title']!r}). One row per "
                 f"code — a second is the dual home rule 5 forbids. To add or correct a "
                 f"title, use `db.py set-icf-title`.")
         if title and title_payload:
@@ -4153,8 +4153,8 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
         row = {"icf_code": icf_code, "component": icf_code[0],
                "is_range": 1 if re.search(r"[-\u2013\u2014]", icf_code) else 0,
                "title": title, "title_source": title_source, "notes": notes}
-        row.update(dbcore.stamp_for(conn, "base_icf", session))
-        conn.execute(f"INSERT INTO base_icf ({','.join(row)}) "
+        row.update(dbcore.stamp_for(conn, "base_taxonomy_icf", session))
+        conn.execute(f"INSERT INTO base_taxonomy_icf ({','.join(row)}) "
                      f"VALUES ({','.join('?'*len(row))})", list(row.values()))
         return {"icf_code": icf_code, "component": icf_code[0],
                 "is_range": row["is_range"], "title": title,
@@ -4186,11 +4186,11 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
             "title from memory; the schema refuses the pair too.")
     with connect(dry_run) as conn:
         row = conn.execute(
-            "SELECT icf_code, title, title_source FROM base_icf WHERE icf_code=?",
+            "SELECT icf_code, title, title_source FROM base_taxonomy_icf WHERE icf_code=?",
             [icf_code]).fetchone()
         if row is None:
             raise Refusal(
-                f"{icf_code!r} is not in base_icf. Mint it first:\n"
+                f"{icf_code!r} is not in base_taxonomy_icf. Mint it first:\n"
                 f"  db.py add-icf-code --icf-code {icf_code} --session ...")
         if row["title"]:
             raise Refusal(
@@ -4207,7 +4207,7 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
                     f"--title {title!r} does not appear in {title_payload}. If the "
                     f"classification words it differently, use its wording.")
             title_source = f"payload:{title_payload}"
-        conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?",
+        conn.execute("UPDATE base_taxonomy_icf SET title=?, title_source=? WHERE icf_code=?",
                      [title, title_source, icf_code])
         return {"icf_code": icf_code, "title": title, "title_source": title_source,
                 "title_verified": bool(title_payload), "dry_run": dry_run}
@@ -4374,7 +4374,7 @@ _LENS_COLUMNS = {
     # the same day's ruling bans outright: "'AX-' for ICF should never ever exist
     # anywhere". The demand layer keeps its rows and its maps; it is simply no longer
     # a lens.
-    "icf_code": ("base_icf", "icf_code"),
+    "icf_code": ("base_taxonomy_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
     "medical_code": ("base_taxonomy_medical", "medical_code"),
 }

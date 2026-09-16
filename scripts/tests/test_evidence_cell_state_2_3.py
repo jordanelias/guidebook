@@ -115,10 +115,10 @@ _live = [r[0] for r in _con.execute(
     "  name = 'specifications' OR tbl_name = 'specifications'"
     # `axes` left the list 2026-09-13: the ICF lens no longer points at it. Owner ruling,
     # "keep the ICF lens, give it real ICF codes", executed by migration 081 -- which
-    # re-pointed specifications.icf_code at `base_icf`. A fixture still pulling `axes`
+    # re-pointed specifications.icf_code at `base_taxonomy_icf`. A fixture still pulling `axes`
     # would build a parent nothing references and MISS the one the FK now needs, which is
     # how this test failed the moment 081 landed (rule 4: a test fixture is a caller).
-    "  OR name IN ('base_parameters','terms','populations','base_icf',"
+    "  OR name IN ('base_parameters','terms','populations','base_taxonomy_icf',"
     "              'access_needs','base_taxonomy_medical'))")]
 _con.close()
 if not _live:
@@ -150,7 +150,7 @@ db.execute("INSERT INTO populations(population_code,display_name) VALUES ('MOB',
 # The ICF lens's parent. The old fixture seeded `axes` with axis_code='b230' -- a real ICF
 # code sitting in the demand registry, which is the confusion the 2026-09-13 rulings ended.
 # It now goes where it belongs.
-db.execute("INSERT INTO base_icf(icf_code,component,title,title_source,created_at,"
+db.execute("INSERT INTO base_taxonomy_icf(icf_code,component,title,title_source,created_at,"
            "created_by_session) VALUES ('b230','b','Hearing functions','test fixture',?,?)",
            (STAMP, SESS))
 

@@ -42,7 +42,7 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       DOI + page/table (or direct URL) else [UNVERIFIED-QUANT].
       Observed violation: 5 code/standard sources admitted with 0 clauses and 0 flags.
 
-  R4  COMBINATORIAL dimension.  Cells are (parameter x lens); populations/access_needs/ICF/axes
+  R4  COMBINATORIAL dimension.  Cells are (parameter x lens); populations/access_needs/ICF
       are first-class. Observed violation: 0 of 52 queries crossed a population, access need,
       ICF code or axis — coverage was one-dimensional.
 
@@ -136,7 +136,7 @@ REPO = Path(__file__).resolve().parent.parent.parent
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
 BASELINE_PATH = REPO / "governance" / "research-contract-baseline.json"
 
-# Populations / axes / ICF vocabulary used to detect a combinatorial query (R4).
+# Populations / ICF-grouping / ICF vocabulary used to detect a combinatorial query (R4).
 COMBINATORIAL_HINTS = (
     "icf", "wheelchair", "blind", "low vision", "deaf", "autis", "dementia", "vestibul",
     "chronic pain", "fatigue", "ambulant", "neurodiver", "cognitive", "intellectual",

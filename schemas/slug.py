@@ -28,7 +28,7 @@ class Slug(GuidebookEntity):
 
     # E2 (2026-07-21 register): JSON array of axis_code this slug serves, e.g. '["DM-BAL"]'.
     # Stored as TEXT (JSON) in the DB; nullable until backfilled (E3-dependent).
-    serves_axes: Optional[str] = None
+    serves_icf_groupings: Optional[str] = None
 
     @field_validator("slug")
     @classmethod
