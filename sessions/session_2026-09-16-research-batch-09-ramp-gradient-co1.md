@@ -17,10 +17,39 @@ every extraction on parameter 3. Verify with `PRAGMA`-free SQL against `specific
 than trusting this sentence.
 
 **The determination moved and did not change.** `specification_id 3` is still `pending` with
-`refs=0`, because `assess_cell.gather_sources()` gathers `figure_role IN ('claim','derived')` and
-both Co-1 rows are `finding`. That is the exact mechanism the owner named on 2026-09-16: a
-determination cannot yet be reached from findings plus a threshold. The batch's headline evidence
-is in the corpus and reaches no cell.
+`refs=0`. ~~because `assess_cell.gather_sources()` gathers `figure_role IN ('claim','derived')` and
+both Co-1 rows are `finding`.~~ **CORRECTED 2026-09-17 by the batch-10 preparation, which designed
+against this sentence and then measured it.** The struck clause is true about the Co-1 rows and
+false as an account of `refs=0`. `gather_sources(con, 3)` returns **two** rows, not zero —
+REF-00987 (T6, US) and REF-00988 (T5, DE), both `claim`. What holds the cell at `pending` is the
+next line of `determine()`: one T5 and one T6 fall **below §2.3 regulatory richness**
+(`regulatory_richness` → `(False, 'below §2.3 richness')`), so the branch that assigns `governing`
+is never entered and `refs=0` follows from the unassigned variable rather than from an empty
+gather. Re-derive both, rather than trusting either sentence:
+
+```
+python3 - <<'PY'
+import sys, sqlite3; sys.path.insert(0,'scripts'); sys.path.insert(0,'scripts/assess')
+import assess_cell as A
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+s = A.gather_sources(con, 3)
+print(len(s), [(r['ref_id'], r['tier'], r['jurisdiction']) for r in s])
+print(A.regulatory_richness([r for r in s if r['tier'] in (4,5)],
+                            [r for r in s if r['tier'] == 6]))
+PY
+```
+
+**The difference is not academic — it changes what the next batch must retrieve.** Under the struck
+reading, any further `claim` row would move the cell. Under the measured one, only a T4
+international standard, a T5 from a jurisdiction other than DE, or two more T6 from two new
+jurisdictions will; a single additional statutory code will not. `research_code_leads` 84 asserts
+the struck reading in its own note — *"Retrieve ONE jurisdiction's ramp clause and the cell becomes
+determinable"* — so the error is in the corpus as well as in this record.
+
+The owner's 2026-09-16 ACTION (2) — that `assess_cell` must reach a determination from findings
+plus a threshold — stands untouched and is still owed. The Co-1 findings genuinely do not reach the
+cell. They are simply not the reason `refs=0`. The batch's headline evidence is in the corpus and
+reaches no cell.
 
 Every figure below is derived from `data/guidebook.db` after the migration applied (rule 7).
 Re-derive before relying on any of it; the commands are in the PR.
