@@ -1481,6 +1481,30 @@ checks:
     loop, not a bag of unrelated scalars. min_items:1. STALE on main as of 2026-08-01 — the committed
     evidentiary-base-audit outputs do not match a fresh regeneration from the DB. Fix with scripts/regenerate_derived.sh,
     not by demoting the check.'
+- id: pipeline_walk_fresh
+  cmd:
+  - python3
+  - tools/pipeline_walk.py
+  - --check
+  battery: render
+  kinds:
+  - data
+  - schema
+  level: advisory
+  basis: render/render-freshness
+  cost: fast
+  min_items: 1
+  note: 'Two failures in one gate, deliberately. (1) The committed page is stale
+    against the live DB -- a rendered claim about what a session wrote that no longer
+    matches the database is CLAUDE.md 5(b) exactly. (2) The judged table->stage map
+    has drifted: a live table it does not name, or a name the schema no longer has.
+    The second is why this is registered at all. dbcore.WRITABLE_TABLES went blind
+    EIGHT times because a curated list can silently omit a live table; this map is
+    also curated, so it is given the falsifier that one lacked -- the table list is
+    read from sqlite_master and an unassigned table fails the gate rather than
+    vanishing from the page. ADVISORY, not blocking: it renders and reports, it
+    gates no write path, and a stale view surface must not stop a research batch
+    landing.'
 - id: context_map_fresh
   cmd:
   - python3

@@ -1042,6 +1042,14 @@ checks:
     - tooling
     min_items: 1
     cmd: python3 scripts/audit/pipeline_contract_audit.py
+  - id: pipeline_walk_fresh
+    level: advisory
+    battery: render
+    kinds:
+    - data
+    - schema
+    min_items: 1
+    cmd: python3 tools/pipeline_walk.py --check
   - id: pmp_audit
     level: advisory
     battery: research
