@@ -274,3 +274,51 @@ UTF-8. End-to-end against a real Shift_JIS page written into a scratch retrieval
 quote is found and an invented one is not — and the same artefact under the OLD path normalised
 to `'zxvza121aɓb'`, where the genuine quote does not match. **All 22 quotes already committed in
 the corpus still verify, zero regressions.**
+
+---
+
+## Addendum 3, 2026-09-17 — a zero-yield batch is compliant again
+
+Registering `research_dod_session` as BLOCKING (addendum 1) created a real conflict, found by
+driving the gate rather than by reading it: **three rules failed a batch for admitting nothing,
+and R14 says admitting nothing after searching is a completed unit of work.** Once the gate
+blocked CI, an honest zero-yield batch would have stopped the line for doing exactly what the
+contract asks. Owner ruling 2026-09-17: make it possible.
+
+**The discriminator is the search log, not a sentinel row.** The owner offered "even if it's just
+populating with null"; a null row would work and was declined, because the fact is derivable and
+rule 8 says derive it. *Did this session look?* is answered by `search_executions`:
+
+| state | searches logged | admissions | verdict |
+|---|---|---|---|
+| zero-yield batch | > 0 | 0 | **PASS** — nothing to cross-check, honestly |
+| untouched / misnamed session | 0 | 0 | **FAIL**, as before |
+| batch that admitted without locators | any | > 0 | **FAIL**, as before |
+
+**Three rules corrected, all with the same shape — the rule's subject is admitted evidence, and
+a batch with no admissions has no subject:**
+
+- **R9a / R9b** — a zero-yield batch mints no identifier, so none can collide with the stash.
+- **R4** — `evidence_population_match` keys on an admitted source, so a batch that admitted
+  nothing cannot produce a linkage. R4 read that as "ZERO population linkages" and failed it.
+  Failing to cross nothing is not a failure to cross.
+
+**THE PRE-STATE PROBE IS PRESERVED, and that was the constraint.** `workplan/2026-09-10-batch-06-runbook.md`
+Step 0 runs the gate on a brand-new session id and expects **exactly R1, R9a, R9b** to fire —
+that is how a session proves its id is uncontaminated. A brand-new session has logged no searches
+either, so it still trips all three. Verified: brand-new session fires exactly those three; the
+zero-yield batch is COMPLIANT; batch 09 and the corpus-wide posture are unchanged; `--selftest`
+still PASSES with R9a and R9b firing.
+
+**This makes logging what we search LOAD-BEARING, which is the point.** The exemption is bought
+by the search log and by nothing else, so a batch that searches without logging gets no
+exemption. R8 protects the other end: `search_executions` is append-only and a deleted row leaves
+an id gap (`max(exec_id) > COUNT`), so a zero-yield row cannot be quietly removed after it has
+bought the exemption. R14 still requires each empty row to say *why* it was empty — query-shape
+failure, wrong index, retrieval failure or genuine absence.
+
+**The residual risk, stated rather than papered over.** Nothing can detect a search that was run
+and never logged — that is unknowable from inside. And a fabricated `log-search` row could buy the
+exemption. What stands against it is the same discipline as everywhere else: `--prior-expectation`
+written before the query, R8's append-only guarantee, and R14's required diagnosis. The exemption
+does not weaken the fidelity floor; it moves the honest zero from "non-compliant" to "recorded".

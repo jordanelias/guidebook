@@ -368,12 +368,25 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
              )[0][0]:
         linked = _rows(cx, f"SELECT COUNT(*) FROM evidence_population_match WHERE 1=1"
                            f"{scope.replace('session','created_by_session')}", sargs)[0][0]
-    if total and linked == 0:
+    # A LINKAGE REQUIRES SOMETHING TO LINK. `evidence_population_match` keys on an admitted
+    # source, so a batch that admitted nothing cannot produce one -- and until 2026-09-17 R4
+    # read that as "ZERO population linkages" and failed it. The subject of this rule is
+    # ADMITTED EVIDENCE, not searches; a zero-yield batch has no subject, which is different
+    # from having one and failing to cross it. Counted here rather than reusing the R9 block's
+    # figure because that is computed further down.
+    n_admitted = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE 1=1"
+                           f"{scope.replace('session', 'created_by_session')}", sargs)[0][0]
+    if total and linked == 0 and n_admitted:
         fail("R4", f"{total} searches produced ZERO population linkages "
-                   f"(evidence_population_match). Cells are (parameter x lens) since migration "
-                   f"071 — NOT (item x population), the traversal D-0184 rejected: a search that "
-                   f"merely mentions a population in prose is not a crossing — link admitted "
-                   f"evidence to the population(s)/axis it actually speaks to.", total)
+                   f"(evidence_population_match) over {n_admitted} admitted source(s). Cells are "
+                   f"(parameter x lens) since migration 071 — NOT (item x population), the "
+                   f"traversal D-0184 rejected: a search that merely mentions a population in "
+                   f"prose is not a crossing — link admitted evidence to the population(s)/axis "
+                   f"it actually speaks to.", total)
+    elif total and linked == 0:
+        ok("R4", f"NOTHING TO CROSS: {total} search(es) logged and 0 sources admitted, so there "
+                 f"is no admitted evidence to link to a population. A zero-yield batch fails to "
+                 f"cross nothing (R14)")
     else:
         ok("R4", f"{linked} population linkages produced across {total} searches")
 
@@ -501,6 +514,15 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     n_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE COALESCE(e.doi,'') = '' "
                       f"AND COALESCE(e.url,'') <> ''{escope}", sargs)[0][0]
     n_adm = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE 1=1{escope}", sargs)[0][0]
+    # DID THIS SESSION LOOK? The difference between "admitted nothing AFTER SEARCHING" and
+    # "did nothing" is the whole of the zero-yield question, and the search log is what
+    # settles it -- derived, not a sentinel row anyone has to remember to write. R14 is
+    # explicit that a zero-yield search is "a COMPLETED unit of work", so a batch that
+    # searched honestly and admitted nothing is COMPLIANT doctrine; before 2026-09-17 it was
+    # non-compliant machinery, and once research_dod_session became blocking that combination
+    # would have stopped CI for a batch that did exactly what the contract asks.
+    n_search = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE 1=1"
+                         f"{' AND session = ?' if not allmode else ''}", sargs)[0][0]
 
     # RETIRED STASH ROWS ARE NOT A HELD IDENTITY, AND EXCLUDING THEM IS THE WHOLE POINT
     # OF THE TOMBSTONE. Migration 076 retains the thirteen refs the 2026-09-13 clear deleted
@@ -562,9 +584,21 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                         f"stash. That is not a locator problem to be waived: a source with no "
                         f"resolvable identifier at all cannot be cross-filed, deduplicated or "
                         f"re-retrieved by anyone. Give each admission its locator (R10).")
+        elif n_search:
+            # THE ZERO-YIELD BATCH, and it is a legitimate outcome rather than a hole.
+            # The session ran searches and admitted nothing, which R14 calls a completed
+            # unit of work. There is genuinely no identifier to cross-check, and saying so
+            # is not the vacuity this rule guards against -- the guard is preserved by the
+            # branch below, which still fires when NOTHING was logged either.
+            ok("R9a", f"NOTHING TO CROSS-CHECK, and that is an honest result: {n_search} "
+                      f"search(es) logged, 0 admissions. A zero-yield batch has no identifier "
+                      f"to collide with the stash (R14: a zero-yield search is a completed "
+                      f"unit of work)")
         else:
-            fail("R9a", "NOTHING IN SCOPE — this batch admitted no sources at all, so the stash "
-                        "cross-check examined nothing. A pass here would assert nothing.")
+            fail("R9a", "NOTHING IN SCOPE — this batch admitted no sources AND logged no "
+                        "searches, so nothing was examined and nothing was attempted. That is "
+                        "an untouched or misnamed session, not a zero-yield one: check the "
+                        "session id is the bare stem the DB stores (CLAUDE.md §7).")
     else:
         ok("R9a", f"{n_doi} admitted DOI(s) and {n_url} URL-only admission(s) checked against "
                   f"the stash; none held under a different ref_id")
@@ -590,9 +624,14 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                     f"as the UNION of every table holding a ref_id -- NOT the stash alone: "
                     + "; ".join(f"{r} admitted {a}, stash holds {b}" for r, a, b in collide[:5]),
              len(collide))
+    elif n_adm == 0 and n_search:
+        ok("R9b", f"NOTHING TO COLLIDE, and that is an honest result: {n_search} search(es) "
+                  f"logged, 0 admissions. A zero-yield batch mints no ref_id, so none can "
+                  f"collide with a held identifier (R14)")
     elif n_adm == 0:
-        fail("R9b", "NOTHING IN SCOPE — this batch admitted no sources, so the identifier "
-                    "collision check examined nothing.")
+        fail("R9b", "NOTHING IN SCOPE — this batch admitted no sources AND logged no searches, "
+                    "so the identifier collision check examined nothing and nothing was "
+                    "attempted. An untouched or misnamed session, not a zero-yield one.")
     else:
         ok("R9b", f"{n_adm} admitted ref_id(s) checked against the stash across "
                   f"{len(ID_COLS)} identifier types; no collision")
