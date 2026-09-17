@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-17-research-batch-11-threshold-legs-bcd",
+  "artifact": "sessions/session_2026-09-17-research-batch-11-threshold-legs-bcd.md",
+  "doctrine_sha": "4279241",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol",
+    "multilingual-research"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/batch-11-threshold-legs-bcd/PRIORS.md",
+      "reason": "Eight falsifiable priors were committed in 50c9b53 before the first query ran, so the R8 ordering is provable from git history rather than asserted. Each prior stated what would disconfirm it, and three were graded against outcome in the record: prior 1 falsified (PVA), prior 2 half-confirmed (APF: right on substance, wrong that it would be a retrieval failure), priors 6 and 8 confirmed."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-17-research-batch-11-threshold-legs-bcd/manifest.jsonl",
+      "reason": "Every admission rests on bytes persisted before the claim was written, with sha256, byte count and HTTP status in the manifest. Two figures were seen and NOT filed: the JISC system-error page carried nothing, and no value was taken from any search-engine summary. The IPC figures were read from p.27 of the persisted 5MB PDF via pypdf and ledgered VERBATIM-EXEMPT with the artefact hash, because a compressed PDF cannot carry its own rendered text; the Flemish figures verified as contiguous substrings of the persisted HTML and needed no exemption."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-17-research-batch-11-threshold-legs-bcd.md",
+      "reason": "Three claims that would have been easy to accept were checked instead. The 62 'gradient' hits on the PVA page were inspected individually and are all WordPress CSS presets, not content. The 5 % on the APF page was traced to an Ifop survey statistic, not a gradient. The Flemish percentages were first read from the explanatory memorandum, then re-read from the normative article, which revealed that the two disagree — the memorandum carries a 7% band the article does not contain. Lead 84's JIS entry was disproved against the standards body's own preview rather than against recollection."
+    },
+    "multilingual-research": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-17-research-batch-11-threshold-legs-bcd/manifest.jsonl",
+      "reason": "Four languages were searched in their own scripts and sources read in the original: Japanese (JIS T 9251 title and JSA preview), Dutch (the Flemish decree, read as statutory Dutch and quoted verbatim), French (APF), English. R11 harvesting took each concept phrase in the source's own words — hellingspercentage, niveauverschillen, tussenbordes — rather than back-translating. No alias was written without its in-language source."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "REF-00994 was tiered T4 via standard_eb x international, and that classification is contestable in a way that happens to favour the batch. 'standard_eb' reads as evidence-based standard; the IPC guide states no evidence base anywhere in 216 pages. The alternative, grey x intrinsic, would have made it T3 and would NOT have cleared regulatory richness. I judged that T4 is the honest slot because the ladder's T4 is the regulatory stratum's international tier and 'grey primary' implies primary material this is not — but the choice was made by the party who benefits from it, the reasoning is recorded in the extraction rather than ruled on by the owner, and a reviewer should treat it as the batch's most questionable single decision."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Two of the four planned Co-1 routes were not run at all: CERMI/ONCE and the DPI public comment, the latter already retrieved and persisted by batch 10 and needing only screening. R1 passed on the two Co-1-targeted searches that did run, so the gate is satisfied by a batch that reached half its Co-1 plan and admitted no Co-1 source. That is the contract being met on a technicality, and the record says so rather than letting COMPLIANT stand for more than it does."
+    }
+  ],
+  "bias_direction": "Toward the reading in which this batch resolved something. Two findings are genuinely strong — the IPC figure quantifying DPI Japan's complaint, and the three-way 1:20 convergence — and both arrived early, which makes the rest of the batch easy to narrate as confirmation rather than as the thin result it partly is. The specific pull to watch: having spent batch 10 dismantling a false convergence at 1:12, I had an appetite for finding a true one, and I found one at 1:20 across three sources. That appetite is exactly the condition under which a coincidence gets written up as a pattern. Three sources agreeing is not many, two of the three (AD M, Flemish decree) are European building regulators who may share unrecorded influences, and none of the three states any basis for its figure — so the convergence is real as a fact about documents and proves nothing about what a wheelchair user can climb. A second pull: the T4 classification of REF-00994 unlocked richness, and I made it myself.",
+  "independent_reviewer_counterclaim": "A reviewer should press hardest on whether this batch has any evidence at all, as opposed to a better-organised collection of assertions. Every figure it added — 1:20, 1:14, 5% — comes from a document that states no warrant, which the record itself says three times. The corpus now holds eight regulatory numbers for this parameter and still not one measurement of what gradient a wheelchair user can negotiate; the two dose-response studies that DO measure it were admitted in batch 08 and remain unreachable by the determination engine. On that reading the last three batches have been elaborate bibliography, and the honest next act is ACTION (2) — the engine work — not a ninth number. The reviewer should also note that the one target that would answer the owner's question, the Handboek criterion framed on the physical capability of an independent wheelchair user, was identified in batch 10, named again here, and has now been deferred twice in favour of documents that were easier to retrieve. The counter is that the IPC admission materially changed what the corpus knows — it converted a DPO's 'the standard is low' from rhetoric into a measured factor of 1.67 — and that is not bibliography. But the reviewer's charge that retrievability, not importance, has been setting the order for three batches is correct, and this batch's own priors admit it by putting the easiest leg first.",
+  "verdict": "DEVIATION-LOGGED"
+}
