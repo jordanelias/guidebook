@@ -1,6 +1,6 @@
-# research-preparation-joue00 — orientation, and the write path that was broken
+# pr-143 — orientation, and the write path that was broken
 
-**Branch:** `claude/research-preparation-joue00`
+**Branch:** `claude/research-preparation-joue00` · **PR** #143
 **Session id:** `session_2026-09-17-research-write-path-repair`
 
 ## What this session was asked to do, and what it found instead

@@ -1,7 +1,7 @@
 # The research write path was broken by migration 085, under a green battery
 
 **Session id:** `session_2026-09-17-research-write-path-repair`
-**Branch:** `claude/research-preparation-joue00`
+**Branch:** `claude/research-preparation-joue00` · **PR** #143
 **Asked for:** orient, and prepare to perform research.
 
 > **NO RESEARCH RAN IN THIS SESSION, AND NO ROW WAS WRITTEN TO THE CANONICAL DB.** Every probe

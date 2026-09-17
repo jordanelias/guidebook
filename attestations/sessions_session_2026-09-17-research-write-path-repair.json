@@ -11,7 +11,7 @@
   "per_rule_status": {
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "scratchpad/research-preparation-joue00/README.md",
+      "evidence_path": "scratchpad/pr-143-research-write-path-repair/README.md",
       "reason": "Every claim in the record is a command that was run and whose output is quoted, not a reading of the code. The defect was proved by executing log-search against a scratch copy and quoting the OperationalError; the repair was proved by executing it again; the new check was proved by re-introducing both original defects and quoting the two findings it then produced."
     },
     "source-discipline": {
