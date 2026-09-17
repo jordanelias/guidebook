@@ -1,7 +1,7 @@
 # Batch 10 — the threshold of acceptability for ramp gradient (TERM-001, parameter 3) × MOB
 
 **Session id:** `session_2026-09-17-research-batch-10-ramp-gradient-threshold`
-**Branch:** `claude/batch-10-prep-04rjhv`
+**Branch:** `claude/batch-10-prep-04rjhv` · **PR** #141
 **Cell:** `parameter_id 3` (TERM-001 `ramp gradient`) × identity lens `MOB`, slug
 `accessible-circulation-geometry`
 
@@ -59,8 +59,8 @@ two writes where one will do.
 
 | Artifact | What it is |
 |---|---|
-| `scratchpad/batch-10-prep-04rjhv/PRIORS.md` | Six expectations, four surprises, six refusals. Committed before any query. |
-| `scratchpad/batch-10-prep-04rjhv/QUERY-PLAN.md` | 14 executions in four legs, each with the prior that goes verbatim into `log-search --prior-expectation`. |
+| `scratchpad/pr-141-research-batch-10-threshold/PRIORS.md` | Six expectations, four surprises, six refusals. Committed before any query. |
+| `scratchpad/pr-141-research-batch-10-threshold/QUERY-PLAN.md` | 14 executions in four legs, each with the prior that goes verbatim into `log-search --prior-expectation`. |
 | `scratchpad/CURRENT` | Moved to this session's folder at OPEN, per the pointer trap. |
 | this record | Open; closed when the batch runs. |
 

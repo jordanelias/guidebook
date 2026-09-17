@@ -12,7 +12,7 @@
   "per_rule_status": {
     "adherence-logging-and-attestation": {
       "status": "FIRED",
-      "evidence_path": "scratchpad/batch-10-prep-04rjhv/PRIORS.md",
+      "evidence_path": "scratchpad/pr-141-research-batch-10-threshold/PRIORS.md",
       "reason": "Priors and the full query plan were committed to git as two separate commits BEFORE any query ran, and no query has run in this session at all, so the R8 ordering is provable from history rather than asserted. The pre-state probe was run on a scratch copy and fires exactly R1/R9a/R9b, the uncontaminated-id signature."
     },
     "source-discipline": {
