@@ -223,6 +223,16 @@ def unwritable(con) -> list[str]:
     The refusal is `FOREIGN KEY constraint failed` at INSERT, never at migration
     time, so the schema looks healthy and every gate stays green over a table that
     cannot accept a row. Derived here, never quoted.
+
+    IT OVER-REPORTS, AND THE PAGE SAYS SO RATHER THAN THE COMMENT ALONE. The probe
+    asks only whether the parent table is empty RIGHT NOW. Where a single `db.py`
+    call inserts the parent and the child in one transaction, the parent is empty
+    beforehand and the write still succeeds -- `connection_targets.con_id`,
+    `identity_medical_map.medical_code` and `icf_medical_map.medical_code` were all
+    flagged by this probe and are all fine, measured 2026-09-17. Only a child whose
+    parent NOTHING fills is genuinely dead. Reporting the raw probe as a verdict
+    would manufacture findings, so the page prints it as a list to check, not a
+    list of defects.
     """
     empty = {t for t in live_tables(con)
              if con.execute(f'SELECT COUNT(*) FROM "{t}"').fetchone()[0] == 0}
@@ -426,11 +436,15 @@ def render_html(F: dict, focus: str | None) -> str:
             + ", ".join(esc(t) for t in F["phantom"]) + "</p></div>")
     if F["unwritable"]:
         alerts += (
-            '<div class="card note"><h2>Unwritable columns</h2>'
-            '<p>A NOT NULL foreign key into an emptied table. The refusal is '
-            '<code>FOREIGN KEY constraint failed</code> at INSERT, never at migration '
-            'time, so the schema looks healthy and every gate stays green over a table '
-            'that cannot accept a row (CLAUDE.md §4).</p><p class="mono">'
+            '<div class="card note"><h2>NOT NULL foreign keys into empty tables</h2>'
+            '<p>The refusal is <code>FOREIGN KEY constraint failed</code> at INSERT, never '
+            'at migration time, so the schema looks healthy and every gate stays green over '
+            'a table that cannot accept a row (CLAUDE.md §4).</p>'
+            '<p><strong>This list over-reports and is a list to check, not a list of '
+            'defects.</strong> The probe asks only whether the parent is empty right now. '
+            'Where one <code>db.py</code> call inserts parent and child in the same '
+            'transaction the write succeeds anyway, so a column here is dead only if '
+            '<em>nothing</em> fills its parent.</p><p class="mono">'
             + ", ".join(esc(c) for c in F["unwritable"]) + "</p></div>")
 
     not_attributable = (
