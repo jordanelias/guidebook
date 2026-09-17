@@ -717,12 +717,21 @@ checks:
   level: blocking
   basis: unattributed
   cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n (the count of stated/provisional `specifications`
-    rows queried). 0 today, for the same reason as validate_evidence_state above: the specifications table
-    is genuinely unpopulated pre-Phase-E, not a broken sweep — empty-by-decision. Ran in preflight only;
-    no workflow invoked it. Now both do.'
+  min_items: 1
+  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n, the count of stated/provisional `specifications`
+    rows queried.
+
+    RATCHETED FROM no_floor TO min_items:1 ON 2026-09-17, by the guard doing its job rather than by anyone
+    noticing. The entry read `no_floor: empty-by-decision` because the specifications table was genuinely
+    unpopulated: the reason ASSERTED THE SUBJECT WAS EMPTY. Migration 086 gave the table its first live
+    determination — cell 3×MOB, the proxy branch — and the check printed EXAMINED: 1, so run_checks C9
+    refused the pair: a check cannot assert its subject is empty over a subject that is not. That is
+    CLAUDE.md rule 7a''s own enforcer catching a claim that went stale the moment the corpus filled, which
+    is exactly the ratchet CLAUDE.md asks for (`checks with a real floor: N of 73 — ratchet this up as the
+    corpus fills`; derive N from `run_checks.py --selftest`, never from this sentence).
+
+    THE FLOOR IS 1, NOT THE LIVE COUNT. 1 is the boundary between examined-something and examined-nothing
+    and does not go stale on the next determination; a floor set to today''s count would.'
 - id: audit_evidence_metadata
   cmd:
   - python3

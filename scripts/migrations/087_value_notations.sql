@@ -1,0 +1,41 @@
+-- 087_value_notations.sql
+--
+-- PRESENT BOTH. NEVER CHOOSE BETWEEN RATIO AND PERCENTAGE.
+--
+-- Owner ruling 2026-09-17, quoted in references/project-standards.md:
+-- "Present both--don't choose between ratio or percentage."
+--
+-- WHAT THIS IS FOR. A gradient is written `1:12` by some sources and `5 %` by
+-- others, and those are one quantity in two notations. `parse_bound` returns NULL
+-- for a ratio by explicit design, so `compose_value` built the determination's
+-- interval out of the percentage-stated rows alone -- measured on parameter 3 the
+-- day before this migration, TWO OF SEVEN governing claims, with five dropped.
+-- Migration 086 made that visible instead of silent; the ruling settles what to do
+-- about it, and the answer is not to pick a notation. It is to carry every notation
+-- the governing set states.
+--
+-- WHY A COLUMN RATHER THAN value_note. The existing `value_min`/`value_max`/
+-- `value_unit` triple can hold ONE notation, which is exactly the privileging the
+-- ruling forbids, and a free-text note is not something a render surface can lay
+-- out or a gate can check. This column holds the full set, as JSON, one row per
+-- notation, each carrying whether a source STATED it or the engine DERIVED it and
+-- whether that derivation is EXACT. `1:20` is exactly `5 %`; `1:12` is 8.333...%
+-- and no finite decimal is what the source wrote, so an inexact derivation is
+-- marked as one. ACTION (3) of the ruling: never round a derived figure into the
+-- position of a stated one -- that is the 2026-08-19 fabrication shape, one column
+-- along.
+--
+-- WHAT IT IS NOT. This is a ruling about NOTATION of one quantity, not about UNITS.
+-- Millimetres and degrees remain different units and `compose_value`'s refusal to
+-- compose across them is untouched by this column and by the ruling (ACTION 4).
+--
+-- NULLABLE, because most determinations have nothing to say here: a governing set
+-- written in a single notation yields a single entry, and a cell with no numeric
+-- bound at all yields none. A NULL means "no interval was composed", which
+-- `value_note` already explains in words.
+--
+-- AFTER_DATA: 20260917221350
+
+ALTER TABLE specifications ADD COLUMN value_notations TEXT;
+
+PRAGMA user_version = 87;

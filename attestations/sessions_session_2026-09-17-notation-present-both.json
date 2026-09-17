@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-17-notation-present-both",
+  "artifact": "sessions/session_2026-09-17-notation-present-both.md",
+  "doctrine_sha": "13221c9",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "integrity-protocol",
+    "source-discipline"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "references/project-standards.md",
+      "reason": "Rule 0: a live owner statement supersedes every prior ratified record it touches, ON CONTACT, and the supersession is recorded. The ruling was written into the ledger with its CONDITION/ACTION/DATE block BEFORE any code was written, and the three limits it implies rather than states -- comparison not replacement, mark the derived, mark the inexact -- are recorded there as ACTIONs so a later session is bound by them and not by my reading of them here."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/tests/test_assess_cell_pilot.py",
+      "reason": "Every claim the record makes is pinned by an assertion: that a ratio now composes AND WINS (5.0, not the steeper 6, which is the failure the ruling was asked about), that both notations are carried, that stated and derived are distinguished, that a non-terminating derivation is marked inexact, that genuinely different UNITS still refuse, and that a missing comparator now yields a refusal rather than an interval. The exactness is Fraction, not float, so 'exact' is a property the tests can check rather than a word in a comment."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-17-notation-present-both.md",
+      "reason": "One extraction was amended and the warrant is the row's own verified claim_text, quoted in the amendment reason: 'Ramp runs shall have a running slope not steeper than 1:12' is unambiguously a ceiling and the comparator was simply never recorded. amend-extraction permits comparator precisely because a wrong claimed_value would be a second row and a contest; this is not that. No source was admitted, no search logged, no claimed_value touched."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "integrity-protocol",
+      "reason": "A determination carrying an INCOHERENT interval -- minimum 8.33% above maximum 5% -- was computed and committed to a scratch database twice before the cause was found, and the first of those runs was inspected and its output pasted into working notes as though it were a result. It never reached the canonical blob and never reached git, and the engine now refuses that shape outright, but the sequence was compute-then-notice rather than notice-then-compute, and the thing that made me look was the number being visibly absurd rather than any check."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "close-gap accepted CLOSED-RULED, a status the database's own integrity test rejects, and that was found only when B06 failed afterwards on a scratch copy. The writer is laxer than the checker because the strict vocabulary lives as a Python tuple inside test_db_integrity and nothing else can read it. I recorded the defect and used the correct existing status rather than fixing it, so a writer that accepts values the corpus will refuse is still in the tree at the end of this session."
+    }
+  ],
+  "bias_direction": "Toward presenting this as the ruling landing cleanly. It did land cleanly in the sense that matters -- the value is now 5% = 1:20 with both notations stated by real sources and neither invented -- but that tidiness is partly luck: this corpus happens to contain a source stating 1:20 AND a source stating 5%, so the hardest part of the ruling, rendering a notation no source wrote and marking it inexact, is exercised only by a synthetic fixture and not by any live row. A reader could reasonably say the ruling is implemented but not yet tested by the corpus. The second pull is toward crediting the change with finding two defects; the change did not find them, it made them REACHABLE, and one of them was then found by an integrity check and the other by a number being obviously absurd.",
+  "independent_reviewer_counterclaim": "A reviewer should press on whether the notation family is doctrine smuggled in as arithmetic. NOTATION_FAMILIES is a literal in the engine asserting that '%' and 'rise:run ratio' denote one quantity exactly, and nothing in the database says so -- it is my claim, written where CLAUDE.md rule 8 would normally demand derivation, justified on the ground that mathematics is not a fact the corpus holds. That is defensible for this pair and it is also the exact shape by which a future session adds 'degrees' to the family, which would be WRONG: a gradient in degrees is the arctangent of the ratio, not a rescaling, and the conversion is neither linear nor exact. That objection was raised here and ACTED ON rather than filed: to_canonical and from_canonical now REFUSE a family member with no conversion behind it, so adding 'degrees' to the tuple raises instead of reading 5 degrees as 5 per cent, and a test pins it. What remains open, and a reviewer should still press on it, is that membership is asserted in the engine rather than derived from anywhere, and the guard proves only that someone wrote SOME arithmetic for a member -- not that the arithmetic is right. A wrong-but-present conversion would pass every check here.",
+  "verdict": "DEVIATION-LOGGED"
+}

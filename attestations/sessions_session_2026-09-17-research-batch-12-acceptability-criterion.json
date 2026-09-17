@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-17-research-batch-12-acceptability-criterion",
+  "artifact": "sessions/session_2026-09-17-research-batch-12-acceptability-criterion.md",
+  "doctrine_sha": "5ce534b",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol",
+    "multilingual-research"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-17-research-batch-12-acceptability-criterion.md",
+      "reason": "The batch was chosen to answer a charge the previous batch's own attestation made against it — that retrievability rather than importance had set the order for three batches, and that this specific target had been deferred twice. Both searches carry a prior stating what would disconfirm it, and the criterion prior was graded wrong on two of its three clauses in the record rather than quietly dropped."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-17-research-batch-12-acceptability-criterion/manifest.jsonl",
+      "reason": "Both criterion sentences verify as contiguous substrings of the persisted HTML and needed no verbatim exemption. The page the batch-10 plan named was retrieved FIRST, found not to contain the criterion, and kept — so the negative that redirected the search is evidenced rather than asserted. Nothing was taken from a search-engine summary."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-17-research-batch-12-acceptability-criterion/manifest.jsonl",
+      "reason": "The tier call was made against the ruling that constrains it rather than for the batch's benefit: national_fw/T5, not grey/T3, because the 2026-09-13 ruling puts value-restating grey in the regulatory stratum and T3 would let a handbook anchor more strongly than the decree it explains. T3 would have been the flattering choice for a row this batch is pleased to have found. The Co-1 screen was also graded honestly: a news outlet quoting a wheelchair user is not a co-produced source, so nothing was admitted from it despite its lived-experience content."
+    },
+    "multilingual-research": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-17-research-batch-12-acceptability-criterion/manifest.jsonl",
+      "reason": "Both searches were run in Dutch and both sources read in Dutch, with the criterion and its mechanism quoted verbatim in the original rather than back-translated. R11 harvested four concept phrases in the source's own words — fysieke haalbaarheid, zelfstandige rolstoelgebruiker, uitgangspunt, hellend vlak — with the parenthesis in zelfstandige preserved because it is the source's own and carries the substantive position."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The Co-1 search in this batch was run after the DoD gate named R1 as unmet, not before. The question it asked was genuine and motivated by what the batch had just admitted — whether disabled people say what the agency says on their behalf — and it was searched and screened properly rather than waved at. But the honest sequence is that the gate prompted it, which is the opposite of R1's own instruction that Co-1 runs first, and a reader should know the order rather than infer from a PASS that Co-1 led the batch."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "One admitted source, three extractions, and the record leans on it heavily. REF-00996 is a web page on a handbook site, not a dated publication: it carries no edition, no revision date and no author beyond the two agencies, so --year 2009 is taken from the regulation the handbook accompanies rather than from the page itself. That is a weaker provenance than any other row in this cell, and it is the row the batch treats as most important."
+    }
+  ],
+  "bias_direction": "Toward treating the criterion as more than it is, because this batch went looking for exactly one thing after being criticised for not going looking for it, and found it. Having framed it in advance as the highest-value target left, there was every incentive to write it up as the answer. It is not the answer: it is a regulator's assertion with no participants, no measurement and no citation, which is the same evidential class as the ceilings it explains — the only difference is that it says what the number is for. The specific overreach to watch is the claim that its mechanism stops the owner's 0-degree regress. That is my inference joining a sentence about sustained effort to a statement about monotonic curves; the source does not mention dose-response, and a reader could reasonably call it a tidy story rather than a finding.",
+  "independent_reviewer_counterclaim": "A reviewer should ask whether four Co-1 zeroes are being converted, a little too smoothly, from a failure into a result. The record presents the asymmetry — disabled people published on access, regulators published on numbers — as a fact about the evidence base. An alternative reading is that four searches, three of them a single query at a single organisation's website, is thin evidence for a claim about what an entire community has and has not published, and that the batches have been searching in the register the corpus already speaks: institutional documents in indexed places. Lived-experience knowledge about gradient plausibly exists in forums, in wheelchair-skills training material, in occupational-therapy practice and in the Co-2 professional-body literature the contract names first and no batch has yet run at all. On that reading the asymmetry finding is premature and the honest statement is narrower: four institutional Co-1 sources were checked and none carried a figure. The counter is that each zero was well-formed and individually diagnosed, and that naming a pattern is how the next batch knows where not to look again. But the reviewer is right that Co-2 — OT professional-body CPGs, co-primary under the tier system and untouched across three batches — is the gap this record should be naming instead of a pattern.",
+  "verdict": "DEVIATION-LOGGED"
+}

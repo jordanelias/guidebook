@@ -2,11 +2,11 @@
   "as_of": "2026-09-17",
   "n_slices": 80,
   "n_items": 0,
-  "total_source_instances": 11,
-  "unique_sources": 11,
+  "total_source_instances": 14,
+  "unique_sources": 14,
   "grade_distribution": {
-    "A": 0,
-    "B": 1,
+    "A": 1,
+    "B": 0,
     "C": 0,
     "D": 0,
     "E": 0,
@@ -15,8 +15,9 @@
   "tier_totals": {
     "1": 5,
     "2": 1,
-    "5": 1,
-    "6": 4
+    "4": 1,
+    "5": 2,
+    "6": 5
   },
   "strength_band_slices": {
     "full": 1,
@@ -26,12 +27,12 @@
   },
   "strength_band_instances": {
     "full": 6,
-    "partial": 1,
-    "weak": 4,
+    "partial": 3,
+    "weak": 5,
     "disputed": 0
   },
   "practice_stream_instances": 0,
-  "english_instances": 1,
+  "english_instances": 2,
   "zero_yield_search_languages": [],
   "item_basis_health": {},
   "slices": [
@@ -39,77 +40,84 @@
       "slug": "accessible-circulation-geometry",
       "topic": "entrances-and-circulation",
       "state": null,
-      "n": 11,
+      "n": 14,
       "full": 6,
-      "partial": 1,
-      "weak": 4,
+      "partial": 3,
+      "weak": 5,
       "disputed": 0,
       "t3_clinical": 0,
       "practice": 0,
-      "code_only": 5,
+      "code_only": 8,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
         "1": 5,
         "2": 1,
-        "5": 1,
-        "6": 4
+        "4": 1,
+        "5": 2,
+        "6": 5
       },
       "etypes": {
         "clinical": 3,
         "sr_meta": 1,
-        "code": 4,
-        "national_fw": 1,
-        "co1": 2
+        "code": 5,
+        "national_fw": 2,
+        "co1": 2,
+        "standard_eb": 1
       },
       "markers": {
         "●": 6,
-        "◐": 1,
-        "○": 4
+        "◐": 3,
+        "○": 5
       },
-      "n_jur": 4,
-      "n_jur_raw": 4,
-      "n_true_jur": 4,
+      "n_jur": 6,
+      "n_jur_raw": 6,
+      "n_true_jur": 6,
       "n_null_jur": 4,
       "polluted_jur": {},
       "jurs": {
         "JP": 4,
+        "BE": 2,
         "US": 1,
         "DE": 1,
-        "GB": 1
+        "GB": 1,
+        "INT": 1
       },
       "jurs_clean": {
         "US": 1,
         "DE": 1,
         "JP": 4,
-        "GB": 1
+        "GB": 1,
+        "INT": 1,
+        "BE": 2
       },
-      "n_lang": 4,
+      "n_lang": 5,
       "langs": {
         "?": 5,
         "ja": 4,
-        "de": 1,
-        "en": 1
+        "en": 2,
+        "nl": 2,
+        "de": 1
       },
-      "n_en": 1,
-      "n_nonen": 10,
-      "pct_en": 9.1,
+      "n_en": 2,
+      "n_nonen": 12,
+      "pct_en": 14.3,
       "anglo_core": 1,
-      "supra": 0,
-      "non_anglo": 6,
-      "pct_anglo_core": 14.3,
+      "supra": 1,
+      "non_anglo": 8,
+      "pct_anglo_core": 10.0,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 75.8,
+      "score": 82.5,
       "components": {
-        "A": 16,
-        "B": 21.6,
-        "C": 13,
+        "A": 20,
+        "B": 20.3,
+        "C": 17,
         "D": 12,
         "E": 13.2
       },
-      "grade": "B"
+      "grade": "A"
     },
     {
       "slug": "accessibility-feature-market-value-uplift-framing",
