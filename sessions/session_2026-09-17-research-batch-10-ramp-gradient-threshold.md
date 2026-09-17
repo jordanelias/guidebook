@@ -7,8 +7,12 @@
 
 > **THIS RECORD IS OPEN. THE BATCH HAS NOT RUN.** What follows is the preparation: the frame, the
 > priors, the query plan, the pre-state probe, and the blockers execution will meet. No search has
-> been executed, no source admitted, no migration emitted, and the canonical DB is untouched —
-> `sha256sum data/guidebook.db` is unchanged from the value recorded below. `sessions/LATEST` moves
+> been executed, no source admitted, no migration emitted, and **no row this batch would write
+> exists.** The clause "`sha256sum data/guidebook.db` is unchanged from the value recorded below"
+> stood here and is struck 2026-09-17: migration 085 moved the blob for reasons that have nothing to
+> do with this batch, so an unchanged sha is the wrong invariant. The right one is that no
+> `search_executions`, `evidence_sources` or `specifications` row carries this session id — see the
+> Pre-state section. `sessions/LATEST` moves
 > to this session because it is where work left off; **`sessions/LATEST-RESEARCH` deliberately does
 > not**, because it names the newest session with research rows and this one has none. Moving it
 > would point the blocking `research_dod_session` and `citation_mining_session` gates at a session
@@ -127,8 +131,31 @@ REF-00989 speaks to and what Leg C's criterion names, and neither reaches a dete
 
 ```
 sha256sum data/guidebook.db
-fdbb8612b5797c6ddcdc4660b6c35acf3564f3816cb2ef42ef269f98b559ec2f
 ```
+
+~~`fdbb8612b5797c6ddcdc4660b6c35acf3564f3816cb2ef42ef269f98b559ec2f`~~ — **stale, and struck
+2026-09-17.** Migration 085 (`085_column_vocabulary.sql`, one role one column name) landed hours
+after this record was written and moved the blob to
+`608626c70689b57573e897dae479f5fd1cb9d3fbe55e03b24766a82c24ec6bce`. A session trusting the recorded
+string would have read a legitimate schema migration as contamination. **The instruction below is
+what saved it, which is the reason it is written that way — re-derive the value now rather than
+trusting either string in this paragraph, including the second one.**
 
 Re-derive rather than trust that string. It must be unchanged when the batch begins, and must move
 exactly once, at the migration.
+
+## Addendum 2026-09-17 — the write path this batch needs was broken, and is repaired
+
+The same migration that moved the sha broke `db.py log-search`, which is the only way R8 can be met
+and the first command this batch runs. It raised `table search_executions has no column named
+session`: 085 renamed that column to `created_by_session` and `executed_at` to `created_at`, and
+both were spelled as string literals in the writer. `add-candidate` was broken identically
+(`search_candidates.session`), which Leg C needs for candidate 69.
+
+**Every gate was green over it.** 085's caller sweep was empirical — it ran the whole check battery
+against a rebuilt DB — and no check WRITES a search execution, so nothing exercised the writer.
+The repair and its falsifiable enforcement are recorded in
+`sessions/session_2026-09-17-research-write-path-repair.md`; both commands are verified working
+against a scratch copy. **Nothing in this batch's frame, priors or query plan changes** — the
+richness table in `QUERY-PLAN.md` re-derives identically, and the pre-state probe still fires
+exactly R1/R9a/R9b on this session id.

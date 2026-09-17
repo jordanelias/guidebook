@@ -522,16 +522,32 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # data migrations INSERT it and migrations are append-only.
 
         "deferred_reason": deferred_reason, "backfill": backfill,
-        "session": session, "executed_at": ts,
+        # The audit columns are DERIVED below, inside the connection, and are
+        # deliberately absent here -- see the stamp_for call.
         "findings_note": findings_note, "harm_finding": harm_finding,
         # The prior belongs HERE, on the search, and nowhere else. Migration 069
         # moved it off evidence_sources, where it could only be reconstructed after
         # reading the source -- the artefact the field exists to prevent.
         "prior_expectation": prior_expectation,
     }
-    cols = ", ".join(row)
-    ph = ", ".join(["?"] * len(row))
     with connect(dry_run) as conn:
+        # DERIVED, NEVER HAND-TYPED. This table's audit columns were spelled
+        # `session` and `executed_at` here as string literals until migration
+        # 085 renamed them to the corpus-wide `created_by_session`/`created_at`.
+        # That rename's sweep was empirical -- it ran the check battery against
+        # a rebuilt DB -- and it could not see these two, because NO CHECK
+        # WRITES A SEARCH EXECUTION. The battery stayed green and `log-search`,
+        # the first command of every research batch, raised "table
+        # search_executions has no column named session" on its next call.
+        # Every writer that reached for stamp_for instead survived the same
+        # rename untouched, which is the whole argument for deriving: the
+        # schema is the one home of the column's name (rule 8).
+        row.update(dbcore.stamp_for(conn, "search_executions", session))
+        # Keep the junction rows stamped with the execution row's own instant
+        # rather than a second, slightly later `now()`.
+        ts = row.get("created_at", ts)
+        cols = ", ".join(row)
+        ph = ", ".join(["?"] * len(row))
         cur = conn.execute(
             f"INSERT INTO search_executions ({cols}) VALUES ({ph})",
             list(row.values()))
@@ -2634,7 +2650,9 @@ def main():
         data   = {
             "run_id":    run_id,
             "item_code": args.item_code,
-            "session":   args.session,
+            # `"session": args.session` stood here until migration 085 DROPPED
+            # item_audit_runs.session as a duplicate of created_by_session,
+            # which insert_audit_run's own audit() stamp supplies.
             "status":    args.status,
         }
         if args.spec_hash: data["spec_hash"] = args.spec_hash
@@ -5891,7 +5909,10 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
                 "candidate description is a hypothesis, and admitting one whose locator "
                 "was never resolved is how a guess becomes a fact.")
         row = dict(data)
-        row["session"] = session
+        # `row["session"] = session` stood here until migration 085 renamed the
+        # column to `created_by_session`. The stamp_for call on the next line
+        # already supplied the right name from the live schema, so the literal
+        # was both redundant and the only thing that broke.
         row.update(dbcore.stamp_for(conn, "search_candidates", session))
         if row.get("candidate_id") is None:
             nxt = conn.execute("SELECT COALESCE(MAX(candidate_id),0)+1 FROM search_candidates").fetchone()[0]

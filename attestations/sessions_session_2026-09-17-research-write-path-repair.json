@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-17-research-write-path-repair",
+  "artifact": "sessions/session_2026-09-17-research-write-path-repair.md",
+  "doctrine_sha": "3721484",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/research-preparation-joue00/README.md",
+      "reason": "Every claim in the record is a command that was run and whose output is quoted, not a reading of the code. The defect was proved by executing log-search against a scratch copy and quoting the OperationalError; the repair was proved by executing it again; the new check was proved by re-introducing both original defects and quoting the two findings it then produced."
+    },
+    "source-discipline": {
+      "status": "NOT-FIRED",
+      "reason": "No source was admitted, no search logged against the canonical DB, no extraction written and no migration emitted. Every probe write went to a scratch copy and the canonical blob's sha256 is unchanged across this session. This is infrastructure repair, not research."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-17-research-batch-10-ramp-gradient-threshold.md",
+      "reason": "Two stale figures were found and struck in place with the stale values left visible: the batch-10 record's pre-state sha, and the check registry's hand-typed count of 91 live CHECK vocabularies where the true figure was 95. The registry count was replaced with the command that computes it rather than with the new number, per rule 7a. The batch-10 record's unchanged-sha invariant was replaced with one that is actually about the batch -- no row carries its session id -- which was then verified across four tables."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The session was asked to orient and prepare to perform research, and it added a check to the registry instead of only repairing what blocked the batch. CLAUDE.md §8 puts the burden of proof on adding apparatus, and the honest statement of what wrong thing reaches the BOOK without it -- a batch whose searches cannot be recorded, found only after the retrieval work is spent -- is an argument about the apparatus protecting the book rather than about the book directly. It is defensible and it is still scope the request did not ask for."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "The completeness of the caller sweep is asserted more confidently than it was measured. Three broken writers were found -- two by an AST scan whose threshold I chose, one by running the CLI -- and the new check demonstrably cannot see the third shape. Writers that are never exercised by any check and never exercised by me remain unswept, and the only claim actually supported is that the two commands batch 10 needs first now work."
+    }
+  ],
+  "bias_direction": "Toward making the finding look larger than the repair, because discovering that a green battery sat over a broken write path is a more interesting result than fixing two string literals, and because a session asked to prepare for research that instead did infrastructure work has an incentive to justify the detour. The record leans on the it-was-green-over-it framing throughout. A second and quieter pull is toward treating the new check as closing the class: it closes one shape of it, I measured that it misses another, and the temptation to let the enforcement stand in for the sweep is exactly the pattern rule 4 keeps catching.",
+  "independent_reviewer_counterclaim": "A reviewer should press on whether the check should exist at all. Its own docstring concedes it cannot see two of the three shapes that broke in this very rename, and it was added after a first version produced fifteen false positives and zero true ones -- which is evidence the class is harder to decide mechanically than the second attempt's clean result suggests. A reviewer might reasonably hold that the durable fix is the discipline the repair itself demonstrates -- every writer derives its audit columns from stamp_for, so there is no literal left to go stale -- and that a partial tripwire beside it invites precisely the over-reading the docstring warns against. The stronger counter is that nothing enforces that discipline on the NEXT writer, and a tripwire that catches the commonest shape is worth more than a convention nobody checks; but the reviewer's point stands that a green result here is close to uninformative, and the record should say so as plainly as the docstring does.",
+  "verdict": "DEVIATION-LOGGED"
+}

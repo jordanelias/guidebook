@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "session": "session_2026-09-17-research-batch-10-ramp-gradient-threshold",
   "artifact": "sessions/session_2026-09-17-research-batch-10-ramp-gradient-threshold.md",
-  "doctrine_sha": "0f2f525",
+  "doctrine_sha": "3721484",
   "rules_in_scope": [
     "adherence-logging-and-attestation",
     "source-discipline",
@@ -41,5 +41,15 @@
   ],
   "bias_direction": "Toward finding that the threshold half is retrievable, because this session chose the batch's subject and then argued for it, and because a batch that lands a determination is a better-looking result than one that records four paywalls. The four legs are ordered so that the leg most likely to yield runs first, which flatters the batch's early record. There is a second and sharper pull: having discovered that a single admission of the right tier flips this cell to provisional, the temptation on execution is to retrieve toward that outcome rather than toward the owner's question, and naming it in advance is the only guard this preparation can offer.",
   "independent_reviewer_counterclaim": "A reviewer should press on whether this batch answers the owner's question at all. The owner asked for a threshold of ACCEPTABILITY; what Leg A retrieves is a set of maximum PERMITTED gradients, and the preparation's own text concedes these are different claims. If every leg lands, the corpus gains five more numbers with no stated basis between them and is no closer to knowing what a wheelchair user can climb -- the one document that speaks to that (candidate 69's criterion) sits in Leg C behind a missing date, and the one source that states a lived boundary (REF-00989) is a finding the engine cannot gather. A reviewer might reasonably conclude the honest next batch is the engine work of ACTION (2), not more retrieval, and that this preparation chose retrieval because retrieval is what a research batch knows how to do. The counter-counterclaim is that ACTION (3) names retrieval explicitly and the threshold cannot be reasoned from documents the corpus does not hold -- but the reviewer's point stands that closing ACTION (3) without ACTION (2) leaves the cell no better answered.",
-  "verdict": "DEVIATION-LOGGED"
+  "verdict": "DEVIATION-LOGGED",
+  "reattestation": [
+    {
+      "prior_doctrine_sha": "0f2f525",
+      "new_doctrine_sha": "3721484",
+      "delta_ref": "1dbd092",
+      "materiality": "MATERIAL",
+      "verdict_change": "none",
+      "reason": "Migration 085 landed after this record was written and falsified two of its statements: the pre-state sha it told the next session to hold constant, and -- more seriously -- the write path the batch runs on. db.py log-search raised 'table search_executions has no column named session' under a wholly green battery. Both are struck in place with the stale values visible, the unchanged-sha invariant is replaced with one verified against four tables, and the repair is recorded in sessions/session_2026-09-17-research-write-path-repair.md. The batch's frame, priors, query plan and richness table are unchanged and re-derive identically, so the verdict does not move."
+    }
+  ]
 }
