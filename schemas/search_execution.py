@@ -13,7 +13,7 @@ requires. `deferred_reason` makes an honest non-search a first-class counted out
 lives in the foreign-keyed `search_admissions` junction, and the two are held equal in
 both directions by test_db_integrity H03/H04 until the column's caller sweep permits
 dropping it; `backfill=1` isolates the recoverable
-historical queries from forward loop rows; `executed_at` is an explicit ISO string so
+historical queries from forward loop rows; `created_at` is an explicit ISO string so
 rebuild is byte-deterministic.
 
 Per DR-2026-07-24-search-executions-substrate (D-SCHEMA / DG-REVIEW, ratified 2026-07-24).
@@ -54,5 +54,9 @@ class SearchExecution(BaseModel):
     admitted_ref_ids: Optional[str] = None        # RETIRED - do not write
     deferred_reason: Optional[str] = None          # non-NULL => deliberate no-search for this cell
     backfill: int = 0
-    session: str
-    executed_at: str                              # explicit ISO timestamp
+    # Renamed by migration 085 from `session`/`executed_at` to the corpus-wide
+    # spelling of "which session made this row, and when". The mirror is the
+    # point of this file (CLAUDE.md §7: schemas/*.py <-> SQLite drift is a bug),
+    # so the old names are gone rather than aliased.
+    created_by_session: str
+    created_at: str                               # explicit ISO timestamp
