@@ -219,3 +219,58 @@ argued it was "genuinely non-vacuous today (R1 fails NON-COMPLIANT on live data)
 COMPLIANT and has been for some time. The structural claim it was defending still holds; the
 evidence offered for it had rotted, which is rule 7a's exact shape. It now carries the command
 instead of the figure.
+
+---
+
+## Addendum 2, 2026-09-17 — the encoding gap, closed
+
+Recorded above as owed and now fixed on owner instruction. It was the third and last member
+of one family: **the apparatus held bytes it could not read, and said nothing.**
+
+**Both halves were broken.** `fetch()` invoked curl with `-w '%{http_code}'` alone, so the
+server's `Content-Type: text/html; charset=…` — the only authoritative statement of how those
+bytes decode — was discarded at the one moment it exists. Every reader then assumed UTF-8:
+`raw.decode("utf-8", errors="replace")`.
+
+**What that did to real sentences**, measured before the change:
+
+```
+shift_jis  勾配は、12分の1を超えないこと   -> normalises to 'za121a'
+euc_kr     경사로의 기울기는 8분의 1        -> '81'
+gb18030    坡道坡度不应大于1:12            -> 'μyо112'
+latin-1    Rampenläufe dürfen …           -> 'rampenlufedrfen…'
+```
+
+The first three cannot match anything, so a genuine quote is **refused** — blocking, but safe.
+**The Latin-1 case is the dangerous one**: it yields a plausible, pronounceable body that would
+match a quote typed with the same mangling, so a wrong reading could verify. These are the
+encodings of the languages the multilingual skill obliges: Shift_JIS/EUC-JP, GB18030/Big5,
+EUC-KR, Windows-1256, ISO-8859-x.
+
+**The fix.** `fetch()` now records `content_type` on every manifest line. `decode_artefact()`
+resolves an encoding in a deliberate order:
+
+1. **BOM**, UTF-32 tested before UTF-16 because `ff fe 00 00` starts with `ff fe`. The mark is
+   stripped explicitly — only `utf-8-sig` consumes its own, and testing caught `utf-16-le`
+   decoding it as a literal U+FEFF into the text.
+2. **Strict UTF-8**, and if it succeeds nothing else is consulted. This is the guard against
+   the second trap: servers mis-declare charsets routinely, and honouring a wrong declaration
+   over plainly-UTF-8 bytes would manufacture mojibake from a body that was fine. Real text in
+   a legacy encoding is almost never accidentally valid UTF-8.
+3. **Declared charset** — HTTP header first (the spec's authority), then the document's own XML
+   declaration or HTML meta.
+4. Otherwise **undecodable**, returned as such.
+
+**No statistical detection, deliberately.** A guessed encoding inside a fidelity check could
+produce a body that looks right and is not, which is the failure the module exists to prevent.
+
+**Undecodable bytes are now named, never silently skipped.** A miss used to report `EXAMINED: n`
+over artefacts it had not actually read; it now adds `N NOT SEARCHED, bytes undecodable: …`.
+"Not found" is a statement about what could be searched, and the reader is told which.
+
+**Verified.** Round-trip through Shift_JIS, EUC-KR, GB18030, ISO-8859-1, and BOM-bearing UTF-8,
+UTF-16 and UTF-32. Mis-declaration trap: valid UTF-8 wrongly declared ISO-8859-1 still decodes as
+UTF-8. End-to-end against a real Shift_JIS page written into a scratch retrieval log, a Japanese
+quote is found and an invented one is not — and the same artefact under the OLD path normalised
+to `'zxvza121aɓb'`, where the genuine quote does not match. **All 22 quotes already committed in
+the corpus still verify, zero regressions.**
