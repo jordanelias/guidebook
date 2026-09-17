@@ -93,3 +93,47 @@ batch begins". Migration 085 moved it to `608626c7…` hours later. A session tr
 string would have read a legitimate schema migration as contamination. Corrected in place, struck
 clause left visible — the record's own instruction to re-derive rather than trust the string is what
 saved it, and is the reason the instruction is written that way.
+
+---
+
+# Part 2 — batch 10 ran
+
+With the write path repaired, the batch the repair existed for was executed. Four of fourteen
+planned executions: Leg A rows 1–3 (JP, FR, GB) and Leg D row 11 (Co-1). Full record in
+`sessions/session_2026-09-17-research-batch-10-ramp-gradient-threshold.md`, now closed.
+
+## The result
+
+**Row 1 falsified its own prior, which is the most valuable thing the batch produced.** The corpus
+held `REF-00989`, a Co-1 source attributing three gradient figures to "the Barrier-Free Law". Two
+are in Cabinet Order 379/2006. The third — 1/15 — occurs **zero times** in that Order; it is in
+MLIT Ordinance 114/2006, the *voluntary* 誘導基準. So the corpus held a lived-experience assessment
+of a legal figure that merged a mandatory instrument with an aspirational one. Nothing in Japanese
+law requires 1/15.
+
+**Row 3 broke the comparison the batch was heading toward.** AD M conditions gradient on the
+*going* of a flight: 1:12 is UK-legal only for a 2 m going (166 mm rise). The US and Japanese 1:12
+carry no length term in the same clause. Regulatory richness now clears on "3 T6 codes from 3
+jurisdictions" — and the engine's own verdict says *value-level convergence unverified*, which row
+3 gives positive reason to believe is false.
+
+**The determination was retired, not recomputed.** Recomputing would publish a regulatory-floor
+claim as though it answered what a wheelchair user can actually climb.
+
+## Three more write-path defects, found by running it
+
+Each was found by the batch hitting it, not by reading code:
+
+1. **`add-source --slug` reported a link it never wrote** — gated on `--local-ref-id` while
+   `_emit` announced `linked_slug` unconditionally. Now refuses.
+2. **The verbatim guard could not read CJK numerals.** It checked that `claimed_value`'s Arabic
+   digits appear in the quote; a Japanese statute writes 十二分の一. `--verbatim-exempt` was
+   correctly refused because the text *did* verify, so there was no path at all — **every CJK
+   statutory value was unfilable.** R5 says non-English work is not lesser; the guard made it
+   unwritable. Now normalises CJK numerals, and still rejects fabricated figures.
+3. **A refusal fired after its own INSERT**, leaving an orphan admission (`REF-09999`) that the
+   DoD gate caught on R3 and R11-harvest. My own defect, introduced in fix 1 and moved to where
+   argument checks belong.
+
+The batch is captured as `replay-batch-10.sh` — rebuild from canonical, replay, diff. That is how
+the orphan was proved gone rather than argued away.

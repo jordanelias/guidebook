@@ -37,6 +37,10 @@
     {
       "rule": "adherence-logging-and-attestation",
       "reason": "This attestation grades a plan, not work. Every FIRED status above attests to the quality of a preparation whose predictions are untested by construction; the priors could be systematically wrong and nothing here would show it. An attestation over an unexecuted batch is weaker evidence than its verdict field can express, and the verdict is DEVIATION-LOGGED partly for that reason."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The batch was executed in the same session and the same PR as the write-path repair that made it possible, so the diff mixes infrastructure change with research rows and a reviewer cannot take either in isolation. The branch instruction named one branch, which is why it was not split, but the honest description is that PR #143 is two pieces of work. A second, smaller one: three of the four executions were Leg A, and the plan's own ordering put Leg A first precisely because it was most likely to yield -- so the batch's completed fraction flatters it, and the four legs that did not run are the ones whose value did not depend on reaching a number."
     }
   ],
   "bias_direction": "Toward finding that the threshold half is retrievable, because this session chose the batch's subject and then argued for it, and because a batch that lands a determination is a better-looking result than one that records four paywalls. The four legs are ordered so that the leg most likely to yield runs first, which flatters the batch's early record. There is a second and sharper pull: having discovered that a single admission of the right tier flips this cell to provisional, the temptation on execution is to retrieve toward that outcome rather than toward the owner's question, and naming it in advance is the only guard this preparation can offer.",
@@ -50,6 +54,14 @@
       "materiality": "MATERIAL",
       "verdict_change": "none",
       "reason": "Migration 085 landed after this record was written and falsified two of its statements: the pre-state sha it told the next session to hold constant, and -- more seriously -- the write path the batch runs on. db.py log-search raised 'table search_executions has no column named session' under a wholly green battery. Both are struck in place with the stale values visible, the unchanged-sha invariant is replaced with one verified against four tables, and the repair is recorded in sessions/session_2026-09-17-research-write-path-repair.md. The batch's frame, priors, query plan and richness table are unchanged and re-derive identically, so the verdict does not move."
+    },
+    {
+      "prior_doctrine_sha": "3721484",
+      "new_doctrine_sha": "3721484",
+      "delta_ref": "PR-143-batch-10-execution",
+      "materiality": "MATERIAL",
+      "verdict_change": "none",
+      "reason": "THE BATCH RAN. This attestation graded a plan; it now grades executed work, which is a different object. Four of fourteen executions ran (Leg A rows 1-3, Leg D row 11), four sources admitted, six extractions, DoD COMPLIANT on all nineteen rules, canonical DB moved once at the migration. The prior deviation about grading an unexecuted batch is therefore discharged: the predictions were tested. Row 1's prior was PARTLY FALSIFIED and that is the batch's main result -- the corpus held a Co-1 assessment of a legal figure that merged a mandatory instrument with a voluntary one. The bias named in bias_direction (retrieving toward the outcome that flips the cell) is the one to re-read against what happened: richness DID clear, and the batch declined to recompute the determination and recorded positive evidence that the convergence clearing it is false. Verdict does not move: DEVIATION-LOGGED remains right, and the second deviation below is added rather than the first being removed."
     }
   ]
 }

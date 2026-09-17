@@ -2558,11 +2558,36 @@ def main():
                 "organisation produced this work — because that co-production IS the "
                 "warrant. If it genuinely cannot be evidenced from the source, the row is "
                 "not Co-1; admit it at its actual tier and say why in --notes.")
+        # REFUSE BEFORE ANY WRITE, NOT AFTER. This read
+        # `if args.slug and args.local_ref_id:` around the link INSERT while the
+        # _emit below announced "linked_slug": args.slug unconditionally, so
+        # `add-source --slug X` WITHOUT --local-ref-id wrote no link and said it
+        # had -- the source was admitted to no topic at all, which add-extraction
+        # then refuses on, one step downstream and only after the admission is
+        # already committed. A writer that merely INSERTs is worse than hand SQL
+        # because it looks safe (CLAUDE.md §4); one that REPORTS a write it
+        # skipped is worse still.
+        #
+        # THE GUARD ITSELF WAS FIRST WRITTEN AFTER insert_evidence_source, which
+        # made it worse than useless: the refusal fired, but the evidence_sources
+        # row was already committed, so a refused command left an ORPHAN
+        # admission behind -- linked to no slug, carrying no extraction and no
+        # observed term, and the DoD gate duly failed R3 and R11-harvest on it.
+        # An argument check belongs with the argument checks. Measured 2026-09-17
+        # by REF-09999, a probe of this very refusal, surviving in the batch.
+        if args.slug and not args.local_ref_id:
+            raise Refusal(
+                "--slug needs --local-ref-id. source_slug_links carries both and "
+                "without it this command would write no link while reporting "
+                "`linked_slug`, admitting the source to no topic at all. The "
+                "local_ref_id is the label this source carries WITHIN that slug; "
+                "pick the next unused one for the slug (SELECT local_ref_id FROM "
+                "source_slug_links WHERE slug=?) and pass it. Nothing was written.")
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
         ref_id = insert_evidence_source(data, session=args.session,
                                         dry_run=args.dry_run, authors=authors)
-        if args.slug and args.local_ref_id:
+        if args.slug:
             insert_source_slug_link(ref_id, args.slug, args.local_ref_id,
                                     session=args.session, dry_run=args.dry_run)
         _emit({"ref_id": ref_id, "linked_slug": args.slug, "dry_run": args.dry_run})
@@ -4668,6 +4693,22 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
             body = _verbatim_norm(text)
             missing = [d for d in digits if d not in body]
             if missing:
+                # THE CHECK ABOVE IS MONOLINGUAL, AND SILENTLY SO. It asks whether
+                # the Arabic digits of claimed_value occur in the quote. A Japanese
+                # statute writes its numerals in kanji -- 勾配は、十二分の一を超えないこと
+                # states 1:12 and contains no digit at all -- so EVERY CJK code value
+                # was unextractable, and --verbatim-exempt could not rescue it because
+                # the exemption is refused when the text verifies, which this text
+                # does. The escape hatch was closed against the one case that needed
+                # it. R5 says non-English work is academic, not lesser; a guard that
+                # only reads Arabic numerals makes it unfilable.
+                #
+                # This WIDENS what counts as the number appearing in the quote; it
+                # does not loosen the standard. The figure must still be present in
+                # the source's own sentence -- merely written the way that language
+                # writes it. A fabricated number fails here exactly as before.
+                missing = [d for d in digits if d not in _cjk_to_arabic(body)]
+            if missing:
                 raise Refusal(
                     f"{context}: claimed_value {claimed_value!r} contains {missing}, which "
                     f"do not appear in the verified {field}. A number attached to a quote "
@@ -4677,6 +4718,39 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
                     f"measurement. Quote the sentence that states the value. Nothing was "
                     f"written.")
     return None
+
+
+_CJK_DIGITS = {"〇": 0, "零": 0, "一": 1, "二": 2, "三": 3, "四": 4,
+               "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+_CJK_UNITS = {"十": 10, "百": 100, "千": 1000}
+
+
+def _cjk_num(run):
+    """Parse one contiguous CJK numeral (十二, 百二十, 七十五) into an int, or None."""
+    total = cur = 0
+    for ch in run:
+        if ch in _CJK_DIGITS:
+            cur = _CJK_DIGITS[ch]
+        elif ch in _CJK_UNITS:
+            total += (cur or 1) * _CJK_UNITS[ch]
+            cur = 0
+        else:
+            return None
+    return total + cur
+
+
+def _cjk_to_arabic(text):
+    """`text` with each run of CJK numerals rewritten as its Arabic value.
+
+    Used ONLY to widen the number-in-the-quote check for CJK sources. 分の is not in
+    the character class, so 十二分の一 splits into the runs 十二 and 一 and renders
+    "12分の1" -- which is how the figure is read aloud and how every secondary source
+    in this corpus writes it.
+    """
+    return re.sub(r"[〇零一二三四五六七八九十百千]+",
+                  lambda m: str(_cjk_num(m.group(0)))
+                  if _cjk_num(m.group(0)) is not None else m.group(0),
+                  text)
 
 
 def _verbatim_norm(text):

@@ -5,18 +5,19 @@
 **Cell:** `parameter_id 3` (TERM-001 `ramp gradient`) × identity lens `MOB`, slug
 `accessible-circulation-geometry`
 
-> **THIS RECORD IS OPEN. THE BATCH HAS NOT RUN.** What follows is the preparation: the frame, the
-> priors, the query plan, the pre-state probe, and the blockers execution will meet. No search has
-> been executed, no source admitted, no migration emitted, and **no row this batch would write
-> exists.** The clause "`sha256sum data/guidebook.db` is unchanged from the value recorded below"
-> stood here and is struck 2026-09-17: migration 085 moved the blob for reasons that have nothing to
-> do with this batch, so an unchanged sha is the wrong invariant. The right one is that no
-> `search_executions`, `evidence_sources` or `specifications` row carries this session id — see the
-> Pre-state section. `sessions/LATEST` moves
-> to this session because it is where work left off; **`sessions/LATEST-RESEARCH` deliberately does
-> not**, because it names the newest session with research rows and this one has none. Moving it
-> would point the blocking `research_dod_session` and `citation_mining_session` gates at a session
-> that logged no searches, which addendum 3 of the batch-09 record establishes is a FAIL, correctly.
+> **THIS RECORD IS CLOSED. THE BATCH RAN 2026-09-17.** It was prepared on branch
+> `claude/batch-10-prep-04rjhv` (PR #141) and executed on `claude/research-preparation-joue00`
+> (PR #143), after that session found and repaired the write path the batch runs on — `db.py
+> log-search` could not accept a row at all. Four of the fourteen planned executions ran: Leg A
+> rows 1–3 and Leg D row 11. Four sources admitted (REF-00990…REF-00993), six extractions, one
+> Co-1 pass, one retrieval failure recorded as such. `research_batch_dod.py` reports COMPLIANT on
+> all nineteen rules. The canonical DB moved exactly once, at the migration:
+> `608626c7…` → `2db1d324…`. `sessions/LATEST` and `LATEST-RESEARCH` both move to this session,
+> because it now holds research rows.
+>
+> **What did NOT run:** Leg B entirely (the four sold standards), Leg C (the Flemish dated
+> carrier), and Leg D rows 12–14 (APF France Handicap, CERMI/ONCE, PVA). Those remain owed and
+> are not deferred_reason material — they were simply not reached.
 
 ## Why this batch exists
 
@@ -159,3 +160,82 @@ The repair and its falsifiable enforcement are recorded in
 against a scratch copy. **Nothing in this batch's frame, priors or query plan changes** — the
 richness table in `QUERY-PLAN.md` re-derives identically, and the pre-state probe still fires
 exactly R1/R9a/R9b on this session id.
+
+---
+
+## What the batch found
+
+### Row 1 — JP, the falsifiable row. **Prior partly falsified, and that is the result.**
+
+Two of the three figures REF-00989 attributes to the Barrier-Free Law are confirmed in Cabinet
+Order 379/2006 (`REF-00990`), Art. 19(2)(iv)ロ and (vii)ニ(2), which read
+*勾配は、十二分の一を超えないこと。ただし、高さが十六センチメートル以下のものにあっては、八分の一を超えないこと。*
+
+The third is not. **十五分の一 occurs ZERO times in the entire Cabinet Order.** It is in a
+different instrument, retrieved in the same pass: MLIT Ordinance 114/2006 (`REF-00991`), the
+**誘導基準** — the enhanced standard a building meets *voluntarily* to be certified — at
+Art. 11(1)(vi)ロ, governing 敷地内の通路.
+
+**So the corpus held a Co-1 assessment of "the legal figure" that silently merged two instruments
+of different legal force.** 1/12 and 1/8 are mandatory; 1/15 is aspirational. REF-00989 calls 1/15
+the outdoor figure: the domain is roughly right, the legal strength is not. **Nothing in Japanese
+law requires 1/15 of anyone.** A determination built on the Co-1 reading would have overstated the
+regulatory floor. The prior was also right that no warrant is stated — neither instrument gives any
+basis for any figure.
+
+### Row 2 — FR. **R14 RETRIEVAL FAILURE, not absence.**
+
+Légifrance returns HTTP 403 to automated retrieval on every route (`/loda/id/`,
+`/jorf/article_jo/`, `/jorf/id/`, `/download/pdf`), with a browser User-Agent. The ministry carrier
+`accessibilite-batiment.fr` returns 200 but serves a byte-identical JS shell for every section. The
+document was correctly identified on the first query; only the machine route is blocked. **Values
+were seen through a reader tool and deliberately NOT filed** — a figure the corpus cannot check
+against persisted bytes is the 2026-08-19 shape. Recorded as code lead 86, REFERENCE-ONLY.
+
+### Row 3 — GB. **Prior confirmed, and the finding is structural.**
+
+AD M (`REF-00992`) Table 1 does not state a ceiling; it conditions gradient on the **going** of a
+flight: 10 m → 1:20, 5 m → 1:15, 2 m → 1:12, interpolating between. **The UK 1:12 buys 166 mm of
+rise — about one step.** REF-00987 (ADA) and REF-00990 (JP) both state a flat 1:12 with no length
+term in the same clause, so *a cross-jurisdiction table reading 1:12 = 1:12 = 1:12 would be false
+three ways.* Filed as a claim at 1:20 with the 2 m row as a separate finding, so the engine cannot
+gather the false convergence.
+
+### Row 11 — JP Co-1. **Prior half right, and the half it got wrong matters.**
+
+DPI Japan (`REF-00993`), a cross-disability DPO, assessing Japan against the CRPD Committee's 2022
+Concluding Observations: *特に建物関係はバリアフリー法の義務基準が低く、移動等円滑化基準（義務基準）だけでは円滑な利用ができない* —
+the mandatory standards are low against the IPC Accessibility Guide, and the mandatory standard
+alone does not permit smooth use. **The people governed by REF-00990 say it is not enough.**
+
+But the prior assumed a DPO commenting on the *gradient*. It does not: 勾配, スロープ and 傾斜 occur
+**zero** times; the worked examples are toilets and parking bays. The extraction says so in its own
+notes so no later reader over-reads it. **The gradient-specific Co-1 claim remains owed.**
+
+## The thing this batch said it would not do, and did not do
+
+Regulatory richness now clears — 3 T6 codes from 3 distinct jurisdictions (GB, JP, US). **That is
+the mechanical consequence §2.3 predicted and not an answer to the owner's question**, and this
+batch's own row 3 gives positive reason to distrust it: the engine's verdict says *"value-level
+convergence unverified"*, and the AD M finding shows the apparent agreement at 1:12 is an artefact
+of reading three differently-shaped rules as one number.
+
+Determination 3 is **retired, not recomputed** (K02 fires correctly — `derivation_sha` hashes the
+junction). Recomputing it would publish a regulatory floor claim as though it answered what a
+wheelchair user can climb. Closing that gap is ACTION (2) of 2026-09-16 — engine work, not
+retrieval — and it is still owed.
+
+## What execution actually met, against what was predicted
+
+The plan predicted the paywall casualties and got the mechanism right in one case and wrong in
+another. It predicted `--quote` would bite on AD M — it did, and harder than expected: **no
+extraction_relations edge involving AD M can ever exist**, because `--quote` has no exemption and
+the PDF is compressed, so the 2 m row had to be filed as a `finding` rather than a `condition`.
+Three write-path defects were found by running the batch and are repaired in PR #143: `add-source`
+reporting a slug link it never wrote, the verbatim guard being unable to read CJK numerals (which
+made *every* Japanese statutory value unfilable), and a refusal that fired after its own INSERT.
+
+**Owed after this batch:** Leg B (four sold standards), Leg C (Flemish dated carrier), Leg D rows
+12–14, the gradient-specific Co-1 claim, the IPC Accessibility Guide (candidate, named by
+REF-00993 as its benchmark), the French arrêté (lead 86), and `update-code-lead` so R15 can be
+discharged against lead 85 (GAP-005).
