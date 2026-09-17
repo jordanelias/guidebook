@@ -3630,3 +3630,46 @@ half is a code value or an equivalent criterion, and `research_code_leads` names
 fetch but deliberately holds no values (2026-08-12 REFERENCE-ONLY ruling), so it must be retrieved.
 (4) Do not invent a `value_directness` scale on the strength of this statement.
 DATE: 2026-09-16 — owner statement, quoted above.
+
+## Owner ruling 2026-09-17 — PRESENT BOTH notations; never choose between ratio and percentage
+
+> **"Present both--don't choose between ratio or percentage."**
+
+**WHAT THIS ANSWERS.** The `DEC` gap raised the same day by the ACTION (2) engine work. A gradient is
+written as a ratio (`1:12`, `1:20`) by some sources and as a percentage (`5 %`, `6 %`) by others, and
+they are the same physical quantity in two notations. `parse_bound` returns `None` for a ratio by
+explicit design, so `compose_value` was building the determination's interval out of the
+percentage-stated rows alone — measured on parameter 3: **2 of 7 governing claims**, with five rows
+dropped. Migration 086 made that visible in `value_note` instead of silent. The question it left open
+was whether the engine may convert, and the answer is that the question was malformed: **the engine
+does not pick a notation at all. It presents both.**
+
+**WHAT IT SETTLES.**
+
+1. **No notation is dropped.** A governing claim stated as a ratio contributes to the determination on
+   the same footing as one stated as a percentage. The 2-of-7 composition was a defect, not a policy.
+2. **No notation is privileged.** The determination does not select a "canonical" form and relegate the
+   other to a note. Both are carried, and a render surface shows both.
+3. **Conversion is for COMPARISON, not for replacement.** The engine must compare across notations to
+   apply the most-accommodating rule at all, and `1:20 = 5 %` exactly. That comparison is arithmetic.
+   What it must not do is overwrite what a source wrote with the other form.
+
+**WHAT IT DOES NOT SETTLE, and the limit is arithmetic rather than doctrine.** Some conversions are
+exact and some are not: `1:20` is exactly `5 %`, but `1:12` is `8.333…%` and no finite decimal is the
+figure the source stated. So a derived notation is **marked as derived**, and where it does not
+terminate it is marked as inexact as well. Presenting both does not license presenting a rounded
+figure as though a source had written it — that is the 2026-08-19 shape, one column along.
+
+**A CONSEQUENCE WORTH STATING.** Until this ruling the engine's protection against inventing figures
+was to refuse cross-unit composition outright, which cost it five of seven rows on the first cell it
+determined. The protection was real and the cost was invisible. Both halves of that stay true and the
+remedy is not to relax the refusal but to stop treating two notations of one quantity as two units.
+
+CONDITION: Any session composing a determination's value from governing claims stated in more than one
+notation of the same quantity; any session extending `parse_bound` or `compose_value`.
+ACTION: (1) Compose across notations, never within one. (2) Carry every notation the governing set
+states, and mark any notation the engine derived rather than read. (3) Mark a derived notation that
+does not terminate as inexact; never round it into the position of a stated figure. (4) This is a
+ruling about NOTATION of one quantity, not about UNITS: millimetres and degrees remain different
+units and the existing refusal to compose across them is untouched.
+DATE: 2026-09-17 — owner ruling, quoted above.

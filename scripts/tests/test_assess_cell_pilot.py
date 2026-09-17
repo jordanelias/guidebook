@@ -547,34 +547,121 @@ def main():
            d["n_finding_sources"] == 1 and d["n_sources"] == 0,
            f"findings={d['n_finding_sources']} value-suppliers={d['n_sources']}")
 
-    # compose_value must SAY when it composed from part of the governing set. Two
-    # sources state the same quantity, one as a percentage and one as a ratio; the
-    # ratio does not parse, and before 086 it was dropped in silence.
+    # ── Owner ruling 2026-09-17: PRESENT BOTH, never choose ───────────────────
+    # Three codes state the same quantity, two as a percentage and one as a RATIO.
+    # Before the ruling the ratio was unreadable and the interval was composed from
+    # the two percentages alone. Now all three compose, on one exact scale.
     d = determine(synth_db([
         {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
          "claimed_value": "8.33", "claimed_unit": "%", "comparator": "<="},
         {"tier": 6, "evidence_type": "code", "jurisdiction": "GB",
          "claimed_value": "1:20", "claimed_unit": "rise:run ratio", "comparator": "<="},
         {"tier": 6, "evidence_type": "code", "jurisdiction": "AU",
+         "claimed_value": "6", "claimed_unit": "%", "comparator": "<="}],
+        direction="lower_is_better"),
+        1, {"identity_code": "MOB"}, "syn-slug", "both-notations")
+    # 1:20 is 5%, gentler than either percentage row. If the ratio were still being
+    # dropped this would return 6 -- the STEEPER figure -- and call it
+    # most-accommodating, which is the failure the ruling was asked about.
+    expect("NOTATION: a ratio now composes, and wins on the most-accommodating rule",
+           d["value_max"] == 5.0, str(d["value_max"]))
+    _n = {x["notation"]: x for x in (d["value_notations"] or [])}
+    expect("NOTATION: BOTH notations are carried, neither chosen",
+           set(_n) == {"%", "rise:run ratio"}, str(list(_n)))
+    expect("NOTATION: the percentage rendering is 5 and the ratio rendering is 1:20",
+           _n.get("%", {}).get("max") == "5"
+           and _n.get("rise:run ratio", {}).get("max") == "1:20",
+           str(d["value_notations"]))
+    # The winning bound was WRITTEN as a ratio by a source and not as a percentage, so
+    # one notation is stated and the other is the engine's rendering. ACTION (2) of the
+    # ruling: mark which is which.
+    expect("NOTATION: the notation a source actually wrote is marked stated",
+           _n["rise:run ratio"]["stated"] is True, str(_n["rise:run ratio"]))
+    expect("NOTATION: the notation the engine rendered is marked NOT stated",
+           _n["%"]["stated"] is False, str(_n["%"]))
+    expect("NOTATION: both renderings of 1:20 are exact, so neither is flagged inexact",
+           _n["%"]["exact"] and _n["rise:run ratio"]["exact"], str(d["value_notations"]))
+
+    # ACTION (3): a derived notation that does not terminate is marked INEXACT. 1:12 is
+    # 8.333...% and no finite decimal is what the source wrote.
+    d = determine(synth_db([
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
+         "claimed_value": "1:12", "claimed_unit": "rise:run ratio", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "GB",
+         "claimed_value": "9", "claimed_unit": "%", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "AU",
+         "claimed_value": "10", "claimed_unit": "%", "comparator": "<="}],
+        direction="lower_is_better"),
+        1, {"identity_code": "MOB"}, "syn-slug", "inexact-derivation")
+    _n = {x["notation"]: x for x in (d["value_notations"] or [])}
+    expect("NOTATION: 1:12 wins over 9% and 10% on the exact scale",
+           _n.get("rise:run ratio", {}).get("max") == "1:12", str(d["value_notations"]))
+    expect("NOTATION: a non-terminating derived rendering is marked INEXACT",
+           _n["%"]["exact"] is False and _n["rise:run ratio"]["exact"] is True,
+           str(d["value_notations"]))
+
+    # A UNIT mismatch is still refused. The ruling is about NOTATION of one quantity
+    # (ACTION 4); millimetres and degrees remain different units.
+    d = determine(synth_db([
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
+         "claimed_value": "1200", "claimed_unit": "mm", "comparator": ">="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "GB",
+         "claimed_value": "5", "claimed_unit": "degrees", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "AU",
+         "claimed_value": "6", "claimed_unit": "degrees", "comparator": "<="}],
+        direction="lower_is_better"),
+        1, {"identity_code": "MOB"}, "syn-slug", "unit-mismatch")
+    expect("NOTATION: genuinely different UNITS still refuse to compose",
+           d["value_max"] is None and "different units" in (d["value_note"] or ""),
+           str(d["value_note"]))
+
+    # A ceiling stored with NO comparator is read as a point and contributes a floor
+    # as well, giving min > max. That describes nothing and must not be emitted.
+    d = determine(synth_db([
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
+         "claimed_value": "1:12", "claimed_unit": "rise:run ratio"},   # comparator MISSING
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "GB",
+         "claimed_value": "1:20", "claimed_unit": "rise:run ratio", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "AU",
          "claimed_value": "5", "claimed_unit": "%", "comparator": "<="}],
         direction="lower_is_better"),
-        1, {"identity_code": "MOB"}, "syn-slug", "mixed-notation")
-    expect("COMPOSE: a governing claim with no parsable bound is REPORTED, not dropped",
-           d["value_note"] and "1:20" in d["value_note"] and "2 of 3" in d["value_note"],
-           str(d["value_note"]))
-    # The most-accommodating rule biting, under lower_is_better: the GENTLEST ceiling,
-    # not the first or the largest. 8.33% and 5% are both ceilings; 5 wins.
-    expect("COMPOSE: lower_is_better selects the gentlest ceiling",
-           d["value_max"] == 5.0, str(d["value_max"]))
-    # AND THE DEFECT THAT LEAVES BEHIND, asserted so it cannot be forgotten: 1:20 IS
-    # 5%, so the dropped row happens to agree with the winner here. It need not. If the
-    # only source stating the gentlest ceiling had written it as a ratio, this engine
-    # would return the STEEPER 8.33% and call it most-accommodating. Ratio-vs-percent
-    # is a doctrinal question (is an exact notation change a conversion?) and is
-    # recorded as a gap rather than decided inside an engine fix.
-    expect("COMPOSE: the note admits the interval rests on a SUBSET of the governing set",
-           "contribute to the cell's STATE but not to this interval" in d["value_note"],
-           str(d["value_note"]))
+        1, {"identity_code": "MOB"}, "syn-slug", "no-comparator")
+    expect("COMPARATOR: a missing comparator yields an INCOHERENT interval, and the "
+           "engine refuses it instead of publishing min above max",
+           d["value_min"] is None and d["value_max"] is None
+           and "INCOHERENT INTERVAL" in (d["value_note"] or ""), str(d["value_note"]))
+
+    # A family member with no arithmetic behind it must RAISE, not be read as if it
+    # were already canonical. `degrees` is the arctangent of the ratio, not a
+    # rescaling, so adding it to the family by analogy would make 5 degrees read as
+    # 5 % -- silently, and only in the composed value.
+    import assess_cell as _ac
+    _saved = _ac.NOTATION_FAMILIES["gradient"]
+    try:
+        _ac.NOTATION_FAMILIES["gradient"] = _saved + ("degrees",)
+        try:
+            _ac.to_canonical("5", "degrees")
+            expect("NOTATION: an unbacked family member is REFUSED", False,
+                   "to_canonical accepted it")
+        except NotImplementedError:
+            expect("NOTATION: an unbacked family member is REFUSED, not read as canonical",
+                   True)
+    finally:
+        _ac.NOTATION_FAMILIES["gradient"] = _saved
+
+    # And a claim with no number at all is still reported rather than dropped (086).
+    d = determine(synth_db([
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
+         "claimed_value": "5", "claimed_unit": "%", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "GB",
+         "claimed_value": "as gentle as practicable", "claimed_unit": "%",
+         "claim_type": "qualitative"},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "AU",
+         "claimed_value": "6", "claimed_unit": "%", "comparator": "<="}],
+        direction="lower_is_better"),
+        1, {"identity_code": "MOB"}, "syn-slug", "unparsable-reported")
+    expect("COMPOSE: a claim stating no number is REPORTED, not silently dropped",
+           d["value_note"] and "2 of 3" in d["value_note"], str(d["value_note"]))
 
     if FAILED:
         print(f"\nFAIL: {len(FAILED)} test(s): {FAILED}")
