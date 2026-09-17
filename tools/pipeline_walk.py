@@ -91,13 +91,19 @@ STAGE_OF = {
     "life_stage_modifiers": "base", "population_axis_map": "base",
     "population_icf_links": "base", "populations": "base", "rooms": "base",
     "room_items": "base", "situations": "base", "slugs": "base",
-    "term_aliases": "base", "terms": "base", "weighting_profile": "base",
+    "term_aliases": "base", "terms": "base",
     # research -- what was searched, screened and mined, plus the clue store
     "citation_mining": "research", "gap_mining": "research",
     "research_code_leads": "research", "search_admissions": "research",
     "search_candidates": "research", "search_coverage": "research",
     "search_executions": "research", "search_languages": "research",
-    "observed_terms": "research",
+    # THE CLUE STORE IS RESEARCH, not evidence. `db.py add-locator` is helped
+    # "Write a lead into the clue store", and §3's research row is "what was
+    # searched, screened and mined, PLUS THE CLUE STORE". Both tables carry
+    # status/tier_claimed/recovered_from and no foreign keys -- pre-admission
+    # leads, not admitted sources. (Both read "evidence" until 2026-09-17;
+    # source_locators is 893 rows, the largest object this map places.)
+    "source_locators": "research", "reference_stubs": "research",
     # evidence -- what was admitted, its identity, verification and extraction
     "case_studies": "evidence", "case_study_outcomes": "evidence",
     "case_study_populations": "evidence", "case_study_specs": "evidence",
@@ -105,9 +111,14 @@ STAGE_OF = {
     "economics_entry_populations": "evidence", "economics_entry_specs": "evidence",
     "evidence_source_authors": "evidence", "evidence_sources": "evidence",
     "external_root_registry": "evidence", "extraction_relations": "evidence",
-    "jurisdictional_values": "evidence", "reference_stubs": "evidence",
-    "source_locators": "evidence", "source_slug_links": "evidence",
+    "jurisdictional_values": "evidence", "source_slug_links": "evidence",
     "source_value_extractions": "evidence", "url_verification_runs": "evidence",
+    # Harvest is an EVIDENCE act on an admitted source, not a research one:
+    # observed_terms.ref_id is a FK into evidence_sources, and the owner ruling
+    # of 2026-08-27 quoted in CLAUDE.md §6 says "harvest concepts AT EVIDENCE
+    # (db.py observe-term, verbatim and unjudged), adjudicate at judgment".
+    # (Read "research" until 2026-09-17, contradicting the ruling by name.)
+    "observed_terms": "evidence",
     # judgment -- whether an extraction is sound and how it weighs
     "citation_population_links": "judgment",
     "evidence_population_match": "judgment",
@@ -116,8 +127,8 @@ STAGE_OF = {
     # synthesis -- what the judgments say together
     "conflicts": "synthesis", "connections": "synthesis",
     "connection_targets": "synthesis", "convergence_assessment": "synthesis",
-    "gaps": "synthesis", "reasoning_doc_citations": "synthesis",
-    "supersession_check": "synthesis",
+    "reasoning_doc_citations": "synthesis", "supersession_check": "synthesis",
+    "gaps": "synthesis",   # DISPUTED -- see DISPUTED below
     # specification -- the determination
     "determination_gates": "specification",
     "spec_value_probes": "specification",
@@ -125,17 +136,60 @@ STAGE_OF = {
     "specification_source_links": "specification",
     "specifications": "specification",
     # render -- book surfaces and the rollups that feed them
-    "bpc_metadata": "render", "item_audit_runs": "render",
     "item_bpc_links": "render", "item_population_elaborations": "render",
     "item_taxonomy_links": "render", "items": "render",
     "term_item_links": "render",
+    # Not a vocabulary and nothing points into it, so it fails the base bucket's
+    # own entry test; doctrine puts it at render (governance/grounds.md §R role
+    # views, held-tensions.md's door-epistemology disclosure). Read "base" until
+    # 2026-09-17.
+    "weighting_profile": "render",
+}
+
+#: Where the REPOSITORY CONTRADICTS ITSELF about a table's stage. The map still
+#: has to put the table somewhere for the walk to render, and the value used is
+#: recorded in STAGE_OF -- but silently taking a side in a live dispute is the
+#: thing rule 8 calls curating a fact the machine cannot check. So the side is
+#: taken openly, with both readings and their citations, and the page prints it.
+DISPUTED = {
+    "source_value_extractions": (
+        "evidence",
+        "CLAUDE.md §3 puts extraction at EVIDENCE (\"what was admitted, its "
+        "identity, verification and extraction\"). governance/pipeline-contract.yaml "
+        "calls the same rows JUDGMENT under its `- id: judgment` stage -- \"One "
+        "evidence source may provide many judgment rows\" -- and assess_cell.py:78 "
+        "calls it \"the JUDGMENT item (D-0168)\". Four contract criteria naming it "
+        "sit under judgment. Rendered at evidence; the dispute is real and open."),
+    "extraction_relations": (
+        "evidence",
+        "Inherits its parent exactly: both ends are FKs into "
+        "source_value_extractions, so it cannot sit in a different stage from it. "
+        "Disputed for the same reason and by the same documents."),
+    "gaps": (
+        "synthesis",
+        "SYNTHESIS IS THE ONE STAGE WITH NO SUPPORT, and it is where this map put "
+        "it. pipeline-contract.yaml:105 makes \"an OPEN gap\" the RESEARCH stage's "
+        "entry; 8 of 12 live rows were written by research-batch sessions; "
+        "evidence_population_match.gap_id is a FK from judgment INTO gaps; and §3 "
+        "defines synthesis as weighing, convergence and cross-slug findings, which "
+        "a gap is none of. assess_cell.py:1534 also writes it at specification. The "
+        "honest answer is a cross-stage register with no single home."),
 }
 
 #: Tables that record the repository's own operation rather than a pipeline
 #: stage. Named here so they do not sit in UNASSIGNED forever pretending to be
 #: an unclassified stage table -- a permanent false alarm teaches its reader to
 #: ignore the alarm (CLAUDE.md rule 6's own argument).
-INFRASTRUCTURE = {"data_migrations", "decisions", "pipeline_runs"}
+INFRASTRUCTURE = {
+    "data_migrations", "decisions", "pipeline_runs",
+    # RUN LEDGERS, NOT RENDER SURFACES. §3 defines render as "Book surfaces --
+    # site/, parts/, tools/*.html". bpc_metadata holds per-slug completion flags
+    # (pico_complete, search_complete, citation_mining_complete) and
+    # item_audit_runs holds run_id/status/steps_complete: both record the
+    # repository's own operation, which is this set's entry test. Both read
+    # "render" until 2026-09-17.
+    "bpc_metadata", "item_audit_runs",
+}
 
 
 # ---------------------------------------------------------------------------
@@ -294,6 +348,8 @@ def gather(con) -> dict:
         "unassigned": unassigned, "phantom": phantom, "no_session": no_session,
         "infrastructure": sorted(INFRASTRUCTURE & set(tables)),
         "sessions": sess, "writes": writes,
+        "disputed": {t: {"stage": v[0], "why": v[1]}
+                     for t, v in sorted(DISPUTED.items()) if t in tables},
         "unwritable": unwritable(con), "as_of": as_of(con, tables),
         "n_tables": len(tables),
     }
@@ -447,6 +503,20 @@ def render_html(F: dict, focus: str | None) -> str:
             '<em>nothing</em> fills its parent.</p><p class="mono">'
             + ", ".join(esc(c) for c in F["unwritable"]) + "</p></div>")
 
+    disputed_html = ""
+    if F.get("disputed"):
+        rows = "".join(
+            f'<tr><td class="mono">{esc(t)}</td><td class="mono">{esc(d["stage"])}</td>'
+            f'<td>{esc(d["why"])}</td></tr>' for t, d in F["disputed"].items())
+        disputed_html = (
+            '<div class="card note"><h2>Contested stage assignments</h2>'
+            '<p>The repository contradicts itself about where these tables belong. The walk '
+            'still has to put each one somewhere, so it does — and says which side it took '
+            'and what argues the other way, rather than picking silently. A map that hides a '
+            'live dispute is curating a fact nothing can check.</p>'
+            '<div class="scroll"><table><thead><tr><th>table</th><th>rendered at</th>'
+            f'<th>the dispute</th></tr></thead><tbody>{rows}</tbody></table></div></div>')
+
     not_attributable = (
         '<div class="card"><h2>Not attributable to a session</h2>'
         f'<p>{len(F["no_session"])} of {F["n_tables"]} tables carry no session column, so '
@@ -469,7 +539,7 @@ def render_html(F: dict, focus: str | None) -> str:
 <code>sqlite_master</code>, so a new table cannot hide. Data as of <strong>{esc(F["as_of"])}</strong>
 — derived from the database's own timestamps, never the clock. Regenerate with
 <code>python3 tools/pipeline_walk.py</code>.</p>
-{alerts}
+{alerts}{disputed_html}
 <h2>Session</h2>
 <div class="card">
 <select id="sess">{opts}</select>
