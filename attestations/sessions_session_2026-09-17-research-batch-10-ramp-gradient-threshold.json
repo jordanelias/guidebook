@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-17-research-batch-10-ramp-gradient-threshold",
+  "artifact": "sessions/session_2026-09-17-research-batch-10-ramp-gradient-threshold.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol",
+    "multilingual-research"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/pr-141-research-batch-10-threshold/PRIORS.md",
+      "reason": "Priors and the full query plan were committed to git as two separate commits BEFORE any query ran, and no query has run in this session at all, so the R8 ordering is provable from history rather than asserted. The pre-state probe was run on a scratch copy and fires exactly R1/R9a/R9b, the uncontaminated-id signature."
+    },
+    "source-discipline": {
+      "status": "NOT-FIRED",
+      "reason": "No source was admitted, no extraction written and no migration emitted. This session prepares a batch; it does not execute one. The canonical DB sha256 is unchanged."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-16-research-batch-09-ramp-gradient-co1.md",
+      "reason": "Every load-bearing figure in the preparation was derived by calling assess_cell's own functions against a read-only connection, and each is written beside the command that regenerates it (rule 7a). The batch-09 record's account of why specification 3 sits at pending was measured rather than inherited, found false, and corrected in place with the struck clause left visible."
+    },
+    "multilingual-research": {
+      "status": "NOT-FIRED",
+      "reason": "No language pass was executed. The query plan reserves five languages (JA, FR, NL, ES, EN) across ten jurisdictions and orders the non-English legs ahead of nothing, because no leg has run. The batch-09 deviation on English-first ordering is carried forward as a constraint on execution, not discharged here."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "research_code_leads 84 is left carrying a note this preparation measured to be false ('Retrieve ONE jurisdiction's ramp clause and the cell becomes determinable' -- a single new statutory code does not clear §2.3 richness). The defect is recorded in three places and fixed in none, on the judgement that R15 re-describes the lead from the retrieved documents in one write rather than two. A reader meeting the lead before the batch runs still meets the false claim."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "This attestation grades a plan, not work. Every FIRED status above attests to the quality of a preparation whose predictions are untested by construction; the priors could be systematically wrong and nothing here would show it. An attestation over an unexecuted batch is weaker evidence than its verdict field can express, and the verdict is DEVIATION-LOGGED partly for that reason."
+    }
+  ],
+  "bias_direction": "Toward finding that the threshold half is retrievable, because this session chose the batch's subject and then argued for it, and because a batch that lands a determination is a better-looking result than one that records four paywalls. The four legs are ordered so that the leg most likely to yield runs first, which flatters the batch's early record. There is a second and sharper pull: having discovered that a single admission of the right tier flips this cell to provisional, the temptation on execution is to retrieve toward that outcome rather than toward the owner's question, and naming it in advance is the only guard this preparation can offer.",
+  "independent_reviewer_counterclaim": "A reviewer should press on whether this batch answers the owner's question at all. The owner asked for a threshold of ACCEPTABILITY; what Leg A retrieves is a set of maximum PERMITTED gradients, and the preparation's own text concedes these are different claims. If every leg lands, the corpus gains five more numbers with no stated basis between them and is no closer to knowing what a wheelchair user can climb -- the one document that speaks to that (candidate 69's criterion) sits in Leg C behind a missing date, and the one source that states a lived boundary (REF-00989) is a finding the engine cannot gather. A reviewer might reasonably conclude the honest next batch is the engine work of ACTION (2), not more retrieval, and that this preparation chose retrieval because retrieval is what a research batch knows how to do. The counter-counterclaim is that ACTION (3) names retrieval explicitly and the threshold cannot be reasoned from documents the corpus does not hold -- but the reviewer's point stands that closing ACTION (3) without ACTION (2) leaves the cell no better answered.",
+  "verdict": "DEVIATION-LOGGED"
+}
