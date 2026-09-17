@@ -1,1 +1,79 @@
-[]
+[
+  {
+    "started": "2026-09-17T04:10:57",
+    "role": "other",
+    "bytes": 675665,
+    "agent_id_prefix": "ab288263",
+    "file": "2026-09-17T04-10-57_other_ab288263.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:11:05",
+    "role": "other",
+    "bytes": 691275,
+    "agent_id_prefix": "a67363e1",
+    "file": "2026-09-17T04-11-05_other_a67363e1.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:11:16",
+    "role": "other",
+    "bytes": 807498,
+    "agent_id_prefix": "a8f1d0c8",
+    "file": "2026-09-17T04-11-16_other_a8f1d0c8.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:11:27",
+    "role": "other",
+    "bytes": 988214,
+    "agent_id_prefix": "add15aa0",
+    "file": "2026-09-17T04-11-27_other_add15aa0.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:11:40",
+    "role": "other",
+    "bytes": 766612,
+    "agent_id_prefix": "aa3c7cc1",
+    "file": "2026-09-17T04-11-40_other_aa3c7cc1.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:21:50",
+    "role": "antagonist",
+    "bytes": 875448,
+    "agent_id_prefix": "a91c98ae",
+    "file": "2026-09-17T04-21-50_antagonist_a91c98ae.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:38:54",
+    "role": "other",
+    "bytes": 663492,
+    "agent_id_prefix": "ae6315d2",
+    "file": "2026-09-17T04-38-54_other_ae6315d2.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:52:25",
+    "role": "other",
+    "bytes": 615271,
+    "agent_id_prefix": "a6434d3e",
+    "file": "2026-09-17T04-52-25_other_a6434d3e.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:52:38",
+    "role": "other",
+    "bytes": 462196,
+    "agent_id_prefix": "ac0a044a",
+    "file": "2026-09-17T04-52-38_other_ac0a044a.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:52:50",
+    "role": "other",
+    "bytes": 493282,
+    "agent_id_prefix": "a4ee8b3f",
+    "file": "2026-09-17T04-52-50_other_a4ee8b3f.jsonl"
+  },
+  {
+    "started": "2026-09-17T04:53:07",
+    "role": "other",
+    "bytes": 662578,
+    "agent_id_prefix": "a763d444",
+    "file": "2026-09-17T04-53-07_other_a763d444.jsonl"
+  }
+]

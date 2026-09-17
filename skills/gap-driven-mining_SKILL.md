@@ -51,7 +51,7 @@ When `adversarial-research`, `functional-deficit-researcher`, `multilingual-rese
    Returns the gap's `mining_addressability` and the most recent `gap_mining.outcome` (if any).
 3. If `mining_addressability != 'ADDRESSABLE'` → return early; the calling skill stays on its primary task.
 4. If most recent `outcome = 'closure_evidence_found'` → return early (gap already closed by mining).
-5. If most recent `outcome IN ('null_result', 'partial_evidence_found')` and `attempt_at` is within 6 months AND no caller-provided new candidates → return early (per §5 re-eligibility).
+5. If most recent `outcome IN ('null_result', 'partial_evidence_found')` and `created_at` is within 6 months AND no caller-provided new candidates → return early (per §5 re-eligibility).
 6. Otherwise run the §3 matrix for the gap's pattern, log the `gap_mining` row, return discoveries to caller.
 
 ### BATCH mode (standalone sweep)
@@ -64,7 +64,7 @@ When invoked directly to sweep OPEN gaps:
    # then
    python3 scripts/db.py unmined-gaps --priority P2
    ```
-   Each returns gaps with `mining_addressability = 'ADDRESSABLE'`, `status LIKE 'OPEN%'`, and either no `gap_mining` row OR most recent `attempt_at` older than 6 months.
+   Each returns gaps with `mining_addressability = 'ADDRESSABLE'`, `status LIKE 'OPEN%'`, and either no `gap_mining` row OR most recent `created_at` older than 6 months.
 2. For each gap, in priority order:
    - Run the §3 matrix for the gap's pattern (the matrix entry is selected by parsing the gap's description; see §2).
    - Aggregate candidates across all matrix entries before outcome judgment (cluster pattern per §3).
@@ -275,19 +275,19 @@ The `gap_mining` row alone does NOT close the gap. The closure workflow:
 
 ## 5. Cross-session idempotency and re-eligibility
 
-`gap_mining` is append-only. Each pass adds rows; older rows are retained for audit history. The operative outcome for each gap is the row with `MAX(attempt_at)`.
+`gap_mining` is append-only. Each pass adds rows; older rows are retained for audit history. The operative outcome for each gap is the row with `MAX(created_at)`.
 
 **Re-eligibility rules:**
 
 | Previous outcome | When re-eligible |
 |---|---|
-| `null_result` | After 6 months (`attempt_at < today - 6mo`), with publication-date filter set to `> previous attempt_at` to scope search to truly new literature. |
+| `null_result` | After 6 months (`created_at < today - 6mo`), with publication-date filter set to `> previous created_at` to scope search to truly new literature. |
 | `partial_evidence_found` | Immediately if new candidate sources surface from any direction (citation-miner BATCH, an adjacent gap's mining, supersession-audit). |
 | `deferred` | Immediately when the blocking connector recovers. |
 | `gap_recategorized` | Never via gap-mining (the gap is now handled by another skill). |
 | `closure_evidence_found` | Never unless the gap is reopened (e.g., a cited discovery is retracted). |
 
-This protocol is semiannual-sweep-ready: re-run the BATCH query filtered to `attempt_at < (today - 6 months)` with publication-date filter `> previous attempt_at`.
+This protocol is semiannual-sweep-ready: re-run the BATCH query filtered to `created_at < (today - 6 months)` with publication-date filter `> previous created_at`.
 
 ---
 

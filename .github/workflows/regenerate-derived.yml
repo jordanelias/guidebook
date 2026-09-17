@@ -36,6 +36,7 @@ on:
       - 'tools/evidentiary_audit.py'
       - 'tools/pipeline_completeness.py'
       - 'tools/regenerate_vetting_surface.py'
+      - 'tools/pipeline_walk.py'
       - '.github/workflows/regenerate-derived.yml'
   schedule:
     # Mondays 07:30 UTC, after the weekly source-verification job. A belt-and-
@@ -82,6 +83,20 @@ jobs:
             generator: tools/pipeline_completeness.py
             commit_prefix: pipeline-completeness-regen
             outputs: tools/pipeline-completeness-dashboard.html
+
+          # WITHOUT THIS LEG THE GATE IS RED BY CONSTRUCTION. resolve-dois.yml
+          # and verify-urls.yml both `git add data/guidebook.db` and push to
+          # main on a schedule; either push moves evidence_sources.updated_at,
+          # which moves this page's as-of stamp and its rendered rows. With no
+          # write-back leg the committed page goes stale on main and every later
+          # PR touching data/ or schemas/ fails pipeline_walk_fresh over a change
+          # it did not make -- which is CLAUDE.md rule 6's own argument for why a
+          # check that is red by construction teaches its reader to ignore it.
+          - id: pipeline-walk
+            name: Pipeline walk
+            generator: tools/pipeline_walk.py
+            commit_prefix: pipeline-walk-regen
+            outputs: tools/pipeline-walk.html
 
     steps:
       - uses: actions/checkout@v4

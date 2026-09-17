@@ -279,7 +279,7 @@ def check_baseline(ref="origin/main"):
 
 def audit(session=None, allmode=False, capture=None, use_baseline=True):
     cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
-    scope = "" if allmode else " AND session = ?"
+    scope = "" if allmode else " AND created_by_session = ?"
     sargs = () if allmode else (session,)
     issues, notes = [], []
 
@@ -298,7 +298,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     co1 = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE target_evidence_type IN "
                     f"('co1','co2'){scope}", sargs)[0][0]
     co1_src = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE evidence_type IN "
-                        f"('co1','co2'){scope.replace('session','created_by_session')}",
+                        f"('co1','co2'){scope}",
                     sargs)[0][0]
     co1_waiver = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE "
                            f"COALESCE(findings_note,'') LIKE '%CO1-NOT-APPLICABLE%'{scope}",
@@ -322,9 +322,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # and never consulted citation_mining at all — "did you mine?" did not look at the mining
     # table. Now requires actual citation_mining rows, proportionate to admitted anchors.
     admitted = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE tier BETWEEN 1 AND 3"
-                         f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                         f"{scope}", sargs)[0][0]
     mined_rows = _rows(cx, f"SELECT COUNT(*) FROM citation_mining WHERE 1=1"
-                           f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                           f"{scope}", sargs)[0][0]
     mined_dir = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE mining_direction IS NOT "
                           f"NULL AND mining_direction <> 'none'{scope}", sargs)[0][0]
     if admitted > 0 and mined_rows == 0:
@@ -343,7 +343,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                         f"(article_number IS NULL OR article_number='') AND "
                         f"(pages IS NULL OR pages='') AND "
                         f"COALESCE(notes,'') NOT LIKE '%UNVERIFIED-QUANT%'"
-                        f"{scope.replace('session','created_by_session')}", sargs)
+                        f"{scope}", sargs)
     if uncited:
         fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry values with no clause/"
                    f"section/page AND no [UNVERIFIED-QUANT] flag: "
@@ -367,7 +367,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_population_match'"
              )[0][0]:
         linked = _rows(cx, f"SELECT COUNT(*) FROM evidence_population_match WHERE 1=1"
-                           f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                           f"{scope}", sargs)[0][0]
     # A LINKAGE REQUIRES SOMETHING TO LINK. `evidence_population_match` keys on an admitted
     # source, so a batch that admitted nothing cannot produce one -- and until 2026-09-17 R4
     # read that as "ZERO population linkages" and failed it. The subject of this rule is
@@ -375,7 +375,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # from having one and failing to cross it. Counted here rather than reusing the R9 block's
     # figure because that is computed further down.
     n_admitted = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE 1=1"
-                           f"{scope.replace('session', 'created_by_session')}", sargs)[0][0]
+                           f"{scope}", sargs)[0][0]
     if total and linked == 0 and n_admitted:
         fail("R4", f"{total} searches produced ZERO population linkages "
                    f"(evidence_population_match) over {n_admitted} admitted source(s). Cells are "
@@ -469,7 +469,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     dupes = _rows(cx, f"SELECT e.doi, COUNT(*) c FROM evidence_sources e WHERE e.doi IS NOT NULL "
                       f"AND e.doi <> '' AND e.doi IN (SELECT doi FROM evidence_sources WHERE "
                       f"doi IS NOT NULL AND doi <> ''"
-                      f"{scope.replace('session','created_by_session')}) "
+                      f"{scope}) "
                       f"GROUP BY e.doi HAVING c > 1", sargs)
     if dupes:
         fail("R9", f"{len(dupes)} DOI(s) admitted by THIS batch already exist in the corpus — "
@@ -522,7 +522,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # non-compliant machinery, and once research_dod_session became blocking that combination
     # would have stopped CI for a batch that did exactly what the contract asks.
     n_search = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE 1=1"
-                         f"{' AND session = ?' if not allmode else ''}", sargs)[0][0]
+                         f"{' AND created_by_session = ?' if not allmode else ''}", sargs)[0][0]
 
     # RETIRED STASH ROWS ARE NOT A HELD IDENTITY, AND EXCLUDING THEM IS THE WHOLE POINT
     # OF THE TOMBSTONE. Migration 076 retains the thirteen refs the 2026-09-13 clear deleted
@@ -642,11 +642,11 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     unver = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE verification_status='VERIFIED'"
                       f" AND COALESCE(doi,'')='' AND COALESCE(url,'')='' AND COALESCE(pmid,'')=''"
                       f" AND COALESCE(verified_by_tool,'')=''"
-                      f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                      f"{scope}", sargs)[0][0]
     unresolved = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
                            f"verification_status='VERIFIED' AND COALESCE(doi,'') <> '' AND "
                            f"COALESCE(doi_resolution_outcome,'') NOT IN ('RESOLVED','NO-MATCH')"
-                           f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                           f"{scope}", sargs)[0][0]
     if unver:
         fail("R10", f"{unver} VERIFIED source(s) with no locator or verifying tool. Ladder "
                     f"DOI -> Crossref/PubMed -> publisher -> repository; a publisher block is "
@@ -673,12 +673,12 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # edit (same workplan, STOP CONDITIONS #1).
     unverified_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
                                f"COALESCE(url,'') <> '' AND verification_status IS NULL"
-                               f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                               f"{scope}", sargs)[0][0]
     # The subject: URL-bearing admissions. Without this the pass could not say whether it
     # had looked at anything, which is the whole of §5(a).
     n_url_bearing = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
                               f"COALESCE(url,'') <> ''"
-                              f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                              f"{scope}", sargs)[0][0]
     if unverified_url:
         fail("R10b", f"{unverified_url} admitted source(s) carry a URL with verification_status "
                      f"left NULL. This is exactly the pool verify_urls.py's scheduled cron "
@@ -700,9 +700,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
 
     # --- R11 vocabulary provenance ---------------------------------------------------------
     noprov_scope = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE 1=1"
-                       f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                       f"{scope}", sargs)[0][0]
     noprov = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE COALESCE(notes,'')=''"
-                       f"{scope.replace('session','created_by_session')}", sargs)[0][0]
+                       f"{scope}", sargs)[0][0]
     if noprov:
         fail("R11", f"{noprov} alias(es) with no sourcing note. No back-translation: every alias "
                     f"needs its authoritative in-language basis or [UNVERIFIED-TERMS].", noprov)
@@ -779,7 +779,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # legitimate as PROXY evidence and dangerous as anything else. An admission with no population
     # match asserts, silently, that study population == served population.
     anchors = _rows(cx, f"SELECT ref_id FROM evidence_sources WHERE tier BETWEEN 1 AND 3"
-                        f"{scope.replace('session','created_by_session')}", sargs)
+                        f"{scope}", sargs)
     unmatched = [r[0] for r in anchors
                  if not _rows(cx, "SELECT 1 FROM evidence_population_match WHERE ref_id=?",
                               (r[0],))]
@@ -909,11 +909,11 @@ def selftest():
     cx.execute("INSERT INTO search_executions (exec_id,slug,jurisdiction,language,"
                "target_evidence_type,query_text,engine,depth_method,mining_direction,"
                "results_found,results_screened,results_admitted,deferred_reason,backfill,"
-               "session,executed_at) VALUES (1,'s','ID','id','grey','q','web','scoping','none',"
+               "created_by_session,created_at) VALUES (1,'s','ID','id','grey','q','web','scoping','none',"
                "5,5,0,'found things',0,?,'t')", (T,))
     cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
                "depth_method,mining_direction,results_found,results_screened,results_admitted,"
-               "backfill,session,executed_at) VALUES (3,'s','en','q','web','scoping','none',"
+               "backfill,created_by_session,created_at) VALUES (3,'s','en','q','web','scoping','none',"
                "0,0,0,0,?,'t')", (T,))   # exec_id 2 absent => append-only violation for R8
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,verification_status,"
                "notes,created_by_session) VALUES ('REF-ST1',6,'code','VERIFIED','250 lbf',?)", (T,))
@@ -978,11 +978,11 @@ def selftest():
     # out of R14's zero-yield check. exec_id 4 preserves the exec_id-2 gap that R8 detects.
     cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
                "depth_method,mining_direction,results_found,results_screened,results_admitted,"
-               "findings_note,backfill,session,executed_at) VALUES (4,'s','en','q','web',"
+               "findings_note,backfill,created_by_session,created_at) VALUES (4,'s','en','q','web',"
                "'scoping','none',50,50,0,'lifetime cost of retrofit vs new build',0,?,'t')", (T,))
     # R15: a candidate marked ADMITTED whose description was never re-checked against the source.
     cx.execute("INSERT INTO search_candidates (candidate_id,found_under_slug,disposition,title,"
-               "session,created_at) VALUES (1,'s','ADMITTED','a staged hypothesis',?,'t')", (T,))
+               "created_by_session,created_at) VALUES (1,'s','ADMITTED','a staged hypothesis',?,'t')", (T,))
     #
     # R7 INTERACTION, stated rather than discovered: the R15 candidate raises `cand` to 1, and R7
     # fires only while cand < max(1, screened // 25). The R12 fixture takes total screened from 5

@@ -272,7 +272,7 @@ When item-specification-writer consumes a connection:
 
 ### connections columns
 `con_id, status, confidence, connection_type, filed_in, description, source_skill,
-opus_reviewed, session_applied, created_at, created_by_session, updated_at, updated_by_session`
+opus_reviewed, created_by_session, created_at, created_by_session, updated_at, updated_by_session`
 
 ### connection_targets columns
 `con_id, target`

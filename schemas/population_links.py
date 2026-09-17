@@ -34,7 +34,7 @@ class CitationPopulationLink(BaseModel):
 
     citation_id: str = Field(..., description="FK reasoning_doc_citations.citation_id")
     population_code: str = Field(..., description="FK populations.population_code")
-    note: Optional[str] = None  # optional per-population qualifier
+    notes: Optional[str] = None  # optional per-population qualifier
     created_at: Optional[datetime] = None
     created_by_session: Optional[str] = None
 
@@ -44,7 +44,7 @@ class ProbePopulationLink(BaseModel):
 
     probe_id: str = Field(..., description="FK spec_value_probes.probe_id")
     population_code: str = Field(..., description="FK populations.population_code")
-    note: Optional[str] = None
+    notes: Optional[str] = None
     created_at: Optional[datetime] = None
     created_by_session: Optional[str] = None
 
@@ -54,6 +54,6 @@ class ExtractionPopulationLink(BaseModel):
 
     extraction_id: int = Field(..., description="FK source_value_extractions.extraction_id")
     population_code: str = Field(..., description="FK populations.population_code")
-    note: Optional[str] = None
+    notes: Optional[str] = None
     created_at: Optional[datetime] = None
     created_by_session: Optional[str] = None

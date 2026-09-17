@@ -29,7 +29,7 @@ class BPCMetadata(GuidebookEntity):
     # Required (per validate_bpc.py)
     slug: str
     population: str  # Comma-separated or single code
-    last_updated: str  # YYYY-MM-DD or YYYY-MM-DD HH:MM
+    updated_at: str  # YYYY-MM-DD or YYYY-MM-DD HH:MM (was last_updated, migration 085)
 
     # Location
     topic_directory: str  # e.g., "bathrooms-and-wet-areas"

@@ -405,6 +405,29 @@ traversal D-0184 measured and rejected.
 - **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is live
   and legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.
 - **Don't run `scripts/bootstrap.sh`** — PAT-gated, for the claude.ai surface.
+- **TWO TRACKED FILES APPEND ON EVERY TURN, so any "is the tree clean?" gate is
+  unsatisfiable while a session is live.** `transcripts/harness_*/main.jsonl` grows
+  whenever the agent writes anything and `scratchpad/<session>/commands.jsonl` grows
+  on every Bash call, so the tree is dirty again the instant the gate is answered.
+  A stop hook enforcing it produces a commit-and-push per turn forever — measured
+  2026-09-17 at roughly fifteen cycles and ~150–200k tokens in one session, for
+  nothing but transcript commits. **That is rule 6's own argument** (a check red by
+  construction teaches its reader to ignore it) arriving as a fresh imperative each
+  turn, which is why it beats a remembered rule. Scope the question instead:
+  `git diff --quiet -- :/ ':(exclude)transcripts/' ':(exclude)*commands.jsonl'`.
+  `scratchpad/wiring-sweep-04rjhv/fix-stop-hook-loop.sh` patches the harness hook
+  to read that exclusion from `git config stophook.ignorePath`.
+- **`run_checks.py --all` over `--changed-from origin/main` is the expensive
+  default.** `--all` runs every battery and prints every subject; §1's gate is the
+  diff-scoped form, and `--battery <name>` answers a targeted question. Reach for
+  `--all` when the question really is corpus-wide, not to re-confirm a result the
+  scoped run already gave.
+- **`tools/*.html` are hidden from ripgrep and the Grep tool** (`.ignore`), because
+  the four rendered dashboards embed ~579KB of row data and a search for any table
+  or column name matches the rendering louder than the code that produced it. A hit
+  inside one was never the answer to "where is this referenced". `governance/context-map.yaml`
+  is deliberately NOT hidden: it is generated too, but it is the one derived file a
+  session is meant to search.
 
 ---
 

@@ -1,0 +1,145 @@
+# governance/stage-map.yaml — which pipeline stage each table belongs to.
+#
+# NAMED AND SIZED BEFORE IT WAS BUILT. `architecture/meta-scripts-spec.md` §8
+# ("The single v2 blocker: there is no stage map") specifies this file: "one
+# entry per table and view naming its stage id from pipeline-contract.yaml, with
+# a `pointer:` list for cross-stage views. It is one file, ~89 lines." It names
+# three consumers blocked on it — L1.8 (rule 5 checked mechanically, which today
+# cannot be computed at all because stage attribution does not exist), L2.6 and
+# L3.5. The judgments below were first made inside tools/pipeline_walk.py, which
+# put them where none of those three could read them; this is that move.
+#
+# JUDGED, NOT DERIVED — and the distinction is load-bearing. There is no
+# derivable table→stage edge in this repository. Two routes were measured and
+# both are noise: FK topology (depth 0 holds 26 tables spanning five stages) and
+# "which stage's checks read this table" (17 of 89 objects attributed, 12
+# unambiguous, evidence_sources landing in four stages at once — §8's own
+# measurement). Rule 8 says derive it or NAME WHO JUDGED IT. This names them.
+#
+# THE FALSIFIER IS THE POINT, and it is what dbcore.WRITABLE_TABLES lacked when
+# it went blind eight times. The consumer reads the live table list from
+# sqlite_master, not from this file: a table here that the schema lacks, a table
+# the schema has that is missing here, and a stage id the contract does not
+# define are each reported and each fail `pipeline_walk.py --check`. A new table
+# cannot hide by being left out.
+#
+# `infrastructure` is not a stage. It marks tables recording the repository's own
+# operation — migration ledgers, run records — rather than pipeline content.
+#
+# STILL OWED: the 20 views. §8 specifies a `pointer:` list naming the stages each
+# cross-stage view spans, because CLAUDE.md §3 calls a cross-stage view "the most
+# protected object in the schema" and tells you to ask what it spans before
+# deleting it. Five such views currently have no reader at all. Views are absent
+# from this file and its consumer filters `type='table'`, so nothing yet checks
+# them — recorded here rather than left to be discovered.
+
+version: 1
+judged_by: session_2026-09-17-research-batch-10-ramp-gradient-threshold
+judged_on: '2026-09-17'
+judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
+
+tables:
+  access_duration: base
+  access_need_axis_map: base
+  access_need_icf: base
+  access_needs: base
+  access_stakes: base
+  axes: base
+  base_icf: base
+  base_parameters: base
+  base_taxonomy_medical: base
+  bpc_metadata: infrastructure
+  case_studies: evidence
+  case_study_outcomes: evidence
+  case_study_populations: evidence
+  case_study_specs: evidence
+  case_study_strategies: evidence
+  citation_mining: research
+  citation_population_links: judgment
+  conflicts: synthesis
+  connection_targets: synthesis
+  connections: synthesis
+  convergence_assessment: synthesis
+  data_migrations: infrastructure
+  decisions: infrastructure
+  determination_gates: specification
+  economics_entries: evidence
+  economics_entry_populations: evidence
+  economics_entry_specs: evidence
+  evidence_population_match: judgment
+  evidence_source_authors: evidence
+  evidence_sources: evidence
+  external_root_registry: evidence
+  extraction_population_links: judgment
+  extraction_relations: evidence
+  gap_mining: research
+  gaps: synthesis
+  icf_medical_map: base
+  identity_medical_map: base
+  item_audit_runs: infrastructure
+  item_bpc_links: render
+  item_population_elaborations: render
+  item_taxonomy_links: render
+  items: render
+  jurisdictional_values: evidence
+  lang_jur_map: base
+  life_stage_modifiers: base
+  observed_terms: evidence
+  pipeline_runs: infrastructure
+  population_axis_map: base
+  population_icf_links: base
+  populations: base
+  probe_population_links: judgment
+  reasoning_doc_citations: synthesis
+  reference_stubs: research
+  research_code_leads: research
+  room_items: base
+  rooms: base
+  search_admissions: research
+  search_candidates: research
+  search_coverage: research
+  search_executions: research
+  search_languages: research
+  situations: base
+  slugs: base
+  source_locators: research
+  source_slug_links: evidence
+  source_value_extractions: evidence
+  spec_value_probes: specification
+  specification_extraction_links: specification
+  specification_source_links: specification
+  specifications: specification
+  supersession_check: synthesis
+  term_adjudications: judgment
+  term_aliases: base
+  term_item_links: render
+  terms: base
+  url_verification_runs: evidence
+  weighting_profile: render
+
+# Where the repository contradicts ITSELF about a table's stage. The map still has
+# to place these, and `tables:` above records where — but taking a side silently
+# is curating a fact nothing can check, so both readings are kept with their
+# citations. This is a Layer 0 vs Layer 1 conflict (CLAUDE.md §3 against
+# pipeline-contract.yaml), so under rule 0 an owner ruling settles it and the
+# contract is what gets corrected. Until then this file is the only record, which
+# is itself a reason to resolve it in a DR rather than here.
+disputed:
+  extraction_relations: >-
+    Inherits its parent exactly: both ends are FKs into source_value_extractions, so it cann
+    ot sit in a different stage from it. Disputed for the same reason and by the same docume
+    nts.
+  gaps: >-
+    SYNTHESIS IS THE ONE STAGE WITH NO SUPPORT, and it is where this map put it. The contrac
+    t makes "an OPEN gap" the RESEARCH stage's entry; most live rows were written by researc
+    h-batch sessions (derive, never quote: SELECT created_by_session, COUNT(*) FROM gaps GRO
+    UP BY 1); evidence_population_match.gap_id is a FK from judgment INTO gaps; and §3 defin
+    es synthesis as weighing, convergence and cross-slug findings, which a gap is none of. a
+    ssess_cell also writes it at specification. The honest answer is a cross-stage register 
+    with no single home.
+  source_value_extractions: >-
+    CLAUDE.md §3 puts extraction at EVIDENCE ("what was admitted, its identity, verification
+     and extraction"). governance/pipeline-contract.yaml calls the same rows JUDGMENT under 
+    its `- id: judgment` stage -- "One evidence source may provide many judgment rows" -- an
+    d assess_cell.py:78 calls it "the JUDGMENT item (D-0168)". Four contract criteria naming
+     it sit under judgment. Rendered at evidence; the dispute is real and open.

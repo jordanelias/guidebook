@@ -64,6 +64,6 @@ class SourceLocator(GuidebookEntity):
     # column's own CHECK, so the constraint holds whatever writer is used; it is
     # Optional here because the other three states must not carry one.
     screened_reason: Optional[str] = None
-    worked_by_session: Optional[str] = None
-    worked_at: Optional[str] = None
+    created_by_session: Optional[str] = None
+    created_at: Optional[str] = None
     notes: Optional[str] = None
