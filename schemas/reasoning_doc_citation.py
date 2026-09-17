@@ -125,7 +125,7 @@ class ReasoningDocCitation(BaseModel):
 
     # ── Provenance of the verification itself ────────────────────────────────
     verified_at: str
-    verified_by_session: str
+    created_by_session: str
 
     paywall_purchase_candidate: int = Field(default=0, ge=0, le=1)
     notes: Optional[str] = None

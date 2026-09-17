@@ -390,7 +390,7 @@ def ensure_schema(conn):
           transient           INTEGER DEFAULT 0,
           verified_before     INTEGER DEFAULT 0,
           verified_after      INTEGER DEFAULT 0,
-          run_by_session      TEXT
+          created_by_session      TEXT
         )
     """)
     conn.commit()
@@ -472,7 +472,7 @@ def main():
     run_id = now_iso
     conn.execute("""
         INSERT OR REPLACE INTO url_verification_runs
-          (run_id, started_at, candidates_pool, verified_before, run_by_session)
+          (run_id, started_at, candidates_pool, verified_before, created_by_session)
         VALUES (?, ?, ?, ?, ?)
     """, (run_id, now_iso, pool_size, verified_before, SESSION))
     conn.commit()

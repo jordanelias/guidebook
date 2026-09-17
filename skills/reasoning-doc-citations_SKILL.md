@@ -114,7 +114,7 @@ for each citation in reasoning_doc:
     value_match ← NULL
 
   # 3. INSERT ROW
-  insert_rdc_row(citation, value_match, claim_match, verified_at=now(), verified_by_session=session_id)
+  insert_rdc_row(citation, value_match, claim_match, verified_at=now(), created_by_session=session_id)
 
   # 4. ACT ON OUTCOME
   if value_match == 'DIFFERENT' or claim_match == 'CONTRADICTED':
@@ -175,7 +175,7 @@ INSERT INTO reasoning_doc_citations (
   claim_type, claimed_value, claimed_unit, claim_text,
   source_ref_id, source_section,
   value_match, claim_match,
-  verified_at, verified_by_session,
+  verified_at, created_by_session,
   paywall_purchase_candidate, notes
 ) VALUES (
   :citation_id, :slug, :parameter, :jurisdiction, :population,

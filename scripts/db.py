@@ -165,7 +165,7 @@ def update_connection_status(con_id: str, status: str,
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
-            "UPDATE connections SET status=?, session_applied=?, "
+            "UPDATE connections SET status=?, created_by_session=?, "
             "updated_at=?, updated_by_session=? WHERE con_id=?",
             [status, session, u["updated_at"], u["updated_by_session"], con_id]
         )
@@ -1970,7 +1970,7 @@ def main():
     p_ung.add_argument("--include-not-addressable", action="store_true",
                        help="Include NOT-ADDRESSABLE gaps in results (default: ADDRESSABLE only)")
     p_ung.add_argument("--include-recent", action="store_true",
-                       help="Include gaps with attempt_at within last 6 months (default: skip)")
+                       help="Include gaps with created_at within last 6 months (default: skip)")
 
     args = parser.parse_args()
 
@@ -3585,13 +3585,13 @@ def update_locator(ref_id: str, status: str, session: str, reason: str = None,
         terminal = status in ("PROMOTED", "SCREENED-OUT")
         conn.execute(
             "UPDATE source_locators SET status=?, screened_reason=?, "
-            "worked_by_session=COALESCE(?, worked_by_session), "
-            "worked_at=COALESCE(?, worked_at) WHERE ref_id=?",
+            "created_by_session=COALESCE(?, created_by_session), "
+            "created_at=COALESCE(?, created_at) WHERE ref_id=?",
             [status, (reason or "").strip() or None,
              session if terminal else None,
              dbcore.now() if terminal else None, ref_id])
         return {"ref_id": ref_id, "was": row["status"], "now": status, "changed": True,
-                "worked_by_session": session if terminal else None,
+                "created_by_session": session if terminal else None,
                 "screened_reason": (reason or "").strip() or None}
 
 
@@ -3945,7 +3945,7 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         crossings = []
         if identity:
             c = {"identity_code": identity, "medical_code": code,
-                 "relationship": relationship, "note": note}
+                 "relationship": relationship, "notes": note}
             c = {k: v for k, v in c.items() if v is not None}
             c.update(dbcore.stamp_for(conn, "identity_medical_map", session))
             conn.execute(f"INSERT INTO identity_medical_map ({','.join(c)}) "
@@ -3954,7 +3954,7 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
                               "relationship": relationship})
         if icf:
             c = {"icf_code": icf, "medical_code": code, "role": role,
-                 "mapping_confidence": mapping_confidence, "note": note}
+                 "mapping_confidence": mapping_confidence, "notes": note}
             c = {k: v for k, v in c.items() if v is not None}
             c.update(dbcore.stamp_for(conn, "icf_medical_map", session))
             conn.execute(f"INSERT INTO icf_medical_map ({','.join(c)}) "
@@ -5681,12 +5681,12 @@ def add_supersession_check(*, slug: str, local_ref_id: str, ref_id: str,
     """Insert a supersession_check row (DR-2026-05-24, migration 015).
 
     Returns the generated check_id. Uses a deterministic id based on
-    (slug, local_ref_id, checked_at) so repeat calls in the same session don't collide.
+    (slug, local_ref_id, created_at) so repeat calls in the same session don't collide.
     """
     import hashlib
     from datetime import datetime, timezone
-    checked_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    seed = f"{slug}|{local_ref_id}|{checked_at}|{session}"
+    created_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    seed = f"{slug}|{local_ref_id}|{created_at}|{session}"
     check_id = "SUPCHK-" + hashlib.sha256(seed.encode()).hexdigest()[:12]
     with connect(dry_run) as conn:
         conn.execute("""
@@ -5696,7 +5696,7 @@ def add_supersession_check(*, slug: str, local_ref_id: str, ref_id: str,
                 outcome, superseding_ref_ids, superseding_dois,
                 refinement_dimension, divergence_notes,
                 search_strategy_record, candidates_returned, candidates_reviewed,
-                checked_at, checked_by_session, check_method, notes
+                created_at, created_by_session, check_method, notes
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
             check_id, slug, local_ref_id, ref_id,
@@ -5706,7 +5706,7 @@ def add_supersession_check(*, slug: str, local_ref_id: str, ref_id: str,
             json.dumps(superseding_dois) if superseding_dois else None,
             refinement_dimension, divergence_notes,
             search_strategy_record, candidates_returned, candidates_reviewed,
-            checked_at, session, check_method, notes,
+            created_at, session, check_method, notes,
         ])
     return check_id
 
@@ -5725,21 +5725,21 @@ def add_gap_mining(*, gap_id: str,
     """Insert a gap_mining row (DR-2026-05-26, migration 017).
 
     Returns the autoincrement gap_mining_id. Append-only: multiple attempts per
-    gap_id are allowed; the most recent row (MAX(attempt_at)) is the operative
+    gap_id are allowed; the most recent row (MAX(created_at)) is the operative
     outcome.
     """
     from datetime import datetime, timezone
-    attempt_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    created_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     with connect(dry_run) as conn:
         cur = conn.execute("""
             INSERT INTO gap_mining (
-                gap_id, attempt_at, attempted_by_session,
+                gap_id, created_at, created_by_session,
                 search_strategy_record, candidates_returned, candidates_reviewed,
                 outcome, discoveries_logged, candidate_dois,
                 check_method, notes
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, [
-            gap_id, attempt_at, session,
+            gap_id, created_at, session,
             search_strategy_record, candidates_returned, candidates_reviewed,
             outcome,
             json.dumps(discoveries_logged) if discoveries_logged else None,
@@ -5776,7 +5776,7 @@ def get_unmined_gaps(*, gap_id: str | None = None,
 
     Returns OPEN gaps with mining_addressability=ADDRESSABLE (or all if
     include_not_addressable) that either have no gap_mining row OR whose most
-    recent attempt_at is older than 6 months (per re-eligibility rules in
+    recent created_at is older than 6 months (per re-eligibility rules in
     DR §5). include_recent overrides the 6-month filter.
 
     Each result row includes: gap_id, priority, status, skill, section,
@@ -5805,17 +5805,17 @@ def get_unmined_gaps(*, gap_id: str | None = None,
         SELECT g.gap_id, g.priority, g.status, g.skill, g.section,
                substr(g.description, 1, 180) AS description_snippet,
                g.mining_addressability,
-               latest.attempt_at AS latest_attempt_at,
+               latest.created_at AS latest_attempt_at,
                latest.outcome    AS latest_outcome
           FROM gaps g
           LEFT JOIN (
-              SELECT gm.gap_id, gm.attempt_at, gm.outcome
+              SELECT gm.gap_id, gm.created_at, gm.outcome
                 FROM gap_mining gm
                 JOIN (
-                    SELECT gap_id, MAX(attempt_at) AS max_at
+                    SELECT gap_id, MAX(created_at) AS max_at
                       FROM gap_mining
                      GROUP BY gap_id
-                ) m ON m.gap_id = gm.gap_id AND m.max_at = gm.attempt_at
+                ) m ON m.gap_id = gm.gap_id AND m.max_at = gm.created_at
           ) latest ON latest.gap_id = g.gap_id
          WHERE {where_sql}
     """

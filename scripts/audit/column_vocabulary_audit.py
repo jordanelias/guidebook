@@ -55,7 +55,6 @@ ROLES = {
             # exactly one such column and no `created_by_session` beside it, so
             # the verb is decoration on the one fact, not a second event.
             "worked_by_session": "domain verb for 'created'",
-            "applied_by_session": "domain verb for 'created'",
             "attempted_by_session": "domain verb for 'created'",
             "checked_by_session": "domain verb for 'created'",
             "run_by_session": "domain verb for 'created'",
@@ -67,7 +66,6 @@ ROLES = {
         "canonical": "created_at",
         "same_fact": {
             "worked_at": "domain verb for 'created'",
-            "applied_at": "domain verb for 'created'",
             "checked_at": "domain verb for 'created'",
             "executed_at": "domain verb for 'created'",
             "attempt_at": "domain verb for 'created', and not even past tense "
@@ -88,6 +86,14 @@ ROLES = {
 #: genuinely different event on the same row. Named so the audit cannot quietly
 #: start demanding they be merged, which would destroy a fact.
 NOT_DRIFT = {
+    # EXEMPT BY BOOTSTRAP, not by preference. `data_migrations.applied_at` and
+    # `.applied_by_session` are drift by this audit's own definition, and they are
+    # unrenameable: `migrate_db.py` writes `INSERT INTO data_migrations
+    # (migration_id, applied_at, ...)` at three call sites DURING the run that
+    # would apply the rename, so the run cannot record itself; and updating the
+    # writer first breaks it before the migration exists. Migration 085 records
+    # the same reasoning.
+    "applied_at", "applied_by_session",
     "raised_by_session", "resolved_by_session", "raised_at", "resolved_at",
     "retired_by_session", "retired_at", "updated_by_session",
     "started_at", "completed_at", "last_verified_at", "verified_at",

@@ -68,7 +68,7 @@ def audit():
     print(f"  current year for age calc: {now_year}")
     print(f"  tier thresholds (years): T4={THRESHOLDS[4]}, T5={THRESHOLDS[5]}, T6={THRESHOLDS[6]}")
     print(f"  365-day suppression cutoff: rows with code_currency_verified_at OR")
-    print(f"    supersession_check.checked_at >= today minus 365 days suppressed")
+    print(f"    supersession_check.created_at >= today minus 365 days suppressed")
     print()
     print("=" * 70)
 
@@ -95,7 +95,7 @@ def audit():
     #   - tier IN (4,5,6) AND in source_slug_links AND pub_year < (now - threshold)
     #   AND NOT (code_currency_status='VERIFIED-CURRENT' or 'PERMANENT-FRAMEWORK'
     #            AND code_currency_verified_at >= today-365 days)
-    #   AND NOT (supersession_check.checked_at >= today-365 days AND outcome in current_best set)
+    #   AND NOT (supersession_check.created_at >= today-365 days AND outcome in current_best set)
     suppression_sql = """
         (es.code_currency_status IN ('VERIFIED-CURRENT','PERMANENT-FRAMEWORK')
          AND es.code_currency_verified_at IS NOT NULL
@@ -105,7 +105,7 @@ def audit():
             SELECT 1 FROM supersession_check sc
              WHERE sc.ref_id = es.ref_id
                AND sc.outcome IN ('current_best','co1_addition_logged','refined_by')
-               AND sc.checked_at >= date('now','-365 days')
+               AND sc.created_at >= date('now','-365 days')
         )
     """
     flagged_query = f"""

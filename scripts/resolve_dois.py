@@ -722,7 +722,7 @@ def main():
           metadata_complete_before INTEGER DEFAULT 0,
           metadata_complete_after  INTEGER DEFAULT 0,
           total_resolved     INTEGER DEFAULT 0,
-          run_by_session     TEXT
+          created_by_session     TEXT
         )
     """)
 
@@ -740,7 +740,7 @@ def main():
     conn.execute("""
         INSERT OR REPLACE INTO pipeline_runs
           (run_id, started_at, doi_before, verified_before, pmcid_before,
-           metadata_complete_before, run_by_session)
+           metadata_complete_before, created_by_session)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (run_id, now_iso, doi_before, verified_before, pmcid_before,
           metadata_complete_before, SESSION))

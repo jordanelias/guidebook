@@ -1489,7 +1489,7 @@ checks:
   kinds:
   - schema
   - data
-  level: advisory
+  level: blocking
   basis: base/base-schema-validates
   cost: fast
   min_items: 1
@@ -1499,13 +1499,16 @@ checks:
     source_locators, the largest -- as unattributable. The drift was in the schema,
     not the tool, and nothing named it, so each new reader rediscovers it by being
     wrong. Three tables carry BOTH spellings of one fact (item_audit_runs,
-    connections, bpc_metadata), which is rule 5 literally. ADVISORY, and it FAILS
-    today by design: the fix is 25 column renames, and a rename here is a migration
-    plus rule 4 caller sweep, never an edit -- migration 064 exists because 063
-    swept eight Python readers and six skills and missed v_item_provenance. Making
-    it blocking before the renames land would be red by construction, which
-    CLAUDE.md rule 6 says teaches its reader to ignore the check. Ratchet to
-    blocking once the deviant set is empty.'
+    connections, bpc_metadata), which is rule 5 literally. BLOCKING as of migration 085, which
+    executed the renames and emptied the deviant set -- the note that registered
+    this check advisory said to ratchet once that happened, and this is that.
+    It is not red by construction: the audit reports CLEAN on the live schema and
+    its --selftest still fires on a drifting fixture, so it passes AND can be shown
+    to fail. Two columns stay exempt by BOOTSTRAP, not preference:
+    data_migrations.applied_at and .applied_by_session are drift by this audit own
+    definition and unrenameable, because migrate_db.py writes that ledger row
+    during the very run that would rename the column. Migration 085 carries the
+    same reasoning.'
 - id: pipeline_walk_fresh
   cmd:
   - python3

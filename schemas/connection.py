@@ -35,7 +35,7 @@ class Connection(GuidebookEntity):
     opus_reviewed: bool = False
 
     # Application
-    session_applied: Optional[str] = None
+    created_by_session: Optional[str] = None
 
     # Type (per project-standards — connection_scout entry schema)
     connection_type: Optional[str] = None  # CROSS-POPULATION, CROSS-ITEM, COMPOUND-INTERACTION, METHODOLOGY

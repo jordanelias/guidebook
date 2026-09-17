@@ -462,7 +462,7 @@ try:
     expected = {'run_id','started_at','completed_at','candidates_pool','attempted',
                 'verified','probabilistic','no_match','dead','wayback_verified',
                 'wayback_probabilistic','dead_dns','transient',
-                'verified_before','verified_after','run_by_session'}
+                'verified_before','verified_after','created_by_session'}
     record("H01", "url_verification_runs has all expected columns",
            expected.issubset(set(cols)),
            details=f"missing: {expected - set(cols)}" if not expected.issubset(set(cols)) else "all present")

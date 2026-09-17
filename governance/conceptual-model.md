@@ -120,7 +120,7 @@ Time-Version (ENT-19) ──── attached_to ──── all mutable entities
 
 ### Session 4: Connection (ENT-04) schema + conversion
 - **Input:** connections/_index.md (181 records) + per-topic connection files
-- **Schema:** Connection model — CON-ID, status, primary_target, filed_in, confidence, opus_reviewed, session_applied
+- **Schema:** Connection model — CON-ID, status, primary_target, filed_in, confidence, opus_reviewed, created_by_session
 - **Conversion:** convert_connections.py — parses index + per-topic files → YAML under data/connections/
 - **Validator:** validate_cross_refs.py rewrite — referential integrity (CON-IDs, target item codes, filed_in topic)
 - **Cross-system check:** every item_code referenced in a connection's primary_target must exist in part04-item-index
