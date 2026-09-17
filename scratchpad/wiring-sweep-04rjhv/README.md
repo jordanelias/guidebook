@@ -6,7 +6,9 @@ pointer trap names exactly that: *"It also goes stale when your PR merges mid-se
 folder it names is then a merged PR's, and your command log appends to someone else's record
 until you move it."*
 
-`pr-141-.../` is the closed record of the batch-10 preparation and is left untouched: its
+`pr-141-.../` is the closed record of the batch-10 preparation and is left untouched FROM HERE ON
+(the commit that added this file still appended to its command log, which is the very drift
+this folder exists to stop): its
 `PRIORS.md` and `QUERY-PLAN.md` are what the R8 ordering is proved against, and the session
 record cites them at that path. This folder carries the work that came after the merge.
 

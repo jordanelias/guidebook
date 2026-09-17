@@ -1048,6 +1048,8 @@ checks:
     kinds:
     - data
     - schema
+    - render
+    - tooling
     min_items: 1
     cmd: python3 tools/pipeline_walk.py --check
   - id: pmp_audit

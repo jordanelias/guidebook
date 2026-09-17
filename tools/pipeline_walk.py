@@ -101,8 +101,9 @@ STAGE_OF = {
     # "Write a lead into the clue store", and §3's research row is "what was
     # searched, screened and mined, PLUS THE CLUE STORE". Both tables carry
     # status/tier_claimed/recovered_from and no foreign keys -- pre-admission
-    # leads, not admitted sources. (Both read "evidence" until 2026-09-17;
-    # source_locators is 893 rows, the largest object this map places.)
+    # leads, not admitted sources. (Both read "evidence" until 2026-09-17, and
+    # source_locators is the largest object this map places -- derive the count,
+    # never quote it: SELECT COUNT(*) FROM source_locators.)
     "source_locators": "research", "reference_stubs": "research",
     # evidence -- what was admitted, its identity, verification and extraction
     "case_studies": "evidence", "case_study_outcomes": "evidence",
@@ -168,12 +169,13 @@ DISPUTED = {
     "gaps": (
         "synthesis",
         "SYNTHESIS IS THE ONE STAGE WITH NO SUPPORT, and it is where this map put "
-        "it. pipeline-contract.yaml:105 makes \"an OPEN gap\" the RESEARCH stage's "
-        "entry; 8 of 12 live rows were written by research-batch sessions; "
+        "it. The contract makes \"an OPEN gap\" the RESEARCH stage's entry; most "
+        "live rows were written by research-batch sessions (derive, never quote: "
+        "SELECT created_by_session, COUNT(*) FROM gaps GROUP BY 1); "
         "evidence_population_match.gap_id is a FK from judgment INTO gaps; and §3 "
         "defines synthesis as weighing, convergence and cross-slug findings, which "
-        "a gap is none of. assess_cell.py:1534 also writes it at specification. The "
-        "honest answer is a cross-stage register with no single home."),
+        "a gap is none of. assess_cell also writes it at specification. The honest "
+        "answer is a cross-stage register with no single home."),
 }
 
 #: Tables that record the repository's own operation rather than a pipeline
@@ -264,11 +266,25 @@ def rows_for(con, table, sess) -> tuple[list[str], list[list], int]:
         f'SELECT COUNT(*) FROM "{table}" WHERE "{sc}" = ?', (sess,)).fetchone()[0]
     if not total:
         return cols, [], 0
-    order = cols[0]
-    got = con.execute(
-        f'SELECT * FROM "{table}" WHERE "{sc}" = ? ORDER BY "{order}" LIMIT {ROW_CAP}',
-        (sess,)).fetchall()
-    return cols, [list(r) for r in got], total
+    # A TOTAL ORDER, or the cap is nondeterministic and --check lies.
+    # cols[0] is not unique in nine live tables -- term_aliases holds 2382 rows
+    # over 88 distinct term_id, so `ORDER BY term_id LIMIT 50` picks 50 rows out
+    # of a huge tie set and SQLite may break the tie differently on a different
+    # build, after an added index, or after VACUUM. The page would then differ
+    # byte-for-byte from the committed copy and `--check` would report a
+    # correctly-generated page stale, with nothing telling the reader why.
+    # `_rowid_` is the tiebreaker; a WITHOUT ROWID table has none, so fall back
+    # to ordering on every column, which is total by construction.
+    allcols = ", ".join(f'"{c}"' for c in cols)
+    for order in (f'"{cols[0]}", _rowid_', allcols):
+        try:
+            got = con.execute(
+                f'SELECT * FROM "{table}" WHERE "{sc}" = ? ORDER BY {order} '
+                f'LIMIT {ROW_CAP}', (sess,)).fetchall()
+            return cols, [list(r) for r in got], total
+        except sqlite3.OperationalError:
+            continue
+    raise RuntimeError(f"no total order available for {table}")
 
 
 def unwritable(con) -> list[str]:
@@ -300,6 +316,20 @@ def unwritable(con) -> list[str]:
     return sorted(out)
 
 
+def _norm_stamp(v) -> str:
+    """One comparable form for three stored formats.
+
+    The DB holds '2026-07-23T00:00:00Z', '2026-09-16 04:20' and bare '2026-08-19'
+    in the same pair of column names. A raw string MAX puts 'T' (0x54) above ' '
+    (0x20), so a midnight ISO stamp sorts above a same-day 23:59 space-separated
+    one and the page would claim freshness as of 00:00 while rendering rows
+    written at 23:59. Non-strings (an epoch int in a created_at) are coerced
+    rather than compared against a str, which used to raise TypeError.
+    """
+    s = str(v or "").strip().replace("T", " ").rstrip("Z").strip()
+    return s
+
+
 def as_of(con, tables) -> str:
     """Derived from the DB's own timestamps, never wall clock (determinism)."""
     best = ""
@@ -308,8 +338,9 @@ def as_of(con, tables) -> str:
         for c in ("updated_at", "created_at"):
             if c in cols:
                 v = con.execute(f'SELECT MAX("{c}") FROM "{t}"').fetchone()[0]
-                if v and v > best:
-                    best = v
+                n = _norm_stamp(v)
+                if n and n > best:
+                    best = n
     return best or "unknown"
 
 
@@ -318,10 +349,20 @@ def gather(con) -> dict:
     tables = live_tables(con)
     known = set(STAGE_OF) | INFRASTRUCTURE
     unassigned = sorted(t for t in tables if t not in known)
-    # A mapped name that no longer exists is the other half of the same drift.
-    phantom = sorted(t for t in STAGE_OF if t not in tables)
+    # A mapped name that no longer exists is the other half of the same drift --
+    # and it is swept across BOTH maps. Sweeping only STAGE_OF left a renamed or
+    # dropped INFRASTRUCTURE table sitting in the set forever, which is rule 4's
+    # drift applied to half the map.
+    phantom = sorted(t for t in (set(STAGE_OF) | INFRASTRUCTURE) if t not in tables)
 
-    counts = {t: con.execute(f'SELECT COUNT(*) FROM "{t}"').fetchone()[0] for t in tables}
+    # A MISTYPED STAGE VALUE IS THE ONE WAY A TABLE COULD STILL HIDE, and it
+    # would defeat this module's central claim. `unassigned` keys on the table
+    # NAME, so STAGE_OF['foo'] = 'evidenc' keeps foo out of it -- while the
+    # `s in by_stage` filter below drops foo from every stage list, so the table
+    # and every row a session wrote into it vanish from the page with --check
+    # green. Nothing validated the VALUES against the contract until now.
+    bad_stage = sorted(f"{t} -> {v!r}" for t, v in STAGE_OF.items()
+                       if v not in set(stages))
     no_session = sorted(t for t in tables if session_col(con, t) is None)
 
     by_stage: dict[str, list[str]] = {s: [] for s in stages}
@@ -344,9 +385,9 @@ def gather(con) -> dict:
         writes[e["id"]] = per
 
     return {
-        "stages": stages, "by_stage": by_stage, "counts": counts,
-        "unassigned": unassigned, "phantom": phantom, "no_session": no_session,
-        "infrastructure": sorted(INFRASTRUCTURE & set(tables)),
+        "stages": stages, "by_stage": by_stage, "labels": {s: stage_label(s) for s in stages},
+        "unassigned": unassigned, "phantom": phantom, "bad_stage": bad_stage,
+        "no_session": no_session,
         "sessions": sess, "writes": writes,
         "disputed": {t: {"stage": v[0], "why": v[1]}
                      for t, v in sorted(DISPUTED.items()) if t in tables},
@@ -418,6 +459,13 @@ a{color:var(--accent)}
 
 JS = """
 const D=window.__WALK__;
+// EVERY interpolated value goes through this. The DB carries 134 cell values
+// holding `<` or `&` today: `RT60 <= 0.6 s` survives raw only because the HTML
+// parser passes `<` before a non-letter, and the first value with `<` before a
+// letter opens a tag and swallows the rest of the cell -- a rendered row that
+// differs from the database row, on the surface built to stop exactly that.
+function E(v){return String(v).replace(/[&<>"']/g,function(c){
+ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function paint(){
  const s=document.getElementById('sess').value;
  const w=D.writes[s]||{};
@@ -431,7 +479,7 @@ function paint(){
   const d=document.createElement('details');
   d.className='stage'; if(tabs.length) {d.open=true; any=true;}
   const sm=document.createElement('summary');
-  sm.innerHTML='<span>'+st.replace(/-/g,' ')+'</span>'+
+  sm.innerHTML='<span>'+E(D.labels[st]||st)+'</span>'+
    '<span class="pill '+(tabs.length?'on':'off')+'">'+
    (tabs.length? n+' row'+(n===1?'':'s')+' in '+tabs.length+' table'+(tabs.length===1?'':'s')
               : 'no writes')+'</span>'+
@@ -445,15 +493,15 @@ function paint(){
     const e=w[t];
     const h=document.createElement('div');
     const shown=e.rows.length, more=e.total-shown;
-    h.innerHTML='<div class="tname"><span class="mono">'+t+'</span>'+
+    h.innerHTML='<div class="tname"><span class="mono">'+E(t)+'</span>'+
       '<span class="pill">'+e.total+' row'+(e.total===1?'':'s')+'</span>'+
       (more>0?'<span class="pill">showing first '+shown+', '+more+' more</span>':'')+
       '</div>';
     const sc=document.createElement('div'); sc.className='scroll';
     const tb=document.createElement('table');
-    tb.innerHTML='<thead><tr>'+e.cols.map(c=>'<th>'+c+'</th>').join('')+'</tr></thead>'+
+    tb.innerHTML='<thead><tr>'+e.cols.map(c=>'<th>'+E(c)+'</th>').join('')+'</tr></thead>'+
      '<tbody>'+e.rows.map(r=>'<tr>'+r.map(v=>'<td>'+
-       (v===null?'<span class="empty">null</span>':String(v))+'</td>').join('')+'</tr>').join('')+
+       (v===null?'<span class="empty">null</span>':E(v))+'</td>').join('')+'</tr>').join('')+
      '</tbody>';
     sc.appendChild(tb); h.appendChild(sc); b.appendChild(h);
    });
@@ -461,6 +509,22 @@ function paint(){
   d.appendChild(b); host.appendChild(d);
  });
  document.getElementById('none').style.display=any?'none':'block';
+ // ROWS THE WALK CANNOT SHOW ARE COUNTED, NOT DROPPED. The session list sums
+ // every table with a session column, but only stage-assigned tables render --
+ // so a session whose writes are all infrastructure used to advertise rows and
+ // display none, with nothing accounting for the gap.
+ const inStage=new Set(); D.stages.forEach(st=>(D.by_stage[st]||[]).forEach(t=>inStage.add(t)));
+ const off=Object.keys(w).filter(t=>!inStage.has(t));
+ const offN=off.reduce((a,t)=>a+w[t].total,0);
+ const el=document.getElementById('offstage');
+ el.innerHTML = offN
+  ? '<p>This session also wrote <strong>'+offN+'</strong> row'+(offN===1?'':'s')+
+    ' into '+off.length+' table'+(off.length===1?'':'s')+' outside the stage map — '+
+    off.map(t=>'<code>'+E(t)+'</code>').join(', ')+
+    '. Those are run ledgers or unassigned tables, not pipeline stages, so they are '+
+    'counted here rather than rendered above.</p>'
+  : '';
+ el.style.display = offN ? 'block' : 'none';
 }
 document.getElementById('sess').addEventListener('change',paint);
 paint();
@@ -470,12 +534,32 @@ paint();
 def render_html(F: dict, focus: str | None) -> str:
     sess = F["sessions"]
     default = focus if focus and focus in F["writes"] else (sess[-1]["id"] if sess else "")
-    opts = "".join(
-        f'<option value="{esc(e["id"])}"{" selected" if e["id"] == default else ""}>'
-        f'{esc(e["id"])} — {e["rows"]} rows, {len(e["tables"])} tables</option>'
-        for e in reversed(sess))
+    # THE LABEL COUNTS WHAT THE PAGE RENDERS. `sessions()` sums every table with
+    # a session column, including run ledgers and anything unassigned; the walk
+    # renders stage-assigned tables only. Advertising the larger number sent a
+    # reviewer to a session promising 157 rows and showed an empty walk.
+    in_stage = {t for st in F["stages"] for t in F["by_stage"].get(st, [])}
+    opts = []
+    for e in reversed(sess):
+        w = F["writes"].get(e["id"], {})
+        shown = {t: d for t, d in w.items() if t in in_stage}
+        n = sum(d["total"] for d in shown.values())
+        off = e["rows"] - n
+        label = f'{e["id"]} — {n} rows, {len(shown)} tables'
+        if off:
+            label += f' (+{off} off-stage)'
+        opts.append(f'<option value="{esc(e["id"])}"'
+                    f'{" selected" if e["id"] == default else ""}>{esc(label)}</option>')
+    opts = "".join(opts)
 
     alerts = ""
+    if F.get("bad_stage"):
+        alerts += (
+            '<div class="card alert"><h2>Stage values naming no contract stage</h2>'
+            '<p>A table mapped to a stage id the contract does not define is dropped from '
+            'every stage list while still counting as "assigned" — the one way a live table '
+            'could still vanish from this page. Fix the value in <code>STAGE_OF</code>.</p>'
+            '<p class="mono">' + ", ".join(esc(x) for x in F["bad_stage"]) + '</p></div>')
     if F["unassigned"]:
         alerts += (
             '<div class="card alert"><h2>Unassigned tables</h2>'
@@ -527,7 +611,18 @@ def render_html(F: dict, focus: str | None) -> str:
 
     payload = json.dumps({
         "stages": F["stages"], "by_stage": F["by_stage"], "writes": F["writes"],
+        "labels": F["labels"],
     }, sort_keys=True, ensure_ascii=False, default=str)
+    # `json.dumps` escapes neither `<` nor `/`, so a DB value holding the literal
+    # `</script>` closes this element early: `window.__WALK__` is then undefined,
+    # paint() throws before its first line, and the page renders its chrome over
+    # an EMPTY walk with no error -- a reviewer reads "wrote nothing" over a
+    # session that wrote rows. No live value contains it today, which is the
+    # same "one populated column away" state this session criticised elsewhere,
+    # so it is closed rather than noted.
+    payload = (payload.replace("</", "<\\/")
+                      .replace("<!--", "<\\u0021--")
+                      .replace("\u2028", "\\u2028").replace("\u2029", "\\u2029"))
 
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
@@ -540,15 +635,21 @@ def render_html(F: dict, focus: str | None) -> str:
 — derived from the database's own timestamps, never the clock. Regenerate with
 <code>python3 tools/pipeline_walk.py</code>.</p>
 {alerts}{disputed_html}
-<h2>Session</h2>
+<h2 id="sesshead">Session</h2>
 <div class="card">
-<select id="sess">{opts}</select>
-<p class="legend">{len(sess)} sessions have written rows. Stages with writes open automatically;
+<label for="sess">Show the rows written by session</label><br>
+<select id="sess" aria-describedby="sesshelp">{opts}</select>
+<p class="legend" id="sesshelp">{len(sess)} sessions have written rows. Stages with writes open automatically;
 row counts are the true totals, and any table showing fewer is labelled as truncated.</p>
 </div>
 <div id="none" class="card" style="display:none"><p class="empty">This session wrote no rows
 into any stage-assigned table.</p></div>
-<div id="stages"></div>
+<noscript><div class="card alert"><h2>JavaScript is off</h2><p>Every stage, row and
+count on this page is built at runtime, so with scripting disabled there is nothing
+below but chrome. Run <code>python3 tools/pipeline_walk.py --session &lt;id&gt;</code>
+and read its output instead of trusting an empty page.</p></div></noscript>
+<div id="stages" aria-live="polite" aria-labelledby="sesshead"></div>
+<div id="offstage" class="card" style="display:none"></div>
 {not_attributable}
 <div class="card"><h2>How to read this</h2>
 <p>A stage reading <em>no writes</em> means this session wrote nothing there — not that the
@@ -560,14 +661,6 @@ page is scoped to one session on purpose, because the question it answers is
 <script>{JS}</script>
 </body></html>
 """
-
-
-def build(db_path: Path, focus: str | None) -> str:
-    con = connect_ro(db_path)
-    try:
-        return render_html(gather(con), focus)
-    finally:
-        con.close()
 
 
 def main() -> int:
@@ -594,7 +687,19 @@ def main() -> int:
     page = render_html(F, a.session)
     out = Path(a.out)
 
+    if a.session and a.session not in F["writes"]:
+        # CLAUDE.md §7: "Wrong form scopes a gate to nothing and it passes green."
+        # Silently falling back to the newest session renders a confident page
+        # about a DIFFERENT batch. The bare stem is what the DB stores; a pointer
+        # file's trailing `.md` is the usual way to get here.
+        print(f"pipeline_walk: --session {a.session!r} wrote no rows under that id. "
+              f"The DB stores the BARE STEM (no trailing '.md').", file=sys.stderr)
+        return 1
+
     drift = []
+    if F["bad_stage"]:
+        drift.append(f"{len(F['bad_stage'])} STAGE_OF value(s) name no contract stage: "
+                     + ", ".join(F["bad_stage"]))
     if F["unassigned"]:
         drift.append(f"{len(F['unassigned'])} live table(s) unassigned to a stage: "
                      + ", ".join(F["unassigned"]))
@@ -620,8 +725,13 @@ def main() -> int:
     print(f"Wrote {out} — {F['n_tables']} tables, {len(F['sessions'])} sessions, "
           f"as-of {F['as_of']}")
     for d in drift:
-        print(f"  DRIFT: {d}")
-    return 1 if drift else 0
+        print(f"  DRIFT: {d}", file=sys.stderr)
+    # THE WRITER RETURNS 0 EVEN ON DRIFT, and the siblings do the same.
+    # `scripts/regenerate_derived.sh` runs under `set -euo pipefail`, so a
+    # non-zero here killed the script at the generator and its whole
+    # verification block -- including the three sibling `--check` gates -- never
+    # ran. Drift is the --check exit code's job; reporting it is the writer's.
+    return 0
 
 
 if __name__ == "__main__":
