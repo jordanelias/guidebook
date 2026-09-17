@@ -966,6 +966,14 @@ checks:
     - synthesis
     min_items: 1
     cmd: python3 scripts/audit/claims_docket.py check
+  - id: column_vocabulary_audit
+    level: advisory
+    battery: schema
+    kinds:
+    - schema
+    - data
+    min_items: 1
+    cmd: python3 scripts/audit/column_vocabulary_audit.py
   - id: context_map_fresh
     level: advisory
     battery: render

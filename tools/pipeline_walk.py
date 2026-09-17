@@ -65,133 +65,32 @@ def stage_label(stage_id: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Table -> stage: JUDGED, with a falsifier
+# Table -> stage: JUDGED, and it lives in a data file
 # ---------------------------------------------------------------------------
-# Rule 8 says derive it or name who judged it. There is no derivable table->stage
-# edge in this repository: `pipeline-contract.yaml` stages carry `anchor`,
-# `entry` and `criteria` and no `tables:` key, and the retired `pipeline-map.yaml`
-# bucketing that once did is what CLAUDE.md §3 warns is NOT this. So this map is
-# JUDGED, against CLAUDE.md §3's stage table, and it is named as such.
+# The judgments used to be a dict in this module. `architecture/meta-scripts-spec.md`
+# §8 had already specified where they belong -- `governance/stage-map.yaml`, "one
+# entry per table and view naming its stage id from pipeline-contract.yaml" --
+# and named three consumers (L1.8, L2.6, L3.5) blocked on its absence. Keeping 77
+# judgments inside a renderer meant none of them could read it, and whoever built
+# L1 would have re-judged all 77: a second home, which is rule 5.
 #
-# THE FALSIFIER IS THE POINT, and it is what rule 8's own proof story lacked.
-# `dbcore.WRITABLE_TABLES` went blind eight times because a curated list can
-# silently omit a live table. This map cannot: the table list is read from
-# `sqlite_master`, every live table not named here lands in an UNASSIGNED bucket
-# that the page renders first and loudly, and `--check` fails while one exists.
-# A new table is therefore visible on the next regeneration rather than absent.
-#
-# Judged by: batch-10 preparation session, 2026-09-17, against CLAUDE.md §3.
-STAGE_OF = {
-    # base -- the vocabularies and registries every other stage points into
-    "access_duration": "base", "access_need_axis_map": "base",
-    "access_need_icf": "base", "access_needs": "base", "access_stakes": "base",
-    "axes": "base", "base_icf": "base", "base_parameters": "base",
-    "base_taxonomy_medical": "base", "icf_medical_map": "base",
-    "identity_medical_map": "base", "lang_jur_map": "base",
-    "life_stage_modifiers": "base", "population_axis_map": "base",
-    "population_icf_links": "base", "populations": "base", "rooms": "base",
-    "room_items": "base", "situations": "base", "slugs": "base",
-    "term_aliases": "base", "terms": "base",
-    # research -- what was searched, screened and mined, plus the clue store
-    "citation_mining": "research", "gap_mining": "research",
-    "research_code_leads": "research", "search_admissions": "research",
-    "search_candidates": "research", "search_coverage": "research",
-    "search_executions": "research", "search_languages": "research",
-    # THE CLUE STORE IS RESEARCH, not evidence. `db.py add-locator` is helped
-    # "Write a lead into the clue store", and §3's research row is "what was
-    # searched, screened and mined, PLUS THE CLUE STORE". Both tables carry
-    # status/tier_claimed/recovered_from and no foreign keys -- pre-admission
-    # leads, not admitted sources. (Both read "evidence" until 2026-09-17, and
-    # source_locators is the largest object this map places -- derive the count,
-    # never quote it: SELECT COUNT(*) FROM source_locators.)
-    "source_locators": "research", "reference_stubs": "research",
-    # evidence -- what was admitted, its identity, verification and extraction
-    "case_studies": "evidence", "case_study_outcomes": "evidence",
-    "case_study_populations": "evidence", "case_study_specs": "evidence",
-    "case_study_strategies": "evidence", "economics_entries": "evidence",
-    "economics_entry_populations": "evidence", "economics_entry_specs": "evidence",
-    "evidence_source_authors": "evidence", "evidence_sources": "evidence",
-    "external_root_registry": "evidence", "extraction_relations": "evidence",
-    "jurisdictional_values": "evidence", "source_slug_links": "evidence",
-    "source_value_extractions": "evidence", "url_verification_runs": "evidence",
-    # Harvest is an EVIDENCE act on an admitted source, not a research one:
-    # observed_terms.ref_id is a FK into evidence_sources, and the owner ruling
-    # of 2026-08-27 quoted in CLAUDE.md §6 says "harvest concepts AT EVIDENCE
-    # (db.py observe-term, verbatim and unjudged), adjudicate at judgment".
-    # (Read "research" until 2026-09-17, contradicting the ruling by name.)
-    "observed_terms": "evidence",
-    # judgment -- whether an extraction is sound and how it weighs
-    "citation_population_links": "judgment",
-    "evidence_population_match": "judgment",
-    "extraction_population_links": "judgment",
-    "probe_population_links": "judgment", "term_adjudications": "judgment",
-    # synthesis -- what the judgments say together
-    "conflicts": "synthesis", "connections": "synthesis",
-    "connection_targets": "synthesis", "convergence_assessment": "synthesis",
-    "reasoning_doc_citations": "synthesis", "supersession_check": "synthesis",
-    "gaps": "synthesis",   # DISPUTED -- see DISPUTED below
-    # specification -- the determination
-    "determination_gates": "specification",
-    "spec_value_probes": "specification",
-    "specification_extraction_links": "specification",
-    "specification_source_links": "specification",
-    "specifications": "specification",
-    # render -- book surfaces and the rollups that feed them
-    "item_bpc_links": "render", "item_population_elaborations": "render",
-    "item_taxonomy_links": "render", "items": "render",
-    "term_item_links": "render",
-    # Not a vocabulary and nothing points into it, so it fails the base bucket's
-    # own entry test; doctrine puts it at render (governance/grounds.md §R role
-    # views, held-tensions.md's door-epistemology disclosure). Read "base" until
-    # 2026-09-17.
-    "weighting_profile": "render",
-}
+# One mapping, one set of values. `infrastructure` was a separate Python set
+# beside the dict, which made it a fourth value of the same function implemented
+# as a different structure -- nothing checked the two for overlap, and the stage
+# validator never saw it. It is now just another value, so one validator covers
+# every entry.
+STAGE_MAP = REPO_ROOT / "governance" / "stage-map.yaml"
+INFRA = "infrastructure"
 
-#: Where the REPOSITORY CONTRADICTS ITSELF about a table's stage. The map still
-#: has to put the table somewhere for the walk to render, and the value used is
-#: recorded in STAGE_OF -- but silently taking a side in a live dispute is the
-#: thing rule 8 calls curating a fact the machine cannot check. So the side is
-#: taken openly, with both readings and their citations, and the page prints it.
-DISPUTED = {
-    "source_value_extractions": (
-        "evidence",
-        "CLAUDE.md §3 puts extraction at EVIDENCE (\"what was admitted, its "
-        "identity, verification and extraction\"). governance/pipeline-contract.yaml "
-        "calls the same rows JUDGMENT under its `- id: judgment` stage -- \"One "
-        "evidence source may provide many judgment rows\" -- and assess_cell.py:78 "
-        "calls it \"the JUDGMENT item (D-0168)\". Four contract criteria naming it "
-        "sit under judgment. Rendered at evidence; the dispute is real and open."),
-    "extraction_relations": (
-        "evidence",
-        "Inherits its parent exactly: both ends are FKs into "
-        "source_value_extractions, so it cannot sit in a different stage from it. "
-        "Disputed for the same reason and by the same documents."),
-    "gaps": (
-        "synthesis",
-        "SYNTHESIS IS THE ONE STAGE WITH NO SUPPORT, and it is where this map put "
-        "it. The contract makes \"an OPEN gap\" the RESEARCH stage's entry; most "
-        "live rows were written by research-batch sessions (derive, never quote: "
-        "SELECT created_by_session, COUNT(*) FROM gaps GROUP BY 1); "
-        "evidence_population_match.gap_id is a FK from judgment INTO gaps; and §3 "
-        "defines synthesis as weighing, convergence and cross-slug findings, which "
-        "a gap is none of. assess_cell also writes it at specification. The honest "
-        "answer is a cross-stage register with no single home."),
-}
 
-#: Tables that record the repository's own operation rather than a pipeline
-#: stage. Named here so they do not sit in UNASSIGNED forever pretending to be
-#: an unclassified stage table -- a permanent false alarm teaches its reader to
-#: ignore the alarm (CLAUDE.md rule 6's own argument).
-INFRASTRUCTURE = {
-    "data_migrations", "decisions", "pipeline_runs",
-    # RUN LEDGERS, NOT RENDER SURFACES. §3 defines render as "Book surfaces --
-    # site/, parts/, tools/*.html". bpc_metadata holds per-slug completion flags
-    # (pico_complete, search_complete, citation_mining_complete) and
-    # item_audit_runs holds run_id/status/steps_complete: both record the
-    # repository's own operation, which is this set's entry test. Both read
-    # "render" until 2026-09-17.
-    "bpc_metadata", "item_audit_runs",
-}
+def load_stage_map(path: Path) -> tuple[dict, dict]:
+    import yaml
+    with open(path, encoding="utf-8") as fh:
+        doc = yaml.safe_load(fh)
+    return doc["tables"], doc.get("disputed", {})
+
+
+STAGE_OF, DISPUTED = load_stage_map(STAGE_MAP)
 
 
 # ---------------------------------------------------------------------------
@@ -209,111 +108,157 @@ def live_tables(con) -> list[str]:
         "AND name NOT LIKE 'sqlite_%' ORDER BY name")]
 
 
-def columns(con, table) -> list[str]:
-    return [r[1] for r in con.execute(f'PRAGMA table_info("{table}")')]
+def columns(con, table, _cache={}) -> list[str]:
+    """PRAGMA table_info, memoised for the life of one run.
 
-
-def session_col(con, table) -> str | None:
-    """Which column attributes a row to a session -- DERIVED per table, not curated.
-
-    Three spellings are live: `created_by_session` (most), `session`
-    (search_executions, search_candidates), and both (item_audit_runs). A curated
-    list of which table uses which is the exact shape rule 8 forbids, so this asks
-    the table.
+    The DB is opened read-only and never mutated mid-run, so the schema cannot
+    change under the cache. Measured before it existed: 529 PRAGMA calls over 77
+    tables, a 6.87x redundancy, because session_col(), sessions(), rows_for() and
+    as_of() each re-asked for the same table.
     """
-    cols = set(columns(con, table))
-    for c in ("created_by_session", "session"):
-        if c in cols:
-            return c
-    return None
+    key = (id(con), table)
+    if key not in _cache:
+        _cache[key] = [r[1] for r in con.execute(f'PRAGMA table_info("{table}")')]
+    return _cache[key]
 
 
-def sessions(con, tables) -> list[dict]:
+# ---------------------------------------------------------------------------
+# Session attribution: ONE HOME, and it is not this file
+# ---------------------------------------------------------------------------
+# `scripts/audit/batch_capture_report.py` already answers "what did this batch
+# record, in every table" -- built on the owner request of 2026-09-16, one day
+# before this module. Its attribution is strictly better than what this file
+# first shipped, and re-deriving it here would give two tools that answer the
+# same question differently about the same batch. So this imports it.
+#
+# WHAT THIS FILE GOT WRONG BY NOT LOOKING FIRST. Its session_col() matched two
+# hardcoded names, `created_by_session` and `session`. The corpus uses at least
+# eight: `worked_by_session` (source_locators, the largest table this map
+# places), `applied_by_session`, `run_by_session`, `raised_by_session`,
+# `resolved_by_session`, `attempted_by_session`, `checked_by_session`,
+# `verified_by_session`. Fifteen of the eighteen tables this page named
+# "not attributable to a session" were attributable -- eight directly and seven
+# through a foreign key. A curated list of column names went blind exactly the
+# way `dbcore.WRITABLE_TABLES` did eight times, inside the tool whose whole
+# argument is that curated lists go blind.
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "audit"))
+import batch_capture_report as _bcr  # noqa: E402
+
+
+def attribution(con, tables) -> dict:
+    """{table: (kind, sql_predicate)} for every live table. Derived, never listed.
+
+    kind is DIRECT (the table carries a session column), FK (it reaches one
+    through a foreign key, up to batch_capture_report.MAX_HOPS) or NONE. A NONE
+    table is NAMED on the page rather than omitted: an absent row and an
+    unattributable row are different facts.
+    """
+    direct = {t: cols for t in tables if (cols := _bcr._session_cols(con, t))}
+    out = {}
+    for t in tables:
+        kind, pred, _path = _bcr._resolve(con, t, direct)
+        out[t] = (kind, pred)
+    return out
+
+
+def sessions(con, tables, attrib, counts) -> list[dict]:
     """Every session id that wrote anything, with what it touched.
 
-    Ordered by first write then id, so the page is stable across runs.
+    Session ids ORIGINATE in DIRECT tables -- an FK-attributed row inherits its
+    id from a parent -- so enumeration reads the direct ones and attribution
+    then reaches the rest. Empty tables are skipped outright, which is what
+    keeps this bounded as sessions accumulate.
     """
     seen: dict[str, dict] = {}
     for t in tables:
-        sc = session_col(con, t)
-        if sc is None:
+        kind, _pred = attrib[t]
+        if kind != "DIRECT" or not counts[t]:
             continue
-        stamp = "created_at" if "created_at" in columns(con, t) else None
+        cols = columns(con, t)
+        sc = _bcr._session_cols(con, t)[0]
+        stamp = "created_at" if "created_at" in cols else None
+        # ONE GROUPED QUERY PER TABLE, not one per (session, table): this returns
+        # every session's count for this table in a single pass, and the counts
+        # are carried through to rows_for() rather than re-derived there.
         q = (f'SELECT "{sc}" AS s, COUNT(*) AS n'
              + (f', MIN("{stamp}") AS first' if stamp else ', NULL AS first')
              + f' FROM "{t}" WHERE "{sc}" IS NOT NULL GROUP BY "{sc}"')
         for row in con.execute(q):
             e = seen.setdefault(row["s"], {"id": row["s"], "rows": 0,
-                                           "tables": [], "first": None})
+                                           "per_table": {}, "first": None})
             e["rows"] += row["n"]
-            e["tables"].append(t)
+            e["per_table"][t] = row["n"]
             if row["first"] and (e["first"] is None or row["first"] < e["first"]):
                 e["first"] = row["first"]
+    # FK-reached tables cannot be grouped in one pass, so they are counted per
+    # session -- but only for non-empty ones, of which there are currently none.
+    fk = [t for t in tables if attrib[t][0] == "FK" and counts[t]]
+    for e in seen.values():
+        for t in fk:
+            n = con.execute(f'SELECT COUNT(*) FROM "{t}" WHERE {attrib[t][1]}',
+                            (e["id"],)).fetchone()[0]
+            if n:
+                e["per_table"][t] = n
+                e["rows"] += n
     out = list(seen.values())
-    for e in out:
-        e["tables"] = sorted(set(e["tables"]))
     out.sort(key=lambda e: (e["first"] or "", e["id"]))
     return out
 
 
-def rows_for(con, table, sess) -> tuple[list[str], list[list], int]:
-    """The rows `sess` wrote into `table`: (columns, capped rows, true total)."""
-    sc = session_col(con, table)
-    if sc is None:
-        return [], [], 0
+def rows_for(con, table, sess, pred, total) -> tuple[list[str], list[list]]:
+    """The rows `sess` wrote into `table`. `total` is passed in, never re-counted."""
     cols = columns(con, table)
-    total = con.execute(
-        f'SELECT COUNT(*) FROM "{table}" WHERE "{sc}" = ?', (sess,)).fetchone()[0]
     if not total:
-        return cols, [], 0
-    # A TOTAL ORDER, or the cap is nondeterministic and --check lies.
-    # cols[0] is not unique in nine live tables -- term_aliases holds 2382 rows
-    # over 88 distinct term_id, so `ORDER BY term_id LIMIT 50` picks 50 rows out
-    # of a huge tie set and SQLite may break the tie differently on a different
-    # build, after an added index, or after VACUUM. The page would then differ
-    # byte-for-byte from the committed copy and `--check` would report a
-    # correctly-generated page stale, with nothing telling the reader why.
-    # `_rowid_` is the tiebreaker; a WITHOUT ROWID table has none, so fall back
-    # to ordering on every column, which is total by construction.
+        return cols, []
+    # A TOTAL ORDER, or the cap is nondeterministic and --check lies. cols[0] is
+    # not unique in nine live tables -- term_aliases holds 2382 rows over 88
+    # distinct term_id -- so `ORDER BY term_id LIMIT 50` picks 50 out of a huge
+    # tie set and SQLite may break the tie differently on another build, after an
+    # added index, or after VACUUM. `_rowid_` is the tiebreaker; a WITHOUT ROWID
+    # table has none, so fall back to ordering on every column.
     allcols = ", ".join(f'"{c}"' for c in cols)
     for order in (f'"{cols[0]}", _rowid_', allcols):
         try:
             got = con.execute(
-                f'SELECT * FROM "{table}" WHERE "{sc}" = ? ORDER BY {order} '
+                f'SELECT * FROM "{table}" WHERE {pred} ORDER BY {order} '
                 f'LIMIT {ROW_CAP}', (sess,)).fetchall()
-            return cols, [list(r) for r in got], total
+            return cols, [list(r) for r in got]
         except sqlite3.OperationalError:
             continue
     raise RuntimeError(f"no total order available for {table}")
 
 
-def unwritable(con) -> list[str]:
-    """CLAUDE.md §4's probe: a NOT NULL FK into an EMPTIED table.
+def unwritable(con, tables) -> dict:
+    """CLAUDE.md §4's probe, collapsed to ROOTS rather than leaves.
 
-    The refusal is `FOREIGN KEY constraint failed` at INSERT, never at migration
-    time, so the schema looks healthy and every gate stays green over a table that
-    cannot accept a row. Derived here, never quoted.
+    The raw probe returns 21 columns today. Printed flat that is a list a reader
+    learns to skip -- the same argument this repo makes about a check that is red
+    by construction. Nearly all of them are one empty table away from being
+    writable: `items` alone accounts for most, and base_parameters -> specifications
+    -> specification_source_links is a chain, not three independent facts. So the
+    empty PARENTS are the finding and the columns are their consequence.
 
-    IT OVER-REPORTS, AND THE PAGE SAYS SO RATHER THAN THE COMMENT ALONE. The probe
-    asks only whether the parent table is empty RIGHT NOW. Where a single `db.py`
-    call inserts the parent and the child in one transaction, the parent is empty
-    beforehand and the write still succeeds -- `connection_targets.con_id`,
-    `identity_medical_map.medical_code` and `icf_medical_map.medical_code` were all
-    flagged by this probe and are all fine, measured 2026-09-17. Only a child whose
-    parent NOTHING fills is genuinely dead. Reporting the raw probe as a verdict
-    would manufacture findings, so the page prints it as a list to check, not a
-    list of defects.
+    IT STILL OVER-REPORTS, and the page says so. The probe asks only whether a
+    parent is empty right now; where one db.py call inserts parent and child in
+    the same transaction the write succeeds anyway -- connection_targets.con_id,
+    identity_medical_map.medical_code and icf_medical_map.medical_code are all
+    flagged and all fine. Only a child whose parent NOTHING fills is dead.
+
+    A fuller version -- transitive collapse plus the softer class of NULLABLE FKs
+    into empty tables, where the row is writable but the lens is not -- is specced
+    as L1.7 in `architecture/meta-scripts-spec.md` and belongs with that module,
+    not here.
     """
-    empty = {t for t in live_tables(con)
+    empty = {t for t in tables
              if con.execute(f'SELECT COUNT(*) FROM "{t}"').fetchone()[0] == 0}
-    out = []
-    for t in live_tables(con):
-        dead = {f[3] for f in con.execute(f'PRAGMA foreign_key_list("{t}")')
+    roots: dict = {}
+    for t in tables:
+        dead = {f[3]: f[2] for f in con.execute(f'PRAGMA foreign_key_list("{t}")')
                 if f[2] in empty}
         for c in con.execute(f'PRAGMA table_info("{t}")'):
             if c[1] in dead and c[3]:
-                out.append(f"{t}.{c[1]}")
-    return sorted(out)
+                roots.setdefault(dead[c[1]], []).append(f"{t}.{c[1]}")
+    return {k: sorted(v) for k, v in sorted(roots.items())}
 
 
 def _norm_stamp(v) -> str:
@@ -347,13 +292,13 @@ def as_of(con, tables) -> str:
 def gather(con) -> dict:
     stages = load_stages(CONTRACT)
     tables = live_tables(con)
-    known = set(STAGE_OF) | INFRASTRUCTURE
+    known = set(STAGE_OF)
     unassigned = sorted(t for t in tables if t not in known)
     # A mapped name that no longer exists is the other half of the same drift --
     # and it is swept across BOTH maps. Sweeping only STAGE_OF left a renamed or
     # dropped INFRASTRUCTURE table sitting in the set forever, which is rule 4's
     # drift applied to half the map.
-    phantom = sorted(t for t in (set(STAGE_OF) | INFRASTRUCTURE) if t not in tables)
+    phantom = sorted(t for t in known if t not in tables)
 
     # A MISTYPED STAGE VALUE IS THE ONE WAY A TABLE COULD STILL HIDE, and it
     # would defeat this module's central claim. `unassigned` keys on the table
@@ -361,27 +306,43 @@ def gather(con) -> dict:
     # `s in by_stage` filter below drops foo from every stage list, so the table
     # and every row a session wrote into it vanish from the page with --check
     # green. Nothing validated the VALUES against the contract until now.
+    # ONE VALIDATOR, EVERY VALUE -- including `infrastructure`, which the old
+    # separate set escaped entirely. A stage id the contract does not define
+    # keeps its table out of `unassigned` while dropping it from every stage
+    # list, so the table would vanish from the page with --check green.
+    allowed = set(stages) | {INFRA}
     bad_stage = sorted(f"{t} -> {v!r}" for t, v in STAGE_OF.items()
-                       if v not in set(stages))
-    no_session = sorted(t for t in tables if session_col(con, t) is None)
+                       if v not in allowed)
+
+    counts = {t: con.execute(f'SELECT COUNT(*) FROM "{t}"').fetchone()[0] for t in tables}
+    attrib = attribution(con, tables)
+    no_session = sorted(t for t in tables if attrib[t][0] == "NONE")
 
     by_stage: dict[str, list[str]] = {s: [] for s in stages}
     for t in tables:
-        s = STAGE_OF.get(t)
-        if s in by_stage:
-            by_stage[s].append(t)
-    for s in by_stage:
-        by_stage[s].sort()
+        st = STAGE_OF.get(t)
+        if st in by_stage:
+            by_stage[st].append(t)
+    for st in by_stage:
+        by_stage[st].sort()
+    in_stage = {t for st in stages for t in by_stage[st]}
 
-    sess = sessions(con, tables)
+    sess = sessions(con, tables, attrib, counts)
     writes: dict[str, dict] = {}
     for e in sess:
         per = {}
-        for t in e["tables"]:
-            cols, rws, total = rows_for(con, t, e["id"])
-            if total:
-                per[t] = {"cols": cols, "rows": rws, "total": total,
-                          "stage": STAGE_OF.get(t, "unassigned")}
+        for t, n in sorted(e["per_table"].items()):
+            if not n:
+                continue
+            if t not in in_stage:
+                # OFF-STAGE TABLES CARRY ONLY THEIR COUNT. The page reads .total
+                # for these and never .rows, so fetching and embedding them put
+                # 141,988 bytes -- 26% of the payload -- into the browser to be
+                # parsed and never read.
+                per[t] = {"total": n, "stage": STAGE_OF.get(t, INFRA)}
+                continue
+            cols, rws = rows_for(con, t, e["id"], attrib[t][1], n)
+            per[t] = {"cols": cols, "rows": rws, "total": n, "stage": STAGE_OF[t]}
         writes[e["id"]] = per
 
     return {
@@ -389,9 +350,13 @@ def gather(con) -> dict:
         "unassigned": unassigned, "phantom": phantom, "bad_stage": bad_stage,
         "no_session": no_session,
         "sessions": sess, "writes": writes,
-        "disputed": {t: {"stage": v[0], "why": v[1]}
+        # POINT, DO NOT COPY (rule 5). This read v[0] -- DISPUTED's own copy of
+        # the stage -- so editing STAGE_OF without editing DISPUTED rendered a
+        # table under one stage while the panel named another, with --check
+        # green. Demonstrated, not theorised.
+        "disputed": {t: {"stage": STAGE_OF.get(t), "why": v}
                      for t, v in sorted(DISPUTED.items()) if t in tables},
-        "unwritable": unwritable(con), "as_of": as_of(con, tables),
+        "unwritable": unwritable(con, tables), "as_of": as_of(con, tables),
         "n_tables": len(tables),
     }
 
@@ -444,7 +409,6 @@ display:flex;gap:10px;align-items:baseline;list-style:none}
 .pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11.5px;
 border:1px solid var(--line);color:var(--mut)}
 .pill.on{color:var(--ok);border-color:var(--ok)}
-.pill.off{color:var(--mut)}
 table{border-collapse:collapse;width:100%;margin:8px 0 2px;font-size:12.5px}
 th,td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;
 vertical-align:top;max-width:340px;overflow-wrap:anywhere}

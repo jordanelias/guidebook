@@ -1481,6 +1481,31 @@ checks:
     loop, not a bag of unrelated scalars. min_items:1. STALE on main as of 2026-08-01 — the committed
     evidentiary-base-audit outputs do not match a fresh regeneration from the DB. Fix with scripts/regenerate_derived.sh,
     not by demoting the check.'
+- id: column_vocabulary_audit
+  cmd:
+  - python3
+  - scripts/audit/column_vocabulary_audit.py
+  battery: schema
+  kinds:
+  - schema
+  - data
+  level: advisory
+  basis: base/base-schema-validates
+  cost: fast
+  min_items: 1
+  note: 'Do the tables agree on what to call the same thing? Found because
+    tools/pipeline_walk.py matched two session-column names and the corpus spells
+    that ONE role eight ways, so it reported fifteen tables -- including
+    source_locators, the largest -- as unattributable. The drift was in the schema,
+    not the tool, and nothing named it, so each new reader rediscovers it by being
+    wrong. Three tables carry BOTH spellings of one fact (item_audit_runs,
+    connections, bpc_metadata), which is rule 5 literally. ADVISORY, and it FAILS
+    today by design: the fix is 25 column renames, and a rename here is a migration
+    plus rule 4 caller sweep, never an edit -- migration 064 exists because 063
+    swept eight Python readers and six skills and missed v_item_provenance. Making
+    it blocking before the renames land would be red by construction, which
+    CLAUDE.md rule 6 says teaches its reader to ignore the check. Ratchet to
+    blocking once the deviant set is empty.'
 - id: pipeline_walk_fresh
   cmd:
   - python3
