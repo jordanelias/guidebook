@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-17-engine-proxy-inference",
+  "artifact": "sessions/session_2026-09-17-engine-proxy-inference.md",
+  "doctrine_sha": "3077cee",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "integrity-protocol",
+    "source-discipline"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scripts/tests/test_assess_cell_pilot.py",
+      "reason": "The branch was written against the owner statement's four ACTIONS read in full before any code, and every claim the record makes about the engine is pinned by an assertion in the pilot test: that the marker is set, that regulatory_stratum_only goes false, that the state stays provisional, that a finding does NOT govern, that the floor claim is unchanged when no finding is present, that findings without a threshold stay pending, and that the convergence axis count matches the axes carried. Eighteen assertions, added with the branch rather than after it."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-17-engine-proxy-inference.md",
+      "reason": "The baseline was MEASURED before the change rather than assumed from the owner statement: run against the live corpus, the cell no longer read refs=0 as the statement describes -- batches 10-12 had supplied the threshold -- so the defect had moved to an absence list asserting 'No Tier 1 clinical' over five anchoring-tier sources. The record says that rather than repeating the statement's own framing. Two adjacent defects were found by running the thing and are reported rather than quietly fixed: compose_value composing from 2 of 7 governing claims in silence, and a gap description telling a findings-only parameter its sources had been superseded."
+    },
+    "source-discipline": {
+      "status": "NOT-FIRED",
+      "reason": "No source was admitted, no search logged and no extraction written. This session changed how admitted evidence is READ, not what is admitted. The one data row it adds beyond the determination itself is parameter 3's accessibility_direction, whose rationale cites four already-admitted sources and introduces no new claim."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Scope ran wider than ACTION (2) strictly required. The action asked for one capability; this session also added a schema column, ratcheted a registry entry, changed compose_value's reporting, corrected a gap description and set a parameter's direction. Each is defensible on its own and three of them were forced by running the change, but a reviewer should see it as one session touching the engine, the schema, the registry and the data layer at once, and the branch already carries two research batches as well."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "The first cut of the proxy branch hard-coded convergence status 'single_axis' while populating three axes, and validate_evidence_state refused the row. That defect reached the canonical database: migration 086 and a data migration were applied, the error was found by the battery afterwards, and both were reverted and re-emitted from a clean scratch. Nothing was committed to git in the bad state and the rebuild reproduces, but the ordering was fix-then-check rather than check-then-apply, which is the order this repository's own write path exists to enforce."
+    }
+  ],
+  "bias_direction": "Toward declaring ACTION (2) discharged. The owner named this as the next act, I recommended it twice, and it now produces a determination with a number in it -- every incentive points at writing that up as closure. It is not closure. The value 5% is the shallowest figure a regulator wrote down; the findings did not produce it, they only justify preferring the shallow end of a range the codes had already fixed. A reader could fairly say the proxy branch changes the LABEL on the determination and its supporting set without changing the number, and that the number would be 5% today with the branch reverted. The second pull is toward the tidy story that the three-way 1:20 convergence and the engine's selection of 5% confirm each other; they do not -- the engine picked 5% because it is the smallest parsable percentage, and it could not read two of the three sources in that convergence at all.",
+  "independent_reviewer_counterclaim": "A reviewer should ask whether this implements the owner's inference or sidesteps it. ACTION (2) is about reasoning from dose-response toward a RANGE: 'whatever range of gradients corresponds to the best outcomes is the best range of gradient'. What was built does not reason from the curves at all -- it does not read the studies' tested ranges, their measured effect sizes, or where discomfort accelerates. It checks that anchoring-tier findings EXIST, and on that basis relabels a determination whose value still comes entirely from code ceilings. The findings are a gate, not an input. A stricter reading of the statement would want the engine to use REF-00985's 0-to-4.8 degree tested range as evidence about where the acceptable boundary sits, which is the lead the statement itself records and which this session did not touch. The counter is that the statement's own limit -- the inference is degenerate without a threshold, because monotonic curves resolve to 0 degrees -- means the threshold must supply the value and the findings can only condition which threshold is chosen, which is exactly what was built. But the reviewer is right that 'rests on findings' overstates it: the determination rests on codes and is WARRANTED by findings, and those are different sentences.",
+  "verdict": "DEVIATION-LOGGED"
+}

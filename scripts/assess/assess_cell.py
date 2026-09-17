@@ -310,6 +310,53 @@ def gather_sources(conn, parameter_id):
 #: `pending` without moving its attestation.
 VALUE_SUPPLYING_ROLES = ("claim", "derived")
 CONDITIONING_ROLES = ("condition",)
+#: Rows that report something ABOUT the parameter without asserting a value for it.
+#: They supply DIRECTION, never value (owner ruling 2026-09-13), and since the owner
+#: statement of 2026-09-16 they may also carry a determination as a PROXY -- see
+#: `gather_findings` and the proxy branch in `determine()`.
+DIRECTION_SUPPLYING_ROLES = ("finding",)
+
+
+def gather_findings(conn, parameter_id):
+    """The sources holding a FINDING for this parameter. Direction, never value.
+
+    WHY THIS EXISTS, and it is not symmetry with `gather_sources`. Owner statement
+    2026-09-16: "even if they aren't asserting a gradient, they are examining the
+    impacts of gradients ... adjudication will be able to reason that whatever range
+    of gradients corresponds to the best outcomes is the best range of gradient." Its
+    ACTION (2) names this function's absence as the defect: "`assess_cell` must be
+    able to reach a determination from findings plus a threshold, not only from
+    `claim` rows -- today it cannot, and that is why batch 08 reads `refs=0`."
+
+    WHAT THAT LOOKED LIKE. Batch 08 admitted two studies measuring articular
+    discomfort rising 14->36% and pushrim force more than doubling across gradient,
+    and the engine returned `pending` with `refs=0` -- which renders as "no evidence"
+    over two studies that measured the thing. The rows were there; `gather_sources`
+    filters `figure_role IN ('claim','derived')` and a `finding` contributed nothing
+    however much it had measured.
+
+    WHAT THIS DOES NOT DO. It does not make a finding a value-supplier. `governing`
+    still means "supplied the value" and still comes from `gather_sources` alone --
+    stop condition 6 of the operative plan turns on that, and migration 075 exists
+    because two conditions and two findings once governed a `stated` cell. A finding
+    reaching a determination through this function lands in `supporting`, and the
+    determination is marked `rests_on_proxy_inference` so the book can tell an
+    inference from a citation.
+    """
+    has_disp = any(r[1] == "verification_disposition"
+                   for r in conn.execute("PRAGMA table_info(evidence_sources)"))
+    disp_col = "e.verification_disposition" if has_disp else "NULL"
+    q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
+                   e.verification_status, {disp_col}, e.scope, e.jurisdiction
+            FROM source_value_extractions x
+            JOIN evidence_sources e ON e.ref_id = x.ref_id
+            WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
+              AND x.figure_role IN ({",".join("?" * len(DIRECTION_SUPPLYING_ROLES))})
+            ORDER BY e.ref_id"""
+    return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
+                      "verification_status", "verification_disposition",
+                      "scope", "jurisdiction"), r))
+            for r in conn.execute(q, (parameter_id,) + DIRECTION_SUPPLYING_ROLES)]
 
 
 def gather_extraction_links(conn, parameter_id, governing_refs):
@@ -617,10 +664,21 @@ def compose_value(conn, links, direction):
         "FROM source_value_extractions WHERE extraction_id IN (%s)"
         % ",".join("?" * len(ids)), ids).fetchall()
 
-    bounds, units = [], set()
+    bounds, units, unparsed = [], set(), []
     for _eid, val, unit, cmp_, ctype in rows:
         b = parse_bound(val, cmp_, ctype)
         if b is None:
+            # KEPT, NOT DISCARDED. `parse_bound` returns None for a ratio like '1:12',
+            # for a qualitative claim, and for any value with words in it, and its own
+            # docstring promises those "govern the STATE of a cell ... without
+            # contributing a numeric bound, and THE CALLER SAYS SO rather than silently
+            # treating them as zero". The caller did not say so: it composed from
+            # whatever parsed and reported nothing about the rest. Measured on parameter
+            # 3 on 2026-09-17, that meant an interval built from the two rows stating a
+            # PERCENTAGE while five rows stating the same quantity as a RATIO were
+            # dropped in silence -- a value resting on two of seven governing rows and
+            # reading as the whole set.
+            unparsed.append((val, unit))
             continue
         bounds.append(b)
         units.add((unit or "").strip())
@@ -646,6 +704,20 @@ def compose_value(conn, links, direction):
             "inapplicable (DR-2026-07-21 section 5) and no single value is anchored; the "
             "spread is rendered with each population's direction stated")
 
+    # The caveat travels with the value, because a reader of the number cannot
+    # otherwise tell it was composed from part of the governing set. NOT a conversion:
+    # turning '1:12' into 8.33% here would invent a figure no source stated, which is
+    # the same refusal the unit-mismatch branch above makes. Whether ratio and percent
+    # are one unit for composition is a doctrinal question and needs a ruling, not an
+    # engine author.
+    caveat = None
+    if unparsed:
+        _shown = ", ".join(sorted({repr(v) for v, _u in unparsed}))
+        caveat = (f"composed from {len(bounds)} of {len(bounds) + len(unparsed)} governing "
+                  f"claims: {len(unparsed)} state no parsable numeric bound ({_shown}) and "
+                  f"contribute to the cell's STATE but not to this interval. No conversion "
+                  f"was applied; a ratio is not read as a percentage here")
+
     los = [lo for lo, _ in bounds if lo is not None]
     his = [hi for _, hi in bounds if hi is not None]
     if direction == "higher_is_better":
@@ -656,7 +728,7 @@ def compose_value(conn, links, direction):
         # The gentlest maximum, the lowest ceiling.
         vmin = min(los) if los else None
         vmax = min(his) if his else None
-    return vmin, vmax, unit, None
+    return vmin, vmax, unit, caveat
 
 
 def link_payload(links):
@@ -938,6 +1010,17 @@ def determine(conn, parameter_id, lens, slug, note):
     n_extractions = count_extractions(conn, parameter_id)
     recs = [assess_source(conn, s, SCALE_POPULATION, identity) for s in sources]
     b = classify(recs)
+    # THE DIRECTION SET (owner 2026-09-16, ACTION 2). Sources holding a `finding` for
+    # this parameter: they measured an effect without stating a value. Assessed through
+    # exactly the same gates as the value-supplying set -- tier consistency,
+    # disqualification, population directness -- because a finding that cannot anchor
+    # for one of those reasons cannot carry a proxy inference either.
+    finding_sources = gather_findings(conn, parameter_id)
+    finding_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
+                    for s in finding_sources]
+    fb = classify(finding_recs)
+    finding_anchors = (anchoring(fb["t1"]) + anchoring(fb["co1"])
+                       + anchoring(fb["t2"]) + anchoring(fb["co2"]))
     # §2.8 verification-status machinery
     live = [r for r in recs if not _is_disqualified(r)]
     has_unverified = any((r["verification_status"] or "") == "UNVERIFIED" for r in live)
@@ -958,6 +1041,7 @@ def determine(conn, parameter_id, lens, slug, note):
     state, design_scale = None, SCALE_POPULATION
     tier_basis, governing, conf, gap_needed = None, [], None, False
     code_floor_only, regulatory_stratum_only = 0, 0
+    rests_on_proxy_inference = 0
     falsification = None
 
     supporting = []
@@ -1061,23 +1145,107 @@ def determine(conn, parameter_id, lens, slug, note):
         if rich:
             state = "provisional"
             governing = sorted(r["ref_id"] for r in regulatory)
-            tier_basis = ("T6-only" if code_floor_only else
-                          ("T4-6-only" if b["t6"] else "T4-5-only")) + "(regulatory_stratum_only)"
-            conv = dict(status="single_axis", clinical=[], co1=[], co2=[],
-                        downw=[], disc=discounted,
-                        rationale="regulatory stratum only (T4-6): convergence-not-evidence "
-                                  "(tier-system.md §3). Universal-Mode regulatory determination; "
-                                  "richness: " + why,
-                        synth=None)
-            conf = dict(present=[f"Tier 4-5 standards ({len(b['t45'])})",
-                                 f"Tier 6 statutory codes ({len(b['t6'])})"],
-                        absent=["No Tier 1 clinical", "No Co-1", "No Tier 2 synthesis",
-                                "No Co-2 CPG", "No Tier 3 clinical"],
-                        basis="Regulatory-stratum floor synthesis (" + why + "). NOT an "
-                              "evidence-anchored best practice: no anchoring dimension exists.")
-            falsification = ("This is a floor claim: overturned if the cited editions are "
-                             "superseded. It never becomes a best-practice claim by more codes "
-                             "agreeing; only T1/Co-1/T2/Co-2 evidence can do that (§2.7).")
+            _floor = ("T6-only" if code_floor_only else
+                      ("T4-6-only" if b["t6"] else "T4-5-only"))
+            if finding_anchors:
+                # ── THE PROXY BRANCH (owner statement 2026-09-16, ACTIONS 1 and 2) ──
+                #
+                # The threshold is the regulatory stratum; the DIRECTION is measured by
+                # anchoring-tier findings. Together they reach a determination that the
+                # floor claim alone cannot: the codes say what is permitted, and the
+                # findings say which end of what is permitted the evidence favours.
+                # `compose_value` then selects most-accommodatingly, which is where the
+                # findings actually bite -- without them, "gentlest ceiling" is a rule
+                # with no evidence behind it on this parameter.
+                #
+                # WHAT CHANGES, AND WHAT DELIBERATELY DOES NOT:
+                #   * `governing` is UNCHANGED. Findings do not supply values, so they
+                #     do not govern -- stop condition 6 and migration 075 both turn on
+                #     that, and the whole point of 075 was that findings and conditions
+                #     had once governed a `stated` cell. They land in `supporting`.
+                #   * `regulatory_stratum_only` becomes 0, because it is no longer TRUE:
+                #     the evidence basis is not only the regulatory stratum. The
+                #     tier_basis marker moves with it, because register_integrity_check
+                #     cross-checks the two and a disagreement is a tuple misreport.
+                #   * The absence list is CORRECTED. It read "No Tier 1 clinical" over a
+                #     parameter with T1 dose-response evidence -- an assertion of absence
+                #     across evidence that exists, which is the reading the owner called
+                #     wrong.
+                #   * `state` stays `provisional`, never `stated`. ACTION (1): a
+                #     determination may rest on findings "marked as a proxy, never as a
+                #     stated value". `stated` is what a source stating the value earns.
+                rests_on_proxy_inference = 1
+                regulatory_stratum_only = 0
+                supporting = sorted(r["ref_id"] for r in finding_anchors)
+                _fparts = [n for n, k in (("T1", fb["t1"]), ("CO1", fb["co1"]),
+                                          ("T2", fb["t2"]), ("CO2", fb["co2"]))
+                           if anchoring(k)]
+                tier_basis = f"{_floor}-threshold+{'+'.join(_fparts)}-direction(proxy_inference)"
+                _fax_clin = [r["ref_id"] for r in finding_anchors
+                             if r["evidence_type"] not in ("co1", "co2")]
+                _fax_co1 = [r["ref_id"] for r in finding_anchors
+                            if r["evidence_type"] == "co1"]
+                _fax_co2 = [r["ref_id"] for r in finding_anchors
+                            if r["evidence_type"] == "co2"]
+                # THE AXIS COUNT IS THE SAME RULE AS THE ANCHORED BRANCH, and it has to
+                # be: `validate_evidence_state` recomputes it and refuses a convergence
+                # row whose status contradicts the axes it carries. The first cut of
+                # this branch hard-coded `single_axis` while populating three axes, and
+                # that check caught it -- which is the check doing exactly its job.
+                # `pending_assessment` rather than `convergent` for two or more, for the
+                # reason the anchored branch gives at length: no rule exists for grading
+                # value-level agreement, and on a PROXY determination there is even less
+                # to grade, because the axes agree about DIRECTION and state no value.
+                _fn_axes = sum(1 for a in (_fax_clin, _fax_co1, _fax_co2) if a)
+                conv = dict(status=("pending_assessment" if _fn_axes >= 2 else "single_axis"),
+                            clinical=_fax_clin, co1=_fax_co1, co2=_fax_co2,
+                            downw=down_weighted, disc=discounted,
+                            rationale="PROXY: the regulatory stratum supplies the threshold "
+                                      "(" + why + ") and " + str(len(finding_anchors)) +
+                                      " anchoring-tier finding(s) supply the direction. The "
+                                      "value is selected most-accommodatingly within what the "
+                                      "threshold permits; no source states it. Owner "
+                                      "2026-09-16: 'yes it's not perfect it's a proxy'.",
+                            synth=None)
+                conf = dict(present=[f"Tier 4-5 standards ({len(b['t45'])})",
+                                     f"Tier 6 statutory codes ({len(b['t6'])})",
+                                     f"Anchoring-tier findings supplying direction "
+                                     f"({len(finding_anchors)}: {'+'.join(_fparts)})"],
+                            absent=["No source states a value for this parameter at an "
+                                    "anchoring tier -- the threshold is regulatory and the "
+                                    "direction is inferred, so this is a PROXY determination "
+                                    "and not a best-practice claim"],
+                            basis="Threshold from the regulatory stratum (" + why + "), "
+                                  "direction from measured findings. A proxy inference under "
+                                  "the owner statement of 2026-09-16, marked as one.")
+                falsification = ("Overturned if a source states a value for this parameter at "
+                                 "an anchoring tier (the cell then rests on that, not on a "
+                                 "proxy), if the findings supplying direction are retracted or "
+                                 "re-graded off `finding`, or if the cited threshold editions "
+                                 "are superseded. It does NOT become a best-practice claim by "
+                                 "more codes agreeing (§2.7), and the proxy step is degenerate "
+                                 "without the threshold: 'best outcomes' alone resolves to the "
+                                 "gentlest gradient physically possible, which for a ramp is "
+                                 "not a ramp.")
+            else:
+                tier_basis = _floor + "(regulatory_stratum_only)"
+                conv = dict(status="single_axis", clinical=[], co1=[], co2=[],
+                            downw=[], disc=discounted,
+                            rationale="regulatory stratum only (T4-6): convergence-not-evidence "
+                                      "(tier-system.md §3). Universal-Mode regulatory "
+                                      "determination; richness: " + why,
+                            synth=None)
+                conf = dict(present=[f"Tier 4-5 standards ({len(b['t45'])})",
+                                     f"Tier 6 statutory codes ({len(b['t6'])})"],
+                            absent=["No Tier 1 clinical", "No Co-1", "No Tier 2 synthesis",
+                                    "No Co-2 CPG", "No Tier 3 clinical"],
+                            basis="Regulatory-stratum floor synthesis (" + why + "). NOT an "
+                                  "evidence-anchored best practice: no anchoring dimension "
+                                  "exists.")
+                falsification = ("This is a floor claim: overturned if the cited editions are "
+                                 "superseded. It never becomes a best-practice claim by more "
+                                 "codes agreeing; only T1/Co-1/T2/Co-2 evidence can do that "
+                                 "(§2.7).")
         else:
             state = "pending"
             gap_needed = True
@@ -1169,6 +1337,13 @@ def determine(conn, parameter_id, lens, slug, note):
         "convergence": conv, "confidence": conf,
         "gap_needed": gap_needed, "code_floor_only": code_floor_only,
         "regulatory_stratum_only": regulatory_stratum_only,
+        "rests_on_proxy_inference": rests_on_proxy_inference,
+        # Counted so the GAP DESCRIPTION can name the right absence. A parameter read
+        # only into `finding` rows has sources that qualify perfectly well and supply
+        # no value, which is a different fact from having none and a different fact
+        # again from having them all superseded.
+        "n_finding_sources": len(finding_sources),
+        "n_finding_anchors": len(finding_anchors),
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
@@ -1509,6 +1684,31 @@ def main():
                           "absence of the topic — sources may be admitted and linked "
                           "to the slug and still have been read for no parameter at "
                           "all, so a new search is not the first move")
+            elif det_at == 0 and det["n_finding_sources"]:
+                # THE BATCH-08 CASE, AND THE BRANCH BELOW USED TO CLAIM IT WAS A
+                # SUPERSESSION. `det_at` counts VALUE-SUPPLYING sources; a parameter
+                # read only into `finding` rows has none, so it fell through to the
+                # supersession text and told the next session that every source behind
+                # it had been replaced. Nothing had been replaced: two studies had
+                # measured the effect of the parameter and stated no value for it.
+                # This block's own comment says a gap naming the wrong cause is worse
+                # than a vague one because it is followed -- this is that, fixed.
+                cause = (f"{det_x} extraction(s) exist for parameter {parameter_id} "
+                         f"from {det['n_finding_sources']} source(s), but NONE STATES A "
+                         f"VALUE: every one is a `finding` (an effect measured) or a "
+                         f"`condition`, and a determination needs a threshold to reason "
+                         f"against" +
+                         (f". {det['n_finding_anchors']} of those source(s) are at an "
+                          f"anchoring tier, so this is not weak evidence -- it is "
+                          f"evidence of a different KIND"
+                          if det["n_finding_anchors"] else ""))
+                remedy = ("retrieve the THRESHOLD half: a code value or an equivalent "
+                          "criterion of acceptability (owner 2026-09-16 ACTION 3). With "
+                          "one present, the findings supply direction and the cell "
+                          "reaches a PROXY determination; without one, 'best outcomes' "
+                          "is degenerate -- it resolves to the gentlest value physically "
+                          "possible, which for a ramp is not a ramp. Do NOT re-read the "
+                          "same sources for a value they do not state")
             elif det_at == 0:
                 cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, "
                          f"but EVERY source holding one has been SUPERSEDED "
@@ -1583,6 +1783,10 @@ def main():
                 det["falsification"],
                 det["has_unverified_sources"], det["all_sources_disqualified"],
                 det["regulatory_stratum_only"],
+                # 086. The third marker of a weakened claim, beside code_floor_only and
+                # regulatory_stratum_only: the value was selected under a proxy inference
+                # from findings rather than stated by a source (owner 2026-09-16).
+                det["rests_on_proxy_inference"],
                 # 080. `derivation_paths` carries a CHECK that a single-path row owes
                 # either a rationale or a cultural anchor, so these four are written
                 # together or the database refuses the row -- which is the dignity line
@@ -1599,6 +1803,7 @@ def main():
                 "tier_basis, governing_refs, rule_version, derivation_sha, code_floor_only, "
                 "value_min, value_max, value_unit, value_note, falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
+                "rests_on_proxy_inference, "
                 "functional_basis, derivation_paths, derivation_rationale, "
                 "cultural_claim_anchor, "
                 "created_at, created_by_session, updated_at, updated_by_session")
@@ -1652,7 +1857,8 @@ def main():
                         "accessibility_direction",
                         "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
-                        "regulatory_stratum_only", "has_unverified_sources",
+                        "regulatory_stratum_only", "rests_on_proxy_inference",
+                        "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "n_extractions", "non_anchoring_on_tier",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}

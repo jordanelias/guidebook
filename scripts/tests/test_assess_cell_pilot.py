@@ -51,7 +51,7 @@ def _default_scope(evidence_type, tier):
 
 
 def synth_db(sources, parameter_id=1, extractions_per_source=1,
-             icf_links=(), gates=()):
+             icf_links=(), gates=(), direction=None):
     """Minimal in-memory schema for determine(): evidence_sources +
     source_value_extractions + evidence_population_match.
 
@@ -76,7 +76,8 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         extraction_id INTEGER PRIMARY KEY AUTOINCREMENT,
         ref_id TEXT, slug TEXT, parameter_id INTEGER,
         identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
-        claim_type TEXT, claimed_value TEXT, figure_role TEXT, comparator TEXT);
+        claim_type TEXT, claimed_value TEXT, claimed_unit TEXT,
+        figure_role TEXT, comparator TEXT);
       CREATE TABLE evidence_population_match (
         match_id TEXT, ref_id TEXT, match_grade TEXT, target_population TEXT);
       -- 080. CREATED UNCONDITIONALLY, EVEN EMPTY, for the reason this docstring
@@ -88,6 +89,14 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         link_id INTEGER PRIMARY KEY AUTOINCREMENT, population_code TEXT, icf_code TEXT,
         mechanism TEXT, mapping_confidence TEXT, provenance TEXT, notes TEXT,
         created_at TEXT, created_by_session TEXT);
+      -- 086. Created here for the same reason as source_slug_links and
+      -- population_icf_links: `compose_value` reads accessibility_direction out of
+      -- this table, and a fixture without it can only ever exercise the branch that
+      -- declines for want of a direction. Left EMPTY unless a case passes one, so the
+      -- no-direction branch stays testable too.
+      CREATE TABLE base_parameters (
+        parameter_id INTEGER PRIMARY KEY, term_id TEXT, status TEXT,
+        accessibility_direction TEXT, direction_rationale TEXT);
       CREATE TABLE determination_gates (
         gate_id INTEGER PRIMARY KEY AUTOINCREMENT, parameter_id INTEGER,
         identity_code TEXT, verdict TEXT, trigger_ref_id TEXT, trigger_tier INT,
@@ -99,6 +108,11 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
                g.raised_by_session
           FROM determination_gates g WHERE g.resolved_at IS NULL;
     """)
+    if direction:
+        conn.execute("INSERT INTO base_parameters (parameter_id, term_id, status, "
+                     "accessibility_direction, direction_rationale) "
+                     "VALUES (?, 'TERM-SYN', 'active', ?, 'synthetic fixture')",
+                     (parameter_id, direction))
     for L in icf_links:
         conn.execute("INSERT INTO population_icf_links (population_code, icf_code, "
                      "mechanism, mapping_confidence, provenance) VALUES (?,?,?,?,?)", L)
@@ -122,11 +136,20 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
                 # be filtered out before the logic under test ever ran, and every
                 # assertion here would pass over an empty governing set -- the
                 # vacuity CLAUDE.md 5(a) names, hidden inside the engine's own tests.
+                # `figure_role` is per-source since 086. It defaults to 'claim' for the
+                # reason the comment above gives, and a fixture may set 'finding' to
+                # exercise the proxy branch -- a source that MEASURED the parameter
+                # without stating a value for it (owner 2026-09-16).
                 "INSERT INTO source_value_extractions "
                 "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value, "
-                " figure_role) "
-                "VALUES (?, 'syn-slug', ?, 'MOB', 'numerical', '1', 'claim')",
-                (ref, parameter_id))
+                " claimed_unit, figure_role, comparator) "
+                "VALUES (?, 'syn-slug', ?, 'MOB', ?, ?, ?, ?, ?)",
+                (ref, parameter_id,
+                 s.get("claim_type", "numerical"),
+                 s.get("claimed_value", "1"),
+                 s.get("claimed_unit"),
+                 s.get("figure_role", "claim"),
+                 s.get("comparator")))
     return conn
 
 
@@ -460,6 +483,98 @@ def main():
     else:
         expect("H2 CHECK: live DDL available to test against", False,
                "data/guidebook.db absent")
+
+    # ── 086 / owner statement 2026-09-16: the PROXY branch ────────────────────
+    # ACTION (2) said assess_cell "must be able to reach a determination from
+    # findings plus a threshold, not only from `claim` rows". These four cases are
+    # the regression cover for that, and for the three things it must NOT do.
+    _t6 = [{"tier": 6, "evidence_type": "code", "jurisdiction": j} for j in ("US", "GB", "AU")]
+    _find = [{"tier": 1, "evidence_type": "clinical", "ref_id": "REF-FIND-1",
+              "figure_role": "finding", "claim_type": "qualitative",
+              "claimed_value": "discomfort rises with gradient"}]
+
+    d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "proxy")
+    expect("PROXY: threshold + anchoring finding => marked rests_on_proxy_inference",
+           d["rests_on_proxy_inference"] == 1, str(d["rests_on_proxy_inference"]))
+    expect("PROXY: regulatory_stratum_only is FALSE — the stratum is not all there is",
+           d["regulatory_stratum_only"] == 0, str(d["regulatory_stratum_only"]))
+    expect("PROXY: tier_basis carries the marker and NOT the rso marker",
+           "(proxy_inference)" in d["tier_basis"]
+           and not d["tier_basis"].endswith("(regulatory_stratum_only)"), d["tier_basis"])
+    expect("PROXY: state is provisional, NEVER stated (ACTION 1)",
+           d["state"] == "provisional", d["state"])
+    # The invariant migration 075 exists for, and stop condition 6: a finding never
+    # governs. It supplies direction and lands in `supporting`.
+    expect("PROXY: the finding does NOT govern",
+           "REF-FIND-1" not in d["governing_refs"], str(d["governing_refs"]))
+    expect("PROXY: the finding DOES support",
+           "REF-FIND-1" in d["supporting_refs"], str(d["supporting_refs"]))
+    expect("PROXY: the absence list no longer asserts 'No Tier 1 clinical' over T1 evidence",
+           not any("No Tier 1" in a for a in d["confidence"]["absent"]),
+           str(d["confidence"]["absent"]))
+
+    expect("PROXY: one finding axis => single_axis",
+           d["convergence"]["status"] == "single_axis", d["convergence"]["status"])
+    # TWO finding axes must NOT report single_axis. The first cut of the proxy branch
+    # hard-coded it while populating three axes, and validate_evidence_state -- which
+    # recomputes the axis count from the row it is given -- refused the convergence
+    # row. This is that defect, pinned.
+    d2 = determine(synth_db(_t6 + _find + [
+        {"tier": 1, "evidence_type": "co1", "ref_id": "REF-FIND-2",
+         "co1_source_type": "lived_experience_publication", "figure_role": "finding",
+         "claim_type": "qualitative", "claimed_value": "too steep to self-propel"}]),
+        1, {"identity_code": "MOB"}, "syn-slug", "proxy-2-axes")
+    expect("PROXY: two finding axes => pending_assessment, never single_axis",
+           d2["convergence"]["status"] == "pending_assessment", d2["convergence"]["status"])
+
+    # The floor claim is UNCHANGED when no finding is present. If this regresses, the
+    # proxy branch has started firing on cells that have no direction evidence at all.
+    d = determine(synth_db(_t6), 1, {"identity_code": "MOB"}, "syn-slug", "floor")
+    expect("NO-PROXY: threshold alone is still an unmarked floor claim",
+           d["rests_on_proxy_inference"] == 0 and d["regulatory_stratum_only"] == 1,
+           f"proxy={d['rests_on_proxy_inference']} rso={d['regulatory_stratum_only']}")
+    expect("NO-PROXY: tier_basis keeps the rso marker",
+           d["tier_basis"].endswith("(regulatory_stratum_only)"), d["tier_basis"])
+
+    # Findings with NO threshold: still pending — the proxy step is degenerate without
+    # a bound, which is the owner's own limit on the inference.
+    d = determine(synth_db(_find), 1, {"identity_code": "MOB"}, "syn-slug", "no-threshold")
+    expect("NO-THRESHOLD: findings alone do not reach a determination",
+           d["state"] == "pending" and d["rests_on_proxy_inference"] == 0,
+           f"{d['state']} proxy={d['rests_on_proxy_inference']}")
+    expect("NO-THRESHOLD: the finding sources are counted, so the gap can name the "
+           "right absence instead of claiming supersession",
+           d["n_finding_sources"] == 1 and d["n_sources"] == 0,
+           f"findings={d['n_finding_sources']} value-suppliers={d['n_sources']}")
+
+    # compose_value must SAY when it composed from part of the governing set. Two
+    # sources state the same quantity, one as a percentage and one as a ratio; the
+    # ratio does not parse, and before 086 it was dropped in silence.
+    d = determine(synth_db([
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
+         "claimed_value": "8.33", "claimed_unit": "%", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "GB",
+         "claimed_value": "1:20", "claimed_unit": "rise:run ratio", "comparator": "<="},
+        {"tier": 6, "evidence_type": "code", "jurisdiction": "AU",
+         "claimed_value": "5", "claimed_unit": "%", "comparator": "<="}],
+        direction="lower_is_better"),
+        1, {"identity_code": "MOB"}, "syn-slug", "mixed-notation")
+    expect("COMPOSE: a governing claim with no parsable bound is REPORTED, not dropped",
+           d["value_note"] and "1:20" in d["value_note"] and "2 of 3" in d["value_note"],
+           str(d["value_note"]))
+    # The most-accommodating rule biting, under lower_is_better: the GENTLEST ceiling,
+    # not the first or the largest. 8.33% and 5% are both ceilings; 5 wins.
+    expect("COMPOSE: lower_is_better selects the gentlest ceiling",
+           d["value_max"] == 5.0, str(d["value_max"]))
+    # AND THE DEFECT THAT LEAVES BEHIND, asserted so it cannot be forgotten: 1:20 IS
+    # 5%, so the dropped row happens to agree with the winner here. It need not. If the
+    # only source stating the gentlest ceiling had written it as a ratio, this engine
+    # would return the STEEPER 8.33% and call it most-accommodating. Ratio-vs-percent
+    # is a doctrinal question (is an exact notation change a conversion?) and is
+    # recorded as a gap rather than decided inside an engine fix.
+    expect("COMPOSE: the note admits the interval rests on a SUBSET of the governing set",
+           "contribute to the cell's STATE but not to this interval" in d["value_note"],
+           str(d["value_note"]))
 
     if FAILED:
         print(f"\nFAIL: {len(FAILED)} test(s): {FAILED}")
