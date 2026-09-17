@@ -53,6 +53,7 @@ has since been corrected upstream, nor can it run when the API is unreachable.
 """
 
 import argparse
+import codecs
 import hashlib
 import json
 import os
@@ -243,14 +244,24 @@ def fetch(url, session, purpose="", timeout=40, stamp=None, ref_id=None):
     os.close(fd)
     tmp = Path(tmp_path)
     try:
+        # CONTENT TYPE IS CAPTURED, added 2026-09-17, and the charset inside it is the
+        # reason. The server's `Content-Type: text/html; charset=Shift_JIS` is the ONLY
+        # authoritative statement of how these bytes decode, and it was being thrown away
+        # at the one moment it exists. Everything downstream then assumed UTF-8, so a
+        # Japanese, Chinese, Korean or Arabic page served in a legacy encoding became
+        # mojibake in the verifier while its sha256 stayed perfectly valid. Two fields on
+        # one -w is a tab-separated line, parsed below.
         r = subprocess.run(
             ["curl", "-sS", "-L", "--max-time", str(timeout),
-             "-o", str(tmp), "-w", "%{http_code}", url],
+             "-o", str(tmp), "-w", "%{http_code}\t%{content_type}", url],
             capture_output=True)
         body = tmp.read_bytes() if tmp.exists() else b""  # bytes, straight off disk
     finally:
         tmp.unlink(missing_ok=True)
-    code_raw = r.stdout.decode("ascii", errors="replace").strip()
+    raw_w = r.stdout.decode("ascii", errors="replace").strip()
+    code_raw, _, content_type = raw_w.partition("\t")
+    code_raw = code_raw.strip()
+    content_type = content_type.strip() or None
     # curl's own sentinel for "no HTTP response was ever received" is the literal
     # string "000" (measured: a proxy CONNECT failure prints it, curl exit 56).
     # That is not a status code -- 0 is not in any HTTP spec -- so it is None, the
@@ -273,6 +284,10 @@ def fetch(url, session, purpose="", timeout=40, stamp=None, ref_id=None):
             "ref_id": ref_id,
             "sha256": sha, "bytes": len(body), "exit": r.returncode,
             "status": status, "artefact": artefact,
+            # The server's own statement of how to decode these bytes. Null for every
+            # artefact retrieved before 2026-09-17, which is why _decode_artefact()
+            # below must still work from the bytes alone.
+            "content_type": content_type,
         }, ensure_ascii=False) + "\n")
     if r.returncode != 0 or not body.strip():
         return None
@@ -440,7 +455,20 @@ _TITLE_COLS = ("pub_title", "pub_title_en", "original_title", "chapter_title", "
 # ---------------------------------------------------------------------------
 
 _TAG = re.compile(r"<[^>]{0,200}>")
-_NOISE = re.compile(r"[^0-9a-z]+")
+# RETIRED 2026-09-16: `[^0-9a-z]+`. It kept ASCII letters and digits and deleted
+# everything else, which meant it deleted EVERY CHARACTER OF EVERY NON-LATIN SCRIPT.
+# Measured on the Japanese Co-1 source admitted this session (REF-00989): the
+# 45-character sentence 「8分の１より勾配がある場合は、いくらスロープがあっても車椅子を
+# 自走で上るのは不可能に近いです。」 normalised to the single character `8`. So did the
+# INVENTED sentence 「この文章はコーパスに存在しません8」 ("this sentence does not exist
+# in the corpus"), and it therefore VERIFIED against the artefact.
+#
+# That is the 2026-08-19 fabrication passing the check built to stop it (CLAUDE.md
+# §5(c)), for every source in Japanese, Chinese, Korean, Arabic, Hindi or Bengali --
+# six of the nineteen languages skills/multilingual-research_SKILL.md obliges. The
+# check did not merely weaken outside Latin script; it examined nothing and said PASS,
+# which is §5(a) in the one place the project cannot afford it.
+# ---------------------------------------------------------------------------
 
 
 def normalise_quote(text):
@@ -463,8 +491,103 @@ def normalise_quote(text):
     esummary record. Normalising to letters and digits tolerates markup, whitespace and
     punctuation while still requiring the same words in the same order -- a quote must
     still BE a quote, it just no longer has to survive the publisher's typography.
+
+    WHAT "LETTERS AND DIGITS" MEANS, fixed 2026-09-16. It means Unicode's, not ASCII's.
+    See the retired `_NOISE` above for what the ASCII reading did to non-Latin script and
+    why it is a fabrication hole rather than a rough edge. Three properties are kept:
+
+      * NFKC FIRST, so a full-width digit folds to its ASCII twin. A Japanese source
+        writing 8分の１ and a claimed_value written 1/8 are the same number; before this,
+        `re.findall(r"\\d+", ...)` in db.py extracted the full-width １ as a digit (Python's
+        \\d is Unicode-aware) while this function deleted it (this one was not), so the two
+        halves of one check disagreed and no CJK numeral could ever pass.
+      * ACCENTS FOLD rather than vanish. `Pérez` now normalises to `perez`, not `prez`:
+        the old filter DELETED the é, so a quote typed `Perez` (-> `perez`) could not match
+        an artefact reading `Pérez` (-> `prez`). That asymmetry was silent.
+      * Markup, whitespace and punctuation are still discarded, which is the whole reason
+        this replaced a raw byte substring.
     """
-    return _NOISE.sub("", _TAG.sub(" ", text or "").lower())
+    s = unicodedata.normalize("NFKC", _TAG.sub(" ", text or "")).lower()
+    s = unicodedata.normalize("NFKD", s)
+    s = "".join(ch for ch in s if not unicodedata.combining(ch))
+    return "".join(ch for ch in s if ch.isalnum())
+
+
+_XMLDECL_RE = re.compile(rb"""<\?xml[^>]{0,200}?encoding\s*=\s*["']([A-Za-z0-9_.:\-]+)["']""",
+                         re.I)
+_CHARSET_RE = re.compile(rb"""charset\s*=\s*["']?([A-Za-z0-9_.:\-]+)""", re.I)
+# UTF-32 BEFORE UTF-16, because BOM_UTF32_LE (ff fe 00 00) STARTS WITH BOM_UTF16_LE
+# (ff fe): checking the shorter one first would read every UTF-32-LE document as UTF-16-LE.
+_BOMS = ((codecs.BOM_UTF32_LE, "utf-32-le"), (codecs.BOM_UTF32_BE, "utf-32-be"),
+         (codecs.BOM_UTF8, "utf-8"),
+         (codecs.BOM_UTF16_LE, "utf-16-le"), (codecs.BOM_UTF16_BE, "utf-16-be"))
+
+
+def decode_artefact(raw, declared=None):
+    """Decode a persisted artefact's bytes. Returns (text, encoding) or (None, why).
+
+    THE DEFECT THIS EXISTS FOR, measured 2026-09-17. Every caller decoded artefacts as
+    `raw.decode("utf-8", errors="replace")`, so a page served in a legacy encoding became
+    U+FFFD soup while its sha256 stayed perfectly valid -- the bytes were faithfully stored
+    and then unfaithfully read. Measured on real sentences:
+
+        shift_jis  勾配は、12分の1を超えないこと  -> normalises to 'za121a'
+        euc_kr     경사로의 기울기는 8분의 1        -> normalises to '81'
+        gb18030    坡道坡度不应大于1:12           -> normalises to 'μyо112'
+        latin-1    Rampenläufe dürfen ...        -> 'rampenlufedrfen...'
+
+    The first three cannot match anything, so a genuine quote is refused -- blocking, but
+    safe. THE LATIN-1 CASE IS THE DANGEROUS ONE: it yields a plausible, pronounceable body
+    that would match a quote typed with the same mangling, so a wrong reading could verify.
+    And these are exactly the encodings of the languages skills/multilingual-research_SKILL.md
+    obliges: Shift_JIS/EUC-JP, GB18030/Big5, EUC-KR, Windows-1256, ISO-8859-x.
+
+    THE ORDER IS CHOSEN TO AVOID A SECOND TRAP, not merely to try things. A server that
+    MIS-declares its charset is common, and honouring a wrong declaration over bytes that
+    are plainly UTF-8 would manufacture mojibake from a body that was fine. So valid strict
+    UTF-8 always wins: it is a strong signal, because real text in a legacy encoding is
+    almost never accidentally valid UTF-8. Only when strict UTF-8 FAILS does a declaration
+    get consulted, and then the HTTP header first (the spec's authority), then the document's
+    own XML declaration or HTML meta.
+
+    NO STATISTICAL DETECTION, deliberately. A guessed encoding in a FIDELITY check could
+    produce a body that looks right and is not, which is the failure this whole module
+    exists to prevent. Undecodable is returned as undecodable and reported by the caller.
+    """
+    for bom, enc in _BOMS:
+        if raw.startswith(bom):
+            # THE BOM IS STRIPPED EXPLICITLY, not left to the codec. Only `utf-8-sig`
+            # consumes its own mark; `utf-16-le` and friends decode it as a literal
+            # U+FEFF and prepend it to the text. Caught in testing 2026-09-17: a
+            # BOM-bearing UTF-16 document round-tripped to '﻿' + body, which
+            # normalise_quote then silently discarded as a non-alphanumeric -- so the
+            # bug would have been invisible here and surfaced as an off-by-one somewhere
+            # that cared about the first character.
+            try:
+                return raw[len(bom):].decode(enc), enc
+            except UnicodeDecodeError:
+                break
+    try:
+        return raw.decode("utf-8"), "utf-8"          # STRICT, no errors= -- see above
+    except UnicodeDecodeError:
+        pass
+    cands = []
+    if declared:
+        m = _CHARSET_RE.search(declared.encode("ascii", "ignore"))
+        if m:
+            cands.append(m.group(1).decode("ascii", "ignore"))
+    head = raw[:4096]
+    for rx in (_XMLDECL_RE, _CHARSET_RE):
+        m = rx.search(head)
+        if m:
+            cands.append(m.group(1).decode("ascii", "ignore"))
+    for enc in cands:
+        try:
+            return raw.decode(enc), enc
+        except (UnicodeDecodeError, LookupError):
+            continue
+    return None, ("not valid UTF-8 and no usable charset declaration"
+                  + (" (tried %s)" % ", ".join(cands) if cands else ""))
 
 
 def quote_in_artefacts(quote, ref_id=None, session=None):
@@ -499,6 +622,7 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
 
     scoped_hit = unscoped_hit = None
     examined = scoped_examined = 0
+    undecodable = []
     dirs = [root / _session_stem(session)] if session else sorted(
         p for p in root.iterdir() if p.is_dir())
     for d in dirs:
@@ -513,8 +637,16 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
             if ref_id and rec_ref == ref_id:
                 scoped_examined += 1
             try:
-                body = art.read_bytes().decode("utf-8", errors="replace")
+                raw = art.read_bytes()
             except OSError:
+                continue
+            body, enc = decode_artefact(raw, rec.get("content_type"))
+            if body is None:
+                # NEVER SILENTLY SKIPPED. A miss below reports EXAMINED, and an artefact
+                # whose bytes could not be read is not examined -- saying "not found" over
+                # it would be CLAUDE.md §5(a) at the input, which is the same error this
+                # function's own docstring names one level up.
+                undecodable.append("%s/%s (%s)" % (d.name, rec["artefact"], enc))
                 continue
             if needle in normalise_quote(body):
                 where = "%s/%s" % (d.name, rec["artefact"])
@@ -529,10 +661,17 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
                       "ref_id, or one that is not %s, so this proves the words are in "
                       "the corpus, not that they came from this source"
                       % (unscoped_hit, ref_id or "(none given)"))
-    return False, ("EXAMINED: %d persisted artefact(s) under %s/*/%s"
-                   % (examined, root,
-                      " (%d retrieved for %s)" % (scoped_examined, ref_id)
-                      if ref_id else ""))
+    detail = ("EXAMINED: %d persisted artefact(s) under %s/*/%s"
+              % (examined, root,
+                 " (%d retrieved for %s)" % (scoped_examined, ref_id)
+                 if ref_id else ""))
+    if undecodable:
+        # The miss is now qualified, because it has to be: these bytes were held and not
+        # read, so "not found" is a statement about what could be searched, not about the
+        # corpus. Naming them is what lets the next reader tell the two apart.
+        detail += (" -- %d NOT SEARCHED, bytes undecodable: %s"
+                   % (len(undecodable), "; ".join(undecodable[:5])))
+    return False, detail
 
 def _index_by_doi(payloads):
     """Every logged payload that identifies a DOI, whatever service produced it.
@@ -689,6 +828,28 @@ def verify_authors(session):
     session = _session_stem(session)
     payloads = _logged_payloads(session)
     if not payloads:
+        # TWO DIFFERENT STATES WERE PRINTED AS ONE, and the wrong one is the common
+        # one. `_logged_payloads` is JSON ONLY by contract, so a session whose
+        # payloads are all HTML and PDF lands here with a full retrieval log and was
+        # told "no logged retrievals" — false on its face, and false for precisely the
+        # evidence R1 exists to reach: Co-1, DPO and standards material arrives as a
+        # publication page or a PDF and never as Crossref JSON. Batch 09 hit it with
+        # eight artefacts on disk (2026-09-16). `_unparsed_payloads` already exists to
+        # make this visible and its own docstring says callers MUST consult it; this
+        # branch returned before it ever did.
+        unparsed_only = _unparsed_payloads(session)
+        if unparsed_only:
+            print(f"  {len(unparsed_only)} payload(s) logged for session {session!r}, "
+                  f"NONE of them JSON:")
+            for artefact, url, why in unparsed_only[:10]:
+                print(f"    {artefact}  {why}  {url[:70]}")
+            print(f"  EXAMINED: 0 of {len(unparsed_only)}")
+            print("\n  INDETERMINATE — the payloads exist and cannot be author-diffed.")
+            print("  This module compares against Crossref-shaped JSON, so a corpus of")
+            print("  publication pages and PDFs is outside its reach ENTIRELY, not")
+            print("  partially. Do not read this as a clean session and do not read it")
+            print("  as an unlogged one; the bytes are on disk and unchecked.")
+            return 1
         print(f"  no retrieval log for session {session!r} under {LOG_ROOT}/")
         print("  EXAMINED: 0")
         print("\n  INDETERMINATE — a session with no logged retrievals cannot be")

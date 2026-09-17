@@ -127,9 +127,32 @@ batteries:
     - jsonschema
     description: Adherence-log attestations.
   research:
+    # pypdf/cffi ADDED 2026-09-16. THE PROJECT COULD NOT READ THE FORMAT ITS EVIDENCE
+    # ARRIVES IN. retrieval_log.py's own comment says PDF "is the format Co-1 and
+    # disability-led evidence overwhelmingly arrives in", and no sanctioned dependency
+    # could open one: a fresh container has no pypdf, no pdfminer and no pdftotext. The
+    # batch-09 R1 pass hit this on its first non-English source (REF-00988, a DGUV PDF)
+    # and had to install a reader ad hoc to read a document it had already persisted.
+    #
+    # cffi IS NOT OPTIONAL AND IS NOT COSMETIC. The container's Debian cryptography
+    # 41.0.7 is installed WITHOUT its _cffi_backend, so `import pypdf` does not raise
+    # ImportError -- it raises pyo3_runtime.PanicException from a Rust binding, which
+    # `except ImportError` does not catch. pypdf alone therefore installs successfully
+    # and still cannot be imported, and ensure-deps.sh would report it missing forever.
+    # Installing cffi repairs cryptography and pypdf imports clean.
+    #
+    # NO CHECK IMPORTS pypdf TODAY, stated plainly rather than implied. It is declared
+    # here because this file is the one home of the dependency list (CLAUDE.md §1) and
+    # because the research WRITE path needs it: a PDF-only source cannot have its
+    # --claim-text or --quote verified against bytes, so every standards and Co-1 PDF
+    # routes through --verbatim-exempt, and §5(c)'s floor is bypassed structurally
+    # rather than by anyone's choice. Making quote_in_artefacts PDF-aware is the change
+    # that turns this into a dependency a CHECK needs; it is proposed, not made here.
     deps:
     - pydantic
     - jsonschema
+    - cffi
+    - pypdf
     description: Research definition-of-done and its enforcers.
   render:
     deps: []
@@ -1082,9 +1105,60 @@ checks:
   basis: unattributed
   cost: fast
   no_floor: not-instrumented — R1-R15 each read a different table (searches, sources, admissions, DOIs,
-    ...) with no single honest count across them. Genuinely non-vacuous today (R1 fails NON-COMPLIANT
-    on live data), so there is no urgency, but a combined figure would still misrepresent which rule examined
-    what. Left uninstrumented on 2026-08-14 (A5).
+    ...) with no single honest count across them. A combined figure would misrepresent which rule
+    examined what. Left uninstrumented on 2026-08-14 (A5). CORRECTED 2026-09-17, and the correction
+    is the point — this reason justified itself with "Genuinely non-vacuous today (R1 fails
+    NON-COMPLIANT on live data)", which stopped being true and went unnoticed, exactly as CLAUDE.md
+    rule 7a predicts of a volatile figure used as self-justification. Derive it with `python3
+    scripts/audit/research_batch_dod.py --all`, never quote it. The STRUCTURAL claim (no single
+    honest count) stands; the evidence offered for it had rotted.
+# WHY THERE ARE TWO OF THESE, AND WHY THE CORPUS-WIDE ONE IS NOT ENOUGH. `research_dod` above
+# runs `--all`, which asks "is the corpus as a whole compliant". That question cannot fail for a
+# single bad batch once the corpus holds good sources: one batch admitting a source with no
+# locator is invisible beside a corpus of sources that have them. The contract the owner ratified
+# is per-BATCH — the session-start hook says in as many words "Gate before you claim done:
+# research_batch_dod.py --session <id>" — and until 2026-09-17 nothing ran that. It was enforced
+# only by an operator remembering, which is the state CLAUDE.md §2 calls "you are the gate".
+#
+# BLOCKING, deliberately. DR-2026-07-25 is not hedged: "RESEARCH IS INVALID IF IT IS NOT COMPLIANT
+# WITH OUR GOVERNANCE AND VERIFICATION TOOLS AND RULES AND ETHOS." An advisory gate does not
+# implement that sentence, it annotates it. This is not red-by-construction: batch 08, batch 09 and
+# the corpus-wide posture all pass as this lands — verify rather than trust that, it is the whole
+# precondition for the level.
+#
+# THE POINTER IS LATEST-RESEARCH AND ITS LAG IS A FEATURE HERE. It moves at CLOSE, so for the whole
+# life of a running session it names the PREVIOUS one (CLAUDE.md §7). A PR opened mid-batch is
+# therefore gated on the last CLOSED batch, and the new one is gated once its pointer moves — which
+# is exactly when a batch claims to be done.
+#
+# THE '.md' TRAP THIS WOULD HAVE WALKED INTO. @SESSION@ is substituted from the pointer file, and
+# pointer files carry '.md' while the DB stores the bare stem. `--session` is interpolated into
+# `WHERE session = ?`, so the '.md' form matches zero rows and every rule reports PASS over an empty
+# subject — §7's "wrong form scopes a gate to nothing and it passes green", installed on every PR.
+# research_batch_dod.py now strips a trailing '.md' before any query runs. Registering this check
+# without that fix would have been worse than not registering it.
+- id: research_dod_session
+  cmd:
+  - python3
+  - scripts/audit/research_batch_dod.py
+  - --session
+  - '@SESSION@'
+  battery: research
+  kinds:
+  - data
+  - synthesis
+  level: blocking
+  basis: unattributed
+  cost: fast
+  requires_session: true
+  session_pointer: LATEST-RESEARCH
+  no_floor: 'session-scoped — the subject is whatever the session named by LATEST-RESEARCH
+    admitted, so it varies per session and a floor would fail a BLOCKING gate for correctly
+    gating a small batch. Same shape and same reasoning as citation_mining_session, which is
+    scoped to the same pointer. This is NOT the vacuity hole it resembles. R9a and R9b both
+    FAIL on a session that admitted nothing, so an empty subject is caught by the rules
+    themselves rather than passing silently, which is why session-scoped is honest here and
+    not an excuse.'
 - id: research_protocol_audit
   cmd:
   - python3
