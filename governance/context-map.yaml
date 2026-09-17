@@ -19,6 +19,7 @@ search_visibility:
   - references/audits/
   - references/search-log/
   - sessions/**
+  - tools/*.html
   - transcripts/**/*.jsonl
   - transcripts/*.jsonl
   - versions/
