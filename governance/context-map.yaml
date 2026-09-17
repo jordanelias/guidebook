@@ -1403,6 +1403,14 @@ checks:
     - always
     min_items: null
     cmd: python3 scripts/audit/research_batch_dod.py --selftest
+  - id: research_dod_session
+    level: blocking
+    battery: research
+    kinds:
+    - data
+    - synthesis
+    min_items: null
+    cmd: python3 scripts/audit/research_batch_dod.py --session @SESSION@
   - id: schema_reference_audit
     level: blocking
     battery: schema

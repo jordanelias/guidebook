@@ -4,8 +4,23 @@
 **Branch:** `claude/pensive-bardeen-d26q0s` · **PR** #140
 **Cell:** `parameter_id 3` (TERM-001 `ramp gradient`) × identity lens `MOB`, slug
 `accessible-circulation-geometry`
-**Scope:** R1 only — the Co-1 / T2 / Co-2 pass, outside PubMed. No determination was
-re-computed; `specification_id 2` stands as batch 08 left it.
+**Scope:** R1 only — the Co-1 / T2 / Co-2 pass, outside PubMed.
+
+**CORRECTED 2026-09-17.** This line read *"No determination was re-computed; `specification_id 2`
+stands as batch 08 left it."* It was true when written and false within the hour, and the
+correction is left visible because the mechanism is the point: admitting evidence for a parameter
+that already carries a live determination makes that determination's junction incomplete, and
+`test_db_integrity` K02 goes **BLOCKING red** until the cell is re-determined. It is not optional
+and it is not a separate piece of work — it is what admitting evidence *means*. So
+`specification_id 2` was retired and superseded by **`specification_id 3`**, which accounts for
+every extraction on parameter 3. Verify with `PRAGMA`-free SQL against `specifications` rather
+than trusting this sentence.
+
+**The determination moved and did not change.** `specification_id 3` is still `pending` with
+`refs=0`, because `assess_cell.gather_sources()` gathers `figure_role IN ('claim','derived')` and
+both Co-1 rows are `finding`. That is the exact mechanism the owner named on 2026-09-16: a
+determination cannot yet be reached from findings plus a threshold. The batch's headline evidence
+is in the corpus and reaches no cell.
 
 Every figure below is derived from `data/guidebook.db` after the migration applied (rule 7).
 Re-derive before relying on any of it; the commands are in the PR.
@@ -102,20 +117,34 @@ the reason recorded there. `cffi` is load-bearing, not cosmetic: the container's
 ## What the gates say
 
 ```
-research_batch_dod.py --session <id>        NON-COMPLIANT — 1 rule: R9a
+research_batch_dod.py --session <id>        COMPLIANT   (was NON-COMPLIANT on R9a; see below)
 citation_mining_completeness.py --session   EXAMINED: 1 · Outstanding 0 · VERDICT: CLEAN
 run_checks.py --selftest                    PASS (before and after)
 ```
 
-**The R9a failure is structural and is flagged rather than worked around.** R9a is a vacuity
-guard: it fails when a batch admits no DOI-bearing source, because a pass would assert
-nothing. But **a Co-1 / DPO / grey / regulatory pass admits no DOI-bearing sources by
-construction** — none of them have DOIs. So the definition-of-done gate reports
-NON-COMPLIANT for exactly the evidence class R1 exists to reach, and the contract declares
-research invalid when non-compliant. Every other rule passes. This needs an owner ruling:
-either R9a becomes NOTHING-IN-SCOPE-is-acceptable when no admission carries a DOI, or Co-1
-batches carry a standing waiver. **Waiver recorded here and in PR #140; nothing was
-relabelled to make it green.**
+**R9a WAS NON-COMPLIANT AND IS NOW FIXED, ON AN OWNER RULING OF 2026-09-17.** This section
+first recorded a waiver: R9a fails when a batch admits no DOI-bearing source, and **a Co-1 /
+DPO / grey / regulatory pass admits none by construction**, so the definition-of-done gate
+reported NON-COMPLIANT for exactly the evidence class R1 exists to reach. The owner ruled to
+fix rather than waive, and the fix is that R9a **could** have performed the check all along:
+
+- The identifier stash holds URLs as well as DOIs — derive the split with
+  `SELECT COUNT(*) FROM source_locators WHERE COALESCE(url,'') <> ''` — and both of this
+  batch's admissions carry one. R9a compared DOIs only. Widening it is R9b's own 2026-08-23
+  widening applied to R9a, on the same reasoning: identity is not DOI-conditional.
+- **A URL counts as a held identity only when it resolves to exactly one ref_id.** Measured
+  before the change: the BSI catalogue page for BS 8300 is held against **seven** ref_ids,
+  the ISO, DIN and ADA standards pages against five each. Those are landing pages — one
+  address serving a standards family — and sharing one is correct. A naive URL join would
+  have fired on every one and advised "cross-file the held id", which for two genuinely
+  different standards destroys an identity rather than repairing one.
+- The zero-branch conflated **"admitted nothing"** with **"admitted sources carrying no
+  comparable identifier"**, and told a batch with two well-located sources that it was
+  "missing its locators". They are now separate messages, and the second is still a failure:
+  a source with no resolvable identifier at all cannot be cross-filed or re-retrieved.
+
+Fault-injected on a scratch copy, all three behaviours in one run: **fires** on a singleton
+URL collision, **silent** on a three-way landing page, **silent** on a RETIRED tombstone.
 
 ## Tooling defects found and NOT worked around
 
@@ -146,3 +175,47 @@ relabelled to make it green.**
   assessment of a legal figure it has never read.
 - **The `EN`/`en` case split in `search_executions.language`** — pre-existing, and R5's own
   comment records the same class of bug being fixed once already.
+
+---
+
+## Addendum, 2026-09-17 — the contract's own gate now runs in CI
+
+The R9a fix above exposed the larger half of the same finding, and the owner ruled on both.
+
+**The gate CI ran was not the gate the contract names.** `research_dod` runs `--all`, which
+asks whether the CORPUS is compliant. That question cannot fail for a single bad batch once
+the corpus holds good sources: one batch admitting an unlocated source is invisible beside a
+corpus of located ones. The contract is per-BATCH — the session-start hook says in as many
+words *"Gate before you claim done: `research_batch_dod.py --session <id>`"* — and nothing ran
+it. It was enforced by an operator remembering, which is CLAUDE.md §2's "you are the gate".
+
+**`research_dod_session` is now registered BLOCKING**, scoped to `LATEST-RESEARCH`. Blocking
+because DR-2026-07-25 is not hedged — *"RESEARCH IS INVALID IF IT IS NOT COMPLIANT"* — and an
+advisory gate annotates that sentence rather than implementing it. It is not red-by-
+construction: batch 08, batch 09 and the corpus-wide posture all pass as it lands.
+
+**AND IT WOULD HAVE BEEN A VACUOUS GATE ON EVERY PR.** `@SESSION@` is substituted from the
+pointer file; pointer files carry `.md`; the DB stores the bare stem; `--session` is
+interpolated into `WHERE session = ?`. Measured before the fix:
+
+```
+created_by_session = '<id>'      -> 2 rows
+created_by_session = '<id>.md'   -> 0 rows
+```
+
+So registering this check as written would have installed a BLOCKING gate that runs on every
+PR, examines nothing, and reports the contract satisfied — CLAUDE.md §7's named trap ("wrong
+form scopes a gate to nothing and it passes green") and §5(a) together, in the one place the
+project declares research invalid without. `research_batch_dod.py` now strips a trailing
+`.md` before any query runs, and the runner-expanded command was verified to examine a real
+subject (2 admissions, 1 tier-1..3 population match) rather than an empty one.
+
+**The pointer's lag is a feature here.** `LATEST-RESEARCH` moves at CLOSE, so a PR opened
+mid-batch is gated on the last CLOSED batch, and the new one is gated once its pointer moves
+— which is exactly when a batch claims to be done.
+
+**One stale self-justification corrected in passing.** `research_dod`'s `no_floor` reason
+argued it was "genuinely non-vacuous today (R1 fails NON-COMPLIANT on live data)". R1 is
+COMPLIANT and has been for some time. The structural claim it was defending still holds; the
+evidence offered for it had rotted, which is rule 7a's exact shape. It now carries the command
+instead of the figure.

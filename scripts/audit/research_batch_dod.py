@@ -488,8 +488,18 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # "PASS" for a session that admitted nothing -- CLAUDE.md 2(a), a gate that passes
     # having examined nothing, reproduced inside the fix written for a gate that examined
     # the WRONG set. Both rules now carry their subject count, and say so when it is zero.
+    # WIDENED TO URL 2026-09-17. The subject was DOI-bearing admissions ALONE, so a batch
+    # whose sources legitimately have no DOI -- every Co-1, DPO, grey and regulatory source
+    # there is -- fell into the zero-branch below and was told it had admitted nothing and
+    # was "missing its locators". Both halves were false for batch 09, which admitted two
+    # sources each carrying a URL. The stash holds 402 URLs against 465 DOIs (derive it:
+    # SELECT COUNT(*) FROM source_locators WHERE COALESCE(url,'') <> ''), so the check
+    # could be performed and simply was not. This is R9b's own 2026-08-23 widening applied
+    # to R9a: CLAUDE.md §4's warning is not DOI-conditional, and neither is identity.
     n_doi = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE COALESCE(e.doi,'') <> ''"
                       f"{escope}", sargs)[0][0]
+    n_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE COALESCE(e.doi,'') = '' "
+                      f"AND COALESCE(e.url,'') <> ''{escope}", sargs)[0][0]
     n_adm = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources e WHERE 1=1{escope}", sargs)[0][0]
 
     # RETIRED STASH ROWS ARE NOT A HELD IDENTITY, AND EXCLUDING THEM IS THE WHOLE POINT
@@ -509,18 +519,55 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                       f"WHERE COALESCE(e.doi,'') <> '' AND COALESCE(sl.doi,'') <> '' "
                       f"AND COALESCE(sl.status,'') <> 'RETIRED' "
                       f"AND sl.ref_id <> e.ref_id{escope}", sargs)
-    if split:
-        fail("R9a", f"{len(split)} source(s) admitted under a ref_id that DIFFERS from the one "
-                    f"the identifier stash already holds for the same DOI — one source, two "
-                    f"identities. Cross-file the held id instead of minting a second: "
-                    + "; ".join(f"{a} vs stash {b} ({d})" for a, b, d in split[:5]), len(split))
-    elif n_doi == 0:
-        fail("R9a", "NOTHING IN SCOPE — this batch admitted no source carrying a DOI, so the "
-                    "stash cross-check examined nothing. A pass here would assert nothing. "
-                    "If the batch admitted sources, they are missing their locators (see R10).")
+
+    # A URL IS A HELD IDENTITY ONLY WHEN IT IDENTIFIES EXACTLY ONE SOURCE, and that
+    # restriction is the whole design rather than a refinement of it. Measured 2026-09-17
+    # before this was written: the BSI catalogue page for BS 8300 is held against SEVEN
+    # different ref_ids, the ISO and DIN catalogue pages and the ADA standards page against
+    # five each. Those are LANDING PAGES -- one web address serving a whole standards family
+    # -- and sharing one is correct, not a defect. A naive url join would have fired on every
+    # one of them and told the operator to "cross-file the held id", which for two genuinely
+    # different standards is wrong advice that destroys an identity rather than repairing one.
+    # So the set is derived, never assumed: a url the stash resolves to a single ref_id is an
+    # identity; a url it resolves to several is a catalogue, and proves nothing either way.
+    # Derive the split rather than trusting this comment:
+    #   SELECT LOWER(TRIM(url)), COUNT(DISTINCT ref_id) n FROM source_locators
+    #   WHERE COALESCE(url,'') <> '' GROUP BY 1 HAVING n > 1;
+    urlnorm = "RTRIM(LOWER(TRIM({}.url)), '/')"
+    singleton = (f"SELECT {urlnorm.format('s2')} FROM source_locators s2 "
+                 f"WHERE COALESCE(s2.url,'') <> '' AND COALESCE(s2.status,'') <> 'RETIRED' "
+                 f"GROUP BY 1 HAVING COUNT(DISTINCT s2.ref_id) = 1")
+    usplit = _rows(cx, f"SELECT e.ref_id, sl.ref_id, e.url FROM evidence_sources e "
+                       f"JOIN source_locators sl ON {urlnorm.format('sl')} = {urlnorm.format('e')} "
+                       f"WHERE COALESCE(e.url,'') <> '' AND COALESCE(sl.url,'') <> '' "
+                       f"AND COALESCE(sl.status,'') <> 'RETIRED' "
+                       f"AND sl.ref_id <> e.ref_id "
+                       f"AND {urlnorm.format('sl')} IN ({singleton}){escope}", sargs)
+
+    if split or usplit:
+        both = [(a, b, d, "DOI") for a, b, d in split] + [(a, b, u, "URL") for a, b, u in usplit]
+        fail("R9a", f"{len(both)} source(s) admitted under a ref_id that DIFFERS from the one "
+                    f"the identifier stash already holds for the same identifier — one source, "
+                    f"two identities. Cross-file the held id instead of minting a second: "
+                    + "; ".join(f"{a} vs stash {b} ({k} {d})" for a, b, d, k in both[:5]),
+             len(both))
+    elif n_doi == 0 and n_url == 0:
+        # THE TWO STATES THIS BRANCH USED TO CONFLATE. "Admitted nothing" and "admitted
+        # sources that carry no comparable identifier" are different facts and only the
+        # first is vacuity; the old message asserted the second was the first, and told a
+        # batch with two well-located sources that it was "missing its locators".
+        if n_adm:
+            fail("R9a", f"NOTHING IN SCOPE — {n_adm} source(s) admitted and not one carries a "
+                        f"DOI or a URL, so no identifier exists to cross-check against the "
+                        f"stash. That is not a locator problem to be waived: a source with no "
+                        f"resolvable identifier at all cannot be cross-filed, deduplicated or "
+                        f"re-retrieved by anyone. Give each admission its locator (R10).")
+        else:
+            fail("R9a", "NOTHING IN SCOPE — this batch admitted no sources at all, so the stash "
+                        "cross-check examined nothing. A pass here would assert nothing.")
     else:
-        ok("R9a", f"{n_doi} admitted DOI(s) checked against the stash; none held under a "
-                  f"different ref_id")
+        ok("R9a", f"{n_doi} admitted DOI(s) and {n_url} URL-only admission(s) checked against "
+                  f"the stash; none held under a different ref_id")
 
     # R9b WIDENED 2026-08-23. It compared DOIs only, so it reached 441 of 835 stash rows and
     # was blind to the other 394 -- yet CLAUDE.md 4's warning ("mint above the high-water mark
@@ -965,7 +1012,12 @@ def selftest():
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description="Research batch definition-of-done gate")
-    p.add_argument("--session", help="session id to gate")
+    p.add_argument("--session", metavar="ID",
+                   help="session id to gate. EITHER FORM IS ACCEPTED: the bare stem the DB "
+                        "stores, or the same id with '.md' as the pointer files and "
+                        "emit_data_migration carry it. A trailing '.md' is stripped before "
+                        "any query runs -- see the normalisation below for why that is a "
+                        "refusal of a trap rather than a convenience.")
     p.add_argument("--all", action="store_true", help="whole-corpus posture")
     p.add_argument("--selftest", action="store_true", help="prove the checks fire")
     p.add_argument("--write-baseline", action="store_true",
@@ -974,6 +1026,20 @@ if __name__ == "__main__":
                    help="fail if the committed baseline raises any count above REF "
                         "(default origin/main). Closes the hand-edit amnesty.")
     a = p.parse_args()
+    # THE TWO-FORM SESSION ID, AND WHY THIS IS NOT A CONVENIENCE. CLAUDE.md §7: the DB
+    # stores the BARE STEM, while `sessions/LATEST-RESEARCH`, `emit_data_migration
+    # --session` and `citation_mining_completeness --session` all take the id WITH '.md'.
+    # `--session` here is interpolated straight into `WHERE session = ?` against columns
+    # holding the stem, so the '.md' form matches ZERO ROWS -- and every rule then reports
+    # PASS over an empty subject. That is §7's named failure verbatim: "Wrong form scopes a
+    # gate to nothing and it passes green."
+    #
+    # It stopped being hypothetical the moment this gate was registered to run in CI, which
+    # substitutes @SESSION@ from a pointer file, and pointer files carry '.md'. Registering
+    # it without this line would have installed a gate that runs on every PR, examines
+    # nothing, and reports the contract satisfied.
+    if a.session:
+        a.session = a.session[:-3] if a.session.endswith(".md") else a.session
     if a.selftest:
         sys.exit(selftest())
     if a.check_baseline:
