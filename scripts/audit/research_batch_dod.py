@@ -473,7 +473,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                       f"GROUP BY e.doi HAVING c > 1", sargs)
     if dupes:
         fail("R9", f"{len(dupes)} DOI(s) admitted by THIS batch already exist in the corpus — "
-                   f"pre-check DOIs and cross-file the existing ref_id instead of creating a "
+                   f"pre-check DOIs and cross-file the existing ref_id (`db.py "
+                   f"link-source-slug`) instead of creating a "
                    f"second row: {', '.join(str(d[0]) for d in dupes[:5])}", len(dupes))
     else:
         ok("R9", "this batch introduced no duplicate DOIs")

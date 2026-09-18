@@ -35,13 +35,19 @@ Re-derive with `scratchpad/batch-13-content-review-kpz7u8/walk.py`.
 
 | # | Hand-off | Mechanism | State |
 |---|---|---|---|
-| 1 | base → research | `search_executions.slug` → `slugs` | **KEYED** 59/59 |
-| 2 | research → evidence | `search_admissions(exec_id, ref_id)` junction | **KEYED** 15/16 |
-| 3 | evidence internal | `source_value_extractions.ref_id` | **KEYED** 26/26 |
-| 4 | evidence → judgment | `evidence_population_match.ref_id` | **KEYED** 12/16 graded |
+| 1 | base → research | `search_executions.slug` → `slugs` | **KEYED** |
+| 2 | research → evidence | `search_admissions(exec_id, ref_id)` junction | **KEYED** (one source short) |
+| 3 | evidence internal | `source_value_extractions.ref_id` | **KEYED** |
+| 4 | evidence → judgment | `evidence_population_match.ref_id` | **KEYED** (not all sources graded) |
 | 5 | judgment → synthesis | `convergence_assessment` | **NO KEY — 0 FKs** |
-| 6 | synthesis → specification | `specifications.convergence_id` | **KEYED** 4/7 |
+| 6 | synthesis → specification | `specifications.convergence_id` | **KEYED** |
 | 7 | specification → render | — | **NO OUTPUT, NO WRITER** |
+
+**The ratios are deliberately not written here.** They moved within hours of this
+document being published — batch 15 took the walk from 59/59 · 15/16 · 26/26 · 12/16 · 4/7 to
+65/65 · 19/20 · 33/33 · 16/20 · 5/8, and a table of literals would now be wrong in five cells.
+Run `walk.py` for the live numbers; that is rule 7a applied to this document's own table, which
+first shipped with the literals in it.
 
 `PRAGMA foreign_key_check` returns **0 violations**. The keys that exist are sound.
 
@@ -67,6 +73,8 @@ only code that assigns a marker is `scripts/audit/register_integrity_check.py`, 
 reader-facing attribute of a determination has no home, no writer, and no gate.
 
 Parameter 3 has a live determination — 5 % / 1:20, provisional — that no reader can reach.
+*(Correction, 2026-09-18: this read "spec 7" when written. Batch 15 retired 7 and determined 8,
+which carries the same interval. `walk.py` now derives the live id rather than pinning it.)*
 
 ### F2 — `judgment → synthesis` is the one unkeyed hand-off, and it copies.
 
@@ -103,15 +111,23 @@ rewrite."* Neither is caught by any gate.
 |---|---|---|
 | 1 | YES | 2 |
 | 2 | YES | 3 |
-| 3 | YES | **NULL** |
-| 4 | YES | **NULL** |
-| 5 | YES | **NULL** |
-| 6 | YES | **NULL** |
-| 7 | no | — |
+| 3 | YES | ~~NULL~~ → 4 |
+| 4 | YES | ~~NULL~~ → 5 |
+| 5 | YES | ~~NULL~~ → 6 |
+| 6 | YES | ~~NULL~~ → 7 |
+| 7 | YES | 8 |
+| 8 | no | — |
 
-Six rows are retired; **two** carry a forward pointer. A reader landing on retired spec 4 has no
-keyed route to spec 7, the live determination. The successor is named only in `retirement_reason`
-prose — which is a prose caller, the class rule 7a says has no gate at all.
+Six rows were retired and **two** carried a forward pointer. A reader landing on retired spec 4 had
+no keyed route to the live determination; the successor was named only in `retirement_reason` prose,
+which is a prose caller, the class rule 7a says has no gate at all.
+
+**FIXED 2026-09-18** — the chain now runs unbroken 1→2→3→4→5→6→7→8 with spec 8 live. The fix also
+caught a worse state the original table could not show: batch 15 retired spec 7 *without*
+re-determining, so for several hours the corpus held **zero live determinations** and nothing went
+red. `retire_specification`'s own docstring sets the order as *retire, re-determine, then link*;
+only the first step had been taken. No gate asserts that a parameter has a live specification, and
+that remains true.
 
 The retire-in-place policy itself is sound and well-reasoned; every `retirement_reason` here is
 honest and specific about *why* the row was superseded rather than found wrong. The defect is that

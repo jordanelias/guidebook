@@ -3113,7 +3113,9 @@ def insert_evidence_source(data: dict, session: str,
                 if dupe:
                     raise Refusal(
                         f"DOI {data['doi']!r} is already filed as {dupe[0]} in {table} "
-                        f"(R9: cross-file the existing ref_id, never duplicate). Link "
+                        f"(R9: cross-file the existing ref_id, never duplicate). Run "
+                        f"`db.py link-source-slug --ref-id <held> --slug <slug> "
+                        f"--rationale <why>` to link "
                         f"that ref_id to your slug instead. Nothing was written.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
@@ -3384,6 +3386,15 @@ _AMENDABLE = (
     # happen" -- which no payload can settle. Added 2026-09-02 to correct rows that
     # insert_source had written OPEN while VERIFIED, before its default was fixed.
     "verification_disposition",
+    # jurisdiction, added 2026-09-18. It sits between the two classes and lands
+    # here because the hard case is a JUDGEMENT no payload settles: a synthesis
+    # searched across three databases with no single jurisdiction is INT, and
+    # choosing INT over a country code is an adjudication, not a transcription.
+    # The single-country case (a US survey of ADA-regulated transit) is closer to
+    # bibliographic, but splitting one column across two writers by which value it
+    # happens to take would be worse than either home. The vocabulary stays gated
+    # by validate_jurisdiction, so this widens WHO may correct it, not WHAT to.
+    "jurisdiction",
 )
 
 
@@ -5725,16 +5736,30 @@ def derive_extraction(*, ref_id: str, slug: str, parameter_id: int, base: int,
 
 
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
-                             session: str, dry_run: bool = False):
-    """Link an evidence source to a slug with a local ref ID."""
+                             session: str, dry_run: bool = False,
+                             relevance_note: str | None = None):
+    """Link an evidence source to a slug with a local ref ID.
+
+    `relevance_note` is the GROUNDS. D-0174 (ADOPTED) measured this column
+    populated in 0 of 10 rows and named the defect exactly: "the adjudication
+    is made every time and recorded never." A caller that has the grounds and
+    does not pass them reproduces that defect, so link_source_slug requires
+    them and this function stores them.
+
+    Returns True when a row was actually inserted. The INSERT is OR IGNORE, so
+    a caller that reports success on rowcount 0 reports a write it did not
+    perform -- the class add-source's own comment names as worse than hand SQL.
+    """
     with connect(dry_run) as conn:
-        conn.execute(
+        cur = conn.execute(
             "INSERT OR IGNORE INTO source_slug_links "
-            "(ref_id, slug, local_ref_id, created_at, created_by_session, "
-            "updated_at, updated_by_session) VALUES (?,?,?,?,?,?,?)",
-            [ref_id, slug, local_ref_id,
+            "(ref_id, slug, local_ref_id, relevance_note, created_at, "
+            "created_by_session, updated_at, updated_by_session) "
+            "VALUES (?,?,?,?,?,?,?,?)",
+            [ref_id, slug, local_ref_id, relevance_note,
              *audit(session).values()]
         )
+        return cur.rowcount > 0
 
 
 def link_source_slug(ref_id: str, slug: str, rationale: str,
@@ -5744,50 +5769,111 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
     WHY THIS EXISTS. `add-source` refuses a second call for a ref_id with
     "R9: cross-file the existing ref_id rather than duplicating" -- and until
     2026-09-18 no command did that, so the instruction named an action the CLI
-    could not perform. Measured the day this was written: ALL 16 sources in
-    evidence_sources were linked to exactly ONE slug, and not one had ever been
-    cross-filed. That is not a research finding about the corpus; it is the
-    shape of the missing writer.
+    could not perform, and single-slug filing was the only expressible outcome.
+    Derive the shape rather than trusting a number here (rule 7a):
+
+        select n, count(*) from (select ref_id, count(distinct slug) n
+          from source_slug_links group by ref_id) group by n order by n;
 
     Owner directive 2026-09-18: "you search by slug, but you have to adjudicate
     by all slugs in a category and stuff for each source" -- the search is
-    scoped, the ADMISSION is not. A source retrieved under one slug is evidence
-    for every slug it actually speaks to.
+    scoped, the ADMISSION is not.
 
-    local_ref_id is DERIVED, never asked for (rule 8): it is the next unused
-    label within the target slug, and asking an operator to retype what
-    `MAX(local_ref_id)+1` already knows is the anti-pattern that rule names.
+    `--rationale` IS THE GROUNDS AND IS STORED IN relevance_note. D-0174
+    (ADOPTED) measured that column populated in 0 of 10 rows and named the
+    defect: "the adjudication is made every time and recorded never." Collecting
+    the warrant and dropping it is that defect with an extra step.
 
-    --rationale is the half that IS judgment, so the script demands it and
-    stores it: which claim of this source bears on THIS slug. A link with no
-    warrant is indistinguishable from a mis-file.
+    local_ref_id is DERIVED, never asked for (rule 8), and it INHERITS THE
+    SLUG'S EXISTING LABEL SCHEME: a slug labelled ACG-01..ACG-09 gets ACG-10,
+    not "10". Mixing two schemes inside one slug breaks citation_mining, which
+    copies the label from here and joins it as a string.
     """
     if not (rationale or "").strip():
         raise Refusal(
             "--rationale is required. The link is a JUDGEMENT that this source "
             "speaks to this slug; without the warrant it cannot be told apart "
-            "from a mis-file. Name the claim that bears on this slug.")
+            "from a mis-file. It is stored in source_slug_links.relevance_note, "
+            "which D-0174 measured populated in 0 of 10 rows. Name the claim "
+            "that bears on this slug.")
     with connect(readonly=True) as conn:
-        if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
-                            (ref_id,)).fetchone():
+        row = conn.execute(
+            "SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id=?",
+            (ref_id,)).fetchone()
+        if row is None:
             raise Refusal(
                 f"{ref_id} is not in evidence_sources. This command cross-files "
                 f"an ADMITTED source to a further slug; it does not admit one. "
                 f"Use add-source first.")
-        if not conn.execute("SELECT 1 FROM slugs WHERE slug=?", (slug,)).fetchone():
+        if (row[0] or "").strip():
+            raise Refusal(
+                f"{ref_id} is superseded by {row[0]}. Neither row is a live "
+                f"claim, which is the same ground add-source's R9 check uses to "
+                f"exclude superseded rows. Cross-file the superseding ref_id.")
+        srow = conn.execute("SELECT status, merged_into FROM slugs WHERE slug=?",
+                            (slug,)).fetchone()
+        if srow is None:
             raise Refusal(
                 f"slug '{slug}' is not in the slugs registry. The vocabulary is "
                 f"the table's own, never a guess.")
-        if conn.execute("SELECT 1 FROM source_slug_links WHERE ref_id=? AND slug=?",
-                        (ref_id, slug)).fetchone():
-            raise Refusal(f"{ref_id} is already linked to '{slug}'. Nothing to do.")
+        status, merged_into = srow[0], srow[1]
+        if status == "MERGED":
+            raise Refusal(
+                f"slug '{slug}' is MERGED into '{merged_into}'. Filing evidence "
+                f"into a folded topic hides it from every reader that scopes to "
+                f"the live set. Link '{merged_into}' instead.")
+        existing = conn.execute(
+            "SELECT local_ref_id, relevance_note FROM source_slug_links "
+            "WHERE ref_id=? AND slug=?", (ref_id, slug)).fetchone()
+    if existing is not None:
+        # The link exists. Refusing outright would leave D-0174's backlog
+        # unreachable: the duplicate guard exists to stop a SECOND link, not to
+        # stop recording grounds that were never written. So a missing note is
+        # backfillable and a present one is not silently overwritten.
+        if (existing[1] or "").strip():
+            raise Refusal(
+                f"{ref_id} is already linked to '{slug}' AND already carries a "
+                f"relevance_note. Refusing to overwrite a recorded judgement; "
+                f"ship a migration if it is wrong.")
+        with connect(dry_run) as conn:
+            conn.execute(
+                "UPDATE source_slug_links SET relevance_note=?, updated_at=?, "
+                "updated_by_session=? WHERE ref_id=? AND slug=?",
+                [rationale, audit(session)["updated_at"],
+                 session, ref_id, slug])
+        return {"ref_id": ref_id, "slug": slug, "local_ref_id": existing[0],
+                "backfilled_relevance_note": True, "dry_run": dry_run}
+    with connect(readonly=True) as conn:
         taken = [r[0] for r in conn.execute(
             "SELECT local_ref_id FROM source_slug_links WHERE slug=?", (slug,))]
-    nums = [int(re.sub(r"\D", "", t)) for t in taken if re.sub(r"\D", "", t)]
-    local_ref_id = str(max(nums) + 1) if nums else "1"
-    insert_source_slug_link(ref_id, slug, local_ref_id, session, dry_run=dry_run)
+    # Inherit the slug's own label scheme rather than imposing a bare integer.
+    prefixes = {m.group(1) for m in (re.match(r"^([A-Za-z]+[-_]?)\d+$", t or "")
+                                     for t in taken) if m}
+    width = max((len(m.group(2)) for m in (re.match(r"^([A-Za-z]*[-_]?)(\d+)$", t or "")
+                                           for t in taken) if m), default=0)
+    nums = [int(m.group(2)) for m in (re.match(r"^([A-Za-z]*[-_]?)(\d+)$", t or "")
+                                      for t in taken) if m]
+    nxt = max(nums) + 1 if nums else 1
+    if len(prefixes) == 1:
+        local_ref_id = f"{prefixes.pop()}{nxt:0{max(width, 1)}d}"
+    elif prefixes:
+        raise Refusal(
+            f"slug '{slug}' already mixes local_ref_id label schemes "
+            f"({sorted(set(taken))[:6]}); a derived label cannot be trusted to "
+            f"match. Reconcile the scheme before cross-filing into this slug.")
+    else:
+        local_ref_id = str(nxt)
+    wrote = insert_source_slug_link(ref_id, slug, local_ref_id, session,
+                                    dry_run=dry_run, relevance_note=rationale)
+    if not wrote and not dry_run:
+        raise Refusal(
+            f"the INSERT for {ref_id} -> '{slug}' affected no row, so the link "
+            f"was NOT written and local_ref_id '{local_ref_id}' was not taken. "
+            f"A concurrent write most likely landed the row between the "
+            f"duplicate check and the insert. Re-run and read the refusal.")
     return {"ref_id": ref_id, "slug": slug, "local_ref_id": local_ref_id,
-            "rationale": rationale, "dry_run": dry_run}
+            "slug_status": status, "relevance_note": rationale,
+            "written": bool(wrote), "dry_run": dry_run}
 
 
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
@@ -6340,7 +6426,8 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
                 if hit:
                     raise Refusal(
                         f"DOI {data['doi']!r} is already held as {hit[0]} in {table}. "
-                        f"R9: cross-file the existing ref_id, never mint a second identity "
+                        f"R9: cross-file the existing ref_id with `db.py link-source-slug`, "
+                        f"never mint a second identity "
                         f"for one source. Nothing was written.")
             data = dict(data, doi=doi)
         row = dict(data)

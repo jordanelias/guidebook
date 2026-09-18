@@ -7,9 +7,9 @@
   "grade_distribution": {
     "A": 1,
     "B": 0,
-    "C": 2,
+    "C": 3,
     "D": 1,
-    "E": 1,
+    "E": 0,
     "F": 75
   },
   "tier_totals": {
@@ -75,24 +75,24 @@
       "n_jur": 8,
       "n_jur_raw": 8,
       "n_true_jur": 8,
-      "n_null_jur": 7,
+      "n_null_jur": 4,
       "polluted_jur": {},
       "jurs": {
         "JP": 4,
+        "INT": 2,
+        "US": 2,
+        "GB": 2,
         "BE": 2,
         "AU": 2,
-        "US": 1,
         "DE": 1,
-        "GB": 1,
-        "INT": 1,
         "HR": 1
       },
       "jurs_clean": {
-        "US": 1,
+        "INT": 2,
+        "US": 2,
         "DE": 1,
         "JP": 4,
-        "GB": 1,
-        "INT": 1,
+        "GB": 2,
         "BE": 2,
         "AU": 2,
         "HR": 1
@@ -108,20 +108,20 @@
       "n_en": 8,
       "n_nonen": 12,
       "pct_en": 40.0,
-      "anglo_core": 3,
-      "supra": 1,
-      "non_anglo": 9,
-      "pct_anglo_core": 23.1,
+      "anglo_core": 4,
+      "supra": 2,
+      "non_anglo": 10,
+      "pct_anglo_core": 25.0,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 84.3,
+      "score": 84.1,
       "components": {
         "A": 20,
         "B": 22.0,
         "C": 20,
         "D": 12,
-        "E": 10.3
+        "E": 10.1
       },
       "grade": "A"
     },
@@ -150,15 +150,21 @@
       "markers": {
         "●": 4
       },
-      "n_jur": 1,
-      "n_jur_raw": 1,
-      "n_true_jur": 1,
-      "n_null_jur": 3,
+      "n_jur": 4,
+      "n_jur_raw": 4,
+      "n_true_jur": 4,
+      "n_null_jur": 0,
       "polluted_jur": {},
       "jurs": {
+        "INT": 1,
+        "US": 1,
+        "GB": 1,
         "HR": 1
       },
       "jurs_clean": {
+        "INT": 1,
+        "US": 1,
+        "GB": 1,
         "HR": 1
       },
       "n_lang": 1,
@@ -168,78 +174,20 @@
       "n_en": 4,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 0,
-      "supra": 0,
-      "non_anglo": 1,
-      "pct_anglo_core": 0.0,
+      "anglo_core": 1,
+      "supra": 1,
+      "non_anglo": 2,
+      "pct_anglo_core": 25.0,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 50.5,
+      "score": 56.6,
       "components": {
         "A": 8,
         "B": 30,
-        "C": 5,
+        "C": 13,
         "D": 0,
-        "E": 7.5
-      },
-      "grade": "C"
-    },
-    {
-      "slug": "stair-ramp-threshold-biomechanics-accessibility",
-      "topic": "entrances-and-circulation",
-      "state": null,
-      "n": 3,
-      "full": 3,
-      "partial": 0,
-      "weak": 0,
-      "disputed": 0,
-      "t3_clinical": 3,
-      "practice": 0,
-      "code_only": 0,
-      "strength_band": "full",
-      "weak_only": false,
-      "tiers": {
-        "3": 3
-      },
-      "etypes": {
-        "clinical": 3
-      },
-      "markers": {
-        "●": 3
-      },
-      "n_jur": 1,
-      "n_jur_raw": 1,
-      "n_true_jur": 1,
-      "n_null_jur": 2,
-      "polluted_jur": {},
-      "jurs": {
-        "HR": 1
-      },
-      "jurs_clean": {
-        "HR": 1
-      },
-      "n_lang": 1,
-      "langs": {
-        "en": 3
-      },
-      "n_en": 3,
-      "n_nonen": 0,
-      "pct_en": 100.0,
-      "anglo_core": 0,
-      "supra": 0,
-      "non_anglo": 1,
-      "pct_anglo_core": 0.0,
-      "sl_searched": 0,
-      "sl_hit": 0,
-      "search_jurs": 0,
-      "score": 50.5,
-      "components": {
-        "A": 8,
-        "B": 30,
-        "C": 5,
-        "D": 0,
-        "E": 7.5
+        "E": 5.6
       },
       "grade": "C"
     },
@@ -268,13 +216,21 @@
       "markers": {
         "●": 3
       },
-      "n_jur": 0,
-      "n_jur_raw": 0,
-      "n_true_jur": 0,
-      "n_null_jur": 3,
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
       "polluted_jur": {},
-      "jurs": {},
-      "jurs_clean": {},
+      "jurs": {
+        "INT": 1,
+        "US": 1,
+        "GB": 1
+      },
+      "jurs_clean": {
+        "INT": 1,
+        "US": 1,
+        "GB": 1
+      },
       "n_lang": 1,
       "langs": {
         "en": 3
@@ -282,22 +238,84 @@
       "n_en": 3,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 0,
-      "supra": 0,
-      "non_anglo": 0,
-      "pct_anglo_core": null,
+      "anglo_core": 1,
+      "supra": 1,
+      "non_anglo": 1,
+      "pct_anglo_core": 33.3,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 38.0,
+      "score": 56.0,
       "components": {
         "A": 8,
         "B": 30,
-        "C": 0,
+        "C": 13,
         "D": 0,
-        "E": 0.0
+        "E": 5.0
       },
-      "grade": "D"
+      "grade": "C"
+    },
+    {
+      "slug": "stair-ramp-threshold-biomechanics-accessibility",
+      "topic": "entrances-and-circulation",
+      "state": null,
+      "n": 3,
+      "full": 3,
+      "partial": 0,
+      "weak": 0,
+      "disputed": 0,
+      "t3_clinical": 3,
+      "practice": 0,
+      "code_only": 0,
+      "strength_band": "full",
+      "weak_only": false,
+      "tiers": {
+        "3": 3
+      },
+      "etypes": {
+        "clinical": 3
+      },
+      "markers": {
+        "●": 3
+      },
+      "n_jur": 3,
+      "n_jur_raw": 3,
+      "n_true_jur": 3,
+      "n_null_jur": 0,
+      "polluted_jur": {},
+      "jurs": {
+        "US": 1,
+        "GB": 1,
+        "HR": 1
+      },
+      "jurs_clean": {
+        "US": 1,
+        "GB": 1,
+        "HR": 1
+      },
+      "n_lang": 1,
+      "langs": {
+        "en": 3
+      },
+      "n_en": 3,
+      "n_nonen": 0,
+      "pct_en": 100.0,
+      "anglo_core": 1,
+      "supra": 0,
+      "non_anglo": 2,
+      "pct_anglo_core": 33.3,
+      "sl_searched": 0,
+      "sl_hit": 0,
+      "search_jurs": 0,
+      "score": 56.0,
+      "components": {
+        "A": 8,
+        "B": 30,
+        "C": 13,
+        "D": 0,
+        "E": 5.0
+      },
+      "grade": "C"
     },
     {
       "slug": "threshold-and-level-access",
@@ -324,13 +342,19 @@
       "markers": {
         "●": 2
       },
-      "n_jur": 0,
-      "n_jur_raw": 0,
-      "n_true_jur": 0,
-      "n_null_jur": 2,
+      "n_jur": 2,
+      "n_jur_raw": 2,
+      "n_true_jur": 2,
+      "n_null_jur": 0,
       "polluted_jur": {},
-      "jurs": {},
-      "jurs_clean": {},
+      "jurs": {
+        "INT": 1,
+        "US": 1
+      },
+      "jurs_clean": {
+        "INT": 1,
+        "US": 1
+      },
       "n_lang": 1,
       "langs": {
         "en": 2
@@ -338,22 +362,22 @@
       "n_en": 2,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 0,
-      "supra": 0,
+      "anglo_core": 1,
+      "supra": 1,
       "non_anglo": 0,
-      "pct_anglo_core": null,
+      "pct_anglo_core": 50.0,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 34.0,
+      "score": 46.8,
       "components": {
         "A": 4,
         "B": 30,
-        "C": 0,
+        "C": 9,
         "D": 0,
-        "E": 0.0
+        "E": 3.8
       },
-      "grade": "E"
+      "grade": "D"
     },
     {
       "slug": "accessibility-feature-market-value-uplift-framing",

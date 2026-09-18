@@ -28,17 +28,31 @@ print(f"6 synth->specification {one('select count(*) from specifications where c
 print(f"7 spec->render        site/ files = {sum(len(f) for _,_,f in os.walk('site'))}   <-- no pages")
 print(f"foreign_key_check violations = {len(list(c.execute('PRAGMA foreign_key_check')))}\n")
 
+# The LIVE determination, derived -- never a literal id. Batch 15 retired spec 7
+# and created spec 8, and a script pinned to 7 would have gone on measuring a
+# retired row while reporting it as the determination.
+LIVE = one("select specification_id from specifications where retired_at is null "
+           "order by specification_id desc limit 1")
+CONV = one("select convergence_id from specifications where specification_id=?", LIVE)
+print(f"live specification_id = {LIVE} (derived); its convergence_id = {CONV}\n")
+
 print("== F2 convergence carries refs as JSON, not pointers ==")
-row = one("select clinical_sources from convergence_assessment where convergence_id=7")
-allr = sum(len(json.loads(x)) for x in c.execute(
-    "select clinical_sources,co1_sources,co2_sources,discounted_sources from convergence_assessment where convergence_id=7").fetchone())
-print(f"ref_ids in convergence_id=7 JSON: {allr}\n")
+# ALL FIVE ref-id columns, not four: down_weighted_sources is also a JSON array
+# of REF-IDs and omitting it undercounts the moment anything is down-weighted.
+# Every one is nullable, and json.loads(None) raises, so coalesce first.
+CONV_COLS = ["clinical_sources", "co1_sources", "co2_sources",
+             "down_weighted_sources", "discounted_sources"]
+row = c.execute(f"select {','.join(CONV_COLS)} from convergence_assessment "
+                f"where convergence_id=?", (CONV,)).fetchone()
+allr = sum(len(json.loads(x or "[]")) for x in row)
+print(f"ref_ids in convergence_id={CONV} JSON across {len(CONV_COLS)} columns: {allr}\n")
 
 print("== F3 rule 5: same fact, two homes ==")
-gr = sorted(json.loads(one("select governing_refs from specifications where specification_id=7")))
-lk = sorted(r[0] for r in c.execute("select ref_id from specification_source_links where specification_id=7 and role='governing'"))
+gr = sorted(json.loads(one("select governing_refs from specifications where specification_id=?", LIVE) or "[]"))
+lk = sorted(r[0] for r in c.execute(
+    "select ref_id from specification_source_links where specification_id=? and role='governing'", (LIVE,)))
 print(f"governing_refs == specification_source_links : {gr == lk}")
-fb = sorted(x['icf_code'] for x in json.loads(one("select functional_basis from specifications where specification_id=7")))
+fb = sorted(x['icf_code'] for x in json.loads(one("select functional_basis from specifications where specification_id=?", LIVE) or "[]"))
 pil = sorted(r[0] for r in c.execute("select icf_code from population_icf_links where population_code='MOB'"))
 print(f"functional_basis == population_icf_links[MOB] : {fb == pil}\n")
 

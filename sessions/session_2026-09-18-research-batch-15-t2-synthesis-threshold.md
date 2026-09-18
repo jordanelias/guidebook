@@ -163,3 +163,50 @@ both remediating queries were written and committed at `70bae3e` **before** they
 4. **Candidate 88 (Kim 2014)** — the rise-conditioned derived value. Blocked by GAP-008; figure rests
    on an aggregator abstract and must not be cited until the publisher text is read.
 5. **REF-00977's backward set** — its 48 included studies are the richest unmined seam for this parameter.
+
+---
+
+## 10. What a code review caught afterwards, and what it changed
+
+An adversarial review of this batch returned fifteen findings. Acted on:
+
+- **`link-source-slug` demanded a `--rationale`, echoed it back, and stored none of it.**
+  `source_slug_links.relevance_note` is the column that exists for exactly this, and D-0174 (ADOPTED)
+  had already measured it populated in 0 of 10 rows, in these words: *"the adjudication is made every
+  time and recorded never."* The new writer collected the adjudication and recorded it never — the
+  documented defect with an extra step, shipped by the same session that was congratulating itself on
+  fixing a neighbouring one. Fixed: the note is stored; a link that exists without one can be
+  backfilled; one that already carries a note is not silently overwritten. All twelve of this batch's
+  cross-slug warrants were backfilled.
+- **The batch left ZERO live determinations corpus-wide.** Spec 7 was retired in place and never
+  re-determined, and nothing went red. `retire_specification`'s own docstring sets the order as
+  *retire, re-determine, then link*; only step one had been taken. Fixed: spec 8 determined — **same
+  interval**, which is the point, the new evidence changed the warrant and not the value — and the
+  supersession chain backfilled unbroken 1→8, closing F4 of this PR's own workplan.
+- **Three of four admissions carried `jurisdiction` NULL** although determinable, and the per-link
+  fan-out multiplied each omission across every slug it reached. Fixed to US / GB / INT. The column
+  had no writer at all — neither `amend-source` nor `correct-source` would take it — so it was added
+  to the amendable set with the reasoning recorded beside it.
+- **The writer accepted MERGED and STUB slugs and superseded ref_ids, and could report a write it did
+  not perform** (`INSERT OR IGNORE`, with the duplicate check on a separate connection). Now refused
+  or surfaced; `local_ref_id` also inherits the slug's existing label scheme instead of imposing a
+  bare integer on a slug labelled `ACG-01…`.
+- **`walk.py` was pinned to literal id 7**, omitted `down_weighted_sources` from the five JSON
+  ref-id columns, and would crash on a NULL one. It now derives the live specification id — which
+  mattered immediately, since this batch retired 7.
+
+Recorded but NOT fixed here, each being wider than this batch:
+
+- **Multi-slug filing breaks `citation_mining_completeness`'s per-slug semantics.** Its join ignores
+  slug while `citation_mining` is keyed per (slug, local_ref_id) and `citation_mining_status` is one
+  flag per source. Harmless while every source had one slug; not harmless now. It cuts both ways —
+  one pass satisfying R2 for five slugs, and the legacy fallback fanning out into false UNMINED rows.
+  **This is a direct consequence of the fix in §5b** and the honest reading is that GAP-009's fix
+  opened it.
+- **Every `retrieval_log.fetch()` call in batches 10–15 omits `ref_id=`,** so each artefact carries
+  `ref_id: null` and every verbatim check resolves to the weak UNSCOPED branch — which proves the
+  words are in the corpus, not that they came from this source. Batches 08–09 populated it. That is a
+  regression in the §5(c) anti-fabrication control, and it qualifies what this session's attestation
+  claims about byte-for-byte verification.
+- **Ten commands from this session landed in batch 14's `commands.jsonl`** before `scratchpad/CURRENT`
+  was moved — the §7 trap, verbatim, in the session that quoted it.
