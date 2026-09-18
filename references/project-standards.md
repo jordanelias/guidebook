@@ -3810,3 +3810,45 @@ and say so wherever it is quoted. (4) The "runs eventually" obligation needs a m
 a backlog count on undischarged deferrals — and it does not exist yet. (5) A deferral is
 legitimate; do not record one as a defect.
 DATE: 2026-09-18 — owner ruling, quoted above.
+
+---
+
+RULE: A RETRACTION IS A CLAIM, AND IT IS HELD TO THE STANDARD OF THE CLAIM IT RETRACTS.
+CONDITION: Whenever a session withdraws a result and offers a replacement — a corrected
+  count, a re-ranking, a different instrument, a revised cause.
+ACTION: Re-derive the *whole* comparison, not the part that was challenged, and name the
+  instrument. Batch 17 retracted a mining yield as a screen artefact — correctly — and in
+  the same paragraph asserted that the strict screen "inverts the original ranking",
+  without re-deriving the anchor that founded the hypothesis. That anchor tops both
+  screens. The retraction reached a gap, a session record, an attestation and a PR body
+  before an adversarial pass caught it, which is the same distance the original error
+  travelled. **Self-correction is not self-verifying.** A retraction published on an
+  unvalidated instrument is a second claim of the same kind, and it inherits the
+  credibility of the first — which is to say, none.
+DATE: 2026-09-18 22:55
+
+RULE: A YIELD IS DERIVED FROM A NAMED, VERSIONED SCREEN — NEVER FROM A REGEX TYPED INLINE.
+CONDITION: Any count of "how many of these references are relevant", in a mining pass, a
+  prediction, a gap, or a comparison between batches.
+ACTION: Name a screen from `governance/mining-screens.yaml` and derive the figure:
+  `python3 scripts/research/mining_screen.py --ref <REF-NNNNN> --compare`. Record the
+  screen name and version beside any yield you keep. Adding a screen is cheap; editing one
+  in place silently re-scores every yield ever recorded against its name, so add a new name
+  instead. Rationale: two batches compared counts produced by two different ad-hoc regexes
+  and neither said so, a pre-registered floor was scored on a screen it was not calibrated
+  on, and the instrument was swapped after the results were seen. This is rule 7a applied
+  to a measurement rather than a count — the number must be written as the command that
+  computes it, and the command must name its instrument.
+DATE: 2026-09-18 22:55
+
+RULE: WHEN THE CLI CANNOT REACH A COLUMN, ADD THE VERB — DO NOT CLAIM THE WRITE HAPPENED.
+CONDITION: A correction that requires writing a column no `db.py` subcommand exposes.
+ACTION: CLAUDE.md §4 already says a table the CLI cannot reach is a coverage bug, not a
+  licence to bypass. The failure mode this rule adds is the third option nobody names:
+  **writing the claim without the write.** Batch 17 recorded in a committed, immutable
+  migration that it had repointed two candidates off a zero-yield search. No verb could
+  write `search_candidates.exec_id`, so it had not — and because the candidate-to-source
+  edge lived in free-text notes, no check could contradict it. Add the verb, add the edge
+  the check needs, add the check, then make the claim. `reattribute-candidate`,
+  migration 088's `resolved_ref_id`, and integrity check S01 are that sequence.
+DATE: 2026-09-18 22:55
