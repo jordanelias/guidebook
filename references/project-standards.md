@@ -3852,3 +3852,93 @@ ACTION: CLAUDE.md §4 already says a table the CLI cannot reach is a coverage bu
   the check needs, add the check, then make the claim. `reattribute-candidate`,
   migration 088's `resolved_ref_id`, and integrity check S01 are that sequence.
 DATE: 2026-09-18 22:55
+
+## Owner ruling 2026-09-18 — ERIC is a repository worth remembering
+
+> **"ERIC is a valuable repository to remember"**
+
+Given mid-batch, immediately after ERIC returned the full text of a source six batches of
+DOI-keyed searching had never reached. Recorded on contact per `CLAUDE.md` rule 0.
+
+**WHAT IT ANSWERS.** GAP-028's structural finding: *"EVERY SEARCH METHOD THIS PROJECT USES IS
+DOI-KEYED OR INDEX-KEYED, so the foundation layer of its central parameter is structurally out of
+reach."* That was true and it is now narrower. ERIC (the US Department of Education's Education
+Resources Information Center) indexes government and institutional reports that carry **no DOI, no
+PMID and no Crossref deposit**, and serves many of them as full-text PDF at a predictable URL:
+
+    https://api.ies.ed.gov/eric/?search=<query>&format=json&rows=25     # record, gives ED number
+    https://files.eric.ed.gov/fulltext/<ED-number>.pdf                  # full text, often present
+
+Batch 18 used exactly that pair to retrieve HUD-PDR 397 (Steinfeld, Schroeder and Bishop 1979,
+`ED184280`, 170 pp., 5.7 MB), persisted through `retrieval_log.fetch`. Derive what the corpus holds
+rather than quoting this sentence:
+
+    python3 -c "import sqlite3;con=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);\
+    print(list(con.execute(\"select engine,count(*) from search_executions group by 1 order by 2 desc\")))"
+
+**WHAT IT DOES NOT SETTLE.** ERIC's scope is education and rehabilitation-adjacent research. It is
+not a general grey-literature index, and a miss in ERIC is a miss in *that* index — an R14
+query-shape-versus-wrong-index diagnosis still has to be made rather than assumed. Two sibling
+routes went untried in batch 18 and are owed: **NTIS** for federal technical reports and **Jisc
+Library Hub Discover** for UK institutional reports (which is where Walter 1971 would sit).
+
+**AND ONE INSTRUMENT IS NOW KNOWN BAD FOR THIS PURPOSE.** `catalog.hathitrust.org` returned
+HTTP 200 carrying a Cloudflare *"Just a moment… Enable JavaScript and cookies to continue"*
+interstitial — a false 200, the same shape batch 17 found on JSTOR. It is persisted in this
+session's retrieval log as evidence. **A 200 from HathiTrust's catalogue is not a result**; read the
+artefact before scoring the retrieval.
+
+CONDITION: Any session searching for a pre-1995 report, an institutional or government research
+report, or any source that returned no DOI from Crossref.
+ACTION: (1) Try ERIC before recording a zero-yield as genuine absence — a pre-1995 grey report
+absent from PubMed and Crossref is an INDEXING fact until ERIC has been asked (R5's principle, one
+index along). (2) Retrieve through `retrieval_log.fetch`, never `WebFetch`, so the payload is an
+artefact (GAP-034). (3) Read the body before believing a 200.
+DATE: 2026-09-18 — owner ruling, quoted above.
+
+## Owner ruling 2026-09-18 — 1979 work is HISTORICAL GROUNDING, not a current standard
+
+> **"I don't think 1979 work is great for today standards but it's great for historical grounding"**
+
+Given on contact when batch 18 surfaced Steinfeld, Schroeder and Bishop 1979 (HUD-PDR 397) and was
+weighing its tier. Recorded per `CLAUDE.md` rule 0, and it **overrides the tier the ladder would
+otherwise have produced on study design alone.**
+
+**WHAT IT SETTLES, AND IT CUTS AGAINST THE ADMITTING SESSION'S OWN INCLINATION.** On
+`governance/tier-system.md` §1 read mechanically, the study is a candidate for
+`clinical`/`high_control` → **T1**: the parameter under design was experimentally manipulated (a
+purpose-built 40-ft ramp reset from 1:12 to 1:16 to 1:20), the outcome was physiological (pulse
+recovery to within ten beats of resting), and n = 124 disabled participants. That is the T1
+definition on its face, and it is the reading this session was about to take.
+
+**The ruling refuses it, and the refusal is about CURRENCY rather than about design quality.** A
+determination is a statement about what to build **now**. A 1979 measurement was taken on 1979
+wheelchairs, by people trained in 1979 rehabilitation practice, against 1979 expectations of what a
+disabled person should have to tolerate — and the anchoring band (T1 / Co-1 / T2 / Co-2) is the band
+the guidebook uses to say *this is best practice today*. Historical distance is not a defect in the
+study; it is a mismatch between the study and the claim it would be made to anchor.
+
+**HOW IT IS EXPRESSED IN THE SCHEMA.** `evidence_type='grey'`, `scope='intrinsic'` → **T3**, marker
+**○**, which `tier-system.md` §1 glosses as *"Supporting evidence for best-practice claims; rarely
+the sole basis"* — precisely "grounding, not standard". The study-design facts are not discarded:
+they are recorded in `verification_note` and in the extractions, so a later session can see that a
+high-control design was admitted at T3 **by ruling** and not by anyone mistaking its methods.
+
+**WHAT IT DOES NOT SAY.** It does not retire the source, does not make its findings false, and does
+not bar it from a determination's supporting set. It bars it from being the **anchor**. Nor is this
+a general rule that old work is weak: it is a ruling about 1979 work being used to state a
+present-day building parameter. Where the claim is itself historical — *what did the evidence say
+when this code was written* — this source is **primary and first-class**, and that is the use batch
+18 makes of it.
+
+**AND IT LEAVES THE REAL BLOCKER EXACTLY WHERE IT WAS.** Parameter 3 × MOB stays undetermined,
+determination gate 1 stays open, and C10 still refuses (GAP-020, GAP-024). This ruling means batch
+18 did not move that, and the batch's own pre-registered prior P3 predicted it would not.
+
+CONDITION: Any session admitting a source published before roughly 1990, or weighing an old but
+methodologically strong study for an anchoring tier.
+ACTION: (1) Age is a CURRENCY judgement, made separately from study design — do not let a strong
+method carry an old source into the anchoring band. (2) Record the design facts anyway, so the T3 is
+legible as a ruling rather than as a misreading. (3) Historical-provenance claims are a different
+claim type, and old primary work anchors those at full strength.
+DATE: 2026-09-18 — owner ruling, quoted above.
