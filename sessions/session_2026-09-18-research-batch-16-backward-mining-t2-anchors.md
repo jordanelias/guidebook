@@ -116,11 +116,33 @@ uncaught traceback at `assess_cell.py:1923`, writing nothing. The **proxy** bran
 not, and nothing notices that `provisional` is reachable down both. It was unreachable until now
 because no anchoring-tier *claim* had ever existed for a determined parameter. **GAP-019.**
 
-**What it would have written is its own argument against forcing it.** Instrumented:
-`value_max 7.0 %`, `tier_basis T1`, `rests_on_proxy_inference 0`, `governing` and `supporting` both
-`None`. **A single T1 claim displaces the entire regulatory stratum rather than composing with it.**
-So the determination would have moved 5 % → 7 % and shed its proxy marker on one skim extraction
-read from a third-party index abstract whose article has not been obtained.
+**RESOLVED 2026-09-18, and half of what this section first claimed was my own error.**
+
+*The real defect, now fixed.* The engine's **gate cap** — `state == "stated" and any binding gate
+→ provisional` — downgraded the cell **without supplying the confidence flag `provisional`
+requires**, so `EvidenceStateRecord` refused it. `determination_gates` held **zero rows** until
+this batch raised gate 1, so that branch had never executed in the engine's life: the crash was
+created by the first gate ever raised, which was mine. It is not a doctrine question, which is what
+GAP-019 first called it — `present` is the anchoring basis the cell already has, `absent` names the
+gate that caps it, both read off state the function already holds. (GAP-023.)
+
+*What is retracted.* This paragraph asserted that **a single T1 claim displaced the entire
+regulatory stratum**, citing `governing` and `supporting` both `None`. **That is false, and the
+cause was my probe rather than the engine**: I printed `det.get("governing")`; the key is
+`governing_refs`, and it reads `["REF-01002"]` correctly. Re-measured — `governing_refs
+["REF-01002"]`, `tier_basis T1`, `supporting_refs []`. The regulatory sources dropping out of the
+governing set once an anchor exists **is the ratified ladder working**, T4–T6 being walled off from
+full-strength anchoring, not a defect. Rule 7a applies to a figure read off the wrong dict key as
+much as to one typed by hand.
+
+*And the cell still must not be re-determined — but that is now mechanical, not a judgement call.*
+Rehearsed on a throwaway copy with the engine fixed, the determination succeeds: `provisional`,
+`value_max 7.0 %`, `tier_basis T1`, governed by REF-01002, with the cap recorded in the confidence
+flag. K01 and K02 return to one subject each. **C10 then fails** — *"no published cell rests on an
+unverified or disputed source"* — because REF-01002 is `UNVERIFIED`, the grade I4 forced after the
+original `VERIFIED` was caught as wrong. `test_db_integrity` goes 73/74. **The repository's own
+blocking check refuses the re-determination, for exactly the reason this batch refused it by hand.**
+The empty surface is correct until GAP-016 closes. (GAP-024.)
 
 So **specification 8 was retired in place** (owner ruling 2026-09-16) with that reasoning recorded
 on the row. It stays readable as history at 5 % / 1:20 with its notations intact. **The cell is
