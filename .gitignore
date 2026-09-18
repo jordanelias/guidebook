@@ -23,3 +23,11 @@ data/audit_graph.db-wal
 # reader to stop reading git status, which is the same disease as a check that is red by
 # construction (CLAUDE.md rule 6).
 data/audit_graph.db-journal
+
+# Scratch databases. A batch copies data/guidebook.db into its session folder to
+# write against (CLAUDE.md §4: scratch copy -> db.py -> emit -> migrate), and a
+# `git add -A` before the migration is emitted sweeps that ~4 MB copy into the
+# commit. That happened in batch 16 and again in batch 17, and neither could be
+# undone once pushed. The delta reaches main through the migration; the scratch
+# copy is a working file and never belongs in history.
+scratchpad/**/*.db
