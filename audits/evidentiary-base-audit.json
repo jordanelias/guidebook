@@ -2,8 +2,8 @@
   "as_of": "2026-09-18",
   "n_slices": 80,
   "n_items": 0,
-  "total_source_instances": 32,
-  "unique_sources": 20,
+  "total_source_instances": 35,
+  "unique_sources": 23,
   "grade_distribution": {
     "A": 1,
     "B": 0,
@@ -13,7 +13,7 @@
     "F": 75
   },
   "tier_totals": {
-    "1": 5,
+    "1": 8,
     "2": 5,
     "3": 12,
     "4": 1,
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 22,
+    "full": 25,
     "partial": 5,
     "weak": 5,
     "disputed": 0
   },
   "practice_stream_instances": 0,
-  "english_instances": 20,
+  "english_instances": 23,
   "zero_yield_search_languages": [],
   "item_basis_health": {},
   "slices": [
@@ -41,8 +41,8 @@
       "slug": "accessible-circulation-geometry",
       "topic": "entrances-and-circulation",
       "state": null,
-      "n": 20,
-      "full": 10,
+      "n": 23,
+      "full": 13,
       "partial": 5,
       "weak": 5,
       "disputed": 0,
@@ -52,7 +52,7 @@
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
-        "1": 5,
+        "1": 8,
         "2": 2,
         "3": 3,
         "4": 1,
@@ -61,14 +61,14 @@
       },
       "etypes": {
         "sr_meta": 2,
-        "clinical": 6,
+        "clinical": 9,
         "code": 5,
         "national_fw": 4,
         "co1": 2,
         "standard_eb": 1
       },
       "markers": {
-        "●": 10,
+        "●": 13,
         "◐": 5,
         "○": 5
       },
@@ -78,9 +78,9 @@
       "n_null_jur": 4,
       "polluted_jur": {},
       "jurs": {
+        "US": 5,
         "JP": 4,
         "INT": 2,
-        "US": 2,
         "UK": 2,
         "BE": 2,
         "AU": 2,
@@ -89,7 +89,7 @@
       },
       "jurs_clean": {
         "INT": 2,
-        "US": 2,
+        "US": 5,
         "DE": 1,
         "JP": 4,
         "UK": 2,
@@ -99,29 +99,29 @@
       },
       "n_lang": 5,
       "langs": {
-        "en": 8,
+        "en": 11,
         "?": 5,
         "ja": 4,
         "nl": 2,
         "de": 1
       },
-      "n_en": 8,
+      "n_en": 11,
       "n_nonen": 12,
-      "pct_en": 40.0,
-      "anglo_core": 6,
+      "pct_en": 47.8,
+      "anglo_core": 9,
       "supra": 2,
       "non_anglo": 8,
-      "pct_anglo_core": 37.5,
+      "pct_anglo_core": 47.4,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 83.2,
+      "score": 82.9,
       "components": {
         "A": 20,
-        "B": 22.0,
+        "B": 23.0,
         "C": 20,
         "D": 12,
-        "E": 9.2
+        "E": 7.9
       },
       "grade": "A"
     },

@@ -1,0 +1,443 @@
+[
+ {
+  "key": "ref_1",
+  "doi-asserted-by": "crossref",
+  "first-page": "207",
+  "DOI": "10.1016/S0003-6870(02)00014-5",
+  "article-title": "The nature of work-related neck and upper limb musculoskeletal disorders",
+  "volume": "33",
+  "author": "Buckle",
+  "year": "2002",
+  "journal-title": "Appl. Ergon."
+ },
+ {
+  "key": "ref_2",
+  "doi-asserted-by": "crossref",
+  "first-page": "546",
+  "DOI": "10.1016/S1297-319X(02)00450-5",
+  "article-title": "Work-related musculoskeletal disorders of the upper limb",
+  "volume": "69",
+  "author": "Aptel",
+  "year": "2002",
+  "journal-title": "Jt. Bone Spine"
+ },
+ {
+  "key": "ref_3",
+  "unstructured": "Bernard, B.P., Putz-Anderson, V., Burt, S.E., Cole, L.L., Fairfield-Estill, C., Fine, L.J., Grant, C., Gjessing, K.A., Jenkins, L., and Hurrell, J.J. (2023, July 19). Musculoskeletal Disorders and Workplace Factors: A Critical Review of Epidemiologic Evidence for Work-Related Musculoskeletal Disorders of the Neck, Upper Extremity, and Low Back, Available online: https://stacks.cdc.gov/view/cdc/21745."
+ },
+ {
+  "key": "ref_4",
+  "unstructured": "World Health Organization (2001). International Classification of Functioning, Disability and Health: ICF, WHO."
+ },
+ {
+  "key": "ref_5",
+  "doi-asserted-by": "crossref",
+  "first-page": "73",
+  "DOI": "10.1111/j.1471-6712.1997.tb00436.x",
+  "article-title": "Elderly people\u2019s daily activities and need for mobility support",
+  "volume": "11",
+  "author": "Lilja",
+  "year": "1997",
+  "journal-title": "Scand. J. Caring Sci."
+ },
+ {
+  "key": "ref_6",
+  "doi-asserted-by": "crossref",
+  "first-page": "71",
+  "DOI": "10.1080/10400435.1996.10132277",
+  "article-title": "Measuring the outcomes of assistive technology: Challenge and innovation",
+  "volume": "8",
+  "author": "Smith",
+  "year": "1996",
+  "journal-title": "Assist. Technol."
+ },
+ {
+  "key": "ref_7",
+  "doi-asserted-by": "crossref",
+  "first-page": "231",
+  "DOI": "10.2340/16501977-0159",
+  "article-title": "Demographics of wheelchair users in France: Results of national community-based handicaps-incapacit\u00e9s-d\u00e9pendance surveys",
+  "volume": "40",
+  "author": "Vignier",
+  "year": "2008",
+  "journal-title": "J. Rehabil. Med."
+ },
+ {
+  "key": "ref_8",
+  "doi-asserted-by": "crossref",
+  "first-page": "22",
+  "DOI": "10.1080/10400435.1997.10132293",
+  "article-title": "An analysis of the effects of ramp slope on people with mobility impairments",
+  "volume": "9",
+  "author": "Sanford",
+  "year": "1997",
+  "journal-title": "Assist. Technol."
+ },
+ {
+  "key": "ref_9",
+  "doi-asserted-by": "crossref",
+  "first-page": "68",
+  "DOI": "10.3109/03790798909166390",
+  "article-title": "Portable ramps for wheelchair users\u2014An appraisal",
+  "volume": "11",
+  "author": "Sweeney",
+  "year": "1989",
+  "journal-title": "Int. Disabil. Stud."
+ },
+ {
+  "key": "ref_10",
+  "doi-asserted-by": "crossref",
+  "unstructured": "Paralyzed Veterans of America Consortium for Spinal Cord Medicine (2005). Preservation of upper limb function following spinal cord injury: A clinical practice guideline for health-care professionals. J. Spinal Cord. Med., 28, 434\u2013470.",
+  "DOI": "10.1080/10790268.2005.11753844"
+ },
+ {
+  "key": "ref_11",
+  "doi-asserted-by": "crossref",
+  "first-page": "1141",
+  "DOI": "10.1016/j.apmr.2003.11.016",
+  "article-title": "Relation between median and ulnar nerve function and wrist kinematics during wheelchair propulsion",
+  "volume": "85",
+  "author": "Boninger",
+  "year": "2004",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_12",
+  "first-page": "253",
+  "article-title": "Evaluation of minimal mechanical effort during the ramp access of manual wheelchair",
+  "volume": "26",
+  "author": "Arabi",
+  "year": "2004",
+  "journal-title": "Ergon. IJEHF"
+ },
+ {
+  "key": "ref_13",
+  "doi-asserted-by": "crossref",
+  "first-page": "81",
+  "DOI": "10.1016/j.apmr.2006.09.017",
+  "article-title": "Stroke pattern and handrim biomechanics for level and uphill wheelchair propulsion at self-selected speeds",
+  "volume": "88",
+  "author": "Richter",
+  "year": "2007",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_14",
+  "doi-asserted-by": "crossref",
+  "first-page": "654",
+  "DOI": "10.1016/j.apmr.2011.10.023",
+  "article-title": "Effect of backrest height on wheelchair propulsion biomechanics for level and uphill conditions",
+  "volume": "93",
+  "author": "Yang",
+  "year": "2012",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_15",
+  "doi-asserted-by": "crossref",
+  "first-page": "1151",
+  "DOI": "10.1016/j.apmr.2003.10.024",
+  "article-title": "A new method to quantify demand on the upper extremity during manual wheelchair propulsion",
+  "volume": "85",
+  "author": "Sabick",
+  "year": "2004",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_16",
+  "doi-asserted-by": "crossref",
+  "first-page": "299",
+  "DOI": "10.1016/j.clinbiomech.2009.12.011",
+  "article-title": "Upper limb joint dynamics during manual wheelchair propulsion",
+  "volume": "25",
+  "author": "Desroches",
+  "year": "2010",
+  "journal-title": "Clin. Biomech."
+ },
+ {
+  "key": "ref_17",
+  "doi-asserted-by": "crossref",
+  "first-page": "9",
+  "DOI": "10.1682/JRRD.2004.08.0103",
+  "article-title": "Pushrim biomechanics and injury prevention in spinal cord injury: Recommendations based on CULP-SCI investigations",
+  "volume": "42",
+  "author": "Boninger",
+  "year": "2005",
+  "journal-title": "J. Rehabil. Res. Dev."
+ },
+ {
+  "key": "ref_18",
+  "unstructured": "Putz-Anderson, V. (1988). Cumulative Trauma Disorders. A Manual for Musculoskeletal Diseases of the Upper-Limbs, CRC Press. [1st ed.]."
+ },
+ {
+  "key": "ref_19",
+  "first-page": "290",
+  "article-title": "Development of the Wheelchair User\u2019s Shoulder Pain Index (WUSPI)",
+  "volume": "33",
+  "author": "Curtis",
+  "year": "1995",
+  "journal-title": "Paraplegia"
+ },
+ {
+  "key": "ref_20",
+  "doi-asserted-by": "crossref",
+  "first-page": "981",
+  "DOI": "10.1016/j.jbiomech.2004.05.042",
+  "article-title": "International Society of Biomechanics. ISB recommendation on definitions of joint coordinate systems of various joints for the reporting of human joint motion\u2014Part II: Shoulder, elbow, wrist and hand",
+  "volume": "38",
+  "author": "Wu",
+  "year": "2005",
+  "journal-title": "J. Biomech."
+ },
+ {
+  "key": "ref_21",
+  "doi-asserted-by": "crossref",
+  "first-page": "1320",
+  "DOI": "10.1109/10.250587",
+  "article-title": "SMARTWheels: Development and testing of a system for measuring manual wheelchair propulsion dynamics",
+  "volume": "40",
+  "author": "Asato",
+  "year": "1993",
+  "journal-title": "IEEE Trans. Biomed. Eng."
+ },
+ {
+  "key": "ref_22",
+  "doi-asserted-by": "crossref",
+  "first-page": "23",
+  "DOI": "10.1682/JRRD.2011.01.0009",
+  "article-title": "Changes in surface electromyography signals and kinetics associated with progression of fatigue at two speeds during wheelchair propulsion",
+  "volume": "49",
+  "author": "Qi",
+  "year": "2012",
+  "journal-title": "J. Rehabil. Res. Dev."
+ },
+ {
+  "key": "ref_23",
+  "doi-asserted-by": "crossref",
+  "first-page": "159",
+  "DOI": "10.1080/10255840410001727805",
+  "article-title": "A 3D generic inverse dynamic method using wrench notation and quaternion algebra",
+  "volume": "7",
+  "author": "Dumas",
+  "year": "2004",
+  "journal-title": "Comput. Methods Biomech. Biomed. Eng."
+ },
+ {
+  "key": "ref_24",
+  "doi-asserted-by": "crossref",
+  "unstructured": "Desroches, G., Ch\u00e8ze, L., and Dumas, R. (2010). Expression of joint moment in the joint coordinate system. J. Biomech. Eng., 132.",
+  "DOI": "10.1115/1.4002537"
+ },
+ {
+  "key": "ref_25",
+  "doi-asserted-by": "crossref",
+  "unstructured": "Zacher, I., and Bubb, H. (2004, January 15\u201317). Strength Based Discomfort Model of Posture and Movement. Proceedings of the Digital Human Modeling for Design and Engineering Symposium Proceedings, Oakland University, Rochester, NY, USA.",
+  "DOI": "10.4271/2004-01-2139"
+ },
+ {
+  "key": "ref_26",
+  "unstructured": "International Organization for Standardization (2023, July 19). ISO 11228-3:2007 (en) Ergonomics\u2014Manual Handling\u2014Part 3: Handling of Low Loads at High Frequency. Available online: https://www.iso.org/obp/ui/fr/#iso:std:iso:11228:-3:ed-1:v2:en."
+ },
+ {
+  "key": "ref_27",
+  "unstructured": "AFNOR (2023, July 19). NF EN 1005-4+A1: Safety of Machinery\u2014Human Physical Performance\u2014Part 4: Evaluation of Working Postures and Movements in Relation to Machinery. Available online: https://www.boutique.afnor.org/fr-fr/norme/nf-en-10054-a1/securite-des-machines-performance-physique-humaine-partie-4-evaluation-des-/fa160745/32230#AreasStoreProductsSummaryView."
+ },
+ {
+  "key": "ref_28",
+  "doi-asserted-by": "crossref",
+  "first-page": "457",
+  "DOI": "10.1007/BF00705037",
+  "article-title": "Physiological response in the forearm during and after isometric intermittent handgrip",
+  "volume": "60",
+  "author": "Kilbom",
+  "year": "1990",
+  "journal-title": "Eur. J. Appl. Physiol. Occup. Physiol."
+ },
+ {
+  "key": "ref_29",
+  "doi-asserted-by": "crossref",
+  "first-page": "152",
+  "DOI": "10.1109/86.536770",
+  "article-title": "Three-dimensional kinematics of wheelchair propulsion",
+  "volume": "4",
+  "author": "Rao",
+  "year": "1996",
+  "journal-title": "IEEE Trans. Rehabil. Eng."
+ },
+ {
+  "key": "ref_30",
+  "first-page": "210",
+  "article-title": "Kinematic characterization of wheelchair propulsion",
+  "volume": "35",
+  "author": "Shimada",
+  "year": "1998",
+  "journal-title": "J. Rehabil. Res. Dev."
+ },
+ {
+  "key": "ref_31",
+  "doi-asserted-by": "crossref",
+  "first-page": "223",
+  "DOI": "10.1016/S0966-6362(99)00034-X",
+  "article-title": "Three dimensional upper extremity motion during manual wheelchair propulsion in men with different levels of spinal cord injury",
+  "volume": "10",
+  "author": "Newsam",
+  "year": "1999",
+  "journal-title": "Gait Posture."
+ },
+ {
+  "key": "ref_32",
+  "first-page": "635",
+  "article-title": "Shoulder kinematics and kinetics during two speeds of wheelchair propulsion",
+  "volume": "39",
+  "author": "Koontz",
+  "year": "2002",
+  "journal-title": "J. Rehabil. Res. Dev."
+ },
+ {
+  "key": "ref_33",
+  "doi-asserted-by": "crossref",
+  "first-page": "211",
+  "DOI": "10.1016/S0268-0033(02)00008-6",
+  "article-title": "Load on the shoulder in low intensity wheelchair propulsion",
+  "volume": "17",
+  "author": "Veeger",
+  "year": "2002",
+  "journal-title": "Clin. Biomech."
+ },
+ {
+  "key": "ref_34",
+  "doi-asserted-by": "crossref",
+  "first-page": "313",
+  "DOI": "10.1016/j.ergon.2006.11.007",
+  "article-title": "Estimating upper limb discomfort level due to intermittent isometric pronation torque with various combinations of elbow angles, forearm rotation angles, force and frequency with upper arm at 90\u00b0 abduction",
+  "volume": "37",
+  "author": "Mukhopadhyay",
+  "year": "2007",
+  "journal-title": "Int. J. Ind. Ergon."
+ },
+ {
+  "key": "ref_35",
+  "doi-asserted-by": "crossref",
+  "first-page": "57",
+  "DOI": "10.3109/17483107.2010.512970",
+  "article-title": "Development and content validation of the Wheelchair Use Confidence Scale: A mixed-methods study",
+  "volume": "6",
+  "author": "Rushton",
+  "year": "2011",
+  "journal-title": "Disabil. Rehabil. Assist. Technol."
+ },
+ {
+  "key": "ref_36",
+  "doi-asserted-by": "crossref",
+  "first-page": "453",
+  "DOI": "10.1016/S0003-9993(99)90285-X",
+  "article-title": "Shoulder pain in wheelchair users with tetraplegia and paraplegia",
+  "volume": "80",
+  "author": "Curtis",
+  "year": "1999",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_37",
+  "doi-asserted-by": "crossref",
+  "first-page": "179",
+  "DOI": "10.1097/01.rhu.0000230532.54403.25",
+  "article-title": "Shoulder pain in the traumatically injured spinal cord patient: Evaluation of risk factors and function",
+  "volume": "12",
+  "author": "McCasland",
+  "year": "2006",
+  "journal-title": "J. Clin. Rheumatol."
+ },
+ {
+  "key": "ref_38",
+  "doi-asserted-by": "crossref",
+  "first-page": "1214",
+  "DOI": "10.1016/j.apmr.2004.09.023",
+  "article-title": "Mechanical load on the upper extremity during wheelchair activities",
+  "volume": "86",
+  "author": "Janssen",
+  "year": "2005",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_39",
+  "doi-asserted-by": "crossref",
+  "first-page": "651",
+  "DOI": "10.1682/JRRD.2012.06.0109",
+  "article-title": "Coordination patterns of shoulder muscles during level-ground and incline wheelchair propulsion",
+  "volume": "50",
+  "author": "Qi",
+  "year": "2013",
+  "journal-title": "J. Rehabil. Res. Dev."
+ },
+ {
+  "key": "ref_40",
+  "doi-asserted-by": "crossref",
+  "first-page": "271",
+  "DOI": "10.1016/j.apmr.2008.07.019",
+  "article-title": "Kinematic and electromyographic analysis of wheelchair propulsion on ramps of different slopes for young men with paraplegia",
+  "volume": "90",
+  "author": "Chow",
+  "year": "2009",
+  "journal-title": "Arch. Phys. Med. Rehabil."
+ },
+ {
+  "key": "ref_41",
+  "doi-asserted-by": "crossref",
+  "first-page": "789",
+  "DOI": "10.1682/JRRD.2013.07.0168",
+  "article-title": "Pushrim biomechanical changes with progressive increases in slope during motorized treadmill manual wheelchair propulsion in individuals with spinal cord injury",
+  "volume": "51",
+  "author": "Gagnon",
+  "year": "2014",
+  "journal-title": "J. Rehabil. Res. Dev."
+ },
+ {
+  "key": "ref_42",
+  "doi-asserted-by": "crossref",
+  "first-page": "136",
+  "DOI": "10.3109/03091908909030214",
+  "article-title": "Propulsion technique in hand rim wheelchair ambulation",
+  "volume": "13",
+  "author": "Veeger",
+  "year": "1989",
+  "journal-title": "J. Med. Eng. Technol."
+ },
+ {
+  "key": "ref_43",
+  "doi-asserted-by": "crossref",
+  "unstructured": "Gagnon, D., Babineau, A.C., Champagne, A., Desroches, G., and Aissaoui, R. (2015). Trunk and shoulder kinematic and kinetic and electromyographic adaptations to slope increase during motorized treadmill propulsion among manual wheelchair users with a spinal cord injury. Biomed. Res. Int., 2015.",
+  "DOI": "10.1155/2015/636319"
+ },
+ {
+  "key": "ref_44",
+  "first-page": "2478",
+  "article-title": "Linking wheelchair kinetics to glenohumeral joint demand during everyday accessibility activities",
+  "volume": "2015",
+  "author": "Holloway",
+  "year": "2015",
+  "journal-title": "Annu. Int. Conf. IEEE Eng. Med. Biol. Soc."
+ },
+ {
+  "key": "ref_45",
+  "doi-asserted-by": "crossref",
+  "first-page": "1056",
+  "DOI": "10.1016/j.apergo.2014.01.002",
+  "article-title": "Cardio-respiratory and subjective strains sustained by paraplegic subjects, when travelling on a cross slope in a manual wheelchair (MWC)",
+  "volume": "45",
+  "author": "Pierret",
+  "year": "2014",
+  "journal-title": "Appl. Ergon."
+ },
+ {
+  "key": "ref_46",
+  "doi-asserted-by": "crossref",
+  "first-page": "6783",
+  "DOI": "10.1080/09638288.2021.1973586",
+  "article-title": "Effect of power-assistance on upper limb biomechanical and physiological variables during a 6-minute, manual wheelchair propulsion test: A randomised, cross-over study",
+  "volume": "44",
+  "author": "Pradon",
+  "year": "2022",
+  "journal-title": "Disabil. Rehabil."
+ }
+]

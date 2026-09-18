@@ -3719,3 +3719,94 @@ ACTION: (1) Derive what is live before proposing a code, and name WHICH tables c
 reference. (2) Never write `GB`. (3) Do not admit a `lang_jur_map`-only code without a scope ruling.
 (4) `TW` and `colloquial` are owed a decision.
 DATE: 2026-09-18 — owner ruling, quoted above.
+
+## Owner ruling 2026-09-18 — EXECUTED IS `mined`; a deferral is legitimate so long as it eventually runs
+
+> **"executed is 'mined'"**
+>
+> and, immediately after:
+>
+> **"deferred is okay so long as it runs eventually"**
+
+Given in answer to batch 16's finding that `citation_mining.backward` and `.forward` are set to `1`
+by `log_mining` **unconditionally**, including on a deferral, so the direction flags do not
+distinguish a pass that ran from one that was logged. Recorded on contact per `CLAUDE.md` rule 0.
+
+**WHAT IT SETTLES, AND IT NARROWS THE DEFECT RATHER THAN WIDENING IT.**
+
+1. **The execution signal already exists and it is `evidence_sources.citation_mining_status`.**
+   `mined` means the pass ran; `deferred` means it did not. The column is live, it is populated, and
+   `log_mining` already derives it correctly (`deferred` with a reason, `mined` otherwise). Nothing
+   new needs building to answer "did this source get mined".
+2. **The direction columns are therefore not the home of that fact and must not be made one.**
+   Batch 16's proposed remedy — split `backward`/`forward` into attempted-versus-executed pairs —
+   is **refused by this ruling**: it would put one fact in a second home, which is rule 5, and the
+   first home already answers it. `backward=1` says a backward pass was *logged*; the status says
+   whether it *ran*. Read both.
+3. **A deferral is not a defect.** Depth-1 is a hard constraint (`citation-miner` §6) and a batch
+   that admits an anchor cannot mine it in the same pass. Deferring is the designed behaviour, and
+   batch 16's three new deferrals are correct.
+
+**WHAT REMAINS OWED, WHICH IS THE HALF THE RULING'S SECOND CLAUSE CREATES.** *"So long as it runs
+eventually"* is an obligation, and **nothing in this repository enforces it or even measures it**.
+There is no ageing on a deferred mining row, no backlog count, and no check that fails when a
+deferral goes unhonoured. A deferral that is never discharged is indistinguishable from one taken
+last week, and the register currently holds deferrals from batch 08 alongside batch 16's.
+
+**AND ONE READING IS NOW WRONG RATHER THAN MERELY IMPRECISE.**
+`citation_mining_completeness` counts **row presence**, so it reports deferrals as mined — measured
+2026-09-18 at `10/10 T1-2 sources mined, 100.0%` repo-wide while the number of sources on
+`accessible-circulation-geometry` whose backward pass had actually been executed was **3 of 13**.
+Under this ruling that check is reading the wrong column: it must read `citation_mining_status`.
+Derive both figures, never quote these:
+
+**The snippet below derives BOTH quoted figures and nothing else.** The first version of it
+derived neither — it printed a repo-wide tally across all tiers, so a reader told to re-derive
+rather than trust got numbers that did not match the sentence above them. That is rule 7a's own
+failure mode reappearing inside the remedy for it, and it is corrected here rather than excused.
+
+```
+python3 - <<'PY'
+import sqlite3
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+SLUG = 'accessible-circulation-geometry'
+
+# FIGURE 1 -- what citation_mining_completeness reports: T1-2 sources with a mining ROW,
+# over T1-2 sources in scope. It counts PRESENCE, which is the defect.
+rows = con.execute("""
+    select es.ref_id,
+           (select count(*) from citation_mining c where c.global_ref_id = es.ref_id) has_row,
+           es.citation_mining_status
+    from evidence_sources es
+    where es.tier in (1, 2)""").fetchall()
+present = sum(1 for _, h, _ in rows if h)
+print(f"as the check reports it : {present}/{len(rows)} T1-2 'mined' "
+      f"= {100.0 * present / len(rows):.1f}%   <- PRESENCE, the overstatement")
+
+# FIGURE 2 -- what actually ran on the slug: status='mined' is the execution signal.
+slug_rows = con.execute("""
+    select es.citation_mining_status
+    from evidence_sources es
+    join source_slug_links l on l.ref_id = es.ref_id
+    where l.slug = ? and exists
+          (select 1 from citation_mining c
+            where c.global_ref_id = es.ref_id and c.slug = l.slug)""", (SLUG,)).fetchall()
+executed = sum(1 for (st,) in slug_rows if st == 'mined')
+print(f"as execution reports it : {executed} of {len(slug_rows)} on {SLUG}")
+
+for st in ('mined', 'deferred', 'pending'):
+    n = con.execute("select count(*) from evidence_sources "
+                    "where citation_mining_status = ?", (st,)).fetchone()[0]
+    print(f"  corpus-wide {st:<9}: {n}")
+PY
+```
+
+CONDITION: Any session logging a mining pass, reading the mining register, or reporting mining
+coverage; and any session about to propose a schema change to `citation_mining`.
+ACTION: (1) `citation_mining_status` is the execution signal — read it, and do not build a second
+home for it. (2) Do not split the direction columns. (3) `citation_mining_completeness` reads row
+presence and must be changed to read status; until it is, treat its percentage as an overstatement
+and say so wherever it is quoted. (4) The "runs eventually" obligation needs a measure — an age or
+a backlog count on undischarged deferrals — and it does not exist yet. (5) A deferral is
+legitimate; do not record one as a defect.
+DATE: 2026-09-18 — owner ruling, quoted above.

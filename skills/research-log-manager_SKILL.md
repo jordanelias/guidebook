@@ -162,7 +162,19 @@ After multilingual-research completes:
    ```bash
    python3 scripts/audit/citation_mining_completeness.py --session {session_filename}
    ```
-   The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker. To clear: either mine the source or write a citation_mining row with `deferred_reason` and the explicit DEFERRED-* marker.
+   The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker.
+
+   **To clear it, say which of three things happened.** Which flag carries which case is in `citation-miner_SKILL.md` §1 step 5 and in `python3 scripts/db.py log-mining --help`; do not re-list them here.
+
+   This step said the only way to clear the blocker was a `deferred_reason` row, and there were only two cases to choose from. That made a session whose pass genuinely ran and found nothing write a **false deferral** — R6 reserves `deferred_reason` for DELIBERATELY NOT SEARCHED, and under the owner ruling of 2026-09-18 (*"executed is `mined`"*) a deferral also leaves `citation_mining_status` reading `deferred` over work that was done.
+
+   **And note what this check does NOT measure.** Its unmined test is `cm.backward = 0 AND cm.forward = 0` — the flags the owner ruling of 2026-09-18 says do *not* mean a pass ran — so it counts row *presence* and reports a deferred source as mined. Treat its percentage as an upper bound until GAP-022 lands. **Do not quote a figure from this line**; derive the real one:
+
+   ```
+   python3 scripts/db.py is-mined --slug <slug> --ref <REF-NNNNN>   # read `executed`
+   ```
+
+   `executed` is `true` / `false` / `null`, and **`null` is not `false`**: it means the ref names a `source_locators` lead rather than an admitted source, so it has no status to report. Treating `null` as unmined tells you to re-mine finished work.
 
 ---
 
