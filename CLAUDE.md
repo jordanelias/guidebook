@@ -415,7 +415,7 @@ traversal D-0184 measured and rejected.
   construction teaches its reader to ignore it) arriving as a fresh imperative each
   turn, which is why it beats a remembered rule. Scope the question instead:
   `git diff --quiet -- :/ ':(exclude)transcripts/' ':(exclude)*commands.jsonl'`.
-  `scratchpad/wiring-sweep-04rjhv/fix-stop-hook-loop.sh` patches the harness hook
+  `scripts/fix_stop_hook_loop.sh` patches the harness hook
   to read that exclusion from `git config stophook.ignorePath`.
 - **`run_checks.py --all` over `--changed-from origin/main` is the expensive
   default.** `--all` runs every battery and prints every subject; §1's gate is the
