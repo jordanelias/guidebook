@@ -109,3 +109,80 @@ with no DOI, and if retrieval fails it has produced a null, two backward passes,
 else. A defender would say the read is what unblocks the determination, C10 and gate 1
 together — which is true, and is also exactly what a batch would say to justify a single
 expensive bet.
+
+---
+
+# ADDENDUM — batch 17 continued, priors written before the second half runs
+
+The first half was **short of minimum viable and that is a defect, not a judgement**.
+DR-2026-08-19 §12.2 sets minimum viable at 10–12 searches and **3–4 admissions**; the first
+half ran 4 and admitted 0. One failed retrieval was allowed to bound the batch while GAP-025
+had eight deferrals outstanding and the register held retrievable candidates. Continuing.
+
+## B1 — Longmuir 2003 (candidate 107): RETRIEVE AND ADMIT IF SOUND
+
+*Impact of Running Slope and Cross Slope on the Difficulty Level of Outdoor Pathways*,
+Environment and Behavior. Sage, so **I expect a DOI and I expect retrieval to succeed** —
+the opposite of the REF-01002 situation, and the reason this should have been in the first half.
+
+**Prior on what it says.** 23 participants with vision *or* mobility limitations, rating path
+difficulty 1–10 after walking at preferred pace. Note *walked* — so the population is
+**ambulatory as well as wheelchair-using**, and the paper's own closing line (per the index
+record) calls for future work to "examine different perceptions between ambulatory individuals
+and wheelchair users". **I therefore expect the population match for MOB to be PARTIAL at
+best, possibly PROXY**, and I am recording that before retrieval because the temptation will
+be to grade it generously — it is the second acceptability study this parameter has and I want
+it to count.
+
+**Prior on tier.** Field study, real paths, perceived-difficulty ratings, no control condition
+→ `clinical` + `lower_control` → **T3** by the ratified ladder. Not an anchor. If it grades
+T3 it cannot lift parameter 3 off proxy, and saying so now stops a later reading that it can.
+
+**Prior on the figure.** Expect *no* stated maximum gradient — expect it to report that paths
+meeting the *proposed* guidelines rated easy-to-moderate, which is a **confirms** relation
+against a standard, the same shape as REF-00980, not a new value.
+
+## B2 — Kim 2010 (candidate 108): RETRIEVE AND ADMIT IF SOUND
+
+*Effects of Ramp Slope and Height on Usability and Physiology during Wheelchair Driving*,
+HFES Proceedings. **Prior: five slopes (1:6, 1:8, 1:10, 1:12, 1:14) × three rise heights
+(15/30/45 cm)** — the rise-conditioned design this corpus has never had. Expect the tested
+slope set to extract as a `condition` row, not a claim, exactly as Chow's did.
+
+**Prior on the headline.** Expect two findings: no significant difference between 1:10 and
+1:12, and slope effects minor at low rise. **The second is the one that matters** — it is
+rise-conditioning measured, where REF-00996 states it as mechanism and REF-01002 conditions on
+distance. Expect a conference-proceedings venue → `clinical` + `high_control` → T1, but HFES
+proceedings are not peer-reviewed to journal standard and I may need to down-grade; recording
+the tension now.
+
+## B3 — Rouvier 2022 backward, or admission
+
+PLoS ONE, **open access**, systematic review of MWC biomechanics across environmental
+barriers including slope and cross-slope, 34 articles. Batch 15 read it and could not admit it
+(GAP-008). **Prior: retrieval succeeds** (PLoS is open), and its 34 included studies are a
+pre-screened seam on exactly this parameter. Expect T2.
+
+## M4 — REF-00983 and REF-00986 backward: FLOORS PRE-REGISTERED (GAP-027 asks for this)
+
+GAP-027 requires a floor recorded *before* each pass, so the GAP-018 predictor keeps being
+tested rather than described.
+
+- **REF-00983** — *Manual wheelchair propulsion on ramp slopes encountered when boarding public
+  transit buses*. Its independent variable **is ramp slope**. Predictor says high yield:
+  **floor ≥ 8 of its references match the screen.**
+- **REF-00986** — *Shoulder load during wheelchair-related activities of daily life*. Its
+  independent variable is **activity type, not slope** — its own extraction is graded `absent`
+  because it states no incline. Predictor says **low**: **I predict ≤ 4.**
+
+**This is the sharper test of the two.** Both are wheelchair biomechanics papers on the same
+slug; only the independent variable differs. If REF-00983 clears 8 and REF-00986 stays at or
+under 4, the predictor separates two papers that a topical screen would treat as identical.
+**If REF-00986 also comes back high, the predictor is measuring "is it about wheelchairs"
+rather than "what does it measure", and GAP-027 must say so.**
+
+## What would falsify the addendum's premise
+
+If Longmuir and Kim both grade below anchoring tier, this batch will have added volume without
+moving the determination — more sources, same undetermined cell. That is a real possibility and
+it is not a reason to grade them up.
