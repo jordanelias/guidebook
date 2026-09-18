@@ -1,0 +1,1 @@
+../../../skills/critique-report-writer_SKILL.md

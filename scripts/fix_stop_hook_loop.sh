@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Stop the stop-hook/push loop at its source. Run once:
 #
-#     bash scratchpad/wiring-sweep-04rjhv/fix-stop-hook-loop.sh
+#     bash scripts/fix_stop_hook_loop.sh
 #
 # WHAT THE LOOP IS. ~/.claude/stop-hook-git-check.sh fails the turn while the
 # working tree is dirty. In this repository two tracked files append on every
@@ -70,7 +70,7 @@ PY
   bash -n "$HOOK" && echo "syntax OK"
 fi
 
-cd "$(dirname "$0")/../.."
+cd "$(git rev-parse --show-toplevel)"
 git config --get-all stophook.ignorePath | grep -qx 'transcripts/' \
   || git config --add stophook.ignorePath 'transcripts/'
 git config --get-all stophook.ignorePath | grep -qx '*commands.jsonl' \

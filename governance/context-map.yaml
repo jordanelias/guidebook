@@ -1077,6 +1077,14 @@ checks:
     - synthesis
     min_items: 1
     cmd: python3 scripts/audit/claims_docket.py check
+  - id: claude_skills_loadable
+    level: advisory
+    battery: governance
+    kinds:
+    - governance
+    - docs
+    min_items: 1
+    cmd: python3 scripts/sync_claude_skills.py --check
   - id: context_map_fresh
     level: advisory
     battery: render

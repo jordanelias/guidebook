@@ -1,0 +1,1 @@
+../../../skills/guidebook-auditor_SKILL.md

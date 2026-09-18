@@ -1,0 +1,1 @@
+../../../skills/find-and-replace_SKILL.md

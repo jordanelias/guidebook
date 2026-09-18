@@ -1,0 +1,1 @@
+../../../skills/research-log-manager_SKILL.md
