@@ -1508,6 +1508,37 @@ def determine(conn, parameter_id, lens, slug, note):
     # `provisional` -- and `derivation_handshake_integrity` is what holds the two in step.
     if state == "stated" and any(g["binds"] for g in gates):
         state = "provisional"
+        # AND IT MUST SAY WHY, or it cannot be emitted at all. Added 2026-09-18,
+        # after this cap fired for the first time in the engine's life.
+        #
+        # `determination_gates` held ZERO rows until batch 16 raised gate 1, so this
+        # branch had never executed. The anchored branch above sets state='stated' and
+        # leaves `conf` None -- correct, because a stated cell carries no provisional
+        # confidence flag. This cap then moved the cell to 'provisional' and left `conf`
+        # None behind it, and `EvidenceStateRecord` refuses that combination outright:
+        # "State 'provisional' requires confidence_flag". The result was an uncaught
+        # pydantic traceback from validate_with_models(), no --emit-sql file, and
+        # nothing written -- a determination that could be COMPUTED and not RECORDED.
+        #
+        # The flag is DESCRIPTIVE, not a new judgement: `present` is the anchoring
+        # basis the cell genuinely has, `absent` names the gate that caps it. Both are
+        # read off state this function already holds, so nothing here decides anything
+        # the gate did not already decide.
+        _binding = [g for g in gates if g["binds"]]
+        conf = dict(
+            present=[f"Anchoring-tier basis: {tier_basis}"]
+                    + ([f"Supporting: {len(supporting)} Tier-3 source(s)"]
+                       if supporting else []),
+            # `why` is the gate's `detail` column -- derivation_handshake() names it
+            # that when it builds these dicts. Reading `detail` here produced a flag
+            # that named the gate and then said nothing about it.
+            absent=[f"Capped at provisional by determination gate "
+                    f"{g.get('gate_id', '?')} ({g.get('verdict', '?')}): "
+                    f"{(g.get('why') or '').strip()[:280]}"
+                    for g in _binding],
+            basis="The evidence would carry a `stated` cell; an OPEN determination "
+                  "gate caps it at `provisional` until resolved. Resolve the gate to "
+                  "restore the cell, never re-run the engine to route around it.")
 
     return {
         "links": links,
