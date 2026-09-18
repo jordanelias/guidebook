@@ -1,9 +1,9 @@
 {
-  "as_of": "2026-09-17",
+  "as_of": "2026-09-18",
   "n_slices": 80,
   "n_items": 0,
-  "total_source_instances": 14,
-  "unique_sources": 14,
+  "total_source_instances": 15,
+  "unique_sources": 15,
   "grade_distribution": {
     "A": 1,
     "B": 0,
@@ -16,7 +16,7 @@
     "1": 5,
     "2": 1,
     "4": 1,
-    "5": 2,
+    "5": 3,
     "6": 5
   },
   "strength_band_slices": {
@@ -27,12 +27,12 @@
   },
   "strength_band_instances": {
     "full": 6,
-    "partial": 3,
+    "partial": 4,
     "weak": 5,
     "disputed": 0
   },
   "practice_stream_instances": 0,
-  "english_instances": 2,
+  "english_instances": 3,
   "zero_yield_search_languages": [],
   "item_basis_health": {},
   "slices": [
@@ -40,39 +40,39 @@
       "slug": "accessible-circulation-geometry",
       "topic": "entrances-and-circulation",
       "state": null,
-      "n": 14,
+      "n": 15,
       "full": 6,
-      "partial": 3,
+      "partial": 4,
       "weak": 5,
       "disputed": 0,
       "t3_clinical": 0,
       "practice": 0,
-      "code_only": 8,
+      "code_only": 9,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
         "1": 5,
         "2": 1,
         "4": 1,
-        "5": 2,
+        "5": 3,
         "6": 5
       },
       "etypes": {
         "clinical": 3,
         "sr_meta": 1,
         "code": 5,
-        "national_fw": 2,
+        "national_fw": 3,
         "co1": 2,
         "standard_eb": 1
       },
       "markers": {
         "●": 6,
-        "◐": 3,
+        "◐": 4,
         "○": 5
       },
-      "n_jur": 6,
-      "n_jur_raw": 6,
-      "n_true_jur": 6,
+      "n_jur": 7,
+      "n_jur_raw": 7,
+      "n_true_jur": 7,
       "n_null_jur": 4,
       "polluted_jur": {},
       "jurs": {
@@ -81,7 +81,8 @@
         "US": 1,
         "DE": 1,
         "GB": 1,
-        "INT": 1
+        "INT": 1,
+        "AU": 1
       },
       "jurs_clean": {
         "US": 1,
@@ -89,33 +90,34 @@
         "JP": 4,
         "GB": 1,
         "INT": 1,
-        "BE": 2
+        "BE": 2,
+        "AU": 1
       },
       "n_lang": 5,
       "langs": {
         "?": 5,
         "ja": 4,
-        "en": 2,
+        "en": 3,
         "nl": 2,
         "de": 1
       },
-      "n_en": 2,
+      "n_en": 3,
       "n_nonen": 12,
-      "pct_en": 14.3,
-      "anglo_core": 1,
+      "pct_en": 20.0,
+      "anglo_core": 2,
       "supra": 1,
       "non_anglo": 8,
-      "pct_anglo_core": 10.0,
+      "pct_anglo_core": 18.2,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 82.5,
+      "score": 81.2,
       "components": {
         "A": 20,
-        "B": 20.3,
+        "B": 20.1,
         "C": 17,
         "D": 12,
-        "E": 13.2
+        "E": 12.1
       },
       "grade": "A"
     },
