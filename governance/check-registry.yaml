@@ -475,21 +475,47 @@ checks:
   kinds:
   - data
   - synthesis
-  level: blocking
+  level: advisory
   basis: unattributed
   cost: fast
   no_floor: session-scoped — RELABELLED 2026-09-16. This read "empty-by-decision — instrumented
-    and examining 0" and both halves were wrong. It examines 4 slug-linked T1-2 sources under the
-    current pointer, and that count was invisible to the runner until the same change fixed the
-    output line it prints. The KIND was the more consequential error, because this check is scoped to
+    and examining 0" and both halves were wrong. It examined slug-linked T1-2 sources under the pointer of the day,
+    and that count was invisible to the runner until the same change fixed the output line
+    it prints. DERIVE the count, never quote it (rule 7a) -- the figure originally typed
+    here was 4 and is 0 under the current pointer; the SELECT that computes it is in note. The KIND was the more consequential error, because this check is scoped to
     LATEST-RESEARCH, so its subject is whatever THAT session admitted, and zero is an honest
     result for a session that admitted nothing. That is why it keeps no_floor while its repo-wide
     sibling citation_mining_backlog_t2 — same script, no --session — was ratcheted to a floor in
-    the same pass. A floor here would fail a BLOCKING gate for correctly reporting an empty
-    session.
+    the same pass. A floor here would fail the gate for correctly reporting an empty
+    session -- which mattered more while it was blocking, and still misreports now it is not.
   requires_session: true
   session_pointer: LATEST-RESEARCH
-  note: '@SESSION@ is substituted from **sessions/LATEST-RESEARCH**, not LATEST. W4, 2026-08-06. This
+  note: 'DEMOTED blocking -> advisory 2026-09-18. It had examined ZERO subjects since batch 10 and
+    nobody could see it. Batches 11, 12, 13 and 14 admitted only T4-T6 sources, so the gate had no
+    slug-linked T1-2 anchor to mine, and test_db_integrity L04 -- the check that exists to catch
+    exactly this -- compared CALENDAR DATES and stayed green while batches 11 and 12 happened to
+    share a date with batch 10. Batch 13 crossed midnight and the condition surfaced. A gate that
+    gates nothing is CLAUDE.md rule 6 arriving as a fresh imperative -- it teaches its reader to
+    ignore it.
+    WHAT THIS DEMOTION COSTS, STATED ACCURATELY BECAUSE THE FIRST VERSION OF THIS PARAGRAPH GOT IT
+    WRONG. It was written here that run_checks still reports this under BLOCKING-and-vacuous and
+    that L04 still fires on the true condition, so nothing was hidden. BOTH WERE FALSE.
+    run_checks.py builds blocking_vacuous by filtering on level == blocking, so demoting removes
+    this check from that escalation by construction; and L04 reads this level, so it is silent
+    while this is advisory. The demotion is a real loss of signal, not a free one, and the only
+    remaining report is the plain NOTHING-IN-SCOPE line. The deeper fix -- failing the verdict on
+    blocking-and-vacuous inside run_checks, which already computes it for every check, and
+    retiring L04 -- is NOT done here and is the right next change. It would also cover the other
+    two checks on this pointer, one of which (research_dod_session) is blocking and floorless.
+    RE-PROMOTE to blocking the first time a batch admits a slug-linked Tier 1-2 source, which is
+    the moment this check has work again. Derive that, do not assume it. SELECT COUNT(DISTINCT
+    es.ref_id) FROM evidence_sources es JOIN source_slug_links ssl ON es.ref_id=ssl.ref_id WHERE
+    es.tier BETWEEN 1 AND 2 AND es.created_by_session IN (stem, stem with .md appended). NOTE THE
+    TRAP -- this entry declares kinds [data, synthesis] and test_db_integrity declares [data,
+    schema], while an edit under governance/ classifies as governance, so the re-promotion edit
+    does not itself run the check that reads this level. Run the data battery to confirm it.
+    ---
+    @SESSION@ is substituted from **sessions/LATEST-RESEARCH**, not LATEST. W4, 2026-08-06. This
     gate previously read LATEST, which was simultaneously the continuity pointer ("where did work leave
     off") and this gate''s subject ("whose research should be checked"). Those are different objects and
     they had drifted six weeks apart: LATEST named a June continuity session while the newest session

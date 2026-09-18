@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-18-research-batch-14-co2-professional-bodies",
+  "artifact": "sessions/session_2026-09-18-research-batch-14-co2-professional-bodies.md",
+  "doctrine_sha": "6893397",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol",
+    "multilingual-research"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/batch-14-co2-professional-bodies/PRIORS.md",
+      "reason": "The batch exists because the previous batch's attestation accused it of leaving R1 partly unrun and named the three bodies to start with. That accusation was acted on rather than filed. The prior was committed before the first query, and PRIORS.md additionally recorded WHAT WOULD MAKE THIS BATCH A FAILURE RATHER THAN A ZERO -- a body declared searched on one query, a zero logged without R14's diagnosis, or something admitted at Co-2 because the batch wanted a Co-2 source. A zero was the expected outcome, so it needed a standard it could fall short of."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-18-research-batch-14-co2-professional-bodies/manifest.jsonl",
+      "reason": "Every quote on the admitted row verifies byte-for-byte against the persisted HTML: no --verbatim-exempt was needed anywhere in this batch, unlike batch 13 where all three extractions rested on one. The CAOT zero is a FULL READ of a two-page document, not an inference from a search snippet. The WFOT zero is explicitly labelled WEAK -- the archived index is a JavaScript shell with ~3800 characters of text, so its silence is a rendering fact as much as a content fact, and saturation was logged 'none' rather than claimed."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-18-research-batch-14-co2-professional-bodies.md",
+      "reason": "Occupational Therapy Australia IS the OT professional body, so Co-2 was genuinely available for the one admission of a batch convened to find a Co-2 source. Refused: Co-2 means professional-body CLINICAL PRACTICE GUIDELINES, and an FAQ explaining an Australian Standard carries no clinical warrant, no consensus process and no cited evidence. Tiered T5 national_fw instead. Both blocking failures this batch produced (K02, R3) were found on the SCRATCH DB before emitting -- the procedure batch 13's attestation prescribed after learning it the hard way -- so neither reached CI."
+    },
+    "multilingual-research": {
+      "status": "NOT-FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-18-research-batch-14-co2-professional-bodies/manifest.jsonl",
+      "reason": "Every search ran in English against INT, CA and AU sources. R5 is satisfied vacuously, not exercised, for the second batch running. Recorded NOT-FIRED rather than PASS. This is becoming a pattern worth naming: the Co-2 shelf has been searched in one language, and non-anglophone OT professional bodies -- the Nordic, Japanese, German and Francophone associations -- have never been approached at all."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "TWO CAPTURE MISSES FROM BATCH 13 WERE FOUND BY THE AUTHOR ASKING, NOT BY ME CHECKING. Batch 13 wrote 0 research_code_leads while admitting a source whose entire warrant is AS 1428.1, and 0 economics_entries while reading a national body's statement that little research exists comparing ramp costs. R12 sends both to structured homes and forbids leaving them in prose. Both are filed in this batch (leads 87/88, ECON-001), but the honest sequence is that a direct question surfaced them. economics_entries held ZERO rows before this batch -- the table existed and nothing had ever reached it, across every batch in the project."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "WFOT was not properly searched and the batch was named for reaching it. wfot.org returns 403 and the Wayback rung produced a JavaScript shell; three rungs remain untried (members area, individually-linked position statement PDFs, the WFOT Bulletin in a journal index). The batch stopped there because CAOT and OTA were yielding. That is the same pattern batch 13's reviewer counterclaim criticised -- following the thread that gives results and leaving the hard target -- one level down. Candidate 87 records it, which is not the same as having done it."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "REF-00997's `pages` field, which I set last batch, holds '3' -- the document's page count, not a pinpoint locator. It satisfies R3 mechanically while being weaker than all eight other regulatory-stratum rows in the corpus, which carry article numbers, clause references or breadcrumbs. Found while deriving the convention to fix REF-00998. Not corrected: it is committed, rule 3 is fix-forward, and the value is unhelpful rather than false. A reader auditing R3 compliance should know one of its passes is thin."
+    }
+  ],
+  "bias_direction": "Toward presenting a second consecutive zero as a discovery rather than a limitation. Three professional bodies in three countries stating no gradient makes a satisfying pattern -- the profession points at the regulator -- and there is real evidence for it now: RCOT read in full, CAOT read in full, OTA read in full, all silent. But the pattern is assembled from four documents, one of which (WFOT) was not actually read, and it is being used to explain why the Co-2 shelf is bare in a way that makes the bareness feel settled rather than unfinished. The second pull is toward over-weighting the private-dwellings finding because it is the kind of thing that looks like insight: it qualifies a source I admitted myself last batch, which is flattering in both directions -- it shows the corpus self-correcting AND makes my own prior admission look carefully caveated rather than under-examined at the time.",
+  "independent_reviewer_counterclaim": "A reviewer should ask what this batch actually admitted and whether it was worth a batch. One source, T5, carrying no value -- a professional association's FAQ page explaining somebody else's standard. It changes no number and the record says so plainly. Set against that: the two genuinely new things in this batch were not found by searching at all. The AS 1428.1 scope limitation is a fact about a standard that any reader of AS 1428.1 knows, surfaced incidentally; and the two capture misses were surfaced by the author asking a question, not by the batch's own method. So the honest summary is that batch 14's search produced a well-formed zero and one marginal admission, and its real value was remedial -- filing what batch 13 should have filed and applying the procedure batch 13 said to apply. That is worth doing and it is not the same as progress on the parameter. The determination has not moved since batch 11. A reviewer should also press on language: two consecutive batches have searched Co-2 in English only, and the conclusion being drawn -- that the OT profession holds no gradient -- rests entirely on anglophone bodies. The Japanese, Nordic, German and Francophone OT associations have never been approached, and R5 exists precisely because non-English professional literature is professional literature.",
+  "verdict": "DEVIATION-LOGGED"
+}
