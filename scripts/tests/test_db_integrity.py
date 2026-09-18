@@ -1697,6 +1697,63 @@ def run_checks(db_path):
            # comment — not just the three the defect was first measured on.
            subject=_cols_examined)
 
+    # ── M02-M04: the hand-writer field sets vs the live schema ───────────────
+    #
+    # db.py holds TWO curated sets naming which evidence_sources columns a human
+    # may write by hand: _CORRECTABLE (a payload proves the value) and _AMENDABLE
+    # (a judgement no payload settles). Rule 8 is unhappy that they are curated at
+    # all, and a /simplify pass in 2026-09 proposed deriving them from
+    # schemas/evidence_source.py. THAT PROPOSAL DOES NOT WORK and the reason is
+    # worth keeping: the model carries 20 fields against the table's 97, and four
+    # of the nine _AMENDABLE members (bpc_note, grey_reason, scope,
+    # verification_note) are not model fields at all. Deriving from the model would
+    # silently cover a fifth of the table and drop half the amendable set.
+    #
+    # So the sets stay curated, and these three checks make the ways they can rot
+    # silently into loud failures instead. M04 does not FAIL on the unclassified
+    # residual -- 82 of 97 columns today -- because classifying them is a real
+    # project, not a line of code. It PRINTS the number so it is visible and can be
+    # ratcheted, which is what run_checks --selftest does with "checks with no
+    # stated authority".
+    _es_cols = {r[1] for r in conn.execute("PRAGMA table_info(evidence_sources)")}
+    # IMPORT the constants; do not re-parse db.py's source. The first cut of this
+    # block did parse it, with `.split("_AMENDABLE = (")[1].split(")")[0]`, and a
+    # comment inside the tuple containing "(a US survey of ADA-regulated transit)"
+    # truncated the match at that bracket -- so the guard silently missed
+    # `jurisdiction`, the newest member and the one it most needed to see. A check
+    # that examines 14 of 15 while reporting success is §5(a)'s failure mode, and
+    # reading the real object cannot drift from the real object.
+    sys.path.insert(0, os.path.join(REPO, "scripts"))
+    import db as _db
+    _amend, _correct = set(_db._AMENDABLE), set(_db._CORRECTABLE)
+
+    _ghost = sorted((_amend | _correct) - _es_cols)
+    record("M02", "every hand-writable field named in db.py is a live column",
+           not _ghost,
+           f"named but absent from evidence_sources: {_ghost} — the column was "
+           f"renamed or dropped and the writer's list did not move with it, so the "
+           f"refusal offers a field that cannot be written." if _ghost else "",
+           subject=len(_amend | _correct))
+
+    _both = sorted(_amend & _correct)
+    record("M03", "_AMENDABLE and _CORRECTABLE are disjoint",
+           not _both,
+           f"in BOTH sets: {_both} — one says a payload proves this field and the "
+           f"other says no payload can. A field in both is writable by two writers "
+           f"with contradictory warrants." if _both else "",
+           subject=len(_amend) + len(_correct))
+
+    _unclassified = sorted(_es_cols - _amend - _correct)
+    record("M04", "evidence_sources hand-writer classification coverage",
+           True,
+           f"{len(_unclassified)} of {len(_es_cols)} columns are in neither "
+           f"_AMENDABLE nor _CORRECTABLE. NOT A FAILURE: most are structural "
+           f"(ref_id, audit stamps), derived (tier), or bibliographic fields no "
+           f"extractor has been written for yet. Reported so the residual is "
+           f"visible rather than invisible — ratchet it down, and never let a NEW "
+           f"column land here unnoticed.",
+           subject=len(_es_cols))
+
     # ── Summary ───────────────────────────────────────────────────────────────
     conn.close()
     print("\n" + "=" * 70)
