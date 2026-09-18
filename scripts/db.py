@@ -241,7 +241,8 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
         row = conn.execute(
             "SELECT cm.backward, cm.forward, cm.connections_produced, "
             "       cm.deferred_reason, cm.notes, "
-            "       es.citation_mining_status AS status "
+            "       es.citation_mining_status AS status, "
+            "       (es.ref_id IS NOT NULL) AS resolves "
             "FROM citation_mining cm "
             "LEFT JOIN evidence_sources es ON es.ref_id = cm.global_ref_id "
             "WHERE cm.slug=? AND cm.global_ref_id=?",
@@ -250,9 +251,30 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
     if not row:
         return None
     out = dict(row)
-    # Spelled out so a caller cannot reach the wrong answer by reading the flags first.
-    out["executed"] = out.get("status") == "mined"
+    out["executed"] = mining_executed(out["status"], row["resolves"])
     return out
+
+
+def mining_executed(status, resolves_in_evidence_sources) -> bool | None:
+    """Did the mining pass RUN? True / False / None, and None is not False.
+
+    ONE derivation of "executed", called by `is_mined` and by `log_mining`'s
+    regression guard, because answering it twice in one module from two different
+    columns is rule 5 at code level -- and the second answer was wrong both ways.
+
+    `None` MEANS THE QUESTION DOES NOT APPLY, and collapsing it to False is the
+    defect this exists to prevent. A `citation_mining` row's `global_ref_id` may name
+    a `source_locators` LEAD rather than an admitted source: migration 067 dropped
+    that FK deliberately -- "a ref_id is an identity that SPANS two tables" -- so the
+    ref resolves nowhere in `evidence_sources` and carries no status at all. Measured
+    2026-09-18: 10 of 23 live rows, every one of them fully mined with a real DOI
+    list. Reporting those as not-executed tells the next session to re-mine finished
+    work, which is verbatim the RAP-F61/F69/F70 failure the citation-miner skill
+    already records.
+    """
+    if not resolves_in_evidence_sources:
+        return None
+    return status == "mined"
 
 
 def log_mining(slug: str, ref_id: str, direction: str,
@@ -298,14 +320,11 @@ def log_mining(slug: str, ref_id: str, direction: str,
     # 'mined' iff a non-deferred mining row resolves to it. Nothing in this writer ever
     # moved it, so the biconditional could not hold through the sanctioned path -- the
     # CLI was structurally unable to produce a state its own integrity test accepts.
-    # CAPTURED BEFORE THE DERIVATION BELOW OVERWRITES IT. The state-aware refusal in
-    # the connection block asks whether the OPERATOR named a status; two lines down
-    # `status` is unconditionally assigned, so testing `status is None` there is dead
-    # code -- which it was, for the first hour of this guard's life, until the
-    # reproduction that was supposed to confirm the fix showed it still regressing.
-    status_explicit = status is not None
-    if status is None:
-        status = "deferred" if deferred_reason else "mined"
+    # `status` is DELIBERATELY NOT DERIVED HERE. It is derived at its point of use,
+    # beside check_vocab, so that `status is None` still means "the operator named
+    # none" everywhere above it. Deriving it here made the state-aware refusal below
+    # dead code for the first hour of its life -- the reproduction meant to confirm
+    # that guard is what caught it.
     dir_col = direction
     ts = now()
 
@@ -315,11 +334,19 @@ def log_mining(slug: str, ref_id: str, direction: str,
         # pointer column the readers need was never populated and the label
         # column carried a value that was not a label. Key on the reference id;
         # derive the label from source_slug_links, which owns it.
+        # ONE snapshot of the row, read BEFORE anything is written. It was two SELECTs
+        # on the same key in the same transaction until 2026-09-18, the second issued
+        # AFTER the UPDATE/INSERT below -- so the state-aware refusal fired with a write
+        # already on the transaction, and in the INSERT branch it re-read a row this
+        # function had just created, where both columns are NULL by construction.
         row = conn.execute(
-            "SELECT backward, forward, connections_produced "
+            "SELECT backward, forward, connections_produced, notes, deferred_reason "
             "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
+        prior_notes = (row["notes"] if row else None) or None
+        prior_def = (row["deferred_reason"] if row else None) or None
+        undischarged = None
         if row:
             prior = json.loads(row["connections_produced"] or "[]")
             merged = json.dumps(list(dict.fromkeys(prior + connections)))
@@ -360,33 +387,32 @@ def log_mining(slug: str, ref_id: str, direction: str,
                  1 if direction == "forward" else 0,
                  json.dumps(connections), ts, session, ts, session]
             )
-        # THE ROW'S EXISTING STATE DECIDES, NOT THIS CALL'S ARGUMENTS ALONE.
-        # Corrected 2026-09-18, the same day it was introduced: the two guards at the
-        # top of this function inspect only argv, so a --notes pass followed by a
-        # --deferred-reason pass left BOTH columns populated -- the state those guards
-        # call impossible -- and regressed citation_mining_status from 'mined' back to
-        # 'deferred', erasing the record that a pass had executed.
-        cur = conn.execute(
-            "SELECT notes, deferred_reason FROM citation_mining "
-            "WHERE slug=? AND global_ref_id=?", [slug, ref_id]).fetchone()
-        prior_notes = (cur["notes"] if cur else None) or None
-        prior_def = (cur["deferred_reason"] if cur else None) or None
-        undischarged = None
-
+        # THE ROW'S EXISTING STATE DECIDES, NOT THIS CALL'S ARGUMENTS ALONE. The two
+        # guards at the top of this function inspect only argv, so a --notes pass
+        # followed by a --deferred-reason pass left BOTH columns populated -- the state
+        # those guards call impossible -- and regressed citation_mining_status from
+        # 'mined' back to 'deferred', erasing the record that a pass had executed.
         if deferred_reason:
-            if prior_notes and not status_explicit:
-                # A pass on this row has already RUN. Deferring the OTHER direction does
-                # not un-run it, and the owner ruling of 2026-09-18 makes
-                # citation_mining_status the execution signal -- so lowering it here
-                # would delete the only record that anything was mined. One flag serves
-                # two directions (GAP-015, GAP-022, both unruled); refuse to guess
-                # rather than silently take the lower reading.
+            # KEYED ON citation_mining_status, VIA THE ONE DERIVATION -- not on whether
+            # `notes` happens to be non-empty, which is how this guard was first
+            # written and which was wrong in BOTH directions. False negative: a
+            # `--connections` pass sets status='mined' and writes NO notes, so the
+            # guard stayed silent on the skill's own documented happy path and let the
+            # status regress -- the exact thing it exists to stop. False positive: it
+            # fired on lead anchors whose ref resolves in source_locators rather than
+            # evidence_sources, which have no status to regress. And `notes` had no
+            # writer at all before 2026-09-18, so it was blind to every legacy row.
+            _es = conn.execute("SELECT citation_mining_status FROM evidence_sources "
+                               "WHERE ref_id=?", [ref_id]).fetchone()
+            if mining_executed(_es["citation_mining_status"] if _es else None,
+                               _es is not None) and status is None:
                 raise Refusal(
-                    f"{ref_id}: this row already records an EXECUTED pass in notes, so "
-                    f"writing a deferral would regress citation_mining_status from "
-                    f"'mined' to 'deferred' and erase that record. The status column is "
-                    f"ONE flag for BOTH directions (GAP-015/GAP-022, unruled). Pass "
-                    f"--status explicitly to say which reading this source carries.")
+                    f"{ref_id}: citation_mining_status already reads 'mined', so "
+                    f"writing a deferral would regress it to 'deferred' and erase the "
+                    f"record that a pass executed. That column is ONE flag for BOTH "
+                    f"directions (GAP-015/GAP-022, unruled), so this is not guessed: "
+                    f"pass --status explicitly to say which reading this source "
+                    f"carries.")
             conn.execute("UPDATE citation_mining SET deferred_reason=?, updated_at=?, "
                          "updated_by_session=? WHERE slug=? AND global_ref_id=?",
                          [deferred_reason, ts, session, slug, ref_id])
@@ -416,13 +442,20 @@ def log_mining(slug: str, ref_id: str, direction: str,
                                  f"[{direction} {ts}] {notes}" if notes else None,
                                  carried) if x]
             merged_notes = "\n\n".join(parts) if parts else None
-            if merged_notes != prior_notes or carried:
+            # ONE static statement, conditionality in the PARAMETERS. It was assembled
+            # by `+` with a spliced ", deferred_reason=NULL" fragment, which hides the
+            # column from the grep rule 4's caller sweep runs. `carried` is always an
+            # element of `parts`, so `merged_notes != prior_notes` already covers it --
+            # the old `or carried` could never change the outcome.
+            if merged_notes != prior_notes:
                 conn.execute(
-                    "UPDATE citation_mining SET notes=?"
-                    + (", deferred_reason=NULL" if carried else "")
-                    + ", updated_at=?, updated_by_session=? "
-                      "WHERE slug=? AND global_ref_id=?",
-                    [merged_notes, ts, session, slug, ref_id])
+                    "UPDATE citation_mining SET notes=?, deferred_reason=?, "
+                    "updated_at=?, updated_by_session=? "
+                    "WHERE slug=? AND global_ref_id=?",
+                    [merged_notes, None if carried else prior_def,
+                     ts, session, slug, ref_id])
+        if status is None:
+            status = "deferred" if deferred_reason else "mined"
         dbcore.check_vocab(conn, "evidence_sources", "citation_mining_status",
                            status, "--status")
         conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
@@ -431,12 +464,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
     out = {"logged": True, "connections": len(connections),
            "status_set": status, "dry_run": dry_run}
     if undischarged:
-        # SAID OUT LOUD rather than left to be discovered. The row still carries a
-        # deferral this pass did not discharge, so the work it names is still owed --
-        # and under the 2026-09-18 ruling ("deferred is okay so long as it runs
-        # eventually") an undischarged deferral is precisely the thing that must stay
-        # visible. Until then the caller printed a FIXED dict and never asked the
-        # writer what it had actually done.
+        # The deferral this pass did not discharge stays visible -- see the else branch.
         out["deferral_still_standing"] = undischarged
     return out
 
@@ -2179,7 +2207,7 @@ def main():
         # PRINT WHAT THE WRITER DID, not a fixed dict. Until 2026-09-18 this reported
         # `logged: true` regardless, so a standing deferral the pass left undischarged
         # was invisible at the call site that created it.
-        print(json.dumps(log_mining(
+        _emit(log_mining(
             slug=args.slug, ref_id=args.ref,
             direction=args.direction, connections=conns,
             session=args.session,
@@ -2188,7 +2216,7 @@ def main():
             status=args.mining_status,
             notes=args.notes,
             discharge_deferral=args.discharge_deferral,
-        )))
+        ))
 
     elif args.command == "next-id":
         id_funcs = {
@@ -3633,32 +3661,25 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     # the row from every I-check's subject set, since all of them filter on the
     # literal 'VERIFIED'. add-source gated the same column with argparse choices; this
     # writer gated nothing. The vocabularies did NOT "stay gated where they were".
-    if field == "verification_status":
-        if replacement not in ("VERIFIED", "UNVERIFIED"):
+    if field == "doi_resolution_outcome":
+        # ENUM_GUARDS OWNS THIS SET; this reads it rather than retyping it. The first
+        # cut hard-coded ("RESOLVED","NO-MATCH","REVERTED") in a message that named
+        # ENUM_GUARDS as the real home in the same breath -- rule 8's "never curate a
+        # fact the machine can compute", committed beside its own citation. Nothing
+        # would have caught the drift either: derived_not_curated_audit scans argparse
+        # `choices=` literals, so a tuple inside an `if x not in (...)` is invisible to
+        # it. `dbcore.check_vocab` is deliberately NOT used here -- the column has no
+        # CHECK, so check_vocab falls back to the LIVE values, which today are
+        # {NO-MATCH, RESOLVED} only, and it would refuse REVERTED: a legal value with
+        # no row yet carrying it.
+        from emit_data_migration import ENUM_GUARDS  # noqa: E402
+        _permitted = {c: v for c, v, *_ in ENUM_GUARDS}["doi_resolution_outcome"]
+        if replacement not in _permitted:
             raise Refusal(
-                f"{ref_id}: verification_status must be VERIFIED or UNVERIFIED, got "
-                f"{replacement!r}. The column carries no CHECK, so nothing downstream "
-                f"would have caught this -- and a misspelling silently drops the row "
-                f"out of every I-check, all of which filter on the literal 'VERIFIED'.")
-        if replacement == "VERIFIED":
-            with connect(True) as _c:
-                _row = _c.execute("SELECT verification_method FROM evidence_sources "
-                                  "WHERE ref_id=?", [ref_id]).fetchone()
-            if _row is None:
-                raise Refusal(f"{ref_id} is not in evidence_sources.")
-            if not _row["verification_method"]:
-                raise Refusal(
-                    f"{ref_id}: VERIFIED requires verification_method (D-0157: a "
-                    f"standing without its method is not a standing). `add-source` "
-                    f"refuses this row; amending must not be the way around it. Set "
-                    f"the method first, then the standing.")
-    if field == "doi_resolution_outcome" and replacement not in (
-            "RESOLVED", "NO-MATCH", "REVERTED"):
-        raise Refusal(
-            f"{ref_id}: doi_resolution_outcome must be RESOLVED, NO-MATCH or REVERTED, "
-            f"got {replacement!r}. The set is the one ENUM_GUARDS in "
-            f"scripts/emit_data_migration.py enforces at migration time; refusing here "
-            f"means the refusal arrives before the row is written, not after.")
+                f"{ref_id}: doi_resolution_outcome must be one of "
+                f"{sorted(_permitted)}, got {replacement!r}. The set is ENUM_GUARDS in "
+                f"scripts/emit_data_migration.py, which enforces it at migration time; "
+                f"refusing here means the refusal arrives before the row is written.")
     if tier is not None and field != "scope":
         raise Refusal(
             f"{ref_id}: --tier is only admissible beside --field scope. The tier is "
@@ -3667,10 +3688,36 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             f"state B5(b) found on all nine sources and could not check.")
     new_tier = old_tier = None
     with connect(dry_run) as conn:
-        row = conn.execute(f"SELECT ref_id, {field}, metadata_integrity_detail "
+        row = conn.execute(f"SELECT ref_id, {field}, verification_method, "
+                           f"metadata_integrity_detail "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
             raise Refusal(f"{ref_id}: no such evidence source.")
+        if field == "verification_status":
+            # The live vocabulary, read from the column rather than retyped beside it
+            # (rule 8). This column carries no CHECK, so check_vocab falls back to the
+            # live values -- which for THIS column are exactly {VERIFIED, UNVERIFIED},
+            # so the fallback is the whole vocabulary and not a sample of it. That is
+            # why it is safe here and not for doi_resolution_outcome above. Without any
+            # gate, 'verrified' stored cleanly and silently dropped the row out of every
+            # I-check, all of which filter on the literal 'VERIFIED'.
+            dbcore.check_vocab(conn, "evidence_sources", "verification_status",
+                               replacement, "--field verification_status")
+        if field == "verification_status" and replacement == "VERIFIED" \
+                and not row["verification_method"]:
+            # D-0157, carried over from insert_source so amending cannot be the way
+            # round it. It lives HERE, on the row this function already read, rather
+            # than in the argv block above: the first cut opened a second connection
+            # with `connect(True)` -- which is positional `dry_run=True`, NOT
+            # `readonly=True` -- so it asked for the canonical blob READ-WRITE and
+            # dbcore's rule-3 guard refused it. The invariant was unreachable on the
+            # one database it most needed to hold for, and the operator got a
+            # migrations-only lecture instead of the real reason.
+            raise Refusal(
+                f"{ref_id}: VERIFIED requires verification_method (D-0157: a standing "
+                f"without its method is not a standing). `add-source` refuses this row; "
+                f"amending must not be the way around it. Set the method first, then "
+                f"the standing.")
         was = row[field]
         if (was or "").strip() == replacement:
             return {"ref_id": ref_id, "field": field, "changed": False}

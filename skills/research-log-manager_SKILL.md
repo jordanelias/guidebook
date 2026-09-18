@@ -164,14 +164,17 @@ After multilingual-research completes:
    ```
    The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker.
 
-   **To clear it, say which of three things happened — the third had no writer until 2026-09-18:**
-   - the pass **ran and produced connections** → `log-mining --connections '[...]'`
-   - the pass **ran and yielded nothing** → `log-mining --notes '<what it covered and found>'`
-   - the pass **was not run** → `log-mining --deferred-reason '<why>'` plus the explicit DEFERRED-* marker
+   **To clear it, say which of three things happened.** Which flag carries which case is in `citation-miner_SKILL.md` §1 step 5 and in `python3 scripts/db.py log-mining --help`; do not re-list them here.
 
-   This step said the only way to clear the blocker was a `deferred_reason` row. That made a session whose pass genuinely ran and found nothing write a **false deferral** — R6 reserves `deferred_reason` for DELIBERATELY NOT SEARCHED, and under the owner ruling of 2026-09-18 (*"executed is `mined`"*) a deferral also leaves `citation_mining_status` reading `deferred` over work that was done.
+   This step said the only way to clear the blocker was a `deferred_reason` row, and there were only two cases to choose from. That made a session whose pass genuinely ran and found nothing write a **false deferral** — R6 reserves `deferred_reason` for DELIBERATELY NOT SEARCHED, and under the owner ruling of 2026-09-18 (*"executed is `mined`"*) a deferral also leaves `citation_mining_status` reading `deferred` over work that was done.
 
-   **And note what this check does NOT measure.** It counts row *presence*, not execution, so it reports a deferred source as mined — measured 2026-09-18 at `10/10 T1-2 sources mined, 100.0%` while backward had actually run on 3 of 13 sources on the slug in question. Treat its percentage as an upper bound until GAP-022 lands; derive the real figure from `evidence_sources.citation_mining_status`.
+   **And note what this check does NOT measure.** Its unmined test is `cm.backward = 0 AND cm.forward = 0` — the flags the owner ruling of 2026-09-18 says do *not* mean a pass ran — so it counts row *presence* and reports a deferred source as mined. Treat its percentage as an upper bound until GAP-022 lands. **Do not quote a figure from this line**; derive the real one:
+
+   ```
+   python3 scripts/db.py is-mined --slug <slug> --ref <REF-NNNNN>   # read `executed`
+   ```
+
+   `executed` is `true` / `false` / `null`, and **`null` is not `false`**: it means the ref names a `source_locators` lead rather than an admitted source, so it has no status to report. Treating `null` as unmined tells you to re-mine finished work.
 
 ---
 

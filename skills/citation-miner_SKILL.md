@@ -56,8 +56,16 @@ literature-review-planner confirms a Tier 1–3 source:
    authoritative. This step read *"if already mined (both B+F) → skip"* until
    2026-09-18; on REF-01002 — `backward = 1`, `status = 'deferred'`, and named by its own
    deferral as the highest-value target on its slug — that instruction skipped the work.
-4. If `executed` is false, or a direction is still owed → mine the missing direction(s).
-   A `deferred_reason` on the row tells you what was owed and **why it was not done**.
+   **`executed` is `true` / `false` / `null`, and `null` is NOT `false`.** It means the
+   ref names a `source_locators` lead rather than an admitted source — migration 067
+   dropped that FK deliberately, *"a ref_id is an identity that SPANS two tables"* — so
+   there is no status to read. Measured 2026-09-18: ten live rows, every one fully
+   mined. **Treating `null` as unmined re-mines finished work**, which is the
+   RAP-F61/F69/F70 failure recorded further down this file.
+4. If `executed` is `false`, or a direction is still owed → mine the missing
+   direction(s). If it is `null`, read `backward`/`forward` and the row's own `notes`
+   instead, and do not assume either way. A `deferred_reason` on the row tells you what
+   was owed and **why it was not done**.
 5. Log result. **Three outcomes, three flags — do not collapse them:**
    ```bash
    # (a) the pass RAN and produced connections
@@ -78,14 +86,13 @@ literature-review-planner confirms a Tier 1–3 source:
      --direction forward --deferred-reason 'no citation-graph connector available — ...' \
      --session {session_filename}
    ```
-   **A pass that runs does NOT automatically discharge a standing deferral.**
-   `deferred_reason` is one column while `backward`/`forward` are two, so a backward
-   pass cannot tell whether the deferral on the row was its own — and clearing it
-   blindly erased a *forward* deferral on REF-00989 and marked the source mined. Pass
-   `--discharge-deferral` to assert the deferral belongs to the direction you just ran;
-   its text is carried into `notes`, never destroyed. Without the flag the deferral
-   stands and the result prints `deferral_still_standing`.
-   **`--notes` appends**; it will not overwrite an earlier pass's record.
+   **A pass that runs does NOT automatically discharge a standing deferral**, and the
+   judgement that call needs is this skill's business: `deferred_reason` is one column
+   while `backward`/`forward` are two, so a backward pass cannot tell whether the
+   deferral on the row was its own. Decide, then say so with `--discharge-deferral`.
+   For what each flag does, run `python3 scripts/db.py log-mining --help` — **derive it
+   there, never from this file.** (`gap-driven-mining_SKILL.md` records what copying
+   costs: it instructed sessions to run a subcommand that never existed.)
 
    > **`--ref` TAKES THE GLOBAL `REF-NNNNN`, NOT THE PER-SLUG LABEL. CORRECTED
    > 2026-08-24, and this instruction is where the defect came from.** It read
