@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-18-research-batch-16-backward-mining-t2-anchors",
+  "artifact": "sessions/session_2026-09-18-research-batch-16-backward-mining-t2-anchors.md",
+  "doctrine_sha": "4b02dc4",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol",
+    "multilingual-research"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/session_2026-09-18-research-batch-16-backward-mining-t2-anchors/priors.md",
+      "reason": "Priors for all five units were committed at 589577b BEFORE the first query ran, and they are falsifiable rather than decorative: each names an expected yield and the batch's premise section states outright what would falsify it. Three of the five were then WRONG, two of them badly, and the record says so in the search rows, the mining register and section 4 of the session record rather than in a footnote. The prior on REF-00985 predicted zero relevant references against 23 of 46 actual -- the single largest miss -- and it is the one that carried the batch, so there is no reading on which the errors are incidental to the result."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-18-research-batch-16-backward-mining-t2-anchors/manifest.jsonl",
+      "reason": "A search-engine summary returned a specific, plausible 1:12 / 8.3 per cent figure attributed to Swedish DPO guidance. It is recorded NOWHERE -- not as a candidate value, not in a note -- and the search row says why: a model-generated synthesis with no retrieved document behind it is the CLAUDE.md 5(c) shape. Every one of the seven claim texts written this batch was verified as a byte-exact substring of a persisted artefact before the extraction was attempted, and the TRID abstract was re-fetched through retrieval_log specifically so the 7 per cent figure would rest on persisted bytes rather than on a WebFetch summary. ref_id= was passed on every fetch(), which GAP-012 records as regressed across batches 10-15."
+    },
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-18-research-batch-16-backward-mining-t2-anchors.md",
+      "reason": "The batch found the anchoring-tier stated maximum six batches of searching had missed, and then DECLINED TO USE IT. Extraction 45 is skim/preliminary because the article was not retrieved -- only its TRID record -- and the cell was left at 5 per cent with determination gate 1 raised instead of being re-determined at 7. The refusal cost the batch its headline and follows batch 15's precedent on REF-01001, where the same caution was vindicated by the full text. Two writer defects found by using the write path were fixed at source rather than worked around, and the discharged deferral text was carried into notes rather than destroyed, per the 2026-09-16 retire-in-place ruling."
+    },
+    "multilingual-research": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-18-research-batch-16-backward-mining-t2-anchors/manifest.jsonl",
+      "reason": "Two Co-1 passes in languages not previously run on this parameter -- HR and SV, against batches 09-12's EN/DE/FR/NL/ES/JA. Both yielded nothing and both are recorded as well-formed absences with the distinction R14 demands: the HR pass FETCHED HUPT's own publications index rather than inferring absence from a result list, so it is absence of the object from the organisation's own catalogue. Graded FIRED rather than PASS on that basis, but see the deviation below: two zero-yields are a thin exercise of a rule whose substance is native-language retrieval."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "multilingual-research",
+      "reason": "R1 is 'Co-1 / T2 / Co-2 pass FIRST -- no exceptions', and this batch discharged it with two zero-yields and then spent its effort elsewhere. That is compliant and it is also thin. The HR pass was chosen because GAP-014 made HUPT salient, not because Croatia was the likeliest place to find a DPO-authored gradient; the SV pass surfaced a national guideline hosted by a DPO and correctly refused it as Co-1, which is a negative result about method rather than about the corpus. No non-English source was admitted and no new language was added to the parameter's coverage. A reader should not take R1: PASS here as evidence the Co-1 space for ramp gradient is exhausted."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "The three admissions rest on ABSTRACTS AND BIBLIOGRAPHIC RECORDS, not full texts. All five extractions are extraction_method=skim, extraction_status=preliminary, and that is stated on every row -- but it means a batch whose headline is 'the first anchoring-tier stated maximum' has read none of the three papers it admitted. The PubMed abstracts for REF-00980 and REF-00979 are authoritative and structured; the TRID record for REF-01002 is a third-party index, and its publisher field is WRONG for that journal (it says Elsevier Science), which is direct evidence that TRID metadata is imperfect. The publisher field was left unwritten for that reason and the error is named in GAP-016, but the same record supplied the abstract the 7 per cent figure comes from."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "GAP-002 was left OPEN without a reasoned close, and the batch-13 attestation already logged this same deviation. Its stated closing condition is 'a code value or an equivalent criterion'; REF-01002 supplies an equivalent criterion at an anchoring tier, which is stronger than what the gap asks for. It stays OPEN because the source is unread beyond its abstract, and that is defensible -- but the gap register now overstates what is missing for a SECOND recorded reason, and a reader taking an OPEN P1 as evidence the threshold is absent would be wrong twice over."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "REF-01002 was DISCOVERED in M1's pass over REF-00977 but its admission is recorded against M3's exec row (70), because that is where the corroborating anchors landed. The M1 row (68) says so in its findings_note, so the provenance is recoverable, but search_admissions now links the batch's most important source to a pass that did not find it. The honest alternative was a fourth exec row for the title resolution, and it was not written."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "db.py log-mining was modified mid-batch, by the session using it, and the modification was then used to write this batch's own rows. The defects were real and reproduced (REF-00977's row asserted mined and deferred simultaneously, live, in this session), and the fix is small and additive. But a writer repaired by its own first user, with no independent check registered for the invariant it now maintains, is a weaker guarantee than it looks -- which is exactly what GAP-017 item 1 records as owed."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "THE BATCH EMPTIED THE DETERMINATION SURFACE AND ITS BLOCKING GATE WENT GREEN BECAUSE OF IT. K02 forced a choice between a live determination that omits new evidence and no live determination; the engine could not recompute (GAP-019, an uncaught pydantic traceback), so specification 8 was retired in place. test_db_integrity then read 74/74 with K01 and K02 both in its own PASSED HAVING EXAMINED NOTHING list, which grew 19 to 22 -- CLAUDE.md 5(a), the failure this repository has produced four times, produced here by this batch's own remedy. It is recorded as GAP-020 and in section 5a rather than banked. A reader comparing 74/74 before and after would be comparing different denominators, and nothing in the check output says so."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "THE BLOCKING BATTERY WAS RUN AFTER A MIGRATION HAD ALREADY BEEN APPLIED TO THE CANONICAL DB, which is the exact lesson batch 13's attestation recorded and told the next session not to repeat: run the blocking batteries against the SCRATCH before emitting, not after applying. Three failures followed -- I4, C04, K02 -- all introduced by this batch against a 74/74 baseline. It was recoverable only because nothing had been committed: canonical was restored from HEAD, the uncommitted migration deleted, the corrections made in the scratch, and ONE clean migration re-emitted. Had it been pushed, rule 3 would have forced a compensating migration for a grading error. The order was wrong and the recovery does not undo that."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "A SECOND WRITER WAS WIDENED MID-BATCH BY THE SESSION THAT NEEDED IT: verification_status and doi_resolution_outcome were added to amend-source's _AMENDABLE set so this batch could correct its own I4 and C04 failures. The reasoning is recorded beside the constant and follows batch 15's jurisdiction precedent, and verification_status gates real checks -- making it amendable lets a future session flip UNVERIFIED to VERIFIED to clear one. I4 still refuses the dangerous direction and amend-source ledgers every replacement with a mandatory reason, so the guard that matters survives. But two writers widened in one batch, both by their first complaining user, with no independent check registered for either, is a pattern a reviewer should weigh against the convenience that produced it."
+    }
+  ],
+  "bias_direction": "Toward a rescue narrative. The most flattering available story is that six batches of DOI-keyed searching missed the threshold source and a backward pass found it, and that story is TRUE and is also why it should be distrusted. Three things temper it. First, the source was found by a method the previous batch had already named and queued -- batch 15 wrote down that REF-00977's reference list was the richest unmined seam and was right about that even while ranking the three anchors backwards; this batch executed a plan it inherited. Second, the find is UNREAD, and a batch that stops at an abstract has produced a lead of unusual quality rather than an answer. Third, there is a pull to present the log-mining repair as a second headline, and it is a twenty-line fix to a writer, found because I tripped over it, not because I audited anything. The secondary pull is toward over-dramatising the inverted rankings: being wrong in a pre-registered way is the method working, and a batch should not earn credit for its own bad predictions merely by having recorded them.",
+  "independent_reviewer_counterclaim": "A reviewer should press hardest on whether the 7 per cent figure is load-bearing or decorative. The batch raised a gate, wrote a P1 gap, and changed no determination -- so the corpus's actual position on ramp gradient is exactly what it was before: 5 per cent, provisional, resting on a proxy. Everything claimed as progress is contingent on a full text nobody has obtained, from a journal with no DOI, through an index whose publisher field for that very record is demonstrably wrong. A harder reviewer would go further: the abstract sentence says 'Results suggest', which is hedged language, and 'a ramp should not exceed' may be the authors' recommendation or may be the TRID abstracter's compression of one -- and the batch cannot tell which, because it did not read the paper. If the full text shows 7 per cent is the highest slope TESTED rather than the highest slope RECOMMENDED, this batch will have raised a gate and opened a P1 gap on a misreading, and the convergence with Chow's 4-to-10-degree band will turn out to be the coincidence it was explicitly warned about rather than corroboration. The defence is that the gate and the skim grading are precisely the instruments for holding a finding at the confidence its retrieval earned, and that nothing was moved -- but a reviewer is entitled to observe that a batch which admits three sources it has not read, on a parameter this contested, has produced a larger unverified surface than it has closed. AND THE STRONGEST LINE IS NOW SHARPER THAN WHEN THIS WAS FIRST WRITTEN. The batch's net effect on the guidebook is that it REMOVED the only live determination the project had. Before it, a reader asking the corpus for a ramp gradient got 5 percent, provisional, marked as a proxy; after it they get nothing, and the source that caused the removal is one nobody has read past its abstract. Every instrument invoked to justify that -- the gate, the skim grading, the retirement -- is real and correctly used, and a reviewer is still entitled to ask whether a batch should be able to take the book's only answer away on the strength of an abstract retrieved from a third-party index whose publisher field for that same record is wrong. The defence is that K02 forced the choice and the engine removed the alternative, which is true and is also why GAP-019 and GAP-020 are both P1: the project's ability to hold a determination while evidence accumulates is what actually failed here, and this batch found that by tripping over it rather than by auditing for it.",
+  "verdict": "DEVIATION-LOGGED"
+}

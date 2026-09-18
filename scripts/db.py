@@ -240,7 +240,7 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
 def log_mining(slug: str, ref_id: str, direction: str,
                connections: list[str], session: str,
                dry_run: bool = False, deferred_reason: str = None,
-               status: str = None):
+               status: str = None, notes: str = None):
     """Record a mining pass. Keyed on the global ref_id.
 
     The `doi` parameter was REMOVED 2026-08-24. It wrote a copy of a value that
@@ -253,15 +253,28 @@ def log_mining(slug: str, ref_id: str, direction: str,
             f"direction must be 'backward' or 'forward', got '{direction}'"
         )
     deferred_reason = (deferred_reason or "").strip() or None
+    notes = (notes or "").strip() or None
     if connections and deferred_reason:
         raise Refusal(
             f"{ref_id}: a pass cannot both produce connections and be deferred. "
             f"Say which happened.")
-    if not connections and not deferred_reason:
+    if deferred_reason and notes:
         raise Refusal(
-            f"{ref_id}: no connections and no --deferred-reason. A mining pass that "
-            f"found nothing and does not say why is indistinguishable from one that "
-            f"never ran (R8's rule for searches, applied to mining).")
+            f"{ref_id}: --deferred-reason says the pass was NOT run; --notes records what "
+            f"a pass that RAN found. A row cannot assert both. R6: deferred_reason means "
+            f"DELIBERATELY NOT SEARCHED and is never a findings channel.")
+    if not connections and not deferred_reason and not notes:
+        # THIRD STATE, ADDED 2026-09-18. The two-way guard below conflated a pass that
+        # was never run with one that ran and found nothing, and offered only
+        # --deferred-reason for both -- which R6 forbids, since deferred_reason means
+        # DELIBERATELY NOT SEARCHED. Measured on REF-00984: its backward pass ran over
+        # 38 deposited references, 0 matched, and there was no way to say so. The column
+        # for it already existed (citation_mining.notes) and had no writer at all.
+        raise Refusal(
+            f"{ref_id}: no connections, no --deferred-reason and no --notes. A mining pass "
+            f"that found nothing and does not say why is indistinguishable from one that "
+            f"never ran (R8's rule for searches, applied to mining). Use --deferred-reason "
+            f"if the pass was NOT run; use --notes if it ran and yielded nothing.")
     # citation_mining_status is asserted AGAINST this table by test_db_integrity C08:
     # 'mined' iff a non-deferred mining row resolves to it. Nothing in this writer ever
     # moved it, so the biconditional could not hold through the sanctioned path -- the
@@ -314,6 +327,34 @@ def log_mining(slug: str, ref_id: str, direction: str,
             conn.execute("UPDATE citation_mining SET deferred_reason=?, updated_at=?, "
                          "updated_by_session=? WHERE slug=? AND global_ref_id=?",
                          [deferred_reason, ts, session, slug, ref_id])
+        else:
+            # A PASS THAT RAN DISCHARGES THE DEFERRAL IT WAS OWED. Added 2026-09-18.
+            # Without this the register asserted both at once: on 2026-09-18 this writer
+            # set REF-00977 to backward=1, status='mined', connections=["REF-01002"] while
+            # leaving deferred_reason reading "BACKWARD PASS DEFERRED" -- a row that says a
+            # finished pass is owed, which is how a later session re-queues finished work
+            # (the RAP-F61/F69/F70 shape the citation-miner skill already records).
+            # The discharged text is not destroyed: it is folded into notes, because the
+            # 2026-09-16 retire-in-place ruling governs data rows and a deferral's stated
+            # reasoning is evidence of what was believed when.
+            prior_def = (conn.execute(
+                "SELECT deferred_reason FROM citation_mining "
+                "WHERE slug=? AND global_ref_id=?", [slug, ref_id]).fetchone()
+                or [None])[0]
+            merged_notes = notes
+            if prior_def:
+                carried = f"DEFERRAL DISCHARGED {ts} by {session}. It read: {prior_def}"
+                merged_notes = f"{notes}\n\n{carried}" if notes else carried
+            if merged_notes:
+                conn.execute(
+                    "UPDATE citation_mining SET notes=?, deferred_reason=NULL, updated_at=?, "
+                    "updated_by_session=? WHERE slug=? AND global_ref_id=?",
+                    [merged_notes, ts, session, slug, ref_id])
+            elif prior_def:
+                conn.execute(
+                    "UPDATE citation_mining SET deferred_reason=NULL, updated_at=?, "
+                    "updated_by_session=? WHERE slug=? AND global_ref_id=?",
+                    [ts, session, slug, ref_id])
         dbcore.check_vocab(conn, "evidence_sources", "citation_mining_status",
                            status, "--status")
         conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
@@ -946,12 +987,17 @@ def main():
     p_logm.add_argument("--direction", required=True,
                         choices=["backward", "forward"])
     p_logm.add_argument("--connections",
-                        help="JSON array of CON-IDs. Omit only when --deferred-reason "
-                             "says why the pass produced none.")
+                        help="JSON array of CON-IDs. Omit only when --deferred-reason or "
+                             "--notes says why the pass produced none.")
     p_logm.add_argument("--deferred-reason", dest="deferred_reason",
-                        help="Why this anchor was NOT mined. Required when no "
-                             "connections are given, so a pass that found nothing is "
-                             "distinguishable from one that never ran.")
+                        help="Why this anchor was NOT mined -- DELIBERATELY NOT SEARCHED "
+                             "(R6). Never a findings channel: if the pass RAN, use --notes.")
+    p_logm.add_argument("--notes",
+                        help="What a pass that RAN found, including nothing. Writes "
+                             "citation_mining.notes, which existed with no writer until "
+                             "2026-09-18. Mutually exclusive with --deferred-reason, and "
+                             "supplying either --notes or --connections DISCHARGES any "
+                             "standing deferral on the row, carrying its text into notes.")
     p_logm.add_argument("--status", dest="mining_status",
                         help="citation_mining_status to set on the source. Live "
                              "vocabulary from the column's own CHECK. Derived when "
@@ -2045,6 +2091,7 @@ def main():
             dry_run=args.dry_run,
             deferred_reason=args.deferred_reason,
             status=args.mining_status,
+            notes=args.notes,
         )
         print(json.dumps({"logged": True, "connections": len(conns),
                           "dry_run": args.dry_run}))
@@ -3409,6 +3456,27 @@ _AMENDABLE = (
     # happens to take would be worse than either home. The vocabulary stays gated
     # by validate_jurisdiction, so this widens WHO may correct it, not WHAT to.
     "jurisdiction",
+    # verification_status and doi_resolution_outcome, added 2026-09-18, and the case
+    # for them is the case I4 and C04 make against a row this repository just wrote.
+    # Both are JUDGEMENTS about what a retrieval ESTABLISHED, which is exactly what no
+    # payload can settle: the payload says what came back, the operator says whether
+    # that amounts to having verified the source. Batch 16 graded REF-01002 VERIFIED on
+    # an authoritative third-party bibliographic record while its verification_method
+    # read corroborated-not-retrieved -- I4 caught it, and NOTHING COULD CORRECT IT.
+    # Its DOI outcome was NULL for a work that has no DOI at all, which C04 caught and
+    # nothing could correct either. A field a session can get wrong at admission and
+    # cannot fix afterwards forces a compensating migration for a typo, which is rule 3
+    # spending its weight on the wrong thing.
+    #
+    # THE RISK IS NAMED RATHER THAN WAVED OFF: verification_status gates real checks, so
+    # making it amendable lets a session flip UNVERIFIED to VERIFIED to clear one. Two
+    # things hold against that and neither is this constant. I4 still refuses VERIFIED
+    # whose method did not obtain the artefact, which is the dangerous direction; and
+    # amend-source ledgers the replaced value with a mandatory reason into
+    # metadata_integrity_detail, so the flip is legible rather than silent. This widens
+    # WHO may correct these, not WHAT to -- the vocabularies stay gated where they were.
+    "verification_status",
+    "doi_resolution_outcome",
 )
 
 
