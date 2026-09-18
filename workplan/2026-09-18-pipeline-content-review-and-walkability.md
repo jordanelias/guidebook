@@ -187,9 +187,14 @@ the determination history rather than with the assessments.
 
 ## 3. What is working, stated because it narrows where the fix goes
 
-- **R8 prior discipline is perfect on the live corpus.** All 28 executions missing
-  `prior_expectation` are batches 01–03 (execs 1–28, August, acoustic slug). **Batches 08–14 are
-  0 missing out of 27.** The rule took, and the gap is legacy.
+- **R8 prior discipline is perfect on the live corpus, and the exception is not a gap at all.**
+  *(Corrected 2026-09-18 after a `/simplify` pass: this first called the 28 missing priors a legacy
+  **gap**. They are not. `db.py` did not refuse a prior-less `log-search` until **2026-09-03**
+  (`research_protocol_audit.py`, `PRIOR_REFUSAL_LANDED`), so every one of them was logged when no
+  prior was required — and `search_executions` is append-only under R8, so they cannot be
+  backfilled and must not be "tidied". Counting them as defects is the overstatement, not the
+  omission.)* Split on that date, **every session that was required to carry a prior carries one**:
+  0 missing across batches 08–15. `walk.py` now prints the split rather than a raw count.
 - **Empties are kept.** 40 of 59 executions are zero-yield and retained — R8's hardest instruction
   to follow, followed.
 - **Verification is complete.** 16/16 sources `VERIFIED`; not one NULL `verification_status`, which
