@@ -299,6 +299,15 @@ def log_mining(slug: str, ref_id: str, direction: str,
         raise Refusal(
             f"{ref_id}: a pass cannot both produce connections and be deferred. "
             f"Say which happened.")
+    if deferred_reason and discharge_deferral:
+        raise Refusal(
+            f"{ref_id}: --discharge-deferral asserts the standing deferral belongs to "
+            f"the {direction} pass just RUN; --deferred-reason asserts this pass was "
+            f"deliberately NOT run. One call, one direction, cannot be both. Run the "
+            f"discharging pass and the new deferral as two calls, naming the direction "
+            f"each belongs to. (Silently ignored until 2026-09-18, which let the new "
+            f"text overwrite the standing deferral with no carry into notes -- against "
+            f"this verb's own --help, which promises the old text is never destroyed.)")
     if deferred_reason and notes:
         raise Refusal(
             f"{ref_id}: --deferred-reason says the pass was NOT run; --notes records what "
@@ -413,6 +422,19 @@ def log_mining(slug: str, ref_id: str, direction: str,
                     f"directions (GAP-015/GAP-022, unruled), so this is not guessed: "
                     f"pass --status explicitly to say which reading this source "
                     f"carries.")
+            # A REPLACED DEFERRAL IS CARRIED, NOT DESTROYED. This UPDATE overwrote
+            # `deferred_reason` outright, so re-deferring a row erased the reason the
+            # previous session recorded -- while --help promised "its text is carried
+            # into notes, never destroyed" and the else-branch below carried a
+            # DISCHARGED one faithfully. Corrected 2026-09-18 after an adversarial pass.
+            if prior_def and prior_def != deferred_reason:
+                superseded = (f"DEFERRAL SUPERSEDED {ts} by {session} "
+                              f"({direction} pass). It read: {prior_def}")
+                carried_notes = "\n\n".join(
+                    [x for x in (prior_notes, superseded) if x])
+                conn.execute("UPDATE citation_mining SET notes=? "
+                             "WHERE slug=? AND global_ref_id=?",
+                             [carried_notes, slug, ref_id])
             conn.execute("UPDATE citation_mining SET deferred_reason=?, updated_at=?, "
                          "updated_by_session=? WHERE slug=? AND global_ref_id=?",
                          [deferred_reason, ts, session, slug, ref_id])
@@ -455,7 +477,15 @@ def log_mining(slug: str, ref_id: str, direction: str,
                     [merged_notes, None if carried else prior_def,
                      ts, session, slug, ref_id])
         if status is None:
-            status = "deferred" if deferred_reason else "mined"
+            # THE ROW'S POST-WRITE STATE DECIDES, NOT THIS CALL'S ARGUMENTS. Keyed on
+            # `deferred_reason` alone, a --connections or --notes pass over a row whose
+            # deferral STANDS wrote 'mined' while deferred_reason was still populated --
+            # exactly the state test_db_integrity C08 rejects ('mined' iff a NON-deferred
+            # row resolves to it). The sanctioned writer produced a C08-red database on
+            # its own documented path; batch 17 escaped only because every pass happened
+            # to carry --discharge-deferral. `undischarged` is set above precisely when a
+            # deferral survived this call, so it is the state, not a second guess at it.
+            status = "deferred" if (deferred_reason or undischarged) else "mined"
         dbcore.check_vocab(conn, "evidence_sources", "citation_mining_status",
                            status, "--status")
         conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
@@ -791,6 +821,10 @@ def get_unmined_sources(slug: str) -> list[dict]:
         rows = conn.execute("""
             SELECT ssl.local_ref_id,
                    es.doi, es.pub_title,
+                   -- THE RULING'S COLUMN IS THE ANSWER; the flags are reported beside
+                   -- it so a reader can see the disagreement rather than inherit it.
+                   COALESCE(es.citation_mining_status, '') AS citation_mining_status,
+                   cm.deferred_reason,
                    COALESCE(cm.backward, 0) AS backward,
                    COALESCE(cm.forward,  0) AS forward
             FROM source_slug_links ssl
@@ -804,8 +838,15 @@ def get_unmined_sources(slug: str) -> list[dict]:
                 -- reference id was in every row the whole time; join on it.
                 ON cm.slug=ssl.slug AND cm.global_ref_id=ssl.ref_id
             WHERE ssl.slug=?
-            AND (cm.backward IS NULL OR cm.forward IS NULL
-                 OR cm.backward=0 OR cm.forward=0)
+            -- OWNER RULING 2026-09-18: "executed is `mined`". The direction flags do
+            -- NOT mean a pass ran -- log_mining raises {direction}=1 on a DEFERRAL too
+            -- -- so `backward=0 OR forward=0` answered a different question from the one
+            -- this verb is asked. Measured the same day: REF-00989 and REF-00993 carry
+            -- backward=1, forward=1 AND a standing FORWARD deferral, so this returned
+            -- neither, and a session routed to the backlog through this verb was handed
+            -- a quarter less work than it was owed. citation_mining_status is the column
+            -- the ruling names; a row with no mining row at all is NULL and sorts in.
+            AND COALESCE(es.citation_mining_status, '') <> 'mined'
             ORDER BY ssl.local_ref_id
         """, [slug]).fetchall()
     return [dict(r) for r in rows]
@@ -1242,6 +1283,28 @@ def main():
                            "incomplete record. Only rises; lowering is refused.")
     p_am.add_argument("--session", required=True)
     p_am.add_argument("--dry-run", action="store_true")
+
+    p_ag2 = sub.add_parser("amend-gap",
+                           help="APPEND a dated correction to a gap's description")
+    p_ag2.add_argument("--gap-id", required=True)
+    p_ag2.add_argument("--append-note", required=True, dest="append_note",
+                       help="Appended after a '|| CORRECTED <date>:' marker. close-gap "
+                            "moves status only, and gaps has no closure-note column, so "
+                            "this is the only way to correct a filed description.")
+    p_ag2.add_argument("--session", required=True)
+    p_ag2.add_argument("--dry-run", action="store_true")
+
+    p_rca = sub.add_parser("reattribute-candidate",
+                           help="Repoint a candidate at the search that surfaced it")
+    p_rca.add_argument("--candidate-id", required=True, type=int)
+    p_rca.add_argument("--exec-id", required=True, type=int,
+                       help="The search that ACTUALLY surfaced it. Must already be "
+                            "logged -- backfill it with log-search first if it was not.")
+    p_rca.add_argument("--reason", required=True,
+                       help="Why the original attribution was wrong. Carried into notes "
+                            "with the old exec_id, so the move is itself on the record.")
+    p_rca.add_argument("--session", required=True)
+    p_rca.add_argument("--dry-run", action="store_true")
 
     p_rc = sub.add_parser("resolve-candidate",
                           help="Close a staged candidate, re-describing it from the source (R15)")
@@ -2200,10 +2263,38 @@ def main():
 
     elif args.command == "is-mined":
         result = is_mined(args.slug, args.ref)
-        _emit(result if result else {"mined": False})
+        # THE OUTPUT SHAPE IS TOTAL, AND IT WAS NOT. `{"mined": False}` was emitted ONLY
+        # when no citation_mining row existed; a row whose `executed` is False came back
+        # with no `mined` key at all. Both skills branch on `mined: false` to decide
+        # whether to invoke a mining pass, so the trigger never fired for exactly the
+        # rows the owner ruling of 2026-09-18 says are owed -- REF-01002, REF-01003 and
+        # REF-01004 among them. `mined` now always appears and always equals
+        # `executed is True`, so a caller reading either key gets the same answer, and
+        # `row_exists` distinguishes "no row" from "row says not mined" -- a distinction
+        # `executed: null` did NOT carry (null means the ref names a source_locators
+        # lead, which is a third thing again).
+        if result:
+            result = {**result, "mined": result.get("executed") is True,
+                      "row_exists": True}
+        else:
+            result = {"mined": False, "executed": False, "row_exists": False}
+        _emit(result)
 
     elif args.command == "log-mining":
-        conns = json.loads(args.connections) if args.connections else []
+        # A BAD --connections VALUE IS A REFUSAL, NOT A TRACEBACK. `db.py refuses, and
+        # that is its whole value` (CLAUDE.md section 4); an unwrapped json.loads exited
+        # with a raw JSONDecodeError, which tells the operator nothing about the shape
+        # the flag wants.
+        try:
+            conns = json.loads(args.connections) if args.connections else []
+        except json.JSONDecodeError as e:
+            raise Refusal(
+                f"--connections must be a JSON array of connection ids, e.g. "
+                f'\'["CON-0001","CON-0002"]\' -- got {args.connections!r} ({e}).')
+        if not isinstance(conns, list):
+            raise Refusal(
+                f"--connections must be a JSON ARRAY, got {type(conns).__name__}: "
+                f"{args.connections!r}")
         # PRINT WHAT THE WRITER DID, not a fixed dict. Until 2026-09-18 this reported
         # `logged: true` regardless, so a standing deferral the pass left undischarged
         # was invisible at the call site that created it.
@@ -2407,6 +2498,11 @@ def main():
                            dry_run=args.dry_run,
                            set_harm_finding=args.set_harm_finding))
 
+    elif args.command == "amend-gap":
+        out = amend_gap(args.gap_id, args.append_note, args.session, args.dry_run)
+    elif args.command == "reattribute-candidate":
+        out = reattribute_candidate(args.candidate_id, args.exec_id, args.reason,
+                                    args.session, args.dry_run)
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
@@ -3487,6 +3583,94 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                 "harm_finding_raised": raised}
 
 
+def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
+    """APPEND a dated correction to a gap's description. Never rewrite it.
+
+    `close-gap` moves `status` and nothing else, and the `gaps` table has no
+    closure-note column -- so a gap whose DESCRIPTION states something since
+    falsified had no repair path at all. Measured on batch 17: GAP-027's text still
+    opened "GAP-018 PREDICTOR PASSED ITS FIRST PROSPECTIVE TEST" after GAP-029
+    retracted that result as a screen artefact, and GAP-026 still asserted a
+    "SafetyLit 503" its own persisted artefact does not hold. A register whose
+    entries state retracted findings is worse than one that is merely incomplete:
+    the reader who consults it is misled by the document built to prevent that.
+
+    Append-only, in the same '|| CORRECTED <date>:' form `amend-search` uses, for the
+    same reason -- what was believed at filing time is part of the record.
+    """
+    note = (note or "").strip()
+    if not note:
+        raise Refusal(f"{gap_id}: refusing to append an empty amendment.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT gap_id, description, status FROM gaps "
+                           "WHERE gap_id=?", [gap_id]).fetchone()
+        if row is None:
+            raise Refusal(f"{gap_id}: no such gap.")
+        if note in (row["description"] or ""):
+            return {"gap_id": gap_id, "appended": False,
+                    "reason": "this amendment is already on the row"}
+        stamp = audit(session)
+        merged = ((row["description"] or "").rstrip()
+                  + f" || CORRECTED {stamp['created_at'][:10]}: " + note)
+        conn.execute("UPDATE gaps SET description=?, updated_at=?, updated_by_session=? "
+                     "WHERE gap_id=?",
+                     [merged, stamp["created_at"], session, gap_id])
+        return {"gap_id": gap_id, "appended": True, "status": row["status"],
+                "chars": len(merged)}
+
+
+def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session: str,
+                          dry_run: bool = False):
+    """Repoint a staged candidate at the search that actually surfaced it.
+
+    `search_candidates.exec_id` is the provenance edge from a candidate back to the
+    query that found it, and NOTHING could write it after the insert. Batch 17 staged
+    two candidates against exec 71 -- a Co-1 web search whose own note reads ZERO
+    YIELD -- when an unlogged Consensus search had produced them, then recorded in a
+    committed migration that it had "corrected" the attribution. It had not: no verb
+    existed, so the claim was structurally impossible through the sanctioned path and
+    was made anyway. CLAUDE.md section 4: a table the CLI cannot reach is a coverage
+    bug to fix, not a licence to hand-write SQL.
+
+    The old exec_id is carried into `notes`, so the repointing is itself on the record
+    and a reader can see where the candidate was first filed.
+    """
+    reason = (reason or "").strip()
+    if not reason:
+        raise Refusal(
+            f"candidate {candidate_id}: --reason is required. Moving a provenance edge "
+            f"without saying why replaces one unexplained attribution with another.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT candidate_id, exec_id, notes FROM search_candidates "
+                           "WHERE candidate_id=?", [candidate_id]).fetchone()
+        if row is None:
+            raise Refusal(f"candidate {candidate_id}: no such candidate.")
+        if conn.execute("SELECT 1 FROM search_executions WHERE exec_id=?",
+                        [exec_id]).fetchone() is None:
+            raise Refusal(
+                f"exec {exec_id}: no such search execution. A candidate cannot be "
+                f"attributed to a search that was never logged -- log it first (R8 "
+                f"keeps every query, backfills included).")
+        if row["exec_id"] == exec_id:
+            return {"candidate_id": candidate_id, "changed": False,
+                    "exec_id": exec_id}
+        stamp = audit(session)
+        carried = (f"REATTRIBUTED {stamp['created_at'][:10]} from exec "
+                   f"{row['exec_id']} to exec {exec_id} by {session}: {reason}")
+        merged = "\n\n".join([x for x in ((row["notes"] or "").strip() or None,
+                                           carried) if x])
+        # search_candidates carries created_at/created_by_session and NO updated_*
+        # pair, so the reattribution's date and author live in the carried note -- which
+        # is why `carried` above stamps both. Do not "tidy" this into an updated_at:
+        # the column does not exist, and adding one to record a repair would be a
+        # second home for a fact the note already holds.
+        conn.execute("UPDATE search_candidates SET exec_id=?, notes=? "
+                     "WHERE candidate_id=?",
+                     [exec_id, merged, candidate_id])
+        return {"candidate_id": candidate_id, "changed": True,
+                "from_exec": row["exec_id"], "exec_id": exec_id}
+
+
 def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
                       session: str, admitted_ref_id: str = None, dry_run: bool = False):
     """Close a staged candidate by RE-DESCRIBING it from the source (R15).
@@ -3538,9 +3722,17 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
         tail = f" || RESOLVED {stamp['created_at'][:10]} (R15, re-described from the source"
         tail += f"; admitted as {admitted_ref_id}" if admitted_ref_id else ""
         tail += f"): {redescription}"
-        conn.execute("UPDATE search_candidates SET disposition=?, notes=? "
+        # THE EDGE GOES IN THE COLUMN. --admitted-ref-id was required for ADMITTED and
+        # then written ONLY into the `notes` tail, so the candidate-to-source link
+        # existed as prose and nothing could join on it. Migration 088 gives the table
+        # `resolved_ref_id`; writing it here is what lets integrity check S01 compare a
+        # candidate's exec_id against the exec that actually admitted its source. The
+        # tail still names it too -- that is the human-readable record, not the edge.
+        conn.execute("UPDATE search_candidates SET disposition=?, notes=?, "
+                     "resolved_ref_id=COALESCE(?, resolved_ref_id) "
                      "WHERE candidate_id=?",
-                     [disposition, (row["notes"] or "").rstrip() + tail, candidate_id])
+                     [disposition, (row["notes"] or "").rstrip() + tail,
+                      admitted_ref_id, candidate_id])
         return {"candidate_id": candidate_id, "was": row["disposition"],
                 "now": disposition, "admitted_ref_id": admitted_ref_id}
 
@@ -3689,6 +3881,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     new_tier = old_tier = None
     with connect(dry_run) as conn:
         row = conn.execute(f"SELECT ref_id, {field}, verification_method, "
+                           f"verification_disposition, verification_closure_reason, "
+                           f"verification_attempt_count, "
                            f"metadata_integrity_detail "
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
@@ -3718,6 +3912,30 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                 f"without its method is not a standing). `add-source` refuses this row; "
                 f"amending must not be the way around it. Set the method first, then "
                 f"the standing.")
+        if field == "verification_status" and replacement != "VERIFIED" \
+                and (row["verification_disposition"] or "") == "CLOSED":
+            # THE OTHER DIRECTION, UNGUARDED UNTIL 2026-09-18. The D-0157 refusal above
+            # covers UNVERIFIED -> VERIFIED, which the comment on _AMENDABLE calls "the
+            # dangerous direction" -- but a DEMOTION off a CLOSED row leaves
+            # verification_disposition='CLOSED' standing over a non-VERIFIED status,
+            # which I3 ("closure is earned and reasoned") and I3b ("closure rests on at
+            # least two recorded attempts") both reject. Reproduced on a scratch copy:
+            # amending REF-01004 to UNVERIFIED turned 74/74 into 72/74. The disposition
+            # is a separate, amendable field; this refuses rather than silently
+            # rewriting it, because which closure reason applies is the operator's to
+            # state and not this writer's to invent.
+            _why = (row["verification_closure_reason"] or "").strip()
+            _n = row["verification_attempt_count"] or 0
+            if not _why or _n < 2:
+                raise Refusal(
+                    f"{ref_id}: demoting verification_status to {replacement!r} would "
+                    f"leave verification_disposition='CLOSED' over a non-VERIFIED row "
+                    f"with "
+                    f"{'no closure reason' if not _why else f'{_n} recorded attempt(s)'}"
+                    f", which test_db_integrity I3/I3b reject. Amend "
+                    f"verification_disposition, verification_closure_reason and "
+                    f"verification_attempt_count to say WHY the closure stands, then "
+                    f"demote the standing.")
         was = row[field]
         if (was or "").strip() == replacement:
             return {"ref_id": ref_id, "field": field, "changed": False}
@@ -6197,6 +6415,8 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             SELECT ssl.local_ref_id, ssl.slug,
                    es.doi, es.tier, es.pub_title AS title,
                    COALESCE(es.lang_detected, es.language) AS lang,
+                   COALESCE(es.citation_mining_status, '') AS citation_mining_status,
+                   cm.deferred_reason,
                    COALESCE(cm.backward, 0) AS backward,
                    COALESCE(cm.forward, 0) AS forward
             FROM source_slug_links ssl
@@ -6217,7 +6437,11 @@ def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
             -- when no link exists. A mined source with a NULL label would report
             -- UNMINED: the exact PD-0 false negative, surviving in the WHERE clause
             -- after the JOIN was fixed. Test the key the join actually uses.
-            AND (cm.global_ref_id IS NULL OR cm.backward = 0 OR cm.forward = 0)
+            -- Same sweep as get_unmined_sources above: the owner ruling of 2026-09-18
+            -- makes citation_mining_status the answer and the direction flags a
+            -- different question. Kept in step deliberately -- two verbs answering
+            -- "what is unmined" differently is how a backlog goes half-invisible.
+            AND COALESCE(es.citation_mining_status, '') <> 'mined'
             ORDER BY es.tier ASC,
                      CASE WHEN COALESCE(es.lang_detected, es.language, 'en') = 'en' THEN 1 ELSE 0 END,
                      ssl.slug, ssl.local_ref_id

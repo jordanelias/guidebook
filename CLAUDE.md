@@ -253,10 +253,15 @@ model. Verify with `migrate_db.py --rebuild /tmp/rebuilt.db`.
 **A NOT NULL foreign key into an EMPTIED table makes that table unwritable.** The refusal is
 `FOREIGN KEY constraint failed` at INSERT — never at migration time — so the schema looks healthy, a
 rebuild reproduces it exactly, and every gate stays green over a table that cannot accept a row.
-`specifications` is in this state: migration 071 re-keyed it on `parameter_id NOT NULL REFERENCES
-base_parameters(parameter_id)`, and `base_parameters` is a freshly-minted registry with nothing in it
-yet — so **no determination can be written until a parameter is minted**, and `db.py add-parameter`
-is the writer that mints one. (This bullet blamed the 2026-09-01 item-layer emptying for
+`specifications` **was** in this state and is not any more: migration 071 re-keyed it on
+`parameter_id NOT NULL REFERENCES base_parameters(parameter_id)` while `base_parameters` was empty,
+and a parameter has since been minted — so the derivation below no longer lists `specifications`,
+and `db.py add-parameter` has already done its job. (This paragraph read "a freshly-minted registry
+with nothing in it yet — so **no determination can be written until a parameter is minted**" until
+2026-09-18, under a heading whose own command disproved it, which is rule 7a's third shape: a prose
+caller restating a checked fact. **What actually blocks the determination today is not an FK** — run
+the derivation and read what it says, then look at `specifications`' row count, not at this
+sentence.) (This bullet blamed the 2026-09-01 item-layer emptying for
 `specifications`' unwritability instead, until 2026-09-10 — true of the OLD `specifications.item_code`
 FK, which 071 dropped along with the table it sat on; stale the moment 071 re-keyed `specifications`
 onto a different empty table for the NEXT STAGE OF THE SAME REFORM — 071's own comment reads *"Was item_code NOT NULL into an emptied table, which is why no determination could be written at all"* (`:96-97`), so these are two stages of one continuous re-keying, not unrelated accidents; this clause read "for an unrelated reason" until an adversarial pass broke it the same day.) `item_taxonomy_links` is unwritable on the

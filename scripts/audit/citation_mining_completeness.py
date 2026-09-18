@@ -237,7 +237,14 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         JOIN evidence_sources es ON cm.global_ref_id = es.ref_id
         LEFT JOIN v_evidence_authors va ON va.ref_id = es.ref_id
         WHERE es.tier BETWEEN 1 AND ?
-          AND cm.backward = 0 AND cm.forward = 0
+          -- OWNER RULING 2026-09-18: "executed is `mined`", and "deferred is okay so
+          -- long as it runs eventually". `backward = 0 AND forward = 0` tested the
+          -- direction flags, which log_mining raises on a DEFERRAL as well as on a pass
+          -- that ran -- so this counted row PRESENCE and reported a deferred source as
+          -- mined. It printed "100.0%" over a corpus the ruling's own column scores
+          -- lower, and this file's own text warned readers not to quote that figure
+          -- while continuing to compute it. The column the ruling names is the test.
+          AND COALESCE(es.citation_mining_status, '') <> 'mined'
           AND (cm.deferred_reason IS NULL OR cm.deferred_reason = '')
     """, (tier_max,)).fetchall():
         if session and not ({cm["es_session"], cm["cm_session"]} & {skey, skey_md}):
@@ -255,6 +262,16 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         WHERE es.tier BETWEEN 1 AND ?
     """, (tier_max,)).fetchone()[0]
     coverage_pct = (total_with_cm / total_t12 * 100) if total_t12 else 0.0
+    # TWO DIFFERENT FACTS, AND THEY WERE PRINTED AS ONE. `total_with_cm` counts sources
+    # that HAVE a citation_mining row; the line below printed it as "sources mined".
+    # Under the owner ruling of 2026-09-18 ("executed is `mined`") a row can exist and
+    # record a deferral, so presence is not execution and the two figures differ. Both
+    # are now computed and each is labelled as what it is.
+    total_mined = con.execute("""
+        SELECT COUNT(*) FROM evidence_sources
+        WHERE tier BETWEEN 1 AND ? AND COALESCE(citation_mining_status,'') = 'mined'
+    """, (tier_max,)).fetchone()[0]
+    mined_pct = (total_mined / total_t12 * 100) if total_t12 else 0.0
 
     # A session-scoped run that selects no subjects is CLEAN in the sense that it
     # found no violation, and empty in the sense that it looked at nothing. It
@@ -272,6 +289,8 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         "total_tier_in_scope": total_t12,
         "total_with_citation_mining": total_with_cm,
         "coverage_pct": round(coverage_pct, 1),
+        "total_mined": total_mined,
+        "mined_pct": round(mined_pct, 1),
         "outstanding_count": len(rows),
         "outstanding": [dict(r) for r in rows],
         "stub_cm_rows": bad_cm,  # rows that exist but say nothing happened — also a violation
@@ -302,10 +321,15 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
             # which read as though the session had been measured — the run that
             # examined zero of its own sources still reported "9 (4.7%)".
             print(f"  (repo-wide, not this session: {total_with_cm}/{total_t12} "
-                  f"T1-{tier_max} sources mined, {coverage_pct:.1f}%)")
+                  f"T1-{tier_max} sources HAVE a mining row, {coverage_pct:.1f}%; "
+                  f"{total_mined}/{total_t12} read citation_mining_status='mined', "
+                  f"{mined_pct:.1f}% -- the ruling's column, and the smaller number is "
+                  f"the one that answers 'is it mined')")
         else:
             print(f"  Total in scope: {total_t12}")
             print(f"  Total with citation_mining row: {total_with_cm} ({coverage_pct:.1f}%)")
+            print(f"  Total citation_mining_status='mined': {total_mined} "
+                  f"({mined_pct:.1f}%)  <- the owner ruling's column")
         if verdict == "NOTHING-IN-SCOPE":
             print()
             print(f"  Nothing was checked. {session!r} logged no slug-linked "

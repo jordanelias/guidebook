@@ -1,0 +1,101 @@
+# Named, versioned screens for citation-mining relevance counts.
+#
+# WHY THIS FILE EXISTS. A backward mining pass reports a YIELD: how many of an anchor's
+# deposited references are relevant to the parameter under study. Until 2026-09-18 that
+# number was produced by a regex typed inline into the session's shell history, fresh
+# each batch and recorded nowhere. Three consequences, all measured:
+#
+#   1. BATCHES WERE COMPARED THAT USED DIFFERENT INSTRUMENTS. Batch 16 screened with a
+#      24-term regex; batch 17 screened with 15 terms and put both sets of numbers in
+#      one "RUNNING TALLY". A pre-registered floor calibrated on the wider screen was
+#      then scored on the narrower one. Never like-for-like, and nothing said so.
+#   2. THE INSTRUMENT WAS SWAPPED AFTER THE RESULTS WERE SEEN. Batch 17 reported a
+#      prediction PASSING under one screen, then declared the hypothesis FALSIFIED under
+#      a second screen written afterwards. Whatever the truth of the hypothesis, that
+#      sequence cannot establish it: DR-2026-05-09 forbids a prior chosen after the
+#      results, and choosing the dependent variable afterwards is the same move.
+#   3. THE RETRACTION WAS ITSELF UNVALIDATED. "The strict screen inverts the original
+#      ranking" was published without re-deriving REF-00985 -- the anchor that founded
+#      the hypothesis -- which tops BOTH screens. Re-derive before quoting; that is what
+#      `scripts/research/mining_screen.py` is for.
+#
+# So: a yield is now DERIVED by naming a screen in this file against a persisted
+# payload, and a recorded yield carries the screen name and version that produced it.
+# A number without those is not a measurement (CLAUDE.md rule 7a: a number is written
+# as the command that computes it).
+#
+# ADDING A SCREEN IS CHEAP; CHANGING ONE IN PLACE IS NOT. Editing a screen's terms
+# silently re-scores every yield ever recorded against its name. Add a new name with a
+# new version instead, and leave the old one readable so past numbers stay reproducible.
+
+version: 1
+
+screens:
+
+  slope-strict:
+    version: 1
+    added: 2026-09-18
+    description: >
+      Slope-only. A reference counts when its title names the geometric quantity under
+      study. This is the narrow instrument: it will miss a slope paper whose title says
+      only "uphill" or "incline angle", so a zero here is weak evidence of absence and
+      a hit is strong evidence of presence.
+    match: title
+    terms:
+      - ramp
+      - slope
+      - incline
+      - gradient
+      - grade
+      - cross-?slope
+
+  slope-loose:
+    version: 1
+    added: 2026-09-18
+    description: >
+      Slope plus its built-environment and propulsion neighbourhood. DO NOT READ A COUNT
+      FROM THIS SCREEN AS A SLOPE-RELEVANCE COUNT. `propuls` and `accessib` match any
+      wheelchair-propulsion or accessibility paper whatever its independent variable, so
+      on a propulsion anchor this screen mostly counts "cites propulsion papers", which
+      is trivially true of a propulsion paper. Measured: REF-00979 scores 19 of 30 here
+      and 2 of 30 under slope-strict. Retained because it is the instrument every yield
+      recorded before 2026-09-18 used, and a past number cannot be compared to a present
+      one without it.
+    match: title
+    terms:
+      - ramp
+      - slope
+      - incline
+      - gradient
+      - grade
+      - cross-?slope
+      - sidewalk
+      - pavement
+      - curb
+      - kerb
+      - pathway
+      - trail
+      - accessib
+      - propuls
+      - ascend
+
+  slope-strict-plus-motion:
+    version: 1
+    added: 2026-09-18
+    description: >
+      slope-strict widened by the words a slope study uses when it names the ACT rather
+      than the geometry. Added because slope-strict misses REF-00979's reference to
+      "level and uphill wheelchair propulsion", which is a slope paper by any reading.
+      Narrower than slope-loose: it does not admit bare `propuls` or `accessib`.
+    match: title
+    terms:
+      - ramp
+      - slope
+      - incline
+      - gradient
+      - grade
+      - cross-?slope
+      - uphill
+      - downhill
+      - ascent
+      - descent

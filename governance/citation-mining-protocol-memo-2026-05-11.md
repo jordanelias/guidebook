@@ -30,7 +30,14 @@ Two new hooks should be added *ahead of* the existing Phase 1 set (commit-format
 
 **Trigger:** any commit that touches `data/guidebook.db` with an INSERT to `evidence_sources` of a row with `tier IN (1, 2)`.
 
-**Check:** for each new Tier 1-2 ref_id, verify a matching row exists in `citation_mining` with `global_ref_id = ref_id`. If `backward = 1`, accept (mining is done). If `backward = 0 AND deferred_reason IS NOT NULL`, accept (explicit deferral). Otherwise: warning at commit time, block at session-close time.
+**Check:** for each new Tier 1-2 ref_id, verify a matching row exists in `citation_mining` with `global_ref_id = ref_id`. If `evidence_sources.citation_mining_status = 'mined'`, accept (mining is done). If a `deferred_reason` stands, accept (explicit deferral, and the ruling's *"deferred is okay so long as it runs eventually"* applies). Otherwise: warning at commit time, block at session-close time.
+
+> **SUPERSEDED READING, 2026-09-18.** This said *"If `backward = 1`, accept (mining is done)"*.
+> Owner ruling of that date: *executed is `mined`*. `log-mining` raises the direction flag on a
+> DEFERRED pass too, so `backward = 1` accepted rows where nothing had been searched. This memo's
+> own status is "decisions pending"; it is corrected rather than deleted because the check it
+> describes is implemented in `scripts/audit/citation_mining_completeness.py`, which was swept onto
+> the ruling's column on the same date.
 
 **Enforcement level:** warn first month, block thereafter.
 

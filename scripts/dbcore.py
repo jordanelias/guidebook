@@ -466,6 +466,46 @@ def check_values(conn, table: str, column: str) -> set:
     return {v.strip().strip("'\"") for v in m.group(1).split(",") if v.strip()}
 
 
+def check_expression(conn, table: str, column: str) -> str:
+    """The raw CHECK expression a column declares, or None if it declares none.
+
+    `check_values` above answers "which values does this column permit", and can only
+    answer it for CHECKs written as a closed `IN (...)` list. A CHECK can also declare
+    a SHAPE rather than a set -- `gaps.status` declares
+    `CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%')` -- and for those
+    `check_values` returns the empty set, which its own docstring warns means
+    "no vocabulary declared" to every caller that reads it.
+
+    A checker that wants to assert the column's own rule, whatever shape it is in, asks
+    for the EXPRESSION and evaluates it in SQL. That is strictly derived: whatever the
+    schema declares is what gets asserted, and a migration that changes the declaration
+    changes the assertion in the same commit. It replaces the pattern rule 8 names
+    outright -- a list maintained alongside the thing it describes, where the list and
+    the thing drift and only the list is checked. Measured 2026-09-18: test_db_integrity
+    B06 kept a 12-value tuple for this column, narrower than the LIKE form the column
+    itself declares, and turned red on a value the writer and the schema both accepted.
+    """
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name=?", (table,)
+    ).fetchone()
+    if not row or not row[0]:
+        return None
+    ddl = _strip_sql_line_comments(row[0])
+    # Balanced-paren scan from each `CHECK (` that mentions this column, so a CHECK
+    # containing its own parens (a LIKE disjunction, a nested AND) is returned whole.
+    # A regex with `[^)]*` truncates those at the first inner `)` -- which is exactly
+    # the bug the `\(?` patch above works around for one migration's shape.
+    for m in re.finditer(r"CHECK\s*\(", ddl, re.I):
+        depth, i = 1, m.end()
+        while i < len(ddl) and depth:
+            depth += (ddl[i] == "(") - (ddl[i] == ")")
+            i += 1
+        expr = ddl[m.end():i - 1].strip()
+        if re.search(r"\b%s\b" % re.escape(column), expr):
+            return expr
+    return None
+
+
 def check_declared(conn, table: str, column: str, value, context: str):
     """Refuse a value the column's CHECK constraint would reject, naming the set."""
     allowed = check_values(conn, table, column)
