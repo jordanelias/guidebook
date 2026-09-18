@@ -1108,6 +1108,19 @@ def main():
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
+    p_lss = sub.add_parser(
+        "link-source-slug",
+        help="Cross-file an ADMITTED source to an ADDITIONAL slug (R9)")
+    p_lss.add_argument("--ref-id", required=True)
+    p_lss.add_argument("--slug", required=True,
+                       help="Target slug. Vocabulary is the slugs table's own.")
+    p_lss.add_argument("--rationale", required=True,
+                       help="WHICH CLAIM of this source bears on THIS slug. The "
+                            "link is a judgement and the warrant is stored with it; "
+                            "a link with no rationale cannot be told from a mis-file.")
+    p_lss.add_argument("--session", required=True)
+    p_lss.add_argument("--dry-run", action="store_true")
+
     p_ul = sub.add_parser("update-locator", help="Move a lead's status in the clue store")
     p_ul.add_argument("--ref-id", required=True)
     p_ul.add_argument("--status", required=True,
@@ -2234,6 +2247,10 @@ def main():
         _emit(retire_specification(args.specification_id, reason=args.reason,
                                    superseded_by=args.superseded_by,
                                    session=args.session, dry_run=args.dry_run))
+    elif args.command == "link-source-slug":
+        _emit(link_source_slug(args.ref_id, args.slug, args.rationale,
+                               session=args.session, dry_run=args.dry_run))
+
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
                              reason=args.reason, dry_run=args.dry_run))
@@ -5718,6 +5735,59 @@ def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str,
             [ref_id, slug, local_ref_id,
              *audit(session).values()]
         )
+
+
+def link_source_slug(ref_id: str, slug: str, rationale: str,
+                     session: str, dry_run: bool = False):
+    """Cross-file an ALREADY-ADMITTED source to an ADDITIONAL slug (R9).
+
+    WHY THIS EXISTS. `add-source` refuses a second call for a ref_id with
+    "R9: cross-file the existing ref_id rather than duplicating" -- and until
+    2026-09-18 no command did that, so the instruction named an action the CLI
+    could not perform. Measured the day this was written: ALL 16 sources in
+    evidence_sources were linked to exactly ONE slug, and not one had ever been
+    cross-filed. That is not a research finding about the corpus; it is the
+    shape of the missing writer.
+
+    Owner directive 2026-09-18: "you search by slug, but you have to adjudicate
+    by all slugs in a category and stuff for each source" -- the search is
+    scoped, the ADMISSION is not. A source retrieved under one slug is evidence
+    for every slug it actually speaks to.
+
+    local_ref_id is DERIVED, never asked for (rule 8): it is the next unused
+    label within the target slug, and asking an operator to retype what
+    `MAX(local_ref_id)+1` already knows is the anti-pattern that rule names.
+
+    --rationale is the half that IS judgment, so the script demands it and
+    stores it: which claim of this source bears on THIS slug. A link with no
+    warrant is indistinguishable from a mis-file.
+    """
+    if not (rationale or "").strip():
+        raise Refusal(
+            "--rationale is required. The link is a JUDGEMENT that this source "
+            "speaks to this slug; without the warrant it cannot be told apart "
+            "from a mis-file. Name the claim that bears on this slug.")
+    with connect(readonly=True) as conn:
+        if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
+                            (ref_id,)).fetchone():
+            raise Refusal(
+                f"{ref_id} is not in evidence_sources. This command cross-files "
+                f"an ADMITTED source to a further slug; it does not admit one. "
+                f"Use add-source first.")
+        if not conn.execute("SELECT 1 FROM slugs WHERE slug=?", (slug,)).fetchone():
+            raise Refusal(
+                f"slug '{slug}' is not in the slugs registry. The vocabulary is "
+                f"the table's own, never a guess.")
+        if conn.execute("SELECT 1 FROM source_slug_links WHERE ref_id=? AND slug=?",
+                        (ref_id, slug)).fetchone():
+            raise Refusal(f"{ref_id} is already linked to '{slug}'. Nothing to do.")
+        taken = [r[0] for r in conn.execute(
+            "SELECT local_ref_id FROM source_slug_links WHERE slug=?", (slug,))]
+    nums = [int(re.sub(r"\D", "", t)) for t in taken if re.sub(r"\D", "", t)]
+    local_ref_id = str(max(nums) + 1) if nums else "1"
+    insert_source_slug_link(ref_id, slug, local_ref_id, session, dry_run=dry_run)
+    return {"ref_id": ref_id, "slug": slug, "local_ref_id": local_ref_id,
+            "rationale": rationale, "dry_run": dry_run}
 
 
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:

@@ -91,3 +91,29 @@ empty, which would mean the anchor is a dead end rather than a seam.
   found four ungraded sources, so this batch does not add a fifth.
 - **R9/R10:** pre-check every DOI; re-retrieve every locator. No admission on a search snippet.
   Batch 13's Foundations falsification is the standing warning.
+
+---
+
+## 5. Priors added mid-batch, committed before the queries they describe
+
+**Why these exist.** `research_batch_dod` returned NON-COMPLIANT on R1 and R2 after the first five
+searches, and both failures are real rather than technicalities. R1: I framed the batch on T2 and ran
+no Co-1 pass, when R1 says Co-1 comes **first, no exceptions** and is co-primary with T1 under CRPD
+Art 4.3. R2: three anchors were admitted and the citation-mining register is empty. Remediating, not
+waiving.
+
+**Q6 — Co-1, lived experience of ramp gradient from disabled people's own accounts.**
+*Prior:* the Co-1 seam for ramps has been worked hard already — batch 09 admitted REF-00989 and
+REF-00993 and batches 13–14 found the professional-body route empty — so I expect **LOW yield and
+high overlap**, and I expect any new material to be testimonial rather than dimensional. I expect
+**0–1 admissions**. FALSIFIED IF a disabled people's organisation states or contests a gradient
+figure, which would be a Co-1 value and would meet spec 7's falsification condition from the
+co-primary side rather than the T1/T2 side.
+
+**Q7 — R2 citation mining, forward and backward, on REF-00977 (Kapsalis 2022).**
+*Prior:* Kapsalis is a 2022 systematic review with 122 citations, so the **forward** set should be
+substantial and recent, and the **backward** set is its own 48 included studies. I expect the
+backward set to be the richer of the two for this parameter, because the included studies are
+primary work on physical barriers. I expect **3–10 candidates worth staging** and **0–2 admissions**
+within this batch's remaining scope. FALSIFIED IF the forward set is dominated by methodological or
+mapping papers with no dimensional or argumentative content.
