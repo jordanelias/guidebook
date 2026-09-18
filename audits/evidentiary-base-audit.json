@@ -81,7 +81,7 @@
         "JP": 4,
         "INT": 2,
         "US": 2,
-        "GB": 2,
+        "UK": 2,
         "BE": 2,
         "AU": 2,
         "DE": 1,
@@ -92,7 +92,7 @@
         "US": 2,
         "DE": 1,
         "JP": 4,
-        "GB": 2,
+        "UK": 2,
         "BE": 2,
         "AU": 2,
         "HR": 1
@@ -108,20 +108,20 @@
       "n_en": 8,
       "n_nonen": 12,
       "pct_en": 40.0,
-      "anglo_core": 4,
+      "anglo_core": 6,
       "supra": 2,
-      "non_anglo": 10,
-      "pct_anglo_core": 25.0,
+      "non_anglo": 8,
+      "pct_anglo_core": 37.5,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 84.1,
+      "score": 83.2,
       "components": {
         "A": 20,
         "B": 22.0,
         "C": 20,
         "D": 12,
-        "E": 10.1
+        "E": 9.2
       },
       "grade": "A"
     },
@@ -158,13 +158,13 @@
       "jurs": {
         "INT": 1,
         "US": 1,
-        "GB": 1,
+        "UK": 1,
         "HR": 1
       },
       "jurs_clean": {
         "INT": 1,
         "US": 1,
-        "GB": 1,
+        "UK": 1,
         "HR": 1
       },
       "n_lang": 1,
@@ -174,20 +174,20 @@
       "n_en": 4,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 1,
+      "anglo_core": 2,
       "supra": 1,
-      "non_anglo": 2,
-      "pct_anglo_core": 25.0,
+      "non_anglo": 1,
+      "pct_anglo_core": 50.0,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 56.6,
+      "score": 54.8,
       "components": {
         "A": 8,
         "B": 30,
         "C": 13,
         "D": 0,
-        "E": 5.6
+        "E": 3.8
       },
       "grade": "C"
     },
@@ -224,12 +224,12 @@
       "jurs": {
         "INT": 1,
         "US": 1,
-        "GB": 1
+        "UK": 1
       },
       "jurs_clean": {
         "INT": 1,
         "US": 1,
-        "GB": 1
+        "UK": 1
       },
       "n_lang": 1,
       "langs": {
@@ -238,20 +238,20 @@
       "n_en": 3,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 1,
+      "anglo_core": 2,
       "supra": 1,
-      "non_anglo": 1,
-      "pct_anglo_core": 33.3,
+      "non_anglo": 0,
+      "pct_anglo_core": 66.7,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 56.0,
+      "score": 53.5,
       "components": {
         "A": 8,
         "B": 30,
         "C": 13,
         "D": 0,
-        "E": 5.0
+        "E": 2.5
       },
       "grade": "C"
     },
@@ -285,12 +285,12 @@
       "polluted_jur": {},
       "jurs": {
         "US": 1,
-        "GB": 1,
+        "UK": 1,
         "HR": 1
       },
       "jurs_clean": {
         "US": 1,
-        "GB": 1,
+        "UK": 1,
         "HR": 1
       },
       "n_lang": 1,
@@ -300,20 +300,20 @@
       "n_en": 3,
       "n_nonen": 0,
       "pct_en": 100.0,
-      "anglo_core": 1,
+      "anglo_core": 2,
       "supra": 0,
-      "non_anglo": 2,
-      "pct_anglo_core": 33.3,
+      "non_anglo": 1,
+      "pct_anglo_core": 66.7,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 56.0,
+      "score": 53.5,
       "components": {
         "A": 8,
         "B": 30,
         "C": 13,
         "D": 0,
-        "E": 5.0
+        "E": 2.5
       },
       "grade": "C"
     },

@@ -13,7 +13,7 @@ This audit scores every research slice on the six requested dimensions — (1) a
 - **Grade distribution:** A=1 · B=0 · C=3 · D=1 · E=0 · F=75  (A≥80, B≥65, C≥50, D≥35, E>0, F=empty).
 - **Tier profile is code-and-clinical heavy, synthesis-light.** Of linked instances: T1=5, T2=5, T3=12, T4=1, T5=4, T6=5. Only **5 Tier-2 (systematic-review / evidence-based-standard) instances** exist across the whole corpus — the synthesis tier that best anchors best-practice claims is the thinnest.
 - **Anchoring strength, banded.** Under the weighted-strength model (§8) every tier can anchor a best-practice claim, weighted by tier: **22/32 (69%)** of instances anchor at ● full strength (T1/Co-1/T2/Co-2/T3-clinical, adjudicated), 5 at ◐ partial (T4/T5 standards practice), 5 at ○ weak (T3-grey/T6/grey floor). By slice: **5 full · 0 partial · 0 weak-only** (of 5 evidenced). Every evidenced slice anchors at ● full or ◐ partial strength — none rests on a weak-only base.
-- **Anglophone concentration is the dominant quality risk.** **20/32 (62%) of linked sources are English-language**; only 12 are non-English. By jurisdiction, 8 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 5 supranational (INT/EU/ISO), 15 other, 4 unrecorded.
+- **Anglophone concentration is the dominant quality risk.** **20/32 (62%) of linked sources are English-language**; only 12 are non-English. By jurisdiction, 13 instances are native-Anglophone (US/UK/AU/CA/NZ/IE), 5 supranational (INT/EU/ISO), 10 other, 4 unrecorded.
 - **Search breadth ≠ evidentiary yield.** Per the frozen pre-log coverage grids, slices were searched across **0 languages** and ~0 jurisdictions, but 0 searched languages () returned **zero** usable sources in **every** slice. The bias lives in what converted to evidence, not in search effort.
 
 ## 2. Method & definitions
@@ -76,7 +76,7 @@ Median linked sources among non-empty slices: **3**. Largest bases: `accessible-
 **Strength-band split of instances:** **22/32 (69%)** anchor at ● full (T1/Co-1/T2/Co-2/T3-clinical), 5 (16%) at ◐ partial (T4/T5 standards), and 5 (16%) at ○ weak (T3-grey/T6/grey floor). No evidenced slice rests on a ○ weak-only base — every slice anchors at ● full or ◐ partial strength (see the band breakdown in §4).
 
 ### (3) Jurisdictions sourced
-Distinct jurisdiction strings across the corpus: **8**, none mis-filed as language codes in the `jurisdiction` column. Top: US (6), INT (5), GB (5), JP (4), HR (3), BE (2), AU (2), DE (1).
+Distinct jurisdiction strings across the corpus: **8**, none mis-filed as language codes in the `jurisdiction` column. Top: US (6), INT (5), UK (5), JP (4), HR (3), BE (2), AU (2), DE (1).
 
 **0 non-empty slices draw on ≤1 jurisdiction** — monojurisdictional bases whose values may not transfer across code regimes. Separately, **4 source-instances carry no jurisdiction at all** (NULL) — mostly clinical/synthesis sources with no single national home; these are excluded from every jurisdiction-share denominator.
 
@@ -95,8 +95,8 @@ Distinct source languages: **5** (`en`/`eng` merged; raw ISO codes may be one mo
 
 ### (5) English / Anglophone bias
 - **Language axis:** 62% English. 4 slices 100% English.
-- **Jurisdiction axis (all 32 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **8** · supranational/English-medium (INT/EU/ISO) **5** · English-official + other non-Anglophone **15** · **no jurisdiction recorded 4**. (These four sum to 32 = all instances.)
-- **1 slices are doubly-concentrated** (≥90% English *and* ≥50% native-Anglophone jurisdiction): `threshold-and-level-access`.
+- **Jurisdiction axis (all 32 instances):** native-Anglophone (US/UK/AU/CA/NZ/IE) **13** · supranational/English-medium (INT/EU/ISO) **5** · English-official + other non-Anglophone **10** · **no jurisdiction recorded 4**. (These four sum to 32 = all instances.)
+- **4 slices are doubly-concentrated** (≥90% English *and* ≥50% native-Anglophone jurisdiction): `mobility-built-environment`, `accessible-design-failures-poor-performance`, `stair-ramp-threshold-biomechanics-accessibility`, `threshold-and-level-access`.
 - **Process counter-evidence:** non-English/Global-South *searches were run* (0 languages across 0 of 80 slices per the frozen `search_languages` grid — a pre-log record, not a logged search) but  yielded nothing linkable in any slice. The gap is a *yield/recovery* gap, not a *search-effort* gap.
 
 ### (6) Overall quality of the evidentiary base
@@ -115,10 +115,10 @@ Legend: **N** linked sources · **Band** strongest anchoring band (● full / �
 
 | # | Grade | Score | Slice | Topic | N | Band | ● | ◐ | ○ | ⊘ | Tiers | JUR | LNG | %EN | %ANG | A·B·C·D·E |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **A** | 84.1 | `accessible-circulation-geometry` | entrances-and-circulation | 20 | ● | 10 | 5 | 5 | 0 | T1×5,T2×2,T3×3,T4×1,T5×4,T6×5 | 8 | 5 | 40.0 | 25.0 | 20·22.0·20·12·10.1 |
-| 2 | **C** | 56.6 | `mobility-built-environment` | population-general | 4 | ● | 4 | 0 | 0 | 0 | T2×1,T3×3 | 4 | 1 | 100.0 | 25.0 | 8·30·13·0·5.6 |
-| 3 | **C** | 56.0 | `accessible-design-failures-poor-performance` | frameworks-and-methodology | 3 | ● | 3 | 0 | 0 | 0 | T2×1,T3×2 | 3 | 1 | 100.0 | 33.3 | 8·30·13·0·5.0 |
-| 4 | **C** | 56.0 | `stair-ramp-threshold-biomechanics-accessibility` | entrances-and-circulation | 3 | ● | 3 | 0 | 0 | 0 | T3×3 | 3 | 1 | 100.0 | 33.3 | 8·30·13·0·5.0 |
+| 1 | **A** | 83.2 | `accessible-circulation-geometry` | entrances-and-circulation | 20 | ● | 10 | 5 | 5 | 0 | T1×5,T2×2,T3×3,T4×1,T5×4,T6×5 | 8 | 5 | 40.0 | 37.5 | 20·22.0·20·12·9.2 |
+| 2 | **C** | 54.8 | `mobility-built-environment` | population-general | 4 | ● | 4 | 0 | 0 | 0 | T2×1,T3×3 | 4 | 1 | 100.0 | 50.0 | 8·30·13·0·3.8 |
+| 3 | **C** | 53.5 | `accessible-design-failures-poor-performance` | frameworks-and-methodology | 3 | ● | 3 | 0 | 0 | 0 | T2×1,T3×2 | 3 | 1 | 100.0 | 66.7 | 8·30·13·0·2.5 |
+| 4 | **C** | 53.5 | `stair-ramp-threshold-biomechanics-accessibility` | entrances-and-circulation | 3 | ● | 3 | 0 | 0 | 0 | T3×3 | 3 | 1 | 100.0 | 66.7 | 8·30·13·0·2.5 |
 | 5 | **D** | 46.8 | `threshold-and-level-access` | entrances-and-circulation | 2 | ● | 2 | 0 | 0 | 0 | T2×1,T3×1 | 2 | 1 | 100.0 | 50.0 | 4·30·9·0·3.8 |
 | 6 | **F** | 0 | `accessibility-feature-market-value-uplift-framing` | economics | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
 | 7 | **F** | 0 | `accessible-bathroom-and-grab-bar` | bathrooms-and-wet-areas | 0 | — | 0 | 0 | 0 | 0 | — | 0 | 0 | — | — | 0·0·0·0·0 |
@@ -290,7 +290,7 @@ Several name high-salience topics where an empty base is a material coverage gap
 2. **Convert non-English search into non-English evidence.** The pre-log grids record searches in 0 languages but the corpus is ~62% English. Target the languages already searched-with-results but under-linked, and the zero-yield languages () explicitly.
 3. **De-risk monojurisdictional slices.** 0 evidenced slices rest on ≤1 jurisdiction; flag their numeric thresholds as non-transferable until a second regime is sourced.
 4. **Fill or formally park the empty slices.** Move the 75 un-started slices into an active search queue or an explicit deferred state so they stop reading as silent gaps.
-5. **Treat the doubly-concentrated slices as citation-risk.** The 1 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
+5. **Treat the doubly-concentrated slices as citation-risk.** The 4 ≥90%-English-and-≥50%-Anglophone slices are where global-applicability claims are weakest.
 
 ## 7. Limitations & what this audit does *not* claim
 

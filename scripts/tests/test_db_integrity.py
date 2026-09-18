@@ -1529,7 +1529,17 @@ def run_checks(db_path):
                               .get("records") or [])}
         live = {(j, sn) for j, sn in conn.execute(
             "SELECT jurisdiction, standard_name FROM research_code_leads")}
-        lost = sorted(archived - live)
+        # NORMALISE THE JURISDICTION SPELLING ON BOTH SIDES BEFORE COMPARING
+        # (2026-09-18). The archive is frozen and holds `GB`; the live table was
+        # normalised to `UK` because jurisdiction-philosophy.md rules GB rejected.
+        # Comparing raw pairs then reported 17 leads "lost" that had not moved at
+        # all -- only their spelling had. What this check is FOR, in its own words
+        # above, is "that nothing the restore recovered goes missing", and a
+        # rename loses nothing. The alternative -- rewriting `_archived/` to match
+        # a later ruling -- would falsify a frozen record to keep a check quiet.
+        _JUR_CANON = {"GB": "UK"}
+        _norm = lambda pair: (_JUR_CANON.get(pair[0], pair[0]), pair[1])
+        lost = sorted({_norm(p) for p in archived} - {_norm(p) for p in live})
         n_db = conn.execute("SELECT COUNT(*) FROM research_code_leads").fetchone()[0]
         record("L02", "every archived code lead is still in research_code_leads",
                not lost,
