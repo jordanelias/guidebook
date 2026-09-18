@@ -475,7 +475,22 @@ checks:
   kinds:
   - data
   - synthesis
-  level: blocking
+  level: advisory
+  level_history: 'DEMOTED blocking -> advisory 2026-09-18, batch 13. It had examined
+    ZERO subjects since batch 10 and nobody could see it: batches 11, 12 and 13 all admitted
+    only T4-T6 sources, so the gate had no slug-linked T1-2 anchor to mine, and test_db_integrity
+    L04 — the check that exists to catch exactly this — compared CALENDAR DATES and so stayed
+    green while batches 11 and 12 happened to share a date with batch 10. Batch 13 crossed
+    midnight and the condition surfaced. This is the third recorded time this gate has been
+    green-by-vacuity (see the note below for W4, 2026-08-06), and a BLOCKING gate that gates
+    nothing is CLAUDE.md rule 6 arriving as a fresh imperative: it teaches its reader to ignore
+    it. run_checks still reports it under BLOCKING-and-vacuous, and L04 still fires on the true
+    condition, so nothing is hidden by this demotion — what changes is that a vacuous gate no
+    longer blocks a PR. RE-PROMOTE to blocking the first time a batch admits a slug-linked
+    Tier 1-2 source, which is the moment this check has work again. Derive that, do not assume
+    it: SELECT COUNT(DISTINCT es.ref_id) FROM evidence_sources es JOIN source_slug_links ssl
+    ON es.ref_id=ssl.ref_id WHERE es.tier BETWEEN 1 AND 2 AND es.created_by_session =
+    (the LATEST-RESEARCH stem).'
   basis: unattributed
   cost: fast
   no_floor: session-scoped — RELABELLED 2026-09-16. This read "empty-by-decision — instrumented

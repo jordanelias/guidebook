@@ -1580,11 +1580,16 @@ def run_checks(db_path):
         _pairs = [(m.group(1), n) for n in _in_scope
                   if (m := _re.match(r"session_(\d{4}-\d{2}-\d{2})", n))]
         _newest = max(_pairs)[1] if _pairs else None
-        _pd = (_re.match(r"session_(\d{4}-\d{2}-\d{2})", _stem) or None)
-        _pd = _pd.group(1) if _pd else None
-        _nd = (_re.match(r"session_(\d{4}-\d{2}-\d{2})", _newest).group(1)
-               if _newest else None)
-        _drifted = bool(_newest and _pd and _nd and _pd != _nd)
+        # THE TRIGGER IS THE SUBJECT COUNT, NOT A CALENDAR COMPARISON. Until
+        # 2026-09-18 this fired only when the pointer's DATE differed from the
+        # newest in-scope session's date, so a pointed session with no subjects
+        # passed whenever the two happened to fall on the same day. Measured when
+        # batch 13 crossed midnight: batches 11 and 12 held 0 slug-linked T1-2
+        # sources each and both passed, because batch 10 — the last session that
+        # held one — was also dated 2026-09-17. The gate had examined nothing for
+        # three batches and this check, which exists to say so, was green by
+        # coincidence. A date tie is not evidence that a gate has work.
+        _drifted = True
         # Whether the POINTED session itself has subjects — queried, not assumed.
         # The standalone version asserted "holds no slug-linked T1-2 sources" from
         # a date comparison alone, so the message was true only by luck.
@@ -1593,14 +1598,32 @@ def run_checks(db_path):
             "JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id "
             "WHERE es.tier BETWEEN 1 AND 2 AND es.created_by_session IN (?, ?)",
             (_stem, _stem + ".md")).fetchone()[0]
+        # AND THE DEMOTION REMEDY THIS CHECK ADVERTISES NOW ACTUALLY WORKS. The
+        # comment above has always offered two ways out — advance the pointer, or
+        # demote citation_mining_session to advisory — but the condition never read
+        # the registry, so demoting it cleared nothing. A check whose stated remedy
+        # does not clear it teaches its reader that the message is decorative.
+        # Read the level from the registry, which is the single inventory (§8);
+        # if it cannot be read, keep failing rather than passing on an unknown.
+        _gate_blocking = True
+        try:
+            import yaml as _yaml
+            _reg = _yaml.safe_load(open(os.path.join(REPO, "governance", "check-registry.yaml")))
+            _cm = [c for c in (_reg.get("checks") or []) if c.get("id") == "citation_mining_session"]
+            if _cm:
+                _gate_blocking = (_cm[0].get("level") == "blocking")
+        except Exception:
+            pass
         record("L04", "sessions/LATEST-RESEARCH gives citation_mining_session a subject",
-               not (_drifted and _own == 0),
+               not (_drifted and _own == 0 and _gate_blocking),
                f"pointer names {_ptr!r}, which holds {_own} slug-linked Tier 1-2 "
                f"source(s); the newest session inside the gate's scope is "
                f"{_newest!r}. With 0 subjects that BLOCKING gate examines nothing "
                f"and passes. Advance the pointer (and expect it to go red on a "
-               f"real backlog), or demote the gate to advisory until it has work."
-               if (_drifted and _own == 0) else "",
+               f"real backlog), or demote the gate to advisory until it has work "
+               f"— that second remedy is read from governance/check-registry.yaml "
+               f"and does now clear this check."
+               if (_drifted and _own == 0 and _gate_blocking) else "",
                # L04 is the check that exists BECAUSE of vacuity: it asks whether
                # another gate has a subject. Its own subject is the pointer it read
                # — one, and only when a pointer was found at all.
