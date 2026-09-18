@@ -139,8 +139,25 @@ def audit():
     # Tuple rows, not sqlite3.Row -- this module's connection sets no row_factory,
     # and indexing by name here raised TypeError on the first run. (ref_id, title,
     # latest_search) is the SELECT order above; keep them in step.
-    pre_writer = [r for r in _no_prior if (r[2] or "") < PRIOR_REFUSAL_LANDED]
-    verified_no_prior = [r for r in _no_prior if (r[2] or "") >= PRIOR_REFUSAL_LANDED]
+    # THE EMPTY STRING IS NOT A DATE, AND SPLITTING ON IT EXEMPTED THE WORST CASE.
+    # Corrected 2026-09-18. `latest_search` is COALESCE(MAX(v.admitted_at), '') over a
+    # LEFT JOIN, so it is '' in TWO different situations: the source was admitted before
+    # the cutoff, and THE SOURCE HAS NO ADMITTING SEARCH AT ALL. `'' < '2026-09-03'` is
+    # True, so the second case fell into `pre_writer` and was printed as a legacy row
+    # "NOT to be backfilled" — permanently, for every future source, however recently
+    # admitted. Measured on REF-01003 and REF-01004, admitted 2026-09-18 with no
+    # search_admissions edge: both were excused and excluded from TOTAL ISSUES by a
+    # check whose entire purpose is to catch a source with no recorded prior.
+    #
+    # That is CLAUDE.md §5(a) inside the check built to prevent it: a gate passing
+    # having examined nothing, because the thing it should have examined looked like
+    # something it was told to skip. The three-way split below names the missing edge as
+    # its own issue rather than letting it borrow the legacy exemption.
+    no_admitting_search = [r for r in _no_prior if not (r[2] or "").strip()]
+    pre_writer = [r for r in _no_prior
+                  if (r[2] or "").strip() and r[2] < PRIOR_REFUSAL_LANDED]
+    verified_no_prior = [r for r in _no_prior
+                         if (r[2] or "").strip() and r[2] >= PRIOR_REFUSAL_LANDED]
 
     # CHECK 8 (added 2026-05-10; REPOINTED 2026-08-25).
     #
@@ -217,6 +234,19 @@ def audit():
               f"is the artefact this field exists to prevent.)")
         for ref_id, title, _ in pre_writer[:5]:
             print(f"      · {ref_id}: {(title or '')[:60]}")
+    if no_admitting_search:
+        # A REAL ISSUE, AND A DIFFERENT ONE FROM A MISSING PRIOR. These sources have no
+        # search_admissions edge at all, so there is no path from the source back to the
+        # search that admitted it -- db.py:646 calls that edge "the only carrier of it".
+        # They are counted below; until 2026-09-18 they were silently sorted into the
+        # legacy exemption above because their empty admitted_at sorted before the cutoff.
+        print(f"  ⚠ {len(no_admitting_search)} source(s) have NO ADMITTING SEARCH at all "
+              f"-- not a missing prior but a missing edge: nothing links them to the "
+              f"search that admitted them. Fix with a compensating migration writing "
+              f"search_admissions and the search's results_admitted; do NOT backfill a "
+              f"prior onto a search that did not admit them.")
+        for ref_id, title, _ in no_admitting_search[:5]:
+            print(f"      · {ref_id}: {(title or '')[:60]}")
 
     print(f"\n[CHECK 8] Verified citations lacking search_queries_used: {len(verified_no_queries)}")
     for ref_id, title in verified_no_queries[:5]:
@@ -238,7 +268,8 @@ def audit():
     total_issues = (len(deficient) + len(unmatched_verified) + 
                     (1 if suspicious_grades else 0) + len(narrative_ci) + 
                     len(topic_evidence_pattern) + len(unlogged_none_found) +
-                    len(verified_no_prior) + len(verified_no_queries) +
+                    len(verified_no_prior) + len(no_admitting_search) +
+                    len(verified_no_queries) +
                     len(unmarked_langs))
     
     # EXAMINED: the corpus rows actually queried across checks 1-9, not the

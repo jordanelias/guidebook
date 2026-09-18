@@ -24,10 +24,25 @@ data/audit_graph.db-wal
 # construction (CLAUDE.md rule 6).
 data/audit_graph.db-journal
 
-# Scratch databases. A batch copies data/guidebook.db into its session folder to
-# write against (CLAUDE.md §4: scratch copy -> db.py -> emit -> migrate), and a
-# `git add -A` before the migration is emitted sweeps that ~4 MB copy into the
-# commit. That happened in batch 16 and again in batch 17, and neither could be
-# undone once pushed. The delta reaches main through the migration; the scratch
-# copy is a working file and never belongs in history.
-scratchpad/**/*.db
+# Scratch databases AND THEIR SIDECARS. A batch copies data/guidebook.db into its
+# session folder to write against (CLAUDE.md §4: scratch copy -> db.py -> emit ->
+# migrate), and a `git add -A` issued before the migration is emitted sweeps that
+# ~4 MB copy into the commit. The delta reaches main through the migration; the
+# scratch copy is a working file and never belongs in history.
+#
+# CORRECTED 2026-09-18, twice over, and both corrections matter.
+#
+# (1) The glob was `*.db`, which does not match the `-journal`, `-wal` and `-shm`
+#     sidecars. db.py's connect() no longer sets journal_mode=WAL, so these stores
+#     run in delete mode and drop a `-journal` beside the scratch copy mid-run --
+#     exactly the reason data/audit_graph.db-journal had to be listed above. The
+#     rule would have caught the database and left its journal. `*.db*` catches both.
+#
+# (2) The first version of this comment said the mistake "happened in batch 16 and
+#     again in batch 17". THAT IS FALSE and a code review caught it:
+#     `git rev-list --all --objects | grep -E '\.db$'` lists exactly ONE scratchpad
+#     blob across every ref, added in ca238cb by batch 17. Batch 16 removed its copy
+#     with `git rm --cached` BEFORE committing, so it never entered history. A
+#     hand-typed historical claim, wrong when written, in a governance file --
+#     CLAUDE.md rule 7a, which is the rule this file was being edited to honour.
+scratchpad/**/*.db*

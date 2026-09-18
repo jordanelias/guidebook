@@ -136,54 +136,81 @@ parameter publish advocacy and barrier testimony, not technical thresholds.** Th
 about where Co-1 evidence for a *numeric* parameter lives, and it should be tested against a
 parameter where lived experience is more directly dispositive before it is generalised.
 
-## 5. GAP-025's backlog: 10 → 8
+## 5. Corrections a code review forced, and what they say about the batch
 
-Items 2 and 3 discharged with `--discharge-deferral`, the mechanism batch 16 built after
-clearing a deferral blindly erased a forward pass. Item 1 (REF-01002 backward) is **blocked
-exactly as its own assignment predicted** — no DOI, so no deposit, so the reference list can
-only come from the article GAP-016 cannot get.
+**Sections 5–8 of this record were written for the first half and contradicted the database in
+five places until a code review caught them.** They said the batch admitted nothing, staged
+seven candidates, left 107/108 unadmitted, and owed a floor that §2 records as already tested.
+All false after the continuation. Rewritten here rather than patched line by line.
 
-## 6. Seven candidates staged, two of them strong
+**Provenance was broken on both admissions, in two ways.**
+- Neither had a `search_admissions` edge, and every search row read `results_admitted = 0` —
+  so no path existed from either source back to the search that admitted it. `db.py:646` calls
+  that edge *"the only carrier of it"*. The gate passed COMPLIANT over it.
+- Candidates 107/108 hung off **exec 71 — the Co-1 search whose own note reads ZERO YIELD**.
+  The batch's two best sources were attributed to a search reporting it found nothing.
 
-- **107 — Longmuir 2003**, *Impact of Running Slope and Cross Slope on the Difficulty Level of
-  Outdoor Pathways* (Environment and Behavior). A **second independent perceived-difficulty
-  study** on running slope, 23 participants, rating paths against proposed guidelines — and
-  **distance-conditioned** in the same way REF-01002's 7 % is conditioned on 20 ft and
-  REF-00996 states as its mechanism. Three sources, three methods, one conditioning structure.
-- **108 — Kim 2010** (HFES). Five slope levels crossed with **three rise heights** — the
-  rise-conditioned design this parameter has never had — plus perceived discomfort.
+**Root cause: the Consensus search that actually surfaced them was never logged.** It ran during
+the REF-01002 retrieval hunt and I did not treat a locator hunt as a screening search. Backfilled
+as **exec 77**, marked `backfill=1`, with the prior recorded as *absent* rather than reconstructed
+— DR-2026-05-09 forbids writing one after seeing results.
 
-Both reached through Consensus records, **not retrieved payloads**, so neither is admitted.
+**A check was silently excusing exactly this.** `research_protocol_audit` CHECK 7 split its legacy
+exemption on `(r[2] or "") < "2026-09-03"`, and `r[2]` is `''` both for a pre-cutoff row **and for
+a row with no admitting search at all**. So every future source with a missing edge was exempted
+forever, by the check built to catch it — CLAUDE.md §5(a) inside its own remedy. Fixed to a
+three-way split; it now surfaces **REF-00987**, a pre-existing case it had been masking.
+
+**Also corrected:** candidates 107/108 left `PENDING-VERIFICATION` after admission (and §8 then
+listed them as owed work, so the next batch would have re-retrieved two sources it holds);
+`citation_mining` notes citing exec 77/78 when the executions were 75/76 — and exec 77 now
+*exists*, so a stale pointer resolves to an unrelated row rather than to nothing; `volume` and
+`issue` NULL on both admissions while sitting in the persisted payloads.
+
+**And one correction I got wrong on the first attempt.** Closing GAP-018/027 as
+`CLOSED-SUPERSEDED` — accurate, accepted by the writer and by the column's own CHECK — turned
+**B06 red at 73/74**, because B06 enumerates a narrower curated list. Resolved with
+`CLOSED-DECIDED` rather than by widening the check: adding a value to a check to accommodate one
+I had just invented is the shape of disabling a test to get green. **GAP-032** records that B06
+is a curated vocabulary beside a column that declares its own — rule 8, in a test file.
+
+## 6. Gaps opened and closed
+
+**Opened:** GAP-026 (retrieval null), GAP-028 (the pre-1990 no-DOI layer), **GAP-029** (the
+predictor falsified), GAP-030 (GAP-008 blocks Rouvier), GAP-031 (three fields with no repair
+path), GAP-032 (B06's curated list).
+**Closed:** GAP-018 and GAP-027, both `CLOSED-DECIDED`, superseded by GAP-029.
+
+**GAP-031 distinguishes design from damage**, because the review conflated them: `journal_name`
+is NULL on all 25 rows with no writer (real gap); `evidence_population_match` has no amend verb,
+so a `--sample-size` I simply failed to pass is now unrepairable except by a second row that
+would read as a dissenting grade (real gap); **`author_count` NULL on all 25 is correct** —
+migration 063 writer-retired it, and authorship lives in `evidence_source_authors`.
 
 ## 7. What this batch did not do
 
-**It admitted nothing.** Four searches, zero admissions. The batch was convened to read one
-paper and could not obtain it; what it produced instead is two discharged deferrals, a passed
-prediction, a named foundation layer, and seven candidates.
+**It still moved no determination.** REF-01004 is T1 and states a value, but the cell stays
+undetermined because C10 blocks on REF-01002, unread. **Five consecutive batches on one
+parameter.**
 
-**It did not test the predictor more than once**, and it did not resolve the REF-01002 fourth
-author discrepancy — TRID prints *Weiner, Jerome M*, a search summary rendered it *Welner,
-J. M.*, neither is a retrieved authoritative index, and the stored row says Weiner and is
-flagged unconfirmed.
+It reached **9 searches and 2 admissions** — still under §12.2's minimum viable of 10–12 and
+3–4, after a first half that ran 4 and 0 and was closed as complete.
 
-## 7a. A gate that examined nothing, and why it is not the usual cause
+It did not re-derive any earlier mining yield under the strict screen, which GAP-029 says is
+owed for every figure in the register.
 
-`citation_mining_completeness --session <id>.md` returns **`NOTHING-IN-SCOPE`, `EXAMINED: 0`.**
-CLAUDE.md §12.3 warns that this reading usually means the stem/`.md` mismatch bit you — **it
-did not here.** The same session id on the bare stem runs the DoD gate to COMPLIANT over four
-search rows, so the id resolves; the check is scoped to T1–2 sources *admitted this batch*,
-and this batch admitted none. `run_checks` counts it under nothing-in-scope rather than green,
-which is the machinery behaving correctly.
+It did not resolve REF-01002's fourth-author discrepancy (TRID *Weiner* vs a summary's *Welner*),
+and the stored row carries an unconfirmed name.
 
-Recorded because §5(a) says to confirm a passing check had a subject, and because the two
-causes of `NOTHING-IN-SCOPE` — a misnamed session and an empty one — look identical in the
-output and mean opposite things.
+**And GAP-026 overstated one of its seven routes.** It records "SafetyLit 503"; the persisted
+artefact is `status: null, exit: 35, bytes: 0` — a connect failure, not an HTTP 503 with a body.
+One of the seven routes evidencing a P1 null is evidenced by an empty file.
 
 ## 8. Owed
 
-1. **GAP-016 / GAP-028 (P1)** — both need a **library or archive route**, not another
-   retrieval ladder. Plan them together.
-2. **GAP-027 (P2)** — record a floor for REF-00983 and REF-00986 before mining them.
-3. **Candidates 107 and 108** — retrieve and tier; 107 is the strongest acceptability lead
-   the corpus has had after REF-01002.
-4. GAP-025's remaining eight deferrals.
+1. **GAP-016 / GAP-028 (P1)** — a library or archive route, not another retrieval ladder.
+2. **GAP-029 (P1)** — re-derive every recorded mining yield under the strict screen.
+3. **GAP-030 (P1)** — a `correct-locator` verb; GAP-008 has now blocked a verified open-access
+   admission twice.
+4. **GAP-025's remaining six deferrals**; REF-01003/REF-01004 backward, with the **strict**
+   screen.
