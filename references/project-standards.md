@@ -3760,13 +3760,44 @@ last week, and the register currently holds deferrals from batch 08 alongside ba
 Under this ruling that check is reading the wrong column: it must read `citation_mining_status`.
 Derive both figures, never quote these:
 
+**The snippet below derives BOTH quoted figures and nothing else.** The first version of it
+derived neither — it printed a repo-wide tally across all tiers, so a reader told to re-derive
+rather than trust got numbers that did not match the sentence above them. That is rule 7a's own
+failure mode reappearing inside the remedy for it, and it is corrected here rather than excused.
+
 ```
 python3 - <<'PY'
-import sqlite3; con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
-print('logged  :', con.execute("select count(*) from citation_mining").fetchone()[0])
-print('mined   :', con.execute("select count(*) from evidence_sources where citation_mining_status='mined'").fetchone()[0])
-print('deferred:', con.execute("select count(*) from evidence_sources where citation_mining_status='deferred'").fetchone()[0])
-print('pending :', con.execute("select count(*) from evidence_sources where citation_mining_status='pending'").fetchone()[0])
+import sqlite3
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+SLUG = 'accessible-circulation-geometry'
+
+# FIGURE 1 -- what citation_mining_completeness reports: T1-2 sources with a mining ROW,
+# over T1-2 sources in scope. It counts PRESENCE, which is the defect.
+rows = con.execute("""
+    select es.ref_id,
+           (select count(*) from citation_mining c where c.global_ref_id = es.ref_id) has_row,
+           es.citation_mining_status
+    from evidence_sources es
+    where es.tier in (1, 2)""").fetchall()
+present = sum(1 for _, h, _ in rows if h)
+print(f"as the check reports it : {present}/{len(rows)} T1-2 'mined' "
+      f"= {100.0 * present / len(rows):.1f}%   <- PRESENCE, the overstatement")
+
+# FIGURE 2 -- what actually ran on the slug: status='mined' is the execution signal.
+slug_rows = con.execute("""
+    select es.citation_mining_status
+    from evidence_sources es
+    join source_slug_links l on l.ref_id = es.ref_id
+    where l.slug = ? and exists
+          (select 1 from citation_mining c
+            where c.global_ref_id = es.ref_id and c.slug = l.slug)""", (SLUG,)).fetchall()
+executed = sum(1 for (st,) in slug_rows if st == 'mined')
+print(f"as execution reports it : {executed} of {len(slug_rows)} on {SLUG}")
+
+for st in ('mined', 'deferred', 'pending'):
+    n = con.execute("select count(*) from evidence_sources "
+                    "where citation_mining_status = ?", (st,)).fetchone()[0]
+    print(f"  corpus-wide {st:<9}: {n}")
 PY
 ```
 

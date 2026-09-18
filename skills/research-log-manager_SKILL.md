@@ -162,7 +162,16 @@ After multilingual-research completes:
    ```bash
    python3 scripts/audit/citation_mining_completeness.py --session {session_filename}
    ```
-   The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker. To clear: either mine the source or write a citation_mining row with `deferred_reason` and the explicit DEFERRED-* marker.
+   The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker.
+
+   **To clear it, say which of three things happened — the third had no writer until 2026-09-18:**
+   - the pass **ran and produced connections** → `log-mining --connections '[...]'`
+   - the pass **ran and yielded nothing** → `log-mining --notes '<what it covered and found>'`
+   - the pass **was not run** → `log-mining --deferred-reason '<why>'` plus the explicit DEFERRED-* marker
+
+   This step said the only way to clear the blocker was a `deferred_reason` row. That made a session whose pass genuinely ran and found nothing write a **false deferral** — R6 reserves `deferred_reason` for DELIBERATELY NOT SEARCHED, and under the owner ruling of 2026-09-18 (*"executed is `mined`"*) a deferral also leaves `citation_mining_status` reading `deferred` over work that was done.
+
+   **And note what this check does NOT measure.** It counts row *presence*, not execution, so it reports a deferred source as mined — measured 2026-09-18 at `10/10 T1-2 sources mined, 100.0%` while backward had actually run on 3 of 13 sources on the slug in question. Treat its percentage as an upper bound until GAP-022 lands; derive the real figure from `evidence_sources.citation_mining_status`.
 
 ---
 

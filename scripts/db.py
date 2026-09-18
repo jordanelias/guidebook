@@ -228,19 +228,38 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
     # Keyed on the REFERENCE ID. Callers pass a global ref_id; this matched it
     # against local_ref_id, the per-slug label, which only worked while the two
     # happened to agree. They stopped agreeing on 2026-08-23.
+    # THE DIRECTION FLAGS DO NOT MEAN THE PASS RAN, so this verb could not answer the
+    # question its only caller asks. Owner ruling 2026-09-18: "executed is 'mined'" --
+    # the execution signal is evidence_sources.citation_mining_status, and log_mining
+    # sets backward/forward to 1 on a DEFERRED pass as readily as an executed one.
+    # citation-miner SKILL.md step 3 reads this verb and says "If already mined (both
+    # B+F) -> skip", so on REF-01002 -- backward=1, status='deferred', the anchor named
+    # as the next pass's highest-value target -- the next session would have skipped it.
+    # `status` and `deferred_reason` are returned so a caller can read the fact the
+    # ruling makes authoritative; they are POINTED AT, not copied (rule 5).
     with connect(readonly=True) as conn:
         row = conn.execute(
-            "SELECT backward, forward, connections_produced "
-            "FROM citation_mining WHERE slug=? AND global_ref_id=?",
+            "SELECT cm.backward, cm.forward, cm.connections_produced, "
+            "       cm.deferred_reason, cm.notes, "
+            "       es.citation_mining_status AS status "
+            "FROM citation_mining cm "
+            "LEFT JOIN evidence_sources es ON es.ref_id = cm.global_ref_id "
+            "WHERE cm.slug=? AND cm.global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
-    return dict(row) if row else None
+    if not row:
+        return None
+    out = dict(row)
+    # Spelled out so a caller cannot reach the wrong answer by reading the flags first.
+    out["executed"] = out.get("status") == "mined"
+    return out
 
 
 def log_mining(slug: str, ref_id: str, direction: str,
                connections: list[str], session: str,
                dry_run: bool = False, deferred_reason: str = None,
-               status: str = None, notes: str = None):
+               status: str = None, notes: str = None,
+               discharge_deferral: bool = False):
     """Record a mining pass. Keyed on the global ref_id.
 
     The `doi` parameter was REMOVED 2026-08-24. It wrote a copy of a value that
@@ -279,6 +298,12 @@ def log_mining(slug: str, ref_id: str, direction: str,
     # 'mined' iff a non-deferred mining row resolves to it. Nothing in this writer ever
     # moved it, so the biconditional could not hold through the sanctioned path -- the
     # CLI was structurally unable to produce a state its own integrity test accepts.
+    # CAPTURED BEFORE THE DERIVATION BELOW OVERWRITES IT. The state-aware refusal in
+    # the connection block asks whether the OPERATOR named a status; two lines down
+    # `status` is unconditionally assigned, so testing `status is None` there is dead
+    # code -- which it was, for the first hour of this guard's life, until the
+    # reproduction that was supposed to confirm the fix showed it still regressing.
+    status_explicit = status is not None
     if status is None:
         status = "deferred" if deferred_reason else "mined"
     dir_col = direction
@@ -305,61 +330,115 @@ def log_mining(slug: str, ref_id: str, direction: str,
                 [merged, ts, session, slug, ref_id]
             )
         else:
+            # local_ref_id is LOOKED UP, never invented: source_slug_links owns the
+            # per-slug label. THE LOOKUP CAN MISS, and until 2026-09-18 the miss fell
+            # through as `[None][0]` into a NOT NULL column, so a valid ref_id against
+            # the wrong slug exited with an uncaught
+            # `sqlite3.IntegrityError: NOT NULL constraint failed` instead of a
+            # sentence. CLAUDE.md section 4: db.py refuses, and that is its whole value.
+            label = (conn.execute("SELECT local_ref_id FROM source_slug_links "
+                                  "WHERE slug=? AND ref_id=?", [slug, ref_id]
+                                  ).fetchone() or [None])[0]
+            if label is None:
+                raise Refusal(
+                    f"{ref_id} is not linked to slug '{slug}', so it has no per-slug "
+                    f"label to key a mining row on. Either the slug is wrong, or the "
+                    f"source needs `db.py link-source-slug` first. Mining a source "
+                    f"under a slug it was never filed to writes a row no reader of "
+                    f"that slug can resolve.")
             conn.execute(
-                # local_ref_id is LOOKED UP, never invented: source_slug_links owns
-                # the per-slug label. doi is NOT written -- it is reachable through
-                # global_ref_id and copying it is what drifted 2 of 10 rows by case.
+                # doi is NOT written -- it is reachable through global_ref_id, and
+                # copying it is what drifted 2 of 10 rows by case.
                 "INSERT INTO citation_mining "
                 "(slug,local_ref_id,global_ref_id,backward,forward,"
                 " connections_produced,created_at,created_by_session,"
                 " updated_at,updated_by_session) "
                 "VALUES (?,?,?,?,?,?,?,?,?,?)",
-                [slug,
-                 (conn.execute("SELECT local_ref_id FROM source_slug_links "
-                               "WHERE slug=? AND ref_id=?", [slug, ref_id]
-                               ).fetchone() or [None])[0],
+                [slug, label,
                  ref_id,
                  1 if direction == "backward" else 0,
                  1 if direction == "forward" else 0,
                  json.dumps(connections), ts, session, ts, session]
             )
+        # THE ROW'S EXISTING STATE DECIDES, NOT THIS CALL'S ARGUMENTS ALONE.
+        # Corrected 2026-09-18, the same day it was introduced: the two guards at the
+        # top of this function inspect only argv, so a --notes pass followed by a
+        # --deferred-reason pass left BOTH columns populated -- the state those guards
+        # call impossible -- and regressed citation_mining_status from 'mined' back to
+        # 'deferred', erasing the record that a pass had executed.
+        cur = conn.execute(
+            "SELECT notes, deferred_reason FROM citation_mining "
+            "WHERE slug=? AND global_ref_id=?", [slug, ref_id]).fetchone()
+        prior_notes = (cur["notes"] if cur else None) or None
+        prior_def = (cur["deferred_reason"] if cur else None) or None
+        undischarged = None
+
         if deferred_reason:
+            if prior_notes and not status_explicit:
+                # A pass on this row has already RUN. Deferring the OTHER direction does
+                # not un-run it, and the owner ruling of 2026-09-18 makes
+                # citation_mining_status the execution signal -- so lowering it here
+                # would delete the only record that anything was mined. One flag serves
+                # two directions (GAP-015, GAP-022, both unruled); refuse to guess
+                # rather than silently take the lower reading.
+                raise Refusal(
+                    f"{ref_id}: this row already records an EXECUTED pass in notes, so "
+                    f"writing a deferral would regress citation_mining_status from "
+                    f"'mined' to 'deferred' and erase that record. The status column is "
+                    f"ONE flag for BOTH directions (GAP-015/GAP-022, unruled). Pass "
+                    f"--status explicitly to say which reading this source carries.")
             conn.execute("UPDATE citation_mining SET deferred_reason=?, updated_at=?, "
                          "updated_by_session=? WHERE slug=? AND global_ref_id=?",
                          [deferred_reason, ts, session, slug, ref_id])
         else:
-            # A PASS THAT RAN DISCHARGES THE DEFERRAL IT WAS OWED. Added 2026-09-18.
-            # Without this the register asserted both at once: on 2026-09-18 this writer
-            # set REF-00977 to backward=1, status='mined', connections=["REF-01002"] while
-            # leaving deferred_reason reading "BACKWARD PASS DEFERRED" -- a row that says a
-            # finished pass is owed, which is how a later session re-queues finished work
-            # (the RAP-F61/F69/F70 shape the citation-miner skill already records).
-            # The discharged text is not destroyed: it is folded into notes, because the
-            # 2026-09-16 retire-in-place ruling governs data rows and a deferral's stated
-            # reasoning is evidence of what was believed when.
-            prior_def = (conn.execute(
-                "SELECT deferred_reason FROM citation_mining "
-                "WHERE slug=? AND global_ref_id=?", [slug, ref_id]).fetchone()
-                or [None])[0]
-            merged_notes = notes
-            if prior_def:
-                carried = f"DEFERRAL DISCHARGED {ts} by {session}. It read: {prior_def}"
-                merged_notes = f"{notes}\n\n{carried}" if notes else carried
-            if merged_notes:
-                conn.execute(
-                    "UPDATE citation_mining SET notes=?, deferred_reason=NULL, updated_at=?, "
-                    "updated_by_session=? WHERE slug=? AND global_ref_id=?",
-                    [merged_notes, ts, session, slug, ref_id])
+            # A PASS THAT RAN MAY DISCHARGE THE DEFERRAL IT WAS OWED -- BUT ONLY WHEN
+            # SOMEONE SAYS SO. Added 2026-09-18 and narrowed the same day. The first cut
+            # cleared deferred_reason UNCONDITIONALLY, which is wrong because
+            # `deferred_reason` is ONE column while `backward`/`forward` are TWO: a
+            # backward pass silently discharged REF-00989's FORWARD deferral ("Forward
+            # mining means finding who cites this source...") and marked the source
+            # mined, erasing owed work that the ruling's "runs eventually" depends on.
+            # The direction cannot be recovered from the text, so it is not guessed:
+            # --discharge-deferral is the operator asserting that the standing deferral
+            # belongs to the direction just run. Without it the deferral STANDS, and the
+            # returned dict says so rather than leaving it to be noticed later.
+            carried = None
+            if prior_def and discharge_deferral:
+                carried = (f"DEFERRAL DISCHARGED {ts} by {session} "
+                           f"({direction} pass). It read: {prior_def}")
             elif prior_def:
+                undischarged = prior_def
+            # NOTES ACCUMULATE, THEY DO NOT OVERWRITE. Corrected 2026-09-18: this UPDATE
+            # replaced the column outright while `connections_produced` a few lines above
+            # was carefully merged, so a second pass destroyed the first pass's record --
+            # and any carried discharge text with it.
+            parts = [x for x in (prior_notes,
+                                 f"[{direction} {ts}] {notes}" if notes else None,
+                                 carried) if x]
+            merged_notes = "\n\n".join(parts) if parts else None
+            if merged_notes != prior_notes or carried:
                 conn.execute(
-                    "UPDATE citation_mining SET deferred_reason=NULL, updated_at=?, "
-                    "updated_by_session=? WHERE slug=? AND global_ref_id=?",
-                    [ts, session, slug, ref_id])
+                    "UPDATE citation_mining SET notes=?"
+                    + (", deferred_reason=NULL" if carried else "")
+                    + ", updated_at=?, updated_by_session=? "
+                      "WHERE slug=? AND global_ref_id=?",
+                    [merged_notes, ts, session, slug, ref_id])
         dbcore.check_vocab(conn, "evidence_sources", "citation_mining_status",
                            status, "--status")
         conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
                      "updated_at=?, updated_by_session=? WHERE ref_id=?",
                      [status, ts, session, ref_id])
+    out = {"logged": True, "connections": len(connections),
+           "status_set": status, "dry_run": dry_run}
+    if undischarged:
+        # SAID OUT LOUD rather than left to be discovered. The row still carries a
+        # deferral this pass did not discharge, so the work it names is still owed --
+        # and under the 2026-09-18 ruling ("deferred is okay so long as it runs
+        # eventually") an undischarged deferral is precisely the thing that must stay
+        # visible. Until then the caller printed a FIXED dict and never asked the
+        # writer what it had actually done.
+        out["deferral_still_standing"] = undischarged
+    return out
 
 
 class FrozenGridError(Refusal):
@@ -995,13 +1074,26 @@ def main():
     p_logm.add_argument("--notes",
                         help="What a pass that RAN found, including nothing. Writes "
                              "citation_mining.notes, which existed with no writer until "
-                             "2026-09-18. Mutually exclusive with --deferred-reason, and "
-                             "supplying either --notes or --connections DISCHARGES any "
-                             "standing deferral on the row, carrying its text into notes.")
+                             "2026-09-18. APPENDS -- it never overwrites an earlier "
+                             "pass's note. Mutually exclusive with --deferred-reason.")
+    p_logm.add_argument("--discharge-deferral", dest="discharge_deferral",
+                        action="store_true",
+                        help="Assert that the deferral standing on this row belongs to "
+                             "the direction just run, and clear it (its text is carried "
+                             "into notes, never destroyed). NOT automatic, and that is "
+                             "the point: deferred_reason is ONE column while backward "
+                             "and forward are TWO, so a backward pass cannot tell "
+                             "whether the standing deferral was its own. Without this "
+                             "flag the deferral stands and the result says so.")
     p_logm.add_argument("--status", dest="mining_status",
                         help="citation_mining_status to set on the source. Live "
                              "vocabulary from the column's own CHECK. Derived when "
-                             "omitted: 'mined' with connections, 'deferred' without.")
+                             "omitted: 'deferred' with --deferred-reason, 'mined' "
+                             "otherwise -- so an executed zero-yield pass (--notes, no "
+                             "connections) derives 'mined', which is the 2026-09-18 "
+                             "ruling that executed IS mined. This help said \"'mined' "
+                             "with connections, 'deferred' without\" until that day, "
+                             "which described neither the code nor the ruling.")
     p_logm.add_argument("--session", required=True)
     p_logm.add_argument("--dry-run", action="store_true")
 
@@ -2084,7 +2176,10 @@ def main():
 
     elif args.command == "log-mining":
         conns = json.loads(args.connections) if args.connections else []
-        log_mining(
+        # PRINT WHAT THE WRITER DID, not a fixed dict. Until 2026-09-18 this reported
+        # `logged: true` regardless, so a standing deferral the pass left undischarged
+        # was invisible at the call site that created it.
+        print(json.dumps(log_mining(
             slug=args.slug, ref_id=args.ref,
             direction=args.direction, connections=conns,
             session=args.session,
@@ -2092,9 +2187,8 @@ def main():
             deferred_reason=args.deferred_reason,
             status=args.mining_status,
             notes=args.notes,
-        )
-        print(json.dumps({"logged": True, "connections": len(conns),
-                          "dry_run": args.dry_run}))
+            discharge_deferral=args.discharge_deferral,
+        )))
 
     elif args.command == "next-id":
         id_funcs = {
@@ -3518,6 +3612,53 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
+    # ── THE TWO VERIFICATION FIELDS CARRY insert_source's REFUSALS WITH THEM ──
+    #
+    # Added 2026-09-18, hours after those fields were made amendable, because making
+    # them amendable opened a hole this writer had no idea it was opening: it applies
+    # NO vocabulary gate and NO invariant, so `--field verification_status` accepted
+    # any string at all, and accepted VERIFIED on a row whose verification_method is
+    # NULL -- the exact row `insert_source` refuses with "a standing without its
+    # method is not a standing" (D-0157).
+    #
+    # AND THE COMMENT DEFENDING THE WIDENING WAS WRONG ABOUT WHY THAT WAS SAFE. It
+    # said "I4 still refuses VERIFIED whose method did not obtain the artefact". I4's
+    # subject is `verification_status='VERIFIED' AND verification_method IS NOT NULL`,
+    # so a NULL-method row is not examined by I4 AT ALL -- it is invisible to I1, I2
+    # and I4 alike, and test_db_integrity reports 74/74 over it. A guard that does not
+    # see the row it is cited as guarding is not a guard.
+    #
+    # A typo was equally unstopped: `verification_status` has no CHECK in the schema
+    # and no ENUM_GUARDS entry, so 'verrified' stored cleanly -- and silently removed
+    # the row from every I-check's subject set, since all of them filter on the
+    # literal 'VERIFIED'. add-source gated the same column with argparse choices; this
+    # writer gated nothing. The vocabularies did NOT "stay gated where they were".
+    if field == "verification_status":
+        if replacement not in ("VERIFIED", "UNVERIFIED"):
+            raise Refusal(
+                f"{ref_id}: verification_status must be VERIFIED or UNVERIFIED, got "
+                f"{replacement!r}. The column carries no CHECK, so nothing downstream "
+                f"would have caught this -- and a misspelling silently drops the row "
+                f"out of every I-check, all of which filter on the literal 'VERIFIED'.")
+        if replacement == "VERIFIED":
+            with connect(True) as _c:
+                _row = _c.execute("SELECT verification_method FROM evidence_sources "
+                                  "WHERE ref_id=?", [ref_id]).fetchone()
+            if _row is None:
+                raise Refusal(f"{ref_id} is not in evidence_sources.")
+            if not _row["verification_method"]:
+                raise Refusal(
+                    f"{ref_id}: VERIFIED requires verification_method (D-0157: a "
+                    f"standing without its method is not a standing). `add-source` "
+                    f"refuses this row; amending must not be the way around it. Set "
+                    f"the method first, then the standing.")
+    if field == "doi_resolution_outcome" and replacement not in (
+            "RESOLVED", "NO-MATCH", "REVERTED"):
+        raise Refusal(
+            f"{ref_id}: doi_resolution_outcome must be RESOLVED, NO-MATCH or REVERTED, "
+            f"got {replacement!r}. The set is the one ENUM_GUARDS in "
+            f"scripts/emit_data_migration.py enforces at migration time; refusing here "
+            f"means the refusal arrives before the row is written, not after.")
     if tier is not None and field != "scope":
         raise Refusal(
             f"{ref_id}: --tier is only admissible beside --field scope. The tier is "

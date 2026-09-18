@@ -46,18 +46,46 @@ literature-review-planner confirms a Tier 1–3 source:
    ```bash
    python3 scripts/db.py is-mined --slug {slug} --ref {global_ref_id}   # GLOBAL REF-NNNNN, not the label
    ```
-   Returns: `{"mined": false}` or `{"backward": 0/1, "forward": 0/1, ...}`
-3. If already mined (both B+F) → skip, return
-4. If unmined or partial → mine missing direction(s)
-5. Log result:
+   Returns `null` if no row exists, else `{"backward", "forward",
+   "connections_produced", "deferred_reason", "notes", "status", "executed"}`.
+3. **READ `executed`, NOT THE DIRECTION FLAGS.** Owner ruling 2026-09-18:
+   *"executed is `mined`"*. `log-mining` sets `backward`/`forward` to `1` on a
+   **deferred** pass exactly as it does on one that ran, so `backward = 1` means a pass
+   was *logged*, never that it happened. `executed` is derived from
+   `evidence_sources.citation_mining_status`, which is the signal that ruling makes
+   authoritative. This step read *"if already mined (both B+F) → skip"* until
+   2026-09-18; on REF-01002 — `backward = 1`, `status = 'deferred'`, and named by its own
+   deferral as the highest-value target on its slug — that instruction skipped the work.
+4. If `executed` is false, or a direction is still owed → mine the missing direction(s).
+   A `deferred_reason` on the row tells you what was owed and **why it was not done**.
+5. Log result. **Three outcomes, three flags — do not collapse them:**
    ```bash
-   python3 scripts/db.py log-mining \
-     --slug {slug} \
-     --ref {global_ref_id} \
-     --direction backward \
-     --connections '["CON-NNNN","CON-NNNN"]' \   # the ids you actually created
+   # (a) the pass RAN and produced connections
+   python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
+     --direction backward --connections '["CON-NNNN","CON-NNNN"]' \
+     --session {session_filename}
+
+   # (b) the pass RAN and yielded nothing — use --notes, NEVER --deferred-reason.
+   #     R6: deferred_reason means DELIBERATELY NOT SEARCHED and is not a findings
+   #     channel. `notes` had no writer at all until 2026-09-18, which is why every
+   #     older mining note in this table sits in the wrong column.
+   python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
+     --direction backward --notes 'ran over N references, 0 matched the screen; ...' \
+     --session {session_filename}
+
+   # (c) the pass was NOT run
+   python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
+     --direction forward --deferred-reason 'no citation-graph connector available — ...' \
      --session {session_filename}
    ```
+   **A pass that runs does NOT automatically discharge a standing deferral.**
+   `deferred_reason` is one column while `backward`/`forward` are two, so a backward
+   pass cannot tell whether the deferral on the row was its own — and clearing it
+   blindly erased a *forward* deferral on REF-00989 and marked the source mined. Pass
+   `--discharge-deferral` to assert the deferral belongs to the direction you just ran;
+   its text is carried into `notes`, never destroyed. Without the flag the deferral
+   stands and the result prints `deferral_still_standing`.
+   **`--notes` appends**; it will not overwrite an earlier pass's record.
 
    > **`--ref` TAKES THE GLOBAL `REF-NNNNN`, NOT THE PER-SLUG LABEL. CORRECTED
    > 2026-08-24, and this instruction is where the defect came from.** It read

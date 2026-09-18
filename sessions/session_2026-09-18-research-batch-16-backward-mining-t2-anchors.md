@@ -127,9 +127,16 @@ on the row. It stays readable as history at 5 % / 1:20 with its notations intact
 undetermined, and that is the true state**: the corpus holds evidence it cannot yet turn into a
 determination.
 
-**And the green run now says less than it did.** `test_db_integrity` reports 74/74 — with **K01 and
-K02 in its own "PASSED HAVING EXAMINED NOTHING" list, which grew from 19 to 22.** That is
-CLAUDE.md §5(a) verbatim, the failure this repository has produced four times. Comparing 74/74
+**And the green run now says less than it did.** `test_db_integrity` reports 74/74 — with **K01,
+K02 _and C10_ in its own "PASSED HAVING EXAMINED NOTHING" list, which grew from 19 to 22.** That is
+CLAUDE.md §5(a) verbatim, the failure this repository has produced four times. **C10 was missing
+from this sentence until a code review caught it**, and it is the one of the three that most
+deserved naming: *"no published cell rests on an unverified or disputed source"* examined 1 subject
+before this batch and 0 after — so the check that would have objected to a determination resting on
+REF-01002, the unverified source this batch admitted, is the check the batch silenced. Measured:
+`git show 589577b:data/guidebook.db > /tmp/pre.db && python3 scripts/tests/test_db_integrity.py
+--db /tmp/pre.db`. An account of a coverage loss that omits one of the three losses is itself the
+§5(a) shape at one remove. Comparing 74/74
 today against 74/74 before this batch would be a false equivalence: the denominator of examined
 checks fell. **GAP-020** records it. This is also the *second* time in three batches the
 determination surface emptied — batch 15's review caught spec 7 retired and never re-determined and
