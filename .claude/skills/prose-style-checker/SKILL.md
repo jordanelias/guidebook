@@ -1,0 +1,1 @@
+../../../skills/prose-style-checker_SKILL.md

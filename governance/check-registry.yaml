@@ -581,6 +581,30 @@ checks:
 #      not a delete.
 # Net effect: only the genuinely-vacuous blocking entry is gone. The file, `validate_schema_cross_check`,
 # and the `base-schema-validates` criterion (governance/pipeline-contract.yaml) are all untouched.
+- id: claude_skills_loadable
+  cmd: ['python3', 'scripts/sync_claude_skills.py', '--check']
+  battery: governance
+  kinds: ['governance', 'docs']
+  level: advisory
+  basis: hygiene
+  cost: fast
+  min_items: 1
+  note: >-
+    WHAT REACHES THE GUIDEBOOK WITHOUT IT. skills/ holds the research protocol in 47
+    files, and the harness discovers skills only at .claude/skills/<name>/SKILL.md. A
+    skill added to skills/ and not linked is found only when an agent chooses to read
+    it -- which is the state .claude/settings.json blames for the 2026-07-24 run that
+    skipped Co-1, citation mining, clause citation and combinatorial pairing while the
+    rules for all four sat documented. Non-compliant research is what lands.
+    ADVISORY, and the reason is the level's own doctrine rather than timidity. Six
+    skills carry no `description:` and cannot be linked until a human writes one --
+    adversarial-research, evidence-metadata-rehabilitation, integrity-protocol,
+    progressive-measurement, reasoning-doc-citations, voice-style. A blocking gate
+    would be red by construction until then, and a check that is red by construction
+    teaches its reader to ignore it (CLAUDE.md rule 6). RATCHET TO BLOCKING once those
+    six carry descriptions and this reports IN SYNC on a clean tree; derive that count
+    from the script, never from this note.
+
 - id: claude_md_spine
   cmd: ['python3', 'scripts/audit/claude_md_spine.py']
   battery: governance

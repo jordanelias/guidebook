@@ -1,0 +1,1 @@
+../../../skills/sensory-coherence-checker_SKILL.md

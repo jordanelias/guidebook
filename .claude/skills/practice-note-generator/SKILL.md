@@ -1,0 +1,1 @@
+../../../skills/practice-note-generator_SKILL.md

@@ -1,0 +1,1 @@
+../../../skills/bibliography-compiler_SKILL.md

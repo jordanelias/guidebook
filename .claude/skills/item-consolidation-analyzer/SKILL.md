@@ -1,0 +1,1 @@
+../../../skills/item-consolidation-analyzer_SKILL.md

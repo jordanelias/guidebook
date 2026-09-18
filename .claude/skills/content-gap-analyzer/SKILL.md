@@ -1,0 +1,1 @@
+../../../skills/content-gap-analyzer_SKILL.md
