@@ -59,3 +59,58 @@ a non-regulator body stating a figure on its own authority.
 
 Query shapes will be logged verbatim with `db.py log-search --prior-expectation` before screening,
 per R8, and R14 applies to every zero: query-shape failure vs wrong index vs genuine absence.
+
+---
+
+## CORRECTION 2026-09-18, appended before any screening or admission
+
+**The framing above is wrong on its central factual claim, and the error was inherited.** PRIORS.md
+said Co-2 "has never been run" and that "twelve batches have run without one". Both are false.
+`search_executions` holds **two co2-targeted searches**, both from
+`session_2026-09-16-research-batch-09-ramp-gradient-co1`:
+
+| Query | Jur | Found/Screened/Admitted | Outcome |
+|---|---|---|---|
+| `RCOT housing adaptations without delay ramp gradient occupational therapy` | UK | 9 / 9 / 0 | *Adaptations without Delay* retrieved and read in full (4.8 MB, 40 pp). **States no ramp gradient anywhere.** Prior falsified at the time. |
+| `AOTA home modification ramp slope occupational therapy practice` | US | 8 / 8 / 0 | **R14 retrieval failure** — member-gated at `library.aota.org`. Staged, not admitted. |
+
+**Where the error came from.** PR #144's body lists "Still owed: **Co-2 (untouched)**" first. I read
+that as the live state instead of deriving it. This is CLAUDE.md rule 7 exactly — a hand-written
+status claim in a derived document, false within a fortnight, under a paragraph that looked
+authoritative. The correct derivation is one query:
+`select count(*) from search_executions where target_evidence_type='co2'`.
+
+**What survives.** The *sources* claim was right and remains right: zero Co-2 rows in
+`evidence_sources`. What was wrong is *why* — not an unrun pass, but a pass that ran well and
+admitted nothing, plus one unresolved retrieval failure.
+
+**What my stated prior was worth.** Prior #1 (OT professional guidance is about the assessment, not
+the dimension) was **already confirmed by evidence in the database before I wrote it** — the RCOT
+result is precisely that. I do not get to claim a successful prediction: I predicted a result that
+had already been recorded. Logged as such rather than quietly banked.
+
+## The batch, re-scoped to what is actually owed
+
+Batch 09 left three PENDING-VERIFICATION candidates on this exact question. Resolving them is the
+work; re-running RCOT and AOTA is not.
+
+1. **Candidate 72 — Foundations, "Guidance For Ramp Adaptations" (GB).** The document RCOT's own
+   flagship guidance *delegates ramp design to*. Retrievable. Expect rise/length-conditioned
+   gradients; expect **T5 `national_fw`, not Co-2** — Foundations is the national body for home
+   improvement agencies, not an OT professional body. Its interest is that it shows where the OT
+   profession's dimensional authority actually sits: outside the profession.
+2. **Candidate 71 — HMOTA, Koch, "How to Design a Wheelchair Ramp".** States 1:12, and 1:8 for a
+   power chair, **as practice judgment with no code cited**. This is the nearest thing in the corpus
+   to my stated falsifier. Expect it to fail the Co-2 test on *form* — one practitioner's blog post
+   is not a professional-body CPG — and to land **T3 `grey`**. Tier adjudication is the deliverable.
+3. **Candidate 73 — AOTA CPG.** R10 says a publisher block is not a terminal answer. The ladder was
+   not exhausted: ISBN 9781569003572 gives WorldCat, Google Books preview and the archived NGC
+   summary as untried rungs.
+4. **Bodies never searched at all:** CAOT (CA), Occupational Therapy Australia, WFOT (INT). This is
+   where a genuine Co-2 admission could still come from, and R5 applies — non-English OT guidance is
+   professional literature, not grey.
+
+**Revised prior, stated now and dated.** I expect (1) to admit as T5, (2) to adjudicate to T3 and
+not anchor, (3) to stay blocked, and (4) to return well-formed zeroes. I expect the batch to end
+with **still zero Co-2 sources** and a recorded, evidenced reason — which is a different and more
+defensible claim than "Co-2 is untouched".
