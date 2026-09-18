@@ -136,6 +136,29 @@ def audit():
         GROUP BY e.ref_id
         HAVING COALESCE(MAX(NULLIF(TRIM(v.prior_expectation), '')), '') = ''
     """).fetchall()
+
+    # A POPULATED PRIOR COLUMN IS NOT A PRIOR, AND THIS CHECK COULD NOT TELL.
+    # Added 2026-09-18 after an adversarial pass. The HAVING clause above asks whether
+    # `prior_expectation` is NON-EMPTY -- exactly the "is the field populated?" question
+    # that let six gates pass invented co-authors on 2026-08-19 (CLAUDE.md section 5c),
+    # one column over. `db.py log-search` refuses any row without a prior EVEN under
+    # --backfill, so a backfilled search MUST put something in that column, and what it
+    # honestly puts there is a sentence saying no prior was recorded. Both of batch 17's
+    # admissions passed CHECK 7 on the text "BACKFILL, AND THE PRIOR IS THE ABSENCE OF
+    # ONE". From that batch forward the mechanical record asserted every admitted source
+    # had a prior.
+    #
+    # DERIVED, NOT SNIFFED: the test is `search_was_backfilled`, the column that says so,
+    # never a phrase match on the prose. A source is flagged when EVERY search admitting
+    # it was backfilled -- one genuine pre-registered admission is enough to clear it.
+    _backfilled_only = db.execute("""
+        SELECT e.ref_id, e.pub_title AS title, COUNT(*) AS n
+        FROM evidence_sources e
+        JOIN v_source_admission v ON v.ref_id = e.ref_id
+        WHERE e.verification_status = 'VERIFIED'
+        GROUP BY e.ref_id
+        HAVING MIN(COALESCE(v.search_was_backfilled, 0)) = 1
+    """).fetchall()
     # Tuple rows, not sqlite3.Row -- this module's connection sets no row_factory,
     # and indexing by name here raised TypeError on the first run. (ref_id, title,
     # latest_search) is the SELECT order above; keep them in step.
@@ -242,10 +265,30 @@ def audit():
         # legacy exemption above because their empty admitted_at sorted before the cutoff.
         print(f"  ⚠ {len(no_admitting_search)} source(s) have NO ADMITTING SEARCH at all "
               f"-- not a missing prior but a missing edge: nothing links them to the "
-              f"search that admitted them. Fix with a compensating migration writing "
-              f"search_admissions and the search's results_admitted; do NOT backfill a "
-              f"prior onto a search that did not admit them.")
+              f"search that admitted them. TWO CASES, AND THIS CHECK CANNOT TELL THEM "
+              f"APART: (a) the edge was lost -- log the admitting search with "
+              f"`db.py log-search --admitted-ref-id`, which writes the junction row; or "
+              f"(b) NO SEARCH ADMITTED IT, because it was reached by executing a named "
+              f"retrieval target (a research_code_leads clause, a named standard) rather "
+              f"than by discovery, which is legitimate and has no edge to write. "
+              f"REF-00987 is case (b) on the record (batch 08's attestation). "
+              f"research_code_leads carries no ref_id column, so case (b) is NOT "
+              f"derivable and this check names the rows rather than prescribing a fix: "
+              f"writing an edge for a search that did not admit the source is the same "
+              f"fabrication as backfilling a prior. (Until 2026-09-18 this prescribed "
+              f"exactly that, and also named results_admitted -- a writer-retired column "
+              f"set once at insert and never updated.)")
         for ref_id, title, _ in no_admitting_search[:5]:
+            print(f"      · {ref_id}: {(title or '')[:60]}")
+
+    if _backfilled_only:
+        print(f"  ⚠ {len(_backfilled_only)} source(s) whose ONLY admitting search was "
+              f"BACKFILLED -- the prior column is populated, but it was written after "
+              f"the results were known, so R8's pre-registration did not happen. Not a "
+              f"forgery and not fixable retrospectively: the remedy is to log the search "
+              f"before running it next time. Named here so the mechanical record stops "
+              f"reading as though every admitted source carried a prior.")
+        for ref_id, title, _ in _backfilled_only[:5]:
             print(f"      · {ref_id}: {(title or '')[:60]}")
 
     print(f"\n[CHECK 8] Verified citations lacking search_queries_used: {len(verified_no_queries)}")
@@ -269,6 +312,7 @@ def audit():
                     (1 if suspicious_grades else 0) + len(narrative_ci) + 
                     len(topic_evidence_pattern) + len(unlogged_none_found) +
                     len(verified_no_prior) + len(no_admitting_search) +
+                    len(_backfilled_only) +
                     len(verified_no_queries) +
                     len(unmarked_langs))
     

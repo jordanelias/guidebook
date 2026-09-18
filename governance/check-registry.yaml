@@ -1250,16 +1250,21 @@ checks:
   basis: research/adversarial-fields-complete
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16. The note below asserts all four source tables are 0 rows post
-    clean-room-reset. Measured, three of the four are not — gaps 11, evidence_sources 5,
-    evidence_population_match 5, search_languages 0 — and this check prints EXAMINED 21 and
-    currently exits 1 on a real finding. The reason described a repository that stopped existing
-    over a month before it was read. Floor is 1, never the count.
+  floor_basis: RATCHETED 2026-09-16, and the counts it quoted went stale within two days. Floor is 1,
+    never the count — that is the whole point of a floor. DO NOT QUOTE A FIGURE FROM THIS ENTRY.
+    Derive it — `python3 scripts/audit/research_protocol_audit.py | grep EXAMINED` — which is rule 7a
+    applied to the registry entry that most recently broke it. The earlier reason asserted all four
+    source tables held 0 rows post clean-room-reset; three of the four were already non-empty when
+    that was written, and the EXAMINED figure it then quoted has since roughly quadrupled.
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the four source tables checks 1-9 read
-    (gaps, evidence_sources, evidence_population_match, search_languages) — all four are 0 rows today
-    post clean-room-reset (2026-08-06), so the sum is unambiguous regardless of how it''s combined. empty-by-decision,
-    not min_items — these tables are the same ones research_dod/metadata_integrity_audit/gap_mining_audit/
-    population_integrity_audit already found empty. RED on main. Advisory, as it was in research-contract.yml.'
+    (gaps, evidence_sources, evidence_population_match, search_languages). The claim that those tables
+    are empty is RETIRED — it described the repository as it stood on 2026-08-06 and was still being read
+    as current six weeks later. CHECK 7 grew two further issue classes on 2026-09-18: a source with no
+    admitting search at all, and a source whose only admitting search was BACKFILLED (the prior column is
+    populated, but written after the results were known, so R8 pre-registration did not happen). Both are
+    counted in TOTAL ISSUES; the `[CHECK 7] ... : N` header line counts only the original class, so the
+    header and the total legitimately differ. Advisory, as it was in research-contract.yml. Exits 1 on
+    origin/main''s data too, so a red here is not evidence about a branch.'
 - id: metadata_integrity_audit
   cmd:
   - python3

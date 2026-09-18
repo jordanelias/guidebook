@@ -858,6 +858,36 @@ def verify_authors(session):
         return 1
     by_doi = _index_by_doi(payloads)
 
+    # A MANIFEST ref_id THAT NAMES NO ROW IS A BOOBY TRAP FOR THE NEXT ADMISSION.
+    # `fetch(..., ref_id=...)` takes whatever the caller passes and writes it into the
+    # manifest, with nothing asserting the id exists or was ever allocated. Measured
+    # 2026-09-18: batch 17 hand-wrote REF-01005 into the manifest for a paper whose
+    # `add-source` was then REFUSED, so the id was never minted -- and REF-01005 is
+    # exactly what `dbcore.next_ref_id()` returns next. The next admitted source, of any
+    # work whatsoever, takes that id and inherits this session's Crossref payload as its
+    # scoped verification artefact, under `quote_in_artefacts(quote, ref_id=...)`. That
+    # is CLAUDE.md §5(c)'s control -- the one control against a fabricated bibliography
+    # -- pre-poisoned, silently, by a manifest line.
+    #
+    # Fail it here, where the manifest is already parsed. The remedy is to rebind the
+    # line (the id it should carry, or none at all), not to mint the id to match.
+    _orphans = []
+    try:
+        _c = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+        for _rec in _manifest_records(session):
+            _rid = (_rec.get("ref_id") or "").strip()
+            if not _rid:
+                continue
+            _hit = _c.execute(
+                "SELECT 1 FROM evidence_sources WHERE ref_id=? "
+                "UNION ALL SELECT 1 FROM source_locators WHERE ref_id=?",
+                (_rid, _rid)).fetchone()
+            if not _hit and _rid not in [o[0] for o in _orphans]:
+                _orphans.append((_rid, _rec.get("artefact") or _rec.get("sha256") or "?"))
+        _c.close()
+    except sqlite3.Error as _e:
+        print(f"  (manifest ref_id check skipped: {_e})")
+
     manifest = _manifest_records(session)
     unparsed = _unparsed_payloads(session)
     failed = _failed_retrievals(session)
@@ -948,10 +978,23 @@ def verify_authors(session):
     for ref_id, real, stored in bad:
         print(f"  ✗ {ref_id}\n      logged: {'; '.join(real)}\n      stored: {'; '.join(stored)}")
 
+    # A GAP IS INCOMPLETENESS. A GAP UNDER 'COMPLETE' IS A FALSE SELF-DESCRIPTION,
+    # AND THAT IS A DIFFERENT THING. This module's own docstring said so from the day
+    # the gap class was written -- "a row stamped metadata_quality='COMPLETE' with gaps
+    # is asserting something untrue ABOUT ITSELF" -- and then reported both under one
+    # "reported, not failed" verdict, so nothing ever acted on it. Measured 2026-09-18:
+    # four anchors this repository had just mined and persisted payloads for carried 10
+    # payload-supplied NULLs between them, every one stamped COMPLETE, across two
+    # batches and one code review. `metadata_quality` is an argparse assertion with no
+    # CHECK and no derivation -- rule 8's "a field that can only be right or wrong,
+    # never informative" -- so the stamp is only worth anything if something tests it.
+    # It is tested here, where the payload that falsifies it is already open.
+    false_complete = [(r, g) for r, g, mq in biblio_gap if mq == "COMPLETE"]
     if biblio_gap:
         n = sum(len(g) for _, g, _ in biblio_gap)
         print(f"\n  BIBLIOGRAPHIC GAPS — {n} field(s) NULL in the DB that the payload supplies.")
-        print("  Incompleteness, not falsehood: reported, not failed.")
+        print("  Incompleteness, not falsehood: reported, not failed — EXCEPT under "
+              "metadata_quality='COMPLETE', which is the row asserting the opposite.")
         for ref_id, gp, mq in biblio_gap:
             flag = "  <-- while stamped metadata_quality='COMPLETE'" if mq == "COMPLETE" else ""
             print(f"      {ref_id}{flag}")
@@ -962,16 +1005,35 @@ def verify_authors(session):
         for col, have, want in mm:
             print(f"          {col}: stored {have!r}, payload {want!r}")
 
-    if bad or biblio_bad:
+    if _orphans:
+        print(f"\n  ORPHAN MANIFEST ref_id — {len(_orphans)} id(s) bound to persisted "
+              f"bytes but present in NO table:")
+        for _rid, _art in _orphans:
+            print(f"      ✗ {_rid}  ->  {_art}")
+        print("  The next id the allocator hands out will inherit these bytes as its "
+              "verification artefact. Rebind the manifest line to the id the payload "
+              "really belongs to, or to none; do not mint the id to make this pass.")
+
+    if bad or biblio_bad or false_complete or _orphans:
         if bad:
             print(f"\n  {len(bad)} source(s) disagree with the payload on AUTHORS.")
         if biblio_bad:
             print(f"  {len(biblio_bad)} source(s) assert a bibliographic field the payload contradicts.")
+        if false_complete:
+            _n = sum(len(g) for _, g in false_complete)
+            print(f"\n  {len(false_complete)} source(s) are stamped "
+                  f"metadata_quality='COMPLETE' over {_n} field(s) their own persisted "
+                  f"payload supplies. Fix with `db.py correct-source --field <col>`, "
+                  f"which rewrites FROM the logged payload, or amend the stamp to say "
+                  f"what the row actually is.")
+            for ref_id, gp in false_complete:
+                print(f"      ✗ {ref_id}: {', '.join(c for c, _ in gp)}")
         return 1
     if examined == 0:
         print("\n  INDETERMINATE — nothing verifiable. Not a pass.")
         return 1
-    tail = "" if not biblio_gap else " Bibliographic gaps above are reported, not failed."
+    tail = "" if not biblio_gap else (" Bibliographic gaps above are reported, not "
+                                      "failed — none of them sits under a COMPLETE stamp.")
     scope = (f"the {examined} of {n_rows} source(s) examined"
              if examined != n_rows else f"all {n_rows} source(s)")
     print(f"\n  CLEAN FOR {scope.upper()} — their stored authors and asserted")

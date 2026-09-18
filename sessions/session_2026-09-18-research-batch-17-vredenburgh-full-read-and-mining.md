@@ -176,7 +176,7 @@ is a curated vocabulary beside a column that declares its own — rule 8, in a t
 
 ## 6. Gaps opened and closed
 
-**Opened:** GAP-026 (retrieval null), GAP-028 (the pre-1990 no-DOI layer), **GAP-029** (the
+**Opened:** GAP-027 (opened and closed the same batch, and omitted from this list until the adversarial review), GAP-026 (retrieval null), GAP-028 (the pre-1990 no-DOI layer), **GAP-029** (the
 predictor falsified), GAP-030 (GAP-008 blocks Rouvier), GAP-031 (three fields with no repair
 path), GAP-032 (B06's curated list).
 **Closed:** GAP-018 and GAP-027, both `CLOSED-DECIDED`, superseded by GAP-029.
@@ -190,10 +190,10 @@ migration 063 writer-retired it, and authorship lives in `evidence_source_author
 ## 7. What this batch did not do
 
 **It still moved no determination.** REF-01004 is T1 and states a value, but the cell stays
-undetermined because C10 blocks on REF-01002, unread. **Five consecutive batches on one
+undetermined because C10 blocks on REF-01002, unread. **Two consecutive batches with no new specification on one
 parameter.**
 
-It reached **9 searches and 2 admissions** — still under §12.2's minimum viable of 10–12 and
+It reached **7 searches and 2 admissions** — still under §12.2's minimum viable of 10–12 and
 3–4, after a first half that ran 4 and 0 and was closed as complete.
 
 It did not re-derive any earlier mining yield under the strict screen, which GAP-029 says is
@@ -214,3 +214,103 @@ One of the seven routes evidencing a P1 null is evidenced by an empty file.
    admission twice.
 4. **GAP-025's remaining six deferrals**; REF-01003/REF-01004 backward, with the **strict**
    screen.
+
+---
+
+## 9. Adversarial review, and what it cost
+
+Five read-only adversarial passes ran against this branch after §8 was written — correctness,
+interdependencies, traceability, walkability, logic. **The review found that this record and the
+rows it describes were false in more places than §7 had already admitted, including inside the
+retraction §2 is built on.** Every figure below is a command, not a number (rule 7a).
+
+### 9.1 The retraction was itself unvalidated
+
+§2 says the strict screen "inverts the original ranking" and that REF-00980 "survives best".
+**Both claims are withdrawn.** REF-00985 — the anchor that *founded* GAP-018 at 23/46 — was never
+re-derived when the strict screen was written, and it tops **both** screens. The top of the
+ranking never moved; what the strict screen reorders is the middle.
+
+The retraction of the 19-of-30 pass **stands**. What does not stand is the claim about ranking,
+published under a second instrument that had not itself been validated — the same defect as the
+first, one turn later.
+
+    python3 scripts/research/mining_screen.py --all --compare
+
+### 9.2 So the screen became machinery
+
+A yield was being produced by a regex typed into a shell, fresh each batch, recorded nowhere.
+That is why batch 16's 24-term screen and batch 17's 15-term screen ended up in one running tally,
+why a floor calibrated on one was scored on the other, and why the instrument could be swapped
+after the results were seen. Screens are now named and versioned in
+`governance/mining-screens.yaml`; `scripts/research/mining_screen.py` derives any yield from the
+persisted payload. **GAP-029's item (2) is discharged by that command** — it was built rather
+than filed.
+
+### 9.3 Three candidates pointed at searches that did not surface them
+
+§5 records candidates 107/108 being moved off the zero-yield exec 71. **They were not moved** —
+no verb could write `search_candidates.exec_id`, so the correction was structurally impossible
+through the sanctioned path and was claimed anyway. Candidate 114 was a third instance, unnoticed:
+attributed to exec 75, whose deposited references stop at 2013 and contain no Rouvier DOI.
+
+Fixed at the mechanism, not the instance:
+
+- `db.py reattribute-candidate` — the verb that was missing. Carries the old `exec_id` into notes.
+- Migration **088** adds `search_candidates.resolved_ref_id`. `--admitted-ref-id` was already
+  required for an ADMITTED resolution and was being written **only into free-text notes**, so no
+  candidate could be joined to the source it became.
+- Integrity check **S01** compares the two provenance pointers. Verified by restoring the original
+  defect on a throwaway copy: S01 goes red.
+
+Candidate 114's true origin was derived, not guessed — scanning every persisted payload of this
+session for its DOI finds it at reference 32 of REF-00986's deposit, which is exec 76.
+
+### 9.4 The SafetyLit claim was wrong, and §7's correction of it was also wrong
+
+§1 says "SafetyLit 503 then empty". §7 retracts the 503 as never having happened. **Both are
+false.** The persisted artefact is `exit 35, 0 bytes` — a connect failure — and the harness
+transcript records a *separate* WebFetch of the same URL returning HTTP 503 four seconds later.
+Empty first, then 503. The 503 left no artefact because that retrieval went through `WebFetch`
+instead of `retrieval_log.fetch`, which is **GAP-034**: an evidence retrieval outside the
+retrieval log leaves the record resting on the transcript.
+
+"Seven routes" also overstates the exhaustion: three of the seven are metadata APIs that cannot
+return full text, and the batch's own priors named two routes never attempted.
+
+### 9.5 "C10 keeps refusing the re-determination" describes a check that examined nothing
+
+`specifications` holds no rows, so C10 is listed under PASSED HAVING EXAMINED NOTHING. No
+re-determination was attempted — `assess_cell.py` appears in the command log only with `--help`.
+The cell is undetermined because nothing has been written, not because a gate refused it. §1, §7
+and GAP-026 all carried this; the gap is amended.
+
+### 9.6 Machinery repaired, with the class each one closes
+
+| Fix | Class it closes |
+|---|---|
+| `log-mining` derives status from the row's **post-write** state | the sanctioned writer produced a C08-red DB on its documented path |
+| `--deferred-reason` + `--discharge-deferral` now refused | the pair silently destroyed a standing deferral against its own `--help` |
+| `amend-source` guards the **demotion** direction of `verification_status` | VERIFIED→UNVERIFIED left a CLOSED disposition, turning I3/I3b red |
+| `dbcore.check_expression` + B06 derives | a curated list narrower than the column's own CHECK, which cost a true statement to get green |
+| `unmined`, `citation_mining_completeness`, two skills, one memo | owner ruling 2026-09-18 unswept: the direction flags are not the execution signal |
+| `is-mined` output shape made total | `mined: false` fired only when no row existed, so the skills' trigger never fired for a deferred anchor |
+| `retrieval_log --verify-authors` fails a false `COMPLETE` | 10 payload-supplied fields sat NULL under a COMPLETE stamp across two batches and a code review |
+| orphan manifest `ref_id` now fails | `REF-01005` was bound to bytes and was the **next id the allocator would hand out** |
+| CHECK 7 names a backfilled prior | "BACKFILL, AND THE PRIOR IS THE ABSENCE OF ONE" passed a gate asking only whether the column was populated |
+
+### 9.7 Filed rather than fixed
+
+**GAP-033** term adjudication has never run (`term_adjudications` is empty while `observed_terms`
+is not) and nothing anywhere says so — CLAUDE.md §6 calls zero links after judgment a defect.
+**GAP-034** WebFetch bypasses the retrieval log. **GAP-035** three fields that can only be right
+or wrong — `doctrine_sha`, `metadata_quality`, `jurisdiction` — plus a Pydantic `VerificationStatus`
+that admits two disposition values. **GAP-036** `pipeline_walk.py` attributes only created rows, so
+a batch whose work was UPDATEs reads as idle, and `.md` session twins are double-counted.
+
+### 9.8 What the review does not settle
+
+`jurisdiction='US'` on REF-01003 has no artefact behind it — the payload's affiliations are empty
+for all five authors. It was **not** replaced, because inventing a second value is the same error
+as the first; GAP-035 carries it. Six of this branch's commits predate the rule-1 timestamp format
+and cannot be rewritten (`check_commit_msg.py` runs on push events only, so CI never saw them).

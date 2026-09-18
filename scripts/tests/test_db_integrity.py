@@ -36,6 +36,9 @@ import re as _re
 import sqlite3
 import argparse
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+import dbcore  # noqa: E402  -- for check_expression: vocabularies come from the schema
+
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
 results = []
@@ -282,19 +285,83 @@ def run_checks(db_path):
            f"{bad} invalid values" if bad else "",
            subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE source_type IS NOT NULL"))
 
-    VALID_GAP_STATUS = ("OPEN","IN-PROGRESS","CLOSED-FIXED","CLOSED-RESOLVED",
-                         "CLOSED-DELETED","BLOCKED","P1",
-                         "CLOSED-SYSTEMIC","CLOSED-SYNC","CLOSED-FALSE-POSITIVE",
-                         # 2026-08-03: written by the owner-approved DR-2026-07-20
-                         # migration (data_20260720135718_...sql:18,34), which closes a
-                         # gap by *deciding* it rather than fixing or deleting it.
-                         "CLOSED-DECIDED")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM gaps
-        WHERE status NOT IN ({','.join('?'*len(VALID_GAP_STATUS))})
-    """, VALID_GAP_STATUS).fetchone()[0]
-    record("B06", "gaps.status values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM gaps"))
+    # DERIVED FROM THE COLUMN, NOT CURATED BESIDE IT (rule 8). This was a 12-value
+    # tuple maintained here while `gaps.status` declares its own
+    # CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%'). The tuple was NARROWER than
+    # the schema, so on 2026-09-18 a session closed two gaps as CLOSED-SUPERSEDED --
+    # accurate, accepted by `db.py close-gap`, accepted by the column's own CHECK -- and
+    # this blocking check went red on it. The session then wrote a LESS accurate value
+    # to get green, which is the list bending the data instead of describing it: exactly
+    # the failure rule 8 names ("the list and the thing drift and only the list is
+    # checked"), and it cost a true statement about the register.
+    #
+    # `dbcore.check_expression` returns whatever the column declares, in whatever shape,
+    # and this asserts it. A migration that narrows or widens the vocabulary changes
+    # this check in the same commit, because there is nothing here to update.
+    _expr = dbcore.check_expression(conn, "gaps", "status")
+    if _expr:
+        bad = conn.execute(f"SELECT COUNT(*) FROM gaps WHERE NOT ({_expr})").fetchone()[0]
+        record("B06", "gaps.status matches the column's own CHECK", bad == 0,
+               f"{bad} rows violate the declared constraint: {_expr}" if bad else "",
+               subject=subj("SELECT COUNT(*) FROM gaps"))
+    else:
+        # NOT SILENTLY GREEN. An unparsed or absent CHECK means this check has no rule
+        # to assert, which is a finding about the schema, not a pass.
+        record("B06", "gaps.status matches the column's own CHECK", False,
+               "gaps.status declares no CHECK this reader could extract, so there is "
+               "no vocabulary to assert. Declare one in a migration, or retire B06.",
+               subject=subj("SELECT COUNT(*) FROM gaps"))
+
+    # S01. THE TWO PROVENANCE POINTERS MUST NAME THE SAME SEARCH.
+    #
+    # A source admitted from a staged candidate has its provenance recorded TWICE:
+    # `search_candidates.exec_id` says which search surfaced the candidate, and
+    # `search_admissions.exec_id` says which search admitted the source. Those are the
+    # same event, so they must name the same search -- and until 2026-09-18 nothing
+    # compared them, because there was no candidate-to-source edge to join on (the ref
+    # id lived in free-text `notes`). Migration 088 adds `resolved_ref_id`; this is what
+    # it is for.
+    #
+    # Measured the day it was written: candidates 107 and 108 pointed at exec 71, a
+    # search whose own findings_note reads ZERO YIELD with results_admitted=0, while
+    # search_admissions put both their sources on exec 77. A reader walking
+    # candidate -> search was told the sources came out of a search that found nothing.
+    # The batch recorded in a committed migration that it had corrected this; it had
+    # not, and no gate could contradict it. That is CLAUDE.md rule 5's shape -- one fact
+    # with two homes -- and the cost of it is that only a human reading both rows could
+    # ever notice.
+    #
+    # Scoped to candidates that HAVE the edge: a legacy row cannot have its resolution
+    # reconstructed, and a check that demands one would be red forever over history
+    # nobody can repair (rule 6's argument: a check red by construction teaches its
+    # reader to ignore it).
+    # A MISSING COLUMN IS A FINDING, NOT A TRACEBACK. Schema/Pydantic drift is a bug
+    # (CLAUDE.md §7), and a check that dies on it reports nothing at all.
+    _has_edge = any(c[1] == "resolved_ref_id"
+                    for c in conn.execute("PRAGMA table_info(search_candidates)"))
+    if not _has_edge:
+        record("S01", "a candidate and its admission name the same search", False,
+               "search_candidates has no resolved_ref_id column, so the candidate-to-"
+               "source edge does not exist and the two provenance pointers cannot be "
+               "compared. Migration 088 adds it; this database predates it.",
+               subject=subj("SELECT COUNT(*) FROM search_candidates"))
+    else:
+        _prov = conn.execute("""
+            SELECT COUNT(DISTINCT c.candidate_id) FROM search_candidates c
+            JOIN search_admissions a ON a.ref_id = c.resolved_ref_id
+            WHERE c.exec_id IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM search_admissions a2
+                              WHERE a2.ref_id = c.resolved_ref_id
+                                AND a2.exec_id = c.exec_id)
+        """).fetchone()[0]
+        record("S01", "a candidate and its admission name the same search", _prov == 0,
+               f"{_prov} candidate(s) point at a search that did not admit the source "
+               f"they resolved to — repoint with `db.py reattribute-candidate`, or log "
+               f"the search that really surfaced them" if _prov else "",
+               subject=subj("SELECT COUNT(DISTINCT c.candidate_id) "
+                            "FROM search_candidates c "
+                            "JOIN search_admissions a ON a.ref_id = c.resolved_ref_id "
+                            "WHERE c.exec_id IS NOT NULL"))
 
     # evidence_sources.tier is a bare INTEGER: no CHECK constraint, and
     # ENUM_GUARDS in scripts/emit_data_migration.py only scans quoted string

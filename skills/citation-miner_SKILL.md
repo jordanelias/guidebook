@@ -30,7 +30,21 @@ Before any mining pass, probe connector availability:
 - **CrossRef** (via `web_fetch` to `api.crossref.org`) — preferred for backward mining when the source has a DOI. Authoritative for the reference list of any DOI-bearing publication.
 - **Direct document fetch** (`web_fetch`/`curl`, DOI not required) — backward mining is **not gated on having a DOI or a connector**. It only requires the source document itself, read for its own reference list. This works identically regardless of language — see §2 non-DOI sub-protocol. Do not mark a non-DOI source `backward = 0`/deferred without first fetching the actual document.
 
-**Partial-availability rule:** If only PubMed + CrossRef are available, complete backward mining and mark forward DEFERRED with the reason above. A citation_mining row with `backward = 1`, `forward = 0`, and `deferred_reason` set is a VALID partial-mining state. A row with `backward = 0` AND `forward = 0` AND no `deferred_reason` is a PROTOCOL VIOLATION (see GAP-283).
+**Partial-availability rule:** If only PubMed + CrossRef are available, complete backward mining and mark forward DEFERRED with the reason above.
+
+> **DO NOT READ THE DIRECTION FLAGS TO ANSWER "DID A PASS RUN".** Owner ruling
+> 2026-09-18: *executed is `mined`*. `log-mining` raises `{direction}=1` on a DEFERRED
+> pass as readily as on one that ran, so `backward = 1` says a call was made about the
+> backward direction and nothing about whether anything was searched. The execution
+> signal is `evidence_sources.citation_mining_status`, and `db.py is-mined` returns it
+> as `executed` alongside a `mined` boolean.
+>
+> This paragraph read *"a row with `backward = 0` AND `forward = 0` AND no
+> `deferred_reason` is a PROTOCOL VIOLATION"* until 2026-09-18 — a test that cannot
+> fire on the state it is meant to catch, since a deferral sets the flag. The real
+> violation is a T1–2 source whose `citation_mining_status` is not `mined` and which
+> carries no standing `deferred_reason`: work neither done nor deliberately deferred
+> (GAP-283's original concern, stated on the column that answers it).
 
 ---
 
@@ -347,6 +361,8 @@ All research skills MUST invoke citation-miner inline for every confirmed Tier 1
 SELECT COUNT(*), ssl.slug FROM evidence_sources es
 JOIN source_slug_links ssl ON es.ref_id = ssl.ref_id
 LEFT JOIN citation_mining cm ON cm.slug = ssl.slug AND cm.global_ref_id = es.ref_id
-WHERE es.tier IN (1,2,3) AND (cm.global_ref_id IS NULL OR cm.backward=0 OR cm.forward=0)
+-- Owner ruling 2026-09-18: the flags do not mean a pass ran. `db.py unmined` was swept
+-- onto citation_mining_status the same day; keep this query in step with it.
+WHERE es.tier IN (1,2,3) AND COALESCE(es.citation_mining_status,'') <> 'mined'
 GROUP BY ssl.slug ORDER BY COUNT(*) DESC
 ```
