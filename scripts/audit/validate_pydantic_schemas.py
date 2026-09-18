@@ -165,10 +165,55 @@ def compatible(py_group: str, sql_group: str) -> bool:
     return False
 
 
+# One concept, two names. Without this, a field the model calls `title` and the
+# column calls `pub_title` is reported TWICE -- once as Pydantic-only and once as
+# DB-only -- so a pure naming choice inflates the drift total by two and looks
+# like two missing mirrors. Added 2026-09-18 after the count was read as though
+# every entry were real drift.
+#
+# This is a curated list and rule 8 is unhappy about that, but the alternative is
+# worse: nothing in the schema records that `title` and `pub_title` are the same
+# concept, so there is no live source to derive it FROM. Keep it minimal, and
+# prefer renaming one side to deleting an entry here -- an alias is a second name
+# for one thing, which is the shape rule 5 warns about even when nothing is copied.
+FIELD_ALIASES = {
+    # "<table>": {"<model field>": "<db column>"}
+    "evidence_sources": {
+        "title": "pub_title",
+        "year": "pub_year",
+    },
+    "populations": {
+        # model comment: 'PopulationCode value, e.g. "MOB"' -- the same thing the
+        # column spells out in full.
+        "code": "population_code",
+    },
+}
+#
+# CHECKED AND DELIBERATELY NOT ALIASED, so the next reader does not re-propose them:
+#   populations.co1_status  vs  populations.status
+#       Different concepts. co1_status holds a Co-1 RETRIEVAL state ("Partial -- KR
+#       and BR not retrieved"); status is the population's own lifecycle. A fuzzy
+#       name match, not one concept.
+#   gap.date  vs  gaps.updated_at / updated_by_session
+#       date is the gap's own date; updated_at is an audit stamp.
+#   evidence_state.EvidenceStateRecord.convergence  vs  specifications.convergence_id
+#       The model field is Optional[ConvergenceAssessment] -- the EMBEDDED
+#       assessment -- while the column is the integer FK to it. Aliasing them would
+#       assert that a nested object mirrors an int column and would then report a
+#       bogus type mismatch. The model nests where the schema points, which is a
+#       real difference worth seeing, not drift to be silenced.
+
+
 def check_pair(model_cls, table: str, conn) -> dict:
     """Return {'pydantic_only': [...], 'db_only': [...], 'type_mismatch': [(f, pytype, dbtype)]}."""
     cols = {r[1]: r[2] for r in conn.execute(f"PRAGMA table_info({table})").fetchall()}
-    fields = model_cls.model_fields
+    fields = dict(model_cls.model_fields)
+    # Resolve aliases BEFORE the set difference, so one concept is compared once.
+    # Only rewrite when the alias target actually exists, otherwise a stale entry
+    # would hide a genuinely missing column instead of reporting it.
+    for model_name, col_name in FIELD_ALIASES.get(table, {}).items():
+        if model_name in fields and col_name in cols and col_name not in fields:
+            fields[col_name] = fields.pop(model_name)
     pydantic_only = sorted(set(fields) - set(cols))
     db_only = sorted(set(cols) - set(fields))
     type_mismatch = []

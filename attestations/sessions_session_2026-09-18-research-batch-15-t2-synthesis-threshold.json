@@ -1,0 +1,54 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-09-18-research-batch-15-t2-synthesis-threshold",
+ "artifact": "sessions/session_2026-09-18-research-batch-15-t2-synthesis-threshold.md",
+ "doctrine_sha": "70bae3e",
+ "rules_in_scope": [
+  "adherence-logging-and-attestation",
+  "source-discipline",
+  "integrity-protocol",
+  "multilingual-research"
+ ],
+ "per_rule_status": {
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "scratchpad/batch-15-t2-synthesis-threshold/PRIORS.md",
+   "reason": "Priors were committed before any query ran (3db5769-equivalent: dea4f1c), and a SECOND set was written and committed separately (70bae3e) before the two remediating queries, rather than backfilled after the gate failed. PRIORS.md section 1 opens by FALSIFYING the brief that commissioned the batch: my own review had called T2 'the untried stratum' while naming the command to check, and the check returned 3 prior executions. The correction was made before framing rather than inherited."
+  },
+  "source-discipline": {
+   "status": "FIRED",
+   "evidence_path": "retrieval-log/session_2026-09-18-research-batch-15-t2-synthesis-threshold/manifest.jsonl",
+   "reason": "Every claim_text on every extraction verifies byte-for-byte against a persisted artefact; no --verbatim-exempt was used. add-extraction refused three attempts and each refusal was correct: a claim typed from an MCP response with no persisted payload behind it, a to_label asserted as 'named' that the quote did not contain, and a claimed_value carrying digits (60, 78) drawn from two different sentences. The last is the 2026-08-19 fabrication shape with a figure in place of an author, caught by the gate rather than by me."
+  },
+  "integrity-protocol": {
+   "status": "FIRED",
+   "evidence_path": "scratchpad/batch-15-t2-synthesis-threshold/",
+   "reason": "research_batch_dod returned NON-COMPLIANT on R1 and R2 and both were REMEDIATED, not waived: a Co-1 pass was run (exec 65) and citation mining was logged over the T2 anchor in both directions (forward: ran, 192 pmids, saturation; backward: deferred with the reason named). The forward pass produced zero connection rows and that is recorded as a distinct fact from not running."
+  },
+  "multilingual-research": {
+   "status": "NOT-FIRED",
+   "reason": "No non-English source was admitted or screened this batch. Every admission is English-language; lang_detected is set to the canonical UPPERCASE form on all four, which is the form lang_jur_map and db.py --language both declare. No alias was written, so R11's back-translation rule had no subject."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "source-discipline",
+   "reason": "REF-01001 is admitted at T3 (clinical + lower_control, derived by the ratified ladder) while its abstract names co-production through the Croatian Association of Paraplegics and Tetraplegics. If that is co-production rather than participation-as-subjects it is Co-1, co-primary with T1, and it would satisfy specification 7's own falsification condition. The tier is therefore possibly UNDERSTATED and the deviation is deliberate: MDPI is Akamai-blocked, 'included in the implementation' does not settle D-0178's distinction, and claiming Co-1 on an ambiguous sentence is the mirror of the failure CLAUDE.md section 6 forbids. Raised as GAP-010 with the resolution path named."
+  },
+  {
+   "rule": "source-discipline",
+   "reason": "Extractions 42 and 43 carry extraction_method=skim and extraction_status=preliminary because they rest on the Crossref-deposited abstract rather than the full text. They must not be promoted or cited until the full text is read."
+  },
+  {
+   "rule": "integrity-protocol",
+   "reason": "Two verified-identity sources could NOT be admitted at all: Kim 2014 and Rouvier 2022, both blocked by false R9 collisions against corrupted source_locators rows (GAP-008). Rouvier was read in full and is a T2 systematic review directly on parameter 3. The batch's headline candidate -- Kim's rise-conditioned 1:8/1:10/1:12 -- is therefore staged, not filed."
+  },
+  {
+   "rule": "integrity-protocol",
+   "reason": "The backward mining pass over REF-00977 was deferred rather than run. Its 48 included studies are the richest unmined seam now in the corpus for this parameter and the deferral is named rather than silent."
+  }
+ ],
+ "bias_direction": "Toward declaring the batch a success on finding a stated value, because the batch was commissioned to find one and two candidates appeared that state one. The countervailing discipline actually applied: Kim's figure rests on an aggregator abstract, which is not a rung on the R10 ladder, so it is staged and explicitly marked not-to-be-cited; Lepoglavec's figures rest on a publisher-deposited abstract, which is, so they are filed but as preliminary skim rows. A second bias ran the other way and was corrected mid-batch by owner directive: I scoped the batch to STATED VALUES and was discarding qualitative and argument-level sources as secondary, which would have lost REF-00977 and REF-01000 entirely.",
+ "independent_reviewer_counterclaim": "A reviewer should press hardest on this: the batch's most consequential claim is that db.py's missing cross-file writer CAUSED the single-slug corpus, and I both diagnosed that and shipped the fix in the same session, with no independent check that link-source-slug is the right shape. Its four refusals were tested by me against my own expectations. A reviewer should also note that seven of the ten cross-slug links written are my own judgement calls recorded in a free-text --rationale that no gate reads for meaning, which is precisely the enforcement gap CLAUDE.md rule 2 names for attestations. Finally: three of the four admissions are T3 by the ratified ladder, so a reader skimming for 'the batch that broke the proxy' should be told plainly that it did not -- parameter 3 remains a proxy determination and GAP-010 is what would settle it.",
+ "verdict": "DEVIATION-LOGGED"
+}

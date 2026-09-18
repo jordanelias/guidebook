@@ -113,7 +113,9 @@ The jurisdiction-tracker skill (Sonnet 4.6, run once per edition) performs the c
 
 ### 3.3 UK convention
 
-The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is documented in the JurisdictionCode enum docstring and enforced by the validator.
+The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is documented in the JurisdictionCode enum docstring and enforced by two checks: `validate_jurisdiction.py` over the standards-registry and source YAML, and `scripts/audit/jurisdiction_db_vocabulary.py` over the DATABASE.
+
+*(Corrected 2026-09-18. This sentence previously said "enforced by the validator", singular, and that was false of the database: `validate_jurisdiction.py` globs files and never reads a table, so it passed with 0 errors while 27 rows across five tables held the rejected `GB` code — two of them written the same day. A rule stated at ERROR level with no gate on the data is a rule the corpus can violate silently, and this document asserting enforcement is what made it invisible. The second check closes that, derives its tables from the live schema, and parses the rejected spellings out of the table below rather than carrying its own copy.)*
 
 ---
 

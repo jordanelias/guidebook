@@ -140,9 +140,27 @@ class ItemAssignmentStatus(str, Enum):
 class JurisdictionCode(str, Enum):
     """Canonical jurisdiction codes.
 
-    24 country codes per jurisdiction-tracker §4.7.3 plus meta-codes.
-    Uses ISO 3166-1 alpha-2 where possible. UK used instead of GB
-    per project convention. Full list confirmed at A3.
+    The original 24 per jurisdiction-tracker §4.7.3, plus meta-codes, plus the
+    five admitted 2026-09-18 (below). ISO 3166-1 alpha-2 where possible.
+
+    UK, NOT GB. `governance/jurisdiction-philosophy.md` rules GB rejected at
+    ERROR level, and as of 2026-09-18 that is enforced on the DATABASE by
+    `scripts/audit/jurisdiction_db_vocabulary.py` -- previously only on files,
+    which is how 27 GB rows across five tables went unnoticed.
+
+    DO NOT ADD A CODE BECAUSE IT APPEARS IN A TABLE. Derive what is live before
+    proposing one, and note WHICH tables carry it:
+
+        select jurisdiction, count(*) from evidence_sources group by 1;
+
+    The 2026-09-18 five were admitted because they appear in the CORPUS tables --
+    evidence_sources, source_value_extractions, search_executions,
+    research_code_leads. Roughly twenty further ISO codes are live in
+    `lang_jur_map`, which is a language-to-jurisdiction reference map of places
+    the project MAY expand into, not evidence it holds; those are the "Phase 3
+    expansion" `validate_jurisdiction.py` warns about and they are deliberately
+    NOT admitted here. Admitting a code silently converts a candidate
+    jurisdiction into a declared one.
     """
 
     # Core 24 jurisdictions (alphabetical)
@@ -172,9 +190,20 @@ class JurisdictionCode(str, Enum):
     US = "US"   # United States
     ZA = "ZA"   # South Africa
 
+    # Admitted 2026-09-18 (owner ruling). Each was already live in the corpus
+    # tables while absent from this enum, so the declared vocabulary could not be
+    # used to gate the column it describes.
+    BE = "BE"   # Belgium -- REF-00995 (Flemish decree), REF-00996 (Handboek Toegankelijkheid)
+    ES = "ES"   # Spain -- search_executions (CTE DB-SUA line of enquiry)
+    HR = "HR"   # Croatia -- REF-01001 (Lepoglavec 2023)
+    IT = "IT"   # Italy -- search_executions
     # Meta-codes (not individual countries)
     ISO = "ISO"   # ISO international standards
     EU = "EU"     # European Union directives
+    INT = "INT"   # International / no single jurisdiction. DISTINCT FROM ISO: ISO
+    #               means an ISO-published standard, INT means the work spans
+    #               jurisdictions without being one -- REF-00994 (IPC Accessibility
+    #               Guide) and REF-00977 (a review searched across three databases).
 
 
 class EvidenceMarker(str, Enum):

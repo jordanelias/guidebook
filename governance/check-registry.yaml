@@ -701,6 +701,26 @@ checks:
     it is a taxonomy act, DG-NON), and two columns pack comma-joined codes, one of them hiding two retired
     codes. Leaving it blocking would red-X every schema and data diff for a backlog the committer cannot
     clear — the trap CLAUDE.md §7 warns about for the DB integrity job. Promote once those five are resolved.'
+- id: jurisdiction_db_vocabulary
+  cmd:
+  - python3
+  - scripts/audit/jurisdiction_db_vocabulary.py
+  battery: schema
+  kinds:
+  - schema
+  - data
+  level: blocking
+  basis: base/base-jurisdiction-vocabulary
+  cost: fast
+  min_items: 1
+  note: 'ADDED 2026-09-18. validate_jurisdiction (below) globs source YAML and the standards-registry
+    markdown and NEVER READS A TABLE, so it passed with 0 errors over 27 rows holding the rejected
+    GB code across five tables -- while jurisdiction-philosophy.md line 116 said the rule was
+    "enforced by the validator". This check reads the DATABASE. Its table list is DERIVED from the
+    live schema (any table with a jurisdiction column) and its vocabulary is PARSED from
+    jurisdiction-philosophy.md, so it holds no curated list of its own and refuses rather than
+    passing if the rule stops parsing. min_items:1 — the jurisdiction-bearing tables are schema, not
+    a corpus that legitimately empties. source_locators is exempt and the exemption states why.'
 - id: validate_jurisdiction
   cmd:
   - python3
