@@ -3,12 +3,17 @@
   "session": "session_2026-09-18-research-batch-17-vredenburgh-full-read-and-mining",
   "artifact": "sessions/session_2026-09-18-research-batch-17-vredenburgh-full-read-and-mining.md",
   "doctrine_sha": "1825003",
-  "rules_in_scope": ["adherence-logging-and-attestation","source-discipline","integrity-protocol","multilingual-research"],
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "source-discipline",
+    "integrity-protocol",
+    "multilingual-research"
+  ],
   "per_rule_status": {
     "adherence-logging-and-attestation": {
       "status": "FIRED",
       "evidence_path": "scratchpad/session_2026-09-18-research-batch-17-vredenburgh-full-read-and-mining/priors.md",
-      "reason": "The priors were committed at 36d7de2 before the first query and they were FALSIFIABLE RATHER THAN DECORATIVE, which is the only reason this batch has a result at all. The REF-00979 prior named a numeric floor -- >= 8 matches, with 'below 5 weakens the predictor' written out -- so 19 of 30 is a passed test rather than a description. The retrieval prior put success BELOW EVEN ODDS and said in advance that failure 'is not licence to promote the extraction'; retrieval failed and the extraction was not promoted."
+      "reason": "The priors were committed at 36d7de2 before the first query and they were FALSIFIABLE RATHER THAN DECORATIVE, which is the only reason this batch has a result at all. The REF-00979 prior named a numeric floor -- >= 8 matches, with 'below 5 weakens the predictor' written out -- so 19 of 30 is a passed test rather than a description. The retrieval prior put success BELOW EVEN ODDS and said in advance that failure 'is not licence to promote the extraction'; retrieval failed and the extraction was not promoted. THE SECOND HALF'S PRIORS ARE THE MORE IMPORTANT ONES: they pre-registered a numeric floor for REF-00983 (>= 8) and a ceiling for REF-00986 (<= 4), and wrote out in advance the clause 'if REF-00986 also comes back high, the predictor is measuring is-it-about-wheelchairs rather than what-does-it-measure'. That clause fired exactly as written, which is the only reason the screen was tested at all."
     },
     "source-discipline": {
       "status": "FIRED",
@@ -42,6 +47,18 @@
     {
       "rule": "integrity-protocol",
       "reason": "GAP-028 makes a claim this batch cannot yet support: that the pre-1990 layer is probably where the 1:12 threshold comes from. The evidence for it is a 1971 paper TITLED 'Ramp gradients' cited by the 1997 study that tested the ADA-permitted range. That is suggestive and it is not established -- nobody has read the 1971 paper, and the gap says so, but the framing 'probably where the threshold comes from' is stronger than a title is entitled to carry."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "THIS BATCH REPORTED A PASSED PREDICTION AND THEN FALSIFIED IT ITSELF, AND THE FIRST REPORT REACHED A COMMIT MESSAGE, A SESSION RECORD AND A PR BODY BEFORE THE CHECK THAT BROKE IT. REF-00979's 19-of-30 was counted with a screen whose regex carries 'propuls' and 'accessib', so it was measuring 'cites wheelchair-propulsion papers' -- trivially true of a wheelchair-propulsion paper. Under a strict slope-only screen it is 2 of 30. The two later pre-registered predictions both failed in opposite directions, which is what prompted testing the instrument rather than the hypothesis. The correction is GAP-029 and the session record; commit 857050c states the false version and cannot be edited. WHAT SHOULD HAVE HAPPENED: the screen should have been validated before any yield figure was reported as evidence for anything, because a screen is an instrument and an untested instrument produces numbers, not measurements."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "THE FIRST HALF OF THIS BATCH WAS SHORT OF MINIMUM VIABLE AND I CLOSED IT ANYWAY. DR-2026-08-19 section 12.2 sets minimum viable at 10-12 searches and 3-4 admissions; the first half ran 4 and admitted 0, wrote a session record, an attestation and a PR, and reported it as complete. One failed retrieval was allowed to bound the batch while GAP-025 had eight deferrals outstanding and the register held three candidates that resolved through Crossref on the first try in the second half. The user identified it; I did not. The continuation reaches 8 searches and 2 admissions, still under minimum viable on searches."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "A 3.9 MB SCRATCH DATABASE WAS COMMITTED (ca238cb) AND CANNOT BE REMOVED FROM HISTORY. scratchpad/<session>/walk.db was staged by a git add -A before the migration was emitted; it is now untracked going forward but remains in the repository history, exactly as batch 16 did before it. The same mistake twice in two batches is a process defect rather than a slip, and the fix is to name the scratch DB in .gitignore rather than to remember."
     }
   ],
   "bias_direction": "Toward rescuing a failed batch by promoting its consolation prizes. The batch had one job and did not do it, and there is a strong pull to lead with the passed prediction and the pre-1990 discovery instead -- both real, both genuinely interesting, neither what the batch was for. The record resists that by making the null the headline, but a reader should notice that sections 2 and 3 are longer and more enthusiastic than section 1. A second pull: the GAP-018 predictor is MINE, so a pass flatters me, and 19-against-8 is a wide enough margin to feel conclusive after a single test. It is one test. The third: 'structurally out of reach' is a satisfying diagnosis that also happens to excuse the retrieval failure, and the two should be kept apart -- the pre-1990 layer having no DOIs does not explain why a 2009 paper could not be fetched from JSTOR.",
