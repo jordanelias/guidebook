@@ -1516,7 +1516,12 @@ def main():
                                 "row, with a reason ledgered into notes")
     p_amx.add_argument("--extraction-id", dest="extraction_id", type=int,
                        required=True)
-    p_amx.add_argument("--field", required=True, choices=["figure_role", "comparator"],
+    # DERIVED from _AMENDABLE_SVE_FIELDS, not retyped. This list said
+    # ["figure_role", "comparator"] and went stale the moment the constant grew,
+    # which is rule 8's "twelve argparse choices= lists that duplicate a column's
+    # CHECK" in miniature -- one list fewer.
+    p_amx.add_argument("--field", required=True,
+                       choices=sorted(_AMENDABLE_SVE_FIELDS),
                        help="ONLY these two. A wrong claimed_value or claim_text is "
                             "a SECOND ROW and a contest (D-0168), not an overwrite.")
     p_amx.add_argument("--value", required=True)
@@ -5547,7 +5552,18 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # second row. figure_role/comparator are GRADING columns migration 075 added NULL
 # onto 8 pre-existing rows ("not yet graded"); filling that in later is not a
 # contest over what the source said.
-_AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator"})
+# extraction_method and extraction_status added 2026-09-18. They are PROVENANCE,
+# not the claim: they record HOW a row was made and how far it has been checked.
+# The refusal below is right that a changed claimed_value or claim_text is a
+# second row and a contest (D-0168) -- but a row filed `skim`/`preliminary` off an
+# abstract, and later CONFIRMED against the full text with the value unchanged, is
+# not a contest and filing a duplicate row asserting the same value would
+# manufacture one. R15 requires re-describing a staged item from the source on
+# resolution; until now there was no way to record that the re-description
+# happened. Verified against REF-01001, whose two rows were filed from a
+# Crossref-deposited abstract while MDPI was Akamai-blocked.
+_AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
+                                   "extraction_method", "extraction_status"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -5574,9 +5590,13 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
     if not value:
         raise Refusal("amend-extraction: --value is required and must not be blank.")
     with dbcore.connect(dry_run) as conn:
+        # SELECT * rather than a hand-listed column set. The list here was
+        # "extraction_id, ref_id, figure_role, comparator, claim_type, notes" and
+        # broke with IndexError the moment _AMENDABLE_SVE_FIELDS grew -- a second
+        # place naming the amendable columns, one line below the constant that
+        # names them. Two lists, one truth.
         row = conn.execute(
-            "SELECT extraction_id, ref_id, figure_role, comparator, claim_type, "
-            "notes FROM source_value_extractions WHERE extraction_id=?",
+            "SELECT * FROM source_value_extractions WHERE extraction_id=?",
             (extraction_id,)).fetchone()
         if row is None:
             raise Refusal(f"amend-extraction: extraction_id {extraction_id}: no "
