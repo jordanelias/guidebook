@@ -3673,3 +3673,49 @@ does not terminate as inexact; never round it into the position of a stated figu
 ruling about NOTATION of one quantity, not about UNITS: millimetres and degrees remain different
 units and the existing refusal to compose across them is untouched.
 DATE: 2026-09-17 — owner ruling, quoted above.
+
+## Owner ruling 2026-09-18 — UK is canonical; BE, ES, HR, IT and INT admitted to the jurisdiction enum
+
+> **"UK is canonical, add BE HR INT ES IT to the enum"**
+
+**WHAT THIS ANSWERS.** `JurisdictionCode` declared 27 codes while the corpus held eight the enum
+did not — so the declared vocabulary could not gate the column it described, and
+`governance/jurisdiction-philosophy.md`'s ERROR-level "GB rejected, must be UK" rule had **no gate on
+the database at all**: `validate_jurisdiction.py` globs source YAML and the standards registry and
+never reads a table. It passed with 0 errors over **27 GB rows across five tables**, two of which
+were written the same day.
+
+**WHAT IT SETTLES.**
+
+1. **UK, never GB**, confirmed. All 27 rows normalised;
+   `scripts/audit/jurisdiction_db_vocabulary.py` now enforces it on the DATABASE, deriving its table
+   list from the live schema and parsing the rejected spellings out of the philosophy document
+   rather than carrying a copy.
+2. **BE, ES, HR, IT, INT are admitted.** Each was already live in the CORPUS tables —
+   `evidence_sources`, `source_value_extractions`, `search_executions`, `research_code_leads`. With
+   them declared, every corpus jurisdiction value resolves, which is what makes the enum usable as a
+   gate.
+3. **INT is not ISO.** `ISO` means an ISO-published standard; `INT` means a work spanning
+   jurisdictions without being one — REF-00994 (IPC Accessibility Guide), REF-00977 (a review
+   searched across three databases). Both meta-codes, different meanings, recorded in the enum.
+
+**WHAT IT DOES NOT SETTLE, and the boundary is deliberate.** Roughly twenty further ISO codes are
+live in `lang_jur_map` — AR, AT, CL, CO, CR, CY, EC, ET, FI, GH, GT, MA, MX, PE, PH, PT, TH, TZ, UY.
+That table is a language-to-jurisdiction reference map of places the project **may expand into**, the
+"Phase 3 expansion" the validator warns about, not evidence it holds. They are **not** admitted here:
+admitting a code silently converts a candidate jurisdiction into a declared one, and that is a scope
+decision about the project's coverage rather than a vocabulary repair. The check exempts that table
+and says why.
+
+**TWO ANOMALIES SURFACED AND LEFT FOR A RULING**, in `term_aliases.jurisdiction`:
+`TW` (Taiwan — a real jurisdiction, undeclared, outside the five ruled on) and `colloquial` on
+TERM-027 *"place handicapé"* — **which is not a jurisdiction at all** but a register label written
+into the jurisdiction column. Reported by the check, non-blocking, because `term_aliases` is base
+vocabulary rather than admitted evidence and neither is this session's to decide.
+
+CONDITION: Any session admitting a source whose jurisdiction is not already declared; any session
+proposing an addition to `JurisdictionCode`.
+ACTION: (1) Derive what is live before proposing a code, and name WHICH tables carry it — corpus or
+reference. (2) Never write `GB`. (3) Do not admit a `lang_jur_map`-only code without a scope ruling.
+(4) `TW` and `colloquial` are owed a decision.
+DATE: 2026-09-18 — owner ruling, quoted above.

@@ -34,6 +34,27 @@ PHILOSOPHY = REPO_ROOT / "governance" / "jurisdiction-philosophy.md"
 # signal this check exists for.
 EXEMPT = {"source_locators"}
 
+# Tables whose `jurisdiction` names a CANDIDATE, not a place the project holds
+# evidence for. lang_jur_map is a language-to-jurisdiction reference map covering
+# roughly twenty further ISO codes the project may expand into -- the "Phase 3
+# expansion" validate_jurisdiction.py warns about. Gating it against the declared
+# enum would force every candidate to be admitted as a declared jurisdiction just
+# to be listed as a possibility, which inverts what the enum is for.
+#
+# This is an exemption list and rule 8 dislikes those. It is kept because the
+# burden of proof sits on the exclusions: two tables, each with its reason stated
+# here, against a table set DERIVED from the live schema.
+CANDIDATE_TABLES = {"lang_jur_map"}
+
+# Tables where an undeclared code is REPORTED but does not fail the check. These
+# are base-vocabulary stores, not admitted evidence: term_aliases.jurisdiction
+# records where an alias is USED, so it reaches places the corpus holds no
+# evidence for. An undeclared value here is a question for the owner -- admit the
+# jurisdiction, or fix a mis-filed value -- and not a reason to block a push on
+# work that did not cause it. The GB rule still FAILS everywhere, because that
+# one is ruled.
+REPORT_ONLY = {"term_aliases"}
+
 
 def rejected_spellings() -> dict:
     """{bad: good} read from the governance table that rules on it, not hardcoded."""
@@ -67,7 +88,7 @@ def main() -> int:
         if any(c[1] == "jurisdiction" for c in conn.execute(f'PRAGMA table_info("{t}")')):
             tables.append(t)
 
-    findings, examined = [], 0
+    findings, reported, examined = [], [], 0
     for t in tables:
         for bad, good in bad_map.items():
             n = conn.execute(
@@ -77,8 +98,42 @@ def main() -> int:
                 findings.append(f"  {t}.jurisdiction: {n} row(s) hold '{bad}' "
                                 f"-- rejected, must be '{good}'")
 
+    # Every corpus value must be a DECLARED code. Possible since 2026-09-18, when
+    # the owner admitted BE/ES/HR/IT/INT -- before that the corpus held codes the
+    # enum did not declare, so the declared vocabulary could not gate the column
+    # it describes and this half of the check would have failed on correct data.
+    declared, undeclared_note = set(), ""
+    try:
+        sys.path.insert(0, str(REPO_ROOT))
+        from schemas.enums import JurisdictionCode
+        declared = {e.value for e in JurisdictionCode}
+    except Exception as exc:                                    # pragma: no cover
+        undeclared_note = f"  [SKIPPED] could not import JurisdictionCode: {exc}"
+    if declared:
+        for t in tables:
+            if t in CANDIDATE_TABLES:
+                continue
+            vals = {r[0] for r in conn.execute(
+                f'SELECT DISTINCT jurisdiction FROM "{t}" WHERE jurisdiction IS NOT NULL')}
+            examined += len(vals)
+            for v in sorted(v for v in vals if v not in declared):
+                n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE jurisdiction = ?',
+                                 (v,)).fetchone()[0]
+                msg = (f"  {t}.jurisdiction: {n} row(s) hold '{v}', which "
+                       f"JurisdictionCode does not declare. Either it is a real "
+                       f"jurisdiction the owner should admit to the enum, or it is "
+                       f"not a jurisdiction at all and the value is mis-filed.")
+                (reported if t in REPORT_ONLY else findings).append(msg)
+
     print(f"Rejected spellings, read from {PHILOSOPHY.relative_to(REPO_ROOT)}: {bad_map}")
-    print(f"Tables with a jurisdiction column (derived, {len(EXEMPT)} exempt): {len(tables)}")
+    print(f"Declared codes in JurisdictionCode: {len(declared)}")
+    print(f"Tables with a jurisdiction column (derived, {len(EXEMPT)} exempt, "
+          f"{len(CANDIDATE_TABLES)} candidate-only): {len(tables)}")
+    if undeclared_note:
+        print(undeclared_note)
+    if reported:
+        print("REPORTED (base vocabulary, not blocking -- owner decision):")
+        print("\n".join(reported))
     if findings:
         print("\n".join(findings))
     print(f"EXAMINED: {examined} (table x rejected-spelling pair)")
