@@ -169,18 +169,38 @@ def audit(db_path, session=None, tier_max=2, output_json=False):
         -- pass over that fix; corrected here rather than in a second column.
         LEFT JOIN citation_mining cm
                ON cm.global_ref_id = es.ref_id
-        -- cm2 IS A LEGACY FALLBACK AND IS CURRENTLY DORMANT: measured 2026-08-24,
-        -- 0 of 10 citation_mining rows have a NULL global_ref_id, so this join reaches
-        -- nothing. It is KEPT rather than deleted because its reason is specific and
-        -- its failure direction is safe: a row that only (slug, local_ref_id) can reach
-        -- would otherwise report UNMINED, which is the 48-false-positive bug described
-        -- above. `log_mining` now always writes global_ref_id, so the only way it fires
-        -- again is a legacy import. Delete it once no such row can exist.
-        LEFT JOIN citation_mining cm2
-               ON cm2.slug = ssl.slug AND cm2.local_ref_id = ssl.local_ref_id
         WHERE es.tier BETWEEN 1 AND :tier_max
           AND cm.global_ref_id IS NULL
-          AND cm2.slug IS NULL
+          -- THE LEGACY FALLBACK, RESOLVED PER SOURCE (GAP-011, 2026-09-18).
+          --
+          -- It was a LEFT JOIN on `cm2.slug = ssl.slug AND cm2.local_ref_id =
+          -- ssl.local_ref_id` with `cm2.slug IS NULL` in the WHERE -- a PER-SLUG
+          -- test ANDed into a PER-SOURCE question. That was harmless only while
+          -- every source had exactly one slug: the single ssl row either matched
+          -- or did not, and the two readings coincided.
+          --
+          -- Cross-slug filing (db.py link-source-slug) ended that. A source on
+          -- four slugs produces four ssl rows; a legacy mining row reaches ONE of
+          -- them, and the other three satisfy `cm2.slug IS NULL`, so a MINED
+          -- source is reported OUTSTANDING. Reproduced before this fix by nulling
+          -- global_ref_id on REF-00977's row: the gate reported it outstanding
+          -- while its mining row sat in the table. That is the 48-false-positive
+          -- shape the fallback was added to PREVENT, returning through the door
+          -- the fallback itself left open -- and on a BLOCKING gate.
+          --
+          -- NOT EXISTS asks the question the rest of the query asks: is there any
+          -- legacy mining row reachable through ANY of this source's slug links?
+          -- Same semantics as the `cm` join above, which was already per-source.
+          -- No behaviour change on today's data -- 0 of 20 citation_mining rows
+          -- have a NULL global_ref_id, so the fallback is dormant and this is a
+          -- latent defect fixed before it could fire.
+          AND NOT EXISTS (
+              SELECT 1
+              FROM citation_mining cm2
+              JOIN source_slug_links ssl2
+                     ON ssl2.slug = cm2.slug
+                    AND ssl2.local_ref_id = cm2.local_ref_id
+              WHERE ssl2.ref_id = es.ref_id)
           {where_session}
         GROUP BY es.ref_id
         ORDER BY es.tier, es.ref_id
