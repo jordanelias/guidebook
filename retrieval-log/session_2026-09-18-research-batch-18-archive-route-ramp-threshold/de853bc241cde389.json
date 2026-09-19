@@ -1,0 +1,21 @@
+{
+  "response":{"numFound":1,"start":0,"numFoundExact":true,"docs":[
+      {
+        "id":"ED184280",
+        "title":"Accessible Buildings for People with Walking and Reaching Limitations.",
+        "author":["Steinfeld, Edward",
+          "And Others"],
+        "description":"Research was reviewed and conducted regarding the accessibility of buildings for physically disabled persons. Data was produced regarding anthropometrics (eye level and reach limits for ambulant, semiambulant, and wheelchair bound persons); wheelchair maneuvers; speed and distance (maximum travel distances for people with limitations of stamina); push-pull forces against windows and doors; ramps (maximum slopes); toilet stalls (dimensions, use of grab bars); bathtubs (location of grab bars, need for seat); showers (dimension of shower stalls, usability of wheelin showers and those with a curb); bathroom layouts; kitchen (dimensions, heights of shelves and work surfaces); doorways; elevators (size, location of control panels, timing of elevator doors); public telephones; and  public mailboxes. A final section compares data with previous research. (CL)",
+        "subject":["Accessibility (for Disabled)",
+          "Building Design",
+          "Design Requirements",
+          "Facility Guidelines",
+          "Physical Disabilities",
+          "Structural Elements (Construction)"],
+        "publicationtype":["Reports - Research",
+          "Non-Print Media"],
+        "publicationdateyear":1979,
+        "language":["English"],
+        "publisher":"Superintendent of Documents, U.S. Government Printing Office, Washington, DC 20402.",
+        "peerreviewed":"F"}]
+  }}

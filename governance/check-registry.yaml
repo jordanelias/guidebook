@@ -148,6 +148,14 @@ batteries:
     # routes through --verbatim-exempt, and §5(c)'s floor is bypassed structurally
     # rather than by anyone's choice. Making quote_in_artefacts PDF-aware is the change
     # that turns this into a dependency a CHECK needs; it is proposed, not made here.
+    #
+    # CORRECTED 2026-09-18 (batch 18): the sentence above was HALF TRUE when written.
+    # --claim-text could route through the exemption; --quote on a relation edge could
+    # NOT, because add-extraction accepted the flag and never passed it to
+    # _write_relation_edge (GAP-007, closed in that batch). So a PDF-only source could
+    # not carry a relation edge at all, and the note read as though it could. Fixed in
+    # scripts/db.py; relate-extraction and derive-extraction still expose no flag of
+    # their own. Derive the state: grep -n 'verbatim_exempt' scripts/db.py.
     deps:
     - pydantic
     - jsonschema
