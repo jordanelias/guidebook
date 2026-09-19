@@ -3869,6 +3869,11 @@ PMID and no Crossref deposit**, and serves many of them as full-text PDF at a pr
     https://api.ies.ed.gov/eric/?search=<query>&format=json&rows=25     # record, gives ED number
     https://files.eric.ed.gov/fulltext/<ED-number>.pdf                  # full text, often present
 
+**AND ONE ROUTE IN THIS ENVIRONMENT IS EXHAUSTED, NOT EMPTY.** `books.googleapis.com` returns
+HTTP 429 — *"Quota exceeded for quota metric 'Queries' and limit 'Queries per day'"* — so a Google
+Books query here is **not asked**, and its absence of results is not a null. Batch 18 recorded three
+such 429s as *"Google Books 0"* before `author_fidelity` caught it. Treat a 429 as an unfired query.
+
 Batch 18 used exactly that pair to retrieve HUD-PDR 397 (Steinfeld, Schroeder and Bishop 1979,
 `ED184280`, 170 pp., 5.7 MB), persisted through `retrieval_log.fetch`. Derive what the corpus holds
 rather than quoting this sentence:
@@ -3882,11 +3887,24 @@ query-shape-versus-wrong-index diagnosis still has to be made rather than assume
 routes went untried in batch 18 and are owed: **NTIS** for federal technical reports and **Jisc
 Library Hub Discover** for UK institutional reports (which is where Walter 1971 would sit).
 
-**AND ONE INSTRUMENT IS NOW KNOWN BAD FOR THIS PURPOSE.** `catalog.hathitrust.org` returned
-HTTP 200 carrying a Cloudflare *"Just a moment… Enable JavaScript and cookies to continue"*
-interstitial — a false 200, the same shape batch 17 found on JSTOR. It is persisted in this
-session's retrieval log as evidence. **A 200 from HathiTrust's catalogue is not a result**; read the
-artefact before scoring the retrieval.
+**AND ONE INSTRUMENT IS NOW KNOWN BAD FOR THIS PURPOSE.** `catalog.hathitrust.org` served a
+Cloudflare *"Just a moment… Enable JavaScript and cookies to continue"* interstitial instead of
+results, persisted in this session's retrieval log. **Nothing is established about what HathiTrust
+holds**; read the artefact before scoring the retrieval.
+
+> **CORRECTED 2026-09-19, WITHIN THE SAME SESSION, AND THE CORRECTION MATTERS MORE THAN THE
+> ORIGINAL CLAIM.** The paragraph above first read *"returned HTTP 200 carrying a Cloudflare
+> interstitial — a false 200, the same shape batch 17 found on JSTOR."* **The status was 403, not
+> 200.** Derive it: `python3 -c "import json;[print(json.loads(l)['status'],json.loads(l)['url'])
+> for l in open('retrieval-log/<session>/manifest.jsonl') if 'hathitrust' in l]"`.
+>
+> That is not a pedantic difference and it runs AGAINST me. A 403 is an honest refusal — the
+> server says it is blocking. A 200 carrying an interstitial is a *deceptive* success, which is
+> why batch 17's JSTOR finding was worth recording. **By misreading the status I upgraded a
+> mundane block into the more alarming class, and reached for a precedent that did not apply.**
+> The operative lesson survives and is smaller: read the body, not the status, in both
+> directions. Found by `author_fidelity`, which prints every non-2xx in a session's manifest —
+> a check that examines what a session actually retrieved rather than what it said it did.
 
 CONDITION: Any session searching for a pre-1995 report, an institutional or government research
 report, or any source that returned no DOI from Crossref.

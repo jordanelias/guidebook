@@ -1277,6 +1277,21 @@ def main():
     p_am.add_argument("--append-note", required=True, dest="append_note",
                       help="Appended after a '|| CORRECTED <date>:' marker. The existing "
                            "note is never rewritten -- R8 makes this log append-only.")
+    # ADDED 2026-09-18 (batch 18). R5 fires on a NON-ENGLISH search targeted as 'grey',
+    # because treating non-English work as grey is the exact error R5 exists to stop:
+    # non-indexation in PubMed/Scopus is an INDEXING fact, not an evidence-quality fact.
+    # This batch made that error -- it targeted a Dutch 1981 research paper 'grey' because
+    # the item has no DOI -- and then had no way to correct it, because the log is
+    # append-only and amend-search could append only PROSE. A MISCLASSIFICATION THE GATE
+    # READS IS NOT FIXED BY A SENTENCE THE GATE DOES NOT READ.
+    #
+    # Scoped to this one column on purpose: target_evidence_type classifies what was
+    # SOUGHT, not what happened, so correcting it rewrites no history. The query text,
+    # results_found and the findings note stay append-only, which is what R8 protects.
+    p_am.add_argument("--set-target-evidence-type",
+                      help="Correct a MISCLASSIFIED target_evidence_type. The replaced "
+                           "value is appended to findings_note, so the correction is "
+                           "itself logged rather than silent.")
     p_am.add_argument("--set-harm-finding", action="store_true",
                       help="Raise harm_finding 0 -> 1. R7 makes harm first-class, so a "
                            "search logged with the flag down that did surface harm has an "
@@ -1991,6 +2006,21 @@ def main():
     p_as.add_argument("--doi-resolution-outcome",
                       help="RESOLVED | NO-MATCH | REVERTED — the set is DEFINED by "
                            "ENUM_GUARDS in scripts/emit_data_migration.py, not here")
+    # ADDED 2026-09-18 (batch 18): the venue fields that make a REPORT citable.
+    # A government report with no institution and no report number cannot be rendered
+    # into a bibliography -- see the _ES_COLS note for how REF-01005 exposed this.
+    p_as.add_argument("--source-type", help="journal-article | report | book | thesis | standard …")
+    p_as.add_argument("--institution", help="the PERFORMING organisation, as ERIC's INSTITUTION field and a report's own title page use the term; the sponsor goes in --publisher")
+    p_as.add_argument("--report-number", help="e.g. HUD-PDR 397; the issuer's own number")
+    p_as.add_argument("--series")
+    p_as.add_argument("--series-number")
+    p_as.add_argument("--publisher")
+    p_as.add_argument("--publisher-location")
+    p_as.add_argument("--book-title")
+    p_as.add_argument("--grey-flag", type=int, choices=(0, 1),
+                      help="1 for grey literature. evidence_type='grey' with grey_flag=0 "
+                           "is the same fact disagreeing with itself across two columns")
+    p_as.add_argument("--grey-reason", help="WHY it is grey: the venue, in a phrase")
     p_as.add_argument("--year", required=True, type=int)
     p_as.add_argument("--title", required=True)
     p_as.add_argument("--tier", required=True, type=int)
@@ -2496,7 +2526,8 @@ def main():
     elif args.command == "amend-search":
         _emit(amend_search(args.exec_id, args.append_note, session=args.session,
                            dry_run=args.dry_run,
-                           set_harm_finding=args.set_harm_finding))
+                           set_harm_finding=args.set_harm_finding,
+                           set_target_evidence_type=args.set_target_evidence_type))
 
     elif args.command == "amend-gap":
         out = amend_gap(args.gap_id, args.append_note, args.session, args.dry_run)
@@ -2744,6 +2775,20 @@ def main():
                             # so all nine of batch 05's sources failed it and none could
                             # be fixed honestly -- a prior recorded after reading the
                             # source is not a prior.
+                            # Added 2026-09-18 (batch 18): the report/venue set. Same
+                            # failure shape as the 2026-09-02 note above -- a flag that
+                            # parses and never reaches the row reports success on a write
+                            # that did not happen.
+                            ("source_type", "source_type"),
+                            ("institution", "institution"),
+                            ("report_number", "report_number"),
+                            ("series", "series"),
+                            ("series_number", "series_number"),
+                            ("publisher", "publisher"),
+                            ("publisher_location", "publisher_location"),
+                            ("book_title", "book_title"),
+                            ("grey_flag", "grey_flag"),
+                            ("grey_reason", "grey_reason"),
                             ):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
@@ -3262,6 +3307,30 @@ def insert_evidence_source(data: dict, session: str,
         # column, after evidence_source_authors, source_locators, observed_terms /
         # term_adjudications, terms, and base_parameters.
         "scope",
+        # ADDED 2026-09-18 (batch 18), and this is the SEVENTH entry in the list of
+        # blindnesses the comments above enumerate -- the sixth is recorded two
+        # paragraphs up, in the same block, by an author who was reading it.
+        #
+        # What exposed it: REF-01005 is a US government research report (HUD-PDR 397,
+        # ERIC ED184280). Every field that makes a report CITABLE -- the issuing
+        # institution, the report number, the series, the publisher -- was unreachable
+        # through the only sanctioned writer, so the row landed with nine
+        # payload-supplied fields NULL under `metadata_quality='COMPLETE'`. A
+        # bibliography compiled from that row cannot name what the document IS.
+        #
+        # The owner rule of 2026-09-18 22:55 is the one that forced this rather than a
+        # companion UPDATE: "WHEN THE CLI CANNOT REACH A COLUMN, ADD THE VERB -- DO NOT
+        # CLAIM THE WRITE HAPPENED." CLAUDE.md section 4 had already said a table the CLI
+        # cannot reach is a coverage bug and not a licence to bypass; what the rule adds
+        # is the third option, which is writing the claim without the write.
+        #
+        # grey_flag/grey_reason ride along deliberately. `evidence_type='grey'` and
+        # `grey_flag=0` was the state this row landed in, and the two say the same thing
+        # in different columns -- so the writer that can set one must be able to set the
+        # other, or they drift by construction.
+        "source_type", "publisher", "publisher_location", "book_title",
+        "series", "series_number", "report_number", "institution",
+        "grey_flag", "grey_reason",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
 
@@ -3529,7 +3598,8 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
 
 
 def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
-                 set_harm_finding: bool = False):
+                 set_harm_finding: bool = False,
+                 set_target_evidence_type: str = None):
     """APPEND a correction to a logged search's findings_note. Never rewrite it.
 
     R8 makes search_executions an append-only log: a query is logged verbatim before
@@ -3551,14 +3621,15 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
     if not note:
         raise Refusal(f"exec {exec_id}: refusing to append an empty amendment.")
     with connect(dry_run) as conn:
-        row = conn.execute("SELECT exec_id, findings_note, harm_finding "
+        row = conn.execute("SELECT exec_id, findings_note, harm_finding, "
+                           "target_evidence_type "
                            "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if row is None:
             raise Refusal(f"exec {exec_id}: no such search execution.")
         stamp = audit(session)
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
         duplicate = note in (row["findings_note"] or "")
-        if duplicate and not set_harm_finding:
+        if duplicate and not set_harm_finding and not set_target_evidence_type:
             return {"exec_id": exec_id, "appended": False,
                     "reason": "this amendment is already on the row"}
         merged = row["findings_note"] or ""
@@ -3566,6 +3637,27 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             merged = merged.rstrip() + marker + note
             conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
                          [merged, exec_id])
+        retyped = None
+        if set_target_evidence_type:
+            # The vocabulary comes from the column's own CHECK, never a list here
+            # (CLAUDE.md rule 8). check_declared raises with the live set on a bad value.
+            dbcore.check_declared(conn, "search_executions", "target_evidence_type",
+                                  set_target_evidence_type, f"exec {exec_id}")
+            was = row["target_evidence_type"]
+            if was == set_target_evidence_type:
+                raise Refusal(
+                    f"exec {exec_id}: target_evidence_type is already "
+                    f"{set_target_evidence_type!r}. Nothing to correct.")
+            conn.execute("UPDATE search_executions SET target_evidence_type=? "
+                         "WHERE exec_id=?", [set_target_evidence_type, exec_id])
+            trail = (f"{marker}target_evidence_type {was!r} -> "
+                     f"{set_target_evidence_type!r} (misclassification corrected; the "
+                     f"replaced value is kept here because the column no longer holds it)")
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [(merged or "").rstrip() + trail, exec_id])
+            merged = (merged or "").rstrip() + trail
+            retyped = {"was": was, "now": set_target_evidence_type}
+
         raised = False
         if set_harm_finding:
             # MONOTONIC, 0 -> 1 ONLY. R7 makes failure, harm and inadequacy first-class
@@ -3580,7 +3672,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                          [exec_id])
             raised = True
         return {"exec_id": exec_id, "appended": not duplicate, "chars": len(merged),
-                "harm_finding_raised": raised}
+                "harm_finding_raised": raised, "target_evidence_type": retyped}
 
 
 def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
@@ -5282,7 +5374,8 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                          to_extraction: int = None, to_label: str = None,
                          to_kind: str = None, stated: str = None, quote: str = None,
                          input_role: str = None, notes: str = None,
-                         cross_source_reason: str = None) -> int:
+                         cross_source_reason: str = None,
+                         verbatim_exempt: str = None) -> int:
     """Validate and INSERT one `extraction_relations` row. The one place every
     refusal in this junction's CHECK constraints is restated as a sentence — shared
     by `add-extraction`, `relate-extraction` and `derive-extraction` so there is one
@@ -5409,12 +5502,34 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
 
     verified, where = _verbatim(quote, from_ref_id)
     if not verified:
-        raise Refusal(
-            f"{context}: --quote does not occur byte-for-byte in any persisted "
-            f"retrieval artefact ({where}). Either the payload behind this quote "
-            f"was never retrieved and persisted (R10 -- retrieve it first, "
-            f"retrieval_log.fetch()), or the quote was typed from memory rather "
-            f"than read off the bytes (CLAUDE.md 5(c)). Nothing was written.")
+        # GAP-007, closed 2026-09-18 (batch 18). `add-extraction` has carried
+        # --verbatim-exempt since it was built; this edge writer never received it, so
+        # the refusal below TOLD THE READER TO USE A FLAG THAT COULD NOT REACH IT. That
+        # is worse than a missing flag: the message is a correct instruction to an
+        # impossible action, and the only ways past it were to abandon a true extraction
+        # or to weaken the check for everyone.
+        #
+        # It bites exactly where the evidence is oldest. `quote_in_artefacts` cannot
+        # decode a scanned PDF's text layer, so NO quote from a microfiche-era report can
+        # ever match byte-for-byte -- and the pre-1990 layer (GAP-028) is entirely that
+        # shape. REF-01005 (ED184280, a 1979 microfiche) is the row that exposed it.
+        #
+        # The exemption does not weaken the check: it is REFUSED unless a reason is given,
+        # the reason is stored on the row, and the artefact is still required to exist and
+        # to be bound to the ref_id. What it stops requiring is byte-equality against
+        # bytes that cannot be decoded at all.
+        if not (verbatim_exempt or "").strip():
+            raise Refusal(
+                f"{context}: --quote does not occur byte-for-byte in any persisted "
+                f"retrieval artefact ({where}). Either the payload behind this quote "
+                f"was never retrieved and persisted (R10 -- retrieve it first, "
+                f"retrieval_log.fetch()), or the quote was typed from memory rather "
+                f"than read off the bytes (CLAUDE.md 5(c)). If the artefact exists but "
+                f"its bytes cannot be decoded -- a scanned PDF's text layer, say -- pass "
+                f"--verbatim-exempt with the reason, which is ledgered on the row. "
+                f"Nothing was written.")
+        notes = ((notes + " || ") if notes else "") + (
+            "VERBATIM-EXEMPT: " + verbatim_exempt.strip())
 
     dup = conn.execute(
         "SELECT relation_id FROM extraction_relations WHERE from_extraction_id=? "
@@ -5840,7 +5955,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         relation_ids = []
         for edge in relations:
             relation_ids.append(_write_relation_edge(
-                conn, from_id=extraction_id, from_ref_id=ref,
+                conn, verbatim_exempt=verbatim_exempt,
+                from_id=extraction_id, from_ref_id=ref,
                 from_figure_role=figure_role, from_comparator=row.get("comparator"),
                 relation=edge.get("relation"), to_extraction=edge.get("to_extraction"),
                 to_label=edge.get("to_label"), to_kind=edge.get("to_kind"),

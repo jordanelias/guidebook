@@ -1,0 +1,28 @@
+{
+  "response":{"numFound":1,"start":0,"numFoundExact":true,"docs":[
+      {
+        "id":"ED113892",
+        "title":"Bio-Engineering Services to the Developmentally Disabled Adolescent. Final Report.",
+        "author":["Mallik, Kalisankar",
+          "Yuspeh, Sheldon"],
+        "description":"A 1-year demonstration project involving 24 developmentally disabled students (9- to 20-years-old) with severe physical limitations was conducted to increase their educational and vocational possibilities by using cost-effective bio-engineering techniques to modify their physical environment and develop improved adaptive devices. Phase I of the project consisted of student selection, parent education, and initial evaluation of individual functional abilities. The second phase included using specially designed or commercially available adaptive devices (such as contour seats and wheelchair ramps) to increase functional independence; developing recreational programs (such as a miniature golf course); measuring functional improvement in 50 areas of self-care (such as dressing and  eating); providing vocational orientation programs (including training in microfilming and one-handed typing); evaluating each student's functional and vocational potentials and recommending environmental and othotic (supportive device) adaptations; and meeting of project advisors, staff members, parents, and students. Plans for the project's final phase focus on a practical workshop to demonstrate how low-cost, simple designed, bio-engineering adaptations can be used to increase the physically disabled individual's functional level and work capacity. (Provided are descriptions and pictures of adaptive devices used with individual students and 14 appendixes including sample forms for evaluating physical functioning and recreational interests.) (SB)",
+        "subject":["Adolescents",
+          "Children",
+          "Demonstration Programs",
+          "Developmental Disabilities",
+          "Equipment",
+          "Exceptional Child Education",
+          "Material Development",
+          "Mobility Aids",
+          "Parent Education",
+          "Physical Activities",
+          "Physical Disabilities",
+          "Prevocational Education",
+          "Program Descriptions",
+          "Recreation",
+          "Self Care Skills",
+          "Student Evaluation"],
+        "publicationtype":["Reports - Research"],
+        "publicationdateyear":1975,
+        "peerreviewed":"F"}]
+  }}
