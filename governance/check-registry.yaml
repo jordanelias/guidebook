@@ -141,7 +141,25 @@ batteries:
     # and still cannot be imported, and ensure-deps.sh would report it missing forever.
     # Installing cffi repairs cryptography and pypdf imports clean.
     #
-    # NO CHECK IMPORTS pypdf TODAY, stated plainly rather than implied. It is declared
+    # pymupdf ADDED 2026-09-20, AND THE REASON IS A MEASURED FAILURE, NOT A PREFERENCE.
+    # pypdf reads a PDF's TEXT LAYER. When that layer is damaged -- as it is on every
+    # scanned pre-1990 report this project keeps reaching for -- pypdf returns mush, and
+    # batch 19 read that mush as a fact about the DOCUMENT. It recorded "no OCR engine is
+    # available in this environment, so this text layer is the best that exists here",
+    # transcribed 38 bibliography entries with authors marked illegible and years marked
+    # unresolvable, built a floor/ceiling band into mining_screen.py to bound the damage,
+    # and carried all of it into a session record, an attestation, three candidates, two
+    # extractions and an amendment to a filed gap. The pages are JBIG2 IMAGES and render
+    # legibly in under a second: the entry transcribed as "[?] [Un]iversity" reads
+    # "New York: Columbia University, 1974", and the one whose initial and year were
+    # called unreadable reads "Walter, F. ... Disabled Living Foundation, 1971".
+    #
+    # A text layer is evidence about the text layer. The page is the document. Without a
+    # renderer the project has only the first, and a session that meets a damaged scan
+    # will reason about its limits instead of reading it -- carefully, at length, and
+    # wrongly. scripts/research/page_image.py is the second route.
+    #
+    # NO CHECK IMPORTS pypdf OR pymupdf TODAY, stated plainly rather than implied. It is declared
     # here because this file is the one home of the dependency list (CLAUDE.md §1) and
     # because the research WRITE path needs it: a PDF-only source cannot have its
     # --claim-text or --quote verified against bytes, so every standards and Co-1 PDF
@@ -161,6 +179,7 @@ batteries:
     - jsonschema
     - cffi
     - pypdf
+    - pymupdf
     description: Research definition-of-done and its enforcers.
   render:
     deps: []
@@ -1601,6 +1620,37 @@ checks:
     definition and unrenameable, because migrate_db.py writes that ledger row
     during the very run that would rename the column. Migration 085 carries the
     same reasoning.'
+- id: schema_walkability_fresh
+  cmd:
+  - python3
+  - tools/schema_walkability.py
+  - --check
+  battery: render
+  kinds:
+  - data
+  - schema
+  - render
+  level: advisory
+  basis: render/render-freshness
+  cost: fast
+  min_items: 1
+  note: 'The committed schema-walkability page is stale against the live schema.
+    WHY THIS IS REGISTERED RATHER THAN LEFT TO THE REGENERATION SCRIPT. CLAUDE.md
+    section 8 asks what wrong thing reaches the GUIDEBOOK if a check does not exist,
+    and the answer here is specific rather than about the apparatus: this page is
+    the only thing in the repository that says which views are CROSS-STAGE POINTERS.
+    Section 3 calls a cross-stage view the most protected object in the schema and
+    says to ask which stages it spans before deleting one -- and stage-map.yaml
+    records the per-view pointer list as STILL OWED, so nothing else can answer it.
+    A stale page answers it WRONG, and the wrong answer is the one that gets a
+    pointer deleted, after which the next reader copies the fact instead and rule 5
+    is broken in the data rather than in a document. Migration 064 exists because a
+    sweep missed v_item_provenance and a byte-exact diff called it clean because the
+    view rendered 0 rows; five of the six pointers this page currently finds render
+    0 rows, so that failure mode is live, not historical. Advisory rather than
+    blocking because a stale render misinforms a reader, it does not corrupt data,
+    and the repository has learned that a gate red by construction teaches its
+    reader to ignore it.'
 - id: pipeline_walk_fresh
   cmd:
   - python3

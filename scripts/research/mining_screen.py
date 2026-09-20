@@ -93,6 +93,15 @@ def payloads_by_ref():
     return out
 
 
+def supersedes_of(path):
+    """The artefact filename this payload declares it replaces, or None."""
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None
+    return doc.get("supersedes_artefact") if isinstance(doc, dict) else None
+
+
 def provenance_of(path):
     """DEPOSITED or EXTRACTED. Never guessed: it is read off the payload itself.
 
@@ -108,7 +117,11 @@ def provenance_of(path):
     except (json.JSONDecodeError, UnicodeDecodeError):
         return "unknown"
     if isinstance(doc, dict) and doc.get("kind") == "pdf-bibliography":
-        return "EXTRACTED"
+        # READ vs SCRAPED, and the difference is the whole lesson of batch 19. A list
+        # transcribed from RENDERED PAGES is as reliable as the reader; one scraped from a
+        # damaged TEXT LAYER is not, and reporting both as "EXTRACTED" would hide exactly
+        # the distinction that batch cost.
+        return "SCRAPED" if doc.get("ocr_damaged") else "READ"
     return "DEPOSITED"
 
 
@@ -162,11 +175,24 @@ def main():
 
     rows, skipped = [], []
     for rid in refs:
-        best = None
+        cands = []
         for _sess, path in index.get(rid, []):
             r = references_for(path)
-            if r and (best is None or len(r) > len(best[1])):
-                best = (path, r)
+            if r:
+                cands.append((path, r))
+        # A CORRECTED TRANSCRIPTION MUST BE ABLE TO TAKE EFFECT. Selection used to be
+        # "the payload with the most references", which silently keeps the FIRST of two
+        # equal-length lists -- so a re-transcription that fixes readings without changing
+        # the count could never win, and the screen would go on scoring the version its
+        # author had already withdrawn. Measured on REF-01005: the corrected 38-entry
+        # transcription lost to the damaged 38-entry one.
+        #
+        # An artefact that names the one it replaces wins. The superseded file is NOT
+        # deleted -- migrations are append-only in spirit here too, and the withdrawn
+        # reading is part of the record of how the corrected one was reached.
+        superseded = {supersedes_of(path) for path, _ in cands} - {None}
+        live = [c for c in cands if c[0].name not in superseded] or cands
+        best = max(live, key=lambda c: len(c[1]), default=None)
         if best is None:
             skipped.append(rid)
             continue
@@ -179,7 +205,7 @@ def main():
         for n in chosen:
             rx = compile_screen(screens[n])
             floor = score(reflist, rx, "unstructured")
-            ceil = score(reflist, rx, "inferred") if prov == "EXTRACTED" else floor
+            ceil = score(reflist, rx, "inferred") if prov == "SCRAPED" else floor
             cells[n] = (floor, max(floor, ceil))
         rows.append((rid, len(reflist), cells, prov))
 
@@ -201,13 +227,9 @@ def main():
               + "".join(f"{render(sc[n2]):>{width + 2}}" for n2 in chosen))
     print(f"\nEXAMINED: {len(rows)} anchor(s), "
           f"{sum(n for _, n, _, _ in rows)} reference(s)")
-    if any(prov == "EXTRACTED" for *_, prov in rows):
-        print("\nEXTRACTED means the reference list was transcribed from a scanned page, "
-              "not\ndeposited by a publisher. A range is floor-ceiling: the floor scores a "
-              "reading\nthat substitutes no letters, the ceiling a best reading of damaged "
-              "OCR. THE FLOOR\nIS THE DEFENSIBLE NUMBER; the ceiling says how much the "
-              "damage could be hiding.\nA zero on an extracted list is weak evidence of "
-              "absence (CLAUDE.md 5a).")
+    if any(prov in ("SCRAPED", "READ") for *_, prov in rows):
+        print("\nPROVENANCE. DEPOSITED: the publisher's own reference list. "
+              "READ: transcribed from\nthe RENDERED PAGE of a scan. SCRAPED: taken off a damaged PDF TEXT LAYER, which\nis the unreliable one -- batch 19 read a mangled text layer as evidence the DOCUMENT\nwas illegible and was wrong about authors, years and a title's slope term. A range is\nfloor-ceiling and appears only for SCRAPED: the floor substitutes no letters, the\nceiling is a best guess at the damage. A zero on a SCRAPED list is weak evidence of\nabsence (CLAUDE.md 5a); on a READ list it is as good as the reader.")
     print(f"SCREENS: " + ", ".join(
         f"{n} v{screens[n].get('version', '?')}" for n in chosen))
     if skipped:

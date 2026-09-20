@@ -1,0 +1,233 @@
+{
+  "kind": "pdf-bibliography",
+  "ref_id": "REF-01005",
+  "supersedes_artefact": "08263082ebdda8eb.json",
+  "source_title_as_filed": "Steinfeld, Schroeder and Bishop 1979, HUD-PDR 397 (ERIC ED184280)",
+  "extracted_from_artefact": "5dd866a236fb5978.pdf",
+  "page_indices": [
+    167,
+    168,
+    169
+  ],
+  "page_images": [
+    "5dd866a236fb5978.p0167.png",
+    "5dd866a236fb5978.p0168.png",
+    "5dd866a236fb5978.p0169.png"
+  ],
+  "extractor": "scripts/research/page_image.py at 130 dpi, then read from the rendered pages",
+  "ocr_damaged": false,
+  "transcription_note": "TRANSCRIBED FROM THE PAGE IMAGES, NOT FROM THE PDF TEXT LAYER. The earlier artefact in this session (08263082ebdda8eb.json) was made from pypdf's text layer, which is badly damaged, and recorded that damage as though it were a property of the DOCUMENT -- authors 'illegible', years 'not resolvable', one title's slope term 'NOT legible'. The pages are JBIG2 images and render legibly in about a second. Every such claim in the earlier artefact is withdrawn. The per-entry `note` fields below record what the first pass got wrong, so the correction is auditable rather than silent.",
+  "completeness": "38 entries, ANSI to Webb, strict alphabetical order with no break, ending at the GPO imprint on page index 169. Read off the rendered pages.",
+  "reference": [
+    {
+      "unstructured": "ANSI A117.1 Making buildings accessible and usable by the physically handicapped. New York: American National Standards Institute, 1961 (R1971).",
+      "title_certain": true,
+      "page": 167,
+      "note": "The standard REF-01005 was commissioned to improve. Batch 19's first pass read the year as '19[6]?'; the page reads 1961 (R1971)."
+    },
+    {
+      "unstructured": "American Telephone and Telegraph Co. Universal public telephone height for handicapped and able-bodied users. New York: Research Section/Marketing Dept., AT&T, 1975.",
+      "title_certain": true,
+      "page": 167,
+      "note": "First pass recorded this entry as 'unresolved'."
+    },
+    {
+      "unstructured": "Birren, J.E. Psychology of aging. Englewood Cliffs, N.J.: Prentice Hall, 1964.",
+      "title_certain": true,
+      "page": 167,
+      "note": "First pass read 'C[u]rren' and filed it at alphabetical position C, then wrote a note claiming Brattgard was 'out of strict order in the scan' to explain the resulting sequence. The list IS in strict order; the misreading invented the anomaly."
+    },
+    {
+      "unstructured": "Brattgard, S.O. Unpublished research at the University of Goteborg, Sweden, 1967-1974.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Churchman, C.W. The systems approach. New York: Dell, 1968.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Corlett, E.N., Hutcheson, C., DeLugan, M.A. and Rogozenski, J. Ramps or stairs, in Applied ergonomics, 3:4, pp 195-201, 1972.",
+      "title_certain": true,
+      "page": 167,
+      "note": "THE CORRECTION THAT CHANGES A MEASUREMENT. The first pass called 'Ramps' illegible, scored this ceiling-only, and staged candidate 116 saying 'THE TITLE MAY NOT CONTAIN Ramps AT ALL'. It plainly does. slope-strict on this anchor is 2, not the 1-2 band first reported, and the band was measuring my own guesswork."
+    },
+    {
+      "unstructured": "Damon, A., Stoudt, H.W. and McFarland, R.A. The human body in equipment design. Cambridge, MA: Harvard University Press.",
+      "title_certain": true,
+      "page": 167,
+      "note": "No year on the page; the source states none."
+    },
+    {
+      "unstructured": "Diffrient, N., Tilley, A.R. and Bardagjy, J.C. Humanscale 1/2/3. Cambridge, MA: MIT Press, 1974.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Elmer, C.D. A study to determine the specifications of wheelchair ramps. Ph.D. dissertation, University of IL, 1957.",
+      "title_certain": true,
+      "page": 167,
+      "note": "SLOPE HIT, and the year is ON THE PAGE. The first pass read '194-5/' and said 1957 could only come from the body text. It is printed here. NOTE A LIVE CONTEST, found by adversarial review: FHWA-RD-79-3 (Templer et al.) cites the same 1957 Illinois dissertation as DIXON, Charles E. Two primary sources disagree on the author and this project holds both readings; candidate 110 must not treat 'Elmer' as settled."
+    },
+    {
+      "unstructured": "Floyd, W.F., Guttmen, L., Noble, W., Parkes, K.R. and Ward, J. A study of the space requirements of wheelchair users, in Paraplegia, 4, pp 24-37, May 1966.",
+      "title_certain": true,
+      "page": 167,
+      "note": "Spelled 'Guttmen' and 'Parkes' on the page; first pass guessed 'Guttmann' and 'Parker'. Transcribed as printed."
+    },
+    {
+      "unstructured": "Fruin, J. Pedestrian planning and design. New York: Metropolitan Association of Urban Designers and Environmental Planners, 1971.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Goldsmith, S. Designing for the disabled. New York: McGraw-Hill, 1967.",
+      "title_certain": true,
+      "page": 167,
+      "note": "Candidate 122 was staged with an UNCONFIRMED expansion of the initial. The page gives 'S.' only, so the expansion remains unconfirmed -- that caution stands."
+    },
+    {
+      "unstructured": "Grandjean, E. Ergonomics of the home. London: Taylor and Francis, and New York: Halsted Press (a division of John Wiley & Sons), 1973.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Harrigan, J.E. Human factors information taxonomy: Fundemental human factors applications for architectural programs, in Human factors, 16:4, pp 432-440, 16:4, 1974.",
+      "title_certain": true,
+      "page": 167,
+      "note": "'Harrigan', not the 'Harri[m]an' first guessed. 'Fundemental' and the duplicated '16:4' are the source's own typography, transcribed as printed."
+    },
+    {
+      "unstructured": "Howie, P.M. A pilot study of disabled housewives in their kitchens. London: Disabled Living Foundation, 1972.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Hyde, W.T. Window operation, in Building, p 151, November, 1972.",
+      "title_certain": true,
+      "page": 167
+    },
+    {
+      "unstructured": "Jones, J.C. Methods and results of seating research, in E. Grandjean (Ed.) Sitting posture. London: Taylor and Francis, 1969.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Jones, J.C. Fitting for action 1/2, in Design, p 135.",
+      "title_certain": true,
+      "page": 168,
+      "note": "First pass recorded 'AUTHOR LOST TO THE SCAN' and bounded it by alphabetical position. The author is printed: Jones, J.C., the same author as the entry above."
+    },
+    {
+      "unstructured": "Kidwell, A.M. and Greer, P.S. Sites perception and the non-visual experience. New York: American Foundation for the Blind, 1973.",
+      "title_certain": true,
+      "page": 168,
+      "note": "First pass: 'K[?], O.M.'."
+    },
+    {
+      "unstructured": "Kira, A. The bathroom. Ithaca, NY: Cornell University, Center for Housing and Environmental Studies, 1966.",
+      "title_certain": true,
+      "page": 168,
+      "note": "First pass: '[author illegible]'."
+    },
+    {
+      "unstructured": "Kroemer, K.H.E. Human strength: Terminology, measurement and interpretation of data, in Human factors, 12:3, pp 297-313, 1970.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Leonard, J.A. Studies in blind mobility, in Applied ergonomics, pp 37-46, March, 1972.",
+      "title_certain": true,
+      "page": 168,
+      "note": "'Leonard, J.A.', and the page range is 37-46; first pass guessed 'J.K.' and 37-44."
+    },
+    {
+      "unstructured": "McCormick, E.J. Human factors engineering. New York: McGraw-Hill, 1970.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "McCullough, H.E. and Farnham, M.B. Kitchens for women in wheelchairs. Urbana, IL: College of Agriculture Extension Service, Circular 841, 1961.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "McCullough, H.E. and Farnham, M.B. Space and design requirements for wheelchair kitchens. Urbana, IL: College of Agriculture Extension Service, Bulletin No. 661, 1960.",
+      "title_certain": true,
+      "page": 168,
+      "note": "Bulletin No. 661; the first pass could not resolve the last digit."
+    },
+    {
+      "unstructured": "Murrell, K.F.H. Ergonomics. London: Chapman and Hall, 1965.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Nichols, P.J.R. Door handles for the disabled. Oxford, UK: Nuffield Orthopedic Centre (date unknown).",
+      "title_certain": true,
+      "page": 168,
+      "note": "'Nichols'; first pass recorded '[surname illegible]'. '(date unknown)' is the source's own statement, not a scan defect -- that reading was correct."
+    },
+    {
+      "unstructured": "Ownsworth, A. An ergonomic study of the space requirements of wheelchair users for doorways and corridors. Leicestershire, UK: Institute for Consumer Ergonomics, 1973.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Parsons, H.M. Why human factors research in environmental design?, in D.H. Carson (Ed.) Man environment transactions (EDRA 5). Milwaukee, WI: Environmental Design Research Association, 1974.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Poulton, E.C. Bias in ergonomic experiments, in Applied ergonomics, 4:1, pp 17-18, 1973.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Pushkarev, B.S. and Zupan, J.M. Urban space for pedestrians. Cambridge, MA: MIT Press, 1975.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Steidl, R.E. and Bratton, E.C. Work in the home. New York: Wiley, 1968.",
+      "title_certain": true,
+      "page": 168,
+      "note": "First pass: '[Steidl]' bracketed as an inference from alphabetical position. Printed."
+    },
+    {
+      "unstructured": "Steidl, R.E. Difficulty factors in homemaking tasks: Implications for environmental design, in Human factors, 1972, 14:5, pp 471-482, 1972.",
+      "title_certain": true,
+      "page": 168
+    },
+    {
+      "unstructured": "Steinfeld, Edward. Human factors research, in Access to the built environment: A review of literature. Washington, DC: U.S. Department of Housing and Urban Development, 1978.",
+      "title_certain": true,
+      "page": 168,
+      "note": "'Edward'. The first pass recorded the OCR's 'Eckard' AS THE READING and told a later reader to settle it against the cover rather than from memory. The page settles it. Self-citation: the lead author's own 1978 HUD literature review, a sibling in the same six-report series."
+    },
+    {
+      "unstructured": "Templer, J.A. Stair shape and human movement, Unpublished doctoral dissertation. New York: Columbia University, 1974.",
+      "title_certain": true,
+      "page": 169,
+      "note": "COLUMBIA UNIVERSITY, printed plainly; the first pass wrote '[?] [Un]iversity'. THE ENTRY IS STILL 1974 AND STILL ABOUT STAIRS, so the discrepancy with Table 13 footnote c's 'Templer, 1977' is real. BUT THE CONCLUSION BATCH 19 DREW FROM IT WAS FALSE: adversarial review found Templer, J.A., Provisions for elderly and handicapped pedestrians, FHWA-RD-79-1/-2/-3, Georgia Tech Pedestrian Research Laboratory -- whose Volume 3 contains 'A Study of Short Ramps', 32 gradient-rating tables for manual and electric wheelchair users, and Table 20 'Ramp Gradient Recommendations' over 1:8, 1:10, 1:12 and 1:16. Templer has substantial ramp research; this bibliography simply cites a different item of his."
+    },
+    {
+      "unstructured": "Thiberg, S. and Wester, P.O. Anatomy for planners. Stockholm, Sweden: National Institute for Building Research, Reports 20:1965 and R12:1970.",
+      "title_certain": true,
+      "page": 169,
+      "note": "Printed AFTER Templer. The first pass's JSON put Thiberg before Templer while its own completeness field claimed the order was 'derived from the ordering in the document'."
+    },
+    {
+      "unstructured": "Walter, F. Four architectural movement studies for the wheelchair and ambulant disabled. London: Disabled Living Foundation, 1971.",
+      "title_certain": true,
+      "page": 169,
+      "note": "THE INITIAL IS F AND THE YEAR IS 1971, both printed plainly. The first pass called the initial 'NOT an F on its face' and the year OCR-damaged, and candidate 120 was staged partly to chase the 'unexplained initial'. There was nothing to explain. This agrees with the Open Library MARC record (Felix Walter, DLF, 1971) and with Table 13 footnote c's year. The title still carries no slope term, so the title-screen false negative recorded for this entry stands."
+    },
+    {
+      "unstructured": "Webb, E.J., Campbell, D.T., Schwartz, R.D. and Sechrest, L. Unobtrusive measures. Chicago: Rand McNally, 1966.",
+      "title_certain": true,
+      "page": 169
+    }
+  ]
+}

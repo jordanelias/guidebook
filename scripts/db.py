@@ -3502,6 +3502,21 @@ _CORRECTABLE = {
     "pages":          lambda m: m.get("page"),
     "pub_year":       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0]
                                  or [None])[0],
+    # journal_name and publisher, added 2026-09-20. THE VENUE OF EVERY SOURCE IN THIS
+    # PROJECT EXISTED ONLY IN PROSE AND IN PAYLOADS -- GAP-031 recorded journal_name NULL
+    # on all 25 rows corpus-wide and named this writer's missing field as the reason. The
+    # batch that filed that gap then admitted a journal article, stamped it
+    # metadata_quality='COMPLETE', and left the journal name NULL, because the only
+    # repair path did not reach the column. author_fidelity did not catch it either: its
+    # comparison looks at volume, article-number and page and never at container-title,
+    # so a `journal_article` row with no journal name passed as complete.
+    #
+    # Crossref's `container-title` is a LIST, like `title`, and the first non-empty entry
+    # is the venue; `short-container-title` is the abbreviation and is deliberately not
+    # read here, because journal_abbrev is a different column.
+    "journal_name":   lambda m: next((t for t in (m.get("container-title") or []) if t),
+                                     None),
+    "publisher":      lambda m: m.get("publisher"),
 }
 
 
@@ -4000,6 +4015,22 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
             raise Refusal(f"{ref_id}: no such evidence source.")
+        # EVERY AMENDABLE FIELD WHOSE COLUMN DECLARES A CHECK IS GATED BY IT, derived
+        # rather than listed (rule 8). Added 2026-09-20, and the case against the older
+        # shape is that it was field-by-field: `verification_status` got the gate below
+        # because someone thought of it, and every other _AMENDABLE field got nothing.
+        # That went wrong within hours in this same batch. `source_type` was added to
+        # _AMENDABLE precisely to repair a vocabulary typo ('journal-article' for
+        # 'journal_article') -- and the verb added to fix the typo would have accepted
+        # the identical typo, leaving a blocking check as the only catch, after the
+        # fact, which is the shape of the defect it was added for.
+        #
+        # check_declared is a no-op for a column with no CHECK, so this neither
+        # constrains the free-text warrants (co1_provenance, notes, verification_note)
+        # nor duplicates the specific gate below; a migration that gives any amendable
+        # column a vocabulary arms this in the same commit, with nothing to update here.
+        dbcore.check_declared(conn, "evidence_sources", field, replacement,
+                              f"amend-source --field {field}")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the
@@ -6173,8 +6204,19 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # resolution; until now there was no way to record that the re-description
 # happened. Verified against REF-01001, whose two rows were filed from a
 # Crossref-deposited abstract while MDPI was Akamai-blocked.
+# root_type ADDED 2026-09-20. It is the same class as figure_role -- a JUDGEMENT about
+# what KIND of thing a figure is, which no payload settles -- and it had no repair path,
+# so a wrong grade at write time was permanent. Batch 19 wrote root_type
+# 'measurement_primary' with root_ref_id NULL on a value REF-01005 did not measure and
+# whose actual source this corpus does not hold. The prose field beside it said so
+# honestly; the typed columns said "a primary measurement whose root is nothing", and
+# nothing could see the contradiction: v_unregistered_roots, which exists for exactly
+# this, filters on root_id IS NOT NULL, so a row that leaves root_id null is not examined
+# at all. The vocabulary already carried the right value, 'untraced'. Gated below by the
+# column's own CHECK, so this widens WHO may correct it, not WHAT to.
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
-                                   "extraction_method", "extraction_status"})
+                                   "extraction_method", "extraction_status",
+                                   "root_type"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,

@@ -10,6 +10,135 @@ or any screen run. P6 (Co-1) was appended later and says so in its own text.
 
 ---
 
+---
+
+## 0. RETRACTIONS — read this before anything below it
+
+**An adversarial pass over this batch refuted two of its headline findings and five
+smaller ones.** Everything below §0 was written before that pass and is left standing as
+the record of what I claimed; the corrections are here, in the database rows they touch,
+and in the amendments to GAP-037 and GAP-041. Where §0 and a later section disagree, §0
+wins.
+
+### R1. "Templer has no ramp research" is FALSE, and it inverts §3, §4 and §13
+
+§4 concluded that John A. Templer's corpus is *"stairs end to end"*, *"four items across
+fifteen years, not one about ramps"*. **Templer, John A., _Provisions for elderly and
+handicapped pedestrians_, FHWA-RD-79-1/-2/-3** (Georgia Tech Pedestrian Research
+Laboratory, contract DOT-FH-11-8504) is a dedicated ramp study. Volume 3's Part I is
+*"Short Ramps, Tactile Surfaces and Wheelchair Dimensions"*, opening with **"A Study of
+Short Ramps"**; it carries **32 gradient-rating tables** for manual and electric
+wheelchair users, cane users and ambulant disabled people, ascent and descent separately;
+and **Table 20, "Ramp Gradient Recommendations"**, over gradients **1:8, 1:10, 1:12 and
+1:16**. Full text is free on Internet Archive. Derive it:
+
+    curl -sS 'https://archive.org/advancedsearch.php?q=creator%3ATempler+AND+%28pedestrian+OR+ramp+OR+handicapped%29&fl%5B%5D=identifier&rows=20&output=json'
+    curl -sSL https://archive.org/download/provisionsforeld00temp_0/provisionsforeld00temp_0_djvu.txt | grep -ci ramp
+
+**How I got it wrong is worse than the fact.** The Crossref query I described as
+"resolving his corpus" was `query.bibliographic=Templer+stair+shape+human+movement` —
+**a query containing "stair" returned stair papers.** That is query shape, which is R14,
+which the same note invoked against ERIC two sentences earlier while exempting itself.
+And I never pointed Internet Archive at Templer, though I used that exact endpoint for
+Walter an hour before.
+
+**The priority conclusion is inverted, not merely weakened.** §3 argued the footnote scope
+means Templer is not part of the 1:12 chain and his retrieval matters less. Table 20
+recommends over **the same four bands as Steinfeld's Table 13**, whose footnote marks the
+two Steinfeld did not test. Retrieving Templer is now the **strongest** lead on what
+footnote c means. Staged as **candidate 125**, and it should be the next batch's first
+admission.
+
+### R2. "The scan is unreadable" is FALSE, and it is the deeper error
+
+§2 and the transcription artefact recorded *"no OCR engine is available in this
+environment … so this text layer is the best that exists here"*, then marked authors
+illegible, years unresolvable, and one title's slope term absent. **The pages are JBIG2
+images and render legibly in about a second.**
+
+`pypdf` reads a **text layer**. When that layer is mush it tells you the layer is mush and
+**nothing whatever about the document**. I read the mush as a property of the page, and
+then reasoned carefully, at length, and wrongly about the consequences — including
+building a floor/ceiling band into `mining_screen.py` to bound a damage the document does
+not have. **The band was measuring the distance between a bad text layer and my own
+guesses.**
+
+What the pages actually say, re-transcribed and persisted as the superseding artefact
+`c9361532746ffec9.json`:
+
+| I recorded | The page says |
+|---|---|
+| "C[u]rren", filed at position **C** | **Birren, J.E.**, *Psychology of aging*, 1964 |
+| "'Ramps' IS NOT legible" | **Corlett et al., _Ramps or stairs_**, Applied Ergonomics 3:4, 195–201, 1972 |
+| year "not resolvable to 1957" | **Elmer, C.D. … University of IL, 1957** |
+| "AUTHOR LOST TO THE SCAN" | **Jones, J.C.** |
+| "Steinfeld, **Eckard**" recorded as the reading | **Steinfeld, Edward** |
+| "[?] [Un]iversity" | **New York: Columbia University**, 1974 |
+| initial "NOT an F on its face", year damaged | **Walter, F. … 1971** |
+
+I also invented an anomaly to explain a misreading: having filed Birren under C, I wrote a
+note claiming Brattgard was *"out of strict order in the scan"*. **The list is in strict
+alphabetical order.**
+
+**The measurement changes:** `slope-strict` on REF-01005 is **2**, not the 1–2 band
+reported — Corlett scores in the floor once the title is read rather than guessed.
+
+### R3. Five smaller corrections
+
+- **GAP-041 asserted TRID "reports 20 results".** The artefact contains **no result count
+  at all**; the five "Templer" hits are echoes of my own query string. I typed a number
+  the bytes do not support, inside a gap whose subject is people mis-scoring retrievals.
+  TRID is also **reachable** — batch 16 fetched a record page — so filing it as a closed
+  host was wrong.
+- **Footnote c reads "Walters, 1971", not "Walter".** Extraction 56 normalised it and
+  blamed OCR, erasing a real inconsistency between the report's footnote and its
+  bibliography.
+- **ERIC returned `numFound` 33 but the request carried `rows=25`.** Eight records were
+  never seen; "33 records, none architectural" overstates what was examined, and
+  `results_screened=43` is a hand-typed figure the artefact contradicts.
+- **"26 of 27 sources have no logged retrieval"** (§11) conflates two things. The tool
+  reports **12** DOI-bearing rows with no logged retrieval; 14 others were skipped for
+  carrying no DOI, several of which *do* have logged retrievals.
+- **§6's "each step came from widening the sample" is wrong at the last step.** Within
+  REF-01005 the sample **narrowed**: 124 → 18 returning for 1:16 → **3** for 1:20. The
+  1:20 row rests on three people.
+
+### R4. The author of the 1957 dissertation is contested
+
+Templer's FHWA report cites it as **Dixon, Charles E.**; Steinfeld's bibliography plainly
+prints **Elmer, C.D.** Two federal reports of the same period disagree. §6's "an author it
+never had" should not be read as settled, and candidate 110 now records both.
+
+### R5. What survives the pass
+
+The **footnote-scope reading itself** (marker on 1:8 and 1:10 only, Table 12 confirming the
+tested set) was independently confirmed on the rendered page. The 38-entry count, the
+ANSI-to-Webb completeness, the Walter holdings identifiers, the REF-01006 admission and
+its Co-1 warrant, the compliance figures, and `research_batch_dod` 19/19 all re-derive
+correctly. **No letters were smuggled into the conservative transcription** — the band was
+useless here, but it was not dishonest.
+
+### R6. Mechanisms fixed, because each of these was a missing mechanism
+
+- **`scripts/research/page_image.py`** renders a persisted PDF page so a session can *look*
+  at a scan. `pymupdf` is declared in the check-registry batteries. **This is the fix for
+  R2**; without it the next session meets a damaged scan and reasons about its limits
+  instead of reading it.
+- **`mining_screen.py`** now labels provenance **READ** vs **SCRAPED** vs **DEPOSITED**, and
+  a superseding transcription wins over the one it replaces — previously a corrected
+  38-entry list could never beat the damaged 38-entry list written to replace it.
+- **`amend-source` gates every amendable field against its column's CHECK**, derived. The
+  verb I added earlier this batch to fix a vocabulary typo would have accepted the same
+  typo.
+- **`correct-source` reaches `journal_name` and `publisher`**, from the payload. REF-01006
+  was stamped `COMPLETE` with no journal name, and `author_fidelity` could not see it
+  because its comparison never looks at `container-title`. GAP-031 had already named this.
+- **`amend-extraction` reaches `root_type`**, gated by the column. Extraction 57 claimed a
+  primary measurement with no root, and `v_unregistered_roots` could not see it because it
+  filters on `root_id IS NOT NULL`.
+
+---
+
 ## 1. What the batch was for, and what it actually found
 
 Item 1 was the assigned work and it produced the batch's substantive finding, which is **not** the
