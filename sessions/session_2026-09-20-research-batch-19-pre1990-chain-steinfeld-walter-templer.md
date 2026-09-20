@@ -416,3 +416,95 @@ would still leave the cell undetermined.** That is the batch's expected outcome,
 **Not attempted, and owed a third batch running:** GAP-033 — term adjudication has never run.
 `term_adjudications` is empty while `observed_terms` is not, and this batch added three more to the
 unadjudicated pile.
+
+---
+
+## 14. Code-review repairs — fifteen findings, and the worst one was a gate I had just added
+
+A `/code-review` pass over the diff found fifteen defects. Most were mine and recent; the
+two that matter most were in the *repairs* made earlier in this same batch, which is the
+pattern worth naming: **fixing a mechanism badly is its own failure mode, and it hides
+behind the fact that a fix was made.**
+
+### The worst: `schema_walkability_fresh` was red by construction
+
+The new page embedded `date.today()` and the short HEAD sha, and `--check` compares
+byte-for-byte. **Committing the page changes HEAD, so the committed file records the
+previous sha forever, and the date rolls over nightly.** Measured on this branch:
+committed `4c9a38e` against HEAD `ab695e6`, `--check` STALE, the registered check red.
+
+Two things make this worse than an ordinary bug. **The registry note I wrote for that
+check argues against exactly this** — *"the repository has learned that a gate red by
+construction teaches its reader to ignore it"* — and `scripts/regenerate_derived.sh`, the
+sanctioned regeneration entry point, runs every `--check` under `set -euo pipefail`, so
+**I had broken the one script CLAUDE.md tells sessions to use.**
+
+Fixed by removing both volatile fields. The page's content is a pure function of the
+schema, so it is rendered as one; *when* it was generated is already recorded, by git,
+without anyone maintaining it. Two consecutive renders now produce identical bytes, and
+`regenerate_derived.sh` exits 0.
+
+### The second: three repairs each left the hole they were made for
+
+- **`journal_name`/`publisher` added to `_CORRECTABLE`** broke the invariant that
+  constant's own header states — *"EXACTLY what retrieval_log --verify-authors can prove
+  against a payload"* — because I never extended the verifier. `correct-source`'s refusal
+  message then named them as fields the verifier can prove, which was false. Fixed by
+  extending `_BIBLIO_FIELDS`, so the invariant is true again rather than merely restated.
+- **`root_type` made amendable** repaired one bad row and left the blind spot that let it
+  through — `v_unregistered_roots` filtering on `root_id IS NOT NULL`, which I had *named
+  in the comment* and not closed. **Migration 090** gives the view a `rootless` arm. Its
+  first act was to catch a second row of my own: extraction 56 asserted a committee claim
+  with no root. Repairing that needed `root_ref_id`, which no writer reached — now added,
+  FK-validated.
+- **`amend-extraction --reason` was silently discarded** when the value was already
+  correct, though the flag's help says it is *"appended to notes, never overwriting"*. My
+  own correction recording that a quote had been confirmed against a rendered page was
+  written and lost. *"I checked, it was already right, here is what I found"* is a real
+  result — often the only trace that checking happened — and it is now recorded.
+
+### Instrument bugs the review caught
+
+- **The SCRAPED band's ceiling could fall below its floor.** It scored only the `inferred`
+  reading, and `_title` discards the unstructured text when an inferred one exists — so an
+  entry matching the raw text but not the bracketed reconstruction was dropped from the
+  upper bound, with `max(floor, ceil)` hiding it in the aggregate. A ceiling that can be
+  lower than its floor is not a bound. Now a per-entry union.
+- **`provenance_of` guessed from a magic string in the payload body** instead of the
+  `derived` flag `derive()` writes onto the manifest — so any derived artefact not
+  literally `kind == "pdf-bibliography"` printed as DEPOSITED, "the publisher's own
+  reference list". Exactly the mislabelling that function exists to prevent.
+- **`derive()` built a colliding URI** with no content hash, and `_logged_payloads` is
+  keyed by URL — so a corrected transcription silently evicted the one it replaced, with
+  file order deciding which survived. It also accepted an unvalidated `source_artefact`,
+  and both live derivations named a PDF that resolves in neither this session's directory
+  nor its manifest. Now hashed and validated.
+- **Page renders had no manifest line** — unattested files in an evidence log, with no
+  sha256 and no record of what they came from. `retrieval_log.record_file()` attests them.
+- **`derive()` had no caller and no CLI**, so the sanctioned way to write a derived
+  artefact existed only as an ad-hoc script outside the repo — CLAUDE.md §8's "an uncalled
+  script is the same defect". Now `--derive` on `retrieval_log`.
+- **`named_in` matched table names inside SQL comments**, and that list is the sole input
+  to the cross-stage-pointer verdict. `v_item_provenance`'s comment mentions
+  `evidence_source_authors`, which the tool duly reported as a table the view reads.
+  `dbcore` already had the stripper.
+
+### And one hand-typed count, in the sentence justifying the check
+
+The registry note said *"five of the six pointers render 0 rows"*. **It is four.** A count
+going stale inside the note that argues for the check — rule 7a, in the file CLAUDE.md §8
+already lists as an outstanding offender. Replaced with the command that computes it. The
+check also omitted the `tooling` kind its sibling declares, so a diff touching **only the
+generator** — the change most likely to stale the page — selected nothing.
+
+### What the review confirmed
+
+Extraction 57's `claim_text` **is** verbatim: page index 162 was rendered at 150 dpi,
+attested, and reads the sentence word for word. Its `VERBATIM-EXEMPT` warrant is now stale
+rather than wrong — true of the text layer, no longer a statement about the document. The
+page locator remains genuinely ambiguous (zero-based 162, one-based 163, printed 161, one
+`page` scheme that declares none of them), recorded in **GAP-043** with the cheapest fix.
+
+**Gates after the repairs:** `research_batch_dod` 19/19, `test_db_integrity` 75/75,
+`run_checks --changed-from origin/main` PASS, `--selftest` PASS, `migrate_db --rebuild`
+reproduces, `regenerate_derived.sh` exits 0.

@@ -84,11 +84,16 @@ def main():
                     help="ZERO-BASED page indices: '167' or '167-169' or '3,167-169'")
     ap.add_argument("--dpi", type=int, default=130,
                     help="130 is legible for 1970s microfiche; raise it for small type")
+    ap.add_argument("--ref-id", default=None,
+                    help="evidence_sources.ref_id these pages belong to; recorded on each "
+                         "manifest line so a render is scoped to its source")
     ap.add_argument("--out-session", default=None,
                     help="write images into a DIFFERENT session's log (default: the "
                          "session the artefact came from)")
     args = ap.parse_args()
 
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import retrieval_log
     try:
         import pymupdf
     except ImportError:
@@ -121,8 +126,17 @@ def main():
         # by the page it is a picture of.
         dest = out_dir / f"{pdf.stem}.p{i:04d}.png"
         doc[i].get_pixmap(dpi=args.dpi).save(dest)
+        # ATTEST IT. A file written into an evidence log with no manifest line records
+        # nothing -- not its sha256, not what it was rendered from, not when. It would be
+        # invisible to _manifest_records, _unparsed_payloads and _failed_retrievals, and
+        # this module's own promise that "a later reader can check the transcription
+        # against the same bytes" would rest on unattested files.
+        sha = retrieval_log.record_file(
+            dest, args.out_session or args.session, pdf.name,
+            purpose=f"page render, zero-based index {i}, {args.dpi} dpi",
+            ref_id=args.ref_id, kind="page-render")
         wrote.append(dest)
-        print(f"  {dest}")
+        print(f"  {dest}  sha256 {sha[:16]}")
     doc.close()
 
     print(f"EXAMINED: {len(wrote)} page(s) rendered from {pdf.name} at {args.dpi} dpi, "

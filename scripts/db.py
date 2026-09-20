@@ -6216,7 +6216,7 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # column's own CHECK, so this widens WHO may correct it, not WHAT to.
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
-                                   "root_type"})
+                                   "root_type", "root_ref_id"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -6254,6 +6254,20 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
         if row is None:
             raise Refusal(f"amend-extraction: extraction_id {extraction_id}: no "
                           f"such row.")
+        if field == "root_ref_id":
+            # A FOREIGN KEY, SO IT IS CHECKED HERE AND NOT LEFT TO SQLite. root_ref_id was
+            # made amendable in the same change that gave v_unregistered_roots its
+            # 'rootless' arm -- the view immediately found a row of this batch's own
+            # (extraction 56) claiming a committee assertion with no root, and there was
+            # no writer that could point it at one. An amendment that can invent a ref_id
+            # is worse than no amendment, hence the existence check.
+            if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
+                                (value,)).fetchone():
+                raise Refusal(
+                    f"amend-extraction: root_ref_id {value!r} is not an admitted source. "
+                    f"A root must point at a row this project actually holds -- if the "
+                    f"root is outside the corpus, root_type 'untraced' is the honest "
+                    f"value. Nothing was written.")
         dbcore.check_declared(conn, "source_value_extractions", field, value,
                               "amend-extraction")
 
@@ -6289,8 +6303,27 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                         f"figure_role cannot be 'claim'. Leave it 'finding'.")
 
         if old == value:
+            # THE REASON IS STILL RECORDED. This path used to return early and DISCARD
+            # --reason, although the flag's own help says it is "Appended to notes, never
+            # overwriting it". A session that re-examined a row, found the value already
+            # right, and wrote down what it had learned got a silent no-op -- the finding
+            # vanished. Measured on this batch: a correction recording that a quote had
+            # been confirmed against a rendered page image, and that the row's page
+            # locator means the one-based PDF page rather than the index an earlier note
+            # called it, was written and lost.
+            #
+            # "I checked, and it was already correct, and here is what I found" is a real
+            # result and often a more useful one than a change, because it is the only
+            # trace that the checking happened at all.
+            stamp = dbcore.now()
+            marker = f" || {stamp[:10]} {field} CONFIRMED {value} ({reason})"
+            conn.execute(
+                "UPDATE source_value_extractions SET notes=?, updated_at=?, "
+                "updated_by_session=? WHERE extraction_id=?",
+                ((row["notes"] or "").rstrip() + marker, stamp, session, extraction_id))
             return {"extraction_id": extraction_id, "field": field, "changed": False,
-                    "reason": "already this value", "dry_run": dry_run}
+                    "reason": "already this value; the reason is recorded on notes",
+                    "dry_run": dry_run}
 
         stamp = dbcore.now()
         old_disp = "NULL" if old is None else old

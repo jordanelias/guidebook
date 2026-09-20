@@ -38,9 +38,7 @@ import argparse
 import json
 import os
 import sqlite3
-import subprocess
 import sys
-from datetime import date
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -102,9 +100,18 @@ def collect(con):
                           # stays green over a table that cannot accept a row.
                           "dead": notnull and target in empty})
 
-    # Which tables a view names. Substring matching against the view SQL, which
-    # over-reports a table whose name is a prefix of another; guarded by requiring a
-    # non-identifier character on each side.
+    # Which tables a view names. COMMENTS ARE STRIPPED FIRST: view_reads is the sole
+    # input to spanned(), which decides whether a view is flagged a cross-stage POINTER --
+    # the verdict this page exists to supply and the one a session consults before
+    # deleting a view. A table named only in a `-- comment` would promote a non-crossing
+    # view to POINTER, or pad the read-list a reader trusts. Measured: v_item_provenance's
+    # SQL comment mentions evidence_source_authors, and the unstripped scan reported that
+    # table as one the view reads. dbcore already has the stripper, so this reuses it
+    # rather than writing a second one (rule 5).
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+    import dbcore
+    views = [(v, dbcore._strip_sql_line_comments(sql)) for v, sql in views]
+
     def named_in(sql, name):
         i, n = 0, len(name)
         while (i := sql.find(name, i)) != -1:
@@ -175,16 +182,23 @@ def build(con):
             "island": not out_by[t] and not in_by[t],
         })
 
-    try:
-        sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=REPO_ROOT,
-                             capture_output=True, text=True).stdout.strip() or "unknown"
-    except Exception:
-        sha = "unknown"
-
+    # NO DATE AND NO COMMIT SHA IN THE RENDERED BYTES, and this is a repair rather than a
+    # preference. The first version of this file stamped date.today() and the short HEAD
+    # sha into the page. --check compares byte-for-byte, so the stamp guaranteed the page
+    # could NEVER match: committing it moves HEAD, so the committed file records the
+    # previous sha forever, and the date rolls over nightly. Measured on the branch that
+    # introduced it -- committed 4c9a38e against HEAD ab695e6, --check STALE, and
+    # schema_walkability_fresh red. That is a gate red by construction, which the registry
+    # note added alongside it argues against in its own words, and it also broke
+    # scripts/regenerate_derived.sh, which runs every --check under `set -euo pipefail`.
+    #
+    # The page's content is a pure function of the schema and the two governance files, so
+    # it is rendered as one. WHEN it was generated is already recorded, exactly once and
+    # without anyone maintaining it, by git: `git log -1 -- tools/schema-walkability.html`.
+    # Writing it into the page as well is rule 7a's own target -- a fact copied beside the
+    # thing that already knows it, which then goes stale on its own.
     return {
-        "generated": date.today().isoformat(),
         "schema_version": con.execute("PRAGMA user_version").fetchone()[0],
-        "commit": sha,
         "spine": stages,
         "stage_order": stages + [INFRA, "UNASSIGNED"],
         "tables": tinfo,
@@ -396,8 +410,11 @@ sg.onchange=renderList;
   document.getElementById(id).onclick=e=>{F[k]=!F[k];e.target.classList.toggle('on',F[k]);renderList();};
 });
 document.getElementById('foot').innerHTML=
- `Generated ${esc(D.generated)} from <code>data/guidebook.db</code> at schema version
-  <b>${D.schema_version}</b>, commit <code>${esc(D.commit)}</code>. Stage ids from
+ `Rendered from <code>data/guidebook.db</code> at schema version
+  <b>${D.schema_version}</b>. This page carries no generation date and no commit sha on
+  purpose: it is a pure function of the schema, so <code>--check</code> can compare it
+  byte-for-byte. For WHEN it was last regenerated, ask git &mdash;
+  <code>git log -1 -- tools/schema-walkability.html</code>. Stage ids from
   <code>governance/pipeline-contract.yaml</code>; table&rarr;stage from
   <code>governance/stage-map.yaml</code>. <b>Do not hand-edit this file</b> &mdash;
   regenerate with <code>scripts/regenerate_derived.sh</code>.<br>

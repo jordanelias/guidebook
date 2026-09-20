@@ -31,6 +31,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 SCREEN_FILE = ROOT / "governance" / "mining-screens.yaml"
 LOG_ROOT = ROOT / "retrieval-log"
+# artefact filename -> derivation kind, filled by payloads_by_ref() from the
+# manifest lines it already reads.
+DERIVED_ARTEFACTS = {}
 
 
 def load_screens():
@@ -84,6 +87,11 @@ def payloads_by_ref():
                 continue
             rid = (rec.get("ref_id") or "").strip()
             art = rec.get("artefact") or rec.get("sha256")
+            if art and rec.get("derived"):
+                # payloads_by_ref already parses every manifest line and used to throw
+                # all of it away except ref_id and artefact. The derived flag is right
+                # here; provenance_of should not have to re-guess it from the body.
+                DERIVED_ARTEFACTS[art] = rec.get("derivation_kind") or "extraction"
             if not rid or not art:
                 continue
             path = manifest.parent / art
@@ -112,6 +120,21 @@ def provenance_of(path):
     rule 7a's third shape (a caller restating a checked fact) arriving in a tool's own
     output.
     """
+    # THE MANIFEST IS THE AUTHORITY, not a magic string in the body. retrieval_log.derive()
+    # writes `derived: true` onto the manifest line; reading instead for
+    # kind == "pdf-bibliography" meant any OTHER derived artefact -- including one made
+    # with derive()'s own default kind, "extraction" -- printed as DEPOSITED, i.e. "the
+    # publisher's own reference list". That is precisely the mislabelling this function
+    # exists to prevent, reintroduced one field over.
+    if DERIVED_ARTEFACTS.get(path.name):
+        doc = None
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            pass
+        if isinstance(doc, dict) and doc.get("ocr_damaged"):
+            return "SCRAPED"
+        return "READ"
     try:
         doc = json.loads(path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, UnicodeDecodeError):
@@ -144,6 +167,22 @@ def references_for(path):
 
 def score(refs, rx, reading="unstructured"):
     return sum(1 for r in refs if rx.search(_title(r, reading)))
+
+
+def score_ceiling(refs, rx):
+    """The UPPER bound: an entry counts if EITHER reading matches.
+
+    Not `score(refs, rx, "inferred")`. _title returns the inferred reading whenever one
+    exists, DISCARDING the unstructured text for that entry -- and an inferred reading
+    inserts brackets mid-word ("P[s]yc[h]ology", "[Un]iversity"), so a term that matched
+    the raw text can fail against the reconstruction. Scanning only the inferred reading
+    therefore DROPS such entries from the ceiling, and max(floor, ceiling) only clamps the
+    aggregate, hiding it: 5 refs where 3 match unstructured only and 2 match inferred only
+    gives floor 3, inferred-scan 2, printed band "3" -- when the honest ceiling is 5.
+    A ceiling that can be lower than its floor is not a bound.
+    """
+    return sum(1 for r in refs
+               if rx.search(_title(r, "unstructured")) or rx.search(_title(r, "inferred")))
 
 
 def main():
@@ -205,7 +244,7 @@ def main():
         for n in chosen:
             rx = compile_screen(screens[n])
             floor = score(reflist, rx, "unstructured")
-            ceil = score(reflist, rx, "inferred") if prov == "SCRAPED" else floor
+            ceil = score_ceiling(reflist, rx) if prov == "SCRAPED" else floor
             cells[n] = (floor, max(floor, ceil))
         rows.append((rid, len(reflist), cells, prov))
 
