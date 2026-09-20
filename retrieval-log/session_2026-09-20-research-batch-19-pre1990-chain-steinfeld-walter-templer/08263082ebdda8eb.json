@@ -1,0 +1,297 @@
+{
+  "kind": "pdf-bibliography",
+  "ref_id": "REF-01005",
+  "source_title_as_filed": "Steinfeld, Schroeder and Bishop 1979, HUD-PDR 397 (ERIC ED184280)",
+  "extracted_from_artefact": "5dd866a236fb5978.pdf",
+  "extracted_from_session": "session_2026-09-18-research-batch-18-archive-route-ramp-threshold",
+  "page_indices": [
+    167,
+    168,
+    169
+  ],
+  "page_label_note": "Zero-based pypdf page indices. The section heading 'References' is legible on index 167.",
+  "extractor": "pypdf PdfReader.extract_text, then manual transcription",
+  "ocr_damaged": true,
+  "ocr_damage_note": "1979 microfiche scan. The OCR layer is damaged throughout; no OCR engine is available in this environment (no tesseract, no pdftotext), so this text layer is the best that exists here. A YIELD OVER THIS LIST IS A FLOOR: an entry whose title is mangled below a screen's terms is a false negative.",
+  "completeness": "The list runs alphabetically from ANSI to Webb with no visible break, so it is read as COMPLETE rather than truncated. Derived from the ordering in the document, not assumed.",
+  "reference": [
+    {
+      "ocr_verbatim": "ANSt'Al 17', f.Maki i,!\"` buil11sd ssitabdrid usable bthh si ca 1.1 ... !..haditas..,ItteWork;mpr can:t. ma 4- tanlarhst tutps ... t9.6R",
+      "unstructured": "ANSt'Al 17' f.Maki buil11sd ssitabdrid usable bthh si ca 1.1 haditas ItteWork mpr can:t ma tanlarhst tutps t9.6R",
+      "inferred": "ANSI A117.1 [Making buildings ... accessible to and usable by the physically] handicapped. [American National Standards Institute], 19[6]?",
+      "title_certain": false,
+      "alpha_position": "first entry",
+      "year_damaged": true
+    },
+    {
+      "ocr_verbatim": "Ape ripn: Telephonordand lele raleih..UrtiVersa.1b3 i11ei ht.' ... for liandiiedd eh'hi'ied Itsanist; , gyirk; ... ttonf.tidrIceti,n9,.111",
+      "unstructured": "Ape ripn Telephonordand lele raleih UrtiVersa 1b3 i11ei ht for liandiiedd eh'hi'ied Itsanist gyirk ttonf tidrIceti n9",
+      "inferred": "[?] Telephon[e] and [te]le[g]ra[ph] ... universal ... height ... for [handicapped] ...",
+      "title_certain": false,
+      "alpha_position": "between ANSI and C[u]rren",
+      "unresolved": true
+    },
+    {
+      "ocr_verbatim": "C,81 rren,'Jg E.-., P.s,yc ologY.:_ofagifiegy.. i\",,nplyv,itle.d;01 i f Itsr11.11\" ..,-P ran ti ge' Hall', 194:",
+      "unstructured": "C 81 rren Jg E P s yc ologY ofagifiegy i nplyv itle d 01 i f Itsr11 11 P ran ti ge' Hall 194",
+      "inferred": "[Cu]rren, J[.]E. P[s]yc[h]ology of ag[e]ing. [E]n[g]l[ewood] [C]l[if]fs: Prentice Hall, 194?",
+      "title_certain": false,
+      "alpha_position": "C"
+    },
+    {
+      "ocr_verbatim": "s'4.18 ra t Vga rd\"; .S.0:.,-:ljeltthis3let resditiqait tile ;lin i; (te rs *IN. 9,f,'GoebReg,,. ... Seedetr, -T.,9t-'19.4\"",
+      "unstructured": "ra t Vga rd S 0 ljeltthis3let resditiqait tile lin i te rs IN 9 f GoebReg Seedetr T 9t 19 4",
+      "inferred": "[B]ra[t]tga[r]d, S.O. ... [Goteborg], [Sweden], 197?",
+      "title_certain": false,
+      "alpha_position": "B (out of strict order in the scan)",
+      "cross_reference": "p166 table footnote reads 'Source; Brattgar4, 1974'"
+    },
+    {
+      "ocr_verbatim": "Churchman ,: C. W.-,- ': The- vi terns -approkch ;.INI:e1,4 1grk:.,*-De 1 /",
+      "unstructured": "Churchman C. W. The vi terns approkch INI e1,4 1grk De 1",
+      "inferred": "Churchman, C.W. The [sys]tems appro[a]ch. N[ew] Y[o]rk: De[ll]",
+      "title_certain": false,
+      "alpha_position": "C"
+    },
+    {
+      "ocr_verbatim": "Corle.-tt;t:N:',-Huichesy :,e.;,-:Det.,Utill,,,L,M..and 6goiens4k.1',\"*.a.:'Rip'p':-., ,!,....:.,......-:..-r.:... iii...-stafrs, -11i',APpi.ie.d ergbnilmrev,..3,p",
+      "unstructured": "Corle tt t N Huichesy e Det Utill L M and 6goiens4k 1 a Rip'p iii stafrs 11i APpi ie d ergbnilmrev 3 p",
+      "inferred": "Corle[t]t, [E].N., Hu[t]ches[on], [C]., De[L]u[gan], L.M. and [Ro]go[z]ens[ki], [J]. [Ramps] [or] stai[r]s, in Applied ergonomi[cs], 3, p...",
+      "title_certain": false,
+      "alpha_position": "C",
+      "note": "CANDIDATE SLOPE HIT AND THE MOST CONSEQUENTIAL READING ON THE PAGE. 'stafrs'->'stairs' is legible. \"Rip'p\"->'Ramps' is NOT: the R is clear, the rest is not. Scored as a hit ONLY in the inferred band, deliberately."
+    },
+    {
+      "ocr_verbatim": "Damon,.. A:, Stoudt,LW. .iand1cF,011 0,nd, 'R.A.Dia -htfeaod,y,-in,ettlitp- ... _mentdesign.-'Cambridge, MA:- Harvard tinNetistty.ress.",
+      "unstructured": "Damon A Stoudt LW iand1cF 011 0 nd R.A. Dia htfeaod y in ettlitp mentdesign Cambridge MA Harvard tinNetistty ress",
+      "inferred": "Damon, A., Stoudt, [H].W. and [M]cF[arla]nd, R.A. [The human body in equip]ment design. Cambridge, MA: Harvard [U]n[iv]e[rs]ity [P]ress",
+      "title_certain": false,
+      "alpha_position": "D"
+    },
+    {
+      "ocr_verbatim": "IVDi ffrient, ..R..,Ti /fey', AIR: efid.'811irdajy1, J.C-.:Fil-umanscale -.1/21-1tam--- ... .bridge,- MA:.,;MIT! Prvit,' 19744.",
+      "unstructured": "Di ffrient R Ti /fey AIR efid 811irdajy1 J.C Fil umanscale 1/21 1tam bridge MA MIT Prvit 19744",
+      "inferred": "Diffrient, [N].[R].?, Ti[l]ley, A[.]R. [an]d [Bar]da[g]jy, J.C. [H]umanscale 1/2/[3]. [Cam]bridge, MA: MIT Pr[ess], 1974",
+      "title_certain": false,
+      "alpha_position": "D"
+    },
+    {
+      "ocr_verbatim": ",Elmer, C. D.ks tali, to determine the sieei fi cat ion s of Wheeichal rt,ramp.' ... Ph.D. dtsseratlion; University ot IL,.194-5/",
+      "unstructured": "Elmer C. D. ks tali to determine the sieei fi cat ion s of Wheeichal rt,ramp Ph.D. dtsseratlion University ot IL 194-5",
+      "inferred": "Elmer, C.D. [A s]t[udy] to determine the s[p]e[ci]fications of wheelchai[r] ramp[s]. Ph.D. d[is]ser[ta]tion, University o[f] Il[linois], 19[5]?",
+      "title_certain": true,
+      "alpha_position": "E",
+      "note": "SLOPE HIT IN THE CONSERVATIVE BAND: the token 'ramp' is legible in the OCR as written ('Wheeichal rt,ramp'), so this scores without any letter substitution. THIS IS CANDIDATE 110, and the bibliography supplies what the Crossref reference list did not: an AUTHOR (Elmer, C.D.) and a FORM (Ph.D. dissertation, University of Il[linois]). Year OCR reads '194-5/' and is NOT resolvable to 1957 from these bytes."
+    },
+    {
+      "ocr_verbatim": "Floyd, W.F., Guttmen, L., No-ble, W., ,Parkei,K.R:\" and 14ard,A's-tudy: of the space requirdments of wheelchair*users,- in 1.?1,egia.i 4,., ' pp 24-37, May 1966.",
+      "unstructured": "Floyd W.F. Guttmen L No-ble W Parkei K.R and 14ard A s-tudy of the space requirdments of wheelchair users in 1 ?1 egia i 4 pp 24-37 May 1966",
+      "inferred": "Floyd, W.F., Guttm[a]n[n], L., Noble, W., Park[e]r, K.R. and [W]ard, [J.] A study of the space requir[e]ments of wheelchair users, in [Parapl]egia 4, pp 24-37, May 1966",
+      "title_certain": false,
+      "alpha_position": "F"
+    },
+    {
+      "ocr_verbatim": "Fruin, J.Pe des tri an _planning_ and design,NeW. York:Metropplit0Awr.ciation oUrban Desi4pners and Environmental 'El annerS--1971,",
+      "unstructured": "Fruin J. Pe des tri an planning and design NeW York Metropplit0Awr ciation oUrban Desi4pners and Environmental El annerS 1971",
+      "inferred": "Fruin, J. Pedestrian planning and design. New York: Metropolit[an] A[sso]ciation o[f] Urban Desi[g]ners and Environmental Planners, 1971",
+      "title_certain": false,
+      "alpha_position": "F"
+    },
+    {
+      "ocr_verbatim": ",Goldsmith, S.Designing for %the --disabled.-New York:AcGraw-1011:,..,1967.",
+      "unstructured": "Goldsmith S. Designing for the disabled New York AcGraw-1011 1967",
+      "inferred": "Goldsmith, S. Designing for the disabled. New York: M[c]Graw-[Hi]ll, 1967",
+      "title_certain": true,
+      "alpha_position": "G"
+    },
+    {
+      "ocr_verbatim": "Grandjeani :E.Er'sonomics of the home.London:Taylor andiranpis,..kriki ... New York: *Halsted Press Za division of John Wiley & Sons),.,1973:",
+      "unstructured": "Grandjean E. Er sonomics of the home London Taylor andiranpis kriki New York Halsted Press a division of John Wiley & Sons 1973",
+      "inferred": "Grandjean, E. Er[g]onomics of the home. London: Taylor and [F]ran[c]is; New York: Halsted Press (a division of John Wiley & Sons), 1973",
+      "title_certain": true,
+      "alpha_position": "G"
+    },
+    {
+      "ocr_verbatim": "Harriian, J.E''.Human factors information _ta)conorry:Fghdemental human . factors applications for architecturaprograms, in Human factori*,16:4, pp 432-440, 16:4,. 1974.",
+      "unstructured": "Harriian J.E. Human factors information ta)conorry Fghdemental human factors applications for architecturaprograms in Human factori 16:4 pp 432-440 1974",
+      "inferred": "Harri[m]an, J.E. Human factors information ta[x]onomy: F[un]damental human factors applications for architectura[l] programs, in Human Factors 16:4, pp 432-440, 1974",
+      "title_certain": true,
+      "alpha_position": "H"
+    },
+    {
+      "ocr_verbatim": "Howie, P.M.A pilot study.of, disablet housewives in theirkitchebs. London:Disabld Lvineigr, Foundat on, 1972.",
+      "unstructured": "Howie P.M. A pilot study of disablet housewives in theirkitchebs London Disabld Lvineigr Foundat on 1972",
+      "inferred": "Howie, P.M. A pilot study of disable[d] housewives in their kitche[n]s. London: Disab[le]d L[i]v[i]n[g] Foundat[i]on, 1972",
+      "title_certain": true,
+      "alpha_position": "H",
+      "note": "Disabled Living Foundation -- the SAME UK publisher as the Walter entry below."
+    },
+    {
+      "ocr_verbatim": "HydeW.T.Window operation, in 8u:tiding,p 151,November,\\1972.",
+      "unstructured": "Hyde W.T. Window operation in 8u:tiding p 151 November 1972",
+      "inferred": "Hyde, W.T. Window operation, in [B]u[il]ding, p 151, November 1972",
+      "title_certain": true,
+      "alpha_position": "H"
+    },
+    {
+      "ocr_verbatim": "$)ones;:\"-J.C.,: Methods and results of' seating research, in E. Grandjean (Ed..) 51,14:11.q pOSture,.London:Taylor. and Francis, 1969.",
+      "unstructured": "ones J.C. Methods and results of seating research in E. Grandjean Ed 51,14:11 q pOSture London Taylor and Francis 1969",
+      "inferred": "[J]ones, J.C. Methods and results of seating research, in E. Grandjean (Ed.) [Sitting] posture. London: Taylor and Francis, 1969",
+      "title_certain": true,
+      "alpha_position": "J"
+    },
+    {
+      "ocr_verbatim": "Fitting for' action 1/2, in Desi§n, p 135.,",
+      "unstructured": "Fitting for action 1/2 in Desi n p 135",
+      "inferred": "[author illegible] Fitting for action 1/2, in Desi[g]n, p 135",
+      "title_certain": true,
+      "alpha_position": "between Jones and K[?] -- surname begins J or K",
+      "note": "AUTHOR LOST TO THE SCAN, not absent from the document. Bounded by alphabetical position only."
+    },
+    {
+      "ocr_verbatim": "Ktqwep, 0:.M...-'anci Greer, P.S.Sites percePtion and the non-visual ex- \"° -';*Deriene-New York:American foundation for the Blind, 1973.",
+      "unstructured": "Ktqwep 0 M anci Greer P.S. Sites percePtion and the non-visual ex Deriene New York American foundation for the Blind 1973",
+      "inferred": "K[?], O.M. and Greer, P.S. Sites perception and the non-visual ex[peri]ence. New York: American Foundation for the Blind, 1973",
+      "title_certain": true,
+      "alpha_position": "K"
+    },
+    {
+      "ocr_verbatim": "The bathroom.Ithaca, NY:tornell University, Center for HOosirry ;and ,Environmental Studies, 1966.",
+      "unstructured": "The bathroom Ithaca NY tornell University Center for HOosirry and Environmental Studies 1966",
+      "inferred": "[author illegible] The bathroom. Ithaca, NY: [C]ornell University, Center for Hous[ing] and Environmental Studies, 1966",
+      "title_certain": true,
+      "alpha_position": "between K[?] and Kroemer -- surname begins K"
+    },
+    {
+      "ocr_verbatim": "11\"ArcierneP, K;H:E.' Human strength:terminology, measurement and interpre- tatiqn Of data, in Human factors, 12:3, pp 297-313, ,1970.",
+      "unstructured": "ArcierneP K H E Human strength terminology measurement and interpre tatiqn Of data in Human factors 12:3 pp 297-313 1970",
+      "inferred": "[Kroemer], K.H.E. Human strength: terminology, measurement and interpretation of data, in Human Factors, 12:3, pp 297-313, 1970",
+      "title_certain": true,
+      "alpha_position": "K"
+    },
+    {
+      "ocr_verbatim": "teqnh.r.d, J.K.Studies in blind mobility, in Applied ergonomics. pp 37- .. .,44, March, 1972.",
+      "unstructured": "teqnh r d J.K. Studies in blind mobility in Applied ergonomics pp 37-44 March 1972",
+      "inferred": "[Leo]n[ha]r[d], J.K. Studies in blind mobility, in Applied Ergonomics, pp 37-44, March 1972",
+      "title_certain": true,
+      "alpha_position": "L"
+    },
+    {
+      "ocr_verbatim": "McCormick,.E.J..Human factors engineering.New York:McGraw-Hill, 1970.",
+      "unstructured": "McCormick E.J. Human factors engineering New York McGraw-Hill 1970",
+      "inferred": "McCormick, E.J. Human factors engineering. New York: McGraw-Hill, 1970",
+      "title_certain": true,
+      "alpha_position": "M"
+    },
+    {
+      "ocr_verbatim": "14Actulrought,c1.E. and Farnham, M.B.Kitchens for women in wheelchairs. .;Urbana, IL:College of Agriculture Extension Service, Circular 841, -'.',.19.61.",
+      "unstructured": "Actulrought c1 E and Farnham M.B. Kitchens for women in wheelchairs Urbana IL College of Agriculture Extension Service Circular 841 19 61",
+      "inferred": "M[cCullough], [H].E. and Farnham, M.B. Kitchens for women in wheelchairs. Urbana, IL: College of Agriculture Extension Service, Circular 841, 1961",
+      "title_certain": true,
+      "alpha_position": "M"
+    },
+    {
+      "ocr_verbatim": ".McCullough, H.E. and, Farnham, M.B.Space and destgn requirements for wheelchair kitchens.Urbana, IL:College of Agriculture Extens'ion Service, Bulletin No. 664 1960.",
+      "unstructured": "McCullough H.E. and Farnham M.B. Space and destgn requirements for wheelchair kitchens Urbana IL College of Agriculture Extens ion Service Bulletin No. 664 1960",
+      "inferred": "McCullough, H.E. and Farnham, M.B. Space and des[i]gn requirements for wheelchair kitchens. Urbana, IL: College of Agriculture Extension Service, Bulletin No. 66[?], 1960",
+      "title_certain": true,
+      "alpha_position": "M"
+    },
+    {
+      "ocr_verbatim": "Murrell, K.F.H.Ergonomics.London:Chapman and Hall, 1965%.",
+      "unstructured": "Murrell K.F.H. Ergonomics London Chapman and Hall 1965",
+      "inferred": "Murrell, K.F.H. Ergonomics. London: Chapman and Hall, 1965",
+      "title_certain": true,
+      "alpha_position": "M"
+    },
+    {
+      "ocr_verbatim": "P.J. R.Door handles for the disabled.Oxford, UK:Nuffield Orthopedic Centre (date unknown).",
+      "unstructured": "P.J. R. Door handles for the disabled Oxford UK Nuffield Orthopedic Centre date unknown",
+      "inferred": "[surname illegible], P.J.R. Door handles for the disabled. Oxford, UK: Nuffield Orthopedic Centre (date unknown)",
+      "title_certain": true,
+      "alpha_position": "between Murrell and Ownsworth -- surname begins N",
+      "note": "The document itself records the date as UNKNOWN. That is the source's statement, not a scan defect."
+    },
+    {
+      "ocr_verbatim": "Ownsworth, A.An ergonomic stuq of the nace reguirements of wheelchair users for doorways and corridor-s.Leicestershire, UK:Institute,a for Consumer Ergonomio, 1973.",
+      "unstructured": "Ownsworth A. An ergonomic stuq of the nace reguirements of wheelchair users for doorways and corridor-s Leicestershire UK Institute for Consumer Ergonomio 1973",
+      "inferred": "Ownsworth, A. An ergonomic stu[dy] of the [sp]ace requirements of wheelchair users for doorways and corridors. Leicestershire, UK: Institute for Consumer Ergonomi[cs], 1973",
+      "title_certain": true,
+      "alpha_position": "O"
+    },
+    {
+      "ocr_verbatim": "Parsons, H.M.Why human factdrs research in enVironmental design?, in D.H. Carson (Ed.) Mari environment transactions (EDRA 5).Milwaukee, WI:Environmental Design Research Association,i1974.",
+      "unstructured": "Parsons H.M. Why human factdrs research in enVironmental design? in D.H. Carson Ed Mari environment transactions EDRA 5 Milwaukee WI Environmental Design Research Association 1974",
+      "inferred": "Parsons, H.M. Why human fact[o]rs research in environmental design?, in D.H. Carson (Ed.) Ma[n] environment transactions (EDRA 5). Milwaukee, WI: Environmental Design Research Association, 1974",
+      "title_certain": true,
+      "alpha_position": "P"
+    },
+    {
+      "ocr_verbatim": "Poulton, E.C.Bias in ergon'omic experiments, in Applied ergonomics,. pp 17-18, 1973.",
+      "unstructured": "Poulton E.C. Bias in ergon omic experiments in Applied ergonomics pp 17-18 1973",
+      "inferred": "Poulton, E.C. Bias in ergonomic experiments, in Applied Ergonomics, pp 17-18, 1973",
+      "title_certain": true,
+      "alpha_position": "P"
+    },
+    {
+      "ocr_verbatim": "*Pushkarev, B.S. and Zupan, J.M.Urban spap for pedestrians. \"Cambridge, :MA:flit Press, 1975.",
+      "unstructured": "Pushkarev B.S. and Zupan J.M. Urban spap for pedestrians Cambridge MA flit Press 1975",
+      "inferred": "Pushkarev, B.S. and Zupan, J.M. Urban spa[ce] for pedestrians. Cambridge, MA: [MIT] Press, 1975",
+      "title_certain": true,
+      "alpha_position": "P"
+    },
+    {
+      "ocr_verbatim": ",R.E. and Bratton, E.C.Work in the h6me.New York:Wiley, 1968.",
+      "unstructured": "R.E. and Bratton E.C. Work in the h6me New York Wiley 1968",
+      "inferred": "[Steidl], R.E. and Bratton, E.C. Work in the home. New York: Wiley, 1968",
+      "title_certain": true,
+      "alpha_position": "between Pushkarev and Steidl -- surname begins S",
+      "note": "Almost certainly the same Steidl, R.E. as the next entry, but the surname is NOT in these bytes and is not supplied here."
+    },
+    {
+      "ocr_verbatim": "Steidl, R.E.pi f fi c u 1 ty factors in homemaking tasks:Impliatigns for environmental desigrr, in Human factors, 1972, 14:5, pp 471-482, 1972.",
+      "unstructured": "Steidl R.E. pi f fi c u 1 ty factors in homemaking tasks Impliatigns for environmental desigrr in Human factors 1972 14:5 pp 471-482 1972",
+      "inferred": "Steidl, R.E. [D]ifficulty factors in homemaking tasks: Impli[c]ations for environmental design, in Human Factors, 14:5, pp 471-482, 1972",
+      "title_certain": true,
+      "alpha_position": "S"
+    },
+    {
+      "ocr_verbatim": "Steinfeld, Eckard. ',Human factors research, 'in Accessto the built environ-mit:A review of 11teriture.Washington, DC:'U.S...beprartment of Housirig and Urban Deveropmert, 1978.",
+      "unstructured": "Steinfeld Eckard Human factors research in Accessto the built environ-mit A review of 11teriture Washington DC U.S. beprartment of Housirig and Urban Deveropmert 1978",
+      "inferred": "Steinfeld, E[dward]? Human factors research, in Access to the built environment: A review of l[i]terature. Washington, DC: U.S. Department of Housing and Urban Development, 1978",
+      "title_certain": true,
+      "alpha_position": "S",
+      "note": "THE OCR READS 'Eckard', NOT 'Edward'. Recorded as it stands. The report's own cover spelling is the place to settle this, not memory -- and REF-01005's stored author row should be checked against it rather than against this line. SELF-CITATION: the lead author citing his own 1978 HUD literature review, which is a sibling in the same six-report series."
+    },
+    {
+      "ocr_verbatim": "Thiberg,\" S. and Wester, P.O.Anatomy, forplanners,.Stockholm,Sweden: National Institute for Building Resea ch, Reports20:1965 and R12:,1970.",
+      "unstructured": "Thiberg S. and Wester P.O. Anatomy forplanners Stockholm Sweden National Institute for Building Resea ch Reports 20:1965 and R12 1970",
+      "inferred": "Thiberg, S. and Wester, P.O. Anatomy for planners. Stockholm, Sweden: National Institute for Building Resea[r]ch, Reports 20:1965 and R12:1970",
+      "title_certain": true,
+      "alpha_position": "T"
+    },
+    {
+      "ocr_verbatim": "Templer, J.A.Stair shae and h man movement, Unpublished docts ral- ,sertation.Newor:£LoiiaMiversity, 1974.",
+      "unstructured": "Templer J.A. Stair shae and h man movement Unpublished docts ral sertation Newor LoiiaMiversity 1974",
+      "inferred": "Templer, J.A. Stair sha[p]e and h[u]man movement, Unpublished doct[o]ral [dis]sertation. New [York]: [?] [Un]iversity, 1974",
+      "title_certain": true,
+      "alpha_position": "T",
+      "note": "LOAD-BEARING, AND IT DOES NOT SAY WHAT THE FOOTNOTE SAYS. Table 13 footnote c cites 'Templer, 1977'. The reference list carries Templer, J.A. 1974, and its subject is STAIR SHAPE, not ramps. The year digits '1974' are clean in the OCR. Either the footnote year is wrong, or footnote c cites an item absent from this bibliography. NOT RESOLVED HERE AND NOT GUESSED (batch 18 section 9 item 3)."
+    },
+    {
+      "ocr_verbatim": "Wal ter,rE.Four archi teCtUral Movement studies for thewheelchair and kmbuTant disabtondon:-Disab ed L v ngoun ation,9.Y",
+      "unstructured": "Wal ter rE Four archi teCtUral Movement studies for thewheelchair and kmbuTant disab ondon Disab ed L v ngoun ation 9",
+      "inferred": "Walter, [?]E. Four architectural movement studies for the wheelchair and [a]mbulant disab[led]. [L]ondon: Disab[l]ed L[i]v[i]n[g] [F]oun[d]ation, 19[7]?",
+      "title_certain": true,
+      "alpha_position": "W",
+      "note": "CANDIDATE 109. THE TITLE AS DEPOSITED HERE CARRIES NO SLOPE TERM -- 'Part 3: Ramp gradients' is a PART TITLE and is not in this entry, so Walter does NOT score under slope-strict on this bibliography even though it is the single most slope-relevant item in it. That is a measured limitation of a title screen, not a property of the literature. THE YEAR IS DAMAGED: the OCR tail reads 'ation,9.Y' and cannot be read as 1971 or 1979 from these bytes. Table 13 footnote c says 1971; this entry does not confirm it."
+    },
+    {
+      "ocr_verbatim": "Webb, E.J., Campbell, D.T.., Schwartz,.R.D. and Sechrest, L.Unobtrusive measures.Chicago:Rand McNally, 1966.",
+      "unstructured": "Webb E.J. Campbell D.T. Schwartz R.D. and Sechrest L. Unobtrusive measures Chicago Rand McNally 1966",
+      "inferred": "Webb, E.J., Campbell, D.T., Schwartz, R.D. and Sechrest, L. Unobtrusive measures. Chicago: Rand McNally, 1966",
+      "title_certain": true,
+      "alpha_position": "W (last entry)"
+    }
+  ]
+}

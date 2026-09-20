@@ -31,6 +31,9 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 SCREEN_FILE = ROOT / "governance" / "mining-screens.yaml"
 LOG_ROOT = ROOT / "retrieval-log"
+# artefact filename -> derivation kind, filled by payloads_by_ref() from the
+# manifest lines it already reads.
+DERIVED_ARTEFACTS = {}
 
 
 def load_screens():
@@ -49,6 +52,7 @@ def compile_screen(spec):
 
 
 def _title(ref):
+    """The string a screen matches against."""
     return (ref.get("article-title") or ref.get("volume-title")
             or ref.get("unstructured") or "")
 
@@ -72,6 +76,11 @@ def payloads_by_ref():
                 continue
             rid = (rec.get("ref_id") or "").strip()
             art = rec.get("artefact") or rec.get("sha256")
+            if art and rec.get("derived"):
+                # payloads_by_ref already parses every manifest line and used to throw
+                # all of it away except ref_id and artefact. The derived flag is right
+                # here; provenance_of should not have to re-guess it from the body.
+                DERIVED_ARTEFACTS[art] = rec.get("derivation_kind") or "extraction"
             if not rid or not art:
                 continue
             path = manifest.parent / art
@@ -79,6 +88,53 @@ def payloads_by_ref():
                 continue
             out.setdefault(rid, []).append((manifest.parent.name, path))
     return out
+
+
+def supersedes_of(path):
+    """The artefact filename this payload declares it replaces, or None."""
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return None
+    return doc.get("supersedes_artefact") if isinstance(doc, dict) else None
+
+
+def provenance_of(path):
+    """DEPOSITED or EXTRACTED. Never guessed: it is read off the payload itself.
+
+    A publisher-deposited reference list and a reference list transcribed off a damaged
+    scan are not the same evidence and must not print under the same column heading.
+    Until 2026-09-20 this module had one heading, `deposited`, and would have applied it
+    to an OCR transcription -- restating an extraction as a deposit, which is CLAUDE.md
+    rule 7a's third shape (a caller restating a checked fact) arriving in a tool's own
+    output.
+    """
+    # THE MANIFEST IS THE AUTHORITY, not a magic string in the body. retrieval_log.derive()
+    # writes `derived: true` onto the manifest line; reading instead for
+    # kind == "pdf-bibliography" meant any OTHER derived artefact -- including one made
+    # with derive()'s own default kind, "extraction" -- printed as DEPOSITED, i.e. "the
+    # publisher's own reference list". That is precisely the mislabelling this function
+    # exists to prevent, reintroduced one field over.
+    if DERIVED_ARTEFACTS.get(path.name):
+        doc = None
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            pass
+        if isinstance(doc, dict) and doc.get("ocr_damaged"):
+            return "SCRAPED"
+        return "READ"
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return "unknown"
+    if isinstance(doc, dict) and doc.get("kind") == "pdf-bibliography":
+        # READ vs SCRAPED, and the difference is the whole lesson of batch 19. A list
+        # transcribed from RENDERED PAGES is as reliable as the reader; one scraped from a
+        # damaged TEXT LAYER is not, and reporting both as "EXTRACTED" would hide exactly
+        # the distinction that batch cost.
+        return "SCRAPED" if doc.get("ocr_damaged") else "READ"
+    return "DEPOSITED"
 
 
 def references_for(path):
@@ -129,31 +185,64 @@ def main():
               file=sys.stderr)
         return 2
 
+    # Compiled once, not once per anchor: this sat inside the loop and recompiled
+    # every screen for every ref.
+    rxs = {n: compile_screen(screens[n]) for n in chosen}
+
     rows, skipped = [], []
     for rid in refs:
-        best = None
+        cands = []
         for _sess, path in index.get(rid, []):
             r = references_for(path)
-            if r and (best is None or len(r) > len(best[1])):
-                best = (path, r)
+            if r:
+                cands.append((path, r))
+        # A CORRECTED TRANSCRIPTION MUST BE ABLE TO TAKE EFFECT. Selection used to be
+        # "the payload with the most references", which silently keeps the FIRST of two
+        # equal-length lists -- so a re-transcription that fixes readings without changing
+        # the count could never win, and the screen would go on scoring the version its
+        # author had already withdrawn. Measured on REF-01005: the corrected 38-entry
+        # transcription lost to the damaged 38-entry one.
+        #
+        # An artefact that names the one it replaces wins. The superseded file is NOT
+        # deleted -- migrations are append-only in spirit here too, and the withdrawn
+        # reading is part of the record of how the corrected one was reached.
+        superseded = {supersedes_of(path) for path, _ in cands} - {None}
+        live = [c for c in cands if c[0].name not in superseded] or cands
+        best = max(live, key=lambda c: len(c[1]), default=None)
         if best is None:
             skipped.append(rid)
             continue
-        rows.append((rid, len(best[1]),
-                     {n: score(best[1], compile_screen(screens[n])) for n in chosen}))
+        path, reflist = best
+        prov = provenance_of(path)
+        # A band, not a point, wherever the transcription is uncertain. floor == ceiling
+        # for a deposited list, and the band renders as a single number, so nothing about
+        # the existing output changes for the anchors that had it before.
+        rows.append((rid, len(reflist),
+                     {n: score(reflist, rxs[n]) for n in chosen}, prov))
 
     if not rows:
         print("EXAMINED: 0 — no payload carried a reference list. Not a zero yield.")
         return 1
 
-    width = max(len(n) for n in chosen)
-    head = f"{'ref':<12}{'deposited':>10}" + "".join(f"{n:>{width + 2}}" for n in chosen)
+    width = max(max(len(n) for n in chosen), 7)
+    head = (f"{'ref':<12}{'refs':>6}  {'provenance':<11}"
+            + "".join(f"{n:>{width + 2}}" for n in chosen))
     print(head)
     print("-" * len(head))
-    for rid, n, sc in sorted(rows, key=lambda r: -r[2][chosen[0]]):
-        print(f"{rid:<12}{n:>10}" + "".join(f"{sc[n2]:>{width + 2}}" for n2 in chosen))
+    for rid, n, sc, prov in sorted(rows, key=lambda r: -r[2][chosen[0]]):
+        print(f"{rid:<12}{n:>6}  {prov:<11}"
+              + "".join(f"{sc[n2]:>{width + 2}}" for n2 in chosen))
     print(f"\nEXAMINED: {len(rows)} anchor(s), "
-          f"{sum(n for _, n, _ in rows)} deposited reference(s)")
+          f"{sum(n for _, n, _, _ in rows)} reference(s)")
+    if any(prov in ("SCRAPED", "READ") for *_, prov in rows):
+        print("\nPROVENANCE. DEPOSITED: the publisher's own reference list. READ: "
+              "transcribed from the\nRENDERED PAGE of a scan, via "
+              "scripts/research/page_image.py. SCRAPED: taken off a\ndamaged PDF TEXT "
+              "LAYER, which is the unreliable one -- batch 19 read a mangled text\nlayer "
+              "as evidence the DOCUMENT was illegible and was wrong about authors, years "
+              "and\na title's slope term. A SCRAPED list should be re-transcribed from "
+              "renders before\nits yield is trusted; a zero on one is weak evidence of "
+              "absence (CLAUDE.md 5a).")
     print(f"SCREENS: " + ", ".join(
         f"{n} v{screens[n].get('version', '?')}" for n in chosen))
     if skipped:

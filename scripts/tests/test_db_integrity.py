@@ -219,71 +219,49 @@ def run_checks(db_path):
     # verification_attempt_count. Every value this list used to carry was one of
     # those three facts smuggled into the status string -- and UNVERIFIED-1
     # asserted an attempt count its own column contradicted in 25 of 31 rows.
-    VALID_VSTATUS = ("VERIFIED", "UNVERIFIED")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
-        WHERE verification_status IS NOT NULL
-        AND verification_status NOT IN ({','.join('?'*len(VALID_VSTATUS))})
-    """, VALID_VSTATUS).fetchone()[0]
-    record("B01", "verification_status values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE verification_status IS NOT NULL"))
+    # ─── B01-B05: FIVE VOCABULARIES, ONE SHAPE, ALL READ FROM THE COLUMN ───────────
+    #
+    # These were five hand-curated tuples maintained here, over five columns that
+    # declared nothing. That is CLAUDE.md rule 8's named anti-pattern -- "a list
+    # maintained alongside the thing it describes, where the list and the thing drift and
+    # only the list is checked" -- and it cost something measurable before it went.
+    #
+    # Because the columns declared no CHECK, `dbcore.check_values` returned the empty set
+    # for all five, and an empty vocabulary reads as NO CONSTRAINT to every caller: so
+    # `db.py`'s argparse could not offer the values, its --help restated them by hand, and
+    # its writers accepted anything. A session copied Crossref's `journal-article` out of
+    # a stale help string into the database; this file caught it two steps after argparse
+    # could have refused it for free. Migrations 089 and 091 moved all five vocabularies
+    # into the columns' own CHECKs, so the writer, the help text and this assertion now
+    # read one declaration.
+    #
+    # The per-column prose those tuples carried is not lost -- it moved into the migration
+    # headers, which is where a vocabulary decision belongs (091 records the two parallel
+    # URL-resolution vocabularies and why they are not merged; 089 records D-0157 §4.6
+    # ratifying `code`).
+    def declared_vocab(code, column, label):
+        """Assert a column against its OWN CHECK, or fail loudly if it declares none."""
+        subject = subj(f"SELECT COUNT(*) FROM evidence_sources "
+                       f"WHERE {column} IS NOT NULL")
+        expr = dbcore.check_expression(conn, "evidence_sources", column)
+        if not expr:
+            record(code, label, False,
+                   f"evidence_sources.{column} declares no CHECK to assert against — "
+                   f"migrations 089/091 gave all five a vocabulary, so its absence means "
+                   f"the schema moved backwards and the writer's guard is silently off",
+                   subject=subject)
+            return
+        bad = conn.execute(
+            f"SELECT COUNT(*) FROM evidence_sources WHERE NOT ({expr})").fetchone()[0]
+        record(code, label, bad == 0, f"{bad} invalid values" if bad else "",
+               subject=subject)
 
-    VALID_MQ = ("COMPLETE","AUTHOR-TITLE-ONLY","GREY","PMID-ONLY","NULL",
-                # DR-2026-05-18 — statutory metadata completeness:
-                "COMPLETE-STATUTORY")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
-        WHERE metadata_quality IS NOT NULL
-        AND metadata_quality NOT IN ({','.join('?'*len(VALID_MQ))})
-    """, VALID_MQ).fetchone()[0]
-    record("B02", "metadata_quality values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality IS NOT NULL"))
-
-    VALID_DOI_OUT = ("RESOLVED","NO-MATCH","REVERTED")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
-        WHERE doi_resolution_outcome IS NOT NULL
-        AND doi_resolution_outcome NOT IN ({','.join('?'*len(VALID_DOI_OUT))})
-    """, VALID_DOI_OUT).fetchone()[0]
-    record("B03", "doi_resolution_outcome values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE doi_resolution_outcome IS NOT NULL"))
-
-    # Two URL-resolution vocabularies coexist:
-    #   - granular pipeline outputs from scripts/url_verifier.py
-    #     (MATCHED/PARTIAL/NO-MATCH/DEAD-LINK/DEAD-DNS/WAYBACK-*/URL-NO-MATCH)
-    #   - simpler DOI-resolver/url-fetch outputs that pre-date the granular
-    #     pipeline and align with B03's doi_resolution_outcome vocabulary
-    #     (RESOLVED/DEAD/RESOLVED-PARTIAL). RESOLVED is the same value B03 uses.
-    # The two vocabularies are NOT equivalent (MATCHED implies title-match
-    # check; RESOLVED does not), so they are accepted as parallel valid sets
-    # rather than merged.
-    VALID_URL_OUT = ("MATCHED","PARTIAL","NO-MATCH","DEAD-LINK","DEAD-DNS",
-                     "WAYBACK-MATCH","WAYBACK-PARTIAL","URL-NO-MATCH",
-                     "RESOLVED","DEAD","RESOLVED-PARTIAL")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
-        WHERE url_resolution_outcome IS NOT NULL
-        AND url_resolution_outcome NOT IN ({','.join('?'*len(VALID_URL_OUT))})
-    """, VALID_URL_OUT).fetchone()[0]
-    record("B04", "url_resolution_outcome values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE url_resolution_outcome IS NOT NULL"))
-
-    VALID_ST = ("journal_article","book","book_chapter","conference_paper","thesis",
-                "primary_research","case_study","standard","guideline","report",
-                "grey","internal","letter","editorial","commentary","other",
-                # D-0157 section 4.6 ratifies `code`: 16 rows, statutory
-                # instruments (French arretes, Italian DPCM, Japanese ministerial
-                # standards), mirroring EvidenceType.CODE in schemas/enums.py.
-                # Used consistently since coinage; the transcription here was
-                # simply never updated.
-                "code")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
-        WHERE source_type IS NOT NULL
-        AND source_type NOT IN ({','.join('?'*len(VALID_ST))})
-    """, VALID_ST).fetchone()[0]
-    record("B05", "source_type values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE source_type IS NOT NULL"))
+    for _code, _col in (("B01", "verification_status"),
+                        ("B02", "metadata_quality"),
+                        ("B03", "doi_resolution_outcome"),
+                        ("B04", "url_resolution_outcome"),
+                        ("B05", "source_type")):
+        declared_vocab(_code, _col, f"{_col} matches the column's own CHECK")
 
     # DERIVED FROM THE COLUMN, NOT CURATED BESIDE IT (rule 8). This was a 12-value
     # tuple maintained here while `gaps.status` declares its own

@@ -302,6 +302,99 @@ def fetch(url, session, purpose="", timeout=40, stamp=None, ref_id=None):
         return None
 
 
+def derive(payload, session, source_artefact, purpose="", ref_id=None, kind=None,
+           stamp=None):
+    """Persist an artefact DERIVED from bytes already on disk, not fetched from a host.
+
+    WHY THIS IS SEPARATE FROM fetch(). fetch() promises the artefact is "the bytes the
+    caller actually received". A reference list read out of a scanned PDF was never
+    received from anywhere -- it was produced HERE, by an extraction that can be wrong.
+    Writing it through fetch() with a pretend URL would buy mining_screen.py an input at
+    the cost of the one promise this module exists to keep, and the repository has
+    already been bitten by a derived figure wearing a retrieved figure's clothes.
+
+    So a derived artefact is marked as one, in three ways a reader cannot miss:
+      * `derived: true` and a `provenance` block naming the extractor and its input;
+      * `url` carries a `derived:` scheme, which is not a URL and cannot be re-fetched;
+      * `status` is null -- there was no HTTP transaction -- which _failed_retrievals()
+        already reads as "not a failure" rather than inventing a code for it.
+
+    The caller supplies `payload` as a dict. It is stored verbatim, so whatever
+    uncertainty the extraction carries must be IN it (per-entry damage flags, an
+    explicit `ocr_damaged`), not in a sentence about it somewhere else.
+    """
+    d = LOG_ROOT / _session_stem(session)
+    d.mkdir(parents=True, exist_ok=True)
+    # THE SOURCE MUST RESOLVE, or the provenance chain this function promises dangles.
+    # Its whole point is that a later reader can check a transcription against the bytes
+    # it came from; an unvalidated free string cannot support that, and the first two
+    # derived artefacts written in this repository named a PDF that is in neither this
+    # session's directory nor its manifest -- it lives in the session that fetched it.
+    # So: resolve here or in any session's log, and refuse otherwise.
+    if not (d / source_artefact).exists() and not any(
+            (m.parent / source_artefact).exists() for m in LOG_ROOT.glob("*/manifest.jsonl")):
+        raise ValueError(
+            f"derive(): source_artefact {source_artefact!r} resolves to no file under "
+            f"{LOG_ROOT}/. A derived artefact whose source cannot be found is not "
+            f"provenance, it is an assertion. Pass the artefact filename as the session "
+            f"that RETRIEVED it stored it.")
+    body = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
+    sha = hashlib.sha256(body).hexdigest()
+    artefact = f"{sha[:16]}.json"
+    (d / artefact).write_bytes(body)
+    _append_derived(d, artefact=artefact, sha=sha, nbytes=len(body),
+                    source_artefact=source_artefact, kind=kind, purpose=purpose,
+                    ref_id=ref_id, content_type="application/json", stamp=stamp)
+    return d / artefact
+
+
+def record_file(path, session, source_artefact, purpose="", ref_id=None,
+                kind="render", stamp=None):
+    """Attest a file ALREADY WRITTEN into a session log, by giving it a manifest line.
+
+    derive() persists a dict it is handed; this records bytes that already exist on disk
+    -- a rendered page image, say. Without it, page renders were unattested files sitting
+    in an evidence log: invisible to _manifest_records, _unparsed_payloads and
+    _failed_retrievals, with no sha256, no record of what they were rendered from and no
+    timestamp. page_image.py's promise that "a later reader can check the transcription
+    against the same bytes" cannot rest on files nothing accounts for.
+    """
+    d = LOG_ROOT / _session_stem(session)
+    d.mkdir(parents=True, exist_ok=True)
+    path = Path(path)
+    body = path.read_bytes()
+    sha = hashlib.sha256(body).hexdigest()
+    _append_derived(d, artefact=path.name, sha=sha, nbytes=len(body),
+                    source_artefact=source_artefact, kind=kind, purpose=purpose,
+                    ref_id=ref_id,
+                    content_type="image/png" if path.suffix == ".png" else None,
+                    stamp=stamp)
+    return sha
+
+
+def _append_derived(d, *, artefact, sha, nbytes, source_artefact, kind, purpose,
+                    ref_id, content_type, stamp=None):
+    """The manifest line for a DERIVED artefact, written in exactly one place.
+
+    There was no manifest writer: fetch(), derive(), record_file() and
+    reconstruct_manifest() each assembled the dict by hand, and they had already drifted
+    -- reconstruct_manifest emits no ref_id, status or content_type; fetch emits no
+    `derived`. Four writers against one reader (_manifest_records) is the shape that lets
+    a new field reach three lines out of four. This collapses the two derived writers;
+    fetch() keeps its own because it carries HTTP facts (exit, status) that no derivation
+    has, and merging those branches would cost the promise its docstring makes.
+    """
+    with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
+        fh.write(json.dumps({
+            "retrieved_at": stamp or _now(),
+            "url": f"derived:{kind}/{sha[:16]}/{source_artefact}",
+            "purpose": purpose, "ref_id": ref_id, "sha256": sha, "bytes": nbytes,
+            "exit": 0, "status": None, "artefact": artefact,
+            "content_type": content_type,
+            "derived": True, "derived_from": source_artefact, "derivation_kind": kind,
+        }, ensure_ascii=False) + "\n")
+
+
 def _session_stem(session):
     """Accept both spellings of a session id.
 
@@ -434,13 +527,36 @@ _ALT_LOCATORS = ("url", "pmid", "pmcid", "handle", "isbn")
 # Bibliographic fields this verifier can check against a Crossref payload, and the
 # payload key each is derived from. Deliberately NOT exhaustive: only fields where
 # the payload is unambiguously authoritative.
+# journal_name and publisher ADDED 2026-09-20, TO KEEP AN INVARIANT TRUE RATHER THAN TO
+# widen a check. db.py's _CORRECTABLE header states the boundary: the fields that writer
+# may touch are "EXACTLY what retrieval_log --verify-authors can prove against a payload.
+# A field the verifier cannot check is a field this writer must not touch." Batch 19 added
+# journal_name and publisher to _CORRECTABLE without adding them here, which broke that
+# invariant and made correct-source's own refusal message false -- it names the fields as
+# ones the verifier can prove, while the verifier had never looked at container-title.
+# The concrete cost: REF-01006 was stamped metadata_quality='COMPLETE' with journal_name
+# NULL, author_fidelity reported it clean, and GAP-031 had already recorded that the venue
+# of every source in this project existed only in prose and in payloads.
 _BIBLIO_FIELDS = (
     ("volume",         lambda m: m.get("volume")),
     ("issue",          lambda m: m.get("issue")),
     ("article_number", lambda m: m.get("article-number")),
     ("pages",          lambda m: m.get("page")),
     ("pub_year",       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0] or [None])[0]),
+    ("journal_name",   lambda m: next((t for t in (m.get("container-title") or []) if t),
+                                      None)),
+    ("publisher",      lambda m: m.get("publisher")),
 )
+
+# THE ONE HOME. db.py's _CORRECTABLE is built from this rather than restating it, because
+# its own header declares the invariant -- the correctable set is "EXACTLY what
+# retrieval_log --verify-authors can prove against a payload" -- and that invariant was
+# broken by hand within hours of being written: journal_name and publisher were added to
+# _CORRECTABLE and not here, which made correct-source's refusal message false. Two
+# hand-maintained tables that must agree, held together by a comment, is rule 5 in Python
+# inside the module that enforces rule 5 in the data. Now the invariant holds by
+# construction and a new field cannot be added to one side only.
+PAYLOAD_FIELDS = _BIBLIO_FIELDS
 
 # Columns any one of which may legitimately carry the payload's title. A
 # non-English source stores its native title in `pub_title` and the English in
@@ -1154,7 +1270,31 @@ def main():
     p.add_argument("--reconstruct-manifest", action="store_true",
                    help="rebuild manifest lines for payloads already on disk; "
                         "marks every line reconstructed=true")
+    # A COMMITTED ROUTE TO derive(). Without one, the only way to write a derived artefact
+    # was an ad-hoc script outside the repository -- so the next session meeting a damaged
+    # scan finds no sanctioned path and reaches for fetch() with a pretend URL, the one
+    # thing derive() exists to prevent. CLAUDE.md §8: an uncalled function is the same
+    # defect as an unread field or an unregistered check.
+    p.add_argument("--derive", metavar="JSON_FILE",
+                   help="persist this JSON file as a DERIVED artefact of --source-artefact")
+    p.add_argument("--source-artefact",
+                   help="the persisted artefact the derivation was made FROM; must resolve")
+    p.add_argument("--kind", default="extraction",
+                   help="derivation kind recorded on the manifest line")
+    p.add_argument("--ref-id", help="evidence_sources.ref_id this derivation is about")
+    p.add_argument("--purpose", default="", help="why this derivation was made")
     a = p.parse_args()
+    if a.derive:
+        if not a.source_artefact:
+            p.error("--derive requires --source-artefact: a derivation with no stated "
+                    "source is an assertion, not provenance")
+        with open(a.derive, encoding="utf-8") as fh:
+            payload = json.load(fh)
+        out = derive(payload, a.session, a.source_artefact, purpose=a.purpose,
+                     ref_id=a.ref_id, kind=a.kind)
+        print(f"  {out}")
+        print(f"EXAMINED: 1 derivation from {a.source_artefact}")
+        sys.exit(0)
     if a.reconstruct_manifest:
         sys.exit(reconstruct_manifest(a.session))
     if a.backfill:

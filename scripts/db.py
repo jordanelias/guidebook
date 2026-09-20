@@ -2009,7 +2009,16 @@ def main():
     # ADDED 2026-09-18 (batch 18): the venue fields that make a REPORT citable.
     # A government report with no institution and no report number cannot be rendered
     # into a bibliography -- see the _ES_COLS note for how REF-01005 exposed this.
-    p_as.add_argument("--source-type", help="journal-article | report | book | thesis | standard …")
+    # choices AND help both READ FROM THE COLUMN'S OWN CHECK (rule 8), as of migration
+    # 089. Until then this was a free-text flag whose help string listed the vocabulary by
+    # hand -- and listed it WRONG, advertising Crossref's `journal-article` where the
+    # project's value is `journal_article`. A session copied the hyphen straight out of the
+    # help, the writer accepted it because the column declared no CHECK, and a blocking
+    # check caught it two steps later. Now argparse refuses it before the command runs and
+    # `--help` cannot drift from the schema, because neither is written down here.
+    p_as.add_argument("--source-type",
+                      choices=dbcore.schema_choices("evidence_sources", "source_type"),
+                      help="Live vocabulary, read from the column's own CHECK")
     p_as.add_argument("--institution", help="the PERFORMING organisation, as ERIC's INSTITUTION field and a report's own title page use the term; the sponsor goes in --publisher")
     p_as.add_argument("--report-number", help="e.g. HUD-PDR 397; the issuer's own number")
     p_as.add_argument("--series")
@@ -2083,7 +2092,14 @@ def main():
                       help="REQUIRED when --verification-method tool: which tool "
                            "(crossref, pubmed, semantic-scholar, ...). Invariant I4b.")
     p_as.add_argument("--verification-status",
-                      choices=["VERIFIED", "UNVERIFIED"],
+                      # Read from the column, not restated. Migration 091 gave
+                      # verification_status a CHECK, and derived_not_curated_audit went
+                      # red on this literal within the same run -- the audit doing
+                      # exactly its job: the moment a vocabulary gains a home in the
+                      # schema, a hand-written copy of it becomes the second home rule 5
+                      # forbids.
+                      choices=dbcore.schema_choices("evidence_sources",
+                                                    "verification_status"),
                       help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
                            "(CrossRef, PubMed, Semantic Scholar, a second citing source). A source found only "
                            "in one citing document's bibliography, with no independent hit, is UNVERIFIED "
@@ -3485,15 +3501,24 @@ def insert_evidence_source(data: dict, session: str,
 # EXACTLY what retrieval_log --verify-authors can prove against a payload. A field the
 # verifier cannot check is a field this writer must not touch, or the repository gains
 # a way to assert a bibliographic value that nothing can ever contradict.
-_CORRECTABLE = {
-    "pub_title":      lambda m: next((t for t in (m.get("title") or []) if t), None),
-    "volume":         lambda m: m.get("volume"),
-    "issue":          lambda m: m.get("issue"),
-    "article_number": lambda m: m.get("article-number"),
-    "pages":          lambda m: m.get("page"),
-    "pub_year":       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0]
-                                 or [None])[0],
-}
+def _correctable():
+    """The payload-backed columns, DERIVED from the verifier's own map.
+
+    Not a second list. `_BIBLIO_FIELDS` in retrieval_log is what --verify-authors can
+    actually prove against a payload, and this dict's contract is to be exactly that set
+    -- so it is that set, plus `pub_title`, which the verifier checks through `_TITLE_COLS`
+    instead (a non-English source stores its native title in pub_title and the English in
+    pub_title_en, so the verifier compares a SET of columns where this writer targets one).
+    That exception is stated here rather than left implicit.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                              # noqa: E402
+    out = {"pub_title": lambda m: next((t for t in (m.get("title") or []) if t), None)}
+    out.update(dict(retrieval_log.PAYLOAD_FIELDS))
+    return out
+
+
+_CORRECTABLE = _correctable()
 
 
 def _payload_for(ref_id, doi, log_session):
@@ -3848,6 +3873,18 @@ R9_REMEDY = (
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
     "notes", "bpc_note", "scope",
+    # source_type, added 2026-09-20, and the case is the one B05 made against a row
+    # this repository had just written. It is a CLASSIFICATION -- is this a report, a
+    # journal article, a standard? -- which no payload settles: Crossref's `type` says
+    # what the publisher deposited, not what this project counts the item as, and the
+    # 1979 HUD study is a `report` here whatever an index calls it. GAP-038 gave
+    # add-source the flag to WRITE it and left nothing able to CORRECT it, so the first
+    # wrong value cost a compensating migration for a typo -- rule 3 spending its weight
+    # on the wrong thing, which is the same argument verification_status was added on.
+    # The value that provoked this: `journal-article`, copied straight from Crossref,
+    # where the checked vocabulary is `journal_article`. add-source's own --help
+    # advertised the hyphen; that is fixed in the same commit.
+    "source_type",
     # verification_disposition belongs here and not with the bibliographic fields:
     # D-0157 states it as a JUDGEMENT -- "verification is finished or it did not
     # happen" -- which no payload can settle. Added 2026-09-02 to correct rows that
@@ -3979,6 +4016,24 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                            f"FROM evidence_sources WHERE ref_id=?", [ref_id]).fetchone()
         if row is None:
             raise Refusal(f"{ref_id}: no such evidence source.")
+        # EVERY AMENDABLE FIELD WHOSE COLUMN DECLARES A CHECK IS GATED BY IT, derived
+        # rather than listed (rule 8). Added 2026-09-20, and the case against the older
+        # shape is that it was field-by-field: `verification_status` got the gate below
+        # because someone thought of it, and every other _AMENDABLE field got nothing.
+        # That went wrong within hours in this same batch. `source_type` was added to
+        # _AMENDABLE precisely to repair a vocabulary typo ('journal-article' for
+        # 'journal_article') -- and the verb added to fix the typo would have accepted
+        # the identical typo, leaving a blocking check as the only catch, after the
+        # fact, which is the shape of the defect it was added for.
+        #
+        # check_declared is a no-op for a column with no CHECK, so this neither
+        # constrains the free-text warrants (co1_provenance, notes, verification_note)
+        # nor duplicates the specific gate below; a migration that gives any amendable
+        # column a vocabulary arms this in the same commit, with nothing to update here.
+        dbcore.fk_declared(conn, "evidence_sources", field, replacement,
+                           f"amend-source --field {field}")
+        dbcore.check_declared(conn, "evidence_sources", field, replacement,
+                              f"amend-source --field {field}")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the
@@ -6152,8 +6207,19 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # resolution; until now there was no way to record that the re-description
 # happened. Verified against REF-01001, whose two rows were filed from a
 # Crossref-deposited abstract while MDPI was Akamai-blocked.
+# root_type ADDED 2026-09-20. It is the same class as figure_role -- a JUDGEMENT about
+# what KIND of thing a figure is, which no payload settles -- and it had no repair path,
+# so a wrong grade at write time was permanent. Batch 19 wrote root_type
+# 'measurement_primary' with root_ref_id NULL on a value REF-01005 did not measure and
+# whose actual source this corpus does not hold. The prose field beside it said so
+# honestly; the typed columns said "a primary measurement whose root is nothing", and
+# nothing could see the contradiction: v_unregistered_roots, which exists for exactly
+# this, filters on root_id IS NOT NULL, so a row that leaves root_id null is not examined
+# at all. The vocabulary already carried the right value, 'untraced'. Gated below by the
+# column's own CHECK, so this widens WHO may correct it, not WHAT to.
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
-                                   "extraction_method", "extraction_status"})
+                                   "extraction_method", "extraction_status",
+                                   "root_type", "root_ref_id"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -6191,6 +6257,14 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
         if row is None:
             raise Refusal(f"amend-extraction: extraction_id {extraction_id}: no "
                           f"such row.")
+        # BOTH GATES, DERIVED, ON EVERY AMENDABLE FIELD. The first version of this gated
+        # one column by name -- `if field == "root_ref_id"` -- twenty lines below a
+        # generic check_declared in amend_source, which is the field-by-field shape rule 8
+        # forbids and which this very commit had just criticised. fk_declared reads
+        # PRAGMA foreign_key_list, so it is a no-op where no FK is declared and covers
+        # every amendable reference the day one becomes amendable.
+        dbcore.fk_declared(conn, "source_value_extractions", field, value,
+                           f"amend-extraction --field {field}")
         dbcore.check_declared(conn, "source_value_extractions", field, value,
                               "amend-extraction")
 
@@ -6226,8 +6300,27 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                         f"figure_role cannot be 'claim'. Leave it 'finding'.")
 
         if old == value:
+            # THE REASON IS STILL RECORDED. This path used to return early and DISCARD
+            # --reason, although the flag's own help says it is "Appended to notes, never
+            # overwriting it". A session that re-examined a row, found the value already
+            # right, and wrote down what it had learned got a silent no-op -- the finding
+            # vanished. Measured on this batch: a correction recording that a quote had
+            # been confirmed against a rendered page image, and that the row's page
+            # locator means the one-based PDF page rather than the index an earlier note
+            # called it, was written and lost.
+            #
+            # "I checked, and it was already correct, and here is what I found" is a real
+            # result and often a more useful one than a change, because it is the only
+            # trace that the checking happened at all.
+            stamp = dbcore.now()
+            marker = f" || {stamp[:10]} {field} CONFIRMED {value} ({reason})"
+            conn.execute(
+                "UPDATE source_value_extractions SET notes=?, updated_at=?, "
+                "updated_by_session=? WHERE extraction_id=?",
+                ((row["notes"] or "").rstrip() + marker, stamp, session, extraction_id))
             return {"extraction_id": extraction_id, "field": field, "changed": False,
-                    "reason": "already this value", "dry_run": dry_run}
+                    "reason": "already this value; the reason is recorded on notes",
+                    "dry_run": dry_run}
 
         stamp = dbcore.now()
         old_disp = "NULL" if old is None else old

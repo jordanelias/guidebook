@@ -16,10 +16,12 @@ python3 tools/pipeline_completeness.py
 python3 tools/evidentiary_audit.py
 python3 tools/regenerate_vetting_surface.py
 python3 tools/pipeline_walk.py
+python3 tools/schema_walkability.py
 
 echo "== Verifying --check gates (mirror CI regenerate-*.yml) =="
 python3 tools/pipeline_completeness.py --check
 python3 tools/evidentiary_audit.py --check
 python3 tools/pipeline_walk.py --check
+python3 tools/schema_walkability.py --check
 
 echo "All DB-derived outputs regenerated and --check-clean. Review 'git status' and commit."
