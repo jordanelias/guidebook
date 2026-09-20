@@ -528,9 +528,27 @@ hand-patches were the same anti-pattern the fix was for.** Those are now closed.
 
 `_AMENDABLE` is the one I did **not** fix, and the reason is stated rather than skipped:
 inverting it to a complement-of-`_CORRECTABLE` derivation would widen the write surface
-across **97 columns, 79 of them currently unreachable**, and a wrong exclusion makes a bad
-value writable that no gate catches. That is a change to make deliberately, not at the end
-of a long session. GAP-013 already holds it; the measurement is added there.
+across most of a wide table, and a wrong exclusion makes a bad value writable that no gate
+catches. That is a change to make deliberately, not at the end of a long session. GAP-013
+already holds it; the measurement is added there.
+
+**Derive the size of the gap, never quote it** — this paragraph said "97 columns, 79 of
+them currently unreachable" and the command below returns 77, a hand-typed count going
+stale inside the section about hand-typed counts, which is rule 7a on its third outing in
+this batch. It also measured only `evidence_sources`; `source_value_extractions` has the
+same shape and was never counted:
+
+```
+python3 - <<'EOF'
+import sqlite3, sys
+sys.path.insert(0, "scripts"); import db
+con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
+for t, reach in (("evidence_sources", set(db._AMENDABLE) | set(db._CORRECTABLE)),
+                 ("source_value_extractions", set(db._AMENDABLE_SVE_FIELDS))):
+    cols = {c[1] for c in con.execute(f'PRAGMA table_info("{t}")')}
+    print(t, len(cols), "columns,", len(cols - reach), "unreachable by any amend/correct writer")
+EOF
+```
 
 ### The defect on the page I shipped
 
