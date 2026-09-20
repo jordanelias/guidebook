@@ -2009,7 +2009,7 @@ def main():
     # ADDED 2026-09-18 (batch 18): the venue fields that make a REPORT citable.
     # A government report with no institution and no report number cannot be rendered
     # into a bibliography -- see the _ES_COLS note for how REF-01005 exposed this.
-    p_as.add_argument("--source-type", help="journal-article | report | book | thesis | standard …")
+    p_as.add_argument("--source-type", help="journal_article | report | book | thesis | standard … (UNDERSCORE, not Crossref's hyphen: test_db_integrity B05 rejects journal-article)")
     p_as.add_argument("--institution", help="the PERFORMING organisation, as ERIC's INSTITUTION field and a report's own title page use the term; the sponsor goes in --publisher")
     p_as.add_argument("--report-number", help="e.g. HUD-PDR 397; the issuer's own number")
     p_as.add_argument("--series")
@@ -3848,6 +3848,18 @@ R9_REMEDY = (
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
     "notes", "bpc_note", "scope",
+    # source_type, added 2026-09-20, and the case is the one B05 made against a row
+    # this repository had just written. It is a CLASSIFICATION -- is this a report, a
+    # journal article, a standard? -- which no payload settles: Crossref's `type` says
+    # what the publisher deposited, not what this project counts the item as, and the
+    # 1979 HUD study is a `report` here whatever an index calls it. GAP-038 gave
+    # add-source the flag to WRITE it and left nothing able to CORRECT it, so the first
+    # wrong value cost a compensating migration for a typo -- rule 3 spending its weight
+    # on the wrong thing, which is the same argument verification_status was added on.
+    # The value that provoked this: `journal-article`, copied straight from Crossref,
+    # where the checked vocabulary is `journal_article`. add-source's own --help
+    # advertised the hyphen; that is fixed in the same commit.
+    "source_type",
     # verification_disposition belongs here and not with the bibliographic fields:
     # D-0157 states it as a JUDGEMENT -- "verification is finished or it did not
     # happen" -- which no payload can settle. Added 2026-09-02 to correct rows that

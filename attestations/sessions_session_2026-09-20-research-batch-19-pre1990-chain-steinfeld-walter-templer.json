@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-20-research-batch-19-pre1990-chain-steinfeld-walter-templer",
+  "artifact": "sessions/session_2026-09-20-research-batch-19-pre1990-chain-steinfeld-walter-templer.md",
+  "doctrine_sha": "83b5b40",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/",
+      "reason": "Every database change went through the sanctioned path: staged on a scratch copy under GUIDEBOOK_DB_PATH, captured with emit_batch_sql.py, emitted with emit_data_migration.py, applied with migrate_db.py. Five migrations, because three of them are self-corrections caught by blocking gates mid-batch rather than one clean pass. No hand-written SQL touched data/guidebook.db. migration_reproducibility PASSES, so the committed blob is what the migration history produces. Two writer gaps were met by ADDING THE VERB rather than by writing around them, per the owner rule of 2026-09-18: source_type was added to db.py's _AMENDABLE because nothing could correct it after admission, and retrieval_log.derive() was added because a reference list read out of a scanned PDF had no honest home in a module whose fetch() promises the artefact is what a host served."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "sessions/session_2026-09-20-research-batch-19-pre1990-chain-steinfeld-walter-templer.md",
+      "reason": "Every figure in this record is derived from the live repository or from a persisted retrieval artefact, and the record says which command regenerates it. THE HARD CASE WAS THE TRANSCRIPTION: REF-01005's bibliography exists only as damaged OCR, so each of the 38 entries carries the verbatim bytes, a conservative reading that substitutes no letters, and a bracketed best reading -- and the screen scores the conservative one by default, so a generous transcription cannot manufacture a yield. CLAUDE.md 5(c) was the live constraint throughout: where the OCR gives 'Newor:£LoiiaMiversity' or an author initial that is not an F, nothing is repaired from memory and the damage is left visible. Illegible surnames are bounded by ALPHABETICAL POSITION in the list, which is evidence from the document. One hypothesis about a previous batch -- that it had fetched the Open Library record and failed to read it -- was CHECKED BEFORE BEING WRITTEN, proved false, and is recorded as a near-miss rather than filed as a correction."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-09-20-research-batch-19-pre1990-chain-steinfeld-walter-templer.json",
+      "reason": "One attestation for the one session record this batch produced. research_batch_dod reports COMPLIANT on all 19 rules, and the two that failed first -- R1 (no Co-1 pass) and R7 (too few candidates registered) -- were remediated by a real Co-1 retrieval that admitted REF-01006 and by staging seven candidates that would otherwise have evaporated into prose, not by a reasoned waiver. Priors were committed before results in both legs, and the Co-1 prior states in its own text that it was added mid-batch and is not pre-registration of the batch."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "source-discipline",
+      "reason": "My own pre-registered falsification condition for P1b was set wider than the prediction it was meant to test ('falsified if 0 or >= 20' against a predicted band of 3-12). The yield missed the band and did not trigger the threshold. Carelessness in writing the prior, not in running the test. Recorded in the session record under the failed prediction rather than behind the looser rule that would have let the prediction stand."
+    },
+    {
+      "rule": "integrity-protocol",
+      "reason": "Three defects in this batch's own writes reached the canonical DB and were corrected by compensating migration rather than caught before the first apply: source_type spelled as Crossref's 'journal-article' (B05), extraction 56 given figure_role='condition' while qualifying no row (extraction_relations_integrity), and REF-01006 stamped metadata_quality='COMPLETE' over three NULL fields its own payload supplied (author_fidelity). All three were caught by gates before merge and none reached main, which is the system working. Logged as deviations rather than as routine because the first was caused by add-source's own --help advertising a value the blocking check rejects -- a defect in the tool that misled the operator, now fixed -- and because three in one batch is worth a reader knowing about."
+    }
+  ],
+  "bias_direction": "Toward treating the assigned retrieval targets as more load-bearing than the evidence supports. The batch was convened to retrieve Walter 1971 and Templer 1977 as 'the two remaining nodes of the 1:12 chain', and an operator who has spent a batch chasing two documents is motivated to conclude they matter. The reading of Table 13's footnote scope cuts AGAINST that -- it suggests both warrant only the permissive bands and neither belongs to the 1:12 chain -- which is why it is held explicitly as a reading rather than promoted, and why the amendment to GAP-037 qualifies that gap rather than claiming to correct it. A second, opposite bias: having failed to retrieve either target, there is pressure to present the Co-1 admission as the batch's real result. It is a genuine admission but it does not advance the determination, and the record says so.",
+  "independent_reviewer_counterclaim": "The footnote-scope finding rests on the presence or absence of a single OCR character on four table rows of a damaged 1979 microfiche, and a reviewer would be right to say that is thin evidence for qualifying a filed gap. The defence offered -- that Table 12 shows the study tested exactly the three slopes outside the marked bands, so the pattern is coherent rather than random -- is corroboration by internal consistency, not by reading the marks more clearly, and a reviewer could fairly call that reasoning-to-fit. The session record states the claim as a reading, names the one cheap action that would settle it, and does not promote it; a stricter reviewer would have left it out of GAP-037 entirely until a cleaner scan existed. A second counterclaim: admitting REF-01006 at Co-1 tier 1 on a compliance audit rests on co-production at the team, board and data-collection levels, but the paper never states that any named author is disabled, and a reviewer who reads Co-1's warrant as requiring identified disabled authorship rather than disabled-led process would grade it lower. The co1_provenance field records exactly what the bytes say and explicitly declines to claim more.",
+  "verdict": "DEVIATION-LOGGED"
+}
