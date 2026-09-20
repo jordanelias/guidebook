@@ -36,6 +36,15 @@
 version: 1
 judged_by: session_2026-09-17-research-batch-10-ramp-gradient-threshold
 judged_on: '2026-09-17'
+# 2026-09-20, session_2026-09-20-data-table-visualization-0z7vke: added
+# `convergence_sources` (migration 093) as SYNTHESIS -- it is a junction whose both ends
+# are pointers out of a convergence_assessment row, and a junction cannot sit in a
+# different stage from the row it decomposes (the same reasoning the `disputed:` block
+# below records for extraction_relations); and `amendments` (migration 094) as
+# INFRASTRUCTURE -- it records the repository's own corrections rather than pipeline
+# content, which is why data_migrations and decisions sit there too. Both were caught by
+# this file's OWN falsifier (`pipeline_walk.py --check` reported them unassigned within a
+# minute of the migrations landing), which is the behaviour its header asks for.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -48,6 +57,7 @@ tables:
   base_icf: base
   base_parameters: base
   base_taxonomy_medical: base
+  amendments: infrastructure
   bpc_metadata: infrastructure
   case_studies: evidence
   case_study_outcomes: evidence
@@ -60,6 +70,7 @@ tables:
   connection_targets: synthesis
   connections: synthesis
   convergence_assessment: synthesis
+  convergence_sources: synthesis
   data_migrations: infrastructure
   decisions: infrastructure
   determination_gates: specification

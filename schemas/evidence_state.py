@@ -75,13 +75,25 @@ class ConvergenceAssessment(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     status: ConvergenceStatus
-    clinical_sources: list[str] = []  # REF-IDs of Tier 1–3 sources
-    co1_sources: list[str] = []  # REF-IDs of Co-1 sources
-    co2_sources: list[str] = []  # REF-IDs of Co-2 sources
+    # THE FIVE SOURCE LISTS ARE FROZEN HISTORY, NOT THE LIVE HOME (migration 093).
+    # A ref_id inside a JSON array has no foreign key: the database could not refuse one
+    # that never existed, nor one retired later, and `schema_reference_audit` could not see
+    # it at all. The live home is the `convergence_sources` junction -- (convergence_id,
+    # ref_id, role) with a real FK into evidence_sources and the weighing in the column's
+    # own CHECK. `assess_cell.py` writes the junction and leaves these five NULL;
+    # `validate_evidence_state.py` reads the junction. They are kept here, and in the
+    # table, because seven committed data migrations INSERT them and rule 3 makes those
+    # immutable -- so rule 5's sequence is writer-retire, reader-retire, NULL forward, and
+    # a rebuild from history must still validate the rows written before 2026-09-20.
+    # Default [] rather than None so a row written after 093 validates unchanged.
+    clinical_sources: list[str] = []  # REF-IDs of Tier 1–3 sources (pre-093 rows only)
+    co1_sources: list[str] = []  # REF-IDs of Co-1 sources (pre-093 rows only)
+    co2_sources: list[str] = []  # REF-IDs of Co-2 sources (pre-093 rows only)
     # Directness conditioning (§1.7): how grain-matching conditioned the source set
     # for this cell's design_scale. Anchoring set = (clinical ∪ co1 ∪ co2) − discounted.
-    down_weighted_sources: list[str] = []  # REF-IDs DOWN-WEIGHTED (grain-mismatch; count less)
-    discounted_sources: list[str] = []  # REF-IDs DISCOUNTED / NON-ANCHORING (cannot anchor)
+    # Now carried as roles 'down_weighted' and 'discounted' on the junction.
+    down_weighted_sources: list[str] = []  # DOWN-WEIGHTED (grain-mismatch; pre-093 rows only)
+    discounted_sources: list[str] = []  # DISCOUNTED / NON-ANCHORING (pre-093 rows only)
     rationale: Optional[str] = None  # Required for divergent and single_axis
     synthesis_approach: Optional[str] = None  # Required for divergent
 

@@ -1958,19 +1958,36 @@ def main():
             conv_id += 1
             this_conv = conv_id
             c = det["convergence"]
-            vals = (this_conv, c["status"], json.dumps(c["clinical"]), json.dumps(c["co1"]),
-                    json.dumps(c["co2"]), json.dumps(c["downw"]), json.dumps(c["disc"]),
-                    c["rationale"], c["synth"], STAMP, SESSION)
+            # WRITER-RETIRE, step 2 of migration 093's sequence. The five *_sources columns
+            # are NO LONGER WRITTEN: a ref_id inside a JSON string has no foreign key, so
+            # the database could not refuse a dead ref and `schema_reference_audit` could
+            # not see one. They are not dropped -- seven committed data migrations INSERT
+            # them and rule 3 makes those immutable -- so rule 5's sequence is
+            # writer-retire, reader-retire, NULL forward, and new rows leave them NULL.
+            # The pairing now lands in `convergence_sources`, where the ref_id is an FK and
+            # the weighing is the junction's own CHECK-constrained column.
+            vals = (this_conv, c["status"], c["rationale"], c["synth"], STAMP, SESSION)
             conn.execute(
-                "INSERT INTO convergence_assessment (convergence_id, status, clinical_sources, "
-                "co1_sources, co2_sources, down_weighted_sources, discounted_sources, rationale, "
+                "INSERT INTO convergence_assessment (convergence_id, status, rationale, "
                 "synthesis_approach, created_at, created_by_session) "
-                "VALUES (?,?,?,?,?,?,?,?,?,?,?)", vals)
+                "VALUES (?,?,?,?,?,?)", vals)
             sql_lines.append(
-                "INSERT INTO convergence_assessment (convergence_id, status, clinical_sources, "
-                "co1_sources, co2_sources, down_weighted_sources, discounted_sources, rationale, "
+                "INSERT INTO convergence_assessment (convergence_id, status, rationale, "
                 "synthesis_approach, created_at, created_by_session) VALUES (" +
                 ", ".join(q(v) for v in vals) + ");")
+            # Roles are paired with the determination's own keys rather than re-listed, so a
+            # role added to the CHECK and to determine() cannot be silently dropped here.
+            for _role, _key in (("clinical", "clinical"), ("co1", "co1"), ("co2", "co2"),
+                                ("down_weighted", "downw"), ("discounted", "disc")):
+                for _ref in (c.get(_key) or []):
+                    _cv = (this_conv, _ref, _role, STAMP, SESSION)
+                    conn.execute(
+                        "INSERT INTO convergence_sources (convergence_id, ref_id, role, "
+                        "created_at, created_by_session) VALUES (?,?,?,?,?)", _cv)
+                    sql_lines.append(
+                        "INSERT INTO convergence_sources (convergence_id, ref_id, role, "
+                        "created_at, created_by_session) VALUES (" +
+                        ", ".join(q(v) for v in _cv) + ");")
 
         specification_id += 1
         conf = det["confidence"]
