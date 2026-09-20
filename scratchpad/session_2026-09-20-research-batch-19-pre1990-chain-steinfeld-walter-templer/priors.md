@@ -99,3 +99,33 @@ VOCABULARY defect rather than running cleanly, probability 0.6** — every other
 never-run verb in this repository has (`reattribute-candidate`, `--verbatim-exempt`,
 `add-source` report fields). Stated in advance so a discovered defect counts as a
 prediction rather than as an incident.
+
+---
+
+## P6 — Co-1 pass (ADDENDUM, written 2026-09-20 mid-batch)
+
+**Honest provenance of this prior:** it was NOT in the original pre-registration.
+The batch was framed as an archive-retrieval pass and I did not plan a Co-1 leg;
+`research_batch_dod` R1 failed and named that omission. This prior is written NOW,
+before any Co-1 query has been fired, so it is a real prior for those queries — but
+it is not pre-registration of the batch, and recording it as if it were would be
+the rationalisation DR-2026-05-09 forbids.
+
+**Why a Co-1 pass is substantive here rather than a box to tick.** This batch's whole
+subject is a chain of studies from 1957, 1971 and 1979 in which disabled people were
+the MEASURED SUBJECTS — pulse recovery, completion distance, Borg-scale effort. The
+Co-1 question that chain raises is direct: does the ramp-gradient literature contain
+anything disabled people AUTHORED, as against anything measured on them?
+
+- **P6a — a lived-experience or DPO-authored source stating or contesting a ramp
+  gradient exists and is reachable: probability 0.35.** The corpus already holds two
+  (REF-00989, REF-00993), so the stratum is not empty; the question is whether a
+  third is reachable on this parameter by the routes available.
+- **P6b — the historical (pre-1990) layer contains NO disabled-authored ramp source
+  reachable from here: probability 0.8.** Co-production as a research norm postdates
+  this literature, and the indexes that hold pre-1990 grey material are the same ones
+  GAP-041 records as closed.
+- **P6c — the strongest Co-1 finding available will be about the SILENCE rather than
+  a value** — that the people whose pulse rates set the 1979 thresholds did not write
+  any of it. Probability 0.5. **If that is the result it is a finding, not a null**, and
+  I commit now to recording it as one rather than as a failed search.
