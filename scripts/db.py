@@ -4145,13 +4145,28 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"{ref_id}: --tier {tier} contradicts the ladder, which derives "
                     f"{_derived} from ({_et}, {replacement}).")
         stamp = audit(session)
-        ledger = (row["metadata_integrity_detail"] or "").rstrip()
-        ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
-                   f"Replaced text was: {was!r}")
+        # THE STRUCTURED FACTS GO IN COLUMNS (migration 094). Until today this path had
+        # `field`, `was`, `replacement`, `reason` and the stamp all in hand and concatenated
+        # five of them into a sentence, so "what did this session correct" could not be
+        # asked and no gate could see a correction at all. `amendments` holds them as
+        # columns; `metadata_integrity_detail` keeps the WARRANT only, which is the half
+        # that is genuinely an argument and the half metadata_integrity_audit.py prints.
+        _amend = [(field, was, replacement, reason)]
         if new_tier is not None:
-            ledger += (f" || {stamp['created_at'][:10]} tier CORRECTED {old_tier} -> "
-                       f"{new_tier}, derived from (evidence_type, scope) by the "
-                       f"ratified ladder in the same statement as the scope.")
+            _amend.append(("tier", str(old_tier), str(new_tier),
+                           "Derived from (evidence_type, scope) by the ratified ladder, in "
+                           "the same statement as the scope. The tier is not a free field."))
+        for _f, _wasv, _nowv, _why in _amend:
+            conn.execute(
+                "INSERT INTO amendments (table_name, row_key, field, value_was, value_now, "
+                "reason, amended_at, amended_by_session) VALUES (?,?,?,?,?,?,?,?)",
+                ("evidence_sources", ref_id, _f, _wasv, _nowv, _why,
+                 stamp["created_at"], stamp["created_by_session"]))
+        ledger = (row["metadata_integrity_detail"] or "").rstrip()
+        ledger += f" || {stamp['created_at'][:10]} {field}: {reason}"
+        if new_tier is not None:
+            ledger += (f" || {stamp['created_at'][:10]} tier derived from (evidence_type, "
+                       f"scope) by the ratified ladder in the same statement as the scope.")
         _sets, _vals = [f"{field}=?"], [replacement]
         if new_tier is not None:
             _sets.append("tier=?"); _vals.append(new_tier)
@@ -5932,6 +5947,46 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value)
         if _exempt_note:
             row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
+
+        # THE STRUCTURED LOCATOR, for the regulatory stratum only (added 2026-09-20).
+        # R3 says a quantified value needs a locator, and `source_section` free text
+        # already satisfied every gate that asked -- so migration 053's seventeen
+        # `loc_*` columns went unused by exactly the documents they were built for.
+        # Measured 2026-09-20: of 48 extractions, 41 carried no structured locator, and
+        # the 17 from the regulatory stratum carried ZERO between them. Their pinpoints
+        # were sitting in prose -- `第十九条第二項第四号ロ`, `Advisory 405.2`,
+        # `Artikel 19 §1, 4°` -- where nothing can check that a clause resolves, nothing
+        # can range over a span, and no pinpoint citation can be rendered.
+        #
+        # Scoped by TIER, not by a list of evidence types: CLAUDE.md §6 states T4-T6 as
+        # the regulatory stratum, so the band is read from the source rather than
+        # re-listed here (rule 8 -- a curated list beside the thing it describes is what
+        # drifts). A journal article keeps prose: `source_section` of "Abstract, Results"
+        # is the honest locator for a paper and there is no clause to give.
+        #
+        # The hierarchy columns are read from the live table, never typed out, so a
+        # migration that adds a level is covered without editing this refusal.
+        if value is not None and claim_type != "absent":
+            _tier = conn.execute(
+                "SELECT tier FROM evidence_sources WHERE ref_id=?", (ref,)).fetchone()
+            if _tier and _tier[0] is not None and int(_tier[0]) >= 4:
+                _levels = [c[1] for c in conn.execute(
+                    'PRAGMA table_info("source_value_extractions")')
+                    if c[1].startswith("loc_") and not c[1].endswith("_end")
+                    and c[1] != "loc_note"]
+                _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
+                if not _esc and not any(str(row.get(c) or "").strip() for c in _levels):
+                    raise Refusal(
+                        f"R3: {ref} is tier {int(_tier[0])} -- the regulatory stratum -- and this row "
+                        f"states a value with no structured locator. A code, standard or statute "
+                        f"numbers its own clauses, so give the pinpoint in the hierarchy rather than "
+                        f"in prose: one of {', '.join('--' + c.replace('_', '-') for c in _levels)} "
+                        f"(with --locator-scheme naming the family, e.g. ADA section vs ISO clause). "
+                        f"`--source-section` is still wanted, and stays sufficient on its own for a "
+                        f"journal article, but it cannot be checked, sorted or cited to a pinpoint. "
+                        f"If this instrument genuinely carries no clause numbering, say so with "
+                        f"[UNVERIFIED-QUANT] in --notes. Nothing written.")
+
         if claim_type == "absent" and value is not None:
             raise Refusal(
                 "claim_type='absent' records that the source asserts NO value for this "

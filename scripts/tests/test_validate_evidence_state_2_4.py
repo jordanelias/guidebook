@@ -54,7 +54,11 @@ def schema_ddl():
         # at the ICF registry (owner ruling, "keep the ICF lens, give it real ICF codes"),
         # so a fixture pulling `axes` builds a parent nothing references and misses the one
         # the FK needs. Rule 4: a test fixture is a caller.
-        "  OR name IN ('base_parameters','base_icf','access_needs','base_taxonomy_medical'))")]
+        # `convergence_sources` 2026-09-20: migration 093 moved the five JSON source arrays
+        # into a junction with a real FK per ref_id, and validate_convergence_db reads it
+        # now. A fixture without it builds a schema the validator cannot query at all.
+        "  OR name IN ('base_parameters','base_icf','access_needs','base_taxonomy_medical',"
+        "              'convergence_sources'))")]
     con.close()
     if not live:
         print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",
@@ -143,10 +147,27 @@ def has(errs, *subs):
     return any(all(s in e for s in subs) for e in errs)
 
 
+def conv(c, cid, status, clinical=(), co1=(), co2=(), downw=(), disc=(),
+         rationale=None, synth=None):
+    """Insert a convergence row the way assess_cell.py writes one since migration 093.
+
+    The five *_sources ARRAYS ARE NOT WRITTEN. They are frozen history on rows that
+    predate 093; the live home is the `convergence_sources` junction, which is what
+    validate_convergence_db reads. A test that kept writing the arrays would assert
+    against a shape the writer no longer produces -- rule 4, a fixture is a caller.
+    """
+    c.execute("INSERT INTO convergence_assessment(convergence_id,status,rationale,"
+              "synthesis_approach) VALUES (?,?,?,?)", (cid, status, rationale, synth))
+    for role, refs in (("clinical", clinical), ("co1", co1), ("co2", co2),
+                       ("down_weighted", downw), ("discounted", disc)):
+        for ref in refs:
+            c.execute("INSERT INTO convergence_sources(convergence_id,ref_id,role) "
+                      "VALUES (?,?,?)", (cid, ref, role))
+
+
 # clean baseline — a valid stated cell + convergent convergence (2 axes)
 def clean(c):
-    c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
-              "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')")
+    conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"])
     # governing_refs is required on 'stated' (anti-hallucination gate, §2.7). The
     # baseline predated that rule, so it was not clean once the fixture caught up.
     c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id,governing_refs) "
@@ -157,8 +178,7 @@ check("clean stated+convergent → 0 errors", run(clean) == [])
 # the rule postdates this file, and the clean baseline was the only 'stated' row.
 check("stated without governing_refs caught (anti-hallucination gate)",
       has(run(lambda c: (
-          c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
-                    "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]')"),
+          conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"]),
           c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id) "
                     "VALUES (1,7,'MOB','stated','population',1)"))),
           "stated", "governing_refs"))
@@ -190,26 +210,30 @@ check("stated without convergence caught",
 
 # convergent with <2 axes
 check("convergent with <2 axes caught",
-      has(run(lambda c: c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources) "
-                                  "VALUES (1,'convergent','[\"REF-1\"]')")), "convergent", "≥2 evidence axes"))
+      has(run(lambda c: conv(c, 1, 'convergent', clinical=["REF-1"])),
+          "convergent", "≥2 evidence axes"))
 
 # single_axis with >1 axis
 check("single_axis with >1 axis caught",
-      has(run(lambda c: c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources,rationale) "
-                                  "VALUES (1,'single_axis','[\"REF-1\"]','[\"REF-2\"]','clinical only')")), "single_axis", "axes present"))
+      has(run(lambda c: conv(c, 1, 'single_axis', clinical=["REF-1"], co1=["REF-2"],
+                             rationale='clinical only')), "single_axis", "axes present"))
 
 # divergent without rationale + synthesis_approach
 check("divergent without rationale/synthesis caught",
-      has(run(lambda c: c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
-                                  "VALUES (1,'divergent','[\"REF-1\"]','[\"REF-2\"]')")), "divergent", "rationale"))
+      has(run(lambda c: conv(c, 1, 'divergent', clinical=["REF-1"], co1=["REF-2"])),
+          "divergent", "rationale"))
 
 # directness (§1.7): a discounted source also listed as anchoring
 check("discounted source also anchoring caught (§1.7)",
-      has(run(lambda c: c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources,discounted_sources) "
-                                  "VALUES (1,'convergent','[\"REF-1\"]','[\"REF-2\"]','[\"REF-1\"]')")), "discounted_sources also listed as anchoring"))
+      has(run(lambda c: conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"],
+                             disc=["REF-1"])), "discounted_sources also listed as anchoring"))
 
 # malformed JSON column
 check("malformed JSON source list caught",
+      # RAW ON PURPOSE. The malformed-array check now applies ONLY to rows that predate
+      # migration 093 and still carry the arrays; a row written after it has NULL there and
+      # is validated from the junction. So this case must write the array directly -- using
+      # conv() would produce a post-093 row and stop exercising the branch at all.
       has(run(lambda c: c.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources,co1_sources) "
                                   "VALUES (1,'convergent','not json','[\"REF-2\"]')")), "not a valid JSON array"))
 

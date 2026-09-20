@@ -154,11 +154,20 @@ already in the failure state when that comment was written. It is now derived
 (`dbcore.writable_tables(conn)`), and the burden of proof moved to the exclusions.*
 → **PARTLY ENFORCED.** `dbcore.check_values()` holds it for vocabularies, `identifier_floor_audit`
 for identifiers, `dbcore.writable_tables()` for the capture set, `adjudication_integrity` for
-tiers. **As a general rule you are the gate**, and the known outstanding violations are: twelve
-argparse `choices=` lists that duplicate a column's CHECK, `add-source --ref-id` and
-`amend-source --tier` asking for values the machine can derive, `validate_pydantic_schemas`'
-curated `MODEL_TABLE_MAP`, and the hand-written "N today" counts throughout
-`governance/check-registry.yaml`.
+tiers. **As a general rule you are the gate**, and the known outstanding violations are: the
+argparse `choices=` lists that duplicate a column's CHECK — **count them, never quote the count**:
+`grep -c 'choices=' scripts/db.py` against
+`grep -c 'choices=dbcore\.\(schema_choices\|check_values\)' scripts/db.py`, and
+`derived_not_curated_audit.py` reports how many of the remainder mirror a live CHECK —
+`add-source --ref-id` and `amend-source --tier` asking for values the machine can derive,
+`validate_pydantic_schemas`' curated `MODEL_TABLE_MAP`, and the hand-written "N today" counts
+throughout `governance/check-registry.yaml`.
+*(This sentence read "twelve argparse `choices=` lists" until 2026-09-20, when the live figures were
+51 `choices=`, 24 of them derived from the schema, 14 literal lists of which 11 are `[0,1]` or the
+tier band, leaving 3 string literals and 2 that mirror a live CHECK. Twelve against two. The rule
+against hand-typed counts carried a hand-typed count, for the third time this file records — see
+rule 7a's own "eleven … three of them BLOCKING" correction. The remedy is the same one rule 7a
+gives: write the command, not the result.)*
 
 ---
 

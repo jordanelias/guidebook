@@ -1,0 +1,1024 @@
+<meta charset="utf-8">
+<title>Guidebook Data Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F3F6F4; --surface:#FFFFFF; --surface2:#E9EEEB; --surface3:#DFE6E2;
+  --ink:#151F1C; --ink2:#48584F; --ink3:#78877F; --rule:#D2DAD5;
+  --accent:#0E5F51; --accent-soft:#D9EAE5;
+  --warn:#9A6B12; --warn-soft:#F6EBD4; --crit:#B23F2A; --crit-soft:#F7E2DC;
+  --s-base:#4F7488; --s-research:#1F7E80; --s-evidence:#2F8F5F;
+  --s-judgment:#7D9433; --s-synthesis:#C08820; --s-specification:#C2603A;
+  --s-render:#A64C64; --s-infrastructure:#78837E; --s-internal:#97A19C;
+  --s-unassigned:#B23F2A;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --r:3px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E1513; --surface:#161E1B; --surface2:#1D2724; --surface3:#26322E;
+  --ink:#E4ECE8; --ink2:#A2B1AB; --ink3:#71807A; --rule:#2A3733;
+  --accent:#4ECFB2; --accent-soft:#12302A;
+  --warn:#E0B052; --warn-soft:#332A14; --crit:#EE8067; --crit-soft:#37201A;
+  --s-base:#7FA5BA; --s-research:#3FB3B4; --s-evidence:#57BE8A;
+  --s-judgment:#A9C158; --s-synthesis:#E3B152; --s-specification:#E48A60;
+  --s-render:#D0798F; --s-infrastructure:#93A09A; --s-internal:#6F7B76;
+  --s-unassigned:#EE8067;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1513; --surface:#161E1B; --surface2:#1D2724; --surface3:#26322E;
+  --ink:#E4ECE8; --ink2:#A2B1AB; --ink3:#71807A; --rule:#2A3733;
+  --accent:#4ECFB2; --accent-soft:#12302A;
+  --warn:#E0B052; --warn-soft:#332A14; --crit:#EE8067; --crit-soft:#37201A;
+  --s-base:#7FA5BA; --s-research:#3FB3B4; --s-evidence:#57BE8A;
+  --s-judgment:#A9C158; --s-synthesis:#E3B152; --s-specification:#E48A60;
+  --s-render:#D0798F; --s-infrastructure:#93A09A; --s-internal:#6F7B76;
+  --s-unassigned:#EE8067;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;
+  line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600;letter-spacing:-0.01em}
+a{color:var(--accent)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink3);font-weight:500}
+
+/* ---- shell ---- */
+.wrap{max-width:1500px;margin:0 auto;padding:0 16px;padding-block:0 56px}
+header.top{border-bottom:1px solid var(--rule);background:var(--surface);
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:40}
+.topin{max-width:1500px;margin:0 auto;padding:14px 16px;display:flex;gap:18px;
+  align-items:baseline;flex-wrap:wrap}
+.topin h1{font-size:19px}
+.fingerprint{font-family:var(--mono);font-size:11px;color:var(--ink3);
+  display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
+.fingerprint b{color:var(--ink2);font-weight:500}
+
+nav.rail{display:flex;gap:2px;border-bottom:1px solid var(--rule);
+  background:var(--surface);overflow-x:auto;scrollbar-width:none}
+nav.rail::-webkit-scrollbar{display:none}
+.railin{max-width:1500px;margin:0 auto;padding:0 16px;display:flex;gap:2px;width:100%}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;
+  color:var(--ink2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;padding:11px 13px;cursor:pointer;white-space:nowrap;
+  font-weight:500}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* ---- tiles ---- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);margin:20px 0 0}
+.tile{background:var(--surface);padding:12px 14px}
+.tile .v{font-family:var(--mono);font-size:24px;font-weight:600;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.15}
+.tile .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);margin-top:3px}
+.tile .sub{font-size:11px;color:var(--ink2);margin-top:5px}
+
+.note{font-size:13px;color:var(--ink2);max-width:74ch;margin:16px 0 0}
+.section{margin-top:30px}
+.section > h2{font-size:15px;margin-bottom:3px}
+.section > p.lede{font-size:13px;color:var(--ink2);max-width:78ch;margin:0 0 14px}
+
+/* ---- stage chrome ---- */
+.stagehead{display:flex;align-items:center;gap:9px;margin:22px 0 7px;
+  padding-bottom:5px;border-bottom:1px solid var(--rule)}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.stagename{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:600}
+.stagemeta{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:auto;
+  font-variant-numeric:tabular-nums}
+
+/* ---- table rows ---- */
+.trow{display:grid;grid-template-columns:minmax(190px,1.5fr) 74px minmax(110px,1fr) minmax(150px,1.4fr) auto;
+  gap:12px;align-items:center;padding:7px 9px;border:1px solid transparent;
+  border-radius:var(--r);cursor:pointer;text-align:left;width:100%;background:none;
+  font:inherit;color:inherit}
+.trow:hover{background:var(--surface);border-color:var(--rule)}
+.trow:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.trow.is-empty .tname{color:var(--ink3)}
+.tname{font-family:var(--mono);font-size:12.5px;font-weight:500;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.tcount{font-family:var(--mono);font-size:12.5px;text-align:right;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.tcount.z{color:var(--ink3)}
+.bar{height:5px;background:var(--surface3);border-radius:1px;overflow:hidden}
+.bar > i{display:block;height:100%;border-radius:1px}
+.wchips{display:flex;gap:4px;flex-wrap:wrap}
+.flags{display:flex;gap:4px;justify-content:flex-end}
+.chip{font-family:var(--mono);font-size:10px;padding:1.5px 5px;border-radius:2px;
+  border:1px solid var(--rule);color:var(--ink2);white-space:nowrap;background:var(--surface2)}
+.chip.cli{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.chip.script{background:var(--surface2)}
+.chip.mig{background:transparent;color:var(--ink3)}
+.chip.none{background:var(--crit-soft);border-color:transparent;color:var(--crit)}
+.flag{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;padding:1.5px 5px;
+  border-radius:2px;text-transform:uppercase;font-weight:500;white-space:nowrap}
+.flag.empty{background:var(--surface2);color:var(--ink3)}
+.flag.unw{background:var(--crit-soft);color:var(--crit)}
+.flag.nw{background:var(--warn-soft);color:var(--warn)}
+
+/* ---- controls ---- */
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+input[type=search],select{font-family:var(--mono);font-size:12px;padding:6px 9px;
+  border:1px solid var(--rule);border-radius:var(--r);background:var(--surface);
+  color:var(--ink);min-width:0}
+input[type=search]{flex:1 1 200px;max-width:320px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);
+  outline-offset:1px}
+.toggle{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);
+  font-size:11px;color:var(--ink2);cursor:pointer;user-select:none}
+.btn{appearance:none;font-family:var(--mono);font-size:11px;padding:6px 10px;
+  border:1px solid var(--rule);border-radius:var(--r);background:var(--surface);
+  color:var(--ink2);cursor:pointer}
+.btn:hover{color:var(--ink);border-color:var(--ink3)}
+.btn[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);
+  border-color:transparent}
+
+/* ---- data table ---- */
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);
+  border-radius:var(--r)}
+table.data{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11.5px}
+table.data th{position:sticky;top:0;background:var(--surface2);text-align:left;
+  padding:6px 9px;border-bottom:1px solid var(--rule);font-weight:600;
+  white-space:nowrap;font-size:10.5px;letter-spacing:.04em;z-index:2}
+table.data th .ty{color:var(--ink3);font-weight:400;font-size:9.5px}
+table.data td{padding:5px 9px;border-bottom:1px solid var(--rule);vertical-align:top;
+  max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+table.data tr:last-child td{border-bottom:0}
+table.data tbody tr:hover{background:var(--surface2)}
+table.data tbody tr.sel{background:var(--accent-soft)}
+td.null{color:var(--ink3);font-style:italic}
+td.pk{font-weight:600}
+td.fk{color:var(--accent)}
+.walkbtn{appearance:none;border:1px solid var(--rule);background:var(--surface);
+  color:var(--ink2);font-family:var(--mono);font-size:10px;padding:1px 6px;
+  border-radius:2px;cursor:pointer}
+.walkbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---- drawer ---- */
+.drawer{position:fixed;inset:0;background:rgba(8,14,12,.46);z-index:100;
+  display:flex;justify-content:flex-end}
+.drawer[hidden]{display:none!important}
+.panel{background:var(--bg);width:min(980px,100%);height:100%;overflow-y:auto;
+  border-left:1px solid var(--rule);padding:0 0 60px}
+.panelhead{position:sticky;top:0;background:var(--surface);z-index:5;
+  border-bottom:1px solid var(--rule);padding:14px 20px;display:flex;
+  gap:12px;align-items:flex-start;flex-wrap:wrap}
+.panelhead h2{font-family:var(--mono);font-size:16px;font-weight:600}
+.panelbody{padding:0 20px}
+.closex{margin-left:auto;appearance:none;background:none;border:1px solid var(--rule);
+  color:var(--ink2);font-family:var(--mono);font-size:13px;line-height:1;
+  padding:5px 9px;border-radius:var(--r);cursor:pointer}
+.closex:hover{color:var(--ink);border-color:var(--ink3)}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;font-size:12.5px;
+  margin:14px 0}
+.kv dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);padding-top:2px}
+.kv dd{margin:0;font-family:var(--mono);font-size:12px}
+
+.subhead{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink3);font-weight:600;
+  margin:22px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--rule)}
+
+.callout{border-left:2px solid var(--crit);background:var(--crit-soft);
+  padding:9px 12px;font-size:12.5px;margin:12px 0;border-radius:0 var(--r) var(--r) 0}
+.callout.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.callout.ok{border-left-color:var(--accent);background:var(--accent-soft)}
+.callout b{font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;display:block;margin-bottom:2px}
+
+/* ---- walk ---- */
+.graphbox{border:1px solid var(--rule);background:var(--surface);border-radius:var(--r);
+  overflow-x:auto}
+.graphbox svg{display:block;min-width:900px}
+.nodelabel{font-family:var(--mono);font-size:9.5px;fill:var(--ink2);
+  paint-order:stroke;stroke:var(--surface);stroke-width:2.6px;stroke-linejoin:round}
+.nodelabel.on{fill:var(--ink);font-weight:600}
+.colhead{font-family:var(--mono);font-size:10px;letter-spacing:.1em;font-weight:600}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;
+  color:var(--ink2);margin:10px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.lswatch{width:15px;height:2px;display:inline-block}
+
+.edgerow{display:grid;grid-template-columns:minmax(230px,2fr) minmax(200px,1.6fr) 60px 60px 60px auto;
+  gap:10px;padding:6px 9px;align-items:center;font-family:var(--mono);font-size:11.5px;
+  border-bottom:1px solid var(--rule)}
+.edgerow.head{font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink3);font-weight:600;border-bottom:1px solid var(--rule)}
+.edgerow span.r{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---- walker ---- */
+.walkgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.walkcard{border:1px solid var(--rule);background:var(--surface);border-radius:var(--r);
+  padding:11px 13px}
+.walkcard h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3);margin:0 0 8px;font-weight:600}
+.reln{border-top:1px solid var(--rule);padding:8px 0 0;margin-top:8px}
+.reln:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.relhead{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px}
+.relrow{font-family:var(--mono);font-size:11px;color:var(--ink2);padding:3px 0 3px 10px;
+  border-left:1px solid var(--rule);cursor:pointer;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.relrow:hover{color:var(--ink);border-left-color:var(--accent)}
+.crumbs{display:flex;gap:5px;flex-wrap:wrap;align-items:center;font-family:var(--mono);
+  font-size:11px;margin:10px 0}
+.crumb{background:var(--surface2);border:1px solid var(--rule);border-radius:2px;
+  padding:2px 7px;cursor:pointer;color:var(--ink2)}
+.crumb:hover{color:var(--ink)}
+.crumb.now{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+
+/* ---- matrix ---- */
+.matrix{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);
+  border-radius:var(--r)}
+table.mx{border-collapse:collapse;font-family:var(--mono);font-size:11px}
+table.mx th{padding:5px 7px;text-align:left;font-weight:500;white-space:nowrap;
+  background:var(--surface2);border-bottom:1px solid var(--rule);font-size:10px}
+table.mx th.rot{height:112px;vertical-align:bottom;padding:0 0 6px}
+table.mx th.rot > div{writing-mode:vertical-rl;transform:rotate(180deg);
+  font-size:9.5px;letter-spacing:.03em;max-height:104px;overflow:hidden}
+table.mx td{padding:0;border-bottom:1px solid var(--rule);text-align:center}
+table.mx td.lab{text-align:left;padding:4px 8px;white-space:nowrap;font-size:10.5px;
+  position:sticky;left:0;background:var(--surface);border-right:1px solid var(--rule);
+  max-width:300px;overflow:hidden;text-overflow:ellipsis}
+table.mx th.lab{position:sticky;left:0;z-index:3}
+.cell{width:19px;height:19px;display:block;margin:0 auto;border-radius:1px}
+
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);
+  font-size:12px;color:var(--ink3);max-width:80ch}
+.foot code{font-family:var(--mono);font-size:11px;background:var(--surface2);
+  padding:1px 5px;border-radius:2px;color:var(--ink2)}
+
+@media(max-width:820px){
+  .trow{grid-template-columns:1fr 66px;gap:7px}
+  .trow .bar,.trow .wchips{display:none}
+  .walkgrid{grid-template-columns:1fr}
+  .fingerprint{margin-left:0}
+  .edgerow{grid-template-columns:1fr 54px 54px;font-size:10.5px}
+  .edgerow > span:nth-child(2){grid-column:1/-1;color:var(--ink3)}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="topin">
+    <h1>Guidebook Data Atlas</h1>
+    <div class="fingerprint" id="fp"></div>
+  </div>
+</header>
+<nav class="rail"><div class="railin" id="tabs" role="tablist"></div></nav>
+
+<div class="wrap">
+  <main id="main"></main>
+  <div class="foot" id="foot"></div>
+</div>
+
+<div class="drawer" id="drawer" hidden>
+  <div class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Table detail"></div>
+</div>
+
+<script>
+const ATLAS = /*__ATLAS_PAYLOAD__*/null;
+const D = ATLAS, M = D.meta;
+const T = Object.fromEntries(D.tables.map(t => [t.name, t]));
+const STAGES = M.stage_order;
+const fmt = n => n == null ? '—' : n.toLocaleString('en');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sc = s => `var(--s-${s})`;
+
+/* ---------- derived once, never typed ---------- */
+const maxRows = Math.max(...D.tables.map(t => t.rows));
+const liveEdges = D.edges.filter(e => e.nn > 0);
+const declaredIdle = D.edges.filter(e => e.nn === 0);
+const deadEdges = D.edges.filter(e => e.dead && e.child > 0);
+const orphanEdges = D.edges.filter(e => e.orph > 0);
+const realW = t => t.writers.filter(w => w.kind !== 'fixture');
+const noWriter = D.tables.filter(t => !realW(t).length && !t.internal);
+const unwritable = D.tables.filter(t => t.unwritable.length);
+const unwRoots = Object.keys(M.unwritable_roots || {});
+const emptyT = D.tables.filter(t => t.rows === 0);
+const byStage = s => D.tables.filter(t => t.stage === s);
+const stageRows = s => byStage(s).reduce((a, t) => a + t.rows, 0);
+const totalResolved = liveEdges.reduce((a, e) => a + e.res, 0);
+const totalPointers = liveEdges.reduce((a, e) => a + e.nn, 0);
+
+/* value indexes for the row walker, built lazily */
+const IDX = {};
+function idx(table, col) {
+  const k = table + '.' + col;
+  if (IDX[k]) return IDX[k];
+  const t = T[table], ci = t.cols.findIndex(c => c.n === col), m = new Map();
+  if (ci >= 0) (D.data[table] || []).forEach((r, i) => {
+    const v = r[ci]; if (v == null) return;
+    const key = String(v);
+    if (!m.has(key)) m.set(key, []);
+    m.get(key).push(i);
+  });
+  return IDX[k] = m;
+}
+const colIdx = (table, col) => T[table].cols.findIndex(c => c.n === col);
+function label(table, i) {
+  const t = T[table], r = (D.data[table] || [])[i];
+  if (!r) return '?';
+  const pk = t.pk.length ? t.pk : [t.cols[0].n];
+  const head = pk.map(p => r[colIdx(table, p)]).join(' · ');
+  const nice = t.cols.find(c => /name|title|label|canonical|slug|query|statement|value/i.test(c.n)
+    && typeof r[colIdx(table, c.n)] === 'string' && r[colIdx(table, c.n)]);
+  return head + (nice ? ' — ' + String(r[colIdx(table, nice.n)]).slice(0, 72) : '');
+}
+
+/* ---------- chrome ---------- */
+document.getElementById('fp').innerHTML = `
+  <span><b>${esc(M.db)}</b></span>
+  <span>sha <b>${esc(M.sha256)}</b></span>
+  <span>schema <b>v${M.user_version}</b></span>
+  <span>as of <b>${esc(M.asof || '—')}</b></span>`;
+
+const VIEWS = [
+  ['atlas', 'Atlas'], ['walk', 'Walkability'], ['batches', 'Batches'],
+  ['writers', 'Writers'], ['views', 'Views']
+];
+const tabs = document.getElementById('tabs');
+tabs.innerHTML = VIEWS.map(([id, lab]) =>
+  `<button class="tab" role="tab" id="tab-${id}" aria-selected="false" data-v="${id}">${lab}</button>`).join('');
+tabs.addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (b) show(b.dataset.v);
+});
+
+function show(v) {
+  [...tabs.children].forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === v)));
+  document.getElementById('main').innerHTML = RENDER[v]();
+  WIRE[v] && WIRE[v]();
+  window.scrollTo({ top: 0 });
+}
+
+/* ---------- tiles ---------- */
+function tiles(list) {
+  return `<div class="tiles">${list.map(t => `<div class="tile">
+    <div class="v" ${t.tone ? `style="color:${t.tone}"` : ''}>${t.v}</div>
+    <div class="k">${t.k}</div>${t.sub ? `<div class="sub">${t.sub}</div>` : ''}
+  </div>`).join('')}</div>`;
+}
+
+/* ---------- ATLAS ---------- */
+const RENDER = {}, WIRE = {};
+
+RENDER.atlas = () => {
+  let h = tiles([
+    { v: fmt(M.rows), k: 'rows held', sub: `across ${M.tables} tables` },
+    { v: fmt(D.tables.length - emptyT.length), k: 'tables with rows', sub: `${emptyT.length} still empty` },
+    { v: fmt(D.sessions.length), k: 'batches', sub: 'distinct writing sessions' },
+    { v: fmt(M.edges), k: 'declared pointers', sub: `${liveEdges.length} carry rows` },
+    { v: fmt(noWriter.length), k: 'tables no tool writes', tone: noWriter.length ? 'var(--crit)' : '', sub: 'derived from the scripts tree' },
+    { v: fmt(unwRoots.length), k: 'empty parents blocking writes', tone: unwRoots.length ? 'var(--crit)' : '', sub: `${fmt(unwritable.length)} child tables wait on them` }
+  ]);
+
+  h += `<div class="section"><h2>Every table, in spine order</h2>
+    <p class="lede">The seven pipeline stages in the order the spine runs them, then the tables that
+    record the repository's own operation. Row count, the tools that can write it, and what is
+    blocking it. Select any table to read its rows and walk its pointers.</p>
+    <div class="controls">
+      <input type="search" id="q" placeholder="filter tables, columns, writers…" aria-label="Filter tables">
+      <button class="btn" id="f-nonempty" aria-pressed="false">only tables with rows</button>
+      <button class="btn" id="f-blocked" aria-pressed="false">only blocked</button>
+    </div><div id="atlaslist"></div></div>`;
+  return h;
+};
+
+function atlasList() {
+  const q = (document.getElementById('q')?.value || '').toLowerCase();
+  const nonEmpty = document.getElementById('f-nonempty')?.getAttribute('aria-pressed') === 'true';
+  const blocked = document.getElementById('f-blocked')?.getAttribute('aria-pressed') === 'true';
+  let out = '';
+  for (const s of STAGES) {
+    let ts = byStage(s);
+    if (!ts.length) continue;
+    ts = ts.filter(t => {
+      if (nonEmpty && !t.rows) return false;
+      if (blocked && !(t.unwritable.length || !t.writers.length)) return false;
+      if (!q) return true;
+      return t.name.includes(q) || t.cols.some(c => c.n.includes(q))
+        || t.writers.some(w => w.tool.toLowerCase().includes(q));
+    });
+    if (!ts.length) continue;
+    ts.sort((a, b) => b.rows - a.rows || a.name.localeCompare(b.name));
+    const rows = ts.reduce((a, t) => a + t.rows, 0);
+    out += `<div class="stagehead"><i class="dot" style="background:${sc(s)}"></i>
+      <span class="stagename" style="color:${sc(s)}">${s}</span>
+      <span class="stagemeta">${ts.length} tables · ${fmt(rows)} rows</span></div>`;
+    out += ts.map(t => {
+      const real = t.writers.filter(x => x.kind !== 'fixture');
+      const w = real.length
+        ? [...new Set(t.writers.filter(x => x.kind === 'cli').map(x => x.tool))].slice(0, 2)
+            .map(x => `<span class="chip cli">${esc(x)}</span>`).join('')
+          + (real.some(x => x.kind === 'script')
+            ? `<span class="chip script">${[...new Set(real.filter(x => x.kind === 'script').map(x => x.tool.split('/').pop()))].slice(0, 1)}</span>` : '')
+          + (real.some(x => x.kind === 'migration') && !real.some(x => x.kind === 'cli')
+            ? `<span class="chip mig">migration only</span>` : '')
+        : `<span class="chip none">no writer</span>`;
+      const flags = [
+        t.unwritable.length ? `<span class="flag unw" title="NOT NULL FK into a table that holds no rows — over-reports where one call inserts parent and child together">blocked</span>` : '',
+        !t.rows && !t.unwritable.length ? `<span class="flag empty">empty</span>` : '',
+        !real.length && !t.internal && !t.unwritable.length ? `<span class="flag nw">no writer</span>` : ''
+      ].join('');
+      const pct = maxRows ? Math.max(t.rows ? 1.5 : 0, (t.rows / maxRows) * 100) : 0;
+      return `<button class="trow ${t.rows ? '' : 'is-empty'}" data-t="${t.name}">
+        <span class="tname">${esc(t.name)}</span>
+        <span class="tcount ${t.rows ? '' : 'z'}">${fmt(t.rows)}</span>
+        <span class="bar"><i style="width:${pct}%;background:${sc(s)}"></i></span>
+        <span class="wchips">${w}</span>
+        <span class="flags">${flags}</span></button>`;
+    }).join('');
+  }
+  document.getElementById('atlaslist').innerHTML = out || `<p class="note">Nothing matches that filter.</p>`;
+}
+
+WIRE.atlas = () => {
+  atlasList();
+  document.getElementById('q').addEventListener('input', atlasList);
+  for (const id of ['f-nonempty', 'f-blocked']) {
+    document.getElementById(id).addEventListener('click', e => {
+      const b = e.currentTarget;
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      atlasList();
+    });
+  }
+  document.getElementById('atlaslist').addEventListener('click', e => {
+    const b = e.target.closest('.trow'); if (b) openTable(b.dataset.t);
+  });
+};
+
+/* ---------- WALKABILITY ---------- */
+RENDER.walk = () => {
+  const rate = totalPointers ? Math.round(totalResolved / totalPointers * 1000) / 10 : 0;
+  let h = tiles([
+    { v: fmt(M.edges), k: 'declared pointers', sub: 'foreign keys in the schema' },
+    { v: fmt(liveEdges.length), k: 'carrying rows', sub: `${declaredIdle.length} declared but unused` },
+    { v: rate + '%', k: 'pointers that resolve', tone: rate === 100 ? 'var(--accent)' : 'var(--crit)', sub: `${fmt(totalResolved)} of ${fmt(totalPointers)} values` },
+    { v: fmt(orphanEdges.length), k: 'orphan-bearing edges', tone: orphanEdges.length ? 'var(--crit)' : 'var(--accent)', sub: 'values pointing at nothing' },
+    { v: fmt(deadEdges.length), k: 'pointers into empty', tone: deadEdges.length ? 'var(--crit)' : '', sub: 'target table holds no rows' },
+    { v: fmt(D.views.filter(v => v.crosses).length), k: 'cross-stage views', sub: `of ${D.views.length} views` }
+  ]);
+
+  h += `<div class="section"><h2>The graph</h2>
+    <p class="lede">Every table placed in its pipeline stage, every foreign key drawn between them.
+    A solid line carries rows today; a faint line is declared in the schema but no row uses it yet;
+    a red line points into a table that holds nothing, so the walk stops there.</p>
+    <div class="controls">
+      <button class="btn" id="g-live" aria-pressed="true">only edges carrying rows</button>
+      <button class="btn" id="g-nonempty" aria-pressed="true">hide empty tables</button>
+    </div>
+    <div class="graphbox" id="graph"></div>
+    <div class="legend">
+      <span><i class="lswatch" style="background:var(--accent)"></i> carries rows</span>
+      <span><i class="lswatch" style="background:var(--ink3);opacity:.5"></i> declared, unused</span>
+      <span><i class="lswatch" style="background:var(--crit)"></i> target table empty</span>
+    </div></div>`;
+
+  h += `<div class="section"><h2>Walk a row</h2>
+    <p class="lede">Pick a table and a row, then follow its pointers outward. Upward is what this row
+    points at; downward is everything that points back at it. This is the walk rule 5 is about —
+    a fact stays in one place and is reached, never copied.</p>
+    <div class="controls">
+      <select id="wt" aria-label="Table to walk"></select>
+      <select id="wr" aria-label="Row to walk"></select>
+    </div>
+    <div class="crumbs" id="crumbs"></div>
+    <div id="walkout"></div></div>`;
+
+  h += `<div class="section"><h2>Pointer integrity, edge by edge</h2>
+    <p class="lede">Measured against the live rows, not declared. <b>Set</b> counts rows whose pointer
+    is filled in; <b>lands</b> counts those that reach a real parent row; <b>orphan</b> is the difference.</p>
+    <div class="controls"><input type="search" id="eq" placeholder="filter edges…" aria-label="Filter edges"></div>
+    <div class="scroll"><div id="edgelist"></div></div></div>`;
+  return h;
+};
+
+function drawGraph() {
+  const onlyLive = document.getElementById('g-live').getAttribute('aria-pressed') === 'true';
+  const hideEmpty = document.getElementById('g-nonempty').getAttribute('aria-pressed') === 'true';
+  let edges = D.edges.filter(e => e.src !== e.dst);
+  if (onlyLive) edges = edges.filter(e => e.nn > 0 || (e.dead && e.child > 0));
+  const keep = new Set();
+  edges.forEach(e => { keep.add(e.src); keep.add(e.dst); });
+  const cols = STAGES.map(s => ({
+    s, ts: byStage(s).filter(t => (!hideEmpty || t.rows > 0) && keep.has(t.name))
+                     .sort((a, b) => b.rows - a.rows)
+  })).filter(c => c.ts.length);
+
+  const CW = 190, RH = 21, TOP = 40, PAD = 14;
+  const H = TOP + Math.max(...cols.map(c => c.ts.length)) * RH + 30;
+  const W = cols.length * CW + PAD * 2;
+  const pos = {};
+  cols.forEach((c, ci) => c.ts.forEach((t, ri) => {
+    pos[t.name] = { x: PAD + ci * CW, y: TOP + ri * RH + 10, w: CW - 30, s: c.s, ci };
+  }));
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img"
+    aria-label="Foreign key graph by pipeline stage">`;
+  cols.forEach((c, ci) => {
+    svg += `<text class="colhead" x="${PAD + ci * CW}" y="22" fill="${sc(c.s)}">${c.s.toUpperCase()}</text>
+      <line x1="${PAD + ci * CW}" y1="28" x2="${PAD + ci * CW + CW - 30}" y2="28"
+        stroke="${sc(c.s)}" stroke-width="1.5" opacity=".55"/>`;
+  });
+  const drawn = edges.filter(e => pos[e.src] && pos[e.dst]);
+  for (const e of drawn) {
+    const a = pos[e.src], b = pos[e.dst];
+    const ax = a.x + (b.ci >= a.ci ? a.w : 0), bx = b.x + (b.ci > a.ci ? 0 : b.w);
+    const dx = Math.max(24, Math.abs(bx - ax) * .45);
+    const col = e.dead ? 'var(--crit)' : (e.nn > 0 ? 'var(--accent)' : 'var(--ink3)');
+    const op = e.dead ? .75 : (e.nn > 0 ? .42 : .16);
+    svg += `<path d="M${ax},${a.y} C${ax + dx},${a.y} ${bx - dx},${b.y} ${bx},${b.y}"
+      fill="none" stroke="${col}" stroke-width="${e.dead ? 1.4 : 1}" opacity="${op}"
+      data-src="${e.src}" data-dst="${e.dst}" class="ed"><title>${esc(e.src)}.${esc(e.col)} → ${esc(e.dst)}.${esc(e.dcol)} — ${fmt(e.nn)} set, ${fmt(e.res)} land</title></path>`;
+  }
+  for (const [n, p] of Object.entries(pos)) {
+    const t = T[n];
+    svg += `<g class="node" data-t="${n}" style="cursor:pointer">
+      <rect x="${p.x - 3}" y="${p.y - 8}" width="${p.w + 6}" height="16" fill="transparent"/>
+      <circle cx="${p.x}" cy="${p.y}" r="${t.rows ? 3.2 : 2}" fill="${t.rows ? sc(p.s) : 'none'}"
+        stroke="${sc(p.s)}" stroke-width="1"/>
+      <text class="nodelabel" x="${p.x + 7}" y="${p.y + 3.2}">${esc(n.length > 23 ? n.slice(0, 22) + '…' : n)}</text>
+      <title>${esc(n)} — ${fmt(t.rows)} rows</title></g>`;
+  }
+  svg += `</svg>`;
+  document.getElementById('graph').innerHTML = svg;
+  document.getElementById('graph').querySelectorAll('.node').forEach(g =>
+    g.addEventListener('click', () => openTable(g.dataset.t)));
+}
+
+function edgeList() {
+  const q = (document.getElementById('eq')?.value || '').toLowerCase();
+  const es = D.edges.filter(e => !q || (e.src + e.col + e.dst + e.dcol).toLowerCase().includes(q))
+    .sort((a, b) => b.nn - a.nn || a.src.localeCompare(b.src));
+  document.getElementById('edgelist').innerHTML =
+    `<div class="edgerow head"><span>from</span><span>to</span><span class="r">set</span>
+      <span class="r">lands</span><span class="r">orphan</span><span></span></div>` +
+    es.map(e => {
+      const state = e.orph ? `<span class="flag unw">orphans</span>`
+        : e.dead && e.child ? `<span class="flag unw">target empty</span>`
+        : e.nn ? `<span class="flag" style="background:var(--accent-soft);color:var(--accent)">walkable</span>`
+        : `<span class="flag empty">unused</span>`;
+      return `<div class="edgerow">
+        <span><b style="color:${sc(e.sstage)}">${esc(e.src)}</b>.${esc(e.col)}</span>
+        <span style="color:var(--ink3)">→ <b style="color:${sc(e.dstage)}">${esc(e.dst)}</b>.${esc(e.dcol)}</span>
+        <span class="r">${fmt(e.nn)}</span><span class="r">${fmt(e.res)}</span>
+        <span class="r" style="${e.orph ? 'color:var(--crit)' : 'color:var(--ink3)'}">${fmt(e.orph)}</span>
+        <span style="text-align:right">${state}</span></div>`;
+    }).join('');
+}
+
+/* row walker */
+let WALK = { t: null, i: 0, trail: [] };
+function walkTables() {
+  return D.tables.filter(t => t.rows > 0 && !t.internal)
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+function fillRows() {
+  const t = WALK.t, sel = document.getElementById('wr');
+  const rows = D.data[t] || [];
+  const cap = Math.min(rows.length, 400);
+  sel.innerHTML = rows.slice(0, cap).map((_, i) =>
+    `<option value="${i}">${esc(label(t, i).slice(0, 84))}</option>`).join('')
+    + (rows.length > cap ? `<option disabled>… ${fmt(rows.length - cap)} more — open the table to reach them</option>` : '');
+  sel.value = String(Math.min(WALK.i, cap - 1));
+}
+function renderWalk() {
+  const t = WALK.t, i = WALK.i, tm = T[t], row = (D.data[t] || [])[i];
+  if (!row) { document.getElementById('walkout').innerHTML = ''; return; }
+
+  const ups = [];
+  for (const c of tm.cols) {
+    if (!c.fk) continue;
+    const v = row[colIdx(t, c.n)];
+    if (v == null) { ups.push({ col: c.n, to: c.fk[0], state: 'null' }); continue; }
+    const hits = idx(c.fk[0], c.fk[1]).get(String(v)) || [];
+    ups.push({ col: c.n, to: c.fk[0], tcol: c.fk[1], v, hits, state: hits.length ? 'ok' : 'orphan' });
+  }
+  const downs = [];
+  for (const e of D.edges) {
+    if (e.dst !== t || e.src === t) continue;
+    const v = row[colIdx(t, e.dcol)];
+    if (v == null) continue;
+    const hits = idx(e.src, e.col).get(String(v)) || [];
+    if (hits.length) downs.push({ from: e.src, col: e.col, hits });
+  }
+
+  const cells = tm.cols.map(c => {
+    const v = row[colIdx(t, c.n)];
+    return `<div style="font-family:var(--mono);font-size:11px;padding:2px 0;
+      border-bottom:1px solid var(--rule);display:flex;gap:10px">
+      <span style="color:var(--ink3);min-width:170px">${esc(c.n)}</span>
+      <span style="${v == null ? 'color:var(--ink3);font-style:italic' : ''}">${v == null ? 'null' : esc(String(v)).slice(0, 220)}</span></div>`;
+  }).join('');
+
+  document.getElementById('walkout').innerHTML = `
+    <div class="walkgrid">
+      <div class="walkcard"><h4>Points at — ${ups.filter(u => u.state === 'ok').length} of ${ups.length} resolve</h4>
+        ${ups.length ? ups.map(u => u.state === 'null'
+          ? `<div class="reln"><div class="relhead" style="color:var(--ink3)">${esc(u.col)} → ${esc(u.to)}</div>
+             <div style="font-family:var(--mono);font-size:11px;color:var(--ink3);padding-left:10px">not set</div></div>`
+          : `<div class="reln"><div class="relhead">${esc(u.col)} → ${esc(u.to)}</div>
+             ${u.hits.length ? u.hits.slice(0, 4).map(h =>
+               `<div class="relrow" data-t="${u.to}" data-i="${h}">${esc(label(u.to, h))}</div>`).join('')
+             : `<div style="font-family:var(--mono);font-size:11px;color:var(--crit);padding-left:10px">orphan — ${esc(String(u.v))} reaches nothing</div>`}</div>`
+        ).join('') : `<p class="note" style="margin:0">This table points at nothing — it is a root.</p>`}
+      </div>
+      <div class="walkcard"><h4>Pointed at by — ${downs.reduce((a, d) => a + d.hits.length, 0)} rows</h4>
+        ${downs.length ? downs.map(d => `<div class="reln">
+          <div class="relhead">${esc(d.from)}.${esc(d.col)} — ${fmt(d.hits.length)}</div>
+          ${d.hits.slice(0, 4).map(h => `<div class="relrow" data-t="${d.from}" data-i="${h}">${esc(label(d.from, h))}</div>`).join('')}
+          ${d.hits.length > 4 ? `<div style="font-family:var(--mono);font-size:10.5px;color:var(--ink3);padding-left:10px">+${fmt(d.hits.length - 4)} more</div>` : ''}
+        </div>`).join('') : `<p class="note" style="margin:0">Nothing points back at this row yet.</p>`}
+      </div>
+    </div>
+    <div class="walkcard" style="margin-top:14px"><h4>${esc(t)} — this row in full</h4>${cells}</div>`;
+
+  document.getElementById('crumbs').innerHTML = WALK.trail.map((s, n) =>
+    `<span class="crumb ${n === WALK.trail.length - 1 ? 'now' : ''}" data-n="${n}">${esc(s.t)} · ${esc(label(s.t, s.i).slice(0, 34))}</span>`).join('<span style="color:var(--ink3)">→</span>');
+
+  document.querySelectorAll('#walkout .relrow').forEach(el => el.addEventListener('click', () => {
+    goWalk(el.dataset.t, +el.dataset.i, true);
+  }));
+  document.querySelectorAll('#crumbs .crumb').forEach(el => el.addEventListener('click', () => {
+    const n = +el.dataset.n, s = WALK.trail[n];
+    WALK.trail = WALK.trail.slice(0, n + 1);
+    WALK.t = s.t; WALK.i = s.i;
+    document.getElementById('wt').value = s.t; fillRows();
+    document.getElementById('wr').value = String(s.i);
+    renderWalk();
+  }));
+}
+function goWalk(t, i, push) {
+  WALK.t = t; WALK.i = i;
+  if (push) WALK.trail.push({ t, i }); else WALK.trail = [{ t, i }];
+  if (WALK.trail.length > 8) WALK.trail = WALK.trail.slice(-8);
+  document.getElementById('wt').value = t; fillRows();
+  document.getElementById('wr').value = String(i);
+  renderWalk();
+}
+
+WIRE.walk = () => {
+  for (const id of ['g-live', 'g-nonempty'])
+    document.getElementById(id).addEventListener('click', e => {
+      const b = e.currentTarget;
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      drawGraph();
+    });
+  drawGraph();
+  edgeList();
+  document.getElementById('eq').addEventListener('input', edgeList);
+
+  const wt = document.getElementById('wt');
+  wt.innerHTML = walkTables().map(t => `<option value="${t.name}">${t.name} (${fmt(t.rows)})</option>`).join('');
+  // Open on the deepest thing the pipeline has produced, so the first look shows a
+  // real walk rather than an empty control.
+  const start = T['specifications']?.rows ? 'specifications' : walkTables()[0].name;
+  wt.value = start;
+  WALK.t = start; WALK.i = 0; fillRows();
+  goWalk(start, 0, false);
+  wt.addEventListener('change', () => { WALK.i = 0; goWalk(wt.value, 0, false); });
+  document.getElementById('wr').addEventListener('change', e => goWalk(WALK.t, +e.target.value, false));
+};
+
+/* ---------- BATCHES ---------- */
+RENDER.batches = () => {
+  const ss = D.sessions;
+  const attributed = ss.filter(s => !s.id.startsWith('—')).reduce((a, s) => a + s.rows, 0);
+  const unattr = ss.filter(s => s.id.startsWith('—')).reduce((a, s) => a + s.rows, 0);
+  const research = ss.filter(s => /research-batch/.test(s.id));
+  let h = tiles([
+    { v: fmt(ss.length), k: 'batches on record', sub: 'distinct created_by_session values' },
+    { v: fmt(research.length), k: 'research batches', sub: 'sessions named research-batch-NN' },
+    { v: fmt(attributed), k: 'rows attributed', sub: 'carry a writing session' },
+    { v: fmt(unattr), k: 'rows unattributed', tone: unattr ? 'var(--warn)' : '', sub: 'session column null' }
+  ]);
+  h += `<div class="section"><h2>What each batch wrote</h2>
+    <p class="lede">One column per table that carries a session stamp, one row per batch, newest
+    batches first. Cell shade is the share of that batch's output — so a batch that touched one
+    stage only, or reached across the whole spine, reads at a glance.</p>
+    <div class="controls">
+      <input type="search" id="bq" placeholder="filter batches…" aria-label="Filter batches">
+      <button class="btn" id="b-research" aria-pressed="false">research batches only</button>
+    </div>
+    <div class="matrix" id="mx"></div></div>`;
+  return h;
+};
+
+function matrix() {
+  const q = (document.getElementById('bq')?.value || '').toLowerCase();
+  const only = document.getElementById('b-research').getAttribute('aria-pressed') === 'true';
+  let ss = D.sessions.filter(s => (!q || s.id.toLowerCase().includes(q))
+    && (!only || /research-batch/.test(s.id)));
+  ss = ss.slice().sort((a, b) => b.id.localeCompare(a.id));
+  const cols = [];
+  for (const s of STAGES) for (const t of byStage(s).sort((a, b) => b.rows - a.rows))
+    if (Object.keys(t.sessions).length) cols.push(t);
+  const used = cols.filter(t => ss.some(s => t.sessions[s.id]));
+  if (!ss.length || !used.length) {
+    document.getElementById('mx').innerHTML = `<p class="note" style="padding:14px">Nothing matches.</p>`;
+    return;
+  }
+  let h = `<table class="mx"><thead><tr><th class="lab">batch</th>` +
+    used.map(t => `<th class="rot" style="color:${sc(t.stage)}"><div>${esc(t.name)}</div></th>`).join('') +
+    `<th style="text-align:right">rows</th></tr></thead><tbody>`;
+  for (const s of ss) {
+    h += `<tr><td class="lab" title="${esc(s.id)}">${esc(s.id.replace(/^session_/, ''))}</td>`;
+    for (const t of used) {
+      const n = t.sessions[s.id] || 0;
+      const a = n ? Math.min(1, .22 + Math.log10(n + 1) / 2.6) : 0;
+      h += `<td>${n ? `<i class="cell" style="background:${sc(t.stage)};opacity:${a.toFixed(2)}"
+        title="${esc(s.id)} → ${esc(t.name)}: ${fmt(n)} rows"></i>` : ''}</td>`;
+    }
+    h += `<td style="text-align:right;padding:0 8px;color:var(--ink2)">${fmt(s.rows)}</td></tr>`;
+  }
+  document.getElementById('mx').innerHTML = h + `</tbody></table>`;
+}
+WIRE.batches = () => {
+  matrix();
+  document.getElementById('bq').addEventListener('input', matrix);
+  document.getElementById('b-research').addEventListener('click', e => {
+    const b = e.currentTarget;
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    matrix();
+  });
+};
+
+/* ---------- WRITERS ---------- */
+RENDER.writers = () => {
+  const tools = {};
+  for (const t of D.tables) for (const w of t.writers) {
+    const k = w.kind + '|' + w.tool;
+    (tools[k] ||= { tool: w.tool, kind: w.kind, tables: new Set(), ops: new Set() });
+    tools[k].tables.add(t.name); tools[k].ops.add(w.op);
+  }
+  const list = Object.values(tools);
+  const cli = list.filter(t => t.kind === 'cli').sort((a, b) => a.tool.localeCompare(b.tool));
+  const scripts = list.filter(t => t.kind === 'script').sort((a, b) => b.tables.size - a.tables.size);
+  const migs = list.filter(t => t.kind === 'migration');
+  const migTables = new Set(); migs.forEach(m => m.tables.forEach(t => migTables.add(t)));
+  const migOnly = D.tables.filter(t =>
+    realW(t).length && realW(t).every(w => w.kind === 'migration'));
+
+  let h = tiles([
+    { v: fmt(cli.length), k: 'db.py subcommands', sub: 'that write at least one table' },
+    { v: fmt(D.tables.filter(t => t.writers.some(w => w.kind === 'cli')).length), k: 'tables a CLI reaches', sub: `of ${M.tables}` },
+    { v: fmt(migOnly.length), k: 'migration-only tables', sub: 'no subcommand reaches them' },
+    { v: fmt(noWriter.length), k: 'tables nothing writes', tone: noWriter.length ? 'var(--crit)' : 'var(--accent)', sub: 'no CLI, script or migration' }
+  ]);
+
+  h += `<div class="section">
+    <div class="callout ${noWriter.length ? '' : 'ok'}"><b>Why this panel exists</b>
+    <code style="font-family:var(--mono)">dbcore.WRITABLE_TABLES</code> was a hand-kept list of which
+    tables a session may write, and it went blind eight times — once capturing a row written through
+    the sanctioned CLI as nothing at all. Nothing here is kept by hand: the writers below are parsed
+    out of the scripts tree and the migrations, then intersected with the live schema. A table with an
+    empty writer column is a finding, not an omission.</div></div>`;
+
+  h += `<div class="section"><h2>db.py subcommands</h2>
+    <p class="lede">The operator-facing write surface. Each subcommand with every table it touches and
+    how.</p><div class="scroll"><div style="padding:2px 0">` +
+    cli.map(t => `<div class="edgerow" style="grid-template-columns:minmax(200px,1fr) 2fr">
+      <span><b>${esc(t.tool)}</b></span>
+      <span>${[...t.tables].sort().map(x => `<span class="chip" style="cursor:pointer" data-t="${x}">${esc(x)}</span>`).join(' ')}</span>
+    </div>`).join('') + `</div></div></div>`;
+
+  h += `<div class="section"><h2>Scripts that write directly</h2>
+    <p class="lede">Modules that reach the database without a subcommand of their own — the migration
+    emitter and applier, the verifiers, the audit tooling.</p><div class="scroll"><div>` +
+    scripts.map(t => `<div class="edgerow" style="grid-template-columns:minmax(220px,1fr) 2fr">
+      <span><b>${esc(t.tool)}</b></span>
+      <span>${[...t.tables].sort().map(x => `<span class="chip" style="cursor:pointer" data-t="${x}">${esc(x)}</span>`).join(' ')}</span>
+    </div>`).join('') + `</div></div></div>`;
+
+  h += `<div class="section"><h2>Reached only by migration</h2>
+    <p class="lede">These hold rows or can hold rows, but no subcommand and no script writes them —
+    the only way in is a committed SQL migration.</p>
+    <div class="scroll"><div>` + (migOnly.length ? migOnly.map(t =>
+      `<div class="edgerow" style="grid-template-columns:minmax(220px,1fr) 80px 2fr">
+        <span><b style="color:${sc(t.stage)}">${esc(t.name)}</b></span>
+        <span class="r">${fmt(t.rows)}</span>
+        <span style="color:var(--ink3)">${[...new Set(t.writers.map(w => w.tool))].slice(0, 5).join(', ')}${t.writers.length > 5 ? ` +${t.writers.length - 5}` : ''}</span>
+      </div>`).join('') : `<p class="note" style="padding:12px">None.</p>`) + `</div></div></div>`;
+
+  const fixOnly = D.tables.filter(t => !realW(t).length
+    && t.writers.some(w => w.kind === 'fixture'));
+  if (fixOnly.length) h += `<div class="section"><h2>Written only by a selftest</h2>
+    <p class="lede">Code does insert into these — but only inside a <code>selftest</code> or
+    <code>test_*</code> function that builds its own schema in memory. That is not a way into the
+    canonical database, so they are counted as having no writer.</p>
+    <div class="scroll"><div>` + fixOnly.map(t =>
+      `<div class="edgerow" style="grid-template-columns:minmax(220px,1fr) 2fr">
+        <span><b style="color:${sc(t.stage)}">${esc(t.name)}</b></span>
+        <span style="color:var(--ink3)">${[...new Set(t.writers.filter(w => w.kind === 'fixture').map(w => w.tool))].join(', ')}</span>
+      </div>`).join('') + `</div></div></div>`;
+
+  h += `<div class="section"><h2>Nothing writes these</h2>
+    <p class="lede">No subcommand, no script, no migration inserts into them. Most are also unwritable
+    for a second reason — a NOT NULL foreign key into a table that holds no rows — so the tool would
+    be refused at INSERT even if one existed.</p>
+    <div class="scroll"><div>` + noWriter.map(t =>
+      `<div class="edgerow" style="grid-template-columns:minmax(220px,1fr) 1fr">
+        <span><b style="color:${sc(t.stage)}">${esc(t.name)}</b>
+          <span style="color:var(--ink3)"> · ${esc(t.stage)}</span></span>
+        <span style="text-align:right">${t.unwritable.length
+          ? t.unwritable.map(u => `<span class="flag unw">${esc(u.col)} → empty ${esc(u.into)}</span>`).join(' ')
+          : `<span class="flag nw">no writer</span>`}</span>
+      </div>`).join('') + `</div></div></div>`;
+  return h;
+};
+WIRE.writers = () => {
+  document.getElementById('main').addEventListener('click', e => {
+    const c = e.target.closest('[data-t]'); if (c) openTable(c.dataset.t);
+  });
+};
+
+/* ---------- VIEWS ---------- */
+RENDER.views = () => {
+  const cross = D.views.filter(v => v.crosses);
+  let h = tiles([
+    { v: fmt(D.views.length), k: 'views', sub: 'in the live schema' },
+    { v: fmt(cross.length), k: 'cross-stage views', sub: 'these are the pointers' },
+    { v: fmt(D.views.filter(v => v.rows === 0).length), k: 'rendering nothing', tone: 'var(--warn)', sub: 'zero rows today' }
+  ]);
+  h += `<div class="section">
+    <div class="callout warn"><b>Read before deleting one</b>
+    A view joining two stages is what "point, do not copy" means in SQL, so it is the most protected
+    object in the schema. A view that renders zero rows looks identical to a deleted one from the
+    data — migration 064 exists because a sweep missed <code>v_item_provenance</code> and a
+    byte-exact diff called it clean. The stages each view spans are derived from the tables its own
+    SQL names.</div></div>`;
+  h += `<div class="section"><h2>Every view, and what it spans</h2><div class="scroll"><div>
+    <div class="edgerow head" style="grid-template-columns:minmax(230px,1fr) 70px minmax(200px,1fr) 2fr">
+      <span>view</span><span class="r">rows</span><span>spans</span><span>reads</span></div>` +
+    D.views.slice().sort((a, b) => (b.crosses - a.crosses) || a.name.localeCompare(b.name)).map(v =>
+      `<div class="edgerow" style="grid-template-columns:minmax(230px,1fr) 70px minmax(200px,1fr) 2fr">
+        <span><b>${esc(v.name)}</b></span>
+        <span class="r" style="${v.rows ? '' : 'color:var(--warn)'}">${fmt(v.rows)}</span>
+        <span>${v.stages.map(s => `<span class="chip" style="color:${sc(s)}">${esc(s)}</span>`).join(' ') || '<span style="color:var(--ink3)">base only</span>'}</span>
+        <span style="color:var(--ink3);overflow:hidden;text-overflow:ellipsis">${v.tables.slice(0, 6).map(esc).join(', ')}${v.tables.length > 6 ? ` +${v.tables.length - 6}` : ''}</span>
+      </div>`).join('') + `</div></div></div>`;
+  return h;
+};
+
+/* ---------- table drawer ---------- */
+const drawer = document.getElementById('drawer'), panel = document.getElementById('panel');
+let LIMIT = 200, CURT = null, LAST = null;
+function openTable(name) {
+  if (!T[name]) return;
+  CURT = name; LIMIT = 200;
+  LAST = document.activeElement;
+  drawer.hidden = false;
+  document.body.style.overflow = 'hidden';
+  renderPanel();
+  panel.querySelector('.closex')?.focus();
+}
+function closeDrawer() {
+  drawer.hidden = true; document.body.style.overflow = '';
+  LAST && LAST.focus && LAST.focus();
+}
+drawer.addEventListener('click', e => { if (e.target === drawer) closeDrawer(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !drawer.hidden) closeDrawer();
+});
+
+function renderPanel() {
+  const t = T[CURT], rows = D.data[CURT] || [];
+  const ins = D.edges.filter(e => e.dst === CURT), outs = D.edges.filter(e => e.src === CURT);
+  const sess = Object.entries(t.sessions).sort((a, b) => b[1] - a[1]);
+
+  let h = `<div class="panelhead">
+    <div><div class="eyebrow" style="color:${sc(t.stage)}">${esc(t.stage)}</div>
+      <h2>${esc(t.name)}</h2></div>
+    <button class="closex" aria-label="Close">✕ close</button></div><div class="panelbody">`;
+
+  h += `<div class="tiles" style="margin-top:14px">
+    <div class="tile"><div class="v">${fmt(t.rows)}</div><div class="k">rows</div></div>
+    <div class="tile"><div class="v">${fmt(t.cols.length)}</div><div class="k">columns</div></div>
+    <div class="tile"><div class="v">${fmt(outs.length)}</div><div class="k">points at</div></div>
+    <div class="tile"><div class="v">${fmt(ins.length)}</div><div class="k">pointed at by</div></div>
+    <div class="tile"><div class="v">${fmt(sess.length)}</div><div class="k">batches</div></div></div>`;
+
+  if (t.unwritable.length) h += `<div class="callout"><b>Blocked by an empty parent</b>
+    ${t.unwritable.map(u => `<code>${esc(u.col)}</code> is NOT NULL and points into
+    <code>${esc(u.into)}</code>, which holds no rows.`).join(' ')}
+    An INSERT is normally refused by the foreign key, never at migration time — so the schema looks
+    healthy, a rebuild reproduces it exactly, and every gate stays green. <b>This probe over-reports:</b>
+    it asks only whether the parent is empty right now, so where one <code>db.py</code> call inserts
+    parent and child in the same transaction the write succeeds anyway. Only a child whose parent
+    nothing fills is actually dead.</div>`;
+  const rw = realW(t), fx = t.writers.filter(w => w.kind === 'fixture');
+  if (!rw.length && !t.internal) h += `<div class="callout warn"><b>No writer found</b>
+    Nothing in the scripts tree or the migrations inserts into this table.${fx.length
+      ? ` The only code that writes it is a selftest fixture building its own schema in memory,
+         which is not a way into the database.` : ''}</div>`;
+
+  h += `<div class="subhead">Written by</div>`;
+  if (t.writers.length) {
+    const g = {};
+    for (const w of t.writers) (g[w.kind] ||= []).push(w);
+    for (const k of ['cli', 'script', 'migration', 'fixture']) {
+      if (!g[k]) continue;
+      const items = k === 'migration'
+        ? [`${g[k].length} migration${g[k].length > 1 ? 's' : ''}: ` +
+           g[k].slice(0, 6).map(w => w.tool).join(', ') + (g[k].length > 6 ? ` +${g[k].length - 6} more` : '')]
+        : [...new Set(g[k].map(w => `${w.tool} · ${[...new Set(t.writers.filter(x => x.tool === w.tool).map(x => x.op))].join('/')}`))];
+      const klab = k === 'cli' ? 'command line'
+        : k === 'fixture' ? 'selftest fixture — not a way into the database' : k;
+      h += `<div style="margin-bottom:9px"><div class="eyebrow" style="margin-bottom:4px;${k === 'fixture' ? 'color:var(--warn)' : ''}">${klab}</div>
+        ${items.map(i => `<div class="mono" style="font-size:11.5px;color:var(--ink2);padding:1px 0">${esc(i)}</div>`).join('')}</div>`;
+    }
+  } else h += `<p class="note" style="margin:0">Nothing.</p>`;
+
+  if (sess.length) {
+    h += `<div class="subhead">Batches that wrote rows here</div><div>` +
+      sess.map(([s, n]) => `<div class="edgerow" style="grid-template-columns:1fr 70px;border-bottom:1px solid var(--rule)">
+        <span>${esc(s.replace(/^session_/, ''))}</span><span class="r">${fmt(n)}</span></div>`).join('') + `</div>`;
+  }
+
+  if (outs.length || ins.length) {
+    h += `<div class="subhead">Pointers</div>`;
+    if (outs.length) h += `<div class="eyebrow" style="margin:6px 0 3px">out</div>` + outs.map(e =>
+      `<div class="mono" style="font-size:11.5px;padding:2px 0;color:var(--ink2)">
+        ${esc(e.col)} → <b style="color:${sc(e.dstage)}">${esc(e.dst)}</b>.${esc(e.dcol)}
+        <span style="color:var(--ink3)"> — ${fmt(e.nn)} set, ${fmt(e.res)} land${e.dead ? ', <span style="color:var(--crit)">target empty</span>' : ''}</span></div>`).join('');
+    if (ins.length) h += `<div class="eyebrow" style="margin:10px 0 3px">in</div>` + ins.map(e =>
+      `<div class="mono" style="font-size:11.5px;padding:2px 0;color:var(--ink2)">
+        <b style="color:${sc(e.sstage)}">${esc(e.src)}</b>.${esc(e.col)} → ${esc(e.dcol)}
+        <span style="color:var(--ink3)"> — ${fmt(e.nn)} set</span></div>`).join('');
+  }
+
+  h += `<div class="subhead">Columns</div><div class="scroll"><table class="data">
+    <thead><tr><th>column</th><th>type</th><th>constraints</th><th>vocabulary from its own CHECK</th></tr></thead><tbody>` +
+    t.cols.map(c => `<tr><td class="${c.pk ? 'pk' : ''}${c.fk ? ' fk' : ''}">${esc(c.n)}</td>
+      <td style="color:var(--ink3)">${esc(c.t || '—')}</td>
+      <td style="color:var(--ink3)">${[c.pk ? 'pk' : '', c.nn ? 'not null' : '',
+        c.fk ? `→ ${esc(c.fk[0])}.${esc(c.fk[1])}` : ''].filter(Boolean).join(' · ') || '—'}</td>
+      <td style="white-space:normal">${c.vocab ? c.vocab.map(v => `<span class="chip">${esc(v)}</span>`).join(' ') : '<span style="color:var(--ink3)">—</span>'}</td></tr>`).join('')
+    + `</tbody></table></div>`;
+
+  h += `<div class="subhead">Rows</div>`;
+  if (!rows.length) h += `<p class="note" style="margin:0">This table holds no rows.</p>`;
+  else {
+    h += `<div class="controls"><input type="search" id="rq" placeholder="filter ${fmt(rows.length)} rows…" aria-label="Filter rows"></div>
+      <div class="scroll" id="rowbox"></div><div id="more"></div>`;
+  }
+  h += `</div>`;
+  panel.innerHTML = h;
+  panel.querySelector('.closex').addEventListener('click', closeDrawer);
+  if (rows.length) {
+    drawRows();
+    panel.querySelector('#rq').addEventListener('input', () => { LIMIT = 200; drawRows(); });
+  }
+  panel.scrollTop = 0;
+}
+
+function drawRows() {
+  const t = T[CURT], rows = D.data[CURT] || [];
+  const q = (panel.querySelector('#rq')?.value || '').toLowerCase();
+  const hits = [];
+  rows.forEach((r, i) => {
+    if (!q || r.some(v => v != null && String(v).toLowerCase().includes(q))) hits.push(i);
+  });
+  const shown = hits.slice(0, LIMIT);
+  panel.querySelector('#rowbox').innerHTML = `<table class="data">
+    <thead><tr><th></th>` + t.cols.map(c =>
+      `<th>${esc(c.n)}<br><span class="ty">${esc(c.t || '')}</span></th>`).join('') + `</tr></thead><tbody>` +
+    shown.map(i => `<tr><td><button class="walkbtn" data-i="${i}" title="Walk from this row">walk</button></td>` +
+      t.cols.map((c, ci) => {
+        const v = rows[i][ci];
+        const cls = v == null ? 'null' : (c.pk ? 'pk' : (c.fk ? 'fk' : ''));
+        const s = v == null ? 'null' : String(v);
+        return `<td class="${cls}" title="${esc(s).slice(0, 400)}">${esc(s.length > 90 ? s.slice(0, 88) + '…' : s)}</td>`;
+      }).join('') + `</tr>`).join('') + `</tbody></table>`;
+  panel.querySelector('#more').innerHTML = hits.length > shown.length
+    ? `<button class="btn" id="more-b" style="margin-top:10px">show ${fmt(Math.min(500, hits.length - shown.length))} more — ${fmt(hits.length - shown.length)} remaining</button>`
+    : `<p class="note" style="font-family:var(--mono);font-size:11px">${fmt(hits.length)} of ${fmt(rows.length)} rows${q ? ' match' : ''}.</p>`;
+  const mb = panel.querySelector('#more-b');
+  mb && mb.addEventListener('click', () => { LIMIT += 500; drawRows(); });
+  panel.querySelectorAll('.walkbtn').forEach(b => b.addEventListener('click', () => {
+    const i = +b.dataset.i, name = CURT;
+    closeDrawer(); show('walk');
+    setTimeout(() => { document.getElementById('wt').value = name; goWalk(name, i, false); }, 0);
+  }));
+}
+
+/* ---------- foot ---------- */
+document.getElementById('foot').innerHTML = `
+  Every figure on this page is read out of <code>${esc(M.db)}</code> at generation time — no count,
+  table list, edge list, writer list or batch list is written into the page by hand. Regenerate with
+  <code>python3 tools/data_atlas.py</code>; <code>--check</code> exits non-zero when the committed
+  copy has drifted from the database. Table→stage assignment is read from
+  <code>governance/stage-map.yaml</code>, judged ${esc(M.judged_on)} by
+  <code>${esc(M.judged_by.replace(/^session_/, ''))}</code>, and every live table is checked against
+  it rather than defaulted. Stage ids come from <code>governance/pipeline-contract.yaml</code>.
+  Database ${fmt(M.bytes)} bytes, sha256 <code>${esc(M.sha256)}</code>.`;
+
+show('atlas');
+</script>

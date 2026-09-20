@@ -290,16 +290,16 @@ def validate_cell_states_db(conn, gap_ids: set):
         # Tier-3-alone stated threshold (DR-2026-07-12-tier3-stated-threshold.md)
         if state == "stated" and conv_id is not None:
             conv_row = conn.execute(
-                "SELECT status, clinical_sources, co1_sources, co2_sources "
-                "FROM convergence_assessment WHERE convergence_id = ?",
+                "SELECT status FROM convergence_assessment WHERE convergence_id = ?",
                 (conv_id,),
             ).fetchone()
             if conv_row:
-                status, clinical, co1, co2 = conv_row
+                status = conv_row[0]
                 if status == "single_axis":
-                    clinical_refs = _jlist(clinical)
-                    co1_refs, co2_refs = _jlist(co1), _jlist(co2)
-                    if clinical_refs and not co1_refs and not co2_refs and not _bad_json(clinical_refs):
+                    _r = _conv_roles(conn).get(conv_id, {})
+                    clinical_refs = _r.get("clinical", [])
+                    co1_refs, co2_refs = _r.get("co1", []), _r.get("co2", [])
+                    if clinical_refs and not co1_refs and not co2_refs:
                         tiers = _ref_tiers(conn, clinical_refs)
                         if tiers and all(t == 3 for t in tiers.values()):
                             errors.append(
@@ -310,6 +310,20 @@ def validate_cell_states_db(conn, gap_ids: set):
     return errors, n
 
 
+def _conv_roles(conn) -> dict:
+    """{convergence_id: {role: [ref_id, ...]}} from the junction migration 093 created.
+
+    ONE access path for one fact. The arrays on `convergence_assessment` are frozen
+    history (rule 5's "NULL forward"): a row written after 093 carries NULL in all five,
+    so a reader still parsing them sees [] and its gate stops firing without going red.
+    """
+    out: dict = {}
+    for cid, role, ref in conn.execute(
+            "SELECT convergence_id, role, ref_id FROM convergence_sources"):
+        out.setdefault(cid, {}).setdefault(role, []).append(ref)
+    return out
+
+
 def validate_convergence_db(conn):
     """Validate convergence_assessment rows against §3.2 + the §1.7 directness
     conditioning. Returns (errors, n)."""
@@ -317,14 +331,20 @@ def validate_convergence_db(conn):
     cols = ("convergence_id,status,clinical_sources,co1_sources,co2_sources,"
             "down_weighted_sources,discounted_sources,rationale,synthesis_approach")
     n = 0
-    for (cid, status, clinical, co1, co2, downw, disc, rationale, synth) in \
+    # READER-RETIRE, step 3 of migration 093's sequence. The source sets come from
+    # `convergence_sources`, where every ref_id is a foreign key into evidence_sources and
+    # the weighing is a CHECK-constrained column, instead of from five JSON strings that
+    # nothing could validate. Read once and grouped, rather than a query per row.
+    _roles = _conv_roles(conn)
+    for (cid, status, j_clinical, j_co1, j_co2, j_downw, j_disc, rationale, synth) in \
             conn.execute(f"SELECT {cols} FROM convergence_assessment"):
         n += 1
         tag = f"convergence {cid}"
-        clinical, co1, co2 = _jlist(clinical), _jlist(co1), _jlist(co2)
-        downw, disc = _jlist(downw), _jlist(disc)
+        _r = _roles.get(cid, {})
+        clinical, co1, co2 = _r.get("clinical", []), _r.get("co1", []), _r.get("co2", [])
+        downw, disc = _r.get("down_weighted", []), _r.get("discounted", [])
         anchoring = set(clinical) | set(co1) | set(co2)
-        axes = sum(1 for lst in (clinical, co1, co2) if lst and not _bad_json(lst))
+        axes = sum(1 for lst in (clinical, co1, co2) if lst)
         # rationale / axis requirements (§3.2)
         if status == "divergent":
             if not rationale:
@@ -343,11 +363,15 @@ def validate_convergence_db(conn):
         overlap = set(disc) & anchoring
         if overlap:
             errors.append(f"{tag}: discounted_sources also listed as anchoring: {sorted(overlap)}")
-        # malformed JSON columns
-        for name, lst in [("clinical_sources", clinical), ("co1_sources", co1),
-                          ("co2_sources", co2), ("down_weighted_sources", downw),
-                          ("discounted_sources", disc)]:
-            if _bad_json(lst):
+        # The five arrays are FROZEN HISTORY, not a second live copy (rule 5's "NULL
+        # forward"): rows written before migration 093 still carry them and are still
+        # checked for well-formedness here, because seven committed data migrations wrote
+        # them and a rebuild reproduces exactly that. A row written after 093 carries NULL
+        # in all five and is validated entirely from the junction above.
+        for name, raw in (("clinical_sources", j_clinical), ("co1_sources", j_co1),
+                          ("co2_sources", j_co2), ("down_weighted_sources", j_downw),
+                          ("discounted_sources", j_disc)):
+            if raw is not None and _bad_json(_jlist(raw)):
                 errors.append(f"{tag}: {name} is not a valid JSON array")
     return errors, n
 
