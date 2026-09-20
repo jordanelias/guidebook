@@ -302,6 +302,46 @@ def fetch(url, session, purpose="", timeout=40, stamp=None, ref_id=None):
         return None
 
 
+def derive(payload, session, source_artefact, purpose="", ref_id=None, kind=None,
+           stamp=None):
+    """Persist an artefact DERIVED from bytes already on disk, not fetched from a host.
+
+    WHY THIS IS SEPARATE FROM fetch(). fetch() promises the artefact is "the bytes the
+    caller actually received". A reference list read out of a scanned PDF was never
+    received from anywhere -- it was produced HERE, by an extraction that can be wrong.
+    Writing it through fetch() with a pretend URL would buy mining_screen.py an input at
+    the cost of the one promise this module exists to keep, and the repository has
+    already been bitten by a derived figure wearing a retrieved figure's clothes.
+
+    So a derived artefact is marked as one, in three ways a reader cannot miss:
+      * `derived: true` and a `provenance` block naming the extractor and its input;
+      * `url` carries a `derived:` scheme, which is not a URL and cannot be re-fetched;
+      * `status` is null -- there was no HTTP transaction -- which _failed_retrievals()
+        already reads as "not a failure" rather than inventing a code for it.
+
+    The caller supplies `payload` as a dict. It is stored verbatim, so whatever
+    uncertainty the extraction carries must be IN it (per-entry damage flags, an
+    explicit `ocr_damaged`), not in a sentence about it somewhere else.
+    """
+    d = LOG_ROOT / _session_stem(session)
+    d.mkdir(parents=True, exist_ok=True)
+    body = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
+    sha = hashlib.sha256(body).hexdigest()
+    artefact = f"{sha[:16]}.json"
+    (d / artefact).write_bytes(body)
+    uri = f"derived:{kind or 'extraction'}/{source_artefact}"
+    with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
+        fh.write(json.dumps({
+            "retrieved_at": stamp or _now(), "url": uri, "purpose": purpose,
+            "ref_id": ref_id, "sha256": sha, "bytes": len(body),
+            "exit": 0, "status": None, "artefact": artefact,
+            "content_type": "application/json",
+            "derived": True, "derived_from": source_artefact,
+            "derivation_kind": kind or "extraction",
+        }, ensure_ascii=False) + "\n")
+    return d / artefact
+
+
 def _session_stem(session):
     """Accept both spellings of a session id.
 

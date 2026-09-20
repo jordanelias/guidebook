@@ -48,7 +48,19 @@ def compile_screen(spec):
     return re.compile(r"\b(" + "|".join(spec["terms"]) + r")", re.I)
 
 
-def _title(ref):
+def _title(ref, reading="unstructured"):
+    """The string a screen matches against.
+
+    `reading` selects WHICH transcription of a damaged entry is scored. For a Crossref
+    deposit there is only one and the argument does nothing. For a list extracted from a
+    scanned page there are two, and the difference between them is the measurement's
+    uncertainty rather than a detail: `unstructured` substitutes no letters, `inferred`
+    is the best reading with brackets on what was supplied. Scoring only the second
+    would let a generous transcription manufacture a yield, which is the failure this
+    whole module exists to prevent, one layer in.
+    """
+    if reading == "inferred" and ref.get("inferred"):
+        return ref["inferred"]
     return (ref.get("article-title") or ref.get("volume-title")
             or ref.get("unstructured") or "")
 
@@ -81,6 +93,25 @@ def payloads_by_ref():
     return out
 
 
+def provenance_of(path):
+    """DEPOSITED or EXTRACTED. Never guessed: it is read off the payload itself.
+
+    A publisher-deposited reference list and a reference list transcribed off a damaged
+    scan are not the same evidence and must not print under the same column heading.
+    Until 2026-09-20 this module had one heading, `deposited`, and would have applied it
+    to an OCR transcription -- restating an extraction as a deposit, which is CLAUDE.md
+    rule 7a's third shape (a caller restating a checked fact) arriving in a tool's own
+    output.
+    """
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return "unknown"
+    if isinstance(doc, dict) and doc.get("kind") == "pdf-bibliography":
+        return "EXTRACTED"
+    return "DEPOSITED"
+
+
 def references_for(path):
     try:
         doc = json.loads(path.read_text(encoding="utf-8"))
@@ -98,8 +129,8 @@ def references_for(path):
     return refs if isinstance(refs, list) else None
 
 
-def score(refs, rx):
-    return sum(1 for r in refs if rx.search(_title(r)))
+def score(refs, rx, reading="unstructured"):
+    return sum(1 for r in refs if rx.search(_title(r, reading)))
 
 
 def main():
@@ -139,21 +170,44 @@ def main():
         if best is None:
             skipped.append(rid)
             continue
-        rows.append((rid, len(best[1]),
-                     {n: score(best[1], compile_screen(screens[n])) for n in chosen}))
+        path, reflist = best
+        prov = provenance_of(path)
+        # A band, not a point, wherever the transcription is uncertain. floor == ceiling
+        # for a deposited list, and the band renders as a single number, so nothing about
+        # the existing output changes for the anchors that had it before.
+        cells = {}
+        for n in chosen:
+            rx = compile_screen(screens[n])
+            floor = score(reflist, rx, "unstructured")
+            ceil = score(reflist, rx, "inferred") if prov == "EXTRACTED" else floor
+            cells[n] = (floor, max(floor, ceil))
+        rows.append((rid, len(reflist), cells, prov))
 
     if not rows:
         print("EXAMINED: 0 — no payload carried a reference list. Not a zero yield.")
         return 1
 
-    width = max(len(n) for n in chosen)
-    head = f"{'ref':<12}{'deposited':>10}" + "".join(f"{n:>{width + 2}}" for n in chosen)
+    def render(cell):
+        lo, hi = cell
+        return str(lo) if lo == hi else f"{lo}-{hi}"
+
+    width = max(max(len(n) for n in chosen), 7)
+    head = (f"{'ref':<12}{'refs':>6}  {'provenance':<11}"
+            + "".join(f"{n:>{width + 2}}" for n in chosen))
     print(head)
     print("-" * len(head))
-    for rid, n, sc in sorted(rows, key=lambda r: -r[2][chosen[0]]):
-        print(f"{rid:<12}{n:>10}" + "".join(f"{sc[n2]:>{width + 2}}" for n2 in chosen))
+    for rid, n, sc, prov in sorted(rows, key=lambda r: -r[2][chosen[0]][0]):
+        print(f"{rid:<12}{n:>6}  {prov:<11}"
+              + "".join(f"{render(sc[n2]):>{width + 2}}" for n2 in chosen))
     print(f"\nEXAMINED: {len(rows)} anchor(s), "
-          f"{sum(n for _, n, _ in rows)} deposited reference(s)")
+          f"{sum(n for _, n, _, _ in rows)} reference(s)")
+    if any(prov == "EXTRACTED" for *_, prov in rows):
+        print("\nEXTRACTED means the reference list was transcribed from a scanned page, "
+              "not\ndeposited by a publisher. A range is floor-ceiling: the floor scores a "
+              "reading\nthat substitutes no letters, the ceiling a best reading of damaged "
+              "OCR. THE FLOOR\nIS THE DEFENSIBLE NUMBER; the ceiling says how much the "
+              "damage could be hiding.\nA zero on an extracted list is weak evidence of "
+              "absence (CLAUDE.md 5a).")
     print(f"SCREENS: " + ", ".join(
         f"{n} v{screens[n].get('version', '?')}" for n in chosen))
     if skipped:
