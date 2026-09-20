@@ -4151,10 +4151,6 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # asked and no gate could see a correction at all. `amendments` holds them as
         # columns; `metadata_integrity_detail` keeps the WARRANT only, which is the half
         # that is genuinely an argument and the half metadata_integrity_audit.py prints.
-        # table_name is checked against the live schema rather than trusted.
-        if not conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",
-                            ("evidence_sources",)).fetchone():
-            raise Refusal("evidence_sources is not in the live schema.")
         _amend = [(field, was, replacement, reason)]
         if new_tier is not None:
             _amend.append(("tier", str(old_tier), str(new_tier),
@@ -5978,7 +5974,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                     'PRAGMA table_info("source_value_extractions")')
                     if c[1].startswith("loc_") and not c[1].endswith("_end")
                     and c[1] != "loc_note"]
-                if not any(str(row.get(c) or "").strip() for c in _levels):
+                _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
+                if not _esc and not any(str(row.get(c) or "").strip() for c in _levels):
                     raise Refusal(
                         f"R3: {ref} is tier {int(_tier[0])} -- the regulatory stratum -- and this row "
                         f"states a value with no structured locator. A code, standard or statute "

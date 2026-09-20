@@ -301,6 +301,7 @@ const orphanEdges = D.edges.filter(e => e.orph > 0);
 const realW = t => t.writers.filter(w => w.kind !== 'fixture');
 const noWriter = D.tables.filter(t => !realW(t).length && !t.internal);
 const unwritable = D.tables.filter(t => t.unwritable.length);
+const unwRoots = Object.keys(M.unwritable_roots || {});
 const emptyT = D.tables.filter(t => t.rows === 0);
 const byStage = s => D.tables.filter(t => t.stage === s);
 const stageRows = s => byStage(s).reduce((a, t) => a + t.rows, 0);
@@ -375,7 +376,7 @@ RENDER.atlas = () => {
     { v: fmt(D.sessions.length), k: 'batches', sub: 'distinct writing sessions' },
     { v: fmt(M.edges), k: 'declared pointers', sub: `${liveEdges.length} carry rows` },
     { v: fmt(noWriter.length), k: 'tables no tool writes', tone: noWriter.length ? 'var(--crit)' : '', sub: 'derived from the scripts tree' },
-    { v: fmt(unwritable.length), k: 'unwritable tables', tone: unwritable.length ? 'var(--crit)' : '', sub: 'NOT NULL FK into an empty table' }
+    { v: fmt(unwRoots.length), k: 'empty parents blocking writes', tone: unwRoots.length ? 'var(--crit)' : '', sub: `${fmt(unwritable.length)} child tables wait on them` }
   ]);
 
   h += `<div class="section"><h2>Every table, in spine order</h2>
@@ -422,7 +423,7 @@ function atlasList() {
             ? `<span class="chip mig">migration only</span>` : '')
         : `<span class="chip none">no writer</span>`;
       const flags = [
-        t.unwritable.length ? `<span class="flag unw" title="NOT NULL FK into an empty table">unwritable</span>` : '',
+        t.unwritable.length ? `<span class="flag unw" title="NOT NULL FK into a table that holds no rows — over-reports where one call inserts parent and child together">blocked</span>` : '',
         !t.rows && !t.unwritable.length ? `<span class="flag empty">empty</span>` : '',
         !real.length && !t.internal && !t.unwritable.length ? `<span class="flag nw">no writer</span>` : ''
       ].join('');
@@ -904,11 +905,14 @@ function renderPanel() {
     <div class="tile"><div class="v">${fmt(ins.length)}</div><div class="k">pointed at by</div></div>
     <div class="tile"><div class="v">${fmt(sess.length)}</div><div class="k">batches</div></div></div>`;
 
-  if (t.unwritable.length) h += `<div class="callout"><b>Unwritable</b>
+  if (t.unwritable.length) h += `<div class="callout"><b>Blocked by an empty parent</b>
     ${t.unwritable.map(u => `<code>${esc(u.col)}</code> is NOT NULL and points into
     <code>${esc(u.into)}</code>, which holds no rows.`).join(' ')}
-    An INSERT is refused by the foreign key, never at migration time — so the schema looks healthy,
-    a rebuild reproduces it exactly, and every gate stays green over a table that cannot accept a row.</div>`;
+    An INSERT is normally refused by the foreign key, never at migration time — so the schema looks
+    healthy, a rebuild reproduces it exactly, and every gate stays green. <b>This probe over-reports:</b>
+    it asks only whether the parent is empty right now, so where one <code>db.py</code> call inserts
+    parent and child in the same transaction the write succeeds anyway. Only a child whose parent
+    nothing fills is actually dead.</div>`;
   const rw = realW(t), fx = t.writers.filter(w => w.kind === 'fixture');
   if (!rw.length && !t.internal) h += `<div class="callout warn"><b>No writer found</b>
     Nothing in the scripts tree or the migrations inserts into this table.${fx.length

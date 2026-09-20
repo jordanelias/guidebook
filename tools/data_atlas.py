@@ -49,6 +49,34 @@ import sqlite3
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT / "scripts"))
+import dbcore                          # noqa: E402
+import pipeline_walk as pw             # noqa: E402
+
+# THE SIBLINGS ARE THE HOME FOR ALL OF THIS, and re-deriving it cost measured errors --
+# the same ones `tools/schema_walkability.py:50-64` already records paying for. The first
+# version of this module defined its own connect_ro, CHECK-vocabulary parser, YAML stage
+# reader, §4 unwritable probe and as-of stamp. Four of the five were wrong:
+#   * the vocabulary parser missed every `CHECK (c IS NULL OR c IN (...))` column -- 28 of
+#     them live, including both vocabularies migrations 091/092 had just declared -- and
+#     returned a comment fragment as a value for `gap_mining.outcome`, because it did not
+#     strip SQL line comments. `dbcore.check_values()` handles both forms and a third one
+#     migration 078 introduced, and its docstring says outright that a new form "would need
+#     adding here, not working around at the call site" -- which a private second parser
+#     silently defeats;
+#   * the UNWRITABLE probe used the flat form and reported 19 columns where
+#     `pw.unwritable()` reports 6 empty-parent ROOTS, including the three that module's
+#     docstring names as writable anyway (one db.py call inserts parent and child in the
+#     same transaction). The page rendered that beside prose saying the table cannot accept
+#     a row: CLAUDE.md 5(b), prose contradicting the database, on a page whose whole claim
+#     is that nothing on it is maintained by hand;
+#   * `as_of` compared raw timestamp strings, so a midnight `...T00:00:00Z` stamp sorted
+#     above a same-day `... 23:59` one -- `pw._norm_stamp` exists for exactly the three
+#     shapes this corpus stores;
+#   * the view scan matched table names in raw view SQL, comments included, which is the
+#     false positive `schema_walkability.py:110` already fixed with the stripper.
+# The YAML reader was merely duplicated rather than wrong, and is gone with the rest.
 DB = pathlib.Path(os.environ.get("GUIDEBOOK_DB_PATH", ROOT / "data/guidebook.db"))
 OUT = ROOT / "tools/data-atlas.html"
 
@@ -66,30 +94,8 @@ WRITE_RE = re.compile(
 
 # ---------------------------------------------------------------- schema + rows
 
-def connect():
-    if not DB.exists():
-        sys.exit(f"no database at {DB}")
-    con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
-    con.row_factory = sqlite3.Row
-    return con
 
 
-def check_vocab(sql: str, col: str):
-    """The column's own CHECK vocabulary, from the CREATE TABLE text (rule 8:
-    a vocabulary comes from the schema, never from a list beside it)."""
-    if not sql:
-        return None
-    pat = re.compile(
-        r'\b' + re.escape(col) + r'\b[^,]*?CHECK\s*\(\s*' + re.escape(col)
-        + r'\s+IN\s*\(([^)]*)\)', re.I | re.S)
-    m = pat.search(sql)
-    if not m:
-        pat2 = re.compile(
-            r'CHECK\s*\(\s*' + re.escape(col) + r'\s+IN\s*\(([^)]*)\)', re.I | re.S)
-        m = pat2.search(sql)
-    if not m:
-        return None
-    return [v.strip().strip("'\"") for v in m.group(1).split(",") if v.strip()]
 
 
 # ---------------------------------------------------------------- writers (AST)
@@ -134,6 +140,19 @@ def is_fixture(path, fname):
             or "/tests/" in rel or pathlib.Path(rel).name.startswith("test_"))
 
 
+def _judged_by(path: pathlib.Path) -> dict:
+    """Who judged the stage map, and when.
+
+    `pw.load_stage_map` returns the assignments and the disputed block, not the
+    attribution -- and rule 8 says a judged fact must name its judge, so the page
+    carries it. Read with the same parser, never a second hand-rolled one.
+    """
+    import yaml
+    with open(path, encoding="utf-8") as fh:
+        doc = yaml.safe_load(fh) or {}
+    return {"by": str(doc.get("judged_by", "")), "on": str(doc.get("judged_on", ""))}
+
+
 def derive_writers(live_tables):
     """Which tool writes which table. Parsed, never listed.
 
@@ -155,23 +174,26 @@ def derive_writers(live_tables):
                 funcs[n.name] = (_sql_writes(n), _called(n))
         modules[p] = funcs
 
-    index = {}
-    for p, funcs in modules.items():
-        for name in funcs:
-            index.setdefault(name, []).append(p)
+    # RESOLVE WITHIN db.py ONLY. The first version indexed every function name in
+    # scripts/ and tools/ and unioned the writes of every module defining that name.
+    # Names collide, so the walk escaped db.py: `add-icf-code` resolved
+    # insert_icf_code -> stamp_for -> audit -> rebuild -> run -> `fresh`, a fixture in
+    # scripts/tests/test_validate_evidence_state_2_4.py, and 33 of 47 subcommands were
+    # reported as CLI writers of `gaps`. The column this module exists for was unusable
+    # on the busiest tables. A bare name is not an import graph; db.py's own functions
+    # are, so the dispatch resolves against them and nothing else.
+    dbpy_funcs = modules.get(ROOT / "scripts/db.py", {})
 
     def resolve(fname, seen=None):
         if seen is None:
             seen = set()
-        if fname in seen:
+        if fname in seen or fname not in dbpy_funcs:
             return set()
         seen.add(fname)
-        out = set()
-        for p in index.get(fname, []):
-            direct, calls = modules[p][fname]
-            out |= direct
-            for c in calls:
-                out |= resolve(c, seen)
+        direct, calls = dbpy_funcs[fname]
+        out = set(direct)
+        for c in calls:
+            out |= resolve(c, seen)
         return out
 
     writers = {t: [] for t in live_tables}
@@ -220,15 +242,14 @@ def derive_writers(live_tables):
         rel = str(p.relative_to(ROOT))
         if rel == "scripts/db.py":
             continue
-        agg = {}
+        agg = set()
         for fname, (direct, _) in funcs.items():
             kind = "fixture" if is_fixture(rel, fname) else "script"
             for tbl, op in direct:
                 if tbl in writers:
-                    agg.setdefault((tbl, op, kind), set()).add(fname)
-        for (tbl, op, kind), fns in sorted(agg.items()):
-            writers[tbl].append({"tool": rel, "op": op, "kind": kind,
-                                 "fns": sorted(fns)[:4]})
+                    agg.add((tbl, op, kind))
+        for tbl, op, kind in sorted(agg):
+            writers[tbl].append({"tool": rel, "op": op, "kind": kind})
 
     # Migrations. Rule 3's real landing path: nothing reaches the committed blob
     # except through one of these files.
@@ -248,49 +269,16 @@ def derive_writers(live_tables):
 
 # ---------------------------------------------------------------- governance reads
 
-def read_stage_contract():
-    """Stage ids from the contract; table->stage from the stage map. Both READ, and the
-    map's coverage of the live schema is checked rather than trusted (its own header
-    asks for exactly this falsifier)."""
-    stages, table_stage, judged = [], {}, {}
-    cpath = ROOT / "governance/pipeline-contract.yaml"
-    if cpath.exists():
-        instages = False
-        for line in cpath.read_text(encoding="utf-8").splitlines():
-            if re.match(r"^stages:\s*$", line):
-                instages = True
-                continue
-            if instages:
-                if line and not line[0].isspace() and not line.startswith("-"):
-                    instages = False
-                    continue
-                m = re.match(r"^- id:\s*(\S+)\s*$", line)
-                if m:
-                    stages.append(m.group(1))
-    spath = ROOT / "governance/stage-map.yaml"
-    if spath.exists():
-        intab = False
-        for line in spath.read_text(encoding="utf-8").splitlines():
-            if re.match(r"^tables:\s*$", line):
-                intab = True
-                continue
-            if intab:
-                m = re.match(r"^  ([A-Za-z_][A-Za-z0-9_]*):\s*(\S+)\s*$", line)
-                if m:
-                    table_stage[m.group(1)] = m.group(2)
-                elif line and not line.startswith(" "):
-                    intab = False
-            m = re.match(r"^judged_(by|on):\s*'?([^'\n]+)'?\s*$", line)
-            if m:
-                judged[m.group(1)] = m.group(2).strip()
-    return stages, table_stage, judged
 
 
 # ---------------------------------------------------------------- build
 
 def build():
-    con = connect()
-    cur = con.cursor()
+    con = pw.connect_ro(DB)
+    # con.execute() returns a FRESH cursor per call, so a query issued inside a loop over
+    # another query cannot reset it. The first version shared one cursor and lost 53 of 108
+    # FK edges to exactly that, then carried a list() workaround and a comment about it.
+    cur = con
 
     tables = [r[0] for r in cur.execute(
         "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")]
@@ -302,8 +290,21 @@ def build():
     counts = {t: cur.execute(f'SELECT COUNT(*) FROM "{t}"').fetchone()[0] for t in tables}
     empty = {t for t in tables if counts[t] == 0}
 
-    stage_ids, table_stage, judged = read_stage_contract()
-    stage_order = stage_ids + ["infrastructure", "internal", "unassigned"]
+    stage_ids = pw.load_stages(pw.CONTRACT)
+    table_stage, _disputed = pw.load_stage_map(pw.STAGE_MAP)
+    judged = _judged_by(pw.STAGE_MAP)
+    stage_order = stage_ids + [pw.INFRA, "internal", "unassigned"]
+    # ROOTS, not leaves. pw.unwritable() collapses rule 4's probe to the empty PARENTS, and
+    # its docstring names three children it still over-reports because one db.py call
+    # inserts parent and child in the same transaction. The flat form this module used
+    # before reported 19 columns against those 6 roots, beside prose asserting the table
+    # cannot accept a row -- the error schema_walkability.py already recorded paying for.
+    unwritable_roots = pw.unwritable(con, tables)
+    blocked_by: dict = {}
+    for _parent, _cols in unwritable_roots.items():
+        for _c in _cols:
+            _t, _col = _c.split(".", 1)
+            blocked_by.setdefault(_t, []).append({"col": _col, "into": _parent})
 
     writers = derive_writers(set(tables))
 
@@ -321,36 +322,33 @@ def build():
             if ispk:
                 pk.append(name)
             entry = {"n": name, "t": ctype or "", "nn": bool(notnull), "pk": bool(ispk)}
-            v = check_vocab(tsql.get(t, ""), name)
+            v = dbcore.check_values(con, t, name)
             if v:
-                entry["vocab"] = v
+                entry["vocab"] = sorted(v)
             if name in fkcols:
                 entry["fk"] = list(fkcols[name])
             cols.append(entry)
 
-        # A NOT NULL foreign key into an EMPTIED table makes the table unwritable:
-        # the refusal comes at INSERT, never at migration time, so every gate stays
-        # green over a table that cannot accept a row (CLAUDE.md §4).
-        unwritable = [
-            {"col": c["n"], "into": c["fk"][0]}
-            for c in cols
-            if c.get("fk") and c["nn"] and c["fk"][0] in empty
-        ]
+        unwritable = blocked_by.get(t, [])
 
-        sess = {}
-        colnames = {c["n"] for c in cols}
-        if "created_by_session" in colnames:
-            for s, n in cur.execute(
-                    f'SELECT created_by_session, COUNT(*) FROM "{t}" GROUP BY 1'):
-                key = s if s is not None else "— unattributed"
-                sess[key] = n
-                sessions_total[key] = sessions_total.get(key, 0) + n
+        # EVERY session-column spelling, derived from the schema. Reading only
+        # `created_by_session` missed `applied_by_session` (data_migrations, 433 rows),
+        # `raised_by_session`, `resolved_by_session`, `retired_by_session` and
+        # `amended_by_session` -- whole batches' worth of attribution reported as none.
+        # `updated_by_session` is excluded deliberately: it records who last touched a row,
+        # not who wrote it, and counting both double-counts every amended row.
+        sess: dict = {}
+        for _sc in sorted(c["n"] for c in cols if c["n"].endswith("_by_session")
+                          and not c["n"].startswith("updated")):
+            for _s, _n in cur.execute(f'SELECT "{_sc}", COUNT(*) FROM "{t}" GROUP BY 1'):
+                key = _s if _s is not None else "— unattributed"
+                sess[key] = sess.get(key, 0) + _n
+                sessions_total[key] = sessions_total.get(key, 0) + _n
 
         internal = t.startswith("sqlite_")
         meta_tables.append({
             "name": t,
             "stage": table_stage.get(t, "internal" if internal else "unassigned"),
-            "mapped": t in table_stage or internal,
             "internal": internal,
             "rows": counts[t],
             "cols": cols,
@@ -393,8 +391,9 @@ def build():
     # (CLAUDE.md §3), so what it spans is derived from the tables its SQL names.
     vinfo = []
     for vname, vsql in views:
+        _clean = dbcore._strip_sql_line_comments(vsql or "")
         named = sorted({t for t in tables
-                        if re.search(r'\b' + re.escape(t) + r'\b', vsql or "")})
+                        if re.search(r'\b' + re.escape(t) + r'\b', _clean)})
         sp = sorted({table_stage.get(t, "unassigned") for t in named} - {"base"})
         try:
             vrows = cur.execute(f'SELECT COUNT(*) FROM "{vname}"').fetchone()[0]
@@ -414,14 +413,10 @@ def build():
         data[t] = rows
 
     dbbytes = DB.read_bytes()
-    asof = None
-    for t in tables:
-        cn = {c[1] for c in cur.execute(f'PRAGMA table_info("{t}")')}
-        for col in ("updated_at", "created_at"):
-            if col in cn:
-                v = cur.execute(f'SELECT MAX("{col}") FROM "{t}"').fetchone()[0]
-                if v and (asof is None or str(v) > asof):
-                    asof = str(v)
+    # pw.as_of normalises via _norm_stamp. Comparing the raw strings, as this module did,
+    # sorts 'T' (0x54) above ' ' (0x20), so a midnight `...T00:00:00Z` stamp beat a same-day
+    # `... 23:59` one and the page could date itself earlier than its newest row.
+    asof = pw.as_of(con, tables)
 
     payload = {
         "meta": {
@@ -437,6 +432,10 @@ def build():
             "stage_order": stage_order,
             "judged_by": judged.get("by", ""),
             "judged_on": judged.get("on", ""),
+            # The ROOTS are the finding; the blocked columns are their consequence. Carried
+            # so the page can count 6 empty parents rather than 18 children, three of which
+            # are writable anyway (pw.unwritable's docstring names them).
+            "unwritable_roots": {k: v for k, v in unwritable_roots.items()},
         },
         "tables": meta_tables,
         "edges": edges,

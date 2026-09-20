@@ -290,16 +290,16 @@ def validate_cell_states_db(conn, gap_ids: set):
         # Tier-3-alone stated threshold (DR-2026-07-12-tier3-stated-threshold.md)
         if state == "stated" and conv_id is not None:
             conv_row = conn.execute(
-                "SELECT status, clinical_sources, co1_sources, co2_sources "
-                "FROM convergence_assessment WHERE convergence_id = ?",
+                "SELECT status FROM convergence_assessment WHERE convergence_id = ?",
                 (conv_id,),
             ).fetchone()
             if conv_row:
-                status, clinical, co1, co2 = conv_row
+                status = conv_row[0]
                 if status == "single_axis":
-                    clinical_refs = _jlist(clinical)
-                    co1_refs, co2_refs = _jlist(co1), _jlist(co2)
-                    if clinical_refs and not co1_refs and not co2_refs and not _bad_json(clinical_refs):
+                    _r = _conv_roles(conn).get(conv_id, {})
+                    clinical_refs = _r.get("clinical", [])
+                    co1_refs, co2_refs = _r.get("co1", []), _r.get("co2", [])
+                    if clinical_refs and not co1_refs and not co2_refs:
                         tiers = _ref_tiers(conn, clinical_refs)
                         if tiers and all(t == 3 for t in tiers.values()):
                             errors.append(
@@ -308,6 +308,20 @@ def validate_cell_states_db(conn, gap_ids: set):
                                 f"sole basis' (tier-system.md); must be 'provisional'"
                             )
     return errors, n
+
+
+def _conv_roles(conn) -> dict:
+    """{convergence_id: {role: [ref_id, ...]}} from the junction migration 093 created.
+
+    ONE access path for one fact. The arrays on `convergence_assessment` are frozen
+    history (rule 5's "NULL forward"): a row written after 093 carries NULL in all five,
+    so a reader still parsing them sees [] and its gate stops firing without going red.
+    """
+    out: dict = {}
+    for cid, role, ref in conn.execute(
+            "SELECT convergence_id, role, ref_id FROM convergence_sources"):
+        out.setdefault(cid, {}).setdefault(role, []).append(ref)
+    return out
 
 
 def validate_convergence_db(conn):
@@ -321,10 +335,7 @@ def validate_convergence_db(conn):
     # `convergence_sources`, where every ref_id is a foreign key into evidence_sources and
     # the weighing is a CHECK-constrained column, instead of from five JSON strings that
     # nothing could validate. Read once and grouped, rather than a query per row.
-    _roles: dict = {}
-    for _cid, _role, _ref in conn.execute(
-            "SELECT convergence_id, role, ref_id FROM convergence_sources"):
-        _roles.setdefault(_cid, {}).setdefault(_role, []).append(_ref)
+    _roles = _conv_roles(conn)
     for (cid, status, j_clinical, j_co1, j_co2, j_downw, j_disc, rationale, synth) in \
             conn.execute(f"SELECT {cols} FROM convergence_assessment"):
         n += 1
