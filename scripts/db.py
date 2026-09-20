@@ -2009,7 +2009,16 @@ def main():
     # ADDED 2026-09-18 (batch 18): the venue fields that make a REPORT citable.
     # A government report with no institution and no report number cannot be rendered
     # into a bibliography -- see the _ES_COLS note for how REF-01005 exposed this.
-    p_as.add_argument("--source-type", help="journal_article | report | book | thesis | standard … (UNDERSCORE, not Crossref's hyphen: test_db_integrity B05 rejects journal-article)")
+    # choices AND help both READ FROM THE COLUMN'S OWN CHECK (rule 8), as of migration
+    # 089. Until then this was a free-text flag whose help string listed the vocabulary by
+    # hand -- and listed it WRONG, advertising Crossref's `journal-article` where the
+    # project's value is `journal_article`. A session copied the hyphen straight out of the
+    # help, the writer accepted it because the column declared no CHECK, and a blocking
+    # check caught it two steps later. Now argparse refuses it before the command runs and
+    # `--help` cannot drift from the schema, because neither is written down here.
+    p_as.add_argument("--source-type",
+                      choices=dbcore.schema_choices("evidence_sources", "source_type"),
+                      help="Live vocabulary, read from the column's own CHECK")
     p_as.add_argument("--institution", help="the PERFORMING organisation, as ERIC's INSTITUTION field and a report's own title page use the term; the sponsor goes in --publisher")
     p_as.add_argument("--report-number", help="e.g. HUD-PDR 397; the issuer's own number")
     p_as.add_argument("--series")

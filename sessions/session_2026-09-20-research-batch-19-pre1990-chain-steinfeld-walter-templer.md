@@ -198,6 +198,55 @@ across catalogues, its issuing body is not.
 **All three were mine, all three were caught, none reached main.** The gates did their job on a
 session that was reading carefully and still got three things wrong.
 
+## 10a. The B05 fix was a hand edit, and it was corrected to a mechanism
+
+**Added after §10 was written, on the instruction "fix mechanisms, not hand edit" — which
+landed on a real gap in what §10 describes.** Fixing my row and correcting the help string
+left the mechanism exactly as it was:  declared **no CHECK**, and the
+vocabulary's only home was a seventeen-value tuple in a test file. That is CLAUDE.md rule
+8's named anti-pattern, in a file that had already fixed the same pattern one check along
+(B06, , 2026-09-18) — the comment recording that fix sits eleven lines below
+the tuple.
+
+**The failure was three mechanisms deep, and only the third caught it:**
+
+1.  **accepted** the bad value. Every other vocabulary flag on that
+   command validates against the live schema; that guard was silently off here because an
+   undeclared vocabulary reads as *no constraint*.
+2.  **advertised** the value the blocking check rejects.
+3. B05 caught it, from the curated tuple, two steps after argparse could have refused it
+   for free.
+
+**Migration 089** puts the vocabulary in the column's own CHECK — the ratified answer, per
+CLAUDE.md §4 ("vocabularies come from the schema, not a list in code"). Deliberately **not**
+a  enum in : that would move the list, not remove it, and
+leave two homes where rule 5 allows one.
+
+Three consumers now derive from that one declaration:
+
+-  takes , so **argparse refuses the typo
+  before the command runs** and names the live set.
+-  renders the vocabulary instead of restating it, so it cannot drift again.
+- **B05 reads ** and the tuple is gone.  75/75.
+
+**The DDL was generated from the live schema, not retyped.**  has 97
+columns; hand-transcribing them to add one constraint would have been the same class of
+error the migration exists to fix. **The first attempt failed and is worth recording:**
+SQLite validates the whole schema during , so the five dependent
+views aborted it with *"error in view v_evidence_authors: no such table"*. It rolled back
+atomically and left the blob untouched — 's transaction boundary (DR-2026-08-19
+F5) doing its job. The migration drops and restores those views verbatim.
+
+ reproduces the result, which is the check that matters for a table
+rebuild.
+
+**GAP-042 records what this did not do.** Four sibling vocabularies on the same table —
+, , , 
+— are still curated tuples over columns that declare nothing, and each is one 
+flag away from the identical failure. They were left because each CHECK costs a full rebuild
+of a 97-column table and this batch did one to fix the defect it had actually caused, not
+four more on spec. The gap notes that all four fit in **one** rebuild.
+
 ## 11. Gates
 
 - `research_batch_dod --session` — **COMPLIANT, 19/19.** R1 and R7 failed first and were remediated

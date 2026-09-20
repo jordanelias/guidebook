@@ -268,22 +268,38 @@ def run_checks(db_path):
            f"{bad} invalid values" if bad else "",
            subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE url_resolution_outcome IS NOT NULL"))
 
-    VALID_ST = ("journal_article","book","book_chapter","conference_paper","thesis",
-                "primary_research","case_study","standard","guideline","report",
-                "grey","internal","letter","editorial","commentary","other",
-                # D-0157 section 4.6 ratifies `code`: 16 rows, statutory
-                # instruments (French arretes, Italian DPCM, Japanese ministerial
-                # standards), mirroring EvidenceType.CODE in schemas/enums.py.
-                # Used consistently since coinage; the transcription here was
-                # simply never updated.
-                "code")
-    bad = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources
-        WHERE source_type IS NOT NULL
-        AND source_type NOT IN ({','.join('?'*len(VALID_ST))})
-    """, VALID_ST).fetchone()[0]
-    record("B05", "source_type values", bad == 0,
-           f"{bad} invalid values" if bad else "",
-           subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE source_type IS NOT NULL"))
+    # DERIVED FROM THE COLUMN, NOT CURATED BESIDE IT (rule 8), as of migration 089 --
+    # the same repair B06 below received for `gaps.status`, and for the same reason
+    # eleven lines further down.
+    #
+    # THIS TUPLE COST SOMETHING BEFORE IT WENT. It was seventeen values maintained here
+    # while the column declared no CHECK at all, so it was the ONLY home the vocabulary
+    # had -- and `db.py add-source` could not read it. The writer therefore accepted
+    # anything, its --help advertised Crossref's `journal-article` where the project's
+    # value is `journal_article`, and a session copied the hyphen out of the help into
+    # the database. This check caught it, which is the tuple working; but a vocabulary
+    # only a checker can see is a vocabulary the writer cannot enforce, and the cheap
+    # catch came two steps after the cheap refusal was available.
+    #
+    # Migration 089 moved it into the column's own CHECK. Now argparse refuses the value
+    # before the command runs, --help renders the live set, and this line asserts
+    # whatever the schema declares. A migration that changes the vocabulary changes all
+    # three in one commit, because there is nothing here to update.
+    _expr = dbcore.check_expression(conn, "evidence_sources", "source_type")
+    if _expr:
+        bad = conn.execute(
+            f"SELECT COUNT(*) FROM evidence_sources WHERE NOT ({_expr})").fetchone()[0]
+        record("B05", "source_type matches the column's own CHECK", bad == 0,
+               f"{bad} invalid values" if bad else "",
+               subject=subj("SELECT COUNT(*) FROM evidence_sources "
+                            "WHERE source_type IS NOT NULL"))
+    else:
+        record("B05", "source_type matches the column's own CHECK", False,
+               "evidence_sources.source_type declares no CHECK to assert against — "
+               "migration 089 added one, so its absence means the schema moved "
+               "backwards and the writer's guard is silently off",
+               subject=subj("SELECT COUNT(*) FROM evidence_sources "
+                            "WHERE source_type IS NOT NULL"))
 
     # DERIVED FROM THE COLUMN, NOT CURATED BESIDE IT (rule 8). This was a 12-value
     # tuple maintained here while `gaps.status` declares its own
