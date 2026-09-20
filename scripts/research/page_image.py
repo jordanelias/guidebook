@@ -44,8 +44,16 @@ import argparse
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-LOG_ROOT = ROOT / "retrieval-log"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import retrieval_log                                                  # noqa: E402
+
+# retrieval_log's LOG_ROOT, NOT a second one. This module used to compute its own
+# absolute `parents[2] / "retrieval-log"` while retrieval_log resolves a RELATIVE,
+# env-overridable path (GUIDEBOOK_RETRIEVAL_LOG). Measured from /tmp the two disagreed --
+# /tmp/retrieval-log against /home/user/guidebook/retrieval-log -- so the PNG was written
+# to one tree and its attestation line appended in the other, which defeats the whole
+# point of attesting it.
+LOG_ROOT = retrieval_log.LOG_ROOT
 
 
 def _parse_pages(spec):
@@ -92,8 +100,6 @@ def main():
                          "session the artefact came from)")
     args = ap.parse_args()
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import retrieval_log
     try:
         import pymupdf
     except ImportError:
@@ -103,7 +109,11 @@ def main():
               "`pip install -r requirements.txt` (CLAUDE.md §1).", file=sys.stderr)
         return 2
 
-    src_dir = LOG_ROOT / args.session
+    # _session_stem, because `--session foo.md` would otherwise put the image in
+    # retrieval-log/foo.md/ and its manifest line in retrieval-log/foo/manifest.jsonl.
+    # CLAUDE.md §7 names this trap and _session_stem exists so no caller has to remember.
+    out_session = retrieval_log._session_stem(args.out_session or args.session)
+    src_dir = LOG_ROOT / retrieval_log._session_stem(args.session)
     pdf = Path(args.artefact)
     if not pdf.is_file():
         pdf = src_dir / args.artefact
@@ -111,7 +121,7 @@ def main():
         print(f"no such artefact: {pdf}", file=sys.stderr)
         return 2
 
-    out_dir = LOG_ROOT / (args.out_session or args.session)
+    out_dir = LOG_ROOT / out_session
     out_dir.mkdir(parents=True, exist_ok=True)
 
     doc = pymupdf.open(pdf)
@@ -132,7 +142,7 @@ def main():
         # this module's own promise that "a later reader can check the transcription
         # against the same bytes" would rest on unattested files.
         sha = retrieval_log.record_file(
-            dest, args.out_session or args.session, pdf.name,
+            dest, out_session, pdf.name,
             purpose=f"page render, zero-based index {i}, {args.dpi} dpi",
             ref_id=args.ref_id, kind="page-render")
         wrote.append(dest)

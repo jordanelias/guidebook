@@ -516,6 +516,41 @@ def check_declared(conn, table: str, column: str, value, context: str):
             % (context, table, column, value, sorted(allowed)))
 
 
+def fk_declared(conn, table: str, column: str, value, context: str):
+    """Refuse a value no row satisfies the column's own FOREIGN KEY, naming the target.
+
+    The derived sibling of check_declared above, and added for the same reason. A writer
+    that gates one named column by hand -- `if field == "root_ref_id": ...` -- is the
+    field-by-field shape rule 8 forbids: it protects the column someone remembered and
+    silently admits every other foreign key that becomes writable later. This reads
+    PRAGMA foreign_key_list, so it is a no-op on a column that declares no FK and arms
+    itself the day a migration gives one, with nothing to update here.
+
+    WHY IT IS CHECKED HERE AND NOT LEFT TO SQLITE. `PRAGMA foreign_keys` is off by
+    default on a fresh connection, so a bad reference can land silently; and even when it
+    is on, the IntegrityError names the constraint rather than the value, which is not a
+    refusal an operator can act on.
+    """
+    if value is None:
+        return
+    for f in conn.execute('PRAGMA foreign_key_list("%s")' % table):
+        parent, from_col, to_col = f[2], f[3], f[4]
+        if from_col != column:
+            continue
+        to_col = to_col or "rowid"
+        if conn.execute('SELECT 1 FROM "%s" WHERE "%s"=?' % (parent, to_col),
+                        (value,)).fetchone():
+            return
+        raise Refusal(
+            "%s: %s.%s=%r has no matching row in %s.%s. A reference must point at "
+            "something this project actually holds. Nothing was written."
+            % (context, table, column, value, parent, to_col))
+
+
+# Read-only connections reused by schema_choices, keyed on the RESOLVED db path.
+_CHOICES_CONNS: dict = {}
+
+
 def schema_choices(table: str, column: str):
     """argparse `choices=` READ FROM THE COLUMN'S OWN CHECK (CLAUDE.md rule 8).
 
@@ -537,17 +572,36 @@ def schema_choices(table: str, column: str):
     by returning None: `check_declared()` refuses the same values at write time, with a
     better message. Degraded, never wrong.
     """
+    # ONE CONNECTION PER PROCESS, NOT ONE PER CALL, and the measurement is why. This
+    # opened, queried and closed its own read-only connection every time. A fresh SQLite
+    # connection's first query forces a parse of the whole schema -- 77 tables and 20
+    # views -- so the call costs 2.28 ms where connect+close alone is 0.03 ms.
+    #
+    # db.py builds its argparse tree at import, and that tree contains 23 schema_choices
+    # calls, so EVERY db.py invocation paid 62.6 ms before doing anything -- about 35% of
+    # `db.py --help` (0.178 s wall), including subcommands that never touch the column in
+    # question. The research sessions in this repo run db.py 60-136 times each, so it was
+    # 3.4-7.7 seconds per session of pure startup. Through one shared connection the same
+    # 23 calls cost 6.8 ms; cached, 4.6 ms.
+    #
+    # KEYED ON THE RESOLVED PATH, so the GUIDEBOOK_DB_PATH semantics db_path() provides
+    # survive: point the variable at a scratch copy and the next call opens that file
+    # instead of reusing the canonical handle. Read-only throughout, so a stale handle
+    # cannot write anything; the worst case is a vocabulary read before a migration in
+    # the same process, which is what the degraded-never-wrong contract above already
+    # covers by returning None.
+    key = str(db_path())
+    conn = _CHOICES_CONNS.get(key)
+    if conn is None:
+        try:
+            conn = sqlite3.connect("file:%s?mode=ro" % key, uri=True)
+        except sqlite3.Error:
+            return None
+        _CHOICES_CONNS[key] = conn
     try:
-        conn = sqlite3.connect("file:%s?mode=ro" % db_path(), uri=True)
+        return sorted(check_values(conn, table, column)) or None
     except sqlite3.Error:
         return None
-    try:
-        vals = check_values(conn, table, column)
-        return sorted(vals) or None
-    except sqlite3.Error:
-        return None
-    finally:
-        conn.close()
 
 
 def check_vocab(conn, table: str, column: str, value, context: str):

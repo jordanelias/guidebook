@@ -342,21 +342,9 @@ def derive(payload, session, source_artefact, purpose="", ref_id=None, kind=None
     sha = hashlib.sha256(body).hexdigest()
     artefact = f"{sha[:16]}.json"
     (d / artefact).write_bytes(body)
-    # THE URI CARRIES THE CONTENT HASH, because _logged_payloads() is keyed by url and
-    # `out[rec["url"]] = ...` means a duplicate url silently evicts the earlier payload --
-    # file order, not intent, deciding which survives. Without the hash, two derivations
-    # from one source collide by construction, which is exactly what a CORRECTED
-    # transcription is: same source, same kind, different content.
-    uri = f"derived:{kind or 'extraction'}/{sha[:16]}/{source_artefact}"
-    with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
-        fh.write(json.dumps({
-            "retrieved_at": stamp or _now(), "url": uri, "purpose": purpose,
-            "ref_id": ref_id, "sha256": sha, "bytes": len(body),
-            "exit": 0, "status": None, "artefact": artefact,
-            "content_type": "application/json",
-            "derived": True, "derived_from": source_artefact,
-            "derivation_kind": kind or "extraction",
-        }, ensure_ascii=False) + "\n")
+    _append_derived(d, artefact=artefact, sha=sha, nbytes=len(body),
+                    source_artefact=source_artefact, kind=kind, purpose=purpose,
+                    ref_id=ref_id, content_type="application/json", stamp=stamp)
     return d / artefact
 
 
@@ -376,16 +364,35 @@ def record_file(path, session, source_artefact, purpose="", ref_id=None,
     path = Path(path)
     body = path.read_bytes()
     sha = hashlib.sha256(body).hexdigest()
+    _append_derived(d, artefact=path.name, sha=sha, nbytes=len(body),
+                    source_artefact=source_artefact, kind=kind, purpose=purpose,
+                    ref_id=ref_id,
+                    content_type="image/png" if path.suffix == ".png" else None,
+                    stamp=stamp)
+    return sha
+
+
+def _append_derived(d, *, artefact, sha, nbytes, source_artefact, kind, purpose,
+                    ref_id, content_type, stamp=None):
+    """The manifest line for a DERIVED artefact, written in exactly one place.
+
+    There was no manifest writer: fetch(), derive(), record_file() and
+    reconstruct_manifest() each assembled the dict by hand, and they had already drifted
+    -- reconstruct_manifest emits no ref_id, status or content_type; fetch emits no
+    `derived`. Four writers against one reader (_manifest_records) is the shape that lets
+    a new field reach three lines out of four. This collapses the two derived writers;
+    fetch() keeps its own because it carries HTTP facts (exit, status) that no derivation
+    has, and merging those branches would cost the promise its docstring makes.
+    """
     with open(d / "manifest.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps({
             "retrieved_at": stamp or _now(),
             "url": f"derived:{kind}/{sha[:16]}/{source_artefact}",
-            "purpose": purpose, "ref_id": ref_id, "sha256": sha, "bytes": len(body),
-            "exit": 0, "status": None, "artefact": path.name,
-            "content_type": "image/png" if path.suffix == ".png" else None,
+            "purpose": purpose, "ref_id": ref_id, "sha256": sha, "bytes": nbytes,
+            "exit": 0, "status": None, "artefact": artefact,
+            "content_type": content_type,
             "derived": True, "derived_from": source_artefact, "derivation_kind": kind,
         }, ensure_ascii=False) + "\n")
-    return sha
 
 
 def _session_stem(session):
@@ -540,6 +547,16 @@ _BIBLIO_FIELDS = (
                                       None)),
     ("publisher",      lambda m: m.get("publisher")),
 )
+
+# THE ONE HOME. db.py's _CORRECTABLE is built from this rather than restating it, because
+# its own header declares the invariant -- the correctable set is "EXACTLY what
+# retrieval_log --verify-authors can prove against a payload" -- and that invariant was
+# broken by hand within hours of being written: journal_name and publisher were added to
+# _CORRECTABLE and not here, which made correct-source's refusal message false. Two
+# hand-maintained tables that must agree, held together by a comment, is rule 5 in Python
+# inside the module that enforces rule 5 in the data. Now the invariant holds by
+# construction and a new field cannot be added to one side only.
+PAYLOAD_FIELDS = _BIBLIO_FIELDS
 
 # Columns any one of which may legitimately carry the payload's title. A
 # non-English source stores its native title in `pub_title` and the English in

@@ -2092,7 +2092,14 @@ def main():
                       help="REQUIRED when --verification-method tool: which tool "
                            "(crossref, pubmed, semantic-scholar, ...). Invariant I4b.")
     p_as.add_argument("--verification-status",
-                      choices=["VERIFIED", "UNVERIFIED"],
+                      # Read from the column, not restated. Migration 091 gave
+                      # verification_status a CHECK, and derived_not_curated_audit went
+                      # red on this literal within the same run -- the audit doing
+                      # exactly its job: the moment a vocabulary gains a home in the
+                      # schema, a hand-written copy of it becomes the second home rule 5
+                      # forbids.
+                      choices=dbcore.schema_choices("evidence_sources",
+                                                    "verification_status"),
                       help="REQUIRED in practice. VERIFIED requires an independent connector/registry hit "
                            "(CrossRef, PubMed, Semantic Scholar, a second citing source). A source found only "
                            "in one citing document's bibliography, with no independent hit, is UNVERIFIED "
@@ -3494,30 +3501,24 @@ def insert_evidence_source(data: dict, session: str,
 # EXACTLY what retrieval_log --verify-authors can prove against a payload. A field the
 # verifier cannot check is a field this writer must not touch, or the repository gains
 # a way to assert a bibliographic value that nothing can ever contradict.
-_CORRECTABLE = {
-    "pub_title":      lambda m: next((t for t in (m.get("title") or []) if t), None),
-    "volume":         lambda m: m.get("volume"),
-    "issue":          lambda m: m.get("issue"),
-    "article_number": lambda m: m.get("article-number"),
-    "pages":          lambda m: m.get("page"),
-    "pub_year":       lambda m: (((m.get("issued") or {}).get("date-parts") or [[]])[0]
-                                 or [None])[0],
-    # journal_name and publisher, added 2026-09-20. THE VENUE OF EVERY SOURCE IN THIS
-    # PROJECT EXISTED ONLY IN PROSE AND IN PAYLOADS -- GAP-031 recorded journal_name NULL
-    # on all 25 rows corpus-wide and named this writer's missing field as the reason. The
-    # batch that filed that gap then admitted a journal article, stamped it
-    # metadata_quality='COMPLETE', and left the journal name NULL, because the only
-    # repair path did not reach the column. author_fidelity did not catch it either: its
-    # comparison looks at volume, article-number and page and never at container-title,
-    # so a `journal_article` row with no journal name passed as complete.
-    #
-    # Crossref's `container-title` is a LIST, like `title`, and the first non-empty entry
-    # is the venue; `short-container-title` is the abbreviation and is deliberately not
-    # read here, because journal_abbrev is a different column.
-    "journal_name":   lambda m: next((t for t in (m.get("container-title") or []) if t),
-                                     None),
-    "publisher":      lambda m: m.get("publisher"),
-}
+def _correctable():
+    """The payload-backed columns, DERIVED from the verifier's own map.
+
+    Not a second list. `_BIBLIO_FIELDS` in retrieval_log is what --verify-authors can
+    actually prove against a payload, and this dict's contract is to be exactly that set
+    -- so it is that set, plus `pub_title`, which the verifier checks through `_TITLE_COLS`
+    instead (a non-English source stores its native title in pub_title and the English in
+    pub_title_en, so the verifier compares a SET of columns where this writer targets one).
+    That exception is stated here rather than left implicit.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                              # noqa: E402
+    out = {"pub_title": lambda m: next((t for t in (m.get("title") or []) if t), None)}
+    out.update(dict(retrieval_log.PAYLOAD_FIELDS))
+    return out
+
+
+_CORRECTABLE = _correctable()
 
 
 def _payload_for(ref_id, doi, log_session):
@@ -4029,6 +4030,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # constrains the free-text warrants (co1_provenance, notes, verification_note)
         # nor duplicates the specific gate below; a migration that gives any amendable
         # column a vocabulary arms this in the same commit, with nothing to update here.
+        dbcore.fk_declared(conn, "evidence_sources", field, replacement,
+                           f"amend-source --field {field}")
         dbcore.check_declared(conn, "evidence_sources", field, replacement,
                               f"amend-source --field {field}")
         if field == "verification_status":
@@ -6254,20 +6257,14 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
         if row is None:
             raise Refusal(f"amend-extraction: extraction_id {extraction_id}: no "
                           f"such row.")
-        if field == "root_ref_id":
-            # A FOREIGN KEY, SO IT IS CHECKED HERE AND NOT LEFT TO SQLite. root_ref_id was
-            # made amendable in the same change that gave v_unregistered_roots its
-            # 'rootless' arm -- the view immediately found a row of this batch's own
-            # (extraction 56) claiming a committee assertion with no root, and there was
-            # no writer that could point it at one. An amendment that can invent a ref_id
-            # is worse than no amendment, hence the existence check.
-            if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
-                                (value,)).fetchone():
-                raise Refusal(
-                    f"amend-extraction: root_ref_id {value!r} is not an admitted source. "
-                    f"A root must point at a row this project actually holds -- if the "
-                    f"root is outside the corpus, root_type 'untraced' is the honest "
-                    f"value. Nothing was written.")
+        # BOTH GATES, DERIVED, ON EVERY AMENDABLE FIELD. The first version of this gated
+        # one column by name -- `if field == "root_ref_id"` -- twenty lines below a
+        # generic check_declared in amend_source, which is the field-by-field shape rule 8
+        # forbids and which this very commit had just criticised. fk_declared reads
+        # PRAGMA foreign_key_list, so it is a no-op where no FK is declared and covers
+        # every amendable reference the day one becomes amendable.
+        dbcore.fk_declared(conn, "source_value_extractions", field, value,
+                           f"amend-extraction --field {field}")
         dbcore.check_declared(conn, "source_value_extractions", field, value,
                               "amend-extraction")
 

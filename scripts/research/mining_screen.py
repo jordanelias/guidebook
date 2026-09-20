@@ -51,19 +51,8 @@ def compile_screen(spec):
     return re.compile(r"\b(" + "|".join(spec["terms"]) + r")", re.I)
 
 
-def _title(ref, reading="unstructured"):
-    """The string a screen matches against.
-
-    `reading` selects WHICH transcription of a damaged entry is scored. For a Crossref
-    deposit there is only one and the argument does nothing. For a list extracted from a
-    scanned page there are two, and the difference between them is the measurement's
-    uncertainty rather than a detail: `unstructured` substitutes no letters, `inferred`
-    is the best reading with brackets on what was supplied. Scoring only the second
-    would let a generous transcription manufacture a yield, which is the failure this
-    whole module exists to prevent, one layer in.
-    """
-    if reading == "inferred" and ref.get("inferred"):
-        return ref["inferred"]
+def _title(ref):
+    """The string a screen matches against."""
     return (ref.get("article-title") or ref.get("volume-title")
             or ref.get("unstructured") or "")
 
@@ -165,24 +154,8 @@ def references_for(path):
     return refs if isinstance(refs, list) else None
 
 
-def score(refs, rx, reading="unstructured"):
-    return sum(1 for r in refs if rx.search(_title(r, reading)))
-
-
-def score_ceiling(refs, rx):
-    """The UPPER bound: an entry counts if EITHER reading matches.
-
-    Not `score(refs, rx, "inferred")`. _title returns the inferred reading whenever one
-    exists, DISCARDING the unstructured text for that entry -- and an inferred reading
-    inserts brackets mid-word ("P[s]yc[h]ology", "[Un]iversity"), so a term that matched
-    the raw text can fail against the reconstruction. Scanning only the inferred reading
-    therefore DROPS such entries from the ceiling, and max(floor, ceiling) only clamps the
-    aggregate, hiding it: 5 refs where 3 match unstructured only and 2 match inferred only
-    gives floor 3, inferred-scan 2, printed band "3" -- when the honest ceiling is 5.
-    A ceiling that can be lower than its floor is not a bound.
-    """
-    return sum(1 for r in refs
-               if rx.search(_title(r, "unstructured")) or rx.search(_title(r, "inferred")))
+def score(refs, rx):
+    return sum(1 for r in refs if rx.search(_title(r)))
 
 
 def main():
@@ -212,6 +185,10 @@ def main():
               file=sys.stderr)
         return 2
 
+    # Compiled once, not once per anchor: this sat inside the loop and recompiled
+    # every screen for every ref.
+    rxs = {n: compile_screen(screens[n]) for n in chosen}
+
     rows, skipped = [], []
     for rid in refs:
         cands = []
@@ -240,35 +217,32 @@ def main():
         # A band, not a point, wherever the transcription is uncertain. floor == ceiling
         # for a deposited list, and the band renders as a single number, so nothing about
         # the existing output changes for the anchors that had it before.
-        cells = {}
-        for n in chosen:
-            rx = compile_screen(screens[n])
-            floor = score(reflist, rx, "unstructured")
-            ceil = score_ceiling(reflist, rx) if prov == "SCRAPED" else floor
-            cells[n] = (floor, max(floor, ceil))
-        rows.append((rid, len(reflist), cells, prov))
+        rows.append((rid, len(reflist),
+                     {n: score(reflist, rxs[n]) for n in chosen}, prov))
 
     if not rows:
         print("EXAMINED: 0 — no payload carried a reference list. Not a zero yield.")
         return 1
-
-    def render(cell):
-        lo, hi = cell
-        return str(lo) if lo == hi else f"{lo}-{hi}"
 
     width = max(max(len(n) for n in chosen), 7)
     head = (f"{'ref':<12}{'refs':>6}  {'provenance':<11}"
             + "".join(f"{n:>{width + 2}}" for n in chosen))
     print(head)
     print("-" * len(head))
-    for rid, n, sc, prov in sorted(rows, key=lambda r: -r[2][chosen[0]][0]):
+    for rid, n, sc, prov in sorted(rows, key=lambda r: -r[2][chosen[0]]):
         print(f"{rid:<12}{n:>6}  {prov:<11}"
-              + "".join(f"{render(sc[n2]):>{width + 2}}" for n2 in chosen))
+              + "".join(f"{sc[n2]:>{width + 2}}" for n2 in chosen))
     print(f"\nEXAMINED: {len(rows)} anchor(s), "
           f"{sum(n for _, n, _, _ in rows)} reference(s)")
     if any(prov in ("SCRAPED", "READ") for *_, prov in rows):
-        print("\nPROVENANCE. DEPOSITED: the publisher's own reference list. "
-              "READ: transcribed from\nthe RENDERED PAGE of a scan. SCRAPED: taken off a damaged PDF TEXT LAYER, which\nis the unreliable one -- batch 19 read a mangled text layer as evidence the DOCUMENT\nwas illegible and was wrong about authors, years and a title's slope term. A range is\nfloor-ceiling and appears only for SCRAPED: the floor substitutes no letters, the\nceiling is a best guess at the damage. A zero on a SCRAPED list is weak evidence of\nabsence (CLAUDE.md 5a); on a READ list it is as good as the reader.")
+        print("\nPROVENANCE. DEPOSITED: the publisher's own reference list. READ: "
+              "transcribed from the\nRENDERED PAGE of a scan, via "
+              "scripts/research/page_image.py. SCRAPED: taken off a\ndamaged PDF TEXT "
+              "LAYER, which is the unreliable one -- batch 19 read a mangled text\nlayer "
+              "as evidence the DOCUMENT was illegible and was wrong about authors, years "
+              "and\na title's slope term. A SCRAPED list should be re-transcribed from "
+              "renders before\nits yield is trusted; a zero on one is weak evidence of "
+              "absence (CLAUDE.md 5a).")
     print(f"SCREENS: " + ", ".join(
         f"{n} v{screens[n].get('version', '?')}" for n in chosen))
     if skipped:

@@ -36,45 +36,38 @@ come from `governance/pipeline-contract.yaml`, table→stage from `governance/st
 """
 import argparse
 import json
-import os
+import re
 import sqlite3
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-# GUIDEBOOK_DB_PATH, not a hardcoded path. db_path_env_audit caught this on the first
-# run of this tool and the refusal is worth keeping in view: a script that ignores the
-# variable reads the COMMITTED database while a test believes it is reading a scratch
-# copy, so the test passes against the wrong bytes and says nothing about the change.
-DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO_ROOT / "data" / "guidebook.db"))
-CONTRACT = REPO_ROOT / "governance" / "pipeline-contract.yaml"
-STAGE_MAP = REPO_ROOT / "governance" / "stage-map.yaml"
+sys.path.insert(0, str(REPO_ROOT / "tools"))
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+import dbcore                          # noqa: E402
+import pipeline_walk as pw             # noqa: E402
+
+# THE SIBLING IS THE HOME FOR ALL OF THIS, and re-deriving it cost a measured error.
+# The first version of this module defined its own load_stages, load_stage_map,
+# connect_ro, live-table query and CLAUDE.md §4 unwritable probe -- all of which
+# tools/pipeline_walk.py already had. The stage/DB helpers were merely duplicated; the
+# UNWRITABLE probe was duplicated WRONG. pipeline_walk.unwritable() collapses the raw
+# probe to empty PARENTS and its docstring names three children it flags that are in
+# fact writable, because one db.py call inserts parent and child in the same
+# transaction. This page used the flat form and stamped "UNWRITABLE" on 18 tables --
+# including all three -- beside prose saying the table cannot take a row. Six root
+# causes reported as eighteen dead tables, with three of them false: CLAUDE.md 5(b),
+# prose contradicting the database, on a page whose whole claim is that nothing on it
+# is maintained by hand. pipeline_walk.py:130-143 already makes this argument about
+# importing a sibling rather than re-deriving ("two tools that answer the same question
+# differently about the same batch"), and sets the precedent by importing one itself.
 DEFAULT_OUT = REPO_ROOT / "tools" / "schema-walkability.html"
-INFRA = "infrastructure"
-
-
-def load_stages():
-    import yaml
-    with open(CONTRACT, encoding="utf-8") as fh:
-        return [s["id"] for s in yaml.safe_load(fh)["stages"]]
-
-
-def load_stage_map():
-    import yaml
-    with open(STAGE_MAP, encoding="utf-8") as fh:
-        doc = yaml.safe_load(fh)
-    return doc["tables"], doc.get("disputed", {})
-
-
-def connect_ro(path):
-    return sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+INFRA = pw.INFRA
 
 
 def collect(con):
     """Every fact the page renders, read off the live schema."""
-    tables = [r[0] for r in con.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' "
-        "AND name NOT LIKE 'sqlite_%' ORDER BY name")]
+    tables = pw.live_tables(con)
     views = [(r[0], r[1] or "") for r in con.execute(
         "SELECT name, sql FROM sqlite_master WHERE type='view' ORDER BY name")]
 
@@ -108,35 +101,35 @@ def collect(con):
     # SQL comment mentions evidence_source_authors, and the unstripped scan reported that
     # table as one the view reads. dbcore already has the stripper, so this reuses it
     # rather than writing a second one (rule 5).
-    sys.path.insert(0, str(REPO_ROOT / "scripts"))
-    import dbcore
+    #
+    # One tokenisation per view intersected with the live table list, rather than a
+    # hand-rolled word-boundary walk per (view, table) pair. Verified equivalent over all
+    # 20 live views: no table or view name in this schema contains a non-word character,
+    # so \w+ tokens and the boundary scan agree exactly.
+    tset = set(tables)
     views = [(v, dbcore._strip_sql_line_comments(sql)) for v, sql in views]
-
-    def named_in(sql, name):
-        i, n = 0, len(name)
-        while (i := sql.find(name, i)) != -1:
-            before = sql[i - 1] if i else " "
-            after = sql[i + n] if i + n < len(sql) else " "
-            if not (before.isalnum() or before == "_") and \
-               not (after.isalnum() or after == "_"):
-                return True
-            i += n
-        return False
-
-    view_reads = {v: sorted(t for t in tables if named_in(sql, t)) for v, sql in views}
+    view_reads = {v: sorted(set(re.findall(r"\w+", sql)) & tset) for v, sql in views}
     view_rows = {}
     for v, _ in views:
         try:
             view_rows[v] = con.execute(f'SELECT COUNT(*) FROM "{v}"').fetchone()[0]
         except sqlite3.Error:
             view_rows[v] = None
-    return tables, views, rows, cols, edges, view_reads, view_rows, empty
+    return tables, views, rows, cols, edges, view_reads, view_rows
 
 
 def build(con):
-    stages = load_stages()
-    stage_of, disputed = load_stage_map()
-    tables, views, rows, cols, edges, view_reads, view_rows, empty = collect(con)
+    stages = pw.load_stages(pw.CONTRACT)
+    stage_of, disputed = pw.STAGE_OF, pw.DISPUTED
+    # ROOTS, not leaves -- pw.unwritable() collapses the probe to the empty PARENTS and
+    # its docstring names the three children it would otherwise flag that are in fact
+    # writable. {parent: [child.col, ...]}.
+    tables, views, rows, cols, edges, view_reads, view_rows = collect(con)
+    dead_roots = pw.unwritable(con, tables)
+    dead_for = {}
+    for parent, children in dead_roots.items():
+        for ch in children:
+            dead_for.setdefault(ch.split(".", 1)[0], []).append((ch, parent))
 
     def stage(t):
         return stage_of.get(t, "UNASSIGNED")
@@ -166,13 +159,13 @@ def build(con):
 
     tinfo = []
     for t in tables:
-        dead = [e for e in out_by[t] if e["dead"]]
+        dead = dead_for.get(t, [])
         tinfo.append({
-            "name": t, "stage": stage(t), "rows": rows[t],
+            "name": t, "stage": pw.stage_label(stage(t)), "rows": rows[t],
             "cols": cols[t], "ncols": len(cols[t]),
             "out": out_by[t], "in": in_by[t],
             "unwritable": bool(dead),
-            "unwritable_via": [f'{e["col"]} -> {e["dst"]}' for e in dead],
+            "unwritable_via": [f"{ch} -> empty {parent}" for ch, parent in dead],
             "views": sorted(v["name"] for v in view_info if t in v["reads"]),
             "disputed": disputed.get(t),
             # An ISLAND has no foreign key in either direction. Rule 5 says reach a fact
@@ -200,15 +193,21 @@ def build(con):
     return {
         "schema_version": con.execute("PRAGMA user_version").fetchone()[0],
         "spine": stages,
-        "stage_order": stages + [INFRA, "UNASSIGNED"],
+        "stage_order": [pw.stage_label(x) for x in stages] + [INFRA, "UNASSIGNED"],
         "tables": tinfo,
         "views": view_info,
+        "dead_roots": dead_roots,
         "counts": {
             "tables": len(tinfo),
             "views": len(view_info),
             "edges": len(edges),
-            "empty": len(empty),
-            "unwritable": sum(1 for t in tinfo if t["unwritable"]),
+            "empty": sum(1 for t in tinfo if t["rows"] == 0),
+            # ROOTS, not leaves: the empty PARENTS are the finding and the child
+            # columns are their consequence. pipeline_walk reports it that way and
+            # its docstring records that the flat form over-reports; counting leaves
+            # here made this page say 18 dead tables where its sibling says 6 root
+            # causes, three of them known writable.
+            "unwritable": len(dead_roots),
             "islands": sum(1 for t in tinfo if t["island"]),
             "crossing_views": sum(1 for v in view_info if v["crosses"]),
         },
@@ -293,7 +292,7 @@ maintained by hand.</div>
 <div class="bar">
   <input type="search" id="q" placeholder="Filter tables and views&hellip;" autocomplete="off">
   <select id="stage"></select>
-  <button id="fUn">Unwritable</button>
+  <button id="fUn">Blocked by empty parent</button>
   <button id="fIs">Islands</button>
   <button id="fEm">Empty</button>
   <button id="fVw">Crossing views</button>
@@ -316,7 +315,7 @@ document.getElementById('spine').innerHTML='SPINE: <b>'+D.spine.join('</b> &rarr
 const C=D.counts;
 document.getElementById('stats').innerHTML=[
  ['tables',C.tables],['views',C.views],['fk edges',C.edges],['empty',C.empty],
- ['unwritable',C.unwritable],['islands',C.islands],['crossing views',C.crossing_views]
+ ['empty parents',C.unwritable],['islands',C.islands],['crossing views',C.crossing_views]
 ].map(([k,v])=>`<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('');
 
 const sg=document.getElementById('stage');
@@ -341,7 +340,7 @@ function renderList(){
   el.innerHTML=
    ts.map(t=>`<div class="row ${sel===t.name?'sel':''}" data-k="t:${esc(t.name)}">
      <span class="nm mono">${esc(t.name)}</span>
-     ${t.unwritable?'<span class="chip w">unwritable</span>':''}
+     ${t.unwritable?'<span class="chip w">blocked</span>':''}
      ${t.island?'<span class="chip">island</span>':''}
      <span class="ct">${t.rows}</span>
      <span class="chip">${esc(t.stage)}</span></div>`).join('')+
@@ -383,10 +382,17 @@ function show(key){
      <code>${esc(e.to_col)}</code>${e.notnull?' <span class="muted">(required there)</span>':''}</li>`).join('');
   el.innerHTML=`<h2 class="mono">${esc(t.name)}</h2>
    <div class="sub">stage <b>${esc(t.stage)}</b> &middot; ${t.rows} row(s) &middot; ${t.ncols} columns</div>
-   ${t.unwritable?`<div class="note"><b>UNWRITABLE.</b> ${t.unwritable_via.map(esc).join(', ')}.
+   ${t.unwritable?`<div class="note"><b>BLOCKED BY AN EMPTY PARENT.</b> ${t.unwritable_via.map(esc).join(', ')}.
      A NOT NULL foreign key into an emptied table refuses at INSERT, never at migration time
      (CLAUDE.md &sect;4) &mdash; so the schema looks healthy, a rebuild reproduces it exactly,
-     and every gate stays green over a table that cannot take a row.</div>`:''}
+     and every gate stays green.
+     <br><br><b>THIS OVER-REPORTS, deliberately.</b> The probe asks only whether the parent is
+     empty right now. Where one <code>db.py</code> call inserts parent and child in the same
+     transaction the write succeeds anyway &mdash; <code>connection_targets</code>,
+     <code>identity_medical_map</code> and <code>icf_medical_map</code> are flagged here and are
+     all fine. <b>Only a child whose parent NOTHING fills is dead.</b> The empty PARENT is the
+     finding; this row is its consequence. Same probe as <code>tools/pipeline_walk.py</code>,
+     imported rather than re-derived, so the two pages cannot disagree.</div>`:''}
    ${t.island?`<div class="note"><b>ISLAND.</b> No foreign key in either direction. Either it is
      standalone vocabulary, or its pointer was never built &mdash; and rule 5 says a fact is
      reached by pointer, so nothing here can be reached that way.</div>`:''}
@@ -437,9 +443,14 @@ def main():
     ap.add_argument("--check", action="store_true",
                     help="exit non-zero if the committed file is not a fresh render")
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    # --db and a CALL-TIME default, matching the three sibling generators. dbcore.db_path()
+    # honours GUIDEBOOK_DB_PATH and its docstring argues against the module-level constant
+    # this file first used: "a module-level constant captured at import would silently
+    # ignore that".
+    ap.add_argument("--db", type=Path, default=None)
     args = ap.parse_args()
 
-    con = connect_ro(DB)
+    con = pw.connect_ro(args.db or dbcore.db_path())
     try:
         data = build(con)
     finally:

@@ -508,3 +508,96 @@ page locator remains genuinely ambiguous (zero-based 162, one-based 163, printed
 **Gates after the repairs:** `research_batch_dod` 19/19, `test_db_integrity` 75/75,
 `run_checks --changed-from origin/main` PASS, `--selftest` PASS, `migrate_db --rebuild`
 reproduces, `regenerate_derived.sh` exits 0.
+
+---
+
+## 15. `/simplify` — four agents, and the answer to "did we fix it mechanically?" was no
+
+Four review agents (reuse, simplification, efficiency, altitude) over the same diff. The
+owner asked whether the fixes were mechanical. **They were not, and three of the four
+hand-patches were the same anti-pattern the fix was for.** Those are now closed.
+
+### The hand-patches, and what replaced them
+
+| hand-patch | mechanism that replaced it |
+|---|---|
+| grew `_AMENDABLE`/`_AMENDABLE_SVE_FIELDS` three times | **not fixed** — see below |
+| migration 090 hard-coded 3 of `root_type`'s 5 CHECK values | **091** rewrites the arm in COMPLEMENT form: `NOT IN ('untraced','derived_calculation')`, each exclusion carrying its reason |
+| `if field == "root_ref_id"` FK check | **`dbcore.fk_declared()`**, reading `PRAGMA foreign_key_list` — a no-op where no FK is declared, armed on both amend paths |
+| 089 did 1 column of 5 | **091** carries the other four in the rebuild 089 had already paid for |
+
+`_AMENDABLE` is the one I did **not** fix, and the reason is stated rather than skipped:
+inverting it to a complement-of-`_CORRECTABLE` derivation would widen the write surface
+across **97 columns, 79 of them currently unreachable**, and a wrong exclusion makes a bad
+value writable that no gate catches. That is a change to make deliberately, not at the end
+of a long session. GAP-013 already holds it; the measurement is added there.
+
+### The defect on the page I shipped
+
+`schema-walkability.html` stamped **UNWRITABLE on 18 tables** where `pipeline_walk.py`
+reports **6 empty parents** — and `pipeline_walk.unwritable()`'s docstring names three of
+my eighteen (`connection_targets`, `identity_medical_map`, `icf_medical_map`) as **known
+writable**, because one `db.py` call inserts parent and child in the same transaction. I
+re-derived a probe that already existed, and got it wrong. The tool now imports the
+sibling for stages, the stage map, `live_tables`, `connect_ro`, `stage_label` and the
+collapsed probe, reports roots, and carries the over-report caveat on the row itself.
+
+### Measured wins
+
+- **`dbcore.schema_choices` opened a fresh connection per call.** `db.py` builds 23 of
+  them at import, so **every invocation paid ~56 ms** before doing anything — 35% of
+  `db.py --help`. Memoized per resolved path (so `GUIDEBOOK_DB_PATH` still works):
+  **0.185s → 0.129s**, measured. At 60–136 invocations per research session that is
+  3.4–7.7 seconds each.
+- **The floor/ceiling band is deleted.** Measured: **zero rows print a range** — the only
+  SCRAPED payload is the superseded one the selection drops, and the corrected READ
+  transcription carries no `inferred` key. The band existed to bound damage the document
+  never had; `page_image.py` removed its reason to exist. The three-way provenance label
+  stays, with the caption now telling a reader to re-transcribe a SCRAPED list rather than
+  trust its yield. Its ceiling also had a real bug (it could fall *below* its floor) — the
+  review pass had fixed the bug inside apparatus that should not exist.
+- **B01–B05 now read `check_expression`.** Five hand-curated tuples, ~50 lines, retired;
+  the per-column prose moved into the migration headers where a vocabulary decision
+  belongs.
+
+### Shared homes
+
+- **`_CORRECTABLE` is derived from `retrieval_log.PAYLOAD_FIELDS`** plus `pub_title`, whose
+  exception is now stated. Its header declared the invariant *"EXACTLY what
+  --verify-authors can prove"*; two hand-maintained tables held together by a comment is
+  rule 5 in Python inside the module that enforces rule 5 in the data.
+- **One `_append_derived()`** behind `derive()` and `record_file()`. `fetch()` keeps its
+  own, deliberately: it carries HTTP facts (`exit`, `status`) no derivation has.
+- **`page_image` uses `retrieval_log.LOG_ROOT` and `_session_stem`.** It had computed its
+  own absolute path while `retrieval_log` resolves a relative, env-overridable one — from
+  `/tmp` the image landed in one tree and its attestation in another. `--session foo.md`
+  likewise split them; CLAUDE.md §7 names that trap.
+- **`named_in` collapsed** to one tokenisation intersected with the live table list,
+  verified equivalent across all 20 views.
+
+### And the audit caught me mid-fix
+
+Migration 091 gave `verification_status` a CHECK, and **`derived_not_curated_audit` went
+red in the same run** on `db.py`'s hand-written `choices=["VERIFIED","UNVERIFIED"]` — a
+literal that was fine while the column declared nothing and became a second home the
+instant it did not. That is the mechanism proving itself, and it is the strongest evidence
+in this section that moving vocabularies into the schema was the right altitude.
+
+**Gates:** `research_batch_dod` 19/19, `test_db_integrity` 75/75, `run_checks
+--changed-from origin/main` PASS, `--selftest` PASS, `migrate_db --rebuild` reproduces,
+`derived_not_curated_audit` CLEAN.
+
+### Skipped, with reasons
+
+- **Deriving amendability** (above) — GAP-013, too large to land safely here.
+- **Moving `spanned()` out of the renderer** into a shared home its three named consumers
+  (L1.8/L2.6/L3.5) can read. Correct, and `stage-map.yaml`'s "STILL OWED: a `pointer:`
+  list" should then close as *unnecessary* rather than be curated. Deferred as its own
+  change.
+- **Replacing `schema_walkability_fresh` with a check over `sqlite_master`.** The
+  objection is sharp — delete a cross-stage view, regenerate, and the freshness check is
+  green with the pointer gone — but designing that check is not a cleanup.
+- **`ensure-deps.sh` probing five deps in five interpreters** (~0.21 s per session start).
+  It is a hook, and the current shape catches the broken-import case its header documents.
+- **Emitting FK edges once instead of twice** in the page (18.6 KB, 15% of the payload).
+  Real, and not worth a JS index at this size.
