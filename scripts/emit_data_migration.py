@@ -52,85 +52,54 @@ RISKY_PATTERNS = [
     (re.compile(r"\bUPDATE\s+\w+\s+SET\s+[^;]+;", re.I), "UPDATE — check WHERE clause"),
 ]
 
-# Closed vocabularies that are enforced by an AUDIT rather than by a table CHECK, so SQLite
-# accepts a bad value silently and only test_db_integrity.py catches it — one integrity check
-# down, discoverable solely by diffing against the pre-batch DB.
+# ENUM_GUARDS DELETED 2026-09-21. It declared doi_resolution_outcome and
+# url_resolution_outcome as "enforced by an AUDIT rather than by a table CHECK, so SQLite
+# accepts a bad value silently" -- true when written, false since migrations 091 and 092
+# put both vocabularies into the columns' own CHECKs on both tables that carry them.
 #
-# WHY THIS EXISTS: the same wrong value ('NOT-APPLICABLE' in doi_resolution_outcome, whose
-# vocabulary is RESOLVED/NO-MATCH/REVERTED) was written in two consecutive research batches on
-# 2026-07-25. After the first, the lesson was recorded in prose — a session file, a PR body and
-# an attestation deviation — and prose did not prevent the repeat a few hours later. The fix
-# belongs at the point of writing, not in a document someone has to remember to re-read.
+# It was also INERT ON THE SANCTIONED WRITE PATH. Its Form-1 regex matched `col = 'X'`
+# unquoted; `scripts/research/emit_batch_sql.py` emits `"col" = 'X'`, and Form 2 matched
+# only a fixed sentinel list. Measured 2026-09-21: a quoted UPDATE and a quoted INSERT
+# carrying a bogus value both PASSED, as did the literal 2026-08-23 statement that wrote
+# 'UNVERIFIED' into doi_resolution_outcome -- the exact class this guard was built for, and
+# which migration 092's header records it missing, adding "A CHECK would have refused it at
+# INSERT." The CHECK is the fix; the guard never was.
 #
-# This is a BLOCKING check, not a warning: warnings are what the repeat slipped past.
-ENUM_GUARDS = [
-    ("doi_resolution_outcome", {"RESOLVED", "NO-MATCH", "REVERTED"},
-     "test_db_integrity.py [B03]"),
-    ("url_resolution_outcome", {"MATCHED", "PARTIAL", "NO-MATCH", "DEAD-LINK", "DEAD-DNS",
-                                "WAYBACK-MATCH", "WAYBACK-PARTIAL", "URL-NO-MATCH",
-                                "RESOLVED", "DEAD", "RESOLVED-PARTIAL"},
-     "test_db_integrity.py [B04]"),
-]
+# Deleting it also removes a second home that would have failed CLOSED on the next
+# widening: the CHECK, dbcore.check_values, argparse and B03/B04 all follow the schema
+# automatically, while a literal set here does not -- it would refuse a schema-legal value
+# while naming itself as the authority.
+#
+# RANGE_GUARDS below is NOT in the same state and stays: evidence_sources.tier is still a
+# bare INTEGER with no CHECK, so its stated premise holds.
 
 # Closed *integer ranges* enforced by an AUDIT rather than a table CHECK —
-# same gap as ENUM_GUARDS above, but ENUM_GUARDS structurally cannot cover
+# same gap the deleted ENUM_GUARDS covered, which structurally could not cover
 # them: it scans for `'QUOTED VALUE'` literals, and an out-of-range integer
-# literal (e.g. `tier = 7`) is unquoted, so it never matches ENUM_GUARDS' regex
+# literal (e.g. `tier = 7`) is unquoted, so it never matched that regex
 # at all. evidence_sources.tier is the T1-T6 (+ Co-1/Co-2 co-primary, mapped
 # onto tier 1/2 — see schemas/evidence_source.py:129-131, NOT separate integer
 # values) anchoring tier the whole evidence-strength doctrine
 # (governance/tier-system.md) runs on, and had zero coverage of any kind before
-# this guard: no CHECK constraint, no ENUM_GUARDS entry, no B-series vocabulary
+# this guard: no CHECK constraint, no enum-guard entry, no B-series vocabulary
 # check. NULL is permitted (schemas/evidence_source.py:42); this guards values
 # that are *present*, not presence itself. 1-6 is the already-ratified boundary
 # (schemas/evidence_source.py:85) — this does not invent, extend, or
 # reinterpret the tier vocabulary.
 #
 # Shape: (column, min, max, enforced_by). `column` is matched bare (like
-# ENUM_GUARDS), not table-qualified: `case_study_outcomes.tier` is a distinct
+# the deleted ENUM_GUARDS), not table-qualified: `case_study_outcomes.tier` is a distinct
 # column with its own, stricter DB-level CHECK (1-3, see
 # scripts/migrations/057_baseline_2026-08-12.sql:918) that this guard's wider
 # 1-6 band cannot false-positive against, since 1-3 is a strict subset of 1-6.
 #
-# BLOCKING, same as ENUM_GUARDS — not a warning.
+# BLOCKING — not a warning. (ENUM_GUARDS, its former sibling, was deleted
+# 2026-09-21 once 091/092 gave its two vocabularies real CHECKs; this one
+# stays because `tier` still has none.)
 RANGE_GUARDS = [
     ("tier", 1, 6, "test_db_integrity.py [B10/B11]"),
 ]
 
-
-def check_enum_guards(sql: str) -> list:
-    """Return violations of the audit-enforced closed vocabularies.
-
-    Scans for `'VALUE'` literals appearing near a guarded column name — both the
-    `SET col='X'` form and the positional-INSERT form where the column appears in a column
-    list. Deliberately conservative: it reports a value only when that value is not in the
-    vocabulary AND is not obviously a placeholder (NULL / bind parameter).
-    """
-    violations = []
-    for col, allowed, enforced_by in ENUM_GUARDS:
-        if col not in sql:
-            continue
-        # Form 1: explicit assignment — col = 'VALUE'
-        for m in re.finditer(rf"{col}\s*=\s*'([^']*)'", sql, re.I):
-            if m.group(1) not in allowed:
-                violations.append((col, m.group(1), allowed, enforced_by))
-        # Form 2: the column is named in an INSERT column list. We cannot map positions
-        # reliably, so flag any literal in the statement that looks like a member of a
-        # RESOLUTION vocabulary but is not in this one — catches NOT-APPLICABLE, N/A, etc.
-        if re.search(rf"\b{col}\b", sql, re.I):
-            suspicious = {"NOT-APPLICABLE", "NOT APPLICABLE", "N/A", "NA", "NONE",
-                          "UNKNOWN", "PENDING", "NOT-CHECKED", "UNRESOLVED"}
-            for m in re.finditer(r"'([A-Z][A-Z /-]{2,24})'", sql):
-                v = m.group(1).strip()
-                if v in suspicious and v not in allowed:
-                    violations.append((col, v, allowed, enforced_by))
-    # de-duplicate while preserving order
-    seen, out = set(), []
-    for v in violations:
-        if v[:2] not in seen:
-            seen.add(v[:2])
-            out.append(v)
-    return out
 
 
 def _split_sql_values(tuple_body: str) -> list:
@@ -492,7 +461,7 @@ def _coerce_int_field(field: str):
 def check_range_guards(sql: str) -> list:
     """Return violations of the audit-enforced closed integer ranges.
 
-    Two forms, mirroring check_enum_guards:
+    Two forms, mirroring the deleted check_enum_guards:
 
     Form 1 — direct assignment, `UPDATE ... SET col = N`. Scoped to the
     SET-clause text of each UPDATE statement (never a WHERE/ON/HAVING
@@ -505,7 +474,7 @@ def check_range_guards(sql: str) -> list:
     Form 2 — positional INSERT (`INSERT INTO t (a, col, b) VALUES (1, N,
     2)`, `INSERT OR REPLACE`, quoted/schema-qualified table names, multi-row
     VALUES, statements with or without a trailing `;`): unlike
-    check_enum_guards' Form 2, this maps the guarded column's actual
+    the deleted check_enum_guards' Form 2, this maps the guarded column's actual
     position in the declared column list to the same position in each
     VALUES tuple, rather than scanning the whole statement for suspicious
     literals — an integer column list nearly always contains *other*
@@ -713,21 +682,6 @@ def main():
     if warnings:
         for w in warnings:
             print(f"  WARNING: detected risky pattern — {w}", file=sys.stderr)
-
-    # Audit-enforced enum vocabularies — BLOCKING (see ENUM_GUARDS rationale).
-    enum_violations = check_enum_guards(sql)
-    if enum_violations:
-        print("  ERROR: value outside an audit-enforced vocabulary — migration NOT emitted.",
-              file=sys.stderr)
-        for col, val, allowed, enforced_by in enum_violations:
-            print(f"    {col}: '{val}' is not permitted. Allowed: "
-                  f"{', '.join(sorted(allowed))}", file=sys.stderr)
-            print(f"      Enforced by {enforced_by}. SQLite has no CHECK on this column, so a "
-                  f"bad value applies silently and only shows up as a lost integrity check.",
-                  file=sys.stderr)
-            print(f"      If the value is genuinely inapplicable (e.g. a source with no DOI), "
-                  f"use NULL — not a sentinel string.", file=sys.stderr)
-        sys.exit(1)
 
     # Audit-enforced integer ranges — BLOCKING (see RANGE_GUARDS rationale).
     range_violations = check_range_guards(sql)

@@ -598,8 +598,14 @@ def run_checks(db_path):
         unsound = conn.execute(f"""
             SELECT COUNT(DISTINCT c.specification_id)
             FROM specifications c
-            JOIN json_each(c.governing_refs) j
-            JOIN evidence_sources e ON e.ref_id = j.value
+            -- THE JUNCTION, not json_each over the retired copy. `governing_refs` is
+            -- NULL on every row written after the 2026-09-21 writer-retire, and
+            -- json_each(NULL) yields NO ROWS -- so this BLOCKING gate would have
+            -- examined nothing and passed green over exactly the cells it exists to
+            -- catch. CLAUDE.md 5(a), a gate that passes having examined nothing.
+            JOIN specification_source_links j
+              ON j.specification_id = c.specification_id AND j.role = 'governing'
+            JOIN evidence_sources e ON e.ref_id = j.ref_id
             WHERE c.state IN ('stated','provisional')
               AND c.retired_at IS NULL
               AND COALESCE(e.verification_status,'') NOT IN ({ph})""",
@@ -1020,7 +1026,7 @@ def run_checks(db_path):
     # section. Migration 044's header called for it; it is here now, covering
     # both junctions. Each is checked in BOTH directions: a one-way check would
     # pass while the junction quietly lost rows.
-    print("\n[H] JSON-array ↔ junction parity")
+    print("\n[H] JSON-array ↔ junction parity — RETIRED, see below")
 
     # Both edge columns carry a table-level CHECK (json_valid(...)), so text
     # that is not JSON at all cannot be written — fault-injection confirms the
@@ -1032,8 +1038,6 @@ def run_checks(db_path):
     # in 13 of its 25 non-empty rows, a count in a column whose other rows hold
     # a list. So every parity query is scoped to rows that are demonstrably
     # arrays, and the rows that are not are reported by H06 rather than dropped.
-    ARRAY_ROWS = ("{t}.{c} IS NOT NULL AND {t}.{c} != '' "
-                  "AND json_valid({t}.{c}) AND json_type({t}.{c}) = 'array'")
 
     # search_executions.admitted_ref_ids was REMOVED from this tuple 2026-08-24.
     # The junction search_admissions is now its sole home (owner ruling: point,
@@ -1041,38 +1045,35 @@ def run_checks(db_path):
     # would compare an empty set against a populated junction and pass — a gate
     # examining nothing. Deleted rather than left green. The column itself
     # survives because committed data migrations INSERT it.
-    EDGE_JSON = (("specifications", "governing_refs"),)
 
-    def _parity(tid_a, tid_b, label, junction, jcols, table, tcol, key):
-        jk, rk = jcols
-        arrays = ARRAY_ROWS.format(t="t", c=tcol)
-        extra = conn.execute(f"""
-            SELECT COUNT(*) FROM {junction} j WHERE NOT EXISTS (
-              SELECT 1 FROM {table} t, json_each(t.{tcol}) je
-              WHERE {arrays} AND t.{key} = j.{jk} AND je.value = j.{rk})
-        """).fetchone()[0]
-        missing = conn.execute(f"""
-            SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je
-            WHERE {arrays} AND NOT EXISTS (
-              SELECT 1 FROM {junction} j WHERE j.{jk} = t.{key} AND j.{rk} = je.value)
-        """).fetchone()[0]
-        # Each direction declares the set IT walked, not the union. They differ:
-        # the junction can hold rows the JSON never mentions and vice versa, which
-        # is the whole reason both directions exist.
-        n_junction = conn.execute(f"SELECT COUNT(*) FROM {junction}").fetchone()[0]
-        n_entries = conn.execute(
-            f"SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je WHERE {arrays}"
-        ).fetchone()[0]
-        record(tid_a, f"{label}: every junction row is in the JSON", extra == 0,
-               f"{extra} rows in {junction} with no matching {tcol} entry" if extra else "",
-               subject=n_junction)
-        record(tid_b, f"{label}: every JSON entry is in the junction", missing == 0,
-               f"{missing} {tcol} entries with no {junction} row" if missing else "",
-               subject=n_entries)
 
-    _parity("H01", "H02", "specification_source_links ↔ governing_refs",
-            "specification_source_links", ("specification_id", "ref_id"),
-            "specifications", "governing_refs", "specification_id")
+    # H01/H02 DELETED 2026-09-21, for the reason H03/H04 and H05 were, and which the
+    # comment three lines below has stated since 2026-08-24: "A parity check between two
+    # homes of one fact does not prevent drift; it makes the second home survivable, and
+    # therefore permanent." H01/H02 was the last instance of that shape still standing,
+    # and it was holding `specifications.governing_refs` alive: the engine wrote the JSON
+    # copy SO THAT this check would pass, and assess_cell said so in its own comment.
+    #
+    # The copy is now retired instead of policed. `specification_source_links` is the one
+    # home; every reader was switched to it (validate_evidence_state's anti-hallucination
+    # gate, validate_verification_consistency's dangling-ref check, C10 above,
+    # derivation_handshake_integrity, register_integrity_check, pipeline_completeness);
+    # the writer stopped setting the JSON, which is rule 5's "NULL forward" because twelve
+    # committed data migrations INSERT the column and rule 3 makes those immutable.
+    #
+    # The blocker this retirement was deferred on did not exist: migration 077 re-keyed
+    # derivation_sha onto the graded link set and recorded that it was noting this "so the
+    # next session knows the blocker is gone rather than rediscovering it". K01's pilot-2
+    # branch still reads the frozen arrays, and must -- it verifies historical rows
+    # replayed from migration history, which is frozen history checked as frozen history.
+    #
+    # H06 and H07 went with them. H06's own comment says it is "what makes H01-H04
+    # non-vacuous"; with those gone it has no dependent. H07 compared array-entry counts
+    # against junction-row counts over this one column, and its own comment records that
+    # retiring a JSON column while leaving H07's separate tuple list made it "comparing 0
+    # array entries against 10 junction rows and reporting a false repeat. A second
+    # reference, in the same file, missed by the first sweep." That warning is honoured
+    # here rather than re-earned.
 
     # H03/H04 DELETED 2026-08-24 — they policed a dual-write that no longer
     # happens. A parity check between two homes of one fact does not prevent
@@ -1098,45 +1099,14 @@ def run_checks(db_path):
     # updates it thereafter. Current yield is COUNT(search_admissions); the execution
     # row keeps what it found.
 
-    # H06 is what makes H01–H04 non-vacuous: they only compare rows that are
-    # JSON arrays, so a column drifting into some other shape would quietly
-    # shrink the comparison set rather than fail it. This names that drift.
-    nonarray, h06_subject = [], 0
-    for table, tcol in EDGE_JSON:
-        h06_subject += subj(f"SELECT COUNT(*) FROM {table} t "
-                            f"WHERE t.{tcol} IS NOT NULL AND t.{tcol} != ''")
-        n = conn.execute(f"""SELECT COUNT(*) FROM {table} t
-            WHERE t.{tcol} IS NOT NULL AND t.{tcol} != ''
-              AND NOT (json_valid(t.{tcol}) AND json_type(t.{tcol}) = 'array')
-        """).fetchone()[0]
-        if n:
-            nonarray.append(f"{table}.{tcol}: {n}")
-    record("H06", "edge JSON columns hold arrays, not scalars or malformed text",
-           not nonarray, "; ".join(nonarray), subject=h06_subject)
-
-    # A ref repeated inside one array collapses to a single junction row (the
-    # PK dedupes it), and both parity directions still pass — the junction
-    # contains it and every entry is found. Only a count comparison sees it.
-    dup, h07_subject = [], 0
-    for junction, jk, rk, table, tcol, key in (
-        ("specification_source_links", "specification_id", "ref_id",
-         "specifications", "governing_refs", "specification_id"),
-        # search_admissions/admitted_ref_ids REMOVED 2026-08-24 with H03/H04.
-        # H07 keeps its OWN tuple list rather than reading EDGE_JSON, so
-        # retiring the JSON column from EDGE_JSON alone left this comparing 0
-        # array entries against 10 junction rows and reporting a false repeat.
-        # A second reference, in the same file, missed by the first sweep.
-    ):
-        arrays = ARRAY_ROWS.format(t="t", c=tcol)
-        entries = conn.execute(
-            f"SELECT COUNT(*) FROM {table} t, json_each(t.{tcol}) je WHERE {arrays}"
-        ).fetchone()[0]
-        edges = conn.execute(f"SELECT COUNT(*) FROM {junction}").fetchone()[0]
-        h07_subject += entries + edges
-        if entries != edges:
-            dup.append(f"{tcol} has {entries} entries but {junction} has {edges} rows")
-    record("H07", "no id repeats inside a single JSON edge array", not dup,
-           "; ".join(dup), subject=h07_subject)
+    # H06 and H07 DELETED 2026-09-21 with H01/H02 — see the record above. H06 existed,
+    # in its own words, as "what makes H01–H04 non-vacuous"; with those gone it has no
+    # dependent. H07 compared array-entry counts to junction-row counts over
+    # `specifications.governing_refs` alone, and its own comment warned that retiring a
+    # JSON column while leaving H07's separate tuple list makes it compare 0 array entries
+    # against a populated junction "and report a false repeat" — which is precisely what
+    # the writer-retire would have caused. ARRAY_ROWS and EDGE_JSON went with them, having
+    # no remaining reader.
 
     # ── J: RETIRED 2026-09-10 by migration 073 ────────────────────────────────
     # J01/J02/J03 policed `source_value_extractions.item_code` -- the hop-4

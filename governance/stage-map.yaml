@@ -41,8 +41,8 @@ judged_on: '2026-09-17'
 # are pointers out of a convergence_assessment row, and a junction cannot sit in a
 # different stage from the row it decomposes (the same reasoning the `disputed:` block
 # below records for extraction_relations); and `amendments` (migration 094) as
-# INFRASTRUCTURE -- it records the repository's own corrections rather than pipeline
-# content, which is why data_migrations and decisions sit there too. Both were caught by
+# INFRASTRUCTURE -- since dropped by migration 095, which nothing read. Only
+# `convergence_sources` remains of that pair. It was caught by
 # this file's OWN falsifier (`pipeline_walk.py --check` reported them unassigned within a
 # minute of the migrations landing), which is the behaviour its header asks for.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
@@ -57,7 +57,6 @@ tables:
   base_icf: base
   base_parameters: base
   base_taxonomy_medical: base
-  amendments: infrastructure
   bpc_metadata: infrastructure
   case_studies: evidence
   case_study_outcomes: evidence

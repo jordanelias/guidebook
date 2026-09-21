@@ -156,9 +156,14 @@ def gather(con: sqlite3.Connection) -> dict:
         provisional=state_counts.get("provisional", 0),
         pending=state_counts.get("pending", 0),
         not_applicable=state_counts.get("not_applicable", 0),
+        # Counted through the junction, not the JSON copy: `governing_refs` is frozen
+        # history since the writer retired it, so a row written after that carries NULL
+        # and this metric would report 0% on a corpus that is fully cited.
         govrefs_ok=scalar(
-            "SELECT COUNT(*) FROM specifications WHERE retired_at IS NULL AND state IN ('stated','provisional') "
-            "AND governing_refs IS NOT NULL AND TRIM(governing_refs)<>''"),
+            "SELECT COUNT(*) FROM specifications s WHERE s.retired_at IS NULL "
+            "AND s.state IN ('stated','provisional') AND EXISTS ("
+            "  SELECT 1 FROM specification_source_links l "
+            "  WHERE l.specification_id = s.specification_id AND l.role = 'governing')"),
         govrefs_denom=scalar(
             "SELECT COUNT(*) FROM specifications WHERE state IN ('stated','provisional') AND retired_at IS NULL"),
         convergence=scalar("SELECT COUNT(*) FROM convergence_assessment"),

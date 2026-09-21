@@ -46,6 +46,10 @@ import sys
 import yaml
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# scripts/ on the path so `dbcore` resolves when this module is imported by a test
+# rather than run as a script (sys.path[0] is the test's directory then, not this one).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import dbcore  # noqa: E402
 
 from schemas.evidence_state import EvidenceStateRecord
 from schemas.evidence_source import EvidenceSource
@@ -282,9 +286,15 @@ def validate_cell_states_db(conn, gap_ids: set):
         # anti-hallucination gate (DR-2026-07-12-evidence-cell-state-schema-reconciliation.md):
         # stated/provisional cells must cite the sources that establish them
         if state in ("stated", "provisional"):
-            refs = _jlist(governing_refs)
-            if not refs or _bad_json(refs):
-                errors.append(f"{tag}: state {state!r} requires non-empty governing_refs "
+            # READ THE JUNCTION, not the JSON copy. `specifications.governing_refs` is
+            # frozen history: the writer stopped setting it, so a row written after that
+            # carries NULL and this gate would see [] and fire on every new determination
+            # -- or, had the check been the other way round, stop firing silently. The
+            # junction carries a real FK per ref_id and is what the render path reads.
+            refs = dbcore.governing_refs(conn, specification_id)
+            if not refs:
+                errors.append(f"{tag}: state {state!r} requires at least one governing "
+                               f"source in specification_source_links "
                                f"(anti-hallucination gate)")
 
         # Tier-3-alone stated threshold (DR-2026-07-12-tier3-stated-threshold.md)

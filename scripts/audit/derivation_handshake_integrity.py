@@ -116,7 +116,10 @@ def main(argv=None):
         sid, pid = s["specification_id"], s["parameter_id"]
         # The cell's best anchor, read the way derivation_handshake() reads it: the
         # strongest tier among the sources the determination actually governs on.
-        govern = json.loads(s["governing_refs"]) if s.get("governing_refs") else []
+        # The junction, not the JSON copy (frozen history since the writer retired it).
+        govern = [r[0] for r in con.execute(
+            "SELECT ref_id FROM specification_source_links "
+            "WHERE specification_id = ? AND role = 'governing' ORDER BY ref_id", (sid,))]
         best = 6
         if govern:
             q = ",".join("?" * len(govern))

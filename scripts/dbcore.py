@@ -720,6 +720,29 @@ def _writer_tables() -> set:
     return found
 
 
+def governing_refs(conn, specification_id) -> list:
+    """The sources a determination rests on, read from the junction.
+
+    ONE ACCESS PATH FOR ONE FACT. `specifications.governing_refs` holds the same
+    ref_ids as a JSON array, and that copy is frozen history: twelve committed data
+    migrations INSERT it, so rule 3 makes it undroppable, and rule 5's sequence for a
+    column that cannot be dropped is writer-retire, reader-retire, NULL forward. A row
+    written after that retirement carries NULL there, so a reader still parsing the
+    JSON sees [] and its gate stops firing without going red -- which is precisely how
+    the Tier-3-alone gate broke after migration 093 did this for convergence.
+
+    The `role` filter is not decoration: `specification_source_links.role` carries a
+    CHECK admitting only 'governing' today, and without the filter these two
+    definitions agree only until a second role exists (build_site.py already filters
+    for the same reason). Verified 2026-09-21 against all 8 live rows: the junction
+    under role='governing' reproduces the JSON exactly.
+    """
+    return [r[0] for r in conn.execute(
+        "SELECT ref_id FROM specification_source_links "
+        "WHERE specification_id = ? AND role = 'governing' ORDER BY ref_id",
+        (specification_id,))]
+
+
 def writable_tables(conn) -> list:
     """Tables a session may write, in an order safe to replay: parents before children.
 

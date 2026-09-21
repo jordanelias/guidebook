@@ -2004,8 +2004,10 @@ def main():
     p_as.add_argument("--url-accessed")
     p_as.add_argument("--pages")
     p_as.add_argument("--doi-resolution-outcome",
-                      help="RESOLVED | NO-MATCH | REVERTED — the set is DEFINED by "
-                           "ENUM_GUARDS in scripts/emit_data_migration.py, not here")
+                      choices=dbcore.schema_choices("evidence_sources",
+                                                    "doi_resolution_outcome"),
+                      help="Read from the column's own CHECK (rule 8), live since "
+                           "migration 091")
     # ADDED 2026-09-18 (batch 18): the venue fields that make a REPORT citable.
     # A government report with no institution and no report number cannot be rendered
     # into a bibliography -- see the _ES_COLS note for how REF-01005 exposed this.
@@ -3977,30 +3979,19 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     # and I4 alike, and test_db_integrity reports 74/74 over it. A guard that does not
     # see the row it is cited as guarding is not a guard.
     #
-    # A typo was equally unstopped: `verification_status` has no CHECK in the schema
-    # and no ENUM_GUARDS entry, so 'verrified' stored cleanly -- and silently removed
+    # A typo was equally unstopped: at the time `verification_status` had no CHECK in
+    # the schema and no enum-guard entry (migration 091 has since given it one, and
+    # ENUM_GUARDS was deleted 2026-09-21), so 'verrified' stored cleanly -- and removed
     # the row from every I-check's subject set, since all of them filter on the
     # literal 'VERIFIED'. add-source gated the same column with argparse choices; this
     # writer gated nothing. The vocabularies did NOT "stay gated where they were".
-    if field == "doi_resolution_outcome":
-        # ENUM_GUARDS OWNS THIS SET; this reads it rather than retyping it. The first
-        # cut hard-coded ("RESOLVED","NO-MATCH","REVERTED") in a message that named
-        # ENUM_GUARDS as the real home in the same breath -- rule 8's "never curate a
-        # fact the machine can compute", committed beside its own citation. Nothing
-        # would have caught the drift either: derived_not_curated_audit scans argparse
-        # `choices=` literals, so a tuple inside an `if x not in (...)` is invisible to
-        # it. `dbcore.check_vocab` is deliberately NOT used here -- the column has no
-        # CHECK, so check_vocab falls back to the LIVE values, which today are
-        # {NO-MATCH, RESOLVED} only, and it would refuse REVERTED: a legal value with
-        # no row yet carrying it.
-        from emit_data_migration import ENUM_GUARDS  # noqa: E402
-        _permitted = {c: v for c, v, *_ in ENUM_GUARDS}["doi_resolution_outcome"]
-        if replacement not in _permitted:
-            raise Refusal(
-                f"{ref_id}: doi_resolution_outcome must be one of "
-                f"{sorted(_permitted)}, got {replacement!r}. The set is ENUM_GUARDS in "
-                f"scripts/emit_data_migration.py, which enforces it at migration time; "
-                f"refusing here means the refusal arrives before the row is written.")
+    # The doi_resolution_outcome special case was DELETED 2026-09-21 with ENUM_GUARDS.
+    # It existed because the column had no CHECK, so the generic path could not gate it and
+    # `check_vocab` would have fallen back to the live values and refused REVERTED -- legal,
+    # with no row yet carrying it. Migration 091 gave the column a real CHECK, so
+    # `dbcore.check_declared` below now refuses a bad value from the schema itself and
+    # accepts REVERTED. Verified before deleting: check_declared refuses 'BOGUS' and admits
+    # 'REVERTED'. One home, and it is the schema's.
     if tier is not None and field != "scope":
         raise Refusal(
             f"{ref_id}: --tier is only admissible beside --field scope. The tier is "
@@ -4145,28 +4136,20 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"{ref_id}: --tier {tier} contradicts the ladder, which derives "
                     f"{_derived} from ({_et}, {replacement}).")
         stamp = audit(session)
-        # THE STRUCTURED FACTS GO IN COLUMNS (migration 094). Until today this path had
-        # `field`, `was`, `replacement`, `reason` and the stamp all in hand and concatenated
-        # five of them into a sentence, so "what did this session correct" could not be
-        # asked and no gate could see a correction at all. `amendments` holds them as
-        # columns; `metadata_integrity_detail` keeps the WARRANT only, which is the half
-        # that is genuinely an argument and the half metadata_integrity_audit.py prints.
-        _amend = [(field, was, replacement, reason)]
-        if new_tier is not None:
-            _amend.append(("tier", str(old_tier), str(new_tier),
-                           "Derived from (evidence_type, scope) by the ratified ladder, in "
-                           "the same statement as the scope. The tier is not a free field."))
-        for _f, _wasv, _nowv, _why in _amend:
-            conn.execute(
-                "INSERT INTO amendments (table_name, row_key, field, value_was, value_now, "
-                "reason, amended_at, amended_by_session) VALUES (?,?,?,?,?,?,?,?)",
-                ("evidence_sources", ref_id, _f, _wasv, _nowv, _why,
-                 stamp["created_at"], stamp["created_by_session"]))
+        # THE LEDGER IS THE RECORD, and it is prose on purpose. Migration 094 added an
+        # `amendments` table here and 095 dropped it: nothing read it, seven other amending
+        # paths never wrote it, and this writer put `reason` into BOTH the table and the
+        # ledger below -- so the warrant had two homes and the unread one was the
+        # structured copy. 095's header records what a reader would have to be for the
+        # register to be worth re-creating. Until then the warrant lives here, in the
+        # column `metadata_integrity_audit.py` actually reads.
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
-        ledger += f" || {stamp['created_at'][:10]} {field}: {reason}"
+        ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
+                   f"Replaced text was: {was!r}")
         if new_tier is not None:
-            ledger += (f" || {stamp['created_at'][:10]} tier derived from (evidence_type, "
-                       f"scope) by the ratified ladder in the same statement as the scope.")
+            ledger += (f" || {stamp['created_at'][:10]} tier CORRECTED {old_tier} -> "
+                       f"{new_tier}, derived from (evidence_type, scope) by the "
+                       f"ratified ladder in the same statement as the scope.")
         _sets, _vals = [f"{field}=?"], [replacement]
         if new_tier is not None:
             _sets.append("tier=?"); _vals.append(new_tier)

@@ -57,8 +57,10 @@ def schema_ddl():
         # `convergence_sources` 2026-09-20: migration 093 moved the five JSON source arrays
         # into a junction with a real FK per ref_id, and validate_convergence_db reads it
         # now. A fixture without it builds a schema the validator cannot query at all.
+        # `specification_source_links` 2026-09-21: the anti-hallucination gate reads the
+        # junction now, not `specifications.governing_refs`. A fixture is a caller.
         "  OR name IN ('base_parameters','base_icf','access_needs','base_taxonomy_medical',"
-        "              'convergence_sources'))")]
+        "              'convergence_sources','specification_source_links'))")]
     con.close()
     if not live:
         print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",
@@ -170,18 +172,23 @@ def clean(c):
     conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"])
     # governing_refs is required on 'stated' (anti-hallucination gate, §2.7). The
     # baseline predated that rule, so it was not clean once the fixture caught up.
-    c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id,governing_refs) "
-              "VALUES (1,1,'AUT','stated','population',1,'[\"REF-1\"]')")
+    c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id) "
+              "VALUES (1,1,'AUT','stated','population',1)")
+    # Through the junction: `governing_refs` is retired and a row written today leaves it
+    # NULL, so stating the ref in the JSON would no longer satisfy the gate.
+    c.execute("INSERT INTO specification_source_links(specification_id,ref_id,role) "
+              "VALUES (1,'REF-1','governing')")
 check("clean stated+convergent → 0 errors", run(clean) == [])
 
-# stated without governing_refs — the anti-hallucination gate. Untested until now:
-# the rule postdates this file, and the clean baseline was the only 'stated' row.
-check("stated without governing_refs caught (anti-hallucination gate)",
+# stated with NO governing source — the anti-hallucination gate. The row below writes no
+# specification_source_links entry, which since the 2026-09-21 retirement is the only way
+# to state one: a row leaves `governing_refs` NULL now, so the JSON cannot answer this.
+check("stated without a governing source caught (anti-hallucination gate)",
       has(run(lambda c: (
           conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"]),
           c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id) "
                     "VALUES (1,7,'MOB','stated','population',1)"))),
-          "stated", "governing_refs"))
+          "stated", "specification_source_links"))
 
 # pending without gap
 check("pending without gap_register_id caught",
