@@ -2006,7 +2006,12 @@ def main():
                 conf["basis"] if conf else None,
                 gap_id, None,
                 det["tier_basis"],
-                json.dumps(det["governing_refs"]) if det["governing_refs"] else None,
+                # WRITER-RETIRE (2026-09-21). `governing_refs` is no longer written: the
+                # junction below is the home, with a real FK per ref_id. The column is NOT
+                # dropped and cannot be -- twelve committed data migrations INSERT it and
+                # rule 3 makes those immutable -- so this is rule 5's "NULL forward", and
+                # rows written before today keep their arrays as frozen history.
+                None,
                 RULE_VERSION, det["derivation_sha"], det["code_floor_only"],
                 # value_min, value_max, value_unit -- literal None here from the 057
                 # baseline until 078, which is why the specification stage emitted the
@@ -2050,22 +2055,21 @@ def main():
         sql_lines.append(f"INSERT INTO specifications ({cols}) VALUES (" +
                          ", ".join(q(v) for v in vals) + ");")
 
-        # THE JUNCTION, not just the JSON. The engine wrote only
-        # specifications.governing_refs until 2026-09-10, and test_db_integrity H02 —
-        # BLOCKING — asserts "every JSON entry is in the junction". Reproduced before
-        # fixing: one engine row, 5 governing_refs entries, 0 specification_source_links
-        # rows, H02 red. A determination engine that cannot produce a state its own
-        # checker accepts is the failure CLAUDE.md names, and it was reintroduced here.
+        # THE JUNCTION IS THE ONLY HOME NOW. The rule-5 tension this comment used to
+        # record -- JSON copy beside junction, with H01/H02 a live parity check over the
+        # two -- is resolved rather than restated: the copy is no longer written (above),
+        # every reader was switched to the junction, and H01/H02 were deleted as H03/H04
+        # and H05 were, for the reason the owner gave on 2026-08-24: "Do not add parity
+        # checks to police a copy -- remove the copy."
         #
-        # RULE 5 TENSION, recorded rather than hidden: the JSON and the junction are two
-        # homes for one fact, and the comment directly under H01/H02 in
-        # test_db_integrity.py says H03/H04 were DELETED because "a parity check between
-        # two homes of one fact does not prevent drift; it makes the second home
-        # survivable, and therefore permanent." H01/H02 is that shape and it is live and
-        # blocking, so the engine satisfies it. The retirement owed is the JSON's: the
-        # junction is the pointer, `governing_refs` is the copy — but the copy is what
-        # derivation_sha hashes (and K01 recomputes), so dropping it re-keys the
-        # attestation. That is a sweep, not this change.
+        # THE BLOCKER THIS COMMENT NAMED WAS ALREADY GONE WHEN IT WAS WRITTEN. It said
+        # dropping the JSON "re-keys the attestation" because derivation_sha hashes it --
+        # true under pilot-2, and migration 077 changed derivation_sha to hash the GRADED
+        # LINK SET instead, recording in its own header that it was noting this "so the
+        # next session knows the blocker is gone rather than rediscovering it". This
+        # comment then kept the retirement deferred for three migrations, and two
+        # sessions rediscovered the blocker from it. Every live row is rule_version
+        # pilot-3, so the pilot-2 hashing path is dead.
         for _ref in det["governing_refs"]:
             _link = (specification_id, _ref, "governing", STAMP, SESSION)
             _lcols = ("specification_id, ref_id, role, created_at, created_by_session")

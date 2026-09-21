@@ -30,6 +30,9 @@ import os
 import sqlite3
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import dbcore  # noqa: E402
+
 DB = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
 
@@ -55,14 +58,20 @@ def _check(con) -> list:
         # four lens columns yields the one the row is stated in; the table's CHECK
         # (D-0182) guarantees at least one is non-NULL.
         "SELECT specification_id,parameter_id,"
-        "COALESCE(identity_code,icf_code,needs_code,medical_code),state,governing_refs,"
+        "COALESCE(identity_code,icf_code,needs_code,medical_code),state,"
         "has_unverified_sources FROM specifications "
         "WHERE state IN ('stated','provisional')"
     ).fetchall()
     errors = []
-    for specification_id, parameter_id, lens, state, gref, hus in rows:
+    for specification_id, parameter_id, lens, state, hus in rows:
         tag = f"specification {specification_id} (param {parameter_id}×{lens}, {state})"
-        refs = _jlist(gref)
+        # THE JUNCTION, not the JSON copy. `governing_refs` is frozen history since the
+        # writer retired it, so a row written after that carries NULL and this dangling-ref
+        # check would silently examine nothing -- a gate passing over a subject it cannot
+        # see, which is CLAUDE.md 5(a). The junction also has a real FK into
+        # evidence_sources, so "dangling" is now structurally impossible for new rows and
+        # this check becomes a guard on the frozen ones and on direct SQL.
+        refs = dbcore.governing_refs(c, specification_id)
         for r in [r for r in refs if r not in status]:
             errors.append(f"{tag}: governing_ref {r} not in evidence_sources (dangling)")
         actual_unverified = any(status.get(r) == "UNVERIFIED" for r in refs)
@@ -89,22 +98,31 @@ def selftest() -> int:
         "CREATE TABLE evidence_sources(ref_id TEXT, verification_status TEXT);"
         "CREATE TABLE specifications(specification_id INT, parameter_id INT,"
         " identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,"
-        " state TEXT, governing_refs TEXT, has_unverified_sources INT);"
+        " state TEXT, has_unverified_sources INT);"
+        # THE JUNCTION, because that is what the checker reads since the 2026-09-21
+        # retirement of `specifications.governing_refs`. A fixture is a caller (rule 4),
+        # and one still building the retired column would have exercised nothing.
+        "CREATE TABLE specification_source_links(specification_id INT, ref_id TEXT,"
+        " role TEXT DEFAULT 'governing');"
         "INSERT INTO evidence_sources VALUES('R1','VERIFIED'),('R2','UNVERIFIED');"
     )
     cases = [
-        # (row, expect_violation, why)
-        # (specification_id, parameter_id, identity, icf, needs, medical, state, refs, flag)
-        ((1, 1, "X", None, None, None, "provisional", '["R1"]', 0), False, "clean: verified ref, flag 0"),
-        ((2, 2, "X", None, None, None, "provisional", '["R2"]', 0), True, "lies: cites UNVERIFIED with flag 0"),
-        ((3, 3, "X", None, None, None, "stated", '["R1"]', 1), True, "stale: flag 1 but no unverified ref"),
-        ((4, 4, "X", None, None, None, "provisional", '["R2"]', 1), False, "honest: unverified ref, flag 1"),
-        ((5, 5, "X", None, None, None, "provisional", '["R9"]', 0), True, "dangling: R9 not in sources"),
+        # (row, refs, expect_violation, why)
+        # (specification_id, parameter_id, identity, icf, needs, medical, state, flag)
+        ((1, 1, "X", None, None, None, "provisional", 0), ["R1"], False, "clean: verified ref, flag 0"),
+        ((2, 2, "X", None, None, None, "provisional", 0), ["R2"], True, "lies: cites UNVERIFIED with flag 0"),
+        ((3, 3, "X", None, None, None, "stated", 1), ["R1"], True, "stale: flag 1 but no unverified ref"),
+        ((4, 4, "X", None, None, None, "provisional", 1), ["R2"], False, "honest: unverified ref, flag 1"),
+        ((5, 5, "X", None, None, None, "provisional", 0), ["R9"], True, "dangling: R9 not in sources"),
     ]
     ok = True
-    for row, expect, why in cases:
+    for row, refs, expect, why in cases:
         con.execute("DELETE FROM specifications")
-        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?,?,?,?)", row)
+        con.execute("DELETE FROM specification_source_links")
+        con.execute("INSERT INTO specifications VALUES(?,?,?,?,?,?,?,?)", row)
+        for _r in refs:
+            con.execute("INSERT INTO specification_source_links VALUES(?,?,'governing')",
+                        (row[0], _r))
         errs, _ = _check(con)
         got = len(errs) > 0
         status = "OK" if got == expect else "**MISSED**"

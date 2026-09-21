@@ -148,13 +148,16 @@ def check(doc, db_path=None):
         conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
         # Re-keyed by migration 071: the cell is parameter x lens. COALESCE yields the
         # lens the row is stated in; the table's CHECK (D-0182) guarantees one is set.
-        for ic, pc, st, tb, cfo, sha, rv, rso, gr in conn.execute(
-                "SELECT parameter_id, "
+        for sid, ic, pc, st, tb, cfo, sha, rv, rso in conn.execute(
+                "SELECT specification_id, parameter_id, "
                 "COALESCE(identity_code, icf_code, needs_code, medical_code), "
                 "state, tier_basis, code_floor_only, "
-                "derivation_sha, rule_version, regulatory_stratum_only, governing_refs "
+                "derivation_sha, rule_version, regulatory_stratum_only "
                 "FROM specifications"):
-            refs = _json.loads(gr) if gr else []
+            # The junction, not the JSON copy (frozen history since the writer retired it).
+            refs = [r[0] for r in conn.execute(
+                "SELECT ref_id FROM specification_source_links "
+                "WHERE specification_id = ? AND role = 'governing' ORDER BY ref_id", (sid,))]
             n_jur = 0
             if rso and refs:
                 qs = ",".join("?" * len(refs))
