@@ -26,10 +26,24 @@
     "Blanket shell access is NOT granted — the two rules below name one script and nothing",
     "else."
   ],
+  "_deny_comment": [
+    "CLAUDE.md rule 9 (owner instruction 2026-09-23): do not watch PRs; open the PR last.",
+    "Most PR-activity wake-ups in the 2026-09 transcripts were CI reporting green on a",
+    "subscribed PR; each cost a full-context turn that did no work. Denying the tools is",
+    "what makes the rule hold. Both subscribe tools are named because sessions used both.",
+    "send_later and create_trigger are denied because they were used to poll CI; the deny",
+    "cannot tell a poll from any other reminder, so lift it when a reminder is wanted."
+  ],
   "permissions": {
     "allow": [
       "Bash(python3 scripts/migrate_db.py)",
       "Bash(python3 scripts/migrate_db.py *)"
+    ],
+    "deny": [
+      "mcp__github__subscribe_pr_activity",
+      "mcp__Claude_Code_Remote__subscribe_pr_activity",
+      "mcp__Claude_Code_Remote__send_later",
+      "mcp__Claude_Code_Remote__create_trigger"
     ]
   },
   "hooks": {
@@ -56,6 +70,15 @@
             "type": "command",
             "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/ensure-deps.sh\" 2>&1 || true",
             "timeout": 120
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/scripts/fix_stop_hook_loop.sh\" >/dev/null 2>&1 || true",
+            "timeout": 30
           }
         ]
       }
