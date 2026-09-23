@@ -87,9 +87,11 @@ committed — fix forward with a compensating migration.
 → Enforced by `migration_reproducibility` (blocking), **which compares row COUNTS only** — an UPDATE
 is invisible to it. `migration_reproducibility_deep` compares every row and is **advisory**.
 → **And the repository breaks this rule on a timer.** The scheduled `source-verification` workflow
-commits a `pipeline_runs` row straight into the blob. `migration_reproducibility` cannot see it —
-`pipeline_runs` is in that script's `EXEMPT_TABLES`, because it is not reproducible from migrations,
-which is the same fact stated as an exemption. A rebuild does not reproduce it, and **every open PR
+(`.github/workflows/resolve-dois.yml`) commits a `pipeline_runs` row straight into the blob, and it
+also UPDATEs `evidence_sources` and rewrites `evidence_source_authors` when a phase fires (bot commit
+`c4c8463` flipped a source's `author_count_is_complete` with no migration and no saved payload).
+`migration_reproducibility` sees neither: both author and run tables sit in its `EXEMPT_TABLES`, and
+an UPDATE never changes a row count. A rebuild does not reproduce it, and **every open PR
 touching the DB inherits a binary conflict when it fires** (2026-09-07 did exactly that to PR #128).
 Resolving such a conflict costs nothing: take the branch's DB and let the next run re-emit.
 
@@ -184,6 +186,20 @@ argparse `choices=` lists that duplicate a column's CHECK — **count them, neve
 `add-source --ref-id` and `amend-source --tier` asking for values the machine can derive,
 `validate_pydantic_schemas`' curated `MODEL_TABLE_MAP`, and the hand-written "N today" counts
 throughout `governance/check-registry.yaml`.
+**9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call
+`subscribe_pr_activity` (either server's) and do not schedule `send_later` or `create_trigger`
+check-ins: this is the owner saying the PR is not to be watched, which the harness's default-subscribe
+instruction defers to. Open the PR once, when the diff-scoped gate (§1) is clean and the work is
+finished, and push nothing afterwards except a deliberate change. A commit that only carries the
+append-only logs (§7) goes in with the work, or carries `[skip ci]` before the timestamp. The final
+push to a PR is never `[skip ci]`, or its head has no CI result. The owner reads CI on GitHub.
+*Proof: in the 2026-09 transcripts most wake-ups on subscribed PRs were a CI run reporting green,
+and each did no work but still cost a full-context turn. The batch that opened its PR at the end
+used a fraction of the tokens of the batch that opened early.*
+→ **NOT ENFORCED** until the owner adds both `subscribe_pr_activity` tools, `send_later` and
+`create_trigger` to `permissions.deny` in `.claude/settings.json`. `ci.yml`'s `concurrency` block
+cancels superseded runs, which saves runner time but does not stop a wake-up.
+
 ---
 
 ## 3. The layers, and the spine

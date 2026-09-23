@@ -23,14 +23,14 @@
   {
     "started": "2026-09-23T00:32:48",
     "role": "other",
-    "bytes": 515992,
+    "bytes": 630697,
     "agent_id_prefix": "aeeed4df",
     "file": "2026-09-23T00-32-48_other_aeeed4df.jsonl"
   },
   {
     "started": "2026-09-23T00:32:55",
     "role": "other",
-    "bytes": 678585,
+    "bytes": 961626,
     "agent_id_prefix": "a45c12a8",
     "file": "2026-09-23T00-32-55_other_a45c12a8.jsonl"
   }
