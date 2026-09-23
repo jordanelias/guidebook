@@ -1,0 +1,23 @@
+[
+  {
+    "started": "2026-09-23T00:16:22",
+    "role": "other",
+    "bytes": 442341,
+    "agent_id_prefix": "ac2afc78",
+    "file": "2026-09-23T00-16-22_other_ac2afc78.jsonl"
+  },
+  {
+    "started": "2026-09-23T00:16:36",
+    "role": "other",
+    "bytes": 456027,
+    "agent_id_prefix": "a7c9f2ab",
+    "file": "2026-09-23T00-16-36_other_a7c9f2ab.jsonl"
+  },
+  {
+    "started": "2026-09-23T00:16:49",
+    "role": "other",
+    "bytes": 393829,
+    "agent_id_prefix": "af9e7588",
+    "file": "2026-09-23T00-16-49_other_af9e7588.jsonl"
+  }
+]
