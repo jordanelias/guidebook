@@ -1,0 +1,20 @@
+0e701d1b subagents=1 tokens=0.3M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+1dc553b7 subagents=1 tokens=2.4M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+292c6e38 subagents=20 tokens=192.9M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+2aa77402 subagents=0 tokens=0.0M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+357827c3 subagents=0 tokens=0.0M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+3ff1e851 subagents=6 tokens=15.2M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+556a3270 subagents=15 tokens=166.4M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+616bcdf9 subagents=12 tokens=31.0M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=1
+     ('2026-09-18T20-26-31', 'other', '2026-09-18T21-53-45', 'other', 1.0) 6.9M
+6a6f63cd subagents=15 tokens=102.4M no-report(<200 chars)=1 overlapping-brief pairs(J>0.25)=0
+94859b50 subagents=9 tokens=44.8M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+c73c246b subagents=11 tokens=43.4M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+ca1ae452 subagents=7 tokens=28.2M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+cb2e5827 subagents=0 tokens=0.0M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+d490f3ed subagents=1 tokens=0.1M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+e124fa82 subagents=8 tokens=70.5M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+e63bfb2e subagents=5 tokens=18.8M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+fbab52c8 subagents=5 tokens=15.2M no-report(<200 chars)=0 overlapping-brief pairs(J>0.25)=0
+TOTAL subagents 116 no report 1 7.4M later-of-overlapping-pair 1 6.9M
+tokens by role {'other': '421.3M', 'antagonist': '166.2M', 'agonist': '75.6M', 'adversarial': '27.7M', 'tracer': '23.2M', 'steelman': '10.5M', 'adversarial-critic': '3.9M', 'planner': '3.3M'}

@@ -1,0 +1,18 @@
+0e701d1b first PR at call 163/166; tokens after it 1M of 42M (3%); housekeeping-only calls after it 1 = 0M
+1dc553b7 first PR at call 35/353; tokens after it 101M of 106M (96%); housekeeping-only calls after it 76 = 24M
+292c6e38 first PR at call 36/1594; tokens after it 748M of 753M (99%); housekeeping-only calls after it 342 = 164M
+2aa77402 first PR at call 30/293; tokens after it 99M of 103M (96%); housekeeping-only calls after it 16 = 6M
+357827c3 first PR at call 55/121; tokens after it 14M of 21M (66%); housekeeping-only calls after it 10 = 2M
+3ff1e851 first PR at call 48/695; tokens after it 259M of 266M (97%); housekeeping-only calls after it 136 = 42M
+556a3270 first PR at call 25/1060; tokens after it 438M of 441M (99%); housekeeping-only calls after it 68 = 30M
+616bcdf9 first PR at call 130/512; tokens after it 170M of 203M (83%); housekeeping-only calls after it 50 = 24M
+6a6f63cd first PR at call 34/1215; tokens after it 498M of 503M (99%); housekeeping-only calls after it 139 = 66M
+94859b50 first PR at call 43/808; tokens after it 322M of 329M (98%); housekeeping-only calls after it 113 = 51M
+c73c246b first PR at call 69/355; tokens after it 112M of 123M (91%); housekeeping-only calls after it 75 = 21M
+ca1ae452 first PR at call 171/432; tokens after it 133M of 183M (73%); housekeeping-only calls after it 26 = 15M
+cb2e5827 first PR at call 73/440; tokens after it 172M of 183M (94%); housekeeping-only calls after it 29 = 12M
+d490f3ed first PR at call 32/64; tokens after it 6M of 11M (60%); housekeeping-only calls after it 14 = 3M
+e124fa82 first PR at call 35/240; tokens after it 42M of 46M (91%); housekeeping-only calls after it 61 = 12M
+e63bfb2e first PR at call 40/265; tokens after it 93M of 99M (94%); housekeeping-only calls after it 38 = 14M
+fbab52c8 first PR at call 19/294; tokens after it 97M of 99M (98%); housekeeping-only calls after it 31 = 9M
+TOTAL after-first-PR 3303M of 3509M; housekeeping-only 495M

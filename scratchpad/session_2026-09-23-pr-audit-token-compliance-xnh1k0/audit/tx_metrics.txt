@@ -1,0 +1,119 @@
+== harness_0e701d1b 2026-09-18T23:33→2026-09-19T00:10 branch=claude/batch-18-orient-execute-jawd92
+  prompt: 'Orient then perform batch 18.'
+  main turns=166 ctxmax=358100 out=130835 cread=41.1M cwrite=0.32M  | subs=1 roles={'other': 1} sub_cread=0.3M sub_out=29
+  models={'claude-opus-5': 166}
+  tools={'Bash': 173, 'ToolSearch': 2, 'WebSearch': 2, 'WebFetch': 2, 'Skill': 1, 'Agent': 1, 'mcp__github__create_pull_request': 1, 'mcp__github__subscribe_pr_activity': 1}
+  skills={'orient': 1} agents={'db-census': 1} bigresults=1 resultMB=0.3
+  scripts={'scripts/db.py': 94, '<shell-read:grep>': 17, '<shell-read:sed>': 15, 'scripts/run_checks.py': 9, '<shell-read:ls>': 6, 'scripts/emit_data_migration.py': 6, 'scripts/audit/research_batch_dod.py': 4, 'scripts/research/mining_screen.py': 4, 'scripts/research/emit_batch_sql.py': 4, 'scripts/migrate_db.py': 4, 'scripts/research/retrieval_log.py': 3, 'scripts/tests/test_db_integrity.py': 3, 'scripts/generate/context_map.py': 3, 'scripts/regenerate_derived.sh': 2}
+== harness_1dc553b7 2026-09-16T15:23→2026-09-16T17:41 branch=claude/repository-infrastructure-state-3noypv
+  prompt: 'Identify the current state of repository infrastructure, and report the current state of content'
+  main turns=353 ctxmax=427463 out=154030 cread=105.0M cwrite=0.38M  | subs=1 roles={'adversarial': 1} sub_cread=2.3M sub_out=580
+  models={'claude-opus-5': 353}
+  tools={'Bash': 147, 'ReadNotifications': 68, 'mcp__github__actions_list': 4, 'ToolSearch': 3, 'mcp__github__create_pull_request': 2, 'mcp__github__subscribe_pr_activity': 2, 'mcp__github__actions_get': 2, 'mcp__github__list_pull_requests': 1, 'Write': 1, 'Edit': 1, 'SendUserFile': 1, 'Agent': 1}
+  skills={} agents={'general-purpose': 1} bigresults=3 resultMB=0.4
+  scripts={'scripts/run_checks.py': 14, '<shell-read:sed>': 6, 'scripts/audit/retired_vocabulary_audit.py': 6, 'scripts/audit/validate_pydantic_schemas.py': 5, '<shell-read:ls>': 4, '<shell-read:grep>': 4, 'scripts/db.py': 4, 'scripts/preserve_transcripts.py': 3, 'scripts/validate_schema.py': 3, 'scripts/generate/build_site.py': 3, '<shell-read:cat>': 3, 'scripts/audit/source_locators_integrity.py': 2, 'scripts/audit/research_protocol_audit.py': 2, 'scripts/validate_reasoning.py': 2}
+== harness_292c6e38 2026-09-09T02:34→2026-09-10T08:10 branch=claude/project-status-overview-8fpu75
+  prompt: "I haven't done any work because it's overwhelming the state of project \n\nPlease cleanly and clearly present to me current state of project, what remains that mu"
+  main turns=1594 ctxmax=783760 out=704679 cread=743.6M cwrite=8.62M  | subs=20 roles={'agonist': 1, 'antagonist': 8, 'planner': 1, 'other': 6, 'adversarial': 4} sub_cread=188.4M sub_out=82432
+  models={'claude-opus-5': 1593, '<synthetic>': 1}
+  tools={'Bash': 769, 'ReadNotifications': 244, 'mcp__github__pull_request_read': 57, 'mcp__Claude_Code_Remote__send_later': 22, 'Agent': 20, 'ToolSearch': 7, 'mcp__github__update_pull_request': 4, 'SendMessage': 4, 'mcp__github__create_pull_request': 3, 'mcp__github__subscribe_pr_activity': 3, 'mcp__github__list_pull_requests': 2, 'mcp__Claude_Code_Remote__delete_trigger': 2}
+  skills={} agents={'Plan': 3, 'Explore': 9, 'general-purpose': 8} bigresults=1 resultMB=1.5
+  scripts={'scripts/preserve_transcripts.py': 158, 'scripts/db.py': 112, '<shell-read:sed>': 59, 'scripts/assess/assess_cell.py': 59, 'scripts/run_checks.py': 48, '<shell-read:grep>': 31, 'scripts/tests/test_validate_evidence_state_2_4.py': 26, 'scripts/tests/test_evidence_cell_state_2_3.py': 23, 'scripts/tests/test_assess_cell_pilot.py': 23, 'scripts/audit/research_batch_dod.py': 18, '<shell-read:cat>': 18, 'scripts/generate/research_contract_hook.py': 18, 'scripts/audit/register_integrity_check.py': 17, 'scripts/migrate_db.py': 14}
+== harness_2aa77402 2026-09-16T22:51→2026-09-17T01:08 branch=claude/pensive-bardeen-d26q0s
+  prompt: 'Retrieve PR#139 and read it in full. After doing so, prepare to begin R1.'
+  main turns=293 ctxmax=570241 out=250208 cread=101.9M cwrite=0.93M  | subs=0 roles={} sub_cread=0.0M sub_out=0
+  models={'claude-opus-5': 293}
+  tools={'Bash': 246, 'Edit': 19, 'WebFetch': 15, 'WebSearch': 12, 'mcp__github__pull_request_read': 9, 'ReadNotifications': 6, 'ToolSearch': 5, 'mcp__github__update_pull_request': 3, 'mcp__github__create_pull_request': 1, 'mcp__Claude_Code_Remote__subscribe_pr_activity': 1, 'mcp__Scholar_Gateway__semanticSearch': 1, 'mcp__Claude_Code_Remote__unsubscribe_pr_activity': 1}
+  skills={} agents={} bigresults=1 resultMB=0.5
+  scripts={'scripts/db.py': 60, 'scripts/audit/research_batch_dod.py': 31, 'scripts/research/retrieval_log.py': 26, '<shell-read:grep>': 25, '<shell-read:sed>': 25, 'scripts/run_checks.py': 18, '<shell-read:cat>': 6, 'scripts/preserve_transcripts.py': 6, '<shell-read:ls>': 5, 'scripts/emit_data_migration.py': 5, 'scripts/research/emit_batch_sql.py': 5, 'scripts/migrate_db.py': 4, 'scripts/generate/context_map.py': 3, 'scripts/generate/build_site.py': 3}
+== harness_357827c3 2026-09-10T13:28→2026-09-10T13:51 branch=claude/pr-131-verification-wzz6tt
+  prompt: 'Verification: PR #131 — determination gets a subject, extraction gets a writer, scope gets derived\nVerdict: PASS\nClaim: 214 commits, 205 files. The load-bearing'
+  main turns=121 ctxmax=251504 out=79330 cread=21.1M cwrite=0.21M  | subs=0 roles={} sub_cread=0.0M sub_out=0
+  models={'claude-opus-5': 121}
+  tools={'Bash': 118, 'mcp__github__pull_request_read': 5, 'ReadNotifications': 4, 'ToolSearch': 3, 'mcp__github__create_pull_request': 2, 'mcp__github__subscribe_pr_activity': 2, 'mcp__Claude_Code_Remote__send_later': 1, 'mcp__Claude_Code_Remote__delete_trigger': 1}
+  skills={} agents={} bigresults=1 resultMB=0.2
+  scripts={'scripts/db.py': 54, 'scripts/assess/assess_cell.py': 36, 'scripts/dbcore.py': 20, '<shell-read:sed>': 17, '<shell-read:grep>': 12, 'scripts/run_checks.py': 10, 'scripts/ci_helpers/check_commit_msg.py': 6, 'scripts/preserve_transcripts.py': 4, '<shell-read:ls>': 3, 'scripts/tests/test_assess_cell_pilot.py': 3, '<shell-read:cat>': 3, 'scripts/tests/test_db_integrity.py': 2, 'scripts/audit/db_path_env_audit.py': 1, 'scripts/tests/test_verification_pipeline.py': 1}
+== harness_3ff1e851 2026-09-18T03:22→2026-09-18T22:34 branch=claude/batch-13-content-review-kpz7u8
+  prompt: 'Before performing Batch 13, review the tables for quality of content created for the pipeline then check for walkability.'
+  main turns=695 ctxmax=780709 out=417058 cread=263.3M cwrite=2.10M  | subs=6 roles={'other': 6} sub_cread=14.7M sub_out=3549
+  models={'claude-opus-5': 694, '<synthetic>': 1}
+  tools={'Bash': 426, 'ReadNotifications': 70, 'mcp__github__pull_request_read': 34, 'ToolSearch': 12, 'mcp__Claude_Code_Remote__send_later': 9, 'WebFetch': 8, 'mcp__github__actions_get': 8, 'mcp__github__actions_list': 8, 'mcp__PubMed__search_articles': 5, 'Agent': 5, 'mcp__github__create_pull_request': 4, 'mcp__Consensus__search': 3}
+  skills={'orient': 1} agents={'Explore': 4, 'db-census': 1} bigresults=6 resultMB=0.9
+  scripts={'scripts/db.py': 172, 'scripts/preserve_transcripts.py': 31, '<shell-read:grep>': 29, 'scripts/tests/test_db_integrity.py': 26, '<shell-read:sed>': 19, 'scripts/audit/research_batch_dod.py': 15, 'scripts/audit/jurisdiction_db_vocabulary.py': 15, 'scripts/run_checks.py': 14, 'scripts/audit/validate_pydantic_schemas.py': 14, '<shell-read:ls>': 12, 'scripts/audit/citation_mining_completeness.py': 11, '<shell-read:cat>': 10, 'scripts/preflight.sh': 10, 'scripts/generate/context_map.py': 10}
+== harness_556a3270 2026-09-12T23:24→2026-09-13T06:59 branch=claude/research-capability-status-fxoybg
+  prompt: 'Can we perform research finally? Where are we at for that?'
+  main turns=1060 ctxmax=783991 out=957170 cread=437.9M cwrite=1.83M  | subs=15 roles={'antagonist': 1, 'other': 13, 'adversarial': 1} sub_cread=162.8M sub_out=59830
+  models={'claude-opus-5': 1058, '<synthetic>': 2}
+  tools={'Bash': 892, 'Edit': 23, 'Write': 19, 'TaskUpdate': 19, 'Agent': 15, 'ReadNotifications': 13, 'mcp__github__pull_request_read': 13, 'TaskCreate': 11, 'ToolSearch': 10, 'AskUserQuestion': 6, 'mcp__Claude_Code_Remote__send_later': 4, 'SendMessage': 4}
+  skills={'artifact-diagramming': 1, 'artifact-design': 1} agents={'general-purpose': 15} bigresults=3 resultMB=1.2
+  scripts={'scripts/db.py': 256, '<shell-read:grep>': 103, 'scripts/assess/assess_cell.py': 89, '<shell-read:sed>': 85, 'scripts/run_checks.py': 58, 'scripts/audit/extraction_relations_integrity.py': 54, 'scripts/dbcore.py': 45, 'scripts/tests/test_db_integrity.py': 42, 'scripts/migrate_db.py': 40, 'scripts/tests/test_assess_cell_pilot.py': 33, 'scripts/preserve_transcripts.py': 24, 'scripts/research/retrieval_log.py': 21, 'scripts/research/emit_batch_sql.py': 21, 'scripts/generate/context_map.py': 18}
+== harness_616bcdf9 2026-09-18T19:44→2026-09-18T22:54 branch=claude/batch-protocol-validation-tlkypw
+  prompt: 'Please perform next batch after ensuring all required protocols/skills/tools have been loaded'
+  main turns=512 ctxmax=783150 out=459918 cread=201.7M cwrite=1.04M  | subs=12 roles={'other': 12} sub_cread=29.1M sub_out=12833
+  models={'claude-opus-5': 512}
+  tools={'Bash': 409, 'mcp__github__pull_request_read': 21, 'Edit': 19, 'ReadNotifications': 15, 'Agent': 10, 'ToolSearch': 7, 'WebSearch': 6, 'mcp__github__actions_get': 5, 'mcp__Claude_Code_Remote__send_later': 4, 'WebFetch': 3, 'mcp__github__update_pull_request': 3, 'Skill': 2}
+  skills={'orient': 1, 'citation-miner': 1} agents={'db-census': 1, 'general-purpose': 4, 'antagonist': 5} bigresults=5 resultMB=0.8
+  scripts={'scripts/db.py': 287, 'scripts/tests/test_db_integrity.py': 65, '<shell-read:sed>': 39, '<shell-read:grep>': 36, 'scripts/run_checks.py': 28, 'scripts/audit/research_batch_dod.py': 21, 'scripts/audit/research_protocol_audit.py': 19, 'scripts/research/mining_screen.py': 19, 'scripts/migrate_db.py': 18, 'scripts/research/retrieval_log.py': 17, 'scripts/assess/assess_cell.py': 17, 'scripts/audit/citation_mining_completeness.py': 15, 'scripts/emit_data_migration.py': 14, 'scripts/research/emit_batch_sql.py': 10}
+== harness_6a6f63cd 2026-09-01T20:12→2026-09-09T03:57 branch=claude/accessible-circulation-research-b0flk1
+  prompt: 'Orient yourself in repository, then inform yourself of all information that concerns reaearch. You will need to read information from base stage and research st'
+  main turns=1215 ctxmax=779388 out=924542 cread=496.0M cwrite=5.73M  | subs=15 roles={'tracer': 3, 'antagonist': 4, 'agonist': 4, 'adversarial-critic': 2, 'planner': 1, 'steelman': 1} sub_cread=97.5M sub_out=13581
+  models={'claude-opus-5': 1208, '<synthetic>': 7}
+  tools={'Bash': 897, 'ReadNotifications': 90, 'mcp__github__pull_request_read': 22, 'TaskUpdate': 21, 'TaskCreate': 20, 'Agent': 15, 'ToolSearch': 12, 'SendMessage': 6, 'mcp__github__update_pull_request': 5, 'mcp__github__create_pull_request': 3, 'mcp__Claude_Code_Remote__send_later': 3, 'AskUserQuestion': 2}
+  skills={} agents={'general-purpose': 15} bigresults=1 resultMB=1.5
+  scripts={'scripts/db.py': 242, 'scripts/run_checks.py': 78, 'scripts/audit/research_batch_dod.py': 66, '<shell-read:grep>': 52, 'scripts/research/retrieval_log.py': 45, 'scripts/preserve_transcripts.py': 40, '<shell-read:sed>': 34, 'scripts/validate_schema.py': 33, 'scripts/migrate_db.py': 28, 'scripts/tests/test_db_integrity.py': 25, 'scripts/audit/research_protocol_audit.py': 20, '<shell-read:ls>': 18, 'scripts/generate/context_map.py': 18, '<shell-read:cat>': 17}
+== harness_94859b50 2026-09-10T19:41→2026-09-11T06:56 branch=claude/repository-orientation-9380wp
+  prompt: 'Please orient yourself in repository then prepare to conduct research.'
+  main turns=808 ctxmax=780260 out=619658 cread=323.5M cwrite=4.42M  | subs=9 roles={'other': 4, 'agonist': 4, 'antagonist': 1} sub_cread=43.1M sub_out=3036
+  models={'claude-opus-5': 808}
+  tools={'Bash': 591, 'ReadNotifications': 55, 'mcp__github__pull_request_read': 22, 'ToolSearch': 9, 'Agent': 9, 'mcp__Claude_Code_Remote__send_later': 9, 'mcp__github__actions_list': 8, 'mcp__github__update_pull_request': 5, 'mcp__github__create_pull_request': 2, 'mcp__Claude_Code_Remote__unsubscribe_pr_activity': 2, 'mcp__Claude_Code_Remote__delete_trigger': 2, 'mcp__Claude_Code_Remote__update_trigger': 2}
+  skills={} agents={'claude-code-guide': 1, 'Plan': 3, 'general-purpose': 4, 'Explore': 1} bigresults=4 resultMB=1.1
+  scripts={'scripts/db.py': 109, 'scripts/preserve_transcripts.py': 63, 'scripts/run_checks.py': 50, '<shell-read:sed>': 30, 'scripts/assess/assess_cell.py': 26, 'scripts/audit/medical_lens_integrity.py': 26, 'scripts/audit/retired_vocabulary_audit.py': 26, 'scripts/ci_helpers/check_commit_msg.py': 25, '<shell-read:grep>': 20, 'scripts/audit/adherence_log_audit.py': 15, 'scripts/research/retrieval_log.py': 14, 'scripts/migrate_db.py': 14, '<shell-read:ls>': 12, 'scripts/preflight.sh': 12}
+== harness_c73c246b 2026-09-17T01:44→2026-09-17T14:02 branch=claude/batch-10-prep-04rjhv
+  prompt: 'Prepare batch 10'
+  main turns=355 ctxmax=665104 out=256635 cread=120.9M cwrite=1.49M  | subs=11 roles={'other': 10, 'antagonist': 1} sub_cread=41.9M sub_out=3569
+  models={'claude-opus-5': 355}
+  tools={'Bash': 220, 'mcp__github__pull_request_read': 25, 'ReadNotifications': 24, 'Agent': 10, 'Write': 8, 'Edit': 5, 'ToolSearch': 4, 'mcp__github__create_pull_request': 2, 'mcp__github__unsubscribe_pr_activity': 2, 'mcp__github__subscribe_pr_activity': 1, 'mcp__github__update_pull_request': 1}
+  skills={} agents={'general-purpose': 10} bigresults=2 resultMB=0.5
+  scripts={'scripts/preserve_transcripts.py': 34, 'scripts/db.py': 22, '<shell-read:grep>': 21, '<shell-read:sed>': 17, 'scripts/generate/context_map.py': 16, 'scripts/run_checks.py': 15, 'scripts/regenerate_derived.sh': 11, '<shell-read:ls>': 9, 'scripts/audit/research_batch_dod.py': 9, 'scripts/assess/assess_cell.py': 8, 'scripts/preflight.sh': 7, 'scripts/audit/column_vocabulary_audit.py': 7, 'scripts/migrate_db.py': 7, '<shell-read:cat>': 4}
+== harness_ca1ae452 2026-09-20T02:40→2026-09-20T06:18 branch=claude/next-batch-ngph6l
+  prompt: 'Perform next batch carefully.'
+  main turns=432 ctxmax=783821 out=405864 cread=181.5M cwrite=0.84M  | subs=7 roles={'other': 7} sub_cread=27.1M sub_out=5183
+  models={'claude-opus-5': 432}
+  tools={'Bash': 366, 'Write': 13, 'ReadNotifications': 10, 'mcp__github__pull_request_read': 10, 'Agent': 6, 'ToolSearch': 5, 'Read': 4, 'mcp__github__update_pull_request': 3, 'Skill': 2, 'mcp__Claude_Code_Remote__send_later': 2, 'mcp__github__create_pull_request': 1, 'mcp__Claude_Code_Remote__subscribe_pr_activity': 1}
+  skills={'orient': 1, 'session-open': 1} agents={'db-census': 1, 'antagonist': 1, 'general-purpose': 4} bigresults=6 resultMB=2.8
+  scripts={'scripts/db.py': 137, 'scripts/run_checks.py': 35, 'scripts/research/mining_screen.py': 31, 'scripts/research/retrieval_log.py': 29, 'scripts/tests/test_db_integrity.py': 26, '<shell-read:sed>': 23, '<shell-read:grep>': 23, 'scripts/migrate_db.py': 21, 'scripts/regenerate_derived.sh': 16, 'scripts/research/page_image.py': 15, 'scripts/emit_data_migration.py': 12, 'scripts/research/emit_batch_sql.py': 12, 'scripts/audit/research_batch_dod.py': 11, 'scripts/dbcore.py': 10}
+== harness_cb2e5827 2026-09-17T20:06→2026-09-17T22:51 branch=claude/research-preparation-joue00
+  prompt: 'Orient. Prepare to perform research'
+  main turns=440 ctxmax=725303 out=383187 cread=181.7M cwrite=0.69M  | subs=0 roles={} sub_cread=0.0M sub_out=0
+  models={'claude-opus-5': 440}
+  tools={'Bash': 395, 'mcp__github__pull_request_read': 13, 'WebSearch': 12, 'ReadNotifications': 9, 'ToolSearch': 4, 'mcp__github__create_pull_request': 2, 'mcp__github__subscribe_pr_activity': 2, 'mcp__Claude_Code_Remote__send_later': 2, 'WebFetch': 2, 'mcp__github__update_pull_request': 2, 'mcp__Claude_Code_Remote__unsubscribe_pr_activity': 1}
+  skills={} agents={} bigresults=3 resultMB=0.6
+  scripts={'scripts/db.py': 145, 'scripts/assess/assess_cell.py': 55, 'scripts/run_checks.py': 32, 'scripts/tests/test_assess_cell_pilot.py': 29, '<shell-read:sed>': 23, '<shell-read:grep>': 23, 'scripts/migrate_db.py': 23, '<shell-read:cat>': 22, 'scripts/audit/research_batch_dod.py': 16, 'scripts/audit/derived_not_curated_audit.py': 14, 'scripts/tests/test_db_integrity.py': 14, 'scripts/research/emit_batch_sql.py': 13, 'scripts/emit_data_migration.py': 10, 'scripts/generate/context_map.py': 10}
+== harness_d490f3ed 2026-09-18T16:26→2026-09-18T16:37 branch=claude/status-update-5uuvg8
+  prompt: 'Status update.'
+  main turns=64 ctxmax=231298 out=33698 cread=10.6M cwrite=0.19M  | subs=1 roles={'other': 1} sub_cread=0.1M sub_out=12
+  models={'claude-opus-5': 64}
+  tools={'Bash': 45, 'ToolSearch': 6, 'mcp__github__actions_get': 5, 'mcp__github__actions_list': 4, 'ReadNotifications': 2, 'mcp__github__get_job_logs': 2, 'Skill': 1, 'Agent': 1, 'mcp__github__list_pull_requests': 1, 'mcp__github__create_pull_request': 1, 'mcp__Claude_Code_Remote__subscribe_pr_activity': 1, 'mcp__github__actions_run_trigger': 1}
+  skills={'orient': 1} agents={'db-census': 1} bigresults=5 resultMB=0.3
+  scripts={'scripts/run_checks.py': 6, '<shell-read:sed>': 5, '<shell-read:ls>': 3, '<shell-read:grep>': 2, 'scripts/preserve_transcripts.py': 1, 'scripts/fix_stop_hook_loop.sh': 1, '<shell-read:cat>': 1}
+== harness_e124fa82 2026-09-16T02:53→2026-09-16T04:12 branch=claude/research-safety-ny8pl0
+  prompt: 'Are we finally safe to research?'
+  main turns=240 ctxmax=248245 out=57240 cread=45.5M cwrite=0.21M  | subs=8 roles={'other': 6, 'antagonist': 2} sub_cread=68.8M sub_out=15652
+  models={'claude-opus-5': 240}
+  tools={'Bash': 106, 'ReadNotifications': 47, 'mcp__github__pull_request_read': 10, 'ToolSearch': 2, 'mcp__Claude_Code_Remote__send_later': 2, 'mcp__github__create_pull_request': 1, 'mcp__github__subscribe_pr_activity': 1}
+  skills={} agents={} bigresults=1 resultMB=0.2
+  scripts={'scripts/preserve_transcripts.py': 45, 'scripts/db.py': 22, '<shell-read:grep>': 9, '<shell-read:ls>': 7, 'scripts/run_checks.py': 6, '<shell-read:sed>': 6, '<shell-read:cat>': 3, 'scripts/assess/assess_cell.py': 3, 'scripts/research/retrieval_log.py': 2}
+== harness_e63bfb2e 2026-09-20T17:47→2026-09-21T00:35 branch=claude/data-table-visualization-0z7vke
+  prompt: 'Create an artifact or design that allows me to view the entirety of data collected in tables across batches as well as see how they connect to each other, ie sh'
+  main turns=265 ctxmax=619780 out=250868 cread=97.7M cwrite=1.37M  | subs=5 roles={'other': 5} sub_cread=18.0M sub_out=3431
+  models={'claude-opus-5': 265}
+  tools={'Bash': 194, 'mcp__github__pull_request_read': 20, 'ReadNotifications': 17, 'TaskUpdate': 11, 'TaskCreate': 6, 'Agent': 5, 'Read': 4, 'Artifact': 3, 'ToolSearch': 3, 'mcp__Claude_Code_Remote__send_later': 3, 'Skill': 1, 'mcp__github__create_pull_request': 1}
+  skills={'artifact-design': 1} agents={'general-purpose': 4, 'antagonist': 1} bigresults=5 resultMB=1.3
+  scripts={'scripts/db.py': 61, '<shell-read:sed>': 20, 'scripts/tests/test_validate_evidence_state_2_4.py': 12, '<shell-read:grep>': 11, 'scripts/validate_evidence_state.py': 10, '<shell-read:ls>': 7, '<shell-read:cat>': 7, 'scripts/migrate_db.py': 7, 'scripts/dbcore.py': 6, 'scripts/regenerate_derived.sh': 6, 'scripts/run_checks.py': 5, '<shell-read:head>': 4, 'scripts/assess/assess_cell.py': 4, 'scripts/generate/context_map.py': 4}
+== harness_fbab52c8 2026-09-17T23:25→2026-09-18T03:10 branch=claude/pr-144-review-n83icb
+  prompt: 'Please read PR#144'
+  main turns=294 ctxmax=601381 out=278504 cread=98.4M cwrite=0.56M  | subs=5 roles={'other': 5} sub_cread=14.6M sub_out=4942
+  models={'claude-opus-5': 294}
+  tools={'Bash': 212, 'mcp__github__pull_request_read': 15, 'ReadNotifications': 9, 'ToolSearch': 6, 'WebSearch': 6, 'mcp__Claude_Code_Remote__send_later': 5, 'Agent': 4, 'mcp__github__update_pull_request': 3, 'mcp__github__add_issue_comment': 2, 'mcp__github__create_pull_request': 1, 'mcp__Claude_Code_Remote__subscribe_pr_activity': 1, 'WebFetch': 1}
+  skills={} agents={'general-purpose': 4} bigresults=2 resultMB=0.4
+  scripts={'scripts/db.py': 56, 'scripts/tests/test_db_integrity.py': 32, 'scripts/run_checks.py': 22, 'scripts/audit/research_batch_dod.py': 13, '<shell-read:cat>': 10, 'scripts/generate/context_map.py': 8, 'scripts/assess/assess_cell.py': 7, '<shell-read:sed>': 7, 'scripts/emit_data_migration.py': 7, '<shell-read:grep>': 6, 'scripts/migrate_db.py': 6, 'scripts/research/emit_batch_sql.py': 4, 'scripts/regenerate_derived.sh': 4, 'scripts/preserve_transcripts.py': 4}
