@@ -61,8 +61,11 @@ Items marked **owner** need an owner decision; everything else is code or proces
 
 **Phase 0: stop the bleeding (S)**
 - **Owner pastes** the `.claude/settings.json` given in-session. It adds `permissions.deny` for both
-  `subscribe_pr_activity` tools, `send_later` and `create_trigger`, which is the mechanism that makes
-  rule 9 hold. It also appends a SessionStart hook that runs `scripts/fix_stop_hook_loop.sh` in every
+  `subscribe_pr_activity` tools, `send_later` and `create_trigger`. This stops explicit subscription
+  and polling but **not** the subscription the harness makes when a PR is created (observed on #158),
+  so rule 9 also requires `unsubscribe_pr_activity` straight after `create_pull_request`. That step
+  is held by the agent, not by a mechanism; no repo-side setting found stops the automatic
+  subscription. It also appends a SessionStart hook that runs `scripts/fix_stop_hook_loop.sh` in every
   new container. [UNVERIFIED: whether the harness installs its stop hook before SessionStart hooks run.]
 - G13-1 (supersedes holistic R1's orphan branch, agreed by both passes):
   - The live logs write to gitignored paths.

@@ -189,15 +189,19 @@ throughout `governance/check-registry.yaml`.
 **9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call
 `subscribe_pr_activity` (either server's) and do not schedule `send_later` or `create_trigger`
 check-ins: this is the owner saying the PR is not to be watched, which the harness's default-subscribe
-instruction defers to. Open the PR once, when the diff-scoped gate (§1) is clean and the work is
+instruction defers to. **Creating a PR subscribes the session by itself** (observed on #158: a
+`subscription.created` event arrived with no subscribe call), so call `unsubscribe_pr_activity` for
+it immediately after `create_pull_request`, before anything else. Open the PR once, when the diff-scoped gate (§1) is clean and the work is
 finished, and push nothing afterwards except a deliberate change. A commit that only carries the
 append-only logs (§7) goes in with the work, or carries `[skip ci]` before the timestamp. The final
 push to a PR is never `[skip ci]`, or its head has no CI result. The owner reads CI on GitHub.
 *Proof: in the 2026-09 transcripts most wake-ups on subscribed PRs were a CI run reporting green,
 and each did no work but still cost a full-context turn. The batch that opened its PR at the end
 used a fraction of the tokens of the batch that opened early.*
-→ **NOT ENFORCED** until the owner adds both `subscribe_pr_activity` tools, `send_later` and
-`create_trigger` to `permissions.deny` in `.claude/settings.json`. `ci.yml`'s `concurrency` block
+→ **PARTLY ENFORCED** once the owner adds both `subscribe_pr_activity` tools, `send_later` and
+`create_trigger` to `permissions.deny` in `.claude/settings.json`: that stops explicit subscription
+and polling, but not the subscription PR creation makes, so the unsubscribe step is yours. Never
+deny `unsubscribe_pr_activity`. `ci.yml`'s `concurrency` block
 cancels superseded runs, which saves runner time but does not stop a wake-up.
 
 ---
