@@ -1,0 +1,2 @@
+1556
+[('research_batch_dod', 383), ('extraction_relations_integrity', 103), ('research_protocol_audit', 97), ('retired_vocabulary_audit', 95), ('validate_pydantic_schemas', 84), ('adherence_log_audit', 78), ('citation_mining_completeness', 69), ('migration_reproducibility', 67), ('register_integrity_check', 50), ('medical_lens_integrity', 42), ('graph_audit', 40), ('schema_reference_audit', 38), ('derived_not_curated_audit', 33), ('adjudication_integrity', 31), ('judgment_handoff_shape', 28)]

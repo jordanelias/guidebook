@@ -1,0 +1,27 @@
+EXCLUSIVE CALL-LEVEL ATTRIBUTION (main transcripts; subagent tokens excluded)
+  1 notification wake, housekeeping only: 1493 calls/tool-uses, 637M = 18.2% of main
+  2 stop-hook cycle, housekeeping only: 904 calls/tool-uses, 396M = 11.3% of main
+  3 suite re-run, no intervening change: 1 calls/tool-uses, 1M = 0.0% of main
+  4 identical Bash re-run, no intervening change: 64 calls/tool-uses, 20M = 0.6% of main
+  5 PR polling inside otherwise-productive episodes: 211 calls/tool-uses, 69M = 2.0% of main
+  SUM 1123M = 32.0% of main 3509M
+
+PER SESSION
+  1dc553b7 {'1': '44M', '2': '42M', '5': '1M'} sum 87M
+  292c6e38 {'1': '277M', '2': '227M', '5': '7M'} sum 511M
+  2aa77402 {'1': '6M', '2': '5M', '5': '1M'} sum 12M
+  357827c3 {'1': '3M', '5': '0M'} sum 3M
+  3ff1e851 {'1': '50M', '2': '11M', '4': '1M', '5': '10M'} sum 72M
+  556a3270 {'1': '7M', '2': '20M', '4': '1M', '5': '7M'} sum 35M
+  616bcdf9 {'1': '22M', '5': '5M'} sum 27M
+  6a6f63cd {'1': '87M', '2': '39M', '4': '2M', '5': '9M'} sum 137M
+  94859b50 {'1': '52M', '2': '19M', '5': '13M'} sum 84M
+  c73c246b {'1': '20M', '2': '5M', '4': '11M', '5': '1M'} sum 38M
+  ca1ae452 {'1': '11M', '2': '6M', '5': '6M'} sum 23M
+  cb2e5827 {'1': '9M', '3': '1M', '5': '5M'} sum 14M
+  d490f3ed {'1': '1M', '5': '2M'} sum 2M
+  e124fa82 {'1': '22M', '2': '19M'} sum 40M
+  e63bfb2e {'1': '19M', '2': '1M', '4': '5M', '5': '1M'} sum 25M
+  fbab52c8 {'1': '8M', '2': '2M', '5': '2M'} sum 13M
+
+stop-hook feedback triggers before fix_stop_hook_loop.sh landed (2026-09-18 16:37Z): 592; after: 24

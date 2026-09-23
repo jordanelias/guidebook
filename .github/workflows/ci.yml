@@ -46,6 +46,14 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# A newer push to the same PR cancels the run still in flight for the older head:
+# only the latest head's result is ever read. Pushes to main are never cancelled.
+# This saves runner time; it does NOT stop PR-activity wake-ups, since a cancelled
+# run still completes a check suite. That is CLAUDE.md rule 9's job.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   GUIDEBOOK_DB_PATH: data/guidebook.db
 
