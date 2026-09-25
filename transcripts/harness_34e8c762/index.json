@@ -1,0 +1,23 @@
+[
+  {
+    "started": "2026-09-25T03:29:04",
+    "role": "other",
+    "bytes": 182418,
+    "agent_id_prefix": "aadccd87",
+    "file": "2026-09-25T03-29-04_other_aadccd87.jsonl"
+  },
+  {
+    "started": "2026-09-25T03:41:23",
+    "role": "other",
+    "bytes": 2249369,
+    "agent_id_prefix": "a2f2ab3c",
+    "file": "2026-09-25T03-41-23_other_a2f2ab3c.jsonl"
+  },
+  {
+    "started": "2026-09-25T04:19:11",
+    "role": "other",
+    "bytes": 8388859,
+    "agent_id_prefix": "acceda5e",
+    "file": "2026-09-25T04-19-11_other_acceda5e.jsonl"
+  }
+]

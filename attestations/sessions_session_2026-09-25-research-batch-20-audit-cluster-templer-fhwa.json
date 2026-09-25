@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa",
+  "artifact": "sessions/session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "integrity-protocol",
+    "source-discipline",
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "integrity-protocol": {
+      "status": "FIRED",
+      "evidence_path": "scripts/migrations/",
+      "reason": "Every database change went through the sanctioned path: a scratch copy under GUIDEBOOK_DB_PATH, db.py verbs only (driven by the scripts persisted in scratchpad/<session>/w01-w15), captured by emit_batch_sql.py, emitted by emit_data_migration.py, applied by migrate_db.py. Two data migrations: the batch, and a fix-forward carrying six corrections an adversarial self-pass found in my own prose -- the first migration was already committed, so it was not edited. The canonical sha moved only at those two applications. migrate_db --rebuild reproduces every row this batch wrote; the only drift from the rebuild is the scheduled bot's direct writes to REF-01006 and pipeline_runs, which predate the branch. Where a writer could not do what was needed -- correcting REF-01002's fourth author from a publisher TOC -- the gap was filed (GAP-044) rather than bypassed with SQL."
+    },
+    "source-discipline": {
+      "status": "FIRED",
+      "evidence_path": "retrieval-log/session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa/manifest.jsonl",
+      "reason": "Every retrieval went through retrieval_log.fetch and is persisted, failures included (Garg's HTTP 500, two Cloudflare 403s and two reCAPTCHA interstitials). Bibliographic fields came from payloads: REF-01007 from the Crossref record (verify-authors CLEAN), REF-01008 from its rendered Technical Report Documentation Page, candidate titles and volumes from the Europe PMC records. Every table extracted from a scan was rendered and looked at before it was used, and the claim_text of a table cell is marked verbatim-exempt with the render named, not passed off as a verbatim quote. Two over-reads of a source's reasoning (REF-01007) and one date inference (NBS IR 78-1554) were caught and corrected in the same batch; one affiliation I was about to write from memory (Mudrick 2012) was removed before it was written."
+    },
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "scratchpad/session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa/priors.md",
+      "reason": "Batch priors committed before any query (be427f35), per-query priors before the Co-1/T2 queries (aa3207de), and the unplanned Q1b's prior before it fired (26ae1dc1), labelled as unplanned. Two executions had no pre-written prior (the two backward passes) and their prior field says so rather than inventing one; a third mis-cited priors.md and was corrected. The session record scores every prior, including the falsified ones (P1a for Pinto, P2b) and the one that did not bear out (P5a)."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The /adversarial command requires an INDEPENDENT critic (the antagonist agent, a different model) so that one model does not check its own work. This batch ran as a subagent without an agent-launching tool and could not start one. A self-administered pass in the antagonist's shape was run instead and found seven defects, six repaired by fix-forward migration; but a self-check is exactly what the pair exists to replace, so the independent pass is recorded as OWED before merge, not as done."
+    },
+    {
+      "rule": "source-discipline",
+      "reason": "One Unpaywall request carried the owner's email address in its URL, following the project's earlier Unpaywall calls rather than asking first. It is disclosed in the session record and was not repeated."
+    }
+  ],
+  "bias_direction": "Toward making the Templer study carry more than it does. It is the batch's most interesting find, and the geometric match between REF-01005 Table 13's footnote-c rows and two of Templer's test ramps is striking enough to tempt an identification of the 'Templer, 1977' referent. The record resists that in three places -- no condition_on edge from extraction 56, candidate 115 left PENDING, and a third candidate referent (the forthcoming 'Stairs and Ramps' book) surfaced and recorded -- but the extraction notes still lean on the match. A second bias runs the other way: after the runbook called Garg 2024 retrievable, there was pressure to admit it on its abstract to keep the plan whole; it was left unadmitted.",
+  "independent_reviewer_counterclaim": "A reviewer would say this attestation is the work checking itself: the adversarial pass that found A1-A7 was run by the author, and an author reliably misses the claims they most want to be true. The minting of six vocabulary terms is the strongest target -- each is argued from the corpus, but a reviewer could fairly say that adding the ramp element, level difference, run length, landing, usability and audit terms in one batch shapes every later search and adjudication, and that the ramp-versus-route deferral shows the vocabulary's own boundary is unsettled. A reviewer could also say REF-01008's Table 20 rows are filed on parameter 3 x MOB although they are curb-ramp recommendations for rises of at most 9 inches, and that a curb ramp is a different object from the building ramps the parameter was built on; the setting field says curb ramp on every row, but a reader skimming values will see 1:8, 1:10 and 1:12 on the parameter.",
+  "verdict": "DEVIATION-LOGGED"
+}
