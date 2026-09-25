@@ -1,0 +1,48 @@
+{
+  "kind": "pdf-bibliography",
+  "ref_id": "REF-01008",
+  "source_title_as_filed": "Templer, John A. 1980, Provisions for Elderly and Handicapped Pedestrians, Vol. 3, FHWA-RD-79-3 (Internet Archive provisionsforeld00temp_0)",
+  "extracted_from_artefact": "db21e48738335d82.pdf",
+  "page_indices": [
+    318
+  ],
+  "page_images": [
+    "db21e48738335d82.p0318.png"
+  ],
+  "extractor": "scripts/research/page_image.py at 150 dpi, then read from the rendered page; cross-checked against the Internet Archive DjVuTXT (639e73bd17c02f7f.txt), which agrees word for word",
+  "ocr_damaged": false,
+  "transcription_note": "TRANSCRIBED FROM THE RENDERED PAGE (printed page 299). The whole reference list is five entries; the report cites its sources in the text by superscript number, and the ramp study's 'Previous Studies' section (printed page 4) cites 1 (Dixon), 2 (ANSI) and 3 (Walter). Spellings are the page's own, including 'Ambuland' for 'Ambulant' and 'Champagne' for 'Champaign' -- not corrected, because a transcription that silently fixes its source cannot be audited against it.",
+  "completeness": "5 entries, numbered 1-5, on a single page; nothing follows before the appendix.",
+  "reference": [
+    {
+      "unstructured": "Dixon, Charles E. A study to determine the Specifications of Wheelchair Ramps, Unpublished Ph.D. Dissertation, University of Illinois, Champagne, Urbana, 1957.",
+      "title_certain": true,
+      "page": 318,
+      "note": "The 1957 Illinois dissertation REF-01005's bibliography attributes to 'Elmer, C.D.' -- candidate 110; the author contest is recorded there and is not resolved by this list."
+    },
+    {
+      "unstructured": "American National Standard Specifications for Making Buildings and Facilities Accessible To and Usable By Physically Handicapped People. American National Standards Institute, Inc., A117.1. Syracuse University, Syracuse, New York, ANSI, 1977.",
+      "title_certain": true,
+      "page": 318,
+      "note": "Cited in the text as 'the present and the proposed revisions to the ANSI standards' carrying a 1:12 maximum. The Syracuse University imprint is the same institution REF-01005 came from."
+    },
+    {
+      "unstructured": "Walter, Felix. Four Architectural Movement Studies for the Wheelchair and Ambuland Disabled, Disabled Living Foundation, London, 1971.",
+      "title_certain": true,
+      "page": 318,
+      "note": "Candidate 109. 'Ambuland' is the page's spelling."
+    },
+    {
+      "unstructured": "Herms, Bruce F.; Elias, Helen; Robbins, Donald O. Guidestrips for Visually Handicapped Pedestrians, Metropolitan Association of Urban Designers and Environmental Planners, Third National Seminar, San Diego, California, December 1976.",
+      "title_certain": true,
+      "page": 318,
+      "note": "Tactile guidance; off parameter 3."
+    },
+    {
+      "unstructured": "Snyder, Monroe B.; Knoblauch, Robert L., Pedestrian Safety: The Identification of Precipitating Factors and Possible Countermeasures, Volume 1, U.S. Department of Transportation, January, 1971.",
+      "title_certain": true,
+      "page": 318,
+      "note": "Pedestrian-vehicle safety; off parameter 3."
+    }
+  ]
+}
