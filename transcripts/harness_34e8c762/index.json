@@ -16,8 +16,15 @@
   {
     "started": "2026-09-25T04:19:11",
     "role": "other",
-    "bytes": 8493855,
+    "bytes": 12766067,
     "agent_id_prefix": "acceda5e",
     "file": "2026-09-25T04-19-11_other_acceda5e.jsonl"
+  },
+  {
+    "started": "2026-09-25T05:15:51",
+    "role": "adversarial",
+    "bytes": 6673290,
+    "agent_id_prefix": "a1efd54a",
+    "file": "2026-09-25T05-15-51_adversarial_a1efd54a.jsonl"
   }
 ]

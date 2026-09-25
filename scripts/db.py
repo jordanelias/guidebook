@@ -1331,8 +1331,44 @@ def main():
                            "after a RESOLVED marker; the staged hypothesis is kept.")
     p_rc.add_argument("--admitted-ref-id", dest="admitted_ref_id",
                       help="Required when --disposition ADMITTED")
+    p_rc.add_argument("--suggested-slug", dest="suggested_slug",
+                      help="With --disposition REHOME only: the slug the candidate belongs "
+                           "under. Must exist in `slugs`; the replaced value is recorded "
+                           "in the notes tail.")
     p_rc.add_argument("--session", required=True)
     p_rc.add_argument("--dry-run", action="store_true")
+
+    p_la = sub.add_parser("link-admission",
+                          help="Record that an EXISTING search admitted a source -- only "
+                               "when a resolved candidate already records both ends")
+    p_la.add_argument("--exec-id", required=True, type=int)
+    p_la.add_argument("--ref-id", required=True)
+    p_la.add_argument("--reason", required=True,
+                      help="Why the edge was not written when the search was logged. "
+                           "Appended to the search's findings_note.")
+    p_la.add_argument("--session", required=True)
+    p_la.add_argument("--dry-run", action="store_true")
+
+    p_apm = sub.add_parser("amend-population-match",
+                           help="Re-grade an R13 match in place (a ruling, not a dissent -- "
+                                "a dissent is a second add-population-match row)")
+    p_apm.add_argument("--match-id", required=True)
+    p_apm.add_argument("--match-grade", required=True,
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_apm.add_argument("--reason", required=True,
+                       help="Appended to mismatch_note with the grade it replaces")
+    p_apm.add_argument("--session", required=True)
+    p_apm.add_argument("--dry-run", action="store_true")
+
+    p_amt = sub.add_parser("amend-term",
+                           help="Replace a term's definition or scope_note, recording the "
+                                "text it replaces (canonical_en is not amendable)")
+    p_amt.add_argument("--term-id", required=True)
+    p_amt.add_argument("--field", required=True, choices=list(_AMENDABLE_TERM_FIELDS))
+    p_amt.add_argument("--replacement", required=True)
+    p_amt.add_argument("--reason", required=True)
+    p_amt.add_argument("--session", required=True)
+    p_amt.add_argument("--dry-run", action="store_true")
 
     p_ams = sub.add_parser("amend-source",
                            help="Correct a JUDGEMENT field on an evidence row, recording what was replaced")
@@ -2548,14 +2584,26 @@ def main():
                            set_target_evidence_type=args.set_target_evidence_type))
 
     elif args.command == "amend-gap":
-        out = amend_gap(args.gap_id, args.append_note, args.session, args.dry_run)
+        # _emit, not a bare assignment: until 2026-09-25 both of these assigned the
+        # writer's result to `out` and never printed it, so a successful amendment and a
+        # no-op ("already on the row") were indistinguishable from the shell.
+        _emit(amend_gap(args.gap_id, args.append_note, args.session, args.dry_run))
     elif args.command == "reattribute-candidate":
-        out = reattribute_candidate(args.candidate_id, args.exec_id, args.reason,
-                                    args.session, args.dry_run)
+        _emit(reattribute_candidate(args.candidate_id, args.exec_id, args.reason,
+                                    args.session, args.dry_run))
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
-                                dry_run=args.dry_run))
+                                dry_run=args.dry_run, suggested_slug=args.suggested_slug))
+    elif args.command == "link-admission":
+        _emit(link_admission(args.exec_id, args.ref_id, args.reason,
+                             session=args.session, dry_run=args.dry_run))
+    elif args.command == "amend-population-match":
+        _emit(amend_population_match(args.match_id, args.match_grade, args.reason,
+                                     session=args.session, dry_run=args.dry_run))
+    elif args.command == "amend-term":
+        _emit(amend_term(args.term_id, args.field, args.replacement, args.reason,
+                         session=args.session, dry_run=args.dry_run))
 
     elif args.command == "amend-source":
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
@@ -3791,7 +3839,8 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
 
 
 def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
-                      session: str, admitted_ref_id: str = None, dry_run: bool = False):
+                      session: str, admitted_ref_id: str = None, dry_run: bool = False,
+                      suggested_slug: str = None):
     """Close a staged candidate by RE-DESCRIBING it from the source (R15).
 
     R15: "A staged candidate description is a HYPOTHESIS. On resolution, re-describe
@@ -3818,7 +3867,7 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
             f"candidate {candidate_id}: R15 requires a re-description FROM THE SOURCE "
             f"to resolve a candidate. Refusing to close a hypothesis without one.")
     with connect(dry_run) as conn:
-        row = conn.execute("SELECT candidate_id, disposition, notes, title "
+        row = conn.execute("SELECT candidate_id, disposition, notes, title, suggested_slug "
                            "FROM search_candidates WHERE candidate_id=?",
                            [candidate_id]).fetchone()
         if row is None:
@@ -3828,6 +3877,24 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
             raise Refusal(
                 f"candidate {candidate_id}: disposition {disposition!r} is not in the "
                 f"column's own vocabulary {sorted(allowed)}.")
+        # --suggested-slug, added 2026-09-25 (batch 20). A REHOME disposition says "this
+        # belongs under another slug" and the column that says WHICH slug had no writer
+        # after staging: candidate 117 was re-described as rehomed to the stairs slug while
+        # its typed suggested_slug still named the slug it was found under -- the prose and
+        # the column disagreeing, with only the column joinable. CLAUDE.md section 4: a
+        # column the CLI cannot reach is a coverage bug, not a licence for hand SQL. Only
+        # with REHOME, because on any other disposition a moved suggested_slug would be a
+        # second, unexplained change riding on a resolution about something else.
+        if suggested_slug is not None:
+            if disposition != "REHOME":
+                raise Refusal(
+                    f"candidate {candidate_id}: --suggested-slug is only accepted with "
+                    f"--disposition REHOME. It names where a rehomed candidate belongs; on "
+                    f"any other disposition it would be an unexplained second change.")
+            if not dbcore.exists(conn, "slugs", "slug", suggested_slug):
+                raise Refusal(
+                    f"candidate {candidate_id}: --suggested-slug {suggested_slug!r} is not a "
+                    f"slug in `slugs`.")
         if disposition == "ADMITTED" and not admitted_ref_id:
             raise Refusal(
                 f"candidate {candidate_id}: ADMITTED without --admitted-ref-id names no "
@@ -3840,6 +3907,10 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
         stamp = audit(session)
         tail = f" || RESOLVED {stamp['created_at'][:10]} (R15, re-described from the source"
         tail += f"; admitted as {admitted_ref_id}" if admitted_ref_id else ""
+        if suggested_slug is not None and suggested_slug != row["suggested_slug"]:
+            # The replaced value goes into the tail: the column keeps only the current
+            # slug, so the move is on the record here or nowhere.
+            tail += f"; suggested_slug {row['suggested_slug']} -> {suggested_slug}"
         tail += f"): {redescription}"
         # THE EDGE GOES IN THE COLUMN. --admitted-ref-id was required for ADMITTED and
         # then written ONLY into the `notes` tail, so the candidate-to-source link
@@ -3848,12 +3919,162 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
         # candidate's exec_id against the exec that actually admitted its source. The
         # tail still names it too -- that is the human-readable record, not the edge.
         conn.execute("UPDATE search_candidates SET disposition=?, notes=?, "
-                     "resolved_ref_id=COALESCE(?, resolved_ref_id) "
+                     "resolved_ref_id=COALESCE(?, resolved_ref_id), "
+                     "suggested_slug=COALESCE(?, suggested_slug) "
                      "WHERE candidate_id=?",
                      [disposition, (row["notes"] or "").rstrip() + tail,
-                      admitted_ref_id, candidate_id])
+                      admitted_ref_id, suggested_slug, candidate_id])
         return {"candidate_id": candidate_id, "was": row["disposition"],
-                "now": disposition, "admitted_ref_id": admitted_ref_id}
+                "now": disposition, "admitted_ref_id": admitted_ref_id,
+                "suggested_slug": suggested_slug or row["suggested_slug"]}
+
+
+def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
+                   dry_run: bool = False):
+    """Record that an EXISTING search admitted a source, when a resolved candidate says so.
+
+    ADDED 2026-09-25 (batch 20), and it closes a coverage gap rather than adding a new
+    kind of fact. `search_admissions` is the one carrier of "which search admitted this
+    source", and its only writer was `log-search --admitted-ref-id`, which can only
+    attach an admission to a search logged IN THE SAME CALL. A source admitted in a
+    later batch from a staged candidate -- candidate 124 surfaced by exec 91 in batch 19,
+    admitted as REF-01007 in batch 20 -- therefore had no sanctioned way to point back
+    at the search that surfaced it. Integrity check S01 states the design: the search
+    that surfaced a candidate and the search that admitted its source are the same
+    event, so they must be the same exec (batch 17's candidates 107/108 are the
+    precedent). research_protocol_audit then reported the two sources as admitted by no
+    search at all.
+
+    THE REFUSAL IS THE POINT. This does not let anyone attach a source to an arbitrary
+    search -- that would be the fabrication research_protocol_audit warns against. It
+    writes the edge ONLY when a search_candidates row already records BOTH ends: that
+    candidate's exec_id is this exec, its resolved_ref_id is this source, and its
+    disposition is ADMITTED. The edge restates a fact the candidate table already holds
+    in two columns; it invents nothing. The reason is appended to the search's
+    findings_note, because search_admissions has no column for one.
+    """
+    reason = (reason or "").strip()
+    if not reason:
+        raise Refusal(
+            f"exec {exec_id} -> {ref_id}: --reason is required. A provenance edge written "
+            f"after the fact must say why it was not written when the search was logged.")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(ref_id)
+        ex = conn.execute("SELECT exec_id, findings_note FROM search_executions "
+                          "WHERE exec_id=?", [exec_id]).fetchone()
+        if ex is None:
+            raise Refusal(f"exec {exec_id}: no such search execution.")
+        if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
+            raise Refusal(f"{ref}: not an admitted source.")
+        cand = conn.execute(
+            "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
+            "AND resolved_ref_id=? AND disposition='ADMITTED'", [exec_id, ref]).fetchall()
+        if not cand:
+            raise Refusal(
+                f"exec {exec_id} -> {ref}: REFUSED. No search_candidates row records that "
+                f"this search surfaced a candidate which was admitted as this source "
+                f"(exec_id = {exec_id}, resolved_ref_id = {ref}, disposition ADMITTED). An "
+                f"admission edge written without that is an attribution nobody recorded -- "
+                f"the fabrication research_protocol_audit names. If the search that "
+                f"admitted it was never logged, log it with log-search --admitted-ref-id.")
+        if conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                        [exec_id, ref]).fetchone():
+            return {"exec_id": exec_id, "ref_id": ref, "changed": False,
+                    "reason": "edge already present"}
+        other = [r[0] for r in conn.execute(
+            "SELECT exec_id FROM search_admissions WHERE ref_id=? AND exec_id<>?",
+            [ref, exec_id])]
+        if other:
+            raise Refusal(
+                f"{ref} is already recorded as admitted by exec(s) {other}. A second "
+                f"admitting search would contradict the candidate's own exec_id (S01); "
+                f"resolve which search admitted it before writing another edge.")
+        stamp = audit(session)
+        conn.execute("INSERT INTO search_admissions (exec_id, ref_id, created_at, "
+                     "created_by_session) VALUES (?,?,?,?)",
+                     [exec_id, ref, stamp["created_at"], session])
+        note = (f" || ADMISSION LINKED {stamp['created_at'][:10]} by {session}: {ref} "
+                f"(candidate {', '.join(str(c[0]) for c in cand)}): {reason}")
+        conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                     [(ex["findings_note"] or "").rstrip() + note, exec_id])
+        return {"exec_id": exec_id, "ref_id": ref, "changed": True,
+                "candidates": [c[0] for c in cand]}
+
+
+def amend_population_match(match_id: str, match_grade: str, reason: str, session: str,
+                           dry_run: bool = False):
+    """Re-grade an R13 population match in place, recording the grade it replaces.
+
+    ADDED 2026-09-25 (batch 20) because an owner ruling re-graded REF-01007 and no verb
+    could apply it. add-population-match deliberately permits a SECOND row -- a
+    dissenting grade reads as a contest (DR-2026-08-19 section 7) -- and that mechanic
+    stays. But a ruling is not a dissent: two rows, PROXY and PARTIAL, would tell a
+    reader the question is open when it has been decided. So the grade moves, and the
+    replaced grade and the reason are appended to mismatch_note, which is the row's
+    warrant text. The table has no updated_* columns, so the stamp lives in that note.
+    """
+    reason = (reason or "").strip()
+    if not reason:
+        raise Refusal(f"{match_id}: --reason is required. A re-grade must say why.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT match_id, match_grade, mismatch_note FROM "
+                           "evidence_population_match WHERE match_id=?",
+                           [match_id]).fetchone()
+        if row is None:
+            raise Refusal(f"{match_id}: no such population match.")
+        dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
+                           match_grade, "--match-grade")
+        if row["match_grade"] == match_grade:
+            return {"match_id": match_id, "changed": False, "match_grade": match_grade}
+        stamp = audit(session)
+        note = (f" || REGRADED {stamp['created_at'][:10]} by {session}: "
+                f"{row['match_grade']} -> {match_grade}. {reason}")
+        conn.execute("UPDATE evidence_population_match SET match_grade=?, "
+                     "mismatch_note=? WHERE match_id=?",
+                     [match_grade, (row["mismatch_note"] or "").rstrip() + note, match_id])
+        return {"match_id": match_id, "changed": True, "was": row["match_grade"],
+                "now": match_grade}
+
+
+_AMENDABLE_TERM_FIELDS = ("definition", "scope_note")
+
+
+def amend_term(term_id: str, field: str, replacement: str, reason: str, session: str,
+               dry_run: bool = False):
+    """Replace a term's definition or scope note, recording the text it replaces.
+
+    ADDED 2026-09-25 (batch 20) to apply an owner ruling that narrowed TERM-089's
+    definition; nothing could write `terms` after add-term minted a row. canonical_en is
+    deliberately NOT amendable: renaming a term is a vocabulary decision with callers
+    (term_aliases, adjudications, parameters), not a wording fix. `terms` has no notes
+    column, so the replaced text and the reason are appended to scope_note -- the only
+    free-text column on the row -- and the stamp goes in updated_*.
+    """
+    reason = (reason or "").strip()
+    replacement = (replacement or "").strip()
+    if field not in _AMENDABLE_TERM_FIELDS:
+        raise Refusal(f"--field {field!r}: only {list(_AMENDABLE_TERM_FIELDS)} are "
+                      f"amendable. canonical_en is a vocabulary decision, not a wording fix.")
+    if not reason or not replacement:
+        raise Refusal(f"{term_id}: --replacement and --reason are both required.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT term_id, definition, scope_note FROM terms "
+                           "WHERE term_id=?", [term_id]).fetchone()
+        if row is None:
+            raise Refusal(f"{term_id}: no such term.")
+        if (row[field] or "").strip() == replacement:
+            return {"term_id": term_id, "field": field, "changed": False}
+        stamp = audit(session)
+        trailer = (f" || AMENDED {stamp['created_at'][:10]} by {session}: {field} was: "
+                   f"'{row[field] or ''}'. {reason}")
+        new = {"definition": row["definition"], "scope_note": row["scope_note"]}
+        new[field] = replacement
+        new["scope_note"] = (new["scope_note"] or "").rstrip() + trailer
+        conn.execute("UPDATE terms SET definition=?, scope_note=?, updated_at=?, "
+                     "updated_by_session=? WHERE term_id=?",
+                     [new["definition"], new["scope_note"], stamp["created_at"], session,
+                      term_id])
+        return {"term_id": term_id, "field": field, "changed": True}
 
 
 # Judgement fields on evidence_sources: prose an author must WRITE, which no payload

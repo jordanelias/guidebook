@@ -16,13 +16,16 @@ beside it; re-run it rather than trust the sentence.
 
 ## 0. What an adversarial pass over this batch found, and what it did not
 
-**The independent critic did not run.** `/adversarial` requires launching the `antagonist` agent
-(read-only, a different model) so that one model does not check its own work. This batch ran as a
-subagent with no agent-launching tool, so it could not start one. **What ran instead is a
-self-administered pass in the antagonist's shape** — every claim attacked against its artefact,
-every count recomputed — and that is exactly the failure mode the pair exists to prevent. It found
-seven defects in my own writing (below) and repaired six by a fix-forward migration
-(`data_20260925050758_…`). **The independent pass is owed before this merges.**
+**First, a self-administered pass; the independent one followed and is §0b.** `/adversarial`
+requires launching the `antagonist` agent (read-only, a different model) so that one model does not
+check its own work. This batch ran as a subagent with no agent-launching tool, so it could not start
+one. **What ran first was a self-administered pass in the antagonist's shape** — every claim
+attacked against its artefact, every count recomputed — and that is exactly the failure mode the pair
+exists to prevent. It found seven defects in my own writing (below) and repaired six by a
+fix-forward migration (`data_20260925050758_…`). The coordinating session then dispatched the
+independent antagonist over PR #159; what it found, and what the owner ruled on the four points it
+could not settle, is §0b. **The self-pass missed every one of the independent pass's findings**,
+which is the argument for the pair made by measurement.
 
 | # | Artefact | What was wrong | Disposition |
 |---|---|---|---|
@@ -32,7 +35,7 @@ seven defects in my own writing (below) and repaired six by a fix-forward migrat
 | A4 | candidate 129 locator | Called Martins 2016 "open access". Europe PMC marks it not-OA; SciELO serves it free. | Corrected (appended) |
 | A5 | exec 95 `prior_expectation` | Claimed batch 19's title-screen warning was "carried into priors.md P1". P1 never mentions it. | Corrected (amend-search) |
 | A6 | GAP-033 batch-20 note | Its five groups of deferrals account for all but one (observation 54). | Corrected (amend-gap) |
-| A7 | commit c3cca9b1 message | Says Garg's body was sought by "nine routes"; exec 96 records nine requests **plus** an Unpaywall lookup. | Not repairable (no history rewrite); recorded here |
+| A7 | commit c3cca9b1 message | Says Garg's body was sought by "nine routes". Exec 96 records ten requests, and **only six could have returned the body** (Europe PMC fullTextXML, NCBI efetch, PMC HTML, PMC `/pdf/`, the Europe PMC render, ScienceDirect); **four were metadata lookups** (Crossref, Europe PMC core, Unpaywall, OpenAlex). This row first said "nine requests plus an Unpaywall lookup", the same body-versus-metadata conflation GAP-026's 2026-09-18 correction had already named; corrected after the independent pass (§0b, #17). | Not repairable (no history rewrite); recorded here |
 
 **Also caught before emission, by refusals in `db.py` rather than by me:** the first Templer
 extraction script tried to attach `1:12` to the prose sentence "Ramps #1, 4, 5, 9, 10, 11, 12 and 13
@@ -46,7 +49,84 @@ states no value), and refused `--stated named` for a label that was not a substr
 **A disclosure:** one Unpaywall request (exec 96) carried an email address in its URL — the same one
 the project's earlier Unpaywall calls in committed manifests carry
 (`grep -c api.unpaywall.org retrieval-log/*/manifest.jsonl`), which is the owner's own. It should not
-have been sent without being asked; no further Unpaywall call was made.
+have been sent without being asked; no further Unpaywall call was made. **The owner has since ruled
+(2026-09-25): no personal email goes to Unpaywall or any similar third-party API, effective at
+once**; nothing in the second fix-forward made such a call, and the committed instances stay as
+they are (no history rewrite).
+
+## 0b. The independent pass, the owner's rulings, and the second fix-forward
+
+The coordinating session dispatched the `antagonist` over PR #159 at da1d95ab. Its full report is in
+`transcripts/harness_34e8c762/subagents/2026-09-25T05-15-51_adversarial_a1efd54a.jsonl`. The
+coordinator sustained most findings for repair, sent four to the owner, and asked for a gap on one
+more (#9). Everything below is in one data migration (`data_20260925061025_…`) plus one schema
+migration (096). Every quotation that went into it was re-checked against the persisted bytes or an
+attested render first. The render for #20 is new: `db21e48738335d82.p0223`, `.p0224`, `.p0246`.
+
+| # | What the independent pass found | Repair |
+|---|---|---|
+| 1 | §5's "more permissive than the study its footnote rests on" holds only against REF-01008's own data. Against footnote c's other warrant, Walter as REF-01008 reports him (1:9 over 10 ft), Table 13's 1:10 band is **stricter**. Ramp 9, the other footnote-c geometry, was unacceptable in descent to people with walking difficulties (Conclusions p.33; Table 19 row g), and I reported only ramp 6. | Qualified in extraction 66, GAP-037 (C) and §5. |
+| 2 | Extractions 61 and 62 are untested Table 20 cells, typed `measurement_primary`. "Interpolate" was my word; the source says only "Based on these findings". Both cells also sit on the **unacceptable** side of Table 3's own heavy line. | `root_type` changed to `committee_assertion` (the authors' recommendation; `derived_calculation` would claim a computation with edges, and none exists). §4. |
+| 3 | "No render of this page existed before." Batch 19's independent subagent **did** render index 56 in its scratchpad and read it. My `ls retrieval-log/…` could only see *persisted* renders. | "No **persisted** render." GAP-037 (A); §5 and §9. |
+| 4 | Extraction 60 gave only ramp 9's favourable ascent figure. | Table 19 row g descent result added. MOB includes people who walk with difficulty. |
+| 5 | Candidate 117 is REHOME, but its typed `suggested_slug` still named the origin slug. `resolve-candidate` could not write the column. | `--suggested-slug` added (REHOME only, validated against `slugs`). GAP-045, closed fixed. Set to the stairs slug. |
+| 6 | §11's "case (b), no edge" was wrong. S01's own design says the surfacing search and the admitting search are one event (batch 17's exec 77 precedent). No verb could attach an admission to an existing search. | New verb `link-admission`. It refuses unless a candidate row already records both ends. GAP-046, closed fixed. Wrote (91, REF-01007) and (90, REF-01008). |
+| 7 | "REF-01005 does not cite Templer or Walter for 1:12 or 1:16." Footnote c does not *mark* those rows, but page 163 cites Walter for 1:16 (extraction 54). | GAP-037 (B); §5. |
+| 8 | "Four independent sources" state length-conditioning. That was a hand count, and it included REF-01002 (abstract only) and REF-01003 (path slopes). | Withdrawn and replaced with an honest listing plus a derivation query: extractions 63 and 65, GAP-037 (D), §4. |
+| 11 | Extraction 56's `claim_text` normalises the page's "Walters" to "Walter". | Second row, **extraction 67**, carries the words verbatim. The Walters→Walter identity is stated in its notes as a hypothesis. |
+| 12 | Templer and Steinfeld are not fully independent readers of Walter. | Caveat on extraction 64, GAP-037 (E), §4. |
+| 13 | Candidate 126's co-facilitators with recorded disabilities were Deaf, lived with albinism, or had visual impairment. **None is a mobility impairment.** | Re-description on 126; §2. |
+| 17 | A7 miscounted. Commit c3cca9b1's message repeats claims since withdrawn. | A7 fixed; the list of message corrections is below. |
+| 18 | P2b was mis-scored: Table 20 endorses 1:12 only to a 9-in curb. That is qualified, so the prior **held**. | §10. |
+| 19 | §9 said 123 "is not" open access. Unpaywall and OpenAlex both give `is_oa` true, green. | "Free to read (green OA via PMC), not OA-licensed." §9. |
+| 20 | REF-01008's Part II field tests went unmentioned. The R1 Co-1 leg was two English queries in one biomedical index. | **Extractions 68** (Sioux City, about 1:12, 11 wheelchair users) and **69** (Baltimore, 1:12, 13 users; the surface, not the slope, caused the difficulty). **GAP-049** (open) records the thin R1 discharge. |
+| 21 | "334 images" is Internet Archive's imagecount; the persisted PDF has 332 pages. Extractions 63 and 64 verify only after normalisation, not "byte-for-byte". A tail of the batch's own subagent transcript was left uncommitted. | Fixed everywhere; transcripts committed. |
+| 9 | `v_value_independence` counts absence-only roots as independent (REF-01007 added one). **Withheld for the owner.** | **GAP-048** (open) gives a derivation query. The view is not redefined. |
+
+**Owner rulings of 2026-09-25 on the four withheld findings**, relayed by the coordinating session
+and recorded on contact (rule 0):
+
+1. **#10: REF-01007 re-graded PROXY → PARTIAL**, matching REF-01006. Whether an audit's participants
+   were disabled is a Co-1 question, not a population-directness criterion. Applied with the new verb
+   `amend-population-match`, which records the old grade and the ruling on `mismatch_note`; REF-01006
+   was not reopened.
+   - The PROXY warrant followed the research contract's one-line R13 summary ("no-participants =
+     PROXY", `governance/research-contract.yaml`), which DR-2026-08-19's own R13 text does not contain.
+   - The ruling supersedes that line as applied to a facility audit. **Whether the contract's wording
+     should change is the owner's call, and it was not edited.**
+2. **#14: TERM-089 ('ramp') narrowed** to exclude the running slope of paths, walkways and trails.
+   Applied with the new verb `amend-term`. The other three term points (TERM-094's universalised
+   prior, TERM-093's foreclosed criterion term, TERM-092's dangling reference) are recorded on
+   GAP-033 as **still open**, not settled.
+3. **#15: a CHECK-permitted `EXHAUSTED` disposition** was added by schema migration 096, a table
+   rebuild generated from the live DDL. It was applied to candidates 109 and 110.
+   - **Candidate 123 stays PENDING-VERIFICATION, deliberately.** EXHAUSTED means no route exists from
+     anywhere. For 123 a route exists: PMC serves it free to read.
+   - What stopped this batch was a bot barrier on this environment's automated requests (reCAPTCHA,
+     Cloudflare), which may be transient. The owner's ruling drew exactly that distinction.
+   - Not queued for anyone; no request drafted.
+4. **#16: no personal email to third-party APIs**; see §0.
+
+The rulings are recorded in `references/project-standards.md`. GAP-047 (closed fixed) records the two
+writer gaps they exposed.
+
+**Corrections to commit messages that cannot be rewritten:**
+- **c3cca9b1:**
+  - "says why (slope measurement is what keeps audits small)" was withdrawn by A1.
+  - "R13 PROXY" is now PARTIAL, by ruling.
+  - "nine routes" should read ten requests, six of them body-capable (A7).
+  - "Candidate 117 rehomed to the stair slug" was prose only until #5 typed it.
+  - "rendered for the first time … contrary to GAP-037's 2026-09-20 text" should read first
+    *persisted* render; GAP-037's 2026-09-20 text was right (#3).
+  - Table 20's "1:10 to 6 in, 1:12 to 9 in" are untested recommendations (#2).
+  - "ramp 6 was unacceptable" is true, and ramp 9 was unacceptable in descent to another group (#1).
+- **da1d95ab:** "the audit's own case (b) … no edge written" was wrong (#6).
+
+**A defect in my own checking, found while repairing:** `retrieval_log.quote_in_artefacts` returns a
+`(found, detail)` tuple, and my pre-write quote checks tested the tuple's truth, which is always
+true. They were vacuous. Re-run properly (`found, detail = …`), every verbatim `claim_text` in this
+batch is found, and only the declared verbatim-exempt transcriptions are not. db.py's own write-time
+check was not affected.
 
 ## 1. Pointer repair first — and it exposed nothing (commit caa52ad8)
 
@@ -71,10 +151,14 @@ because batch 19's lesson is that an audit's ramp data sits in its body, not its
   is real rather than a malformed AND-chain (R14). P7a not confirmed by Q1.
 - **Q1b (Co-1)** returned 21. **Its prior mis-described it**: it claimed to relax one term and
   changed three, so Q1→Q1b isolates nothing. Recorded in the execution. It found
-  **Mactaggart et al. 2024** (Uganda), an audit tool adapted with — and audits co-facilitated by —
-  eight youth researchers with disabilities, which measures ramp slope and reports two of three ramps
-  too steep. **Staged, not admitted** (candidate 126): the slope criterion is in a supplementary
-  appendix not retrieved, and whether the co-production meets D-0178 must be read, not guessed.
+  **Mactaggart et al. 2024** (Uganda). Its audit tool was adapted with eight youth researchers with
+  disabilities, and the pilot audits were run by pairs of trainee facilitators, each pair one youth
+  researcher with a disability and one peer without. The tool measures ramp slope, and the audits
+  report two of three ramps too steep.
+  - **The recorded disabilities of those facilitators are Deaf, albinism and visual impairment.
+    None is a mobility impairment** (§0b, #13).
+  - **Staged, not admitted** (candidate 126): the slope criterion is in a supplementary appendix not
+    retrieved, and whether the co-production meets D-0178 must be read, not guessed.
 - **Q2 (T2)** returned 8 and **no systematic review**: the two reviews are rapid/scoping (T3). Two
   primary audits staged (127 Campillay-Campillay 2022, Chile; 128 Obrusnikova 2026, US parks).
 
@@ -86,7 +170,8 @@ because batch 19's lesson is that an audit's ramp data sits in its body, not its
 text read. A secondary analysis of Brazil's 2012 census of every public primary-care facility.
 **Its ramp item is presence-only** ("Does the health facility have access ramp?"), so it is filed on
 parameter 3 as `claim_type absent` (extraction 59). The staged tier guess of 2 was wrong: a census is
-not a synthesis. R13 PROXY (no participants in any role). Backward pass (exec 95): the slope screens
+not a synthesis. R13 was graded PROXY (no participants in any role); **re-graded PARTIAL by owner
+ruling, matching REF-01006** (§0b). Backward pass (exec 95): the slope screens
 score 0 and that is the known blind spot; reading the titles surfaced **Martins 2016** (candidate
 129 — the only abstract in view reporting a *measured slope* compliance figure, against NBR 9050) and
 **Mudrick 2012** (130, 2,389 US facilities). `python3 scripts/research/mining_screen.py --ref REF-01007 --compare`.
@@ -102,19 +187,34 @@ three items the owner ruled exhausted.
 
 ## 4. Templer, FHWA-RD-79-3 Vol. 3 (candidate 125) → REF-01008, T3 grey
 
-Scan PDF (334 images) and DjVuTXT persisted from Internet Archive. **Every table used was rendered
-and looked at** (page indices 2, 23, 24, 28, 36, 52, 53, 318).
+Scan PDF (332 pages; Internet Archive's metadata says 334 images) and DjVuTXT persisted from
+Internet Archive. **Every table used was rendered and looked at** (page indices 2, 23, 24, 28, 36, 52,
+53, 318; and 223, 224, 246 for the Part II field tests added in §0b).
 
 - **Sole author.** The Technical Report Documentation Page names John A. Templer only; the staged
   "et al." is corrected (R15). May 1980; 325 pages; Georgia Tech Pedestrian Research Laboratory.
 - **It is a CURB-RAMP study and its recommendation is rise-conditioned.** Table 20: 1:8 up to a
   3-inch curb, 1:10 up to 6 inches, 1:12 up to 9 inches, steeper than 1:8 never; "Whenever possible
-  slopes less than the maximum should be employed" (extractions 60–62). **Two of those cells were not
-  tested** — no 1:10 ramp over 6 in, no 1:12 ramp over 9 in exists in Table 1; they interpolate.
+  slopes less than the maximum should be employed" (extractions 60–62).
+  - **Two of those cells were not tested:** Table 1 has no 1:10 ramp over 6 in and no 1:12 ramp over
+    9 in.
+  - The report never says how it set those cells. "Interpolate", which this line first said, was my
+    inference, not the source's word.
+  - Both cells lie on the **unacceptable** side of the report's own Table 3 heavy line for
+    manual-wheelchair ascent, so extractions 61 and 62 are now `committee_assertion` (§0b, #2).
+  - Ramp 9, the 1:8 cell's tested ramp, was unacceptable in descent to people with walking
+    difficulties (Table 19 row g).
 - **1:12 over a 6-inch rise and 6-foot run was acceptable to every manual wheelchair user in ascent**
   (extraction 65), and "steeper ramps are acceptable if they are short" (63). **This does not
-  contradict REF-01005**, where almost half could not complete 1:12 over a longer run: the parameter
-  is length- and rise-conditioned, which is now stated by four independent sources.
+  contradict REF-01005**, where almost half could not complete 1:12 over a longer run. The parameter
+  is length- and rise-conditioned.
+  - This line first said "stated by four independent sources". That was a hand count, and it is
+    withdrawn (§0b, #8).
+  - Measured on ramps by REF-01008 only; stated as a mechanism by REF-00996. REF-01002 and REF-01003
+    bear on it only once GAP-016 and GAP-033 are answered.
+- **Part II, the field tests** (added in §0b, #20). Wheelchair users met no difficulty with the slope
+  at two field-built 1:12 curb ramps (extractions 68 and 69); the lip and the surface caused the
+  trouble.
 - **Sample:** 120 volunteers in eight groups, tested August–November 1976. **Table 2's 18 manual
   wheelchair users are young** — its summary row puts all 18 in the 16–35 bands; its subdivision
   rows do not add up to it, but at least 16 of 18 are 16–35 either way. That is the objection
@@ -122,28 +222,42 @@ and looked at** (page indices 2, 23, 24, 28, 36, 52, 53, 318).
 - **Instrument:** a four-point difficulty rating by the subject plus an independent tester rating;
   heart rate and oxygen consumption were considered and rejected. Acceptable if ~80 % rate it 1–2.
 - **Walter 1971 at second hand** (extraction 64, root `untraced`, as extraction 57 did for Elmer):
-  1:9 over 10 ft and 1:16 over 20 ft for self-propelled chairs. A second independent reader of Walter
-  — corroboration of the *report* of Walter, not a second root.
+  1:9 over 10 ft and 1:16 over 20 ft for self-propelled chairs. A second reader of Walter, which
+  corroborates the *report* of Walter and is not a second root. It is not fully independent: each
+  report knew of the other's work (§0b, #12).
 - **Backward pass:** the reference list is five entries (rendered, transcribed, persisted as a READ
   derivation); none is new. `python3 scripts/research/mining_screen.py --ref REF-01008 --compare`.
 
-## 5. Footnote c — rendered for the first time, and what it settles
+## 5. Footnote c — first persisted render, and what it settles
 
 Index 56 of REF-01005's scan, rendered at 200 dpi: superscript c on the **1:8 (2 ft run, 3 in rise)**
 and **1:10 (8 ft run, 9 in rise)** rows only; the footnote reads "Based on research of others
-(Templer, 1977 and **Walters**, 1971)." **No render of this page existed before** — batch 19 rendered
-indices 55, 162 and 167–169 (`ls retrieval-log/*/5dd866a236fb5978.p*`) — so GAP-037's statement
-that the reading was "confirmed independently on a rendered page image" was right about the page and
-wrong about the evidence. The runbook had this correct.
+(Templer, 1977 and **Walters**, 1971)." **No render of this page had been *persisted* before.** Batch
+19's persisted renders are indices 55, 162 and 167–169 (`ls retrieval-log/*/5dd866a236fb5978.p*`).
+- This paragraph first went further: it said GAP-037's statement that the reading was "confirmed
+  independently on a rendered page image" was wrong about the evidence. **That was my error.**
+- Batch 19's independent adversarial subagent had rendered index 56 in its scratchpad and read it.
+  An `ls` of persisted renders could not see that (§0b, #3).
+- GAP-037's 2026-09-20 statement was true. Extraction 67 now carries the footnote verbatim, beside
+  extraction 56.
 
 **The new finding is geometric.** Table 13's two footnote-c rows have *exactly* the run and rise of
 Templer's test ramps 9 (1:8, 2 ft, 3 in) and 6 (8 ft, 9 in = 1:10.67). That is consistent with the
-cited Templer being the Georgia Tech ramp work. **And ramp 6 was unacceptable to manual wheelchair
-users in ascent** (58 % against the ~80 % line; extraction 66), while Templer's own Table 20 stops 1:10
-at a 6-inch curb. REF-01005's 1:10 band is more permissive than the study its footnote appears to rest
-on.
+cited Templer being the Georgia Tech ramp work.
 
-**What it settles:** REF-01005 does not cite Templer or Walter for 1:12 or 1:16. **What it does not:**
+**What the Templer data say about those rows, qualified after the independent pass** (§0b, #1):
+- **Ramp 6 was unacceptable to manual wheelchair users in ascent** (58 % against the ~80 % line;
+  extraction 66), and Templer's own Table 20 stops 1:10 at a 6-inch curb.
+- So Table 13's 1:10 band is more permissive than *REF-01008's* data, a report dated May 1980, after
+  REF-01005. It is **stricter** than footnote c's other warrant, Walter as Templer reports him (1:9
+  over 10 ft; extraction 64).
+- **Ramp 9, the other footnote-c geometry, was unacceptable in descent to people with walking
+  difficulties** (Conclusions p.33; Table 19 row g; extraction 60).
+- This section first reported only ramp 6.
+
+**What it settles:** footnote c does not mark the 1:12 or 1:16 rows, so it is not a warrant for 1:12.
+REF-01005 does separately cite Walter as corroborating 1:16 over 20 ft on its page 163 (extraction 54);
+this line first said it cited neither for 1:16 (§0b, #7). **What it does not:**
 which document "Templer, 1977" is. There are now three candidates — the 1974 stairs dissertation, the
 FHWA ramp study (dated 1980), and a forthcoming Templer book *Stairs and Ramps* that NBS IR 78-1554
 cites six times. Candidate 115 stays PENDING; no edge was written from extraction 56 (R15).
@@ -152,7 +266,9 @@ cites six times. Candidate 115 stays PENDING; no edge was written from extractio
 
 Read in full from NIST (text layer sound; low-text pages checked). A stair-accident study for the
 CPSC; **no ramp recommendation**; every "gradient" is its *orientation gradient*, a perceptual measure
-(a false friend). Rehomed to `stair-ramp-threshold-biomechanics-accessibility`. P3a and P3b held.
+(a false friend). Rehomed to `stair-ramp-threshold-biomechanics-accessibility`: in prose at first,
+and in the typed `suggested_slug` only after the independent pass found the column still named this
+slug and `resolve-candidate` gained the flag to fix it (§0b, #5). P3a and P3b held.
 
 ## 7. GAP-033 — term adjudication has now run over the whole backlog
 
@@ -169,12 +285,22 @@ defined on ramps, four observations measure path and trail slopes, and **extract
 REF-01003's path slopes on parameter 3.** Whether parameter 3 covers route running slope is a scoping
 decision for whoever re-determines it. P5a (a writer defect would surface) was **not** borne out.
 
+**Owner ruling 2026-09-25 (§0b):**
+- TERM-089 `ramp` is narrowed to exclude the running slope of paths, walkways and trails, so it no
+  longer pre-decides that question.
+- Three further points on the minted terms stay **open** on GAP-033:
+  - TERM-094's scope note universalises one testable prior.
+  - TERM-093 forecloses a separate criterion term.
+  - TERM-092's scope note has a dangling reference.
+
 ## 8. The exhausted three — per the owner ruling of 2026-09-25
 
 "If we can't access something from anywhere then we have to give up on it for now." Applied
 literally: **no retrieval of REF-01002, Walter 1971 or the 1957 dissertation was attempted.**
-Candidates 109 and 110 re-described as exhausted and not queued for anyone, with the routes on record;
-batch 19's request-based next steps are withdrawn by the ruling (rule 0). REF-01002's
+Candidates 109 and 110 were re-described as exhausted and not queued for anyone, with the routes on
+record. Their typed disposition could not say so until the owner's second ruling added `EXHAUSTED`
+(migration 096); both now carry it (§0b). Batch 19's request-based next steps are withdrawn by the
+ruling (rule 0). REF-01002's
 `verification_note` states the disposition; status UNVERIFIED and disposition OPEN are unchanged
 because no writer closes them with this reason. GAP-016 stays OPEN, marked NOT-ADDRESSABLE;
 GAP-026 CLOSED-DECIDED; GAP-020 and GAP-024 annotated as an accepted limitation.
@@ -188,13 +314,20 @@ gap rather than bypassing it.
 
 ## 9. Where the runbook was wrong on live state
 
-- Candidates 123 and 124 were described as "both open access, retrievable". 124 was; **123 is not**.
+- Candidates 123 and 124 were described as "both open access, retrievable". 124 was.
+  - **123 is free to read but not OA-licensed**, and it was not retrievable from here: Unpaywall and
+    OpenAlex both give `is_oa` true, green, via PMC. This line first said "123 is not" open access
+    (§0b, #19).
+  - The access barriers are real.
 - Candidate 124's `tier_guess` 2 was, as the runbook warned, not authoritative: T3.
 - "Table 20 over 1:8/1:10/1:12/1:16" is right, but it is **a curb-ramp table conditioned on curb
   height**, which changes what it can say about parameter 3.
 - The runbook said to "admit" 123 and 124; only 124 could be read, so only 124 was admitted.
-- The runbook said batch 19 "called this 'not settled' without ever actually rendering that page" —
-  correct; GAP-037's later text claiming a render was the error.
+- The runbook said batch 19 "called this 'not settled' without ever actually rendering that page".
+  - This line first called that correct and GAP-037's claim of a render the error. **Both halves
+    were wrong.**
+  - Batch 19's independent subagent rendered and read index 56 in its scratchpad. It was never
+    persisted (§0b, #3).
 - Candidate 117 → a stairs slug exists (`stair-ramp-threshold-biomechanics-accessibility`), so REHOME
   rather than OUT-OF-SCOPE, as the runbook allowed.
 
@@ -208,8 +341,8 @@ gap rather than bypassing it.
 | P1c yardstick = national code | Pinto **not tested** — no gradient yardstick at all |
 | P1d no Co-1 warrant (0.8) | **Held** for Pinto |
 | P1e neither lands at T1 (0.8) | **Held** (T3) |
-| P1f PROXY/PARTIAL (0.85) | **Held** (PROXY) |
-| P2b Table 20 does not endorse 1:12 unqualified (0.6) | **Falsified**: 1:12 recommended to a 9-in curb, qualified only by rise |
+| P1f PROXY/PARTIAL (0.85) | **Held** (graded PROXY; PARTIAL by owner ruling 2026-09-25) |
+| P2b Table 20 does not endorse 1:12 unqualified (0.6) | **Held**: 1:12 is endorsed only up to a 9-in curb, under a footnote urging gentler slopes. First scored "Falsified", which read a qualification as none (§0b, #18) |
 | P2c subjective rating, not physiological (0.55) | **Held**; physiological measures considered and rejected |
 | P2d Walter given as a ratio (0.6) | **Held** |
 | P2e Table 20 legible only on the render (0.5) | **Half**: the text layer carries it column-wise with O read as 0 |
@@ -241,23 +374,42 @@ gap rather than bypassing it.
     `validate_pydantic_schemas`, `retired_vocabulary` (no hit in any batch-20 file),
     `metadata_integrity_audit`, `validate_reasoning`, `source_locators_integrity`, and
     `site_pages_fresh` (examined 0 — vacuous, not a pass).
-  - **One advisory failure this branch DID grow:** `research_protocol_audit` CHECKs 7 and 8 now name
-    REF-01007 and REF-01008 as having **no admitting search**. That is the audit's own case (b): both
-    were reached by executing a staged candidate's locator, not by a search. The searches that
-    *surfaced* them (batch 19's exec 91 and 90) did not admit them, and logging a new search with
-    `--admitted-ref-id` would either misattribute the admission or break S01 (a candidate's exec must
-    equal its source's admitting exec). The audit says outright that writing an edge for a search
-    that did not admit the source is fabrication. No edge written.
+  - **One advisory failure this branch DID grow, and my first reading of it was wrong:**
+    `research_protocol_audit` CHECKs 7 and 8 named REF-01007 and REF-01008 as having **no admitting
+    search**.
+    - I called that the audit's case (b) and wrote no edge. **Wrong** (§0b, #6).
+    - Case (b) is a code clause or a named standard. S01's own design says the search that surfaced
+      a candidate and the search that admitted its source are one event, and batch 17's exec 77 is
+      the precedent.
+    - This is case (a) plus a writer gap. Logging a *new* search would indeed have broken S01, and
+      no verb could attach an admission to an *existing* one.
+    - Fixed in the second fix-forward: `link-admission` (GAP-046) wrote (91, REF-01007) and
+      (90, REF-01008). S01 now examines this batch's admissions.
   - `citation_mining_session` is NOTHING-IN-SCOPE under the new pointer: this batch admitted no
     slug-linked T1-2 source. Correct, and uninformative.
+- **After the second fix-forward** (§0b; run once, on canonical):
+  - `migrate_db --rebuild` reproduces every row. A full-row diff of every table differs only in the
+    ledger's `applied_at` and `applied_by_session` columns, REF-01006's bot-written author and source rows, and `pipeline_runs`
+    (rule 3), as before.
+  - `test_db_integrity`: S01 now examines this batch's two admissions as well as batch 17's.
+  - `run_checks --changed-from origin/main --explain`: **RESULT PASS**, no blocking failure.
+    `--selftest` PASS. `research_batch_dod --session <this>` and `--all` COMPLIANT.
+  - `research_protocol_audit` no longer names REF-01007 or REF-01008. It stays red on REF-00987, which
+    predates this branch.
+  - `test_verification_pipeline` came into scope because `scripts/db.py` changed. Its three failures
+    (the ≥50/≥30/≥100 corpus assertions CLAUDE.md rule 7a names) are identical on origin/main's DB.
+  - `scripts/regenerate_derived.sh --check`-clean; context map regenerated.
 
 ## 12. What the next batch takes
 
-1. **The independent antagonist pass over this batch**, if it has not run before merge.
+1. ~~The independent antagonist pass~~ — run; §0b. What it left for the owner is on GAP-048
+   (independence counting absences) and GAP-033 (three term points). GAP-049 records the thin R1 leg,
+   for a Co-1 pass that reaches beyond one English biomedical index.
 2. **The ramp-versus-route scope of parameter 3** (GAP-033 group 1; extraction 49). It decides what
    evidence the next determination may rest on.
 3. **Candidate 126 (Mactaggart 2024)** — the supplementary appendix's ramp criterion, then a D-0178
-   reading of the co-production. The strongest Co-1 lead in view.
+   reading of the co-production. The strongest Co-1 lead in view, but its facilitators' recorded
+   disabilities include no mobility impairment.
 4. **Candidate 129 (Martins 2016)** — read the Portuguese body for its measured-slope compliance rate.
 5. **GAP-044** — let `correct-source` take a persisted non-Crossref artefact, then correct REF-01002.
 
