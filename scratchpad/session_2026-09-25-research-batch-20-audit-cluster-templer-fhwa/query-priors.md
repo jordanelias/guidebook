@@ -23,3 +23,17 @@ document type — the audit — rather than the topic word "ramp" in a title.
 fetched only for records a title does not rule out. Every staged candidate is R9-prechecked
 against `evidence_sources.doi` and `search_candidates.locator` before staging. A result count is
 read from the persisted payload's `hitCount`, never typed from the screen.
+
+---
+
+## Added after Q1 and Q2 returned, BEFORE Q1b fires
+
+**Honest provenance:** Q1b was not in the original plan. Q1 returned hitCount 2 (predicted
+10-120), one of them REF-01006 — so the query shape is sound (the known positive came back)
+and the narrowness is real, but the exact phrase "accessibility audit"/"access audit" is the
+likeliest single constraint doing the narrowing. Q1b relaxes that one term and nothing else,
+so the difference between Q1 and Q1b isolates it (R14: query shape vs genuine absence).
+
+| # | Target | Engine | Query (verbatim) | Prior, before running |
+|---|---|---|---|---|
+| Q1b | Co-1: same target as Q1, without the audit phrase | Europe PMC REST `search`, resultType=lite, pageSize=100 | `audit AND ramp AND (gradient OR slope) AND ("persons with disabilities" OR "people with disabilities" OR "disabled people") AND (participatory OR "user-led" OR "co-production" OR "co-researchers" OR "peer researchers" OR "disabled people's organisation" OR "organisation of persons with disabilities")` | hitCount 10-150, p≈0.6. At least one NEW co-produced audit that records a ramp gradient: p≈0.25 (lower than Q1's prior, because Q1 already found the one I expected to exist). If Q1b returns only REF-01006 plus off-topic hits, the Co-1 audit stratum on ramp gradient is genuinely thin in Europe PMC's OA full text — an INDEX-bounded absence, not a literature-wide one. |
