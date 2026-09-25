@@ -234,7 +234,22 @@ gap rather than bypassing it.
 - `migrate_db --rebuild` reproduces every row this batch wrote; the only drift is the bot's direct
   writes to REF-01006 and `pipeline_runs` (rule 3), which predate this branch.
 - `scripts/regenerate_derived.sh` — `--check`-clean.
-- `run_checks --changed-from origin/main` — see the PR; run once, at the end.
+- `run_checks --changed-from origin/main --explain`, run once at the end: **RESULT PASS**, no blocking
+  failure; `run_checks --selftest` PASS. Re-run rather than trust the counts it printed.
+  - Advisory failures that are red for reasons this branch did not cause, checked one by one:
+    `migration_reproducibility_deep` (the bot's direct UPDATE to REF-01006), `validate_schema_cross_check`,
+    `validate_pydantic_schemas`, `retired_vocabulary` (no hit in any batch-20 file),
+    `metadata_integrity_audit`, `validate_reasoning`, `source_locators_integrity`, and
+    `site_pages_fresh` (examined 0 — vacuous, not a pass).
+  - **One advisory failure this branch DID grow:** `research_protocol_audit` CHECKs 7 and 8 now name
+    REF-01007 and REF-01008 as having **no admitting search**. That is the audit's own case (b): both
+    were reached by executing a staged candidate's locator, not by a search. The searches that
+    *surfaced* them (batch 19's exec 91 and 90) did not admit them, and logging a new search with
+    `--admitted-ref-id` would either misattribute the admission or break S01 (a candidate's exec must
+    equal its source's admitting exec). The audit says outright that writing an edge for a search
+    that did not admit the source is fabrication. No edge written.
+  - `citation_mining_session` is NOTHING-IN-SCOPE under the new pointer: this batch admitted no
+    slug-linked T1-2 source. Correct, and uninformative.
 
 ## 12. What the next batch takes
 
