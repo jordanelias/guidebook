@@ -267,7 +267,10 @@ def audit():
               f"-- not a missing prior but a missing edge: nothing links them to the "
               f"search that admitted them. TWO CASES, AND THIS CHECK CANNOT TELL THEM "
               f"APART: (a) the edge was lost -- log the admitting search with "
-              f"`db.py log-search --admitted-ref-id`, which writes the junction row; or "
+              f"`db.py log-search --admitted-ref-id`, which writes the junction row, or, "
+              f"when that search is already logged and a resolved candidate records it, "
+              f"`db.py link-admission`; if the step that surfaced it was never logged, "
+              f"log it as a backfill first (batch 17's 107/108, batch 20's GAP-050); or "
               f"(b) NO SEARCH ADMITTED IT, because it was reached by executing a named "
               f"retrieval target (a research_code_leads clause, a named standard) rather "
               f"than by discovery, which is legitimate and has no edge to write. "
@@ -276,8 +279,9 @@ def audit():
               f"derivable and this check names the rows rather than prescribing a fix: "
               f"writing an edge for a search that did not admit the source is the same "
               f"fabrication as backfilling a prior. (Until 2026-09-18 this prescribed "
-              f"exactly that, and also named results_admitted -- a writer-retired column "
-              f"set once at insert and never updated.)")
+              f"exactly that, and also named results_admitted -- set at insert, and "
+              f"afterwards moved only when an admission edge is added to or removed from "
+              f"that search, never lowered to force agreement (owner ruling 2026-09-26).)")
         for ref_id, title, _ in no_admitting_search[:5]:
             print(f"      · {ref_id}: {(title or '')[:60]}")
 

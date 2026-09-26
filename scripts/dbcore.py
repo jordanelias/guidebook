@@ -756,15 +756,19 @@ _INSERT_RE = re.compile(r'INSERT\s+(?:OR\s+\w+\s+)?INTO\s+"?(\w+)"?', re.I)
 _WRITER_MODULES = ("db.py", "assess/assess_cell.py")
 
 
-def _writer_tables() -> set:
-    """Every table a sanctioned writer INSERTs into, read from the writers themselves."""
+_DELETE_RE = re.compile(r'DELETE\s+FROM\s+"?(\w+)"?', re.I)
+
+
+def _writer_tables(pattern=_INSERT_RE) -> set:
+    """Every table a sanctioned writer INSERTs into (or, with _DELETE_RE, deletes from),
+    read from the writers themselves."""
     here = os.path.dirname(os.path.abspath(__file__))
     found = set()
     for rel in _WRITER_MODULES:
         path = os.path.join(here, rel)
         try:
             with open(path, encoding="utf-8") as fh:
-                found |= set(_INSERT_RE.findall(fh.read()))
+                found |= set(pattern.findall(fh.read()))
         except OSError:
             # A writer module that cannot be read is a real problem, but this module is
             # imported by the CLI itself; raising here would make every db.py invocation
@@ -832,6 +836,22 @@ def writable_tables(conn) -> list:
         for t in ready:
             remaining.pop(t)
     return ordered
+
+
+def deletable_tables(conn) -> set:
+    """Tables a sanctioned writer DELETEs from -- derived exactly as writable_tables is.
+
+    ADDED 2026-09-26. The capture path (scripts/research/emit_batch_sql.py) was additive
+    only, and rightly refuses by default to turn a row missing from a scratch into a
+    DELETE: that is usually a stale copy. But db.py has writers that delete on purpose --
+    unlink-admission removes a wrong search_admissions edge -- and an additive-only
+    capture made that sanctioned write unshippable. emit_batch_sql renders a DELETE only
+    for a table in this set AND named by the operator (--allow-delete), so the default
+    stays additive and nothing here is a list maintained beside the writers.
+    """
+    live = {t for (t,) in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    return (_writer_tables(_DELETE_RE) & live) - set(NOT_CAPTURED)
 
 
 # WRITABLE_TABLES and TABLES are GONE, deliberately. Both were module-level constants,
@@ -932,6 +952,10 @@ def _selftest() -> int:
               not _viol, "; ".join(_viol))
         check("every NOT_CAPTURED entry states a reason",
               all(isinstance(v, str) and v.strip() for v in NOT_CAPTURED.values()))
+        _del = deletable_tables(_st_con)
+        check("deletable_tables() sees unlink-admission's table, and is a subset of the "
+              "capture set", "search_admissions" in _del and _del <= set(_tbls),
+              "got %s" % sorted(_del))
     finally:
         _st_con.close()
 

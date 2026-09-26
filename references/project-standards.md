@@ -4020,3 +4020,49 @@ ACTION:
 4. Leave an open scope question open in the vocabulary.
 5. Send no personal email to any third-party API.
 DATE: 2026-09-25 — owner rulings, as relayed above.
+
+## Owner rulings 2026-09-26 — `results_admitted` is raise-only after insert; a proxy provenance edge is repaired before merge
+
+Given on PR #159 (research batch 20) and relayed by the coordinating session, so recorded here in
+that session's words rather than as quotations. Recorded on contact per `CLAUDE.md` rule 0. Full
+record: `sessions/session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa.md`, §0c–§0d.
+
+**(1) `search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT.**
+- `log-search` sets the count from the search's own edges at insert.
+- An admission edge added later to that search (`db.py link-admission`) raises the count to
+  max(count, edges).
+- Removing a wrong edge (`db.py unlink-admission`) lowers it by one, never below the edges that
+  remain.
+- **The count is never lowered to force agreement with the edges.**
+
+The rule was first written by a session as a reconciliation of two records that disagreed. The
+owner confirmed it as the answer, not a stopgap.
+
+**What it supersedes, for post-insert writes:**
+- `DR-2026-08-19` step 7's "the count must agree exactly".
+- The 2026-09-02 repair's "nothing updates it thereafter" (the H05 note in
+  `scripts/tests/test_db_integrity.py`, which now carries an appended pointer here).
+
+**What it keeps:** that repair's lesson. H05 stays deleted, no parity check returns, and the
+historical counts restored above their edges stay as they are. The rule's one home is
+`_results_admitted_after` in `scripts/db.py`. GAP-051 is closed as decided.
+
+**(2) A PROXY PROVENANCE EDGE IS REPAIRED, NOT MERGED.** Batch 20's two admission edges copied
+candidate rows that batch 19 had filed on the nearest logged search, because the steps that
+actually surfaced them were never logged. The ruling was to fix it before merge, on batch 17's
+precedent (candidates 107/108):
+1. log each real discovery step as a backfill search (`log-search --backfill 1`, a prior that
+   states its own absence, and a `query_text` that says honestly what was done);
+2. move the candidates with `reattribute-candidate`;
+3. move the edges with `unlink-admission` and `link-admission`.
+
+An ad hoc lookup is logged as what it was, not dressed as a designed query. GAP-050 records the
+chain.
+
+CONDITION: any session that writes, moves or audits an admission edge on a search that is
+already logged, or finds a candidate filed on a search that did not surface it.
+ACTION:
+1. Never lower `results_admitted` to meet the edges; let the two verbs move it.
+2. When a candidate's search is a proxy, backfill the real step and move the candidate and its
+   edge. Never leave the proxy in place, and never re-describe the proxy search as the source.
+DATE: 2026-09-26 — owner rulings, as relayed above.

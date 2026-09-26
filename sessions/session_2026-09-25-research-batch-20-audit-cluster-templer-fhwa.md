@@ -178,8 +178,9 @@ own record. **Both copy proxy attributions:**
   2. reattribute the candidates;
   3. unlink the proxy edge;
   4. link the true one.
-- **It is not done here.** It reconstructs another batch's unlogged work, and this PR is on hold.
-  It is filed as **GAP-050** (open), with a correction on each search's own note.
+- **It was not done in this round.** It reconstructs another batch's unlogged work, and the PR was
+  on hold. It was filed as **GAP-050**, with a correction on each search's own note. **The owner
+  then ruled it be fixed before merge, and §0d does it.**
 - For the same reason, **`results_admitted` on execs 90 and 91 was deliberately not raised.**
   Raising it would carry the proxy into `v_coverage_branch`'s Co-1 count.
 
@@ -189,8 +190,9 @@ own record. **Both copy proxy attributions:**
   counts to 0. It declared the column set at insert and never updated after.
 
 The max rule honours both: it never lowers, and it moves only on an edge the verb itself writes.
-That is a session's reconciliation, not a ruling, and **GAP-051** (open) puts the choice to the
-owner. The one place to change it is `_results_admitted_after` in `scripts/db.py`.
+I wrote it as a session's reconciliation and filed **GAP-051** to put the choice to the owner.
+**The owner has since confirmed it as the ruling, not a stopgap (§0d).** Its one home is
+`_results_admitted_after` in `scripts/db.py`.
 
 **The driver scripts:**
 - **The first real run did print refusals, masked by `| grep … || true`, but no data is wrong.**
@@ -206,6 +208,53 @@ owner. The one place to change it is `_results_admitted_after` in `scripts/db.py
 - **One slip of mine while repairing:** an `open(p, "w").write(open(p).read())` truncated `w09`
   before reading it. It was restored from HEAD at once and re-repaired; nothing committed was
   affected.
+
+## 0d. Owner rulings 2026-09-26, and the fourth fix-forward
+
+The coordinating session relayed two owner rulings on §0c's open items. Both are recorded on
+contact (rule 0), in `references/project-standards.md` and on the gaps. The work is one data
+migration (`data_20260926042944_…`, driven by `scratchpad/<session>/w21_gap050_repair.py`).
+
+**(1) GAP-050: fix it before merge.** I checked every fact against batch 19's own records, then did
+it in batch 17's order:
+
+| Step | For Pinto (candidate 124, now REF-01007) | For Templer (candidate 125, now REF-01008) |
+|---|---|---|
+| The real discovery step | Batch 19's **backward mining pass over REF-01006's Crossref deposit**. The deposit has 28 references and was persisted as `9a51a98c7235d28f.json`. Batch 19 logged it in `citation_mining` but wrote no search row; candidates 123 and 124 were staged from it one minute later. | An **ad hoc Internet Archive lookup** by batch 19's adversarial pass (`creator:Templer AND (pedestrian OR ramp OR handicapped)`, numFound 3). It was re-run by the batch-19 session before staging 125, and was never persisted. Only the batch-19 transcripts hold it. |
+| Logged now as | **exec 99**, a backfill (`--backfill 1`): engine `crossref-deposit`, mining direction backward. The prior says it is absent. | **exec 100**, a backfill: engine `internet-archive`. The `query_text` says plainly that it was an adversarial pass's catalogue lookup, **not a designed query**. It also says the title words were already in the pass's preceding Crossref query, so where the title came from is not recorded. |
+| Candidates moved | 123 and 124, from exec 91 (`reattribute-candidate`). | 125, from exec 90. |
+| Edges moved | (91, REF-01007) unlinked, (99, REF-01007) linked. | (90, REF-01008) unlinked, (100, REF-01008) linked. |
+| `results_admitted` | exec 99: 0 → 1; exec 91 stays 1 (its REF-01006 edge remains). | exec 100: 0 → 1; exec 90 stays 0. |
+
+GAP-050 is closed as fixed, with the chain and the query that derives it.
+
+**What stays visible:**
+- `research_protocol_audit` now names REF-01007 and REF-01008 among sources admitted only by a
+  **backfilled** search. That is true: the steps ran and were not logged when they ran.
+- Candidate 123 (Garg) moved too. It came from the same pass, and leaving it on exec 91 would have
+  kept a known-wrong filing.
+
+**A capture gap the repair exposed, and fixed.**
+- The first real use of `unlink-admission` produced a DELETE that `emit_batch_sql.py` refused,
+  because the capture path is additive only. The verb I added in §0c was therefore unshippable, and
+  its test ran on a scratch copy that never went through the capture step.
+- Now `--allow-delete TABLE` renders a missing row as a keyed DELETE. It does so only for a table a
+  sanctioned writer actually deletes from; `dbcore.deletable_tables` derives that set the way the
+  capture set is derived.
+- Every other missing row is still refused, so a stale scratch copy is still caught.
+- Both selftests cover it: the allowed deletion replays exactly, and a table no writer deletes from
+  is refused.
+
+**(2) GAP-051: the raise-only rule IS the answer.**
+- **Stated as the ruling:** GAP-051 is closed as decided, the `_results_admitted_after` docstring
+  states the ruling, and project-standards records it.
+- **Two code-level statements of the old position were corrected:**
+  - `test_db_integrity`'s H05 note ("nothing updates it thereafter") now carries an appended
+    pointer to the ruling.
+  - `research_protocol_audit`'s message called the column "set once at insert and never
+    updated". It now describes the rule, and its case-(a) remedy names `link-admission` and the
+    backfill route.
+- Nothing built provisionally needed to change: the code already does what was ruled.
 
 ## 1. Pointer repair first — and it exposed nothing (commit caa52ad8)
 
@@ -467,6 +516,8 @@ gap rather than bypassing it.
     - **Qualified in §0c.** S01 cannot fail on an edge `link-admission` writes, because the edge
       copies the very column S01 compares. Batch 19's own record shows both copied proxy
       attributions (GAP-050).
+    - **Repaired in §0d** by owner ruling: the real steps are now logged as backfills (execs 99
+      and 100), and the candidates and edges have moved there.
   - `citation_mining_session` is NOTHING-IN-SCOPE under the new pointer: this batch admitted no
     slug-linked T1-2 source. Correct, and uninformative.
 - **After the second fix-forward** (§0b; run once, on canonical):
@@ -489,6 +540,19 @@ gap rather than bypassing it.
   - The new `test_db_amend_writers` ran in scope and passed. `dbcore --selftest` passed, including
     its new cases.
   - `--selftest` PASS; `research_batch_dod --session <this>` and `--all` COMPLIANT.
+- **After the fourth fix-forward** (§0d; run once, on canonical):
+  - Full-row rebuild diff: the same bot-only drift. The rebuild replays the two DELETEs and
+    reproduces every row.
+  - `test_db_integrity`: S01 passes. It now compares the moved candidates with their moved edges,
+    which is agreement between two tables, as §0c says.
+  - `run_checks --changed-from origin/main --explain`: **RESULT PASS**, no blocking failure. The
+    advisory set is unchanged.
+  - `research_protocol_audit` names REF-01007 and REF-01008 among backfill-only admissions, which
+    is true.
+  - `--selftest` PASS; `research_batch_dod --session <this>` and `--all` COMPLIANT.
+  - `emit_batch_sql --selftest` and `dbcore --selftest` PASS, including the new DELETE-capture
+    cases. Neither selftest is in the check registry: they were run by hand, and that pre-dates
+    this branch.
 
 ## 12. What the next batch takes
 

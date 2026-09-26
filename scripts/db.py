@@ -1357,7 +1357,8 @@ def main():
     p_ula = sub.add_parser("unlink-admission",
                            help="Remove a WRONG admission edge (the corrective half of "
                                 "link-admission); the removed edge is kept in the search's "
-                                "findings_note")
+                                "findings_note. Capture with emit_batch_sql.py "
+                                "--allow-delete search_admissions")
     p_ula.add_argument("--exec-id", required=True, type=int)
     p_ula.add_argument("--ref-id", required=True)
     p_ula.add_argument("--reason", required=True,
@@ -4004,9 +4005,14 @@ def _results_admitted_after(was, edges: int, linked: bool) -> int:
     EXISTING search, and leaving the count alone produced the opposite defect: exec 90
     read 0 admitted with 1 edge, exec 91 read 1 with 2, and v_coverage_language /
     _jurisdiction / _branch -- which SUM this column -- under-counted what those
-    searches yielded. DR-2026-08-19 step 7 (still the operative instrument) prescribes
-    updating the count in the same transaction as the edge. Reconciled with the
-    2026-09-02 lesson rather than against it:
+    searches yielded. DR-2026-08-19 step 7 prescribes updating the count in the same
+    transaction as the edge.
+
+    THE RULE BELOW IS AN OWNER RULING (2026-09-26, recorded in
+    references/project-standards.md and on GAP-051), not a session's compromise. It first
+    landed as a reconciliation of the two records above; the owner confirmed it as the
+    answer, superseding for post-insert writes both step 7's "must agree exactly" and the
+    2026-09-02 repair's "nothing updates it thereafter":
 
       * never lowered to agree with the edges (the harm): a link gives max(was, edges),
         so the seven restored historical counts -- count above edges, by design -- are
@@ -4016,8 +4022,8 @@ def _results_admitted_after(was, edges: int, linked: bool) -> int:
         monotonic completion amend-search applies to harm_finding ("completing an
         incomplete record is not rewriting what the search found").
 
-    If the owner rules instead that the column must not move after insert, delete this
-    function and its two call sites; nothing else reads it.
+    The one place the rule lives; its cases are L03, L06 and U03 in
+    scripts/tests/test_db_amend_writers.py.
     """
     was = was or 0
     return max(was, edges) if linked else max(edges, was - 1)
@@ -4031,10 +4037,9 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
     kind of fact. `search_admissions` is the one carrier of "which search admitted this
     source", and its only writer was `log-search --admitted-ref-id`, which can only
     attach an admission to a search logged IN THE SAME CALL. A source admitted in a
-    later batch from a staged candidate -- candidate 124 surfaced by exec 91 in batch 19,
-    admitted as REF-01007 in batch 20 -- therefore had no sanctioned way to point back
-    at the search that surfaced it, and research_protocol_audit reported the two
-    sources as admitted by no search at all.
+    later batch from a staged candidate therefore had no sanctioned way to point back at
+    the search that surfaced it, and research_protocol_audit reported batch 20's two
+    such sources (REF-01007, REF-01008) as admitted by no search at all.
 
     WHAT THE REFUSAL PROVES, AND WHAT IT DOES NOT (corrected 2026-09-26). It writes the
     edge only when a search_candidates row already records BOTH ends -- that candidate's
@@ -4045,7 +4050,12 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
     is two tables agreeing about one fact, not a verification of the fact. And
     search_candidates.exec_id has been wrong before -- candidates 107, 108 and 114 (see
     reattribute_candidate). The truth of the edge rests on the session that logged the
-    candidate against this search. A wrong edge is removed with unlink-admission.
+    candidate against this search. A wrong edge is removed with unlink-admission. This
+    is not hypothetical: both edges batch 20 first wrote with this verb copied proxy
+    filings (batch 19 had put candidates 124 and 125 on the nearest logged search because
+    the steps that surfaced them were never logged). They were moved on 2026-09-26 --
+    backfill the real step, reattribute-candidate, unlink-admission, link-admission --
+    and GAP-050 records the chain.
 
     A SECOND ADMITTING SEARCH IS ALLOWED. The first version refused a source that another
     exec already admitted. log-search refuses no such thing -- a source surfaced by two
@@ -4055,8 +4065,8 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
     The reason and any change to results_admitted are appended to the search's
     findings_note (search_admissions has no column for either); see
     _results_admitted_after for why the count moves at all. Re-running it on an edge that
-    already exists writes nothing unless the count is behind the edges -- which is how
-    execs 90 and 91 were brought level after the first version left them behind.
+    already exists writes nothing unless the count is behind the edges, in which case it
+    raises the count and records why.
     """
     reason = dbcore.require_reason(
         reason, f"exec {exec_id} -> {ref_id}",
@@ -4130,6 +4140,12 @@ def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
     row: if the candidate's own exec_id is what was wrong, correct it with
     reattribute-candidate as well -- the result names any candidate that still points
     at this search, so the second half is not forgotten.
+
+    CAPTURING IT. This is a DELETE, and the capture path is additive by default: run
+    emit_batch_sql.py with --allow-delete search_admissions, which renders the removed
+    row as a keyed DELETE (only for a table a writer here deletes from). Found the first
+    time the verb was used for real (GAP-050's repair, 2026-09-26): emit refused the
+    scratch, correctly, until that opt-in existed.
     """
     reason = dbcore.require_reason(
         reason, f"exec {exec_id} -> {ref_id}",
