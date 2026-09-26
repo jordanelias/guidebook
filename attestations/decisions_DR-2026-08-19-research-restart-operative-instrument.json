@@ -54,6 +54,14 @@
       "materiality": "MATERIAL",
       "verdict_change": "none",
       "reason": "RE-FILED 2026-09-10 from `deviations`, where the 2026-09-10 supersession of §12.1 was first appended. Nothing deviated: a correct, deliberate annotation was recorded under the heading for failures, and this file's own runbook (workplan/2026-09-10-batch-06-runbook.md step 8) states the rule it broke — one attestation per artifact path, updated via its reattestation log. Found by an adversarial pass. The substance is unchanged and is preserved verbatim below: §12.1 IS SUPERSEDED IN FULL, ANNOTATED 2026-09-10 BY A TWO-LINE POINTER AT ITS HEAD, NEVER EDITED IN PLACE -- same discipline as the 2026-08-25 §12.0 annotation directly above. workplan/2026-09-10-road-to-batch-06.md B2 found §12.1 stale in three ways: step 4 said 'No CLI; scratch SQL' when add-candidate already exists, step 7 ordered a hand-SQL companion UPDATE when add-source now takes --url/--pages/--doi-resolution-outcome directly, and no step named observe-term, add-term, add-parameter, adjudicate-term or scripts/assess/assess_cell.py -- none of which existed when §12.1 was written. workplan/2026-09-10-batch-06-runbook.md is the replacement: every command and every 'expected' block in it was executed for real, in this same commit, against a scratch copy of the canonical DB (sha256sum of data/guidebook.db verified identical before and after, including through a deliberate collision reproduction of the runbook's own emit-sql hazard). §12.1's own text is left exactly as written below the new pointer -- this is a supersession record, not a correction of what the instrument said at the time."
+    },
+    {
+      "prior_doctrine_sha": "f9bbaf0",
+      "new_doctrine_sha": "f9bbaf0",
+      "delta_ref": "scripts/migrations/096_candidate_disposition_exhausted.sql",
+      "materiality": "IMMATERIAL",
+      "verdict_change": "none",
+      "reason": "ANNOTATED 2026-09-26, NOT RE-GROUNDED: doctrine did not move. Step 4 of section 12.1 states the search_candidates disposition list as REHOME|MISCELLANEOUS|PENDING-VERIFICATION|OUT-OF-SCOPE|ADMITTED; schema migration 096 (owner ruling 2026-09-25) added EXHAUSTED. An AMENDED callout was appended beneath the step, in the instrument's own appended-not-edited style, pointing at the column's CHECK as the vocabulary's only home and noting the REHOME destination rule added the same day. Section 12.1 was already superseded in full on 2026-09-10; the text of the step is unchanged."
     }
   ]
 }

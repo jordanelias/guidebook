@@ -70,7 +70,7 @@ attested render first. The render for #20 is new: `db21e48738335d82.p0223`, `.p0
 | 3 | "No render of this page existed before." Batch 19's independent subagent **did** render index 56 in its scratchpad and read it. My `ls retrieval-log/…` could only see *persisted* renders. | "No **persisted** render." GAP-037 (A); §5 and §9. |
 | 4 | Extraction 60 gave only ramp 9's favourable ascent figure. | Table 19 row g descent result added. MOB includes people who walk with difficulty. |
 | 5 | Candidate 117 is REHOME, but its typed `suggested_slug` still named the origin slug. `resolve-candidate` could not write the column. | `--suggested-slug` added (REHOME only, validated against `slugs`). GAP-045, closed fixed. Set to the stairs slug. |
-| 6 | §11's "case (b), no edge" was wrong. S01's own design says the surfacing search and the admitting search are one event (batch 17's exec 77 precedent). No verb could attach an admission to an existing search. | New verb `link-admission`. It refuses unless a candidate row already records both ends. GAP-046, closed fixed. Wrote (91, REF-01007) and (90, REF-01008). |
+| 6 | §11's "case (b), no edge" was wrong. S01's own design says the surfacing search and the admitting search are one event (batch 17's exec 77 precedent). No verb could attach an admission to an existing search. | New verb `link-admission`. It refuses unless a candidate row already records both ends. GAP-046, closed fixed. Wrote (91, REF-01007) and (90, REF-01008). **§0c qualifies this row:** the refusal proves the attribution was *recorded*, not that it is *true*, and both edges turn out to copy proxy attributions (GAP-050). |
 | 7 | "REF-01005 does not cite Templer or Walter for 1:12 or 1:16." Footnote c does not *mark* those rows, but page 163 cites Walter for 1:16 (extraction 54). | GAP-037 (B); §5. |
 | 8 | "Four independent sources" state length-conditioning. That was a hand count, and it included REF-01002 (abstract only) and REF-01003 (path slopes). | Withdrawn and replaced with an honest listing plus a derivation query: extractions 63 and 65, GAP-037 (D), §4. |
 | 11 | Extraction 56's `claim_text` normalises the page's "Walters" to "Walter". | Second row, **extraction 67**, carries the words verbatim. The Walters→Walter identity is stated in its notes as a hypothesis. |
@@ -127,6 +127,85 @@ writer gaps they exposed.
 true. They were vacuous. Re-run properly (`found, detail = …`), every verbatim `claim_text` in this
 batch is found, and only the declared verbatim-exempt transcriptions are not. db.py's own write-time
 check was not affected.
+
+## 0c. The code-review round, 2026-09-26, and the third fix-forward
+
+The coordinating session ran six reviews over the diff at 0fb5f628: four `/simplify` angles, an
+Opus correctness pass, and a next-steps sweep. A second review covered the `scratchpad/` driver
+scripts.
+
+**Every correctness defect was found by running the code, not by any gate.** That is the finding
+worth keeping. The code half of the repair is in `scripts/db.py`, `scripts/dbcore.py` and a new
+test. The record half is one data migration (`data_20260926041039_…`, driven by
+`scratchpad/<session>/w18_code_review_round.py`).
+
+**Correctness fixes:**
+
+| # | Defect | Repair |
+|---|---|---|
+| 1 | `link-admission` validates itself. Its refusal needs a candidate row recording (exec, source), and it then writes that same exec, so S01 can never fail on its edges. db.py also had no way to remove a wrong edge. | New verb **`unlink-admission`**. The S01 overclaim is corrected in GAP-046, §0b and §11: the refusal proves the attribution was *recorded*, not that it is *true*. |
+| 2 | It refused a second admitting search, which `log-search` permits. | Refusal removed. |
+| 3 | `--suggested-slug` was optional and checked only for existence. | REHOME now **requires** a destination. It refuses the slug the candidate was found under, and refuses MERGED slugs via `_check_slug_filable`. The same guard is on `add-candidate`. New `--clear-suggested-slug`. Legacy REHOME rows with no destination: **GAP-052** (open). |
+| 4 | `results_admitted` was left behind the new edges. | Now raised to max(count, edges) on a link, and lowered by one (never below the remaining edges) on an unlink. Never lowered to force agreement. See the conflict below. |
+| 5 | `amend-term` never detected an unchanged `scope_note`, and nested each audit line inside the next. | No-op detection is now for `definition` only. A `scope_note` amendment keeps the earlier lines flat and adds one. |
+| 6 | No test covered any batch-20 refusal. | New **`scripts/tests/test_db_amend_writers.py`**, registered as advisory in the check registry. Every refusal is shown to fire and the legitimate shape to pass, on a temp copy of the database. Fault-injected: undoing the count raise, the MERGED guard, the self-reference guard, the Co1 fold or the scope-note un-nesting each turns it red. |
+| 7 | `dbcore.fold_ref` upper-cased the mixed-case `Co1-NN` namespace. | Fixed once in `dbcore`, so every caller that folds a ref id gets the fix. No `Co1` row is live, so nothing was misfiled. |
+| 8 | DR-2026-08-19 step 4 still states the five-value disposition list. | An AMENDED callout was appended in the instrument's own style, and its attestation gained a reattestation entry. The historical text is unchanged. |
+
+**Simplify items:**
+- New `dbcore.append_dated_note` and `dbcore.require_reason` are now used by `link-admission`,
+  `unlink-admission`, `amend-population-match`, `amend-term` and `resolve-candidate`.
+- The five older amend writers keep their own trailer formats. Rows already carry those formats,
+  and a reader greps for them.
+- `amend-term` gained the `fk_declared` and `check_declared` gates, plus `dbcore.upd`.
+- `link-admission` now uses `stamp_for` and a single `SELECT`. `amend-term` writes two plain
+  locals.
+
+**Skipped, deliberately:** migration 096 repeats its column list three times where `SELECT *`
+would do. The file is committed and applied (`user_version` 96), and a committed migration is
+immutable (rule 3), so it stays as committed.
+
+**What verifying #1 turned up, and what it changes.** I checked the two edges against batch 19's
+own record. **Both copy proxy attributions:**
+- **Candidate 124 (Pinto) came from REF-01006's reference list**, not from exec 91's results.
+  Batch 19's §13: "REF-01006's references hold at least five audits … Candidates 123 and 124 stage
+  the two strongest". That backward step was never logged as a search.
+- **Candidate 125 was found on Internet Archive**, by batch 19's adversarial pass. Exec 90's seven
+  logged routes do not include Internet Archive.
+- So `search_admissions` now says a Co-1-targeted search admitted a T3 facility census.
+- Batch 17's candidates 107/108 are the precedent for the fix:
+  1. log the unlogged search as a backfill;
+  2. reattribute the candidates;
+  3. unlink the proxy edge;
+  4. link the true one.
+- **It is not done here.** It reconstructs another batch's unlogged work, and this PR is on hold.
+  It is filed as **GAP-050** (open), with a correction on each search's own note.
+- For the same reason, **`results_admitted` on execs 90 and 91 was deliberately not raised.**
+  Raising it would carry the proxy into `v_coverage_branch`'s Co-1 count.
+
+**#4 conflicts with a later record, and I reconciled rather than chose.** The two records:
+- DR-2026-08-19 step 7 (the operative instrument) prescribes syncing the count with the edge.
+- The 2026-09-02 repair deleted invariant H05 because enforcing it had rewritten seven searches'
+  counts to 0. It declared the column set at insert and never updated after.
+
+The max rule honours both: it never lowers, and it moves only on an edge the verb itself writes.
+That is a session's reconciliation, not a ruling, and **GAP-051** (open) puts the choice to the
+owner. The one place to change it is `_results_admitted_after` in `scripts/db.py`.
+
+**The driver scripts:**
+- **The first real run did print refusals, masked by `| grep … || true`, but no data is wrong.**
+  - `w07`'s Table 20 loop was refused three times, and its four calls without `--session` were
+    stopped by argparse.
+  - `w08` had two refusals.
+  - Every refused write was redone in the next script: rows 60–64 in `w08`, 65–66 in `w09`.
+- The dead attempts are removed from `w07`/`w08`, with a comment saying what ran and where the
+  landed version is. The mask became `| { grep … || true; }`, so pipefail now fails loud on a
+  refusal.
+- `w03` reads `exec_id` from `log-search`'s JSON.
+- `w17` closes its files and guards its key.
+- **One slip of mine while repairing:** an `open(p, "w").write(open(p).read())` truncated `w09`
+  before reading it. It was restored from HEAD at once and re-repaired; nothing committed was
+  affected.
 
 ## 1. Pointer repair first — and it exposed nothing (commit caa52ad8)
 
@@ -384,7 +463,10 @@ gap rather than bypassing it.
     - This is case (a) plus a writer gap. Logging a *new* search would indeed have broken S01, and
       no verb could attach an admission to an *existing* one.
     - Fixed in the second fix-forward: `link-admission` (GAP-046) wrote (91, REF-01007) and
-      (90, REF-01008). S01 now examines this batch's admissions.
+      (90, REF-01008). S01 then examined this batch's admissions too.
+    - **Qualified in §0c.** S01 cannot fail on an edge `link-admission` writes, because the edge
+      copies the very column S01 compares. Batch 19's own record shows both copied proxy
+      attributions (GAP-050).
   - `citation_mining_session` is NOTHING-IN-SCOPE under the new pointer: this batch admitted no
     slug-linked T1-2 source. Correct, and uninformative.
 - **After the second fix-forward** (§0b; run once, on canonical):
@@ -392,6 +474,7 @@ gap rather than bypassing it.
     ledger's `applied_at` and `applied_by_session` columns, REF-01006's bot-written author and source rows, and `pipeline_runs`
     (rule 3), as before.
   - `test_db_integrity`: S01 now examines this batch's two admissions as well as batch 17's.
+    That is a wider subject, not evidence about these two edges (§0c).
   - `run_checks --changed-from origin/main --explain`: **RESULT PASS**, no blocking failure.
     `--selftest` PASS. `research_batch_dod --session <this>` and `--all` COMPLIANT.
   - `research_protocol_audit` no longer names REF-01007 or REF-01008. It stays red on REF-00987, which
@@ -399,6 +482,13 @@ gap rather than bypassing it.
   - `test_verification_pipeline` came into scope because `scripts/db.py` changed. Its three failures
     (the ≥50/≥30/≥100 corpus assertions CLAUDE.md rule 7a names) are identical on origin/main's DB.
   - `scripts/regenerate_derived.sh --check`-clean; context map regenerated.
+- **After the third fix-forward** (§0c; run once, on canonical):
+  - Full-row rebuild diff: the same bot-only drift as before.
+  - `run_checks --changed-from origin/main --explain`: **RESULT PASS**, no blocking failure. The
+    advisory failures are the same set as the second round.
+  - The new `test_db_amend_writers` ran in scope and passed. `dbcore --selftest` passed, including
+    its new cases.
+  - `--selftest` PASS; `research_batch_dod --session <this>` and `--all` COMPLIANT.
 
 ## 12. What the next batch takes
 

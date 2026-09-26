@@ -26,38 +26,15 @@ for spec in "3|7.62|1:8|X O O O O|the only curb height at which 1:8 is recommend
    --file-anchor "$PDF" --locator-scheme page --loc-section 34 --loc-note "printed page 34 = zero-based index 53; rendered and read (db21e48738335d82.p0053.png)" \
    --relation none \
    --notes "TABLE 20 AS RENDERED: columns are 'Gradients Steeper Than 1:8', 1:8, 1:10, 1:12, 1:16 under 'Maximum Gradient*'; for curb heights not exceeding ${RISE} in (${CM} cm) the row reads ${ROW} (X = Not Recommended, O = Recommended), so the steepest recommended gradient at this height is ${VAL}. Footnote: '*Whenever possible slopes less than the maximum should be employed.' THE RECOMMENDATION IS RISE-CONDITIONED, and that is the finding: the report's own conclusion is 'steeper ramps are acceptable if they are short'. WHAT WAS AND WAS NOT TESTED AT THIS CELL: ${WHY}. Acceptability criterion (printed p.14): 'a ramp is considered to be acceptable if about 80% of the subjects rated the ramp as 1 or 2' on a four-point difficulty scale. Owner ruling 2026-09-18: pre-1990 work is historical grounding, not a current anchor -- T3 grey, cannot lift parameter 3 off proxy." \
-   --session "$S" 2>&1 | grep -E '"extraction_id"|error|Error|REFUS' || true
+   --session "$S" 2>&1 | { grep -E '"extraction_id"|error|Error|REFUS' || true; }
 done
 
-echo "== extraction: manual wheelchair ascent, 1:12 over 6 in acceptable (finding) =="
-python3 scripts/db.py add-extraction --ref-id REF-01008 --slug accessible-circulation-geometry --parameter-id 3 --identity MOB \
- --claim-type numerical --claimed-value "1:12" --claimed-unit ratio --comparator "=" --figure-role finding \
- --claim-text "From Table 3, the curb ramps to the right of the heavy line are acceptable for ascent: Ramps #1, 4, 5, 9, 10, 11, 12 and 13 are acceptable Ramps #2, 3, 6, 7, 8 are unacceptable" \
- --source-section "A Study of Short Ramps -- Results, 1a Manual Wheelchair Users; Table 3, Gradient Ratings by Manual Wheelchair Users: Ascent" \
- --jurisdiction US --setting "curb ramp 4: 1:12, 6 ft (1.83 m) long, over a 6 in (15.24 cm) curb; ascent" \
- --extraction-method full-read --extraction-status verified \
- --root-type measurement_primary --root-ref-id REF-01008 --device-class manual_self_propelled \
- --root-population-note "Manual (self-propelled) wheelchair users; Table 2 lists 18, at least 16 of them aged 16-35." \
- --file-anchor "$PDF" --locator-scheme page --loc-section 17 --loc-note "Table 3 at printed page 17 = zero-based index 36, rendered (db21e48738335d82.p0036.png); text at printed page 14 = index 33" \
- --relation tested_at --to-label "1:12 over a 6 in curb, 6 ft run (ramp 4)" --to-kind own_sample --stated named \
- --quote "Ramps #1, 4, 5, 9, 10, 11, 12 and 13 are acceptable" \
- --notes "READ OFF THE RENDERED TABLE 3: ramp 4 (1:12, 6 ft, 6 in curb) -- subject mean rating 1.26, 100 percent of subjects rating it 1 or 2 ('not at all' or 'a little difficult'), tester mean 1.84. THE CONTRAST WITH REF-01005 IS THE POINT AND IT IS NOT A CONTRADICTION: REF-01005 found almost half of wheelchair users could not complete a 1:12 RUN over its test length, while here every manual wheelchair user rated 1:12 acceptable over a 6-inch RISE and a 6-foot run. Same gradient, different length -- which is the rise- and length-conditioning REF-01002 (20 ft bound), REF-01003 (short distances) and this report's own conclusion ('steeper ramps are acceptable if they are short') all state. A 1:12 value without its rise or run is not the same claim. The tester's ratings run harder than the subjects' own at almost every ramp (1.84 vs 1.26 here)." \
- --session "$S" 2>&1 | grep -E '"extraction_id"|"relation_ids"|REFUS|error' || true
-
-echo "== extraction: manual wheelchair ascent, the 9-inch rise at 1:10.67 unacceptable (finding) =="
-python3 scripts/db.py add-extraction --ref-id REF-01008 --slug accessible-circulation-geometry --parameter-id 3 --identity MOB \
- --claim-type numerical --claimed-value "1:10.67" --claimed-unit ratio --comparator "=" --figure-role finding \
- --claim-text "Ramps #2, 3, 6, 7, 8 are unacceptable" \
- --source-section "A Study of Short Ramps -- Results, 1a Manual Wheelchair Users; Table 3, Gradient Ratings by Manual Wheelchair Users: Ascent" \
- --jurisdiction US --setting "curb ramp 6: 1:10.67, 8 ft (2.44 m) long, over a 9 in (22.85 cm) curb; ascent" \
- --extraction-method full-read --extraction-status verified \
- --root-type measurement_primary --root-ref-id REF-01008 --device-class manual_self_propelled \
- --root-population-note "Manual (self-propelled) wheelchair users; Table 2 lists 18, at least 16 of them aged 16-35." \
- --file-anchor "$PDF" --locator-scheme page --loc-section 17 --loc-note "Table 3 at printed page 17 = zero-based index 36, rendered; Table 1 at printed page 5 = index 24, rendered" \
- --relation tested_at --to-label "1:10.67 over a 9 in curb, 8 ft run (ramp 6)" --to-kind own_sample --stated named \
- --quote "Ramps #2, 3, 6, 7, 8 are unacceptable" \
- --notes "READ OFF THE RENDERED TABLE 3: ramp 6 (1:10.67, 8 ft, 9 in) -- subject mean 2.16, only 58 percent rating it 1 or 2, tester mean 2.42 -- below the report's ~80 percent acceptability line. Also unacceptable in ascent: ramp 3 (1:8, 4 ft, 6 in) 44 percent; ramp 8 (1:8, 6 ft, 9 in) 47 percent; ramp 7 (1:5.3, 4 ft, 9 in) 32 percent with two subjects unable. WHY THIS ROW EXISTS: THE GEOMETRY OF RAMP 6 IS THE GEOMETRY OF REF-01005 TABLE 13's 1:10 ROW. Table 13 (rendered this batch, 5dd866a236fb5978.p0056.png) allows 'If slope = 10.0% (1:10) or less steep' with a maximum run of 8 ft and a maximum rise of 9 in -- and 9 in over 8 ft is 1:10.67, ramp 6 exactly. The 1:8 row (2 ft run, 3 in rise) is likewise ramp 9 exactly. Both rows carry footnote c, 'Based on research of others (Templer, 1977 and Walters, 1971)'. So the combination Table 13 permits at its 1:10 band is one this report TESTED AND FOUND UNACCEPTABLE to manual wheelchair users in ascent, and its own Table 20 does not recommend 1:10 above a 6-inch curb. HELD AS AN OBSERVATION, NOT AN IDENTIFICATION: the two matching geometries are consistent with footnote c's Templer being this project's ramp work (tested Aug-Nov 1976, an interim report of which could carry 1977), but THIS REPORT IS DATED MAY 1980 and the referent is not identified -- candidate 115 stays PENDING. Walter's 10-ft recommendation reported on printed p.4 (1:9 self-propelled) is steeper than 1:10, so the band is bracketed by its two named warrants rather than taken from either." \
- --session "$S" 2>&1 | grep -E '"extraction_id"|"relation_ids"|REFUS|error' || true
+# REMOVED 2026-09-26: two add-extraction calls stood here (ramp 4, 1:12 over a 6 in curb; ramp 6,
+# 1:10.67 over a 9 in curb). db.py REFUSED both in the real run -- the first for '--stated named'
+# with a label its --quote did not contain, the second on the value-in-claim-text check -- and
+# `| grep ... || true` hid the refusals from `set -e`. Neither landed. Their corrected versions,
+# claim_text read off the rendered Table 3 cell, are w09_templer_table3.sh (extractions 65, 66).
+# Removed so this script replays as it ran; the text is in the version history of this file.
 
 echo "== extraction: steeper is acceptable if short (qualitative finding) =="
 python3 scripts/db.py add-extraction --ref-id REF-01008 --slug accessible-circulation-geometry --parameter-id 3 --identity MOB \
@@ -70,7 +47,7 @@ python3 scripts/db.py add-extraction --ref-id REF-01008 --slug accessible-circul
  --file-anchor "$PDF" --locator-scheme page --loc-section 33 --loc-note "printed page 33 = zero-based index 52, rendered (db21e48738335d82.p0052.png)" \
  --relation none \
  --notes "The conclusion Table 20 is built on, and the fourth independent statement of length-conditioning on parameter 3 in this corpus: REF-01002's 7 percent up to 20 ft, REF-01003's short-distance acceptability, REF-00996's mechanism (the greater the rise, the gentler the ramp, because the effort is sustained longer), and this. It is what a single maximum gradient without a length or rise cannot express, and it is why the 1:12 rows in this corpus do not contradict each other." \
- --session "$S" 2>&1 | grep -E '"extraction_id"|"relation_ids"|REFUS|error' || true
+ --session "$S" 2>&1 | { grep -E '"extraction_id"|"relation_ids"|REFUS|error' || true; }
 
 echo "== extraction: Walter 1971 at second hand (root untraced) =="
 python3 scripts/db.py add-extraction --ref-id REF-01008 --slug accessible-circulation-geometry --parameter-id 3 --identity MOB \
@@ -85,4 +62,4 @@ python3 scripts/db.py add-extraction --ref-id REF-01008 --slug accessible-circul
  --file-anchor "$TXT" --locator-scheme page --loc-section 4 --loc-note "printed page 4 = zero-based index 23, rendered (db21e48738335d82.p0023.png)" \
  --relation none \
  --notes "WALTER'S RAMP AT SECOND HAND, FROM A SECOND INDEPENDENT READER. As printed: an adjustable indoor laboratory ramp, 20 ft at 1:8.6 to 1:16 and 10 ft at 1:5.5 to 1:10, rated on a four-point scale (easy, comfortable, difficult, impossible); recommended for SELF-PROPELLED wheelchairs 1:9 over 10 ft and 1:16 over 20 ft; for ASSISTANT-PROPELLED 1:9 over 10 ft and 1:12 over 20 ft. The page prints '10 foot (6.1 m)' in the assistant-propelled clause -- a unit slip in the source (10 ft is 3.05 m), recorded as printed. WHAT IT CORROBORATES: REF-01005 (extraction 54) reports that Walter and Steinfeld both found 1:16 over 20 ft accessible. Templer, writing independently, gives the same 1:16-over-20-ft figure for Walter. That corroborates the REPORT OF Walter by a second reader; it does NOT make Walter a second root, and v_value_independence must still count Walter once, and only when Walter itself is read. GAP-026 and the 2026-09-25 owner ruling: Walter itself is exhausted, so this second-hand account is the best text of Walter this project will hold for now." \
- --session "$S" 2>&1 | grep -E '"extraction_id"|"relation_ids"|REFUS|error' || true
+ --session "$S" 2>&1 | { grep -E '"extraction_id"|"relation_ids"|REFUS|error' || true; }

@@ -2,7 +2,8 @@
 """Update batch 20's attestation after the independent pass and the owner's rulings."""
 import json
 P = "attestations/sessions_session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa.json"
-a = json.load(open(P, encoding="utf-8"))
+with open(P, encoding="utf-8") as f:
+    a = json.load(f)
 prs = a["per_rule_status"]
 prs["integrity-protocol"]["reason"] = (
     "Every database change went through the sanctioned path: a scratch copy under GUIDEBOOK_DB_PATH, db.py "
@@ -17,7 +18,9 @@ prs["integrity-protocol"]["reason"] = (
     "amend-term (GAP-047), each closed fixed. migrate_db --rebuild reproduces every row this batch wrote; "
     "the only drift is the scheduled bot's direct writes to REF-01006 and pipeline_runs, which predate the "
     "branch. REF-01002's author correction remains blocked by a writer gap (GAP-044) and was not bypassed.")
-prs["adherence-logging-and-attestation"]["reason"] += (
+# Guarded (2026-09-26 review): an attestation shaped differently would KeyError here.
+alog = prs.setdefault("adherence-logging-and-attestation", {})
+alog["reason"] = alog.get("reason", "") + (
     " P2b was first scored falsified; the independent pass showed Table 20's endorsement of 1:12 is "
     "qualified by curb height, so it is rescored as held.")
 a["deviations"] = [
@@ -62,6 +65,8 @@ a["independent_reviewer_counterclaim"] = (
     "were ruled on, but the independence view still counts absences as roots (GAP-048), three minted terms "
     "carry open vocabulary questions (GAP-033), and REF-01008's curb-ramp rows are still filed on a parameter "
     "built on building ramps, which the setting field says and a reader skimming values will not see.")
-json.dump(a, open(P, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-open(P, "a", encoding="utf-8").write("\n")
+# One write, closed by the context manager, trailing newline included -- not three
+# unclosed handles that relied on CPython refcounting to flush.
+with open(P, "w", encoding="utf-8") as f:
+    f.write(json.dumps(a, indent=2, ensure_ascii=False) + "\n")
 print("ok")
