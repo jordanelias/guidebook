@@ -1,0 +1,29 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-09-26-repo-orientation-remediation-planning",
+ "artifact": "sessions/session_2026-09-26-repo-orientation-remediation-planning.md",
+ "doctrine_sha": "7cb2b04",
+ "rules_in_scope": [
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-09-26-repo-orientation-remediation-planning.json",
+   "reason": "This attestation, bound to the doctrine SHA the commit carries. A sibling attestation covers the DR itself; this one covers the session record, and its deviations are about the record's own honesty and about this session's own rule-4/rule-6 compliance gap rather than about the DR's content."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "/session-open was never run at the start of this session, so scratchpad/CURRENT held the previous merged session's stem for this session's entire duration until the gap was caught mid-session and corrected. Every command this session ran before that point was logged against the wrong session's record, and that misattributed portion of the log cannot be retroactively re-filed without editing committed history, so it stands as a permanent gap in this session's own audit trail."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "The session record is written by the session it describes, immediately before this attestation, with no independent read of the record itself. Its 'what this session did' section is a summary of a much longer transcript, written by the same party being summarized, and its completeness has not been checked against the transcript by anyone else."
+  }
+ ],
+ "bias_direction": "A session record written by its own subject tends toward a narrative of steady progress punctuated by caught-and-fixed errors, because listing errors that were found and repaired reads as diligence, while an error nobody in the session noticed cannot appear in the list at all. This record's account of four review rounds on batch 20 and two drafting rounds on the DR is accurate as far as it goes, but 'as far as it goes' is bounded by this session's own attention, and the record has no way of stating what it did not notice.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this session spent a very large amount of orchestration effort -- two separate independent-model surveys, four review rounds on one PR, two full drafts of a 27-section Decision Record -- while leaving the two things the user most directly asked about, whether to merge PR #159 and how the DR's open questions get answered, completely unresolved at close. A reviewer could fairly say the session optimized for producing an impressively thorough artifact over actually closing out the concrete decision in front of the user, and that a shorter session which simply asked the user the open questions early would have made more real progress. Against that: the user's own instructions repeatedly favored rigor over speed ('review for errors then execute'), the DR's own findings (F1, N1) show that skipping the verification step would have produced a mechanism design that could not do what it claimed, and the merge decision was raised with the user more than once without being answered, which this record treats as still open rather than as tacit approval.",
+ "verdict": "DEVIATION-LOGGED"
+}
