@@ -18,6 +18,14 @@ The walk is additive by design. A row present in canonical but absent from the
 scratch is REFUSED rather than rendered as a DELETE: a research batch adds
 evidence, and a missing row means the scratch drifted from the canonical base
 (usually a stale copy), which is a mistake to surface, not to replay.
+
+ONE NARROW EXCEPTION, opt-in (2026-09-26). Some db.py writers delete on purpose --
+`unlink-admission` removes a wrong search_admissions edge -- and an additive-only
+capture made that sanctioned write impossible to ship. `--allow-delete TABLE` renders
+the missing rows of TABLE as DELETEs, and only when a writer in scripts/ actually
+deletes from TABLE (dbcore.deletable_tables, derived from the writers the way the
+capture set is). Every other missing row is still refused, so a stale copy is still
+caught, and a deletion never happens unless the operator names the table.
 """
 
 import argparse
@@ -99,7 +107,7 @@ def where(pk, row):
     return " AND ".join('"%s" = %s' % (c, lit(row[c])) for c in pk)
 
 
-def emit(scratch_path, canonical_path, out_path):
+def emit(scratch_path, canonical_path, out_path, allow_delete=()):
     if scratch_path == canonical_path:
         sys.exit("ERROR: --scratch and --canonical are the same file. The scratch "
                  "must be a copy; the canonical DB is never written outside migrate_db.py.")
@@ -114,7 +122,16 @@ def emit(scratch_path, canonical_path, out_path):
     # Derived per run from the live schema and the writers; never a module constant,
     # because a constant is what drifted eight times.
     tables = dbcore.writable_tables(ca)
+    allow_delete = set(allow_delete or ())
+    if allow_delete:
+        not_deletable = sorted(allow_delete - dbcore.deletable_tables(ca))
+        if not_deletable:
+            sys.exit(f"ERROR: --allow-delete {not_deletable}: no sanctioned writer deletes from "
+                     f"{'that table' if len(not_deletable) == 1 else 'those tables'} "
+                     f"(dbcore.deletable_tables). A row missing there is drift, not a "
+                     f"deletion to replay.")
     lines, n_ins, n_upd, missing = [], 0, 0, []
+    deletes = {}
     for table in tables:
         cols = columns(ca, table)
         if not cols:
@@ -129,7 +146,13 @@ def emit(scratch_path, canonical_path, out_path):
 
         s_rows = load(sc, table, cols, pk)
         c_rows = load(ca, table, cols, pk)
-        missing += [(table, k) for k in c_rows if k not in s_rows]
+        gone = [k for k in c_rows if k not in s_rows]
+        if table in allow_delete:
+            if gone:
+                deletes[table] = ['DELETE FROM "%s" WHERE %s;' % (table, where(pk, c_rows[k]))
+                                  for k in gone]
+        else:
+            missing += [(table, k) for k in gone]
 
         inserts, updates = [], []
         for key, row in s_rows.items():                     # already PK-ordered
@@ -157,7 +180,20 @@ def emit(scratch_path, canonical_path, out_path):
             print(f"  {table}: {key}", file=sys.stderr)
         sys.exit(f"ERROR: {len(missing)} row(s) exist in the canonical DB but not in the "
                  "scratch. The batch path is additive — this means the scratch was copied "
-                 "from a different base, or rows were deleted. Refusing to emit.")
+                 "from a different base, or rows were deleted. Refusing to emit. If a "
+                 "sanctioned writer deleted them on purpose (unlink-admission), name the "
+                 "table with --allow-delete.")
+
+    # Deletions first, children before parents (the reverse of the replay order), so a
+    # DELETE never runs against a row a later statement in the same file still needs.
+    n_del = 0
+    del_lines = []
+    for table in reversed(tables):
+        if table in deletes:
+            del_lines.append("-- %s: %d delete(s)" % (table, len(deletes[table])))
+            del_lines += deletes[table] + [""]
+            n_del += len(deletes[table])
+    lines = del_lines + lines
 
     if not lines:
         sys.exit("ERROR: no delta — the scratch is identical to the canonical DB across "
@@ -171,7 +207,7 @@ def emit(scratch_path, canonical_path, out_path):
         "-- Captured:  %s" % datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "-- Scratch:   %s" % scratch_path,
         "-- Canonical: %s (schema version %d)" % (canonical_path, cv),
-        "-- Totals:    %d insert(s), %d update(s)" % (n_ins, n_upd),
+        "-- Totals:    %d insert(s), %d update(s), %d delete(s)" % (n_ins, n_upd, n_del),
         "--",
         "-- No transaction wrapper: the migration runner owns the boundary (F5).",
         "-- Feed this to: python3 scripts/emit_data_migration.py --input <this file>",
@@ -183,7 +219,8 @@ def emit(scratch_path, canonical_path, out_path):
     else:
         with open(out_path, "w") as fh:
             fh.write(text)
-        print("Wrote %s — %d insert(s), %d update(s)" % (out_path, n_ins, n_upd))
+        print("Wrote %s — %d insert(s), %d update(s), %d delete(s)"
+              % (out_path, n_ins, n_upd, n_del))
     return 0
 
 
@@ -268,6 +305,40 @@ def selftest():
             check("deletion refused with a reason", "additive" in str(e), str(e))
         check("deletion refused", rc == 1)
 
+        # ...unless the operator names the table AND a writer deletes from it
+        _real_deletable = dbcore.deletable_tables
+        dbcore.deletable_tables = lambda _conn: {"evidence_sources"}
+        out3 = os.path.join(tmp, "batch3.sql")
+        emit(scratch, canon, out3, allow_delete=["evidence_sources"])
+        sql3 = open(out3).read()
+        check("an allowed deletion is rendered as a keyed DELETE",
+              """DELETE FROM "evidence_sources" WHERE "ref_id" = 'REF-1';""" in sql3, sql3)
+        check("deletions precede inserts",
+              sql3.index("DELETE FROM") < sql3.index("INSERT INTO"))
+        replay3 = os.path.join(tmp, "replay3.db")
+        shutil.copy(canon, replay3)
+        con = sqlite3.connect(replay3, isolation_level=None)
+        code3 = "\n".join(l for l in sql3.splitlines() if not l.strip().startswith("--"))
+        for stmt in [s for s in code3.split(";\n") if s.strip()]:
+            con.execute(stmt)
+        got3 = con.execute("SELECT * FROM evidence_sources ORDER BY ref_id").fetchall()
+        con.close()
+        con = sqlite3.connect(scratch)
+        want3 = con.execute("SELECT * FROM evidence_sources ORDER BY ref_id").fetchall()
+        con.close()
+        check("replay with the deletion reproduces the scratch exactly", got3 == want3,
+              f"{got3} vs {want3}")
+        dbcore.deletable_tables = lambda _conn: set()
+        rc = 0
+        try:
+            emit(scratch, canon, os.path.join(tmp, "y.sql"), allow_delete=["evidence_sources"])
+        except SystemExit as e:
+            rc = 1
+            check("--allow-delete on a table no writer deletes from is refused",
+                  "no sanctioned writer" in str(e), str(e))
+        check("--allow-delete without a deleting writer refused", rc == 1)
+        dbcore.deletable_tables = _real_deletable
+
     dbcore.writable_tables = _real_writable
     print("\n--- emit_batch_sql selftest ---")
     for name, ok, detail in results:
@@ -285,13 +356,17 @@ def main():
                    help="Canonical DB to diff against (default: $GUIDEBOOK_DB_PATH "
                         "or data/guidebook.db)")
     p.add_argument("--out", default="-", help="Write SQL here ('-' for stdout)")
+    p.add_argument("--allow-delete", action="append", default=[], metavar="TABLE",
+                   help="Render rows missing from the scratch in TABLE as DELETEs. Only for a "
+                        "table a sanctioned writer deletes from (e.g. search_admissions, "
+                        "unlink-admission); repeatable. Everything else stays additive.")
     p.add_argument("--selftest", action="store_true", help="Run the round-trip tests and exit")
     args = p.parse_args()
     if args.selftest:
         sys.exit(selftest())
     if not args.scratch:
         p.error("--scratch is required (or use --selftest)")
-    sys.exit(emit(args.scratch, args.canonical, args.out))
+    sys.exit(emit(args.scratch, args.canonical, args.out, allow_delete=args.allow_delete))
 
 
 if __name__ == "__main__":

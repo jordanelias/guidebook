@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /home/user/guidebook/.claude/worktrees/agent-acceda5e0fdea113d
+export GUIDEBOOK_DB_PATH=/tmp/claude-0/-home-user-guidebook/34e8c762-53ff-5f39-b746-3f5298058fcb/scratchpad/b20.db
+S=session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa
+
+echo "== observe-term =="
+python3 scripts/db.py observe-term --ref-id REF-01008 --surface-form "curb ramp" --language en \
+ --locator "A Study of Short Ramps, Background (printed p.2) and throughout" \
+ --context-quote "curb ramps are often so steep that they are not useable by some of the wheelchair users for whom they are intended" \
+ --notes "The report's own name for the object it tested -- a short ramp through a curb. Unjudged (D-0173)." --session "$S" 2>&1 | tail -2
+python3 scripts/db.py observe-term --ref-id REF-01008 --surface-form "handicapped pedestrians" --language en \
+ --locator "title; Technical Report Documentation Page; A Study of Short Ramps" \
+ --context-quote "how steep should curb ramps be so that they can be used by most handicapped people without too much difficulty?" \
+ --notes "The period's population term (1974-1980), as the title uses it: 'Provisions for Elderly and Handicapped Pedestrians'. Harvested verbatim, not endorsed; whether it names anything in this project's identity lens is judgment's call." --session "$S" 2>&1 | tail -2
+python3 scripts/db.py observe-term --ref-id REF-01008 --surface-form "short ramps" --language en \
+ --locator "Introduction (printed p.1); Part I heading" \
+ --context-quote "The Laboratory studies were used to develop criteria for the design of short ramps, curb ramps and curb cuts." \
+ --notes "The length class the recommendations are scoped to -- the source's own boundary on what Table 20 claims. Unjudged." --session "$S" 2>&1 | tail -2
+
+echo "== backward mining pass: log the execution =="
+python3 scripts/db.py log-search --slug accessible-circulation-geometry --language EN --engine pdf-bibliography --depth-method scoping --session "$S" \
+ --target-tier 3 --target-evidence-type grey --target-scope intrinsic --mining-direction backward \
+ --query-text "BACKWARD MINING PASS over REF-01008 (Templer 1980, FHWA-RD-79-3 Vol. 3). Not an API query: no DOI and no Crossref deposit. The reference list (printed page 299, zero-based index 318) was rendered with page_image.py, transcribed from the image and persisted as a DERIVED artefact, retrieval-log/<session>/75c991f61483c1ac.json; scored with python3 scripts/research/mining_screen.py --ref REF-01008 --compare." \
+ --prior-expectation "No per-pass prior was written. priors.md P2 covered Table 20 and the Walter account, not the reference list; batch 19 had already reported from the djvu text that this report cites Walter and 'Dixon' (the 1957 dissertation), so finding both is not a prediction." \
+ --results-found 5 --results-screened 5 --results-admitted 0 --saturation-signal saturated --harm-finding 0 \
+ --findings-note "THE WHOLE REFERENCE LIST IS FIVE ENTRIES AND NONE IS NEW. DERIVE: python3 scripts/research/mining_screen.py --ref REF-01008 --compare (provenance READ). (1) Dixon, Charles E., 1957 Illinois PhD dissertation -- already candidate 110, whose author is contested with REF-01005's 'Elmer, C.D.'; this list adds nothing to settle it. (2) ANSI A117.1, printed with a 1977 date and a Syracuse University imprint -- the standard REF-01005 was commissioned to improve; a code, not a study. (3) Walter, Felix, Four Architectural Movement Studies for the Wheelchair and 'Ambuland' Disabled, DLF, London, 1971 -- already candidate 109, exhausted under the 2026-09-25 owner ruling. (4) Herms, Elias and Robbins 1976, guidestrips for visually handicapped pedestrians -- tactile guidance, off parameter 3. (5) Snyder and Knoblauch 1971, pedestrian safety countermeasures -- vehicle conflict, off parameter 3. NO CANDIDATE STAGED: the two on-parameter entries are already staged and the other three are off it. FORWARD NOT RUN: no citation index holds a 1980 FHWA report as a citable node here, and R2's mandatory scope is T1-T2." \
+ --session "$S" 2>&1 | tail -2
+
+python3 scripts/db.py log-mining --slug accessible-circulation-geometry --ref REF-01008 --direction backward \
+ --notes "PASS RAN ON ADMISSION against the printed reference list, transcribed from the rendered page and persisted as a derived artefact (75c991f61483c1ac.json). DERIVE THE YIELD: python3 scripts/research/mining_screen.py --ref REF-01008 --compare. Five entries: Dixon 1957 (candidate 110), ANSI A117.1 1977 (a code), Walter 1971 (candidate 109), Herms 1976 and Snyder 1971 (both off parameter 3). No new candidate. FORWARD NOT RUN: T3 grey report with no DOI, and R2's mandatory mining scope is T1-T2; recorded in notes rather than as a deferral so the executed backward pass is not overwritten." \
+ --session "$S" 2>&1 | tail -3
+
+echo "== resolve candidate 125 =="
+python3 scripts/db.py resolve-candidate --candidate-id 125 --disposition ADMITTED --admitted-ref-id REF-01008 --session "$S" \
+ --redescription "ADMITTED AS REF-01008, T3 GREY (owner ruling 2026-09-18: pre-1990 work is historical grounding, the REF-01005 treatment). Scan PDF (db21e48738335d82.pdf, 334 images) and DjVuTXT persisted from Internet Archive provisionsforeld00temp_0 (CC BY-NC-ND 3.0, National Transportation Library); every table extracted was RENDERED AND READ, not taken from the text layer. R15 CORRECTIONS TO THE STAGED ROW: (1) AUTHOR. Staged as 'Templer, John A. et al.'; the Technical Report Documentation Page (rendered, index 2) names ONE author, John A. Templer -- the research associates and assistants are credited as the project team, not as authors. Filed as a sole author. (2) WHAT TABLE 20 IS. Staged as 'a recommend/not-recommend matrix over curb heights 3, 6 and 9 inches against gradients 1:8, 1:10, 1:12 and 1:16', which is right, and it has a consequence the staged row did not draw: it is a CURB-RAMP table whose recommendation is RISE-CONDITIONED -- 1:8 up to a 3-inch curb, 1:10 up to 6 inches, 1:12 up to 9 inches, steeper than 1:8 never, with the footnote 'Whenever possible slopes less than the maximum should be employed' -- and its own conclusion is 'steeper ramps are acceptable if they are short'. Two of its cells (1:10 at 6 in, 1:12 at 9 in) were not tested; they interpolate between tested ramps. (3) THE SAMPLE. 120 volunteers, August-November 1976, in eight groups; the 18 manual wheelchair users are young (at least 16 aged 16-35). (4) THE INSTRUMENT. A four-point subject difficulty rating plus an independent tester rating; heart rate and oxygen consumption were considered and rejected. WHAT STANDS: the Walter 1971 account at second hand (printed p.4) -- now extraction 64 -- and the 'Dixon, Charles E.' attribution of the 1957 dissertation (reference 1), which keeps candidate 110's author contest open. FOOTNOTE c: this report's test ramps 9 (1:8, 2 ft, 3 in) and 6 (1:10.67, 8 ft, 9 in) have EXACTLY the run and rise of REF-01005 Table 13's two footnote-c rows, and ramp 6 was unacceptable to manual wheelchair users in ascent (extraction 66). That is consistent with footnote c's 'Templer, 1977' being this project's ramp work, NOT an identification: this volume is dated May 1980. Candidate 115 stays PENDING." 2>&1 | tail -4
