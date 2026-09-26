@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /home/user/guidebook/.claude/worktrees/agent-acceda5e0fdea113d
+export GUIDEBOOK_DB_PATH=/tmp/claude-0/-home-user-guidebook/34e8c762-53ff-5f39-b746-3f5298058fcb/scratchpad/b20.db
+S=session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa
+
+python3 scripts/db.py log-search --slug accessible-circulation-geometry --language EN --engine multi-repository --depth-method scoping --session "$S" \
+ --target-tier 3 --target-evidence-type clinical --target-scope lower_control --mining-direction none \
+ --query-text "FULL-TEXT RETRIEVAL LADDER for candidate 123 (Garg, Talwar, Garg and Bhandari 2024, doi 10.1016/j.mjafi.2022.10.011), nine requests: (1) api.crossref.org/works/10.1016/j.mjafi.2022.10.011 (2) Europe PMC search DOI core (3) ebi.ac.uk/europepmc/webservices/rest/PMC11116980/fullTextXML (4) eutils efetch db=pmc id=11116980 (5) pmc.ncbi.nlm.nih.gov/articles/PMC11116980/ (6) pmc.ncbi.nlm.nih.gov/articles/PMC11116980/pdf/ (7) europepmc.org/backend/ptpmcrender.fcgi?accid=PMC11116980&blobtype=pdf (8) www.sciencedirect.com/science/article/pii/S0377123722001952 (9) api.openalex.org/works/doi:10.1016/j.mjafi.2022.10.011, plus an Unpaywall lookup." \
+ --prior-expectation "No retrieval-specific prior was written. priors.md P1 assumed the body would be readable, because batch 19 and the runbook both called this item open access and retrievable; P1a predicted p=0.7 that it reports a ramp-gradient compliance figure. That prior is now untestable rather than tested." \
+ --results-found 1 --results-screened 1 --results-admitted 0 --saturation-signal saturated --harm-finding 1 \
+ --findings-note "BODY UNREACHABLE FROM THIS ENVIRONMENT BY EVERY ROUTE TRIED; ABSTRACT AND METADATA RETRIEVED. results_found=1 is the one record (the article) located; it could not be read past its abstract. Outcomes, each persisted: Crossref 200; Europe PMC core 200 (abstract); Europe PMC fullTextXML HTTP 500; NCBI efetch 200 but front matter only, with the comment 'The publisher of this article does not allow downloading of the full text in XML form' and pmc-prop-open-access 'no'; PMC article page and PMC /pdf/ both a reCAPTCHA interstitial; Europe PMC PDF render 403 (Cloudflare); ScienceDirect 403 (Cloudflare error 1000); Unpaywall and OpenAlex both name PMC as the only location. So the item is FREE-TO-READ, not OA-licensed, and the free copy sits behind a bot check. That is a correction to batch 19 and to the runbook, both of which called it retrievable here. Not admitted; candidate 123 re-described accordingly. The Unpaywall request carried the email the project's earlier Unpaywall calls used, which is the user's own address -- noted so it is not repeated." \
+ --session "$S" 2>&1 | tail -3

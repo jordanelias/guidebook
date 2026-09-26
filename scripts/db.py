@@ -1331,8 +1331,61 @@ def main():
                            "after a RESOLVED marker; the staged hypothesis is kept.")
     p_rc.add_argument("--admitted-ref-id", dest="admitted_ref_id",
                       help="Required when --disposition ADMITTED")
+    p_rc.add_argument("--suggested-slug", dest="suggested_slug",
+                      help="REQUIRED with --disposition REHOME, refused otherwise: the slug "
+                           "the candidate belongs under. Must be a filable (not MERGED) "
+                           "slug other than the one it was found under; the replaced value "
+                           "is recorded in the RESOLVED line.")
+    p_rc.add_argument("--clear-suggested-slug", dest="clear_suggested_slug",
+                      action="store_true",
+                      help="Empty a stale suggested_slug (not with REHOME). The cleared "
+                           "value is recorded in the RESOLVED line.")
     p_rc.add_argument("--session", required=True)
     p_rc.add_argument("--dry-run", action="store_true")
+
+    p_la = sub.add_parser("link-admission",
+                          help="Record that an EXISTING search admitted a source -- only "
+                               "when a resolved candidate already records both ends")
+    p_la.add_argument("--exec-id", required=True, type=int)
+    p_la.add_argument("--ref-id", required=True)
+    p_la.add_argument("--reason", required=True,
+                      help="Why the edge was not written when the search was logged. "
+                           "Appended to the search's findings_note.")
+    p_la.add_argument("--session", required=True)
+    p_la.add_argument("--dry-run", action="store_true")
+
+    p_ula = sub.add_parser("unlink-admission",
+                           help="Remove a WRONG admission edge (the corrective half of "
+                                "link-admission); the removed edge is kept in the search's "
+                                "findings_note. Capture with emit_batch_sql.py "
+                                "--allow-delete search_admissions")
+    p_ula.add_argument("--exec-id", required=True, type=int)
+    p_ula.add_argument("--ref-id", required=True)
+    p_ula.add_argument("--reason", required=True,
+                       help="Why the edge is wrong. Appended to the search's findings_note.")
+    p_ula.add_argument("--session", required=True)
+    p_ula.add_argument("--dry-run", action="store_true")
+
+    p_apm = sub.add_parser("amend-population-match",
+                           help="Re-grade an R13 match in place (a ruling, not a dissent -- "
+                                "a dissent is a second add-population-match row)")
+    p_apm.add_argument("--match-id", required=True)
+    p_apm.add_argument("--match-grade", required=True,
+                       help="Live vocabulary, read from the column's own CHECK")
+    p_apm.add_argument("--reason", required=True,
+                       help="Appended to mismatch_note with the grade it replaces")
+    p_apm.add_argument("--session", required=True)
+    p_apm.add_argument("--dry-run", action="store_true")
+
+    p_amt = sub.add_parser("amend-term",
+                           help="Replace a term's definition or scope_note, recording the "
+                                "text it replaces (canonical_en is not amendable)")
+    p_amt.add_argument("--term-id", required=True)
+    p_amt.add_argument("--field", required=True, choices=list(_AMENDABLE_TERM_FIELDS))
+    p_amt.add_argument("--replacement", required=True)
+    p_amt.add_argument("--reason", required=True)
+    p_amt.add_argument("--session", required=True)
+    p_amt.add_argument("--dry-run", action="store_true")
 
     p_ams = sub.add_parser("amend-source",
                            help="Correct a JUDGEMENT field on an evidence row, recording what was replaced")
@@ -2548,14 +2601,30 @@ def main():
                            set_target_evidence_type=args.set_target_evidence_type))
 
     elif args.command == "amend-gap":
-        out = amend_gap(args.gap_id, args.append_note, args.session, args.dry_run)
+        # _emit, not a bare assignment: until 2026-09-25 both of these assigned the
+        # writer's result to `out` and never printed it, so a successful amendment and a
+        # no-op ("already on the row") were indistinguishable from the shell.
+        _emit(amend_gap(args.gap_id, args.append_note, args.session, args.dry_run))
     elif args.command == "reattribute-candidate":
-        out = reattribute_candidate(args.candidate_id, args.exec_id, args.reason,
-                                    args.session, args.dry_run)
+        _emit(reattribute_candidate(args.candidate_id, args.exec_id, args.reason,
+                                    args.session, args.dry_run))
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
-                                dry_run=args.dry_run))
+                                dry_run=args.dry_run, suggested_slug=args.suggested_slug,
+                                clear_suggested_slug=args.clear_suggested_slug))
+    elif args.command == "link-admission":
+        _emit(link_admission(args.exec_id, args.ref_id, args.reason,
+                             session=args.session, dry_run=args.dry_run))
+    elif args.command == "unlink-admission":
+        _emit(unlink_admission(args.exec_id, args.ref_id, args.reason,
+                               session=args.session, dry_run=args.dry_run))
+    elif args.command == "amend-population-match":
+        _emit(amend_population_match(args.match_id, args.match_grade, args.reason,
+                                     session=args.session, dry_run=args.dry_run))
+    elif args.command == "amend-term":
+        _emit(amend_term(args.term_id, args.field, args.replacement, args.reason,
+                         session=args.session, dry_run=args.dry_run))
 
     elif args.command == "amend-source":
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
@@ -3790,8 +3859,42 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                 "from_exec": row["exec_id"], "exec_id": exec_id}
 
 
+def _check_rehome_destination(conn, subject: str, suggested_slug, found_under_slug):
+    """Refuse a REHOME that does not say, validly, where the candidate belongs.
+
+    A REHOME disposition means "this belongs under another slug", and suggested_slug is
+    the only joinable statement of WHICH. Batch 20 (2026-09-25) gave resolve-candidate an
+    OPTIONAL --suggested-slug checked only for existence, and a review the next day found
+    it closed nothing: REHOME rows could still sit at NULL -- undecided -- or point at
+    the slug they were found under, which is not a rehome at all (candidate 117 was in
+    exactly that state while its prose said "rehomed"); and a MERGED slug passed a bare
+    existence check although _check_slug_filable refuses it everywhere else in this file.
+    Derive the legacy rows this now refuses rather than trusting any list:
+
+        select candidate_id, found_under_slug, suggested_slug from search_candidates
+         where disposition='REHOME'
+           and (suggested_slug is null or suggested_slug = found_under_slug);
+
+    Called by BOTH writers that can set a REHOME -- add-candidate at staging and
+    resolve-candidate at resolution -- for the reason _check_slug_filable gives: a guard
+    on one verb leaves the other able to create the row it refuses.
+    """
+    if not suggested_slug:
+        raise Refusal(
+            f"{subject}: a REHOME must name where the candidate belongs -- pass "
+            f"--suggested-slug. A REHOME with no destination is the undecided state the "
+            f"disposition exists to end.")
+    if suggested_slug == found_under_slug:
+        raise Refusal(
+            f"{subject}: --suggested-slug {suggested_slug!r} is the slug it was found "
+            f"under. A REHOME pointing at its own origin is not a rehome; if it belongs "
+            f"where it was found, it is not REHOME.")
+    _check_slug_filable(conn, suggested_slug)
+
+
 def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
-                      session: str, admitted_ref_id: str = None, dry_run: bool = False):
+                      session: str, admitted_ref_id: str = None, dry_run: bool = False,
+                      suggested_slug: str = None, clear_suggested_slug: bool = False):
     """Close a staged candidate by RE-DESCRIBING it from the source (R15).
 
     R15: "A staged candidate description is a HYPOTHESIS. On resolution, re-describe
@@ -3811,49 +3914,376 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
     into fact, and the way to guarantee that is to leave the guess legible beside what
     the source actually said -- an overwrite would erase the evidence that anyone
     guessed at all.
+
+    suggested_slug (2026-09-25/26). REHOME REQUIRES a valid destination
+    (_check_rehome_destination). On any other disposition --suggested-slug is refused --
+    a moved slug riding on a resolution about something else would be an unexplained
+    second change -- and --clear-suggested-slug is the one way to empty a stale value
+    (say, a REHOME later found OUT-OF-SCOPE): the UPDATE below cannot write NULL through
+    a COALESCE, and db.py has no general "clear this field" idiom to borrow. Either move
+    is recorded in the RESOLVED line, because the column keeps only the current value.
     """
     redescription = (redescription or "").strip()
     if not redescription:
         raise Refusal(
             f"candidate {candidate_id}: R15 requires a re-description FROM THE SOURCE "
             f"to resolve a candidate. Refusing to close a hypothesis without one.")
+    subject = f"candidate {candidate_id}"
+    if suggested_slug is not None and clear_suggested_slug:
+        raise Refusal(f"{subject}: --suggested-slug and --clear-suggested-slug contradict "
+                      f"each other. Pass one.")
     with connect(dry_run) as conn:
-        row = conn.execute("SELECT candidate_id, disposition, notes, title "
-                           "FROM search_candidates WHERE candidate_id=?",
+        row = conn.execute("SELECT candidate_id, disposition, notes, title, suggested_slug, "
+                           "found_under_slug FROM search_candidates WHERE candidate_id=?",
                            [candidate_id]).fetchone()
         if row is None:
-            raise Refusal(f"candidate {candidate_id}: no such staged candidate.")
+            raise Refusal(f"{subject}: no such staged candidate.")
         allowed = dbcore.check_values(conn, "search_candidates", "disposition")
         if allowed and disposition not in allowed:
             raise Refusal(
-                f"candidate {candidate_id}: disposition {disposition!r} is not in the "
+                f"{subject}: disposition {disposition!r} is not in the "
                 f"column's own vocabulary {sorted(allowed)}.")
+        if disposition == "REHOME":
+            if clear_suggested_slug:
+                raise Refusal(
+                    f"{subject}: --clear-suggested-slug with REHOME would leave a rehome "
+                    f"with no destination. Name the destination with --suggested-slug.")
+            _check_rehome_destination(conn, subject, suggested_slug, row["found_under_slug"])
+        elif suggested_slug is not None:
+            raise Refusal(
+                f"{subject}: --suggested-slug is only accepted with --disposition REHOME. "
+                f"It names where a rehomed candidate belongs; on any other disposition it "
+                f"would be an unexplained second change. To empty a stale value, pass "
+                f"--clear-suggested-slug.")
         if disposition == "ADMITTED" and not admitted_ref_id:
             raise Refusal(
-                f"candidate {candidate_id}: ADMITTED without --admitted-ref-id names no "
+                f"{subject}: ADMITTED without --admitted-ref-id names no "
                 f"evidence row. Say which source it became.")
         if admitted_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [admitted_ref_id]).fetchone():
             raise Refusal(
-                f"candidate {candidate_id}: --admitted-ref-id {admitted_ref_id} is not in "
+                f"{subject}: --admitted-ref-id {admitted_ref_id} is not in "
                 f"evidence_sources. File the source first.")
-        stamp = audit(session)
-        tail = f" || RESOLVED {stamp['created_at'][:10]} (R15, re-described from the source"
-        tail += f"; admitted as {admitted_ref_id}" if admitted_ref_id else ""
-        tail += f"): {redescription}"
+        new_slug = (None if clear_suggested_slug
+                    else suggested_slug if suggested_slug is not None
+                    else row["suggested_slug"])
+        detail = "R15, re-described from the source"
+        detail += f"; admitted as {admitted_ref_id}" if admitted_ref_id else ""
+        if new_slug != row["suggested_slug"]:
+            detail += f"; suggested_slug {row['suggested_slug']} -> {new_slug}"
         # THE EDGE GOES IN THE COLUMN. --admitted-ref-id was required for ADMITTED and
         # then written ONLY into the `notes` tail, so the candidate-to-source link
         # existed as prose and nothing could join on it. Migration 088 gives the table
         # `resolved_ref_id`; writing it here is what lets integrity check S01 compare a
         # candidate's exec_id against the exec that actually admitted its source. The
-        # tail still names it too -- that is the human-readable record, not the edge.
+        # line still names it too -- that is the human-readable record, not the edge.
+        # search_candidates has no updated_* pair, so the dated, attributed line IS the
+        # audit record of the resolution (the literal RESOLVED is R15's predicate).
         conn.execute("UPDATE search_candidates SET disposition=?, notes=?, "
-                     "resolved_ref_id=COALESCE(?, resolved_ref_id) "
+                     "resolved_ref_id=COALESCE(?, resolved_ref_id), suggested_slug=? "
                      "WHERE candidate_id=?",
-                     [disposition, (row["notes"] or "").rstrip() + tail,
-                      admitted_ref_id, candidate_id])
+                     [disposition,
+                      dbcore.append_dated_note(row["notes"], "RESOLVED", session,
+                                               f"{detail}: {redescription}"),
+                      admitted_ref_id, new_slug, candidate_id])
         return {"candidate_id": candidate_id, "was": row["disposition"],
-                "now": disposition, "admitted_ref_id": admitted_ref_id}
+                "now": disposition, "admitted_ref_id": admitted_ref_id,
+                "suggested_slug": new_slug}
+
+
+def _results_admitted_after(was, edges: int, linked: bool) -> int:
+    """The results_admitted value after an admission edge is added (linked) or removed.
+
+    WHY THIS WRITES A COLUMN THE 2026-09-02 REPAIR CALLED WRITER-RETIRED. That session
+    deleted invariant H05 (test_db_integrity) because enforcing count == edges after the
+    fact had CAUSED harm: a retraction emptied search_admissions and, to keep H05 green,
+    rewrote seven searches' results_admitted to 0 -- erasing admissions those searches
+    really made. Its resolution: log-search sets the count from its edges at insert, and
+    "nothing updates it thereafter".
+
+    link-admission and unlink-admission are the first writers of an admission edge on an
+    EXISTING search, and leaving the count alone produced the opposite defect: exec 90
+    read 0 admitted with 1 edge, exec 91 read 1 with 2, and v_coverage_language /
+    _jurisdiction / _branch -- which SUM this column -- under-counted what those
+    searches yielded. DR-2026-08-19 step 7 prescribes updating the count in the same
+    transaction as the edge.
+
+    THE RULE BELOW IS AN OWNER RULING (2026-09-26, recorded in
+    references/project-standards.md and on GAP-051), not a session's compromise. It first
+    landed as a reconciliation of the two records above; the owner confirmed it as the
+    answer, superseding for post-insert writes both step 7's "must agree exactly" and the
+    2026-09-02 repair's "nothing updates it thereafter":
+
+      * never lowered to agree with the edges (the harm): a link gives max(was, edges),
+        so the seven restored historical counts -- count above edges, by design -- are
+        never touched; an unlink gives max(edges, was - 1), one fewer and never below
+        the edges that remain;
+      * moved only by an edge this writer itself adds or removes, the same event-driven,
+        monotonic completion amend-search applies to harm_finding ("completing an
+        incomplete record is not rewriting what the search found").
+
+    The one place the rule lives; its cases are L03, L06 and U03 in
+    scripts/tests/test_db_amend_writers.py.
+    """
+    was = was or 0
+    return max(was, edges) if linked else max(edges, was - 1)
+
+
+def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
+                   dry_run: bool = False):
+    """Record that an EXISTING search admitted a source, when a resolved candidate says so.
+
+    ADDED 2026-09-25 (batch 20), and it closes a coverage gap rather than adding a new
+    kind of fact. `search_admissions` is the one carrier of "which search admitted this
+    source", and its only writer was `log-search --admitted-ref-id`, which can only
+    attach an admission to a search logged IN THE SAME CALL. A source admitted in a
+    later batch from a staged candidate therefore had no sanctioned way to point back at
+    the search that surfaced it, and research_protocol_audit reported batch 20's two
+    such sources (REF-01007, REF-01008) as admitted by no search at all.
+
+    WHAT THE REFUSAL PROVES, AND WHAT IT DOES NOT (corrected 2026-09-26). It writes the
+    edge only when a search_candidates row already records BOTH ends -- that candidate's
+    exec_id is this exec, its resolved_ref_id is this source, disposition ADMITTED. That
+    stops an attribution nobody recorded. It does NOT establish that the recorded one is
+    TRUE. The edge copies the candidate's exec_id, so integrity check S01, which compares
+    exactly those two columns, cannot fail on an edge written here: a green S01 over it
+    is two tables agreeing about one fact, not a verification of the fact. And
+    search_candidates.exec_id has been wrong before -- candidates 107, 108 and 114 (see
+    reattribute_candidate). The truth of the edge rests on the session that logged the
+    candidate against this search. A wrong edge is removed with unlink-admission. This
+    is not hypothetical: both edges batch 20 first wrote with this verb copied proxy
+    filings (batch 19 had put candidates 124 and 125 on the nearest logged search because
+    the steps that surfaced them were never logged). They were moved on 2026-09-26 --
+    backfill the real step, reattribute-candidate, unlink-admission, link-admission --
+    and GAP-050 records the chain.
+
+    A SECOND ADMITTING SEARCH IS ALLOWED. The first version refused a source that another
+    exec already admitted. log-search refuses no such thing -- a source surfaced by two
+    searches is ordinary -- and the refusal pointed at reattribute-candidate, which
+    would have falsified which search surfaced it. Removed 2026-09-26.
+
+    The reason and any change to results_admitted are appended to the search's
+    findings_note (search_admissions has no column for either); see
+    _results_admitted_after for why the count moves at all. Re-running it on an edge that
+    already exists writes nothing unless the count is behind the edges, in which case it
+    raises the count and records why.
+    """
+    reason = dbcore.require_reason(
+        reason, f"exec {exec_id} -> {ref_id}",
+        "A provenance edge written after the fact must say why it was not written when "
+        "the search was logged.")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(ref_id)
+        ex = conn.execute("SELECT exec_id, findings_note, results_admitted "
+                          "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
+        if ex is None:
+            raise Refusal(f"exec {exec_id}: no such search execution.")
+        if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
+            raise Refusal(f"{ref}: not an admitted source.")
+        cand = [r[0] for r in conn.execute(
+            "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
+            "AND resolved_ref_id=? AND disposition='ADMITTED'", [exec_id, ref])]
+        if not cand:
+            raise Refusal(
+                f"exec {exec_id} -> {ref}: REFUSED. No search_candidates row records that "
+                f"this search surfaced a candidate which was admitted as this source "
+                f"(exec_id = {exec_id}, resolved_ref_id = {ref}, disposition ADMITTED). An "
+                f"admission edge written without that is an attribution nobody recorded -- "
+                f"the fabrication research_protocol_audit names. If the search that "
+                f"admitted it was never logged, log it with log-search --admitted-ref-id.")
+        admitting = [r[0] for r in conn.execute(
+            "SELECT exec_id FROM search_admissions WHERE ref_id=?", [ref])]
+        stamp = dbcore.now()
+        added = exec_id not in admitting
+        if added:
+            edge = {"exec_id": exec_id, "ref_id": ref}
+            edge.update(dbcore.stamp_for(conn, "search_admissions", session))
+            conn.execute(f"INSERT INTO search_admissions ({','.join(edge)}) "
+                         f"VALUES ({','.join('?' * len(edge))})", list(edge.values()))
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+                             [exec_id]).fetchone()[0]
+        was = ex["results_admitted"] or 0
+        count = _results_admitted_after(was, edges, linked=True)
+        if not added and count == was:
+            return {"exec_id": exec_id, "ref_id": ref, "changed": False,
+                    "reason": "edge already present and results_admitted already level"}
+        note = ex["findings_note"]
+        if added:
+            note = dbcore.append_dated_note(
+                note, "ADMISSION LINKED", session,
+                f"{ref} (candidate {', '.join(map(str, cand))}): {reason}", stamp)
+        if count != was:
+            note = dbcore.append_dated_note(
+                note, "RESULTS_ADMITTED RAISED", session,
+                f"{was} -> {count}, level with this search's admission edges"
+                + ("" if added else f". {reason}"), stamp)
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=? "
+                     "WHERE exec_id=?", [count, note, exec_id])
+        return {"exec_id": exec_id, "ref_id": ref, "changed": True, "edge_added": added,
+                "candidates": cand, "results_admitted": {"was": was, "now": count},
+                "other_admitting_execs": [e for e in admitting if e != exec_id]}
+
+
+def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
+                     dry_run: bool = False):
+    """Remove an admission edge that is wrong. The corrective half of link-admission.
+
+    ADDED 2026-09-26. db.py had no DELETE or UPDATE on search_admissions at all, so a
+    wrong edge -- however it got there: a mis-typed --admitted-ref-id, or a
+    link-admission that faithfully copied a candidate's wrong exec_id -- could not be
+    corrected through any sanctioned path. Shaped like reattribute_candidate: the move
+    needs a reason, and the removed edge is kept in the search's findings_note, because
+    the junction row itself is gone.
+
+    results_admitted drops by the edge removed, never below the edges that remain (the
+    rule _results_admitted_after states). It does not touch the candidate
+    row: if the candidate's own exec_id is what was wrong, correct it with
+    reattribute-candidate as well -- the result names any candidate that still points
+    at this search, so the second half is not forgotten.
+
+    CAPTURING IT. This is a DELETE, and the capture path is additive by default: run
+    emit_batch_sql.py with --allow-delete search_admissions, which renders the removed
+    row as a keyed DELETE (only for a table a writer here deletes from). Found the first
+    time the verb was used for real (GAP-050's repair, 2026-09-26): emit refused the
+    scratch, correctly, until that opt-in existed.
+    """
+    reason = dbcore.require_reason(
+        reason, f"exec {exec_id} -> {ref_id}",
+        "Removing a provenance edge without saying why erases an attribution without "
+        "a trace of what replaced it.")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(ref_id)
+        ex = conn.execute("SELECT exec_id, findings_note, results_admitted "
+                          "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
+        if ex is None:
+            raise Refusal(f"exec {exec_id}: no such search execution.")
+        if not conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                            [exec_id, ref]).fetchone():
+            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove.")
+        conn.execute("DELETE FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                     [exec_id, ref])
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+                             [exec_id]).fetchone()[0]
+        was = ex["results_admitted"] or 0
+        count = _results_admitted_after(was, edges, linked=False)
+        detail = f"{ref}: {reason}"
+        if count != was:
+            detail += f" results_admitted {was} -> {count}."
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=? "
+                     "WHERE exec_id=?",
+                     [count, dbcore.append_dated_note(ex["findings_note"],
+                                                      "ADMISSION UNLINKED", session, detail),
+                      exec_id])
+        still = [r[0] for r in conn.execute(
+            "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
+            "AND resolved_ref_id=?", [exec_id, ref])]
+        return {"exec_id": exec_id, "ref_id": ref, "changed": True,
+                "results_admitted": {"was": was, "now": count},
+                "candidates_still_naming_this_search": still}
+
+
+def amend_population_match(match_id: str, match_grade: str, reason: str, session: str,
+                           dry_run: bool = False):
+    """Re-grade an R13 population match in place, recording the grade it replaces.
+
+    ADDED 2026-09-25 (batch 20) because an owner ruling re-graded REF-01007 and no verb
+    could apply it. add-population-match deliberately permits a SECOND row -- a
+    dissenting grade reads as a contest (DR-2026-08-19 section 7) -- and that mechanic
+    stays. But a ruling is not a dissent: two rows, PROXY and PARTIAL, would tell a
+    reader the question is open when it has been decided. So the grade moves, and the
+    replaced grade and the reason are appended to mismatch_note, which is the row's
+    warrant text. The table has no updated_* columns, so the stamp lives in that note.
+    """
+    reason = dbcore.require_reason(reason, match_id, "A re-grade must say why.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT match_id, match_grade, mismatch_note FROM "
+                           "evidence_population_match WHERE match_id=?",
+                           [match_id]).fetchone()
+        if row is None:
+            raise Refusal(f"{match_id}: no such population match.")
+        dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
+                           match_grade, "--match-grade")
+        if row["match_grade"] == match_grade:
+            return {"match_id": match_id, "changed": False, "match_grade": match_grade}
+        conn.execute("UPDATE evidence_population_match SET match_grade=?, "
+                     "mismatch_note=? WHERE match_id=?",
+                     [match_grade,
+                      dbcore.append_dated_note(row["mismatch_note"], "REGRADED", session,
+                                               f"{row['match_grade']} -> {match_grade}. "
+                                               f"{reason}"),
+                      match_id])
+        return {"match_id": match_id, "changed": True, "was": row["match_grade"],
+                "now": match_grade}
+
+
+_AMENDABLE_TERM_FIELDS = ("definition", "scope_note")
+_TERM_TRAILER = "AMENDED"
+
+
+def amend_term(term_id: str, field: str, replacement: str, reason: str, session: str,
+               dry_run: bool = False):
+    """Replace a term's definition or scope note, recording the text it replaces.
+
+    ADDED 2026-09-25 (batch 20) to apply an owner ruling that narrowed TERM-089's
+    definition; nothing could write `terms` after add-term minted a row. canonical_en is
+    deliberately NOT amendable: renaming a term is a vocabulary decision with callers
+    (term_aliases, adjudications, parameters), not a wording fix. `terms` has no notes
+    column, so the replaced text and the reason are appended to scope_note -- the only
+    free-text column on the row -- as ' || AMENDED <date> by <session>: ...' lines, and
+    the stamp goes in updated_*.
+
+    NO-OP DETECTION IS FOR `definition` ONLY (corrected 2026-09-26). The first version
+    compared the stored scope_note with the replacement -- but the stored value carries
+    the previous trailers, so an identical second call never matched, and it quoted the
+    whole old column (trailers included) inside the new trailer, nesting one audit line
+    inside the next. Now a scope_note amendment splits the column into its body and the
+    audit lines after it, replaces the body, keeps the lines, and adds one more: a
+    repeated identical amendment is a second dated line, which is honest, not a bug.
+    """
+    if field not in _AMENDABLE_TERM_FIELDS:
+        raise Refusal(f"--field {field!r}: only {list(_AMENDABLE_TERM_FIELDS)} are "
+                      f"amendable. canonical_en is a vocabulary decision, not a wording fix.")
+    replacement = (replacement or "").strip()
+    if not replacement:
+        raise Refusal(f"{term_id}: --replacement is required and may not be blank.")
+    marker = f" || {_TERM_TRAILER} "
+    if marker in replacement:
+        raise Refusal(f"{term_id}: --replacement contains the audit marker {marker.strip()!r}, "
+                      f"which would make the body and its history inseparable.")
+    reason = dbcore.require_reason(reason, term_id)
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT term_id, definition, scope_note FROM terms "
+                           "WHERE term_id=?", [term_id]).fetchone()
+        if row is None:
+            raise Refusal(f"{term_id}: no such term.")
+        # Both gates, derived, on every amendable field -- as amend-source and
+        # amend-extraction apply them. No-ops today (neither column declares a CHECK or
+        # an FK); the first migration that gives one a vocabulary arms this with nothing
+        # to update here.
+        dbcore.fk_declared(conn, "terms", field, replacement, f"amend-term --field {field}")
+        dbcore.check_declared(conn, "terms", field, replacement,
+                              f"amend-term --field {field}")
+        stamp = dbcore.upd(session)
+        old_note = row["scope_note"] or ""
+        if field == "definition":
+            if (row["definition"] or "").strip() == replacement:
+                return {"term_id": term_id, "field": field, "changed": False}
+            definition = replacement
+            scope_note = dbcore.append_dated_note(
+                old_note, _TERM_TRAILER, session,
+                f"definition was: '{row['definition'] or ''}'. {reason}",
+                stamp["updated_at"])
+        else:
+            body = old_note.split(marker, 1)[0]
+            definition = row["definition"]
+            scope_note = dbcore.append_dated_note(
+                replacement + old_note[len(body):], _TERM_TRAILER, session,
+                f"scope_note was: '{body.strip()}'. {reason}", stamp["updated_at"])
+        conn.execute("UPDATE terms SET definition=?, scope_note=?, updated_at=?, "
+                     "updated_by_session=? WHERE term_id=?",
+                     [definition, scope_note, stamp["updated_at"],
+                      stamp["updated_by_session"], term_id])
+        return {"term_id": term_id, "field": field, "changed": True}
 
 
 # Judgement fields on evidence_sources: prose an author must WRITE, which no payload
@@ -6904,11 +7334,16 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
         if not dbcore.exists(conn, "slugs", "slug", data.get("found_under_slug")):
             raise Refusal(
                 f"found_under_slug {data.get('found_under_slug')!r} is not in `slugs`.")
-        if data.get("suggested_slug") and not dbcore.exists(
-                conn, "slugs", "slug", data["suggested_slug"]):
-            raise Refusal(f"suggested_slug {data['suggested_slug']!r} is not in `slugs`.")
         dbcore.check_vocab(conn, "search_candidates", "disposition",
                            data.get("disposition"), "insert_search_candidate")
+        # The same destination rule resolve-candidate applies (_check_rehome_destination),
+        # here too because staging is the other writer that can create a REHOME row --
+        # and is how six live REHOME rows came to carry no destination at all.
+        if data.get("disposition") == "REHOME":
+            _check_rehome_destination(conn, "add-candidate", data.get("suggested_slug"),
+                                      data.get("found_under_slug"))
+        elif data.get("suggested_slug"):
+            _check_slug_filable(conn, data["suggested_slug"])
         if data.get("locator_status") is not None:
             dbcore.check_vocab(conn, "search_candidates", "locator_status",
                                data["locator_status"], "insert_search_candidate")

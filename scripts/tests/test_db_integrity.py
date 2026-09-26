@@ -1098,6 +1098,15 @@ def run_checks(db_path):
     # 2026-08-24: db.py sets it from len(--admitted-ref-id) at insert and nothing
     # updates it thereafter. Current yield is COUNT(search_admissions); the execution
     # row keeps what it found.
+    #
+    # SUPERSEDED IN PART 2026-09-26 BY OWNER RULING (references/project-standards.md;
+    # GAP-051) -- appended, not rewritten, because the paragraph above is why H05 stays
+    # deleted. "Nothing updates it thereafter" no longer holds: an admission edge added to
+    # an EXISTING search (db.py link-admission) RAISES the count to max(count, edges), and
+    # removing a wrong edge (unlink-admission) lowers it by one, never below the edges that
+    # remain. What stands is the lesson: the count is never lowered to force agreement, so
+    # the restored historical counts above their edges are untouched, and no parity check
+    # comes back. The rule's one home is _results_admitted_after in scripts/db.py.
 
     # H06 and H07 DELETED 2026-09-21 with H01/H02 — see the record above. H06 existed,
     # in its own words, as "what makes H01–H04 non-vacuous"; with those gone it has no
