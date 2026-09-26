@@ -865,6 +865,18 @@ waiver is the literal token `--findings-note 'CO1-NOT-APPLICABLE: <reason>'`.
 REHOME|MISCELLANEOUS|PENDING-VERIFICATION|OUT-OF-SCOPE|ADMITTED`. R7 floor: ≥1 candidate per 25
 screened. **A staged description is a HYPOTHESIS** — it gets re-described from the source at step 7.
 
+> **⚠ AMENDED 2026-09-26 — APPENDED, NOT EDITED. The disposition list above is no longer the
+> vocabulary, and was never its home.** Schema migration 096 (owner ruling 2026-09-25, recorded in
+> `references/project-standards.md`) added **`EXHAUSTED`**: the item is identified and no route to
+> its text exists from anywhere this project can reach, "given up for now". It is not for a
+> barrier that may be transient. Read the live set from the column's own CHECK, never from this
+> sentence (CLAUDE.md rule 8): `dbcore.check_values(conn, "search_candidates", "disposition")`.
+> Two other things in this step have since moved. `add-candidate` / `resolve-candidate` exist, so
+> it is no longer "No CLI". And a **REHOME must now name a filable destination other than the slug
+> it was found under** (`--suggested-slug`, refused otherwise since 2026-09-26). §12.1 as a whole
+> was already superseded on 2026-09-10 (see its head); this note corrects the one vocabulary it
+> states, because a reader who stops here still takes it as the list.
+
 **Step 5 — DOI pre-check (R9).** Per candidate, against the scratch and — once §6 lands — against
 `source_locators` case-insensitively. An `evidence_sources` hit means cross-file; a lead hit means
 admit reusing the stash ref_id.

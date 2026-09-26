@@ -203,6 +203,43 @@ def upd(session: str) -> dict:
     return {"updated_at": now(), "updated_by_session": session}
 
 
+# ---------------------------------------------------------------------------
+# Amendment trailers -- the "change a row, say why on the row" shape
+# ---------------------------------------------------------------------------
+#
+# A writer that amends a row in place keeps what it replaced, and why, in a text column
+# on that row: tables such as search_candidates and evidence_population_match have no
+# updated_* pair, so the dated line IS the audit record. Batch 20 (2026-09-25) added the
+# sixth and seventh hand-written copies of the same composition, and of the "--reason
+# is required" guard in front of it, before a review pointed out the pattern. These two
+# functions are that shape once. The five older writers (amend-search, amend-gap,
+# reattribute-candidate, amend-source, amend-extraction) keep their own historical
+# trailer formats -- '|| CORRECTED <date>:', '\n\nREATTRIBUTED ...', '|| <date> field
+# SET a -> b' -- because rows already carry them and a reader greps for them; migrating
+# them would change what a future row looks like beside every past one.
+
+def require_reason(reason, subject: str,
+                   why: str = "An amendment that cannot say why cannot be contested.") -> str:
+    """The stripped --reason, or a Refusal naming `subject` when it is blank."""
+    reason = (reason or "").strip()
+    if not reason:
+        raise Refusal(f"{subject}: --reason is required. {why}")
+    return reason
+
+
+def append_dated_note(existing, verb: str, session: str, detail: str,
+                      stamp: str = None) -> str:
+    """`existing` with one audit line appended: ' || VERB YYYY-MM-DD by SESSION: DETAIL'.
+
+    `stamp` is a now()-shaped timestamp; pass the one the caller also writes to an
+    updated_at column, so the trailer's date and the column's cannot disagree.
+    Append-only by construction: the existing text is kept verbatim except for
+    trailing whitespace.
+    """
+    when = (stamp or now())[:10]
+    return (existing or "").rstrip() + f" || {verb} {when} by {session}: {detail}"
+
+
 def validate_cols(data_keys, whitelist: frozenset, context: str):
     unknown = set(data_keys) - whitelist
     if unknown:
@@ -227,9 +264,26 @@ def norm_doi(doi):
     return None if doi is None else doi.strip().lower()
 
 
+_CO1_REF = re.compile(r"co1-(\d{2,3})", re.I)
+
+
 def fold_ref(ref_id):
-    """Canonical form for reference-id comparison. Ids are upper-case by convention."""
-    return None if ref_id is None else ref_id.strip().upper()
+    """Canonical form for reference-id comparison.
+
+    REF-NNNNN and REF-VERIFIED-NNN are upper-case, and folding to upper case is what
+    lets 'ref-00965' find REF-00965. But Co1-NN, the lived-experience namespace
+    REF_ID_SHAPE recognises below, is MIXED case, and a blanket .upper() turned it into
+    'CO1-NN' -- which matches no stored id and does not even match REF_ID_SHAPE. Every
+    caller that folds and then looks the id up (link-admission, add-population-match,
+    add-locator, the economics writer) would therefore have refused a genuine Co1 source
+    as "not an admitted source". Latent until 2026-09-26 -- no Co1 row is live -- and
+    found by review, not by any check. The namespace keeps its own spelling.
+    """
+    if ref_id is None:
+        return None
+    ref_id = ref_id.strip()
+    m = _CO1_REF.fullmatch(ref_id)
+    return f"Co1-{m.group(1)}" if m else ref_id.upper()
 
 
 # REF-NNNNN is the global id. REF-VERIFIED-NNN are human-verified standards predating
@@ -702,15 +756,19 @@ _INSERT_RE = re.compile(r'INSERT\s+(?:OR\s+\w+\s+)?INTO\s+"?(\w+)"?', re.I)
 _WRITER_MODULES = ("db.py", "assess/assess_cell.py")
 
 
-def _writer_tables() -> set:
-    """Every table a sanctioned writer INSERTs into, read from the writers themselves."""
+_DELETE_RE = re.compile(r'DELETE\s+FROM\s+"?(\w+)"?', re.I)
+
+
+def _writer_tables(pattern=_INSERT_RE) -> set:
+    """Every table a sanctioned writer INSERTs into (or, with _DELETE_RE, deletes from),
+    read from the writers themselves."""
     here = os.path.dirname(os.path.abspath(__file__))
     found = set()
     for rel in _WRITER_MODULES:
         path = os.path.join(here, rel)
         try:
             with open(path, encoding="utf-8") as fh:
-                found |= set(_INSERT_RE.findall(fh.read()))
+                found |= set(pattern.findall(fh.read()))
         except OSError:
             # A writer module that cannot be read is a real problem, but this module is
             # imported by the CLI itself; raising here would make every db.py invocation
@@ -780,6 +838,22 @@ def writable_tables(conn) -> list:
     return ordered
 
 
+def deletable_tables(conn) -> set:
+    """Tables a sanctioned writer DELETEs from -- derived exactly as writable_tables is.
+
+    ADDED 2026-09-26. The capture path (scripts/research/emit_batch_sql.py) was additive
+    only, and rightly refuses by default to turn a row missing from a scratch into a
+    DELETE: that is usually a stale copy. But db.py has writers that delete on purpose --
+    unlink-admission removes a wrong search_admissions edge -- and an additive-only
+    capture made that sanctioned write unshippable. emit_batch_sql renders a DELETE only
+    for a table in this set AND named by the operator (--allow-delete), so the default
+    stays additive and nothing here is a list maintained beside the writers.
+    """
+    live = {t for (t,) in conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    return (_writer_tables(_DELETE_RE) & live) - set(NOT_CAPTURED)
+
+
 # WRITABLE_TABLES and TABLES are GONE, deliberately. Both were module-level constants,
 # and a constant is exactly what let a snapshot of the write surface drift from the
 # write surface eight times. `writable_tables(conn)` needs a connection, so a caller
@@ -806,6 +880,23 @@ def _selftest() -> int:
           norm_doi("10.1044/2019_AJA-19-0010") == norm_doi("10.1044/2019_aja-19-0010"))
     check("norm_doi passes None through", norm_doi(None) is None)
     check("fold_ref normalises whitespace and case", fold_ref("  ref-00965 ") == "REF-00965")
+    check("fold_ref keeps the Co1 namespace's own spelling, and it still matches REF_ID_SHAPE",
+          fold_ref(" co1-07") == "Co1-07" and bool(REF_ID_SHAPE.fullmatch(fold_ref("CO1-07"))),
+          "got %r -- an upper-cased Co1 id matches no stored row" % fold_ref(" co1-07"))
+
+    # The amendment trailer and its guard.
+    check("append_dated_note appends one dated, attributed line and keeps the text",
+          append_dated_note("old text  ", "AMENDED", "sess-x", "why", "2026-09-26 10:00")
+          == "old text || AMENDED 2026-09-26 by sess-x: why")
+    check("append_dated_note starts cleanly on an empty column",
+          append_dated_note(None, "V", "s", "d", "2026-09-26 10:00") == " || V 2026-09-26 by s: d")
+    try:
+        require_reason("   ", "subject-x")
+        check("require_reason refuses a blank reason", False, "no Refusal raised")
+    except Refusal as exc:
+        check("require_reason refuses a blank reason", "subject-x" in str(exc))
+    check("require_reason returns the stripped reason",
+          require_reason("  because  ", "s") == "because")
 
     # The mint rule. Build the exact live shape: the stash's high-water mark BELOW
     # a live evidence row. The old one-table rule returns a colliding id here.
@@ -861,6 +952,10 @@ def _selftest() -> int:
               not _viol, "; ".join(_viol))
         check("every NOT_CAPTURED entry states a reason",
               all(isinstance(v, str) and v.strip() for v in NOT_CAPTURED.values()))
+        _del = deletable_tables(_st_con)
+        check("deletable_tables() sees unlink-admission's table, and is a subset of the "
+              "capture set", "search_admissions" in _del and _del <= set(_tbls),
+              "got %s" % sorted(_del))
     finally:
         _st_con.close()
 

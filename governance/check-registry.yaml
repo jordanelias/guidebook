@@ -1476,6 +1476,26 @@ checks:
     closed sessions be written into each turn it red.
 
     '
+- id: test_db_amend_writers
+  cmd:
+  - python3
+  - scripts/tests/test_db_amend_writers.py
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+  note: 'Every refusal batch 20 added to db.py''s amendment writers (link-admission,
+    unlink-admission, amend-population-match, amend-term, resolve-candidate
+    --suggested-slug/--clear-suggested-slug, add-candidate REHOME), each proven to fire
+    and its legitimate shape proven to pass, on a temp COPY of the canonical DB. Exists
+    because a 2026-09-26 review that merely RAN those writers found five defects no gate
+    had seen. Its assertion count is its own EXAMINED line -- re-run, do not trust a
+    figure here. Fault-injected 2026-09-26: removing the results_admitted raise, the
+    MERGED-slug guard, the self-reference guard, the Co1 fold, or the scope_note
+    un-nesting each turned it red; restored, green.'
 - id: test_url_verifier
   cmd:
   - python3

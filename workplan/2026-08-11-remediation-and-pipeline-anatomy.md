@@ -2795,6 +2795,10 @@ For one **`search_candidates` row**:
    — `test_db_integrity`'s A-series orphan scan is the direct CI enforcer.
 4. **A `REHOME` candidate names its destination.** Column `suggested_slug`.
    *Level: **UNENFORCED*** — no CHECK ties `suggested_slug` to `disposition='REHOME'`.
+   *Updated 2026-09-26 (appended, not edited):* now **enforced at the writer** — `add-candidate`
+   and `resolve-candidate` both refuse a REHOME without a filable `--suggested-slug` other than
+   `found_under_slug` (`_check_rehome_destination` in `scripts/db.py`). Still no CHECK, so rows
+   written before that remain; they are GAP-052.
 5. **A non-ADMITTED candidate says why.** Column `why_not_admitted`.
    *Level: 1 (text rule)* — the migration-036 DDL comment says "required in practice"; the column
    is nullable and nothing checks it. Enforcer: the comment.

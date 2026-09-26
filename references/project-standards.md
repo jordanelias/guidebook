@@ -3960,3 +3960,109 @@ method carry an old source into the anchoring band. (2) Record the design facts 
 legible as a ruling rather than as a misreading. (3) Historical-provenance claims are a different
 claim type, and old primary work anchors those at full strength.
 DATE: 2026-09-18 — owner ruling, quoted above.
+
+## Owner rulings 2026-09-25 — the unreachable is given up for now; four points from batch 20's independent review
+
+Given during research batch 20
+(`sessions/session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa.md`, §8 and §0b).
+Recorded on contact per `CLAUDE.md` rule 0. The first ruling is quoted. The other four were relayed
+to the batch by the coordinating session, and are recorded here in that session's words rather than
+as quotations.
+
+> **"if we can't access something from anywhere then we have to give up on it for now"**
+
+**(1) GIVE UP ON THE UNREACHABLE, FOR NOW.**
+- An item to which no route exists from anywhere this project can reach is not queued for anyone.
+  No interlibrary-loan, document-delivery or author-contact task is drafted for the owner.
+- "For now" is a decision that can be revisited, not a finding about the item.
+- Applied to REF-01002, Walter 1971 (candidate 109) and the 1957 Illinois dissertation (candidate
+  110). GAP-016 is NOT-ADDRESSABLE and GAP-026 is CLOSED-DECIDED.
+
+**(2) THE DISPOSITION IS TYPED.** "Exhausted, given up for now" gets a real, CHECK-permitted value:
+`search_candidates.disposition = 'EXHAUSTED'`, added by schema migration 096.
+- **It is not for an item behind a possibly transient barrier** (a bot check or a Cloudflare
+  interstitial) that an ordinary browser gets past.
+- Candidate 123 (Garg 2024, free to read at PMC) stays PENDING-VERIFICATION on exactly that
+  distinction. That is the batch's judgment, made under this ruling.
+
+**(3) A FACILITY AUDIT'S POPULATION GRADE DOES NOT TURN ON WHETHER ITS AUDITORS WERE DISABLED.**
+- REF-01007 (Pinto 2021, a census of Brazilian primary-care facilities) is re-graded PROXY → PARTIAL,
+  matching REF-01006. Whether an audit's participants were disabled is a Co-1 question, not a
+  criterion of population-match directness.
+- REF-01006's PARTIAL is the precedent applied, not reopened.
+- **What it touches:** the harness research contract's one-line R13 summary
+  (`governance/research-contract.yaml`: "Children/general-population/no-participants = PROXY") is
+  what the PROXY grade followed. DR-2026-08-19's own R13 text does not name "no participants". This
+  ruling supersedes the contract line as applied to a facility audit. **The contract's wording was
+  not edited; whether it should change is the owner's call.**
+
+**(4) THE VOCABULARY DOES NOT PRE-DECIDE AN OPEN SCOPE QUESTION.**
+- TERM-089 (`ramp`) is narrowed to exclude the running slope of paths, walkways and trails. It no
+  longer answers GAP-033's open ramp-versus-route question for it.
+- **This covers TERM-089 only.** TERM-094's universalised scope note, TERM-093's foreclosure of a
+  separate criterion term, and TERM-092's dangling reference are open on GAP-033.
+
+**(5) NO PERSONAL EMAIL TO THIRD-PARTY APIs**, effective at once.
+- The owner's address is not sent to Unpaywall or any similar service.
+- Where an API tolerates it, omit the contact parameter. Where it requires one, stop and ask; never
+  substitute a guess.
+- The instances already committed in retrieval-log manifests stay as they are, because the history
+  is not rewritten.
+
+CONDITION: any session that meets an unreachable item, grades a facility audit's population match,
+mints or edits a base term near an open scope question, or calls an API that asks for a contact
+address.
+ACTION:
+1. Type an unreachable item EXHAUSTED; do not queue it, and do not draft a request for it.
+2. Keep EXHAUSTED for no-route items only. A transient barrier stays PENDING-VERIFICATION with a note.
+3. Grade population directness on who is served and what was measured, never on the auditors' own
+   disability.
+4. Leave an open scope question open in the vocabulary.
+5. Send no personal email to any third-party API.
+DATE: 2026-09-25 — owner rulings, as relayed above.
+
+## Owner rulings 2026-09-26 — `results_admitted` is raise-only after insert; a proxy provenance edge is repaired before merge
+
+Given on PR #159 (research batch 20) and relayed by the coordinating session, so recorded here in
+that session's words rather than as quotations. Recorded on contact per `CLAUDE.md` rule 0. Full
+record: `sessions/session_2026-09-25-research-batch-20-audit-cluster-templer-fhwa.md`, §0c–§0d.
+
+**(1) `search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT.**
+- `log-search` sets the count from the search's own edges at insert.
+- An admission edge added later to that search (`db.py link-admission`) raises the count to
+  max(count, edges).
+- Removing a wrong edge (`db.py unlink-admission`) lowers it by one, never below the edges that
+  remain.
+- **The count is never lowered to force agreement with the edges.**
+
+The rule was first written by a session as a reconciliation of two records that disagreed. The
+owner confirmed it as the answer, not a stopgap.
+
+**What it supersedes, for post-insert writes:**
+- `DR-2026-08-19` step 7's "the count must agree exactly".
+- The 2026-09-02 repair's "nothing updates it thereafter" (the H05 note in
+  `scripts/tests/test_db_integrity.py`, which now carries an appended pointer here).
+
+**What it keeps:** that repair's lesson. H05 stays deleted, no parity check returns, and the
+historical counts restored above their edges stay as they are. The rule's one home is
+`_results_admitted_after` in `scripts/db.py`. GAP-051 is closed as decided.
+
+**(2) A PROXY PROVENANCE EDGE IS REPAIRED, NOT MERGED.** Batch 20's two admission edges copied
+candidate rows that batch 19 had filed on the nearest logged search, because the steps that
+actually surfaced them were never logged. The ruling was to fix it before merge, on batch 17's
+precedent (candidates 107/108):
+1. log each real discovery step as a backfill search (`log-search --backfill 1`, a prior that
+   states its own absence, and a `query_text` that says honestly what was done);
+2. move the candidates with `reattribute-candidate`;
+3. move the edges with `unlink-admission` and `link-admission`.
+
+An ad hoc lookup is logged as what it was, not dressed as a designed query. GAP-050 records the
+chain.
+
+CONDITION: any session that writes, moves or audits an admission edge on a search that is
+already logged, or finds a candidate filed on a search that did not surface it.
+ACTION:
+1. Never lower `results_admitted` to meet the edges; let the two verbs move it.
+2. When a candidate's search is a proxy, backfill the real step and move the candidate and its
+   edge. Never leave the proxy in place, and never re-describe the proxy search as the source.
+DATE: 2026-09-26 — owner rulings, as relayed above.
