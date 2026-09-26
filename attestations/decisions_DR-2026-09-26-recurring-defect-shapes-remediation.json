@@ -1,0 +1,29 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-09-26-repo-orientation-remediation-planning",
+ "artifact": "decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md",
+ "doctrine_sha": "7cb2b04",
+ "rules_in_scope": [
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/decisions_DR-2026-09-26-recurring-defect-shapes-remediation.json",
+   "reason": "No identifier in references/skill-registry.md or in scripts/audit/adherence_log_audit.py's EXTRA_RULE_IDS governs authoring a Decision Record, so this is the only rule genuinely in scope rather than the first of several force-fitted ones. The DR touches decisions/, which is a rule-2 attestation path, and this is that attestation."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "This DR relies on its own reading of DR-2026-08-19 section 11 property 3 to conclude that the successor-prohibition there does not bind a Decision Record (only a workplan), rather than putting that reading to the owner before the document was written. The reading is stated in section 0.1 and is falsifiable by re-reading that property, but nobody except the authoring session has checked it."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "Sections 0.2 through 6 went through a genuine adversarial review across two drafts (v1 to v2, eleven findings, then twelve more found verifying the fixes) by a different model in a fresh context. The document as a whole -- its framing, its choice of six root causes as the complete set, its sequencing in section 7, and this attestation's own claims -- has not, because DR-2026-08-19's RULE forbids commissioning an adversarial pass against a Decision Record. The per-mechanism review is real; the document-level self-assessment is not independently checked."
+  }
+ ],
+ "bias_direction": "The DR was authored, revised, and is now being attested by the same continuous session, and every fix credited to the review rounds is a fix this session then implemented and is now vouching for the correctness of a second time. There is a specific pull toward overstating how settled the mechanisms are: section 8's acceptance table reads as thorough because it distinguishes what is shown on committed state from what needs a fixture, but every one of those demonstrations was run once, by this session, on scratch copies this session made, and never rerun by anyone else. A second pull is toward treating the six root causes as the complete and correctly-carved set, because the survey that produced them and the DR that answers them share provenance through this same session's orchestration, even though the survey and the DR-drafting used different underlying models.",
+ "independent_reviewer_counterclaim": "The strongest objection is that a document proposing to fix how the project catches unverified claims was itself produced by a process with no verification step at the document's own level of granularity -- the six-root-cause framing, the choice to sequence RC4 first, and the decision to make this a single omnibus DR rather than six independent ones were never adversarially tested, only the mechanisms inside it were. A reviewer could reasonably ask why a DR this large, covering six root causes and touching the schema in three places, was not itself split the way research and tooling are now being told to ship apart (RC6), given that RC6 is one of its own six decisions. Against that: the document is explicit at every section boundary about what was verified and how (the EXAMINED-style commands, the per-finding checked-by column), it is committed as PROPOSED and binds nothing until the owner rules on section 9 and PR #159 merges, and its own section 10 makes each of the six decisions separately reversible, which is close to the effect of six independent DRs without the coordination cost of maintaining six sequencing sections that all say the same thing about PR #159.",
+ "verdict": "DEVIATION-LOGGED"
+}
