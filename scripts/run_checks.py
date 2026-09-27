@@ -75,6 +75,11 @@ REGISTRY = os.path.join(REPO_ROOT, "governance", "check-registry.yaml")
 SESSION_POINTERS = {
     "LATEST":          os.path.join(REPO_ROOT, "sessions", "LATEST"),
     "LATEST-RESEARCH": os.path.join(REPO_ROOT, "sessions", "LATEST-RESEARCH"),
+    # scratchpad/CURRENT moves at OPEN, not at CLOSE, so it names the session running
+    # NOW rather than the previous one (CLAUDE.md section 7). Added 2026-09-27 for
+    # adversarial_pass_recorded (RC4) — registering `session_pointer: CURRENT` without
+    # this entry would silently SKIP the check, because read_pointer() catches KeyError.
+    "CURRENT":         os.path.join(REPO_ROOT, "scratchpad", "CURRENT"),
 }
 DEFAULT_SESSION_POINTER = "LATEST"
 SESSION_POINTER = SESSION_POINTERS[DEFAULT_SESSION_POINTER]   # back-compat alias
@@ -937,6 +942,20 @@ def selftest(reg):
     print(f"  [INFO] checks with a real floor: {len(floored)} of "
           f"{len(reg['checks'])} — every no_floor is a corpus that cannot yet "
           f"falsify its check; ratchet this up as the corpus fills")
+
+    # --- C10: every declared session_pointer is a live key -------------------
+    # RC4 (DR-2026-09-26-recurring-defect-shapes-remediation.md section 1.2(b), point 2):
+    # `read_pointer` catches KeyError and returns "", so registering
+    # `session_pointer: CURRENT` without also adding "CURRENT" to SESSION_POINTERS
+    # switches the check off with no error at all — it just SKIPs (advisory) or FAILs
+    # with "no sessions/CURRENT pointer" (blocking), neither of which names the real
+    # defect. Catch the typo/omission at registration time instead of at run time.
+    bad_pointer = sorted({
+        c.get("session_pointer") for c in reg["checks"]
+        if c.get("session_pointer") and c["session_pointer"] not in SESSION_POINTERS
+    })
+    check("C10 every session_pointer is a key of SESSION_POINTERS", not bad_pointer,
+          str(bad_pointer))
 
     # The population `floor_claim_contradiction` is structurally blind to. A check that
     # prints no line the runner can parse gets PASS whether it examined 500 rows or none,

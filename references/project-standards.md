@@ -4066,3 +4066,108 @@ ACTION:
 2. When a candidate's search is a proxy, backfill the real step and move the candidate and its
    edge. Never leave the proxy in place, and never re-describe the proxy search as the source.
 DATE: 2026-09-26 — owner rulings, as relayed above.
+
+CORRECTION — 2026-09-27. **Back-pointers for two rulings recorded retroactively; the ruling
+entries themselves stand as written, per this ledger's append-not-edit practice.**
+
+Built under `decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md` §4 (RC3: "currency
+lives at the superseded text"), owner nod 2026-09-27. §4.1 found that superseded text was
+sometimes left with no local mark: a reader who reaches the superseded sentence by grep meets it
+with nothing to say it no longer holds, and the fix is not an index but a pointer at the text
+itself, anchored on quotes that occur exactly once at both ends. Relayed rulings are recorded
+here per §4's OQ-4 answer (yes, with the relayed ruling quoted back).
+
+**Seed 1.**
+```
+SUPERSEDES: decisions/DR-2026-08-19-research-restart-operative-instrument.md :: "the junction rows and the count must agree exactly"
+  BY: references/project-standards.md :: "`search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT."
+```
+The target sentence (DR-2026-08-19 §12.1 step 7) described `results_admitted` as bound to agree
+exactly with the admission edges at every point after insert. The owner's 2026-09-26 ruling above
+holds instead that the count is raise-only after insert: an admission edge added later
+(`link-admission`) raises it to `max(count, edges)`, and removing one (`unlink-admission`) lowers
+it by one, never below the edges that remain. The target still describes insert time correctly;
+what no longer holds is "must agree exactly" as a standing invariant. A local callout, quoting the
+BY text verbatim, has been appended at the target site (immediately after the superseded sentence,
+before "Step 8").
+
+**Seed 2.**
+```
+SUPERSEDES: scripts/tests/test_db_integrity.py :: "nothing updates it thereafter"
+  BY: references/project-standards.md :: "`search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT."
+```
+The same target as seed 1, in code. Batch 20 (2026-09-25) already appended a
+"SUPERSEDED IN PART 2026-09-26 BY OWNER RULING" marker to the H05 comment there, naming this
+ledger and GAP-051, but without the ruling's own words — a marker that names where to look is not
+the same as one a reader can verify without leaving the file. The BY quote has now been appended
+to that existing marker, verbatim.
+
+**Why this entry and not an edit to the 2026-09-25 or 2026-09-26 entries above.** Both stand
+exactly as written; they were true the day they were recorded, and adding a machine-checkable
+back-pointer to what they superseded is new information, not a correction to what they say.
+
+CONDITION: any session that changes what a `SUPERSEDES` line covers, or looks for why the two
+target sites now carry a callout.
+ACTION: (1) Treat the two target sites as superseded in part, per the callouts at each. (2) Do not
+edit the 2026-09-25 or 2026-09-26 entries above to add these pointers retroactively — this entry
+is where they live. (3) A `SUPERSEDES`/`BY` pair is verified by `supersession_backpointer_audit.py`
+against the live text of both files, never by re-reading this entry.
+DATE: 2026-09-27 — built per DR-2026-09-26 §4, owner nod on the DR as a whole.
+
+## Owner ruling 2026-09-27 — DR-2026-09-26 is RATIFIED
+
+> **"Owner nod."**
+>
+> **"Build out all phases in their entirety using agonist-antagonist methodology with
+> antagonist ensuring plan fidelity and adherence to code architecture and layer
+> conformance. As required, use /code-review, /simplify, /layer-conformance and then a
+> comprehensive adversarial critique that sweeps and propagates code implications then
+> audits both top-down holistic and bottom-up granular requiring handshakes to resolve
+> all issues."**
+>
+> Followed, same session: **"we do not have layer conformance skill; we just need a code
+> architecture compliance"** — "layer conformance" is checked against CLAUDE.md's own
+> Layer 0-4 model and seven-stage spine (section 3) directly, not a separate tool.
+
+Given on PR #159 already merged, in the session that authored
+`decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md`'s successor build. Recorded on
+contact per rule 0.
+
+**WHAT THIS RATIFIES.** DR-2026-09-26 v2's status line moves from PROPOSED to **RATIFIED**. Its
+§9 owner questions were not put to the owner one at a time; "build out all phases in their
+entirety" is read as adopting each question's own **Recommended** answer, since the DR itself
+frames OQ-1 through OQ-7 (OQ-2 withdrawn) as answerable that way ("yes/no against drafted text,
+under an hour" is DR-2026-08-19's own precedent for exactly this kind of sitting). Recorded here
+because rule 0 requires the supersession recorded, not re-litigated:
+
+- **OQ-1** (same-model independence): require a different model where available; record and
+  report where not. Not yet buildable as a refusal — reported only (DR section 1.4).
+- **OQ-3** (accept RC6 latency, sign the §12.2 callout): yes. Callout appended, DR-2026-08-19 §12.2.
+- **OQ-4** (relay/backfill SUPERSEDES lines): yes, relayed ruling quoted back in the PR, forward
+  only plus the two specimen seeds. Built, RC3.
+- **OQ-5** (retire the `decisions` table / YAML register, name the ledger the single home):
+  recommended retire, **NOT executed** — no concrete migration plan exists in the DR for the two
+  reader scripts (`scripts/doctrine_recheck.py`, `scripts/decision_capture.py`) that read the YAML
+  register, and retiring a store without sweeping its readers is exactly rule 4's failure mode.
+  Left open; this entry is itself evidence for OQ-5's premise, since it lands here rather than in
+  that register.
+- **OQ-6** (reword R13 / does a SUPERSEDED marker in injected text count as rewording): the
+  marker does NOT count as rewording (the DR's own answer); seed 3 (R13) is **not shipped** pending
+  the owner's explicit wording call. Seeds 1 and 2 shipped.
+- **OQ-7** (can a non-planned discovery discharge a contract leg): R1 no, R2 yes — this is a design
+  assumption baked into phase 2's writer refusals when built, not a standalone action.
+- **OQ-8** (widen RC4's scope beyond the RULE's limb-(a) tables): recommended yes, **NOT built** —
+  the DR's own v2 text states the mechanism as specified implements only the limb-(a) list, and no
+  design exists yet for the wider scope (`connection_targets` has no session column). Left open.
+
+**WHAT THIS DOES NOT DO.** It does not retire `data/decisions/decision_register.yaml` or the
+`decisions` table (OQ-5 stays open). It does not widen `adversarial_pass_recorded`'s scope (OQ-8
+stays open). It does not reword the research contract's R13 text (OQ-6's wording half stays the
+owner's). Construction proceeds per DR-2026-09-26 §7's phase order.
+
+CONDITION: any session reading DR-2026-09-26's status line, or asking whether OQ-1/3/4/5/6/7/8
+were answered.
+ACTION: (1) Treat the DR as RATIFIED, with the per-question dispositions above. (2) Do not
+re-ask OQ-1, OQ-3, OQ-4, OQ-6 (seeds 1-2), or OQ-7 — they are answered. (3) OQ-5 and OQ-8 remain
+open; do not build against either without a fresh owner answer or a concrete sweep plan.
+DATE: 2026-09-27 — owner ruling, quoted above.

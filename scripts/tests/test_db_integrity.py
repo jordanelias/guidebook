@@ -1107,6 +1107,7 @@ def run_checks(db_path):
     # remain. What stands is the lesson: the count is never lowered to force agreement, so
     # the restored historical counts above their edges are untouched, and no parity check
     # comes back. The rule's one home is _results_admitted_after in scripts/db.py.
+    # BY: `` `search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT. ``
 
     # H06 and H07 DELETED 2026-09-21 with H01/H02 — see the record above. H06 existed,
     # in its own words, as "what makes H01–H04 non-vacuous"; with those gone it has no

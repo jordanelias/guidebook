@@ -324,3 +324,15 @@ cross_stage:
     not contradict canonical doctrine.
   references: governance/doctrine-recheck.md §1; RecheckTrigger STAGE_TRANSITION
   check: scripts/doctrine_recheck.py
+- id: doctrine-currency
+  criterion: A ruling that supersedes binding text elsewhere carries a SUPERSEDES/BY back-pointer at the
+    superseded text itself, anchored on quotes occurring exactly once at both ends -- never a currency
+    index, which would be a second home for the same fact (rule 5).
+  references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md section 4 (RC3); CLAUDE.md rule 0'
+  check: scripts/audit/supersession_backpointer_audit.py
+- id: research-tooling-separation
+  criterion: Research data (rows, or a data migration) and tooling (schema, scripts, checks, governance
+    prose) ship in separate changesets -- never both in one, so a writer gap found mid-batch cannot be
+    patched with hand SQL disguised as a schema fix.
+  references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md section 6 (RC6); CLAUDE.md section 2'
+  check: scripts/audit/research_tooling_separation.py

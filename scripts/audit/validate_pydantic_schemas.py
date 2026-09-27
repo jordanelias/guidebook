@@ -89,6 +89,10 @@ MODEL_TABLE_MAP = {
     # workplan/2026-08-09-locator-hierarchy-and-enforcement-probes.md.
     "jurisdictional_value.JurisdictionalValueRecord": "jurisdictional_values",
     "reasoning_doc_citation.ReasoningDocCitation": "reasoning_doc_citations",
+    # Migration 097 (RC4, 2026-09-27) created both tables in the same change that added
+    # both mirrors below -- neither side of the pair is ever invisible to this audit.
+    "adversarial.AdversarialPass": "adversarial_passes",
+    "adversarial.AdversarialFinding": "adversarial_findings",
     "population.Population": "populations",
     "population_links.CitationPopulationLink": "citation_population_links",
     "population_links.ProbePopulationLink": "probe_population_links",

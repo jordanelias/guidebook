@@ -49,3 +49,53 @@ silence reads as absence and absence is a finding you did not make.
 
 Do not soften. Do not summarize the work back. Do not close with a verdict on
 whether the work is "good overall".
+
+**The eleven lenses.** Every one of these must appear at least once in your closing
+block before the pass can be closed, whatever you numbered your prose findings above:
+
+| Lens | What it tests |
+|---|---|
+| `L1-existence` | The source/row/artefact cited actually resolves — it exists. |
+| `L2-fidelity` | The artefact says what the claim says it says. |
+| `L3-independence` | Not the same dataset or evidence counted twice under two names. |
+| `L4-tier` | Wrong tier or evidence-type, in either direction. |
+| `L5-population` | Study population vs. served population, graded honestly. |
+| `L6-contrary` | Was a "nothing found" a real absence or a search-shape failure? |
+| `L7-recognition` | Would the population this serves recognise the claim as faithful? |
+| `L8-query-shape` | A zero-yield search: query-shape failure vs. wrong index vs. genuine absence. |
+| `S1-harm-reached-row` | A flagged harm/failure finding actually reached the row it should. |
+| `S2-mismatch-note-vs-payload` | A recorded `mismatch_note` is true against the actual payload. |
+| `S3-containment` | The fix stayed inside its stated blast radius — nothing else moved. |
+
+**Closing block — required, so this pass can be recorded (RC4).** Put this fenced block
+inside your FINAL report — the message you hand back when you finish (in this harness
+that is your `SubagentHandback` call; a plain trailing text turn after it is not read).
+One entry per finding, in this exact shape, so `db.py record-adversarial-pass` can read
+it without anyone retyping a finding by hand:
+
+```json adversarial-findings
+[
+  {"lens": "L2-fidelity", "subject_table": "search_candidates", "subject_key": "124",
+   "claim_attacked": "candidate 124's exec_id names the search that surfaced it",
+   "method": "compared the typed exec_id against the locator's own prose",
+   "artefact": "retrieval-log/<session>/<file>.json", "verdict": "SUSTAINED",
+   "severity": "HIGH"},
+  {"lens": "L6-contrary", "subject_table": null, "subject_key": null,
+   "claim_attacked": "no evidence of X was found",
+   "method": "re-ran the search under a second query shape",
+   "artefact": null, "verdict": "NOT-ATTACKED"}
+]
+```
+
+`verdict` is `SUSTAINED` (the claim broke — set `severity` to one of `CRITICAL` / `HIGH`
+/ `MEDIUM` / `LOW`, required for this verdict and refused for every other one), `SURVIVED`
+(you attacked it and it held — name the `artefact` you attacked it WITH, per
+DR-2026-09-11 clause 2, in more than a few characters, or the row is refused at close
+time), `NOT-ATTACKED` (you did not reach this lens — say why in `method`, in a real
+sentence, not a placeholder), or `WITHHELD-FOR-OWNER` (a doctrinal question, not a
+factual one). At least one row must be SURVIVED — a zero-finding pass has to be able to
+show what it attacked, or it is indistinguishable from a pass that never ran. This block
+is what makes the pass exist as a checkable record rather than only as this transcript;
+write it even when every lens comes back clean, and even when a lens is NOT-ATTACKED
+because it plainly does not apply to this diff — say so in `method` rather than omitting
+the row.
