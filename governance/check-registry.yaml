@@ -601,10 +601,11 @@ checks:
     corpus genuinely carried zero `surfaced_in` values -- registered that way in phase 2
     (tooling) rather than pre-ratcheted on a subject this check itself measured as empty
     (EXAMINED 0), which would have been the vacuous-block shape CLAUDE.md 5(a) exists to
-    catch. Phase 2-data's historical migration derived `surfaced_in` on 17 candidates (16 via
-    a linked payload's own DOI, 1 via a transcript quote), so the floor is live now, not
-    predicted -- derive the current count rather than trusting 17, via
-    `select count(*) from search_candidates where surfaced_in is not null`.
+    catch. Phase 2-data's historical migration derived `surfaced_in` on a first set of
+    candidates, so the floor is live now, not predicted -- derive the current count and its
+    split by route rather than trusting any number typed here (rule 7a), with
+    `select case when surfaced_in like 'transcripts/%' then 'TRANSCRIPT' else 'PAYLOAD' end,
+    count(*) from search_candidates where surfaced_in is not null group by 1`.
 - id: provenance_attribution_audit
   cmd:
   - python3
