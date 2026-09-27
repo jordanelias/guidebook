@@ -1396,6 +1396,11 @@ def main():
                            "with no --set-origin-pass-id is accepted here for history "
                            "that predates adversarial_passes; --append-note must say "
                            "why no pass id exists.")
+    p_am.add_argument("--clear-target", action="store_true",
+                      help="NULL target_tier/target_evidence_type/target_scope together "
+                           "(2026-09-27, DR-2026-09-26 5.2d). Required before --set-origin "
+                           "can move a row off 'planned' when any of the three is set; "
+                           "combine both flags in one call.")
     p_am.add_argument("--set-mined-ref-id",
                       help="NULL -> a value only; refuses a mining_direction of none "
                            "and a value already set.")
@@ -2778,7 +2783,8 @@ def main():
                            set_origin=args.set_origin,
                            set_mined_ref_id=args.set_mined_ref_id,
                            set_origin_pass_id=args.set_origin_pass_id,
-                           add_result_artefacts=args.add_result_artefacts))
+                           add_result_artefacts=args.add_result_artefacts,
+                           clear_target=args.clear_target))
 
     elif args.command == "amend-gap":
         # _emit, not a bare assignment: until 2026-09-25 both of these assigned the
@@ -3889,8 +3895,22 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                  set_harm_finding: bool = False,
                  set_target_evidence_type: str = None,
                  set_origin: str = None, set_mined_ref_id: str = None,
-                 set_origin_pass_id: int = None, add_result_artefacts=None):
+                 set_origin_pass_id: int = None, add_result_artefacts=None,
+                 clear_target: bool = False):
     """APPEND a correction to a logged search's findings_note. Never rewrite it.
+
+    --clear-target (2026-09-27, exec 77 / DR-2026-09-26 5.2d). --set-origin's own
+    refusal below requires target_tier/target_evidence_type/target_scope to be NULL
+    before an origin can move off 'planned' -- correctly, per OQ-7 (R1: no) -- but
+    until now nothing could NULL them: --set-target-evidence-type only ever swaps one
+    declared value for another. That left a ratified correction unexecutable through
+    the CLI, which CLAUDE.md names as a coverage bug to fix, not a licence to hand-write
+    SQL. Clears all three together, because the refusal tests them as a group ("a
+    lookup targets no tier") and a partial clear would leave the row in the same
+    refused state. Combinable with --set-origin in one call: the refusal below reads
+    the EFFECTIVE post-clear values, not the stale pre-call row, so
+    `--clear-target --set-origin incidental` in one call is how a lookup is corrected --
+    there is no ordering in which two separate calls would both succeed.
 
     R8 makes search_executions an append-only log: a query is logged verbatim before
     screening and empties are kept, so no writer may edit what a search recorded at
@@ -3922,7 +3942,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
         any_setter = (set_harm_finding or set_target_evidence_type or set_origin
                      or set_mined_ref_id or set_origin_pass_id is not None
-                     or add_result_artefacts)
+                     or add_result_artefacts or clear_target)
         duplicate = note in (row["findings_note"] or "")
         if duplicate and not any_setter:
             return {"exec_id": exec_id, "appended": False,
@@ -3932,6 +3952,39 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             merged = merged.rstrip() + marker + note
             conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
                          [merged, exec_id])
+
+        # Effective target_* values AFTER this call, used by --set-origin's refusal
+        # below instead of the stale pre-call `row` -- so --clear-target and
+        # --set-origin combine in one call rather than deadlocking across two.
+        eff_target_tier = row["target_tier"]
+        eff_target_evidence_type = row["target_evidence_type"]
+        eff_target_scope = row["target_scope"]
+        cleared = None
+        if clear_target:
+            if set_target_evidence_type:
+                raise Refusal(
+                    f"exec {exec_id}: --clear-target and --set-target-evidence-type "
+                    f"together -- clear removes the value, set retypes it. Pick one.")
+            was = (row["target_tier"], row["target_evidence_type"], row["target_scope"])
+            if was == (None, None, None):
+                raise Refusal(
+                    f"exec {exec_id}: target_tier/target_evidence_type/target_scope "
+                    f"are already NULL. Nothing to clear.")
+            conn.execute(
+                "UPDATE search_executions SET target_tier=NULL, "
+                "target_evidence_type=NULL, target_scope=NULL WHERE exec_id=?",
+                [exec_id])
+            trail = (f"{marker}target_tier {was[0]!r} -> NULL, target_evidence_type "
+                     f"{was[1]!r} -> NULL, target_scope {was[2]!r} -> NULL (a lookup "
+                     f"targets no tier; the replaced values are kept here because the "
+                     f"columns no longer hold them)")
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [(merged or "").rstrip() + trail, exec_id])
+            merged = (merged or "").rstrip() + trail
+            eff_target_tier = eff_target_evidence_type = eff_target_scope = None
+            cleared = {"was_target_tier": was[0], "was_target_evidence_type": was[1],
+                      "was_target_scope": was[2]}
+
         retyped = None
         if set_target_evidence_type:
             # The vocabulary comes from the column's own CHECK, never a list here
@@ -3970,14 +4023,17 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             # without it, `--set-origin incidental` silently pulls a row with a live
             # target_tier/target_evidence_type/target_scope out of v_coverage_branch's
             # Co-1 count after the fact, which is exactly what OQ-7 (R1: no) exists to
-            # prevent (2026-09-27 ruling).
+            # prevent (2026-09-27 ruling). Reads the EFFECTIVE post-clear values (a
+            # same-call --clear-target already nulled them above), not the stale
+            # pre-call `row` -- see --clear-target's docstring note.
             if (set_origin != "planned"
-                    and (row["target_tier"] or row["target_evidence_type"]
-                         or row["target_scope"])):
+                    and (eff_target_tier or eff_target_evidence_type
+                         or eff_target_scope)):
                 raise Refusal(
                     f"exec {exec_id}: --set-origin {set_origin} on a row carrying "
                     f"target_tier/target_evidence_type/target_scope. A lookup targets "
-                    f"no tier; correct those first, or this row is not a lookup.")
+                    f"no tier; correct those first (--clear-target), or this row is "
+                    f"not a lookup.")
             conn.execute("UPDATE search_executions SET origin=? WHERE exec_id=?",
                          [set_origin, exec_id])
             trail = f"{marker}origin {was!r} -> {set_origin!r}"
@@ -4067,7 +4123,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         return {"exec_id": exec_id, "appended": not duplicate, "chars": len(merged),
                 "harm_finding_raised": raised, "target_evidence_type": retyped,
                 "origin": origin_set, "mined_ref_id": mined_ref_set,
-                "origin_pass_id": origin_pass_set,
+                "origin_pass_id": origin_pass_set, "cleared_target": cleared,
                 "result_artefacts_added": len(add_result_artefacts or [])}
 
 
