@@ -583,6 +583,57 @@ checks:
     matched nothing and the vacuity apparatus could see neither a count nor an emptiness. Floor is
     1, not 4; the session-scoped sibling is deliberately NOT ratcheted, because its subject varies
     by session and zero is an honest state there.
+- id: provenance_artefact_audit
+  cmd:
+  - python3
+  - scripts/audit/provenance_artefact_audit.py
+  - --mode
+  - surfaced
+  battery: research
+  kinds:
+  - data
+  compares: record-artefact
+  level: blocking
+  basis: evidence/discovery-provenance
+  cost: fast
+  no_floor: vocabulary-owed — RC1 (DR-2026-09-26-recurring-defect-shapes-remediation.md section
+    2), phase 2 (tooling). `search_candidates.surfaced_in` is a real writable column and the
+    refusal is live (add-candidate/reattribute-candidate both call
+    retrieval_log.check_surfaced_in), but nothing has written a value into it yet -- that is
+    phase 2-DATA's job (a separate PR, per RC6), which the DR's own section 2.2(e) says makes
+    this "non-vacuous from its first run, because section 5.2(d) sets surfaced_in on 123, 124
+    and 125." Ratchet this to a min_items floor of 1 in that PR, not before -- registering it here, on
+    a corpus this check has itself measured as empty (EXAMINED 0), would be exactly the vacuous-block
+    shape CLAUDE.md 5(a) exists to catch.
+- id: provenance_attribution_audit
+  cmd:
+  - python3
+  - scripts/audit/provenance_artefact_audit.py
+  - --mode
+  - attribution
+  battery: research
+  kinds:
+  - data
+  compares: record-artefact
+  level: advisory
+  basis: evidence/discovery-provenance
+  cost: fast
+  min_items: 1
+  floor_basis: RC1 (DR-2026-09-26 section 2.2e). Unlike its sibling registration above, this
+    mode's subject is every candidate WITHOUT surfaced_in -- non-empty with no phase-2-data
+    migration needed (derive the count, never quote it, rule 7a) via
+    `select count(*) from search_candidates where surfaced_in is null and exec_id is not null`.
+    THE SUBJECT IS A DEFICIT, AND IT SHRINKS. As later batches set surfaced_in going forward
+    and phase 2-data backfills history, this count trends toward zero -- at which point an
+    EXAMINED count of zero against this floor correctly reads as NOTHING-IN-SCOPE-turned-
+    vacuous, and this registration should be revisited then (a no_floor of a kind that
+    asserts nothing about emptiness, not a de-ratchet to a lower floor). Ratcheting UP is
+    this registry's normal direction; this is the rarer case of a floor set on a population
+    moving the other way, named here so a future session does not read a red gate as a
+    regression. Advisory because its history links are derived by the section 2.1 rule,
+    which errs toward not linking (an ambiguous payload matching two searches is left
+    unlinked rather than guessed), so what it finds in history is a finding for a batch,
+    not a defect in the PR that lands the check.
 # DELETED 2026-09-10 (P7): the `validate_schema` id that ran `scripts/validate_schema.py --verbose`
 # (no `--cross-check`). ENTITY_REGISTRY = {} (scripts/validate_schema.py:63) is iterated at :101 and
 # :149 with nothing else gating the `--verbose` path, so this examined ENTITY_REGISTRY's zero entries

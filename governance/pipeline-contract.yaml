@@ -140,19 +140,28 @@ stages:
     check: scripts/audit/source_locators_integrity.py
   - id: discovery-provenance
     kind: completeness
-    criterion: 'Each carried-forward source records how it was discovered. No committed enforcer, and
-      the column named for it is UNREACHABLE -- neither derivation_chain nor search_queries_used can
-      be set by any db.py writer (add-source takes no flag for either, amend-source refuses both as
-      non-judgement fields, correct-source writes bibliography from a payload only), so both sit at
-      0 populated. DO NOT ADD A WRITER WITHOUT SETTLING THE DUAL HOME FIRST -- the discovery route is
-      already held by search_admissions (exec_id to ref_id, for a source a logged search admitted)
-      and by citation_mining.connections_produced (for a source a backward pass surfaced), so
-      populating these columns would copy a fact rule 5 says to point at. Derive the counts, never
-      quote them: this criterion carried the hand-written figure "currently sparse (16/640)" until
-      2026-09-11, false since the corpus retraction and exactly what rule 7 is about.'
-    references: 'project-shape-audit F-06; evidence-architecture G1 provenance; research_protocol_audit
-      CHECK 8, which reads search_queries_used and is the only committed reader of either column'
-    check: null
+    criterion: 'Each candidate is checked against the bytes of the payload(s) its search
+      actually returned, not merely against a typed exec_id that a batch can point anywhere
+      (RC1, DR-2026-09-26-recurring-defect-shapes-remediation.md section 2). SETTLED
+      2026-09-27 (phase 2): `search_executions`, together with `search_execution_artefacts`
+      (a search-to-payload junction) and `origin`/`mined_ref_id` (RC5, the same DR''s
+      section 5), is the ONE event home of a discovery step, planned or not, including
+      mining. `citation_mining.connections_produced` is the surviving copy and retires in
+      phase 2b once its readers are swept. `derivation_chain` and `search_queries_used`
+      stay unreachable and are named for retirement, unchanged from before this DR.
+      `search_candidates.surfaced_in`/`surfaced_quote` are the narrower pointer from a
+      staged candidate to the specific payload it was read out of. SETTLED names the
+      DECISION (which table is the event home going forward), not the migration: every
+      pre-existing row took `origin`''s DEFAULT (''planned'') on ALTER, `mined_ref_id` is
+      NULL on every row until phase 2-data backfills what it can derive, and
+      `citation_mining.connections_produced` still holds every historical mining result
+      until phase 2b retires it. Query the live counts; do not quote these as fixed
+      (rule 7a).'
+    references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md sections 2 and 5;
+      project-shape-audit F-06; evidence-architecture G1 provenance; research_protocol_audit
+      CHECK 8, which reads search_queries_used and is the only committed reader of either
+      retired column'
+    check: scripts/audit/provenance_artefact_audit.py
 - id: judgment
   anchor: the 4-state determination machine + convergence + directness (evidence-architecture.md §5)
   entry:

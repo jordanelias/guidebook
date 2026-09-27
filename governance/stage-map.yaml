@@ -120,6 +120,7 @@ tables:
   search_admissions: research
   search_candidates: research
   search_coverage: research
+  search_execution_artefacts: research
   search_executions: research
   search_languages: research
   situations: base

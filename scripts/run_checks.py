@@ -957,6 +957,32 @@ def selftest(reg):
     check("C10 every session_pointer is a key of SESSION_POINTERS", not bad_pointer,
           str(bad_pointer))
 
+    # --- C11: what a check compares, reported never failed -------------------
+    # RC1 (DR-2026-09-26-recurring-defect-shapes-remediation.md section 2.2(g)). S01
+    # (test_db_integrity) compared two typed pointers and stayed green while the true
+    # discovery route sat in prose neither read (candidate 124's own locator named the
+    # right search; its exec_id did not) — a real check, comparing the wrong two things.
+    # `compares` lets a registration say which shape it is, so the corpus-wide count of
+    # `record-record` checks (agreement, not truth) is visible and can be ratcheted down
+    # as `record-artefact` checks (agreement WITH the bytes, RC1's own model) replace
+    # them, without this file ever asserting a check is wrong. This is the brake, at
+    # registration time, on the shape being born a fourth time -- it reports, like C7's
+    # unattributed count, and never fails: `compares` is documentation of a check's
+    # shape, not a claim a subject count could falsify the way C9's kinds are.
+    _COMPARE_SHAPES = frozenset({"record-artefact", "record-record", "shape"})
+    bad_compare = [c["id"] for c in reg["checks"]
+                  if c.get("compares") and c["compares"] not in _COMPARE_SHAPES]
+    check("C11 every declared 'compares' is one of record-artefact/record-record/shape",
+          not bad_compare, str(bad_compare[:5]))
+    by_shape = {}
+    for c in reg["checks"]:
+        by_shape.setdefault(c.get("compares") or "undeclared", []).append(c["id"])
+    print("  [INFO] C11 what checks compare: " + ", ".join(
+        f"{shape}={len(ids)}" for shape, ids in sorted(by_shape.items())))
+    if by_shape.get("record-record"):
+        print(f"           record-record (agreement, not truth): "
+              f"{sorted(by_shape['record-record'])}")
+
     # The population `floor_claim_contradiction` is structurally blind to. A check that
     # prints no line the runner can parse gets PASS whether it examined 500 rows or none,
     # so neither the floor guard nor the claim detector can see it. Seventeen were in this

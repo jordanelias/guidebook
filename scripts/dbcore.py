@@ -341,6 +341,30 @@ def norm_doi(doi):
     return None if doi is None else doi.strip().lower()
 
 
+_DOI_IN_TEXT_RE = re.compile(r"10\.\d{4,9}/[^\s\"'<>()\[\]]+")
+_DOI_TRAILING_PUNCT_RE = re.compile(r"[.,;:]+$")
+
+
+def single_doi_in(text):
+    """The one DOI in free prose, or None if it holds zero or more than one.
+
+    DR-2026-09-26 section 2.2(d): a staged candidate's identifier is "the single
+    DOI in `locator`" -- `locator` is a sentence ("deposited reference bb0030 in
+    REF-01006's Crossref record"), not a DOI field, so this is a regex extraction
+    over prose, not a lookup. AMBIGUOUS ON PURPOSE: two DOIs in one locator means
+    the writer must say which one with --surfaced-quote instead of guessing.
+    Trailing sentence punctuation is stripped; a DOI containing a literal
+    trailing '.', ',', ';' or ':' is vanishingly rare, and none of this
+    project's stored DOIs do:
+    `select doi from evidence_sources where doi glob '*[.,;:]'`.
+    """
+    matches = [_DOI_TRAILING_PUNCT_RE.sub("", m) for m in _DOI_IN_TEXT_RE.findall(text or "")]
+    distinct = {norm_doi(m) for m in matches}
+    if len(distinct) != 1:
+        return None
+    return matches[0]
+
+
 _CO1_REF = re.compile(r"co1-(\d{2,3})", re.I)
 
 
@@ -1041,6 +1065,19 @@ def _selftest() -> int:
           all(REF_ID_SHAPE.fullmatch(x) for x in ("REF-00965", "REF-VERIFIED-011", "Co1-07")))
     check("REF_ID_SHAPE refuses a per-slug local label",
           not REF_ID_SHAPE.fullmatch("RAP-04"))
+
+    # single_doi_in (RC1, DR-2026-09-26 2.2d): the identifier a staged candidate is
+    # checked against is extracted from free prose, not a typed field.
+    check("single_doi_in extracts the one DOI in a sentence",
+          single_doi_in("deposited reference bb0030 in 10.1016/j.dialog.2026.100342's "
+                        "Crossref record") == "10.1016/j.dialog.2026.100342")
+    check("single_doi_in strips trailing sentence punctuation",
+          single_doi_in("see 10.3390/ijerph18062953.") == "10.3390/ijerph18062953")
+    check("single_doi_in returns None on zero DOIs", single_doi_in("no identifier here") is None)
+    check("single_doi_in returns None on two DISTINCT DOIs (ambiguous)",
+          single_doi_in("10.1000/a and 10.2000/b") is None)
+    check("single_doi_in is not confused by one DOI repeated (not ambiguous)",
+          single_doi_in("10.1000/a, also 10.1000/a") == "10.1000/a")
 
     # The write path must never be pointed at the committed blob by default in a
     # scratch run; and is_canonical must be able to say so.
