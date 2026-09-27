@@ -60,3 +60,12 @@ class SearchExecution(BaseModel):
     # so the old names are gone rather than aliased.
     created_by_session: str
     created_at: str                               # explicit ISO timestamp
+    findings_note: Optional[str] = None
+    harm_finding: int = 0
+    prior_expectation: Optional[str] = None
+    # Migration 098 (DR-2026-09-26 RC5). `origin` is the INITIATION axis (why the
+    # step ran); `mining_direction` above stays the METHOD axis (how) -- orthogonal,
+    # so no fact gains a second home.
+    origin: str = "planned"                        # planned|incidental|adversarial-pass|owner-supplied|lead-index
+    mined_ref_id: Optional[str] = None              # FK evidence_sources.ref_id, set on a mining row
+    origin_pass_id: Optional[int] = None            # FK adversarial_passes.pass_id; only with origin=adversarial-pass

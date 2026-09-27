@@ -583,6 +583,57 @@ checks:
     matched nothing and the vacuity apparatus could see neither a count nor an emptiness. Floor is
     1, not 4; the session-scoped sibling is deliberately NOT ratcheted, because its subject varies
     by session and zero is an honest state there.
+- id: provenance_artefact_audit
+  cmd:
+  - python3
+  - scripts/audit/provenance_artefact_audit.py
+  - --mode
+  - surfaced
+  battery: research
+  kinds:
+  - data
+  compares: record-artefact
+  level: blocking
+  basis: evidence/discovery-provenance
+  cost: fast
+  no_floor: vocabulary-owed — RC1 (DR-2026-09-26-recurring-defect-shapes-remediation.md section
+    2), phase 2 (tooling). `search_candidates.surfaced_in` is a real writable column and the
+    refusal is live (add-candidate/reattribute-candidate both call
+    retrieval_log.check_surfaced_in), but nothing has written a value into it yet -- that is
+    phase 2-DATA's job (a separate PR, per RC6), which the DR's own section 2.2(e) says makes
+    this "non-vacuous from its first run, because section 5.2(d) sets surfaced_in on 123, 124
+    and 125." Ratchet this to a min_items floor of 1 in that PR, not before -- registering it here, on
+    a corpus this check has itself measured as empty (EXAMINED 0), would be exactly the vacuous-block
+    shape CLAUDE.md 5(a) exists to catch.
+- id: provenance_attribution_audit
+  cmd:
+  - python3
+  - scripts/audit/provenance_artefact_audit.py
+  - --mode
+  - attribution
+  battery: research
+  kinds:
+  - data
+  compares: record-artefact
+  level: advisory
+  basis: evidence/discovery-provenance
+  cost: fast
+  min_items: 1
+  floor_basis: RC1 (DR-2026-09-26 section 2.2e). Unlike its sibling registration above, this
+    mode's subject is every candidate WITHOUT surfaced_in -- non-empty with no phase-2-data
+    migration needed (derive the count, never quote it, rule 7a) via
+    `select count(*) from search_candidates where surfaced_in is null and exec_id is not null`.
+    THE SUBJECT IS A DEFICIT, AND IT SHRINKS. As later batches set surfaced_in going forward
+    and phase 2-data backfills history, this count trends toward zero -- at which point an
+    EXAMINED count of zero against this floor correctly reads as NOTHING-IN-SCOPE-turned-
+    vacuous, and this registration should be revisited then (a no_floor of a kind that
+    asserts nothing about emptiness, not a de-ratchet to a lower floor). Ratcheting UP is
+    this registry's normal direction; this is the rarer case of a floor set on a population
+    moving the other way, named here so a future session does not read a red gate as a
+    regression. Advisory because its history links are derived by the section 2.1 rule,
+    which errs toward not linking (an ambiguous payload matching two searches is left
+    unlinked rather than guessed), so what it finds in history is a finding for a batch,
+    not a defect in the PR that lands the check.
 # DELETED 2026-09-10 (P7): the `validate_schema` id that ran `scripts/validate_schema.py --verbose`
 # (no `--cross-check`). ENTITY_REGISTRY = {} (scripts/validate_schema.py:63) is iterated at :101 and
 # :149 with nothing else gating the `--verbose` path, so this examined ENTITY_REGISTRY's zero entries
@@ -1052,7 +1103,23 @@ checks:
     `check` needs no diff plumbing: it validates the committed docket. Green today (68/68 annotated);
     --selftest fires on synthetic triggers. CONDITIONALLY green: with no docket file it prints "nothing
     to check" and exits 0. working/claims-docket.md exists and is populated, so it asserts something today;
-    if that file is ever removed this check goes vacuously green rather than failing.'
+    if that file is ever removed this check goes vacuously green rather than failing.
+
+    CORRECTED 2026-09-27, twice in one day (RC4, DR-2026-09-26-recurring-defect-shapes-
+    remediation.md section 1.2e): this entry shares `basis: cross_stage/definition-of-done`
+    with `adversarial_pass_recorded`. That criterion has two clauses, ORed: "the
+    integrity-protocol Mode-3 mechanical battery is unrun" OR "an independent adversarial
+    pass is unrun/unapplied". `claims_docket.py` implements NEITHER clause — its own module
+    docstring calls it "Mode-2 live claims docket", a third thing this criterion does not
+    name, and it scans added prose for claim-words needing a warrant annotation
+    (`grep -n -i adversar scripts/audit/claims_docket.py` finds the word in comments only).
+    The first correction, same day, called this "the Mode-2/Mode-3 warrant-annotation
+    half" — a phrase the criterion does not contain, caught by this entry''s own
+    adversarial review. Whether an independent adversarial pass ran and was recorded is
+    `adversarial_pass_recorded`''s question; whether the Mode-3 battery ran has no
+    registered check at all. A green claims_docket has never vouched for either, and this
+    entry''s `check:` field on the criterion is a historical placeholder, not evidence
+    that either clause is covered.'
 - id: attestation_presence
   cmd:
   - python3
@@ -1265,6 +1332,76 @@ checks:
     FAIL on a session that admitted nothing, so an empty subject is caught by the rules
     themselves rather than passing silently, which is why session-scoped is honest here and
     not an excuse.'
+- id: adversarial_pass_recorded
+  cmd:
+  - python3
+  - scripts/audit/adversarial_pass_audit.py
+  - --session
+  - '@SESSION@'
+  battery: research
+  kinds:
+  - data
+  - synthesis
+  level: advisory
+  basis: cross_stage/definition-of-done
+  cost: fast
+  requires_session: true
+  session_pointer: CURRENT
+  no_floor: 'session-scoped — the subject is the rows the session named by scratchpad/CURRENT
+    wrote into the tables the 2026-08-19 RULE names in its limb (a). A session that wrote none
+    owes no pass and reports NOTHING-IN-SCOPE; a session that wrote some and has no closed pass
+    FAILS, so an empty subject cannot pass silently. NEW 2026-09-27
+    (DR-2026-09-26-recurring-defect-shapes-remediation.md RC4): mechanises a requirement that
+    already existed three times over (the 2026-08-19 RULE, DR-2026-09-11 clause 2, this same
+    criterion) and had no enforcer. `CURRENT`, not `LATEST-RESEARCH` — the latter names the
+    PREVIOUS session for the whole life of this one (CLAUDE.md section 7). Advisory for now:
+    the level is a rollout decision, not an owner question (DR-2026-09-26 section 1.4) — it
+    promotes to blocking once the first research batch closes a recorded, closed, disposed
+    pass with EXAMINED above zero.'
+- id: research_tooling_separation
+  cmd:
+  - python3
+  - scripts/audit/research_tooling_separation.py
+  battery: governance
+  kinds:
+  - data
+  level: advisory
+  basis: cross_stage/research-tooling-separation
+  cost: fast
+  no_floor: 'changeset-scoped — NEW 2026-09-27 (RC6, DR-2026-09-26-recurring-defect-shapes-
+    remediation.md section 6). The subject is the diff against origin/main; a changeset with
+    zero research paths and zero tooling paths is a routine, correct PASS (a doc-only or
+    prose-only commit). FAILS only when the SAME changeset carries both a research-data path
+    (`data/**`, or a `scripts/migrations/data_*.sql` file) and a tooling path (`scripts/**`,
+    `tools/**`, `.github/**`, `.claude/**`, a numbered schema migration, or `schemas/**`).
+    `data/guidebook.db` itself is a named exception when the changeset is schema-migration-only
+    (see the script''s own docstring) — a schema bump shipping with its own blob is the
+    established convention, not the shape this check exists to catch. Named residual: a
+    `governance/check-registry.yaml` edit registering new tooling classifies `governance`, so it
+    is invisible to this check either way (PR #159 did exactly that); left as CLAUDE.md rule 8
+    would want it — named, not silently patched with a curated exception list.'
+  note: 'Advisory until OQ-3 is answered and one clean batch has passed it clean
+    (DR-2026-09-26 section 7); the promoting PR tells the owner rather than asking.'
+- id: supersession_backpointer_audit
+  cmd:
+  - python3
+  - scripts/audit/supersession_backpointer_audit.py
+  battery: governance
+  kinds:
+  - governance
+  - synthesis
+  level: advisory
+  basis: cross_stage/doctrine-currency
+  cost: fast
+  min_items: 1
+  floor_basis: 'RATCHETED 2026-09-27, same day as creation. Registered with a `no_floor:
+    vocabulary-owed` reason asserting the corpus was empty; run_checks.py''s own
+    floor_claim_contradiction caught it as stale within the same PR, because the two seeds
+    landed in references/project-standards.md in the same changeset that registered this
+    entry, so EXAMINED printed 2 against a reason declaring 0. EXAMINED counts SUPERSEDES
+    lines across the ledger and decisions/*.md; the floor is 1, not 2 -- the boundary
+    between examined-something and examined-nothing, never a hand-typed snapshot that goes
+    stale on the next seed (rule 7a).'
 - id: research_protocol_audit
   cmd:
   - python3

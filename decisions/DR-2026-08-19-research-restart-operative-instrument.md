@@ -910,6 +910,15 @@ search_candidates SET disposition='ADMITTED', notes='RESOLVED: re-described from
 JSON array, the junction rows and the count must agree exactly (H03/H04/H05, blocking). `RESOLVED:`
 is R15's literal predicate.
 
+> **SUPERSEDED IN PART 2026-09-27, for post-insert writes, BY OWNER RULING**
+> (`references/project-standards.md`, 2026-09-26, relayed from PR #159; CORRECTION entry
+> 2026-09-27): `` `search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT. `` — appended,
+> not rewritten, per the append-not-edit practice. The sentence above still describes the count at
+> **insert** time, which is unchanged; what no longer holds is that it must keep agreeing exactly
+> forever after. A later admission edge (`db.py link-admission`) raises it to `max(count, edges)`,
+> and removing one (`unlink-admission`) lowers it by one, never below the edges that remain — the
+> count is never lowered to force agreement. See `_results_admitted_after` in `scripts/db.py`.
+
 **Step 8 — population grading (R13).** One `evidence_population_match` row per tier-1..3 admission.
 Grades `EXACT|PARTIAL|PROXY|MISMATCH`. Children-for-adults, chamber tests and general-population are
 **PROXY at best**, with the mismatch note written. No match row = silently claiming study and served
@@ -962,6 +971,17 @@ admissions**; 2–4 candidates; 1–2 mining rows; matches on all; 1–2 `jurisd
 **Target** (one long session): 20–30 searches across all 5 tier bands × top 4 populations
 (DEM/NDV/BRAIN/AUT) × 3–4 languages; 150–250 screened; **8–12 admissions**. **Do not exceed** — the
 step-7 enrichment is hand-written this time, and a failed batch of 30 remediates far worse than one of 10.
+
+> **⚠ AMENDED 2026-09-27 — APPENDED, NOT EDITED.** §12.2's "Target (one long session)" is amended by
+> `DR-2026-09-26-recurring-defect-shapes-remediation.md` §6.2(b) (RC6, ratified by owner nod 2026-09-27
+> together with the DR's §9 recommendations). The target shape is no longer one long session. It is a
+> **coordinator that dispatches three things in turn**: (1) a research session that writes rows only;
+> (2) the antagonist, launched from the coordinator, because a subagent cannot launch it; (3) a
+> data-only repair. A writer gap met mid-batch is filed as a GAP and handled one of two ways: the rows
+> stay unwritten, or they are written through verbs the CLI already has. **The fix itself ships in a
+> tooling-only PR merged to main first**, and the batch branch takes it with `git merge origin/main`
+> (`git rebase` is blocked in this harness, CLAUDE.md §7). The paragraph above is left exactly as
+> ratified, per the same append-not-edit practice §12.1's 2026-08-25 callout already uses.
 
 ## §12.3 Acceptance
 

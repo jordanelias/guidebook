@@ -63,6 +63,7 @@ import subprocess
 import sys
 import tempfile
 import unicodedata
+import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -788,6 +789,329 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
         detail += (" -- %d NOT SEARCHED, bytes undecodable: %s"
                    % (len(undecodable), "; ".join(undecodable[:5])))
     return False, detail
+
+
+def identifying_locator(url):
+    """(host, value): what identifies a fetched payload's URL to the search that found it.
+
+    `value` is the URL's longest non-numeric query value, percent-decoded;
+    a URL with no query string contributes its full percent-decoded path instead,
+    never just its final segment -- DR-2026-09-26 section 2.2(b): "a final segment
+    such as fullTextXML is too generic to identify anything."
+
+    `host` drops a leading "www." -- a search logged by R8's verbatim rule quotes
+    the query as typed, and a session typing a URL by hand drops "www." far more
+    often than a server's own hostname does. Measured live: batch 19's own exec 91
+    writes "ebi.ac.uk/europepmc" for a payload whose actual host is
+    "www.ebi.ac.uk", so an exact-hostname match refused C3 and C6 -- two of the
+    four Co-1 payloads the DR's own section 2.1 derivation links to that search.
+    """
+    parsed = urllib.parse.urlsplit(url or "")
+    host = parsed.hostname or ""
+    if host.startswith("www."):
+        host = host[len("www."):]
+    values = [urllib.parse.unquote_plus(v)
+              for _, v in urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
+              if not v.isdigit()]
+    value = max(values, key=len) if values else urllib.parse.unquote(parsed.path)
+    return host, value
+
+
+def resolve_chain(rel_path, _max_depth=25):
+    """Follow a persisted artefact's `derived_from` chain(s) to its fetched, 2xx root(s).
+
+    `rel_path` is the DB's own pointer shape, `search_execution_artefacts.artefact`
+    and `search_candidates.surfaced_in` (DR-2026-09-26 section 2.2b):
+    "retrieval-log/<session stem>/<file>". Returns a LIST of (root_record,
+    root_session, chain) tuples, where `chain` lists every (session, record)
+    walked for that candidate, the named artefact first and the fetched root
+    last. Raises ValueError, naming why, only when EVERY candidate fails.
+
+    MORE THAN ONE RESULT is possible because the manifest is keyed on content, not
+    on identity: the same content-addressed bytes fetched for two purposes within
+    one session share one filename but log TWO manifest lines (measured live:
+    batch 19's `d03a6fc8797e5f99.json` is both "T7 Templer ... ERIC full-text" and
+    "C4 Co-1: ERIC, wheelchair users + ramp", a byte-identical empty result for
+    both queries). A caller naming only session+filename cannot distinguish them,
+    so this returns every reading and lets `check_artefact_link` accept whichever
+    one satisfies the search it is being checked against -- the shape the
+    migration's own many-to-many junction exists for. An EARLIER version returned
+    only the first manifest line in file order, which made the second of any such
+    pair permanently unlinkable regardless of which search actually returned it.
+
+    PATH SAFETY on the RESOLVED path, not the string -- see dbcore.resolve_under's
+    own docstring for the bypasses (`x/../y`, `x/./y`) a prefix or parts check alone
+    admits, demonstrated live during this project's RC4 review.
+
+    CROSS-SESSION LOOKUP reuses derive()'s own resolution: a `derived_from` name is
+    searched in the artefact's own session first, then in every session's manifest,
+    because derive() itself may resolve a source_artefact that way (a fetched PDF can
+    live in the session that fetched it, not the one that transcribed it). Only the
+    ENTRY file (rel_path itself) is checked for more than one manifest line; a
+    `derived_from` target is assumed unambiguous, since a derivation names one
+    specific source artefact rather than being looked up by filename alone.
+    """
+    dbcore = dbcore_module()
+    boundary = dbcore.REPO_ROOT / "retrieval-log"
+    resolved = dbcore.resolve_under(boundary, rel_path)
+    if resolved is None or resolved.parent.parent != boundary:
+        raise ValueError(
+            f"{rel_path!r}: expected retrieval-log/<session>/<file> under {boundary}/.")
+    session, filename = resolved.parent.name, resolved.name
+
+    # ANCHORED ON `boundary` (dbcore.REPO_ROOT-based), NOT `_manifest_records`/LOG_ROOT.
+    # LOG_ROOT is cwd-relative unless GUIDEBOOK_RETRIEVAL_LOG overrides it -- exactly
+    # right for fetch()/derive()'s real writes, wrong here: the DB's own stored paths
+    # ("retrieval-log/<session>/<file>", the fixed convention `search_execution_
+    # artefacts.artefact` and `search_candidates.surfaced_in` use) are repo-root-
+    # relative regardless of where a script runs from. page_image.py's own comment
+    # already records this exact divergence biting once ("Measured from /tmp the two
+    # disagreed").
+    def _records(home_session):
+        man = boundary / home_session / "manifest.jsonl"
+        if not man.exists():
+            return []
+        return [json.loads(line) for line in man.read_text(encoding="utf-8").splitlines()
+                if line.strip()]
+
+    def _find_all(fname, home_session):
+        """Every manifest line naming `fname`, home session first."""
+        matches = [rec for rec in _records(home_session) if rec.get("artefact") == fname]
+        if matches:
+            return [(home_session, rec) for rec in matches]
+        for m in sorted(boundary.glob("*/manifest.jsonl")):
+            if m.parent.name == home_session:
+                continue
+            matches = [rec for rec in _records(m.parent.name) if rec.get("artefact") == fname]
+            if matches:
+                return [(m.parent.name, rec) for rec in matches]
+        return []
+
+    def _find_one(fname, home_session):
+        found = _find_all(fname, home_session)
+        return found[0] if found else (None, None)
+
+    def _walk(entry_session, entry_rec):
+        chain = [(entry_session, entry_rec)]
+        seen = {(entry_session, entry_rec.get("artefact"))}
+        found_session, rec = entry_session, entry_rec
+        for _ in range(_max_depth):
+            if not rec.get("derived"):
+                break
+            parent = rec.get("derived_from")
+            if not parent:
+                raise ValueError(
+                    f"{rel_path!r}: {found_session}/{rec['artefact']} is derived but "
+                    f"names no derived_from.")
+            if (found_session, parent) in seen:
+                raise ValueError(f"{rel_path!r}: derived_from cycle at "
+                                 f"{found_session}/{parent}.")
+            found_session, rec = _find_one(parent, found_session)
+            if rec is None:
+                raise ValueError(
+                    f"{rel_path!r}: no manifest line names {parent!r} in any session.")
+            seen.add((found_session, rec.get("artefact")))
+            chain.append((found_session, rec))
+        else:
+            raise ValueError(f"{rel_path!r}: derived_from chain exceeds {_max_depth} links.")
+        # THE SAME RULE _failed_retrievals() USES, not a fresh one: exit != 0, or a
+        # STATED status outside 2xx, is a failure; a MISSING status (every manifest
+        # line written before the field existed on 2026-09-13) is UNKNOWN, never
+        # treated as failed -- silence is not evidence of failure any more than it
+        # was evidence of success. An earlier version of this check required status
+        # to be an int in [200, 300), which refused roughly half the real corpus
+        # (every pre-2026-09-13 fetch) with "status None, not 2xx".
+        exit_code, status = rec.get("exit", 0), rec.get("status")
+        failed = exit_code != 0 or (status is not None and not (200 <= status < 300))
+        if failed:
+            raise ValueError(
+                f"{rel_path!r}: chain root {found_session}/{rec['artefact']} is a "
+                f"failed retrieval (exit {exit_code}, status {status!r}).")
+        return rec, found_session, chain
+
+    entries = _find_all(filename, session)
+    if not entries:
+        raise ValueError(f"{rel_path!r}: no manifest line names {session}/{filename}.")
+    results, errors = [], []
+    for entry_session, entry_rec in entries:
+        try:
+            results.append(_walk(entry_session, entry_rec))
+        except ValueError as e:
+            errors.append(str(e))
+    if not results:
+        raise ValueError("; ".join(errors))
+    return results
+
+
+def check_artefact_link(rel_path, *, mined_ref_id=None, query_text=None):
+    """Verify `rel_path` as a legitimate linked payload of the search described.
+
+    The ONE evaluation of DR-2026-09-26 section 2.2(b)'s refusal: `db.py`'s
+    log-search/amend-search writers and `provenance_artefact_audit.py` both call
+    this, so the write-time refusal and its re-derivation from bytes can never drift
+    apart (rule 5, one level up from a table).
+
+    Exactly one of `mined_ref_id` (a mining search) or `query_text` (any other
+    search) is given. Returns a dict describing the accepted link; raises
+    ValueError, naming why, on refusal.
+    """
+    if bool(mined_ref_id) == bool(query_text):
+        raise ValueError(
+            "check_artefact_link(): give exactly one of mined_ref_id, query_text.")
+    # resolve_chain returns every candidate reading of `rel_path` (more than one when
+    # the same content-addressed bytes were logged for two purposes in one session,
+    # e.g. T7/C4 in the module docstring's example). Succeed on the FIRST candidate
+    # that satisfies the search being checked against; report every candidate's
+    # refusal only if none does.
+    candidates = resolve_chain(rel_path)
+    errors = []
+    for root_rec, root_session, chain in candidates:
+        leaf_session, leaf_rec = chain[0]
+        try:
+            if mined_ref_id:
+                candidate_ref = leaf_rec.get("ref_id") or root_rec.get("ref_id")
+                if not candidate_ref:
+                    raise ValueError(
+                        f"{rel_path!r}: carries no structured ref_id (a payload "
+                        f"fetched before 2026-09-13) and cannot be linked to a "
+                        f"mining search.")
+                if candidate_ref != mined_ref_id:
+                    raise ValueError(
+                        f"{rel_path!r}: ref_id {candidate_ref!r} does not match "
+                        f"mined_ref_id {mined_ref_id!r}.")
+                return {"root": f"{root_session}/{root_rec['artefact']}",
+                        "matched_ref_id": candidate_ref}
+            host, value = identifying_locator(root_rec.get("url"))
+            # query_text is prose that often embeds the verbatim, still percent-encoded
+            # URL (log-search's own `--query-text` on batch 19: "...%22Templer%22...").
+            # Decoding it before normalising is what lets a decoded `value` match a
+            # query_text that quotes the URL as fetched -- normalise_quote alone would
+            # keep the literal "22" from each %22 as digit noise splitting the words
+            # it is supposed to match contiguously.
+            q = normalise_quote(urllib.parse.unquote_plus(query_text or ""))
+            if not (host and normalise_quote(host) in q and normalise_quote(value) in q):
+                raise ValueError(
+                    f"{rel_path!r}: query_text does not contain the payload URL's "
+                    f"host ({host!r}) and identifying value ({value!r}).")
+            return {"root": f"{root_session}/{root_rec['artefact']}",
+                    "host": host, "value": value}
+        except ValueError as e:
+            errors.append(str(e))
+    raise ValueError(errors[0] if len(errors) == 1 else "; ".join(errors))
+
+
+def read_artefact_bytes(rel_path):
+    """The raw, persisted bytes at `rel_path` (the DB's own pointer shape).
+
+    Path-traversal-safe: containment is checked on the RESOLVED path, not the
+    string (dbcore.resolve_under).
+    """
+    dbcore = dbcore_module()
+    resolved = dbcore.resolve_under(dbcore.REPO_ROOT / "retrieval-log", rel_path)
+    if resolved is None:
+        raise ValueError(f"{rel_path!r} is not under retrieval-log/.")
+    if not resolved.is_file():
+        raise ValueError(f"{rel_path!r}: no such file.")
+    return resolved.read_bytes()
+
+
+def _is_tracked(rel_path):
+    result = subprocess.run(
+        ["git", "-C", str(dbcore_module().REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
+        capture_output=True)
+    return result.returncode == 0
+
+
+def dbcore_module():
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    import dbcore                                                      # noqa: E402
+    return dbcore
+
+
+def _require_all_in(identifiers, text, surfaced_in):
+    """Raise ValueError naming the first of `identifiers` absent from `text`."""
+    needle_text = normalise_quote(text)
+    for ident in identifiers:
+        if normalise_quote(ident) not in needle_text:
+            raise ValueError(f"identifier {ident!r} does not occur in {surfaced_in!r}.")
+
+
+def check_surfaced_in(exec_id, surfaced_in, surfaced_quote, locator, conn=None):
+    """Verify a staged candidate's `surfaced_in`/`surfaced_quote` against persisted bytes.
+
+    The ONE evaluation of DR-2026-09-26 section 2.2(d)'s refusal: db.py's
+    add-candidate/reattribute-candidate writers and provenance_artefact_audit.py's
+    re-derivation both call this (rule 5). Returns "PAYLOAD" or "TRANSCRIPT-ONLY" on
+    success; raises ValueError, naming why, otherwise.
+
+    `conn`, if given, is used read-only for the search_execution_artefacts check --
+    for a caller already iterating many rows over its own open connection
+    (provenance_artefact_audit.py), so it is not paying for a fresh connection per
+    row. Left unset, this opens and closes its OWN connection, on purpose: a WRITER
+    (db.py) must never verify a claim against the very transaction that is about to
+    make it (dbcore.py's own docstring: "a writer that verifies itself verifies
+    nothing"), the same reason `verify_authors` and `backfill` above open their own
+    connections instead of sharing a caller's.
+    """
+    dbcore = dbcore_module()
+    surfaced_in = (surfaced_in or "").strip()
+    if not surfaced_in:
+        raise ValueError("surfaced_in is required (RC1, DR-2026-09-26 2.2d).")
+    # BOTH are verified when both are given, not just whichever "wins" the fallback.
+    # A first version checked only `doi or quote`, so a candidate with a DOI in its
+    # locator could carry an ARBITRARY, unverified surfaced_quote -- populated,
+    # never true, the exact shape CLAUDE.md 6(c) names as the worst failure here.
+    # DR-2026-09-26 2.2(c) still calls surfaced_quote required "only when the
+    # candidate carries no DOI"; that governs whether it must be SUPPLIED, not
+    # whether a supplied one goes unchecked.
+    doi = dbcore.single_doi_in(locator)
+    quote = (surfaced_quote or "").strip()
+    identifiers = [i for i in (doi, quote) if i]
+    if not identifiers:
+        raise ValueError("locator carries no single DOI, so surfaced_quote is required.")
+    # CONTAINMENT ON THE RESOLVED PATH, never a string prefix test -- a bare
+    # `surfaced_in.startswith("transcripts/")` accepts `transcripts/../governance/x`,
+    # exactly the bypass RC4's own adversarial review demonstrated against a prefix
+    # check (dbcore.resolve_under's docstring) and this function's own first version
+    # reintroduced. resolve_under returns None for anything that does not genuinely
+    # resolve under transcripts/, so a traversal attempt falls through to the payload
+    # branch below and is refused there instead of silently accepted here.
+    transcript_path = dbcore.resolve_under(dbcore.REPO_ROOT / "transcripts", surfaced_in)
+    if transcript_path is not None:
+        if not _is_tracked(surfaced_in):
+            raise ValueError(
+                f"{surfaced_in!r} is not a tracked file. An untracked transcript is "
+                f"not yet an artefact (CLAUDE.md rule 6).")
+        text = transcript_path.read_text(encoding="utf-8", errors="replace")
+        _require_all_in(identifiers, text, surfaced_in)
+        return "TRANSCRIPT-ONLY"
+    if exec_id is None:
+        raise ValueError(
+            f"surfaced_in {surfaced_in!r} does not resolve under transcripts/, so it "
+            f"must be a linked payload -- but this candidate carries no exec_id to "
+            f"check it against.")
+    owns_conn = conn is None
+    if owns_conn:
+        conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    try:
+        linked = conn.execute(
+            "SELECT 1 FROM search_execution_artefacts WHERE exec_id=? AND artefact=?",
+            [exec_id, surfaced_in]).fetchone()
+    finally:
+        if owns_conn:
+            conn.close()
+    if not linked:
+        raise ValueError(
+            f"(exec {exec_id}, {surfaced_in!r}) is not a row of "
+            f"search_execution_artefacts. Link it first (log-search --result-artefact "
+            f"or amend-search --add-result-artefact).")
+    raw = read_artefact_bytes(surfaced_in)
+    text, enc = decode_artefact(raw)
+    if text is None:
+        raise ValueError(f"{surfaced_in!r} could not be decoded ({enc}).")
+    _require_all_in(identifiers, text, surfaced_in)
+    return "PAYLOAD"
+
 
 def _index_by_doi(payloads):
     """Every logged payload that identifies a DOI, whatever service produced it.

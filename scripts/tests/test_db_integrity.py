@@ -318,7 +318,10 @@ def run_checks(db_path):
     _has_edge = any(c[1] == "resolved_ref_id"
                     for c in conn.execute("PRAGMA table_info(search_candidates)"))
     if not _has_edge:
-        record("S01", "a candidate and its admission name the same search", False,
+        record("S01", "a candidate and its admission AGREE on which search "
+              "(agreement, not truth -- RC1, DR-2026-09-26 2.2f: this compares two "
+              "typed pointers, not either against the bytes a search actually "
+              "returned, which is what provenance_artefact_audit.py is for)", False,
                "search_candidates has no resolved_ref_id column, so the candidate-to-"
                "source edge does not exist and the two provenance pointers cannot be "
                "compared. Migration 088 adds it; this database predates it.",
@@ -332,7 +335,11 @@ def run_checks(db_path):
                               WHERE a2.ref_id = c.resolved_ref_id
                                 AND a2.exec_id = c.exec_id)
         """).fetchone()[0]
-        record("S01", "a candidate and its admission name the same search", _prov == 0,
+        record("S01", "a candidate and its admission AGREE on which search "
+              "(agreement, not truth -- RC1, DR-2026-09-26 2.2f: this compares two "
+              "typed pointers, not either against the bytes a search actually "
+              "returned, which is what provenance_artefact_audit.py is for)",
+              _prov == 0,
                f"{_prov} candidate(s) point at a search that did not admit the source "
                f"they resolved to — repoint with `db.py reattribute-candidate`, or log "
                f"the search that really surfaced them" if _prov else "",
@@ -1107,6 +1114,7 @@ def run_checks(db_path):
     # remain. What stands is the lesson: the count is never lowered to force agreement, so
     # the restored historical counts above their edges are untouched, and no parity check
     # comes back. The rule's one home is _results_admitted_after in scripts/db.py.
+    # BY: `` `search_executions.results_admitted` IS RAISE-ONLY AFTER INSERT. ``
 
     # H06 and H07 DELETED 2026-09-21 with H01/H02 — see the record above. H06 existed,
     # in its own words, as "what makes H01–H04 non-vacuous"; with those gone it has no

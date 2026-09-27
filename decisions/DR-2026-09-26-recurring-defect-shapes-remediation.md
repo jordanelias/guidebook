@@ -1,12 +1,22 @@
 # DR-2026-09-26 (v2): Six recurring defect shapes. The pass gets a record, provenance gets an artefact, and research and tooling ship apart
 
-> **STATUS: PROPOSED, NOT RATIFIED.** Committed so the plan is not lost to container recycling between sessions; it binds nothing until the owner answers §9. v2 repairs v1's mechanisms after an independent adversarial review (different model, fresh context) found verified errors in v1. §0.3 lists every finding, what v2 changed, and how the change was checked. The six root causes are not re-diagnosed here — they were established by a separate read-only diagnostic survey (Fable, 2026-09-26) and are re-verified, not re-derived, in §0.2.
+> **STATUS: RATIFIED 2026-09-27** (`references/project-standards.md`, "Owner ruling 2026-09-27
+> — DR-2026-09-26 is RATIFIED"; owner nod, §9's Recommended answers adopted per-question as
+> recorded there — OQ-2 withdrawn, OQ-5 and OQ-8 left open, seed 3 of OQ-6 not shipped). PR #159
+> merged 2026-09-26. Construction is proceeding per §7. v2 repairs v1's mechanisms after an
+> independent adversarial review (different model, fresh context) found verified errors in v1.
+> §0.3 lists every finding, what v2 changed, and how the change was checked. The six root causes
+> are not re-diagnosed here — they were established by a separate read-only diagnostic survey
+> (Fable, 2026-09-26) and are re-verified, not re-derived, in §0.2. A further adversarial review
+> during phase 1a's own construction found and fixed defects IN the mechanisms this DR specifies
+> (severity missing from the RULE's own required finding shape; a path-traversal bypass in the
+> transcript refusals; the findings-block reader missing this harness's actual SubagentHandback
+> delivery shape) — those are phase 1a's fixes, not edits to this DR's text, which stands as
+> ratified.
 > Every figure was measured on 2026-09-26 against `origin/main` @ `cf35d441` and
 > `origin/claude/batch-20-audit-cluster-templer-fhwa` @ `fe0dcd17` (PR #159, not yet merged at the time this was written — check current state before acting on anything below). The command that produced each
 > figure sits beside it. Re-run the command rather than trusting the sentence (CLAUDE.md rule 7a). Several commands read the
 > branch's DB, so extract it once: `git show origin/claude/batch-20-audit-cluster-templer-fhwa:data/guidebook.db > $SCRATCH/b20.db`.
->
-> **To land fully** (per §11): after the owner answers §9 and after PR #159 merges, this status line updates to RATIFIED, a register row is added, and construction proceeds per §7.
 
 ## §A How to use this document
 

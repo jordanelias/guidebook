@@ -28,12 +28,16 @@ CLI usage:
         (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
+    python3 scripts/db.py record-adversarial-pass --subject-session S --subject-commit SHA \
+        --reviewer-transcript transcripts/.../reviewer.jsonl --author-transcript transcripts/.../author.jsonl \
+        --session SESSION      (RC4; then dispose-adversarial-finding and close-adversarial-pass)
     python3 scripts/db.py --help
 """
 
 import json
 import os
 import re
+import subprocess
 import zipfile
 import sqlite3
 import sys
@@ -590,6 +594,34 @@ def upsert_search_language(slug: str, language: str,
     raise FrozenGridError(_FROZEN_MSG.format(table="search_languages"))
 
 
+def _link_result_artefacts(conn, exec_id, artefacts, *, mined_ref_id, query_text,
+                           session, ts):
+    """Validate and insert `search_execution_artefacts` rows for `artefacts`.
+
+    RC1 (DR-2026-09-26 section 2.2b)'s writer side, shared by `log-search
+    --result-artefact` and `amend-search --add-result-artefact` so the two writers
+    cannot drift. `retrieval_log.check_artefact_link` is the ONE place the refusal
+    is evaluated -- `provenance_artefact_audit.py`'s re-derivation from bytes calls
+    the same function, per rule 5.
+    """
+    if not artefacts:
+        return
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                              # noqa: E402
+    for artefact in artefacts:
+        try:
+            if mined_ref_id:
+                retrieval_log.check_artefact_link(artefact, mined_ref_id=mined_ref_id)
+            else:
+                retrieval_log.check_artefact_link(artefact, query_text=query_text)
+        except ValueError as e:
+            raise Refusal(f"--result-artefact {artefact}: {e}")
+        conn.execute(
+            "INSERT INTO search_execution_artefacts "
+            "(exec_id, artefact, created_by_session, created_at) VALUES (?, ?, ?, ?)",
+            [exec_id, artefact, session, ts])
+
+
 def log_search(slug: str, language: str, query_text: str, engine: str,
                depth_method: str, session: str,
                jurisdiction: str = None, target_tier: int = None,
@@ -600,6 +632,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                admitted_ref_ids=None, deferred_reason: str = None,
                backfill: int = 0, findings_note: str = None,
                harm_finding: int = 0, prior_expectation: str = None,
+               origin: str = "planned", mined_ref_id: str = None,
+               origin_pass_id: int = None, result_artefacts=None,
                dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
@@ -646,6 +680,38 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             "is no sanctioned path to add it later: search_executions is append-only "
             "under R8 and amend-search cannot touch this column. A zero-yield "
             "expectation is a legitimate prior -- say so.")
+
+    # RC5 (DR-2026-09-26 5.2c). `origin` is the INITIATION axis (why the step ran);
+    # `mining_direction` is the METHOD axis (how) -- orthogonal, so neither can stand
+    # in for the other, and each refusal below names which one was left incoherent.
+    mining_on = (mining_direction or "none") != "none"
+    if mining_on and not mined_ref_id:
+        raise Refusal(
+            f"--mining-direction {mining_direction} with no --mined-ref-id. A "
+            f"mining pass with no typed source is the gap RC5 exists to close -- "
+            f"name what was mined.")
+    if mined_ref_id and not mining_on:
+        raise Refusal(
+            f"--mined-ref-id {mined_ref_id} with --mining-direction "
+            f"{mining_direction or 'none'!r}. A mined source with no mining "
+            f"direction is incoherent.")
+    if origin != "planned" and (target_tier or target_evidence_type or target_scope):
+        raise Refusal(
+            f"--origin {origin} with a --target-tier/--target-evidence-type/"
+            f"--target-scope flag. A lookup targets no tier -- that is what keeps "
+            f"it out of v_coverage_branch's Co-1 count.")
+    if origin == "adversarial-pass" and origin_pass_id is None:
+        raise Refusal(
+            "--origin adversarial-pass with no --origin-pass-id. Name the pass "
+            "that ran it, or log this as history with amend-search --set-origin "
+            "adversarial-pass, which alone accepts a NULL pass id for a pass that "
+            "predates adversarial_passes.")
+    if origin_pass_id is not None and origin != "adversarial-pass":
+        # Named, not the bare `CHECK constraint failed` the schema's own
+        # `origin_pass_id IS NULL OR origin = 'adversarial-pass'` raises at INSERT.
+        raise Refusal(
+            f"--origin-pass-id {origin_pass_id} with --origin {origin!r}. The CHECK "
+            f"permits a pass id only with origin=adversarial-pass.")
 
     ids = list(admitted_ref_ids or [])
     if len(set(ids)) != len(ids):
@@ -707,8 +773,17 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # moved it off evidence_sources, where it could only be reconstructed after
         # reading the source -- the artefact the field exists to prevent.
         "prior_expectation": prior_expectation,
+        "origin": origin, "mined_ref_id": mined_ref_id,
+        "origin_pass_id": origin_pass_id,
     }
     with connect(dry_run) as conn:
+        if mined_ref_id and not conn.execute(
+                "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
+            # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
+            # the --admitted-ref-id check below.
+            raise Refusal(
+                f"--mined-ref-id {mined_ref_id} is not in evidence_sources. File "
+                f"the source first, then log the pass that mined it.")
         # DERIVED, NEVER HAND-TYPED. This table's audit columns were spelled
         # `session` and `executed_at` here as string literals until migration
         # 085 renamed them to the corpus-wide `created_by_session`/`created_at`.
@@ -752,6 +827,9 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                 "INSERT INTO search_admissions "
                 "(exec_id, ref_id, created_at, created_by_session) "
                 "VALUES (?, ?, ?, ?)", [exec_id, ref_id, ts, session])
+        _link_result_artefacts(conn, exec_id, result_artefacts,
+                               mined_ref_id=mined_ref_id, query_text=query_text,
+                               session=session, ts=ts)
         return exec_id
 
 
@@ -931,14 +1009,13 @@ def get_synonyms(item_code: str, language: str = None) -> list[dict]:
 
 import re as _re
 
-# The ratified status vocabulary — owner ruling 2026-08-14, migration 058.
-# RESOLUTION-PROPOSED became PROPOSED; MODE-S-ONLY became UNRESOLVED.
-_VALID_CONFLICT_STATUS = frozenset({
-    "ACTIVE", "PROPOSED", "DEFERRED", "RESOLVED-EVIDENCE",
-    "RESOLVED-CONSENSUS", "UNRESOLVED", "CLOSED", "RETIRED", "SUPERSEDED",
-})
-_VALID_ITEM_STATUS   = frozenset({"draft", "active", "merged", "retired"})
-_VALID_RUN_STATUS    = frozenset({"IN-PROGRESS", "COMPLETE", "HANDED-OFF"})
+# _VALID_CONFLICT_STATUS / _VALID_ITEM_STATUS / _VALID_RUN_STATUS RETIRED 2026-09-27
+# (RC2, DR-2026-09-26-recurring-defect-shapes-remediation.md section 3.2b): each equalled
+# a live column CHECK exactly (conflicts.status, items.status, item_audit_runs.status
+# respectively) — derived_not_curated_audit.py Class 3 now fails a curated copy of one of
+# these outright. Replaced by dbcore.check_declared / dbcore.schema_choices at every
+# call site; the owner ruling and migration each cited are unaffected, only their
+# vocabulary's SECOND home is gone.
 _ITEM_CODE_RE        = _re.compile(r"^[A-K]-\d{2}[a-z]?$")
 _CATEGORY_RE         = _re.compile(r"^[A-K]$")
 _PIPELINE_STEPS      = frozenset({
@@ -961,8 +1038,6 @@ def next_conf_id() -> str:
 
 
 def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
-    if data.get("status") not in _VALID_CONFLICT_STATUS:
-        raise Refusal(f"Invalid conflict status: {data.get('status')}")
     if data.get("pop_a") and data.get("pop_b"):
         if data["pop_a"] > data["pop_b"]:
             raise Refusal(
@@ -972,6 +1047,12 @@ def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
             )
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        # conflicts.status happens to share its vocabulary with decisions.status; this
+        # writer INSERTs into conflicts, so that is the CHECK it validates against
+        # (rule 8: derive from the column the writer actually writes, not whichever
+        # column a value-set match finds first).
+        dbcore.check_declared(conn, "conflicts", "status", data.get("status"),
+                              "insert_conflict")
         cols = ", ".join(row)
         ph   = ", ".join(["?"] * len(row))
         conn.execute(f"INSERT INTO conflicts ({cols}) VALUES ({ph})", list(row.values()))
@@ -982,8 +1063,6 @@ def update_conflict(conflict_id: str, session: str,
                     status: str = None, resolution: str = None,
                     evidence: str = None, gap_id: str = None,
                     dry_run: bool = False):
-    if status and status not in _VALID_CONFLICT_STATUS:
-        raise Refusal(f"Invalid conflict status: {status}")
     u    = _upd(session)
     sets = [f"updated_at=?", f"updated_by_session=?"]
     vals = [u["updated_at"], u["updated_by_session"]]
@@ -997,6 +1076,8 @@ def update_conflict(conflict_id: str, session: str,
         sets.append("gap_id=?");     vals.append(gap_id)
     vals.append(conflict_id)
     with connect(dry_run) as conn:
+        if status is not None:
+            dbcore.check_declared(conn, "conflicts", "status", status, "update_conflict")
         conn.execute(
             f"UPDATE conflicts SET {', '.join(sets)} WHERE conflict_id=?", vals
         )
@@ -1041,10 +1122,11 @@ def get_items(category: str = None, status: str = None) -> list:
 
 
 def insert_audit_run(data: dict, session: str, dry_run: bool = False) -> str:
-    if data.get("status") and data["status"] not in _VALID_RUN_STATUS:
-        raise Refusal(f"Invalid audit run status: {data.get('status')}")
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        if data.get("status") is not None:
+            dbcore.check_declared(conn, "item_audit_runs", "status", data["status"],
+                                  "insert_audit_run")
         cols = ", ".join(row)
         ph   = ", ".join(["?"] * len(row))
         conn.execute(f"INSERT INTO item_audit_runs ({cols}) VALUES ({ph})", list(row.values()))
@@ -1055,8 +1137,6 @@ def update_audit_run(run_id: str, session: str,
                      status: str = None, steps_complete: list = None,
                      steps_started: list = None, brief_path: str = None,
                      spec_hash: str = None, dry_run: bool = False):
-    if status and status not in _VALID_RUN_STATUS:
-        raise Refusal(f"Invalid audit run status: {status}")
     # Validate step names
     for step_list in [steps_complete or [], steps_started or []]:
         unknown = [s for s in step_list if s not in _PIPELINE_STEPS]
@@ -1077,6 +1157,9 @@ def update_audit_run(run_id: str, session: str,
         sets.append("spec_hash=?");       vals.append(spec_hash)
     vals.append(run_id)
     with connect(dry_run) as conn:
+        if status is not None:
+            dbcore.check_declared(conn, "item_audit_runs", "status", status,
+                                  "update_audit_run")
         conn.execute(
             f"UPDATE item_audit_runs SET {', '.join(sets)} WHERE run_id=?", vals
         )
@@ -1180,6 +1263,16 @@ def main():
     p_cand.add_argument("--harm-finding", type=int, default=0, choices=[0, 1])
     p_cand.add_argument("--why-not-admitted")
     p_cand.add_argument("--notes")
+    # RC1 (DR-2026-09-26 2.2c/d). The path of the payload the candidate appeared
+    # in -- or a tracked file under transcripts/, for a route that was never
+    # persisted (exec 100's TRANSCRIPT-ONLY shape).
+    p_cand.add_argument("--surfaced-in", required=True,
+                        help="retrieval-log/<session>/<file> (must already be a "
+                             "search_execution_artefacts row for --exec-id), or a "
+                             "tracked transcripts/ file")
+    p_cand.add_argument("--surfaced-quote",
+                        help="a verbatim string from --surfaced-in, required only "
+                             "when locator carries no single DOI")
     p_cand.add_argument("--session", required=True)
     p_cand.add_argument("--dry-run", action="store_true")
 
@@ -1296,6 +1389,24 @@ def main():
                       help="Raise harm_finding 0 -> 1. R7 makes harm first-class, so a "
                            "search logged with the flag down that did surface harm has an "
                            "incomplete record. Only rises; lowering is refused.")
+    # RC5/RC1 (DR-2026-09-26 5.2d). History, through writers only -- never hand SQL.
+    p_am.add_argument("--set-origin",
+                      choices=dbcore.schema_choices("search_executions", "origin"),
+                      help="Correct a row's origin. --set-origin adversarial-pass "
+                           "with no --set-origin-pass-id is accepted here for history "
+                           "that predates adversarial_passes; --append-note must say "
+                           "why no pass id exists.")
+    p_am.add_argument("--set-mined-ref-id",
+                      help="NULL -> a value only; refuses a mining_direction of none "
+                           "and a value already set.")
+    p_am.add_argument("--set-origin-pass-id", type=int,
+                      help="NULL -> a value only; requires origin=adversarial-pass "
+                           "(pass --set-origin too, or it must already be set).")
+    p_am.add_argument("--add-result-artefact", action="append",
+                      dest="add_result_artefacts",
+                      help="repeatable; same refusal as log-search --result-artefact "
+                           "(RC1, DR-2026-09-26 2.2b), for a payload fetched after "
+                           "logging or history never linked at the time.")
     p_am.add_argument("--session", required=True)
     p_am.add_argument("--dry-run", action="store_true")
 
@@ -1318,8 +1429,52 @@ def main():
     p_rca.add_argument("--reason", required=True,
                        help="Why the original attribution was wrong. Carried into notes "
                             "with the old exec_id, so the move is itself on the record.")
+    p_rca.add_argument("--surfaced-in",
+                       help="RC1 (DR-2026-09-26 2.2d), same refusal as add-candidate. "
+                            "NULL -> a value only; a value already set needs a new exec.")
+    p_rca.add_argument("--surfaced-quote",
+                       help="required only when the candidate's locator carries no "
+                            "single DOI")
     p_rca.add_argument("--session", required=True)
     p_rca.add_argument("--dry-run", action="store_true")
+
+    p_rap = sub.add_parser(
+        "record-adversarial-pass",
+        help="Record a completed antagonist pass and its findings block (RC4)")
+    p_rap.add_argument("--subject-session", required=True,
+                       help="Bare stem or .md form; the writer strips a trailing .md")
+    p_rap.add_argument("--subject-commit", required=True,
+                       help="The sha the reviewer read")
+    p_rap.add_argument("--reviewer-transcript", required=True,
+                       help="Tracked path under transcripts/")
+    p_rap.add_argument("--author-transcript", required=True,
+                       help="Tracked path under transcripts/; must differ from "
+                            "--reviewer-transcript")
+    p_rap.add_argument("--session", required=True)
+    p_rap.add_argument("--dry-run", action="store_true")
+
+    p_daf = sub.add_parser(
+        "dispose-adversarial-finding",
+        help="Set an adversarial finding's disposition (RC4)")
+    p_daf.add_argument("--finding-id", required=True, type=int)
+    p_daf.add_argument("--disposition", required=True,
+                       choices=dbcore.schema_choices("adversarial_findings", "disposition"))
+    p_daf.add_argument("--ref",
+                       help="REPAIRED: a scripts/migrations/data_*.sql path. OWNER-RULED: "
+                            "references/project-standards.md :: \"<verbatim quote>\", "
+                            "occurring exactly once. Ignored for REJECTED/PROVISIONAL-DISPUTED, "
+                            "which take --reason instead.")
+    p_daf.add_argument("--reason",
+                       help="Required for REJECTED and PROVISIONAL-DISPUTED.")
+    p_daf.add_argument("--session", required=True)
+    p_daf.add_argument("--dry-run", action="store_true")
+
+    p_cap = sub.add_parser(
+        "close-adversarial-pass",
+        help="Close a pass once every lens is covered and at least one row SURVIVED (RC4)")
+    p_cap.add_argument("--pass-id", required=True, type=int)
+    p_cap.add_argument("--session", required=True)
+    p_cap.add_argument("--dry-run", action="store_true")
 
     p_rc = sub.add_parser("resolve-candidate",
                           help="Close a staged candidate, re-describing it from the source (R15)")
@@ -1991,7 +2146,8 @@ def main():
                       choices=dbcore.schema_choices("search_executions", "depth_method"))
     p_ls.add_argument("--session", required=True)
     p_ls.add_argument("--jurisdiction", help="omit for a search not scoped to one")
-    p_ls.add_argument("--target-tier", type=int, choices=range(1, 7))
+    p_ls.add_argument("--target-tier", type=int,
+                      choices=dbcore.schema_range("search_executions", "target_tier"))
     p_ls.add_argument("--target-evidence-type",
                       choices=dbcore.schema_choices("search_executions", "target_evidence_type"))
     p_ls.add_argument("--target-scope",
@@ -2016,6 +2172,21 @@ def main():
                            "'not looked for' different from 'nothing found'.")
     p_ls.add_argument("--backfill", type=int, default=0,
                       help="1 = reconstructed after the fact, not logged as it happened")
+    # RC5 (DR-2026-09-26 5.2c). `origin` is INITIATION (why the step ran);
+    # `--mining-direction` above stays METHOD (how) -- orthogonal.
+    p_ls.add_argument("--origin", default="planned",
+                      choices=dbcore.schema_choices("search_executions", "origin"))
+    p_ls.add_argument("--mined-ref-id",
+                      help="the source this pass mined; required with a "
+                           "--mining-direction other than none")
+    p_ls.add_argument("--origin-pass-id", type=int,
+                      help="required with --origin adversarial-pass")
+    p_ls.add_argument("--result-artefact", action="append", dest="result_artefacts",
+                      help="repeatable; retrieval-log/<session>/<file> path of a "
+                           "payload this search returned (RC1, DR-2026-09-26 2.2b). "
+                           "Refused unless the chain resolves to a fetched, 2xx "
+                           "artefact this search's own query_text or mined_ref_id "
+                           "identifies.")
     p_ls.add_argument("--dry-run", action="store_true")
 
     # update-bpc
@@ -2179,7 +2350,7 @@ def main():
     p_aconf.add_argument("--pop-a", required=True, help="Population A (wrapper must ensure pop_a < pop_b)")
     p_aconf.add_argument("--pop-b", required=True, help="Population B")
     p_aconf.add_argument("--status", required=True,
-                         choices=list(_VALID_CONFLICT_STATUS))
+                         choices=dbcore.schema_choices("conflicts", "status"))
     p_aconf.add_argument("--resolution")
     p_aconf.add_argument("--evidence")
     p_aconf.add_argument("--gap-id")
@@ -2190,7 +2361,7 @@ def main():
     # update-conflict
     p_uconf = sub.add_parser("update-conflict", help="Update a conflict record")
     p_uconf.add_argument("--conflict-id", required=True)
-    p_uconf.add_argument("--status", choices=list(_VALID_CONFLICT_STATUS))
+    p_uconf.add_argument("--status", choices=dbcore.schema_choices("conflicts", "status"))
     p_uconf.add_argument("--resolution")
     p_uconf.add_argument("--evidence")
     p_uconf.add_argument("--gap-id")
@@ -2224,7 +2395,7 @@ def main():
     p_ai.add_argument("--name")
     p_ai.add_argument("--bpc-source-slug")
     p_ai.add_argument("--status", default="draft",
-                      choices=list(_VALID_ITEM_STATUS))
+                      choices=dbcore.schema_choices("items", "status"))
     p_ai.add_argument("--item-id")
     p_ai.add_argument("--session")
     p_ai.add_argument("--dry-run", action="store_true")
@@ -2240,14 +2411,14 @@ def main():
     p_aar.add_argument("--session", required=True)
     p_aar.add_argument("--spec-hash")
     p_aar.add_argument("--status", default="IN-PROGRESS",
-                       choices=list(_VALID_RUN_STATUS))
+                       choices=dbcore.schema_choices("item_audit_runs", "status"))
     p_aar.add_argument("--dry-run", action="store_true")
 
     # update-audit-run
     p_uar = sub.add_parser("update-audit-run", help="Update an item_audit_runs record")
     p_uar.add_argument("--run-id", required=True)
     p_uar.add_argument("--session", required=True)
-    p_uar.add_argument("--status", choices=list(_VALID_RUN_STATUS))
+    p_uar.add_argument("--status", choices=dbcore.schema_choices("item_audit_runs", "status"))
     p_uar.add_argument("--steps-complete", help="JSON array of completed step names")
     p_uar.add_argument("--steps-started",  help="JSON array of started step names")
     p_uar.add_argument("--brief-path")
@@ -2500,9 +2671,13 @@ def main():
             deferred_reason=args.deferred_reason, backfill=args.backfill,
             findings_note=args.findings_note, harm_finding=args.harm_finding,
             prior_expectation=args.prior_expectation,
+            origin=args.origin, mined_ref_id=args.mined_ref_id,
+            origin_pass_id=args.origin_pass_id,
+            result_artefacts=args.result_artefacts,
             dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "admitted": len(args.admitted_ref_ids or []),
+               "linked_artefacts": len(args.result_artefacts or []),
                "dry_run": args.dry_run})
 
     elif args.command == "update-bpc":
@@ -2536,7 +2711,8 @@ def main():
             "title": args.title, "locator": args.locator,
             "locator_status": args.locator_status, "tier_guess": args.tier_guess,
             "harm_finding": args.harm_finding, "why_not_admitted": args.why_not_admitted,
-            "notes": args.notes,
+            "notes": args.notes, "surfaced_in": args.surfaced_in,
+            "surfaced_quote": args.surfaced_quote,
         }, session=args.session, dry_run=args.dry_run)
         _emit({"candidate_id": cid, "dry_run": args.dry_run})
 
@@ -2598,7 +2774,11 @@ def main():
         _emit(amend_search(args.exec_id, args.append_note, session=args.session,
                            dry_run=args.dry_run,
                            set_harm_finding=args.set_harm_finding,
-                           set_target_evidence_type=args.set_target_evidence_type))
+                           set_target_evidence_type=args.set_target_evidence_type,
+                           set_origin=args.set_origin,
+                           set_mined_ref_id=args.set_mined_ref_id,
+                           set_origin_pass_id=args.set_origin_pass_id,
+                           add_result_artefacts=args.add_result_artefacts))
 
     elif args.command == "amend-gap":
         # _emit, not a bare assignment: until 2026-09-25 both of these assigned the
@@ -2607,7 +2787,19 @@ def main():
         _emit(amend_gap(args.gap_id, args.append_note, args.session, args.dry_run))
     elif args.command == "reattribute-candidate":
         _emit(reattribute_candidate(args.candidate_id, args.exec_id, args.reason,
-                                    args.session, args.dry_run))
+                                    args.session, args.dry_run,
+                                    surfaced_in=args.surfaced_in,
+                                    surfaced_quote=args.surfaced_quote))
+    elif args.command == "record-adversarial-pass":
+        _emit(record_adversarial_pass(args.subject_session, args.subject_commit,
+                                      args.reviewer_transcript, args.author_transcript,
+                                      args.session, args.dry_run))
+    elif args.command == "dispose-adversarial-finding":
+        _emit(dispose_adversarial_finding(args.finding_id, args.disposition, args.ref,
+                                          args.session, reason=args.reason,
+                                          dry_run=args.dry_run))
+    elif args.command == "close-adversarial-pass":
+        _emit(close_adversarial_pass(args.pass_id, args.session, args.dry_run))
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
@@ -3695,7 +3887,9 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
 
 def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                  set_harm_finding: bool = False,
-                 set_target_evidence_type: str = None):
+                 set_target_evidence_type: str = None,
+                 set_origin: str = None, set_mined_ref_id: str = None,
+                 set_origin_pass_id: int = None, add_result_artefacts=None):
     """APPEND a correction to a logged search's findings_note. Never rewrite it.
 
     R8 makes search_executions an append-only log: a query is logged verbatim before
@@ -3718,14 +3912,19 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         raise Refusal(f"exec {exec_id}: refusing to append an empty amendment.")
     with connect(dry_run) as conn:
         row = conn.execute("SELECT exec_id, findings_note, harm_finding, "
-                           "target_evidence_type "
+                           "target_evidence_type, mining_direction, origin, "
+                           "mined_ref_id, origin_pass_id, query_text, "
+                           "target_tier, target_scope "
                            "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if row is None:
             raise Refusal(f"exec {exec_id}: no such search execution.")
         stamp = audit(session)
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
+        any_setter = (set_harm_finding or set_target_evidence_type or set_origin
+                     or set_mined_ref_id or set_origin_pass_id is not None
+                     or add_result_artefacts)
         duplicate = note in (row["findings_note"] or "")
-        if duplicate and not set_harm_finding and not set_target_evidence_type:
+        if duplicate and not any_setter:
             return {"exec_id": exec_id, "appended": False,
                     "reason": "this amendment is already on the row"}
         merged = row["findings_note"] or ""
@@ -3754,6 +3953,104 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             merged = (merged or "").rstrip() + trail
             retyped = {"was": was, "now": set_target_evidence_type}
 
+        origin_set = None
+        if set_origin:
+            # RC5 (DR-2026-09-26 5.2d). `--set-origin adversarial-pass` is accepted
+            # here with no pass id -- unlike log-search's hard requirement -- because
+            # history can predate adversarial_passes entirely (exec 100, batch 19's
+            # own pass). --append-note is already required on every call and carries
+            # the warrant; nothing here can verify prose for truth (CLAUDE.md 5(b)).
+            dbcore.check_declared(conn, "search_executions", "origin", set_origin,
+                                  f"exec {exec_id}")
+            was = row["origin"]
+            if was == set_origin:
+                raise Refusal(f"exec {exec_id}: origin is already {set_origin!r}. "
+                              f"Nothing to correct.")
+            # THE SAME REFUSAL log-search MAKES AT INSERT, applied to history too --
+            # without it, `--set-origin incidental` silently pulls a row with a live
+            # target_tier/target_evidence_type/target_scope out of v_coverage_branch's
+            # Co-1 count after the fact, which is exactly what OQ-7 (R1: no) exists to
+            # prevent (2026-09-27 ruling).
+            if (set_origin != "planned"
+                    and (row["target_tier"] or row["target_evidence_type"]
+                         or row["target_scope"])):
+                raise Refusal(
+                    f"exec {exec_id}: --set-origin {set_origin} on a row carrying "
+                    f"target_tier/target_evidence_type/target_scope. A lookup targets "
+                    f"no tier; correct those first, or this row is not a lookup.")
+            conn.execute("UPDATE search_executions SET origin=? WHERE exec_id=?",
+                         [set_origin, exec_id])
+            trail = f"{marker}origin {was!r} -> {set_origin!r}"
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [(merged or "").rstrip() + trail, exec_id])
+            merged = (merged or "").rstrip() + trail
+            origin_set = {"was": was, "now": set_origin}
+
+        mined_ref_set = None
+        if set_mined_ref_id:
+            if (row["mining_direction"] or "none") == "none":
+                raise Refusal(
+                    f"exec {exec_id}: --set-mined-ref-id with mining_direction "
+                    f"{row['mining_direction'] or 'none'!r}. A mined source with no "
+                    f"mining direction is incoherent.")
+            if row["mined_ref_id"] is not None:
+                raise Refusal(
+                    f"exec {exec_id}: mined_ref_id is already {row['mined_ref_id']!r}. "
+                    f"Only NULL -> a value is a correction; a different value already "
+                    f"set needs a new exec.")
+            if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
+                                [set_mined_ref_id]).fetchone():
+                raise Refusal(
+                    f"exec {exec_id}: --set-mined-ref-id {set_mined_ref_id} is not in "
+                    f"evidence_sources.")
+            conn.execute("UPDATE search_executions SET mined_ref_id=? WHERE exec_id=?",
+                         [set_mined_ref_id, exec_id])
+            trail = f"{marker}mined_ref_id set to {set_mined_ref_id!r}"
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [(merged or "").rstrip() + trail, exec_id])
+            merged = (merged or "").rstrip() + trail
+            mined_ref_set = set_mined_ref_id
+
+        origin_pass_set = None
+        if set_origin_pass_id is not None:
+            if row["origin_pass_id"] is not None:
+                raise Refusal(
+                    f"exec {exec_id}: origin_pass_id is already "
+                    f"{row['origin_pass_id']}. Only NULL -> a value is a correction.")
+            if not conn.execute("SELECT 1 FROM adversarial_passes WHERE pass_id=?",
+                                [set_origin_pass_id]).fetchone():
+                raise Refusal(
+                    f"exec {exec_id}: --set-origin-pass-id {set_origin_pass_id} is "
+                    f"not in adversarial_passes.")
+            effective_origin = set_origin or row["origin"]
+            if effective_origin != "adversarial-pass":
+                raise Refusal(
+                    f"exec {exec_id}: --set-origin-pass-id with origin "
+                    f"{effective_origin!r}. The CHECK permits a pass id only with "
+                    f"origin='adversarial-pass' -- pass --set-origin too.")
+            conn.execute("UPDATE search_executions SET origin_pass_id=? WHERE exec_id=?",
+                         [set_origin_pass_id, exec_id])
+            trail = f"{marker}origin_pass_id set to {set_origin_pass_id}"
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [(merged or "").rstrip() + trail, exec_id])
+            merged = (merged or "").rstrip() + trail
+            origin_pass_set = set_origin_pass_id
+
+        if add_result_artefacts:
+            # RC1 (DR-2026-09-26 2.2b). History, or a payload fetched after logging.
+            # --append-note (required on every call) is the warrant; the link itself
+            # is appended to findings_note, matching every other setter's trail.
+            effective_mined_ref = (set_mined_ref_id if set_mined_ref_id is not None
+                                   else row["mined_ref_id"])
+            _link_result_artefacts(conn, exec_id, add_result_artefacts,
+                                   mined_ref_id=effective_mined_ref,
+                                   query_text=row["query_text"],
+                                   session=session, ts=stamp["created_at"])
+            trail = f"{marker}result artefact(s) added: {', '.join(add_result_artefacts)}"
+            conn.execute("UPDATE search_executions SET findings_note=? WHERE exec_id=?",
+                         [(merged or "").rstrip() + trail, exec_id])
+            merged = (merged or "").rstrip() + trail
+
         raised = False
         if set_harm_finding:
             # MONOTONIC, 0 -> 1 ONLY. R7 makes failure, harm and inadequacy first-class
@@ -3768,7 +4065,10 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                          [exec_id])
             raised = True
         return {"exec_id": exec_id, "appended": not duplicate, "chars": len(merged),
-                "harm_finding_raised": raised, "target_evidence_type": retyped}
+                "harm_finding_raised": raised, "target_evidence_type": retyped,
+                "origin": origin_set, "mined_ref_id": mined_ref_set,
+                "origin_pass_id": origin_pass_set,
+                "result_artefacts_added": len(add_result_artefacts or [])}
 
 
 def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
@@ -3808,7 +4108,8 @@ def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
 
 
 def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session: str,
-                          dry_run: bool = False):
+                          dry_run: bool = False, surfaced_in: str = None,
+                          surfaced_quote: str = None):
     """Repoint a staged candidate at the search that actually surfaced it.
 
     `search_candidates.exec_id` is the provenance edge from a candidate back to the
@@ -3829,7 +4130,8 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
             f"candidate {candidate_id}: --reason is required. Moving a provenance edge "
             f"without saying why replaces one unexplained attribution with another.")
     with connect(dry_run) as conn:
-        row = conn.execute("SELECT candidate_id, exec_id, notes FROM search_candidates "
+        row = conn.execute("SELECT candidate_id, exec_id, notes, locator, surfaced_in "
+                           "FROM search_candidates "
                            "WHERE candidate_id=?", [candidate_id]).fetchone()
         if row is None:
             raise Refusal(f"candidate {candidate_id}: no such candidate.")
@@ -3839,9 +4141,40 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                 f"exec {exec_id}: no such search execution. A candidate cannot be "
                 f"attributed to a search that was never logged -- log it first (R8 "
                 f"keeps every query, backfills included).")
+
+        surfaced_set = None
+        if surfaced_in:
+            # RC1 (DR-2026-09-26 2.2d). Only NULL -> a value is a correction; a value
+            # already set is a reattribution and needs a new exec, same discipline as
+            # amend-search's --set-mined-ref-id.
+            if row["surfaced_in"] is not None:
+                raise Refusal(
+                    f"candidate {candidate_id}: surfaced_in is already "
+                    f"{row['surfaced_in']!r}. Changing a value already set is a "
+                    f"reattribution and needs a new exec.")
+            _check_surfaced_in(conn, exec_id, surfaced_in, surfaced_quote,
+                               row["locator"], "reattribute-candidate")
+            conn.execute(
+                "UPDATE search_candidates SET surfaced_in=?, surfaced_quote=? "
+                "WHERE candidate_id=?", [surfaced_in, surfaced_quote, candidate_id])
+            surfaced_set = {"surfaced_in": surfaced_in, "surfaced_quote": surfaced_quote}
+
         if row["exec_id"] == exec_id:
+            if surfaced_set is not None:
+                # --reason is required and validated above; on THIS path (exec_id
+                # unchanged) nothing below writes it anywhere, so an earlier version
+                # of this function validated it and then discarded it -- the judge's
+                # warrant (rule 8) went unrecorded. Carried into notes exactly as the
+                # true-reattribution branch below does for its own --reason.
+                stamp = audit(session)
+                carried = (f"SURFACED-IN SET {stamp['created_at'][:10]} by {session}: "
+                          f"{reason}")
+                merged = "\n\n".join([x for x in ((row["notes"] or "").strip() or None,
+                                                   carried) if x])
+                conn.execute("UPDATE search_candidates SET notes=? WHERE candidate_id=?",
+                             [merged, candidate_id])
             return {"candidate_id": candidate_id, "changed": False,
-                    "exec_id": exec_id}
+                    "exec_id": exec_id, "surfaced": surfaced_set}
         stamp = audit(session)
         carried = (f"REATTRIBUTED {stamp['created_at'][:10]} from exec "
                    f"{row['exec_id']} to exec {exec_id} by {session}: {reason}")
@@ -3856,7 +4189,349 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                      "WHERE candidate_id=?",
                      [exec_id, merged, candidate_id])
         return {"candidate_id": candidate_id, "changed": True,
-                "from_exec": row["exec_id"], "exec_id": exec_id}
+                "from_exec": row["exec_id"], "exec_id": exec_id,
+                "surfaced": surfaced_set}
+
+
+_MODEL_SUFFIX_RE = re.compile(r"\[[^\]]*\]$")
+_FINDINGS_BLOCK_RE = re.compile(
+    r"^[ \t]*```[ \t]*json[ \t]+adversarial-findings[ \t]*\n(.*?)\n[ \t]*```", re.S | re.M)
+_HANDBACK_TOOL_NAMES = frozenset({"SubagentHandback"})
+
+
+def _is_tracked(rel_path: str) -> bool:
+    """True iff `rel_path` (repo-relative) is a tracked file at HEAD.
+
+    An untracked transcript is not an artefact (CLAUDE.md rule 6): its entire
+    contents live in ephemeral container storage until committed, so a session
+    could name a file that a later clone will never see.
+    """
+    result = subprocess.run(
+        ["git", "-C", str(dbcore.REPO_ROOT), "ls-files", "--error-unmatch", rel_path],
+        capture_output=True)
+    return result.returncode == 0
+
+
+def _resolve_transcript_path(rel_path: str, label: str) -> tuple:
+    """(resolved absolute Path, normalised repo-relative str), confirmed under transcripts/.
+
+    Containment is checked on the RESOLVED path via `dbcore.resolve_under`, never on the
+    raw string -- see that function's docstring for the two bypasses this closes.
+    """
+    resolved = dbcore.resolve_under(dbcore.REPO_ROOT / "transcripts", rel_path)
+    if resolved is None:
+        raise Refusal(f"{label} {rel_path!r} does not resolve under transcripts/.")
+    return resolved, os.path.normpath(rel_path).replace(os.sep, "/")
+
+
+def _read_transcript(path: Path) -> tuple:
+    """(sorted distinct assistant-turn models, the reviewer's final report text), in
+    ONE pass over the file -- it is a full session log and can be large, and this used
+    to be two separate functions each streaming and json.loads-ing every line.
+
+    MODELS: reads ONLY `message.model` on records whose `type` is `assistant` -- not
+    every `"model"` substring in the file, which over-counted an attachment record's
+    `claude-opus-5-5[1m]` alongside the real assistant turns in batch 20's own
+    transcript. One trailing bracketed suffix (a context-window annotation, not a
+    different model) is stripped from each result before it is deduplicated.
+
+    FINAL REPORT: THE LAST PLAIN TEXT BLOCK IS THE WRONG THING TO READ. In this harness
+    a subagent's final report is delivered through a `SubagentHandback` TOOL CALL, not
+    as trailing assistant prose -- a real reviewer transcript inspected during this
+    feature's own adversarial review carried its whole findings report inside a
+    `SubagentHandback` tool_use's `input.message`, followed by a separate, shorter
+    plain-text turn ("I've sent the full adversarial pass ... back to the orchestrating
+    session") that a last-text-block reader would return instead. The LAST
+    `SubagentHandback` call in the transcript is preferred; only if none exists does
+    this fall back to the last plain text block, for a reviewer run without that tool.
+    """
+    models = set()
+    last_text, last_handback = "", None
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if rec.get("type") != "assistant":
+                continue
+            msg = rec.get("message")
+            if not isinstance(msg, dict):
+                continue
+            model = msg.get("model")
+            if model:
+                models.add(_MODEL_SUFFIX_RE.sub("", model))
+            content = msg.get("content")
+            if isinstance(content, str):
+                last_text = content
+            elif isinstance(content, list):
+                texts = [b.get("text", "") for b in content
+                         if isinstance(b, dict) and b.get("type") == "text"]
+                if texts:
+                    last_text = "\n".join(texts)
+                for b in content:
+                    if (isinstance(b, dict) and b.get("type") == "tool_use"
+                            and b.get("name") in _HANDBACK_TOOL_NAMES):
+                        inp = b.get("input") or {}
+                        parts = [v for v in inp.values() if isinstance(v, str)]
+                        if parts:
+                            last_handback = "\n".join(parts)
+    return sorted(models), (last_handback if last_handback is not None else last_text)
+
+
+def _extract_findings_block(text: str):
+    """The parsed JSON array inside a ```json adversarial-findings``` fence, or None.
+
+    See .claude/agents/antagonist.md, "Report shape". The record is derived
+    from the reviewer's own words -- this function never fabricates a finding
+    the block did not carry.
+    """
+    m = _FINDINGS_BLOCK_RE.search(text or "")
+    if not m:
+        return None
+    try:
+        data = json.loads(m.group(1))
+    except json.JSONDecodeError:
+        return None
+    return data if isinstance(data, list) else None
+
+
+def record_adversarial_pass(subject_session: str, subject_commit: str,
+                            reviewer_transcript: str, author_transcript: str,
+                            session: str, dry_run: bool = False) -> dict:
+    """Record a completed antagonist pass and its findings (RC4).
+
+    The requirement already existed three times -- the 2026-08-19 RULE, DR-2026-09-11
+    clause 2, and pipeline-contract.yaml's cross_stage/definition-of-done -- and none of
+    the three was enforced: nothing recorded a pass in checkable form, so batch 20's own
+    antagonist pass ran the SAME model as its author while its record called it
+    independent, and nothing caught that until this writer's own derivation could.
+
+    Refuses: a second pass for the same subject_session (RULE ACTION 5: at most one
+    adversarial pass per research batch); a self-administered pass (the two transcripts
+    resolve to the same file); a transcript outside `transcripts/` or not tracked; a
+    transcript with no assistant-turn model; a reviewer transcript whose final report
+    carries no findings block; a SUSTAINED finding with no severity, or a non-SUSTAINED
+    finding with one (RULE ACTION 2: severity grades a confirmed defect, and only that).
+    Writes one findings row per block entry -- it never retypes a finding by hand.
+    """
+    if subject_session.endswith(".md"):
+        subject_session = subject_session[:-3]
+    reviewer_path, reviewer_rel = _resolve_transcript_path(reviewer_transcript,
+                                                           "reviewer_transcript")
+    author_path, author_rel = _resolve_transcript_path(author_transcript,
+                                                       "author_transcript")
+    if reviewer_path == author_path:
+        raise Refusal(
+            "reviewer_transcript and author_transcript resolve to the same file. A "
+            "self-administered pass is not a pass -- batch 20 section 0 says this "
+            "about its own.")
+    for label, rel in (("reviewer_transcript", reviewer_rel), ("author_transcript", author_rel)):
+        if not _is_tracked(rel):
+            raise Refusal(
+                f"{label} {rel!r} is not a tracked file. Commit it first (CLAUDE.md "
+                f"rule 6) -- an untracked transcript is not an artefact.")
+    reviewer_models, reviewer_text = _read_transcript(reviewer_path)
+    author_models, _ = _read_transcript(author_path)
+    if not reviewer_models:
+        raise Refusal(f"{reviewer_rel}: no assistant turn carries a model.")
+    if not author_models:
+        raise Refusal(f"{author_rel}: no assistant turn carries a model.")
+    findings_block = _extract_findings_block(reviewer_text)
+    if findings_block is None:
+        raise Refusal(
+            f"{reviewer_rel}: the reviewer's final report carries no "
+            f"```json adversarial-findings``` block. See .claude/agents/antagonist.md, "
+            f"'Report shape'.")
+    for i, f in enumerate(findings_block):
+        if not isinstance(f, dict):
+            raise Refusal(f"findings block entry {i}: not an object.")
+
+    with connect(dry_run) as conn:
+        existing = conn.execute(
+            "SELECT pass_id FROM adversarial_passes WHERE subject_session=?",
+            [subject_session]).fetchone()
+        if existing:
+            raise Refusal(
+                f"a pass already exists for {subject_session} (pass_id "
+                f"{existing['pass_id']}). RULE ACTION (5): at most one adversarial pass "
+                f"per research batch; a pass on a pass is forbidden.")
+        # The allowed key set is DERIVED from the table's own columns, minus the ones
+        # a writer stamps or a later verb sets (rule 8: a hand-typed mirror of the
+        # schema is exactly the shape this DR's RC2 closes for a value vocabulary; this
+        # is the same shape for a column-name set).
+        writer_stamped = {"finding_id", "pass_id", "disposition", "disposition_ref",
+                          "disposed_by_session", "disposed_at",
+                          "created_by_session", "created_at"}
+        allowed_finding_cols = frozenset(dbcore.columns(conn, "adversarial_findings")) - writer_stamped
+        for i, f in enumerate(findings_block):
+            dbcore.validate_cols(f.keys(), allowed_finding_cols, "record-adversarial-pass")
+            if not (f.get("claim_attacked") or "").strip():
+                raise Refusal(f"findings block entry {i}: claim_attacked is required.")
+            if not (f.get("method") or "").strip():
+                raise Refusal(f"findings block entry {i}: method is required.")
+            verdict, severity = f.get("verdict"), f.get("severity")
+            if verdict == "SUSTAINED" and not (severity or "").strip():
+                raise Refusal(f"findings block entry {i}: verdict=SUSTAINED requires "
+                              f"severity (RULE ACTION 2).")
+            if verdict != "SUSTAINED" and severity:
+                raise Refusal(f"findings block entry {i}: severity is set but verdict is "
+                              f"{verdict!r}, not SUSTAINED -- only a confirmed defect is graded.")
+            dbcore.check_declared(conn, "adversarial_findings", "lens", f.get("lens"),
+                                  f"findings block entry {i}")
+            dbcore.check_declared(conn, "adversarial_findings", "verdict", f.get("verdict"),
+                                  f"findings block entry {i}")
+            if severity:
+                dbcore.check_declared(conn, "adversarial_findings", "severity",
+                                      severity, f"findings block entry {i}")
+        row = {
+            "subject_session": subject_session, "subject_commit": subject_commit,
+            "reviewer_transcript": reviewer_rel,
+            "reviewer_models": json.dumps(reviewer_models),
+            "author_transcript": author_rel,
+            "author_models": json.dumps(author_models),
+        }
+        row.update(dbcore.stamp_for(conn, "adversarial_passes", session))
+        cols = ", ".join(row)
+        cur = conn.execute(
+            f"INSERT INTO adversarial_passes ({cols}) VALUES ({', '.join('?' * len(row))})",
+            list(row.values()))
+        pass_id = cur.lastrowid
+        finding_ids = []
+        for f in findings_block:
+            frow = {
+                "pass_id": pass_id, "lens": f.get("lens"),
+                "subject_table": f.get("subject_table"), "subject_key": f.get("subject_key"),
+                "claim_attacked": f["claim_attacked"], "method": f["method"],
+                "artefact": f.get("artefact"), "verdict": f.get("verdict"),
+                "severity": f.get("severity"),
+            }
+            frow.update(dbcore.stamp_for(conn, "adversarial_findings", session))
+            fcols = ", ".join(frow)
+            fcur = conn.execute(
+                f"INSERT INTO adversarial_findings ({fcols}) VALUES ({', '.join('?' * len(frow))})",
+                list(frow.values()))
+            finding_ids.append(fcur.lastrowid)
+    return {"pass_id": pass_id, "finding_ids": finding_ids,
+            "reviewer_models": reviewer_models, "author_models": author_models,
+            "same_model": bool(set(reviewer_models) & set(author_models))}
+
+
+def dispose_adversarial_finding(finding_id: int, disposition: str, ref: str, session: str,
+                                reason: str = None, dry_run: bool = False) -> dict:
+    """Set a finding's disposition (RC4). Disposition resolves a CONFIRMED defect, so it
+    applies only to a SUSTAINED finding, and only once -- a second call is refused rather
+    than silently overwriting the first judge's record (CLAUDE.md rule 8: name who judged
+    it, permanently, not whoever called last).
+
+    REPAIRED requires `ref` to be an existing data migration path under
+    scripts/migrations/. OWNER-RULED requires `ref` of the form
+    `references/project-standards.md :: "<verbatim quote>"`, the quote occurring
+    exactly once in the ledger's SUBSTANTIVE prose under the RC3 normalisation
+    (`dbcore.count_ledger_quote`, excluding SUPERSEDES/BY citation lines) -- the same
+    anchor the SUPERSEDES/BY grammar uses. REJECTED and PROVISIONAL-DISPUTED require
+    --reason.
+    """
+    with connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT finding_id, verdict, disposition FROM adversarial_findings "
+            "WHERE finding_id=?", [finding_id]).fetchone()
+        if row is None:
+            raise Refusal(f"finding {finding_id}: no such finding.")
+        if row["verdict"] != "SUSTAINED":
+            raise Refusal(
+                f"finding {finding_id}: verdict is {row['verdict']!r}, not SUSTAINED. "
+                f"Disposition resolves a confirmed defect; nothing to dispose here.")
+        if row["disposition"] is not None:
+            raise Refusal(
+                f"finding {finding_id}: already disposed as {row['disposition']!r}. "
+                f"A disposition is not amended by a second call.")
+        dbcore.check_declared(conn, "adversarial_findings", "disposition", disposition,
+                              f"finding {finding_id}")
+        if disposition == "REPAIRED":
+            import migrate_db
+            valid = bool(
+                ref and ref.startswith("scripts/migrations/")
+                and migrate_db.DATA_PATTERN.match(Path(ref).name)
+                and (dbcore.REPO_ROOT / ref).exists())
+            if not valid:
+                raise Refusal(
+                    f"finding {finding_id}: disposition=REPAIRED requires --ref to be an "
+                    f"existing file under scripts/migrations/ matching "
+                    f"migrate_db.DATA_PATTERN; got {ref!r}.")
+        elif disposition == "OWNER-RULED":
+            m = re.match(r'^references/project-standards\.md :: "(.+)"$', ref or "", re.S)
+            if not m:
+                raise Refusal(
+                    f"finding {finding_id}: disposition=OWNER-RULED requires --ref of the "
+                    f"form 'references/project-standards.md :: \"<verbatim quote>\"'.")
+            quote = m.group(1)
+            text = (dbcore.REPO_ROOT / "references" / "project-standards.md").read_text(
+                encoding="utf-8")
+            n = dbcore.count_ledger_quote(dbcore.strip_supersedes_citations(text), quote)
+            if n != 1:
+                raise Refusal(
+                    f"finding {finding_id}: the quote occurs {n} time(s) in the ledger's "
+                    f"substantive prose (RC3 normalisation, excluding SUPERSEDES citation "
+                    f"lines); it must occur exactly once.")
+        elif disposition in ("REJECTED", "PROVISIONAL-DISPUTED"):
+            reason = dbcore.require_reason(reason, f"finding {finding_id}")
+            ref = reason
+        stamp = audit(session)
+        conn.execute(
+            "UPDATE adversarial_findings SET disposition=?, disposition_ref=?, "
+            "disposed_by_session=?, disposed_at=? WHERE finding_id=?",
+            [disposition, ref, session, stamp["created_at"], finding_id])
+        return {"finding_id": finding_id, "disposition": disposition, "disposition_ref": ref,
+                "disposed_by_session": session, "disposed_at": stamp["created_at"]}
+
+
+def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) -> dict:
+    """Close a pass (RC4). Refuses unless every lens has a row, at least one row is
+    SURVIVED, every NOT-ATTACKED row's method says why, and every SURVIVED row names
+    an artefact that exists on disk.
+    """
+    with connect(dry_run) as conn:
+        prow = conn.execute(
+            "SELECT pass_id, closed_at FROM adversarial_passes WHERE pass_id=?",
+            [pass_id]).fetchone()
+        if prow is None:
+            raise Refusal(f"pass {pass_id}: no such pass.")
+        if prow["closed_at"]:
+            raise Refusal(f"pass {pass_id}: already closed at {prow['closed_at']}.")
+        findings = conn.execute(
+            "SELECT finding_id, lens, verdict, method, artefact FROM adversarial_findings "
+            "WHERE pass_id=?", [pass_id]).fetchall()
+        all_lenses = dbcore.check_values(conn, "adversarial_findings", "lens")
+        missing = sorted(all_lenses - {f["lens"] for f in findings})
+        if missing:
+            raise Refusal(f"pass {pass_id}: no finding for lens(es) {missing}.")
+        if not any(f["verdict"] == "SURVIVED" for f in findings):
+            raise Refusal(
+                f"pass {pass_id}: no SURVIVED row. A zero-finding pass must be able to "
+                f"show what it attacked (2026-08-19 RULE), or it is indistinguishable "
+                f"from a pass that never ran.")
+        for f in findings:
+            if (f["verdict"] == "NOT-ATTACKED"
+                    and len((f["method"] or "").strip()) < 10):
+                raise Refusal(
+                    f"finding {f['finding_id']}: verdict=NOT-ATTACKED but method "
+                    f"({f['method']!r}) is too short to say why. A placeholder is not "
+                    f"a reason.")
+            if f["verdict"] == "SURVIVED":
+                artefact = f["artefact"] or ""
+                resolved = dbcore.resolve_under(dbcore.REPO_ROOT, artefact) if artefact else None
+                if not resolved or not resolved.is_file():
+                    raise Refusal(
+                        f"finding {f['finding_id']}: verdict=SURVIVED names artefact "
+                        f"{artefact!r}, which is not an existing file under the repo.")
+        stamp = audit(session)
+        conn.execute("UPDATE adversarial_passes SET closed_at=? WHERE pass_id=?",
+                     [stamp["created_at"], pass_id])
+        return {"pass_id": pass_id, "closed_at": stamp["created_at"], "findings": len(findings)}
 
 
 def _check_rehome_destination(conn, subject: str, suggested_slug, found_under_slug):
@@ -7316,12 +7991,29 @@ def get_unmined_gaps(*, gap_id: str | None = None,
 # ===========================================================================
 
 
+def _check_surfaced_in(conn, exec_id, surfaced_in, surfaced_quote, locator, label):
+    """Enforce DR-2026-09-26 section 2.2(d)'s refusal on `surfaced_in`/`surfaced_quote`.
+
+    A thin wrapper: `retrieval_log.check_surfaced_in` is the ONE evaluation, shared
+    with `provenance_artefact_audit.py`'s re-derivation (rule 5). `conn` is unused
+    here -- retrieval_log opens its own read-only connection, on purpose, staying
+    independent of the write path (dbcore.py's docstring: "a writer that verifies
+    itself verifies nothing").
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                              # noqa: E402
+    try:
+        return retrieval_log.check_surfaced_in(exec_id, surfaced_in, surfaced_quote, locator)
+    except ValueError as e:
+        raise Refusal(f"{label}: {e}")
+
+
 def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> str:
     """Stage a screened-but-not-admitted candidate (research stage)."""
     _COLS = frozenset({
         "candidate_id", "exec_id", "found_under_slug", "suggested_slug", "disposition",
         "title", "locator", "locator_status", "tier_guess", "harm_finding",
-        "why_not_admitted", "notes",
+        "why_not_admitted", "notes", "surfaced_in", "surfaced_quote",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_search_candidate")
     with dbcore.connect(dry_run) as conn:
@@ -7331,6 +8023,9 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
                 f"exec_id {data['exec_id']!r} is not a live search_executions row. "
                 f"A candidate is something a SEARCH surfaced; log the search first "
                 f"(db.py log-search), then stage what it found.")
+        _check_surfaced_in(conn, data.get("exec_id"), data.get("surfaced_in"),
+                           data.get("surfaced_quote"), data.get("locator"),
+                           "add-candidate")
         if not dbcore.exists(conn, "slugs", "slug", data.get("found_under_slug")):
             raise Refusal(
                 f"found_under_slug {data.get('found_under_slug')!r} is not in `slugs`.")

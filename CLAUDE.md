@@ -69,7 +69,8 @@ directive are what a ruling *changes* — never an argument against it. Numbered
 this file tilts the other way.
 *Proof: on 2026-08-18 the owner ruled `axes` a bad coined term, marked "do not relitigate", and the
 next day a batch framed four of five searches on bare `axis_code`, hiding a second mechanism.*
-→ **NOT ENFORCED — you are the gate.**
+→ **PARTLY ENFORCED** by `supersession_backpointer_audit`, for supersessions a `SUPERSEDES` line
+names. Naming them is yours.
 
 **1. Commit format.** `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, from
 `date -u '+%Y-%m-%d %H:%M'`. Use `governance` when no project skill fits.
@@ -203,6 +204,20 @@ used a fraction of the tokens of the batch that opened early.*
 and polling, but not the subscription PR creation makes, so the unsubscribe step is yours. Never
 deny `unsubscribe_pr_activity`. `ci.yml`'s `concurrency` block
 cancels superseded runs, which saves runner time but does not stop a wake-up.
+
+**10. Research and the tooling it uses ship apart.** A schema migration, a new `db.py` verb, a
+new check — anything Layer 0/1/2 — goes in a tooling-only PR, merged to main first. A research
+batch's rows go in their own PR after. A writer gap discovered mid-batch is filed as a GAP and
+either left unwritten or written through verbs the CLI already has; it is never patched with hand
+SQL disguised inside the batch's data migration. Batch 20 shipped `link-admission` (a tautology),
+`unlink-admission` (unshippable — its own capture path refused the DELETE) and vacuous pre-write
+checks alongside its rows in one PR, and "every correctness defect was found by running the code,
+not by any gate." `data/guidebook.db` shipping with a SCHEMA-only migration (no `data_*.sql` file
+alongside) is not a violation — that is the ordinary shape of a schema bump, not research content.
+→ **PARTLY ENFORCED** by `research_tooling_separation` (advisory; DR-2026-09-26-recurring-
+defect-shapes-remediation.md section 6, RC6). `governance/check-registry.yaml` itself classifies
+`governance`, so a registry entry landing new tooling alongside research rows is invisible to it —
+named, not patched.
 
 ---
 
@@ -390,7 +405,17 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   when you create the batch folder. **It also goes stale when your PR merges mid-session** — the
   folder it names is then a merged PR's, and your command log appends to someone else's record until
   you move it. Name the folder for the branch and `git mv` once the PR number exists; never guess a
-  number, because a guess that lands teaches nobody.
+  number, because a guess that lands teaches nobody. **`CURRENT` holds the DB SESSION STEM**
+  (`session_YYYY-MM-DD-<slug>`), not a bare branch slug — batches 11–15 wrote branch slugs while
+  their rows were stamped `session_...`, and any check reading `CURRENT` (e.g.
+  `adversarial_pass_recorded`, RC4) scopes to zero rows on the mismatch and reports green.
+  **THE SCRATCHPAD FOLDER MUST BE NAMED IDENTICALLY TO `CURRENT`'S CONTENT, not just similarly** —
+  `.claude/hooks/record-command.py`'s `open_session()` requires `(scratchpad/<CURRENT content>).is_dir()`
+  to be literally true, or it falls through to a same-harness-sid fallback that can (and did,
+  2026-09-27) misfile the command log into an unrelated PAST session's directory for as long as the
+  mismatch stands. Changing `CURRENT`'s content without renaming the folder to match breaks routing
+  immediately, silently, and the misrouted lines have to be found by `session_id` and moved by hand
+  afterward — rename the folder in the SAME action that changes `CURRENT`.
 - **`git rebase` and `git checkout -B` are blocked in this harness** as history-rewriting. When a
   merged PR leaves unmerged commits on your branch, `git merge origin/main` reaches the same state
   without rewriting anything — the branch carries a merge commit rather than a replay.

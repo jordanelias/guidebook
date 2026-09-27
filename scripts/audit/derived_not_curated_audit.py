@@ -59,7 +59,30 @@ A CHECK THAT GREPS ITS OWN REPOSITORY, deliberately. The alternative is importin
 and inspecting the parser, which would run module-level code and couple this gate to the
 writer it polices — the thing dbcore's own docstring says a gate must not do.
 
-EXAMINED counts `choices=` literals inspected, not files read.
+THREE MORE CLASSES, added 2026-09-27 (RC2, DR-2026-09-26-recurring-defect-shapes-remediation.md
+section 3). The first pass above sees only a bracketed `choices=[...]` literal; the
+detector was blind to every OTHER shape the same shortcut takes. `grep -c 'choices='
+scripts/db.py` against `grep -c 'choices=dbcore\.\(schema_choices\|check_values\)'
+scripts/db.py` (CLAUDE.md rule 8) names the gap this closes.
+
+  * CLASS 3 — a module-level string collection (frozenset/set/list/tuple literal) in a
+    writer module that EQUALS a live CHECK IN-list. FAILS. A collection that is a proper
+    SUBSET of a live vocabulary is printed as SUBSET and never fails — three exist today
+    on purpose (`_VALID_DIRECTIONS`, `_ROW_ONLY_RELATIONS`,
+    `assess_cell.VALUE_SUPPLYING_ROLES`), each a deliberate restriction, not a drifted
+    copy. Neither list is quoted here as a count; the class computes both live, each run.
+  * CLASS 4 — a numeric `choices=` (a `range(...)` or an integer literal list) that
+    mirrors a `BETWEEN` CHECK, read through `dbcore.check_expression` rather than
+    `check_values` (which cannot parse a range expression). `--target-tier
+    choices=range(1, 7)` mirroring `target_tier BETWEEN 1 AND 6` is the specimen.
+  * CLASS 5 — a DDL comment enumerating three or more pipe-separated values on a column
+    with NO CHECK at all. REPORTED, never failed — the remedy is a judgement call (does
+    this column get a CHECK, and is its vocabulary doctrinal), not a mechanical rewrite.
+    `search_executions.engine` is the specimen: its vocabulary lives only in a comment,
+    and live rows already hold values outside it.
+
+EXAMINED counts `choices=` literals, module-level collections, and DDL-comment
+enumerations inspected — not files read.
 """
 import ast
 import os
@@ -71,9 +94,24 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent.parent
 DB = os.environ.get("GUIDEBOOK_DB_PATH", str(ROOT / "data" / "guidebook.db"))
 
+sys.path.insert(0, str(ROOT / "scripts"))
+import dbcore                                                        # noqa: E402
+
 #: Files whose argparse parsers are in scope. The writers; a report script that offers a
 #: fixed menu of its own output formats is not restating a schema vocabulary.
 SCANNED = ("scripts/db.py",)
+
+#: Class 3's scan set — the three writer modules the DR names (section 3.1). Wider than
+#: SCANNED because a module-level collection, unlike an argparse choices= literal, can
+#: live in any of them.
+MODULE_SCAN = ("scripts/db.py", "scripts/dbcore.py", "scripts/assess/assess_cell.py")
+
+_RANGE_CALL = re.compile(r"choices=range\((-?\d+),\s*(-?\d+)\)")
+_INT_LIST = re.compile(r"choices=\[([^\]]*)\]")
+#: Class 5: a column definition line ending in a comment holding >=3 pipe-separated
+#: tokens. The column name is the first identifier on the line (quoted or bare).
+_COMMENT_ENUM_LINE = re.compile(
+    r'^\s*"?(\w+)"?\s+\w+.*--\s*([^\s|][^|]*(?:\|[^|]+){2,})\s*$')
 
 #: Trees scanned for the column-name class. Wider than SCANNED because any writer can
 #: hard-code a column name, and AST parsing is cheap. Derived by walk, never listed.
@@ -89,8 +127,6 @@ _LITERAL = re.compile(r'"([^"]*)"|\'([^\']*)\'')
 
 def check_vocabularies(con):
     """Every column CHECK vocabulary in the live schema, keyed by its value set."""
-    sys.path.insert(0, str(ROOT / "scripts"))
-    import dbcore                                                    # noqa: E402
     out = {}
     for (table,) in con.execute(
             "SELECT name FROM sqlite_master WHERE type='table'"):
@@ -203,6 +239,175 @@ def scan_writer_columns(con):
     return examined, violations
 
 
+def _literal_collection(node):
+    """The set of string constants in a module-level collection literal, or None.
+
+    Handles `frozenset({...})` / `frozenset((...))` / `frozenset([...])` calls and bare
+    Set/List/Tuple literals — the shapes `_VALID_DIRECTIONS` (frozenset), the retired
+    `_ROW_ONLY_RELATIONS` (tuple) and `assess_cell.VALUE_SUPPLYING_ROLES` (tuple) all use.
+    Returns None for anything that is not entirely string constants (so an int range or a
+    mixed list is never mistaken for a vocabulary mirror — that is Class 4's job).
+    """
+    if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+            and node.func.id == "frozenset" and node.args
+            and isinstance(node.args[0], (ast.Set, ast.List, ast.Tuple))):
+        node = node.args[0]
+    if not isinstance(node, (ast.Set, ast.List, ast.Tuple)):
+        return None
+    out = set()
+    for elt in node.elts:
+        if isinstance(elt, ast.Constant) and isinstance(elt.value, str):
+            out.add(elt.value)
+        else:
+            return None
+    return out if out else None
+
+
+def scan_module_collections(con, vocab):
+    """Class 3: a module-level string collection that equals or is a subset of a live
+    CHECK vocabulary. Equality FAILs; a proper subset is reported as SUBSET only."""
+    examined, violations, subsets = 0, [], []
+    for rel in MODULE_SCAN:
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        src = path.read_text(encoding="utf-8", errors="replace")
+        try:
+            tree = ast.parse(src)
+        except SyntaxError:
+            continue
+        for node in tree.body:          # module level only — a local variable is scoped
+            if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+                continue
+            target = node.targets[0]
+            if not isinstance(target, ast.Name):
+                continue
+            lits = _literal_collection(node.value)
+            if lits is None:
+                continue
+            examined += 1
+            frozen = frozenset(lits)
+            owner = vocab.get(frozen)
+            if owner:
+                table, column = owner[0]
+                violations.append(
+                    "%s:%d `%s` EQUALS the CHECK on %s.%s — replace with "
+                    "dbcore.check_values(conn, %r, %r) or dbcore.schema_choices(%r, %r)"
+                    % (rel, node.lineno, target.id, table, column,
+                       table, column, table, column))
+                continue
+            for live, owners in vocab.items():
+                if lits and lits < live:          # proper subset
+                    t, c = owners[0]
+                    subsets.append(
+                        "%s:%d `%s` is a SUBSET of the CHECK on %s.%s (%d of %d values) "
+                        "— reported only; a deliberate restriction is not a violation"
+                        % (rel, node.lineno, target.id, t, c, len(lits), len(live)))
+                    break
+    return examined, violations, subsets
+
+
+_FLAG_NAME = re.compile(r'"(--[\w-]+)"')
+
+
+def _flag_on_line(src: str, pos: int):
+    """The first `"--flag-name"` on the physical line containing `pos`, or None.
+
+    Required to accept a Class 4 match: `add-supersession-check --tier
+    choices=[1,2,3,4,5,6]` numerically coincides with `search_executions.target_tier`'s
+    BETWEEN 1 AND 6, and the two are UNRELATED — the flag writes
+    `supersession_check.anchor_evidence_type`, which declares no CHECK at all, and the
+    code's own comment explains at length why borrowing a foreign column's CHECK there
+    would be silently wrong. Class 1's string-vocabulary match has the same ambiguity and
+    resolves it with a caveat rather than a name check because an exact string-set
+    coincidence is rare; a 1..6 or 1..N integer span is not, so Class 4 requires the flag
+    name to equal the mirrored column's name before it reports anything.
+    """
+    line_start = src.rfind("\n", 0, pos) + 1
+    line_end = src.find("\n", pos)
+    line = src[line_start:(line_end if line_end != -1 else len(src))]
+    m = _FLAG_NAME.search(line)
+    return m.group(1)[2:].replace("-", "_") if m else None
+
+
+def _report_numeric_mirror(rel, src, m, span, display, between):
+    """One Class-4 violation string, or None — shared by both the range() and int-list
+    finditer loops below, which differ only in how `span`/`display` are derived."""
+    owner = next((o for o in between.get(span, [])
+                 if o[1] == _flag_on_line(src, m.start())), None)
+    if not owner:
+        return None
+    line = src[:m.start()].count("\n") + 1
+    table, column = owner
+    return ("%s:%d choices=%s mirrors %s.%s's BETWEEN %d AND %d — read it with "
+           "dbcore.schema_range(%r, %r) instead"
+           % (rel, line, display, table, column, span[0], span[1], table, column))
+
+
+def scan_numeric_mirrors(con):
+    """Class 4: a numeric choices= (range(...) or an int literal list) that mirrors a
+    BETWEEN CHECK, read through dbcore.schema_range (check_values cannot parse a range
+    expression). Only reported when the flag's own name equals the mirrored column's
+    name — see `_flag_on_line`."""
+    between = {}    # (lo, hi) -> [(table, column), ...], derived from every live CHECK
+    for (table,) in con.execute("SELECT name FROM sqlite_master WHERE type='table'"):
+        for col in con.execute('PRAGMA table_info("%s")' % table):
+            span = dbcore.schema_range(table, col[1])
+            if span:
+                between.setdefault((span.start, span.stop - 1), []).append((table, col[1]))
+
+    examined, violations = 0, []
+    for rel in SCANNED:
+        path = ROOT / rel
+        if not path.exists():
+            continue
+        src = path.read_text(encoding="utf-8", errors="replace")
+        for m in _RANGE_CALL.finditer(src):
+            lo, hi_exclusive = int(m.group(1)), int(m.group(2))
+            span = (lo, hi_exclusive - 1)     # range(a, b) is a..b-1 inclusive
+            examined += 1
+            v = _report_numeric_mirror(rel, src, m, span, "range(%d, %d)" % (lo, hi_exclusive),
+                                       between)
+            if v:
+                violations.append(v)
+        for m in _INT_LIST.finditer(src):
+            lits = _LITERAL.findall(m.group(1))
+            if lits:
+                continue    # a string list, already Class 1's subject
+            try:
+                nums = sorted(int(x.strip()) for x in m.group(1).split(",") if x.strip())
+            except ValueError:
+                continue
+            if not nums or nums != list(range(nums[0], nums[-1] + 1)):
+                continue    # not contiguous — not a range mirror
+            examined += 1
+            v = _report_numeric_mirror(rel, src, m, (nums[0], nums[-1]), str(nums), between)
+            if v:
+                violations.append(v)
+    return examined, violations
+
+
+def scan_comment_vocabularies(con):
+    """Class 5: a DDL comment enumerating >=3 pipe-separated values on a column with no
+    CHECK at all. Reported, never failed — the remedy needs judgement."""
+    examined, reported = 0, []
+    for (table, sql) in con.execute(
+            "SELECT name, sql FROM sqlite_master WHERE type='table' AND sql IS NOT NULL"):
+        for line in sql.splitlines():
+            m = _COMMENT_ENUM_LINE.match(line)
+            if not m:
+                continue
+            column, tokens = m.group(1), m.group(2)
+            examined += 1
+            if dbcore.check_values(con, table, column):
+                continue    # already has a real, parseable CHECK
+            reported.append(
+                "%s.%s: comment enumerates %d value(s) (%s) with NO CHECK on the column "
+                "— a judgement call, not asserted here"
+                % (table, column, len(tokens.split("|")), tokens.strip()))
+    return examined, reported
+
+
 def main():
     if not Path(DB).exists():
         print("FAIL: no database at %s" % DB)
@@ -236,13 +441,32 @@ def main():
     col_examined, col_violations = scan_writer_columns(con)
     violations += col_violations
 
+    mod_examined, mod_violations, mod_subsets = scan_module_collections(con, vocab)
+    violations += mod_violations
+
+    num_examined, num_violations = scan_numeric_mirrors(con)
+    violations += num_violations
+
+    cmt_examined, cmt_reported = scan_comment_vocabularies(con)
+
     print("EXAMINED: %d argparse choices= literal(s) across %d writer file(s), against "
-          "%d live CHECK vocabular(ies); and %d row dict(s) against the columns of the "
-          "table their own function writes" % (examined, len(SCANNED), len(vocab),
-                                               col_examined))
+          "%d live CHECK vocabular(ies); %d row dict(s) against the columns of the "
+          "table their own function writes; %d module-level collection(s) across %d "
+          "module(s); %d numeric choices=; %d DDL-comment enumeration(s)"
+          % (examined, len(SCANNED), len(vocab), col_examined, mod_examined,
+             len(MODULE_SCAN), num_examined, cmt_examined))
     print("VERDICT: " + ("FAIL" if violations else "CLEAN"))
     for v in violations:
         print("  * " + v)
+    if mod_subsets:
+        print("SUBSET (not a violation — a deliberate restriction, reported so it stays "
+              "legible as one):")
+        for s in mod_subsets:
+            print("  * " + s)
+    if cmt_reported:
+        print("REPORTED (not blocking — a judgement call, class 5):")
+        for r in cmt_reported:
+            print("  * " + r)
     return 1 if violations else 0
 
 

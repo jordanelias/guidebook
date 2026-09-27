@@ -45,6 +45,16 @@ judged_on: '2026-09-17'
 # `convergence_sources` remains of that pair. It was caught by
 # this file's OWN falsifier (`pipeline_walk.py --check` reported them unassigned within a
 # minute of the migrations landing), which is the behaviour its header asks for.
+#
+# 2026-09-27, session_2026-09-27-recent-prs-orientation-f5wt5i: added
+# `adversarial_passes`/`adversarial_findings` (migration 097, RC4) as INFRASTRUCTURE --
+# same reasoning as `item_audit_runs`/`pipeline_runs` above: a record OF a diff and the
+# review that attacked it, keyed on a session stem, a git sha and two transcript paths,
+# none of them stage content. Migration 097's own header corrects a first-draft claim
+# that these sit at judgment: `subject_table`/`subject_key` are untyped, unenforced
+# pointers into whichever stage a finding happens to attack, never one stage in
+# particular, so the table itself cannot be assigned to one either. Caught by this
+# file's own falsifier within the same session that added the migration.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -53,6 +63,8 @@ tables:
   access_need_icf: base
   access_needs: base
   access_stakes: base
+  adversarial_findings: infrastructure
+  adversarial_passes: infrastructure
   axes: base
   base_icf: base
   base_parameters: base
@@ -108,6 +120,7 @@ tables:
   search_admissions: research
   search_candidates: research
   search_coverage: research
+  search_execution_artefacts: research
   search_executions: research
   search_languages: research
   situations: base

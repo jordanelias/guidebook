@@ -218,6 +218,28 @@ def upd(session: str) -> dict:
 # SET a -> b' -- because rows already carry them and a reader greps for them; migrating
 # them would change what a future row looks like beside every past one.
 
+def resolve_under(boundary, rel_path: str):
+    """`rel_path` (REPO-RELATIVE, always resolved against REPO_ROOT) confirmed to sit
+    under `boundary` (an absolute path -- REPO_ROOT itself, or a subdirectory of it),
+    or None.
+
+    A raw prefix check (`rel_path.startswith(str(boundary))`) or a bare string
+    comparison accepts `<boundary>/../elsewhere` (escapes `boundary` while matching the
+    prefix textually) and treats `x/./f` and `x/f` as different paths when they are the
+    same file. Both were demonstrated as live bypasses of a transcript-path refusal
+    during this project's own adversarial review (RC4). Normalise with
+    os.path.normpath, then resolve, then check containment on the RESOLVED path --
+    never on the string.
+    """
+    resolved = (REPO_ROOT / os.path.normpath(rel_path)).resolve()
+    boundary = Path(boundary).resolve()
+    try:
+        resolved.relative_to(boundary)
+    except ValueError:
+        return None
+    return resolved
+
+
 def require_reason(reason, subject: str,
                    why: str = "An amendment that cannot say why cannot be contested.") -> str:
     """The stripped --reason, or a Refusal naming `subject` when it is blank."""
@@ -238,6 +260,61 @@ def append_dated_note(existing, verb: str, session: str, detail: str,
     """
     when = (stamp or now())[:10]
     return (existing or "").rstrip() + f" || {verb} {when} by {session}: {detail}"
+
+
+#: RC3's normalisation (DR-2026-09-26-recurring-defect-shapes-remediation.md section
+#: 4.2a): strip one leading comment/quote marker per line, join with spaces, collapse
+#: whitespace -- so a quote that a `# `-wrap or a Markdown blockquote splits across
+#: lines can still be found. `retrieval_log.normalise_quote` is a DIFFERENT normaliser
+#: (letters-and-digits only, for matching a quote against retrieved payload bytes); this
+#: one is for ledger/DR prose and keeps punctuation and word boundaries.
+#: PUBLIC (no leading underscore): `supersession_backpointer_audit.py` needs the
+#: per-line and grammar primitives, not just the whole-text form below, to find
+#: paragraph boundaries -- the grammar and normalisation have one home, with a public
+#: interface, rather than a caller reaching past a "private" name to get at them.
+LEDGER_LINE_MARKER_RE = re.compile(r'^\s*(?:#|>|//|--)*\s?')
+LEDGER_SUPERSEDES_RE = re.compile(
+    r'^SUPERSEDES:\s*(\S+)\s*::\s*"(.+?)"\s*\n[ \t]*BY:\s*(\S+)\s*::\s*"(.+?)"\s*$',
+    re.M)
+
+
+def strip_ledger_line_marker(line: str) -> str:
+    """One line with its leading comment/quote marker stripped and trimmed."""
+    return LEDGER_LINE_MARKER_RE.sub("", line.rstrip("\n")).strip()
+
+
+def normalise_ledger_quote(text: str) -> str:
+    """`text` with each line's leading comment/quote marker stripped, space-joined,
+    whitespace collapsed. The ONE normalisation a SUPERSEDES/BY quote is checked under."""
+    joined = " ".join(strip_ledger_line_marker(l) for l in text.split("\n"))
+    return normalise_quote_text(joined)
+
+
+def normalise_quote_text(s: str) -> str:
+    """`s` with internal whitespace collapsed to single spaces and trimmed.
+
+    The smaller primitive `normalise_ledger_quote` and every SUPERSEDES/BY quote
+    comparison share, so a bare quote string (already free of comment markers) is
+    normalised the same way a multi-line text is.
+    """
+    return re.sub(r"\s+", " ", s.strip())
+
+
+def count_ledger_quote(text: str, quote: str) -> int:
+    """How many times `quote` occurs in `text` under `normalise_ledger_quote`."""
+    return normalise_ledger_quote(text).count(normalise_quote_text(quote))
+
+
+def strip_supersedes_citations(text: str) -> str:
+    """`text` with every SUPERSEDES/BY citation line pair removed.
+
+    Two SUPERSEDES lines are allowed to cite the SAME ruling (seed 2 of
+    DR-2026-09-26 section 4.2c reuses seed 1's BY quote, "with the same BY", rather
+    than each pointing at a distinct sentence). A BY quote's "exactly once"
+    requirement is checked against the ledger's SUBSTANTIVE prose, never against how
+    many SUPERSEDES lines cite it -- a citation is not a second assertion of the fact.
+    """
+    return LEDGER_SUPERSEDES_RE.sub("", text)
 
 
 def validate_cols(data_keys, whitelist: frozenset, context: str):
@@ -262,6 +339,30 @@ def norm_doi(doi):
     is a defect waiting for its second row.
     """
     return None if doi is None else doi.strip().lower()
+
+
+_DOI_IN_TEXT_RE = re.compile(r"10\.\d{4,9}/[^\s\"'<>()\[\]]+")
+_DOI_TRAILING_PUNCT_RE = re.compile(r"[.,;:]+$")
+
+
+def single_doi_in(text):
+    """The one DOI in free prose, or None if it holds zero or more than one.
+
+    DR-2026-09-26 section 2.2(d): a staged candidate's identifier is "the single
+    DOI in `locator`" -- `locator` is a sentence ("deposited reference bb0030 in
+    REF-01006's Crossref record"), not a DOI field, so this is a regex extraction
+    over prose, not a lookup. AMBIGUOUS ON PURPOSE: two DOIs in one locator means
+    the writer must say which one with --surfaced-quote instead of guessing.
+    Trailing sentence punctuation is stripped; a DOI containing a literal
+    trailing '.', ',', ';' or ':' is vanishingly rare, and none of this
+    project's stored DOIs do:
+    `select doi from evidence_sources where doi glob '*[.,;:]'`.
+    """
+    matches = [_DOI_TRAILING_PUNCT_RE.sub("", m) for m in _DOI_IN_TEXT_RE.findall(text or "")]
+    distinct = {norm_doi(m) for m in matches}
+    if len(distinct) != 1:
+        return None
+    return matches[0]
 
 
 _CO1_REF = re.compile(r"co1-(\d{2,3})", re.I)
@@ -644,6 +745,22 @@ def schema_choices(table: str, column: str):
     # cannot write anything; the worst case is a vocabulary read before a migration in
     # the same process, which is what the degraded-never-wrong contract above already
     # covers by returning None.
+    conn = _cached_ro_conn()
+    if conn is None:
+        return None
+    try:
+        return sorted(check_values(conn, table, column)) or None
+    except sqlite3.Error:
+        return None
+
+
+def _cached_ro_conn():
+    """The one shared read-only connection `schema_choices`/`schema_range` reuse, or None.
+
+    Keyed on the resolved path (see `schema_choices`'s docstring for the measurement that
+    justifies caching at all): pointing `GUIDEBOOK_DB_PATH` at a scratch copy opens that
+    file on the next call rather than reusing the canonical handle.
+    """
     key = str(db_path())
     conn = _CHOICES_CONNS.get(key)
     if conn is None:
@@ -652,10 +769,37 @@ def schema_choices(table: str, column: str):
         except sqlite3.Error:
             return None
         _CHOICES_CONNS[key] = conn
+    return conn
+
+
+def schema_range(table: str, column: str):
+    """argparse `choices=` for a column whose CHECK is a `BETWEEN lo AND hi` shape.
+
+    `schema_choices` above reads only a closed `IN (...)` list; a `BETWEEN` CHECK is a
+    shape `check_values` returns nothing for. RC2 (DR-2026-09-26-recurring-defect-shapes-
+    remediation.md section 3) found `--target-tier choices=range(1, 7)` mirroring
+    `search_executions.target_tier`'s `BETWEEN 1 AND 6` with no derived form to replace it
+    — this is that form, on the same cached-connection, degraded-never-wrong contract as
+    `schema_choices`. Returns None (never raises) when the column declares no CHECK, or a
+    CHECK that is not a `col BETWEEN lo AND hi` shape, or the database cannot be read.
+    """
+    conn = _cached_ro_conn()
+    if conn is None:
+        return None
     try:
-        return sorted(check_values(conn, table, column)) or None
+        expr = check_expression(conn, table, column)
     except sqlite3.Error:
         return None
+    if not expr:
+        return None
+    # search, not match/fullmatch: a nullable column's CHECK reads
+    # "col IS NULL OR col BETWEEN lo AND hi" — the BETWEEN clause is a substring, not
+    # the whole expression, and NULL is handled by argparse's own default=None.
+    m = re.search(r'"?%s"?\s+BETWEEN\s+(-?\d+)\s+AND\s+(-?\d+)' % re.escape(column),
+                  expr, re.I)
+    if not m:
+        return None
+    return range(int(m.group(1)), int(m.group(2)) + 1)
 
 
 def check_vocab(conn, table: str, column: str, value, context: str):
@@ -921,6 +1065,19 @@ def _selftest() -> int:
           all(REF_ID_SHAPE.fullmatch(x) for x in ("REF-00965", "REF-VERIFIED-011", "Co1-07")))
     check("REF_ID_SHAPE refuses a per-slug local label",
           not REF_ID_SHAPE.fullmatch("RAP-04"))
+
+    # single_doi_in (RC1, DR-2026-09-26 2.2d): the identifier a staged candidate is
+    # checked against is extracted from free prose, not a typed field.
+    check("single_doi_in extracts the one DOI in a sentence",
+          single_doi_in("deposited reference bb0030 in 10.1016/j.dialog.2026.100342's "
+                        "Crossref record") == "10.1016/j.dialog.2026.100342")
+    check("single_doi_in strips trailing sentence punctuation",
+          single_doi_in("see 10.3390/ijerph18062953.") == "10.3390/ijerph18062953")
+    check("single_doi_in returns None on zero DOIs", single_doi_in("no identifier here") is None)
+    check("single_doi_in returns None on two DISTINCT DOIs (ambiguous)",
+          single_doi_in("10.1000/a and 10.2000/b") is None)
+    check("single_doi_in is not confused by one DOI repeated (not ambiguous)",
+          single_doi_in("10.1000/a, also 10.1000/a") == "10.1000/a")
 
     # The write path must never be pointed at the committed blob by default in a
     # scratch run; and is_canonical must be able to say so.

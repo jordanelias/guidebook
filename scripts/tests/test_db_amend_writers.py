@@ -96,6 +96,11 @@ try:
                              prior_expectation="fixture prior, written before the call")
 
     def candidate(exec_id, title, disposition="PENDING-VERIFICATION", **extra):
+        # RC1 (DR-2026-09-26 2.2d) made --surfaced-in required. These fixtures have no
+        # real search history to link a payload to, so they use the TRANSCRIPT-ONLY
+        # route against a stable, tracked sentence in transcripts/README.md.
+        extra.setdefault("surfaced_in", "transcripts/README.md")
+        extra.setdefault("surfaced_quote", "single home for what the agents actually did")
         return int(db.insert_search_candidate(
             dict({"exec_id": exec_id, "found_under_slug": A, "disposition": disposition,
                   "title": title, "harm_finding": 0}, **extra), S))
