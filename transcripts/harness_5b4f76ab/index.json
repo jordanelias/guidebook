@@ -1,0 +1,16 @@
+[
+  {
+    "started": "2026-09-27T03:43:16",
+    "role": "other",
+    "bytes": 185152,
+    "agent_id_prefix": "adcdaf77",
+    "file": "2026-09-27T03-43-16_other_adcdaf77.jsonl"
+  },
+  {
+    "started": "2026-09-27T04:00:42",
+    "role": "adversarial",
+    "bytes": 439468,
+    "agent_id_prefix": "abf72a9d",
+    "file": "2026-09-27T04-00-42_adversarial_abf72a9d.jsonl"
+  }
+]

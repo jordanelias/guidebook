@@ -4171,3 +4171,59 @@ ACTION: (1) Treat the DR as RATIFIED, with the per-question dispositions above. 
 re-ask OQ-1, OQ-3, OQ-4, OQ-6 (seeds 1-2), or OQ-7 — they are answered. (3) OQ-5 and OQ-8 remain
 open; do not build against either without a fresh owner answer or a concrete sweep plan.
 DATE: 2026-09-27 — owner ruling, quoted above.
+
+## Owner ruling 2026-09-27 (second) — exec 77 executed per DR-2026-09-26 §5.2(d); further tooling on pass 1 stood down
+
+Given in this session, after an independent read-only adjudication (Fable 5.1, dispatched with no
+memory of the session that raised the question) tested whether continued work on the still-open
+`adversarial_passes` pass_id=1 (subject commit `9443fdb`) was warranted, or was the meta-work
+pattern `DR-2026-08-19` §2.1 names by name. Recorded on contact per rule 0.
+
+> "Execute as ratified? Proceed all."
+
+**(1) THE ADJUDICATION'S VERDICT STANDS.** Further tooling to force pass 1 closed is the
+spurious-apparatus pattern: the 2026-08-19 RULE's own ACTION (5) forbids it outright ("a pass on
+a pass is forbidden — defects in a pass are the next batch's pass's business"), and nothing
+depends on pass 1 closing — `adversarial_pass_recorded` is advisory and does not even query
+`adversarial_passes` when `EXAMINED`=0. Pass 1 stays OPEN. No `amend-adversarial-finding` verb is
+built; the artefact-shape mismatch behind findings 9–12 (`.claude/agents/antagonist.md`'s prose
+spec versus `close-adversarial-pass`'s literal single-file check) is named for the next tooling
+PR, not built standalone.
+
+**(2) EXEC 77 IS EXECUTED PER §5.2(d) AS RATIFIED.** The adjudication found the phase-2-data
+migration (`9443fdb`) had not actually carried out `DR-2026-09-26` §5.2(d)'s own instruction —
+exec 77's `origin` was left `planned` with `target_tier=1`/`target_evidence_type='clinical'`/
+`target_scope='high_control'` still live, though §5.2(d) states plainly "exec 77 → incidental".
+The prior session had declined to relabel it, because `amend-search`'s own writer refusal (added
+beyond the DR's text, to protect `v_coverage_branch`'s Co-1 count) blocks `--set-origin` while any
+of the three target columns is populated, and no setter could null them. Ruling: execute it.
+`scripts/db.py`'s `amend_search` gained `--clear-target`, nulling all three columns together (the
+refusal tests them as a group) and reading the effective post-clear state so
+`--clear-target --set-origin incidental` succeeds in one call — a coverage gap fixed, not
+bypassed, per CLAUDE.md's own "if you find one it cannot [reach], that is a coverage bug to fix,
+not a licence to bypass." Exec 77 now carries `origin='incidental'`, `target_tier`/
+`target_evidence_type`/`target_scope` NULL, and a `findings_note` trail recording both changes.
+Finding 2 is disposed `OWNER-RULED` against this entry.
+
+**(3) THE AUDIT'S BLIND SPOT IS LOGGED, NOT BUILT.** Finding 1 — `adversarial_pass_audit.py`
+reports `EXAMINED: 0` over 41 real UPDATEs because `search_executions`/`search_candidates` carry
+no `updated_by_session` column — is real (CLAUDE.md 5(a)'s named failure mode, inside the
+mechanism ratified 2026-09-27 to end it) but is filed as **GAP-053**, not fixed now: the same
+adjudication judged a standalone schema PR for it unwarranted, since nothing currently gates on
+the check. The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands. Finding 1
+is disposed `PROVISIONAL-DISPUTED`, pointing at GAP-053.
+
+**(4) FINDING 7 DID NOT REPRODUCE.** 23 rows (not 24) carry a `|| RC1/RC5 phase 2-data` segment,
+and each sits inside a correctly-formed `|| CORRECTED 2026-09-27:` marker — the bare `||` the
+finding read as a missing marker is a nested separator, not a defect. No script or check greps for
+the marker (`grep -rn CORRECTED scripts/audit governance` finds only `db.py` help-text). Disposed
+`REJECTED`.
+
+CONDITION: any session reading pass 1, exec 77's origin, GAP-053, or asking why pass 1 is still
+open.
+ACTION: (1) Treat exec 77 as `origin='incidental'`, executed, not merely proposed. (2) Do not
+build `amend-adversarial-finding` or otherwise chase pass 1 closed as its own effort; it stays
+open. (3) GAP-053 is the one record of the audit's blind spot until phase 2b; do not re-file it.
+(4) `amend-search --clear-target` is now the sanctioned way to null a row's target columns before
+an origin change — never hand-edit them.
+DATE: 2026-09-27 — owner ruling, quoted above.

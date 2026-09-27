@@ -1,0 +1,37 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-09-27-repo-data-status-check-ht2rsn",
+ "artifact": "sessions/session_2026-09-27-repo-data-status-check-ht2rsn.md",
+ "doctrine_sha": "86f0b65",
+ "rules_in_scope": [
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-09-27-repo-data-status-check-ht2rsn.json",
+   "reason": "This attestation, bound to the doctrine SHA this session started from. It covers the session record above, whose deviations are about this session's own earlier diagnostic errors and about a design decision (--clear-target) that was not independently re-reviewed."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "This session's own report to the user, before the independent adjudication ran, misstated finding 7 (claimed 24-of-24 non-conforming rows; the true count is 23, and none are actually non-conforming) and finding 10 (claimed no artefact at all; it has one, just not a file). Both were corrected by the adjudication and are recorded correctly in the session record, but the uncorrected versions were already shown to the user as this session's own analysis before the adjudication ran."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "The --clear-target design (nulling target_tier/target_evidence_type/target_scope together, in one writer call combinable with --set-origin) is this session's own judgment call, made after the user's execute-as-ratified instruction. It was not put back to the user or to a second independent reviewer before landing, unlike the exec-77 relabeling decision itself, which the Fable adjudication and the user both explicitly ruled on."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "No second antagonist pass was run over this session's own diff (the amend_search change, the ledger entry, the three dispositions) before this record was written, so the RULE's own definition-of-done (an independent adversarial pass on a diff that writes to its subject tables) is unsatisfied for this session's own writes to search_executions and adversarial_findings. This is filed as an open item, not concealed, on the same reasoning the adjudication itself gave for not chasing pass 1 closed: the check is advisory, and forcing a second pass on this small a diff risks being the same meta-work pattern this session was warned against."
+  },
+  {
+   "rule": "research-tooling-separation",
+   "reason": "research_tooling_separation (RC6, advisory) FAILS on this changeset: it carries scripts/db.py (tooling, --clear-target) and data/guidebook.db plus its migration (data) in one PR. Splitting into a tooling-only PR merged first and a data-only follow-up would require this session to merge its own PR to main, which it is not authorized to do unilaterally, for a six-line writer flag with no research batch behind it. Named rather than patched."
+  }
+ ],
+ "bias_direction": "A session that just received a pointed challenge about spurious work has an incentive to show something concrete got done, which pushes toward executing every item on the adjudication's list rather than stopping at the cheapest subset, and toward writing this record's 'what this session did' section as a story of correction and resolution rather than dwelling on how much of the original tooling-fix plan (a schema migration, a new verb, force-closing the pass) turned out to be unwarranted.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this session still built new tooling (--clear-target) in the same turn it was warned about spurious infrastructure work, and did so without a second adversarial pass -- the exact discipline the owner's 2026-09-27 instruction asked for and this session invoked for everything else in this thread. The counter is that --clear-target was not optional apparatus: it was the specific, minimal capability the owner's own execute-as-ratified ruling required to be possible at all, scoped to exactly the three columns one existing refusal already names as a group, and its absence -- not its presence -- was the actual coverage bug CLAUDE.md's own rule 8 names as illegitimate to route around by hand SQL.",
+ "verdict": "DEVIATION-LOGGED"
+}
