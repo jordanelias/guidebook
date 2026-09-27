@@ -596,15 +596,15 @@ checks:
   level: blocking
   basis: evidence/discovery-provenance
   cost: fast
-  no_floor: vocabulary-owed — RC1 (DR-2026-09-26-recurring-defect-shapes-remediation.md section
-    2), phase 2 (tooling). `search_candidates.surfaced_in` is a real writable column and the
-    refusal is live (add-candidate/reattribute-candidate both call
-    retrieval_log.check_surfaced_in), but nothing has written a value into it yet -- that is
-    phase 2-DATA's job (a separate PR, per RC6), which the DR's own section 2.2(e) says makes
-    this "non-vacuous from its first run, because section 5.2(d) sets surfaced_in on 123, 124
-    and 125." Ratchet this to a min_items floor of 1 in that PR, not before -- registering it here, on
-    a corpus this check has itself measured as empty (EXAMINED 0), would be exactly the vacuous-block
-    shape CLAUDE.md 5(a) exists to catch.
+  min_items: 1
+  floor_basis: RATCHETED 2026-09-27 (phase 2-data). Was a `vocabulary-owed` no_floor while the
+    corpus genuinely carried zero `surfaced_in` values -- registered that way in phase 2
+    (tooling) rather than pre-ratcheted on a subject this check itself measured as empty
+    (EXAMINED 0), which would have been the vacuous-block shape CLAUDE.md 5(a) exists to
+    catch. Phase 2-data's historical migration derived `surfaced_in` on 17 candidates (16 via
+    a linked payload's own DOI, 1 via a transcript quote), so the floor is live now, not
+    predicted -- derive the current count rather than trusting 17, via
+    `select count(*) from search_candidates where surfaced_in is not null`.
 - id: provenance_attribution_audit
   cmd:
   - python3
