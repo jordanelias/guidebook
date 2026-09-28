@@ -4227,3 +4227,48 @@ open. (3) GAP-053 is the one record of the audit's blind spot until phase 2b; do
 (4) `amend-search --clear-target` is now the sanctioned way to null a row's target columns before
 an origin change — never hand-edit them.
 DATE: 2026-09-27 — owner ruling, quoted above.
+
+CORRECTION — 2026-09-28. **A back-pointer for GAP-053's fix, built during DR-2026-09-26 phase 2b;
+the GAP-053 entry above stands as written, per this ledger's append-not-edit practice.**
+
+`scripts/db.py`'s `reattribute_candidate` carried a comment reasoning that `search_candidates`
+should never gain an `updated_at`/`updated_by_session` pair, because a reattribution's date and
+author already live in the row's own `notes` narrative — adding the pair would be "a second home
+for a fact the note already holds." That reasoning was sound for the purpose it addressed (a
+human reader of `notes`) and is superseded here for a different purpose (a machine reader):
+`adversarial_pass_audit.py` (RC4) scopes a session's subject rows by matching every column ending
+`_by_session` on the 2026-08-19 RULE's named tables, and `search_candidates` carrying only
+`created_by_session` made every UPDATE this writer issues invisible to that scope — GAP-053's
+finding. Migration 100 (phase 2b) adds the pair; the writer now stamps it from the same
+`audit(session)` call that writes the narrative note, so the two homes are written together and
+cannot drift — not the shape rule 5 forbids, which is two independently-written homes of one fact.
+
+```
+SUPERSEDES: scripts/db.py :: "the column does not exist, and adding one to record a repair would be a second home for a fact the note already holds."
+  BY: references/project-standards.md :: "The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands."
+```
+
+A second comment in the same file asserted the same fact for a sibling function, and is superseded
+by the same ruling — reusing the BY quote, not asserting it twice (the audit's own convention: two
+`SUPERSEDES` lines may cite one ruling, per DR-2026-09-26 §4.2(c)'s two seeds).
+
+```
+SUPERSEDES: scripts/db.py :: "search_candidates has no updated_* pair, so the dated, attributed line IS the audit record of the resolution (the literal RESOLVED is R15's predicate)."
+  BY: references/project-standards.md :: "The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands."
+```
+
+A "SUPERSEDED IN PART" marker naming this entry and GAP-053, carrying the BY quote verbatim, has
+been appended immediately after each target sentence in `scripts/db.py` — the original comments are
+untouched, per the append-not-edit practice this trailer itself depends on.
+
+CONDITION: any session reading `reattribute_candidate`'s original comment, or asking why
+`search_candidates` carries `updated_at`/`updated_by_session` despite that comment's stated
+objection.
+ACTION: (1) Treat the objection as answered for GAP-053's specific (machine-reader) purpose, not
+retracted in general — a future addition of a THIRD home for the same fact, for the same
+human-narrative purpose the original comment addressed, is not licensed by this entry. (2) Do not
+edit `reattribute_candidate`'s original comment; the marker beside it is where this is recorded at
+the source. (3) A `SUPERSEDES`/`BY` pair is verified by `supersession_backpointer_audit.py` against
+the live text of both files, never by re-reading this entry.
+DATE: 2026-09-28 — built per DR-2026-09-26 §§1 and 6 (RC4/GAP-053 and RC6), during phase 2b
+construction.

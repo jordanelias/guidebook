@@ -315,9 +315,12 @@ CREATE TABLE citation_mining (
     doi                 TEXT,
     backward            INTEGER NOT NULL DEFAULT 0 CHECK(backward IN (0,1)),
     forward             INTEGER NOT NULL DEFAULT 0 CHECK(forward IN (0,1)),
-    connections_produced TEXT NOT NULL DEFAULT '[]',
-                        -- JSON array of CON-IDs: ["CON-0241","CON-0242"]
-                        -- Array not range string — IDs may be non-contiguous
+    connections_produced TEXT,
+                        -- RETIRED 2026-09-28 (DR-2026-09-26 phase 2b, migration 099).
+                        -- WAS: NOT NULL DEFAULT '[]', a JSON array of CON-IDs. No writer
+                        -- sets it on a new row; historical rows keep whatever they held.
+                        -- What a mining pass surfaced now lives in the event home RC5
+                        -- settled: search_executions.mined_ref_id + search_candidates.exec_id.
     notes               TEXT,
     -- audit
     created_at          TEXT NOT NULL,
@@ -695,13 +698,21 @@ def update_gap_priority(gap_id: str, priority: str,
 
 ### 5.4 Storage layer — Citation Mining
 
+> **This illustration predates several since-superseded changes to the live functions**
+> (the `doi` parameter's removal 2026-08-24, the `global_ref_id` rekey 2026-09-02,
+> `connections_produced`'s retirement 2026-09-28 — DR-2026-09-26 phase 2b). It is kept
+> for the shape of the write pattern, not as a byte-accurate mirror; read
+> `scripts/db.py`'s `is_mined`/`log_mining` for the live signatures. The one change made
+> here is removing `connections_produced` from the shown SELECT/UPDATE/INSERT, so this
+> example does not actively teach a retired write.
+
 ```python
 _VALID_DIRECTIONS = frozenset({"backward", "forward"})
 
 def is_mined(slug: str, ref_id: str) -> dict | None:
     with connect() as conn:
         row = conn.execute(
-            "SELECT backward, forward, connections_produced "
+            "SELECT backward, forward "
             "FROM citation_mining WHERE slug=? AND local_ref_id=?",
             [slug, ref_id]
         ).fetchone()
@@ -720,31 +731,29 @@ def log_mining(slug: str, ref_id: str, direction: str,
 
     with connect(dry_run) as conn:
         row = conn.execute(
-            "SELECT backward, forward, connections_produced "
+            "SELECT backward, forward "
             "FROM citation_mining WHERE slug=? AND local_ref_id=?",
             [slug, ref_id]
         ).fetchone()
         if row:
-            prior   = json.loads(row["connections_produced"] or "[]")
-            merged  = json.dumps(list(dict.fromkeys(prior + connections)))
             # dir_col validated above — safe to interpolate
             conn.execute(
                 f"UPDATE citation_mining SET {dir_col}=1, "
-                "connections_produced=?, updated_at=?, updated_by_session=? "
+                "updated_at=?, updated_by_session=? "
                 "WHERE slug=? AND local_ref_id=?",
-                [merged, ts, session, slug, ref_id]
+                [ts, session, slug, ref_id]
             )
         else:
             conn.execute(
                 "INSERT INTO citation_mining "
                 "(slug,local_ref_id,doi,backward,forward,"
-                " connections_produced,created_at,created_by_session,"
+                " created_at,created_by_session,"
                 " updated_at,updated_by_session) "
-                "VALUES (?,?,?,?,?,?,?,?,?,?)",
+                "VALUES (?,?,?,?,?,?,?,?,?)",
                 [slug, ref_id, doi,
                  1 if direction == "backward" else 0,
                  1 if direction == "forward"  else 0,
-                 json.dumps(connections), ts, session, ts, session]
+                 ts, session, ts, session]
             )
 ```
 
@@ -1083,6 +1092,10 @@ Each script: `--dry-run` first → review output → `--commit` to apply → upl
 
 ## 10. validate_db.py Spec
 
+**`scripts/validate_db.py` was RETIRED 2026-08-15** (CLAUDE.md's quarantine list;
+archived to `_archived/scripts/validate_db.py`). This section is kept as design
+history for a script that no longer runs -- none of C1-C9 below is a live check.
+
 ```
 Checks:
   C1  PRAGMA integrity_check → must return 'ok'
@@ -1097,6 +1110,9 @@ Checks:
       dropped from the schema, and the query against it crashed the whole script.
   C6  citation_mining rows with backward=1 AND forward=1 AND connections_produced='[]'
       → INFO only (mining completed, nothing found — valid outcome)
+      (connections_produced RETIRED 2026-09-28, DR-2026-09-26 phase 2b: a row mined
+      after that date carries NULL there regardless of outcome, not '[]' — this
+      predicate describes history, and this whole spec is for a retired script)
   C7  source_slug_links.local_ref_id not present in citation_mining for same slug
       → INFO: count of unmined sources per slug
   C8  gaps with status LIKE 'OPEN%' AND priority NOT IN ('P1','P2','P3') → ERROR

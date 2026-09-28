@@ -146,21 +146,27 @@ stages:
       2026-09-27 (phase 2): `search_executions`, together with `search_execution_artefacts`
       (a search-to-payload junction) and `origin`/`mined_ref_id` (RC5, the same DR''s
       section 5), is the ONE event home of a discovery step, planned or not, including
-      mining. `citation_mining.connections_produced` is the surviving copy and retires in
-      phase 2b once its readers are swept. `derivation_chain` and `search_queries_used`
+      mining. `derivation_chain` and `search_queries_used`
       stay unreachable and are named for retirement, unchanged from before this DR.
       `search_candidates.surfaced_in`/`surfaced_quote` are the narrower pointer from a
       staged candidate to the specific payload it was read out of. SETTLED names the
       DECISION (which table is the event home going forward), not the migration: every
-      pre-existing row took `origin`''s DEFAULT (''planned'') on ALTER, `mined_ref_id` is
-      NULL on every row until phase 2-data backfills what it can derive, and
-      `citation_mining.connections_produced` still holds every historical mining result
-      until phase 2b retires it. Query the live counts; do not quote these as fixed
-      (rule 7a).'
-    references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md sections 2 and 5;
-      project-shape-audit F-06; evidence-architecture G1 provenance; research_protocol_audit
-      CHECK 8, which reads search_queries_used and is the only committed reader of either
-      retired column'
+      pre-existing row took `origin`''s DEFAULT (''planned'') on ALTER, and `mined_ref_id`
+      remains NULL on any row phase 2-data could not derive it for. Query the live counts;
+      do not quote these as fixed (rule 7a).
+      RETIRED 2026-09-28 (phase 2b): `citation_mining.connections_produced` -- the copy
+      this criterion originally named as surviving until its readers were swept -- no
+      longer has a writer (migration 099 relaxed its NOT NULL first, then a db.py change
+      to log_mining stopped setting it; see DR section 5.2(a) -- migration 100 in the
+      same PR is the unrelated GAP-053 fix, not part of this retirement). It stays
+      readable as history (rule 3:
+      committed data migrations INSERT it) but records nothing after that date. A mining
+      pass''s yield is found via `mined_ref_id` joined to `search_candidates.exec_id`,
+      never via this column, from here on.'
+    references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md sections 2, 5 and
+      5.2(a); project-shape-audit F-06; evidence-architecture G1 provenance;
+      research_protocol_audit CHECK 8, which reads search_queries_used and is the only
+      committed reader of that still-unreachable column'
     check: scripts/audit/provenance_artefact_audit.py
 - id: judgment
   anchor: the 4-state determination machine + convergence + directness (evidence-architecture.md §5)

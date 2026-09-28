@@ -52,6 +52,9 @@ then by normalised title.
 
 ### citation_mining columns
 `slug, local_ref_id, backward, forward, connections_produced`
+(`connections_produced` RETIRED 2026-09-28, DR-2026-09-26 phase 2b — nullable, no writer
+sets it; a mining pass's yield now lives against its own `search_executions` row via
+`search_candidates.exec_id`)
 
 ---
 

@@ -1,0 +1,41 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-09-28-phase-2b-connections-produced-retirement",
+ "artifact": "sessions/session_2026-09-28-phase-2b-connections-produced-retirement.md",
+ "doctrine_sha": "71d7a52",
+ "rules_in_scope": [
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-09-28-phase-2b-connections-produced-retirement.json",
+   "reason": "This attestation, bound to the doctrine SHA this session branched from. It covers the session record above: a RC6 (research_tooling_separation) advisory failure this session accepted rather than split into further PRs, two of this session's own uncaught errors (a numeric claim and a rebuild-reproducibility overstatement, both caught only by an independent adversarial pass, not self-caught), and a design decision (removing --connections outright, on a second pass) that corrected a first cut this session itself got wrong. 'research-tooling-separation' is not a registered attestation rule identifier (scripts/audit/adherence_log_audit.py's EXTRA_RULE_IDS, governed by DR-2026-07-13, ratified 2026-07-21) -- its deviation is filed under this rule instead of a dedicated scope, rather than extending that separately-ratified registry as a side effect of this PR."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "research_tooling_separation (RC6, advisory) FAILS on this changeset: it carries scripts/db.py, scripts/dbcore.py and two schema migrations (tooling) alongside a data migration closing GAP-053 and two further data migrations correcting that closure's own text (data), all in one PR. Splitting into a tooling-only PR merged first and data-only follow-ups would require this session to merge its own PR to main, which it is not authorized to do unilaterally, for a bookkeeping gap-closure with no research batch behind it -- the same trade-off the immediately prior session made and named for an analogous small data change."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "This session's own first-shipped migration 100 header, and the commit message that carried it, asserted 'the other 9 of the RULE's 11 tables already carry the pair' while naming only 8 tables and excluding the 9th (evidence_population_match) as lacking the pair in the same paragraph -- an internally inconsistent claim this session wrote, and did not catch before pushing it. An independent adversarial pass caught it. The migration's comment was corrected before merge (DDL unaffected); the commit message was not, since editing a pushed commit message here means rewriting history, which was not done; the correction lives in this record and in a follow-up commit and gaps-table entry instead."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "The same commit's message claimed a full --rebuild reproduces every table byte-for-byte except pipeline_runs. This session's own migration_reproducibility_deep run, minutes before writing that sentence, had already shown evidence_sources diverging too (a pre-existing, documented cause -- the scheduled source-verification cron -- not something this diff caused). The sentence contradicted evidence already in hand and was not caught until the adversarial pass re-ran the same comparison. Not rewritten in the pushed commit message for the same reason as above; corrected here."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "log_mining's --connections retirement was wrong on its first pass: this session kept the flag as validated-but-discarded, reasoning it still proved a call 'did something,' and only recognised -- prompted by the adversarial pass, not on its own -- that this reproduces exactly the anti-pattern the same function's own doi-removal precedent already documents (accepting a value while silently not recording it is worse than dropping it outright). The parameter was then removed entirely on a second pass. Recorded as a real design mistake this session made, not smoothed over as an iteration."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "One SUPERSEDES/BY marker this session wrote cites, as the superseding ruling, a sentence from a session's own relayed account of an adjudication's recommendation rather than a verbatim owner quote -- the owner's own quoted words in that ledger entry are 'Execute as ratified? Proceed all.' The adversarial pass flagged this WITHHELD-FOR-OWNER as doctrinal. This session judged it covered by OQ-4's ratified answer (a session may write SUPERSEDES lines for a ruling it relays in its own words, quoted back to the owner in the PR) and left it as built, rather than treating the flag as a reason to revert -- a judgment call the owner may overrule."
+  }
+ ],
+ "bias_direction": "A session deep in a multi-hour build, having already run /code-review and four /simplify passes and fixed everything they found, has an incentive to treat the adversarial pass as a final formality to clear rather than a genuine adversary -- and, once it does surface real defects, to fix the loudest ones fully while writing up the smaller or more doctrinally uncertain ones (the WITHHELD-FOR-OWNER finding, the two commit-message errors this session cannot retroactively fix) in language that reads as more resolved than they are, because the alternative is admitting the record now contains errors that will outlive this session's ability to correct them.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this session shipped two more numeric/factual errors (the migration-100 header, the rebuild-reproducibility commit message) in the course of fixing findings from one adversarial pass, on a diff whose entire second half exists because the first pass already found comparable errors -- suggesting the discipline itself is not converging, and a fourth pass might well find a fifth error. The counter is that both new errors were caught within the same review cycle rather than shipped silent to main, both are now corrected at the source or in this record, and the two that could not be corrected (pushed commit messages) are precisely the two the record above names rather than conceals -- which is what the adherence-logging rule asks for, not a guarantee that no session ever writes an inaccurate sentence.",
+ "verdict": "DEVIATION-LOGGED"
+}

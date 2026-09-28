@@ -11,7 +11,7 @@ CLI usage:
     python3 scripts/db.py connections [--status PENDING] [--confidence HIGH] [--summary]
     python3 scripts/db.py is-mined --slug SLUG --ref REF-ID
     python3 scripts/db.py log-mining --slug S --ref R --direction backward
-                          --connections '["CON-0241"]' --session SESSION
+                          --notes "found N items, staged on exec X" --session SESSION
                           [--dry-run]
     python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
@@ -242,8 +242,12 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
     # `status` and `deferred_reason` are returned so a caller can read the fact the
     # ruling makes authoritative; they are POINTED AT, not copied (rule 5).
     with connect(readonly=True) as conn:
+        # connections_produced is NOT selected -- retired 2026-09-28 (DR-2026-09-26
+        # phase 2b), and a helper has no obligation to keep surfacing a column the
+        # schema still carries for history alone (rule 3 governs the column, not this
+        # function's return shape). Dropped here rather than returned-and-disclaimed.
         row = conn.execute(
-            "SELECT cm.backward, cm.forward, cm.connections_produced, "
+            "SELECT cm.backward, cm.forward, "
             "       cm.deferred_reason, cm.notes, "
             "       es.citation_mining_status AS status, "
             "       (es.ref_id IS NOT NULL) AS resolves "
@@ -282,7 +286,7 @@ def mining_executed(status, resolves_in_evidence_sources) -> bool | None:
 
 
 def log_mining(slug: str, ref_id: str, direction: str,
-               connections: list[str], session: str,
+               session: str,
                dry_run: bool = False, deferred_reason: str = None,
                status: str = None, notes: str = None,
                discharge_deferral: bool = False):
@@ -292,6 +296,24 @@ def log_mining(slug: str, ref_id: str, direction: str,
     is reachable through global_ref_id, and 2 of 10 rows had already drifted by
     case. Accepting it while ignoring it would have been worse than either
     keeping or dropping it: a caller would believe a DOI had been recorded.
+
+    `connections` was REMOVED 2026-09-28 for the identical reason, the moment
+    `connections_produced` stopped being written (DR-2026-09-26 phase 2b, RC5's
+    event home: `search_executions.mined_ref_id` together with
+    `search_candidates.exec_id` now records what a mining pass surfaced -- this
+    column was a copy of exactly that, rule 5). An earlier version of this
+    retirement kept `--connections` as an accepted-but-discarded argument, on the
+    theory that it still proved a pass "did something" alongside `deferred_reason`/
+    `notes`. An adversarial pass caught that as the exact anti-pattern the `doi`
+    paragraph above already names: the CLI validated the JSON, used it to satisfy a
+    refusal, and reported `"connections": 3` in a call that recorded zero of them
+    anywhere -- a caller had every reason to believe a list had been persisted. A
+    pass that ran and found something now says so through `--notes` (describe what
+    was found, e.g. "N items, staged as candidates on exec X"), and stages the
+    items themselves via `add-candidate --exec-id <the mining search's own exec,
+    from log-search --mined-ref-id> --surfaced-in <payload>` -- the same discipline
+    every other discovery step already follows. Two ways to prove a call did
+    something now, not three: `deferred_reason` (not run) or `notes` (ran).
     """
     if direction not in _VALID_DIRECTIONS:
         raise Refusal(
@@ -299,10 +321,6 @@ def log_mining(slug: str, ref_id: str, direction: str,
         )
     deferred_reason = (deferred_reason or "").strip() or None
     notes = (notes or "").strip() or None
-    if connections and deferred_reason:
-        raise Refusal(
-            f"{ref_id}: a pass cannot both produce connections and be deferred. "
-            f"Say which happened.")
     if deferred_reason and discharge_deferral:
         raise Refusal(
             f"{ref_id}: --discharge-deferral asserts the standing deferral belongs to "
@@ -317,18 +335,20 @@ def log_mining(slug: str, ref_id: str, direction: str,
             f"{ref_id}: --deferred-reason says the pass was NOT run; --notes records what "
             f"a pass that RAN found. A row cannot assert both. R6: deferred_reason means "
             f"DELIBERATELY NOT SEARCHED and is never a findings channel.")
-    if not connections and not deferred_reason and not notes:
-        # THIRD STATE, ADDED 2026-09-18. The two-way guard below conflated a pass that
-        # was never run with one that ran and found nothing, and offered only
+    if not deferred_reason and not notes:
+        # THIRD STATE, ADDED 2026-09-18, NARROWED TO TWO 2026-09-28 when `connections`
+        # was removed (see the docstring). The two-way guard this replaced conflated a
+        # pass that was never run with one that ran and found nothing, and offered only
         # --deferred-reason for both -- which R6 forbids, since deferred_reason means
         # DELIBERATELY NOT SEARCHED. Measured on REF-00984: its backward pass ran over
         # 38 deposited references, 0 matched, and there was no way to say so. The column
         # for it already existed (citation_mining.notes) and had no writer at all.
         raise Refusal(
-            f"{ref_id}: no connections, no --deferred-reason and no --notes. A mining pass "
-            f"that found nothing and does not say why is indistinguishable from one that "
-            f"never ran (R8's rule for searches, applied to mining). Use --deferred-reason "
-            f"if the pass was NOT run; use --notes if it ran and yielded nothing.")
+            f"{ref_id}: no --deferred-reason and no --notes. A mining pass that ran and "
+            f"does not say what it found (even 'nothing') is indistinguishable from one "
+            f"that never ran (R8's rule for searches, applied to mining). Use "
+            f"--deferred-reason if the pass was NOT run; use --notes if it ran, whether "
+            f"or not it found anything.")
     # citation_mining_status is asserted AGAINST this table by test_db_integrity C08:
     # 'mined' iff a non-deferred mining row resolves to it. Nothing in this writer ever
     # moved it, so the biconditional could not hold through the sanctioned path -- the
@@ -353,7 +373,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
         # already on the transaction, and in the INSERT branch it re-read a row this
         # function had just created, where both columns are NULL by construction.
         row = conn.execute(
-            "SELECT backward, forward, connections_produced, notes, deferred_reason "
+            "SELECT backward, forward, notes, deferred_reason "
             "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
@@ -361,13 +381,14 @@ def log_mining(slug: str, ref_id: str, direction: str,
         prior_def = (row["deferred_reason"] if row else None) or None
         undischarged = None
         if row:
-            prior = json.loads(row["connections_produced"] or "[]")
-            merged = json.dumps(list(dict.fromkeys(prior + connections)))
+            # connections_produced is NOT touched here — retired 2026-09-28, see the
+            # docstring. The row's existing value (if any, from before retirement)
+            # is left exactly as it was; this UPDATE never re-reads or rewrites it.
             conn.execute(
                 f"UPDATE citation_mining SET {dir_col}=1, "
-                "connections_produced=?, updated_at=?, updated_by_session=? "
+                "updated_at=?, updated_by_session=? "
                 "WHERE slug=? AND global_ref_id=?",
-                [merged, ts, session, slug, ref_id]
+                [ts, session, slug, ref_id]
             )
         else:
             # local_ref_id is LOOKED UP, never invented: source_slug_links owns the
@@ -389,16 +410,22 @@ def log_mining(slug: str, ref_id: str, direction: str,
             conn.execute(
                 # doi is NOT written -- it is reachable through global_ref_id, and
                 # copying it is what drifted 2 of 10 rows by case.
+                # connections_produced is NOT written either -- retired 2026-09-28,
+                # see the docstring. NULL forward (rule 5): the column survives
+                # because committed data migrations INSERT it (rule 3), but no new
+                # row sets it, and migration 099 relaxed its NOT NULL so this INSERT
+                # can omit it instead of taking the old '[]' default and reading as
+                # a real empty result.
                 "INSERT INTO citation_mining "
                 "(slug,local_ref_id,global_ref_id,backward,forward,"
-                " connections_produced,created_at,created_by_session,"
+                " created_at,created_by_session,"
                 " updated_at,updated_by_session) "
-                "VALUES (?,?,?,?,?,?,?,?,?,?)",
+                "VALUES (?,?,?,?,?,?,?,?,?)",
                 [slug, label,
                  ref_id,
                  1 if direction == "backward" else 0,
                  1 if direction == "forward" else 0,
-                 json.dumps(connections), ts, session, ts, session]
+                 ts, session, ts, session]
             )
         # THE ROW'S EXISTING STATE DECIDES, NOT THIS CALL'S ARGUMENTS ALONE. The two
         # guards at the top of this function inspect only argv, so a --notes pass
@@ -463,7 +490,9 @@ def log_mining(slug: str, ref_id: str, direction: str,
             # NOTES ACCUMULATE, THEY DO NOT OVERWRITE. Corrected 2026-09-18: this UPDATE
             # replaced the column outright while `connections_produced` a few lines above
             # was carefully merged, so a second pass destroyed the first pass's record --
-            # and any carried discharge text with it.
+            # and any carried discharge text with it. (`connections_produced` itself
+            # retired 2026-09-28; the contrast is historical, the lesson about `notes`
+            # is not.)
             parts = [x for x in (prior_notes,
                                  f"[{direction} {ts}] {notes}" if notes else None,
                                  carried) if x]
@@ -482,7 +511,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
                      ts, session, slug, ref_id])
         if status is None:
             # THE ROW'S POST-WRITE STATE DECIDES, NOT THIS CALL'S ARGUMENTS. Keyed on
-            # `deferred_reason` alone, a --connections or --notes pass over a row whose
+            # `deferred_reason` alone, a --notes pass over a row whose
             # deferral STANDS wrote 'mined' while deferred_reason was still populated --
             # exactly the state test_db_integrity C08 rejects ('mined' iff a NON-deferred
             # row resolves to it). The sanctioned writer produced a C08-red database on
@@ -495,8 +524,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
         conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
                      "updated_at=?, updated_by_session=? WHERE ref_id=?",
                      [status, ts, session, ref_id])
-    out = {"logged": True, "connections": len(connections),
-           "status_set": status, "dry_run": dry_run}
+    out = {"logged": True, "status_set": status, "dry_run": dry_run}
     if undischarged:
         # The deferral this pass did not discharge stays visible -- see the else branch.
         out["deferral_still_standing"] = undischarged
@@ -1217,9 +1245,6 @@ def main():
     p_logm.add_argument("--ref", required=True)
     p_logm.add_argument("--direction", required=True,
                         choices=["backward", "forward"])
-    p_logm.add_argument("--connections",
-                        help="JSON array of CON-IDs. Omit only when --deferred-reason or "
-                             "--notes says why the pass produced none.")
     p_logm.add_argument("--deferred-reason", dest="deferred_reason",
                         help="Why this anchor was NOT mined -- DELIBERATELY NOT SEARCHED "
                              "(R6). Never a findings channel: if the pass RAN, use --notes.")
@@ -1241,11 +1266,11 @@ def main():
                         help="citation_mining_status to set on the source. Live "
                              "vocabulary from the column's own CHECK. Derived when "
                              "omitted: 'deferred' with --deferred-reason, 'mined' "
-                             "otherwise -- so an executed zero-yield pass (--notes, no "
-                             "connections) derives 'mined', which is the 2026-09-18 "
-                             "ruling that executed IS mined. This help said \"'mined' "
-                             "with connections, 'deferred' without\" until that day, "
-                             "which described neither the code nor the ruling.")
+                             "otherwise -- so an executed zero-yield pass (--notes) "
+                             "derives 'mined', which is the 2026-09-18 ruling that "
+                             "executed IS mined. This help said \"'mined' with "
+                             "connections, 'deferred' without\" until that day, which "
+                             "described neither the code nor the ruling.")
     p_logm.add_argument("--session", required=True)
     p_logm.add_argument("--dry-run", action="store_true")
 
@@ -2558,26 +2583,12 @@ def main():
         _emit(result)
 
     elif args.command == "log-mining":
-        # A BAD --connections VALUE IS A REFUSAL, NOT A TRACEBACK. `db.py refuses, and
-        # that is its whole value` (CLAUDE.md section 4); an unwrapped json.loads exited
-        # with a raw JSONDecodeError, which tells the operator nothing about the shape
-        # the flag wants.
-        try:
-            conns = json.loads(args.connections) if args.connections else []
-        except json.JSONDecodeError as e:
-            raise Refusal(
-                f"--connections must be a JSON array of connection ids, e.g. "
-                f'\'["CON-0001","CON-0002"]\' -- got {args.connections!r} ({e}).')
-        if not isinstance(conns, list):
-            raise Refusal(
-                f"--connections must be a JSON ARRAY, got {type(conns).__name__}: "
-                f"{args.connections!r}")
         # PRINT WHAT THE WRITER DID, not a fixed dict. Until 2026-09-18 this reported
         # `logged: true` regardless, so a standing deferral the pass left undischarged
         # was invisible at the call site that created it.
         _emit(log_mining(
             slug=args.slug, ref_id=args.ref,
-            direction=args.direction, connections=conns,
+            direction=args.direction,
             session=args.session,
             dry_run=args.dry_run,
             deferred_reason=args.deferred_reason,
@@ -4120,6 +4131,15 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             conn.execute("UPDATE search_executions SET harm_finding=1 WHERE exec_id=?",
                          [exec_id])
             raised = True
+
+        # GAP-053 (DR-2026-09-26 phase 2b, migration 100). Every path that reaches
+        # here has written at least the findings_note append above (the early return
+        # a few lines up is the only no-op path), so one trailing stamp covers every
+        # setter this call ran, rather than repeating it on each of the individual
+        # UPDATEs above.
+        conn.execute("UPDATE search_executions SET updated_at=?, updated_by_session=? "
+                     "WHERE exec_id=?",
+                     [stamp["updated_at"], stamp["updated_by_session"], exec_id])
         return {"exec_id": exec_id, "appended": not duplicate, "chars": len(merged),
                 "harm_finding_raised": raised, "target_evidence_type": retyped,
                 "origin": origin_set, "mined_ref_id": mined_ref_set,
@@ -4198,6 +4218,10 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                 f"attributed to a search that was never logged -- log it first (R8 "
                 f"keeps every query, backfills included).")
 
+        # Computed once and reused at every write site below (GAP-053, migration 100):
+        # was two separate `audit(session)` calls, one per branch that could write.
+        stamp = audit(session)
+
         surfaced_set = None
         if surfaced_in:
             # RC1 (DR-2026-09-26 2.2d). Only NULL -> a value is a correction; a value
@@ -4210,9 +4234,14 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                     f"reattribution and needs a new exec.")
             _check_surfaced_in(conn, exec_id, surfaced_in, surfaced_quote,
                                row["locator"], "reattribute-candidate")
+            # No updated_* stamp here: whichever of the two branches below runs next
+            # always fires (same-exec-with-surfaced always writes when surfaced_set is
+            # set; the true-reattribution branch is unconditional), and stamps once
+            # there. Stamping here too would write the identical value twice per call.
             conn.execute(
                 "UPDATE search_candidates SET surfaced_in=?, surfaced_quote=? "
-                "WHERE candidate_id=?", [surfaced_in, surfaced_quote, candidate_id])
+                "WHERE candidate_id=?",
+                [surfaced_in, surfaced_quote, candidate_id])
             surfaced_set = {"surfaced_in": surfaced_in, "surfaced_quote": surfaced_quote}
 
         if row["exec_id"] == exec_id:
@@ -4222,16 +4251,17 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                 # of this function validated it and then discarded it -- the judge's
                 # warrant (rule 8) went unrecorded. Carried into notes exactly as the
                 # true-reattribution branch below does for its own --reason.
-                stamp = audit(session)
                 carried = (f"SURFACED-IN SET {stamp['created_at'][:10]} by {session}: "
                           f"{reason}")
                 merged = "\n\n".join([x for x in ((row["notes"] or "").strip() or None,
                                                    carried) if x])
-                conn.execute("UPDATE search_candidates SET notes=? WHERE candidate_id=?",
-                             [merged, candidate_id])
+                conn.execute(
+                    "UPDATE search_candidates SET notes=?, updated_at=?, "
+                    "updated_by_session=? WHERE candidate_id=?",
+                    [merged, stamp["updated_at"], stamp["updated_by_session"],
+                     candidate_id])
             return {"candidate_id": candidate_id, "changed": False,
                     "exec_id": exec_id, "surfaced": surfaced_set}
-        stamp = audit(session)
         carried = (f"REATTRIBUTED {stamp['created_at'][:10]} from exec "
                    f"{row['exec_id']} to exec {exec_id} by {session}: {reason}")
         merged = "\n\n".join([x for x in ((row["notes"] or "").strip() or None,
@@ -4241,9 +4271,27 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
         # is why `carried` above stamps both. Do not "tidy" this into an updated_at:
         # the column does not exist, and adding one to record a repair would be a
         # second home for a fact the note already holds.
-        conn.execute("UPDATE search_candidates SET exec_id=?, notes=? "
-                     "WHERE candidate_id=?",
-                     [exec_id, merged, candidate_id])
+        #
+        # SUPERSEDED IN PART 2026-09-28 BY OWNER RULING (references/project-standards.md;
+        # GAP-053) -- appended, not rewritten, because the paragraph above is why this
+        # comment stood for as long as it did and a superseded record is evidence of what
+        # was true when. The tidiness objection above is still correct on its own terms:
+        # `updated_at`/`updated_by_session` would restate what `carried` already narrates
+        # for a HUMAN reader. GAP-053's need is a different one -- a MACHINE reader.
+        # `adversarial_pass_audit.py` scopes a session's subject rows by matching every
+        # column ending `_by_session` on the RULE's named tables (CLAUDE.md rule 8:
+        # derived, not curated), and `search_candidates` carrying only
+        # `created_by_session` made every UPDATE this function issues invisible to it --
+        # EXAMINED: 0 over rows a session had, in fact, touched. Migration 100 adds the
+        # pair; this function now stamps it below, alongside the narrative note, not
+        # instead of it. Two homes of the same fact for two different readers is not the
+        # drift rule 5 forbids -- both are written by this one call, from this one
+        # `stamp`, so they cannot disagree.
+        # BY: `The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands.`
+        conn.execute("UPDATE search_candidates SET exec_id=?, notes=?, updated_at=?, "
+                     "updated_by_session=? WHERE candidate_id=?",
+                     [exec_id, merged, stamp["updated_at"], stamp["updated_by_session"],
+                      candidate_id])
         return {"candidate_id": candidate_id, "changed": True,
                 "from_exec": row["exec_id"], "exec_id": exec_id,
                 "surfaced": surfaced_set}
@@ -4710,13 +4758,25 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
         # line still names it too -- that is the human-readable record, not the edge.
         # search_candidates has no updated_* pair, so the dated, attributed line IS the
         # audit record of the resolution (the literal RESOLVED is R15's predicate).
+        #
+        # SUPERSEDED IN PART 2026-09-28 BY OWNER RULING (references/project-standards.md;
+        # GAP-053) -- appended, not rewritten, per the paragraph immediately above. The
+        # pair now exists, for a different reader than the one that paragraph addressed:
+        # see reattribute_candidate's own SUPERSEDED note for the full reasoning (same
+        # fact, same fix, sibling function). Both the note and the pair are written below,
+        # from one stamp, so they cannot disagree.
+        # BY: `The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands.`
+        stamp = dbcore.upd(session)
         conn.execute("UPDATE search_candidates SET disposition=?, notes=?, "
-                     "resolved_ref_id=COALESCE(?, resolved_ref_id), suggested_slug=? "
+                     "resolved_ref_id=COALESCE(?, resolved_ref_id), suggested_slug=?, "
+                     "updated_at=?, updated_by_session=? "
                      "WHERE candidate_id=?",
                      [disposition,
                       dbcore.append_dated_note(row["notes"], "RESOLVED", session,
-                                               f"{detail}: {redescription}"),
-                      admitted_ref_id, new_slug, candidate_id])
+                                               f"{detail}: {redescription}",
+                                               stamp["updated_at"]),
+                      admitted_ref_id, new_slug,
+                      stamp["updated_at"], stamp["updated_by_session"], candidate_id])
         return {"candidate_id": candidate_id, "was": row["disposition"],
                 "now": disposition, "admitted_ref_id": admitted_ref_id,
                 "suggested_slug": new_slug}
@@ -4848,8 +4908,11 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
                 note, "RESULTS_ADMITTED RAISED", session,
                 f"{was} -> {count}, level with this search's admission edges"
                 + ("" if added else f". {reason}"), stamp)
-        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=? "
-                     "WHERE exec_id=?", [count, note, exec_id])
+        # GAP-053 (migration 100): stamped from the same `stamp` the note above dates
+        # itself by, so the two cannot disagree.
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
+                     "updated_at=?, updated_by_session=? WHERE exec_id=?",
+                     [count, note, stamp, session, exec_id])
         return {"exec_id": exec_id, "ref_id": ref, "changed": True, "edge_added": added,
                 "candidates": cand, "results_admitted": {"was": was, "now": count},
                 "other_admitting_execs": [e for e in admitting if e != exec_id]}
@@ -4900,11 +4963,15 @@ def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
         detail = f"{ref}: {reason}"
         if count != was:
             detail += f" results_admitted {was} -> {count}."
-        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=? "
-                     "WHERE exec_id=?",
+        # One stamp for both the note's date and updated_at (GAP-053, migration 100),
+        # so they cannot disagree -- link_admission's own pattern.
+        stamp = dbcore.now()
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
+                     "updated_at=?, updated_by_session=? WHERE exec_id=?",
                      [count, dbcore.append_dated_note(ex["findings_note"],
-                                                      "ADMISSION UNLINKED", session, detail),
-                      exec_id])
+                                                      "ADMISSION UNLINKED", session, detail,
+                                                      stamp),
+                      stamp, session, exec_id])
         still = [r[0] for r in conn.execute(
             "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
             "AND resolved_ref_id=?", [exec_id, ref])]

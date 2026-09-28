@@ -208,8 +208,13 @@ def upd(session: str) -> dict:
 # ---------------------------------------------------------------------------
 #
 # A writer that amends a row in place keeps what it replaced, and why, in a text column
-# on that row: tables such as search_candidates and evidence_population_match have no
-# updated_* pair, so the dated line IS the audit record. Batch 20 (2026-09-25) added the
+# on that row: a table with no updated_* pair has no other audit record, so the dated
+# line IS it. `evidence_population_match` is that shape (append-only by convention, a
+# dissenting grade lands as a second row rather than an update). `search_candidates` WAS
+# too until migration 100 (GAP-053, 2026-09-28) gave it the pair for a different reader
+# (an audit that scopes by column suffix, not by narrative text) -- its writers now write
+# both, from one stamp, and the dated line stays because a human reader still wants it.
+# Batch 20 (2026-09-25) added the
 # sixth and seventh hand-written copies of the same composition, and of the "--reason
 # is required" guard in front of it, before a review pointed out the pattern. These two
 # functions are that shape once. The five older writers (amend-search, amend-gap,
