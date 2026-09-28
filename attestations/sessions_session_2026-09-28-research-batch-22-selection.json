@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-09-28-research-batch-22-selection",
+  "artifact": "sessions/session_2026-09-28-research-batch-22-selection.md",
+  "doctrine_sha": "1343459",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-09-28-research-batch-22-selection.json",
+      "reason": "This attestation, bound to the doctrine SHA CLAUDE.md carries as of this session. It covers the session record above: a CRITICAL, self-uncaught source misidentification (REF-01015 stamped as Ireland's 2022 TGD M when it is actually the retired 2010 edition, CLAUDE.md 5(c)'s exact fabrication-adjacent shape), a CRITICAL gap-register duplicate (GAP-057 re-filing GAP-043 without searching first, the second such incident on this branch in one day), and a corpus-wide population-match error (all six code/standard admissions graded PARTIAL by misapplying a facility-audit-specific owner ruling and citing a nonexistent precedent). None of these was self-caught; all were found by an independent adversarial pass and are recorded plainly, not smoothed over. Ten of nineteen SUSTAINED findings were repaired via a data migration; nine are recorded PROVISIONAL-DISPUTED, several of which are in fact fixed by a direct prose commit (CLAUDE.md, this session record) rather than a migration, since the adversarial-findings ledger's REPAIRED disposition requires a migration ref that a prose-only fix has none of."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "REF-01015 was admitted with pub_year=2022 and a title/institution taken from a WebSearch result's own page title, never from the retrieved PDF payload. The persisted artefact is genuinely the retired 2010 edition (title page, ISBN, copyright notice, PDF metadata creationDate all read 2010), which itself ceased to have legal effect on 1 January 2024. This is CLAUDE.md 5(c)'s exact failure shape -- a bibliographic field written from memory/context rather than the payload in hand -- caught by an independent adversarial pass, not self-caught. The genuine 2022 edition was retrieved, byte-verified and admitted separately as REF-01018 before this PR opened; REF-01015's own pub_year/pub_title/institution could not be corrected by any sanctioned writer (amend-source refuses them as bibliographic, correct-source refuses because the row has no DOI) and are flagged via a lengthy correction in evidence_sources.notes instead."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "This session filed GAP-057, a near-total duplicate of GAP-043 (already extended by batch 21 the same day with the identical mechanism and identical proposed fixes), without searching the gaps register first -- the exact rule-5-in-the-gaps-register failure batch 21's own GAP-054 already demonstrated and recorded as remediated within the same 24 hours. Caught by an independent adversarial pass, not self-caught. Closed GAP-057 CLOSED-DUPLICATE before this PR opened and folded its one genuinely new fact (six more affected sources, not just one) into GAP-043."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "All six of this batch's code/standard admissions (REF-01012 through REF-01017) were population-graded PARTIAL by applying the 2026-09-25 owner ruling on facility-audit population grading to statutory instruments the ruling does not cover (it presupposes 'what was measured,' which a statute has none of), and by citing a 'REF-01010 PARTIAL precedent' that does not exist -- REF-01010 carries zero population-match rows in this corpus. The correct, already-established precedent for a code/standard source (REF-00987 ADA, REF-00994, REF-00995, all PROXY) was not consulted. Caught by an independent adversarial pass, not self-caught. Corrected PROXY rows added for all seven admissions (including REF-01018) before this PR opened; the wrong PARTIAL rows are left in place, append-only, per this project's discipline."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "REF-01013 (Ontario) was stamped pub_year=2024 citing 'O. Reg. 163/24' on the strength of an unverified WebSearch summary, while the actual persisted artefact explicitly self-describes as 2012/2017 text and tells the reader to confirm the 2024 edition separately -- the same AI-search-summary risk this batch's own exec 111 flagged and refused to use elsewhere, inconsistently applied here. Caught by an independent adversarial pass, not self-caught. Flagged in evidence_sources.notes; the underlying pub_year/pub_title fields could not be corrected by any sanctioned writer (no DOI to key correct-source to), and a CanLII retrieval attempt for the genuine current text failed (403) and was not pursued further -- a residual, named limitation, not silently accepted as resolved."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Three admissions this session (REF-01012, REF-01013, REF-01014) never received a search_admissions edge, leaving this project's own exhaustion-tracking view (v_coverage_jurisdiction) reading Norway, Canada and ISO as zero-admitted on this slug despite three real admissions -- directly undermining the bucket-exhaustion ruling this same session wrote, which reads exhaustion off that exact view. Caught by an independent adversarial pass, not self-caught. Backfilled via three dedicated log-search executions before this PR opened."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "CLAUDE.md's own newly-added Wayback-technique trap entry claimed the technique succeeded for a Canadian standards PDF (CSA B651) blocked by a 403; every attempt at that retrieval this session in fact failed with a proxy-level connection reset. A governance file loaded into every turn asserted something the session's own command log contradicts -- CLAUDE.md's own named failure mode (b), prose contradicting the record. Caught by an independent adversarial pass, not self-caught. Corrected before this PR opened."
+    }
+  ],
+  "bias_direction": "A session closing out a long, effortful batch (six new admissions across five jurisdictions, plus a UN non-admission and two tooling gaps already found and filed) has every incentive to treat an adversarial pass's findings as nitpicks to note and move past quickly, especially when several of them require admitting that its own headline admissions (REF-01015, REF-01013) carry fabrication-adjacent bibliographic errors and that its own population-grading judgment, applied identically across six rows, was wrong in a way that would have been embarrassing to catch only after the PR opened.",
+  "independent_reviewer_counterclaim": "The strongest objection is that this session's own process -- writing bibliographic fields from search-result titles rather than retrieved payloads, and applying a stretched legal theory (a facility-audit ruling) to six statutory sources without checking the actual established precedent for that source type -- produced two CRITICAL and five HIGH-severity defects that shipped into the working DB before any adversarial pass ran, and every one of them would have gone to the PR silently had the antagonist agent's pass been thinner or skipped structural verification against the actual bytes. The counter is not that this makes the errors acceptable -- it does not -- but that the review-and-repair process worked as designed: independent, structural, byte-level verification caught what self-review of one's own reasoning could not, and every fully-fixable finding was fixed (not merely noted) before this PR opened, with the genuinely unfixable ones (three bibliographic fields with no sanctioned correction path, two doctrine-level jurisdiction questions) named as reasoned waivers rather than silently absorbed.",
+  "verdict": "DEVIATION-LOGGED"
+}
