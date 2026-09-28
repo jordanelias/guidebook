@@ -242,8 +242,12 @@ def is_mined(slug: str, ref_id: str) -> dict | None:
     # `status` and `deferred_reason` are returned so a caller can read the fact the
     # ruling makes authoritative; they are POINTED AT, not copied (rule 5).
     with connect(readonly=True) as conn:
+        # connections_produced is NOT selected -- retired 2026-09-28 (DR-2026-09-26
+        # phase 2b), and a helper has no obligation to keep surfacing a column the
+        # schema still carries for history alone (rule 3 governs the column, not this
+        # function's return shape). Dropped here rather than returned-and-disclaimed.
         row = conn.execute(
-            "SELECT cm.backward, cm.forward, cm.connections_produced, "
+            "SELECT cm.backward, cm.forward, "
             "       cm.deferred_reason, cm.notes, "
             "       es.citation_mining_status AS status, "
             "       (es.ref_id IS NOT NULL) AS resolves "
@@ -4243,11 +4247,14 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                     f"reattribution and needs a new exec.")
             _check_surfaced_in(conn, exec_id, surfaced_in, surfaced_quote,
                                row["locator"], "reattribute-candidate")
+            # No updated_* stamp here: whichever of the two branches below runs next
+            # always fires (same-exec-with-surfaced always writes when surfaced_set is
+            # set; the true-reattribution branch is unconditional), and stamps once
+            # there. Stamping here too would write the identical value twice per call.
             conn.execute(
-                "UPDATE search_candidates SET surfaced_in=?, surfaced_quote=?, "
-                "updated_at=?, updated_by_session=? WHERE candidate_id=?",
-                [surfaced_in, surfaced_quote, stamp["updated_at"],
-                 stamp["updated_by_session"], candidate_id])
+                "UPDATE search_candidates SET surfaced_in=?, surfaced_quote=? "
+                "WHERE candidate_id=?",
+                [surfaced_in, surfaced_quote, candidate_id])
             surfaced_set = {"surfaced_in": surfaced_in, "surfaced_quote": surfaced_quote}
 
         if row["exec_id"] == exec_id:
@@ -4764,13 +4771,25 @@ def resolve_candidate(candidate_id: int, disposition: str, redescription: str,
         # line still names it too -- that is the human-readable record, not the edge.
         # search_candidates has no updated_* pair, so the dated, attributed line IS the
         # audit record of the resolution (the literal RESOLVED is R15's predicate).
+        #
+        # SUPERSEDED IN PART 2026-09-28 BY OWNER RULING (references/project-standards.md;
+        # GAP-053) -- appended, not rewritten, per the paragraph immediately above. The
+        # pair now exists, for a different reader than the one that paragraph addressed:
+        # see reattribute_candidate's own SUPERSEDED note for the full reasoning (same
+        # fact, same fix, sibling function). Both the note and the pair are written below,
+        # from one stamp, so they cannot disagree.
+        # BY: `The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands.`
+        stamp = dbcore.upd(session)
         conn.execute("UPDATE search_candidates SET disposition=?, notes=?, "
-                     "resolved_ref_id=COALESCE(?, resolved_ref_id), suggested_slug=? "
+                     "resolved_ref_id=COALESCE(?, resolved_ref_id), suggested_slug=?, "
+                     "updated_at=?, updated_by_session=? "
                      "WHERE candidate_id=?",
                      [disposition,
                       dbcore.append_dated_note(row["notes"], "RESOLVED", session,
-                                               f"{detail}: {redescription}"),
-                      admitted_ref_id, new_slug, candidate_id])
+                                               f"{detail}: {redescription}",
+                                               stamp["updated_at"]),
+                      admitted_ref_id, new_slug,
+                      stamp["updated_at"], stamp["updated_by_session"], candidate_id])
         return {"candidate_id": candidate_id, "was": row["disposition"],
                 "now": disposition, "admitted_ref_id": admitted_ref_id,
                 "suggested_slug": new_slug}
@@ -4902,8 +4921,11 @@ def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
                 note, "RESULTS_ADMITTED RAISED", session,
                 f"{was} -> {count}, level with this search's admission edges"
                 + ("" if added else f". {reason}"), stamp)
-        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=? "
-                     "WHERE exec_id=?", [count, note, exec_id])
+        # GAP-053 (migration 100): stamped from the same `stamp` the note above dates
+        # itself by, so the two cannot disagree.
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
+                     "updated_at=?, updated_by_session=? WHERE exec_id=?",
+                     [count, note, stamp, session, exec_id])
         return {"exec_id": exec_id, "ref_id": ref, "changed": True, "edge_added": added,
                 "candidates": cand, "results_admitted": {"was": was, "now": count},
                 "other_admitting_execs": [e for e in admitting if e != exec_id]}
@@ -4954,11 +4976,15 @@ def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
         detail = f"{ref}: {reason}"
         if count != was:
             detail += f" results_admitted {was} -> {count}."
-        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=? "
-                     "WHERE exec_id=?",
+        # One stamp for both the note's date and updated_at (GAP-053, migration 100),
+        # so they cannot disagree -- link_admission's own pattern.
+        stamp = dbcore.now()
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
+                     "updated_at=?, updated_by_session=? WHERE exec_id=?",
                      [count, dbcore.append_dated_note(ex["findings_note"],
-                                                      "ADMISSION UNLINKED", session, detail),
-                      exec_id])
+                                                      "ADMISSION UNLINKED", session, detail,
+                                                      stamp),
+                      stamp, session, exec_id])
         still = [r[0] for r in conn.execute(
             "SELECT candidate_id FROM search_candidates WHERE exec_id=? "
             "AND resolved_ref_id=?", [exec_id, ref])]

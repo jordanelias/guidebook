@@ -60,14 +60,13 @@ literature-review-planner confirms a Tier 1–3 source:
    ```bash
    python3 scripts/db.py is-mined --slug {slug} --ref {global_ref_id}   # GLOBAL REF-NNNNN, not the label
    ```
-   Returns `null` if no row exists, else `{"backward", "forward",
-   "connections_produced", "deferred_reason", "notes", "status", "executed"}`.
-   **`connections_produced` is RETIRED** (2026-09-28, DR-2026-09-26 phase 2b) — a row
-   written before that date may still carry its historical JSON list; a row written
-   after carries `NULL` there. Do not read it to decide anything; it is returned only
-   because the column still exists (rule 3). What a mining pass surfaced now lives
-   against the mining search's own `search_executions` row (`log-search
-   --mined-ref-id`) via `search_candidates.exec_id` — see step 5 below.
+   Returns `null` if no row exists, else `{"backward", "forward", "deferred_reason",
+   "notes", "status", "executed"}`. **No longer includes `connections_produced`**
+   (2026-09-28, DR-2026-09-26 phase 2b) — the column is retired (nullable, no writer
+   sets it), and `is_mined()` stopped returning it rather than surface a field that
+   would read as live and isn't. What a mining pass surfaced now lives against the
+   mining search's own `search_executions` row (`log-search --mined-ref-id`) via
+   `search_candidates.exec_id` — see step 5 below.
 3. **READ `executed`, NOT THE DIRECTION FLAGS.** Owner ruling 2026-09-18:
    *"executed is `mined`"*. `log-mining` sets `backward`/`forward` to `1` on a
    **deferred** pass exactly as it does on one that ran, so `backward = 1` means a pass

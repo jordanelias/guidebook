@@ -4248,8 +4248,17 @@ SUPERSEDES: scripts/db.py :: "the column does not exist, and adding one to recor
   BY: references/project-standards.md :: "The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands."
 ```
 
+A second comment in the same file asserted the same fact for a sibling function, and is superseded
+by the same ruling — reusing the BY quote, not asserting it twice (the audit's own convention: two
+`SUPERSEDES` lines may cite one ruling, per DR-2026-09-26 §4.2(c)'s two seeds).
+
+```
+SUPERSEDES: scripts/db.py :: "search_candidates has no updated_* pair, so the dated, attributed line IS the audit record of the resolution (the literal RESOLVED is R15's predicate)."
+  BY: references/project-standards.md :: "The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands."
+```
+
 A "SUPERSEDED IN PART" marker naming this entry and GAP-053, carrying the BY quote verbatim, has
-been appended immediately after the target sentence in `scripts/db.py` — the original comment is
+been appended immediately after each target sentence in `scripts/db.py` — the original comments are
 untouched, per the append-not-edit practice this trailer itself depends on.
 
 CONDITION: any session reading `reattribute_candidate`'s original comment, or asking why
