@@ -394,6 +394,17 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 
 ## 7. Traps
 
+- **A publisher block (403, a Cloudflare/Bunny-Shield JS challenge, a paywall on a page that used to
+  be free) is not terminal — try the Internet Archive before giving up (R10).** `curl -sS
+  "http://archive.org/wayback/available?url=<host+path, no scheme>"` finds a snapshot; fetch it as
+  `https://web.archive.org/web/<timestamp>if_/<original URL>` — the `if_` suffix serves the raw
+  file with no Wayback toolbar injected, and (measured 2026-09-28) is also the form that clears an
+  otherwise-blocked plain `/web/<ts>/` request through this environment's egress proxy. A large file
+  can still fail with a bare connection reset on one or both forms; retry once, and try the other
+  form, before concluding the snapshot itself is unreachable. Persist whatever comes back through
+  `retrieval_log.fetch()` as usual — a Wayback snapshot is a real retrieval, not an exemption from
+  R10's persistence requirement. Used for a SciELO article blocked by a Bunny Shield challenge and a
+  Canadian standards PDF blocked by a 403, both batch 21/22.
 - **`.ignore` hides frozen records from ripgrep and the Grep tool** — `_archived/`, `audits/`,
   `sessions/`, `references/search-log/`, `versions/`, `workplan/_superseded/`, and the JSONL under
   `transcripts/`. **Owner rulings live overwhelmingly in `sessions/`.** "No matches" ≠ absent:

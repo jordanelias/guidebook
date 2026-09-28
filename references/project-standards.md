@@ -4272,3 +4272,72 @@ the source. (3) A `SUPERSEDES`/`BY` pair is verified by `supersession_backpointe
 the live text of both files, never by re-reading this entry.
 DATE: 2026-09-28 — built per DR-2026-09-26 §§1 and 6 (RC4/GAP-053 and RC6), during phase 2b
 construction.
+
+## Owner ruling 2026-09-28 — jurisdiction scope: buckets 1–2 exhausted before reaching further, for any slug
+
+**OD-2** (`decisions/DR-2026-08-19-research-restart-operative-instrument.md` §9) recorded a drafted
+bucket fill order as "Ratify as drafted, noting the bucket 4/5 split is authored, not the owner's
+words," but left it formally OPEN ("decisions OD-2 through OD-12 are still open; nothing gated
+behind them is executed"). Batch 21 (2026-09-28) admitted Uganda — a jurisdiction in neither the
+bucket scheme nor `governance/jurisdiction-philosophy.md`'s 24-canonical list — without consulting
+either. The owner, live in the batch-22 orientation conversation, corrected this on contact (rule 0)
+and gave a standing order:
+
+> "Uganda ... is not a great country to hone in on." / "Please focus on the tiers 1 and 2
+> countries" / "Uganda is not part of the 24 jurisdiction list" / "Standing order: do not research
+> from countries other than Bucket 1 and Bucket 2 for any slug until those buckets are
+> categorically exhausted."
+
+**RULE: for every slug, research jurisdiction scope is Bucket 1 and Bucket 2 ONLY, until both are
+categorically exhausted for that slug** (`workplan/2026-08-18-research-frame-proposal.md:420-424`,
+membership below) — not merely for batch 22, and not merely for the ramp-gradient slug batch 21 and
+22 work. "Categorically exhausted" means a search-coverage record (SEARCHED/THIN/NO-DATA, per the
+per-jurisdiction tier-coverage convention `references/project-standards.md:121` already requires)
+exists for every bucket-1 and bucket-2 jurisdiction against the slug's parameters, not merely that
+some bucket-1/2 evidence has been found. Only once that is true for a slug may a session reach past
+bucket 2 for that slug. This is narrower than OD-2's own draft (which scoped the buckets to a named
+item set for scale-out) — this ruling applies the bucket-1/2 floor to every slug, and does not by
+itself ratify buckets 4/5 or resolve the fill order beyond bucket 2.
+
+**Bucket membership, derived from the one citation, never re-typed:**
+`sed -n '420,424p' workplan/2026-08-18-research-frame-proposal.md` — at authoring time this reads
+Bucket 1 = UN, ISO, Canada, USA, UK, Germany, Norway, Sweden, Japan, Australia; Bucket 2 = EU,
+Singapore, New Zealand, Ireland, France, Spain, Portugal, Finland, Netherlands, South Korea.
+
+**NOT RESOLVED BY THIS RULING**, named rather than silently carried forward: `workplan/2026-08-18-model-substitution-log.md`
+records "buckets omit 7 of 8 Global South jurisdictions named by CANONICAL doctrine" as a conflict
+raised and not resolved — Bangladesh, Egypt, Indonesia, India, Kenya, Nigeria, South Africa are all
+in the 24-canonical list (`governance/jurisdiction-philosophy.md` §1.1) and in none of buckets 1–2.
+This ruling does not touch that tension; it only fixes the floor (bucket 1–2 first, categorically,
+per slug) that batch 21 violated. UN also names no member of `JurisdictionCode`
+(`schemas/enums.py`) at all — distinct from Uganda's gap, UN is now IN the operative scope but has
+no enum value; a session reaching UN-level evidence hits the same `jurisdiction_db_vocabulary`
+class of block batch 21's PR #165 already carries as a waiver, and that is a tooling gap (rule 10:
+fix in its own PR), not licence to admit UN-jurisdiction evidence under a different, wrong code.
+
+CONDITION: any session selecting a jurisdiction to search for any slug, or asking why a
+non-bucket-1/2 jurisdiction was reached.
+ACTION: (1) Before searching outside bucket 1–2 for a slug, confirm and record a search-coverage
+status for every bucket-1 and bucket-2 jurisdiction against that slug's parameters — do not infer
+exhaustion from a partial pass. (2) Do not admit evidence from a jurisdiction outside buckets 1–2
+for a slug that has not met that bar, batch 21's Uganda admissions being the named violation this
+ruling corrects going forward (not retroactively — PR #165's existing rows are not unwound by this
+ruling). (3) The Global South/canonical-24 tension is left open, not silently resolved by this
+ruling's floor. (4) `UN` is in scope per this ruling but absent from `JurisdictionCode`; treat
+admitting UN-sourced evidence as blocked on the same class of gap as Uganda's, not as licensed by
+this ruling's wording.
+DATE: 2026-09-28 — owner ruling, quoted above, given live during batch 22 orientation.
+
+CORRECTION — same session, self-caught before any write was attempted against it. The ruling
+above cites "the per-jurisdiction tier-coverage convention `references/project-standards.md:121`"
+as the mechanism for recording exhaustion; `search_coverage` (the table that RULE describes) is
+FROZEN (`db.py upsert-coverage` refuses on contact: "a hand-kept grid that drifted from the search
+log in both directions; `workplan/search-coverage-completion-workplan.md` replaced it with the
+search_executions log plus derived views"). **The live mechanism is `search_executions.jurisdiction`
+plus `v_coverage_jurisdiction`/`v_coverage_language`** — a jurisdiction's status for a slug is read
+off logged searches (including deferred ones, which are how a jurisdiction is marked deliberately
+not searched), not written to a separate grid. ACTION (1) above is corrected to: confirm exhaustion
+by querying `v_coverage_jurisdiction` (or the equivalent over `search_executions` directly) for
+every bucket-1/2 jurisdiction against the slug, and closing any gap with `db.py log-search
+--jurisdiction <code> ... --deferred-reason "..."` for a jurisdiction deliberately not searched, or
+a real logged search otherwise. Nothing else in the ruling changes.
