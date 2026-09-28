@@ -1,0 +1,41 @@
+{
+ "schema_version": "1.0",
+ "session": "session_2026-09-28-research-batch-21-selection",
+ "artifact": "sessions/session_2026-09-28-research-batch-21-selection.md",
+ "doctrine_sha": "c8020a1",
+ "rules_in_scope": [
+  "adherence-logging-and-attestation"
+ ],
+ "per_rule_status": {
+  "adherence-logging-and-attestation": {
+   "status": "FIRED",
+   "evidence_path": "attestations/sessions_session_2026-09-28-research-batch-21-selection.json",
+   "reason": "This attestation, bound to the doctrine SHA CLAUDE.md carries as of this session. It covers the session record above: a CRITICAL, self-uncaught error (grading two facility audits PROXY on a rule the owner superseded on 2026-09-25, caught only by an independent adversarial pass, not self-caught), ten further findings from that same pass (most repaired, three genuinely unfixable by any existing writer and disposed PROVISIONAL-DISPUTED rather than silently accepted), and one gate this session could not satisfy at all -- the adversarial pass itself could not be closed, because every one of its nine SURVIVED findings cited a real but non-bare-path artefact reference and nothing in db.py can correct a finding's artefact field after recording. Both of this session's reasoned waivers (research_batch_dod's R3 on REF-01010, and the unclosed adversarial pass) are recorded plainly in the session record and backed by newly-filed or extended gaps (GAP-043 extended, GAP-055 filed), not smoothed over."
+  }
+ },
+ "deviations": [
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "This session graded REF-01009 and REF-01011 PROXY for MOB using reasoning (auditor disability status; a blanket 'no-participants=PROXY' reading) that a 2026-09-25 owner ruling in references/project-standards.md had already superseded for facility audits, and that ruling was not consulted before grading -- despite the corpus already carrying the corrected precedent on REF-01006/REF-01007 in plain text. This is CLAUDE.md rule 0's exact failure shape (a live owner statement that binds on contact, missed because the session did not search for it) applied to a fresh admission rather than an old one. Caught by an independent adversarial pass, not self-caught, and both rows re-graded PARTIAL before this PR opened."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "A citation-mining forward pass that was attempted and failed (two Europe PMC calls, both HTTP 503) was logged via --deferred-reason, which this project's own tooling reserves for a pass deliberately NOT run -- producing a state (citation_mining_status='mined' over a row whose deferred_reason is populated) that test_db_integrity's C08 check exists specifically to reject. The scratch DB was red on this check for part of this session before an independent adversarial pass surfaced it; re-logged via --notes and --discharge-deferral, and C08 is green in the shipped state. The underlying mistake -- confusing 'ran and failed' with 'deliberately not run' -- is a real misreading of this project's own documented R6/log-mining distinction, not a typo."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "This session filed GAP-054 for a defect GAP-043 item (1) already names in full (the DOI-keyed correct-source mechanism leaving a DOI-less row's bibliographic fields unreachable by any writer) -- a rule-5 violation in the gaps register itself, caught by an independent adversarial pass. Closed CLOSED-DUPLICATE and its genuinely new content folded into GAP-043 instead. Separately, one of the two shell commands used to fold that content into GAP-043 put two column names inside backtick characters, which bash interpreted as command substitution against two nonexistent commands -- silently deleting both words from three places in the appended text. This was self-caught (by reading the note back before moving on) and corrected with a follow-up append; the garbled text was left in place, append-only, per this project's own discipline for a mistake that cannot be unwritten."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "Two DOI-bearing sources (REF-01009, REF-01011) were stamped verification_status=VERIFIED, doi_resolution_outcome=RESOLVED and metadata_quality=COMPLETE on the strength of ad hoc curl-and-python DOI lookups run outside this project's sanctioned retrieval_log.fetch() persistence path -- meaning the 'confirmed this session' claims those stamps implicitly made had no artefact behind them, exactly the fabrication-adjacent shape CLAUDE.md 5(c) exists to prevent, even though the underlying bibliographic facts turned out to be true. Caught by an independent adversarial pass, not self-caught. Fixed by re-fetching and persisting both Crossref records properly and backfilling the fields they supply through correct-source before this PR opened."
+  },
+  {
+   "rule": "adherence-logging-and-attestation",
+   "reason": "The independent adversarial pass's own report could not be fully processed: close-adversarial-pass requires every SURVIVED finding's artefact field to resolve to one bare existing file path, and this pass's reviewer (a different model, genuinely independent) wrote richer, still-checkable citations for several SURVIVED rows -- two files joined with '; ', a code symbol plus a file, a table-and-row reference -- none of which parses as a single path. Nothing in db.py can correct a finding's artefact field once record-adversarial-pass has parsed it from the transcript, and a second pass for the same session is refused by design (at most one per batch). The pass is recorded but ships OPEN, not closed -- a reasoned waiver, filed as GAP-055, not a corner cut on the review itself (all 24 findings, including the CRITICAL ones, were fully triaged and 11 of 14 SUSTAINED findings repaired regardless of the pass's own closure status)."
+  }
+ ],
+ "bias_direction": "A session that has already run four remediation rounds (population-match re-grading, bibliographic-payload persistence, GAP consolidation, citation-mining C08 fix) on top of an already-long research batch has every incentive to treat the adversarial pass's closure failure as a technicality to route around quietly, or to under-describe how serious the CRITICAL population-match error was, because admitting that a live, already-corrected-once owner ruling was missed on a fresh admission looks worse than admitting a first-time process gap would.",
+ "independent_reviewer_counterclaim": "The strongest objection is that this session shipped a genuinely severe error (CRITICAL, on the exact axis -- population-match grading of a facility audit -- that a named owner ruling had already corrected once in this corpus) and only caught it because an independent, different-model pass happened to check the population-match rows against the ruling ledger; had that pass been thinner or skipped the L5-population lens, both rows would have shipped PROXY, silently understating REF-01009 and REF-01011's evidentiary weight for the eventual determination. The counter is not that this makes the error acceptable -- it does not -- but that the process worked exactly as designed: an independent adversarial pass exists precisely to catch what a self-review of one's own reasoning cannot, and did, and the finding was fully repaired (not merely noted) before this PR opened. The pass's own closure defect (GAP-055) is a separate, narrower failure of the CLOSING mechanism, not of the review itself -- the review's substantive findings are unaffected by whether the closing gate could later process them.",
+ "verdict": "DEVIATION-LOGGED"
+}

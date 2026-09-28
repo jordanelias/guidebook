@@ -1,9 +1,9 @@
 {
-  "as_of": "2026-09-25",
+  "as_of": "2026-09-28",
   "n_slices": 80,
   "n_items": 0,
-  "total_source_instances": 41,
-  "unique_sources": 29,
+  "total_source_instances": 44,
+  "unique_sources": 32,
   "grade_distribution": {
     "A": 1,
     "B": 0,
@@ -13,12 +13,12 @@
     "F": 75
   },
   "tier_totals": {
-    "1": 10,
+    "1": 11,
     "2": 5,
-    "3": 16,
+    "3": 17,
     "4": 1,
     "5": 4,
-    "6": 5
+    "6": 6
   },
   "strength_band_slices": {
     "full": 5,
@@ -27,13 +27,13 @@
     "disputed-only": 0
   },
   "strength_band_instances": {
-    "full": 29,
+    "full": 31,
     "partial": 5,
-    "weak": 7,
+    "weak": 8,
     "disputed": 0
   },
   "practice_stream_instances": 0,
-  "english_instances": 29,
+  "english_instances": 31,
   "zero_yield_search_languages": [],
   "item_basis_health": {},
   "slices": [
@@ -41,41 +41,41 @@
       "slug": "accessible-circulation-geometry",
       "topic": "entrances-and-circulation",
       "state": null,
-      "n": 29,
-      "full": 17,
+      "n": 32,
+      "full": 19,
       "partial": 5,
-      "weak": 7,
+      "weak": 8,
       "disputed": 0,
-      "t3_clinical": 5,
+      "t3_clinical": 6,
       "practice": 0,
-      "code_only": 12,
+      "code_only": 13,
       "strength_band": "full",
       "weak_only": false,
       "tiers": {
-        "1": 10,
+        "1": 11,
         "2": 2,
-        "3": 7,
+        "3": 8,
         "4": 1,
         "5": 4,
-        "6": 5
+        "6": 6
       },
       "etypes": {
         "sr_meta": 2,
-        "clinical": 12,
-        "code": 5,
+        "clinical": 13,
+        "code": 6,
         "national_fw": 4,
-        "co1": 3,
+        "co1": 4,
         "standard_eb": 1,
         "grey": 2
       },
       "markers": {
-        "●": 17,
+        "●": 19,
         "◐": 5,
-        "○": 7
+        "○": 8
       },
-      "n_jur": 11,
-      "n_jur_raw": 11,
-      "n_true_jur": 11,
+      "n_jur": 12,
+      "n_jur_raw": 12,
+      "n_true_jur": 12,
       "n_null_jur": 4,
       "polluted_jur": {},
       "jurs": {
@@ -85,11 +85,12 @@
         "UK": 2,
         "BE": 2,
         "AU": 2,
+        "BR": 2,
+        "UG": 2,
         "DE": 1,
         "HR": 1,
         "KR": 1,
-        "IN": 1,
-        "BR": 1
+        "IN": 1
       },
       "jurs_clean": {
         "INT": 2,
@@ -102,33 +103,35 @@
         "HR": 1,
         "KR": 1,
         "IN": 1,
-        "BR": 1
+        "BR": 2,
+        "UG": 2
       },
-      "n_lang": 5,
+      "n_lang": 6,
       "langs": {
-        "en": 17,
+        "en": 19,
         "?": 5,
         "ja": 4,
         "nl": 2,
-        "de": 1
+        "de": 1,
+        "pt": 1
       },
-      "n_en": 17,
-      "n_nonen": 12,
-      "pct_en": 58.6,
+      "n_en": 19,
+      "n_nonen": 13,
+      "pct_en": 59.4,
       "anglo_core": 12,
       "supra": 2,
-      "non_anglo": 11,
-      "pct_anglo_core": 48.0,
+      "non_anglo": 14,
+      "pct_anglo_core": 42.9,
       "sl_searched": 0,
       "sl_hit": 0,
       "search_jurs": 0,
-      "score": 82.1,
+      "score": 85.4,
       "components": {
         "A": 20,
         "B": 23.1,
         "C": 20,
-        "D": 12,
-        "E": 7.0
+        "D": 15,
+        "E": 7.3
       },
       "grade": "A"
     },
