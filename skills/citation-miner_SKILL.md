@@ -62,6 +62,12 @@ literature-review-planner confirms a Tier 1–3 source:
    ```
    Returns `null` if no row exists, else `{"backward", "forward",
    "connections_produced", "deferred_reason", "notes", "status", "executed"}`.
+   **`connections_produced` is RETIRED** (2026-09-28, DR-2026-09-26 phase 2b) — a row
+   written before that date may still carry its historical JSON list; a row written
+   after carries `NULL` there. Do not read it to decide anything; it is returned only
+   because the column still exists (rule 3). What a mining pass surfaced now lives
+   against the mining search's own `search_executions` row (`log-search
+   --mined-ref-id`) via `search_candidates.exec_id` — see step 5 below.
 3. **READ `executed`, NOT THE DIRECTION FLAGS.** Owner ruling 2026-09-18:
    *"executed is `mined`"*. `log-mining` sets `backward`/`forward` to `1` on a
    **deferred** pass exactly as it does on one that ran, so `backward = 1` means a pass
@@ -81,6 +87,14 @@ literature-review-planner confirms a Tier 1–3 source:
    instead, and do not assume either way. A `deferred_reason` on the row tells you what
    was owed and **why it was not done**.
 5. Log result. **Three outcomes, three flags — do not collapse them:**
+
+   **`--connections` still signals outcome (a) happened; it no longer records WHAT was
+   found** (2026-09-28, DR-2026-09-26 phase 2b — `connections_produced` is retired, see
+   step 2). Stage each discovered item on the record properly: `log-search
+   --mined-ref-id {global_ref_id} --mining-direction backward ...` first (the mining
+   pass's own event row), then `add-candidate --exec-id <that exec> --surfaced-in
+   <payload>` for each one found. `--connections` on the call below is then a summary,
+   not the filing.
    ```bash
    # (a) the pass RAN and produced connections
    python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
@@ -233,6 +247,7 @@ crashed with "table evidence_sources has no column named authors".
 
 ### citation_mining columns
 `slug, local_ref_id, global_ref_id, doi, backward, forward, connections_produced, notes`
+(`connections_produced` RETIRED 2026-09-28 — nullable, no writer sets it; see §0/step 5)
 
 ### Adding new sources
 ```bash

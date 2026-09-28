@@ -292,6 +292,17 @@ def log_mining(slug: str, ref_id: str, direction: str,
     is reachable through global_ref_id, and 2 of 10 rows had already drifted by
     case. Accepting it while ignoring it would have been worse than either
     keeping or dropping it: a caller would believe a DOI had been recorded.
+
+    `connections_produced` STOPPED BEING WRITTEN 2026-09-28 (DR-2026-09-26 phase 2b,
+    RC5's event home). `search_executions.mined_ref_id` together with
+    `search_candidates.exec_id` now records what a mining pass surfaced — this
+    column was a copy of exactly that (rule 5). `connections` is still accepted and
+    still required (with `deferred_reason`/`notes`) as one of the three ways a call
+    proves the pass did something; it is simply no longer persisted. A caller
+    wanting the discovered items on the record files them via `add-candidate
+    --exec-id <the mining search's own exec, from log-search --mined-ref-id>
+    --surfaced-in <payload>` — the same discipline every other discovery step
+    already follows.
     """
     if direction not in _VALID_DIRECTIONS:
         raise Refusal(
@@ -353,7 +364,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
         # already on the transaction, and in the INSERT branch it re-read a row this
         # function had just created, where both columns are NULL by construction.
         row = conn.execute(
-            "SELECT backward, forward, connections_produced, notes, deferred_reason "
+            "SELECT backward, forward, notes, deferred_reason "
             "FROM citation_mining WHERE slug=? AND global_ref_id=?",
             [slug, ref_id]
         ).fetchone()
@@ -361,13 +372,14 @@ def log_mining(slug: str, ref_id: str, direction: str,
         prior_def = (row["deferred_reason"] if row else None) or None
         undischarged = None
         if row:
-            prior = json.loads(row["connections_produced"] or "[]")
-            merged = json.dumps(list(dict.fromkeys(prior + connections)))
+            # connections_produced is NOT touched here — retired 2026-09-28, see the
+            # docstring. The row's existing value (if any, from before retirement)
+            # is left exactly as it was; this UPDATE never re-reads or rewrites it.
             conn.execute(
                 f"UPDATE citation_mining SET {dir_col}=1, "
-                "connections_produced=?, updated_at=?, updated_by_session=? "
+                "updated_at=?, updated_by_session=? "
                 "WHERE slug=? AND global_ref_id=?",
-                [merged, ts, session, slug, ref_id]
+                [ts, session, slug, ref_id]
             )
         else:
             # local_ref_id is LOOKED UP, never invented: source_slug_links owns the
@@ -389,16 +401,22 @@ def log_mining(slug: str, ref_id: str, direction: str,
             conn.execute(
                 # doi is NOT written -- it is reachable through global_ref_id, and
                 # copying it is what drifted 2 of 10 rows by case.
+                # connections_produced is NOT written either -- retired 2026-09-28,
+                # see the docstring. NULL forward (rule 5): the column survives
+                # because committed data migrations INSERT it (rule 3), but no new
+                # row sets it, and migration 099 relaxed its NOT NULL so this INSERT
+                # can omit it instead of taking the old '[]' default and reading as
+                # a real empty result.
                 "INSERT INTO citation_mining "
                 "(slug,local_ref_id,global_ref_id,backward,forward,"
-                " connections_produced,created_at,created_by_session,"
+                " created_at,created_by_session,"
                 " updated_at,updated_by_session) "
-                "VALUES (?,?,?,?,?,?,?,?,?,?)",
+                "VALUES (?,?,?,?,?,?,?,?,?)",
                 [slug, label,
                  ref_id,
                  1 if direction == "backward" else 0,
                  1 if direction == "forward" else 0,
-                 json.dumps(connections), ts, session, ts, session]
+                 ts, session, ts, session]
             )
         # THE ROW'S EXISTING STATE DECIDES, NOT THIS CALL'S ARGUMENTS ALONE. The two
         # guards at the top of this function inspect only argv, so a --notes pass
@@ -463,7 +481,9 @@ def log_mining(slug: str, ref_id: str, direction: str,
             # NOTES ACCUMULATE, THEY DO NOT OVERWRITE. Corrected 2026-09-18: this UPDATE
             # replaced the column outright while `connections_produced` a few lines above
             # was carefully merged, so a second pass destroyed the first pass's record --
-            # and any carried discharge text with it.
+            # and any carried discharge text with it. (`connections_produced` itself
+            # retired 2026-09-28; the contrast is historical, the lesson about `notes`
+            # is not.)
             parts = [x for x in (prior_notes,
                                  f"[{direction} {ts}] {notes}" if notes else None,
                                  carried) if x]
@@ -4120,6 +4140,15 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
             conn.execute("UPDATE search_executions SET harm_finding=1 WHERE exec_id=?",
                          [exec_id])
             raised = True
+
+        # GAP-053 (DR-2026-09-26 phase 2b, migration 100). Every path that reaches
+        # here has written at least the findings_note append above (the early return
+        # a few lines up is the only no-op path), so one trailing stamp covers every
+        # setter this call ran, rather than repeating it on each of the individual
+        # UPDATEs above.
+        conn.execute("UPDATE search_executions SET updated_at=?, updated_by_session=? "
+                     "WHERE exec_id=?",
+                     [stamp["updated_at"], stamp["updated_by_session"], exec_id])
         return {"exec_id": exec_id, "appended": not duplicate, "chars": len(merged),
                 "harm_finding_raised": raised, "target_evidence_type": retyped,
                 "origin": origin_set, "mined_ref_id": mined_ref_set,
@@ -4198,6 +4227,10 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                 f"attributed to a search that was never logged -- log it first (R8 "
                 f"keeps every query, backfills included).")
 
+        # Computed once and reused at every write site below (GAP-053, migration 100):
+        # was two separate `audit(session)` calls, one per branch that could write.
+        stamp = audit(session)
+
         surfaced_set = None
         if surfaced_in:
             # RC1 (DR-2026-09-26 2.2d). Only NULL -> a value is a correction; a value
@@ -4211,8 +4244,10 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
             _check_surfaced_in(conn, exec_id, surfaced_in, surfaced_quote,
                                row["locator"], "reattribute-candidate")
             conn.execute(
-                "UPDATE search_candidates SET surfaced_in=?, surfaced_quote=? "
-                "WHERE candidate_id=?", [surfaced_in, surfaced_quote, candidate_id])
+                "UPDATE search_candidates SET surfaced_in=?, surfaced_quote=?, "
+                "updated_at=?, updated_by_session=? WHERE candidate_id=?",
+                [surfaced_in, surfaced_quote, stamp["updated_at"],
+                 stamp["updated_by_session"], candidate_id])
             surfaced_set = {"surfaced_in": surfaced_in, "surfaced_quote": surfaced_quote}
 
         if row["exec_id"] == exec_id:
@@ -4222,16 +4257,17 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
                 # of this function validated it and then discarded it -- the judge's
                 # warrant (rule 8) went unrecorded. Carried into notes exactly as the
                 # true-reattribution branch below does for its own --reason.
-                stamp = audit(session)
                 carried = (f"SURFACED-IN SET {stamp['created_at'][:10]} by {session}: "
                           f"{reason}")
                 merged = "\n\n".join([x for x in ((row["notes"] or "").strip() or None,
                                                    carried) if x])
-                conn.execute("UPDATE search_candidates SET notes=? WHERE candidate_id=?",
-                             [merged, candidate_id])
+                conn.execute(
+                    "UPDATE search_candidates SET notes=?, updated_at=?, "
+                    "updated_by_session=? WHERE candidate_id=?",
+                    [merged, stamp["updated_at"], stamp["updated_by_session"],
+                     candidate_id])
             return {"candidate_id": candidate_id, "changed": False,
                     "exec_id": exec_id, "surfaced": surfaced_set}
-        stamp = audit(session)
         carried = (f"REATTRIBUTED {stamp['created_at'][:10]} from exec "
                    f"{row['exec_id']} to exec {exec_id} by {session}: {reason}")
         merged = "\n\n".join([x for x in ((row["notes"] or "").strip() or None,
@@ -4241,9 +4277,27 @@ def reattribute_candidate(candidate_id: int, exec_id: int, reason: str, session:
         # is why `carried` above stamps both. Do not "tidy" this into an updated_at:
         # the column does not exist, and adding one to record a repair would be a
         # second home for a fact the note already holds.
-        conn.execute("UPDATE search_candidates SET exec_id=?, notes=? "
-                     "WHERE candidate_id=?",
-                     [exec_id, merged, candidate_id])
+        #
+        # SUPERSEDED IN PART 2026-09-28 BY OWNER RULING (references/project-standards.md;
+        # GAP-053) -- appended, not rewritten, because the paragraph above is why this
+        # comment stood for as long as it did and a superseded record is evidence of what
+        # was true when. The tidiness objection above is still correct on its own terms:
+        # `updated_at`/`updated_by_session` would restate what `carried` already narrates
+        # for a HUMAN reader. GAP-053's need is a different one -- a MACHINE reader.
+        # `adversarial_pass_audit.py` scopes a session's subject rows by matching every
+        # column ending `_by_session` on the RULE's named tables (CLAUDE.md rule 8:
+        # derived, not curated), and `search_candidates` carrying only
+        # `created_by_session` made every UPDATE this function issues invisible to it --
+        # EXAMINED: 0 over rows a session had, in fact, touched. Migration 100 adds the
+        # pair; this function now stamps it below, alongside the narrative note, not
+        # instead of it. Two homes of the same fact for two different readers is not the
+        # drift rule 5 forbids -- both are written by this one call, from this one
+        # `stamp`, so they cannot disagree.
+        # BY: `The fix folds into phase 2b's tooling PR (DR-2026-09-26 §7) when that lands.`
+        conn.execute("UPDATE search_candidates SET exec_id=?, notes=?, updated_at=?, "
+                     "updated_by_session=? WHERE candidate_id=?",
+                     [exec_id, merged, stamp["updated_at"], stamp["updated_by_session"],
+                      candidate_id])
         return {"candidate_id": candidate_id, "changed": True,
                 "from_exec": row["exec_id"], "exec_id": exec_id,
                 "surfaced": surfaced_set}

@@ -130,6 +130,12 @@ nothing.
    per-connection direction, so a view over it would assert containment the data cannot support.
    Run the query; do not trust its absence.
 
+   **`connections_produced` RETIRED 2026-09-28** (DR-2026-09-26 phase 2b): the reasoning above
+   still holds for every row written before that date (the column's live history), but no session
+   writes it going forward, so the standing query's population stops growing. A source mined after
+   this date has no `connections_produced` entry to find here at all — check the mining search's
+   own `search_executions` row (`mined_ref_id`) joined to `search_candidates.exec_id` instead.
+
 ## Population match record (per cited study)
 
 ```bash
