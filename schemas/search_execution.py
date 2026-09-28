@@ -69,8 +69,9 @@ class SearchExecution(BaseModel):
     origin: str = "planned"                        # planned|incidental|adversarial-pass|owner-supplied|lead-index
     mined_ref_id: Optional[str] = None              # FK evidence_sources.ref_id, set on a mining row
     origin_pass_id: Optional[int] = None            # FK adversarial_passes.pass_id; only with origin=adversarial-pass
-    # Migration 100 (GAP-053, DR-2026-09-26 phase 2b). NULL on a row `amend_search`
-    # has never touched -- there is no backfill, and no INSERT path sets these; only
-    # amend_search's own trailing stamp does, once per call that actually wrote.
+    # Migration 100 (GAP-053, DR-2026-09-26 phase 2b). NULL on a row no UPDATE has ever
+    # touched -- there is no backfill, and no INSERT path sets these. Three writers set
+    # them on a real write: amend_search's trailing stamp, and link_admission/
+    # unlink_admission's own UPDATE of this same table.
     updated_at: Optional[str] = None
     updated_by_session: Optional[str] = None

@@ -1092,6 +1092,10 @@ Each script: `--dry-run` first → review output → `--commit` to apply → upl
 
 ## 10. validate_db.py Spec
 
+**`scripts/validate_db.py` was RETIRED 2026-08-15** (CLAUDE.md's quarantine list;
+archived to `_archived/scripts/validate_db.py`). This section is kept as design
+history for a script that no longer runs -- none of C1-C9 below is a live check.
+
 ```
 Checks:
   C1  PRAGMA integrity_check → must return 'ok'
@@ -1106,6 +1110,9 @@ Checks:
       dropped from the schema, and the query against it crashed the whole script.
   C6  citation_mining rows with backward=1 AND forward=1 AND connections_produced='[]'
       → INFO only (mining completed, nothing found — valid outcome)
+      (connections_produced RETIRED 2026-09-28, DR-2026-09-26 phase 2b: a row mined
+      after that date carries NULL there regardless of outcome, not '[]' — this
+      predicate describes history, and this whole spec is for a retired script)
   C7  source_slug_links.local_ref_id not present in citation_mining for same slug
       → INFO: count of unmined sources per slug
   C8  gaps with status LIKE 'OPEN%' AND priority NOT IN ('P1','P2','P3') → ERROR

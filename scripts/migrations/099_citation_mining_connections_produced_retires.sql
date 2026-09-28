@@ -12,15 +12,22 @@
 -- the column NULL, which is what "NULL forward" (rule 5) actually requires here.
 --
 -- Rule 3 still forbids dropping the column outright: committed data migrations
--- INSERT it (`grep -l connections_produced scripts/migrations/data_*.sql | wc -l`
--- printed 18 at authoring time; re-run, do not trust this number, rule 7a). The
--- column stays; only its constraint changes. Historical values are copied verbatim
--- and untouched -- including whatever shape they hold: a 2026-09-21-vintage comment
--- in scripts/tests/test_db_integrity.py claims 13 of 25 non-empty rows hold a bare
--- integer rather than a JSON array, and that claim is ITSELF STALE, discovered while
+-- INSERT it (`grep -lE 'INSERT INTO "?citation_mining"?' scripts/migrations/data_*.sql | wc -l`
+-- printed 18 at authoring time; re-run, do not trust this number, rule 7a -- a plain
+-- `grep -l connections_produced` over the same glob answers a different question and,
+-- caught by an adversarial pass, already includes this PR's own data migration, which
+-- mentions the column in prose without inserting it). The column stays; only its
+-- constraint changes. Historical values are copied verbatim and untouched -- including
+-- whatever shape they hold: a 2026-09-21-vintage comment in
+-- scripts/tests/test_db_integrity.py claims 13 of 25 non-empty rows hold a bare integer
+-- rather than a JSON array. That claim is FALSE OF LIVE DATA TODAY, discovered while
 -- writing this migration (rule 7a's own failure mode, caught before it compounded):
 -- `python3 -c "import sqlite3,json; c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True); print([type(json.loads(v)).__name__ for (v,) in c.execute('select connections_produced from citation_mining')])"`
--- prints `list` for all 29 live rows today. Corrected at the source, not just here.
+-- prints `list` for all 29 live rows today. An adversarial pass went further and found
+-- it false even at its own introducing commit (`git log -S"13 of its 25" -- scripts/tests/test_db_integrity.py`
+-- finds it first at fae3fb0, 2026-09-18, not 2026-09-21; that commit's own DB blob holds
+-- 16 rows, 7 non-empty, zero bare scalars) -- so "STALE" overclaimed a history nothing
+-- here verifies. Recorded plainly at the source as false, not as having drifted.
 --
 -- No view, trigger, or inbound FK touches this table or this column
 -- (`select name from sqlite_master where sql like '%connections_produced%'` names

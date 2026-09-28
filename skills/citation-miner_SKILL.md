@@ -85,22 +85,41 @@ literature-review-planner confirms a Tier 1–3 source:
    direction(s). If it is `null`, read `backward`/`forward` and the row's own `notes`
    instead, and do not assume either way. A `deferred_reason` on the row tells you what
    was owed and **why it was not done**.
-5. Log result. **Three outcomes, three flags — do not collapse them:**
+5. Log result. **Two flags, and the pass-that-ran flag covers two scenarios by its text:**
 
-   **`--connections` still signals outcome (a) happened; it no longer records WHAT was
-   found** (2026-09-28, DR-2026-09-26 phase 2b — `connections_produced` is retired, see
-   step 2). Stage each discovered item on the record properly: `log-search
-   --mined-ref-id {global_ref_id} --mining-direction backward ...` first (the mining
-   pass's own event row), then `add-candidate --exec-id <that exec> --surfaced-in
-   <payload>` for each one found. `--connections` on the call below is then a summary,
-   not the filing.
+   **`--connections` was REMOVED 2026-09-28** (DR-2026-09-26 phase 2b), the same day
+   `connections_produced` stopped being written (see step 2) — keeping it as an
+   accepted-but-discarded flag was tried first and an adversarial pass caught it as the
+   exact anti-pattern this file's own `doi`-removal precedent warns against: validating
+   a value, using it to satisfy a refusal, and reporting it as logged, while persisting
+   none of it. **A pass that ran now always uses `--notes`**, whether it found something
+   or nothing — outcomes (a) and (b) below are now one flag with different text.
+
+   **Stage each discovered item on the record BEFORE calling log-mining.** This is not
+   optional narration: `add-candidate --surfaced-in` refuses unless the payload is
+   already linked to the exec via `search_execution_artefacts`, so the order is fixed —
    ```bash
-   # (a) the pass RAN and produced connections
+   # 1. the mining pass's own event row (RC5's event home)
+   python3 scripts/db.py log-search --slug {slug} --language en --engine crossref \
+     --depth-method systematic --query-text '...' --mined-ref-id {global_ref_id} \
+     --mining-direction backward --origin planned --prior-expectation '...' \
+     --result-artefact retrieval-log/{session}/{payload}.json --session {session_filename}
+   #    (or amend-search --add-result-artefact PATH on a search already logged --
+   #    this is what links the payload into search_execution_artefacts; add-candidate
+   #    below refuses --surfaced-in without it)
+
+   # 2. each item the payload surfaced, staged with its provenance
+   python3 scripts/db.py add-candidate --exec-id <exec from step 1> \
+     --surfaced-in retrieval-log/{session}/{payload}.json --title '...' \
+     --locator 'doi:...' --session {session_filename}   # repeat per item
+
+   # 3. the mining flags themselves — --notes describes the outcome, it does not file it
+   # (a)/(b) the pass RAN — say what happened, found or not
    python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
-     --direction backward --connections '["CON-NNNN","CON-NNNN"]' \
+     --direction backward --notes 'N items found, staged as candidates on exec <N> (see 1-2)' \
      --session {session_filename}
 
-   # (b) the pass RAN and yielded nothing — use --notes, NEVER --deferred-reason.
+   #     Found nothing: same flag, different text — NEVER --deferred-reason.
    #     R6: deferred_reason means DELIBERATELY NOT SEARCHED and is not a findings
    #     channel. `notes` had no writer at all until 2026-09-18, which is why every
    #     older mining note in this table sits in the wrong column.

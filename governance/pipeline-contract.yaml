@@ -156,8 +156,10 @@ stages:
       do not quote these as fixed (rule 7a).
       RETIRED 2026-09-28 (phase 2b): `citation_mining.connections_produced` -- the copy
       this criterion originally named as surviving until its readers were swept -- no
-      longer has a writer (migration 099 relaxed its NOT NULL first, migration 100 and a
-      db.py change followed; see DR section 5.2(a)). It stays readable as history (rule 3:
+      longer has a writer (migration 099 relaxed its NOT NULL first, then a db.py change
+      to log_mining stopped setting it; see DR section 5.2(a) -- migration 100 in the
+      same PR is the unrelated GAP-053 fix, not part of this retirement). It stays
+      readable as history (rule 3:
       committed data migrations INSERT it) but records nothing after that date. A mining
       pass''s yield is found via `mined_ref_id` joined to `search_candidates.exec_id`,
       never via this column, from here on.'

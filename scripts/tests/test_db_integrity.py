@@ -1047,11 +1047,14 @@ def run_checks(db_path):
     # arrays, and the rows that are not are reported by H06 rather than dropped.
     #
     # CORRECTED 2026-09-28 (DR-2026-09-26 phase 2b, migration 099's header): the
-    # 13-of-25 figure is now STALE, not merely historical — direct query shows all
-    # 29 live rows parse as a JSON list, zero bare scalars. H06 is deleted (below),
-    # so nothing re-checks this, and the figure is left here uncorrected in shape
-    # (this paragraph explains why H06 existed) but flagged so it is not read as
-    # current. Re-derive rather than trust either number (rule 7a).
+    # 13-of-25 figure is FALSE OF LIVE DATA — direct query shows all 29 live rows
+    # parse as a JSON list, zero bare scalars. An adversarial pass found it false
+    # even at its own introducing commit (fae3fb0, 2026-09-18: 16 rows, 7 non-empty,
+    # zero bare scalars) — nothing here verifies it was ever a true count, only that
+    # it isn't one now. H06 is deleted (below), so nothing re-checks this, and the
+    # figure is left here uncorrected in shape (this paragraph explains why H06
+    # existed) but flagged so it is not read as current. Re-derive rather than trust
+    # either number (rule 7a).
 
     # search_executions.admitted_ref_ids was REMOVED from this tuple 2026-08-24.
     # The junction search_admissions is now its sole home (owner ruling: point,

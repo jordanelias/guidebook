@@ -47,5 +47,12 @@
     "bytes": 628319,
     "agent_id_prefix": "afc91de2",
     "file": "2026-09-28T02-08-34_other_afc91de2.jsonl"
+  },
+  {
+    "started": "2026-09-28T02:22:33",
+    "role": "adversarial",
+    "bytes": 923431,
+    "agent_id_prefix": "aa723c1d",
+    "file": "2026-09-28T02-22-33_adversarial_aa723c1d.jsonl"
   }
 ]

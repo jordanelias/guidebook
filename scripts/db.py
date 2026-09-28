@@ -11,7 +11,7 @@ CLI usage:
     python3 scripts/db.py connections [--status PENDING] [--confidence HIGH] [--summary]
     python3 scripts/db.py is-mined --slug SLUG --ref REF-ID
     python3 scripts/db.py log-mining --slug S --ref R --direction backward
-                          --connections '["CON-0241"]' --session SESSION
+                          --notes "found N items, staged on exec X" --session SESSION
                           [--dry-run]
     python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
@@ -286,7 +286,7 @@ def mining_executed(status, resolves_in_evidence_sources) -> bool | None:
 
 
 def log_mining(slug: str, ref_id: str, direction: str,
-               connections: list[str], session: str,
+               session: str,
                dry_run: bool = False, deferred_reason: str = None,
                status: str = None, notes: str = None,
                discharge_deferral: bool = False):
@@ -297,16 +297,23 @@ def log_mining(slug: str, ref_id: str, direction: str,
     case. Accepting it while ignoring it would have been worse than either
     keeping or dropping it: a caller would believe a DOI had been recorded.
 
-    `connections_produced` STOPPED BEING WRITTEN 2026-09-28 (DR-2026-09-26 phase 2b,
-    RC5's event home). `search_executions.mined_ref_id` together with
-    `search_candidates.exec_id` now records what a mining pass surfaced — this
-    column was a copy of exactly that (rule 5). `connections` is still accepted and
-    still required (with `deferred_reason`/`notes`) as one of the three ways a call
-    proves the pass did something; it is simply no longer persisted. A caller
-    wanting the discovered items on the record files them via `add-candidate
-    --exec-id <the mining search's own exec, from log-search --mined-ref-id>
-    --surfaced-in <payload>` — the same discipline every other discovery step
-    already follows.
+    `connections` was REMOVED 2026-09-28 for the identical reason, the moment
+    `connections_produced` stopped being written (DR-2026-09-26 phase 2b, RC5's
+    event home: `search_executions.mined_ref_id` together with
+    `search_candidates.exec_id` now records what a mining pass surfaced -- this
+    column was a copy of exactly that, rule 5). An earlier version of this
+    retirement kept `--connections` as an accepted-but-discarded argument, on the
+    theory that it still proved a pass "did something" alongside `deferred_reason`/
+    `notes`. An adversarial pass caught that as the exact anti-pattern the `doi`
+    paragraph above already names: the CLI validated the JSON, used it to satisfy a
+    refusal, and reported `"connections": 3` in a call that recorded zero of them
+    anywhere -- a caller had every reason to believe a list had been persisted. A
+    pass that ran and found something now says so through `--notes` (describe what
+    was found, e.g. "N items, staged as candidates on exec X"), and stages the
+    items themselves via `add-candidate --exec-id <the mining search's own exec,
+    from log-search --mined-ref-id> --surfaced-in <payload>` -- the same discipline
+    every other discovery step already follows. Two ways to prove a call did
+    something now, not three: `deferred_reason` (not run) or `notes` (ran).
     """
     if direction not in _VALID_DIRECTIONS:
         raise Refusal(
@@ -314,10 +321,6 @@ def log_mining(slug: str, ref_id: str, direction: str,
         )
     deferred_reason = (deferred_reason or "").strip() or None
     notes = (notes or "").strip() or None
-    if connections and deferred_reason:
-        raise Refusal(
-            f"{ref_id}: a pass cannot both produce connections and be deferred. "
-            f"Say which happened.")
     if deferred_reason and discharge_deferral:
         raise Refusal(
             f"{ref_id}: --discharge-deferral asserts the standing deferral belongs to "
@@ -332,18 +335,20 @@ def log_mining(slug: str, ref_id: str, direction: str,
             f"{ref_id}: --deferred-reason says the pass was NOT run; --notes records what "
             f"a pass that RAN found. A row cannot assert both. R6: deferred_reason means "
             f"DELIBERATELY NOT SEARCHED and is never a findings channel.")
-    if not connections and not deferred_reason and not notes:
-        # THIRD STATE, ADDED 2026-09-18. The two-way guard below conflated a pass that
-        # was never run with one that ran and found nothing, and offered only
+    if not deferred_reason and not notes:
+        # THIRD STATE, ADDED 2026-09-18, NARROWED TO TWO 2026-09-28 when `connections`
+        # was removed (see the docstring). The two-way guard this replaced conflated a
+        # pass that was never run with one that ran and found nothing, and offered only
         # --deferred-reason for both -- which R6 forbids, since deferred_reason means
         # DELIBERATELY NOT SEARCHED. Measured on REF-00984: its backward pass ran over
         # 38 deposited references, 0 matched, and there was no way to say so. The column
         # for it already existed (citation_mining.notes) and had no writer at all.
         raise Refusal(
-            f"{ref_id}: no connections, no --deferred-reason and no --notes. A mining pass "
-            f"that found nothing and does not say why is indistinguishable from one that "
-            f"never ran (R8's rule for searches, applied to mining). Use --deferred-reason "
-            f"if the pass was NOT run; use --notes if it ran and yielded nothing.")
+            f"{ref_id}: no --deferred-reason and no --notes. A mining pass that ran and "
+            f"does not say what it found (even 'nothing') is indistinguishable from one "
+            f"that never ran (R8's rule for searches, applied to mining). Use "
+            f"--deferred-reason if the pass was NOT run; use --notes if it ran, whether "
+            f"or not it found anything.")
     # citation_mining_status is asserted AGAINST this table by test_db_integrity C08:
     # 'mined' iff a non-deferred mining row resolves to it. Nothing in this writer ever
     # moved it, so the biconditional could not hold through the sanctioned path -- the
@@ -506,7 +511,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
                      ts, session, slug, ref_id])
         if status is None:
             # THE ROW'S POST-WRITE STATE DECIDES, NOT THIS CALL'S ARGUMENTS. Keyed on
-            # `deferred_reason` alone, a --connections or --notes pass over a row whose
+            # `deferred_reason` alone, a --notes pass over a row whose
             # deferral STANDS wrote 'mined' while deferred_reason was still populated --
             # exactly the state test_db_integrity C08 rejects ('mined' iff a NON-deferred
             # row resolves to it). The sanctioned writer produced a C08-red database on
@@ -519,8 +524,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
         conn.execute("UPDATE evidence_sources SET citation_mining_status=?, "
                      "updated_at=?, updated_by_session=? WHERE ref_id=?",
                      [status, ts, session, ref_id])
-    out = {"logged": True, "connections": len(connections),
-           "status_set": status, "dry_run": dry_run}
+    out = {"logged": True, "status_set": status, "dry_run": dry_run}
     if undischarged:
         # The deferral this pass did not discharge stays visible -- see the else branch.
         out["deferral_still_standing"] = undischarged
@@ -1241,9 +1245,6 @@ def main():
     p_logm.add_argument("--ref", required=True)
     p_logm.add_argument("--direction", required=True,
                         choices=["backward", "forward"])
-    p_logm.add_argument("--connections",
-                        help="JSON array of CON-IDs. Omit only when --deferred-reason or "
-                             "--notes says why the pass produced none.")
     p_logm.add_argument("--deferred-reason", dest="deferred_reason",
                         help="Why this anchor was NOT mined -- DELIBERATELY NOT SEARCHED "
                              "(R6). Never a findings channel: if the pass RAN, use --notes.")
@@ -1265,11 +1266,11 @@ def main():
                         help="citation_mining_status to set on the source. Live "
                              "vocabulary from the column's own CHECK. Derived when "
                              "omitted: 'deferred' with --deferred-reason, 'mined' "
-                             "otherwise -- so an executed zero-yield pass (--notes, no "
-                             "connections) derives 'mined', which is the 2026-09-18 "
-                             "ruling that executed IS mined. This help said \"'mined' "
-                             "with connections, 'deferred' without\" until that day, "
-                             "which described neither the code nor the ruling.")
+                             "otherwise -- so an executed zero-yield pass (--notes) "
+                             "derives 'mined', which is the 2026-09-18 ruling that "
+                             "executed IS mined. This help said \"'mined' with "
+                             "connections, 'deferred' without\" until that day, which "
+                             "described neither the code nor the ruling.")
     p_logm.add_argument("--session", required=True)
     p_logm.add_argument("--dry-run", action="store_true")
 
@@ -2582,26 +2583,12 @@ def main():
         _emit(result)
 
     elif args.command == "log-mining":
-        # A BAD --connections VALUE IS A REFUSAL, NOT A TRACEBACK. `db.py refuses, and
-        # that is its whole value` (CLAUDE.md section 4); an unwrapped json.loads exited
-        # with a raw JSONDecodeError, which tells the operator nothing about the shape
-        # the flag wants.
-        try:
-            conns = json.loads(args.connections) if args.connections else []
-        except json.JSONDecodeError as e:
-            raise Refusal(
-                f"--connections must be a JSON array of connection ids, e.g. "
-                f'\'["CON-0001","CON-0002"]\' -- got {args.connections!r} ({e}).')
-        if not isinstance(conns, list):
-            raise Refusal(
-                f"--connections must be a JSON ARRAY, got {type(conns).__name__}: "
-                f"{args.connections!r}")
         # PRINT WHAT THE WRITER DID, not a fixed dict. Until 2026-09-18 this reported
         # `logged: true` regardless, so a standing deferral the pass left undischarged
         # was invisible at the call site that created it.
         _emit(log_mining(
             slug=args.slug, ref_id=args.ref,
-            direction=args.direction, connections=conns,
+            direction=args.direction,
             session=args.session,
             dry_run=args.dry_run,
             deferred_reason=args.deferred_reason,

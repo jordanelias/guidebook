@@ -10,13 +10,17 @@
 -- `amend-search`/`reattribute-candidate` (41 UPDATEs in the phase-2-data migration
 -- alone: 24 to search_executions, 17 to search_candidates) is invisible to that scope
 -- and reports EXAMINED: 0 / NOTHING-IN-SCOPE — CLAUDE.md's own named failure mode 5(a),
--- inside the very mechanism ratified 2026-09-27 to end it. The other 9 of the RULE's 11
--- tables already carry the pair (verified: `evidence_sources`, `source_slug_links`,
--- `source_value_extractions`, `specifications`, `convergence_assessment`,
--- `jurisdictional_values`, `case_studies`, `economics_entries` all have both
--- `updated_at` and `updated_by_session`; `evidence_population_match` has neither and is
--- append-only by convention, outside this migration's scope). This is a two-column
--- convention hole, not a design question.
+-- inside the very mechanism ratified 2026-09-27 to end it. Of the RULE's other NINE
+-- tables (11 named, minus these two), EIGHT already carry the pair (verified:
+-- `evidence_sources`, `source_slug_links`, `source_value_extractions`, `specifications`,
+-- `convergence_assessment`, `jurisdictional_values`, `case_studies`, `economics_entries`
+-- all have both `updated_at` and `updated_by_session`); the ninth, `evidence_population_match`,
+-- has neither and is append-only by convention (a dissenting grade lands as a second row,
+-- DR-2026-08-19 section 7), outside this migration's scope. (An earlier draft of this
+-- header said "the other 9... already carry the pair" while naming only 8 and excluding
+-- the 9th in the same breath — corrected here before merge, per an adversarial pass;
+-- GAP-053's own filed text still reads the uncorrected way and is addressed separately,
+-- append-only, per rule 3.) This is a two-column convention hole, not a design question.
 --
 -- BOTH COLUMNS, MATCHING THE LIVE CONVENTION. GAP-053's own fix names only
 -- `updated_by_session` (the column the audit's suffix-match actually needs), but every
