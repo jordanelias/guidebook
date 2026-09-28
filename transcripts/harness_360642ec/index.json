@@ -61,5 +61,12 @@
     "bytes": 1192146,
     "agent_id_prefix": "af0b8fe7",
     "file": "2026-09-28T07-09-42_other_af0b8fe7.jsonl"
+  },
+  {
+    "started": "2026-09-28T20:28:42",
+    "role": "adversarial",
+    "bytes": 1448594,
+    "agent_id_prefix": "adbde794",
+    "file": "2026-09-28T20-28-42_adversarial_adbde794.jsonl"
   }
 ]
