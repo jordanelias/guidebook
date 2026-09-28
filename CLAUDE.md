@@ -403,8 +403,12 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   can still fail with a bare connection reset on one or both forms; retry once, and try the other
   form, before concluding the snapshot itself is unreachable. Persist whatever comes back through
   `retrieval_log.fetch()` as usual — a Wayback snapshot is a real retrieval, not an exemption from
-  R10's persistence requirement. Used for a SciELO article blocked by a Bunny Shield challenge and a
-  Canadian standards PDF blocked by a 403, both batch 21/22.
+  R10's persistence requirement. Succeeded for a SciELO article blocked by a Bunny Shield challenge
+  (batch 21). **Failed for a Canadian standards PDF (CSA B651) blocked by a 403** (batch 22): every
+  attempt across multiple snapshots and both URL forms returned a proxy-level connection reset, not
+  a Wayback-side 404 — confirmed session-level (a known-good control URL also failed) via
+  `/__agentproxy/status`'s `recentRelayFailures`. Recorded here as a genuine limit of this technique,
+  not a second success story — a prior version of this entry wrongly claimed both cases succeeded.
 - **`.ignore` hides frozen records from ripgrep and the Grep tool** — `_archived/`, `audits/`,
   `sessions/`, `references/search-log/`, `versions/`, `workplan/_superseded/`, and the JSONL under
   `transcripts/`. **Owner rulings live overwhelmingly in `sessions/`.** "No matches" ≠ absent:
