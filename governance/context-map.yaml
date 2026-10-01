@@ -729,7 +729,9 @@ writers:
     - source_value_extractions
     - specifications
     scripts/tests/test_db_amend_writers.py:
+    - evidence_sources
     - search_executions
+    - specifications
     scripts/tests/test_db_integrity.py:
     - evidence_sources
     - search_executions

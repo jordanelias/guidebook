@@ -811,8 +811,12 @@ def run_checks(db_path):
     # 241/2017 general vs door provisions) into false positives.
     KNOWN_DUP_SOURCE_KEYS = (
         # (normalised_author, pub_year, normalised_title) pairs that are
-        # deliberately two rows. Empty today — every current collision is a
-        # genuine re-entry queued for merge. Add here only with the reason.
+        # deliberately two rows. Empty: a collision that is a re-entry or a
+        # mirror is MERGED, not exempted, with `db.py supersede-source --ref-id
+        # <duplicate> --by <canonical> --reason ...`, which leaves the duplicate
+        # as a tombstone the supersession filter below skips. An entry here
+        # leaves both rows live and counted twice by every reader, so add one
+        # only for two genuinely distinct works, with the reason.
     )
     import re as _re
 

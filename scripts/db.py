@@ -1620,6 +1620,18 @@ def main():
     p_lss.add_argument("--session", required=True)
     p_lss.add_argument("--dry-run", action="store_true")
 
+    p_sps = sub.add_parser(
+        "supersede-source",
+        help="Mark an admitted source SUPERSEDED BY another (a mirror, a DOI-less "
+             "re-entry). Neither row is deleted; dependents are reported, not moved.")
+    p_sps.add_argument("--ref-id", required=True, help="The source that stops counting")
+    p_sps.add_argument("--by", required=True, help="The admitted source that replaces it")
+    p_sps.add_argument("--reason", required=True,
+                       help="Why these are one source. Appended to the superseded row's "
+                            "notes as a dated SUPERSEDED line.")
+    p_sps.add_argument("--session", required=True)
+    p_sps.add_argument("--dry-run", action="store_true")
+
     p_ul = sub.add_parser("update-locator", help="Move a lead's status in the clue store")
     p_ul.add_argument("--ref-id", required=True)
     p_ul.add_argument("--status", required=True,
@@ -2884,6 +2896,10 @@ def main():
         _emit(link_source_slug(args.ref_id, args.slug, args.rationale,
                                session=args.session, dry_run=args.dry_run,
                                local_ref_id=args.local_ref_id))
+
+    elif args.command == "supersede-source":
+        _emit(supersede_source(args.ref_id, args.by, args.reason,
+                               session=args.session, dry_run=args.dry_run))
 
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
@@ -8079,6 +8095,106 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
     return {"ref_id": ref_id, "slug": slug, "local_ref_id": local_ref_id,
             "slug_status": status, "action": action,
             "relevance_note": rationale, "dry_run": dry_run}
+
+
+def _source_dependents(conn, ref_id: str) -> list:
+    """Every row that points at source `ref_id`, by table and column, with its count.
+
+    DERIVED from `PRAGMA foreign_key_list` over every table in sqlite_master, never a
+    list: a table that gains a foreign key into evidence_sources is reported the day it
+    exists. A column that points at a source WITHOUT a declared foreign key is not seen
+    here; `superseded_by_ref_id` is the one such pointer on evidence_sources itself
+    (test_db_integrity A09 stands in for its missing FK), so it is added by name.
+    """
+    out = []
+    for (table,) in conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"):
+        for fk in conn.execute('PRAGMA foreign_key_list("%s")' % table):
+            # fk[2] is the parent table, fk[3] the child column, fk[4] the parent column
+            # (None when the FK names the parent's primary key implicitly).
+            if fk[2] != "evidence_sources" or fk[4] not in (None, "ref_id"):
+                continue
+            n = conn.execute('SELECT COUNT(*) FROM "%s" WHERE "%s" = ?'
+                             % (table, fk[3]), (ref_id,)).fetchone()[0]
+            if n:
+                out.append({"table": table, "column": fk[3], "rows": n})
+    n = conn.execute("SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id=?",
+                     (ref_id,)).fetchone()[0]
+    if n:
+        out.append({"table": "evidence_sources", "column": "superseded_by_ref_id",
+                    "rows": n})
+    return out
+
+
+def supersede_source(ref_id: str, by: str, reason: str, session: str,
+                     dry_run: bool = False) -> dict:
+    """Mark admitted source `ref_id` as SUPERSEDED BY admitted source `by` (GAP-060).
+
+    The merge path for a source admitted twice: a mirror of an official document, or a
+    DOI-less re-entry that test_db_integrity D04 reports as an author+year+title
+    collision. Until this verb the only ways to merge were a curated exemption list
+    (D04's KNOWN_DUP_SOURCE_KEYS, which leaves the mirror live and counted) or hand SQL.
+
+    NEITHER ROW IS DELETED. `ref_id` keeps its id and every row that points at it, and
+    gains `superseded_by_ref_id` plus a dated SUPERSEDED line in `notes`. Its dependents
+    are REPORTED, not moved. The readers already skip a superseded source: assess_cell's
+    gather (`superseded_by_ref_id IS NULL`), D04, link-source-slug, add-source's DOI
+    duplicate check. A figure extracted from the superseded row stops being gathered,
+    so re-extract it from `by` if `by` does not already carry it.
+
+    Refuses: A == B; either missing; A already superseded; B itself superseded (no
+    chains); a blank reason; and a LIVE determination resting on A
+    (dbcore.determinations_resting_on) -- moving its source would change a written
+    answer silently, so retire the specification first.
+
+    Not refused, REPORTED: rows already superseded BY A. They appear in the dependents
+    as evidence_sources.superseded_by_ref_id and, after this call, point at a tombstone.
+    No verb re-points them; refusing would leave A's duplicate live with no way out.
+    """
+    a, b = dbcore.fold_ref(ref_id), dbcore.fold_ref(by)
+    if not a or not b:
+        raise Refusal("supersede-source needs both --ref-id and --by. Nothing was written.")
+    reason = dbcore.require_reason(
+        reason, f"supersede {a}",
+        why="A supersession that cannot say why cannot be contested.")
+    if a == b:
+        raise Refusal(f"{a} cannot supersede itself. Nothing was written.")
+    with connect(dry_run) as conn:
+        rows = {r["ref_id"]: r for r in conn.execute(
+            "SELECT ref_id, superseded_by_ref_id, notes FROM evidence_sources "
+            "WHERE ref_id IN (?, ?)", (a, b))}
+        for rid, flag in ((a, "--ref-id"), (b, "--by")):
+            if rid not in rows:
+                raise Refusal(
+                    f"{flag} {rid} is not in evidence_sources. Supersession is between "
+                    f"two ADMITTED sources. Nothing was written.")
+        if (rows[a]["superseded_by_ref_id"] or "").strip():
+            raise Refusal(
+                f"{a} is already superseded by {rows[a]['superseded_by_ref_id']}. A "
+                f"supersession is not amended by a second call. Nothing was written.")
+        if (rows[b]["superseded_by_ref_id"] or "").strip():
+            raise Refusal(
+                f"{b} is itself superseded by {rows[b]['superseded_by_ref_id']}. No "
+                f"chains: supersede {a} by {rows[b]['superseded_by_ref_id']} instead. "
+                f"Nothing was written.")
+        resting = dbcore.determinations_resting_on(conn, a)
+        if resting:
+            named = ", ".join(f"specification {sid} (via {junction})"
+                              for junction, sid in resting)
+            raise Refusal(
+                f"{a} carries a live determination: {named}. Superseding it would "
+                f"change the evidence set of a written answer without re-deciding it. "
+                f"Retire the specification first (db.py retire-specification), then "
+                f"supersede, then re-determine. Nothing was written.")
+        dependents = _source_dependents(conn, a)
+        stamp = now()
+        notes = dbcore.append_dated_note(rows[a]["notes"], "SUPERSEDED", session,
+                                         f"by {b}: {reason}", stamp)
+        conn.execute(
+            "UPDATE evidence_sources SET superseded_by_ref_id=?, notes=?, updated_at=?, "
+            "updated_by_session=? WHERE ref_id=?", (b, notes, stamp, session, a))
+    return {"ref_id": a, "superseded_by": b, "reason": reason,
+            "dependents_left_in_place": dependents, "dry_run": dry_run}
 
 
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:

@@ -1643,7 +1643,14 @@ checks:
     refuses, its --dry-run, and link-source-slug --local-ref-id with the held-label
     refusal -- red on the pre-WP2 code. Fault-injected 2026-10-01: removing the
     held-label refusal, or restoring the two-transaction write, turned S red; restored,
-    green. Its cases share fixtures, so one fault reddens the cases after it too.'
+    green. Its cases share fixtures, so one fault reddens the cases after it too.
+    Section X (GAP-060, 2026-10-01) holds supersede-source: every refusal, D04 going
+    quiet on a fixture DOI-less collision (A09 still holding), the live-determination
+    refusal through both junctions and its lifting after retire-specification, and
+    emit_batch_sql capturing the UPDATE -- red on the pre-WP3 code (no verb).
+    Fault-injected 2026-10-01: removing the live-determination refusal turned exactly
+    its case red; removing the no-chains refusal turned its case and the CLI case that
+    reuses its fixture red; restored, green.'
 - id: test_url_verifier
   cmd:
   - python3

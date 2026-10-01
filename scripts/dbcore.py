@@ -950,6 +950,36 @@ def governing_refs(conn, specification_id) -> list:
         (specification_id,))]
 
 
+def determinations_resting_on(conn, ref_id) -> list:
+    """The LIVE determinations that rest on source `ref_id`, as sorted, distinct
+    (junction, specification_id) pairs. Empty when none does.
+
+    A determination rests on a source through one of two junctions:
+    `specification_source_links` (the governing set, the one access path governing_refs
+    above reads) and `convergence_sources` (the weighing the specification's
+    `convergence_id` points at). They are named here because they ARE the pointer;
+    pipeline-contract.yaml has no table-to-stage map to derive them from.
+
+    LIVE means `retired_at IS NULL`. A retired specification is history, not the cell's
+    answer, and retire-specification is the remedy a caller's refusal names -- counting
+    retired rows would make that remedy do nothing and the refusal permanent. A
+    convergence counts only through a live specification that points at it.
+
+    Callers refuse to move a source a determination stands on (supersede-source).
+    """
+    return sorted({tuple(r) for r in conn.execute(
+        "SELECT 'specification_source_links', l.specification_id "
+        "FROM specification_source_links l "
+        "JOIN specifications s ON s.specification_id = l.specification_id "
+        "WHERE l.ref_id = ? AND s.retired_at IS NULL "
+        "UNION "
+        "SELECT 'convergence_sources', s.specification_id "
+        "FROM convergence_sources c "
+        "JOIN specifications s ON s.convergence_id = c.convergence_id "
+        "WHERE c.ref_id = ? AND s.retired_at IS NULL",
+        (ref_id, ref_id))})
+
+
 def writable_tables(conn) -> list:
     """Tables a session may write, in an order safe to replay: parents before children.
 

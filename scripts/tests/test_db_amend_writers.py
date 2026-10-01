@@ -29,6 +29,12 @@ admission used to leave its source and author rows committed, an orphan that is 
 shipped or deleted by hand. It also holds `link-source-slug --local-ref-id`, the only way to
 file into a slug whose labels mix schemes, and the refusal of a label another source holds.
 
+Section X (GAP-060) holds `supersede-source`: without it a source admitted twice (a mirror,
+a DOI-less re-entry) is gathered twice by the determination engine, and D04 stays red with
+hand SQL as the only remedy. It proves D04 goes quiet on a fixture collision, that a live
+determination blocks the move until it is retired, and that the UPDATE reaches the capture
+path.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -377,10 +383,11 @@ try:
         finally:
             c.close()
 
-    def add_source(ref_id, *extra):
+    def add_source(ref_id, *extra, title=None):
         return run_cli("add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
-                   "--year", "2020", "--title", f"fixture source {ref_id}",
-                   "--tier", GREY_TIER, "--evidence-type", "grey", "--session", S, *extra)
+                       "--year", "2020", "--title", title or f"fixture source {ref_id}",
+                       "--tier", GREY_TIER, "--evidence-type", "grey", "--session", S,
+                       *extra)
 
     def unused_label(slug, stem="FIXTURE-"):
         n = 1
@@ -466,6 +473,156 @@ try:
                out.get("action") == "backfilled" and q(
                    "SELECT relevance_note FROM source_slug_links WHERE ref_id=? AND slug=?",
                    R1, mixed)[0][0] == "fixture grounds", f"out={out}")
+
+    # ── X: supersede-source ───────────────────────────────────────────────────
+    # GAP-060. Two DOI-less fixture sources with one author, year and title are the
+    # collision test_db_integrity D04 exists to catch; the verb is what makes it go quiet
+    # without a curated exemption.
+    supersede = getattr(db, "supersede_source", None)
+
+    def integrity_line(tid):
+        """The copy's test_db_integrity line for `tid`, plus the detail line after it."""
+        r = subprocess.run([sys.executable, str(REPO / "scripts" / "tests" /
+                                                "test_db_integrity.py")],
+                           env=dict(os.environ, GUIDEBOOK_DB_PATH=DB),
+                           capture_output=True, text=True)
+        lines = r.stdout.splitlines()
+        for i, line in enumerate(lines):
+            if f"] {tid}:" in line:
+                return line + " " + (lines[i + 1] if i + 1 < len(lines) else "")
+        return ""
+
+    def superseded_by(ref_id):
+        return q("SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id=?",
+                 ref_id)[0][0]
+
+    if supersede is None:
+        record("X00", "db.supersede_source exists (GAP-060's writer)", False,
+               "no such function -- a duplicate source can be merged only by hand SQL")
+    else:
+        DUP = "fixture decree on ramp gradients"
+        XA = next_ref()
+        add_source(XA, title=DUP)
+        XB = next_ref()
+        add_source(XB, title=DUP)
+        d04 = integrity_line("D04")
+        record("X01", "the fixture pair is a live D04 collision before the verb runs",
+               "[✗]" in d04 and XA in d04 and XB in d04, d04)
+        WHY = "fixture: the same decree admitted twice"
+        msg = refusal(supersede, XA, XA.lower(), WHY, S)
+        record("X02", "refuses A == B (case-folded)",
+               msg and "cannot supersede itself" in msg, f"got {msg!r}")
+        ghost = next_ref()
+        msg = refusal(supersede, ghost, XB, WHY, S)
+        record("X03", "refuses a --ref-id that is not admitted",
+               msg and "--ref-id" in msg and ghost in msg, f"got {msg!r}")
+        msg = refusal(supersede, XA, ghost, WHY, S)
+        record("X04", "refuses a --by that is not admitted",
+               msg and "--by" in msg and ghost in msg, f"got {msg!r}")
+        record("X05", "refuses a blank reason, and writes nothing",
+               refusal(supersede, XA, XB, "  ", S) is not None and superseded_by(XA) is None)
+        out = supersede(XA, XB, WHY, S, dry_run=True)
+        record("X06", "--dry-run reports and writes nothing",
+               out["dry_run"] is True and superseded_by(XA) is None, f"out={out}")
+        out = supersede(XA, XB, f"  {WHY}  ", S)
+        notes, upd_by = q("SELECT notes, updated_by_session FROM evidence_sources "
+                          "WHERE ref_id=?", XA)[0]
+        deps = {(d["table"], d["column"]) for d in out["dependents_left_in_place"]}
+        record("X07", "the legitimate shape sets the pointer, appends one dated SUPERSEDED "
+               "line carrying the reason, stamps the session, and REPORTS dependents "
+               "found through the live foreign keys",
+               superseded_by(XA) == XB and notes.count(" || SUPERSEDED ") == 1
+               and f"by {XB}: {WHY}" in notes and upd_by == S
+               and ("evidence_source_authors", "ref_id") in deps
+               and q("SELECT COUNT(*) FROM evidence_source_authors WHERE ref_id=?",
+                     XA)[0][0] == 1, f"out={out} notes={notes!r}")
+        # THE CASE THAT FAILS ON THE OLD CODE: there was no verb, so the collision could
+        # be cleared only by hand SQL or by a curated exemption that left it counted.
+        d04, a09 = integrity_line("D04"), integrity_line("A09")
+        record("X08", "D04 goes quiet after the verb, and A09 (the pointer resolves) holds "
+               "with the tombstone in scope",
+               "[✓]" in d04 and "[✓]" in a09 and "NOTHING IN SCOPE" not in a09,
+               f"{d04} | {a09}")
+        msg = refusal(supersede, XA, XB, WHY, S)
+        record("X09", "refuses a source already superseded, naming its target",
+               msg and XB in msg, f"got {msg!r}")
+        XC = next_ref()
+        add_source(XC)
+        msg = refusal(supersede, XC, XA, WHY, S)
+        record("X10", "refuses a --by that is itself superseded (no chains), naming where "
+               "it points", msg and XB in msg and superseded_by(XC) is None, f"got {msg!r}")
+        out = supersede(XB, XC, WHY, S, dry_run=True)
+        deps = {(d["table"], d["column"]): d["rows"] for d in out["dependents_left_in_place"]}
+        record("X10b", "a row already superseded BY the source is reported as a dependent "
+               "(the pointer has no FK, so it is added by name), not refused",
+               deps.get(("evidence_sources", "superseded_by_ref_id")) == 1
+               and superseded_by(XB) is None, f"out={out}")
+        ok = run_cli("supersede-source", "--ref-id", XC, "--by", XB, "--reason", WHY,
+                     "--session", S, "--dry-run")
+        bad = run_cli("supersede-source", "--ref-id", XC, "--by", XB, "--reason", " ",
+                      "--session", S)
+        record("X11", "the CLI verb is wired: a dry run exits 0 and writes nothing; a blank "
+               "--reason exits 1 with a REFUSING sentence",
+               ok.returncode == 0 and '"dry_run": true' in ok.stdout
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:")
+               and superseded_by(XC) is None,
+               f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-300:]!r}")
+
+        # A LIVE determination. Every specification in the copy may be retired, and no
+        # writer short of the determination engine creates one, so one is UN-retired by
+        # SQL on the copy. Chosen by query: a specification whose convergence holds a
+        # source its governing links do not, so both junctions are exercised.
+        pick = q("SELECT s.specification_id, l.ref_id, c.ref_id "
+                 "FROM specifications s "
+                 "JOIN specification_source_links l ON l.specification_id = s.specification_id "
+                 "JOIN convergence_sources c ON c.convergence_id = s.convergence_id "
+                 "WHERE NOT EXISTS (SELECT 1 FROM specification_source_links l2 "
+                 "  WHERE l2.specification_id = s.specification_id AND l2.ref_id = c.ref_id) "
+                 "ORDER BY 1, 2, 3 LIMIT 1")
+        if not pick:
+            record("X12", "a specification with both junctions to test with", False,
+                   "fixture missing in the copy")
+        else:
+            SPEC, LREF, CREF = pick[0]
+            con = sqlite3.connect(DB)
+            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
+                        (SPEC,))
+            con.commit()
+            con.close()
+            msg_l = refusal(supersede, LREF, XB, WHY, S)
+            msg_c = refusal(supersede, CREF, XB, WHY, S)
+            record("X12", "refuses a source a LIVE specification rests on, through either "
+                   "junction, naming the specification",
+                   msg_l and f"specification {SPEC} (via specification_source_links)" in msg_l
+                   and msg_c and f"specification {SPEC} (via convergence_sources)" in msg_c
+                   and superseded_by(LREF) is None and superseded_by(CREF) is None,
+                   f"l={msg_l!r} c={msg_c!r}")
+            db.retire_specification(SPEC, S, reason="fixture: retired to release its sources")
+            # The named remedy must work: once the specification is retired, the same
+            # call goes through. Written for real, so the capture path can be checked on
+            # a row the canonical DB already holds -- an UPDATE, not an INSERT.
+            try:
+                out = supersede(LREF, XB, WHY, S)
+            except Exception as exc:  # noqa: BLE001 -- recorded red, so the run reports
+                out = {"error": f"{exc.__class__.__name__}: {exc}"}
+            record("X13", "after retire-specification the refusal lifts (the remedy it "
+                   "names works)", superseded_by(LREF) == XB, f"out={out}")
+            import importlib                                       # noqa: E402
+            sys.path.insert(0, str(REPO / "scripts" / "research"))
+            emit_mod = importlib.import_module("emit_batch_sql")
+            sql_out = os.path.join(TMP, "capture.sql")
+            try:
+                emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+                captured = open(sql_out, encoding="utf-8").read()
+            except SystemExit as exc:
+                captured = f"emit refused: {exc}"
+            hit = [ln for ln in captured.splitlines()
+                   if ln.startswith('UPDATE "evidence_sources"')
+                   and f'"superseded_by_ref_id" = \'{XB}\'' in ln
+                   and f'"ref_id" = \'{LREF}\'' in ln]
+            record("X14", "emit_batch_sql captures the verb's UPDATE of a canonical row "
+                   "(the write can be shipped)", len(hit) == 1, captured[-400:])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
