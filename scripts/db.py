@@ -2864,7 +2864,11 @@ def main():
                                           args.session, reason=args.reason,
                                           dry_run=args.dry_run))
     elif args.command == "close-adversarial-pass":
-        _emit(close_adversarial_pass(args.pass_id, args.session, args.dry_run))
+        result = close_adversarial_pass(args.pass_id, args.session, args.dry_run)
+        for fid, toks in sorted(result["unresolved"].items()):
+            print(f"REPORTED: finding {fid}: path token(s) that did not resolve to a "
+                  f"file under the repo: {toks}", file=sys.stderr)
+        _emit(result)
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
@@ -4671,10 +4675,45 @@ def dispose_adversarial_finding(finding_id: int, disposition: str, ref: str, ses
                 "disposed_by_session": session, "disposed_at": stamp["created_at"]}
 
 
+#: Wrapping punctuation stripped from an artefact token before it is resolved: brackets
+#: and list separators from prose ("(and the other 11)", "a.json;"), quotes and the
+#: backtick an agent puts round a path. A trailing full stop is stripped separately so a
+#: leading "../" keeps its dots and still meets the containment check.
+_ARTEFACT_TOKEN_WRAP = "()[]{},;:'\"`"
+
+
+def _artefact_path_tokens(artefact: str) -> list:
+    """The path-shaped tokens of a finding's artefact string: each whitespace-separated
+    token containing '/', stripped of wrapping punctuation, de-duplicated in order."""
+    out = []
+    for tok in (artefact or "").split():
+        if "/" not in tok:
+            continue
+        prev = None
+        while tok != prev:          # "`a/b.md`." needs both strips, in either order
+            prev = tok
+            tok = tok.strip(_ARTEFACT_TOKEN_WRAP).rstrip(".")
+        if tok and tok not in out:
+            out.append(tok)
+    return out
+
+
 def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) -> dict:
     """Close a pass (RC4). Refuses unless every lens has a row, at least one row is
-    SURVIVED, every NOT-ATTACKED row's method says why, and every SURVIVED row names
-    an artefact that exists on disk.
+    SURVIVED, every NOT-ATTACKED row's method says why, and every SURVIVED row's
+    artefact resolves to at least one existing file under the repo.
+
+    THE ARTEFACT IS PARSED, NOT MATCHED WHOLE (GAP-055). The antagonist brief asks for
+    the artefact a claim was attacked WITH, and the antagonist writes it as a citation:
+    "<file> page 15", "<file>; <file>", "<file> and the other five". The literal
+    single-file check refused every one of those, so a good-faith pass could not close
+    and nothing could amend a finding afterwards (the 2026-09-27 ruling forbids building
+    that verb). The candidates are the whole string, then each path-shaped token
+    (_artefact_path_tokens); one that resolves through dbcore.resolve_under to an
+    existing file satisfies the finding. Containment is still checked on the RESOLVED
+    path, so "../outside/x" is refused however it is wrapped. Path-shaped tokens that do
+    not resolve are returned as `unresolved` (the CLI prints them as REPORTED): one real
+    file admits the finding, and the others it cites stay visible rather than vanish.
     """
     with connect(dry_run) as conn:
         prow = conn.execute(
@@ -4696,6 +4735,11 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
                 f"pass {pass_id}: no SURVIVED row. A zero-finding pass must be able to "
                 f"show what it attacked (2026-08-19 RULE), or it is indistinguishable "
                 f"from a pass that never ran.")
+        def _is_file(tok):
+            p = dbcore.resolve_under(dbcore.REPO_ROOT, tok)
+            return p is not None and p.is_file()
+
+        unresolved = {}
         for f in findings:
             if (f["verdict"] == "NOT-ATTACKED"
                     and len((f["method"] or "").strip()) < 10):
@@ -4704,16 +4748,25 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
                     f"({f['method']!r}) is too short to say why. A placeholder is not "
                     f"a reason.")
             if f["verdict"] == "SURVIVED":
-                artefact = f["artefact"] or ""
-                resolved = dbcore.resolve_under(dbcore.REPO_ROOT, artefact) if artefact else None
-                if not resolved or not resolved.is_file():
+                artefact = (f["artefact"] or "").strip()
+                path_tokens = _artefact_path_tokens(artefact)
+                tried = ([artefact] if artefact else []) + [
+                    t for t in path_tokens if t != artefact]
+                if not any(_is_file(t) for t in tried):
                     raise Refusal(
                         f"finding {f['finding_id']}: verdict=SURVIVED names artefact "
-                        f"{artefact!r}, which is not an existing file under the repo.")
+                        f"{artefact!r}, and no candidate resolves to an existing file "
+                        f"under the repo. Tried: {tried}. Lead the artefact with one "
+                        f"repo-relative path to an existing (committed) file; anything "
+                        f"after it is a qualifier.")
+                missed = [t for t in path_tokens if not _is_file(t)]
+                if missed:
+                    unresolved[f["finding_id"]] = missed
         stamp = audit(session)
         conn.execute("UPDATE adversarial_passes SET closed_at=? WHERE pass_id=?",
                      [stamp["created_at"], pass_id])
-        return {"pass_id": pass_id, "closed_at": stamp["created_at"], "findings": len(findings)}
+        return {"pass_id": pass_id, "closed_at": stamp["created_at"], "findings": len(findings),
+                "unresolved": unresolved}
 
 
 def _check_rehome_destination(conn, subject: str, suggested_slug, found_under_slug):

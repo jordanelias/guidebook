@@ -90,8 +90,10 @@ it without anyone retyping a finding by hand:
 `verdict` is `SUSTAINED` (the claim broke — set `severity` to one of `CRITICAL` / `HIGH`
 / `MEDIUM` / `LOW`, required for this verdict and refused for every other one), `SURVIVED`
 (you attacked it and it held — name the `artefact` you attacked it WITH, per
-DR-2026-09-11 clause 2, in more than a few characters, or the row is refused at close
-time), `NOT-ATTACKED` (you did not reach this lens — say why in `method`, in a real
+DR-2026-09-11 clause 2, or the row is refused at close time; lead `artefact` with one
+repo-relative path to a committed file; anything after it (pages, "and the other N", a
+second path) is a qualifier), `NOT-ATTACKED` (you did not reach this lens — say why in
+`method`, in a real
 sentence, not a placeholder), or `WITHHELD-FOR-OWNER` (a doctrinal question, not a
 factual one). At least one row must be SURVIVED — a zero-finding pass has to be able to
 show what it attacked, or it is indistinguishable from a pass that never ran. This block

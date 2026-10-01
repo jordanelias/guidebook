@@ -35,6 +35,12 @@ hand SQL as the only remedy. It proves D04 goes quiet on a fixture collision, th
 determination blocks the move until it is retired, and that the UPDATE reaches the capture
 path.
 
+Section C (GAP-055) holds `close-adversarial-pass`'s artefact parse: a SURVIVED artefact
+written as a citation ("<file> page 15", "<file> (and the other 11)") used to make a
+good-faith pass unclosable, so its audit stayed red for a pass that had done its work. A
+path that escapes the repo must still refuse, and cited paths that do not resolve must stay
+visible.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -623,6 +629,97 @@ try:
                    and f'"ref_id" = \'{LREF}\'' in ln]
             record("X14", "emit_batch_sql captures the verb's UPDATE of a canonical row "
                    "(the write can be shipped)", len(hit) == 1, captured[-400:])
+
+    # ── C: close-adversarial-pass parses a SURVIVED artefact ──────────────────────
+    # GAP-055. Fixture passes are set by SQL on the copy: record-adversarial-pass derives
+    # its findings from two real, tracked transcripts, which a fixture cannot supply. The
+    # lens set is the column's own CHECK; the tracked file is the module under test, so
+    # no live path is hard-coded.
+    TRACKED = pathlib.Path(db.__file__).resolve().relative_to(REPO).as_posix()
+    con = sqlite3.connect(DB)
+    try:
+        LENSES = sorted(dbcore.check_values(con, "adversarial_findings", "lens"))
+    finally:
+        con.close()
+
+    def make_pass(artefact):
+        """A pass with every lens covered: one SURVIVED row carrying `artefact`, the
+        rest NOT-ATTACKED with a real reason. Returns (pass_id, survived finding_id)."""
+        c = sqlite3.connect(DB)
+        try:
+            pid = c.execute(
+                "INSERT INTO adversarial_passes (subject_session, subject_commit, "
+                "reviewer_transcript, reviewer_models, author_transcript, author_models, "
+                "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?)",
+                (f"session_fixture-close-{artefact[:24]}", "0000000",
+                 "transcripts/fixture/reviewer.jsonl", '["fixture-model"]',
+                 "transcripts/fixture/author.jsonl", '["fixture-model"]', S,
+                 "2026-10-01 00:00")).lastrowid
+            fid = None
+            for i, lens in enumerate(LENSES):
+                survived = i == 0
+                cur = c.execute(
+                    "INSERT INTO adversarial_findings (pass_id, lens, claim_attacked, "
+                    "method, artefact, verdict, created_by_session, created_at) "
+                    "VALUES (?,?,?,?,?,?,?,?)",
+                    (pid, lens, "fixture claim",
+                     "fixture: attacked it and it held" if survived
+                     else "fixture: this lens does not apply to the fixture subject",
+                     artefact if survived else None,
+                     "SURVIVED" if survived else "NOT-ATTACKED", S, "2026-10-01 00:00"))
+                fid = fid or cur.lastrowid
+            c.commit()
+            return pid, fid
+        finally:
+            c.close()
+
+    def closed_at(pid):
+        return q("SELECT closed_at FROM adversarial_passes WHERE pass_id=?", pid)[0][0]
+
+    def close(pid):
+        try:
+            return db.close_adversarial_pass(pid, S)
+        except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+            return {"error": f"{exc.__class__.__name__}: {exc}"}
+
+    # THE CASE THAT FAILS ON THE OLD CODE: the literal check resolved the whole string,
+    # so a real file followed by a qualifier was "not an existing file".
+    P1, _ = make_pass(f"{TRACKED} (and the other 11)")
+    out = close(P1)
+    record("C01", "a SURVIVED artefact that leads with a tracked file and adds a "
+           "qualifier closes the pass", closed_at(P1) is not None and not out.get("error")
+           and out.get("unresolved") == {}, f"out={out}")
+    MISSING = "retrieval-log/no-such-session/none.pdf"
+    P2, F2 = make_pass(f"{TRACKED} page 15; {MISSING}")
+    out = close(P2)
+    record("C02", "one resolving file admits the finding, and a cited path that does "
+           "not resolve is returned as unresolved",
+           closed_at(P2) is not None and out.get("unresolved") == {F2: [MISSING]},
+           f"out={out}")
+    P3, F3 = make_pass("source_value_extractions rows 70 and 71")
+    msg = refusal(db.close_adversarial_pass, P3, S)
+    record("C03", "an artefact with no path-shaped token that resolves still refuses, "
+           "listing what it tried, and the pass stays open",
+           msg and f"finding {F3}" in msg and "Tried:" in msg and closed_at(P3) is None,
+           f"got {msg!r}")
+    # Containment, proven with a file that EXISTS outside the repo (the test's temp
+    # directory), so the refusal cannot be passing merely because the target is absent.
+    outside = os.path.join(TMP, "outside.txt")
+    open(outside, "w").close()
+    rel_out = os.path.relpath(outside, REPO)
+    P4, _ = make_pass(f"({rel_out})")
+    msg = refusal(db.close_adversarial_pass, P4, S)
+    record("C04", "a '../' token that reaches a real file outside the repo refuses "
+           "(containment on the resolved path), wrapped or not",
+           rel_out.startswith("..") and msg and closed_at(P4) is None, f"got {msg!r}")
+    P5, F5 = make_pass(f"`{TRACKED}`. Also {MISSING}")
+    r = run_cli("close-adversarial-pass", "--pass-id", str(P5), "--session", S,
+                "--dry-run")
+    record("C05", "the CLI verb is wired: a dry run exits 0, prints the unresolved token "
+           "as REPORTED, and leaves the pass open",
+           r.returncode == 0 and f"REPORTED: finding {F5}" in r.stderr
+           and MISSING in r.stderr and closed_at(P5) is None,
+           f"rc={r.returncode} {r.stderr[-300:]!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

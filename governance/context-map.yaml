@@ -729,6 +729,8 @@ writers:
     - source_value_extractions
     - specifications
     scripts/tests/test_db_amend_writers.py:
+    - adversarial_findings
+    - adversarial_passes
     - evidence_sources
     - search_executions
     - specifications
