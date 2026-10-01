@@ -1425,6 +1425,14 @@ checks:
     - tooling
     min_items: 1
     cmd: python3 tools/schema_walkability.py --check
+  - id: search_log_completeness
+    level: advisory
+    battery: research
+    kinds:
+    - data
+    - synthesis
+    min_items: null
+    cmd: python3 scripts/audit/search_log_completeness.py --session @SESSION@
   - id: site_pages_fresh
     level: advisory
     battery: render
@@ -1503,6 +1511,13 @@ checks:
     - tooling
     min_items: null
     cmd: python3 scripts/tests/test_record_command_session.py
+  - id: test_search_log_completeness
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/tests/test_search_log_completeness.py
   - id: test_url_verifier
     level: advisory
     battery: tests

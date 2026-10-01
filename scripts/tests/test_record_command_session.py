@@ -22,15 +22,18 @@ now stated twice ("the scratchpad needs to be getting saved always for provenanc
 apparatus about apparatus: it guards the review surface itself.
 
 The hook cannot be imported -- it reads stdin and exits at module scope -- so this
-execs the text above its `try:` block, which is exactly the helper under test.
+execs the text above its `try:` block, which is exactly the helper under test. The H
+cases (2026-10-01, WP14) instead RUN the hook on a payload, because what they test is
+the line it writes: the WebSearch|WebFetch ledger that search_log_completeness reads,
+the Bash line's schema, and settings.json wiring each tool to it exactly once.
 """
-import sys, json, pathlib, tempfile, shutil
+import sys, json, os, pathlib, re, subprocess, tempfile, shutil
 
 HOOK = pathlib.Path(__file__).resolve().parents[2] / ".claude" / "hooks" / "record-command.py"
 
 results = []
 def record(tid, name, passed, details=""):
-    results.append(passed)
+    results.append(bool(passed))
     print(f"  [{'✓' if passed else '✗'}] {tid}: {name}")
     if details and not passed:
         print(f"      {details}")
@@ -163,6 +166,67 @@ try:
     except SyntaxError as exc:
         record("W02", "the hook file compiles end to end, not just its header", False,
                f"{exc.__class__.__name__} at line {exc.lineno}: {exc.msg}")
+
+    # ── H: the WebSearch|WebFetch ledger (WP14, 2026-10-01) ──────────────────
+    # The hook is RUN here, not exec'd in part: these cases are about what lands in
+    # the file, which load() above cannot see. scripts/audit/search_log_completeness.py
+    # reads these lines; an empty ledger makes it NOTHING-IN-SCOPE, so a hook that
+    # silently stopped writing them would turn the audit vacuous, not red.
+    def run_hook(payload, stem="session_2026-10-01-ledger"):
+        t = build(pathlib.Path(tempfile.mkdtemp()), {stem: (None, OPEN)})
+        (t / "scratchpad" / "CURRENT").write_text(stem)
+        subprocess.run([sys.executable, str(HOOK)], input=json.dumps(payload), text=True,
+                       env=dict(os.environ, CLAUDE_PROJECT_DIR=str(t)), timeout=60)
+        f = t / "scratchpad" / stem / "commands.jsonl"
+        got = ([json.loads(x) for x in f.read_text().splitlines()] if f.exists() else [])
+        shutil.rmtree(t, ignore_errors=True)
+        return got
+
+    got = run_hook({"session_id": "SID-W", "tool_name": "WebSearch",
+                    "tool_input": {"query": "ramp gradient TEK17", "allowed_domains": ["dibk.no"]},
+                    "tool_response": {"query": "ramp gradient TEK17", "results": []}})
+    record("H01", "a WebSearch payload writes ONE line: tool, query, session_id, response hash",
+           len(got) == 1 and got[0].get("tool") == "WebSearch"
+           and got[0].get("query") == "ramp gradient TEK17"
+           and got[0].get("allowed_domains") == ["dibk.no"]
+           and got[0].get("session_id") == "SID-W" and got[0].get("response_sha256"),
+           f"got {got!r}")
+
+    got = run_hook({"session_id": "SID-W", "tool_name": "WebFetch",
+                    "tool_input": {"url": "https://example.org/a", "prompt": "p"},
+                    "tool_response": "a model-written summary"})
+    record("H02", "a WebFetch payload writes ONE line carrying tool and url",
+           len(got) == 1 and got[0].get("tool") == "WebFetch"
+           and got[0].get("url") == "https://example.org/a", f"got {got!r}")
+
+    # The Bash line keeps every key it had and gains exactly one: `tool`.
+    BASH_KEYS = {"ts", "cwd", "command", "exit", "is_error", "session_id", "interrupted",
+                 "response_keys", "stdout_sha256", "bytes", "stderr_sha256", "stderr_bytes"}
+    got = run_hook({"session_id": "SID-W", "tool_name": "Bash", "cwd": "/x",
+                    "tool_input": {"command": "echo hi"},
+                    "tool_response": {"stdout": "hi\n", "stderr": "", "interrupted": False}})
+    record("H03", "the Bash path is unchanged: one line, its old keys plus `tool: Bash`",
+           len(got) == 1 and set(got[0]) == BASH_KEYS | {"tool"}
+           and got[0]["tool"] == "Bash" and got[0]["command"] == "echo hi",
+           f"got {got!r}")
+
+    got = run_hook({"session_id": "SID-W", "tool_name": "Read",
+                    "tool_input": {"file_path": "/x"}, "tool_response": "text"})
+    record("H04", "a tool that is neither Bash nor WebSearch/WebFetch writes nothing",
+           got == [], f"got {got!r}")
+
+    # Correction 13: a `Bash|WebSearch|WebFetch` matcher beside the `Bash` one fires the
+    # hook twice per Bash call. Matcher semantics are the harness's and were not measured
+    # when this was wired, so BOTH readings are tested -- whole-name and substring.
+    settings = json.loads((HOOK.parents[1] / "settings.json").read_text(encoding="utf-8"))
+    wired = [h.get("matcher", "") for h in settings["hooks"]["PostToolUse"]
+             if any("record-command.py" in x.get("command", "") for x in h.get("hooks", []))]
+    fires = {tool: (sum(bool(re.fullmatch(m, tool)) for m in wired),
+                    sum(bool(re.search(m, tool)) for m in wired))
+             for tool in ("Bash", "WebSearch", "WebFetch")}
+    record("H05", "settings.json wires the hook exactly ONCE for each of Bash, WebSearch, "
+           "WebFetch", all(v == (1, 1) for v in fires.values()),
+           f"(fullmatch, search) counts per tool: {fires}; matchers {wired}")
 finally:
     shutil.rmtree(tmp, ignore_errors=True)
 
