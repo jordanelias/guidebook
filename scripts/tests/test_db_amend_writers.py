@@ -55,8 +55,9 @@ Co-1-only columns, and that a source a live determination rests on cannot move.
 Section K (I8, GAP-005) holds `update-code-lead` and add-code-lead's near-duplicate refusal:
 without the verb R15 cannot be discharged against a lead, so a lead whose document was
 retrieved stays REFERENCE-ONLY and its note keeps asserting what the document was found not
-to say. It proves the move is ledgered and append-only, that the refusal's "update that row
-instead" names a command that works, and that the duplicate key folds case and punctuation
+to say. It proves the move is ledgered and append-only (a note that is only a substring of
+the held notes is still appended), that the refusal's "update that row instead" names a
+command that works, and that the duplicate key folds case and punctuation
 without erasing a Korean or Japanese name.
 
 Section J (I7) holds the declared jurisdiction vocabulary at write time: without it every
@@ -1162,6 +1163,18 @@ try:
                "is ledgered", out["changed"] and lead(K1)["status"] == "REFERENCE-ONLY"
                and f"status '{MOVE_TO}' -> 'REFERENCE-ONLY'" in lead(K1)["notes"],
                f"out={out}")
+        # A note that is only a SUBSTRING of the held text is a new note. The pre-fix
+        # check was `note in notes`, so this append was reported as already present and
+        # nothing was written.
+        K3 = code_lead("Fixture Standard 8080 (substring case)",
+                       "fixture: the slope figure is in clause 4.2, not 4.3")
+        out = update(K3, "clause 4.2", S)
+        out2 = update(K3, "clause 4.2", S)
+        record("K16", "a note that is a substring of the held notes is appended, not "
+               "mistaken for one already there; the identical note again is a no-op",
+               out["changed"] and out2["changed"] is False
+               and lead(K3)["notes"].count(" || UPDATED ") == 1
+               and lead(K3)["notes"].endswith(": clause 4.2"), f"{out} | {out2}")
 
         # The exact-duplicate refusal names a command, and the command must work.
         msg = refusal(code_lead, NAME1)

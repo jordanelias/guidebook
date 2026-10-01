@@ -1701,7 +1701,9 @@ checks:
     code (no verb; variants admitted). Fault-injected 2026-10-01: an ASCII fold turned
     the non-Latin variant case red, and without the empty-key guard the non-Latin
     collision case; removing the near-duplicate refusal, the same-status refusal or the
-    append turned their cases red; restored, green. Section J (I7, 2026-10-01) holds the
+    append turned their cases red; restored, green. Review fix (2026-10-01): a note that is
+    only a substring of the held notes is appended (K16) -- red on the pre-fix code, whose
+    containment test read it as already present. Section J (I7, 2026-10-01) holds the
     declared jurisdiction vocabulary at write time: add-source refuses an undeclared code
     and writes nothing, the ruled rejected spelling names its replacement, a case
     variant names the declared spelling (refused, not folded), a code admitted the same

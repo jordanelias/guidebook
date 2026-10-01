@@ -140,10 +140,9 @@ class ItemAssignmentStatus(str, Enum):
 class JurisdictionCode(str, Enum):
     """Canonical jurisdiction codes.
 
-    The original 24 per jurisdiction-tracker §4.7.3, plus meta-codes, plus the
-    five admitted 2026-09-18 and the four admitted 2026-10-01 (below). ISO 3166-1
-    alpha-2 where possible. Count the members rather than trusting a number typed
-    anywhere (CLAUDE.md rule 7a):
+    The original 24 per jurisdiction-tracker §4.7.3, plus meta-codes, plus those
+    admitted 2026-09-18 and 2026-10-01 (below). ISO 3166-1 alpha-2 where possible.
+    Count the members rather than trusting a number typed anywhere (CLAUDE.md rule 7a):
 
         python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"
 
@@ -218,11 +217,12 @@ class JurisdictionCode(str, Enum):
     PT = "PT"   # Portugal -- Bucket 2
     FI = "FI"   # Finland -- Bucket 2
     UN = "UN"   # United Nations -- Bucket 1. A meta-code like ISO and EU, not a country.
-    # UG is NOT in either bucket and is admitted by owner decision (D2 of the batch-23
-    # process-gap remediation plan, 2026-10-01): declared for PR #165's rows, which are
-    # not unwound; outside research scope by the 2026-09-28 ruling. This enum is the
-    # declared vocabulary of rows held, not the canonical 24 -- so declaring UG licenses
-    # no further Ugandan research; the ruling, not this list, sets research scope.
+    # UG is NOT in either bucket and is admitted by owner decision D2, approved 2026-10-01
+    # (references/project-standards.md, grep "plan's decisions D1–D4 approved"): declared
+    # for PR #165's rows, which are not unwound; outside research scope by the 2026-09-28
+    # ruling. This enum is the declared vocabulary of rows held, not the canonical list --
+    # so declaring UG licenses no further Ugandan research; the ruling, not this list,
+    # sets research scope.
     UG = "UG"   # Uganda
 
     # Meta-codes (not individual countries)

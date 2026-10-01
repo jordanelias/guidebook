@@ -4341,3 +4341,24 @@ by querying `v_coverage_jurisdiction` (or the equivalent over `search_executions
 every bucket-1/2 jurisdiction against the slug, and closing any gap with `db.py log-search
 --jurisdiction <code> ... --deferred-reason "..."` for a jurisdiction deliberately not searched, or
 a real logged search otherwise. Nothing else in the ruling changes.
+
+## Owner ruling 2026-10-01 — the process-gap remediation plan's decisions D1–D4 approved
+
+Given in session https://claude.ai/code/session_01MaToqCJbDoviNNLNkSpJPX, in reply to the
+process-gap remediation plan for research batch 23 (PR #166), whose list of owner decisions named
+D1 to D4. The plan was held in that session's scratchpad and is not committed; this entry is the
+record. Recorded on contact per rule 0.
+
+> "approve all"
+
+**D2**, the decision this entry exists to make findable: `JurisdictionCode` (`schemas/enums.py`)
+admits `PT`, `FI` and `UN`, executing the owner ruling of 2026-09-28 above, and admits `UG` with
+the comment "declared for PR #165's rows, which are not unwound; outside research scope by the
+2026-09-28 ruling". D1, D3 and D4 concern PR #166's sequencing behind the tooling PR, the go-ahead
+for the plan's branches, and agent edits to `.claude/settings.json`.
+
+CONDITION: any session asking on whose authority `UG`, `PT`, `FI` or `UN` is a `JurisdictionCode`
+member.
+ACTION: (1) Read this entry as that authority. (2) Declaring `UG` licenses no research; the
+2026-09-28 ruling, not the enum, sets research scope.
+DATE: 2026-10-01 — owner approval, quoted above.

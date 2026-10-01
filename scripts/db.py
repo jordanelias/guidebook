@@ -9260,7 +9260,16 @@ def update_code_lead(lead_id: int, append_note: str, session: str, status: str =
                     f"append a note alone. Nothing was written.")
             moves.append(f"clause {row['clause']!r} -> {clause!r}")
             sets["clause"] = clause
-        if not moves and note in (row["notes"] or ""):
+        # EQUALITY, NOT CONTAINMENT. `note in notes` read a note that is merely a
+        # SUBSTRING of the held text as already present, so appending "clause 4.2" to a
+        # lead whose note read "... clause 4.2, not 4.3" wrote nothing. The held texts are
+        # the original note and the detail of each UPDATED segment append_dated_note wrote.
+        segments = (row["notes"] or "").split(" || ")
+        held = {segments[0].strip()} | {
+            m.group(1).strip() for seg in segments[1:]
+            for m in [re.match(r"UPDATED \d{4}-\d{2}-\d{2} by \S+: (.*)$", seg.strip(),
+                               re.S)] if m}
+        if not moves and note in held:
             return {"lead_id": lead_id, "changed": False,
                     "reason": "this note is already on the row", "dry_run": dry_run}
         stamp = dbcore.upd(session)

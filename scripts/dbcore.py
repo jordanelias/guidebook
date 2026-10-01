@@ -858,10 +858,10 @@ def check_jurisdiction(value, context: str):
     governance/jurisdiction-philosophy.md. Neither is restated here (rule 8).
 
     WHICH WRITERS CALL IT mirrors which tables the audit FAILS on: every table with a
-    `jurisdiction` column except its EXEMPT (source_locators: free text), CANDIDATE_TABLES
-    (lang_jur_map: places the project MAY expand into) and REPORT_ONLY (term_aliases: where
-    an alias is used). No db.py writer sets jurisdiction on any of those three, so there is
-    nothing to exclude; re-derive with `grep -n jurisdiction scripts/db.py`.
+    `jurisdiction` column except those in the audit's EXEMPT, CANDIDATE_TABLES and
+    REPORT_ONLY sets (each with its reason, in the audit; not restated here). As of
+    2026-10-01 no db.py writer sets jurisdiction on an excluded table, so there is nothing
+    to exclude; re-derive by reading those sets against `grep -n jurisdiction scripts/db.py`.
 
     NULL passes: a search or a source scoped to no jurisdiction is a legitimate state.
 
