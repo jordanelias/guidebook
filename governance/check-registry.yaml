@@ -1746,7 +1746,9 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 18/18 assertions.
+  note: 'Derive the assertion count, never quote it (rule 7a): `python3 scripts/tests/test_verification_pipeline.py
+    | tail -3`. G01-G03 asserted corpus sizes an owner ruling had cleared, so the file was red on main
+    while this note read "18/18"; they were deleted 2026-10-01. G04 still reads the live pipeline_runs.'
 - id: test_assess_cell_pilot
   cmd:
   - python3
