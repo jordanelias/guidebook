@@ -1,0 +1,940 @@
+		 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>::: DL n.º 163/2006, de 08 de Agosto</TITLE>
+<META http-equiv=Content-Type content="text/html;">
+<META "" name=GENERATOR>
+<LINK href="https://www.pgdlisboa.pt/default.css" type=text/css rel=stylesheet>
+<SCRIPT SRC="https://www.pgdlisboa.pt/javascript.js"></SCRIPT>
+<BODY>
+<script language="javascript" type="text/javascript"
+	src="https://www.pgdlisboa.pt/jquery-1.2.1.min.js"></script>
+
+</HEAD>
+
+<script language="JavaScript">
+
+// val é o artigo_id em exibição
+
+function cria_anotacao(val) {
+      $("#texto_inserir_anotacao").hide();
+      $("#div_cria_anotacao_"+val).empty();
+
+	     var str =' <form name="form_cria_anotacao_'+val+'" id="form_cria_anotacao_'+val+'">';
+         str += '  <div style="margin-left:10px;margin-top:5px;font-family:tahoma;font-size:10px;font-weight:bold;color:#000000;">';
+         str += '   <span style="color:#000000">Insira a anotação:</span>';
+         str += '   </div>';
+
+         str += '   <div style="margin-left:50px;margin-top:3px;font-family:tahoma;font-size:11px;font-weight:bold;color:#234372;">';
+         str += '    Espécie <select id="especie_'+val+'"  name="especie_'+val+'" style="font-size:11px;>';
+         str += '   <option value="0"></option>';
+         str += '   <option value="1">Orientações do MP</option>';
+         str += '    <option value="2">Diversos</option>';
+         str += '   <option value="3">Jurisprudência</option>';
+         str += '   <option value="4">Jurisprudência obrigatória</option>';         
+         str += '   </select>';
+         str += '  </div>';
+         str += '  <div style="margin-top:8px;margin-left:50px;">';
+         str += '  <textarea id="conteudo_'+val+'" name="conteudo_'+val+'" rows="14" cols= "95" style="font-size:11px;"></textarea>';
+	     str += '   </div>';
+
+
+         
+
+
+         str += '  <div style="margin-top:8px;text-align:right">';
+         str += ' <input type="hidden" name="nidlei" value="3110"/>';
+         var valor ="'"+val+"'";;
+	     str+='   <input type="button" name="cancelar" value="Cancelar" onclick="return fecha_cria_anotacao('+valor+');"/>';
+         str += '   <input  type="button"  value="Gravar" name="enviar" onclick="return add_anotacao('+valor+');"/>&nbsp;';
+         str += '   </div>';
+	     str += '  </form>';
+
+         $(str).appendTo("#div_cria_anotacao_"+val);
+
+         $("#div_cria_anotacao_"+val).show();
+}
+
+// val é o artigo_id em exibição
+function fecha_cria_anotacao(val) {
+   document.getElementById('div_cria_anotacao_'+val).style.display="none";
+   document.getElementById('texto_inserir_anotacao').style.display="block";
+}
+
+// val é o artigo_id em exibição
+function add_anotacao(val) {
+  if(valida_anotacao(val) ){
+     var nidlei =  '3110';
+     var artigo_id =  val;
+     var especie =document.getElementById('especie_'+val).value;
+     var anotacao =document.getElementById('conteudo_'+val).value;
+             var confirmada ="N";
+     
+
+     // Para não duplicar um parágrafo simples
+	 anotacao=anotacao.replace(/\n/g, '');
+
+
+     $.post("lei_add_anotacao.php",
+	 	 	 {nidlei: nidlei, especie:especie, conteudo:anotacao, artigo_id:artigo_id, confirmada:confirmada },
+		      function (mostra_anotacao){
+	             fecha_cria_anotacao(val);
+                 ver_anotacoes(val);
+		      }
+		   );
+     return true;
+  }else{
+      return false;
+  }
+
+}
+
+
+function ver_anotacoes(artigo_id) {
+
+     $("#lista_anotacoes_"+artigo_id).empty();
+
+
+      var nidlei=3110
+      $.getJSON("lei_art_anotacoes.php",{artigo_id:artigo_id, nidlei:nidlei},
+       function(json){
+	     var i = 1;
+         var especie_exibida="";
+  	     for(var v in json.anotacoes){
+            var nidanotacoes = json.anotacoes[v].nidanotacoes;
+            var especie = json.anotacoes[v].especie;
+            var anotacao = json.anotacoes[v].conteudo;
+            var confirmada = json.anotacoes[v].confirmada;
+
+            var str ='<div id="div_mostra_anotacao_'+nidanotacoes+'"';
+			str +=" style='margin-top:15px;margin-left:30px;display:block;'>";
+
+                var valor_artigo_id ="'"+artigo_id+"'";
+                var valor_especie= "'"+especie+"'";
+                if(especie=="3"){
+                       var titulo_especie="Jurisprudência";
+                }else if(especie=="1"){
+                       var titulo_especie="Orientações do MP";
+                }else if(especie=="2"){
+                       var titulo_especie="Diversos";
+                }else if(especie=="4"){
+                       var titulo_especie="Jurisprudência obrigatória";
+
+                }
+                 // Se a anotação estiver confirmada, exibe logo para todos
+                if(confirmada=="S"){
+                   if(especie_exibida != especie){
+                       str+="<div style='margin-left:-10px;margin-bottom:5px;font-family:tahoma;font-size:11px;font-weight:bold;color:#35326B'>" + titulo_especie;
+                       especie_exibida=especie;
+                       i=1;
+                       str += "</div>";
+                   }
+                 // Se a anotação não estiver confirmada, só vê quem fez login
+                }else{
+                                    }
+
+		                     if(confirmada=="S"){
+			            str+=  '&nbsp;'+  i++ +'.&nbsp;';
+                 }
+		   		   anotacao=anotacao.replace(/\n/g, '<br>');
+		   // Se a anotação estiver confirmada, todos vêem
+		   if(confirmada=="S"){
+		         str+= '<span style="font-size:10px;font-family:trebuchet ms;color:#7E4F32;line-height:4mm">';
+ 		         str+=anotacao;
+            // Se a anotação não estiver confirmada, só a vêem os que fizeram login
+		   }else{
+                 		         
+		   }
+ 		   str+="</span>";
+ 		   str+='</div>';
+
+             str+='<DIV id ="div_edita_anotacoes_'+nidanotacoes+'" style="display:none;overflow:auto">';
+             str+=' </DIV>';
+
+           $(str).appendTo("#lista_anotacoes_"+artigo_id);
+
+            // Mostra o div da anotação que tenha sido escondido em edita_anotacao()
+           $("#div_mostra_anotacao_"+nidanotacoes).show();
+
+        } // for
+       }// function
+     );  //  $.getJSON
+}
+
+
+function valida_anotacao(val) {
+     var especie =document.getElementById('especie_'+val).value;
+     var conteudo =document.getElementById('conteudo_'+val).value;
+                var confirmada="N";
+     
+     if( especie=="0"){
+         alert (' Escolha a espécie de anotação!');
+         return false;
+     }
+
+     if( LTrim(conteudo)==""){
+         alert (' Introduza os dados!');
+         return false;
+     }
+     
+                  
+     
+
+     if (confirm("Confirma a gravação dos dados?")) {
+	     return true;
+	}else{
+         return false;
+	}
+}
+
+
+
+function edita_anotacao(nidanotacoes,artigo_id, especie) {
+
+      // Esconde o div da anotação que se quer editar para exibir a anotação apenas na form de edição
+     $("#div_mostra_anotacao_"+nidanotacoes).hide();
+
+     $("#texto_inserir_anotacao").hide();
+     $("#div_edita_anotacoes_"+nidanotacoes).empty();
+
+      $.getJSON("lei_mostra_anotacao.php",{nidanotacoes:nidanotacoes},
+         function(json){
+
+           var anotacao = json.anotacao;
+           var confirmada = json.confirmada;
+
+	         var str =' <form name="form_edita_anotacao_'+nidanotacoes+'" id="form_edita_anotacao_'+nidanotacoes+'">';
+             str += '  <div style="margin-left:10px;margin-top:5px;font-family:tahoma;font-size:10px;font-weight:bold;color:#000000;">';
+             str += '   <span style="color:#000000">Editar anotação:</span>';
+             str += '   </div>';
+             str += '   <div style="margin-left:50px;margin-top:3px;font-family:tahoma;font-size:11px;font-weight:bold;color:#234372;">';
+             str += '    Espécie <select id="especie_'+nidanotacoes+'"  name="especie_'+nidanotacoes+'" style="font-size:11px">';
+             if(especie=="3"){
+                 str += '   <option value="3" selected>Jurisprudência</option>';
+                 str += '   <option value="4">Jurisprudência obrigatória</option>';                 
+                 str += '   <option value="1">Orientações do MP</option>';
+                 str += '    <option value="2">Diversos</option>';
+             }else if(especie=="2"){
+                 str += '   <option value="3">Jurisprudência</option>';
+                 str += '   <option value="4">Jurisprudência obrigatória</option>';                                  
+                 str += '   <option value="1">Orientações do MP</option>';
+                 str += '    <option value="2" selected>Diversos</option>';
+             }else if(especie=="1"){
+                 str += '   <option value="3">Jurisprudência</option>';
+                 str += '   <option value="4">Jurisprudência obrigatória</option>';                                  
+                 str += '   <option value="1" selected>Orientações do MP</option>';
+                 str += '    <option value="2">Diversos</option>';
+             }else if(especie=="4"){
+                 str += '   <option value="3">Jurisprudência</option>';
+                 str += '   <option value="4" selected>Jurisprudência obrigatória</option>';                                  
+                 str += '   <option value="1">Orientações do MP</option>';
+                 str += '    <option value="2">Diversos</option>';
+
+             }
+             str += '   </select>';
+             str += '  </div>';
+             str += '  <div style="margin-top:8px;margin-left:50px;">';
+			 anotacao=anotacao.replace(/<br><br><br>/g, '\n');
+			 anotacao=anotacao.replace(/<br><br>/g, '\n');
+			 anotacao=anotacao.replace(/<br>/g, '\n');
+             str += '  <textarea id="conteudo_'+nidanotacoes+'" name="conteudo_'+nidanotacoes+'"  style="font-size:11px" rows="18" cols= "95">'+anotacao+'</textarea>';
+	         str += '   </div>';
+
+         
+	         
+	         
+             str += '  <div style="margin-top:8px;text-align:right">';
+             str += ' <input type="hidden" name="nidlei" value="3110"/>';
+             var valor_nidanotacoes ="'"+nidanotacoes+"'";
+             var valor_artigo_id ="'"+artigo_id+"'";
+	         str+='   <input type="button" name="cancelar" value="Cancelar" onclick="return fecha_edita_anotacao('+valor_nidanotacoes+')"></>';
+             str += '   <input  type="button"  value="Gravar" name="enviar" onclick="return grava_edita_anotacao('+valor_nidanotacoes+','+valor_artigo_id+');"/>&nbsp;';
+             str += '   </div>';
+	         str += '  </form>';
+
+             $(str).appendTo("#div_edita_anotacoes_"+nidanotacoes);
+             $("#div_edita_anotacoes_"+nidanotacoes).show();
+           }
+        )
+
+}
+
+
+function fecha_edita_anotacao(nidanotacoes) {
+     $("#div_mostra_anotacao_"+nidanotacoes).show();
+     $("#texto_inserir_anotacao").show();
+     $("#form_edita_anotacao_"+nidanotacoes).hide();
+}
+
+
+function grava_edita_anotacao(nidanotacoes,artigo_id) {
+     var especie =document.getElementById('especie_'+nidanotacoes).value;
+     var anotacao =document.getElementById('conteudo_'+nidanotacoes).value;
+             var confirmada ="N";
+    
+
+    // Para não duplicar um parágrafo simples
+
+     anotacao=anotacao.replace(/\n/g, '');
+
+       if (confirm("Confirma a gravação das alterações?")) {
+          $.post("lei_gravar_anotacao.php",
+	  			 	{nidanotacoes:nidanotacoes, especie:especie, conteudo:anotacao, confirmada:confirmada },
+		            function (mostra_anotacao){
+              		   fecha_edita_anotacao(nidanotacoes);
+                       ver_anotacoes(artigo_id);
+		            }
+                 );
+             return true;
+		 }else{
+             return false;
+	  	}
+}
+
+
+
+
+function elimina_anotacao(nidanotacoes, artigo_id) {
+   if(confirm("Confirma a eliminação da anotação?")) {
+      $.getJSON("lei_eliminar_anotacao.php",{nidanotacoes:nidanotacoes},
+		      function (mostra_anotacao){
+                 ver_anotacoes(artigo_id);
+		      }
+      );
+   }
+}
+
+function espera() {
+}
+
+
+function confirma() {
+   if(confirm("Confirma a eliminação do  diploma ?"))
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+
+function goartigo(val) {
+  var art_id=val;
+  var nidlei= "3110";
+  var tabela ="leis";
+  var pagina="1";
+  var ficha="1";
+  var nversao="";
+  var URL = "lei_mostra_articulado.php?artigo_id="+art_id+"&nid="+nidlei+"&tabela="+tabela+"&pagina="+pagina+"&ficha="+ficha+"&so_miolo=&nversao="+nversao+"#artigo";
+  document.location.href = URL;
+  return true;
+}
+</script>
+
+    
+				 
+         	<BODY onload="desactivabusca_leis();">
+				
+
+
+
+
+
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+ <META http-equiv="Pragma" content="no-cache">
+ <META http-equiv="expires" content="0">
+<META name="keywords" content="Minist&eacute;rio P&uacute;blico, procuradoria-geral distrital, lisboa, procuradoria da rep&uacute;blica, c&oacute;digos, legisla&ccedil;&atilde;o penal,  legisla&ccedil;&atilde;o,  jurisprud&ecirc;ncia,  rela&ccedil;&atilde;o de Lisboa, f&oacute;rum jur&iacute;dico, portugal, portugu&ecirc;s, portugueses, supremo tribunal de justi&ccedil;a, tribunal constitucional ">
+<TITLE>Procuradoria-Geral Distrital de Lisboa</TITLE>
+<LINK href="https://pgdlisboa.pt/default.css" type="text/css" rel="stylesheet">
+<!-- RightClick - CSS--><link href="https://pgdlisboa.pt/rc_styles.css" type="text/css" rel="stylesheet"><!-- RightClick - CSS-->
+
+<SCRIPT src="https://pgdlisboa.pt/javascript.js"></SCRIPT>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+</HEAD><BODY>
+
+
+
+<FORM name="busca_tudo" action="https://pgdlisboa.pt/buscatudo.php" method="GET">
+
+<!--<div style="position:absolute;left:412px; top:10px; height: 1800px; width:800px;font-size:5px;border:solid 1px;border-color:#eeeeee">-->
+
+
+<!--<DIV align="center"> 
+<DIV style="margin-top:10px; height: 1200px; width:970
+px;font-size:5px;border:solid 1px;border-color:#eeeeee">
+-->
+
+<!-- JAVALI -->
+<header id="header">
+    <div class="center">
+        <div class="region region-header">
+            <div id="block-javali-theme-imagemdemarcadositio" class="block block-system block-system-branding-block">
+                <a aria-label="Página Pessoal" href="/" rel="home" class="site-logo">
+                    <img width="355" height="96" src="/images-mp/mplogo_desktop.png" alt="Início" fetchpriority="high" loading="lazy">
+                </a>
+            </div>
+            <a href="/pgd_login.php?modulo=LEI" class="login">Área reservada</a>
+            <a href="https://simp.pgr.pt/" class="simp">SIMP</a>
+        </div>
+    </div>
+</header>
+
+<div class="micro-header">
+    <div class="region region-post-header">
+        <div id="block-microsite-micrositeheader" class="block block-mp block-microsite-header">
+            <div class="micro-header">
+                <img src="/images-mp/lisboa-157-c.jpg" width="1960" height="180" alt="PGR Lisboa" loading="lazy" class="image-style-microheader">
+                <div class="center">
+                    <h1><a href="/"><p>Procuradoria-Geral Regional</p> <i>de</i> <b>Lisboa</b></a></h1>
+                </div>
+            </div>
+            <div class="micro-header-space"></div>
+        </div>
+    </div>
+</div>
+
+<div class="main-menu">
+    <div class="center">
+        <button aria-controls="region-menu" aria-expanded="false" class="menu-toggler mobile-only" data-once="micromenu">
+            <span class="menu-title">PGR Lisboa</span>
+        </button>
+        <div class="region region-menu" data-once="micromenu_items">
+            <nav aria-labelledby="block-microsite-pgdlisboamain-menu" id="block-microsite-pgdlisboamain" class="block block-menu navigation menu--micro-main-pgd-lisboa">            
+                <ul class="menu">
+                    <li class="">
+                        <a href="https://pgreg-lisboa.ministeriopublico.pt" tabindex="0">PGRL</a>
+                    </li>
+                    <li class="">
+                        <a href="/leis/lei_main.php" tabindex="0">Legislação</a>
+                    </li>
+                    <li class="">
+                        <a href="/jurel/jurisprudencia_main.php" tabindex="0">Jurisprudência</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav aria-labelledby="block-microsite-pgdlisboaapoio-menu" id="block-microsite-pgdlisboaapoio" class="block block-menu navigation menu--micro-apoio-pgd-lisboa">   
+                <ul class="apoio-menu menu">
+                    <li class="">
+                        <a href="https://pgreg-lisboa.ministeriopublico.pt/contactos" tabindex="0">Contactos</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<!-- JAVALI (add caneter class) -->
+<DIV class="center" style="margin-top:25px;font-family:tahoma;font-size:9px;font-weight:bold">
+ 
+
+
+<TABLE id="content-wrapper" border="0" cellspacing="0" cellpadding="0" width="945">
+<TBODY><TR>
+
+<TD valign="top" colspan="3">
+<!-- JAVALI ADD CLASS-->
+<div id="divheader1" class="visually-hidden">
+ 	<div id="divheaderlogo"><a href="https://pgdlisboa.pt/"><img src="https://www.pgdlisboa.pt/imagens/logo_pgdl.png" width="169" height="145" border="0"></a></div>
+    <div id="divheader_right">
+ <div id="divferramentastop"> <a href="https://pgdlisboa.pt/">Início</a>  //  <a href="https://pgdlisboa.pt/indice.php">Índice</a>
+ //  <a href="https://pgdlisboa.pt/contactos.php">Contactos</a>
+  //  <a href="https://pgdlisboa.pt/links.php">Links</a>
+  
+ 
+    |  <a href="https://pgdlisboa.pt/pgd_login.php?modulo=LEI">
+    <img src="https://www.pgdlisboa.pt/imagens/seta.jpg" width="6" height="6" border="0"> Login</a> </div>
+
+ 
+  <div id="divmenu"><a href="https://www.pgdlisboa.pt/novidades/nov_main.php?comarcas=S">Actualidade</a> |
+  <a href="https://www.pgdlisboa.pt/jurel/jurisprudencia_main.php">Jurisprudência</a> |
+   <a href="https://www.pgdlisboa.pt/leis/lei_main.php">Legislação</a> <!--|
+    <a href="https://www.pgdlisboa.pt/forum/for_main.php">Fórum</a> |-->
+    
+    <!-- <a href="#">Institucional</a> | --><span class="pesquisa"> <strong>pesquisa:</strong>
+      <INPUT style="font-family:tahoma; font-size:10.5px;height:18px;" maxlength="150" size="20" name="buscahome" value="">
+  <SELECT name="bases" style="font-family:tahoma; font-weight:normal;font-size:10px;height:18px;">
+					 								        <OPTION value="1">Jurisp. Relação Lisboa</OPTION>
+					  								      <OPTION value="2">Interv. do MP</OPTION>
+			      								      <OPTION value="3">Legislação</OPTION>
+			      								      <OPTION value="4">Peças processuais</OPTION>
+			      							       	<OPTION value="5">Docs. da  PGD</OPTION>
+			      								      <OPTION value="6">Textos</OPTION>
+			      								      <OPTION value="7">Comarcas</OPTION>
+			      								      <OPTION value="8">Actualidade</OPTION>
+			      								      <OPTION value="9">Destaques</OPTION>
+		      </SELECT> <INPUT style="font-family:tahoma; font-size:10px;height:18px;" type="submit" value=" OK " border="0" onClick="return validabusca_tudo();"></SPAN></div>
+  </div>
+
+  </form>
+<!-- FIM RightClick Código-->
+
+
+<!--
+<center><marquee onmouseover="javascript:scroller.stop()" onmouseout="javascript:scroller.start()"
+ id="scroller" direction=left width=770 scrollAmount=3 scrollDelay=80
+        height=24 style="padding-top:6px;background-color:#FBEFFC;border:0px solid black;font-size:11.5px;font-weight:bold;font-family:tahoma;color:#FF0000">
+        Por razões técnicas, este site será interrompido hoje, a partir das 19,00h.</u>
+       O serviço será reposto amanhã de manhã. Pedimos desculpa pelo incómodo causado.
+</marquee>
+
+</center>
+
+    -->
+
+
+  </TD></TR>
+
+
+<TR>
+<TD valign="top" width="185">
+ <div id="divmenu_lateral">
+ <br />
+
+
+                            <div class="seccao"><A href="https://pgdlisboa.pt/home.php"> CIDADÃO</A></div>
+                            <ul>
+                            <li><A href="https://pgdlisboa.pt/home_cd_dir_fm.php"> Menores e Família</A></li>
+                            <li><A href="https://pgdlisboa.pt/home_cd_dir_tr.php"> Trabalho e cível</A></li>
+                            <li><A href="https://pgdlisboa.pt/home_cd_dir_df.php"> Incapacidades</A></li>
+</br>
+                            <li><A href="https://pgdlisboa.pt/home_cd_agi_st.php"> Em situação de crime</A></li>
+                            <li><A href="https://pgdlisboa.pt/home_cd_agi_sm.php"> Em situação de morte</A></li>
+                            <li><A href="https://pgdlisboa.pt/home_cd_agi_dc.php"> Em defesa da comunidade</A></li>
+	
+
+
+
+                            </ul>
+<br />
+                            <div class="seccao"><A href="https://www.pgdlisboa.pt/leis/lei_main.php">INFORMAÇÃO JURÍDICA</A></div>
+                            <ul>
+                            <li><A href="https://www.pgdlisboa.pt/leis/lei_main.php"> Legislação</A></li>
+                            <li><A href="https://www.pgdlisboa.pt/jurel/jurisprudencia_main.php"> Jurisprudência</A></li>
+                        <!--    <li><A href="https://www.pgdlisboa.pt/forum/for_main.php"> Fórum</A></li>-->
+                           </ul>
+<br />
+                            <div class="seccao"><A href="https://www.pgdlisboa.pt/interv/pec_main.php">ACTIVIDADE</A></div>
+                            <ul>
+                            <li><A href="https://www.pgdlisboa.pt/docpgd/doc_main.php"> Docs. da PGDL</A></li>
+      <li><A href="https://www.pgdlisboa.pt/docpgd/doc_busca.php?buscajur=&nid_especie=3&nid_subespecie=21&pagina=1&ficha=1"> Cláusulas contratuais nulas</A></li>
+                           <!-- <li><A href="https://www.pgdlisboa.pt/interv/pec_main.php"> MP na Relação de Lisboa</A></li>
+                           </ul> -->
+<br />
+   
+
+<!--
+                            <div class="seccao"><A href="https://www.pgdlisboa.pt/distrito/dis_main.php">O MP NO DISTRITO</A></div>
+                            <ul>
+                            <li><A href="https://www.pgdlisboa.pt/distrito/files/quadro_legal_06.pdf"> Os magistrados</A></li>
+                            <li><A href="https://www.pgdlisboa.pt/distrito/modelounidade.php?pgdl=pgdl&mostramapas=off"> A PGD de Lisboa</A> </li>
+                            <li><A href="https://www.pgdlisboa.pt/distrito/dis_main.php"> Os círculos judiciais</A></li>
+                            <li><A href="https://www.pgdlisboa.pt/distrito/mp_comarcas.php"> As comarcas</A></li>
+                            </ul>
+-->
+                      
+
+
+
+
+</div>
+
+</TD>
+				  <td valign=top><br>    
+<div style="margin-left: 10px; margin-top: 3px; font-size: 9px; font-family: tahoma; font-weight: bold;">
+<a style="color: #2968b4" href="https://www.pgdlisboa.pt/"><u>Início</u></a>&nbsp;<img
+	src="https://www.pgdlisboa.pt/imagens/seta_menu.gif" height=7 border=0> <a
+	style="color: #2968b4" href="https://www.pgdlisboa.pt/leis/lei_main.php"><u>legislação</u></a>&nbsp;<img
+	src="https://www.pgdlisboa.pt/imagens/seta_menu.gif" height=7 border=0> <span
+	style="color: #999999">Exibe diploma</span></div>
+<BR>
+<div style = "height:23px;font-family:verdana;font-size:12px;font-weight:bold;background-color:#ffffff;color:#26397d;" width=62%>&nbsp; <img src="https://www.pgdlisboa.pt/imagens/lista.gif" border=0 width=18 height=17 align=bottom>&nbsp; Legislação     </div>
+<!-- jaavli - add class -->
+<table class="articulado"  border="0" cellspacing="1" cellpadding="0" bgcolor=#e1e1e1	width=100%>
+	<tr>
+	<td bgcolor=#ffffff>
+	
+        
+    
+    
+    
+    
+	<table>
+	<tr>
+	<td class="descricaomodulos">
+	<div style="margin-top:10px;color:#fc7714;font-weight:bold;font-family:tahoma;font-size:11px;">&nbsp;&nbsp;DL n.º 163/2006, de 08 de Agosto</div><div style="margin-top:10px;color:#0554e7;font-weight:bold;font-family:tahoma">&nbsp;&nbsp;ACESSIBILIDADE A ESPAÇOS PÚBLICOS, EQUIPAMENTOS COLECTIVOS E EDIFÍCIOS PÚBLICOS E HABITACIONAIS<span style="font-weight:normal;margin-left:5px;color:#0554e7;">(versão actualizada)</div></td>
+	</div>
+		<tr>
+	<td bgcolor=#ffffff colspan=2><br>
+	</td>
+	</tr>
+	</table>
+	<table border=0 width=100% cellpadding=2>
+	<td valign=top class=txt_base_n_l width=40%><font color="#387070">&nbsp;&nbsp;&nbsp;
+	
+		          Contém as seguintes alterações: </td>
+		<td valign=top class=txt_base_n_l width=60%><font color="#387070">&nbsp;&nbsp;&nbsp;
+		 
+		       Ver versões do diploma:</font>
+		</td>
+		</tr>
+		<tr>
+		<td colspan=2 valign=top><!--	<div style="height:200px; overflow: auto;
+		margin-left:5px;margin-top:0px;color:#000000;
+		border:solid 0 px;
+		border-color:#1d87de;
+		border-top-width: 0px;
+                    background-color: #ffffff;
+		background-attachment: fixed;
+		border-right-width: 0px;border-left-width: 0px;border-bottom-width: 0px;
+		SCROLLBAR-FACE-COLOR: #f1f1f1;
+		SCROLLBAR-HIGHLIGHT-COLOR:#000000;
+		SCROLLBAR-SHADOW-COLOR: #c2e0f8;
+		SCROLLBAR-3DLIGHT-COLOR: #c2e0f8;
+		SCROLLBAR-ARROW-COLOR: #1d87de;
+		SCROLLBAR-TRACK-COLOR: #8ab6e1;
+		SCROLLBAR-DARKSHADOW-COLOR: #000000;
+		SCROLLBAR-BASE-COLOR: #c2e0f8;" align=left> -->
+		<table border=0 width=100%>
+		<tr>
+		<td valign=top class=txt_base_n_l width=40%>&nbsp;&nbsp;  - <a  href= "lei_mostra_articulado.php?nid=3737&tabela=leis&ficha=1&pagina=1&so_miolo=">DL n.º 10/2024, de 08/01</a><br>&nbsp;&nbsp;  - <a  href= "lei_mostra_articulado.php?nid=3189&tabela=leis&ficha=1&pagina=1&so_miolo=">DL n.º 95/2019, de 18/07</a><br>&nbsp;&nbsp;  - <a  href= "lei_mostra_articulado.php?nid=3111&tabela=leis&ficha=1&pagina=1&so_miolo=">DL n.º 125/2017, de 04/10</a><br>&nbsp;&nbsp;  - <a  href= "lei_mostra_articulado.php?nid=2216&tabela=leis&ficha=1&pagina=1&so_miolo=">DL n.º 136/2014, de 09/09</a><br></td><td valign=top class=txt_base_n_l width=60%><span style="margin-left:14px;font-size:10.5px;font-weight:bold;font-family:tahoma;color:#0259db"><a  style="color:#0259db" href= "lei_mostra_articulado.php?nid=3110&tabela=leis&so_miolo=">- 5ª versão - a mais recente </a></span><span style="color:#696969"> (DL n.º 10/2024, de 08/01)</span><br>&nbsp;&nbsp;&nbsp;&nbsp; <a href= "lei_mostra_articulado.php?nid=3110&tabela=lei_velhas&nversao=4&so_miolo=">- 4ª versão </a>(DL n.º 95/2019, de 18/07)<br>&nbsp;&nbsp;&nbsp;&nbsp; <a href= "lei_mostra_articulado.php?nid=3110&tabela=lei_velhas&nversao=3&so_miolo=">- 3ª versão </a>(DL n.º 125/2017, de 04/10)<br>&nbsp;&nbsp;&nbsp;&nbsp; <a href= "lei_mostra_articulado.php?nid=3110&tabela=lei_velhas&nversao=2&so_miolo=">- 2ª versão </a>(DL n.º 136/2014, de 09/09)<br>&nbsp;&nbsp;&nbsp;&nbsp; <a href= "lei_mostra_articulado.php?nid=3110&tabela=lei_velhas&nversao=1&so_miolo=">- 1ª versão </a>(DL n.º 163/2006, de 08/08)</td></table>        </td>
+	<tr>
+	<td bgcolor="#ffffff" colspan=2>
+	<div style="margin-top: 0px; margin-left: 6px; font-size: 9px; font-family: tahoma">
+	
+	
+	<form name="busca" action="lei_busca_assunto_diploma.php" method="GET"><b><font color=#993333>
+	Procurar no presente diploma:</b></font><br>
+	<input maxLength=250 size=35 name="buscajur"  onkeydown="return limpartigo();"
+	value=""></> 	<input type="checkbox" name="exacta"><font color=#993333><b>A expressão exacta </b></>
+	 <input type="submit" value="Procurar"	onclick="return validabusca_articulado();"></>
+	  <!-- Select para localização de 1 só artigo -->
+	<br>
+	<br>
+	<b><font color=#993333>Ir para o art.: </b></font><br>
+	<select style="height: 20px; width: 500px; font-size: 10.5px;" name="artigo_id" onchange="return goartigo(this.value);">
+	<option></option>
+				<option value="3110A0001">Artigo 1.º<br> 
+Objecto</option>
+					<option value="3110A0002">Artigo 2.º<br> 
+Âmbito de aplicação</option>
+					<option value="3110A0003">Artigo 3.º<br> 
+Licenciamento e autorização</option>
+					<option value="3110A0004">Artigo 4.º<br> 
+Operações urbanísticas promovidas pela Administração Pública</option>
+					<option value="3110A0005">Artigo 5.º<br> 
+Definições</option>
+					<option value="3110A0006">Artigo 6.º<br> 
+Licenciamento de estabelecimentos</option>
+					<option value="3110A0007">Artigo 7.º<br> 
+Direito à informação</option>
+					<option value="3110A0008">Artigo 8.º<br> 
+Publicidade</option>
+					<option value="3110A0009">Artigo 9.º<br> 
+Instalações, edifícios, estabelecimentos e espaços circundantes já existentes</option>
+					<option value="3110A0009A">Artigo 9.º-A<br> 
+Intervenção em edifícios de habitação existentes</option>
+					<option value="3110A0010">Artigo 10.º<br> 
+Excepções</option>
+					<option value="3110A0011">Artigo 11.º<br> 
+Obras em execução ou em processo de licenciamento ou autorização</option>
+					<option value="3110A0012">Artigo 12.º<br> 
+Fiscalização</option>
+					<option value="3110A0013">Artigo 13.º<br> 
+Responsabilidade civil</option>
+					<option value="3110A0014">Artigo 14.º<br> 
+Direito de acção das associações e fundações de defesa dos interesses das pessoas com deficiência</option>
+					<option value="3110A0015">Artigo 15.º<br> 
+Responsabilidade disciplinar</option>
+					<option value="3110A0016">Artigo 16.º<br> 
+Responsabilidade contra-ordenacional</option>
+					<option value="3110A0017">Artigo 17.º<br> 
+Sujeitos</option>
+					<option value="3110A0018">Artigo 18.º<br> 
+Coimas</option>
+					<option value="3110A0019">Artigo 19.º<br> 
+Sanções acessórias</option>
+					<option value="3110A0020">Artigo 20.º<br> 
+Determinação da sanção aplicável</option>
+					<option value="3110A0021">Artigo 21.º<br> 
+Competência sancionatória</option>
+					<option value="3110A0022">Artigo 22.º<br> 
+Avaliação e acompanhamento</option>
+					<option value="3110A0023">Artigo 23.º<br> 
+Norma transitória</option>
+					<option value="3110A0024">Artigo 24.º<br> 
+Aplicação às Regiões Autónomas</option>
+					<option value="3110A0025">Artigo 25.º<br> 
+Norma revogatória</option>
+					<option value="3110A0026">Artigo 26.º<br> 
+Entrada em vigor</option>
+					<option value="3110X0001">ANEXO<br> 
+Normas técnicas para melhoria da acessibilidade das pessoas com mobilidade condicionada</option>
+					<option value=""></option>
+			</select>
+	 	       <span style="margin-left: 10px; color: #1d31ba; font-family: trebuchet ms; font-size: 11px;">
+	       <a  href="lei_mostra_articulado.php?nid=3110&tabela=leis&nversao=&so_miolo=">
+	       <img src="https://www.pgdlisboa.pt/imagens/refresh.gif" border=0 align=top>&nbsp;Todos</a></span>
+		 <input name="pagina" value="1" type=hidden>
+	 <input name="ficha" value="1" type=hidden>
+	  <input name="nid"	value="3110" type=hidden> 
+	  <input name="tabela" value="leis" type=hidden> 
+	  <!-- Isto é só para o javascript não dar erro -->
+	<input name="tipodiploma" value="" type=hidden> 
+	<input name="numerodiploma" value="" type=hidden>
+	 <input	name="anodiploma" value="" type=hidden>
+	  <input	name="diplomaprincipal" value="" type=hidden>
+	   <input	name="buscacodigo" value="" type=hidden> 
+	   <input	name="codigoprincipal" value="" type=hidden> 
+	   <input	name="diplomas" value="" type=hidden>
+	    <input name="artigos"	value="" type=hidden> 
+	 <input name="so_miolo" value="" type=hidden>	    	    
+	 </font>
+	
+	</form>
+	</div>
+	
+	<!--FIM  FORM PARA  PESQUISA-->
+	</table>
+		
+	<table border="0" cellspacing="1" cellpadding="1" bgcolor=#e1e1e1 width=100%>
+	<td valign=bottom bgcolor=#f2f2f2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span style="font-family: trebuchet ms; font-size: 12.5px; font-weight: bolder; color: #fe2607">
+	Nº de artigos :&nbsp;<i> 5</i>&nbsp;</span>
+    
+    </td>
+	<td class=txt_7_n_r bgcolor=#f1f1f1>	&nbsp;&nbsp;&nbsp;&nbsp;
+		</td>
+	</table>
+		<table class="artigo" border=0 bgcolor=#f1f1f1 cellpadding=1 cellspacing=1	width=100%>
+		<td bgcolor=#ffffff>
+		<table border=0 width="100%" cellpadding="0">
+					<td align=right bgcolor=#ffffff valign=top>
+			<table width=100%>
+			<td align=center><br>
+			<br>
+			<a style="color: #0066cc; font-size: 8pt; font-family: Trebuchet MS; font-weight: bold"
+				href="lei_mostra_estrutura.php?tabela=leis&artigo_id=3110A0027&nid=3110&nversao=&tabela=leis&so_miolo=">
+				<img src="https://www.pgdlisboa.pt/imagens/organica.png" alt="" border=0>&nbsp;<u>Ver
+				índice sistemático do diploma</u></a>
+				 <a style="margin-left: 50px; color: #0066cc; font-size: 8pt; font-family: Trebuchet MS; font-weight: bold"
+					href="javascript:janela_imprime('lei_print_articulado.php?tabela=leis&artigo_id=3110A0027&nid=3110&nversao=&tabela=leis  ','imprime',720,480,'yes')">
+				<img src="https://www.pgdlisboa.pt/imagens/imprimir.gif"
+					alt="Abre  janela autónoma para impressão mais amigável "
+					border=0>&nbsp;<u>Imprimir todo o diploma</u></a></td>
+			</table>
+			<table width=100%><td colspan=3><span style="font-size:13px;font-family:tahoma;color:#000000;"><b>SUMÁRIO</b></span><div style="margin-top:8px;margin-left:12px;font-size:12.5px;font-family:trebuchet ms;color:#000000;"><b>Aprova o regime da acessibilidade aos edifícios e estabelecimentos que recebem público, via pública e edifícios habitacionais, revogando o Decreto-Lei n.º 123/97, de 22 de Maio</b></div>_____________________</td></tr></table></td>
+		<tr>
+		<td class=txt_base_n_l colspan=3><br>Decreto-Lei n.º 163/2006, de 8 de Agosto <BR> A promoção da acessibilidade constitui um elemento fundamental na qualidade de vida das pessoas, sendo um meio imprescindível para o exercício dos direitos que são conferidos a qualquer membro de uma sociedade democrática, contribuindo decisivamente para um maior reforço dos laços sociais, para uma maior participação cívica de todos aqueles que a integram e, consequentemente, para um crescente aprofundamento da solidariedade no Estado social de direito. <BR> São, assim, devidas ao Estado acções cuja finalidade seja garantir e assegurar os direitos das pessoas com necessidades especiais, ou seja, pessoas que se confrontam com barreiras ambientais, impeditivas de uma participação cívica activa e integral, resultantes de factores permanentes ou temporários, de deficiências de ordem intelectual, emocional, sensorial, física ou comunicacional. <BR> Do conjunto das pessoas com necessidades especiais fazem parte pessoas com mobilidade condicionada, isto é, pessoas em cadeiras de rodas, pessoas incapazes de andar ou que não conseguem percorrer grandes distâncias, pessoas com dificuldades sensoriais, tais como as pessoas cegas ou surdas, e ainda aquelas que, em virtude do seu percurso de vida, se apresentam transitoriamente condicionadas, como as grávidas, as crianças e os idosos. <BR> Constituem, portanto, incumbências do Estado, de acordo com a Constituição da República Portuguesa, a promoção do bem-estar e qualidade de vida da população e a igualdade real e jurídico-formal entre todos os portugueses [alínea d) do artigo 9.º e artigo 13.º], bem como a realização de «uma política nacional de prevenção e de tratamento, reabilitação e integração dos cidadãos portadores de deficiência e de apoio às suas famílias», o desenvolvimento de «uma pedagogia que sensibilize a sociedade quanto aos deveres de respeito e solidariedade para com eles» e «assumir o encargo da efectiva realização dos seus direitos, sem prejuízo dos direitos e deveres dos pais e tutores» (n.º 2 do artigo 71.º). <BR> Por sua vez, a alínea d) do artigo 3.º da Lei de Bases da Prevenção, Habilitação, Reabilitação e Participação das Pessoas com Deficiência (Lei n.º 38/2004, de 18 de Agosto) determina «a promoção de uma sociedade para todos através da eliminação de barreiras e da adopção de medidas que visem a plena participação da pessoa com deficiência». <BR> O XVII Governo Constitucional assumiu, igualmente, no seu Programa que o combate à exclusão que afecta diversos grupos da sociedade portuguesa seria um dos objectivos primordiais da sua acção governativa, nos quais se incluem, naturalmente, as pessoas com mobilidade condicionada que quotidianamente têm de confrontar-se com múltiplas barreiras impeditivas do exercício pleno dos seus direitos de cidadania. <BR> A matéria das acessibilidades foi já objecto de regulação normativa, através do Decreto-Lei n.º 123/97, de 22 de Maio, que introduziu normas técnicas, visando a eliminação de barreiras urbanísticas e arquitectónicas nos edifícios públicos, equipamentos colectivos e via pública. <BR> Decorridos oito anos sobre a promulgação do Decreto-Lei n.º 123/97, de 22 de Maio, aprova-se agora, neste domínio, um novo diploma que define o regime da acessibilidade aos edifícios e estabelecimentos que recebem público, via pública e edifícios habitacionais, o qual faz parte de um conjunto mais vasto de instrumentos que o XVII Governo Constitucional pretende criar, visando a construção de um sistema global, coerente e ordenado em matéria de acessibilidades, susceptível de proporcionar às pessoas com mobilidade condicionada condições iguais às das restantes pessoas. <BR> As razões que justificam a revogação do Decreto-Lei n.º 123/97, de 22 de Maio, e a criação de um novo diploma em sua substituição prendem-se, em primeiro lugar, com a constatação da insuficiência das soluções propostas por esse diploma. <BR> Pesem embora as melhorias significativas decorrentes da introdução do Decreto-Lei n.º 123/97, de 22 de Maio, a sua fraca eficácia sancionatória, que impunha, em larga medida, apenas coimas de baixo valor, fez que persistissem na sociedade portuguesa as desigualdades impostas pela existência de barreiras urbanísticas e arquitectónicas. <BR> Neste sentido, o presente decreto-lei visa, numa solução de continuidade com o anterior diploma, corrigir as imperfeições nele constatadas, melhorando os mecanismos fiscalizadores, dotando-o de uma maior eficácia sancionatória, aumentando os níveis de comunicação e de responsabilização dos diversos agentes envolvidos nestes procedimentos, bem como introduzir novas soluções, consentâneas com a evolução técnica, social e legislativa entretanto verificada. <BR> De entre as principais inovações introduzidas com o presente decreto-lei, é de referir, em primeiro lugar, o alargamento do âmbito de aplicação das normas técnicas de acessibilidades aos edifícios habitacionais, garantindo-se assim a mobilidade sem condicionamentos, quer nos espaços públicos, como já resultava do diploma anterior e o presente manteve, quer nos espaços privados (acessos às habitações e seus interiores). <BR> Como já foi anteriormente salientado, as normas técnicas de acessibilidades que constavam do Decreto-Lei n.º 123/97, de 22 de Maio, foram actualizadas e procedeu-se à introdução de novas normas técnicas aplicáveis especificamente aos edifícios habitacionais. <BR> Espelhando a preocupação de eficácia da imposição de normas técnicas, que presidiu à elaboração deste decreto-lei, foram introduzidos diversos mecanismos que têm, no essencial, o intuito de evitar a entrada de novas edificações não acessíveis no parque edificado português. Visa-se impedir a realização de loteamentos e urbanizações e a construção de novas edificações que não cumpram os requisitos de acessibilidades estabelecidos no presente decreto-lei. <BR> As operações urbanísticas promovidas pela Administração Pública, que não carecem, de modo geral, de qualquer licença ou autorização, são registadas na Direcção-Geral dos Edifícios e Monumentos Nacionais, devendo as entidades administrativas que beneficiem desta isenção declarar expressamente que foram cumpridas, em tais operações, as normas legais e regulamentares aplicáveis, designadamente as normas técnicas de acessibilidades. <BR> A abertura de quaisquer estabelecimentos destinados ao público (escolas, estabelecimentos de saúde, estabelecimentos comerciais, entre outros) é licenciada pelas entidades competentes, quando o estabelecimento em causa se conforme com as normas de acessibilidade. <BR> Por outro lado, consagra-se também, de forma expressa, a obrigatoriedade de comunicação às entidades competentes para esses licenciamentos, por parte de câmara municipal, das situações que se revelem desconformes com as obrigações impostas por este regime, aumentando-se, assim, o nível de coordenação existente entre os diversos actores intervenientes no procedimento. <BR> Assume igualmente grande importância a regra agora introduzida, segundo a qual os pedidos de licenciamento ou autorização de loteamento, urbanização, construção, reconstrução ou alteração de edificações devem ser indeferidos quando não respeitem as condições de acessibilidade exigíveis, cabendo, no âmbito deste mecanismo, um importante papel às câmaras municipais, pois são elas as entidades responsáveis pelos referidos licenciamentos e autorizações. <BR> Outro ponto fundamental deste novo regime jurídico reside na introdução de mecanismos mais exigentes a observar sempre que quaisquer excepções ao integral cumprimento das normas técnicas sobre acessibilidades sejam concedidas, nomeadamente a obrigatoriedade de fundamentar devidamente tais excepções, a apensação da justificação ao processo e, adicionalmente, a publicação em local próprio para o efeito. <BR> As coimas previstas para a violação das normas técnicas de acessibilidades são sensivelmente mais elevadas do que as previstas no diploma anterior sobre a matéria, e, com o intuito de reforçar ainda mais a co-actividade das normas de acessibilidades, a sua aplicação pode também ser acompanhada da aplicação de sanções acessórias. <BR> Neste domínio, visa-se, igualmente, definir de forma mais clara a responsabilidade dos diversos agentes que intervêm no decurso das diversas operações urbanísticas, designadamente o projectista, o responsável técnico ou o dono da obra. <BR> O produto da cobrança destas coimas reverte em parte para as entidades fiscalizadoras e, noutra parte, para a entidade pública responsável pela execução das políticas de prevenção, habilitação, reabilitação e participação das pessoas com deficiência. <BR> Outra inovação importante introduzida pelo presente decreto-lei consiste na atribuição de um papel activo na defesa dos interesses acautelados aos cidadãos com necessidades especiais e às organizações não governamentais representativas dos seus interesses. Estes cidadãos e as suas organizações são os principais interessados no cumprimento das normas de acessibilidades, pelo que se procurou conceder-lhes instrumentos de fiscalização e de imposição das mesmas. As organizações não governamentais de defesa destes interesses podem, assim, intentar acções, nos termos da lei da acção popular, visando garantir o cumprimento das presentes normas técnicas. Estas acções podem configurar-se como as clássicas acções cíveis, por incumprimento de norma legal de protecção de interesses de terceiros, ou como acções administrativas. O regime aqui proposto deve ser articulado com o regime das novas acções administrativas, introduzidas com o Código de Processo nos Tribunais Administrativos, que pode, em muitos casos, ser um instrumento válido de defesa dos interesses destes cidadãos em matéria de acessibilidades. <BR> Por fim, a efectividade do regime introduzido por este decreto-lei ficaria diminuída caso não fossem consagrados mecanismos tendentes à avaliação e acompanhamento da sua aplicação, pelo que as informações recolhidas no terreno, no decurso das acções de fiscalização, são remetidas para a Direcção-Geral dos Edifícios e Monumentos Nacionais, que procederá, periodicamente, a um diagnóstico global do nível de acessibilidade existente no edificado nacional. <BR> Foram promovidas as diligências necessárias à audição da Ordem dos Engenheiros e da Ordem dos Arquitectos. <BR> Foram ouvidos os órgãos de governo próprio das Regiões Autónomas e a Associação Nacional de Municípios Portugueses. <BR> Assim: <BR> No desenvolvimento do regime jurídico estabelecido na Lei n.º 38/2004, de 18 de Agosto, e nos termos da alínea c) do n.º 1 do artigo 198.º da Constituição, o Governo decreta o seguinte: <BR> </td></tr><tr><td class=txt_base_b_l><font style ="font-family:tahoma;font-weight:bold;color:#d74600; font-size:11px">&nbsp;&nbsp;Artigo 1.º<br> 
+Objecto</td>		</tr>
+		</table>
+		<table bgcolor="#FFFFFF" border=0 width="100%">
+		<tr>
+		<td valign=top colspan=4 class=txt_base_n_l>1 - O presente decreto-lei tem por objecto a definição das condições de acessibilidade a satisfazer no projecto e na construção de espaços públicos, equipamentos colectivos e edifícios públicos e habitacionais. <BR> 2 - São aprovadas as normas técnicas a que devem obedecer os edifícios, equipamentos e infra-estruturas abrangidos, que se publicam no anexo ao presente decreto-lei e que dele faz parte integrante. <BR> 3 - Mantém-se o símbolo internacional de acessibilidade, que consiste numa placa com uma figura em branco sobre um fundo azul, em tinta reflectora, especificada na secção 4.14.3 do anexo ao presente decreto-lei, a qual é obtida junto das entidades licenciadoras. <BR> 4 - O símbolo internacional de acessibilidade deve ser afixado em local bem visível nos edifícios, estabelecimentos e equipamentos de utilização pública e via pública que respeitem as normas técnicas constantes do anexo ao presente decreto-lei.		</td>
+		<tr>
+
+	<!-- INÍCIO DAS ANOTAÇÕES NO FIM DE CADA ARTIGO:
+                    a)   Fazendo um select à tabela  lei_art_alteracoes,   mostra a lista de todos os eventuais diplomas alterantes de cada artigo em exibição, desde que
+                              o nº de versão  que de cada um desses diplomas resultou para o artigo (campo nversao da tabela lei_art_alteracoes)  seja igual
+	                   ou inferior ao nº da versão  (variável $nversaoartigo - vd acima, a qual que corresponde  ao campo nversao,  campo esse que é, consoante os casos, da tabela  lei_artigos ou da tabela lei_velhas_art )
+		         do artigo que está em exibição
+	         b)   Fazendo um select à tabela  lei_art_velhos,  mostra a lista de todas as eventuais versões anteriores de cada artigo em exibição  (...4ª,3ª,2ª,1ª)   -->
+
+	<td valign=top bgcolor=#ffffff class=txt_base_n_l><font
+	color=#387070> </td>
+		<td valign=top bgcolor="#ffffff" class=txt_base_n_l><font
+			color="#387070"> </td>
+			</tr>
+			<td bgcolor="#ffffff" valign="top"
+			style="font-size: 10px; font-family: trebuchet ms; color: #404040"
+			colspan=2>			<DIV id="div_cria_anotacao_3110A0001" style="display: none; height: 300px; overflow: auto"></DIV>
+			<DIV id="lista_anotacoes_3110A0001" style="margin-top:10px;text-align:left;display:block;overflow:auto;"></DIV> <br>
+			</div>
+			</td>
+			<tr>
+			<td colspan=2 valign=top></td>
+		</table>
+		</TD>
+		</TABLE>
+		<table class="artigo" border=0 bgcolor=#f1f1f1 cellpadding=1 cellspacing=1	width=100%>
+		<td bgcolor=#ffffff>
+		<table border=0 width="100%" cellpadding="0">
+		</td>
+		<tr>
+		<td class=txt_base_b_l><font style ="font-family:tahoma;font-weight:bold;color:#d74600; font-size:11px">&nbsp;&nbsp;Artigo 2.º<br> 
+Âmbito de aplicação</td>		</tr>
+		</table>
+		<table bgcolor="#FFFFFF" border=0 width="100%">
+		<tr>
+		<td valign=top colspan=4 class=txt_base_n_l>1 - As normas técnicas sobre acessibilidades aplicam-se às instalações e respectivos espaços circundantes da administração pública central, regional e local, bem como dos institutos públicos que revistam a natureza de serviços personalizados ou de fundos públicos. <BR> 2 - As normas técnicas aplicam-se também aos seguintes edifícios, estabelecimentos e equipamentos de utilização pública e via pública: <BR> a) Passeios e outros percursos pedonais pavimentados; <BR> b) Espaços de estacionamento marginal à via pública ou em parques de estacionamento público; <BR> c) Equipamentos sociais de apoio a pessoas idosas e ou com deficiência, designadamente lares, residências, centros de dia, centros de convívio, centros de emprego protegido, centros de actividades ocupacionais e outros equipamentos equivalentes; <BR> d) Centros de saúde, centros de enfermagem, centros de diagnóstico, hospitais, maternidades, clínicas, postos médicos em geral, centros de reabilitação, consultórios médicos, farmácias e estâncias termais; <BR> e) Estabelecimentos de educação pré-escolar e de ensino básico, secundário e superior, centros de formação, residenciais e cantinas; <BR> f) Estações ferroviárias e de metropolitano, centrais de camionagem, gares marítimas e fluviais, aerogares de aeroportos e aeródromos, paragens dos transportes colectivos na via pública, postos de abastecimento de combustível e áreas de serviço; <BR> g) Passagens de peões desniveladas, aéreas ou subterrâneas, para travessia de vias férreas, vias rápidas e auto-estradas; <BR> h) Estações de correios, estabelecimentos de telecomunicações, bancos e respectivas caixas multibanco, companhias de seguros e estabelecimentos similares; <BR> i) Parques de estacionamento de veículos automóveis; <BR> j) Instalações sanitárias de acesso público; <BR> l) Igrejas e outros edifícios destinados ao exercício de cultos religiosos; <BR> m) Museus, teatros, cinemas, salas de congressos e conferências e bibliotecas públicas, bem como outros edifícios ou instalações destinados a actividades recreativas e sócio-culturais; <BR> n) Estabelecimentos prisionais e de reinserção social; <BR> o) Instalações desportivas, designadamente estádios, campos de jogos e pistas de atletismo, pavilhões e salas de desporto, piscinas e centros de condição física, incluindo ginásios e clubes de saúde; <BR> p) Espaços de recreio e lazer, nomeadamente parques infantis, parques de diversões, jardins, praias e discotecas; <BR> q) Estabelecimentos comerciais cuja superfície de acesso ao público ultrapasse 150 m2, bem como hipermercados, grandes superfícies, supermercados e centros comerciais; <BR> r) Estabelecimentos hoteleiros, meios complementares de alojamento turístico, à excepção das moradias turísticas e apartamentos turísticos dispersos, nos termos da alínea c) do n.º 2 do artigo 38.º do Decreto Regulamentar n.º 34/97, de 17 de Setembro, conjuntos turísticos e ainda cafés e bares cuja superfície de acesso ao público ultrapasse 150 m2; <BR> s) Edifícios e centros de escritórios. <BR> 3 - As normas técnicas sobre acessibilidades aplicam-se ainda aos edifícios habitacionais e predominantemente habitacionais, considerando-se estes aqueles em que pelo menos 50 /prct. da sua área se destine a habitação e a usos complementares, designadamente estacionamento, arrecadação ou usos sociais. <BR> 4 - As presentes normas aplicam-se sem prejuízo das contidas em regulamentação técnica específica mais exigente.		</td>
+		<tr>
+
+	<!-- INÍCIO DAS ANOTAÇÕES NO FIM DE CADA ARTIGO:
+                    a)   Fazendo um select à tabela  lei_art_alteracoes,   mostra a lista de todos os eventuais diplomas alterantes de cada artigo em exibição, desde que
+                              o nº de versão  que de cada um desses diplomas resultou para o artigo (campo nversao da tabela lei_art_alteracoes)  seja igual
+	                   ou inferior ao nº da versão  (variável $nversaoartigo - vd acima, a qual que corresponde  ao campo nversao,  campo esse que é, consoante os casos, da tabela  lei_artigos ou da tabela lei_velhas_art )
+		         do artigo que está em exibição
+	         b)   Fazendo um select à tabela  lei_art_velhos,  mostra a lista de todas as eventuais versões anteriores de cada artigo em exibição  (...4ª,3ª,2ª,1ª)   -->
+
+	<td valign=top bgcolor=#ffffff class=txt_base_n_l><font
+	color=#387070> <span style='color:#0554e7'><i>&nbsp;&nbsp;Contém as alterações dos seguintes diplomas:</i><br></span>&nbsp;&nbsp;&nbsp;-&nbsp;<a href=lei_mostra_articulado.php?nid=3189&tabela=leis&ficha=1&pagina=1&so_miolo=>DL n.º 95/2019, de 18/07</a><br></td>
+		<td valign=top bgcolor="#ffffff" class=txt_base_n_l><font
+			color="#387070"> <span style='color:#0554e7'><i>&nbsp;&nbsp;Consultar versões anteriores deste artigo:</i></span><br>&nbsp;&nbsp;&nbsp;-<a href=lei_busca_art_velho.php?nid=3110&artigonum=3110A0002&n_versao=1&so_miolo=>1ª versão:&nbsp;DL n.º 163/2006, de 08/08</a><br></td>
+			</tr>
+			<td bgcolor="#ffffff" valign="top"
+			style="font-size: 10px; font-family: trebuchet ms; color: #404040"
+			colspan=2>			<DIV id="div_cria_anotacao_3110A0002" style="display: none; height: 300px; overflow: auto"></DIV>
+			<DIV id="lista_anotacoes_3110A0002" style="margin-top:10px;text-align:left;display:block;overflow:auto;"></DIV> <br>
+			</div>
+			</td>
+			<tr>
+			<td colspan=2 valign=top></td>
+		</table>
+		</TD>
+		</TABLE>
+		<table class="artigo" border=0 bgcolor=#f1f1f1 cellpadding=1 cellspacing=1	width=100%>
+		<td bgcolor=#ffffff>
+		<table border=0 width="100%" cellpadding="0">
+		</td>
+		<tr>
+		<td class=txt_base_b_l><font style ="font-family:tahoma;font-weight:bold;color:#d74600; font-size:11px">&nbsp;&nbsp;Artigo 3.º<br> 
+Licenciamento e autorização</td>		</tr>
+		</table>
+		<table bgcolor="#FFFFFF" border=0 width="100%">
+		<tr>
+		<td valign=top colspan=4 class=txt_base_n_l>1 - Os pedidos de licenciamento e de autorização de utilização e a apresentação de comunicação prévia relativos a obras de construção, alteração, ampliação, reconstrução e urbanização devem ser instruídos com um plano de acessibilidades que apresente a rede de espaços e equipamentos acessíveis, bem como soluções de detalhe métrico, técnico e construtivo, esclarecendo as soluções adotadas em matéria de acessibilidade a pessoas com deficiência e mobilidade condicionada, nos termos regulamentados na Portaria n.º 1110/2001, de 19 de setembro.  <BR> 2 - Quando o plano de acessibilidades referido no número anterior seja acompanhado por termo de responsabilidade subscrito por técnico legalmente habilitado do cumprimento do disposto no presente diploma e demais normas legais e regulamentares aplicáveis, fica dispensada a sua apreciação prévia pela câmara municipal.  <BR> 3 - A concessão de licença ou autorização para a realização de obras de alteração ou reconstrução das edificações referidas, já existentes à data da entrada em vigor do presente decreto-lei, não pode ser recusada com fundamento na desconformidade com as presentes normas técnicas de acessibilidade, desde que tais obras não originem ou agravem a desconformidade com estas normas e se encontrem abrangidas pelas disposições constantes dos artigos 9.º e 10.º <BR> 4 - O disposto no presente artigo não prejudica o estabelecido no Decreto-Lei n.º 555/99, de 16 de Dezembro, quanto à sujeição de operações urbanísticas a licenciamento ou autorização. <BR> 5 - Os pedidos referentes aos loteamentos e obras abrangidas pelos n.os 1, 2 e 3 devem ser instruídos com um plano de acessibilidades que apresente a rede de espaços e equipamentos acessíveis bem como soluções de detalhe métrico, técnico e construtivo, esclarecendo as soluções adoptadas em matéria de acessibilidade a pessoas com deficiência e mobilidade condicionada, nos termos regulamentados na Portaria n.º 1110/2001, de 19 de Setembro.		</td>
+		<tr>
+
+	<!-- INÍCIO DAS ANOTAÇÕES NO FIM DE CADA ARTIGO:
+                    a)   Fazendo um select à tabela  lei_art_alteracoes,   mostra a lista de todos os eventuais diplomas alterantes de cada artigo em exibição, desde que
+                              o nº de versão  que de cada um desses diplomas resultou para o artigo (campo nversao da tabela lei_art_alteracoes)  seja igual
+	                   ou inferior ao nº da versão  (variável $nversaoartigo - vd acima, a qual que corresponde  ao campo nversao,  campo esse que é, consoante os casos, da tabela  lei_artigos ou da tabela lei_velhas_art )
+		         do artigo que está em exibição
+	         b)   Fazendo um select à tabela  lei_art_velhos,  mostra a lista de todas as eventuais versões anteriores de cada artigo em exibição  (...4ª,3ª,2ª,1ª)   -->
+
+	<td valign=top bgcolor=#ffffff class=txt_base_n_l><font
+	color=#387070> <span style='color:#0554e7'><i>&nbsp;&nbsp;Contém as alterações dos seguintes diplomas:</i><br></span>&nbsp;&nbsp;&nbsp;-&nbsp;<a href=lei_mostra_articulado.php?nid=2216&tabela=leis&ficha=1&pagina=1&so_miolo=>DL n.º 136/2014, de 09/09</a><br></td>
+		<td valign=top bgcolor="#ffffff" class=txt_base_n_l><font
+			color="#387070"> <span style='color:#0554e7'><i>&nbsp;&nbsp;Consultar versões anteriores deste artigo:</i></span><br>&nbsp;&nbsp;&nbsp;-<a href=lei_busca_art_velho.php?nid=3110&artigonum=3110A0003&n_versao=1&so_miolo=>1ª versão:&nbsp;DL n.º 163/2006, de 08/08</a><br></td>
+			</tr>
+			<td bgcolor="#ffffff" valign="top"
+			style="font-size: 10px; font-family: trebuchet ms; color: #404040"
+			colspan=2>			<DIV id="div_cria_anotacao_3110A0003" style="display: none; height: 300px; overflow: auto"></DIV>
+			<DIV id="lista_anotacoes_3110A0003" style="margin-top:10px;text-align:left;display:block;overflow:auto;"></DIV> <br>
+			</div>
+			</td>
+			<tr>
+			<td colspan=2 valign=top></td>
+		</table>
+		</TD>
+		</TABLE>
+		<table class="artigo" border=0 bgcolor=#f1f1f1 cellpadding=1 cellspacing=1	width=100%>
+		<td bgcolor=#ffffff>
+		<table border=0 width="100%" cellpadding="0">
+		</td>
+		<tr>
+		<td class=txt_base_b_l><font style ="font-family:tahoma;font-weight:bold;color:#d74600; font-size:11px">&nbsp;&nbsp;Artigo 4.º<br> 
+Operações urbanísticas promovidas pela Administração Pública</td>		</tr>
+		</table>
+		<table bgcolor="#FFFFFF" border=0 width="100%">
+		<tr>
+		<td valign=top colspan=4 class=txt_base_n_l>1 - Os órgãos da administração pública central, regional e local, dos institutos públicos que revistam a natureza de serviços personalizados e de fundos públicos e as entidades concessionárias de obras ou serviços públicos, promotores de operações urbanísticas que não careçam de licenciamento ou autorização camarária, certificam o cumprimento das normas legais e regulamentares aplicáveis, designadamente as normas técnicas constantes do anexo ao presente decreto-lei, através de termo de responsabilidade, definido em portaria conjunta dos ministros responsáveis pelas áreas das finanças, da administração local, do ambiente, da solidariedade social e das obras públicas. <BR> 2 - O termo de responsabilidade referido no número anterior deve ser enviado, para efeitos de registo, ao Instituto Nacional para a Reabilitação, I. P. (INR, I. P.).		</td>
+		<tr>
+
+	<!-- INÍCIO DAS ANOTAÇÕES NO FIM DE CADA ARTIGO:
+                    a)   Fazendo um select à tabela  lei_art_alteracoes,   mostra a lista de todos os eventuais diplomas alterantes de cada artigo em exibição, desde que
+                              o nº de versão  que de cada um desses diplomas resultou para o artigo (campo nversao da tabela lei_art_alteracoes)  seja igual
+	                   ou inferior ao nº da versão  (variável $nversaoartigo - vd acima, a qual que corresponde  ao campo nversao,  campo esse que é, consoante os casos, da tabela  lei_artigos ou da tabela lei_velhas_art )
+		         do artigo que está em exibição
+	         b)   Fazendo um select à tabela  lei_art_velhos,  mostra a lista de todas as eventuais versões anteriores de cada artigo em exibição  (...4ª,3ª,2ª,1ª)   -->
+
+	<td valign=top bgcolor=#ffffff class=txt_base_n_l><font
+	color=#387070> <span style='color:#0554e7'><i>&nbsp;&nbsp;Contém as alterações dos seguintes diplomas:</i><br></span>&nbsp;&nbsp;&nbsp;-&nbsp;<a href=lei_mostra_articulado.php?nid=3111&tabela=leis&ficha=1&pagina=1&so_miolo=>DL n.º 125/2017, de 04/10</a><br></td>
+		<td valign=top bgcolor="#ffffff" class=txt_base_n_l><font
+			color="#387070"> <span style='color:#0554e7'><i>&nbsp;&nbsp;Consultar versões anteriores deste artigo:</i></span><br>&nbsp;&nbsp;&nbsp;-<a href=lei_busca_art_velho.php?nid=3110&artigonum=3110A0004&n_versao=1&so_miolo=>1ª versão:&nbsp;DL n.º 163/2006, de 08/08</a><br></td>
+			</tr>
+			<td bgcolor="#ffffff" valign="top"
+			style="font-size: 10px; font-family: trebuchet ms; color: #404040"
+			colspan=2>			<DIV id="div_cria_anotacao_3110A0004" style="display: none; height: 300px; overflow: auto"></DIV>
+			<DIV id="lista_anotacoes_3110A0004" style="margin-top:10px;text-align:left;display:block;overflow:auto;"></DIV> <br>
+			</div>
+			</td>
+			<tr>
+			<td colspan=2 valign=top></td>
+		</table>
+		</TD>
+		</TABLE>
+		<table class="artigo" border=0 bgcolor=#f1f1f1 cellpadding=1 cellspacing=1	width=100%>
+		<td bgcolor=#ffffff>
+		<table border=0 width="100%" cellpadding="0">
+		</td>
+		<tr>
+		<td class=txt_base_b_l><font style ="font-family:tahoma;font-weight:bold;color:#d74600; font-size:11px">&nbsp;&nbsp;Artigo 5.º<br> 
+Definições</td>		</tr>
+		</table>
+		<table bgcolor="#FFFFFF" border=0 width="100%">
+		<tr>
+		<td valign=top colspan=4 class=txt_base_n_l>Para efeitos do presente decreto-lei, são aplicáveis as definições constantes do artigo 2.º do Decreto-Lei n.º 555/99, de 16 de Dezembro.		</td>
+		<tr>
+
+	<!-- INÍCIO DAS ANOTAÇÕES NO FIM DE CADA ARTIGO:
+                    a)   Fazendo um select à tabela  lei_art_alteracoes,   mostra a lista de todos os eventuais diplomas alterantes de cada artigo em exibição, desde que
+                              o nº de versão  que de cada um desses diplomas resultou para o artigo (campo nversao da tabela lei_art_alteracoes)  seja igual
+	                   ou inferior ao nº da versão  (variável $nversaoartigo - vd acima, a qual que corresponde  ao campo nversao,  campo esse que é, consoante os casos, da tabela  lei_artigos ou da tabela lei_velhas_art )
+		         do artigo que está em exibição
+	         b)   Fazendo um select à tabela  lei_art_velhos,  mostra a lista de todas as eventuais versões anteriores de cada artigo em exibição  (...4ª,3ª,2ª,1ª)   -->
+
+	<td valign=top bgcolor=#ffffff class=txt_base_n_l><font
+	color=#387070> </td>
+		<td valign=top bgcolor="#ffffff" class=txt_base_n_l><font
+			color="#387070"> </td>
+			</tr>
+			<td bgcolor="#ffffff" valign="top"
+			style="font-size: 10px; font-family: trebuchet ms; color: #404040"
+			colspan=2>			<DIV id="div_cria_anotacao_3110A0005" style="display: none; height: 300px; overflow: auto"></DIV>
+			<DIV id="lista_anotacoes_3110A0005" style="margin-top:10px;text-align:left;display:block;overflow:auto;"></DIV> <br>
+			</div>
+			</td>
+			<tr>
+			<td colspan=2 valign=top></td>
+		</table>
+		</TD>
+		</TABLE>
+		<table border=0 bgcolor="#ffffff" width="100%">
+		<td valign=top bgcolor="#e1e1e1" class="txt_7_n_r"><!-- Se a página em exibiçao não for a 1ª, mostra o botão "anterior"-->
+		Páginas:&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		</table>
+		</td>
+		</table>
+          <!-- JAVALI -->
+     <footer id="footer">
+  <div class="center">
+    <div class="region region-footer">
+      <div id="block-microsite-contactos" class="block block-mp block-contactos">
+        <div class="copyright">
+          <span>© Copyright 2026. Todos os direitos reservados</span>
+          <a class="javali" href="https://www.javali.pt">Desenvolvido por <span>Javali</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer></BODY>
+</HTML>
+				  
+				  				  
+				  
+<script id="f5_cspm">(function(){var f5_cspm={f5_p:'DKENJMHGKFDJOPJOOBNPFJCEHCKEMHPBIKMDAMPJKLBIDLDGDGGNKLAOODFMNGACBHDBDNEBAAJIDCEGJNBAHEEPAAJHIEJLHGNAFKOBDAJGLMOGJBLBJMCCNJPKPPGA',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,40,(latency>>8));str=f5_cspm.set_byte(str,41,(latency&0xff));str=f5_cspm.set_byte(str,35,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='f5avr1512627630aaaaaaaaaaaaaaaa_cspm_='+encodeURIComponent(cookie_val)+';path=/;'+'';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'&&pair[1]=='1234')
+{var d=new Date();d.setTime(d.getTime()-1000);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;'+';';setTimeout(f5_cspm.wait_perf_data,100);}}}}
+f5_cspm.go();}());</script>
