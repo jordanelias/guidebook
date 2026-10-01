@@ -186,7 +186,11 @@ def web_record(d, ts):
     tool=d.get("tool_name")
     if tool not in WEB_TOOLS:
         return None
-    ti=d.get("tool_input") or {}
+    # Not `or {}`: a non-dict tool_input (a string, a list) is truthy, and `.get` on it
+    # raised inside the module try, so no line landed at all -- the opposite of the
+    # "line still lands" promise above.
+    raw=d.get("tool_input")
+    ti=raw if isinstance(raw,dict) else {}
     tr=d.get("tool_response")
     rec={"ts":ts,"tool":tool}
     if tool=="WebSearch":
@@ -197,7 +201,7 @@ def web_record(d, ts):
         rec["url"]=ti.get("url")
     body=tr if isinstance(tr,str) else json.dumps(tr,sort_keys=True,ensure_ascii=False,default=str)
     rec["session_id"]=d.get("session_id")
-    rec["input_keys"]=sorted(ti) if isinstance(ti,dict) else None
+    rec["input_keys"]=sorted(raw) if isinstance(raw,dict) else None  # None: not a dict
     rec["response_keys"]=sorted(tr) if isinstance(tr,dict) else None
     rec["response_sha256"]=hashlib.sha256(body.encode("utf-8","replace")).hexdigest()
     return rec

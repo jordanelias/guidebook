@@ -192,6 +192,14 @@ try:
            and got[0].get("session_id") == "SID-W" and got[0].get("response_sha256"),
            f"got {got!r}")
 
+    # A non-dict tool_input is truthy, so `d.get("tool_input") or {}` kept it and `.get`
+    # raised inside the module try: no line at all. The docstring promises the line lands.
+    got = run_hook({"session_id": "SID-W", "tool_name": "WebSearch",
+                    "tool_input": "notadict", "tool_response": None})
+    record("H06", "a WebSearch with a non-dict tool_input still writes its line (query null)",
+           len(got) == 1 and got[0].get("tool") == "WebSearch" and got[0].get("query") is None
+           and got[0].get("input_keys") is None, f"got {got!r}")
+
     got = run_hook({"session_id": "SID-W", "tool_name": "WebFetch",
                     "tool_input": {"url": "https://example.org/a", "prompt": "p"},
                     "tool_response": "a model-written summary"})

@@ -17,7 +17,9 @@ from the copy.
 
 WHAT FAILS ON THE UNBUILT CODE. With no audit script every case is red. With the audit but the
 old hook, E01 is red: the old hook writes no line for a WebSearch payload, so the audit reports
-NOTHING-IN-SCOPE where E01 requires a FAIL.
+NOTHING-IN-SCOPE where E01 requires a FAIL. Against the first version of the audit (cea5ec1),
+D01 (a dead witness read as a quiet session), F04 (a remedy that omitted --backfill 1 and let a
+post-hoc prior pass as a prior) and P05 (a PASS silent on the engines it cannot witness) are red.
 """
 import json
 import os
@@ -66,10 +68,10 @@ def audit(ledger_path, session=S):
 SLUG = None
 
 
-def log_search(query, session=S):
+def log_search(query, session=S, engine="web"):
     r = subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), "log-search",
                         "--slug", SLUG, "--language", "EN", "--query-text", query,
-                        "--engine", "web", "--depth-method", "scoping",
+                        "--engine", engine, "--depth-method", "scoping",
                         "--session", session,
                         "--prior-expectation", "test fixture: no expectation"],
                        cwd=REPO, env=ENV, capture_output=True, text=True, timeout=120)
@@ -112,6 +114,8 @@ try:
            rc == 0 and "EXAMINED: 0" in out and "VERDICT: NOTHING-IN-SCOPE" in out, out)
     record("N02", "and run_checks classifies that output as NOTHING-IN-SCOPE, not PASS",
            run_checks.nothing_in_scope(out), out)
+    record("N04", "a session that logged no web row raises no dead-witness line",
+           "may not have fired" not in out, out)
     rc, out = audit(TMP / "does-not-exist.jsonl")
     record("N03", "an absent ledger is NOTHING-IN-SCOPE and says where it looked",
            rc == 0 and "absent" in out and "VERDICT: NOTHING-IN-SCOPE" in out, out)
@@ -122,6 +126,10 @@ try:
     record("F01", "one unlogged WebSearch query FAILs (exit 1) and is named",
            rc == 1 and "FAIL" in out and "ramp gradient tek17 norway" in out
            and "EXAMINED: 1" in out, out)
+    # The remedy must not tell the operator to write a backfilled row as if it were
+    # logged as it happened, with a prior written after the results passing as one.
+    record("F04", "the FAIL remedy names --backfill 1 and says the prior is post hoc",
+           "log-search --backfill 1" in out and "post hoc" in out, out)
 
     log_search("ramp gradient TEK17 Norway", session=OTHER)
     rc, out = audit(one)
@@ -149,6 +157,25 @@ try:
     rc, out = audit(ledger("not-contained", [ws("kerb ramp 1:15 max gradient Norway")]))
     record("P04", "containment runs one way: a ledger query LONGER than any logged one FAILs",
            rc == 1, out)
+
+    # ── D: a dead witness must not read as a quiet session ───────────────────
+    # S now holds two engine='web' rows (P01's) and, from the next line, one consensus
+    # row; OTHER holds one web row. So "2" pins both the session filter and the engine
+    # filter. A hook that never fired leaves a Bash-only ledger, which on its own is
+    # indistinguishable from a session that ran no search.
+    log_search("tactile walking surface indicator", engine="consensus")
+    rc, out = audit(ledger("dead-witness", [bash("ls"), bash("echo hi", tool=False)]))
+    record("D01", "web rows logged + a Bash-only ledger: REPORTED, still NOTHING-IN-SCOPE",
+           rc == 0 and "VERDICT: NOTHING-IN-SCOPE" in out
+           and "2 web search row(s) logged" in out and "may not have fired" in out, out)
+    rc, out = audit(TMP / "does-not-exist.jsonl")
+    record("D02", "an absent ledger raises no dead-witness line (it already says 'absent')",
+           rc == 0 and "absent" in out and "may not have fired" not in out, out)
+
+    rc, out = audit(two)
+    record("P05", "a PASS names the engines no WebSearch/WebFetch line can witness",
+           rc == 0 and "VERDICT: PASS" in out and "Witnessed: WebSearch and WebFetch only" in out
+           and "engine(s) consensus" in out, out)
 
     # ── R: the REPORTED rules never fail ─────────────────────────────────────
     (LOGROOT / S).mkdir(parents=True)

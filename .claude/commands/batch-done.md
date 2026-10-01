@@ -20,8 +20,13 @@ at `LATEST-RESEARCH`, which names the PREVIOUS session for the whole life of thi
 The third line is I5, also on `CURRENT`: it reads the WebSearch/WebFetch ledger the
 harness hook wrote and FAILs a WebSearch query that no `search_executions.query_text` of
 this session contains — a search you ran and did not log (R8). Log it with
-`db.py log-search`. Its REPORTED lines (unpersisted WebFetch URLs, bare curl/wget hosts)
-belong in the session record; they do not fail.
+`db.py log-search --backfill 1`: the row is a reconstruction, not a log made as the search
+ran, and the `--prior-expectation` it still requires is written after the results, so it
+is post hoc and must say so. Its REPORTED lines (unpersisted WebFetch URLs, bare curl/wget
+hosts, and web rows logged with no web line on the ledger — a hook that may not have
+fired) belong in the session record; they do not fail, and a NOTHING-IN-SCOPE verdict does
+not clear them. It witnesses WebSearch and WebFetch only: a search run through an MCP tool
+(Consensus, PubMed, Scholar Gateway) leaves no line, so a PASS says nothing about those.
 
 **The session id is the bare stem in the DB and carries `.md` in pointer files.**
 Wrong form scopes the gate to zero rows and every rule reports PASS over an empty
