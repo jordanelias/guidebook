@@ -55,6 +55,13 @@ judged_on: '2026-09-17'
 # pointers into whichever stage a finding happens to attack, never one stage in
 # particular, so the table itself cannot be assigned to one either. Caught by this
 # file's own falsifier within the same session that added the migration.
+#
+# 2026-10-01, session_2026-10-01-process-gap-t1: added `parameter_declinations`
+# (migration 101) as BASE -- the negative space of `base_parameters`: a term judged NOT
+# to be a design parameter, with its reason. It holds a term_id and a reason and nothing
+# from any later stage, and its only reader is base's own writer (`add-parameter` refuses
+# a declined term), so it sits where `base_parameters` sits. Caught by this file's own
+# falsifier (`pipeline_walk.py --check`) as soon as the migration was applied.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -107,6 +114,7 @@ tables:
   lang_jur_map: base
   life_stage_modifiers: base
   observed_terms: evidence
+  parameter_declinations: base
   pipeline_runs: infrastructure
   population_axis_map: base
   population_icf_links: base

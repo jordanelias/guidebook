@@ -1663,7 +1663,7 @@ def main():
     p_at.add_argument("--dry-run", action="store_true")
 
     # add-parameter — the writer base_parameters shipped without. See insert_parameter
-    # for the four refusals and for why --status/--merged-into are deliberately absent.
+    # for its refusals and for why --status/--merged-into are deliberately absent.
     p_spd = sub.add_parser(
         "set-parameter-direction",
         help="Record which way is better for a disabled person on this parameter "
@@ -1689,6 +1689,21 @@ def main():
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
+
+    # decline-parameter — the other answer to "is this term a parameter?" (migration 101).
+    # See decline_parameter for its refusals and for why there is no un-decline verb.
+    p_dp = sub.add_parser("decline-parameter",
+                          help="Record that a term is NOT a design parameter, and why "
+                               "(parameter_declinations)")
+    p_dp.add_argument("--term-id", dest="term_id", required=True,
+                      help="terms.term_id being declined — must exist and must not "
+                           "already be a parameter")
+    p_dp.add_argument("--reason", required=True,
+                      help="WHY this term is not a quantity under determination (an "
+                           "element, a lens term, a method). Required: a declination that "
+                           "cannot say why cannot be contested.")
+    p_dp.add_argument("--session", required=True)
+    p_dp.add_argument("--dry-run", action="store_true")
 
     # add-population-icf-link / raise-determination-gate / resolve-determination-gate —
     # the writers migration 080's two tables shipped without. See the functions for the
@@ -2880,6 +2895,14 @@ def main():
         _emit(insert_parameter(
             term_id=args.term_id,
             notes=args.notes,
+            session=args.session,
+            dry_run=args.dry_run,
+        ))
+
+    elif args.command == "decline-parameter":
+        _emit(decline_parameter(
+            term_id=args.term_id,
+            reason=args.reason,
             session=args.session,
             dry_run=args.dry_run,
         ))
@@ -5915,6 +5938,10 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
 
     * A term that does not exist. The FK would say `FOREIGN KEY constraint failed`,
       which names neither the term nor the fix.
+    * A DECLINED term (`parameter_declinations`, migration 101). Someone judged it not a
+      design parameter and said why; promoting it would leave two answers to one
+      question. Reversing a declination is a recorded decision, not a promotion, so the
+      refusal names the standing declination and there is no un-decline verb.
     DELIBERATELY NOT REFUSED: a term with no adjudication. The first cut of this writer
     demanded a NAMES-NEW/NAMES-EXISTING row, on the reasoning that a parameter is the
     output of judgment (D-0173). Exercised against a scratch copy, that refusal blocked
@@ -5952,6 +5979,17 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"comes from an observed phrase:\n"
                 f"  db.py observe-term ...   then   db.py add-term --from-observation N "
                 f"--canonical-en '...' --rationale '...'")
+        declined = conn.execute(
+            "SELECT reason, created_at, created_by_session FROM parameter_declinations "
+            "WHERE term_id=?", [term_id]).fetchone()
+        if declined:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) was DECLINED as a parameter by "
+                f"{declined['created_by_session']} at {declined['created_at']}: "
+                f"{declined['reason']!r}.\n"
+                f"Reversing a declination is a recorded decision "
+                f"(governance/decision-protocol.md) and a compensating migration, not a "
+                f"promotion. Nothing was written.")
         if _VALUE_BEARING.search(term["canonical_en"]):
             raise Refusal(
                 f"{term_id} is named {term['canonical_en']!r}, which carries a number, a "
@@ -5981,6 +6019,87 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
+                "dry_run": dry_run}
+
+
+def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = False):
+    """Record that a term is NOT a design parameter, and why — `parameter_declinations`.
+
+    GAP-061's prerequisite. A term judgment has named had one recordable fate: promotion
+    (`add-parameter`). A term naming something other than a quantity under determination
+    — a population lens term ('wheelchair user'), an element whose quantities are
+    separate terms ('ramp'), a method — had none, so "not yet looked at" and "looked at
+    and judged not a parameter" read the same. This records the second answer, with its
+    warrant, so the judgement can be found and contested.
+
+    A SEPARATE TABLE, NOT A `base_parameters.status` VALUE (migration 101): a declined
+    term never holds a parameter_id that an extraction or a determination could point at.
+
+    WHAT IT REFUSES, and why each refusal is the point:
+
+    * A blank --term-id.
+    * A term that does not exist. The FK would say `FOREIGN KEY constraint failed`,
+      which names neither the term nor the route a term comes from.
+    * A blank reason. A declination that cannot say why cannot be contested; the schema
+      CHECK refuses it too, but would say so as an IntegrityError.
+    * A term that is already a parameter, whatever its status. Declining it would leave
+      that parameter_id standing beside a record saying the term is not a parameter —
+      two answers to one question. Retiring a parameter is a different act on the
+      parameter's own row.
+    * A term already declined. One row per term (the PRIMARY KEY); the refusal names the
+      standing reason and session, because the fix is to read that judgement, not to
+      restate it.
+
+    DELIBERATELY NOT REFUSED: a term with no adjudication, for the reason
+    `insert_parameter` gives — the base vocabulary predates observe/adjudicate, and a gate
+    on adjudication would make a writer that cannot write.
+
+    DELIBERATELY ABSENT: an un-decline verb. Reversing a declination is a recorded
+    decision and a compensating migration, and nothing reads an un-decline yet (CLAUDE.md
+    §8). `insert_parameter` refuses a declined term and names this row.
+    """
+    term_id = (term_id or "").strip()
+    if not term_id:
+        raise Refusal("--term-id is required: a declination is a judgement about a term.")
+    reason = dbcore.require_reason(
+        reason, term_id, why="A declination that cannot say why cannot be contested.")
+    with connect(dry_run) as conn:
+        term = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?",
+                            [term_id]).fetchone()
+        if term is None:
+            raise Refusal(
+                f"{term_id!r}: no such term. Only a term can be declined, and a term comes "
+                f"from an observed phrase:\n"
+                f"  db.py observe-term ...   then   db.py add-term --from-observation N "
+                f"--canonical-en '...' --rationale '...'")
+        param = conn.execute(
+            "SELECT parameter_id, status FROM base_parameters WHERE term_id=?",
+            [term_id]).fetchone()
+        if param:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) is already parameter "
+                f"{param['parameter_id']} (status {param['status']}). Declining it would "
+                f"leave that parameter_id standing beside a record saying the term is not "
+                f"a parameter.\n"
+                f"Retiring a parameter is a different act on parameter "
+                f"{param['parameter_id']}'s own row, not a declination. Nothing was written.")
+        prior = conn.execute(
+            "SELECT reason, created_at, created_by_session FROM parameter_declinations "
+            "WHERE term_id=?", [term_id]).fetchone()
+        if prior:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) is already declined, by "
+                f"{prior['created_by_session']} at {prior['created_at']}: "
+                f"{prior['reason']!r}.\n"
+                f"One declination per term. If that reason is wrong, that is a decision "
+                f"(governance/decision-protocol.md), not a second row. Nothing was written.")
+        row = {"term_id": term_id, "reason": reason}
+        row.update(dbcore.stamp_for(conn, "parameter_declinations", session))
+        conn.execute(f"INSERT INTO parameter_declinations ({','.join(row)}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"term_id": term_id, "canonical_en": term["canonical_en"],
+                "declined": True, "reason": reason,
+                "created_by_session": row.get("created_by_session"),
                 "dry_run": dry_run}
 
 

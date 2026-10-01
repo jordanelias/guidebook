@@ -1633,7 +1633,12 @@ checks:
     had seen. Its assertion count is its own EXAMINED line -- re-run, do not trust a
     figure here. Fault-injected 2026-09-26: removing the results_admitted raise, the
     MERGED-slug guard, the self-reference guard, the Co1 fold, or the scope_note
-    un-nesting each turned it red; restored, green.'
+    un-nesting each turned it red; restored, green. Section D (migration 101,
+    2026-10-01) holds decline-parameter''s refusals, its dry run, its capture and its CLI
+    wiring, and add-parameter''s refusal of a declined term -- red on the pre-101 code
+    (no verb, no table). Fault-injected 2026-10-01: removing the declined-term refusal,
+    the already-a-parameter refusal, the already-declined refusal or the CLI dispatch
+    each turned exactly its own case red; restored, green.'
 - id: test_url_verifier
   cmd:
   - python3

@@ -19,6 +19,11 @@ What reaches the guidebook without these cases: a wrong provenance edge nothing 
 a coverage view that under-counts what searches yielded, a candidate "rehomed" nowhere, a
 Co1 source that cannot be graded -- each looking fine to every gate.
 
+Section D (migration 101, GAP-061's prerequisite) holds `decline-parameter` and the one
+refusal it adds to `add-parameter` to the same standard. What reaches the guidebook
+without it: a term judged NOT to be a design parameter minted as one anyway, so
+extractions and determinations can key on a concept somebody already ruled out.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -29,6 +34,7 @@ import os
 import pathlib
 import shutil
 import sqlite3
+import subprocess
 import sys
 import tempfile
 
@@ -245,6 +251,86 @@ try:
            slug is None and f"suggested_slug {B} -> None" in notes, f"{slug} {notes!r}")
     record("R10", "staging a REHOME with no destination is refused too (add-candidate)",
            refusal(candidate, E1, "c5", "REHOME") is not None)
+
+    # ── D: decline-parameter, and add-parameter's refusal of a declined term ─────
+    # Migration 101. Fixture terms are minted through the writers (observe-term ->
+    # add-term) on the copy, never a live id; names carry no digit, comparator or min/max
+    # word, because add-term refuses a value-bearing name.
+    decline = getattr(db, "decline_parameter", None)
+    if decline is None:
+        # The pre-101 state: no verb and no table. Recorded rather than raised, so the
+        # run still prints its summary and exits 1.
+        record("D00", "db.decline_parameter exists (migration 101's writer)", False,
+               "no such function -- parameter_declinations has no writer")
+    else:
+        def fixture_term(name):
+            obs = db.observe_term({"ref_id": REF, "surface_form": f"fixture phrase: {name}"},
+                                  S)
+            return db.insert_term(obs["observation_id"], name, "fixture rationale",
+                                  S)["term_id"]
+
+        def declinations(term_id):
+            return q("SELECT reason, created_by_session FROM parameter_declinations "
+                     "WHERE term_id=?", term_id)
+
+        TD = fixture_term("fixture declinable element")
+        TP = fixture_term("fixture promotable quantity")
+        TX = fixture_term("fixture lens term")
+        WHY = "fixture: an element, not a quantity under determination"
+
+        record("D01", "refuses a blank --term-id", refusal(decline, "  ", WHY, S) is not None)
+        msg = refusal(decline, "TERM-NONE", WHY, S)
+        record("D02", "refuses an unknown term and names the observe-term -> add-term route",
+               msg and "observe-term" in msg and "add-term --from-observation" in msg,
+               f"got {msg!r}")
+        record("D03", "refuses a blank reason, and writes nothing",
+               refusal(decline, TD, "   ", S) is not None and not declinations(TD))
+        pid = db.insert_parameter(TP, S)["parameter_id"]
+        msg = refusal(decline, TP, WHY, S)
+        record("D04", "refuses a term that is already a parameter, naming the parameter_id",
+               msg and f"parameter {pid}" in msg and not declinations(TP), f"got {msg!r}")
+        out = decline(TD, WHY, S, dry_run=True)
+        record("D05", "--dry-run reports the declination and writes nothing",
+               out["dry_run"] is True and out["declined"] and not declinations(TD),
+               f"out={out}")
+        out = decline(TD, f"  {WHY}  ", S)
+        rows = declinations(TD)
+        record("D06", "the legitimate shape writes ONE row, reason stripped, stamped with "
+               "the session", rows == [(WHY, S)] and out["declined"] and not out["dry_run"],
+               f"rows={rows} out={out}")
+        msg = refusal(decline, TD, "fixture: a second reason", S)
+        record("D07", "refuses a second declination, naming the standing reason and session",
+               msg and WHY in msg and S in msg and len(declinations(TD)) == 1,
+               f"got {msg!r}")
+        # THE CASE THAT FAILS ON THE PRE-101 CODE: add-parameter promoted any existing
+        # term, so a term judged not to be a parameter could still be minted one.
+        msg = refusal(db.insert_parameter, TD, S)
+        record("D08", "add-parameter refuses a DECLINED term, naming the declination, and "
+               "mints no parameter",
+               msg and "DECLINED" in msg and WHY in msg
+               and not q("SELECT 1 FROM base_parameters WHERE term_id=?", TD),
+               f"got {msg!r}")
+        con = sqlite3.connect(DB)
+        try:
+            captured = "parameter_declinations" in dbcore.writable_tables(con)
+        finally:
+            con.close()
+        record("D09", "the capture set derives parameter_declinations from the writer's "
+               "INSERT literal (rows written can be shipped)", captured)
+        # The CLI wiring, through argparse: an unwired or mis-keyed dispatch is invisible
+        # to every case above, which call the function directly.
+        env = dict(os.environ, GUIDEBOOK_DB_PATH=DB)
+        cli = [sys.executable, str(REPO / "scripts" / "db.py"), "decline-parameter",
+               "--term-id", TX, "--session", S, "--dry-run", "--reason"]
+        ok = subprocess.run(cli + [WHY], env=env, capture_output=True, text=True)
+        bad = subprocess.run(cli + [" "], env=env, capture_output=True, text=True)
+        record("D10", "the CLI verb is wired: a dry run exits 0 and writes nothing; a blank "
+               "--reason exits 1 with a REFUSING sentence, not a traceback",
+               ok.returncode == 0 and '"declined": true' in ok.stdout
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:")
+               and "Traceback" not in bad.stderr and not declinations(TX),
+               f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-300:]!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
