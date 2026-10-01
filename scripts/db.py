@@ -24,7 +24,7 @@ CLI usage:
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id RAP-07]
+    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
         (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
@@ -42,7 +42,7 @@ import zipfile
 import sqlite3
 import sys
 import argparse
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -108,6 +108,18 @@ now = dbcore.now
 audit = dbcore.audit
 _upd = dbcore.upd
 _validate_cols = dbcore.validate_cols
+
+
+def _txn(conn, dry_run: bool = False):
+    """`conn` itself when the caller already holds a write transaction, else a new one.
+
+    Lets two writers share ONE transaction, so a refusal in the second rolls back the
+    first. `add-source --slug` is the case: the source and its slug link are one
+    admission. As two connect() blocks, a failure in the second left the first
+    committed (GAP-058), and under --dry-run the link's foreign key could not see the
+    rolled-back source, so the dry run crashed with a traceback instead of reporting.
+    """
+    return nullcontext(conn) if conn is not None else connect(dry_run)
 
 
 
@@ -1600,6 +1612,11 @@ def main():
                        help="WHICH CLAIM of this source bears on THIS slug. The "
                             "link is a judgement and the warrant is stored with it; "
                             "a link with no rationale cannot be told from a mis-file.")
+    p_lss.add_argument("--local-ref-id",
+                       help="The per-slug label. Optional: DERIVED from the slug's own "
+                            "scheme when omitted. Give it where derivation refuses (a "
+                            "slug whose labels mix schemes, GAP-013). A label another "
+                            "ref_id holds on the slug is refused.")
     p_lss.add_argument("--session", required=True)
     p_lss.add_argument("--dry-run", action="store_true")
 
@@ -2376,8 +2393,12 @@ def main():
                            "in one citing document's bibliography, with no independent hit, is UNVERIFIED "
                            "with disposition OPEN, "
                            "not VERIFIED — do not upgrade it because the citing document looks authoritative.")
-    p_as.add_argument("--slug", help="Link to slug (requires --local-ref-id)")
-    p_as.add_argument("--local-ref-id", help="Local ref ID within slug")
+    p_as.add_argument("--slug", help="Link to slug. The slug and the label are resolved "
+                                     "before anything is written; a refusal leaves no row.")
+    p_as.add_argument("--local-ref-id",
+                      help="Per-slug label (with --slug only). Optional: DERIVED from the "
+                           "slug's own scheme when omitted. Give it where derivation "
+                           "refuses (a slug whose labels mix schemes, GAP-013).")
     p_as.add_argument("--session", required=True)
     p_as.add_argument("--dry-run", action="store_true")
 
@@ -2861,7 +2882,8 @@ def main():
                                    session=args.session, dry_run=args.dry_run))
     elif args.command == "link-source-slug":
         _emit(link_source_slug(args.ref_id, args.slug, args.rationale,
-                               session=args.session, dry_run=args.dry_run))
+                               session=args.session, dry_run=args.dry_run,
+                               local_ref_id=args.local_ref_id))
 
     elif args.command == "update-locator":
         _emit(update_locator(args.ref_id, args.status, session=args.session,
@@ -3209,37 +3231,50 @@ def main():
                 "organisation produced this work — because that co-production IS the "
                 "warrant. If it genuinely cannot be evidenced from the source, the row is "
                 "not Co-1; admit it at its actual tier and say why in --notes.")
-        # REFUSE BEFORE ANY WRITE, NOT AFTER. This read
-        # `if args.slug and args.local_ref_id:` around the link INSERT while the
-        # _emit below announced "linked_slug": args.slug unconditionally, so
-        # `add-source --slug X` WITHOUT --local-ref-id wrote no link and said it
-        # had -- the source was admitted to no topic at all, which add-extraction
-        # then refuses on, one step downstream and only after the admission is
-        # already committed. A writer that merely INSERTs is worse than hand SQL
-        # because it looks safe (CLAUDE.md §4); one that REPORTS a write it
-        # skipped is worse still.
+        # THE SLUG AND ITS LABEL ARE RESOLVED READ-ONLY BEFORE ANY WRITE, and the
+        # source and its link are then written in ONE transaction.
         #
-        # THE GUARD ITSELF WAS FIRST WRITTEN AFTER insert_evidence_source, which
-        # made it worse than useless: the refusal fired, but the evidence_sources
-        # row was already committed, so a refused command left an ORPHAN
-        # admission behind -- linked to no slug, carrying no extraction and no
-        # observed term, and the DoD gate duly failed R3 and R11-harvest on it.
-        # An argument check belongs with the argument checks. Measured 2026-09-17
-        # by REF-09999, a probe of this very refusal, surviving in the batch.
-        # --local-ref-id is now OPTIONAL and DERIVED when omitted. It used to be
-        # required, with the refusal telling the operator to run the SELECT by
-        # hand and retype the answer -- rule 8's anti-pattern exactly, a field
-        # that can only be right or wrong and never informative. The derivation
-        # lives on the writer (_next_local_ref_id) so both paths get one answer.
+        # History, because each step was a defect. (1) The link INSERT sat inside
+        # `if args.slug and args.local_ref_id:` while the _emit announced
+        # "linked_slug" unconditionally, so `--slug X` without a label wrote no
+        # link and said it had. (2) The guard added for that was written AFTER
+        # insert_evidence_source, so its refusal left an ORPHAN admission (REF-09999,
+        # 2026-09-17). (3) --local-ref-id then became optional and derived -- and the
+        # derivation's own refusal (a slug whose labels mix schemes) still fired only
+        # inside insert_source_slug_link, after the source had committed. A comment
+        # here claimed "refuse before any write" while that was false: batch 23 left
+        # an orphan this way and had to hand-delete it (GAP-058). (4) Under --dry-run
+        # the second block's foreign key could not see the rolled-back source, so
+        # `add-source --slug ... --dry-run` crashed with a traceback.
+        #
+        # The pre-check below calls the same guards insert_source_slug_link runs, so
+        # there is one rule; the shared transaction means that if anything still
+        # refuses after the source INSERT, nothing is committed.
+        if args.local_ref_id is not None and not args.slug:
+            raise Refusal(
+                "--local-ref-id was given without --slug. The label is per-slug and "
+                "would not be written. Nothing was written.")
+        label = None
+        if args.slug:
+            with connect(readonly=True) as _c:
+                _check_slug_filable(_c, args.slug)
+                label = _check_link_label(_c, args.slug, args.local_ref_id,
+                                          args.ref_id)
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
-        ref_id = insert_evidence_source(data, session=args.session,
-                                        dry_run=args.dry_run, authors=authors)
         local_ref_id = None
-        if args.slug:
-            _, local_ref_id = insert_source_slug_link(
-                ref_id, args.slug, args.local_ref_id,
-                session=args.session, dry_run=args.dry_run)
+        with connect(args.dry_run) as _w:
+            ref_id = insert_evidence_source(data, session=args.session,
+                                            dry_run=args.dry_run, authors=authors,
+                                            conn=_w)
+            if args.slug:
+                wrote, local_ref_id = insert_source_slug_link(
+                    ref_id, args.slug, label, session=args.session, conn=_w)
+                if not wrote:
+                    raise Refusal(
+                        f"the slug link {ref_id} -> '{args.slug}' affected no row, so "
+                        f"neither it nor the source was written. Re-run and read the "
+                        f"refusal.")
         _emit({"ref_id": ref_id, "linked_slug": args.slug,
                "local_ref_id": local_ref_id, "dry_run": args.dry_run})
 
@@ -3566,12 +3601,16 @@ def parse_author_display(display: str) -> list[dict]:
 
 def insert_evidence_source(data: dict, session: str,
                            dry_run: bool = False,
-                           authors: list[dict] | None = None) -> str:
+                           authors: list[dict] | None = None,
+                           conn=None) -> str:
     """Insert a new evidence source and its author rows. Returns ref_id.
 
     `authors` is a list of evidence_source_authors rows, from parse_author_flags or
     parse_author_display. It is written in the SAME transaction as the source, so a
     source can never exist without the authors it was filed with.
+
+    `conn`, when given, is a write transaction the caller owns (see _txn): the rows
+    land in it and commit or roll back with whatever else the caller writes there.
     """
     # Map legacy logical field names to the real evidence_sources columns and drop
     # doi_less_key (no such column in the current schema). Without this the CLI crashed
@@ -3722,7 +3761,7 @@ def insert_evidence_source(data: dict, session: str,
         data.setdefault("verification_attempt_count", 1)
 
     row = {**data, **audit(session)}
-    with connect(dry_run) as conn:
+    with _txn(conn, dry_run) as conn:
         # NOT `INSERT OR IGNORE`. That silently no-opped on a colliding ref_id
         # and still returned the ref_id as though the write had happened — so a
         # session could file a source, be told it succeeded, and have written
@@ -7858,7 +7897,9 @@ def _next_local_ref_id(conn, slug: str) -> str:
         raise Refusal(
             f"slug '{slug}' already mixes local_ref_id label schemes "
             f"({sorted(set(taken))[:6]}); a derived label cannot be trusted to "
-            f"match. Reconcile the scheme before filing into this slug.")
+            f"match. Pass --local-ref-id with the label you mean (add-source and "
+            f"link-source-slug both take it), or reconcile the scheme (GAP-013). "
+            f"Nothing was written.")
     nxt = max((int(m.group(2)) for m in parsed), default=0) + 1
     if not prefixes:
         return str(nxt)
@@ -7887,9 +7928,37 @@ def _check_slug_filable(conn, slug: str) -> str:
     return row[0]
 
 
+def _check_link_label(conn, slug: str, local_ref_id, ref_id: str) -> str:
+    """The label `ref_id` would file under on `slug`: the supplied one, stripped, or
+    the derived next one. Refuses a blank supplied label, and a label another ref_id
+    already holds on that slug.
+
+    source_slug_links has no UNIQUE(slug, local_ref_id) -- check it with
+    `select sql from sqlite_master where name='source_slug_links'` -- so nothing but
+    this refusal stops two sources sharing the one label that exists to tell them
+    apart inside the slug.
+    """
+    if local_ref_id is None:
+        return _next_local_ref_id(conn, slug)
+    label = local_ref_id.strip()
+    if not label:
+        raise Refusal(
+            "--local-ref-id is blank. Omit it to derive the slug's next label, or "
+            "give one. Nothing was written.")
+    holder = conn.execute(
+        "SELECT ref_id FROM source_slug_links WHERE slug=? AND local_ref_id=? "
+        "AND ref_id<>?", (slug, label, ref_id)).fetchone()
+    if holder:
+        raise Refusal(
+            f"local_ref_id {label!r} is already held on slug '{slug}' by "
+            f"{holder[0]}. A label names one source inside its slug. Choose an "
+            f"unused label. Nothing was written.")
+    return label
+
+
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str | None,
                              session: str, dry_run: bool = False,
-                             relevance_note: str | None = None):
+                             relevance_note: str | None = None, conn=None):
     """Link an evidence source to a slug. THE ONLY INSERT into this table.
 
     `relevance_note` is the GROUNDS -- which claim of this source bears on this
@@ -7899,18 +7968,20 @@ def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str | None,
 
         select count(relevance_note), count(*) from source_slug_links;
 
-    `local_ref_id=None` DERIVES the label from the slug's own scheme. Both the
-    guards and the derivation live here, not in a caller, because every caller
-    lands the same row.
+    `local_ref_id=None` DERIVES the label from the slug's own scheme; a supplied
+    label is refused if another ref_id holds it on the slug (_check_link_label).
+    Both the guards and the derivation live here, not in a caller, because every
+    caller lands the same row.
 
-    Returns True when a row was actually inserted: the INSERT is OR IGNORE, and
-    a caller that reports success on rowcount 0 reports a write it did not
-    perform.
+    `conn`, when given, is a write transaction the caller owns (see _txn).
+
+    Returns (inserted, label). `inserted` is True only when a row was actually
+    inserted: the INSERT is OR IGNORE, and a caller that reports success on
+    rowcount 0 reports a write it did not perform.
     """
-    with connect(dry_run) as conn:
+    with _txn(conn, dry_run) as conn:
         _check_slug_filable(conn, slug)
-        if local_ref_id is None:
-            local_ref_id = _next_local_ref_id(conn, slug)
+        local_ref_id = _check_link_label(conn, slug, local_ref_id, ref_id)
         cur = conn.execute(
             "INSERT OR IGNORE INTO source_slug_links "
             "(ref_id, slug, local_ref_id, relevance_note, created_at, "
@@ -7923,8 +7994,12 @@ def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str | None,
 
 
 def link_source_slug(ref_id: str, slug: str, rationale: str,
-                     session: str, dry_run: bool = False):
+                     session: str, dry_run: bool = False, local_ref_id: str | None = None):
     """Cross-file an ALREADY-ADMITTED source to an ADDITIONAL slug (R9).
+
+    `local_ref_id` is optional and DERIVED when omitted. It exists for the slug whose
+    labels already mix schemes, where derivation refuses (GAP-013) and the label could
+    otherwise not be said at all; a supplied label another ref_id holds is refused.
 
     WHY THIS EXISTS. `add-source` refuses a second call for a ref_id with
     R9_REMEDY's instruction -- and until 2026-09-18 no command carried it out,
@@ -7974,6 +8049,14 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
             raise Refusal(
                 f"{ref_id} is already linked to '{slug}' AND already carries "
                 f"grounds. Refusing to overwrite a recorded judgement.")
+        if local_ref_id is not None and local_ref_id.strip() != existing[0]:
+            # The backfill below writes grounds only. Accepting a different label here
+            # would report a relabel that never happened.
+            raise Refusal(
+                f"{ref_id} is already linked to '{slug}' under label "
+                f"{existing[0]!r}; --local-ref-id {local_ref_id!r} would not be "
+                f"written. This verb backfills grounds; it does not relabel. "
+                f"Nothing was written.")
         u = _upd(session)
         with connect(dry_run) as conn:
             conn.execute(
@@ -7984,7 +8067,7 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
         local_ref_id, action = existing[0], "backfilled"
     else:
         wrote, local_ref_id = insert_source_slug_link(
-            ref_id, slug, None, session, dry_run=dry_run,
+            ref_id, slug, local_ref_id, session, dry_run=dry_run,
             relevance_note=rationale)
         if not wrote:
             raise Refusal(

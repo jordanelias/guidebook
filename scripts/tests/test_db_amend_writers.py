@@ -24,6 +24,11 @@ refusal it adds to `add-parameter` to the same standard. What reaches the guideb
 without it: a term judged NOT to be a design parameter minted as one anyway, so
 extractions and determinations can key on a concept somebody already ruled out.
 
+Section S (GAP-058) holds `add-source --slug` to "refuse before any write": a refused
+admission used to leave its source and author rows committed, an orphan that is either
+shipped or deleted by hand. It also holds `link-source-slug --local-ref-id`, the only way to
+file into a slug whose labels mix schemes, and the refusal of a label another source holds.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -86,6 +91,19 @@ def q(sql, *params):
 def exec_row(exec_id):
     return q("SELECT results_admitted, findings_note FROM search_executions "
              "WHERE exec_id=?", exec_id)[0]
+
+
+def run_cli(*args):
+    """db.py through argparse, on the copy. The verbs' dispatch blocks are only reached
+    this way: a case that calls the function directly cannot see an unwired flag or a
+    write the dispatch makes before the function is called."""
+    return subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), *args],
+                          env=dict(os.environ, GUIDEBOOK_DB_PATH=DB),
+                          capture_output=True, text=True)
+
+
+def counts(*tables):
+    return tuple(q(f'SELECT COUNT(*) FROM "{t}"')[0][0] for t in tables)
 
 
 try:
@@ -331,6 +349,123 @@ try:
                and "Traceback" not in bad.stderr and not declinations(TX),
                f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
                f"{bad.stderr[-300:]!r}")
+
+    # ── S: add-source refuses before it writes; link-source-slug --local-ref-id ─────
+    # GAP-058. The slug whose labels mix schemes is DERIVED by asking the derivation
+    # itself which slugs it refuses, never named here; the single-scheme slug likewise.
+    from schemas.tier_derivation import VALID_SCOPES_BY_TYPE, derive_tier  # noqa: E402
+    con = sqlite3.connect(DB)
+    try:
+        mixed, plain = None, None
+        for (slug,) in con.execute("SELECT slug FROM slugs WHERE status='ACTIVE' "
+                                   "ORDER BY slug"):
+            try:
+                db._next_local_ref_id(con, slug)
+                plain = plain or slug
+            except Refusal:
+                mixed = mixed or slug
+    finally:
+        con.close()
+    SRC_TABLES = ("evidence_sources", "evidence_source_authors", "source_slug_links")
+    GREY_SCOPE = next(iter(VALID_SCOPES_BY_TYPE["grey"]))
+    GREY_TIER = str(derive_tier("grey", GREY_SCOPE))
+
+    def next_ref():
+        c = sqlite3.connect(DB)
+        try:
+            return dbcore.next_ref_id(c)
+        finally:
+            c.close()
+
+    def add_source(ref_id, *extra):
+        return run_cli("add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
+                   "--year", "2020", "--title", f"fixture source {ref_id}",
+                   "--tier", GREY_TIER, "--evidence-type", "grey", "--session", S, *extra)
+
+    def unused_label(slug, stem="FIXTURE-"):
+        n = 1
+        while q("SELECT 1 FROM source_slug_links WHERE slug=? AND local_ref_id=?",
+                slug, f"{stem}{n:02d}"):
+            n += 1
+        return f"{stem}{n:02d}"
+
+    def link_label(ref_id, slug):
+        rows = q("SELECT local_ref_id FROM source_slug_links WHERE ref_id=? AND slug=?",
+                 ref_id, slug)
+        return rows[0][0] if rows else None
+
+    if not (mixed and plain):
+        record("S00", "the copy holds a mixed-scheme slug and a single-scheme slug to "
+               "test with", False, f"mixed={mixed} plain={plain}")
+    else:
+        R1 = next_ref()
+        before = counts(*SRC_TABLES)
+        # THE CASE THAT FAILS ON THE OLD CODE: the derivation's refusal fired inside the
+        # link INSERT, after insert_evidence_source had committed, so both tables grew.
+        r = add_source(R1, "--slug", mixed)
+        record("S01", "add-source --slug <mixed-scheme slug> with no label refuses and "
+               "writes NOTHING (no source, no author rows, no link)",
+               r.returncode == 1 and r.stderr.startswith("REFUSING:")
+               and counts(*SRC_TABLES) == before
+               and not q("SELECT 1 FROM evidence_sources WHERE ref_id=?", R1),
+               f"rc={r.returncode} {r.stderr[-300:]!r} {before} -> {counts(*SRC_TABLES)}")
+        (held_ref, held,) = q("SELECT ref_id, local_ref_id FROM source_slug_links "
+                              "WHERE slug=? ORDER BY local_ref_id LIMIT 1", mixed)[0]
+        r = add_source(R1, "--slug", mixed, "--local-ref-id", held)
+        record("S02", "a label another ref_id holds on the slug refuses, names the holder, "
+               "and writes nothing",
+               r.returncode == 1 and held_ref in r.stderr
+               and counts(*SRC_TABLES) == before,
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+        r = add_source(R1, "--slug", plain, "--dry-run")
+        record("S03", "add-source --slug --dry-run reports the derived label and writes "
+               "nothing (it crashed on the link's foreign key before)",
+               r.returncode == 0 and '"dry_run": true' in r.stdout
+               and '"local_ref_id": null' not in r.stdout
+               and counts(*SRC_TABLES) == before,
+               f"rc={r.returncode} {r.stdout[-200:]!r} {r.stderr[-300:]!r}")
+        r = add_source(R1, "--local-ref-id", "9")
+        record("S04", "--local-ref-id without --slug refuses rather than dropping the flag",
+               r.returncode == 1 and counts(*SRC_TABLES) == before,
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+        L1 = unused_label(mixed)
+        r = add_source(R1, "--slug", mixed, "--local-ref-id", L1)
+        record("S05", "the same call with an explicit, unused label writes the source and "
+               "the link under that label",
+               r.returncode == 0 and link_label(R1, mixed) == L1
+               and counts(*SRC_TABLES)[:2] == (before[0] + 1, before[1] + 1),
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+
+        R2 = next_ref()
+        r = add_source(R2)
+        L2 = unused_label(mixed)
+        r2 = run_cli("link-source-slug", "--ref-id", R2, "--slug", mixed, "--rationale",
+                 "fixture grounds", "--local-ref-id", L2, "--session", S)
+        record("S06", "link-source-slug --local-ref-id links an admitted, unlinked source "
+               "on a slug where derivation refuses",
+               r.returncode == 0 and r2.returncode == 0 and link_label(R2, mixed) == L2,
+               f"add={r.returncode} {r.stderr[-200:]!r} link={r2.returncode} "
+               f"{r2.stderr[-300:]!r}")
+        R3 = next_ref()
+        add_source(R3)
+        msg = refusal(db.link_source_slug, R3, mixed, "fixture grounds", S, local_ref_id=L1)
+        record("S07", "link-source-slug refuses a label another ref_id holds, and writes "
+               "no link", msg and R1 in msg and link_label(R3, mixed) is None,
+               f"got {msg!r}")
+        # R1's link came from add-source, so it carries no grounds: the backfill branch.
+        msg = refusal(db.link_source_slug, R1, mixed, "fixture grounds", S,
+                      local_ref_id=L2 + "X")
+        record("S08", "backfilling grounds on an existing link refuses a DIFFERENT label "
+               "(it would report a relabel that is never written)",
+               msg and L1 in msg and link_label(R1, mixed) == L1, f"got {msg!r}")
+        try:
+            out = db.link_source_slug(R1, mixed, "fixture grounds", S, local_ref_id=L1)
+        except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+            out = {"error": f"{exc.__class__.__name__}: {exc}"}
+        record("S09", "the same label backfills the grounds",
+               out.get("action") == "backfilled" and q(
+                   "SELECT relevance_note FROM source_slug_links WHERE ref_id=? AND slug=?",
+                   R1, mixed)[0][0] == "fixture grounds", f"out={out}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

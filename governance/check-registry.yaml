@@ -1638,7 +1638,12 @@ checks:
     wiring, and add-parameter''s refusal of a declined term -- red on the pre-101 code
     (no verb, no table). Fault-injected 2026-10-01: removing the declined-term refusal,
     the already-a-parameter refusal, the already-declined refusal or the CLI dispatch
-    each turned exactly its own case red; restored, green.'
+    each turned exactly its own case red; restored, green. Section S (GAP-058,
+    2026-10-01) holds add-source --slug to writing nothing when the slug or its label
+    refuses, its --dry-run, and link-source-slug --local-ref-id with the held-label
+    refusal -- red on the pre-WP2 code. Fault-injected 2026-10-01: removing the
+    held-label refusal, or restoring the two-transaction write, turned S red; restored,
+    green. Its cases share fixtures, so one fault reddens the cases after it too.'
 - id: test_url_verifier
   cmd:
   - python3
