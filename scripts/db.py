@@ -1595,10 +1595,20 @@ def main():
                        help="Why the previous text was wrong. Recorded in "
                             "metadata_integrity_detail with the replaced text.")
     p_ams.add_argument("--tier", type=int, default=None,
-                       help="Only with --field scope, and only when the new scope "
-                            "derives a different tier: moves the tier to the one value "
-                            "the ratified ladder produces, in the same statement. The "
-                            "tier is never set on its own.")
+                       help="With --field scope, required when the new scope derives a "
+                            "different tier; with --field evidence_type, optional. Either "
+                            "way it must equal the one value the ratified ladder "
+                            "produces, and moves in the same statement. The tier is "
+                            "never set on its own.")
+    p_ams.add_argument("--scope", default=None,
+                       help="Only with --field evidence_type: the scope the new tier is "
+                            "derived from. Required when the new type spans more than one "
+                            "tier; derived when it admits exactly one.")
+    p_ams.add_argument("--co1-provenance", default=None,
+                       help="Only with --field evidence_type --replacement co1, and "
+                            "required there: the D-0178 warrant naming the co-production. "
+                            "A move OFF co1 keeps the old warrant in the ledger and NULLs "
+                            "the column.")
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
@@ -2890,7 +2900,8 @@ def main():
     elif args.command == "amend-source":
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
                            session=args.session, dry_run=args.dry_run,
-                           tier=args.tier))
+                           tier=args.tier, scope=args.scope,
+                           co1_provenance=args.co1_provenance))
 
     elif args.command == "retire-specification":
         _emit(retire_specification(args.specification_id, reason=args.reason,
@@ -3246,11 +3257,9 @@ def main():
         # refused them. Now something does.
         if (args.evidence_type or "").lower() == "co1" and not args.co1_provenance:
             raise Refusal(
-                "--co1-provenance is REQUIRED for --evidence-type co1. D-0178: the Co-1 "
-                "warrant must NAME the co-production — which disabled people or "
-                "organisation produced this work — because that co-production IS the "
-                "warrant. If it genuinely cannot be evidenced from the source, the row is "
-                "not Co-1; admit it at its actual tier and say why in --notes.")
+                "--co1-provenance is REQUIRED for --evidence-type co1. "
+                + CO1_WARRANT_REQUIRED
+                + "admit it at its actual tier and say why in --notes.")
         # THE SLUG AND ITS LABEL ARE RESOLVED READ-ONLY BEFORE ANY WRITE, and the
         # source and its link are then written in ONE transaction.
         #
@@ -5230,6 +5239,16 @@ R9_REMEDY = (
     "`db.py link-source-slug --ref-id <held> --slug <slug> --rationale <why>`"
 )
 
+# THE CO-1 WARRANT SENTENCE (D-0178), in one place for the same reason as R9_REMEDY.
+# add-source refuses a Co-1 admission without --co1-provenance, and amend-source
+# refuses a move TO co1 without it; both interpolate this and add their own remedy, so
+# the doctrine cannot drift between the two doors into the tier.
+CO1_WARRANT_REQUIRED = (
+    "D-0178: the Co-1 warrant must NAME the co-production — which disabled people or "
+    "organisation produced this work — because that co-production IS the warrant. If it "
+    "genuinely cannot be evidenced from the source, the row is not Co-1; "
+)
+
 
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
@@ -5281,11 +5300,124 @@ _AMENDABLE = (
     # WHO may correct these, not WHAT to -- the vocabularies stay gated where they were.
     "verification_status",
     "doi_resolution_outcome",
+    # evidence_type, added 2026-10-01 (I1 of the batch-23 process-gap review). The type
+    # is a CLASSIFICATION -- is this Co-1 work, a code, a grey report? -- which no
+    # payload settles, and that review found a mis-tiered row (a Co-1/T6 contradiction)
+    # with no correction after capture except hand SQL against a table the CLI reaches.
+    # The tier moves WITH the type, derived by the ratified ladder in the same
+    # statement, exactly as the scope path below moves it; _retype_source refuses any
+    # move a live determination rests on. This grows a curated tuple rule 8 names as a
+    # violator: GAP-013 item (1), deriving the amendable set from the live columns,
+    # remains the fix.
+    "evidence_type",
 )
 
 
+def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance):
+    """The columns an `amend-source --field evidence_type` move writes beside the type,
+    and the ledger text recording them; None when the row already says this.
+
+    THE VOCABULARY IS THE LADDER. evidence_sources.evidence_type declares no CHECK
+    (`dbcore.check_values(conn, 'evidence_sources', 'evidence_type')` is empty), so its
+    one home is the keys of schemas.tier_derivation.VALID_SCOPES_BY_TYPE, which
+    add-source already gates on. The scope is required unless the new type admits
+    exactly one, and the tier is DERIVED from (type, scope): --tier is optional and
+    refused when it disagrees, because a tier is never asserted on its own.
+
+    THE CO-1 FIELDS MOVE WITH THE TYPE. A move to co1 needs the D-0178 warrant. A move
+    off co1 copies every co1_* column into the ledger and sets it NULL: those columns
+    are only valid on a Co-1 row (schemas/evidence_source.py co1_field_consistency),
+    and only co1 rows carry them (`select evidence_type, count(co1_provenance),
+    count(co1_source_type) from evidence_sources group by 1`). The set is read from the
+    live schema by its co1_ prefix, never listed. Left in place, a Co-1 warrant on a
+    non-Co-1 row is a live claim about a tier the row no longer holds.
+
+    NEVER MOVE AN ADJUDICATED FIGURE. A live determination resting on the source
+    (dbcore.determinations_resting_on) refuses the move: re-tiering its source would
+    change a written answer's evidence without re-deciding it.
+    """
+    from schemas.tier_derivation import VALID_SCOPES_BY_TYPE, derive_tier  # noqa: E402
+    valid = VALID_SCOPES_BY_TYPE.get(new_type)
+    if valid is None:
+        raise Refusal(
+            f"{ref_id}: evidence_type {new_type!r} is not on the ratified ladder. Known "
+            f"types: {sorted(VALID_SCOPES_BY_TYPE)}. Nothing was written.")
+    if scope is None and len(valid) == 1:
+        scope = next(iter(valid))                    # forced by the type; not a judgment
+    if scope is None:
+        raise Refusal(
+            f"{ref_id}: --scope is REQUIRED to move evidence_type to {new_type!r}: it is "
+            f"the discriminator the tier is derived from, and this type spans more than "
+            f"one tier. Choose {sorted(valid)}. Nothing was written.")
+    if scope not in valid:
+        raise Refusal(
+            f"{ref_id}: --scope {scope!r} is not admissible for evidence_type "
+            f"{new_type!r}; valid: {sorted(valid)}. Nothing was written.")
+    derived = derive_tier(new_type, scope)
+    if tier is not None and int(tier) != derived:
+        raise Refusal(
+            f"{ref_id}: --tier {tier} contradicts the ratified ladder, which derives "
+            f"{derived} from ({new_type}, {scope}). The tier is not a free field; drop "
+            f"--tier or correct the type or scope. Nothing was written.")
+    co1_cols = [c[1] for c in conn.execute("PRAGMA table_info(evidence_sources)")
+                if c[1].startswith("co1_")]
+    cur = conn.execute(
+        "SELECT evidence_type, scope, tier%s FROM evidence_sources WHERE ref_id=?"
+        % "".join(f", {c}" for c in co1_cols), [ref_id]).fetchone()
+    old_type = cur["evidence_type"]
+    if (old_type or "").strip().lower() == new_type:
+        if cur["scope"] == scope and cur["tier"] == derived:
+            return None
+        raise Refusal(
+            f"{ref_id}: evidence_type is already {new_type!r} (scope {cur['scope']!r}, "
+            f"tier {cur['tier']}). This path moves a TYPE; a scope move on an unchanged "
+            f"type is `amend-source --field scope`, which carries the tier with it. "
+            f"Nothing was written.")
+    provenance = (co1_provenance or "").strip()
+    if new_type == "co1" and not provenance:
+        raise Refusal(
+            f"{ref_id}: --co1-provenance is REQUIRED to move evidence_type to co1. "
+            + CO1_WARRANT_REQUIRED
+            + "leave it at its actual tier. Nothing was written.")
+    if new_type != "co1" and co1_provenance is not None:
+        raise Refusal(
+            f"{ref_id}: --co1-provenance is only admissible when the new evidence_type is "
+            f"co1; {new_type!r} carries no Co-1 warrant. Nothing was written.")
+    resting = dbcore.determinations_resting_on(conn, ref_id)
+    if resting:
+        named = ", ".join(f"specification {sid} (via {junction})"
+                          for junction, sid in resting)
+        raise Refusal(
+            f"{ref_id} carries a live determination: {named}. Moving its evidence_type "
+            f"re-tiers the evidence that answer was written on without re-deciding it. "
+            f"Retire the specification first (db.py retire-specification), then amend, "
+            f"then re-determine. Never move an adjudicated figure. Nothing was written.")
+    sets = {"scope": scope, "tier": derived}
+    moved_scope = (f"scope {cur['scope']!r} unchanged" if cur["scope"] == scope
+                   else f"scope {cur['scope']!r} -> {scope!r}")
+    text = (f". {moved_scope}; tier {cur['tier']} -> {derived}, derived from "
+            f"(evidence_type, scope) by the ratified ladder in the same statement as the "
+            f"type.")
+    if new_type == "co1":
+        sets["co1_provenance"] = provenance
+        text += (f" co1_provenance written as the D-0178 warrant; replaced text was: "
+                 f"{cur['co1_provenance']!r}.")
+    leaving = (old_type or "").strip().lower() == "co1"
+    moved = {c: cur[c] for c in co1_cols if leaving and cur[c] is not None}
+    if moved:
+        sets.update({c: None for c in moved})
+        text += (" Leaving co1, so the Co-1-only fields are set NULL and their text is "
+                 "kept here: " + "; ".join(f"{c} was {v!r}" for c, v in moved.items())
+                 + ".")
+    out = {"type_was": old_type, "type_now": new_type, "scope_was": cur["scope"],
+           "scope_now": scope, "tier_was": cur["tier"], "tier_now": derived,
+           "nulled": sorted(moved)}
+    return {"sets": sets, "ledger": text, "out": out}
+
+
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
-                 session: str, dry_run: bool = False, tier=None):
+                 session: str, dry_run: bool = False, tier=None, scope=None,
+                 co1_provenance=None):
     """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
 
     Replaces rather than appends, and that is the opposite of what resolve-candidate
@@ -5322,6 +5454,16 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
+    if field == "evidence_type":
+        # Stored lower-case, as add-source stores it: assess_cell.classify() compares
+        # against lower-case literals, so 'CO1' would stop anchoring anything.
+        replacement = replacement.lower()
+    elif scope is not None or co1_provenance is not None:
+        raise Refusal(
+            f"{ref_id}: --scope and --co1-provenance are only admissible beside --field "
+            f"evidence_type, where they travel with the type. A scope on its own is "
+            f"`--field scope`; a Co-1 row's warrant on its own is `--field "
+            f"co1_provenance`. Nothing was written.")
     # ── THE TWO VERIFICATION FIELDS CARRY insert_source's REFUSALS WITH THEM ──
     #
     # Added 2026-09-18, hours after those fields were made amendable, because making
@@ -5351,13 +5493,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     # `dbcore.check_declared` below now refuses a bad value from the schema itself and
     # accepts REVERTED. Verified before deleting: check_declared refuses 'BOGUS' and admits
     # 'REVERTED'. One home, and it is the schema's.
-    if tier is not None and field != "scope":
+    if tier is not None and field not in ("scope", "evidence_type"):
         raise Refusal(
-            f"{ref_id}: --tier is only admissible beside --field scope. The tier is "
+            f"{ref_id}: --tier is only admissible beside --field scope or --field "
+            f"evidence_type. The tier is "
             f"DERIVED from (evidence_type, scope) by the ratified ladder; it is never "
             f"set on its own, because a tier with no derivation input is exactly the "
             f"state B5(b) found on all nine sources and could not check.")
-    new_tier = old_tier = None
+    new_tier = old_tier = retype = None
     with connect(dry_run) as conn:
         row = conn.execute(f"SELECT ref_id, {field}, verification_method, "
                            f"verification_disposition, verification_closure_reason, "
@@ -5434,7 +5577,13 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"verification_attempt_count to say WHY the closure stands, then "
                     f"demote the standing.")
         was = row[field]
-        if (was or "").strip() == replacement:
+        if field == "evidence_type":
+            # The type's own no-op test lives in _retype_source: an unchanged type with a
+            # different scope is a refusal there, not a silent no-op here.
+            retype = _retype_source(conn, ref_id, replacement, scope, tier, co1_provenance)
+            if retype is None:
+                return {"ref_id": ref_id, "field": field, "changed": False}
+        elif (was or "").strip() == replacement:
             return {"ref_id": ref_id, "field": field, "changed": False}
         if field == "scope":
             # BYPASS CLOSED 2026-09-10. `scope` is amendable, and amending it changes
@@ -5475,6 +5624,11 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                 # derives from the new scope, in the same statement as that scope, with
                 # a reason. There is no path here that writes a row the ladder cannot
                 # produce -- which was the original refusal's whole point.
+                #
+                # THE SECOND PATH, added 2026-10-01 (I1): `--field evidence_type` moves
+                # the tier with the TYPE by the same derivation (_retype_source), with
+                # --tier optional there and refused when it disagrees. `tier` itself is
+                # still in neither _AMENDABLE nor _CORRECTABLE.
                 if tier is None:
                     raise Refusal(
                         f"{ref_id}: amending scope to {replacement!r} would make the "
@@ -5503,8 +5657,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # register to be worth re-creating. Until then the warrant lives here, in the
         # column `metadata_integrity_audit.py` actually reads.
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
-        ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
+        segment = (f"{stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
                    f"Replaced text was: {was!r}")
+        if retype is not None:
+            # ONE segment: the type, its scope and tier, and any Co-1 text it carries out
+            # of the columns, so the move cannot be read in halves.
+            segment += retype["ledger"]
+            retype["out"]["ledger_segment"] = segment
+        ledger += " || " + segment
         if new_tier is not None:
             ledger += (f" || {stamp['created_at'][:10]} tier CORRECTED {old_tier} -> "
                        f"{new_tier}, derived from (evidence_type, scope) by the "
@@ -5512,6 +5672,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         _sets, _vals = [f"{field}=?"], [replacement]
         if new_tier is not None:
             _sets.append("tier=?"); _vals.append(new_tier)
+        for col, value in (retype or {}).get("sets", {}).items():
+            _sets.append(f"{col}=?"); _vals.append(value)
         conn.execute(
             f"UPDATE evidence_sources SET {', '.join(_sets)}, "
             f"metadata_integrity_status=?, metadata_integrity_detail=?, "
@@ -5522,6 +5684,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                "was_chars": len(was or ""), "now_chars": len(replacement)}
         if new_tier is not None:
             out["tier_was"], out["tier_now"] = old_tier, new_tier
+        if retype is not None:
+            out.update(retype["out"])
         return out
 
 

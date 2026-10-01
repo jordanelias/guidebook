@@ -1656,7 +1656,16 @@ checks:
     artefact with no resolving path still refuses, and a ''../'' token reaching a real
     file outside the repo refuses -- red on the pre-WP4 code. Fault-injected
     2026-10-01: dropping the containment check turned the containment case red;
-    dropping the unresolved list turned its two cases red; restored, green.'
+    dropping the unresolved list turned its two cases red; restored, green. Section E
+    (I1, 2026-10-01) holds amend-source --field evidence_type: the tier moves with the
+    type by the ladder only, a move to co1 needs the D-0178 warrant, a move off co1
+    ledgers and NULLs the co1_* columns, a live determination refuses through both
+    junctions, and emit_batch_sql captures the UPDATE with its NULLs -- red on the
+    pre-WP5 code (not an amendable field). Fault-injected 2026-10-01: removing the
+    live-determination refusal turned exactly its case red; removing the NULLing turned
+    its case and the capture case red; removing the Co-1 warrant refusal or the
+    disagreeing-tier refusal turned its case red and, through the shared fixture, the
+    cases after it; restored, green.'
 - id: test_url_verifier
   cmd:
   - python3

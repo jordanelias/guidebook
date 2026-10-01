@@ -41,6 +41,13 @@ good-faith pass unclosable, so its audit stayed red for a pass that had done its
 path that escapes the repo must still refuse, and cited paths that do not resolve must stay
 visible.
 
+Section E (I1) holds `amend-source --field evidence_type`: without it a source filed at the
+wrong rung of the ladder (a Co-1/T6 contradiction, a grey report typed as a trial) keeps
+anchoring at the wrong strength, because the only correction was hand SQL. It proves the
+tier moves with the type by derivation only, that a move to co1 needs the D-0178 warrant,
+that a move off co1 keeps the old warrant in the ledger and NULLs the Co-1-only columns, and
+that a source a live determination rests on cannot move.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -720,6 +727,226 @@ try:
            r.returncode == 0 and f"REPORTED: finding {F5}" in r.stderr
            and MISSING in r.stderr and closed_at(P5) is None,
            f"rc={r.returncode} {r.stderr[-300:]!r}")
+
+    # ── E: amend-source --field evidence_type ──────────────────────────────────
+    # I1. Fixture sources are admitted through add-source on the copy; every tier the
+    # cases expect is derived from the ladder, never typed. The Co-1 fixture carries a
+    # co1_source_type so the move off co1 is seen to clear BOTH Co-1-only columns.
+    from schemas.tier_derivation import TIER_MAP  # noqa: E402
+
+    def attempt(fn, *a, **k):
+        """(result, None) when `fn` returns, (None, text) when it refuses or fails. A
+        non-Refusal exception is a defect and is reported as one."""
+        try:
+            return fn(*a, **k), None
+        except Refusal as exc:
+            return None, str(exc)
+        except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+            return None, f"DEFECT {exc.__class__.__name__}: {exc}"
+
+    def source_row(ref_id):
+        return dict(zip(
+            ("evidence_type", "scope", "tier", "co1_provenance", "co1_source_type",
+             "metadata_integrity_status", "metadata_integrity_detail",
+             "updated_by_session"),
+            q("SELECT evidence_type, scope, tier, co1_provenance, co1_source_type, "
+              "metadata_integrity_status, metadata_integrity_detail, updated_by_session "
+              "FROM evidence_sources WHERE ref_id=?", ref_id)[0]))
+
+    def admit(ref_id, etype, scope=None, *extra):
+        args = ["add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
+                "--year", "2021", "--title", f"fixture retype {ref_id}", "--evidence-type",
+                etype, "--tier", str(TIER_MAP[(etype, scope or next(iter(
+                    VALID_SCOPES_BY_TYPE[etype])))]), "--session", S, *extra]
+        if scope:
+            args += ["--scope", scope]
+        return run_cli(*args)
+
+    ONE = {t for t, v in VALID_SCOPES_BY_TYPE.items() if len(v) == 1}
+    HI = min(sorted(VALID_SCOPES_BY_TYPE["clinical"]), key=lambda s: TIER_MAP[("clinical", s)])
+    PROV = "fixture: written by a named disabled people's organisation, per its own preface"
+    EA, EC = next_ref(), None
+    r_a = admit(EA, "clinical", HI)
+    EC = next_ref()
+    r_c = admit(EC, "co1", None, "--co1-provenance", PROV, "--co1-source-type",
+                "dpo_research")
+    if r_a.returncode or r_c.returncode:
+        record("E00", "fixture sources admitted for the retype cases", False,
+               f"clinical={r_a.returncode} {r_a.stderr[-200:]!r} "
+               f"co1={r_c.returncode} {r_c.stderr[-200:]!r}")
+    else:
+        WHY = "fixture: the bytes describe a grey report, not a trial"
+        grey_tier = TIER_MAP[("grey", next(iter(VALID_SCOPES_BY_TYPE["grey"])))]
+        hi_tier = TIER_MAP[("clinical", HI)]
+        before = source_row(EA)
+        # THE CASE THAT FAILS ON THE OLD CODE: evidence_type was not in _AMENDABLE, so a
+        # mis-typed row could only be re-typed (and re-tiered) by hand SQL.
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "GREY", WHY, session=S)
+        row = source_row(EA)
+        seg = (row["metadata_integrity_detail"] or "").split(" || ")[-1]
+        record("E01", "a type move succeeds, derives the tier from the ladder (here "
+               f"{hi_tier} -> {grey_tier}), stores the type lower-case, and ledgers type, "
+               "scope and tier in ONE segment with the reason",
+               out and out["changed"] and out["tier_now"] == grey_tier
+               and row["evidence_type"] == "grey" and row["tier"] == grey_tier
+               and row["scope"] in VALID_SCOPES_BY_TYPE["grey"]
+               and row["metadata_integrity_status"] == "CORRECTED"
+               and row["updated_by_session"] == S
+               and f"evidence_type CORRECTED ({WHY}). Replaced text was: 'clinical'" in seg
+               and f"scope {HI!r} -> " in seg and f"tier {hi_tier} -> {grey_tier}" in seg
+               and before["metadata_integrity_detail"] is None,
+               f"msg={msg!r} out={out} seg={seg!r}")
+
+        # getattr, so the pre-change module (no constant) reports red here rather than
+        # crashing the run and hiding every later case.
+        WARRANT = getattr(db, "CO1_WARRANT_REQUIRED", None)
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "co1", WHY, session=S)
+        record("E02", "a move TO co1 without --co1-provenance refuses with add-source's "
+               "D-0178 sentence, and writes nothing",
+               out is None and msg and WARRANT and WARRANT in msg
+               and source_row(EA)["evidence_type"] == "grey", f"msg={msg!r}")
+        nf = TIER_MAP[("national_fw", next(iter(VALID_SCOPES_BY_TYPE["national_fw"])))]
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "national_fw", WHY,
+                           session=S, tier=nf + 1)
+        record("E03", "a --tier that disagrees with the ladder refuses, naming the derived "
+               "tier, and writes nothing",
+               out is None and msg and f"derives {nf} from" in msg
+               and source_row(EA)["evidence_type"] == "grey", f"msg={msg!r}")
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "clinical", WHY, session=S)
+        out2, msg2 = attempt(db.amend_source, EA, "evidence_type", "standard_eb", WHY,
+                             session=S, scope=next(iter(VALID_SCOPES_BY_TYPE["grey"])))
+        record("E04", "a multi-scope type needs --scope, and an inadmissible scope "
+               "refuses; neither writes",
+               msg and "--scope is REQUIRED" in msg and msg2 and "not admissible" in msg2
+               and source_row(EA)["evidence_type"] == "grey", f"{msg!r} | {msg2!r}")
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "folklore", WHY, session=S)
+        record("E05", "a type off the ladder refuses and names the ladder's types",
+               msg and "not on the ratified ladder" in msg and "'co1'" in msg,
+               f"msg={msg!r}")
+        out, msg = attempt(db.amend_source, EA, "notes", "fixture note", WHY, session=S,
+                           scope=HI)
+        out2, msg2 = attempt(db.amend_source, EA, "evidence_type", "code", WHY, session=S,
+                             co1_provenance=PROV)
+        record("E06", "--scope beside another field, and --co1-provenance beside a non-co1 "
+               "type, both refuse",
+               msg and "only admissible beside --field evidence_type" in msg
+               and msg2 and "only admissible when the new evidence_type is co1" in msg2
+               and source_row(EA)["evidence_type"] == "grey", f"{msg!r} | {msg2!r}")
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "grey", WHY, session=S)
+        record("E07", "the type it already holds (scope and tier consistent) is a no-op",
+               out and out["changed"] is False, f"out={out} msg={msg!r}")
+
+        # Leaving co1: the warrant goes to the ledger, in the same segment as the tier
+        # move, and both Co-1-only columns are NULLed (correction 17).
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "grey",
+                           "fixture: no co-production is evidenced in the bytes", session=S)
+        row = source_row(EC)
+        seg = (row["metadata_integrity_detail"] or "").split(" || ")[-1]
+        record("E08", "leaving co1 NULLs co1_provenance and co1_source_type and keeps both "
+               "texts in the SAME ledger segment as the tier move",
+               out and out["nulled"] == ["co1_provenance", "co1_source_type"]
+               and row["co1_provenance"] is None and row["co1_source_type"] is None
+               and row["evidence_type"] == "grey"
+               and f"tier {TIER_MAP[('co1', 'intrinsic')]} -> {grey_tier}" in seg
+               and PROV in seg and "dpo_research" in seg,
+               f"msg={msg!r} out={out} seg={seg!r}")
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "co1",
+                           "fixture: the preface names the DPO after all", session=S,
+                           co1_provenance=PROV, tier=TIER_MAP[("co1", "intrinsic")])
+        row = source_row(EC)
+        record("E09", "a move TO co1 with the warrant (and an agreeing --tier) writes the "
+               "warrant, the derived scope and tier",
+               out and out["changed"] and row["evidence_type"] == "co1"
+               and row["co1_provenance"] == PROV
+               and row["tier"] == TIER_MAP[("co1", "intrinsic")],
+               f"msg={msg!r} out={out}")
+
+        # A LIVE determination, through both junctions. Every specification in the copy
+        # is retired and no writer short of the determination engine creates one, so one
+        # is UN-retired by SQL on the copy and its retirement restored the same way.
+        pick = q("SELECT s.specification_id, l.ref_id, c.ref_id, s.retired_at, "
+                 "s.retired_by_session, s.retirement_reason "
+                 "FROM specifications s "
+                 "JOIN specification_source_links l ON l.specification_id = s.specification_id "
+                 "JOIN convergence_sources c ON c.convergence_id = s.convergence_id "
+                 "WHERE NOT EXISTS (SELECT 1 FROM specification_source_links l2 "
+                 "  WHERE l2.specification_id = s.specification_id AND l2.ref_id = c.ref_id) "
+                 "ORDER BY 1, 2, 3 LIMIT 1")
+        if not pick:
+            record("E10", "a specification with both junctions to test with", False,
+                   "fixture missing in the copy")
+        else:
+            SPEC, LREF, CREF, R_AT, R_BY, R_WHY = pick[0]
+            con = sqlite3.connect(DB)
+            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
+                        (SPEC,))
+            con.commit()
+            con.close()
+            types = {r: source_row(r)["evidence_type"] for r in (LREF, CREF)}
+            to = {r: next(t for t in sorted(ONE) if t != types[r] and t != "co1")
+                  for r in (LREF, CREF)}
+            _, msg_l = attempt(db.amend_source, LREF, "evidence_type", to[LREF], WHY,
+                               session=S)
+            _, msg_c = attempt(db.amend_source, CREF, "evidence_type", to[CREF], WHY,
+                               session=S)
+            record("E10", "a source a LIVE specification rests on refuses, through either "
+                   "junction, naming it and the footer, and writes nothing",
+                   msg_l and f"specification {SPEC} (via specification_source_links)" in msg_l
+                   and msg_c and f"specification {SPEC} (via convergence_sources)" in msg_c
+                   and "Never move an adjudicated figure" in msg_l
+                   and {r: source_row(r)["evidence_type"] for r in types} == types,
+                   f"l={msg_l!r} c={msg_c!r}")
+            con = sqlite3.connect(DB)
+            con.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, "
+                        "retirement_reason=? WHERE specification_id=?",
+                        (R_AT, R_BY, R_WHY, SPEC))
+            con.commit()
+            con.close()
+
+        ok = run_cli("amend-source", "--ref-id", EA, "--field", "evidence_type",
+                     "--replacement", "co1", "--co1-provenance", PROV, "--reason", WHY,
+                     "--session", S, "--dry-run")
+        bad = run_cli("amend-source", "--ref-id", EA, "--field", "notes", "--replacement",
+                      "x", "--scope", HI, "--reason", WHY, "--session", S)
+        record("E11", "the CLI is wired: a dry run exits 0 with the ledger segment and "
+               "writes nothing; --scope beside --field notes exits 1 with REFUSING",
+               ok.returncode == 0 and '"type_now": "co1"' in ok.stdout
+               and '"ledger_segment"' in ok.stdout
+               and source_row(EA)["evidence_type"] == "grey"
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:"),
+               f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-300:]!r}")
+
+        # The capture path, on a CANONICAL row (an UPDATE, not a fixture INSERT): a Co-1
+        # row taken from the copy moves off co1, and the NULLs must reach the migration.
+        canon = q("SELECT ref_id FROM evidence_sources WHERE evidence_type='co1' "
+                  "AND co1_provenance IS NOT NULL AND created_by_session <> ? "
+                  "ORDER BY ref_id LIMIT 1", S)
+        if not canon:
+            record("E12", "a canonical Co-1 row to test capture with", False,
+                   "fixture missing in the copy")
+        else:
+            (CREF1,) = canon[0]
+            out, msg = attempt(db.amend_source, CREF1, "evidence_type", "grey", WHY,
+                               session=S)
+            import importlib                                       # noqa: E402
+            sys.path.insert(0, str(REPO / "scripts" / "research"))
+            emit_mod = importlib.import_module("emit_batch_sql")
+            sql_out = os.path.join(TMP, "capture-retype.sql")
+            try:
+                emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+                captured = open(sql_out, encoding="utf-8").read()
+            except SystemExit as exc:
+                captured = f"emit refused: {exc}"
+            hit = [ln for ln in captured.splitlines()
+                   if ln.startswith('UPDATE "evidence_sources"')
+                   and f'"ref_id" = \'{CREF1}\'' in ln
+                   and '"evidence_type" = \'grey\'' in ln
+                   and '"co1_provenance" = NULL' in ln
+                   and '"co1_source_type" = NULL' in ln]
+            record("E12", "emit_batch_sql captures the retype of a canonical row, NULLs "
+                   "included (the write can be shipped)",
+                   out and len(hit) == 1, f"msg={msg!r} {captured[-400:]!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
