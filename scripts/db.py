@@ -5966,6 +5966,7 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
             raise Refusal(
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
                 f"observed IN a source; observe it after the source is filed.")
+        _refuse_tombstone(conn, ref, "observe-term")
         row = {"ref_id": ref, "surface_form": surface,
                "language": (data.get("language") or "EN").strip().upper(),
                "locator": data.get("locator"),
@@ -7552,6 +7553,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. An extraction "
                 f"is a reading OF a source; extract AFTER admission.\n"
                 f"  db.py add-source ...")
+        _refuse_tombstone(conn, ref, "add-extraction")
         row["ref_id"] = ref
 
         if not dbcore.exists(conn, "slugs", "slug", row.get("slug")):
@@ -8433,6 +8435,41 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
             "relevance_note": rationale, "dry_run": dry_run}
 
 
+def _refuse_tombstone(conn, ref_id: str, what: str):
+    """Refuse to file new work against a SUPERSEDED source (a tombstone).
+
+    supersede-source leaves the superseded row in place, and the determination engine
+    gathers nothing from it (assess_cell.gather_sources: `superseded_by_ref_id IS NULL`).
+    A writer that still accepted it filed an extraction, an observed term or a population
+    grade that the engine then dropped without a word: work filed and lost. The same
+    ground link-source-slug already refuses on, applied to the writers whose rows the
+    engine would drop: add-extraction (and derive-extraction through it), observe-term,
+    add-population-match.
+
+    NOT ROUTED THROUGH HERE, on purpose:
+      * log-search --admitted-ref-id, link-admission, resolve-candidate --admitted-ref-id:
+        they record which search admitted which id, or what a candidate became -- history
+        still true of the tombstone, and test_db_integrity S01 reads those edges.
+      * log-mining, log-search --mined-ref-id: citation_mining_completeness does not
+        filter superseded rows, so a tombstone may still owe a mining row or a deferral,
+        and refusing would make that record unwritable.
+      * add-economics-entry, raise-determination-gate: nothing drops them by the
+        source's liveness; a row pointing at the tombstone is listed among its dependents
+        by supersede-source.
+      * amend-source, correct-source, amend-extraction, amend-population-match: they
+        correct a row's own record, which stays legitimate after supersession.
+    """
+    row = conn.execute("SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id=?",
+                       (ref_id,)).fetchone()
+    if row is not None and (row[0] or "").strip():
+        raise Refusal(
+            f"{what}: {ref_id} is superseded by {row[0]}. A superseded source is a "
+            f"tombstone: the determination engine gathers nothing from it "
+            f"(assess_cell.gather_sources reads superseded_by_ref_id IS NULL), so work "
+            f"filed against it is silently dropped. File it against {row[0]}. Nothing "
+            f"was written.")
+
+
 def _source_dependents(conn, ref_id: str) -> list:
     """Every row that points at source `ref_id`, by table and column, with its count.
 
@@ -8473,10 +8510,21 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
 
     NEITHER ROW IS DELETED. `ref_id` keeps its id and every row that points at it, and
     gains `superseded_by_ref_id` plus a dated SUPERSEDED line in `notes`. Its dependents
-    are REPORTED, not moved. The readers already skip a superseded source: assess_cell's
-    gather (`superseded_by_ref_id IS NULL`), D04, link-source-slug, add-source's DOI
-    duplicate check. A figure extracted from the superseded row stops being gathered,
-    so re-extract it from `by` if `by` does not already carry it.
+    are REPORTED, not moved. Some readers skip a superseded source: assess_cell's gather
+    (`superseded_by_ref_id IS NULL`), D04, link-source-slug, add-source's DOI duplicate
+    check, and (since the review fix of 2026-10-01) add-extraction, observe-term and
+    add-population-match, which refuse it rather than file work the engine drops. A figure
+    extracted from the superseded row stops being gathered, so re-extract it from `by` if
+    `by` does not already carry it.
+
+    KNOWN GAP, NOT FIXED HERE: the views that read evidence_sources do not filter on
+    supersession, so a tombstone still appears in them -- v_convergence_sources,
+    v_determination_provenance, v_evidence_authors, v_item_provenance,
+    v_source_admission and v_source_reach_all as of 2026-10-01. Re-derive rather than
+    trust the list:
+        select name from sqlite_master where type='view' and sql like '%evidence_sources%'
+           and sql not like '%superseded_by_ref_id%';
+    A view change is a schema change, and it belongs in its own migration.
 
     Refuses: A == B; either missing; A already superseded; B itself superseded (no
     chains); a blank reason; and a LIVE determination resting on A
@@ -8855,6 +8903,7 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. Grade the "
                 f"match AFTER admission -- a match row for a source that does not exist "
                 f"is a claim about nothing.")
+        _refuse_tombstone(conn, ref, "add-population-match")
         if not dbcore.exists(conn, "populations", "population_code", data.get("target_population")):
             raise Refusal(
                 f"target_population {data.get('target_population')!r} is not in `populations`.")

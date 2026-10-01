@@ -1668,7 +1668,10 @@ checks:
     emit_batch_sql capturing the UPDATE -- red on the pre-WP3 code (no verb).
     Fault-injected 2026-10-01: removing the live-determination refusal turned exactly
     its case red; removing the no-chains refusal turned its case and the CLI case that
-    reuses its fixture red; restored, green. Section C (GAP-055, 2026-10-01) holds
+    reuses its fixture red; restored, green. Review fix (2026-10-01): add-extraction,
+    observe-term and add-population-match refuse a superseded source (a payload accepted
+    while it was live is refused once it is superseded), and the live source is still
+    accepted -- red on the pre-fix code, which wrote all three rows. Section C (GAP-055, 2026-10-01) holds
     close-adversarial-pass''s artefact parse: a tracked file plus a qualifier closes,
     a cited path that does not resolve is returned and printed as REPORTED, an
     artefact with no resolving path still refuses, and a ''../'' token reaching a real

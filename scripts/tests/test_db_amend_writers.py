@@ -32,8 +32,9 @@ file into a slug whose labels mix schemes, and the refusal of a label another so
 Section X (GAP-060) holds `supersede-source`: without it a source admitted twice (a mirror,
 a DOI-less re-entry) is gathered twice by the determination engine, and D04 stays red with
 hand SQL as the only remedy. It proves D04 goes quiet on a fixture collision, that a live
-determination blocks the move until it is retired, and that the UPDATE reaches the capture
-path.
+determination blocks the move until it is retired, that the UPDATE reaches the capture
+path, and that add-extraction, observe-term and add-population-match then refuse the
+superseded source, whose rows the engine would drop.
 
 Section C (GAP-055) holds `close-adversarial-pass`'s artefact parse: a SURVIVED artefact
 written as a citation ("<file> page 15", "<file> (and the other 11)") used to make a
@@ -577,6 +578,64 @@ try:
         msg = refusal(supersede, XA, XB, WHY, S)
         record("X09", "refuses a source already superseded, naming its target",
                msg and XB in msg, f"got {msg!r}")
+
+        # THE TOMBSTONE IS NOT LIVE FOR THE WRITERS WHOSE ROWS THE ENGINE WOULD DROP.
+        # On the pre-fix code each of these WROTE a row against a superseded source,
+        # which gather_sources then skipped (superseded_by_ref_id IS NULL): work filed and
+        # silently lost. Each case uses a payload the writer accepts for a live source,
+        # so the only thing that changes between accept and refuse is the supersession.
+        con = sqlite3.connect(DB)
+        try:
+            PID = con.execute("SELECT parameter_id FROM base_parameters "
+                              "WHERE status='active' ORDER BY 1 LIMIT 1").fetchone()
+            GRADE = sorted(dbcore.check_values(con, "evidence_population_match",
+                                               "match_grade"))[0]
+        finally:
+            con.close()
+        XD = next_ref()
+        add_source(XD, title=f"fixture extraction source {XD}")
+        X_PAYLOAD = {"ref_id": XD, "slug": plain, "parameter_id": PID and PID[0],
+                     "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
+                     "claim_text": "fixture: the source states nothing for this parameter",
+                     "extraction_method": "skim"}
+        # No artefact carries a fixture's words; the exemption is the writer's own path
+        # for that, and it is ledgered on the row.
+        X_EXEMPT = "fixture: a test payload, no retrieved artefact exists"
+        try:
+            db.link_source_slug(XD, plain, "fixture: speaks to this slug", S)
+            first = db.insert_extraction(dict(X_PAYLOAD), S, relations=[],
+                                         verbatim_exempt=X_EXEMPT)
+            supersede(XD, XB, WHY, S)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            first = {"error": f"{exc.__class__.__name__}: {exc}"}
+        n_sve = counts("source_value_extractions")
+        msg = refusal(db.insert_extraction, dict(X_PAYLOAD), S, relations=[],
+                      verbatim_exempt=X_EXEMPT)
+        record("X15", "add-extraction accepts a payload while the source is live, and "
+               "refuses the same payload once it is superseded, naming the live source",
+               "extraction_id" in first and msg and f"superseded by {XB}" in msg
+               and f"File it against {XB}" in msg
+               and counts("source_value_extractions") == n_sve,
+               f"first={first} msg={msg!r}")
+        n_obs = counts("observed_terms")
+        msg = refusal(db.observe_term, {"ref_id": XA, "surface_form": "fixture phrase X",
+                                        "language": "EN"}, S)
+        record("X16", "observe-term refuses a superseded source and writes nothing",
+               msg and f"superseded by {XB}" in msg and counts("observed_terms") == n_obs,
+               f"got {msg!r}")
+        n_epm = counts("evidence_population_match")
+        msg = refusal(db.insert_population_match,
+                      {"ref_id": XA, "target_population": POP, "match_grade": GRADE}, S)
+        record("X17", "add-population-match refuses a superseded source and writes nothing",
+               msg and f"superseded by {XB}" in msg
+               and counts("evidence_population_match") == n_epm, f"got {msg!r}")
+        try:
+            live = db.observe_term({"ref_id": XB, "surface_form": "fixture phrase X",
+                                    "language": "EN"}, S)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            live = {"error": f"{exc.__class__.__name__}: {exc}"}
+        record("X18", "the superseding (live) source is still accepted by observe-term",
+               live.get("created") is True, f"{live}")
         XC = next_ref()
         add_source(XC)
         msg = refusal(supersede, XC, XA, WHY, S)
@@ -586,7 +645,9 @@ try:
         deps = {(d["table"], d["column"]): d["rows"] for d in out["dependents_left_in_place"]}
         record("X10b", "a row already superseded BY the source is reported as a dependent "
                "(the pointer has no FK, so it is added by name), not refused",
-               deps.get(("evidence_sources", "superseded_by_ref_id")) == 1
+               deps.get(("evidence_sources", "superseded_by_ref_id"))
+               == q("SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id=?",
+                    XB)[0][0] >= 1
                and superseded_by(XB) is None, f"out={out}")
         ok = run_cli("supersede-source", "--ref-id", XC, "--by", XB, "--reason", WHY,
                      "--session", S, "--dry-run")
