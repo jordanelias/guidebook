@@ -48,6 +48,13 @@ tier moves with the type by derivation only, that a move to co1 needs the D-0178
 that a move off co1 keeps the old warrant in the ledger and NULLs the Co-1-only columns, and
 that a source a live determination rests on cannot move.
 
+Section K (I8, GAP-005) holds `update-code-lead` and add-code-lead's near-duplicate refusal:
+without the verb R15 cannot be discharged against a lead, so a lead whose document was
+retrieved stays REFERENCE-ONLY and its note keeps asserting what the document was found not
+to say. It proves the move is ledgered and append-only, that the refusal's "update that row
+instead" names a command that works, and that the duplicate key folds case and punctuation
+without erasing a Korean or Japanese name.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -947,6 +954,187 @@ try:
             record("E12", "emit_batch_sql captures the retype of a canonical row, NULLs "
                    "included (the write can be shipped)",
                    out and len(hit) == 1, f"msg={msg!r} {captured[-400:]!r}")
+
+    # ── K: update-code-lead, and add-code-lead's near-duplicate refusal ────────────
+    # I8 / GAP-005. Fixture leads are written through insert_code_lead on the copy, in a
+    # jurisdiction read from the copy's own leads. The status vocabulary is the column's
+    # CHECK; the two non-default values are taken from it, never typed. Each fixture
+    # passes the column default as its status, as the CLI does: insert_code_lead's
+    # vocabulary gate refuses a None status before its INSERT fallback is reached.
+    update = getattr(db, "update_code_lead", None)
+    con = sqlite3.connect(DB)
+    try:
+        STATUSES = sorted(dbcore.check_values(con, "research_code_leads", "status"))
+    finally:
+        con.close()
+    (JUR,) = q("SELECT jurisdiction FROM research_code_leads ORDER BY lead_id LIMIT 1")[0]
+
+    def lead(lead_id):
+        return dict(zip(("status", "clause", "notes", "updated_by_session"), q(
+            "SELECT status, clause, notes, updated_by_session FROM research_code_leads "
+            "WHERE lead_id=?", lead_id)[0]))
+
+    def code_lead(name, notes=None, **kw):
+        return db.insert_code_lead({"jurisdiction": JUR, "status": "REFERENCE-ONLY",
+                                    "standard_name": name, "notes": notes}, S, **kw)
+
+    NOTE0 = "fixture: restated on a vendor page, primary text not retrieved"
+    NAME1 = "Fixture Standard 4711-2 (ramp provisions)"
+    K1 = code_lead(NAME1, NOTE0)
+    MOVE_TO = OTHER = None
+    if update is None:
+        # The pre-WP6 state: no verb. Recorded rather than raised, so the run still
+        # prints its summary and exits 1; the near-duplicate cases below still run.
+        record("K00", "db.update_code_lead exists (GAP-005's writer)", False,
+               "no such function -- a lead's status and note cannot be corrected")
+    elif "REFERENCE-ONLY" not in STATUSES or len(STATUSES) < 3:
+        record("K00", "the status CHECK still holds the default and two moves to test "
+               "with", False, f"CHECK declares {STATUSES}")
+    else:
+        MOVE_TO, OTHER = [s for s in STATUSES if s != "REFERENCE-ONLY"][:2]
+        msg = refusal(update, 999999999, "fixture note", S, status=MOVE_TO)
+        record("K01", "refuses an unknown lead", msg and "no such code lead" in msg,
+               f"got {msg!r}")
+        msg = refusal(update, K1, "   ", S, status=MOVE_TO)
+        record("K02", "refuses a blank --append-note (R15) and writes nothing",
+               msg and "R15" in msg and lead(K1)["status"] == "REFERENCE-ONLY",
+               f"got {msg!r}")
+        msg = refusal(update, K1, "fixture note", S, status="FOUND-IT")
+        record("K03", "refuses a status outside the column's CHECK, naming the CHECK",
+               msg and "CHECK" in msg and lead(K1)["status"] == "REFERENCE-ONLY",
+               f"got {msg!r}")
+        msg = refusal(update, K1, "fixture note", S, status="REFERENCE-ONLY")
+        msg2 = refusal(update, K1, "fixture note", S, clause="  ")
+        record("K04", "refuses a --status equal to the held one, and a blank --clause",
+               msg and "already" in msg and msg2 and "blank" in msg2, f"{msg!r} | {msg2!r}")
+        out = update(K1, "fixture: dry run", S, status=MOVE_TO, dry_run=True)
+        record("K05", "--dry-run reports the move and writes nothing",
+               out["dry_run"] is True and out["changed"]
+               and lead(K1)["status"] == "REFERENCE-ONLY" and lead(K1)["notes"] == NOTE0,
+               f"out={out}")
+        NOTE1 = "fixture: primary text retrieved; the slope figure is in clause 4.2, not 4.3"
+        out = update(K1, f"  {NOTE1}  ", S, status=MOVE_TO, clause="§4.2")
+        row = lead(K1)
+        record("K06", "a lead moves REFERENCE-ONLY -> " + MOVE_TO + " with a clause: the "
+               "old note is kept verbatim, ONE dated UPDATED segment carries the replaced "
+               "status and clause and the new note, and the row is stamped",
+               out["changed"] and row["status"] == MOVE_TO and row["clause"] == "§4.2"
+               and row["notes"].startswith(NOTE0 + " || UPDATED ")
+               and row["notes"].count(" || UPDATED ") == 1
+               and f"status 'REFERENCE-ONLY' -> '{MOVE_TO}'; clause None -> '§4.2'. "
+                   f"{NOTE1}" in row["notes"]
+               and row["updated_by_session"] == S, f"out={out} row={row}")
+        out = update(K1, "fixture: re-read, the clause holds", S)
+        out2 = update(K1, "fixture: re-read, the clause holds", S)
+        record("K07", "a note alone is appended (R15 without a status move); the same note "
+               "again is a no-op, not a second line",
+               out["changed"] and out2["changed"] is False
+               and lead(K1)["notes"].count("the clause holds") == 1, f"{out} | {out2}")
+        out = update(K1, "fixture: moved back, the retrieval was of a summary", S,
+                     status="REFERENCE-ONLY")
+        record("K08", "no transition order: a wrong status can be moved back, and the move "
+               "is ledgered", out["changed"] and lead(K1)["status"] == "REFERENCE-ONLY"
+               and f"status '{MOVE_TO}' -> 'REFERENCE-ONLY'" in lead(K1)["notes"],
+               f"out={out}")
+
+        # The exact-duplicate refusal names a command, and the command must work.
+        msg = refusal(code_lead, NAME1)
+        r = run_cli("update-code-lead", "--lead-id", str(K1), "--append-note",
+                    "fixture: the remedy the refusal names", "--status", OTHER,
+                    "--session", S, "--dry-run")
+        bad = run_cli("update-code-lead", "--lead-id", str(K1), "--append-note", " ",
+                      "--session", S)
+        record("K09", "an exact restatement refuses with `db.py update-code-lead --lead-id "
+               "N`, and that command is wired: a dry run exits 0 and writes nothing; a "
+               "blank note exits 1 with REFUSING",
+               msg and f"update-code-lead --lead-id {K1}" in msg
+               and "Update that row instead" in msg
+               and r.returncode == 0 and '"changed": true' in r.stdout
+               and lead(K1)["status"] == "REFERENCE-ONLY"
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:"),
+               f"msg={msg!r} r={r.returncode} {r.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-200:]!r}")
+
+    # The near-duplicate refusal is insert_code_lead's, so these cases run whether or
+    # not the verb exists: on the pre-WP6 code the variant is simply admitted.
+    n0 = q("SELECT COUNT(*) FROM research_code_leads")[0][0]
+    VARIANT = "FIXTURE standard 4711 2 — Ramp Provisions"
+    msg = refusal(code_lead, VARIANT)
+    record("K10", "a case/spacing/punctuation variant of a held name refuses, naming "
+           "the held lead and the update command, and writes nothing",
+           msg and f"lead_id {K1}" in msg and "update-code-lead" in msg
+           and q("SELECT COUNT(*) FROM research_code_leads")[0][0] == n0,
+           f"got {msg!r}")
+    msg = refusal(code_lead, VARIANT, distinct_from=[K1])
+    msg2 = refusal(code_lead, "Fixture Standard 9999", distinct_from=[K1], reason="r")
+    msg3 = refusal(code_lead, "Fixture Standard 9999", reason="r")
+    record("K11", "--distinct-from without --reason, --distinct-from naming a lead "
+           "that is not a near match, and --reason alone all refuse",
+           msg and "--reason" in msg and msg2 and "nothing to be distinct from" in msg2
+           and msg3 and "only read beside --distinct-from" in msg3,
+           f"{msg!r} | {msg2!r} | {msg3!r}")
+    WHY_D = "fixture: the 2-part edition and the 2 amendment are separate documents"
+    try:
+        K2 = code_lead(VARIANT, distinct_from=[K1], reason=WHY_D)
+    except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+        K2 = None
+        print(f"      {exc.__class__.__name__}: {exc}")
+    record("K12", "--distinct-from N --reason admits the variant and records the "
+           "reason, naming the lead it is distinct from, in its notes",
+           K2 and "DISTINCT-FROM" in (lead(K2)["notes"] or "")
+           and f"lead_id {K1}" in lead(K2)["notes"] and WHY_D in lead(K2)["notes"],
+           f"K2={K2}")
+
+    # Non-Latin names: the fold must keep the letters. Two different Japanese
+    # instruments and a Korean one must not collide, and a spacing variant of one of
+    # them must. An ASCII fold turns all three into the empty string: without the
+    # writer's empty-key guard they collide (K13 red), and with it every non-Latin
+    # variant passes unrefused (K14 red). Both were fault-injected.
+    CJK_A, CJK_B = "建築基準法施行令", "高齢者、障害者等の移動等の円滑化の促進に関する法律"
+    KO = "장애인·노인·임산부 등의 편의증진 보장에 관한 법률"
+    got = {}
+    for name in (CJK_A, CJK_B, KO):
+        try:
+            got[name] = code_lead(name)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            got[name] = f"{exc.__class__.__name__}: {exc}"
+    record("K13", "distinct Japanese and Korean names do not collide",
+           all(isinstance(v, int) for v in got.values()), f"got={got}")
+    msg = refusal(code_lead, "建築基準法 施行令")
+    record("K14", "a spacing variant of a Japanese name does collide, naming the lead "
+           "(the fold keeps non-Latin letters)",
+           msg and isinstance(got.get(CJK_A), int) and f"lead_id {got[CJK_A]}" in msg,
+           f"got {msg!r}")
+
+    if update is not None and MOVE_TO:
+        # The capture path, on a CANONICAL lead (an UPDATE, not a fixture INSERT).
+        canon = q("SELECT lead_id FROM research_code_leads WHERE status='REFERENCE-ONLY' "
+                  "AND created_by_session <> ? ORDER BY lead_id LIMIT 1", S)
+        if not canon:
+            record("K15", "a canonical REFERENCE-ONLY lead to test capture with", False,
+                   "fixture missing in the copy")
+        else:
+            (CL,) = canon[0]
+            try:
+                update(CL, "fixture: capture check", S, status=MOVE_TO)
+            except Exception as exc:  # noqa: BLE001 -- recorded red below
+                print(f"      {exc.__class__.__name__}: {exc}")
+            import importlib                                       # noqa: E402
+            sys.path.insert(0, str(REPO / "scripts" / "research"))
+            emit_mod = importlib.import_module("emit_batch_sql")
+            sql_out = os.path.join(TMP, "capture-lead.sql")
+            try:
+                emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+                captured = open(sql_out, encoding="utf-8").read()
+            except SystemExit as exc:
+                captured = f"emit refused: {exc}"
+            hit = [ln for ln in captured.splitlines()
+                   if ln.startswith('UPDATE "research_code_leads"')
+                   and f'"lead_id" = {CL}' in ln and f'"status" = \'{MOVE_TO}\'' in ln
+                   and '"updated_by_session"' in ln]
+            record("K15", "emit_batch_sql captures update-code-lead's UPDATE of a "
+                   "canonical lead (the write can be shipped)", len(hit) == 1,
+                   captured[-400:])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

@@ -732,6 +732,7 @@ writers:
     - adversarial_findings
     - adversarial_passes
     - evidence_sources
+    - research_code_leads
     - search_executions
     - specifications
     scripts/tests/test_db_integrity.py:

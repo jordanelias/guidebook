@@ -1380,14 +1380,37 @@ def main():
                             "applies is not retrievable.")
     p_rcl.add_argument("--standard-name", required=True,
                        help="e.g. 'BS 8300-2:2018'. Keyed with --jurisdiction; restating "
-                            "one standard per design parameter is refused.")
+                            "one standard per design parameter is refused, and so is a "
+                            "name that differs from a held one only in case, spacing or "
+                            "punctuation (see --distinct-from).")
     p_rcl.add_argument("--clause", help="R3's locator: clause/section/page, once retrieved")
     p_rcl.add_argument("--status", default="REFERENCE-ONLY",
                        help="Live vocabulary, derived from the table; not a list in this file")
     p_rcl.add_argument("--recovered-from")
     p_rcl.add_argument("--notes")
+    p_rcl.add_argument("--distinct-from", type=int, action="append", default=None,
+                       dest="distinct_from", metavar="LEAD_ID",
+                       help="Repeatable. Admit a name that folds to the same key as this "
+                            "held lead because they are genuinely different documents. "
+                            "Requires --reason, which is appended to --notes.")
+    p_rcl.add_argument("--reason",
+                       help="Only with --distinct-from: why the near-identical names are "
+                            "two documents.")
     p_rcl.add_argument("--session", required=True)
     p_rcl.add_argument("--dry-run", action="store_true")
+
+    p_ucl = sub.add_parser("update-code-lead",
+                           help="Move a code lead's status or clause, APPENDING a dated note "
+                                "(R15: re-describe from the source)")
+    p_ucl.add_argument("--lead-id", required=True, type=int)
+    p_ucl.add_argument("--append-note", required=True, dest="append_note",
+                       help="Appended as a dated UPDATED segment carrying any replaced "
+                            "status or clause. The existing note is never rewritten.")
+    p_ucl.add_argument("--status",
+                       help="From the column's own CHECK; any move is allowed and ledgered")
+    p_ucl.add_argument("--clause", help="R3's locator, replacing the held one")
+    p_ucl.add_argument("--session", required=True)
+    p_ucl.add_argument("--dry-run", action="store_true")
 
     p_cs = sub.add_parser("correct-source",
                           help="Rewrite bibliographic fields FROM THE LOGGED PAYLOAD")
@@ -2836,8 +2859,14 @@ def main():
             "jurisdiction": args.jurisdiction, "standard_name": args.standard_name,
             "clause": args.clause, "status": args.status,
             "recovered_from": args.recovered_from, "notes": args.notes,
-        }, session=args.session, dry_run=args.dry_run)
+        }, session=args.session, dry_run=args.dry_run,
+            distinct_from=args.distinct_from, reason=args.reason)
         _emit({"lead_id": lid, "dry_run": args.dry_run})
+
+    elif args.command == "update-code-lead":
+        _emit(update_code_lead(args.lead_id, args.append_note, session=args.session,
+                               status=args.status, clause=args.clause,
+                               dry_run=args.dry_run))
 
     elif args.command == "correct-source":
         ch = correct_source(args.ref_id, args.fields, session=args.session,
@@ -8917,13 +8946,34 @@ def insert_case_study(data: dict, session: str, dry_run: bool = False):
     return data.get("case_study_id")
 
 
-def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
+def _lead_name_key(name) -> str:
+    """A standard name with case, spacing and punctuation folded away.
+
+    UNICODE-AWARE ON PURPOSE, as test_db_integrity D04's `_norm_title` is: `\\W` under
+    re.UNICODE keeps every letter and digit of every script. The ASCII fold first
+    proposed for this (`[^a-z0-9]`) erases Korean and Japanese names to the empty
+    string, so every non-Latin standard in a jurisdiction would collide with every
+    other -- enforcing dedup on the English corpus and blocking the multilingual one.
+    """
+    return re.sub(r"\W", "", (name or "").casefold(), flags=re.UNICODE)
+
+
+def insert_code_lead(data: dict, session: str, dry_run: bool = False,
+                     distinct_from=None, reason: str = None) -> int:
     """Write a code/standard lead into the research-stage lead store.
 
     Deliberately NOT a DOI-bearing writer. research_code_leads has no doi column
     (migration 066): a standard is retrieved by clause reference, and letting the two
     identifier shapes share a row format is what put 24 rows in source_locators
     carrying both a standard_number and a DOI.
+
+    A NEAR-DUPLICATE IS REFUSED TOO (I8). The UNIQUE key is exact, so 'DIN 18040-1'
+    and 'din 18040 1' could stand as two leads for one document. A name that folds to
+    a held name's key (_lead_name_key) in the same jurisdiction is refused, naming the
+    held lead, unless `distinct_from` names every such lead and `reason` says why they
+    are different documents; the reason is appended to the new row's notes. The cost
+    is named: two genuinely different standards whose names differ only in punctuation
+    ('ISO 2154-2' beside 'ISO 21542') fold together, and need --distinct-from.
     """
     _COLS = frozenset({
         "jurisdiction", "standard_name", "clause", "status", "recovered_from", "notes",
@@ -8940,12 +8990,24 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
                          "which is the only purpose this row has.")
     if not std:
         raise Refusal("--standard-name is required and may not be blank.")
+    named = set(distinct_from or ())
+    reason = (reason or "").strip()
+    if reason and not named:
+        raise Refusal("--reason is only read beside --distinct-from; it would be dropped. "
+                      "Put a lead's own context in --notes. Nothing was written.")
+    if named and not reason:
+        raise Refusal("--distinct-from needs --reason: two names that differ only in case "
+                      "or punctuation are the same document unless someone says why not. "
+                      "Nothing was written.")
+    notes = data.get("notes")
     with dbcore.connect(dry_run) as conn:
         dbcore.check_vocab(conn, "research_code_leads", "status", data.get("status"),
                            "insert_code_lead")
         # THE DEDUP REFUSAL. 109 archived rows were 83 leads because the same standard was
         # restated once per item. The UNIQUE constraint makes that impossible; this turns
-        # it into a sentence naming the row that already holds it.
+        # it into a sentence naming the row that already holds it -- and, since
+        # 2026-10-01, a remedy a verb performs (GAP-005: it used to say "Update that row
+        # instead" when no verb could).
         hit = conn.execute(
             "SELECT lead_id FROM research_code_leads WHERE jurisdiction=? AND standard_name=?",
             (jur, std)).fetchone()
@@ -8953,15 +9015,118 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
             raise Refusal(
                 f"{jur} / {std!r} is already held as lead_id {hit[0]}. A code lead is keyed "
                 f"on (jurisdiction, standard_name) — restating it is the duplication the "
-                f"item-keyed shape produced. Update that row instead.")
+                f"item-keyed shape produced. Update that row instead: "
+                f"`db.py update-code-lead --lead-id {hit[0]} --append-note <what changed>`.")
+        # An empty key (a name of symbols only) names nothing to compare; skipping it
+        # keeps two such names from colliding on '' -- the ASCII fold's failure, in
+        # miniature.
+        key = _lead_name_key(std)
+        near = [(lid, name) for lid, name in conn.execute(
+                    "SELECT lead_id, standard_name FROM research_code_leads "
+                    "WHERE jurisdiction=? ORDER BY lead_id", (jur,))
+                if key and _lead_name_key(name) == key]
+        stray = sorted(named - {lid for lid, _ in near})
+        if stray:
+            raise Refusal(
+                f"--distinct-from {stray}: not a {jur} lead whose name folds to the same key "
+                f"as {std!r}, so there is nothing to be distinct from. Nothing was written.")
+        unnamed = [(lid, name) for lid, name in near if lid not in named]
+        if unnamed:
+            held = "; ".join(f"lead_id {lid} {name!r}" for lid, name in unnamed)
+            raise Refusal(
+                f"{jur} / {std!r} differs from a held lead only in case, spacing or "
+                f"punctuation: {held}. That is the same document restated. Update that "
+                f"row instead: `db.py update-code-lead --lead-id {unnamed[0][0]} "
+                f"--append-note <what changed>`. If they are genuinely two documents, "
+                f"re-run with --distinct-from <lead_id> for each and --reason <why>. "
+                f"Nothing was written.")
         now = dbcore.now()
+        if near:
+            notes = dbcore.append_dated_note(
+                notes, "DISTINCT-FROM", session,
+                "; ".join(f"lead_id {lid} {name!r}" for lid, name in near)
+                + f": {reason}", now)
         cur = conn.execute(
             "INSERT INTO research_code_leads (jurisdiction, standard_name, clause, status, "
             "recovered_from, notes, created_at, created_by_session) "
             "VALUES (?,?,?,?,?,?,?,?)",
             (jur, std, data.get("clause"), data.get("status") or "REFERENCE-ONLY",
-             data.get("recovered_from"), data.get("notes"), now, session))
+             data.get("recovered_from"), notes, now, session))
         return cur.lastrowid
+
+
+def update_code_lead(lead_id: int, append_note: str, session: str, status: str = None,
+                     clause: str = None, dry_run: bool = False) -> dict:
+    """Move a code lead's status or clause, APPENDING a dated note. GAP-005, I8.
+
+    R15 could not be discharged against a lead: batch 10 retrieved the law behind lead 85,
+    proved part of its note false, and nothing could move the status off REFERENCE-ONLY
+    or put the correction where a reader of the lead would see it. This is that path.
+
+    APPEND, NEVER REWRITE. The note is a hypothesis about a document someone had not yet
+    read (R15); the correction goes after it in a dated ' || UPDATED ...' segment that
+    also carries any replaced status or clause, so the next reader sees what was believed
+    and what was established -- amend-search's shape, applied to the lead store.
+
+    NO TRANSITION ORDER. The status vocabulary is the column's own CHECK. A forward-only
+    order (REFERENCE-ONLY -> RETRIEVED -> SUPERSEDED) would be an ordering list kept
+    beside that CHECK, which rule 8 forbids, and it would make a wrongly-set RETRIEVED
+    uncorrectable -- the defect this verb exists to end. Every move is ledgered instead.
+
+    A note alone is allowed (a lead re-described without a status change is still R15);
+    an identical note already on the row is a no-op. A --status or --clause equal to the
+    held value is refused: it asks to move something that is already there.
+    """
+    note = (append_note or "").strip()
+    if not note:
+        raise Refusal(
+            f"lead {lead_id}: --append-note is required and may not be blank. R15: a lead "
+            f"is updated because the source was read, and the note says what it said. "
+            f"Nothing was written.")
+    if clause is not None and not clause.strip():
+        raise Refusal(
+            f"lead {lead_id}: --clause may not be blank. Give the locator the retrieved "
+            f"document carries; this verb does not clear one. Nothing was written.")
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT lead_id, jurisdiction, standard_name, clause, status, notes "
+            "FROM research_code_leads WHERE lead_id=?", (lead_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"lead {lead_id}: no such code lead. Nothing was written.")
+        moves, sets = [], {}
+        if status is not None:
+            dbcore.check_vocab(conn, "research_code_leads", "status", status,
+                               f"update-code-lead --lead-id {lead_id}")
+            if status == row["status"]:
+                raise Refusal(
+                    f"lead {lead_id}: status is already {status!r}. Omit --status to "
+                    f"append a note alone. Nothing was written.")
+            moves.append(f"status {row['status']!r} -> {status!r}")
+            sets["status"] = status
+        if clause is not None:
+            clause = clause.strip()
+            if clause == (row["clause"] or ""):
+                raise Refusal(
+                    f"lead {lead_id}: clause is already {clause!r}. Omit --clause to "
+                    f"append a note alone. Nothing was written.")
+            moves.append(f"clause {row['clause']!r} -> {clause!r}")
+            sets["clause"] = clause
+        if not moves and note in (row["notes"] or ""):
+            return {"lead_id": lead_id, "changed": False,
+                    "reason": "this note is already on the row", "dry_run": dry_run}
+        stamp = dbcore.upd(session)
+        detail = ("; ".join(moves) + ". " if moves else "") + note
+        sets["notes"] = dbcore.append_dated_note(row["notes"], "UPDATED", session, detail,
+                                                 stamp["updated_at"])
+        sets.update(stamp)
+        conn.execute(
+            "UPDATE research_code_leads SET %s WHERE lead_id=?"
+            % ", ".join(f"{c}=?" for c in sets), [*sets.values(), lead_id])
+    return {"lead_id": lead_id, "changed": True, "jurisdiction": row["jurisdiction"],
+            "standard_name": row["standard_name"], "moves": moves,
+            "status": sets.get("status", row["status"]),
+            "clause": sets.get("clause", row["clause"]), "appended": detail,
+            "dry_run": dry_run}
 
 
 def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
