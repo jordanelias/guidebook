@@ -1,0 +1,253 @@
+[PDF page 1 of 79]
+ 
+MINISTERIO 
+DE VIVIENDA 
+Y AGENDA URBANA  
+ 
+ 
+Documento Básico SUA 
+Seguridad de utilización y 
+accesibilidad 
+Con comentarios del Ministerio 
+ 
+  SUA 1 Seguridad frente al riesgo de caídas 
+  SUA 2 Seguridad frente al riesgo de impacto o de atrapamiento 
+  SUA 3 Seguridad frente al riesgo de aprisionamiento 
+  SUA 4 Seguridad frente al riesgo causado por iluminación  
+inadecuada 
+  SUA 5 Seguridad frente al riesgo causado por situaciones con 
+alta ocupación  
+  SUA 6 Seguridad frente al riesgo de ahogamiento 
+  SUA 7 Seguridad frente al riesgo causado por vehículos en 
+movimiento 
+  SUA 8 Seguridad frente al riesgo causado por la acción del rayo 
+  SUA 9 Accesibilidad 
+ 
+ 
+ 
+ 
+Articulado: 
+14 junio 2022 
+Comentarios: 
+15 julio 2024 
+ 
+
+[PDF page 2 of 79]
+Documento Básico SUA Seguridad de utilización y accesibilidad con comentarios 
+2 
+Disposiciones normativas publicadas en el Boletín Oficial del Estado  
+El articulado de este Documento Básico fue aprobado por el Real Decreto 314/2006, de 
+17 de marzo (BOE 28/03/2006) y posteriormente ha sido modificado por las siguientes 
+disposiciones: 
+- 
+Real Decreto 1371/2007, de 19 de octubre (BOE 23/10/2007) 
+- 
+Corrección de errores y erratas del Real Decreto 314/2006, de 17 de marzo (BOE 
+25/01/2008) 
+- 
+Orden VIV/984/2009, de 15 de abril (BOE 23/04/2009) 
+- 
+Corrección de errores y erratas de la orden VIV/984/2009, de 15 de abril (BOE 
+23/09/2009) 
+- 
+Real Decreto 173/2010, de 19 de febrero (BOE 11/03/2010) 
+- 
+Sentencia de 4 de mayo de 2010, de la Sala Tercera del Tribunal Supremo (BOE 
+30/07/2010) 
+- 
+Real Decreto 732/2019, de 20 de diciembre (BOE 27/12/2019) 
+- 
+Real Decreto 450/2022, de 14 de junio (BOE 15/06/2022) 
+- 
+Corrección de errores del Real Decreto 450/2022, de 14 de junio (BOE 2/02/2023) 
+Documento Básico con comentarios 
+Este Ministerio publica periódicamente versiones de los Documentos Básicos del Código 
+Técnico de la Edificación acompañadas de comentarios al objeto de servir de ayuda en 
+la aplicación de la normativa. Los comentarios tienen un carácter orientativo e informati-
+vo no teniendo carácter reglamentario.  
+Hasta la fecha se han publicado las siguientes versiones del Documento Básico de Se-
+guridad de utilización y accesibilidad con comentarios: 
+- 4 febrero 2008 
+- 1 septiembre 2008 
+- 21 agosto 2009 
+- 18 mayo 2010 
+- 12 abril 2011 
+- 2 diciembre 2011 
+- 29 junio 2012 
+- 21 diciembre 2012 
+- 18 diciembre 2013 
+- 30 junio 2014 
+- 19 diciembre 2014 
+- 30 junio 2015 
+- 22 diciembre 2015 
+- 30 junio 2016 
+- 23 diciembre 2016 
+- 30 junio 2017 
+- 26 diciembre 2017 
+- 29 junio 2018 
+- 2 agosto 2019 
+- 20 diciembre 2019 
+- 14 junio 2022 
+- 15 julio 2024 
+ 
+ 
+ 
+Comentarios, aclaraciones y criterios de aplicación 
+Los comentarios que ya existían en versiones anteriores figuran con este tipo de letra, con esta sangría y con 
+una línea vertical fina en el margen izquierdo. 
+ 
+Los comentarios, aclaraciones y criterios de aplicación que se incorporan o modifican significativamente en 
+esta actualización figuran con una doble línea vertical en el margen izquierdo. 
+Documento Básico consolidado 
+Esta versión del Documento Básico es un texto consolidado a partir de las sucesivas 
+modificaciones que se han realizado en el Documento Básico a través de las disposicio-
+nes publicadas en el BOE. Este texto consolidado no tiene valor jurídico. 
+ 
+
+[PDF page 27 of 79]
+Documento Básico SUA Seguridad de utilización y accesibilidad con comentarios    
+SUA 1. Seguridad frente al riesgo de caídas 
+27 
+tringido y los de circulación de vehículos en aparcamientos que también estén previstas para la circu-
+lación de personas. Estas últimas deben satisfacer la pendiente máxima que se establece para ellas 
+en el apartado 4.3.1 siguiente, así como las condiciones de la Sección SUA 7. 
+ 
+Itinerarios con pendiente longitudinal inferior al 4% 
+Una superficie con pendiente longitudinal inferior al 4% no es rampa y puede asimilarse a una superficie hori-
+zontal, siempre que la dirección de la marcha esté claramente determinada, ya que debe tenerse en cuenta 
+que la pendiente transversal en itinerarios accesibles está limitada al 2%. 
+4.3.1 
+Pendiente 
+1 
+Las rampas tendrán una pendiente del 12%, como máximo, excepto: 
+a) las que pertenezcan a itinerarios accesibles, cuya pendiente será, como máximo, del 10% cuan-
+do su longitud sea menor que 3 m, del 8% cuando la longitud sea menor que 6 m y del 6% en el 
+resto de los casos. Si la rampa es curva, la pendiente longitudinal máxima se medirá en el lado 
+más desfavorable.  
+ 
+La longitud de los tramos de las rampas debe medirse en proyección horizontal. 
+Lo establecido en este apartado en relación con la longitud y pendiente de las rampas debe entenderse refe-
+rido a cada tramo de las rampas. 
+ 
+b) las de circulación de vehículos en aparcamientos que también estén previstas para la circulación 
+de personas, y no pertenezcan a un itinerario accesible, cuya pendiente será, como máximo, del 
+16%. 
+2 
+La pendiente transversal de las rampas que pertenezcan a itinerarios accesibles será del 2%, como 
+máximo. 
+4.3.2 
+Tramos 
+1 
+Los tramos tendrán una longitud de 15 m como máximo, excepto si la rampa pertenece a itinerarios 
+accesibles, en cuyo caso la longitud del tramo será de 9 m, como máximo, así como en las de apar-
+camientos previstas para circulación de vehículos y de personas, en las cuales no se limita la longi-
+tud de los tramos. La anchura útil se determinará de acuerdo con las exigencias de evacuación esta-
+blecidas en el apartado 4 de la Sección SI 3 del DB-SI y será, como mínimo, la indicada para escale-
+ras en la tabla 4.1. 
+ 
+La longitud de los tramos de las rampas debe medirse en proyección horizontal. 
+ 
+2 
+La anchura de la rampa estará libre de obstáculos. La anchura mínima útil se medirá entre paredes o 
+barreras de protección, sin descontar el espacio ocupado por los pasamanos, siempre que estos no 
+sobresalgan más de 12 cm de la pared o barrera de protección. 
+3 
+Si la rampa pertenece a un itinerario accesible los tramos serán rectos o con un radio de curvatura 
+de al menos 30 m y de una anchura de 1,20 m, como mínimo. Asimismo, dispondrán de una superfi-
+cie horizontal al principio y al final del tramo con una longitud de 1,20 m en la dirección de la rampa, 
+como mínimo.  
+4.3.3 
+Mesetas  
+1 
+Las mesetas dispuestas entre los tramos de una rampa con la misma dirección tendrán al menos la 
+anchura de la rampa y una longitud, medida en su eje, de 1,50 m como mínimo. 
+2 
+Cuando exista un cambio de dirección entre dos tramos, la anchura de la rampa no se reducirá a lo 
+largo de la meseta. La zona delimitada por dicha anchura estará libre de obstáculos y sobre ella no 
+barrerá el giro de apertura de ninguna puerta, excepto las de zonas de ocupación nula definidas en 
+el anejo SI A del DB SI. 
+3 
+No habrá pasillos de anchura inferior a 1,20 m ni puertas situados a menos de 40 cm de distancia del 
+arranque de un tramo. Si la rampa pertenece a un itinerario accesible, dicha distancia será de 1,50 m 
+como mínimo. 
+ 
+Mesetas de rampas de itinerarios accesibles 
+Conforme a SUA 1-4.3.2 punto 3, todo tramo de una rampa accesible debe tener en sus extremos una super-
+ficie horizontal (meseta) de 1,20 m de longitud en la dirección de la rampa, como mínimo. El objetivo de esta 
+
+[PDF page 28 of 79]
+Documento Básico SUA Seguridad de utilización y accesibilidad con comentarios    
+SUA 1. Seguridad frente al riesgo de caídas 
+28 
+meseta es que los usuarios de silla de ruedas tengan espacio suficiente para poder parar, descansar y reali-
+zar las maniobras de giro necesarias. 
+Conforme a SUA 1-4.3.3 punto 1, si el tramo va seguido de otro tramo en la misma dirección, la longitud de 
+dicha superficie horizontal (meseta intermedia) debe ser 1,50 m, como mínimo. El objetivo de esta medida es 
+evitar la caída de un tramo de rampa a otro encadenando ambos debido a la dificultad de detenerse  
+Conforme a SUA 1-4.3 punto 1, una superficie cuya pendiente longitudinal no exceda del 4% se puede asimi-
+lar a horizontal. 
+Cuando se trate de una rampa de acceso a un edificio, nada impide que la superficie horizontal (o asimilable) 
+exigible esté total o parcialmente situada en el espacio exterior al edificio, pero si la pendiente de dicho espa-
+cio exterior en la dirección de la rampa excede del 4% y no se puede modificar (p. ej. por no poder intervenir 
+sobre dicho espacio) la superficie horizontal o asimilable debe existir necesariamente dentro de los límites del 
+edificio. 
+Conforme a SUA 1-4.3.3 punto 3, no puede haber puertas (o pasillos) situadas a menos de 1,50 m de distan-
+cia del arranque de un tramo de una rampa accesible. El objetivo de esta medida es evitar interferencias entre 
+circulaciones y posibles impactos con otras personas, así como abrir, pasar y cerrar la puerta sin el riesgo de 
+caer por la rampa, por lo que dicha distancia debe aplicarse también respecto del barrido de la puerta.  
+Cuando la aproximación a la puerta sea frontal y se elimine la necesidad de que el usuario realice la maniobra 
+de apertura de la puerta, la distancia entre la puerta y el tramo de rampa y, con ello, la propia existencia de la 
+superficie horizontal o asimilable, es innecesaria en ambos lados de la puerta. Esto sería admisible en puer-
+tas situadas tanto al principio o final de la rampa como en la mitad del tramo de la rampa, que se abren me-
+diante un pulsador de apertura o de forma automática al detectar la presencia de un usuario. En estos casos: 
+- 
+la puerta debe ser transparente y contar con una señalización adecuada que permita percibirla; 
+- 
+debe considerarse el riesgo de impacto que puede producir su movimiento automático, por ejemplo el que 
+presentan las puertas abatibles sobre los espacios hacia donde abatan; 
+- 
+su apertura debe producirse antes de que el usuario comience a utilizar la rampa, considerando la detec-
+ción de los usuarios o la ubicación del pulsador no en la proximidad de la puerta sino en el extremo de la 
+rampa; y 
+- 
+debe existir un sistema que mantenga la puerta abierta mientras el usuario esté utilizando la rampa.  
+En todo caso, se debe asegurar que en situación de emergencia o de fallo en el suministro eléctrico la puerta 
+permanece abierta. 
+En establecimientos con un horario de apertura determinado se considera asimismo admisible que no exista 
+espacio horizontal en ambos lados de la puerta si ésta permanece abierta durante todo el horario de la activi-
+dad.   
+En aquellas rampas "de uso exclusivo de evacuación/salida" podría suprimirse la meseta a continuación de la 
+puerta en el sentido de salida del edificio, puesto que el espacio para poder parar, descansar y realizar las 
+maniobras de giro necesarias se realiza en la zona de apertura de la puerta. En todo caso, se debe asegurar 
+el uso exclusivo de salida de estas puertas, que evite un uso inapropiado de las mismas, e informar de este 
+hecho mediante una adecuada señalización.  
+4.3.4 
+Pasamanos 
+1 
+Las rampas que salven una diferencia de altura de más de 550 mm y cuya pendiente sea mayor o 
+igual que el 6%, dispondrán de un pasamanos continuo al menos en un lado. 
+2 
+Las rampas que pertenezcan a un itinerario accesible, cuya pendiente sea mayor o igual que el 6% y 
+salven una diferencia de altura de más de 18,5 cm, dispondrán de pasamanos continuo en todo su 
+recorrido, incluido mesetas, en ambos lados. Asimismo, los bordes libres contarán con un zócalo o 
+elemento de protección lateral de 10 cm de altura, como mínimo. Cuando la longitud del tramo exce-
+da de 3 m, el pasamanos se prolongará horizontalmente al menos 30 cm en los extremos, en ambos 
+lados. 
+3 
+El pasamanos estará a una altura comprendida entre 90 y 110 cm. Las rampas situadas en escuelas 
+infantiles y en centros de enseñanza primaria, así como las que pertenecen a un itinerario accesible, 
+dispondrán de otro pasamanos a una altura comprendida entre 65 y 75 cm.  
+4 
+El pasamanos será firme y fácil de asir, estará separado del paramento al menos 4 cm y su sistema 
+de sujeción no interferirá el paso continuo de la mano. 
+4.4 
+Pasillos escalonados de acceso a localidades en graderíos y tribunas 
+1 
+Los pasillos escalonados de acceso a localidades en zonas de espectadores tales como patios de 
+butacas, anfiteatros, graderíos o similares, tendrán escalones con una dimensión constante de con-
+trahuella. Las huellas podrán tener dos dimensiones que se repitan en peldaños alternativos, con el 
+fin de permitir el acceso a nivel a las filas de espectadores.  
+ 
+La posibilidad de utilizar dos dimensiones que se repitan en peldaños alternativos puede facilitar el acceso a 
+nivel de las filas de espectadores. En este sentido, se pueden admitir otros patrones regulares de alternancia 
+siempre que las huellas iguales no queden muy distanciadas, de forma que permitan su adopción por los 
