@@ -55,6 +55,14 @@ to say. It proves the move is ledgered and append-only, that the refusal's "upda
 instead" names a command that works, and that the duplicate key folds case and punctuation
 without erasing a Korean or Japanese name.
 
+Section J (I7) holds the declared jurisdiction vocabulary at write time: without it every
+writer took any string, so an undeclared code (`PT` on batch 23's branch) reached the corpus
+and the blocking `jurisdiction_db_vocabulary` audit found it only after it landed. It proves
+an undeclared code, the ruled rejected spelling and a case variant are refused by each
+writer of a gated table, that a code admitted in the same change is accepted, that every
+value live in a gated table still passes (the refusal mirrors the audit and is not stricter),
+and that the audit is green on the copy after the writers ran.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -1135,6 +1143,126 @@ try:
             record("K15", "emit_batch_sql captures update-code-lead's UPDATE of a "
                    "canonical lead (the write can be shipped)", len(hit) == 1,
                    captured[-400:])
+
+    # ── J: the declared jurisdiction vocabulary, refused at write time ─────────────
+    # I7. Every value used here is either read from the enum / the audit or is one no
+    # vocabulary could ever declare ('XX'). The gated tables are DERIVED the way the
+    # audit derives them, from its own exclusion sets, so the writers' refusal and the
+    # blocking check cannot drift apart unseen.
+    import importlib.util                                           # noqa: E402
+    from schemas.enums import JurisdictionCode                      # noqa: E402
+    _spec = importlib.util.spec_from_file_location(
+        "_jdv", REPO / "scripts" / "audit" / "jurisdiction_db_vocabulary.py")
+    jdv = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(jdv)
+    DECLARED = {m.value for m in JurisdictionCode}
+    REJECTED = jdv.rejected_spellings()
+    check_jur = getattr(dbcore, "check_jurisdiction", None)
+    UNDECLARED = "XX"
+    record("J00", "the fixture code is undeclared and a rejected spelling is parsed",
+           UNDECLARED not in DECLARED and bool(REJECTED), f"rejected={REJECTED}")
+    BAD, GOOD = next(iter(REJECTED.items()))
+    # A declared code admitted in the same change, so J03 also shows the enum was widened.
+    NEW = next((c for c in ("PT", "FI", "UN", "UG") if c in DECLARED), None)
+    J_TABLES = ("evidence_sources", "evidence_source_authors")
+
+    def jur_of(ref_id):
+        rows = q("SELECT jurisdiction FROM evidence_sources WHERE ref_id=?", ref_id)
+        return rows[0][0] if rows else "<no row>"
+
+    # THE CASE THAT FAILS ON THE OLD CODE: add-source wrote any string, and the blocking
+    # audit found it only after it landed.
+    RJ = next_ref()
+    before = counts(*J_TABLES)
+    r = add_source(RJ, "--jurisdiction", UNDECLARED)
+    record("J01", "add-source --jurisdiction XX refuses, names JurisdictionCode and the "
+           "audit, and writes nothing",
+           r.returncode == 1 and r.stderr.startswith("REFUSING:")
+           and "JurisdictionCode" in r.stderr and "jurisdiction_db_vocabulary" in r.stderr
+           and counts(*J_TABLES) == before and jur_of(RJ) == "<no row>",
+           f"rc={r.returncode} {r.stderr[-300:]!r} {before} -> {counts(*J_TABLES)}")
+    r = add_source(RJ, "--jurisdiction", BAD)
+    record("J02", f"add-source --jurisdiction {BAD} refuses and names {GOOD}",
+           r.returncode == 1 and f"write '{GOOD}'" in r.stderr and jur_of(RJ) == "<no row>",
+           f"rc={r.returncode} {r.stderr[-300:]!r}")
+    r = add_source(RJ, "--jurisdiction", NEW.lower() if NEW else "pt")
+    record("J03", "a case variant of a declared code refuses, naming the declared "
+           "spelling (stored codes are compared exactly, so it is not folded)",
+           r.returncode == 1 and NEW and f"write '{NEW}'" in r.stderr
+           and jur_of(RJ) == "<no row>", f"rc={r.returncode} {r.stderr[-300:]!r}")
+    r = add_source(RJ, "--jurisdiction", NEW or "PT")
+    record("J04", f"add-source --jurisdiction {NEW} (admitted 2026-10-01) is accepted",
+           r.returncode == 0 and NEW and jur_of(RJ) == NEW,
+           f"rc={r.returncode} {r.stderr[-300:]!r} stored={jur_of(RJ)!r}")
+
+    n_exec = counts("search_executions")
+    msg = refusal(db.log_search, A, "en", "fixture query", "fixture-engine", "keyword", S,
+                  jurisdiction=UNDECLARED, prior_expectation="fixture: expect nothing")
+    record("J05", "log-search refuses an undeclared jurisdiction before it writes",
+           msg and "JurisdictionCode" in msg and counts("search_executions") == n_exec,
+           f"got {msg!r}")
+    ES_LIKE = sorted(DECLARED)[0]
+    msg = refusal(db.insert_code_lead, {"jurisdiction": ES_LIKE.lower(),
+                                        "standard_name": "Fixture lead J06",
+                                        "status": "REFERENCE-ONLY"}, S)
+    record("J06", f"add-code-lead refuses '{ES_LIKE.lower()}' and names '{ES_LIKE}' -- its "
+           "duplicate checks compare jurisdiction exactly, so a variant would split leads",
+           msg and f"write '{ES_LIKE}'" in msg
+           and not q("SELECT 1 FROM research_code_leads WHERE standard_name=?",
+                     "Fixture lead J06"), f"got {msg!r}")
+    msg = refusal(db.insert_extraction, {"ref_id": REF, "slug": A, "parameter_id": 1,
+                                         "jurisdiction": UNDECLARED}, S)
+    record("J07", "add-extraction refuses an undeclared jurisdiction (by the vocabulary, "
+           "before any other check)", msg and "JurisdictionCode" in msg, f"got {msg!r}")
+    msg = refusal(db.amend_source, RJ, "jurisdiction", UNDECLARED, "fixture: wrong code", S)
+    record("J08", "amend-source --field jurisdiction refuses an undeclared code",
+           msg and "JurisdictionCode" in msg and jur_of(RJ) == NEW, f"got {msg!r}")
+    OTHER_NEW = next((c for c in ("FI", "UG", "UN", "PT") if c in DECLARED and c != NEW),
+                     None)
+    out, msg = None, None
+    try:
+        out = db.amend_source(RJ, "jurisdiction", OTHER_NEW, "fixture: re-scoped", session=S)
+    except Exception as exc:  # noqa: BLE001 -- recorded red below
+        msg = f"{exc.__class__.__name__}: {exc}"
+    record("J09", f"amend-source --field jurisdiction accepts a declared code "
+           f"({OTHER_NEW})", out and jur_of(RJ) == OTHER_NEW, f"{msg!r} {jur_of(RJ)!r}")
+    msg = refusal(db.insert_economics_entry, {"entry_id": "FIXTURE-J10",
+                                              "jurisdiction": "MULTI"}, S)
+    msg2 = refusal(db.insert_jurisdictional_value, {"jv_id": "FIXTURE-J10",
+                                                     "jurisdiction": UNDECLARED}, S)
+    record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) and "
+           "add-jurisdictional-value refuses XX, both by the vocabulary",
+           msg and "JurisdictionCode" in msg and msg2 and "JurisdictionCode" in msg2,
+           f"got {msg!r} / {msg2!r}")
+
+    # Mirror, not stricter: every value LIVE in a table the audit gates passes the
+    # writers' refusal, so a real batch writing UK, EU, ISO, INT ... is never blocked by
+    # it. Read from the canonical database (read-only), on the audit's own table set.
+    canon = sqlite3.connect(f"file:{REPO / 'data' / 'guidebook.db'}?mode=ro", uri=True)
+    try:
+        gated = [t for (t,) in canon.execute(
+                     "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+                 if t not in jdv.EXEMPT | jdv.CANDIDATE_TABLES | jdv.REPORT_ONLY
+                 and any(c[1] == "jurisdiction"
+                         for c in canon.execute(f'PRAGMA table_info("{t}")'))]
+        live = {(t, v) for t in gated for (v,) in canon.execute(
+            f'SELECT DISTINCT jurisdiction FROM "{t}" WHERE jurisdiction IS NOT NULL')}
+    finally:
+        canon.close()
+    blocked = sorted((t, v) for t, v in live
+                     if check_jur is None or refusal(check_jur, v, "J11") is not None)
+    record("J11", f"every value live in the {len(gated)} gated table(s) passes the "
+           f"writers' refusal ({len(live)} table/value pair(s))",
+           check_jur is not None and live and not blocked, f"blocked {blocked}")
+
+    # And the gate the refusal mirrors is green on the copy after every fixture write
+    # above. On the old code J01 had written 'XX' and FI/UG/UN were undeclared.
+    r = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" /
+                                            "jurisdiction_db_vocabulary.py")],
+                       env=dict(os.environ, GUIDEBOOK_DB_PATH=DB),
+                       capture_output=True, text=True)
+    record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
+           r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

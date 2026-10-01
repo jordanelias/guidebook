@@ -185,7 +185,7 @@ evidence_type: EvidenceType
 | schemas/enums.py — PopulationCode (24 codes) | ✓ |
 | schemas/enums.py — EvidenceTier (1–6 per T-03) | ✓ |
 | schemas/enums.py — EvidenceType (9 values per T-03) | ✓ |
-| schemas/enums.py — JurisdictionCode (27 codes) | ✓ |
+| schemas/enums.py — JurisdictionCode (count the members, never quote them: `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"`) | ✓ |
 | schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
 | schemas/specification.py (73 records, cross-cutting fields) | ✓ |
 | schemas/evidence_source.py (531 records) | ✓ |

@@ -720,6 +720,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             "is no sanctioned path to add it later: search_executions is append-only "
             "under R8 and amend-search cannot touch this column. A zero-yield "
             "expectation is a legitimate prior -- say so.")
+    # The declared jurisdiction vocabulary (I7). Append-only like the prior: amend-search
+    # cannot correct this column either, so a wrong code here costs a compensating
+    # migration.
+    dbcore.check_jurisdiction(jurisdiction, "log-search --jurisdiction")
 
     # RC5 (DR-2026-09-26 5.2c). `origin` is the INITIATION axis (why the step ran);
     # `mining_direction` is the METHOD axis (how) -- orthogonal, so neither can stand
@@ -3780,6 +3784,10 @@ def insert_evidence_source(data: dict, session: str,
             f"function for months while no command existed), which computes the high-water mark as the "
             f"UNION of every table holding a ref_id. Nothing was written.")
 
+    # THE DECLARED JURISDICTION VOCABULARY (I7, 2026-10-01). Before this the column took
+    # any string, and the blocking jurisdiction_db_vocabulary audit found it afterwards.
+    dbcore.check_jurisdiction(data.get("jurisdiction"), "add-source --jurisdiction")
+
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.
     #
@@ -5305,8 +5313,11 @@ _AMENDABLE = (
     # choosing INT over a country code is an adjudication, not a transcription.
     # The single-country case (a US survey of ADA-regulated transit) is closer to
     # bibliographic, but splitting one column across two writers by which value it
-    # happens to take would be worse than either home. The vocabulary stays gated
-    # by validate_jurisdiction, so this widens WHO may correct it, not WHAT to.
+    # happens to take would be worse than either home. The vocabulary is gated in
+    # amend_source by dbcore.check_jurisdiction, so this widens WHO may correct it,
+    # not WHAT to. (Until 2026-10-01 this said the vocabulary "stays gated by
+    # validate_jurisdiction". That was false: validate_jurisdiction globs files and
+    # never reads a table, and this writer accepted any string.)
     "jurisdiction",
     # verification_status and doi_resolution_outcome, added 2026-09-18, and the case
     # for them is the case I4 and C04 make against a row this repository just wrote.
@@ -5493,6 +5504,11 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
             f"evidence_type, where they travel with the type. A scope on its own is "
             f"`--field scope`; a Co-1 row's warrant on its own is `--field "
             f"co1_provenance`. Nothing was written.")
+    if field == "jurisdiction":
+        # No CHECK on the column, so check_declared below is a no-op for it; the declared
+        # vocabulary is the enum (I7).
+        dbcore.check_jurisdiction(replacement,
+                                  f"{ref_id}: amend-source --field jurisdiction")
     # ── THE TWO VERIFICATION FIELDS CARRY insert_source's REFUSALS WITH THEM ──
     #
     # Added 2026-09-18, hours after those fields were made amendable, because making
@@ -7448,6 +7464,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         "figure_role", "comparator",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
+    dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
     row = {k: v for k, v in data.items() if v is not None}
 
     # A BLANK IS NOT AN ABSENCE — normalise before anything reads these.
@@ -8829,6 +8846,8 @@ def insert_jurisdictional_value(data: dict, session: str, dry_run: bool = False)
         "loc_subsection", "loc_paragraph", "loc_clause", "loc_subclause", "loc_note",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_jurisdictional_value")
+    dbcore.check_jurisdiction(data.get("jurisdiction"),
+                              "add-jurisdictional-value --jurisdiction")
     with dbcore.connect(dry_run) as conn:
         if not dbcore.exists(conn, "items", "item_code", data.get("item_code")):
             raise Refusal(f"item_code {data.get('item_code')!r} is not in `items`.")
@@ -8868,6 +8887,10 @@ def insert_economics_entry(data: dict, session: str, dry_run: bool = False):
         "evidence_tier", "study_design", "sample", "source_section", "notes",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_economics_entry")
+    # The column's DDL comment invites 'MULTI'; the declared code for work spanning
+    # jurisdictions is INT, and the blocking audit fails on MULTI either way.
+    dbcore.check_jurisdiction(data.get("jurisdiction"),
+                              "add-economics-entry --jurisdiction")
     with dbcore.connect(dry_run) as conn:
         dbcore.check_vocab(conn, "economics_entries", "pillar",
                            data.get("pillar"), "insert_economics_entry")
@@ -8990,6 +9013,10 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False,
                          "which is the only purpose this row has.")
     if not std:
         raise Refusal("--standard-name is required and may not be blank.")
+    # The declared vocabulary (I7). This is also what makes the duplicate checks below
+    # sound: they compare jurisdiction EXACTLY, so 'es' beside 'ES' would split one
+    # jurisdiction's leads in two -- and check_jurisdiction refuses the variant.
+    dbcore.check_jurisdiction(jur, "add-code-lead --jurisdiction")
     named = set(distinct_from or ())
     reason = (reason or "").strip()
     if reason and not named:
