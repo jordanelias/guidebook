@@ -951,6 +951,7 @@ checks:
   kinds:
   - data
   - synthesis
+  compares: record-artefact
   session_pointer: LATEST-RESEARCH
   requires_session: true
   level: advisory
@@ -991,7 +992,24 @@ checks:
     and DISAGREED — one folded accents, one did not, so a stored "Rosas-Perez" for the actual "Rosas-Pérez"
     passed one and failed the other. This entry now points at the offline verifier, which compares against
     the payload the authoring session actually received: no network, no drift, and it fails rather than
-    passes when a source has no logged retrieval.'
+    passes when a source has no logged retrieval.
+
+    PRESENCE MODE, 2026-10-01 (I6). A session whose logged payloads include no JSON -- the HTML and PDF
+    form Co-1, DPO and standards evidence arrives in -- used to print INDETERMINATE and stop, so a
+    fabricated person-author on such a source passed every gate. It now looks for each in-scope source''s
+    stored person surnames (whole words for a Latin-script name) and the first segment of its title in the
+    decoded bytes of the artefacts tagged with its ref_id or url, and their text-extraction children, and
+    prints "PRESENT-IN-BYTES: n of m source(s); not Crossref-diffed; cannot detect an omitted author" --
+    never CLEAN. In scope: the rows the session created or its manifest tags. A row with no readable
+    artefact (none tagged, PDF bytes with no text extraction, a failed retrieval) is UNEXAMINABLE and not
+    counted in EXAMINED; an absent corporate name is REPORTED, not failed, because the project adds
+    corporate glosses. This is not the "presence check" ruled out above: that asked whether DB fields
+    were POPULATED; this asks whether the stored value occurs in the retrieved bytes, a record-versus-
+    artefact comparison. It is weaker than the JSON diff and says so: it cannot see a deleted author,
+    and a name in the bytes may be there as someone else (a cited author). A composed title (a standard
+    number prefixed to the title) is a known false FAIL; read each NOT FOUND against its artefact. The
+    JSON path and its exits are unchanged: its output was byte-identical before and after on every
+    JSON-bearing session under retrieval-log/ (2026-10-01). Fixtures: test_author_presence.'
 - id: decision_capture
   cmd:
   - python3
@@ -1674,7 +1692,37 @@ checks:
     code (no verb; variants admitted). Fault-injected 2026-10-01: an ASCII fold turned
     the non-Latin variant case red, and without the empty-key guard the non-Latin
     collision case; removing the near-duplicate refusal, the same-status refusal or the
-    append turned their cases red; restored, green.'
+    append turned their cases red; restored, green. Section J (I7, 2026-10-01) holds the
+    declared jurisdiction vocabulary at write time: add-source refuses an undeclared code
+    and writes nothing, the ruled rejected spelling names its replacement, a case
+    variant names the declared spelling (refused, not folded), a code admitted the same
+    day is accepted, the other gated writers refuse, every value live in a gated table
+    still passes, and jurisdiction_db_vocabulary is green on the copy afterwards -- red
+    on the pre-WP7 code (writers accepted any string; FI, UG, UN undeclared).'
+- id: test_author_presence
+  cmd:
+  - python3
+  - scripts/tests/test_author_presence.py
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+  note: 'retrieval_log --verify-authors presence mode (I6), on a temp COPY of the canonical
+    DB and an empty temporary retrieval log: a present author passes and the verdict is
+    never CLEAN; an absent person-author or title fails, naming the source; a one-word
+    title head is not taken as evidence; a two-letter surname inside a longer word is
+    not present; a PDF is read through its
+    text-extraction child; a source with no artefact, or only a 403, is UNEXAMINABLE and
+    not counted; an absent corporate author is reported, not failed; the JSON path''s
+    exits are unchanged. Red on the pre-WP8 code (INDETERMINATE for every non-JSON
+    session), except the two JSON-path cases. Fault-injected 2026-10-01: substring
+    matching for Latin names turned the short-surname case red; reading failed retrievals
+    turned the 403 case red; asserting a one-word head turned the FAQ case red;
+    restored, green. Its assertion count is its own EXAMINED
+    line.'
 - id: test_url_verifier
   cmd:
   - python3

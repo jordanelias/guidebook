@@ -55,6 +55,7 @@ has since been corrected upstream, nor can it run when the API is unreachable.
 import argparse
 import codecs
 import hashlib
+import html
 import json
 import os
 import re
@@ -503,16 +504,22 @@ def _failed_retrievals(session):
     handed different data.
     """
     session = _session_stem(session)
-    out = []
-    for rec in _manifest_records(session):
-        exit_code = rec.get("exit", 0)
-        status = rec.get("status")
-        if exit_code != 0:
-            out.append((rec.get("artefact", ""), rec.get("url", ""),
-                        f"curl exit {exit_code}: no HTTP response reached"))
-        elif status is not None and not (200 <= status < 300):
-            out.append((rec.get("artefact", ""), rec.get("url", ""), f"HTTP {status}"))
-    return out
+    return [(rec.get("artefact", ""), rec.get("url", ""), why)
+            for rec in _manifest_records(session)
+            for why in [_failure_reason(rec)] if why]
+
+
+def _failure_reason(rec):
+    """Why one manifest line is not a usable retrieval, or None if it is. The rule
+    `_failed_retrievals` applies, in one place, so presence mode cannot read a 403
+    interstitial as the source's text while the JSON path refuses to."""
+    exit_code = rec.get("exit", 0)
+    status = rec.get("status")
+    if exit_code != 0:
+        return f"curl exit {exit_code}: no HTTP response reached"
+    if status is not None and not (200 <= status < 300):
+        return f"HTTP {status}"
+    return None
 
 
 # Locator columns a source may carry INSTEAD of a DOI, in the order they are tried
@@ -1256,6 +1263,247 @@ def _locator_evidence(row, manifest):
     return None, None, []
 
 
+# ---------------------------------------------------------------------------
+# Presence mode: record against artefact, for a session with no JSON payload
+# ---------------------------------------------------------------------------
+#
+# WHAT IT IS AND IS NOT (I6, 2026-10-01). A session whose payloads are publication pages
+# and PDFs has no Crossref record to diff against, and verify_authors used to stop at
+# INDETERMINATE there, so a person-author typed from memory onto a Co-1, DPO or standards
+# source -- exactly the material that never arrives as JSON -- passed every gate (CLAUDE.md
+# §5(c)). Presence mode asks the one question those bytes CAN answer: does each stored
+# surname, and the title, occur in the text that was actually retrieved for this source?
+#
+#   * It is a record-versus-artefact check, not a tautology: the record is the DB row,
+#     the artefact is the persisted bytes, and an invented surname is absent from them.
+#   * It CANNOT see an omitted author -- a person deleted from the row leaves every
+#     remaining name present. That is the 2026-08-19 Co-1 failure's other half, and only
+#     a diff against an authoritative author list catches it. The verdict says so on
+#     every run, and it is never the JSON path's CLEAN.
+#   * A name present in the bytes may be present as someone else (a cited author, a
+#     reviewer). Presence is necessary for truth, not sufficient.
+
+# Where a title's first segment ends. A typed title often carries a subtitle the page
+# sets differently (a line break, a different dash), so only the head is asserted. " -- "
+# is the ASCII spelling of the dash in typed titles, and " (" opens the English gloss this
+# project adds after a native title -- both measured on batch 22's rows, where without
+# them a Finnish decree's genuine title read as absent.
+_TITLE_SEPARATORS = (" — ", " – ", " -- ", ": ", " - ", " (")
+
+
+def _title_head(title):
+    """`title` up to its first separator, or the whole title if it has none.
+
+    A head of one word ('FAQ' of 'FAQ: Environmental and Home Modifications') is not
+    evidence of anything -- it occurs on most pages -- so the whole title is asserted
+    instead.
+    """
+    t = (title or "").strip()
+    cuts = [i for i in (t.find(s) for s in _TITLE_SEPARATORS) if i > 0]
+    head = t[:min(cuts)] if cuts else t
+    return head if len(_fold_tokens(head)) > 1 else t
+
+
+def _fold_tokens(text):
+    """The words of `text`, each folded by normalise_quote, in order.
+
+    normalise_quote alone deletes the spaces, so a short surname matches inside any
+    longer word: 'Li' is in 'reliable', 'Ward' in 'towards'. A presence check that a
+    two-letter fabrication passes is the §5(a) failure in miniature. Words are split
+    after NFKC, so a composed 'é' stays inside its word and is then folded to 'e'.
+    """
+    s = unicodedata.normalize("NFKC", _TAG.sub(" ", text or ""))
+    return [w for w in (normalise_quote(x) for x in re.findall(r"\w+", s)) if w]
+
+
+def _presence_haystack(text):
+    """One decoded artefact, folded the two ways presence is tested on.
+
+    HTML entities are unescaped first: a page that writes 'P&eacute;rez' names Pérez.
+    """
+    text = html.unescape(text)
+    return {"flat": normalise_quote(text),
+            "words": " " + " ".join(_fold_tokens(text)) + " "}
+
+
+def _name_in(name, hay):
+    """Is the person name `name` in this artefact? None when there is nothing to seek.
+
+    A name that folds to ASCII is matched as WHOLE WORDS, in order ('O'Brien' is the
+    words 'o brien'). A name in a script written without spaces (Japanese, Chinese,
+    Korean), or keeping a letter NFKD does not fold (ø, ł), is matched as a substring of
+    the folded text, because there are no word boundaries to require. That is weaker,
+    and it is never stricter than the bytes allow.
+    """
+    flat = normalise_quote(name)
+    if not flat:
+        return None
+    if flat.isascii():
+        return (" " + " ".join(_fold_tokens(name)) + " ") in hay["words"]
+    return flat in hay["flat"]
+
+
+def _presence_artefacts(row, manifest):
+    """The manifest lines that stand behind one source, and their text renderings.
+
+    A line belongs to the source when its structured ref_id is the row's, or its url is
+    the row's url. A DERIVED line belongs when it is a text extraction of one of those
+    (derivation_kind 'text-extraction', 'page-text-extraction'): that is how a PDF's text
+    is reached, since PDF bytes are not read here. Other derivations are left out on
+    purpose -- a 'pdf-bibliography' is the source's reference LIST, other works' authors,
+    and would let an invented name match a cited one; a 'page-render' is an image.
+    """
+    ref, url = row["ref_id"], (row["url"] or "").strip()
+    own = [m for m in manifest if m.get("artefact") and (
+        (m.get("ref_id") or "").strip() == ref or (url and m.get("url") == url))]
+    names = list(dict.fromkeys(m["artefact"] for m in own))
+    children = [m for m in manifest if m.get("derived") and m.get("artefact")
+                and m.get("derived_from") in names
+                and str(m.get("derivation_kind") or "").endswith("text-extraction")]
+    lines = {}
+    for m in own + children:
+        # One line per artefact; where the same bytes carry two lines, a usable
+        # retrieval's line wins over a failed one's.
+        held = lines.get(m["artefact"])
+        if held is None or (_failure_reason(held) and not _failure_reason(m)):
+            lines[m["artefact"]] = m
+    return list(lines.values())
+
+
+def _verify_presence(session, unparsed):
+    """PRESENCE MODE for a session whose logged payloads include no JSON. See above.
+
+    IN SCOPE: every evidence_sources row this session created, plus every row its
+    manifest tags by ref_id or url. Each in-scope row with no decodable artefact is
+    listed UNEXAMINABLE with the reason; EXAMINED counts only rows that had one.
+
+    ASSERTED, and failed when absent from every one of the row's artefacts: each stored
+    PERSON's last_name (is_corporate=0), and the title's first segment -- from any of
+    _TITLE_COLS, checked as a set as the JSON path does, because a non-English source
+    stores its native title in pub_title and the English beside it.
+    REPORTED, never failed: a corporate_name that is absent. A corporate author is often
+    a gloss this project adds ('Republic of Korea' on a Korean statute), which is a
+    convention and not a fabrication.
+
+    Exit 1 when any asserted field is absent or nothing was examined; else 0.
+    """
+    manifest = _manifest_records(session)
+    tagged = {(m.get("ref_id") or "").strip() for m in manifest} - {""}
+    urls = {m.get("url") for m in manifest if m.get("url")}
+    cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    cx.row_factory = sqlite3.Row
+    try:
+        rows = [r for r in cx.execute("SELECT * FROM evidence_sources ORDER BY ref_id")
+                if r["created_by_session"] == session or r["ref_id"] in tagged
+                or ((r["url"] or "").strip() and r["url"] in urls)]
+        people = {r["ref_id"]: cx.execute(
+            "SELECT position, is_corporate, last_name, corporate_name, role "
+            "FROM evidence_source_authors WHERE ref_id=? ORDER BY position",
+            (r["ref_id"],)).fetchall() for r in rows}
+    finally:
+        cx.close()
+
+    print("=" * 74)
+    print(f"retrieval_log --verify-authors  session={session}  -- PRESENCE MODE")
+    print("=" * 74)
+    print(f"  None of the {len(manifest)} logged payload(s) is JSON, so no source here can be")
+    print("  diffed against a Crossref record. Instead, each in-scope source's stored person")
+    print("  surnames and title are looked for in the decoded bytes of the artefacts tagged")
+    print("  with its ref_id or url, and in their text extractions.")
+    print(f"  In scope: {len(rows)} source(s) -- created by this session, or tagged in its "
+          f"manifest.")
+
+    examined, present, unexaminable, absent, corporate_absent = 0, 0, [], [], []
+    for row in rows:
+        ref = row["ref_id"]
+        lines = _presence_artefacts(row, manifest)
+        hays, unread = [], []
+        for m in lines:
+            p = LOG_ROOT / session / m["artefact"]
+            failed = _failure_reason(m)
+            if failed:
+                # A 403 challenge page is evidence of an attempt, not the source's text
+                # ("Just a moment..." would make every title read as absent).
+                unread.append(f"{m['artefact']} (failed retrieval: {failed})")
+                continue
+            if not p.exists():
+                unread.append(f"{m['artefact']} (missing from disk)")
+                continue
+            raw = p.read_bytes()
+            if raw.lstrip()[:5] == b"%PDF-":
+                # PDF syntax can be ASCII and so "decode"; its text is still compressed
+                # streams. Only a text extraction child reads what the page says.
+                unread.append(f"{m['artefact']} (PDF bytes; no text extraction logged)")
+                continue
+            text, why = decode_artefact(raw, m.get("content_type"))
+            if text is None:
+                unread.append(f"{m['artefact']} ({why})")
+                continue
+            hays.append((m["artefact"], _presence_haystack(text)))
+        persons = [a for a in people[ref] if not a["is_corporate"]
+                   and normalise_quote(a["last_name"])]
+        titles = list(dict.fromkeys(
+            _title_head(row[c]) for c in _TITLE_COLS
+            if c in row.keys() and normalise_quote(_title_head(row[c] or ""))))
+        if not hays:
+            unexaminable.append((ref, "no manifest line is tagged with this ref_id or url"
+                                 if not lines else "no readable artefact: " + "; ".join(unread)))
+            continue
+        if not persons and not titles:
+            unexaminable.append((ref, "no person author and no title to look for"))
+            continue
+        examined += 1
+        missing = [f"{a['role'] or 'author'} {a['position']} last_name {a['last_name']!r}"
+                   for a in persons if not any(_name_in(a["last_name"], h) for _, h in hays)]
+        if titles and not any(normalise_quote(t) in h["flat"] for t in titles
+                              for _, h in hays):
+            missing.append("title " + " / ".join(repr(t) for t in titles))
+        for a in people[ref]:
+            if a["is_corporate"] and normalise_quote(a["corporate_name"]) and not any(
+                    normalise_quote(a["corporate_name"]) in h["flat"] for _, h in hays):
+                corporate_absent.append((ref, a["corporate_name"]))
+        if missing:
+            absent.append((ref, missing, [n for n, _ in hays], unread))
+        else:
+            present += 1
+
+    if unexaminable:
+        print(f"\n  UNEXAMINABLE -- {len(unexaminable)} in-scope source(s) with nothing to read. "
+              f"REPORTED, never")
+        print("  skipped: the result below does not speak for them.")
+        for ref, why in unexaminable:
+            print(f"      {ref}  {why}")
+    for ref, missing, read, unread in absent:
+        print(f"  ✗ {ref}  NOT FOUND in {', '.join(read)}:")
+        for what in missing:
+            print(f"          {what}")
+        if unread:
+            print(f"          (also tagged, not read: {'; '.join(unread)})")
+    if corporate_absent:
+        print(f"\n  REPORTED, not failed -- {len(corporate_absent)} corporate author(s) absent "
+              f"from the bytes (often a")
+        print("  gloss the project adds; check it is not a substitution):")
+        for ref, name in corporate_absent:
+            print(f"      {ref}  {name!r}")
+
+    print(f"\n  EXAMINED: {examined}")
+    print(f"  PRESENT-IN-BYTES: {present} of {examined} source(s); not Crossref-diffed; "
+          f"cannot detect an omitted author")
+    if examined == 0:
+        print("\n  INDETERMINATE -- no in-scope source has a decodable artefact. Not a pass.")
+        return 1
+    if absent:
+        print(f"\n  {len(absent)} source(s) carry a person or a title that occurs in none of "
+              f"the bytes")
+        print("  retrieved for them. Read each against its artefact before treating it as a")
+        print("  fabrication: a composed title, a name broken across a line, or a romanised")
+        print("  name over a native-script page are the known false FAILs.")
+        return 1
+    if unexaminable:
+        print("  NOT A WHOLE-SESSION RESULT: see UNEXAMINABLE above.")
+    return 0
+
+
 def verify_authors(session):
     """Diff stored authors against the LOGGED payload. Offline. No network.
 
@@ -1277,19 +1525,13 @@ def verify_authors(session):
         # eight artefacts on disk (2026-09-16). `_unparsed_payloads` already exists to
         # make this visible and its own docstring says callers MUST consult it; this
         # branch returned before it ever did.
+        #
+        # Until 2026-10-01 that branch then printed INDETERMINATE and stopped, so a
+        # fabricated person-author on an HTML or PDF source passed every gate (I6). It
+        # now runs the PRESENCE pass below, which is a weaker check and says so.
         unparsed_only = _unparsed_payloads(session)
         if unparsed_only:
-            print(f"  {len(unparsed_only)} payload(s) logged for session {session!r}, "
-                  f"NONE of them JSON:")
-            for artefact, url, why in unparsed_only[:10]:
-                print(f"    {artefact}  {why}  {url[:70]}")
-            print(f"  EXAMINED: 0 of {len(unparsed_only)}")
-            print("\n  INDETERMINATE — the payloads exist and cannot be author-diffed.")
-            print("  This module compares against Crossref-shaped JSON, so a corpus of")
-            print("  publication pages and PDFs is outside its reach ENTIRELY, not")
-            print("  partially. Do not read this as a clean session and do not read it")
-            print("  as an unlogged one; the bytes are on disk and unchecked.")
-            return 1
+            return _verify_presence(session, unparsed_only)
         print(f"  no retrieval log for session {session!r} under {LOG_ROOT}/")
         print("  EXAMINED: 0")
         print("\n  INDETERMINATE — a session with no logged retrievals cannot be")

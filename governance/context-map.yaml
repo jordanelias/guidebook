@@ -1469,6 +1469,13 @@ checks:
     - data
     min_items: null
     cmd: python3 scripts/tests/test_assess_cell_pilot.py
+  - id: test_author_presence
+    level: advisory
+    battery: tests
+    kinds:
+    - tooling
+    min_items: null
+    cmd: python3 scripts/tests/test_author_presence.py
   - id: test_db_amend_writers
     level: advisory
     battery: tests
