@@ -1686,7 +1686,10 @@ checks:
     live-determination refusal turned exactly its case red; removing the NULLing turned
     its case and the capture case red; removing the Co-1 warrant refusal or the
     disagreeing-tier refusal turned its case red and, through the shared fixture, the
-    cases after it; restored, green. Section K (I8, GAP-005, 2026-10-01) holds
+    cases after it; restored, green. Review fix (2026-10-01): a move to co1 also needs a
+    --co1-source-type from schemas.enums.Co1SourceType, written and ledgered with the
+    warrant, and the co1 -> grey -> co1 round trip re-supplies it -- red on the pre-fix
+    code, which wrote a Co-1 row with co1_source_type NULL. Section K (I8, GAP-005, 2026-10-01) holds
     update-code-lead and add-code-lead''s near-duplicate refusal: every refusal, an
     append-only ledgered move with no transition order, the exact-duplicate refusal
     naming a command that works, a case/punctuation variant refused unless

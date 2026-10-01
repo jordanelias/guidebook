@@ -1644,6 +1644,10 @@ def main():
                             "required there: the D-0178 warrant naming the co-production. "
                             "A move OFF co1 keeps the old warrant in the ledger and NULLs "
                             "the column.")
+    p_ams.add_argument("--co1-source-type", default=None,
+                       help="Only with --field evidence_type --replacement co1, and "
+                            "required there: a member of schemas.enums.Co1SourceType. "
+                            "grain_for grades a Co-1 source's grain from it.")
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
@@ -2946,7 +2950,8 @@ def main():
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
                            session=args.session, dry_run=args.dry_run,
                            tier=args.tier, scope=args.scope,
-                           co1_provenance=args.co1_provenance))
+                           co1_provenance=args.co1_provenance,
+                           co1_source_type=args.co1_source_type))
 
     elif args.command == "retire-specification":
         _emit(retire_specification(args.specification_id, reason=args.reason,
@@ -5391,7 +5396,8 @@ _AMENDABLE = (
 )
 
 
-def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance):
+def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance,
+                   co1_source_type=None):
     """The columns an `amend-source --field evidence_type` move writes beside the type,
     and the ledger text recording them; None when the row already says this.
 
@@ -5402,8 +5408,14 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
     exactly one, and the tier is DERIVED from (type, scope): --tier is optional and
     refused when it disagrees, because a tier is never asserted on its own.
 
-    THE CO-1 FIELDS MOVE WITH THE TYPE. A move to co1 needs the D-0178 warrant. A move
-    off co1 copies every co1_* column into the ledger and sets it NULL: those columns
+    THE CO-1 FIELDS MOVE WITH THE TYPE. A move to co1 needs the D-0178 warrant AND a
+    co1_source_type: schemas/evidence_source.py co1_field_consistency requires both, and
+    schemas.directness.grain_for grades a Co-1 source's grain FROM co1_source_type (a
+    community-consensus type is population-grain; NULL falls back to individual-grain),
+    so a retype that left it NULL would silently downgrade the source it re-tiers. The
+    column declares no CHECK, so its vocabulary is schemas.enums.Co1SourceType, the
+    mirror's one home. A move off co1 copies every co1_* column into the ledger and sets
+    it NULL: those columns
     are only valid on a Co-1 row (schemas/evidence_source.py co1_field_consistency),
     and only co1 rows carry them (`select evidence_type, count(co1_provenance),
     count(co1_source_type) from evidence_sources group by 1`). The set is read from the
@@ -5461,6 +5473,25 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
         raise Refusal(
             f"{ref_id}: --co1-provenance is only admissible when the new evidence_type is "
             f"co1; {new_type!r} carries no Co-1 warrant. Nothing was written.")
+    source_type = (co1_source_type or "").strip()
+    if new_type != "co1" and co1_source_type is not None:
+        raise Refusal(
+            f"{ref_id}: --co1-source-type is only admissible when the new evidence_type "
+            f"is co1; {new_type!r} carries no Co-1 source type. Nothing was written.")
+    if new_type == "co1":
+        from schemas.enums import Co1SourceType  # noqa: E402
+        members = sorted(m.value for m in Co1SourceType)
+        if not source_type:
+            raise Refusal(
+                f"{ref_id}: --co1-source-type is REQUIRED to move evidence_type to co1. "
+                f"A Co-1 row needs it (co1_field_consistency), and grain_for grades the "
+                f"source's grain from it: left NULL, a community-consensus source reads as "
+                f"one person's account. Choose from schemas.enums.Co1SourceType: "
+                f"{members}. Nothing was written.")
+        if source_type not in members:
+            raise Refusal(
+                f"{ref_id}: --co1-source-type {source_type!r} is not a member of "
+                f"schemas.enums.Co1SourceType: {members}. Nothing was written.")
     resting = dbcore.determinations_resting_on(conn, ref_id)
     if resting:
         named = ", ".join(f"specification {sid} (via {junction})"
@@ -5478,8 +5509,10 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
             f"type.")
     if new_type == "co1":
         sets["co1_provenance"] = provenance
+        sets["co1_source_type"] = source_type
         text += (f" co1_provenance written as the D-0178 warrant; replaced text was: "
-                 f"{cur['co1_provenance']!r}.")
+                 f"{cur['co1_provenance']!r}. co1_source_type written as "
+                 f"{source_type!r}; replaced value was {cur['co1_source_type']!r}.")
     leaving = (old_type or "").strip().lower() == "co1"
     moved = {c: cur[c] for c in co1_cols if leaving and cur[c] is not None}
     if moved:
@@ -5495,7 +5528,7 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
 
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                  session: str, dry_run: bool = False, tier=None, scope=None,
-                 co1_provenance=None):
+                 co1_provenance=None, co1_source_type=None):
     """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
 
     Replaces rather than appends, and that is the opposite of what resolve-candidate
@@ -5536,12 +5569,13 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # Stored lower-case, as add-source stores it: assess_cell.classify() compares
         # against lower-case literals, so 'CO1' would stop anchoring anything.
         replacement = replacement.lower()
-    elif scope is not None or co1_provenance is not None:
+    elif scope is not None or co1_provenance is not None or co1_source_type is not None:
         raise Refusal(
-            f"{ref_id}: --scope and --co1-provenance are only admissible beside --field "
-            f"evidence_type, where they travel with the type. A scope on its own is "
-            f"`--field scope`; a Co-1 row's warrant on its own is `--field "
-            f"co1_provenance`. Nothing was written.")
+            f"{ref_id}: --scope, --co1-provenance and --co1-source-type are only "
+            f"admissible beside --field evidence_type, where they travel with the type. A "
+            f"scope on its own is `--field scope`; a Co-1 row's warrant or source type on "
+            f"its own is `--field co1_provenance` / `--field co1_source_type`. Nothing was "
+            f"written.")
     if field == "jurisdiction":
         # No CHECK on the column, so check_declared below is a no-op for it; the declared
         # vocabulary is the enum (I7).
@@ -5663,7 +5697,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         if field == "evidence_type":
             # The type's own no-op test lives in _retype_source: an unchanged type with a
             # different scope is a refusal there, not a silent no-op here.
-            retype = _retype_source(conn, ref_id, replacement, scope, tier, co1_provenance)
+            retype = _retype_source(conn, ref_id, replacement, scope, tier, co1_provenance,
+                                    co1_source_type)
             if retype is None:
                 return {"ref_id": ref_id, "field": field, "changed": False}
         elif (was or "").strip() == replacement:

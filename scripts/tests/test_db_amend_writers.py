@@ -46,9 +46,10 @@ not an artefact of attack.
 Section E (I1) holds `amend-source --field evidence_type`: without it a source filed at the
 wrong rung of the ladder (a Co-1/T6 contradiction, a grey report typed as a trial) keeps
 anchoring at the wrong strength, because the only correction was hand SQL. It proves the
-tier moves with the type by derivation only, that a move to co1 needs the D-0178 warrant,
-that a move off co1 keeps the old warrant in the ledger and NULLs the Co-1-only columns, and
-that a source a live determination rests on cannot move.
+tier moves with the type by derivation only, that a move to co1 needs the D-0178 warrant
+and a co1_source_type from schemas.enums.Co1SourceType (grain_for grades a Co-1 source's
+grain from it), that a move off co1 keeps the old warrant in the ledger and NULLs the
+Co-1-only columns, and that a source a live determination rests on cannot move.
 
 Section K (I8, GAP-005) holds `update-code-lead` and add-code-lead's near-duplicate refusal:
 without the verb R15 cannot be discharged against a lead, so a lead whose document was
@@ -890,16 +891,46 @@ try:
                and f"tier {TIER_MAP[('co1', 'intrinsic')]} -> {grey_tier}" in seg
                and PROV in seg and "dpo_research" in seg,
                f"msg={msg!r} out={out} seg={seg!r}")
-        out, msg = attempt(db.amend_source, EC, "evidence_type", "co1",
-                           "fixture: the preface names the DPO after all", session=S,
-                           co1_provenance=PROV, tier=TIER_MAP[("co1", "intrinsic")])
+        # THE CASE THAT FAILS ON THE PRE-FIX CODE: a move to co1 wrote a Co-1 row with
+        # co1_source_type NULL, which co1_field_consistency rejects and grain_for grades
+        # individual-grain whatever the source is. The vocabulary is the enum, read here.
+        from schemas.enums import Co1SourceType  # noqa: E402
+        CO1_TYPES = sorted(m.value for m in Co1SourceType)
+        CO1_ST = CO1_TYPES[0]
+        WHY_C = "fixture: the preface names the DPO after all"
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "co1", WHY_C, session=S,
+                           co1_provenance=PROV)
+        record("E13", "a move TO co1 with the warrant but no --co1-source-type refuses, "
+               "naming the enum's members, and writes nothing",
+               out is None and msg and "--co1-source-type is REQUIRED" in msg
+               and all(t in msg for t in CO1_TYPES)
+               and source_row(EC)["evidence_type"] == "grey", f"msg={msg!r} out={out}")
+        _, msg = attempt(db.amend_source, EC, "evidence_type", "co1", WHY_C, session=S,
+                         co1_provenance=PROV, co1_source_type="fixture_not_a_member")
+        _, msg2 = attempt(db.amend_source, EC, "evidence_type", "code", WHY_C, session=S,
+                          co1_source_type=CO1_ST)
+        _, msg3 = attempt(db.amend_source, EC, "notes", "fixture note", WHY_C, session=S,
+                          co1_source_type=CO1_ST)
+        record("E14", "an unknown --co1-source-type refuses naming the members; beside a "
+               "non-co1 type, or beside another field, it refuses too",
+               msg and "not a member of schemas.enums.Co1SourceType" in msg
+               and msg2 and "only admissible when the new evidence_type is co1" in msg2
+               and msg3 and "only admissible beside --field evidence_type" in msg3
+               and source_row(EC)["evidence_type"] == "grey",
+               f"{msg!r} | {msg2!r} | {msg3!r}")
+        # The round trip co1 -> grey -> co1 re-supplies the source type, and ends with it.
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "co1", WHY_C, session=S,
+                           co1_provenance=PROV, co1_source_type=CO1_ST,
+                           tier=TIER_MAP[("co1", "intrinsic")])
         row = source_row(EC)
-        record("E09", "a move TO co1 with the warrant (and an agreeing --tier) writes the "
-               "warrant, the derived scope and tier",
+        seg = (row["metadata_integrity_detail"] or "").split(" || ")[-1]
+        record("E09", "a move TO co1 with the warrant and a source type (and an agreeing "
+               "--tier) writes both, the derived scope and tier, and ledgers the type",
                out and out["changed"] and row["evidence_type"] == "co1"
-               and row["co1_provenance"] == PROV
+               and row["co1_provenance"] == PROV and row["co1_source_type"] == CO1_ST
+               and f"co1_source_type written as {CO1_ST!r}" in seg
                and row["tier"] == TIER_MAP[("co1", "intrinsic")],
-               f"msg={msg!r} out={out}")
+               f"msg={msg!r} out={out} seg={seg!r}")
 
         # A LIVE determination, through both junctions. Every specification in the copy
         # is retired and no writer short of the determination engine creates one, so one
@@ -944,7 +975,8 @@ try:
             con.close()
 
         ok = run_cli("amend-source", "--ref-id", EA, "--field", "evidence_type",
-                     "--replacement", "co1", "--co1-provenance", PROV, "--reason", WHY,
+                     "--replacement", "co1", "--co1-provenance", PROV,
+                     "--co1-source-type", CO1_ST, "--reason", WHY,
                      "--session", S, "--dry-run")
         bad = run_cli("amend-source", "--ref-id", EA, "--field", "notes", "--replacement",
                       "x", "--scope", HI, "--reason", WHY, "--session", S)
