@@ -39,7 +39,9 @@ Section C (GAP-055) holds `close-adversarial-pass`'s artefact parse: a SURVIVED 
 written as a citation ("<file> page 15", "<file> (and the other 11)") used to make a
 good-faith pass unclosable, so its audit stayed red for a pass that had done its work. A
 path that escapes the repo must still refuse, and cited paths that do not resolve must stay
-visible.
+visible. The verb's --help must name the 2026-09-27 ruling that holds pass 1 open, and a
+finding admitted only on the database file is closed but reported, because the database is
+not an artefact of attack.
 
 Section E (I1) holds `amend-source --field evidence_type`: without it a source filed at the
 wrong rung of the ladder (a Co-1/T6 contradiction, a grey report typed as a trial) keeps
@@ -742,6 +744,29 @@ try:
            r.returncode == 0 and f"REPORTED: finding {F5}" in r.stderr
            and MISSING in r.stderr and closed_at(P5) is None,
            f"rc={r.returncode} {r.stderr[-300:]!r}")
+
+    # The owner ruling that holds pass 1 open must be where the operator reads: the verb's
+    # own --help (and the function's docstring), since nothing refuses pass 1 by id.
+    h = run_cli("close-adversarial-pass", "--help")
+    record("C06", "--help names the 2026-09-27 ruling that holds pass 1 OPEN",
+           h.returncode == 0 and "2026-09-27" in h.stdout and "pass 1" in h.stdout
+           and "OPEN" in h.stdout, h.stdout[-400:])
+    # THE DATABASE IS NOT AN ARTEFACT OF ATTACK. Its path is derived from dbcore, never
+    # typed. A finding admitted only on it closes (refusing would re-open GAP-055's trap)
+    # but is returned and printed as REPORTED; one that also cites a real file is not.
+    DBREL = dbcore.CANONICAL_DB.resolve().relative_to(REPO.resolve()).as_posix()
+    P6, F6 = make_pass(f"{DBREL} search_executions.query_text for mining rows")
+    r = run_cli("close-adversarial-pass", "--pass-id", str(P6), "--session", S,
+                "--dry-run")
+    out6 = close(P6)
+    P7, _ = make_pass(f"{TRACKED}; {DBREL}")
+    out7 = close(P7)
+    record("C07", "a finding admitted only on the database file closes but is returned as "
+           "database_only and printed as REPORTED; one that also cites a real file is not",
+           r.returncode == 0 and f"REPORTED: finding {F6} was admitted only on" in r.stderr
+           and out6.get("database_only") == {F6: [DBREL]} and closed_at(P6) is not None
+           and out7.get("database_only") == {} and closed_at(P7) is not None,
+           f"rc={r.returncode} {r.stderr[-300:]!r} out6={out6} out7={out7}")
 
     # ── E: amend-source --field evidence_type ──────────────────────────────────
     # I1. Fixture sources are admitted through add-source on the copy; every tier the

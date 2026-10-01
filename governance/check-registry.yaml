@@ -1674,7 +1674,10 @@ checks:
     artefact with no resolving path still refuses, and a ''../'' token reaching a real
     file outside the repo refuses -- red on the pre-WP4 code. Fault-injected
     2026-10-01: dropping the containment check turned the containment case red;
-    dropping the unresolved list turned its two cases red; restored, green. Section E
+    dropping the unresolved list turned its two cases red; restored, green. Review fix
+    (2026-10-01): --help names the 2026-09-27 ruling holding pass 1 OPEN, and a finding
+    admitted only on the database file closes but is returned and printed as REPORTED --
+    both red on the pre-fix code. Section E
     (I1, 2026-10-01) holds amend-source --field evidence_type: the tier moves with the
     type by the ladder only, a move to co1 needs the D-0178 warrant, a move off co1
     ledgers and NULLs the co1_* columns, a live determination refuses through both

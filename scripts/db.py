@@ -1540,7 +1540,15 @@ def main():
 
     p_cap = sub.add_parser(
         "close-adversarial-pass",
-        help="Close a pass once every lens is covered and at least one row SURVIVED (RC4)")
+        help="Close a pass once every lens is covered and at least one row SURVIVED (RC4)",
+        description="Close a pass once every lens is covered and at least one row "
+                    "SURVIVED (RC4). Do NOT use it on pass 1: the owner ruling of "
+                    "2026-09-27 (second; references/project-standards.md, ACTION (2)) "
+                    "holds pass 1 OPEN. Pass 2 was left open by its session "
+                    "(sessions/session_2026-09-28-research-batch-21-selection.md); the "
+                    "process-gap plan the owner approved on 2026-10-01 says not to close "
+                    "it, citing that ruling, which names only pass 1. Nothing refuses "
+                    "either; the operator is the gate.")
     p_cap.add_argument("--pass-id", required=True, type=int)
     p_cap.add_argument("--session", required=True)
     p_cap.add_argument("--dry-run", action="store_true")
@@ -2911,6 +2919,10 @@ def main():
         for fid, toks in sorted(result["unresolved"].items()):
             print(f"REPORTED: finding {fid}: path token(s) that did not resolve to a "
                   f"file under the repo: {toks}", file=sys.stderr)
+        for fid, toks in sorted(result["database_only"].items()):
+            print(f"REPORTED: finding {fid} was admitted only on {toks}, inside the "
+                  f"database's directory; the database is not an artefact of attack.",
+                  file=sys.stderr)
         _emit(result)
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
@@ -4760,6 +4772,23 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
     path, so "../outside/x" is refused however it is wrapped. Path-shaped tokens that do
     not resolve are returned as `unresolved` (the CLI prints them as REPORTED): one real
     file admits the finding, and the others it cites stay visible rather than vanish.
+
+    THE DATABASE IS NOT AN ARTEFACT OF ATTACK. A token that resolves only inside the
+    directory holding the canonical database (dbcore.CANONICAL_DB's parent) proves that a
+    file exists, not what a claim was attacked with: "data/guidebook.db <a query>" names
+    every finding's subject at once. Such a finding still closes -- refusing it would
+    re-open the GAP-055 trap for a good-faith citation -- but it is returned as
+    `database_only` and the CLI prints it as REPORTED, so the weakness stays visible.
+
+    PASSES THIS VERB MUST NOT BE USED ON. Pass 1 is held OPEN by the owner ruling of
+    2026-09-27 (second, "exec 77 executed ...; further tooling on pass 1 stood down",
+    references/project-standards.md), ACTION (2): "Do not build `amend-adversarial-finding`
+    or otherwise chase pass 1 closed as its own effort; it stays open." Pass 2 was left
+    OPEN by its own session (sessions/session_2026-09-28-research-batch-21-selection.md);
+    the process-gap remediation plan the owner approved on 2026-10-01 says not to close it
+    either, citing the same ruling -- which names only pass 1.
+    Nothing here refuses them: a curated list of pass ids beside the passes table is what
+    rule 8 forbids. The operator is the gate, and this is where they are told.
     """
     with connect(dry_run) as conn:
         prow = conn.execute(
@@ -4785,7 +4814,13 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
             p = dbcore.resolve_under(dbcore.REPO_ROOT, tok)
             return p is not None and p.is_file()
 
-        unresolved = {}
+        db_dir = dbcore.CANONICAL_DB.resolve().parent
+
+        def _in_db_dir(tok):
+            p = dbcore.resolve_under(dbcore.REPO_ROOT, tok)
+            return p is not None and db_dir in p.resolve().parents
+
+        unresolved, database_only = {}, {}
         for f in findings:
             if (f["verdict"] == "NOT-ATTACKED"
                     and len((f["method"] or "").strip()) < 10):
@@ -4808,11 +4843,14 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
                 missed = [t for t in path_tokens if not _is_file(t)]
                 if missed:
                     unresolved[f["finding_id"]] = missed
+                admitting = [t for t in tried if _is_file(t)]
+                if admitting and all(_in_db_dir(t) for t in admitting):
+                    database_only[f["finding_id"]] = admitting
         stamp = audit(session)
         conn.execute("UPDATE adversarial_passes SET closed_at=? WHERE pass_id=?",
                      [stamp["created_at"], pass_id])
         return {"pass_id": pass_id, "closed_at": stamp["created_at"], "findings": len(findings),
-                "unresolved": unresolved}
+                "unresolved": unresolved, "database_only": database_only}
 
 
 def _check_rehome_destination(conn, subject: str, suggested_slug, found_under_slug):
