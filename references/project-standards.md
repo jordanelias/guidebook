@@ -4346,8 +4346,9 @@ a real logged search otherwise. Nothing else in the ruling changes.
 
 Given in session https://claude.ai/code/session_01MaToqCJbDoviNNLNkSpJPX, in reply to the
 process-gap remediation plan for research batch 23 (PR #166), whose list of owner decisions named
-D1 to D4. The plan was held in that session's scratchpad and is not committed; this entry is the
-record. Recorded on contact per rule 0.
+D1 to D4. The plan is committed on PR #166's branch at
+`scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md` and is not on main
+until that PR merges; this entry is the record. Recorded on contact per rule 0.
 
 > "approve all"
 
