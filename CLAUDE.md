@@ -142,8 +142,9 @@ several on BLOCKING gates. Count them with T2 in `workplan/2026-09-16-infrastruc
 of them BLOCKING". The eleven traces; the three did not — it was carried over from an earlier nine-item
 probe and silently dropped `citation_mining_session`, which is blocking. The true figure was four. A
 hand-typed count went stale inside the rule against hand-typed counts, within an hour of being written.)
-`test_verification_pipeline` still asserts a corpus of
-`≥50`/`≥30`/`≥100` that an owner ruling deliberately cleared. And the pipeline contract records being
+`test_verification_pipeline` asserted a corpus of
+`≥50`/`≥30`/`≥100` that an owner ruling deliberately cleared, and was red on main until those three
+assertions were deleted (2026-10-01). And the pipeline contract records being
 bitten twice in its own text — `evidence/discovery-provenance` carried "(16/640)" and
 `convergence-independence` carried "8 rows on a single slug", both false after a corpus change, both
 now reading "derive the counts, never quote them".*

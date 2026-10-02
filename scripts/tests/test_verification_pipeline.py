@@ -333,35 +333,10 @@ except Exception as e:
 # ── G: Live state — Phase 4 enrichment produced real results ────────────────
 print("\n[G] Live state — Phase 4 production results")
 
-# G01: Live DB now has populated language column
-try:
-    conn = fresh()
-    n_lang = conn.execute("SELECT COUNT(*) FROM evidence_sources WHERE language IS NOT NULL").fetchone()[0]
-    record("G01", "Live DB has language populated on ≥50 sources after Phase 4 production run",
-           n_lang >= 50,
-           details=f"language populated: {n_lang}")
-except Exception as e:
-    record("G01", "live language state", False, error=traceback.format_exc(limit=2))
-
-# G02: Live DB has ORCID populated
-try:
-    conn = fresh()
-    n_orcid = conn.execute("SELECT COUNT(*) FROM evidence_source_authors WHERE orcid IS NOT NULL AND orcid != ''").fetchone()[0]
-    record("G02", "Live DB has ORCID populated on ≥30 authors (was 0)",
-           n_orcid >= 30,
-           details=f"ORCID populated: {n_orcid}")
-except Exception as e:
-    record("G02", "live ORCID state", False, error=traceback.format_exc(limit=2))
-
-# G03: COMPLETE count increased substantially
-try:
-    conn = fresh()
-    n_complete = conn.execute("SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='COMPLETE'").fetchone()[0]
-    record("G03", "COMPLETE metadata count ≥ 100 (was 67 pre-V1.2)",
-           n_complete >= 100,
-           details=f"COMPLETE: {n_complete}")
-except Exception as e:
-    record("G03", "live COMPLETE state", False, error=traceback.format_exc(limit=2))
+# G01-G03 asserted corpus sizes (language on >=50 sources, ORCID on >=30 authors,
+# >=100 COMPLETE rows). An owner ruling cleared that corpus deliberately, so they were
+# red on main and tested the corpus, not the pipeline; deleted 2026-10-01
+# (CLAUDE.md rule 7a: a threshold typed against a corpus goes stale with nothing red).
 
 # G04: pipeline_runs has Phase 4 metrics recorded
 try:

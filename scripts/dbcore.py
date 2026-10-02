@@ -842,6 +842,84 @@ def check_vocab(conn, table: str, column: str, value, context: str):
         )
 
 
+def check_jurisdiction(value, context: str):
+    """Refuse a jurisdiction code `schemas.enums.JurisdictionCode` does not declare (I7).
+
+    WHY NOT check_declared. No `jurisdiction` column carries a CHECK, so the schema
+    declares nothing for check_declared to read, and check_vocab's live-rows fallback
+    would admit any value already written -- including the undeclared ones this exists to
+    stop. The declared vocabulary is the enum, and the blocking gate that enforces it on
+    the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the same enum. This
+    is that gate moved to the moment of writing: before it, every writer accepted any
+    string and the audit found it after it landed.
+
+    ONE HOME FOR EACH HALF. The members come from the enum and the rejected spellings
+    (GB -> UK) from `rejected_spellings()` in the audit, which parses them out of
+    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8).
+
+    WHICH WRITERS CALL IT mirrors which tables the audit FAILS on: every table with a
+    `jurisdiction` column except those in the audit's EXEMPT, CANDIDATE_TABLES and
+    REPORT_ONLY sets (each with its reason, in the audit; not restated here). As of
+    2026-10-01 no db.py writer sets jurisdiction on an excluded table, so there is nothing
+    to exclude; re-derive by reading those sets against `grep -n jurisdiction scripts/db.py`.
+
+    NULL passes: a search or a source scoped to no jurisdiction is a legitimate state.
+
+    A CASE OR SPACING VARIANT IS REFUSED, NOT FOLDED. `'es'` names Spain, but stored codes
+    are compared exactly -- by the audit, and by add-code-lead's duplicate check, which
+    keys on (jurisdiction, standard_name) -- so a folded-on-write `'es'` would be a second
+    spelling of one jurisdiction only for whichever writer forgot to fold. Refusing keeps
+    one spelling in the corpus and tells the operator which one; a blank is refused for
+    the same reason (the audit reads `''` as an undeclared code, not as NULL).
+    """
+    if value is None:
+        return
+    import sys as _sys
+    if str(REPO_ROOT) not in _sys.path:
+        _sys.path.insert(0, str(REPO_ROOT))
+    from schemas.enums import JurisdictionCode
+
+    declared = {e.value for e in JurisdictionCode}
+    if value in declared:
+        return
+    # Loaded by path, not by putting scripts/audit on sys.path: that directory holds
+    # dozens of modules, and a writer library should not make them importable by name.
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location(
+        "_jurisdiction_db_vocabulary",
+        REPO_ROOT / "scripts" / "audit" / "jurisdiction_db_vocabulary.py")
+    _mod = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    rejected = _mod.rejected_spellings()
+    gate = "scripts/audit/jurisdiction_db_vocabulary.py"
+    if value in rejected:
+        raise Refusal(
+            "%s: jurisdiction %r is rejected by governance/jurisdiction-philosophy.md; "
+            "write %r. The blocking check %s fails on it in every table it reads. "
+            "Nothing was written." % (context, value, rejected[value], gate))
+    folded = str(value).strip().upper()
+    if not folded:
+        raise Refusal(
+            "%s: a blank jurisdiction is not an absence -- it is stored as '' and read as "
+            "an undeclared code. Omit the flag for a row scoped to no jurisdiction. "
+            "Nothing was written." % context)
+    if folded in declared or folded in rejected:
+        good = folded if folded in declared else rejected[folded]
+        raise Refusal(
+            "%s: jurisdiction %r is not a declared spelling; write %r. Codes are stored "
+            "exactly as schemas/enums.py JurisdictionCode declares them and compared "
+            "exactly (by %s, and by add-code-lead's duplicate check), so a case or "
+            "spacing variant would be a second spelling of one jurisdiction. "
+            "Nothing was written." % (context, value, good, gate))
+    raise Refusal(
+        "%s: jurisdiction %r is not declared by schemas/enums.py JurisdictionCode, the "
+        "vocabulary the blocking check %s gates the database against. Declared: %s. If "
+        "it is a real jurisdiction the project now holds evidence for, admitting it is "
+        "an owner decision recorded in the enum, with its ruling, in a tooling PR "
+        "(CLAUDE.md rule 10); if it is not, the value is mis-filed. Nothing was written."
+        % (context, value, gate, sorted(declared)))
+
+
 # ---------------------------------------------------------------------------
 # WHICH TABLES A SESSION MAY WRITE — DERIVED, NOT CURATED
 # ---------------------------------------------------------------------------
@@ -948,6 +1026,36 @@ def governing_refs(conn, specification_id) -> list:
         "SELECT ref_id FROM specification_source_links "
         "WHERE specification_id = ? AND role = 'governing' ORDER BY ref_id",
         (specification_id,))]
+
+
+def determinations_resting_on(conn, ref_id) -> list:
+    """The LIVE determinations that rest on source `ref_id`, as sorted, distinct
+    (junction, specification_id) pairs. Empty when none does.
+
+    A determination rests on a source through one of two junctions:
+    `specification_source_links` (the governing set, the one access path governing_refs
+    above reads) and `convergence_sources` (the weighing the specification's
+    `convergence_id` points at). They are named here because they ARE the pointer;
+    pipeline-contract.yaml has no table-to-stage map to derive them from.
+
+    LIVE means `retired_at IS NULL`. A retired specification is history, not the cell's
+    answer, and retire-specification is the remedy a caller's refusal names -- counting
+    retired rows would make that remedy do nothing and the refusal permanent. A
+    convergence counts only through a live specification that points at it.
+
+    Callers refuse to move a source a determination stands on (supersede-source).
+    """
+    return sorted({tuple(r) for r in conn.execute(
+        "SELECT 'specification_source_links', l.specification_id "
+        "FROM specification_source_links l "
+        "JOIN specifications s ON s.specification_id = l.specification_id "
+        "WHERE l.ref_id = ? AND s.retired_at IS NULL "
+        "UNION "
+        "SELECT 'convergence_sources', s.specification_id "
+        "FROM convergence_sources c "
+        "JOIN specifications s ON s.convergence_id = c.convergence_id "
+        "WHERE c.ref_id = ? AND s.retired_at IS NULL",
+        (ref_id, ref_id))})
 
 
 def writable_tables(conn) -> list:
@@ -1070,6 +1178,25 @@ def _selftest() -> int:
           all(REF_ID_SHAPE.fullmatch(x) for x in ("REF-00965", "REF-VERIFIED-011", "Co1-07")))
     check("REF_ID_SHAPE refuses a per-slug local label",
           not REF_ID_SHAPE.fullmatch("RAP-04"))
+
+    # check_jurisdiction (I7): every declared member passes, read from the enum rather
+    # than typed here; the ruled rejected spelling refuses naming its replacement.
+    import sys as _sys
+    _sys.path.insert(0, str(REPO_ROOT))
+    from schemas.enums import JurisdictionCode as _J
+
+    def _jur_refusal(v):
+        try:
+            check_jurisdiction(v, "selftest")
+        except Refusal as exc:
+            return str(exc)
+        return None
+    _bad = [m.value for m in _J if _jur_refusal(m.value)]
+    check("check_jurisdiction admits every JurisdictionCode member, and NULL",
+          not _bad and _jur_refusal(None) is None, "refused %s" % _bad)
+    _gb = _jur_refusal("GB")
+    check("check_jurisdiction refuses GB and names UK", bool(_gb) and "'UK'" in _gb,
+          "got %r" % _gb)
 
     # single_doi_in (RC1, DR-2026-09-26 2.2d): the identifier a staged candidate is
     # checked against is extracted from free prose, not a typed field.

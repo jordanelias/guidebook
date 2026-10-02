@@ -65,6 +65,9 @@ MODEL_TABLE_MAP = {
     # in the "no mapped Pydantic model" list looking exactly like a table that was
     # never meant to have one.
     "base_parameter.BaseParameter": "base_parameters",
+    # Migration 101 created its negative space -- a term judged NOT a parameter -- in the
+    # same change that added this mirror, so neither side is ever invisible here.
+    "base_parameter.ParameterDeclination": "parameter_declinations",
     "bpc_metadata.BPCMetadata": "bpc_metadata",
     "connection.Connection": "connections",
     "conflict.Conflict": "conflicts",

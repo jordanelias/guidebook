@@ -24,7 +24,7 @@ CLI usage:
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
     python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG --local-ref-id RAP-07]
+    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
         (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
@@ -42,7 +42,7 @@ import zipfile
 import sqlite3
 import sys
 import argparse
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -108,6 +108,18 @@ now = dbcore.now
 audit = dbcore.audit
 _upd = dbcore.upd
 _validate_cols = dbcore.validate_cols
+
+
+def _txn(conn, dry_run: bool = False):
+    """`conn` itself when the caller already holds a write transaction, else a new one.
+
+    Lets two writers share ONE transaction, so a refusal in the second rolls back the
+    first. `add-source --slug` is the case: the source and its slug link are one
+    admission. As two connect() blocks, a failure in the second left the first
+    committed (GAP-058), and under --dry-run the link's foreign key could not see the
+    rolled-back source, so the dry run crashed with a traceback instead of reporting.
+    """
+    return nullcontext(conn) if conn is not None else connect(dry_run)
 
 
 
@@ -708,6 +720,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             "is no sanctioned path to add it later: search_executions is append-only "
             "under R8 and amend-search cannot touch this column. A zero-yield "
             "expectation is a legitimate prior -- say so.")
+    # The declared jurisdiction vocabulary (I7). Append-only like the prior: amend-search
+    # cannot correct this column either, so a wrong code here costs a compensating
+    # migration.
+    dbcore.check_jurisdiction(jurisdiction, "log-search --jurisdiction")
 
     # RC5 (DR-2026-09-26 5.2c). `origin` is the INITIATION axis (why the step ran);
     # `mining_direction` is the METHOD axis (how) -- orthogonal, so neither can stand
@@ -1368,14 +1384,37 @@ def main():
                             "applies is not retrievable.")
     p_rcl.add_argument("--standard-name", required=True,
                        help="e.g. 'BS 8300-2:2018'. Keyed with --jurisdiction; restating "
-                            "one standard per design parameter is refused.")
+                            "one standard per design parameter is refused, and so is a "
+                            "name that differs from a held one only in case, spacing or "
+                            "punctuation (see --distinct-from).")
     p_rcl.add_argument("--clause", help="R3's locator: clause/section/page, once retrieved")
     p_rcl.add_argument("--status", default="REFERENCE-ONLY",
                        help="Live vocabulary, derived from the table; not a list in this file")
     p_rcl.add_argument("--recovered-from")
     p_rcl.add_argument("--notes")
+    p_rcl.add_argument("--distinct-from", type=int, action="append", default=None,
+                       dest="distinct_from", metavar="LEAD_ID",
+                       help="Repeatable. Admit a name that folds to the same key as this "
+                            "held lead because they are genuinely different documents. "
+                            "Requires --reason, which is appended to --notes.")
+    p_rcl.add_argument("--reason",
+                       help="Only with --distinct-from: why the near-identical names are "
+                            "two documents.")
     p_rcl.add_argument("--session", required=True)
     p_rcl.add_argument("--dry-run", action="store_true")
+
+    p_ucl = sub.add_parser("update-code-lead",
+                           help="Move a code lead's status or clause, APPENDING a dated note "
+                                "(R15: re-describe from the source)")
+    p_ucl.add_argument("--lead-id", required=True, type=int)
+    p_ucl.add_argument("--append-note", required=True, dest="append_note",
+                       help="Appended as a dated UPDATED segment carrying any replaced "
+                            "status or clause. The existing note is never rewritten.")
+    p_ucl.add_argument("--status",
+                       help="From the column's own CHECK; any move is allowed and ledgered")
+    p_ucl.add_argument("--clause", help="R3's locator, replacing the held one")
+    p_ucl.add_argument("--session", required=True)
+    p_ucl.add_argument("--dry-run", action="store_true")
 
     p_cs = sub.add_parser("correct-source",
                           help="Rewrite bibliographic fields FROM THE LOGGED PAYLOAD")
@@ -1501,7 +1540,15 @@ def main():
 
     p_cap = sub.add_parser(
         "close-adversarial-pass",
-        help="Close a pass once every lens is covered and at least one row SURVIVED (RC4)")
+        help="Close a pass once every lens is covered and at least one row SURVIVED (RC4)",
+        description="Close a pass once every lens is covered and at least one row "
+                    "SURVIVED (RC4). Do NOT use it on pass 1: the owner ruling of "
+                    "2026-09-27 (second; references/project-standards.md, ACTION (2)) "
+                    "holds pass 1 OPEN. Pass 2 was left open by its session "
+                    "(sessions/session_2026-09-28-research-batch-21-selection.md); the "
+                    "process-gap plan the owner approved on 2026-10-01 says not to close "
+                    "it, citing that ruling, which names only pass 1. Nothing refuses "
+                    "either; the operator is the gate.")
     p_cap.add_argument("--pass-id", required=True, type=int)
     p_cap.add_argument("--session", required=True)
     p_cap.add_argument("--dry-run", action="store_true")
@@ -1583,10 +1630,24 @@ def main():
                        help="Why the previous text was wrong. Recorded in "
                             "metadata_integrity_detail with the replaced text.")
     p_ams.add_argument("--tier", type=int, default=None,
-                       help="Only with --field scope, and only when the new scope "
-                            "derives a different tier: moves the tier to the one value "
-                            "the ratified ladder produces, in the same statement. The "
-                            "tier is never set on its own.")
+                       help="With --field scope, required when the new scope derives a "
+                            "different tier; with --field evidence_type, optional. Either "
+                            "way it must equal the one value the ratified ladder "
+                            "produces, and moves in the same statement. The tier is "
+                            "never set on its own.")
+    p_ams.add_argument("--scope", default=None,
+                       help="Only with --field evidence_type: the scope the new tier is "
+                            "derived from. Required when the new type spans more than one "
+                            "tier; derived when it admits exactly one.")
+    p_ams.add_argument("--co1-provenance", default=None,
+                       help="Only with --field evidence_type --replacement co1, and "
+                            "required there: the D-0178 warrant naming the co-production. "
+                            "A move OFF co1 keeps the old warrant in the ledger and NULLs "
+                            "the column.")
+    p_ams.add_argument("--co1-source-type", default=None,
+                       help="Only with --field evidence_type --replacement co1, and "
+                            "required there: a member of schemas.enums.Co1SourceType. "
+                            "grain_for grades a Co-1 source's grain from it.")
     p_ams.add_argument("--session", required=True)
     p_ams.add_argument("--dry-run", action="store_true")
 
@@ -1600,8 +1661,25 @@ def main():
                        help="WHICH CLAIM of this source bears on THIS slug. The "
                             "link is a judgement and the warrant is stored with it; "
                             "a link with no rationale cannot be told from a mis-file.")
+    p_lss.add_argument("--local-ref-id",
+                       help="The per-slug label. Optional: DERIVED from the slug's own "
+                            "scheme when omitted. Give it where derivation refuses (a "
+                            "slug whose labels mix schemes, GAP-013). A label another "
+                            "ref_id holds on the slug is refused.")
     p_lss.add_argument("--session", required=True)
     p_lss.add_argument("--dry-run", action="store_true")
+
+    p_sps = sub.add_parser(
+        "supersede-source",
+        help="Mark an admitted source SUPERSEDED BY another (a mirror, a DOI-less "
+             "re-entry). Neither row is deleted; dependents are reported, not moved.")
+    p_sps.add_argument("--ref-id", required=True, help="The source that stops counting")
+    p_sps.add_argument("--by", required=True, help="The admitted source that replaces it")
+    p_sps.add_argument("--reason", required=True,
+                       help="Why these are one source. Appended to the superseded row's "
+                            "notes as a dated SUPERSEDED line.")
+    p_sps.add_argument("--session", required=True)
+    p_sps.add_argument("--dry-run", action="store_true")
 
     p_ul = sub.add_parser("update-locator", help="Move a lead's status in the clue store")
     p_ul.add_argument("--ref-id", required=True)
@@ -1663,7 +1741,7 @@ def main():
     p_at.add_argument("--dry-run", action="store_true")
 
     # add-parameter — the writer base_parameters shipped without. See insert_parameter
-    # for the four refusals and for why --status/--merged-into are deliberately absent.
+    # for its refusals and for why --status/--merged-into are deliberately absent.
     p_spd = sub.add_parser(
         "set-parameter-direction",
         help="Record which way is better for a disabled person on this parameter "
@@ -1689,6 +1767,21 @@ def main():
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")
+
+    # decline-parameter — the other answer to "is this term a parameter?" (migration 101).
+    # See decline_parameter for its refusals and for why there is no un-decline verb.
+    p_dp = sub.add_parser("decline-parameter",
+                          help="Record that a term is NOT a design parameter, and why "
+                               "(parameter_declinations)")
+    p_dp.add_argument("--term-id", dest="term_id", required=True,
+                      help="terms.term_id being declined — must exist and must not "
+                           "already be a parameter")
+    p_dp.add_argument("--reason", required=True,
+                      help="WHY this term is not a quantity under determination (an "
+                           "element, a lens term, a method). Required: a declination that "
+                           "cannot say why cannot be contested.")
+    p_dp.add_argument("--session", required=True)
+    p_dp.add_argument("--dry-run", action="store_true")
 
     # add-population-icf-link / raise-determination-gate / resolve-determination-gate —
     # the writers migration 080's two tables shipped without. See the functions for the
@@ -2361,8 +2454,12 @@ def main():
                            "in one citing document's bibliography, with no independent hit, is UNVERIFIED "
                            "with disposition OPEN, "
                            "not VERIFIED — do not upgrade it because the citing document looks authoritative.")
-    p_as.add_argument("--slug", help="Link to slug (requires --local-ref-id)")
-    p_as.add_argument("--local-ref-id", help="Local ref ID within slug")
+    p_as.add_argument("--slug", help="Link to slug. The slug and the label are resolved "
+                                     "before anything is written; a refusal leaves no row.")
+    p_as.add_argument("--local-ref-id",
+                      help="Per-slug label (with --slug only). Optional: DERIVED from the "
+                           "slug's own scheme when omitted. Give it where derivation "
+                           "refuses (a slug whose labels mix schemes, GAP-013).")
     p_as.add_argument("--session", required=True)
     p_as.add_argument("--dry-run", action="store_true")
 
@@ -2778,8 +2875,14 @@ def main():
             "jurisdiction": args.jurisdiction, "standard_name": args.standard_name,
             "clause": args.clause, "status": args.status,
             "recovered_from": args.recovered_from, "notes": args.notes,
-        }, session=args.session, dry_run=args.dry_run)
+        }, session=args.session, dry_run=args.dry_run,
+            distinct_from=args.distinct_from, reason=args.reason)
         _emit({"lead_id": lid, "dry_run": args.dry_run})
+
+    elif args.command == "update-code-lead":
+        _emit(update_code_lead(args.lead_id, args.append_note, session=args.session,
+                               status=args.status, clause=args.clause,
+                               dry_run=args.dry_run))
 
     elif args.command == "correct-source":
         ch = correct_source(args.ref_id, args.fields, session=args.session,
@@ -2816,7 +2919,15 @@ def main():
                                           args.session, reason=args.reason,
                                           dry_run=args.dry_run))
     elif args.command == "close-adversarial-pass":
-        _emit(close_adversarial_pass(args.pass_id, args.session, args.dry_run))
+        result = close_adversarial_pass(args.pass_id, args.session, args.dry_run)
+        for fid, toks in sorted(result["unresolved"].items()):
+            print(f"REPORTED: finding {fid}: path token(s) that did not resolve to a "
+                  f"file under the repo: {toks}", file=sys.stderr)
+        for fid, toks in sorted(result["database_only"].items()):
+            print(f"REPORTED: finding {fid} was admitted only on {toks}, inside the "
+                  f"database's directory; the database is not an artefact of attack.",
+                  file=sys.stderr)
+        _emit(result)
     elif args.command == "resolve-candidate":
         _emit(resolve_candidate(args.candidate_id, args.disposition, args.redescription,
                                 session=args.session, admitted_ref_id=args.admitted_ref_id,
@@ -2838,7 +2949,9 @@ def main():
     elif args.command == "amend-source":
         _emit(amend_source(args.ref_id, args.field, args.replacement, args.reason,
                            session=args.session, dry_run=args.dry_run,
-                           tier=args.tier))
+                           tier=args.tier, scope=args.scope,
+                           co1_provenance=args.co1_provenance,
+                           co1_source_type=args.co1_source_type))
 
     elif args.command == "retire-specification":
         _emit(retire_specification(args.specification_id, reason=args.reason,
@@ -2846,6 +2959,11 @@ def main():
                                    session=args.session, dry_run=args.dry_run))
     elif args.command == "link-source-slug":
         _emit(link_source_slug(args.ref_id, args.slug, args.rationale,
+                               session=args.session, dry_run=args.dry_run,
+                               local_ref_id=args.local_ref_id))
+
+    elif args.command == "supersede-source":
+        _emit(supersede_source(args.ref_id, args.by, args.reason,
                                session=args.session, dry_run=args.dry_run))
 
     elif args.command == "update-locator":
@@ -2880,6 +2998,14 @@ def main():
         _emit(insert_parameter(
             term_id=args.term_id,
             notes=args.notes,
+            session=args.session,
+            dry_run=args.dry_run,
+        ))
+
+    elif args.command == "decline-parameter":
+        _emit(decline_parameter(
+            term_id=args.term_id,
+            reason=args.reason,
             session=args.session,
             dry_run=args.dry_run,
         ))
@@ -3181,42 +3307,53 @@ def main():
         # refused them. Now something does.
         if (args.evidence_type or "").lower() == "co1" and not args.co1_provenance:
             raise Refusal(
-                "--co1-provenance is REQUIRED for --evidence-type co1. D-0178: the Co-1 "
-                "warrant must NAME the co-production — which disabled people or "
-                "organisation produced this work — because that co-production IS the "
-                "warrant. If it genuinely cannot be evidenced from the source, the row is "
-                "not Co-1; admit it at its actual tier and say why in --notes.")
-        # REFUSE BEFORE ANY WRITE, NOT AFTER. This read
-        # `if args.slug and args.local_ref_id:` around the link INSERT while the
-        # _emit below announced "linked_slug": args.slug unconditionally, so
-        # `add-source --slug X` WITHOUT --local-ref-id wrote no link and said it
-        # had -- the source was admitted to no topic at all, which add-extraction
-        # then refuses on, one step downstream and only after the admission is
-        # already committed. A writer that merely INSERTs is worse than hand SQL
-        # because it looks safe (CLAUDE.md §4); one that REPORTS a write it
-        # skipped is worse still.
+                "--co1-provenance is REQUIRED for --evidence-type co1. "
+                + CO1_WARRANT_REQUIRED
+                + "admit it at its actual tier and say why in --notes.")
+        # THE SLUG AND ITS LABEL ARE RESOLVED READ-ONLY BEFORE ANY WRITE, and the
+        # source and its link are then written in ONE transaction.
         #
-        # THE GUARD ITSELF WAS FIRST WRITTEN AFTER insert_evidence_source, which
-        # made it worse than useless: the refusal fired, but the evidence_sources
-        # row was already committed, so a refused command left an ORPHAN
-        # admission behind -- linked to no slug, carrying no extraction and no
-        # observed term, and the DoD gate duly failed R3 and R11-harvest on it.
-        # An argument check belongs with the argument checks. Measured 2026-09-17
-        # by REF-09999, a probe of this very refusal, surviving in the batch.
-        # --local-ref-id is now OPTIONAL and DERIVED when omitted. It used to be
-        # required, with the refusal telling the operator to run the SELECT by
-        # hand and retype the answer -- rule 8's anti-pattern exactly, a field
-        # that can only be right or wrong and never informative. The derivation
-        # lives on the writer (_next_local_ref_id) so both paths get one answer.
+        # History, because each step was a defect. (1) The link INSERT sat inside
+        # `if args.slug and args.local_ref_id:` while the _emit announced
+        # "linked_slug" unconditionally, so `--slug X` without a label wrote no
+        # link and said it had. (2) The guard added for that was written AFTER
+        # insert_evidence_source, so its refusal left an ORPHAN admission (REF-09999,
+        # 2026-09-17). (3) --local-ref-id then became optional and derived -- and the
+        # derivation's own refusal (a slug whose labels mix schemes) still fired only
+        # inside insert_source_slug_link, after the source had committed. A comment
+        # here claimed "refuse before any write" while that was false: batch 23 left
+        # an orphan this way and had to hand-delete it (GAP-058). (4) Under --dry-run
+        # the second block's foreign key could not see the rolled-back source, so
+        # `add-source --slug ... --dry-run` crashed with a traceback.
+        #
+        # The pre-check below calls the same guards insert_source_slug_link runs, so
+        # there is one rule; the shared transaction means that if anything still
+        # refuses after the source INSERT, nothing is committed.
+        if args.local_ref_id is not None and not args.slug:
+            raise Refusal(
+                "--local-ref-id was given without --slug. The label is per-slug and "
+                "would not be written. Nothing was written.")
+        label = None
+        if args.slug:
+            with connect(readonly=True) as _c:
+                _check_slug_filable(_c, args.slug)
+                label = _check_link_label(_c, args.slug, args.local_ref_id,
+                                          args.ref_id)
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
-        ref_id = insert_evidence_source(data, session=args.session,
-                                        dry_run=args.dry_run, authors=authors)
         local_ref_id = None
-        if args.slug:
-            _, local_ref_id = insert_source_slug_link(
-                ref_id, args.slug, args.local_ref_id,
-                session=args.session, dry_run=args.dry_run)
+        with connect(args.dry_run) as _w:
+            ref_id = insert_evidence_source(data, session=args.session,
+                                            dry_run=args.dry_run, authors=authors,
+                                            conn=_w)
+            if args.slug:
+                wrote, local_ref_id = insert_source_slug_link(
+                    ref_id, args.slug, label, session=args.session, conn=_w)
+                if not wrote:
+                    raise Refusal(
+                        f"the slug link {ref_id} -> '{args.slug}' affected no row, so "
+                        f"neither it nor the source was written. Re-run and read the "
+                        f"refusal.")
         _emit({"ref_id": ref_id, "linked_slug": args.slug,
                "local_ref_id": local_ref_id, "dry_run": args.dry_run})
 
@@ -3543,12 +3680,16 @@ def parse_author_display(display: str) -> list[dict]:
 
 def insert_evidence_source(data: dict, session: str,
                            dry_run: bool = False,
-                           authors: list[dict] | None = None) -> str:
+                           authors: list[dict] | None = None,
+                           conn=None) -> str:
     """Insert a new evidence source and its author rows. Returns ref_id.
 
     `authors` is a list of evidence_source_authors rows, from parse_author_flags or
     parse_author_display. It is written in the SAME transaction as the source, so a
     source can never exist without the authors it was filed with.
+
+    `conn`, when given, is a write transaction the caller owns (see _txn): the rows
+    land in it and commit or roll back with whatever else the caller writes there.
     """
     # Map legacy logical field names to the real evidence_sources columns and drop
     # doi_less_key (no such column in the current schema). Without this the CLI crashed
@@ -3660,6 +3801,10 @@ def insert_evidence_source(data: dict, session: str,
             f"function for months while no command existed), which computes the high-water mark as the "
             f"UNION of every table holding a ref_id. Nothing was written.")
 
+    # THE DECLARED JURISDICTION VOCABULARY (I7, 2026-10-01). Before this the column took
+    # any string, and the blocking jurisdiction_db_vocabulary audit found it afterwards.
+    dbcore.check_jurisdiction(data.get("jurisdiction"), "add-source --jurisdiction")
+
     # A verification standing implies its evidence — so REFUSE the write when the
     # evidence is absent. Do not fill it in.
     #
@@ -3699,7 +3844,7 @@ def insert_evidence_source(data: dict, session: str,
         data.setdefault("verification_attempt_count", 1)
 
     row = {**data, **audit(session)}
-    with connect(dry_run) as conn:
+    with _txn(conn, dry_run) as conn:
         # NOT `INSERT OR IGNORE`. That silently no-opped on a colliding ref_id
         # and still returned the ref_id as though the write had happened — so a
         # session could file a source, be told it succeeded, and have written
@@ -4593,10 +4738,62 @@ def dispose_adversarial_finding(finding_id: int, disposition: str, ref: str, ses
                 "disposed_by_session": session, "disposed_at": stamp["created_at"]}
 
 
+#: Wrapping punctuation stripped from an artefact token before it is resolved: brackets
+#: and list separators from prose ("(and the other 11)", "a.json;"), quotes and the
+#: backtick an agent puts round a path. A trailing full stop is stripped separately so a
+#: leading "../" keeps its dots and still meets the containment check.
+_ARTEFACT_TOKEN_WRAP = "()[]{},;:'\"`"
+
+
+def _artefact_path_tokens(artefact: str) -> list:
+    """The path-shaped tokens of a finding's artefact string: each whitespace-separated
+    token containing '/', stripped of wrapping punctuation, de-duplicated in order."""
+    out = []
+    for tok in (artefact or "").split():
+        if "/" not in tok:
+            continue
+        prev = None
+        while tok != prev:          # "`a/b.md`." needs both strips, in either order
+            prev = tok
+            tok = tok.strip(_ARTEFACT_TOKEN_WRAP).rstrip(".")
+        if tok and tok not in out:
+            out.append(tok)
+    return out
+
+
 def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) -> dict:
     """Close a pass (RC4). Refuses unless every lens has a row, at least one row is
-    SURVIVED, every NOT-ATTACKED row's method says why, and every SURVIVED row names
-    an artefact that exists on disk.
+    SURVIVED, every NOT-ATTACKED row's method says why, and every SURVIVED row's
+    artefact resolves to at least one existing file under the repo.
+
+    THE ARTEFACT IS PARSED, NOT MATCHED WHOLE (GAP-055). The antagonist brief asks for
+    the artefact a claim was attacked WITH, and the antagonist writes it as a citation:
+    "<file> page 15", "<file>; <file>", "<file> and the other five". The literal
+    single-file check refused every one of those, so a good-faith pass could not close
+    and nothing could amend a finding afterwards (the 2026-09-27 ruling forbids building
+    that verb). The candidates are the whole string, then each path-shaped token
+    (_artefact_path_tokens); one that resolves through dbcore.resolve_under to an
+    existing file satisfies the finding. Containment is still checked on the RESOLVED
+    path, so "../outside/x" is refused however it is wrapped. Path-shaped tokens that do
+    not resolve are returned as `unresolved` (the CLI prints them as REPORTED): one real
+    file admits the finding, and the others it cites stay visible rather than vanish.
+
+    THE DATABASE IS NOT AN ARTEFACT OF ATTACK. A token that resolves only inside the
+    directory holding the canonical database (dbcore.CANONICAL_DB's parent) proves that a
+    file exists, not what a claim was attacked with: "data/guidebook.db <a query>" names
+    every finding's subject at once. Such a finding still closes -- refusing it would
+    re-open the GAP-055 trap for a good-faith citation -- but it is returned as
+    `database_only` and the CLI prints it as REPORTED, so the weakness stays visible.
+
+    PASSES THIS VERB MUST NOT BE USED ON. Pass 1 is held OPEN by the owner ruling of
+    2026-09-27 (second, "exec 77 executed ...; further tooling on pass 1 stood down",
+    references/project-standards.md), ACTION (2): "Do not build `amend-adversarial-finding`
+    or otherwise chase pass 1 closed as its own effort; it stays open." Pass 2 was left
+    OPEN by its own session (sessions/session_2026-09-28-research-batch-21-selection.md);
+    the process-gap remediation plan the owner approved on 2026-10-01 says not to close it
+    either, citing the same ruling -- which names only pass 1.
+    Nothing here refuses them: a curated list of pass ids beside the passes table is what
+    rule 8 forbids. The operator is the gate, and this is where they are told.
     """
     with connect(dry_run) as conn:
         prow = conn.execute(
@@ -4618,6 +4815,17 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
                 f"pass {pass_id}: no SURVIVED row. A zero-finding pass must be able to "
                 f"show what it attacked (2026-08-19 RULE), or it is indistinguishable "
                 f"from a pass that never ran.")
+        def _is_file(tok):
+            p = dbcore.resolve_under(dbcore.REPO_ROOT, tok)
+            return p is not None and p.is_file()
+
+        db_dir = dbcore.CANONICAL_DB.resolve().parent
+
+        def _in_db_dir(tok):
+            p = dbcore.resolve_under(dbcore.REPO_ROOT, tok)
+            return p is not None and db_dir in p.resolve().parents
+
+        unresolved, database_only = {}, {}
         for f in findings:
             if (f["verdict"] == "NOT-ATTACKED"
                     and len((f["method"] or "").strip()) < 10):
@@ -4626,16 +4834,28 @@ def close_adversarial_pass(pass_id: int, session: str, dry_run: bool = False) ->
                     f"({f['method']!r}) is too short to say why. A placeholder is not "
                     f"a reason.")
             if f["verdict"] == "SURVIVED":
-                artefact = f["artefact"] or ""
-                resolved = dbcore.resolve_under(dbcore.REPO_ROOT, artefact) if artefact else None
-                if not resolved or not resolved.is_file():
+                artefact = (f["artefact"] or "").strip()
+                path_tokens = _artefact_path_tokens(artefact)
+                tried = ([artefact] if artefact else []) + [
+                    t for t in path_tokens if t != artefact]
+                if not any(_is_file(t) for t in tried):
                     raise Refusal(
                         f"finding {f['finding_id']}: verdict=SURVIVED names artefact "
-                        f"{artefact!r}, which is not an existing file under the repo.")
+                        f"{artefact!r}, and no candidate resolves to an existing file "
+                        f"under the repo. Tried: {tried}. Lead the artefact with one "
+                        f"repo-relative path to an existing (committed) file; anything "
+                        f"after it is a qualifier.")
+                missed = [t for t in path_tokens if not _is_file(t)]
+                if missed:
+                    unresolved[f["finding_id"]] = missed
+                admitting = [t for t in tried if _is_file(t)]
+                if admitting and all(_in_db_dir(t) for t in admitting):
+                    database_only[f["finding_id"]] = admitting
         stamp = audit(session)
         conn.execute("UPDATE adversarial_passes SET closed_at=? WHERE pass_id=?",
                      [stamp["created_at"], pass_id])
-        return {"pass_id": pass_id, "closed_at": stamp["created_at"], "findings": len(findings)}
+        return {"pass_id": pass_id, "closed_at": stamp["created_at"], "findings": len(findings),
+                "unresolved": unresolved, "database_only": database_only}
 
 
 def _check_rehome_destination(conn, subject: str, suggested_slug, found_under_slug):
@@ -5099,6 +5319,16 @@ R9_REMEDY = (
     "`db.py link-source-slug --ref-id <held> --slug <slug> --rationale <why>`"
 )
 
+# THE CO-1 WARRANT SENTENCE (D-0178), in one place for the same reason as R9_REMEDY.
+# add-source refuses a Co-1 admission without --co1-provenance, and amend-source
+# refuses a move TO co1 without it; both interpolate this and add their own remedy, so
+# the doctrine cannot drift between the two doors into the tier.
+CO1_WARRANT_REQUIRED = (
+    "D-0178: the Co-1 warrant must NAME the co-production — which disabled people or "
+    "organisation produced this work — because that co-production IS the warrant. If it "
+    "genuinely cannot be evidenced from the source, the row is not Co-1; "
+)
+
 
 _AMENDABLE = (
     "co1_provenance", "co1_source_type", "grey_reason", "verification_note",
@@ -5126,8 +5356,11 @@ _AMENDABLE = (
     # choosing INT over a country code is an adjudication, not a transcription.
     # The single-country case (a US survey of ADA-regulated transit) is closer to
     # bibliographic, but splitting one column across two writers by which value it
-    # happens to take would be worse than either home. The vocabulary stays gated
-    # by validate_jurisdiction, so this widens WHO may correct it, not WHAT to.
+    # happens to take would be worse than either home. The vocabulary is gated in
+    # amend_source by dbcore.check_jurisdiction, so this widens WHO may correct it,
+    # not WHAT to. (Until 2026-10-01 this said the vocabulary "stays gated by
+    # validate_jurisdiction". That was false: validate_jurisdiction globs files and
+    # never reads a table, and this writer accepted any string.)
     "jurisdiction",
     # verification_status and doi_resolution_outcome, added 2026-09-18, and the case
     # for them is the case I4 and C04 make against a row this repository just wrote.
@@ -5150,11 +5383,152 @@ _AMENDABLE = (
     # WHO may correct these, not WHAT to -- the vocabularies stay gated where they were.
     "verification_status",
     "doi_resolution_outcome",
+    # evidence_type, added 2026-10-01 (I1 of the batch-23 process-gap review). The type
+    # is a CLASSIFICATION -- is this Co-1 work, a code, a grey report? -- which no
+    # payload settles, and that review found a mis-tiered row (a Co-1/T6 contradiction)
+    # with no correction after capture except hand SQL against a table the CLI reaches.
+    # The tier moves WITH the type, derived by the ratified ladder in the same
+    # statement, exactly as the scope path below moves it; _retype_source refuses any
+    # move a live determination rests on. This grows a curated tuple rule 8 names as a
+    # violator: GAP-013 item (1), deriving the amendable set from the live columns,
+    # remains the fix.
+    "evidence_type",
 )
 
 
+def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance,
+                   co1_source_type=None):
+    """The columns an `amend-source --field evidence_type` move writes beside the type,
+    and the ledger text recording them; None when the row already says this.
+
+    THE VOCABULARY IS THE LADDER. evidence_sources.evidence_type declares no CHECK
+    (`dbcore.check_values(conn, 'evidence_sources', 'evidence_type')` is empty), so its
+    one home is the keys of schemas.tier_derivation.VALID_SCOPES_BY_TYPE, which
+    add-source already gates on. The scope is required unless the new type admits
+    exactly one, and the tier is DERIVED from (type, scope): --tier is optional and
+    refused when it disagrees, because a tier is never asserted on its own.
+
+    THE CO-1 FIELDS MOVE WITH THE TYPE. A move to co1 needs the D-0178 warrant AND a
+    co1_source_type: schemas/evidence_source.py co1_field_consistency requires both, and
+    schemas.directness.grain_for grades a Co-1 source's grain FROM co1_source_type (a
+    community-consensus type is population-grain; NULL falls back to individual-grain),
+    so a retype that left it NULL would silently downgrade the source it re-tiers. The
+    column declares no CHECK, so its vocabulary is schemas.enums.Co1SourceType, the
+    mirror's one home. A move off co1 copies every co1_* column into the ledger and sets
+    it NULL: those columns
+    are only valid on a Co-1 row (schemas/evidence_source.py co1_field_consistency),
+    and only co1 rows carry them (`select evidence_type, count(co1_provenance),
+    count(co1_source_type) from evidence_sources group by 1`). The set is read from the
+    live schema by its co1_ prefix, never listed. Left in place, a Co-1 warrant on a
+    non-Co-1 row is a live claim about a tier the row no longer holds.
+
+    NEVER MOVE AN ADJUDICATED FIGURE. A live determination resting on the source
+    (dbcore.determinations_resting_on) refuses the move: re-tiering its source would
+    change a written answer's evidence without re-deciding it.
+    """
+    from schemas.tier_derivation import VALID_SCOPES_BY_TYPE, derive_tier  # noqa: E402
+    valid = VALID_SCOPES_BY_TYPE.get(new_type)
+    if valid is None:
+        raise Refusal(
+            f"{ref_id}: evidence_type {new_type!r} is not on the ratified ladder. Known "
+            f"types: {sorted(VALID_SCOPES_BY_TYPE)}. Nothing was written.")
+    if scope is None and len(valid) == 1:
+        scope = next(iter(valid))                    # forced by the type; not a judgment
+    if scope is None:
+        raise Refusal(
+            f"{ref_id}: --scope is REQUIRED to move evidence_type to {new_type!r}: it is "
+            f"the discriminator the tier is derived from, and this type spans more than "
+            f"one tier. Choose {sorted(valid)}. Nothing was written.")
+    if scope not in valid:
+        raise Refusal(
+            f"{ref_id}: --scope {scope!r} is not admissible for evidence_type "
+            f"{new_type!r}; valid: {sorted(valid)}. Nothing was written.")
+    derived = derive_tier(new_type, scope)
+    if tier is not None and int(tier) != derived:
+        raise Refusal(
+            f"{ref_id}: --tier {tier} contradicts the ratified ladder, which derives "
+            f"{derived} from ({new_type}, {scope}). The tier is not a free field; drop "
+            f"--tier or correct the type or scope. Nothing was written.")
+    co1_cols = [c[1] for c in conn.execute("PRAGMA table_info(evidence_sources)")
+                if c[1].startswith("co1_")]
+    cur = conn.execute(
+        "SELECT evidence_type, scope, tier%s FROM evidence_sources WHERE ref_id=?"
+        % "".join(f", {c}" for c in co1_cols), [ref_id]).fetchone()
+    old_type = cur["evidence_type"]
+    if (old_type or "").strip().lower() == new_type:
+        if cur["scope"] == scope and cur["tier"] == derived:
+            return None
+        raise Refusal(
+            f"{ref_id}: evidence_type is already {new_type!r} (scope {cur['scope']!r}, "
+            f"tier {cur['tier']}). This path moves a TYPE; a scope move on an unchanged "
+            f"type is `amend-source --field scope`, which carries the tier with it. "
+            f"Nothing was written.")
+    provenance = (co1_provenance or "").strip()
+    if new_type == "co1" and not provenance:
+        raise Refusal(
+            f"{ref_id}: --co1-provenance is REQUIRED to move evidence_type to co1. "
+            + CO1_WARRANT_REQUIRED
+            + "leave it at its actual tier. Nothing was written.")
+    if new_type != "co1" and co1_provenance is not None:
+        raise Refusal(
+            f"{ref_id}: --co1-provenance is only admissible when the new evidence_type is "
+            f"co1; {new_type!r} carries no Co-1 warrant. Nothing was written.")
+    source_type = (co1_source_type or "").strip()
+    if new_type != "co1" and co1_source_type is not None:
+        raise Refusal(
+            f"{ref_id}: --co1-source-type is only admissible when the new evidence_type "
+            f"is co1; {new_type!r} carries no Co-1 source type. Nothing was written.")
+    if new_type == "co1":
+        from schemas.enums import Co1SourceType  # noqa: E402
+        members = sorted(m.value for m in Co1SourceType)
+        if not source_type:
+            raise Refusal(
+                f"{ref_id}: --co1-source-type is REQUIRED to move evidence_type to co1. "
+                f"A Co-1 row needs it (co1_field_consistency), and grain_for grades the "
+                f"source's grain from it: left NULL, a community-consensus source reads as "
+                f"one person's account. Choose from schemas.enums.Co1SourceType: "
+                f"{members}. Nothing was written.")
+        if source_type not in members:
+            raise Refusal(
+                f"{ref_id}: --co1-source-type {source_type!r} is not a member of "
+                f"schemas.enums.Co1SourceType: {members}. Nothing was written.")
+    resting = dbcore.determinations_resting_on(conn, ref_id)
+    if resting:
+        named = ", ".join(f"specification {sid} (via {junction})"
+                          for junction, sid in resting)
+        raise Refusal(
+            f"{ref_id} carries a live determination: {named}. Moving its evidence_type "
+            f"re-tiers the evidence that answer was written on without re-deciding it. "
+            f"Retire the specification first (db.py retire-specification), then amend, "
+            f"then re-determine. Never move an adjudicated figure. Nothing was written.")
+    sets = {"scope": scope, "tier": derived}
+    moved_scope = (f"scope {cur['scope']!r} unchanged" if cur["scope"] == scope
+                   else f"scope {cur['scope']!r} -> {scope!r}")
+    text = (f". {moved_scope}; tier {cur['tier']} -> {derived}, derived from "
+            f"(evidence_type, scope) by the ratified ladder in the same statement as the "
+            f"type.")
+    if new_type == "co1":
+        sets["co1_provenance"] = provenance
+        sets["co1_source_type"] = source_type
+        text += (f" co1_provenance written as the D-0178 warrant; replaced text was: "
+                 f"{cur['co1_provenance']!r}. co1_source_type written as "
+                 f"{source_type!r}; replaced value was {cur['co1_source_type']!r}.")
+    leaving = (old_type or "").strip().lower() == "co1"
+    moved = {c: cur[c] for c in co1_cols if leaving and cur[c] is not None}
+    if moved:
+        sets.update({c: None for c in moved})
+        text += (" Leaving co1, so the Co-1-only fields are set NULL and their text is "
+                 "kept here: " + "; ".join(f"{c} was {v!r}" for c, v in moved.items())
+                 + ".")
+    out = {"type_was": old_type, "type_now": new_type, "scope_was": cur["scope"],
+           "scope_now": scope, "tier_was": cur["tier"], "tier_now": derived,
+           "nulled": sorted(moved)}
+    return {"sets": sets, "ledger": text, "out": out}
+
+
 def amend_source(ref_id: str, field: str, replacement: str, reason: str,
-                 session: str, dry_run: bool = False, tier=None):
+                 session: str, dry_run: bool = False, tier=None, scope=None,
+                 co1_provenance=None, co1_source_type=None):
     """Replace a JUDGEMENT field on an evidence row, recording what was replaced.
 
     Replaces rather than appends, and that is the opposite of what resolve-candidate
@@ -5191,6 +5565,22 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         raise Refusal(
             f"{ref_id}: --reason is required. An unexplained overwrite of a warrant is "
             f"indistinguishable from the error it replaces.")
+    if field == "evidence_type":
+        # Stored lower-case, as add-source stores it: assess_cell.classify() compares
+        # against lower-case literals, so 'CO1' would stop anchoring anything.
+        replacement = replacement.lower()
+    elif scope is not None or co1_provenance is not None or co1_source_type is not None:
+        raise Refusal(
+            f"{ref_id}: --scope, --co1-provenance and --co1-source-type are only "
+            f"admissible beside --field evidence_type, where they travel with the type. A "
+            f"scope on its own is `--field scope`; a Co-1 row's warrant or source type on "
+            f"its own is `--field co1_provenance` / `--field co1_source_type`. Nothing was "
+            f"written.")
+    if field == "jurisdiction":
+        # No CHECK on the column, so check_declared below is a no-op for it; the declared
+        # vocabulary is the enum (I7).
+        dbcore.check_jurisdiction(replacement,
+                                  f"{ref_id}: amend-source --field jurisdiction")
     # ── THE TWO VERIFICATION FIELDS CARRY insert_source's REFUSALS WITH THEM ──
     #
     # Added 2026-09-18, hours after those fields were made amendable, because making
@@ -5220,13 +5610,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
     # `dbcore.check_declared` below now refuses a bad value from the schema itself and
     # accepts REVERTED. Verified before deleting: check_declared refuses 'BOGUS' and admits
     # 'REVERTED'. One home, and it is the schema's.
-    if tier is not None and field != "scope":
+    if tier is not None and field not in ("scope", "evidence_type"):
         raise Refusal(
-            f"{ref_id}: --tier is only admissible beside --field scope. The tier is "
+            f"{ref_id}: --tier is only admissible beside --field scope or --field "
+            f"evidence_type. The tier is "
             f"DERIVED from (evidence_type, scope) by the ratified ladder; it is never "
             f"set on its own, because a tier with no derivation input is exactly the "
             f"state B5(b) found on all nine sources and could not check.")
-    new_tier = old_tier = None
+    new_tier = old_tier = retype = None
     with connect(dry_run) as conn:
         row = conn.execute(f"SELECT ref_id, {field}, verification_method, "
                            f"verification_disposition, verification_closure_reason, "
@@ -5303,7 +5694,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"verification_attempt_count to say WHY the closure stands, then "
                     f"demote the standing.")
         was = row[field]
-        if (was or "").strip() == replacement:
+        if field == "evidence_type":
+            # The type's own no-op test lives in _retype_source: an unchanged type with a
+            # different scope is a refusal there, not a silent no-op here.
+            retype = _retype_source(conn, ref_id, replacement, scope, tier, co1_provenance,
+                                    co1_source_type)
+            if retype is None:
+                return {"ref_id": ref_id, "field": field, "changed": False}
+        elif (was or "").strip() == replacement:
             return {"ref_id": ref_id, "field": field, "changed": False}
         if field == "scope":
             # BYPASS CLOSED 2026-09-10. `scope` is amendable, and amending it changes
@@ -5344,6 +5742,11 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                 # derives from the new scope, in the same statement as that scope, with
                 # a reason. There is no path here that writes a row the ladder cannot
                 # produce -- which was the original refusal's whole point.
+                #
+                # THE SECOND PATH, added 2026-10-01 (I1): `--field evidence_type` moves
+                # the tier with the TYPE by the same derivation (_retype_source), with
+                # --tier optional there and refused when it disagrees. `tier` itself is
+                # still in neither _AMENDABLE nor _CORRECTABLE.
                 if tier is None:
                     raise Refusal(
                         f"{ref_id}: amending scope to {replacement!r} would make the "
@@ -5372,8 +5775,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         # register to be worth re-creating. Until then the warrant lives here, in the
         # column `metadata_integrity_audit.py` actually reads.
         ledger = (row["metadata_integrity_detail"] or "").rstrip()
-        ledger += (f" || {stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
+        segment = (f"{stamp['created_at'][:10]} {field} CORRECTED ({reason}). "
                    f"Replaced text was: {was!r}")
+        if retype is not None:
+            # ONE segment: the type, its scope and tier, and any Co-1 text it carries out
+            # of the columns, so the move cannot be read in halves.
+            segment += retype["ledger"]
+            retype["out"]["ledger_segment"] = segment
+        ledger += " || " + segment
         if new_tier is not None:
             ledger += (f" || {stamp['created_at'][:10]} tier CORRECTED {old_tier} -> "
                        f"{new_tier}, derived from (evidence_type, scope) by the "
@@ -5381,6 +5790,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
         _sets, _vals = [f"{field}=?"], [replacement]
         if new_tier is not None:
             _sets.append("tier=?"); _vals.append(new_tier)
+        for col, value in (retype or {}).get("sets", {}).items():
+            _sets.append(f"{col}=?"); _vals.append(value)
         conn.execute(
             f"UPDATE evidence_sources SET {', '.join(_sets)}, "
             f"metadata_integrity_status=?, metadata_integrity_detail=?, "
@@ -5391,6 +5802,8 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                "was_chars": len(was or ""), "now_chars": len(replacement)}
         if new_tier is not None:
             out["tier_was"], out["tier_now"] = old_tier, new_tier
+        if retype is not None:
+            out.update(retype["out"])
         return out
 
 
@@ -5553,6 +5966,7 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
             raise Refusal(
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
                 f"observed IN a source; observe it after the source is filed.")
+        _refuse_tombstone(conn, ref, "observe-term")
         row = {"ref_id": ref, "surface_form": surface,
                "language": (data.get("language") or "EN").strip().upper(),
                "locator": data.get("locator"),
@@ -5915,6 +6329,10 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
 
     * A term that does not exist. The FK would say `FOREIGN KEY constraint failed`,
       which names neither the term nor the fix.
+    * A DECLINED term (`parameter_declinations`, migration 101). Someone judged it not a
+      design parameter and said why; promoting it would leave two answers to one
+      question. Reversing a declination is a recorded decision, not a promotion, so the
+      refusal names the standing declination and there is no un-decline verb.
     DELIBERATELY NOT REFUSED: a term with no adjudication. The first cut of this writer
     demanded a NAMES-NEW/NAMES-EXISTING row, on the reasoning that a parameter is the
     output of judgment (D-0173). Exercised against a scratch copy, that refusal blocked
@@ -5952,6 +6370,17 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"comes from an observed phrase:\n"
                 f"  db.py observe-term ...   then   db.py add-term --from-observation N "
                 f"--canonical-en '...' --rationale '...'")
+        declined = conn.execute(
+            "SELECT reason, created_at, created_by_session FROM parameter_declinations "
+            "WHERE term_id=?", [term_id]).fetchone()
+        if declined:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) was DECLINED as a parameter by "
+                f"{declined['created_by_session']} at {declined['created_at']}: "
+                f"{declined['reason']!r}.\n"
+                f"Reversing a declination is a recorded decision "
+                f"(governance/decision-protocol.md) and a compensating migration, not a "
+                f"promotion. Nothing was written.")
         if _VALUE_BEARING.search(term["canonical_en"]):
             raise Refusal(
                 f"{term_id} is named {term['canonical_en']!r}, which carries a number, a "
@@ -5981,6 +6410,87 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 "provenance": ("adjudicated" if adj else "base-vocabulary"),
                 "adjudicated_by": (adj["adjudication_id"] if adj else None),
                 "outcome": (adj["outcome"] if adj else None),
+                "dry_run": dry_run}
+
+
+def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = False):
+    """Record that a term is NOT a design parameter, and why — `parameter_declinations`.
+
+    GAP-061's prerequisite. A term judgment has named had one recordable fate: promotion
+    (`add-parameter`). A term naming something other than a quantity under determination
+    — a population lens term ('wheelchair user'), an element whose quantities are
+    separate terms ('ramp'), a method — had none, so "not yet looked at" and "looked at
+    and judged not a parameter" read the same. This records the second answer, with its
+    warrant, so the judgement can be found and contested.
+
+    A SEPARATE TABLE, NOT A `base_parameters.status` VALUE (migration 101): a declined
+    term never holds a parameter_id that an extraction or a determination could point at.
+
+    WHAT IT REFUSES, and why each refusal is the point:
+
+    * A blank --term-id.
+    * A term that does not exist. The FK would say `FOREIGN KEY constraint failed`,
+      which names neither the term nor the route a term comes from.
+    * A blank reason. A declination that cannot say why cannot be contested; the schema
+      CHECK refuses it too, but would say so as an IntegrityError.
+    * A term that is already a parameter, whatever its status. Declining it would leave
+      that parameter_id standing beside a record saying the term is not a parameter —
+      two answers to one question. Retiring a parameter is a different act on the
+      parameter's own row.
+    * A term already declined. One row per term (the PRIMARY KEY); the refusal names the
+      standing reason and session, because the fix is to read that judgement, not to
+      restate it.
+
+    DELIBERATELY NOT REFUSED: a term with no adjudication, for the reason
+    `insert_parameter` gives — the base vocabulary predates observe/adjudicate, and a gate
+    on adjudication would make a writer that cannot write.
+
+    DELIBERATELY ABSENT: an un-decline verb. Reversing a declination is a recorded
+    decision and a compensating migration, and nothing reads an un-decline yet (CLAUDE.md
+    §8). `insert_parameter` refuses a declined term and names this row.
+    """
+    term_id = (term_id or "").strip()
+    if not term_id:
+        raise Refusal("--term-id is required: a declination is a judgement about a term.")
+    reason = dbcore.require_reason(
+        reason, term_id, why="A declination that cannot say why cannot be contested.")
+    with connect(dry_run) as conn:
+        term = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?",
+                            [term_id]).fetchone()
+        if term is None:
+            raise Refusal(
+                f"{term_id!r}: no such term. Only a term can be declined, and a term comes "
+                f"from an observed phrase:\n"
+                f"  db.py observe-term ...   then   db.py add-term --from-observation N "
+                f"--canonical-en '...' --rationale '...'")
+        param = conn.execute(
+            "SELECT parameter_id, status FROM base_parameters WHERE term_id=?",
+            [term_id]).fetchone()
+        if param:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) is already parameter "
+                f"{param['parameter_id']} (status {param['status']}). Declining it would "
+                f"leave that parameter_id standing beside a record saying the term is not "
+                f"a parameter.\n"
+                f"Retiring a parameter is a different act on parameter "
+                f"{param['parameter_id']}'s own row, not a declination. Nothing was written.")
+        prior = conn.execute(
+            "SELECT reason, created_at, created_by_session FROM parameter_declinations "
+            "WHERE term_id=?", [term_id]).fetchone()
+        if prior:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) is already declined, by "
+                f"{prior['created_by_session']} at {prior['created_at']}: "
+                f"{prior['reason']!r}.\n"
+                f"One declination per term. If that reason is wrong, that is a decision "
+                f"(governance/decision-protocol.md), not a second row. Nothing was written.")
+        row = {"term_id": term_id, "reason": reason}
+        row.update(dbcore.stamp_for(conn, "parameter_declinations", session))
+        conn.execute(f"INSERT INTO parameter_declinations ({','.join(row)}) "
+                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
+        return {"term_id": term_id, "canonical_en": term["canonical_en"],
+                "declined": True, "reason": reason,
+                "created_by_session": row.get("created_by_session"),
                 "dry_run": dry_run}
 
 
@@ -7028,6 +7538,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         "figure_role", "comparator",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
+    dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
     row = {k: v for k, v in data.items() if v is not None}
 
     # A BLANK IS NOT AN ABSENCE — normalise before anything reads these.
@@ -7042,6 +7553,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. An extraction "
                 f"is a reading OF a source; extract AFTER admission.\n"
                 f"  db.py add-source ...")
+        _refuse_tombstone(conn, ref, "add-extraction")
         row["ref_id"] = ref
 
         if not dbcore.exists(conn, "slugs", "slug", row.get("slug")):
@@ -7739,7 +8251,9 @@ def _next_local_ref_id(conn, slug: str) -> str:
         raise Refusal(
             f"slug '{slug}' already mixes local_ref_id label schemes "
             f"({sorted(set(taken))[:6]}); a derived label cannot be trusted to "
-            f"match. Reconcile the scheme before filing into this slug.")
+            f"match. Pass --local-ref-id with the label you mean (add-source and "
+            f"link-source-slug both take it), or reconcile the scheme (GAP-013). "
+            f"Nothing was written.")
     nxt = max((int(m.group(2)) for m in parsed), default=0) + 1
     if not prefixes:
         return str(nxt)
@@ -7768,9 +8282,37 @@ def _check_slug_filable(conn, slug: str) -> str:
     return row[0]
 
 
+def _check_link_label(conn, slug: str, local_ref_id, ref_id: str) -> str:
+    """The label `ref_id` would file under on `slug`: the supplied one, stripped, or
+    the derived next one. Refuses a blank supplied label, and a label another ref_id
+    already holds on that slug.
+
+    source_slug_links has no UNIQUE(slug, local_ref_id) -- check it with
+    `select sql from sqlite_master where name='source_slug_links'` -- so nothing but
+    this refusal stops two sources sharing the one label that exists to tell them
+    apart inside the slug.
+    """
+    if local_ref_id is None:
+        return _next_local_ref_id(conn, slug)
+    label = local_ref_id.strip()
+    if not label:
+        raise Refusal(
+            "--local-ref-id is blank. Omit it to derive the slug's next label, or "
+            "give one. Nothing was written.")
+    holder = conn.execute(
+        "SELECT ref_id FROM source_slug_links WHERE slug=? AND local_ref_id=? "
+        "AND ref_id<>?", (slug, label, ref_id)).fetchone()
+    if holder:
+        raise Refusal(
+            f"local_ref_id {label!r} is already held on slug '{slug}' by "
+            f"{holder[0]}. A label names one source inside its slug. Choose an "
+            f"unused label. Nothing was written.")
+    return label
+
+
 def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str | None,
                              session: str, dry_run: bool = False,
-                             relevance_note: str | None = None):
+                             relevance_note: str | None = None, conn=None):
     """Link an evidence source to a slug. THE ONLY INSERT into this table.
 
     `relevance_note` is the GROUNDS -- which claim of this source bears on this
@@ -7780,18 +8322,20 @@ def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str | None,
 
         select count(relevance_note), count(*) from source_slug_links;
 
-    `local_ref_id=None` DERIVES the label from the slug's own scheme. Both the
-    guards and the derivation live here, not in a caller, because every caller
-    lands the same row.
+    `local_ref_id=None` DERIVES the label from the slug's own scheme; a supplied
+    label is refused if another ref_id holds it on the slug (_check_link_label).
+    Both the guards and the derivation live here, not in a caller, because every
+    caller lands the same row.
 
-    Returns True when a row was actually inserted: the INSERT is OR IGNORE, and
-    a caller that reports success on rowcount 0 reports a write it did not
-    perform.
+    `conn`, when given, is a write transaction the caller owns (see _txn).
+
+    Returns (inserted, label). `inserted` is True only when a row was actually
+    inserted: the INSERT is OR IGNORE, and a caller that reports success on
+    rowcount 0 reports a write it did not perform.
     """
-    with connect(dry_run) as conn:
+    with _txn(conn, dry_run) as conn:
         _check_slug_filable(conn, slug)
-        if local_ref_id is None:
-            local_ref_id = _next_local_ref_id(conn, slug)
+        local_ref_id = _check_link_label(conn, slug, local_ref_id, ref_id)
         cur = conn.execute(
             "INSERT OR IGNORE INTO source_slug_links "
             "(ref_id, slug, local_ref_id, relevance_note, created_at, "
@@ -7804,8 +8348,12 @@ def insert_source_slug_link(ref_id: str, slug: str, local_ref_id: str | None,
 
 
 def link_source_slug(ref_id: str, slug: str, rationale: str,
-                     session: str, dry_run: bool = False):
+                     session: str, dry_run: bool = False, local_ref_id: str | None = None):
     """Cross-file an ALREADY-ADMITTED source to an ADDITIONAL slug (R9).
+
+    `local_ref_id` is optional and DERIVED when omitted. It exists for the slug whose
+    labels already mix schemes, where derivation refuses (GAP-013) and the label could
+    otherwise not be said at all; a supplied label another ref_id holds is refused.
 
     WHY THIS EXISTS. `add-source` refuses a second call for a ref_id with
     R9_REMEDY's instruction -- and until 2026-09-18 no command carried it out,
@@ -7855,6 +8403,14 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
             raise Refusal(
                 f"{ref_id} is already linked to '{slug}' AND already carries "
                 f"grounds. Refusing to overwrite a recorded judgement.")
+        if local_ref_id is not None and local_ref_id.strip() != existing[0]:
+            # The backfill below writes grounds only. Accepting a different label here
+            # would report a relabel that never happened.
+            raise Refusal(
+                f"{ref_id} is already linked to '{slug}' under label "
+                f"{existing[0]!r}; --local-ref-id {local_ref_id!r} would not be "
+                f"written. This verb backfills grounds; it does not relabel. "
+                f"Nothing was written.")
         u = _upd(session)
         with connect(dry_run) as conn:
             conn.execute(
@@ -7865,7 +8421,7 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
         local_ref_id, action = existing[0], "backfilled"
     else:
         wrote, local_ref_id = insert_source_slug_link(
-            ref_id, slug, None, session, dry_run=dry_run,
+            ref_id, slug, local_ref_id, session, dry_run=dry_run,
             relevance_note=rationale)
         if not wrote:
             raise Refusal(
@@ -7877,6 +8433,152 @@ def link_source_slug(ref_id: str, slug: str, rationale: str,
     return {"ref_id": ref_id, "slug": slug, "local_ref_id": local_ref_id,
             "slug_status": status, "action": action,
             "relevance_note": rationale, "dry_run": dry_run}
+
+
+def _refuse_tombstone(conn, ref_id: str, what: str):
+    """Refuse to file new work against a SUPERSEDED source (a tombstone).
+
+    supersede-source leaves the superseded row in place, and the determination engine
+    gathers nothing from it (assess_cell.gather_sources: `superseded_by_ref_id IS NULL`).
+    A writer that still accepted it filed an extraction, an observed term or a population
+    grade that the engine then dropped without a word: work filed and lost. The same
+    ground link-source-slug already refuses on, applied to the writers whose rows the
+    engine would drop: add-extraction (and derive-extraction through it), observe-term,
+    add-population-match.
+
+    NOT ROUTED THROUGH HERE, on purpose:
+      * log-search --admitted-ref-id, link-admission, resolve-candidate --admitted-ref-id:
+        they record which search admitted which id, or what a candidate became -- history
+        still true of the tombstone, and test_db_integrity S01 reads those edges.
+      * log-mining, log-search --mined-ref-id: citation_mining_completeness does not
+        filter superseded rows, so a tombstone may still owe a mining row or a deferral,
+        and refusing would make that record unwritable.
+      * add-economics-entry, raise-determination-gate: nothing drops them by the
+        source's liveness; a row pointing at the tombstone is listed among its dependents
+        by supersede-source.
+      * amend-source, correct-source, amend-extraction, amend-population-match: they
+        correct a row's own record, which stays legitimate after supersession.
+    """
+    row = conn.execute("SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id=?",
+                       (ref_id,)).fetchone()
+    if row is not None and (row[0] or "").strip():
+        raise Refusal(
+            f"{what}: {ref_id} is superseded by {row[0]}. A superseded source is a "
+            f"tombstone: the determination engine gathers nothing from it "
+            f"(assess_cell.gather_sources reads superseded_by_ref_id IS NULL), so work "
+            f"filed against it is silently dropped. File it against {row[0]}. Nothing "
+            f"was written.")
+
+
+def _source_dependents(conn, ref_id: str) -> list:
+    """Every row that points at source `ref_id`, by table and column, with its count.
+
+    DERIVED from `PRAGMA foreign_key_list` over every table in sqlite_master, never a
+    list: a table that gains a foreign key into evidence_sources is reported the day it
+    exists. A column that points at a source WITHOUT a declared foreign key is not seen
+    here; `superseded_by_ref_id` is the one such pointer on evidence_sources itself
+    (test_db_integrity A09 stands in for its missing FK), so it is added by name.
+    """
+    out = []
+    for (table,) in conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"):
+        for fk in conn.execute('PRAGMA foreign_key_list("%s")' % table):
+            # fk[2] is the parent table, fk[3] the child column, fk[4] the parent column
+            # (None when the FK names the parent's primary key implicitly).
+            if fk[2] != "evidence_sources" or fk[4] not in (None, "ref_id"):
+                continue
+            n = conn.execute('SELECT COUNT(*) FROM "%s" WHERE "%s" = ?'
+                             % (table, fk[3]), (ref_id,)).fetchone()[0]
+            if n:
+                out.append({"table": table, "column": fk[3], "rows": n})
+    n = conn.execute("SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id=?",
+                     (ref_id,)).fetchone()[0]
+    if n:
+        out.append({"table": "evidence_sources", "column": "superseded_by_ref_id",
+                    "rows": n})
+    return out
+
+
+def supersede_source(ref_id: str, by: str, reason: str, session: str,
+                     dry_run: bool = False) -> dict:
+    """Mark admitted source `ref_id` as SUPERSEDED BY admitted source `by` (GAP-060).
+
+    The merge path for a source admitted twice: a mirror of an official document, or a
+    DOI-less re-entry that test_db_integrity D04 reports as an author+year+title
+    collision. Until this verb the only ways to merge were a curated exemption list
+    (D04's KNOWN_DUP_SOURCE_KEYS, which leaves the mirror live and counted) or hand SQL.
+
+    NEITHER ROW IS DELETED. `ref_id` keeps its id and every row that points at it, and
+    gains `superseded_by_ref_id` plus a dated SUPERSEDED line in `notes`. Its dependents
+    are REPORTED, not moved. Some readers skip a superseded source: assess_cell's gather
+    (`superseded_by_ref_id IS NULL`), D04, link-source-slug, add-source's DOI duplicate
+    check, and (since the review fix of 2026-10-01) add-extraction, observe-term and
+    add-population-match, which refuse it rather than file work the engine drops. A figure
+    extracted from the superseded row stops being gathered, so re-extract it from `by` if
+    `by` does not already carry it.
+
+    KNOWN GAP, NOT FIXED HERE: the views that read evidence_sources do not filter on
+    supersession, so a tombstone still appears in them -- v_convergence_sources,
+    v_determination_provenance, v_evidence_authors, v_item_provenance,
+    v_source_admission and v_source_reach_all as of 2026-10-01. Re-derive rather than
+    trust the list:
+        select name from sqlite_master where type='view' and sql like '%evidence_sources%'
+           and sql not like '%superseded_by_ref_id%';
+    A view change is a schema change, and it belongs in its own migration.
+
+    Refuses: A == B; either missing; A already superseded; B itself superseded (no
+    chains); a blank reason; and a LIVE determination resting on A
+    (dbcore.determinations_resting_on) -- moving its source would change a written
+    answer silently, so retire the specification first.
+
+    Not refused, REPORTED: rows already superseded BY A. They appear in the dependents
+    as evidence_sources.superseded_by_ref_id and, after this call, point at a tombstone.
+    No verb re-points them; refusing would leave A's duplicate live with no way out.
+    """
+    a, b = dbcore.fold_ref(ref_id), dbcore.fold_ref(by)
+    if not a or not b:
+        raise Refusal("supersede-source needs both --ref-id and --by. Nothing was written.")
+    reason = dbcore.require_reason(
+        reason, f"supersede {a}",
+        why="A supersession that cannot say why cannot be contested.")
+    if a == b:
+        raise Refusal(f"{a} cannot supersede itself. Nothing was written.")
+    with connect(dry_run) as conn:
+        rows = {r["ref_id"]: r for r in conn.execute(
+            "SELECT ref_id, superseded_by_ref_id, notes FROM evidence_sources "
+            "WHERE ref_id IN (?, ?)", (a, b))}
+        for rid, flag in ((a, "--ref-id"), (b, "--by")):
+            if rid not in rows:
+                raise Refusal(
+                    f"{flag} {rid} is not in evidence_sources. Supersession is between "
+                    f"two ADMITTED sources. Nothing was written.")
+        if (rows[a]["superseded_by_ref_id"] or "").strip():
+            raise Refusal(
+                f"{a} is already superseded by {rows[a]['superseded_by_ref_id']}. A "
+                f"supersession is not amended by a second call. Nothing was written.")
+        if (rows[b]["superseded_by_ref_id"] or "").strip():
+            raise Refusal(
+                f"{b} is itself superseded by {rows[b]['superseded_by_ref_id']}. No "
+                f"chains: supersede {a} by {rows[b]['superseded_by_ref_id']} instead. "
+                f"Nothing was written.")
+        resting = dbcore.determinations_resting_on(conn, a)
+        if resting:
+            named = ", ".join(f"specification {sid} (via {junction})"
+                              for junction, sid in resting)
+            raise Refusal(
+                f"{a} carries a live determination: {named}. Superseding it would "
+                f"change the evidence set of a written answer without re-deciding it. "
+                f"Retire the specification first (db.py retire-specification), then "
+                f"supersede, then re-determine. Nothing was written.")
+        dependents = _source_dependents(conn, a)
+        stamp = now()
+        notes = dbcore.append_dated_note(rows[a]["notes"], "SUPERSEDED", session,
+                                         f"by {b}: {reason}", stamp)
+        conn.execute(
+            "UPDATE evidence_sources SET superseded_by_ref_id=?, notes=?, updated_at=?, "
+            "updated_by_session=? WHERE ref_id=?", (b, notes, stamp, session, a))
+    return {"ref_id": a, "superseded_by": b, "reason": reason,
+            "dependents_left_in_place": dependents, "dry_run": dry_run}
 
 
 def get_unmined_for_all_slugs(tier_max: int = 3) -> list[dict]:
@@ -8201,6 +8903,7 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. Grade the "
                 f"match AFTER admission -- a match row for a source that does not exist "
                 f"is a claim about nothing.")
+        _refuse_tombstone(conn, ref, "add-population-match")
         if not dbcore.exists(conn, "populations", "population_code", data.get("target_population")):
             raise Refusal(
                 f"target_population {data.get('target_population')!r} is not in `populations`.")
@@ -8265,6 +8968,8 @@ def insert_jurisdictional_value(data: dict, session: str, dry_run: bool = False)
         "loc_subsection", "loc_paragraph", "loc_clause", "loc_subclause", "loc_note",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_jurisdictional_value")
+    dbcore.check_jurisdiction(data.get("jurisdiction"),
+                              "add-jurisdictional-value --jurisdiction")
     with dbcore.connect(dry_run) as conn:
         if not dbcore.exists(conn, "items", "item_code", data.get("item_code")):
             raise Refusal(f"item_code {data.get('item_code')!r} is not in `items`.")
@@ -8304,6 +9009,10 @@ def insert_economics_entry(data: dict, session: str, dry_run: bool = False):
         "evidence_tier", "study_design", "sample", "source_section", "notes",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_economics_entry")
+    # The column's DDL comment invites 'MULTI'; the declared code for work spanning
+    # jurisdictions is INT, and the blocking audit fails on MULTI either way.
+    dbcore.check_jurisdiction(data.get("jurisdiction"),
+                              "add-economics-entry --jurisdiction")
     with dbcore.connect(dry_run) as conn:
         dbcore.check_vocab(conn, "economics_entries", "pillar",
                            data.get("pillar"), "insert_economics_entry")
@@ -8382,13 +9091,34 @@ def insert_case_study(data: dict, session: str, dry_run: bool = False):
     return data.get("case_study_id")
 
 
-def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
+def _lead_name_key(name) -> str:
+    """A standard name with case, spacing and punctuation folded away.
+
+    UNICODE-AWARE ON PURPOSE, as test_db_integrity D04's `_norm_title` is: `\\W` under
+    re.UNICODE keeps every letter and digit of every script. The ASCII fold first
+    proposed for this (`[^a-z0-9]`) erases Korean and Japanese names to the empty
+    string, so every non-Latin standard in a jurisdiction would collide with every
+    other -- enforcing dedup on the English corpus and blocking the multilingual one.
+    """
+    return re.sub(r"\W", "", (name or "").casefold(), flags=re.UNICODE)
+
+
+def insert_code_lead(data: dict, session: str, dry_run: bool = False,
+                     distinct_from=None, reason: str = None) -> int:
     """Write a code/standard lead into the research-stage lead store.
 
     Deliberately NOT a DOI-bearing writer. research_code_leads has no doi column
     (migration 066): a standard is retrieved by clause reference, and letting the two
     identifier shapes share a row format is what put 24 rows in source_locators
     carrying both a standard_number and a DOI.
+
+    A NEAR-DUPLICATE IS REFUSED TOO (I8). The UNIQUE key is exact, so 'DIN 18040-1'
+    and 'din 18040 1' could stand as two leads for one document. A name that folds to
+    a held name's key (_lead_name_key) in the same jurisdiction is refused, naming the
+    held lead, unless `distinct_from` names every such lead and `reason` says why they
+    are different documents; the reason is appended to the new row's notes. The cost
+    is named: two genuinely different standards whose names differ only in punctuation
+    ('ISO 2154-2' beside 'ISO 21542') fold together, and need --distinct-from.
     """
     _COLS = frozenset({
         "jurisdiction", "standard_name", "clause", "status", "recovered_from", "notes",
@@ -8405,12 +9135,28 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
                          "which is the only purpose this row has.")
     if not std:
         raise Refusal("--standard-name is required and may not be blank.")
+    # The declared vocabulary (I7). This is also what makes the duplicate checks below
+    # sound: they compare jurisdiction EXACTLY, so 'es' beside 'ES' would split one
+    # jurisdiction's leads in two -- and check_jurisdiction refuses the variant.
+    dbcore.check_jurisdiction(jur, "add-code-lead --jurisdiction")
+    named = set(distinct_from or ())
+    reason = (reason or "").strip()
+    if reason and not named:
+        raise Refusal("--reason is only read beside --distinct-from; it would be dropped. "
+                      "Put a lead's own context in --notes. Nothing was written.")
+    if named and not reason:
+        raise Refusal("--distinct-from needs --reason: two names that differ only in case "
+                      "or punctuation are the same document unless someone says why not. "
+                      "Nothing was written.")
+    notes = data.get("notes")
     with dbcore.connect(dry_run) as conn:
         dbcore.check_vocab(conn, "research_code_leads", "status", data.get("status"),
                            "insert_code_lead")
         # THE DEDUP REFUSAL. 109 archived rows were 83 leads because the same standard was
         # restated once per item. The UNIQUE constraint makes that impossible; this turns
-        # it into a sentence naming the row that already holds it.
+        # it into a sentence naming the row that already holds it -- and, since
+        # 2026-10-01, a remedy a verb performs (GAP-005: it used to say "Update that row
+        # instead" when no verb could).
         hit = conn.execute(
             "SELECT lead_id FROM research_code_leads WHERE jurisdiction=? AND standard_name=?",
             (jur, std)).fetchone()
@@ -8418,15 +9164,127 @@ def insert_code_lead(data: dict, session: str, dry_run: bool = False) -> int:
             raise Refusal(
                 f"{jur} / {std!r} is already held as lead_id {hit[0]}. A code lead is keyed "
                 f"on (jurisdiction, standard_name) — restating it is the duplication the "
-                f"item-keyed shape produced. Update that row instead.")
+                f"item-keyed shape produced. Update that row instead: "
+                f"`db.py update-code-lead --lead-id {hit[0]} --append-note <what changed>`.")
+        # An empty key (a name of symbols only) names nothing to compare; skipping it
+        # keeps two such names from colliding on '' -- the ASCII fold's failure, in
+        # miniature.
+        key = _lead_name_key(std)
+        near = [(lid, name) for lid, name in conn.execute(
+                    "SELECT lead_id, standard_name FROM research_code_leads "
+                    "WHERE jurisdiction=? ORDER BY lead_id", (jur,))
+                if key and _lead_name_key(name) == key]
+        stray = sorted(named - {lid for lid, _ in near})
+        if stray:
+            raise Refusal(
+                f"--distinct-from {stray}: not a {jur} lead whose name folds to the same key "
+                f"as {std!r}, so there is nothing to be distinct from. Nothing was written.")
+        unnamed = [(lid, name) for lid, name in near if lid not in named]
+        if unnamed:
+            held = "; ".join(f"lead_id {lid} {name!r}" for lid, name in unnamed)
+            raise Refusal(
+                f"{jur} / {std!r} differs from a held lead only in case, spacing or "
+                f"punctuation: {held}. That is the same document restated. Update that "
+                f"row instead: `db.py update-code-lead --lead-id {unnamed[0][0]} "
+                f"--append-note <what changed>`. If they are genuinely two documents, "
+                f"re-run with --distinct-from <lead_id> for each and --reason <why>. "
+                f"Nothing was written.")
         now = dbcore.now()
+        if near:
+            notes = dbcore.append_dated_note(
+                notes, "DISTINCT-FROM", session,
+                "; ".join(f"lead_id {lid} {name!r}" for lid, name in near)
+                + f": {reason}", now)
         cur = conn.execute(
             "INSERT INTO research_code_leads (jurisdiction, standard_name, clause, status, "
             "recovered_from, notes, created_at, created_by_session) "
             "VALUES (?,?,?,?,?,?,?,?)",
             (jur, std, data.get("clause"), data.get("status") or "REFERENCE-ONLY",
-             data.get("recovered_from"), data.get("notes"), now, session))
+             data.get("recovered_from"), notes, now, session))
         return cur.lastrowid
+
+
+def update_code_lead(lead_id: int, append_note: str, session: str, status: str = None,
+                     clause: str = None, dry_run: bool = False) -> dict:
+    """Move a code lead's status or clause, APPENDING a dated note. GAP-005, I8.
+
+    R15 could not be discharged against a lead: batch 10 retrieved the law behind lead 85,
+    proved part of its note false, and nothing could move the status off REFERENCE-ONLY
+    or put the correction where a reader of the lead would see it. This is that path.
+
+    APPEND, NEVER REWRITE. The note is a hypothesis about a document someone had not yet
+    read (R15); the correction goes after it in a dated ' || UPDATED ...' segment that
+    also carries any replaced status or clause, so the next reader sees what was believed
+    and what was established -- amend-search's shape, applied to the lead store.
+
+    NO TRANSITION ORDER. The status vocabulary is the column's own CHECK. A forward-only
+    order (REFERENCE-ONLY -> RETRIEVED -> SUPERSEDED) would be an ordering list kept
+    beside that CHECK, which rule 8 forbids, and it would make a wrongly-set RETRIEVED
+    uncorrectable -- the defect this verb exists to end. Every move is ledgered instead.
+
+    A note alone is allowed (a lead re-described without a status change is still R15);
+    an identical note already on the row is a no-op. A --status or --clause equal to the
+    held value is refused: it asks to move something that is already there.
+    """
+    note = (append_note or "").strip()
+    if not note:
+        raise Refusal(
+            f"lead {lead_id}: --append-note is required and may not be blank. R15: a lead "
+            f"is updated because the source was read, and the note says what it said. "
+            f"Nothing was written.")
+    if clause is not None and not clause.strip():
+        raise Refusal(
+            f"lead {lead_id}: --clause may not be blank. Give the locator the retrieved "
+            f"document carries; this verb does not clear one. Nothing was written.")
+    with dbcore.connect(dry_run) as conn:
+        row = conn.execute(
+            "SELECT lead_id, jurisdiction, standard_name, clause, status, notes "
+            "FROM research_code_leads WHERE lead_id=?", (lead_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"lead {lead_id}: no such code lead. Nothing was written.")
+        moves, sets = [], {}
+        if status is not None:
+            dbcore.check_vocab(conn, "research_code_leads", "status", status,
+                               f"update-code-lead --lead-id {lead_id}")
+            if status == row["status"]:
+                raise Refusal(
+                    f"lead {lead_id}: status is already {status!r}. Omit --status to "
+                    f"append a note alone. Nothing was written.")
+            moves.append(f"status {row['status']!r} -> {status!r}")
+            sets["status"] = status
+        if clause is not None:
+            clause = clause.strip()
+            if clause == (row["clause"] or ""):
+                raise Refusal(
+                    f"lead {lead_id}: clause is already {clause!r}. Omit --clause to "
+                    f"append a note alone. Nothing was written.")
+            moves.append(f"clause {row['clause']!r} -> {clause!r}")
+            sets["clause"] = clause
+        # EQUALITY, NOT CONTAINMENT. `note in notes` read a note that is merely a
+        # SUBSTRING of the held text as already present, so appending "clause 4.2" to a
+        # lead whose note read "... clause 4.2, not 4.3" wrote nothing. The held texts are
+        # the original note and the detail of each UPDATED segment append_dated_note wrote.
+        segments = (row["notes"] or "").split(" || ")
+        held = {segments[0].strip()} | {
+            m.group(1).strip() for seg in segments[1:]
+            for m in [re.match(r"UPDATED \d{4}-\d{2}-\d{2} by \S+: (.*)$", seg.strip(),
+                               re.S)] if m}
+        if not moves and note in held:
+            return {"lead_id": lead_id, "changed": False,
+                    "reason": "this note is already on the row", "dry_run": dry_run}
+        stamp = dbcore.upd(session)
+        detail = ("; ".join(moves) + ". " if moves else "") + note
+        sets["notes"] = dbcore.append_dated_note(row["notes"], "UPDATED", session, detail,
+                                                 stamp["updated_at"])
+        sets.update(stamp)
+        conn.execute(
+            "UPDATE research_code_leads SET %s WHERE lead_id=?"
+            % ", ".join(f"{c}=?" for c in sets), [*sets.values(), lead_id])
+    return {"lead_id": lead_id, "changed": True, "jurisdiction": row["jurisdiction"],
+            "standard_name": row["standard_name"], "moves": moves,
+            "status": sets.get("status", row["status"]),
+            "clause": sets.get("clause", row["clause"]), "appended": detail,
+            "dry_run": dry_run}
 
 
 def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:

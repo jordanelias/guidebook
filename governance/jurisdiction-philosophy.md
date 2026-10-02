@@ -10,7 +10,7 @@
 
 ### 1.1 Canonical jurisdictions
 
-The guidebook's evidence base covers 24 countries plus 2 meta-jurisdictions. This list was confirmed at A3 and is encoded in `schemas/enums.py` JurisdictionCode.
+The guidebook's evidence base covers 24 countries plus 2 meta-jurisdictions. This list was confirmed at A3. `schemas/enums.py` JurisdictionCode declares a superset (codes admitted by later owner rulings, and further meta-codes); derive its members with `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)), sorted(m.value for m in J))"`.
 
 | Code | Country | Region | Selection rationale |
 |---|---|---|---|

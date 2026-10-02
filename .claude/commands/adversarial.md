@@ -55,7 +55,12 @@ Then, for each finding: `db.py dispose-adversarial-finding --finding-id N --disp
 REPAIRED|REJECTED|PROVISIONAL-DISPUTED|OWNER-RULED [--ref ... | --reason ...]` — REPAIRED
 names the data migration path that fixed it; OWNER-RULED names the exact ledger quote,
 occurring once. Finally `db.py close-adversarial-pass --pass-id N --session ...`, which
-refuses until every lens is covered and at least one row is SURVIVED.
+refuses until every lens is covered and at least one row is SURVIVED. **Never run it on
+pass 1:** the owner ruling of 2026-09-27 (second, `references/project-standards.md`,
+ACTION (2)) holds pass 1 OPEN. Pass 2 was left open by its own session and the
+process-gap plan approved 2026-10-01 keeps it open. Nothing refuses either; you are the
+gate. A finding admitted only on the database file is closed but printed as REPORTED:
+the database is not an artefact of attack.
 
 **4. Gate before claiming done.**
 

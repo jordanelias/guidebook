@@ -19,10 +19,15 @@ Clear Width (>=1200 mm Minimum on All Primary Routes)` — predisposes every fin
 to file into it. A parameter is minted from an observed term through
 `db.py add-term`, which refuses a value-bearing name for the same reason.
 
-WHAT READS THIS MODEL. `scripts/audit/validate_pydantic_schemas.py` compares it
-field-for-column against the live table; CLAUDE.md §4 makes the mirror part of the
-schema-change protocol. It is not a writer — `scripts/db.py` is, through
-`dbcore.WRITABLE_TABLES`.
+THE OTHER ANSWER. `ParameterDeclination` mirrors `parameter_declinations` (migration
+101): a term judged NOT to be a design parameter, with the reason. It is a separate
+table, never a `status` value here, so a declined term holds no `parameter_id` that an
+extraction or a determination could point at.
+
+WHAT READS THESE MODELS. `scripts/audit/validate_pydantic_schemas.py` compares each
+field-for-column against its live table; CLAUDE.md §4 makes the mirror part of the
+schema-change protocol. They are not writers — `scripts/db.py` is (`add-parameter`,
+`decline-parameter`), and its tables are captured through `dbcore.writable_tables()`.
 """
 
 from typing import Optional
@@ -72,5 +77,34 @@ class BaseParameter(BaseModel):
             raise ValueError(
                 f"merged_into is set but status is {self.status!r}; only a merged "
                 "row points at a survivor."
+            )
+        return self
+
+
+class ParameterDeclination(BaseModel):
+    """A term judged NOT to be a design parameter. Mirrors `parameter_declinations`
+    (migration 101).
+
+    One row per term: `term_id` is the primary key, so a second declination is refused
+    rather than becoming a second answer to one question. `reason` is required and
+    non-blank in the schema too (CHECK length(trim(reason)) > 0) — a declination that
+    cannot say why cannot be contested. No `updated_*` pair: the row is never amended;
+    reversing a declination is a recorded decision, not an edit.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    term_id: str
+    reason: str
+
+    created_at: Optional[str] = None
+    created_by_session: Optional[str] = None
+
+    @model_validator(mode="after")
+    def reason_not_blank(self) -> "ParameterDeclination":
+        """Mirrors the table's CHECK on `reason`."""
+        if not self.reason.strip():
+            raise ValueError(
+                "reason is blank — a declination that cannot say why cannot be contested."
             )
         return self

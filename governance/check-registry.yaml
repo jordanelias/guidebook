@@ -951,6 +951,7 @@ checks:
   kinds:
   - data
   - synthesis
+  compares: record-artefact
   session_pointer: LATEST-RESEARCH
   requires_session: true
   level: advisory
@@ -991,7 +992,24 @@ checks:
     and DISAGREED — one folded accents, one did not, so a stored "Rosas-Perez" for the actual "Rosas-Pérez"
     passed one and failed the other. This entry now points at the offline verifier, which compares against
     the payload the authoring session actually received: no network, no drift, and it fails rather than
-    passes when a source has no logged retrieval.'
+    passes when a source has no logged retrieval.
+
+    PRESENCE MODE, 2026-10-01 (I6). A session whose logged payloads include no JSON -- the HTML and PDF
+    form Co-1, DPO and standards evidence arrives in -- used to print INDETERMINATE and stop, so a
+    fabricated person-author on such a source passed every gate. It now looks for each in-scope source''s
+    stored person surnames (whole words for a Latin-script name) and the first segment of its title in the
+    decoded bytes of the artefacts tagged with its ref_id or url, and their text-extraction children, and
+    prints "PRESENT-IN-BYTES: n of m source(s); not Crossref-diffed; cannot detect an omitted author" --
+    never CLEAN. In scope: the rows the session created or its manifest tags. A row with no readable
+    artefact (none tagged, PDF bytes with no text extraction, a failed retrieval) is UNEXAMINABLE and not
+    counted in EXAMINED; an absent corporate name is REPORTED, not failed, because the project adds
+    corporate glosses. This is not the "presence check" ruled out above: that asked whether DB fields
+    were POPULATED; this asks whether the stored value occurs in the retrieved bytes, a record-versus-
+    artefact comparison. It is weaker than the JSON diff and says so: it cannot see a deleted author,
+    and a name in the bytes may be there as someone else (a cited author). A composed title (a standard
+    number prefixed to the title) is a known false FAIL; read each NOT FOUND against its artefact. The
+    JSON path and its exits are unchanged: its output was byte-identical before and after on every
+    JSON-bearing session under retrieval-log/ (2026-10-01). Fixtures: test_author_presence.'
 - id: decision_capture
   cmd:
   - python3
@@ -1709,7 +1727,89 @@ checks:
     had seen. Its assertion count is its own EXAMINED line -- re-run, do not trust a
     figure here. Fault-injected 2026-09-26: removing the results_admitted raise, the
     MERGED-slug guard, the self-reference guard, the Co1 fold, or the scope_note
-    un-nesting each turned it red; restored, green.'
+    un-nesting each turned it red; restored, green. Section D (migration 101,
+    2026-10-01) holds decline-parameter''s refusals, its dry run, its capture and its CLI
+    wiring, and add-parameter''s refusal of a declined term -- red on the pre-101 code
+    (no verb, no table). Fault-injected 2026-10-01: removing the declined-term refusal,
+    the already-a-parameter refusal, the already-declined refusal or the CLI dispatch
+    each turned exactly its own case red; restored, green. Section S (GAP-058,
+    2026-10-01) holds add-source --slug to writing nothing when the slug or its label
+    refuses, its --dry-run, and link-source-slug --local-ref-id with the held-label
+    refusal -- red on the pre-WP2 code. Fault-injected 2026-10-01: removing the
+    held-label refusal, or restoring the two-transaction write, turned S red; restored,
+    green. Its cases share fixtures, so one fault reddens the cases after it too.
+    Section X (GAP-060, 2026-10-01) holds supersede-source: every refusal, D04 going
+    quiet on a fixture DOI-less collision (A09 still holding), the live-determination
+    refusal through both junctions and its lifting after retire-specification, and
+    emit_batch_sql capturing the UPDATE -- red on the pre-WP3 code (no verb).
+    Fault-injected 2026-10-01: removing the live-determination refusal turned exactly
+    its case red; removing the no-chains refusal turned its case and the CLI case that
+    reuses its fixture red; restored, green. Review fix (2026-10-01): add-extraction,
+    observe-term and add-population-match refuse a superseded source (a payload accepted
+    while it was live is refused once it is superseded), and the live source is still
+    accepted -- red on the pre-fix code, which wrote all three rows. Section C (GAP-055, 2026-10-01) holds
+    close-adversarial-pass''s artefact parse: a tracked file plus a qualifier closes,
+    a cited path that does not resolve is returned and printed as REPORTED, an
+    artefact with no resolving path still refuses, and a ''../'' token reaching a real
+    file outside the repo refuses -- red on the pre-WP4 code. Fault-injected
+    2026-10-01: dropping the containment check turned the containment case red;
+    dropping the unresolved list turned its two cases red; restored, green. Review fix
+    (2026-10-01): --help names the 2026-09-27 ruling holding pass 1 OPEN, and a finding
+    admitted only on the database file closes but is returned and printed as REPORTED --
+    both red on the pre-fix code. Section E
+    (I1, 2026-10-01) holds amend-source --field evidence_type: the tier moves with the
+    type by the ladder only, a move to co1 needs the D-0178 warrant, a move off co1
+    ledgers and NULLs the co1_* columns, a live determination refuses through both
+    junctions, and emit_batch_sql captures the UPDATE with its NULLs -- red on the
+    pre-WP5 code (not an amendable field). Fault-injected 2026-10-01: removing the
+    live-determination refusal turned exactly its case red; removing the NULLing turned
+    its case and the capture case red; removing the Co-1 warrant refusal or the
+    disagreeing-tier refusal turned its case red and, through the shared fixture, the
+    cases after it; restored, green. Review fix (2026-10-01): a move to co1 also needs a
+    --co1-source-type from schemas.enums.Co1SourceType, written and ledgered with the
+    warrant, and the co1 -> grey -> co1 round trip re-supplies it -- red on the pre-fix
+    code, which wrote a Co-1 row with co1_source_type NULL. Section K (I8, GAP-005, 2026-10-01) holds
+    update-code-lead and add-code-lead''s near-duplicate refusal: every refusal, an
+    append-only ledgered move with no transition order, the exact-duplicate refusal
+    naming a command that works, a case/punctuation variant refused unless
+    --distinct-from with --reason, Japanese and Korean names kept apart by a
+    Unicode-aware fold, and emit_batch_sql capturing the UPDATE -- red on the pre-WP6
+    code (no verb; variants admitted). Fault-injected 2026-10-01: an ASCII fold turned
+    the non-Latin variant case red, and without the empty-key guard the non-Latin
+    collision case; removing the near-duplicate refusal, the same-status refusal or the
+    append turned their cases red; restored, green. Review fix (2026-10-01): a note that is
+    only a substring of the held notes is appended (K16) -- red on the pre-fix code, whose
+    containment test read it as already present. Section J (I7, 2026-10-01) holds the
+    declared jurisdiction vocabulary at write time: add-source refuses an undeclared code
+    and writes nothing, the ruled rejected spelling names its replacement, a case
+    variant names the declared spelling (refused, not folded), a code admitted the same
+    day is accepted, the other gated writers refuse, every value live in a gated table
+    still passes, and jurisdiction_db_vocabulary is green on the copy afterwards -- red
+    on the pre-WP7 code (writers accepted any string; FI, UG, UN undeclared).'
+- id: test_author_presence
+  cmd:
+  - python3
+  - scripts/tests/test_author_presence.py
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+  note: 'retrieval_log --verify-authors presence mode (I6), on a temp COPY of the canonical
+    DB and an empty temporary retrieval log: a present author passes and the verdict is
+    never CLEAN; an absent person-author or title fails, naming the source; a one-word
+    title head is not taken as evidence; a two-letter surname inside a longer word is
+    not present; a PDF is read through its
+    text-extraction child; a source with no artefact, or only a 403, is UNEXAMINABLE and
+    not counted; an absent corporate author is reported, not failed; the JSON path''s
+    exits are unchanged. Red on the pre-WP8 code (INDETERMINATE for every non-JSON
+    session), except the two JSON-path cases. Fault-injected 2026-10-01: substring
+    matching for Latin names turned the short-surname case red; reading failed retrievals
+    turned the 403 case red; asserting a one-word head turned the FAQ case red;
+    restored, green. Its assertion count is its own EXAMINED
+    line.'
 - id: test_url_verifier
   cmd:
   - python3
@@ -1733,7 +1833,9 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 18/18 assertions.
+  note: 'Derive the assertion count, never quote it (rule 7a): `python3 scripts/tests/test_verification_pipeline.py
+    | tail -3`. G01-G03 asserted corpus sizes an owner ruling had cleared, so the file was red on main
+    while this note read "18/18"; they were deleted 2026-10-01. G04 still reads the live pipeline_runs.'
 - id: test_assess_cell_pilot
   cmd:
   - python3

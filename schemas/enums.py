@@ -140,8 +140,17 @@ class ItemAssignmentStatus(str, Enum):
 class JurisdictionCode(str, Enum):
     """Canonical jurisdiction codes.
 
-    The original 24 per jurisdiction-tracker §4.7.3, plus meta-codes, plus the
-    five admitted 2026-09-18 (below). ISO 3166-1 alpha-2 where possible.
+    The original 24 per jurisdiction-tracker §4.7.3, plus meta-codes, plus those
+    admitted 2026-09-18 and 2026-10-01 (below). ISO 3166-1 alpha-2 where possible.
+    Count the members rather than trusting a number typed anywhere (CLAUDE.md rule 7a):
+
+        python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"
+
+    WRITERS REFUSE WHAT THIS DOES NOT DECLARE (2026-10-01). `dbcore.check_jurisdiction`
+    reads this enum and is called by every `db.py` writer of a table the audit below
+    gates, so an undeclared code is refused at write time rather than found after it
+    lands. Before that the writers checked nothing, and `PT` reached a research
+    batch's rows before any gate saw it.
 
     UK, NOT GB. `governance/jurisdiction-philosophy.md` rules GB rejected at
     ERROR level, and as of 2026-09-18 that is enforced on the DATABASE by
@@ -197,6 +206,25 @@ class JurisdictionCode(str, Enum):
     ES = "ES"   # Spain -- search_executions (CTE DB-SUA line of enquiry)
     HR = "HR"   # Croatia -- REF-01001 (Lepoglavec 2023)
     IT = "IT"   # Italy -- search_executions
+
+    # Admitted 2026-10-01, executing the owner ruling of 2026-09-28 ("jurisdiction
+    # scope: buckets 1-2 exhausted before reaching further", references/
+    # project-standards.md). PT and FI are named Bucket-2 members and UN a Bucket-1
+    # member of that ruling, which calls UN's absence from this enum "a tooling gap
+    # (rule 10: fix in its own PR)". Where each is live:
+    #     select jurisdiction, count(*) from <table> where jurisdiction in
+    #         ('PT','FI','UN','UG') group by 1;
+    PT = "PT"   # Portugal -- Bucket 2
+    FI = "FI"   # Finland -- Bucket 2
+    UN = "UN"   # United Nations -- Bucket 1. A meta-code like ISO and EU, not a country.
+    # UG is NOT in either bucket and is admitted by owner decision D2, approved 2026-10-01
+    # (references/project-standards.md, grep "plan's decisions D1–D4 approved"): declared
+    # for PR #165's rows, which are not unwound; outside research scope by the 2026-09-28
+    # ruling. This enum is the declared vocabulary of rows held, not the canonical list --
+    # so declaring UG licenses no further Ugandan research; the ruling, not this list,
+    # sets research scope.
+    UG = "UG"   # Uganda
+
     # Meta-codes (not individual countries)
     ISO = "ISO"   # ISO international standards
     EU = "EU"     # European Union directives

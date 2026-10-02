@@ -19,6 +19,55 @@ What reaches the guidebook without these cases: a wrong provenance edge nothing 
 a coverage view that under-counts what searches yielded, a candidate "rehomed" nowhere, a
 Co1 source that cannot be graded -- each looking fine to every gate.
 
+Section D (migration 101, GAP-061's prerequisite) holds `decline-parameter` and the one
+refusal it adds to `add-parameter` to the same standard. What reaches the guidebook
+without it: a term judged NOT to be a design parameter minted as one anyway, so
+extractions and determinations can key on a concept somebody already ruled out.
+
+Section S (GAP-058) holds `add-source --slug` to "refuse before any write": a refused
+admission used to leave its source and author rows committed, an orphan that is either
+shipped or deleted by hand. It also holds `link-source-slug --local-ref-id`, the only way to
+file into a slug whose labels mix schemes, and the refusal of a label another source holds.
+
+Section X (GAP-060) holds `supersede-source`: without it a source admitted twice (a mirror,
+a DOI-less re-entry) is gathered twice by the determination engine, and D04 stays red with
+hand SQL as the only remedy. It proves D04 goes quiet on a fixture collision, that a live
+determination blocks the move until it is retired, that the UPDATE reaches the capture
+path, and that add-extraction, observe-term and add-population-match then refuse the
+superseded source, whose rows the engine would drop.
+
+Section C (GAP-055) holds `close-adversarial-pass`'s artefact parse: a SURVIVED artefact
+written as a citation ("<file> page 15", "<file> (and the other 11)") used to make a
+good-faith pass unclosable, so its audit stayed red for a pass that had done its work. A
+path that escapes the repo must still refuse, and cited paths that do not resolve must stay
+visible. The verb's --help must name the 2026-09-27 ruling that holds pass 1 open, and a
+finding admitted only on the database file is closed but reported, because the database is
+not an artefact of attack.
+
+Section E (I1) holds `amend-source --field evidence_type`: without it a source filed at the
+wrong rung of the ladder (a Co-1/T6 contradiction, a grey report typed as a trial) keeps
+anchoring at the wrong strength, because the only correction was hand SQL. It proves the
+tier moves with the type by derivation only, that a move to co1 needs the D-0178 warrant
+and a co1_source_type from schemas.enums.Co1SourceType (grain_for grades a Co-1 source's
+grain from it), that a move off co1 keeps the old warrant in the ledger and NULLs the
+Co-1-only columns, and that a source a live determination rests on cannot move.
+
+Section K (I8, GAP-005) holds `update-code-lead` and add-code-lead's near-duplicate refusal:
+without the verb R15 cannot be discharged against a lead, so a lead whose document was
+retrieved stays REFERENCE-ONLY and its note keeps asserting what the document was found not
+to say. It proves the move is ledgered and append-only (a note that is only a substring of
+the held notes is still appended), that the refusal's "update that row instead" names a
+command that works, and that the duplicate key folds case and punctuation
+without erasing a Korean or Japanese name.
+
+Section J (I7) holds the declared jurisdiction vocabulary at write time: without it every
+writer took any string, so an undeclared code (`PT` on batch 23's branch) reached the corpus
+and the blocking `jurisdiction_db_vocabulary` audit found it only after it landed. It proves
+an undeclared code, the ruled rejected spelling and a case variant are refused by each
+writer of a gated table, that a code admitted in the same change is accepted, that every
+value live in a gated table still passes (the refusal mirrors the audit and is not stricter),
+and that the audit is green on the copy after the writers ran.
+
 Runs on a COPY of the canonical database in a temp directory (dbcore refuses to open the
 canonical file read-write). Fixtures are made through db.py's own writers. Two states no
 writer can make are set by SQL on the copy, and each says why at the point it is set.
@@ -29,6 +78,7 @@ import os
 import pathlib
 import shutil
 import sqlite3
+import subprocess
 import sys
 import tempfile
 
@@ -80,6 +130,19 @@ def q(sql, *params):
 def exec_row(exec_id):
     return q("SELECT results_admitted, findings_note FROM search_executions "
              "WHERE exec_id=?", exec_id)[0]
+
+
+def run_cli(*args):
+    """db.py through argparse, on the copy. The verbs' dispatch blocks are only reached
+    this way: a case that calls the function directly cannot see an unwired flag or a
+    write the dispatch makes before the function is called."""
+    return subprocess.run([sys.executable, str(REPO / "scripts" / "db.py"), *args],
+                          env=dict(os.environ, GUIDEBOOK_DB_PATH=DB),
+                          capture_output=True, text=True)
+
+
+def counts(*tables):
+    return tuple(q(f'SELECT COUNT(*) FROM "{t}"')[0][0] for t in tables)
 
 
 try:
@@ -245,6 +308,1099 @@ try:
            slug is None and f"suggested_slug {B} -> None" in notes, f"{slug} {notes!r}")
     record("R10", "staging a REHOME with no destination is refused too (add-candidate)",
            refusal(candidate, E1, "c5", "REHOME") is not None)
+
+    # ── D: decline-parameter, and add-parameter's refusal of a declined term ─────
+    # Migration 101. Fixture terms are minted through the writers (observe-term ->
+    # add-term) on the copy, never a live id; names carry no digit, comparator or min/max
+    # word, because add-term refuses a value-bearing name.
+    decline = getattr(db, "decline_parameter", None)
+    if decline is None:
+        # The pre-101 state: no verb and no table. Recorded rather than raised, so the
+        # run still prints its summary and exits 1.
+        record("D00", "db.decline_parameter exists (migration 101's writer)", False,
+               "no such function -- parameter_declinations has no writer")
+    else:
+        def fixture_term(name):
+            obs = db.observe_term({"ref_id": REF, "surface_form": f"fixture phrase: {name}"},
+                                  S)
+            return db.insert_term(obs["observation_id"], name, "fixture rationale",
+                                  S)["term_id"]
+
+        def declinations(term_id):
+            return q("SELECT reason, created_by_session FROM parameter_declinations "
+                     "WHERE term_id=?", term_id)
+
+        TD = fixture_term("fixture declinable element")
+        TP = fixture_term("fixture promotable quantity")
+        TX = fixture_term("fixture lens term")
+        WHY = "fixture: an element, not a quantity under determination"
+
+        record("D01", "refuses a blank --term-id", refusal(decline, "  ", WHY, S) is not None)
+        msg = refusal(decline, "TERM-NONE", WHY, S)
+        record("D02", "refuses an unknown term and names the observe-term -> add-term route",
+               msg and "observe-term" in msg and "add-term --from-observation" in msg,
+               f"got {msg!r}")
+        record("D03", "refuses a blank reason, and writes nothing",
+               refusal(decline, TD, "   ", S) is not None and not declinations(TD))
+        pid = db.insert_parameter(TP, S)["parameter_id"]
+        msg = refusal(decline, TP, WHY, S)
+        record("D04", "refuses a term that is already a parameter, naming the parameter_id",
+               msg and f"parameter {pid}" in msg and not declinations(TP), f"got {msg!r}")
+        out = decline(TD, WHY, S, dry_run=True)
+        record("D05", "--dry-run reports the declination and writes nothing",
+               out["dry_run"] is True and out["declined"] and not declinations(TD),
+               f"out={out}")
+        out = decline(TD, f"  {WHY}  ", S)
+        rows = declinations(TD)
+        record("D06", "the legitimate shape writes ONE row, reason stripped, stamped with "
+               "the session", rows == [(WHY, S)] and out["declined"] and not out["dry_run"],
+               f"rows={rows} out={out}")
+        msg = refusal(decline, TD, "fixture: a second reason", S)
+        record("D07", "refuses a second declination, naming the standing reason and session",
+               msg and WHY in msg and S in msg and len(declinations(TD)) == 1,
+               f"got {msg!r}")
+        # THE CASE THAT FAILS ON THE PRE-101 CODE: add-parameter promoted any existing
+        # term, so a term judged not to be a parameter could still be minted one.
+        msg = refusal(db.insert_parameter, TD, S)
+        record("D08", "add-parameter refuses a DECLINED term, naming the declination, and "
+               "mints no parameter",
+               msg and "DECLINED" in msg and WHY in msg
+               and not q("SELECT 1 FROM base_parameters WHERE term_id=?", TD),
+               f"got {msg!r}")
+        con = sqlite3.connect(DB)
+        try:
+            captured = "parameter_declinations" in dbcore.writable_tables(con)
+        finally:
+            con.close()
+        record("D09", "the capture set derives parameter_declinations from the writer's "
+               "INSERT literal (rows written can be shipped)", captured)
+        # The CLI wiring, through argparse: an unwired or mis-keyed dispatch is invisible
+        # to every case above, which call the function directly.
+        env = dict(os.environ, GUIDEBOOK_DB_PATH=DB)
+        cli = [sys.executable, str(REPO / "scripts" / "db.py"), "decline-parameter",
+               "--term-id", TX, "--session", S, "--dry-run", "--reason"]
+        ok = subprocess.run(cli + [WHY], env=env, capture_output=True, text=True)
+        bad = subprocess.run(cli + [" "], env=env, capture_output=True, text=True)
+        record("D10", "the CLI verb is wired: a dry run exits 0 and writes nothing; a blank "
+               "--reason exits 1 with a REFUSING sentence, not a traceback",
+               ok.returncode == 0 and '"declined": true' in ok.stdout
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:")
+               and "Traceback" not in bad.stderr and not declinations(TX),
+               f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-300:]!r}")
+
+    # ── S: add-source refuses before it writes; link-source-slug --local-ref-id ─────
+    # GAP-058. The slug whose labels mix schemes is DERIVED by asking the derivation
+    # itself which slugs it refuses, never named here; the single-scheme slug likewise.
+    from schemas.tier_derivation import VALID_SCOPES_BY_TYPE, derive_tier  # noqa: E402
+    con = sqlite3.connect(DB)
+    try:
+        mixed, plain = None, None
+        for (slug,) in con.execute("SELECT slug FROM slugs WHERE status='ACTIVE' "
+                                   "ORDER BY slug"):
+            try:
+                db._next_local_ref_id(con, slug)
+                plain = plain or slug
+            except Refusal:
+                mixed = mixed or slug
+    finally:
+        con.close()
+    SRC_TABLES = ("evidence_sources", "evidence_source_authors", "source_slug_links")
+    GREY_SCOPE = next(iter(VALID_SCOPES_BY_TYPE["grey"]))
+    GREY_TIER = str(derive_tier("grey", GREY_SCOPE))
+
+    def next_ref():
+        c = sqlite3.connect(DB)
+        try:
+            return dbcore.next_ref_id(c)
+        finally:
+            c.close()
+
+    def add_source(ref_id, *extra, title=None):
+        return run_cli("add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
+                       "--year", "2020", "--title", title or f"fixture source {ref_id}",
+                       "--tier", GREY_TIER, "--evidence-type", "grey", "--session", S,
+                       *extra)
+
+    def unused_label(slug, stem="FIXTURE-"):
+        n = 1
+        while q("SELECT 1 FROM source_slug_links WHERE slug=? AND local_ref_id=?",
+                slug, f"{stem}{n:02d}"):
+            n += 1
+        return f"{stem}{n:02d}"
+
+    def link_label(ref_id, slug):
+        rows = q("SELECT local_ref_id FROM source_slug_links WHERE ref_id=? AND slug=?",
+                 ref_id, slug)
+        return rows[0][0] if rows else None
+
+    if not (mixed and plain):
+        record("S00", "the copy holds a mixed-scheme slug and a single-scheme slug to "
+               "test with", False, f"mixed={mixed} plain={plain}")
+    else:
+        R1 = next_ref()
+        before = counts(*SRC_TABLES)
+        # THE CASE THAT FAILS ON THE OLD CODE: the derivation's refusal fired inside the
+        # link INSERT, after insert_evidence_source had committed, so both tables grew.
+        r = add_source(R1, "--slug", mixed)
+        record("S01", "add-source --slug <mixed-scheme slug> with no label refuses and "
+               "writes NOTHING (no source, no author rows, no link)",
+               r.returncode == 1 and r.stderr.startswith("REFUSING:")
+               and counts(*SRC_TABLES) == before
+               and not q("SELECT 1 FROM evidence_sources WHERE ref_id=?", R1),
+               f"rc={r.returncode} {r.stderr[-300:]!r} {before} -> {counts(*SRC_TABLES)}")
+        (held_ref, held,) = q("SELECT ref_id, local_ref_id FROM source_slug_links "
+                              "WHERE slug=? ORDER BY local_ref_id LIMIT 1", mixed)[0]
+        r = add_source(R1, "--slug", mixed, "--local-ref-id", held)
+        record("S02", "a label another ref_id holds on the slug refuses, names the holder, "
+               "and writes nothing",
+               r.returncode == 1 and held_ref in r.stderr
+               and counts(*SRC_TABLES) == before,
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+        r = add_source(R1, "--slug", plain, "--dry-run")
+        record("S03", "add-source --slug --dry-run reports the derived label and writes "
+               "nothing (it crashed on the link's foreign key before)",
+               r.returncode == 0 and '"dry_run": true' in r.stdout
+               and '"local_ref_id": null' not in r.stdout
+               and counts(*SRC_TABLES) == before,
+               f"rc={r.returncode} {r.stdout[-200:]!r} {r.stderr[-300:]!r}")
+        r = add_source(R1, "--local-ref-id", "9")
+        record("S04", "--local-ref-id without --slug refuses rather than dropping the flag",
+               r.returncode == 1 and counts(*SRC_TABLES) == before,
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+        L1 = unused_label(mixed)
+        r = add_source(R1, "--slug", mixed, "--local-ref-id", L1)
+        record("S05", "the same call with an explicit, unused label writes the source and "
+               "the link under that label",
+               r.returncode == 0 and link_label(R1, mixed) == L1
+               and counts(*SRC_TABLES)[:2] == (before[0] + 1, before[1] + 1),
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+
+        R2 = next_ref()
+        r = add_source(R2)
+        L2 = unused_label(mixed)
+        r2 = run_cli("link-source-slug", "--ref-id", R2, "--slug", mixed, "--rationale",
+                 "fixture grounds", "--local-ref-id", L2, "--session", S)
+        record("S06", "link-source-slug --local-ref-id links an admitted, unlinked source "
+               "on a slug where derivation refuses",
+               r.returncode == 0 and r2.returncode == 0 and link_label(R2, mixed) == L2,
+               f"add={r.returncode} {r.stderr[-200:]!r} link={r2.returncode} "
+               f"{r2.stderr[-300:]!r}")
+        R3 = next_ref()
+        add_source(R3)
+        msg = refusal(db.link_source_slug, R3, mixed, "fixture grounds", S, local_ref_id=L1)
+        record("S07", "link-source-slug refuses a label another ref_id holds, and writes "
+               "no link", msg and R1 in msg and link_label(R3, mixed) is None,
+               f"got {msg!r}")
+        # R1's link came from add-source, so it carries no grounds: the backfill branch.
+        msg = refusal(db.link_source_slug, R1, mixed, "fixture grounds", S,
+                      local_ref_id=L2 + "X")
+        record("S08", "backfilling grounds on an existing link refuses a DIFFERENT label "
+               "(it would report a relabel that is never written)",
+               msg and L1 in msg and link_label(R1, mixed) == L1, f"got {msg!r}")
+        try:
+            out = db.link_source_slug(R1, mixed, "fixture grounds", S, local_ref_id=L1)
+        except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+            out = {"error": f"{exc.__class__.__name__}: {exc}"}
+        record("S09", "the same label backfills the grounds",
+               out.get("action") == "backfilled" and q(
+                   "SELECT relevance_note FROM source_slug_links WHERE ref_id=? AND slug=?",
+                   R1, mixed)[0][0] == "fixture grounds", f"out={out}")
+
+    # ── X: supersede-source ───────────────────────────────────────────────────
+    # GAP-060. Two DOI-less fixture sources with one author, year and title are the
+    # collision test_db_integrity D04 exists to catch; the verb is what makes it go quiet
+    # without a curated exemption.
+    supersede = getattr(db, "supersede_source", None)
+
+    def integrity_line(tid):
+        """The copy's test_db_integrity line for `tid`, plus the detail line after it."""
+        r = subprocess.run([sys.executable, str(REPO / "scripts" / "tests" /
+                                                "test_db_integrity.py")],
+                           env=dict(os.environ, GUIDEBOOK_DB_PATH=DB),
+                           capture_output=True, text=True)
+        lines = r.stdout.splitlines()
+        for i, line in enumerate(lines):
+            if f"] {tid}:" in line:
+                return line + " " + (lines[i + 1] if i + 1 < len(lines) else "")
+        return ""
+
+    def superseded_by(ref_id):
+        return q("SELECT superseded_by_ref_id FROM evidence_sources WHERE ref_id=?",
+                 ref_id)[0][0]
+
+    if supersede is None:
+        record("X00", "db.supersede_source exists (GAP-060's writer)", False,
+               "no such function -- a duplicate source can be merged only by hand SQL")
+    else:
+        DUP = "fixture decree on ramp gradients"
+        XA = next_ref()
+        add_source(XA, title=DUP)
+        XB = next_ref()
+        add_source(XB, title=DUP)
+        d04 = integrity_line("D04")
+        record("X01", "the fixture pair is a live D04 collision before the verb runs",
+               "[✗]" in d04 and XA in d04 and XB in d04, d04)
+        WHY = "fixture: the same decree admitted twice"
+        msg = refusal(supersede, XA, XA.lower(), WHY, S)
+        record("X02", "refuses A == B (case-folded)",
+               msg and "cannot supersede itself" in msg, f"got {msg!r}")
+        ghost = next_ref()
+        msg = refusal(supersede, ghost, XB, WHY, S)
+        record("X03", "refuses a --ref-id that is not admitted",
+               msg and "--ref-id" in msg and ghost in msg, f"got {msg!r}")
+        msg = refusal(supersede, XA, ghost, WHY, S)
+        record("X04", "refuses a --by that is not admitted",
+               msg and "--by" in msg and ghost in msg, f"got {msg!r}")
+        record("X05", "refuses a blank reason, and writes nothing",
+               refusal(supersede, XA, XB, "  ", S) is not None and superseded_by(XA) is None)
+        out = supersede(XA, XB, WHY, S, dry_run=True)
+        record("X06", "--dry-run reports and writes nothing",
+               out["dry_run"] is True and superseded_by(XA) is None, f"out={out}")
+        out = supersede(XA, XB, f"  {WHY}  ", S)
+        notes, upd_by = q("SELECT notes, updated_by_session FROM evidence_sources "
+                          "WHERE ref_id=?", XA)[0]
+        deps = {(d["table"], d["column"]) for d in out["dependents_left_in_place"]}
+        record("X07", "the legitimate shape sets the pointer, appends one dated SUPERSEDED "
+               "line carrying the reason, stamps the session, and REPORTS dependents "
+               "found through the live foreign keys",
+               superseded_by(XA) == XB and notes.count(" || SUPERSEDED ") == 1
+               and f"by {XB}: {WHY}" in notes and upd_by == S
+               and ("evidence_source_authors", "ref_id") in deps
+               and q("SELECT COUNT(*) FROM evidence_source_authors WHERE ref_id=?",
+                     XA)[0][0] == 1, f"out={out} notes={notes!r}")
+        # THE CASE THAT FAILS ON THE OLD CODE: there was no verb, so the collision could
+        # be cleared only by hand SQL or by a curated exemption that left it counted.
+        d04, a09 = integrity_line("D04"), integrity_line("A09")
+        # The claim is about THIS fixture pair, not the whole database: D04's detail lists
+        # every live collision, so the pair must be absent from it. Asserting the line is
+        # green would make the test depend on the rest of the corpus holding no collision,
+        # which stopped being true once main carried REF-01019 and REF-01031 (a mirror and
+        # its official file, awaiting this very verb). `d04` must be non-empty: a missing
+        # line is a vacuous pass, not a quiet check.
+        record("X08", "D04 no longer names the fixture pair after the verb, and A09 (the "
+               "pointer resolves) holds with the tombstone in scope",
+               bool(d04) and XA not in d04 and XB not in d04
+               and "[✓]" in a09 and "NOTHING IN SCOPE" not in a09,
+               f"{d04} | {a09}")
+        msg = refusal(supersede, XA, XB, WHY, S)
+        record("X09", "refuses a source already superseded, naming its target",
+               msg and XB in msg, f"got {msg!r}")
+
+        # THE TOMBSTONE IS NOT LIVE FOR THE WRITERS WHOSE ROWS THE ENGINE WOULD DROP.
+        # On the pre-fix code each of these WROTE a row against a superseded source,
+        # which gather_sources then skipped (superseded_by_ref_id IS NULL): work filed and
+        # silently lost. Each case uses a payload the writer accepts for a live source,
+        # so the only thing that changes between accept and refuse is the supersession.
+        con = sqlite3.connect(DB)
+        try:
+            PID = con.execute("SELECT parameter_id FROM base_parameters "
+                              "WHERE status='active' ORDER BY 1 LIMIT 1").fetchone()
+            GRADE = sorted(dbcore.check_values(con, "evidence_population_match",
+                                               "match_grade"))[0]
+        finally:
+            con.close()
+        XD = next_ref()
+        add_source(XD, title=f"fixture extraction source {XD}")
+        X_PAYLOAD = {"ref_id": XD, "slug": plain, "parameter_id": PID and PID[0],
+                     "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
+                     "claim_text": "fixture: the source states nothing for this parameter",
+                     "extraction_method": "skim"}
+        # No artefact carries a fixture's words; the exemption is the writer's own path
+        # for that, and it is ledgered on the row.
+        X_EXEMPT = "fixture: a test payload, no retrieved artefact exists"
+        try:
+            db.link_source_slug(XD, plain, "fixture: speaks to this slug", S)
+            first = db.insert_extraction(dict(X_PAYLOAD), S, relations=[],
+                                         verbatim_exempt=X_EXEMPT)
+            supersede(XD, XB, WHY, S)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            first = {"error": f"{exc.__class__.__name__}: {exc}"}
+        n_sve = counts("source_value_extractions")
+        msg = refusal(db.insert_extraction, dict(X_PAYLOAD), S, relations=[],
+                      verbatim_exempt=X_EXEMPT)
+        record("X15", "add-extraction accepts a payload while the source is live, and "
+               "refuses the same payload once it is superseded, naming the live source",
+               "extraction_id" in first and msg and f"superseded by {XB}" in msg
+               and f"File it against {XB}" in msg
+               and counts("source_value_extractions") == n_sve,
+               f"first={first} msg={msg!r}")
+        n_obs = counts("observed_terms")
+        msg = refusal(db.observe_term, {"ref_id": XA, "surface_form": "fixture phrase X",
+                                        "language": "EN"}, S)
+        record("X16", "observe-term refuses a superseded source and writes nothing",
+               msg and f"superseded by {XB}" in msg and counts("observed_terms") == n_obs,
+               f"got {msg!r}")
+        n_epm = counts("evidence_population_match")
+        msg = refusal(db.insert_population_match,
+                      {"ref_id": XA, "target_population": POP, "match_grade": GRADE}, S)
+        record("X17", "add-population-match refuses a superseded source and writes nothing",
+               msg and f"superseded by {XB}" in msg
+               and counts("evidence_population_match") == n_epm, f"got {msg!r}")
+        try:
+            live = db.observe_term({"ref_id": XB, "surface_form": "fixture phrase X",
+                                    "language": "EN"}, S)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            live = {"error": f"{exc.__class__.__name__}: {exc}"}
+        record("X18", "the superseding (live) source is still accepted by observe-term",
+               live.get("created") is True, f"{live}")
+        XC = next_ref()
+        add_source(XC)
+        msg = refusal(supersede, XC, XA, WHY, S)
+        record("X10", "refuses a --by that is itself superseded (no chains), naming where "
+               "it points", msg and XB in msg and superseded_by(XC) is None, f"got {msg!r}")
+        out = supersede(XB, XC, WHY, S, dry_run=True)
+        deps = {(d["table"], d["column"]): d["rows"] for d in out["dependents_left_in_place"]}
+        record("X10b", "a row already superseded BY the source is reported as a dependent "
+               "(the pointer has no FK, so it is added by name), not refused",
+               deps.get(("evidence_sources", "superseded_by_ref_id"))
+               == q("SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id=?",
+                    XB)[0][0] >= 1
+               and superseded_by(XB) is None, f"out={out}")
+        ok = run_cli("supersede-source", "--ref-id", XC, "--by", XB, "--reason", WHY,
+                     "--session", S, "--dry-run")
+        bad = run_cli("supersede-source", "--ref-id", XC, "--by", XB, "--reason", " ",
+                      "--session", S)
+        record("X11", "the CLI verb is wired: a dry run exits 0 and writes nothing; a blank "
+               "--reason exits 1 with a REFUSING sentence",
+               ok.returncode == 0 and '"dry_run": true' in ok.stdout
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:")
+               and superseded_by(XC) is None,
+               f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-300:]!r}")
+
+        # A LIVE determination. Every specification in the copy may be retired, and no
+        # writer short of the determination engine creates one, so one is UN-retired by
+        # SQL on the copy. Chosen by query: a specification whose convergence holds a
+        # source its governing links do not, so both junctions are exercised.
+        pick = q("SELECT s.specification_id, l.ref_id, c.ref_id "
+                 "FROM specifications s "
+                 "JOIN specification_source_links l ON l.specification_id = s.specification_id "
+                 "JOIN convergence_sources c ON c.convergence_id = s.convergence_id "
+                 "WHERE NOT EXISTS (SELECT 1 FROM specification_source_links l2 "
+                 "  WHERE l2.specification_id = s.specification_id AND l2.ref_id = c.ref_id) "
+                 "ORDER BY 1, 2, 3 LIMIT 1")
+        if not pick:
+            record("X12", "a specification with both junctions to test with", False,
+                   "fixture missing in the copy")
+        else:
+            SPEC, LREF, CREF = pick[0]
+            con = sqlite3.connect(DB)
+            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
+                        (SPEC,))
+            con.commit()
+            con.close()
+            msg_l = refusal(supersede, LREF, XB, WHY, S)
+            msg_c = refusal(supersede, CREF, XB, WHY, S)
+            record("X12", "refuses a source a LIVE specification rests on, through either "
+                   "junction, naming the specification",
+                   msg_l and f"specification {SPEC} (via specification_source_links)" in msg_l
+                   and msg_c and f"specification {SPEC} (via convergence_sources)" in msg_c
+                   and superseded_by(LREF) is None and superseded_by(CREF) is None,
+                   f"l={msg_l!r} c={msg_c!r}")
+            db.retire_specification(SPEC, S, reason="fixture: retired to release its sources")
+            # The named remedy must work: once the specification is retired, the same
+            # call goes through. Written for real, so the capture path can be checked on
+            # a row the canonical DB already holds -- an UPDATE, not an INSERT.
+            try:
+                out = supersede(LREF, XB, WHY, S)
+            except Exception as exc:  # noqa: BLE001 -- recorded red, so the run reports
+                out = {"error": f"{exc.__class__.__name__}: {exc}"}
+            record("X13", "after retire-specification the refusal lifts (the remedy it "
+                   "names works)", superseded_by(LREF) == XB, f"out={out}")
+            import importlib                                       # noqa: E402
+            sys.path.insert(0, str(REPO / "scripts" / "research"))
+            emit_mod = importlib.import_module("emit_batch_sql")
+            sql_out = os.path.join(TMP, "capture.sql")
+            try:
+                emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+                captured = open(sql_out, encoding="utf-8").read()
+            except SystemExit as exc:
+                captured = f"emit refused: {exc}"
+            hit = [ln for ln in captured.splitlines()
+                   if ln.startswith('UPDATE "evidence_sources"')
+                   and f'"superseded_by_ref_id" = \'{XB}\'' in ln
+                   and f'"ref_id" = \'{LREF}\'' in ln]
+            record("X14", "emit_batch_sql captures the verb's UPDATE of a canonical row "
+                   "(the write can be shipped)", len(hit) == 1, captured[-400:])
+
+    # ── C: close-adversarial-pass parses a SURVIVED artefact ──────────────────────
+    # GAP-055. Fixture passes are set by SQL on the copy: record-adversarial-pass derives
+    # its findings from two real, tracked transcripts, which a fixture cannot supply. The
+    # lens set is the column's own CHECK; the tracked file is the module under test, so
+    # no live path is hard-coded.
+    TRACKED = pathlib.Path(db.__file__).resolve().relative_to(REPO).as_posix()
+    con = sqlite3.connect(DB)
+    try:
+        LENSES = sorted(dbcore.check_values(con, "adversarial_findings", "lens"))
+    finally:
+        con.close()
+
+    def make_pass(artefact):
+        """A pass with every lens covered: one SURVIVED row carrying `artefact`, the
+        rest NOT-ATTACKED with a real reason. Returns (pass_id, survived finding_id)."""
+        c = sqlite3.connect(DB)
+        try:
+            pid = c.execute(
+                "INSERT INTO adversarial_passes (subject_session, subject_commit, "
+                "reviewer_transcript, reviewer_models, author_transcript, author_models, "
+                "created_by_session, created_at) VALUES (?,?,?,?,?,?,?,?)",
+                (f"session_fixture-close-{artefact[:24]}", "0000000",
+                 "transcripts/fixture/reviewer.jsonl", '["fixture-model"]',
+                 "transcripts/fixture/author.jsonl", '["fixture-model"]', S,
+                 "2026-10-01 00:00")).lastrowid
+            fid = None
+            for i, lens in enumerate(LENSES):
+                survived = i == 0
+                cur = c.execute(
+                    "INSERT INTO adversarial_findings (pass_id, lens, claim_attacked, "
+                    "method, artefact, verdict, created_by_session, created_at) "
+                    "VALUES (?,?,?,?,?,?,?,?)",
+                    (pid, lens, "fixture claim",
+                     "fixture: attacked it and it held" if survived
+                     else "fixture: this lens does not apply to the fixture subject",
+                     artefact if survived else None,
+                     "SURVIVED" if survived else "NOT-ATTACKED", S, "2026-10-01 00:00"))
+                fid = fid or cur.lastrowid
+            c.commit()
+            return pid, fid
+        finally:
+            c.close()
+
+    def closed_at(pid):
+        return q("SELECT closed_at FROM adversarial_passes WHERE pass_id=?", pid)[0][0]
+
+    def close(pid):
+        try:
+            return db.close_adversarial_pass(pid, S)
+        except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+            return {"error": f"{exc.__class__.__name__}: {exc}"}
+
+    # THE CASE THAT FAILS ON THE OLD CODE: the literal check resolved the whole string,
+    # so a real file followed by a qualifier was "not an existing file".
+    P1, _ = make_pass(f"{TRACKED} (and the other 11)")
+    out = close(P1)
+    record("C01", "a SURVIVED artefact that leads with a tracked file and adds a "
+           "qualifier closes the pass", closed_at(P1) is not None and not out.get("error")
+           and out.get("unresolved") == {}, f"out={out}")
+    MISSING = "retrieval-log/no-such-session/none.pdf"
+    P2, F2 = make_pass(f"{TRACKED} page 15; {MISSING}")
+    out = close(P2)
+    record("C02", "one resolving file admits the finding, and a cited path that does "
+           "not resolve is returned as unresolved",
+           closed_at(P2) is not None and out.get("unresolved") == {F2: [MISSING]},
+           f"out={out}")
+    P3, F3 = make_pass("source_value_extractions rows 70 and 71")
+    msg = refusal(db.close_adversarial_pass, P3, S)
+    record("C03", "an artefact with no path-shaped token that resolves still refuses, "
+           "listing what it tried, and the pass stays open",
+           msg and f"finding {F3}" in msg and "Tried:" in msg and closed_at(P3) is None,
+           f"got {msg!r}")
+    # Containment, proven with a file that EXISTS outside the repo (the test's temp
+    # directory), so the refusal cannot be passing merely because the target is absent.
+    outside = os.path.join(TMP, "outside.txt")
+    open(outside, "w").close()
+    rel_out = os.path.relpath(outside, REPO)
+    P4, _ = make_pass(f"({rel_out})")
+    msg = refusal(db.close_adversarial_pass, P4, S)
+    record("C04", "a '../' token that reaches a real file outside the repo refuses "
+           "(containment on the resolved path), wrapped or not",
+           rel_out.startswith("..") and msg and closed_at(P4) is None, f"got {msg!r}")
+    P5, F5 = make_pass(f"`{TRACKED}`. Also {MISSING}")
+    r = run_cli("close-adversarial-pass", "--pass-id", str(P5), "--session", S,
+                "--dry-run")
+    record("C05", "the CLI verb is wired: a dry run exits 0, prints the unresolved token "
+           "as REPORTED, and leaves the pass open",
+           r.returncode == 0 and f"REPORTED: finding {F5}" in r.stderr
+           and MISSING in r.stderr and closed_at(P5) is None,
+           f"rc={r.returncode} {r.stderr[-300:]!r}")
+
+    # The owner ruling that holds pass 1 open must be where the operator reads: the verb's
+    # own --help (and the function's docstring), since nothing refuses pass 1 by id.
+    h = run_cli("close-adversarial-pass", "--help")
+    record("C06", "--help names the 2026-09-27 ruling that holds pass 1 OPEN",
+           h.returncode == 0 and "2026-09-27" in h.stdout and "pass 1" in h.stdout
+           and "OPEN" in h.stdout, h.stdout[-400:])
+    # THE DATABASE IS NOT AN ARTEFACT OF ATTACK. Its path is derived from dbcore, never
+    # typed. A finding admitted only on it closes (refusing would re-open GAP-055's trap)
+    # but is returned and printed as REPORTED; one that also cites a real file is not.
+    DBREL = dbcore.CANONICAL_DB.resolve().relative_to(REPO.resolve()).as_posix()
+    P6, F6 = make_pass(f"{DBREL} search_executions.query_text for mining rows")
+    r = run_cli("close-adversarial-pass", "--pass-id", str(P6), "--session", S,
+                "--dry-run")
+    out6 = close(P6)
+    P7, _ = make_pass(f"{TRACKED}; {DBREL}")
+    out7 = close(P7)
+    record("C07", "a finding admitted only on the database file closes but is returned as "
+           "database_only and printed as REPORTED; one that also cites a real file is not",
+           r.returncode == 0 and f"REPORTED: finding {F6} was admitted only on" in r.stderr
+           and out6.get("database_only") == {F6: [DBREL]} and closed_at(P6) is not None
+           and out7.get("database_only") == {} and closed_at(P7) is not None,
+           f"rc={r.returncode} {r.stderr[-300:]!r} out6={out6} out7={out7}")
+
+    # ── E: amend-source --field evidence_type ──────────────────────────────────
+    # I1. Fixture sources are admitted through add-source on the copy; every tier the
+    # cases expect is derived from the ladder, never typed. The Co-1 fixture carries a
+    # co1_source_type so the move off co1 is seen to clear BOTH Co-1-only columns.
+    from schemas.tier_derivation import TIER_MAP  # noqa: E402
+
+    def attempt(fn, *a, **k):
+        """(result, None) when `fn` returns, (None, text) when it refuses or fails. A
+        non-Refusal exception is a defect and is reported as one."""
+        try:
+            return fn(*a, **k), None
+        except Refusal as exc:
+            return None, str(exc)
+        except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+            return None, f"DEFECT {exc.__class__.__name__}: {exc}"
+
+    def source_row(ref_id):
+        return dict(zip(
+            ("evidence_type", "scope", "tier", "co1_provenance", "co1_source_type",
+             "metadata_integrity_status", "metadata_integrity_detail",
+             "updated_by_session"),
+            q("SELECT evidence_type, scope, tier, co1_provenance, co1_source_type, "
+              "metadata_integrity_status, metadata_integrity_detail, updated_by_session "
+              "FROM evidence_sources WHERE ref_id=?", ref_id)[0]))
+
+    def admit(ref_id, etype, scope=None, *extra):
+        args = ["add-source", "--ref-id", ref_id, "--author", "corp|Fixture Body",
+                "--year", "2021", "--title", f"fixture retype {ref_id}", "--evidence-type",
+                etype, "--tier", str(TIER_MAP[(etype, scope or next(iter(
+                    VALID_SCOPES_BY_TYPE[etype])))]), "--session", S, *extra]
+        if scope:
+            args += ["--scope", scope]
+        return run_cli(*args)
+
+    ONE = {t for t, v in VALID_SCOPES_BY_TYPE.items() if len(v) == 1}
+    HI = min(sorted(VALID_SCOPES_BY_TYPE["clinical"]), key=lambda s: TIER_MAP[("clinical", s)])
+    PROV = "fixture: written by a named disabled people's organisation, per its own preface"
+    EA, EC = next_ref(), None
+    r_a = admit(EA, "clinical", HI)
+    EC = next_ref()
+    r_c = admit(EC, "co1", None, "--co1-provenance", PROV, "--co1-source-type",
+                "dpo_research")
+    if r_a.returncode or r_c.returncode:
+        record("E00", "fixture sources admitted for the retype cases", False,
+               f"clinical={r_a.returncode} {r_a.stderr[-200:]!r} "
+               f"co1={r_c.returncode} {r_c.stderr[-200:]!r}")
+    else:
+        WHY = "fixture: the bytes describe a grey report, not a trial"
+        grey_tier = TIER_MAP[("grey", next(iter(VALID_SCOPES_BY_TYPE["grey"])))]
+        hi_tier = TIER_MAP[("clinical", HI)]
+        before = source_row(EA)
+        # THE CASE THAT FAILS ON THE OLD CODE: evidence_type was not in _AMENDABLE, so a
+        # mis-typed row could only be re-typed (and re-tiered) by hand SQL.
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "GREY", WHY, session=S)
+        row = source_row(EA)
+        seg = (row["metadata_integrity_detail"] or "").split(" || ")[-1]
+        record("E01", "a type move succeeds, derives the tier from the ladder (here "
+               f"{hi_tier} -> {grey_tier}), stores the type lower-case, and ledgers type, "
+               "scope and tier in ONE segment with the reason",
+               out and out["changed"] and out["tier_now"] == grey_tier
+               and row["evidence_type"] == "grey" and row["tier"] == grey_tier
+               and row["scope"] in VALID_SCOPES_BY_TYPE["grey"]
+               and row["metadata_integrity_status"] == "CORRECTED"
+               and row["updated_by_session"] == S
+               and f"evidence_type CORRECTED ({WHY}). Replaced text was: 'clinical'" in seg
+               and f"scope {HI!r} -> " in seg and f"tier {hi_tier} -> {grey_tier}" in seg
+               and before["metadata_integrity_detail"] is None,
+               f"msg={msg!r} out={out} seg={seg!r}")
+
+        # getattr, so the pre-change module (no constant) reports red here rather than
+        # crashing the run and hiding every later case.
+        WARRANT = getattr(db, "CO1_WARRANT_REQUIRED", None)
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "co1", WHY, session=S)
+        record("E02", "a move TO co1 without --co1-provenance refuses with add-source's "
+               "D-0178 sentence, and writes nothing",
+               out is None and msg and WARRANT and WARRANT in msg
+               and source_row(EA)["evidence_type"] == "grey", f"msg={msg!r}")
+        nf = TIER_MAP[("national_fw", next(iter(VALID_SCOPES_BY_TYPE["national_fw"])))]
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "national_fw", WHY,
+                           session=S, tier=nf + 1)
+        record("E03", "a --tier that disagrees with the ladder refuses, naming the derived "
+               "tier, and writes nothing",
+               out is None and msg and f"derives {nf} from" in msg
+               and source_row(EA)["evidence_type"] == "grey", f"msg={msg!r}")
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "clinical", WHY, session=S)
+        out2, msg2 = attempt(db.amend_source, EA, "evidence_type", "standard_eb", WHY,
+                             session=S, scope=next(iter(VALID_SCOPES_BY_TYPE["grey"])))
+        record("E04", "a multi-scope type needs --scope, and an inadmissible scope "
+               "refuses; neither writes",
+               msg and "--scope is REQUIRED" in msg and msg2 and "not admissible" in msg2
+               and source_row(EA)["evidence_type"] == "grey", f"{msg!r} | {msg2!r}")
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "folklore", WHY, session=S)
+        record("E05", "a type off the ladder refuses and names the ladder's types",
+               msg and "not on the ratified ladder" in msg and "'co1'" in msg,
+               f"msg={msg!r}")
+        out, msg = attempt(db.amend_source, EA, "notes", "fixture note", WHY, session=S,
+                           scope=HI)
+        out2, msg2 = attempt(db.amend_source, EA, "evidence_type", "code", WHY, session=S,
+                             co1_provenance=PROV)
+        record("E06", "--scope beside another field, and --co1-provenance beside a non-co1 "
+               "type, both refuse",
+               msg and "only admissible beside --field evidence_type" in msg
+               and msg2 and "only admissible when the new evidence_type is co1" in msg2
+               and source_row(EA)["evidence_type"] == "grey", f"{msg!r} | {msg2!r}")
+        out, msg = attempt(db.amend_source, EA, "evidence_type", "grey", WHY, session=S)
+        record("E07", "the type it already holds (scope and tier consistent) is a no-op",
+               out and out["changed"] is False, f"out={out} msg={msg!r}")
+
+        # Leaving co1: the warrant goes to the ledger, in the same segment as the tier
+        # move, and both Co-1-only columns are NULLed (correction 17).
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "grey",
+                           "fixture: no co-production is evidenced in the bytes", session=S)
+        row = source_row(EC)
+        seg = (row["metadata_integrity_detail"] or "").split(" || ")[-1]
+        record("E08", "leaving co1 NULLs co1_provenance and co1_source_type and keeps both "
+               "texts in the SAME ledger segment as the tier move",
+               out and out["nulled"] == ["co1_provenance", "co1_source_type"]
+               and row["co1_provenance"] is None and row["co1_source_type"] is None
+               and row["evidence_type"] == "grey"
+               and f"tier {TIER_MAP[('co1', 'intrinsic')]} -> {grey_tier}" in seg
+               and PROV in seg and "dpo_research" in seg,
+               f"msg={msg!r} out={out} seg={seg!r}")
+        # THE CASE THAT FAILS ON THE PRE-FIX CODE: a move to co1 wrote a Co-1 row with
+        # co1_source_type NULL, which co1_field_consistency rejects and grain_for grades
+        # individual-grain whatever the source is. The vocabulary is the enum, read here.
+        from schemas.enums import Co1SourceType  # noqa: E402
+        CO1_TYPES = sorted(m.value for m in Co1SourceType)
+        CO1_ST = CO1_TYPES[0]
+        WHY_C = "fixture: the preface names the DPO after all"
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "co1", WHY_C, session=S,
+                           co1_provenance=PROV)
+        record("E13", "a move TO co1 with the warrant but no --co1-source-type refuses, "
+               "naming the enum's members, and writes nothing",
+               out is None and msg and "--co1-source-type is REQUIRED" in msg
+               and all(t in msg for t in CO1_TYPES)
+               and source_row(EC)["evidence_type"] == "grey", f"msg={msg!r} out={out}")
+        _, msg = attempt(db.amend_source, EC, "evidence_type", "co1", WHY_C, session=S,
+                         co1_provenance=PROV, co1_source_type="fixture_not_a_member")
+        _, msg2 = attempt(db.amend_source, EC, "evidence_type", "code", WHY_C, session=S,
+                          co1_source_type=CO1_ST)
+        _, msg3 = attempt(db.amend_source, EC, "notes", "fixture note", WHY_C, session=S,
+                          co1_source_type=CO1_ST)
+        record("E14", "an unknown --co1-source-type refuses naming the members; beside a "
+               "non-co1 type, or beside another field, it refuses too",
+               msg and "not a member of schemas.enums.Co1SourceType" in msg
+               and msg2 and "only admissible when the new evidence_type is co1" in msg2
+               and msg3 and "only admissible beside --field evidence_type" in msg3
+               and source_row(EC)["evidence_type"] == "grey",
+               f"{msg!r} | {msg2!r} | {msg3!r}")
+        # The round trip co1 -> grey -> co1 re-supplies the source type, and ends with it.
+        out, msg = attempt(db.amend_source, EC, "evidence_type", "co1", WHY_C, session=S,
+                           co1_provenance=PROV, co1_source_type=CO1_ST,
+                           tier=TIER_MAP[("co1", "intrinsic")])
+        row = source_row(EC)
+        seg = (row["metadata_integrity_detail"] or "").split(" || ")[-1]
+        record("E09", "a move TO co1 with the warrant and a source type (and an agreeing "
+               "--tier) writes both, the derived scope and tier, and ledgers the type",
+               out and out["changed"] and row["evidence_type"] == "co1"
+               and row["co1_provenance"] == PROV and row["co1_source_type"] == CO1_ST
+               and f"co1_source_type written as {CO1_ST!r}" in seg
+               and row["tier"] == TIER_MAP[("co1", "intrinsic")],
+               f"msg={msg!r} out={out} seg={seg!r}")
+
+        # A LIVE determination, through both junctions. Every specification in the copy
+        # is retired and no writer short of the determination engine creates one, so one
+        # is UN-retired by SQL on the copy and its retirement restored the same way.
+        pick = q("SELECT s.specification_id, l.ref_id, c.ref_id, s.retired_at, "
+                 "s.retired_by_session, s.retirement_reason "
+                 "FROM specifications s "
+                 "JOIN specification_source_links l ON l.specification_id = s.specification_id "
+                 "JOIN convergence_sources c ON c.convergence_id = s.convergence_id "
+                 "WHERE NOT EXISTS (SELECT 1 FROM specification_source_links l2 "
+                 "  WHERE l2.specification_id = s.specification_id AND l2.ref_id = c.ref_id) "
+                 "ORDER BY 1, 2, 3 LIMIT 1")
+        if not pick:
+            record("E10", "a specification with both junctions to test with", False,
+                   "fixture missing in the copy")
+        else:
+            SPEC, LREF, CREF, R_AT, R_BY, R_WHY = pick[0]
+            con = sqlite3.connect(DB)
+            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
+                        (SPEC,))
+            con.commit()
+            con.close()
+            types = {r: source_row(r)["evidence_type"] for r in (LREF, CREF)}
+            to = {r: next(t for t in sorted(ONE) if t != types[r] and t != "co1")
+                  for r in (LREF, CREF)}
+            _, msg_l = attempt(db.amend_source, LREF, "evidence_type", to[LREF], WHY,
+                               session=S)
+            _, msg_c = attempt(db.amend_source, CREF, "evidence_type", to[CREF], WHY,
+                               session=S)
+            record("E10", "a source a LIVE specification rests on refuses, through either "
+                   "junction, naming it and the footer, and writes nothing",
+                   msg_l and f"specification {SPEC} (via specification_source_links)" in msg_l
+                   and msg_c and f"specification {SPEC} (via convergence_sources)" in msg_c
+                   and "Never move an adjudicated figure" in msg_l
+                   and {r: source_row(r)["evidence_type"] for r in types} == types,
+                   f"l={msg_l!r} c={msg_c!r}")
+            con = sqlite3.connect(DB)
+            con.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, "
+                        "retirement_reason=? WHERE specification_id=?",
+                        (R_AT, R_BY, R_WHY, SPEC))
+            con.commit()
+            con.close()
+
+        ok = run_cli("amend-source", "--ref-id", EA, "--field", "evidence_type",
+                     "--replacement", "co1", "--co1-provenance", PROV,
+                     "--co1-source-type", CO1_ST, "--reason", WHY,
+                     "--session", S, "--dry-run")
+        bad = run_cli("amend-source", "--ref-id", EA, "--field", "notes", "--replacement",
+                      "x", "--scope", HI, "--reason", WHY, "--session", S)
+        record("E11", "the CLI is wired: a dry run exits 0 with the ledger segment and "
+               "writes nothing; --scope beside --field notes exits 1 with REFUSING",
+               ok.returncode == 0 and '"type_now": "co1"' in ok.stdout
+               and '"ledger_segment"' in ok.stdout
+               and source_row(EA)["evidence_type"] == "grey"
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:"),
+               f"ok={ok.returncode} {ok.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-300:]!r}")
+
+        # The capture path, on a CANONICAL row (an UPDATE, not a fixture INSERT): a Co-1
+        # row taken from the copy moves off co1, and the NULLs must reach the migration.
+        canon = q("SELECT ref_id FROM evidence_sources WHERE evidence_type='co1' "
+                  "AND co1_provenance IS NOT NULL AND created_by_session <> ? "
+                  "ORDER BY ref_id LIMIT 1", S)
+        if not canon:
+            record("E12", "a canonical Co-1 row to test capture with", False,
+                   "fixture missing in the copy")
+        else:
+            (CREF1,) = canon[0]
+            out, msg = attempt(db.amend_source, CREF1, "evidence_type", "grey", WHY,
+                               session=S)
+            import importlib                                       # noqa: E402
+            sys.path.insert(0, str(REPO / "scripts" / "research"))
+            emit_mod = importlib.import_module("emit_batch_sql")
+            sql_out = os.path.join(TMP, "capture-retype.sql")
+            try:
+                emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+                captured = open(sql_out, encoding="utf-8").read()
+            except SystemExit as exc:
+                captured = f"emit refused: {exc}"
+            hit = [ln for ln in captured.splitlines()
+                   if ln.startswith('UPDATE "evidence_sources"')
+                   and f'"ref_id" = \'{CREF1}\'' in ln
+                   and '"evidence_type" = \'grey\'' in ln
+                   and '"co1_provenance" = NULL' in ln
+                   and '"co1_source_type" = NULL' in ln]
+            record("E12", "emit_batch_sql captures the retype of a canonical row, NULLs "
+                   "included (the write can be shipped)",
+                   out and len(hit) == 1, f"msg={msg!r} {captured[-400:]!r}")
+
+    # ── K: update-code-lead, and add-code-lead's near-duplicate refusal ────────────
+    # I8 / GAP-005. Fixture leads are written through insert_code_lead on the copy, in a
+    # jurisdiction read from the copy's own leads. The status vocabulary is the column's
+    # CHECK; the two non-default values are taken from it, never typed. Each fixture
+    # passes the column default as its status, as the CLI does: insert_code_lead's
+    # vocabulary gate refuses a None status before its INSERT fallback is reached.
+    update = getattr(db, "update_code_lead", None)
+    con = sqlite3.connect(DB)
+    try:
+        STATUSES = sorted(dbcore.check_values(con, "research_code_leads", "status"))
+    finally:
+        con.close()
+    (JUR,) = q("SELECT jurisdiction FROM research_code_leads ORDER BY lead_id LIMIT 1")[0]
+
+    def lead(lead_id):
+        return dict(zip(("status", "clause", "notes", "updated_by_session"), q(
+            "SELECT status, clause, notes, updated_by_session FROM research_code_leads "
+            "WHERE lead_id=?", lead_id)[0]))
+
+    def code_lead(name, notes=None, **kw):
+        return db.insert_code_lead({"jurisdiction": JUR, "status": "REFERENCE-ONLY",
+                                    "standard_name": name, "notes": notes}, S, **kw)
+
+    NOTE0 = "fixture: restated on a vendor page, primary text not retrieved"
+    NAME1 = "Fixture Standard 4711-2 (ramp provisions)"
+    K1 = code_lead(NAME1, NOTE0)
+    MOVE_TO = OTHER = None
+    if update is None:
+        # The pre-WP6 state: no verb. Recorded rather than raised, so the run still
+        # prints its summary and exits 1; the near-duplicate cases below still run.
+        record("K00", "db.update_code_lead exists (GAP-005's writer)", False,
+               "no such function -- a lead's status and note cannot be corrected")
+    elif "REFERENCE-ONLY" not in STATUSES or len(STATUSES) < 3:
+        record("K00", "the status CHECK still holds the default and two moves to test "
+               "with", False, f"CHECK declares {STATUSES}")
+    else:
+        MOVE_TO, OTHER = [s for s in STATUSES if s != "REFERENCE-ONLY"][:2]
+        msg = refusal(update, 999999999, "fixture note", S, status=MOVE_TO)
+        record("K01", "refuses an unknown lead", msg and "no such code lead" in msg,
+               f"got {msg!r}")
+        msg = refusal(update, K1, "   ", S, status=MOVE_TO)
+        record("K02", "refuses a blank --append-note (R15) and writes nothing",
+               msg and "R15" in msg and lead(K1)["status"] == "REFERENCE-ONLY",
+               f"got {msg!r}")
+        msg = refusal(update, K1, "fixture note", S, status="FOUND-IT")
+        record("K03", "refuses a status outside the column's CHECK, naming the CHECK",
+               msg and "CHECK" in msg and lead(K1)["status"] == "REFERENCE-ONLY",
+               f"got {msg!r}")
+        msg = refusal(update, K1, "fixture note", S, status="REFERENCE-ONLY")
+        msg2 = refusal(update, K1, "fixture note", S, clause="  ")
+        record("K04", "refuses a --status equal to the held one, and a blank --clause",
+               msg and "already" in msg and msg2 and "blank" in msg2, f"{msg!r} | {msg2!r}")
+        out = update(K1, "fixture: dry run", S, status=MOVE_TO, dry_run=True)
+        record("K05", "--dry-run reports the move and writes nothing",
+               out["dry_run"] is True and out["changed"]
+               and lead(K1)["status"] == "REFERENCE-ONLY" and lead(K1)["notes"] == NOTE0,
+               f"out={out}")
+        NOTE1 = "fixture: primary text retrieved; the slope figure is in clause 4.2, not 4.3"
+        out = update(K1, f"  {NOTE1}  ", S, status=MOVE_TO, clause="§4.2")
+        row = lead(K1)
+        record("K06", "a lead moves REFERENCE-ONLY -> " + MOVE_TO + " with a clause: the "
+               "old note is kept verbatim, ONE dated UPDATED segment carries the replaced "
+               "status and clause and the new note, and the row is stamped",
+               out["changed"] and row["status"] == MOVE_TO and row["clause"] == "§4.2"
+               and row["notes"].startswith(NOTE0 + " || UPDATED ")
+               and row["notes"].count(" || UPDATED ") == 1
+               and f"status 'REFERENCE-ONLY' -> '{MOVE_TO}'; clause None -> '§4.2'. "
+                   f"{NOTE1}" in row["notes"]
+               and row["updated_by_session"] == S, f"out={out} row={row}")
+        out = update(K1, "fixture: re-read, the clause holds", S)
+        out2 = update(K1, "fixture: re-read, the clause holds", S)
+        record("K07", "a note alone is appended (R15 without a status move); the same note "
+               "again is a no-op, not a second line",
+               out["changed"] and out2["changed"] is False
+               and lead(K1)["notes"].count("the clause holds") == 1, f"{out} | {out2}")
+        out = update(K1, "fixture: moved back, the retrieval was of a summary", S,
+                     status="REFERENCE-ONLY")
+        record("K08", "no transition order: a wrong status can be moved back, and the move "
+               "is ledgered", out["changed"] and lead(K1)["status"] == "REFERENCE-ONLY"
+               and f"status '{MOVE_TO}' -> 'REFERENCE-ONLY'" in lead(K1)["notes"],
+               f"out={out}")
+        # A note that is only a SUBSTRING of the held text is a new note. The pre-fix
+        # check was `note in notes`, so this append was reported as already present and
+        # nothing was written.
+        K3 = code_lead("Fixture Standard 8080 (substring case)",
+                       "fixture: the slope figure is in clause 4.2, not 4.3")
+        out = update(K3, "clause 4.2", S)
+        out2 = update(K3, "clause 4.2", S)
+        record("K16", "a note that is a substring of the held notes is appended, not "
+               "mistaken for one already there; the identical note again is a no-op",
+               out["changed"] and out2["changed"] is False
+               and lead(K3)["notes"].count(" || UPDATED ") == 1
+               and lead(K3)["notes"].endswith(": clause 4.2"), f"{out} | {out2}")
+
+        # The exact-duplicate refusal names a command, and the command must work.
+        msg = refusal(code_lead, NAME1)
+        r = run_cli("update-code-lead", "--lead-id", str(K1), "--append-note",
+                    "fixture: the remedy the refusal names", "--status", OTHER,
+                    "--session", S, "--dry-run")
+        bad = run_cli("update-code-lead", "--lead-id", str(K1), "--append-note", " ",
+                      "--session", S)
+        record("K09", "an exact restatement refuses with `db.py update-code-lead --lead-id "
+               "N`, and that command is wired: a dry run exits 0 and writes nothing; a "
+               "blank note exits 1 with REFUSING",
+               msg and f"update-code-lead --lead-id {K1}" in msg
+               and "Update that row instead" in msg
+               and r.returncode == 0 and '"changed": true' in r.stdout
+               and lead(K1)["status"] == "REFERENCE-ONLY"
+               and bad.returncode == 1 and bad.stderr.startswith("REFUSING:"),
+               f"msg={msg!r} r={r.returncode} {r.stderr[-300:]!r} bad={bad.returncode} "
+               f"{bad.stderr[-200:]!r}")
+
+    # The near-duplicate refusal is insert_code_lead's, so these cases run whether or
+    # not the verb exists: on the pre-WP6 code the variant is simply admitted.
+    n0 = q("SELECT COUNT(*) FROM research_code_leads")[0][0]
+    VARIANT = "FIXTURE standard 4711 2 — Ramp Provisions"
+    msg = refusal(code_lead, VARIANT)
+    record("K10", "a case/spacing/punctuation variant of a held name refuses, naming "
+           "the held lead and the update command, and writes nothing",
+           msg and f"lead_id {K1}" in msg and "update-code-lead" in msg
+           and q("SELECT COUNT(*) FROM research_code_leads")[0][0] == n0,
+           f"got {msg!r}")
+    msg = refusal(code_lead, VARIANT, distinct_from=[K1])
+    msg2 = refusal(code_lead, "Fixture Standard 9999", distinct_from=[K1], reason="r")
+    msg3 = refusal(code_lead, "Fixture Standard 9999", reason="r")
+    record("K11", "--distinct-from without --reason, --distinct-from naming a lead "
+           "that is not a near match, and --reason alone all refuse",
+           msg and "--reason" in msg and msg2 and "nothing to be distinct from" in msg2
+           and msg3 and "only read beside --distinct-from" in msg3,
+           f"{msg!r} | {msg2!r} | {msg3!r}")
+    WHY_D = "fixture: the 2-part edition and the 2 amendment are separate documents"
+    try:
+        K2 = code_lead(VARIANT, distinct_from=[K1], reason=WHY_D)
+    except Exception as exc:  # noqa: BLE001 -- recorded red, so the run still reports
+        K2 = None
+        print(f"      {exc.__class__.__name__}: {exc}")
+    record("K12", "--distinct-from N --reason admits the variant and records the "
+           "reason, naming the lead it is distinct from, in its notes",
+           K2 and "DISTINCT-FROM" in (lead(K2)["notes"] or "")
+           and f"lead_id {K1}" in lead(K2)["notes"] and WHY_D in lead(K2)["notes"],
+           f"K2={K2}")
+
+    # Non-Latin names: the fold must keep the letters. Two different Japanese
+    # instruments and a Korean one must not collide, and a spacing variant of one of
+    # them must. An ASCII fold turns all three into the empty string: without the
+    # writer's empty-key guard they collide (K13 red), and with it every non-Latin
+    # variant passes unrefused (K14 red). Both were fault-injected.
+    CJK_A, CJK_B = "建築基準法施行令", "高齢者、障害者等の移動等の円滑化の促進に関する法律"
+    KO = "장애인·노인·임산부 등의 편의증진 보장에 관한 법률"
+    got = {}
+    for name in (CJK_A, CJK_B, KO):
+        try:
+            got[name] = code_lead(name)
+        except Exception as exc:  # noqa: BLE001 -- recorded red below
+            got[name] = f"{exc.__class__.__name__}: {exc}"
+    record("K13", "distinct Japanese and Korean names do not collide",
+           all(isinstance(v, int) for v in got.values()), f"got={got}")
+    msg = refusal(code_lead, "建築基準法 施行令")
+    record("K14", "a spacing variant of a Japanese name does collide, naming the lead "
+           "(the fold keeps non-Latin letters)",
+           msg and isinstance(got.get(CJK_A), int) and f"lead_id {got[CJK_A]}" in msg,
+           f"got {msg!r}")
+
+    if update is not None and MOVE_TO:
+        # The capture path, on a CANONICAL lead (an UPDATE, not a fixture INSERT).
+        canon = q("SELECT lead_id FROM research_code_leads WHERE status='REFERENCE-ONLY' "
+                  "AND created_by_session <> ? ORDER BY lead_id LIMIT 1", S)
+        if not canon:
+            record("K15", "a canonical REFERENCE-ONLY lead to test capture with", False,
+                   "fixture missing in the copy")
+        else:
+            (CL,) = canon[0]
+            try:
+                update(CL, "fixture: capture check", S, status=MOVE_TO)
+            except Exception as exc:  # noqa: BLE001 -- recorded red below
+                print(f"      {exc.__class__.__name__}: {exc}")
+            import importlib                                       # noqa: E402
+            sys.path.insert(0, str(REPO / "scripts" / "research"))
+            emit_mod = importlib.import_module("emit_batch_sql")
+            sql_out = os.path.join(TMP, "capture-lead.sql")
+            try:
+                emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+                captured = open(sql_out, encoding="utf-8").read()
+            except SystemExit as exc:
+                captured = f"emit refused: {exc}"
+            hit = [ln for ln in captured.splitlines()
+                   if ln.startswith('UPDATE "research_code_leads"')
+                   and f'"lead_id" = {CL}' in ln and f'"status" = \'{MOVE_TO}\'' in ln
+                   and '"updated_by_session"' in ln]
+            record("K15", "emit_batch_sql captures update-code-lead's UPDATE of a "
+                   "canonical lead (the write can be shipped)", len(hit) == 1,
+                   captured[-400:])
+
+    # ── J: the declared jurisdiction vocabulary, refused at write time ─────────────
+    # I7. Every value used here is either read from the enum / the audit or is one no
+    # vocabulary could ever declare ('XX'). The gated tables are DERIVED the way the
+    # audit derives them, from its own exclusion sets, so the writers' refusal and the
+    # blocking check cannot drift apart unseen.
+    import importlib.util                                           # noqa: E402
+    from schemas.enums import JurisdictionCode                      # noqa: E402
+    _spec = importlib.util.spec_from_file_location(
+        "_jdv", REPO / "scripts" / "audit" / "jurisdiction_db_vocabulary.py")
+    jdv = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(jdv)
+    DECLARED = {m.value for m in JurisdictionCode}
+    REJECTED = jdv.rejected_spellings()
+    check_jur = getattr(dbcore, "check_jurisdiction", None)
+    UNDECLARED = "XX"
+    record("J00", "the fixture code is undeclared and a rejected spelling is parsed",
+           UNDECLARED not in DECLARED and bool(REJECTED), f"rejected={REJECTED}")
+    BAD, GOOD = next(iter(REJECTED.items()))
+    # A declared code admitted in the same change, so J03 also shows the enum was widened.
+    NEW = next((c for c in ("PT", "FI", "UN", "UG") if c in DECLARED), None)
+    J_TABLES = ("evidence_sources", "evidence_source_authors")
+
+    def jur_of(ref_id):
+        rows = q("SELECT jurisdiction FROM evidence_sources WHERE ref_id=?", ref_id)
+        return rows[0][0] if rows else "<no row>"
+
+    # THE CASE THAT FAILS ON THE OLD CODE: add-source wrote any string, and the blocking
+    # audit found it only after it landed.
+    RJ = next_ref()
+    before = counts(*J_TABLES)
+    r = add_source(RJ, "--jurisdiction", UNDECLARED)
+    record("J01", "add-source --jurisdiction XX refuses, names JurisdictionCode and the "
+           "audit, and writes nothing",
+           r.returncode == 1 and r.stderr.startswith("REFUSING:")
+           and "JurisdictionCode" in r.stderr and "jurisdiction_db_vocabulary" in r.stderr
+           and counts(*J_TABLES) == before and jur_of(RJ) == "<no row>",
+           f"rc={r.returncode} {r.stderr[-300:]!r} {before} -> {counts(*J_TABLES)}")
+    r = add_source(RJ, "--jurisdiction", BAD)
+    record("J02", f"add-source --jurisdiction {BAD} refuses and names {GOOD}",
+           r.returncode == 1 and f"write '{GOOD}'" in r.stderr and jur_of(RJ) == "<no row>",
+           f"rc={r.returncode} {r.stderr[-300:]!r}")
+    r = add_source(RJ, "--jurisdiction", NEW.lower() if NEW else "pt")
+    record("J03", "a case variant of a declared code refuses, naming the declared "
+           "spelling (stored codes are compared exactly, so it is not folded)",
+           r.returncode == 1 and NEW and f"write '{NEW}'" in r.stderr
+           and jur_of(RJ) == "<no row>", f"rc={r.returncode} {r.stderr[-300:]!r}")
+    r = add_source(RJ, "--jurisdiction", NEW or "PT")
+    record("J04", f"add-source --jurisdiction {NEW} (admitted 2026-10-01) is accepted",
+           r.returncode == 0 and NEW and jur_of(RJ) == NEW,
+           f"rc={r.returncode} {r.stderr[-300:]!r} stored={jur_of(RJ)!r}")
+
+    n_exec = counts("search_executions")
+    msg = refusal(db.log_search, A, "en", "fixture query", "fixture-engine", "keyword", S,
+                  jurisdiction=UNDECLARED, prior_expectation="fixture: expect nothing")
+    record("J05", "log-search refuses an undeclared jurisdiction before it writes",
+           msg and "JurisdictionCode" in msg and counts("search_executions") == n_exec,
+           f"got {msg!r}")
+    ES_LIKE = sorted(DECLARED)[0]
+    msg = refusal(db.insert_code_lead, {"jurisdiction": ES_LIKE.lower(),
+                                        "standard_name": "Fixture lead J06",
+                                        "status": "REFERENCE-ONLY"}, S)
+    record("J06", f"add-code-lead refuses '{ES_LIKE.lower()}' and names '{ES_LIKE}' -- its "
+           "duplicate checks compare jurisdiction exactly, so a variant would split leads",
+           msg and f"write '{ES_LIKE}'" in msg
+           and not q("SELECT 1 FROM research_code_leads WHERE standard_name=?",
+                     "Fixture lead J06"), f"got {msg!r}")
+    msg = refusal(db.insert_extraction, {"ref_id": REF, "slug": A, "parameter_id": 1,
+                                         "jurisdiction": UNDECLARED}, S)
+    record("J07", "add-extraction refuses an undeclared jurisdiction (by the vocabulary, "
+           "before any other check)", msg and "JurisdictionCode" in msg, f"got {msg!r}")
+    msg = refusal(db.amend_source, RJ, "jurisdiction", UNDECLARED, "fixture: wrong code", S)
+    record("J08", "amend-source --field jurisdiction refuses an undeclared code",
+           msg and "JurisdictionCode" in msg and jur_of(RJ) == NEW, f"got {msg!r}")
+    OTHER_NEW = next((c for c in ("FI", "UG", "UN", "PT") if c in DECLARED and c != NEW),
+                     None)
+    out, msg = None, None
+    try:
+        out = db.amend_source(RJ, "jurisdiction", OTHER_NEW, "fixture: re-scoped", session=S)
+    except Exception as exc:  # noqa: BLE001 -- recorded red below
+        msg = f"{exc.__class__.__name__}: {exc}"
+    record("J09", f"amend-source --field jurisdiction accepts a declared code "
+           f"({OTHER_NEW})", out and jur_of(RJ) == OTHER_NEW, f"{msg!r} {jur_of(RJ)!r}")
+    msg = refusal(db.insert_economics_entry, {"entry_id": "FIXTURE-J10",
+                                              "jurisdiction": "MULTI"}, S)
+    msg2 = refusal(db.insert_jurisdictional_value, {"jv_id": "FIXTURE-J10",
+                                                     "jurisdiction": UNDECLARED}, S)
+    record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) and "
+           "add-jurisdictional-value refuses XX, both by the vocabulary",
+           msg and "JurisdictionCode" in msg and msg2 and "JurisdictionCode" in msg2,
+           f"got {msg!r} / {msg2!r}")
+
+    # Mirror, not stricter: every value LIVE in a table the audit gates passes the
+    # writers' refusal, so a real batch writing UK, EU, ISO, INT ... is never blocked by
+    # it. Read from the canonical database (read-only), on the audit's own table set.
+    canon = sqlite3.connect(f"file:{REPO / 'data' / 'guidebook.db'}?mode=ro", uri=True)
+    try:
+        gated = [t for (t,) in canon.execute(
+                     "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+                 if t not in jdv.EXEMPT | jdv.CANDIDATE_TABLES | jdv.REPORT_ONLY
+                 and any(c[1] == "jurisdiction"
+                         for c in canon.execute(f'PRAGMA table_info("{t}")'))]
+        live = {(t, v) for t in gated for (v,) in canon.execute(
+            f'SELECT DISTINCT jurisdiction FROM "{t}" WHERE jurisdiction IS NOT NULL')}
+    finally:
+        canon.close()
+    blocked = sorted((t, v) for t, v in live
+                     if check_jur is None or refusal(check_jur, v, "J11") is not None)
+    record("J11", f"every value live in the {len(gated)} gated table(s) passes the "
+           f"writers' refusal ({len(live)} table/value pair(s))",
+           check_jur is not None and live and not blocked, f"blocked {blocked}")
+
+    # And the gate the refusal mirrors is green on the copy after every fixture write
+    # above. On the old code J01 had written 'XX' and FI/UG/UN were undeclared.
+    r = subprocess.run([sys.executable, str(REPO / "scripts" / "audit" /
+                                            "jurisdiction_db_vocabulary.py")],
+                       env=dict(os.environ, GUIDEBOOK_DB_PATH=DB),
+                       capture_output=True, text=True)
+    record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
+           r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
