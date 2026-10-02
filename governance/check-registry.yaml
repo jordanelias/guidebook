@@ -1359,6 +1359,80 @@ checks:
     the level is a rollout decision, not an owner question (DR-2026-09-26 section 1.4) — it
     promotes to blocking once the first research batch closes a recorded, closed, disposed
     pass with EXAMINED above zero.'
+- id: search_log_completeness
+  cmd:
+  - python3
+  - scripts/audit/search_log_completeness.py
+  - --session
+  - '@SESSION@'
+  battery: research
+  kinds:
+  - data
+  - synthesis
+  compares: record-artefact
+  level: advisory
+  basis: evidence/discovery-provenance
+  cost: fast
+  requires_session: true
+  session_pointer: CURRENT
+  no_floor: 'session-scoped — the subject is the WebSearch and WebFetch lines the harness
+    hook wrote to scratchpad/<CURRENT>/commands.jsonl, so it varies per session, and a session
+    that ran no WebSearch or WebFetch has an honest zero (every session before the hook was
+    wired is in that state, as is a judgement-only batch). A `min_items: 1` floor would fail
+    each of them for correctly reporting an empty subject. Bash lines are scanned for the
+    curl/wget report but are never counted under EXAMINED, so they cannot make an empty web
+    ledger look examined.'
+  note: 'NEW 2026-10-01 (I5, process-gap plan WP14). The record is search_executions; the
+    artefact is the tool-call ledger written by .claude/hooks/record-command.py through a
+    second PostToolUse object whose matcher is WebSearch|WebFetch (the Bash object is
+    unchanged, so no Bash call is logged twice). FAILS a ledger WebSearch query that equals,
+    or is contained in, no query_text this session logged (both casefolded and
+    whitespace-collapsed), and a WebSearch line with no query; the remedy it prints is `db.py
+    log-search --backfill 1`, with the required --prior-expectation then written after the
+    results and so post hoc, said so. REPORTS, never fails, WebFetch URLs in neither
+    query_text nor the session manifest, bare curl/wget hosts the manifest does not name, and
+    a dead witness -- engine=web rows logged by the session while its ledger holds lines but
+    no WebSearch/WebFetch line. WITNESSED SURFACES: WebSearch and WebFetch only. MCP search
+    tools (Consensus, Semantic Scholar / Scholar Gateway, PubMed, bioRxiv) leave no ledger
+    line, so a PASS says nothing about them; the output names the session''s engines other
+    than web, and `select engine, count(*) from search_executions group by 1` gives the
+    corpus split. STATED TRADE-OFFS, so they are not misread: (a) the REPORTED lines print
+    under NOTHING-IN-SCOPE when no web line was examined, and run_checks renders that run as
+    "not evidence of anything" -- read the lines, the verdict does not clear them; (b) only
+    the query is compared, so repeated calls with one query and different allowed_domains
+    collapse onto one logged row, and containment lets a very short ledger query pass on any
+    logged query containing it. `CURRENT`, not `LATEST-RESEARCH`, for the reason
+    adversarial_pass_recorded gives. Advisory until a searching batch has run with the hook live: the payload field
+    names it reads (tool_input.query, tool_input.url) were documented, not measured, when it
+    was written. PROMOTE after the first searching batch whose ledger carries WebSearch lines
+    and whose run of this check examined them -- derive that with `python3
+    scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CURRENT)" | grep
+    EXAMINED`, never from a figure here. T4 (the two-phase search log) waits on the same
+    evidence.'
+- id: test_search_log_completeness
+  cmd:
+  - python3
+  - scripts/tests/test_search_log_completeness.py
+  battery: tests
+  kinds:
+  - tooling
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures (a temp copy of the DB written through db.py
+    log-search, a temp retrieval-log root, hand-written ledgers); a floor would count the wrong
+    thing
+  note: 'Pins search_log_completeness to its rules: an unlogged WebSearch FAILs, one logged
+    under another session still FAILs, a query-less line FAILs, all-logged PASSes, a ledger with
+    no web lines is NOTHING-IN-SCOPE (and run_checks reads it as such), the REPORTED rules
+    never fail, a dead witness (web rows logged, a Bash-only ledger) is REPORTED rather than
+    read as a quiet session, the FAIL remedy names --backfill 1 and a post-hoc prior, and a
+    PASS names the engines it cannot witness. E01/E02 drive the hook itself with a WebSearch payload and audit the line
+    it wrote, the one case that goes red if the writer and the reader drift apart on field
+    names. Its assertion count is its own EXAMINED line -- re-run, do not trust a figure here.
+    Fault-injected 2026-10-01: disabling the FAIL rule, dropping the session filter, passing a
+    query-less line, dropping the trailing-slash or line-continuation fold, and restoring the
+    pre-WP14 hook each turned it red; restored, green.'
 - id: research_tooling_separation
   cmd:
   - python3
@@ -1593,7 +1667,9 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: '10/10 assertions. Guards which session a Bash call is filed under. That one
+  note: 'Count the assertions with `python3 scripts/tests/test_record_command_session.py |
+    grep EXAMINED`, never from a figure here. The H cases (2026-10-01, WP14) run the hook on WebSearch, WebFetch and Bash payloads and
+    pin settings.json to wiring each tool to it exactly once. Guards which session a Bash call is filed under. That one
 
     function was wrong twice in three days and both wrong answers looked like
 
