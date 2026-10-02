@@ -1,0 +1,523 @@
+[PDF page 1 of 68]
+                  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Logotipo Cermi Comunidad de Madrid
+Metodología para la evaluación 
+e implementación de Accesibilidad 
+Universal en espacios públicos de la 
+ciudad de Madrid 
+Madrid, diciembre de 2018 
+
+[PDF page 2 of 68]
+ 
+1 Índice 
+ 
+  
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+1 Índice ............................................................................................................. 2 
+2 Antecedentes ............................................................................................... 3 
+2.1 
+Crecimiento de la ciudad 
+ 
+  
+ ............................................................................... 3 
+2.2 
+De qué tipo de espacios se trata 
+ 
+ 
+ 
+ 
+ 
+ ................................................................... 4 
+2.3 
+Qué se va a valorar
+ 
+ 
+  
+ ........................................................................................ 5 
+2.4 
+Evolución normativa
+ 
+ ....................................................................................... 5 
+3 Problemática detectada en el 
+ 
+ 
+ 
+ entorno de estos espacios
+ 
+ 
+ 
+ ....................... 9 
+3.1 
+Itinerarios hasta los accesos
+ 
+ .......................................................................... 9 
+3.2 
+Condiciones Orográficas .............................................................................. 10 
+3.3 
+Mantenimiento ............................................................................................. 12 
+4 Análisis de los Es
+ 
+ 
+ 
+pacios ........................................................................... 15 
+4.1 
+Accesos al elemento a valorar 
+ 
+  
+ .................................................................... 15 
+4.2 
+Itinerarios ..................................................................................................... 16 
+4.3 
+Itinerarios en pendiente y cambios de cota 
+ 
+ 
+ 
+ ................................................. 21 
+4.4 
+Pavimentos .................................................................................................. 31 
+4.5 
+Usos de la zona 
+  
+ ........................................................................................... 36 
+4.6 
+Alcantarillas tapas y sumideros ................................................................... 40 
+4.7 
+Elementos de uso 
+ 
+ ........................................................................................ 44 
+4.8 
+Zonas verdes ............................................................................................... 48 
+4.9 
+Iluminación ................................................................................................... 56 
+4.10 
+Señalización ................................................................................................. 59 
+ 
+ 
+ 
+Metodología para la evaluación e implementación de accesibilidad Universal 
+en espacios públicos de la ciudad de Madrid 
+-CERMI Comunidad de Madrid-
+
+[PDF page 5 of 68]
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+5 
+2.3 Qué se va a valorar 
+La filosofía de CERMI Comunidad de Madrid no solo es el cumplimiento normativo, 
+sino también en el uso del mismo de forma segura y autónoma por cualquier tipo de 
+usuarios, independientemente de sus 
+ 
+ 
+ 
+características y capacidades. 
+ 
+ 
+La valoración se hace desde el punto de vista de usuarios/as, y los parámetros 
+prioritarios no son solo numéricos, sino también de uso práctico. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+2.4 Evolución normativa 
+La legislación y la preocupación por parte de urbanistas en materia de accesibilidad 
+no tiene carácter de obligatoriedad hasta la publicación de la Ley 13/1982, de 7 de 
+abril, de integración social de los minusválidos, más conocida como LISMI. De la 
+cual fueron derivando las distintas leyes y reglamentos que hoy en día regulan, entre 
+otras cosas, el derecho de todas las personas a acceder a todo tipo de bienes, 
+espacios y servicios.  
+Actualmente el marco legislativo que afecta a la ciudad en esta materia es muy amplio.  
+2.4.1 Legislación Estatal 
+• Real Decreto Legislativo 7/2015, de 30 de octubre, por el que se aprueba el 
+texto refundido de la Ley de Suelo y 
+ 
+ 
+  
+ 
+ Rehabilitación Urbana. 
+ 
+ 
+• Real Decreto Legislativo 1/2013, de 29 de noviembre, por el que se aprueba 
+el Texto Refundido de la Ley General de derechos de las personas con 
+discapacidad y de su inclusión social. 
+ 
+ 
+ 
+ 
+ 
+• Ley 8/2013, de 26 de junio, de rehabilitación, regeneración y renovación 
+urbanas. 
+• Real Decreto 173/2010, de 19 de febrero, por el que se modifica el Código 
+Técnico de la Edificación, aprobado por el Real Decreto 314/2006, de 17 de 
+marzo, en materia de accesibilidad y no discriminación de las personas con 
+discapacidad.  
+• Orden VIV/561/2010 de 1 de febrero por la que se desarrolla el documento 
+Metodología para la evaluación e implementación de accesibilidad Universal 
+en espacios públicos de la ciudad de Madrid 
+-CERMI Comunidad de Madrid-
+
+[PDF page 10 of 68]
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+10 
+• Enrasados. 
+• Sin aberturas mayores de 2 cm. 
+ 
+  
+ 
+• Alcorques y elementos vegetales (árboles o arbustos) 
+  
+ 
+• No interrumpirán un recorrido accesible de 180 cm
+ 
+ 
+ 
+ 
+ 
+ 
+. de anchura. 
+ 
+ 
+ 
+• Las ramas o elementos por debajo de 220 cm. en zona de paso deberán 
+ser podadas o eliminadas. 
+ 
+ 
+3.2 Condiciones Orográficas 
+Orográficamente, la ciudad de Madrid no se encuentra en un llano, la altura media en 
+el centro, es de 657 m., pero existen mas de 300 m. de diferencia de cota entre las 
+zonas mas altas y mas bajas.  
+ 
+La altura máxima del municipio es de 846 m., la cual se da al noroeste del Pardo, 
+cerca de Torrelodones, y su altitud mínima de unos 543 m. se da en el sur, a orillas 
+del río Manzanares. 
+ 
+  
+ 
+Esto genera pendientes bastante pronunciadas en algunas zonas, que producen 
+barreras importantes a la hora de crear recorridos accesibles en el viario público. 
+  
+ 
+ 
+  
+ 
+ 
+ 
+Estas diferencias orográficas generan: 
+ 
+• Calles en pendiente, hemos de tener en cuenta que pendientes superiores al 
+6% (límite que marca la ley) empiezan a tener problemas importantes para ser 
+ 
+recorridas por muchas personas y a partir del 10% es impracticable. Indicar el 
+recorrido accesible más cercano. 
+ 
+ 
+ 
+ 
+ 
+• Pendiente transversal: las calles no han de tener pendientes transversales 
+superiores al 2%, si no se puede eliminar, indicar el recorrido accesible más 
+cercano.  
+ 
+• Calles escalonadas: fue una solución muy común durante las décadas que 
+Metodología para la evaluación e implementación de accesibilidad Universal 
+en espacios públicos de la ciudad de Madrid 
+-CERMI Comunidad de Madrid-
+
+[PDF page 24 of 68]
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Características generales 
+ 
+• Pendiente superior al 6%. 
+ 
+ 
+ 
+• Sin obstáculos en todo su recorrido. 
+ 
+ 
+ 
+ 
+ 
+• Anchura mínima de paso medido entre pasamanos 180 
+ 
+ 
+ 
+ 
+ 
+ 
+ cm. 
+• Al principio y al final de la rampa existirá un espacio libre de obstáculos que o 
+invada el itinerario peatonal accesible, del ancho de la rampa y de una profundidad 
+superior a 150 cm. 
+ 
+ 
+ 
+• La pendiente transversal máxima será del 2%
+ 
+ 
+ 
+ 
+ 
+. 
+• Su directriz será recta o ligeramente curva. 
+ 
+ 
+  
+ 
+ 
+ 
+Pendientes longitudinales máximas 
+ 
+• Rampas de menos de 3 m. pendiente máxima 10%. 
+ 
+  
+ 
+ 
+ 
+ 
+• Rampas de entre 3 y 10 m. pendiente máxima 8%. 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+Rellanos intermedios 
+ 
+• Longitud máxima del tramo de la rampa 10 m. 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+• Profundidad mínima del rellano para tramos con directriz recta
+ 
+ 
+ 
+ 
+ 
+ 
+, 150 cm. 
+• Profundidad mínima de rellanos en los que haya cambio de dirección de tramos 
+180 cm. 
+ 
+ 
+• La anchura de los rellanos coincidirá con la anchura de la rampa
+ 
+ 
+ 
+ 
+  
+ 
+  
+. 
+ 
+  
+Protección lateral 
+• Debe disponer de un zócalo o elemento de protección lateral en caso de existir 
+desniveles laterales con el fin de que no se pueda meter una rueda o un bastón
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+. 
+ 
+ 
+ 
+  
+  
+El espacio bajo la rampa 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+24 
+• 
+• Si es un itinerario peatonal se deberá pro
+ 
+ 
+ 
+ 
+ 
+ 
+teger hasta una altura de 
+ 
+ 
+ 
+ 220 cm. 
+ 
+ 
+• Ha de contar con un cierre de protección con restricción de paso. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+• Dicho cierre ha de tener una altura máxima desde el suelo a la parte inferior del 
+cierre de 25 cm. 
+ 
+ 
+ 
+ 
+Deberá protegerse en altura inferiores a 210 cm. con carácter general. 
+Metodología para la evaluación e implementación de accesibilidad Universal 
+en espacios públicos de la ciudad de Madrid 
+-CERMI Comunidad de Madrid-
+
+[PDF page 68 of 68]
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I
+m
+ágen del logotipo del ayuntamiento de Madrid, Delegación de gobierno de políticas de genero y diversidad. 
+ 
+ 
+Logotipo de Cermi Comunidad de Madrid
+ 
+L
+ogotipos de las redes sociales en las que está presente Cermi: 
+Twitter
+Facebook
+Linkedin 
+Youtube
+ 
+68 
+Con el apoyo de: 
+Metodología para la evaluación e implementación de accesibilidad Universal 
+en espacios públicos de la ciudad de Madrid 
+-CERMI Comunidad de Madrid-

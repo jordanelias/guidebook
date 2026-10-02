@@ -1,0 +1,390 @@
+[PDF page 1 of 65]
+— GUIDE ILLUSTRÉ
+ACCESSIBILITÉ DES ÉTABLISSEMENTS
+RECEVANT DU PUBLIC ET INSTALLATIONS
+OUVERTES AU PUBLIC EXISTANTS
+MINISTÈRE DE LA COHÉSION
+DES TERRITOIRES ET DES RELATIONS
+AVEC LES COLLECTIVITÉS TERRITORIALES
+www.cohesion-territoires.gouv.fr
+MINISTÈRE
+DE LA TRANSITION
+ÉCOLOGIQUE ET SOLIDAIRE
+www.ecologique-solidaire.gouv.fr
+MINISTÈRE DE LA COHÉSION
+DES TERRITOIRES ET DES RELATIONS
+AVEC LES COLLECTIVITÉS TERRITORIALES
+www.cohesion-territoires.gouv.fr
+MINISTÈRE
+DE LA TRANSITION
+ÉCOLOGIQUE ET SOLIDAIRE
+www.ecologique-solidaire.gouv.fr
+
+[PDF page 2 of 65]
+— Les fondements...................................................................................................................................p.03
+A — 1. Définition et généralités.....................................................................................................................p.07
+B — 2. Cheminements extérieurs..................................................................................................................p.10
+C — 3. Stationnement automobile................................................................................................................p.17
+D1 — 4. Accès à l’établissement ou à l’installation.......................................................................................p.20
+D2 — 5. Accueil au public..................................................................................................................................p.24
+E — 6. Circulations intérieures horizontales...............................................................................................p.26
+F — 7. Circulations intérieures verticales...................................................................................................p.28
+G — 8.  Tapis roulants, escaliers et plans inclinés mécaniques.................................................................p.36
+H — 9. Revêtements sols, murs et plafonds.................................................................................................p.37
+I — 10. Portes, portiques et sas......................................................................................................................p.38
+J — 11. Locaux ouverts au public, équipements et dispositifs de commande........................................p.42
+K — 12. Sanitaires..............................................................................................................................................p.45
+L — 13. Sorties...................................................................................................................................................p.47
+M — 14. Éclairage...............................................................................................................................................p.48
+N — 15. Certains types d’établissements.......................................................................................................p.49
+N1 — 16. ERP accueillant du public assis.........................................................................................................p.50
+N2 — 17. Chambres des locaux d’hébergement.............................................................................................p.51
+N3 — 18. Cabines et espaces individuels.........................................................................................................p.54
+N4 — 19. Caisses de paiement et dispositifs ou équipements disposés en batterie ou en série.............p.55
+O. Sous-titrage ou audio description....................................................................................................p.56
+P. Caractéristiques spécifiques pour certains établissements........................................................p.56
+Q. Établissements spéciaux...................................................................................................................p.57
+R. Annexes.................................................................................................................................................p.58
+— Bibliographie........................................................................................................................................p.63
+— Glossaire...............................................................................................................................................p.64
+GUIDE ILLUSTRÉ 
+ERP – IOP EXISTANTS
+Sommaire
+02
+
+[PDF page 3 of 65]
+03
+GUIDE ILLUSTRÉ 
+ERP – IOP EXISTANTS
+—   Les fondements   
+Préambule
+Le guide illustré ci-après traite des ERP / IOP situés dans un cadre bâti existant. 
+Il fait référence aux décret et arrêtés de 2014. Il est le premier d’une série qui 
+doit mettre à jour la circulaire illustrée précédente (n° DGUHC 2007-53 du 30 
+novembre 2007) suite aux ajustements normatif de 2014 – 2017. Ces guides 
+ont pour objectif de commenter les dispositions prévues par les textes afin 
+d’en faciliter la compréhension et permettre une application pragmatique de la 
+politique d’accessibilité sur le terrain. Il est à destination de tout acteur souhaitant 
+se renseigner sur les questions d’accessibilité, qu’il s’agisse d’un professionnel 
+du bâtiment, d’un gestionnaire d’établissement ou d’un agent de l’État en charge 
+de l’instruction des dossiers ou de la mise en accessibilité du patrimoine de 
+l’État. Compte tenu de la structure des textes législatifs et réglementaires, les 
+dispositions générales (loi et décrets d’application) sont commentées dans un guide 
+« procédures » à paraître, et reprises partiellement dans l’introduction de chaque 
+guide illustré thématique. Ce présent guide sur les ERP/IOP situés dans un cadre 
+bâti existant est le premier d’une série de trois. Les deux autres guides illustrés à 
+venir traiteront de l’accessibilité dans les bâtiments d’habitation neufs (textes du 24 
+décembre 2015) et dans les ERP neufs (arrêté du 20 avril 2017). Les dispositions 
+techniques posées par les différents arrêtés correspondants sont commentées dans 
+le corps de ces guides illustrés à venir.	
+I. Introduction
+La loi n°2005-102 du 11 février 2005 pour l’égalité des droits et des chances, la 
+participation et la citoyenneté des personnes handicapées a pour objectif de mieux 
+insérer dans notre société les personnes handicapées, et ce quel que soit le type de 
+leur handicap (notamment physique, sensoriel, mental, psychique et cognitif). 
+Dans la perspective du vieillissement de la population, les enjeux qui s’attachent 
+à l’accessibilité sont particulièrement forts et sa bonne mise en œuvre participe 
+pleinement d’un développement durable de notre société. 
+L’objectif de résultat assigné par la loi est global et porte sur la continuité de la 
+chaîne des déplacements, qui intègre les transports, l’aménagement de la voirie et 
+des espaces publics et les bâtiments dans leur ensemble. 
+L’accessibilité du cadre bâti, et en particulier des bâtiments d’habitation et des 
+établissements recevant du public, tient une place importante dans ce dispositif. 
+ 
+Après la modification du décret n°2006-555 du 17 mai 2006 par le décret 
+n°2014‑1326 du 5 novembre 2014, de nouvelles règles relatives aux cadre 
+bâti existant sont instaurées. L’arrêté du 8 décembre 2014 fixe des dispositions 
+spécifiques aux établissements recevant du public situés dans un cadre bâti existant 
+et aux installations existantes ouvertes au public. Ces dispositions concernent 
+l’application des articles R.111-19-7 à R.111-19-11 du Code de la Construction 
+et de l’Habitation. Elles entrent en vigueur à compter du 1er janvier 2015. Elles 
+s’appliquent aux demandes de permis de construire et aux demandes d’autorisations 
+de construire, aménager ou modifier un établissement recevant du public déposées 
+à compter de cette date. Les textes porteurs des dispositions antérieures sont 
+abrogés de fait. 
+ 
+NB : Lorsqu’une demande de permis a été déposée avant le 1er janvier 2015 mais 
+que celui-ci fait l’objet d’une demande de permis modificatif* déposée à partir du 
+1er janvier 2015, il ne conviendra d’appliquer les nouvelles règles d’accessibilité que 
+sur les parties du ou des bâtiments qui sont touchées de façon substantielle par le 
+modificatif, dans la mesure où cela n’entraîne pas une reprise complète du projet 
+initial. Il est évident par exemple que, si le modificatif porte uniquement sur la façade 
+du bâtiment, il ne sera pas exigé d’appliquer les nouvelles règles sur l’ensemble du 
+bâtiment. 
+*Le bénéficiaire d’un permis de construire ou d’un permis d’aménager en cours de 
+validité peut apporter des modifications à celui-ci dès lors que ces modifications 
+sont mineures. Ce permis ne constitue pas un nouveau permis.	 	
+
+[PDF page 12 of 65]
+  •   L’exigence de plan incliné n’interdit pas d’aménager en complément 
+un cheminement plus direct avec des marches.
+  •   À partir de 6 % sur plusieurs mètres, un nombre important de 
+personnes en fauteuil roulant  manuel vont perdre leur autonomie et 
+devoir demander de l’aide. De nombreuses autres personnes à mobilité 
+réduite subiront une gêne comparable.
+R  En cas de cheminement en pente, une bordure chasse-roues 
+permet à une personne en fauteuil roulant d’éviter le risque de sortir du 
+cheminement. Cette bordure constitue également un repère tactile utile 
+pour le guidage des personnes aveugles ou malvoyantes avec canne.
+R  Le long des rampes de pente supérieure à 4 %, une main courante 
+disposée au moins sur un côté, voire de part et d’autre du cheminement, 
+constitue une aide précieuse à la locomotion. De plus, l’installation 
+d’une seconde main courante à une hauteur intermédiaire permettra 
+son utilisation par des enfants et des personnes de petite taille.
+  •   « Casser l’angle » du ressaut facilite l’attaque de l’obstacle qu’il représente pour 
+la petite roue du fauteuil roulant, fréquemment équipée d’un bandage plein qui ne 
+peut pas « épouser » l’angle et en faciliter le franchissement.
+R  D’une manière générale, il est préférable d’adoucir l’ensemble des 
+ressauts, y compris ceux inférieurs à 2 cm, en les chanfreinant à 33 %
+R  Réaliser un contraste visuel par la couleur ou l’éclairage au droit du ressaut 
+permet aux personnes mal voyantes ainsi qu’aux personnes présentant des 
+diffi  cultés de locomotion (personnes se déplaçant avec des cannes, personnes 
+âgées, etc.) de le repérer et d’éviter de trébucher.
+ •   Compte tenu de la diffi  culté à être emprunté par les personnes mal marchantes et 
+du risque de chutes important qu’ils constituent pour les personnes malvoyantes, 
+les « pas d’âne » sont interdits même en complément d’un cheminement adapté.
+ •   L’aménagement de ressauts 
+successifs est déconseillé car 
+la répétitivité de l’obstacle que 
+constitue le ressaut est très pénible 
+pour les personnes en fauteuil 
+roulant ; on préférera un plan 
+incliné dont la pente est 
+inférieure ou égale à 5 %.
+R  Il est recommandé de prévoir un palier de repos tous les 10 m dès 
+qu’une pente supérieure à 2 % est aménagée sur une longue distance, 
+sans attendre le seuil réglementaire de 5 %
+R  En cas de cheminement 
+en pente présentant 
+des changements de 
+direction supérieurs 
+à 45°, il est important 
+qu’un palier de repos 
+existe à chaque 
+changement de direction.
+R  Sur les longs trajets, 
+il est recommandé de 
+prévoir des appuis 
+ischiatiques (appuis 
+de repos assis-debout) 
+à une hauteur de 
+0,70 m environ. Cette 
+fonction d’appui peut 
+aussi être apportée 
+par un mobilier urbain 
+judicieusement choisi. Le 
+long des cheminements 
+extérieurs, des abris 
+accessibles permettant 
+de se protéger des 
+intempéries sont 
+également utiles.
+2° Caractéristiques dimensionnelles 
+a) Profi l en long :
+Le cheminement accessible est horizontal et sans ressaut.
+Pentes :
+Lorsqu’une dénivellation ne peut être évitée, un plan incliné 
+de pente inférieure ou égale à 6 % est aménagé afi n de 
+la franchir. Les valeurs de pentes suivantes sont tolérées 
+exceptionnellement :
+- jusqu’à 10 % sur une longueur inférieure ou égale à 2 m ;
+- jusqu’à 12 % sur une longueur inférieure ou égale à 0,50 m.
+Palier de repos :
+Un palier de repos est nécessaire en haut et en bas de chaque 
+plan incliné, quelle qu’en soit la longueur. En cas de plan 
+incliné de pente supérieure ou égale à 5 %, un palier de repos 
+est nécessaire tous les 10 m.
+Les caractéristiques dimensionnelles du palier sont défi nies à 
+l’annexe 2.
+Ressaut :
+Lorsqu’il ne peut être évité, un faible écart de niveau peut 
+être traité par un ressaut à bord arrondi ou muni d’un 
+chanfrein et dont la hauteur est inférieure ou égale à 2 cm. 
+Cette hauteur maximale peut toutefois être portée à 4 cm 
+si le ressaut comporte sur toute sa hauteur une pente ne 
+dépassant pas 33 %.
+La distance minimale entre deux ressauts successifs est de 
+2,50 m. Ces ressauts successifs sont séparés par des 
+paliers de repos.
+Les pentes créées comportant plusieurs ressauts successifs, 
+dits « pas d’âne », sont interdites.
+Un plan incliné ne présente pas de ressaut, ni en haut ni 
+en bas. Cette dernière disposition ne s’applique pas aux seuils 
+de porte ni aux pas de porte.
+conseillé car
+stacle que
+est très pénible
+en fauteuil 
+a un plan
+est
+5 %.
+Arrêté du 8 décembre 2014 
+Article 2
+12
+GUIDE ILLUSTRÉ 
+ERP – IOP EXISTANTS
+B — 2.  Dispositions relatives aux cheminements extérieurs
+R   : Recommandé
+TOLÉRÉ
+TOLÉRÉ
+TOLÉRÉ
+2° Caractéristiques dimensionnelles
+a) Profi l en long :
+Le cheminement accessible est horizontal et sans ressaut.
+Pentes :
+Lorsqu’une dénivellation ne peut être évitée, un plan incliné
+de pente inférieure ou égale à 6 % est aménagé afi n de
+la franchir. Les valeurs de pentes suivantes sont tolérées 
+exceptionnellement :
+- jusqu’à 10 % sur une longueur inférieure ou égale à 2 m ;
+- jusqu’à 12 % sur une longueur inférieure ou égale à 0,50 m.
+Palier de repos :
+Un palier de repos est nécessaire en haut et en bas de chaque
+plan incliné, quelle qu’en soit la longueur. En cas de plan
+incliné de pente supérieure ou égale à 5 %, un palier de repos
+est nécessaire tous les 10 m.
+Les caractéristiques dimensionnelles du palier sont défi nies à
+l’annexe 2.
+Ressaut :
+Lorsqu’il ne peut être évité, un faible écart de niveau peut
+être traité par un ressaut à bord arrondi ou muni d’un
+chanfrein et dont la hauteur est inférieure ou égale à 2 cm.
+Cette hauteur maximale peut toutefois être portée à 4 cm
+si le ressaut comporte sur toute sa hauteur une pente ne
+dépassant pas 33 %.
+La distance minimale entre deux ressauts successifs est de
+2,50 m. Ces ressauts successifs sont séparés par des
+paliers de repos.
+Les pentes créées comportant plusieurs ressauts successifs,
+dits « pas d’âne », sont interdites.
+Un plan incliné ne présente pas de ressaut, ni en haut ni
+en bas. Cette dernière disposition ne s’applique pas aux seuils 
+de porte ni aux pas de porte.
+
+[PDF page 13 of 65]
+  •   Une pente ne constitue pas la seule solution 
+pour éviter la stagnation d’eau. À titre 
+d’exemple, un revêtement poreux mais non 
+meuble y contribuera effi  cacement.
+R  En cheminement courant, il est souhaitable 
+que la valeur du dévers ne dépasse pas 1 %.
+  •   La largeur d’un cheminement se mesure 
+entre les mains courantes, les garde-corps 
+ou les bordures éventuels.
+R  Selon l’importance du flux d’usagers sur 
+le cheminement, une largeur supérieure à 
+1m20 peut être nécessaire pour faciliter 
+le croisement. Prévoir des élargissements 
+ponctuels le long du cheminement répond à 
+ce besoin.
+  •   La réduction ponctuelle admise doit être appréciée selon le contexte. Il 
+s’agira notamment de prendre en compte la fréquentation du cheminement 
+en question : celle-ci pourra dépendre de sa localisation à l’intérieur de 
+l’ERP (proche de l’entrée principale ou plus excentré), de l’importance des 
+bâtiments ou équipements qu’il dessert, et de la nature de l’établissement.
+  •   Il est important d’éviter tout aménagement favorisant l’installation 
+ultérieure d’obstacles même temporaires. Par exemple, les poteaux ou 
+barrières où pourraient s’accrocher des véhicules à deux roues doivent être 
+disposés suffi  samment en-dehors du cheminement de 1,20 m.
+  •   Le positionnement de l’espace de 
+manœuvre de porte dépend du sens 
+d’ouverture de la porte et de l’impératif d’atteinte 
+de la poignée.
+  •   Cet espace est destiné à permettre aux 
+personnes en fauteuil roulant de manœuvrer 
+et franchir une porte de façon autonome : il 
+n’est donc pas nécessaire de part et d’autre des 
+portes menant uniquement à un escalier, ou 
+uniquement à un sanitaire, une douche ou une 
+cabine d’habillage non adaptés.
+  •   Afi n d’éviter la fatigue, 
+il est important que les 
+personnes en fauteuil 
+roulant n’aient pas à 
+parcourir de trop longues 
+distances avant de pouvoir 
+faire demi-tour si elles n’ont 
+pas pris la bonne direction 
+ou si elles ne peuvent 
+accéder au bâtiment.
+b) Profi l en travers
+Largeur de passage :
+La largeur minimale du cheminement accessible est 
+de 1,20 m libre de tout obstacle, sans préjudice des 
+prescriptions prévues par le règlement de sécurité 
+contre les risques d’incendie et de panique dans les 
+établissements recevant du public.
+Lorsqu’un rétrécissement ponctuel ne peut être évité, la 
+largeur minimale du cheminement peut, sur une faible 
+longueur, être comprise entre 0,90 m et 1,20 m de manière à 
+permettre le passage d’une personne en fauteuil roulant.
+Lorsqu’un rétrécissement ponctuel ne peut être évité, la 
+largeur minimale du cheminement peut, sur une faible 
+longueur, être comprise entre 0,90 m et 1,20 m de manière à 
+permettre le passage d’une personne en fauteuil roulant.
+Dévers : 
+Le cheminement est conçu et mis en œuvre de manière à 
+éviter la stagnation d’eau. Lorsqu’un dévers est nécessaire, il 
+est inférieur ou égal à 3 %.
+c) Espaces de manœuvre et d’usage pour les personnes 
+circulant en fauteuil roulant
+Un espace de manœuvre avec possibilité de demi-tour est 
+nécessaire en chaque point du cheminement accessible 
+où un choix d’itinéraire est donné à l’usager. De même, un 
+espace de manœuvre avec possibilité de demi-tour est 
+nécessaire au droit du système de contrôle d’accès des 
+portes d’entrée desservies par un cheminement accessible.
+Un espace de manœuvre de porte est nécessaire de part 
+et d’autre de chaque porte ou portillon situé le long du 
+cheminement, à l’exception des portes et des portillons 
+automatiques coulissants dès lors qu’est prévue la 
+détection de toute personne avant le passage de la 
+porte et son passage de la porte en toute sécurité, des 
+portes et des portillons ouvrant uniquement sur un escalier 
+et des portes des sanitaires, des douches et des locaux non 
+adaptés.
+Arrêté du 8 décembre 2014 
+Article 2
+13
+GUIDE ILLUSTRÉ 
+ERP – IOP EXISTANTS
+B — 2.  Dispositions relatives aux cheminements extérieurs
+R   : Recommandé
+TOLÉRÉ
+TOLÉRÉ
+b) Profi l en travers
+Largeur de passage :
+La largeur minimale du cheminement accessible est
+de 1,20 m libre de tout obstacle, sans préjudice des
+prescriptions prévues par le règlement de sécurité
+contre les risques d’incendie et de panique dans les
+établissements recevant du public.
+Lorsqu’un rétrécissement ponctuel ne peut être évité, la
+largeur minimale du cheminement peut, sur une faible
+longueur, être comprise entre 0,90 m et 1,20 m de manière à 
+permettre le passage d’une personne en fauteuil roulant.
+Lorsqu’un rétrécissement ponctuel ne peut être évité, la
+largeur minimale du cheminement peut, sur une faible
+longueur, être comprise entre 0,90 m et 1,20 m de manière à 
+permettre le passage d’une personne en fauteuil roulant.
+Dévers :
+Le cheminement est conçu et mis en œuvre de manière à 
+éviter la stagnation d’eau. Lorsqu’un dévers est nécessaire, il
+est inférieur ou égal à 3 %.
+c) Espaces de manœuvre et d’usage pour les personnes
+circulant en fauteuil roulant
+Un espace de manœuvre avec possibilité de demi-tour est
+nécessaire en chaque point du cheminement accessible
+où un choix d’itinéraire est donné à l’usager. De même, un 
+espace de manœuvre avec possibilité de demi-tour est
+nécessaire au droit du système de contrôle d’accès des
+portes d’entrée desservies par un cheminement accessible.
+Un espace de manœuvre de porte est nécessaire de part
+et d’autre de chaque porte ou portillon situé le long du
+cheminement, à l’exception des portes et des portillons
+automatiques coulissants dès lors qu’est prévue la
+détection de toute personne avant le passage de la
+porte et son passage de la porte en toute sécurité, des
+portes et des portillons ouvrant uniquement sur un escalier
+et des portes des sanitaires, des douches et des locaux non
+adaptés.

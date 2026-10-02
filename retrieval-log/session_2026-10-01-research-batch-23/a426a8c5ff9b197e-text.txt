@@ -1,0 +1,298 @@
+[PDF page 1 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+Towards common European criteria on accessibility of the built environment: 
+Outcomes of Mandate M/420
+22nd March 2021 M/420 Workshop
+Monika Klenovec, PT Leader
+Soren Ginnerup, PT 
+EN 17210:2021, 1st European standard on 
+accessibility and usability of the built 
+environment – Functional requirements
+
+[PDF page 2 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+Soren Ginnerup/Denmark, Civil engineer, formerly Danish Building 
+Research Institute, Aalborg University
+Delfin Jimenez/Spain, Ph architect, EQAR SL Access Consultant
+Katerina Papamichail/Greece, Architect, Access consultant 
+Isabella Tiziana Steffan/Italy, Architect, Certified Professional 
+Ergonomist 
+Carol Thomas/United Kingdom, Planner & Access Consultant, Access 
+Design Solutions UK Ltd.
+
+Project Team Leader:
+Monika Klenovec/Austria, Certified Architect & Access Consultant, 
+TU Vienna, designforall/AT
+Introduction of the Project Team
+©2021 CEN – all rights reserved
+
+[PDF page 3 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+European Commission Mandate M/420
+‘Mandate to CEN, CENELEC and ETSI in support of European 
+accessibility requirements for public procurement in the built 
+environment’
+Drafting: Project Team of experts (Open call)
+Consensus: CEN/CENELEC JTC 11, Accessibility in the built environment
+Phase I: Inventory, analysis and feasibility of European and International 
+accessibility standards in the built environment
+Phase II: 3 deliverables 
+EN: Functional requirements
+TR 1: Technical performance criteria and specifications
+TR 2: Conformity assessment
+©2021 CEN – all rights reserved
+
+[PDF page 4 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+CEN/CENELEC JTC 11  - 15 active members
+Plus observers, liaison officers ...
+European Commission - DG Employment, Social Affairs and Inclusion
+AGE-Platform Europe
+ANEC - European Voice of Consumers in Standardisation
+EDF - European Disability Forum
+ENAT - European Network for accessible tourism
+SBS - Small Business Standards 
+ETSA – European Textile Service Association 
+CEN/TC 10 Lifts, escalators and moving walks
+and more
+•
+Austria
+•
+Belgium
+•
+Denmark
+•
+France
+•
+Germany
+•
+Greece
+•
+Ireland
+•
+Italy
+•
+Malta
+•
+Norway
+•
+Portugal
+•
+Spain
+•
+Sweden
+•
+Switzerland
+•
+UK
+©2021 CEN – all rights reserved
+
+[PDF page 5 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+Consensus building and dialogue
+Phase I: 2009 – 2011 (research)
+Phase II: 4 years (2016 – 2020)
+13 Plenary meetings
+4 small group meetings
+1 Open Workshop (2019)
+2016: start
+2017: 1st and 2nd drafts
+2018: 3rd draft
+2019: 4th draft
+- ENQUIRY VOTE –
+2020: 5th draft
+- FORMAL VOTE –
+Approval by large majority
+©2021 CEN – all rights reserved
+
+[PDF page 6 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210. A new approach
+Functional requirements
+Didactic approach with “Rationale”
+Many Figures (including some inappropriate solutions)
+Basic accessibility requirements and recommendations + additionally specific 
+use buildings and outdoor areas
++ several elements not covered in ISO 21542: urban spaces, pedestrian 
+crossings, shared spaces, emergency evacuation, adaptable housing etc. 
+Comprehensive horizontal European standard on accessibility of the built 
+environment
+©2021 CEN – all rights reserved
+
+[PDF page 7 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210: Sources of information (standards, guidance)
+Based mainly on ISO 21542:2011 Accessibility and usability of the built
+environment; in some areas rev. ISO/DIS 21524:2020
+TSI PRM Standards on Railway applications in Infrastructure : 
+– EN 16584-1 … Part 1: Contrast,
+– EN 16584-2 … Part 2: Information.
+– EN 16584-3 … Part 3: Optical and friction characters.
+– EN 16587 … Requirements for obstacle free routes for infrastructure.
+Other specific ENs and product related ENs,
+National standards,
+Guidance on specific matters.
+©2021 CEN – all rights reserved
+
+[PDF page 8 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210: Content and overview
+This European Standard supports the implementation of accessibility and usablity in 
+the built environment with the „Design for All“ concept:
+1.
+Scope
+2.
+Normative references
+3.
+Terms and definitions
+4.
+Legal and policy background
+5.
+Diversity of users and design considerations
+6 -15. Basic functional requirements/recommendations on accessibility in the built 
+environment
+16 -20. Specific use buildings and environments
+©2021 CEN – all rights reserved
+
+[PDF page 9 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210 content: basics
+6. 
+Wayfinding
+7.
+Access in the outdoor environment (routes, street furniture, squares and 
+plazas, plantings etc.)
+8.
+Arrival and departure areas – Parking areas
+9.
+Horizontal circulation (entrances, doors, windows, patios, terraces, surface 
+finishes and materials)
+10. Vertical circulation (ramps, stairs, handrails, lifts, escalators)
+11. Specific areas, equipment and provisions (service counters, seating, waiting & 
+storage areas, kitchenettes, facilities for assistance dogs etc.)
+12. Sanitary accommodation
+13. User interface, controls and switches
+14. Fire safety for all – Evacuation and emergency exits
+15. Environmental conditions in buildings (lighting, acoustics, indoor climate)
+©2021 CEN – all rights reserved
+
+[PDF page 10 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210: specific uses
+16. Accommodation (hotels, student accommodation, adaptable housing)
+17. Cultural, leisure and sport buildings (auditoriums, concert halls, libraries, 
+museums, heritage buildings and sites, retail and shopping, sport facilities, 
+restaurants etc., swimming pools, saunas)
+18. Administrative, service and employment buildings (conference venues, offices, 
+healthcare and educational buildings, laboratories, banks, post offices, industrial 
+buildings, courts, police stations, religious buildings)
+19. Outdoor and urban areas (playgrounds, garden, parks etc., beaches)
+20. Transport facilities (taxi, bus and coach, metro/underground, tram/light rail, 
+airport, ports and cable car facilities; gas
+©2021 CEN – all rights reserved
+
+[PDF page 11 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210: Scope
+minimum functional requirements and recommendations for an accessible
+and usable built environment, following "Design for All"/"Universal Design"
+principles which will facilitate equitable and safe use for a wide range of
+users, including persons with disabilities.
+applicable across the full spectrum of the built environment.
+relevant to the design, construction, refurbishment or adaptation, and
+maintenance of built environments including outdoor pedestrian and urban
+areas.
+©2021 CEN – all rights reserved
+
+[PDF page 12 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+5.3 Key areas for an accessible built environnment
+Accessible and usable …
+Pedestrian areas
+Approach to the building
+Entrances
+Routes in horizontal circulation
+Routes in vertical circulation
+Rooms
+Equipment and facilities
+Toilets and sanitary facilities
+Exit and evacuation routes
+Information via multiple 
+senses
+©2021 CEN – all rights reserved
+
+[PDF page 13 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210 Example main issues
+Accessible and usable 
+rooms
+1 accessible route in rooms
+2 adequate door widths
+3 adequate circulation space
+4 different seating options 
+5 good indoor climate
+6 good acoustics
+7 good sound and hearing 
+enhancement systems
+8 good lighting
+9 good visual contrast
+©2021 CEN – all rights reserved
+
+[PDF page 14 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210 Example main issues
+Accessible and usable pedestrian areas
+©2021 CEN – all rights reserved
+
+[PDF page 15 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210 Example main issues
+Accessible routes in railway stations
+©2021 CEN – all rights reserved
+
+[PDF page 16 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210 Example detailed issues
+Examples of incorrect surfaces of routes
+Example of adequate foot support 
+on stairs
+Examples of adequate and inadequate absorption of noise in rooms
+©2021 CEN – all rights reserved
+
+[PDF page 17 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+EN 17210 examples (continued)
+Example of an accessible museum display
+Example main functionalities in 
+adaptable housing/dwellings
+Example of an accessible beach 
+service point
+©2021 CEN – all rights reserved
+
+[PDF page 18 of 18]
+CEN/CLC JTC 11
+Accessibility in the built environment
+Standardization documents are not enough!
+Further implementation of accessibility & design for all criteria in the built environment by public
+procurement, architects, facility managers and building legislation is needed – based on prEN 17210  
+Thanks for your attention!  Questions?
+Contact: CEN/CENELEC JTC 11 Secretariat via Fernando Machicado Martin <fmachicado@une.org>
+Abilities of people change from childhood to old age and vary substantially among individuals.
+©2021 CEN – all rights reserved

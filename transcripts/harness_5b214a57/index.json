@@ -1,0 +1,30 @@
+[
+  {
+    "started": "2026-10-01T03:12:15",
+    "role": "other",
+    "bytes": 1353729,
+    "agent_id_prefix": "a2a8834f",
+    "file": "2026-10-01T03-12-15_other_a2a8834f.jsonl"
+  },
+  {
+    "started": "2026-10-01T04:11:56",
+    "role": "other",
+    "bytes": 1387398,
+    "agent_id_prefix": "aead548b",
+    "file": "2026-10-01T04-11-56_other_aead548b.jsonl"
+  },
+  {
+    "started": "2026-10-01T04:15:10",
+    "role": "other",
+    "bytes": 1142218,
+    "agent_id_prefix": "aa99f785",
+    "file": "2026-10-01T04-15-10_other_aa99f785.jsonl"
+  },
+  {
+    "started": "2026-10-01T04:30:59",
+    "role": "other",
+    "bytes": 2331698,
+    "agent_id_prefix": "a39b9904",
+    "file": "2026-10-01T04-30-59_other_a39b9904.jsonl"
+  }
+]
