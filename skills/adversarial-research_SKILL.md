@@ -90,13 +90,13 @@ Specific finding that would invalidate the recommendation. Multiple disjunctive 
 
 ## Standing subjects of every adversarial pass
 
-**These three properties are NOT machine-decidable and no gate asserts them.** Each was raised as
-a defect whose gate could only ever report, never check (D05-021, D05-022, D05-023), and the
-remedy chosen was to give the property a durable home in the pass that *can* decide it. **This
-section is that home** — added 2026-09-03 after an audit found `research_batch_dod.py`'s R7 and
-R13 comments naming "a standing subject of the adversarial pass" while no such subject existed
-anywhere a brief would read. Cite all three by name in your findings, including when you find
-nothing.
+**These four properties are NOT machine-decidable and no gate asserts them.** Each was raised as
+a defect whose gate could only ever report, never check (D05-021, D05-022, D05-023; subject 4,
+GAP-061), and the remedy chosen was to give the property a durable home in the pass that *can*
+decide it. **This section is that home** — added 2026-09-03 after an audit found
+`research_batch_dod.py`'s R7 and R13 comments naming "a standing subject of the adversarial pass"
+while no such subject existed anywhere a brief would read. Cite all four by name in your
+findings, including when you find nothing.
 
 1. **Harm findings against the rows that claim them.** R7 prints the count of
    `search_executions.harm_finding = 1` and the candidate count, and asserts nothing about
@@ -141,6 +141,34 @@ nothing.
    writes it going forward, so the standing query's population stops growing. A source mined after
    this date has no `connections_produced` entry to find here at all — check the mining search's
    own `search_executions` row (`mined_ref_id`) joined to `search_candidates.exec_id` instead.
+
+4. **Figures the payload states that no extraction carries, and concepts it names that no
+   observation records.** Added 2026-10-02 for GAP-061. R11-harvest tests that each admission
+   carries at least one observation; R16-adjudicate that every observation is adjudicated; R16
+   that every term an adjudication names is a parameter or declined. All three read rows that
+   exist. None can see a figure the source states for a concept nobody observed, or a figure for
+   an observed, parameterised concept that no extraction carries — the row that would be checked
+   was never written. That is how every figure batches stated for any concept but the one
+   parameter that existed was lost while the gate read green. Take one sample per admitted
+   source, not one per figure: open the persisted payload under `retrieval-log/<session>/` (the
+   `-text.txt` where one exists), list the figures it states and the concept each is stated
+   for, then read the record side for that `ref_id`:
+
+   ```sql
+   SELECT o.observation_id, o.surface_form, a.outcome, a.term_id, p.parameter_id
+   FROM observed_terms o
+   LEFT JOIN term_adjudications a ON a.observation_id = o.observation_id
+   LEFT JOIN base_parameters p ON p.term_id = a.term_id
+   WHERE o.ref_id = :ref;
+   SELECT extraction_id, parameter_id, figure_role, claimed_value, claimed_unit, claim_text
+   FROM source_value_extractions WHERE ref_id = :ref;
+   ```
+
+   A stated figure with no extraction, and a concept the payload states a figure for with no
+   observation, are each a finding. Record it under `L2-fidelity` (the record does not say what
+   the artefact says; there is no lens of its own, and the lens vocabulary is the column's CHECK),
+   with `subject_table` `source_value_extractions` or `observed_terms` and the payload as
+   `artefact`.
 
 ## Population match record (per cited study)
 

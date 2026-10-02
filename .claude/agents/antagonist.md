@@ -67,6 +67,8 @@ block before the pass can be closed, whatever you numbered your prose findings a
 | `S2-mismatch-note-vs-payload` | A recorded `mismatch_note` is true against the actual payload. |
 | `S3-containment` | The fix stayed inside its stated blast radius — nothing else moved. |
 
+`L2-fidelity` on a research batch also carries standing subject 4 of `skills/adversarial-research_SKILL.md`: figures the payload states that no extraction carries, and concepts it names that no observation records, sampled once per admitted source.
+
 **Closing block — required, so this pass can be recorded (RC4).** Put this fenced block
 inside your FINAL report — the message you hand back when you finish (in this harness
 that is your `SubagentHandback` call; a plain trailing text turn after it is not read).
