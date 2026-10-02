@@ -138,7 +138,15 @@ rules:
       journal article (source_type, from the column's own CHECK), names a journal or
       carries a DOI. The search-target count is printed as a REPORTED line. Known limit:
       a DOI or journal name marks publication, not peer review, so a non-English grey
-      report with a repository DOI fails and takes a reasoned waiver.
+      thesis or report with a repository DOI, or a letter printed in a journal, matches
+      although grey may be right. WAIVER, added in the same PR after its review: such a
+      row is not failed when its grey_reason carries the token `R5-GREY-WARRANTED:`
+      followed by a non-blank reason (written with `db.py amend-source --field
+      grey_reason`, after R1's `CO1-NOT-APPLICABLE: <reason>` precedent). Each waived
+      row is REPORTED by ref_id with its reason, and the adversarial pass reads every one
+      (standing subject 4). A token with nothing after it waives nothing. A non-empty
+      grey_reason alone is not a waiver, because every grey row carries one. A
+      deliberate, narrow loosening, for the owner to confirm.
 
   - id: R6
     phase: when-filing
@@ -297,12 +305,12 @@ rules:
     phase: when-filing
     title: "Every concept a source states a figure for is disposed of"
     hook: >-
-      Every concept a source states a figure for is filed against a parameter, not
-      left in prose or a code lead: observe-term -> adjudicate-term (or add-term) ->
-      add-parameter -> add-extraction. A term that is not a design parameter is
-      declined with its reason (db.py decline-parameter). Every phrase observed on
-      this batch's admissions is adjudicated before the gate; NOT-OURS and DEFERRED
-      are answers.
+      A figure a source states is extracted against a parameter, never left only in
+      prose or a code lead (a lead records where to look; R12 keeps it): observe-term
+      -> adjudicate-term (or add-term) -> add-parameter -> add-extraction. Every phrase
+      observed on this batch's admissions is adjudicated (NOT-OURS and DEFERRED are
+      answers), and every term those adjudications name is a parameter or is declined
+      with its reason (db.py decline-parameter).
     anchor: "D-0173; owner ruling 2026-08-26 (the parameter is the judgment object); workplan/2026-09-10-batch-06-runbook.md Step 4b"
     enforcer: R16
 

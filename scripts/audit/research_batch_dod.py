@@ -51,7 +51,9 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       INDEXING fact, not an evidence-quality fact.  Observed violation: ES/JA searches targeted
       evidence_type='clinical' while ID searches were targeted 'grey'.  Since 2026-10-02 the
       subject is the batch's non-English ADMISSIONS, not its search targets: one filed 'grey'
-      that is a journal article, names a journal or carries a DOI fails.
+      that is a journal article, names a journal or carries a DOI fails, unless its
+      grey_reason carries `R5-GREY-WARRANTED: <reason>` with a non-blank reason (R1's
+      CO1-NOT-APPLICABLE precedent); each waived row is REPORTED with its reason.
 
   R6  FINDINGS NOT SMUGGLED INTO deferred_reason.  deferred_reason means "deliberately NOT
       searched" and coverage views filter on it. Observed violation: 6 SEARCHED cells carried
@@ -166,6 +168,11 @@ COMBINATORIAL_HINTS = (
 )
 CO1_HINTS = ("lived experience", "co-production", "co-design", "participatory", "dpo",
              "disabled people's organisation", "user-led", "peer research", "nothing about us")
+# R5's in-data waiver, written in evidence_sources.grey_reason and followed by a non-blank
+# reason. R1's `CO1-NOT-APPLICABLE: <reason>` in findings_note is the precedent: a judgement
+# the gate cannot make is recorded where the gate reads it, by a sanctioned verb
+# (`db.py amend-source --field grey_reason`), and the adversarial pass reads every one.
+R5_WAIVER_TOKEN = "R5-GREY-WARRANTED:"
 
 # ---------------------------------------------------------------------------------------------
 # TUNABLE THRESHOLDS — collected here ON PURPOSE, for review.
@@ -432,12 +439,25 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     #
     # WHAT THIS CANNOT TELL, stated so the PASS line is not strengthened. A DOI or a journal
     # name marks publication, not peer review: a non-English grey report or thesis carrying a
-    # repository DOI, or a letter printed in a journal, fails here although grey may be right.
-    # The payload settles that and this gate cannot, so the FAIL names the waiver beside the
-    # correction. An admission with no language recorded at all is read as English and NOT
-    # examined; it is counted and REPORTED rather than passed over in silence.
-    # The search-target count survives as a REPORTED line only: a target classifies what was
-    # sought, and a non-English search may honestly seek grey material.
+    # repository DOI, or a letter printed in a journal, matches here although grey may be
+    # right -- and the scheduled DOI resolver (scripts/resolve_dois.py) can write a DOI onto a
+    # grey row after admission. The payload settles that and this gate cannot.
+    #
+    # THE WAIVER IS IN THE DATA, NOT IN A PR (2026-10-02, T2 review). WP12 first told the
+    # operator to record a waiver "in the PR"; nothing reads a PR, and research_dod_session is
+    # blocking, so a legitimate grey row had no route to green but re-filing it or deleting its
+    # DOI, both false. A matching row is NOT failed when its grey_reason carries
+    # R5_WAIVER_TOKEN followed by a non-blank reason (the text after the token, trimmed). It is
+    # REPORTED by ref_id with that reason, and the adversarial pass reads every one (standing
+    # subject 4). A token with nothing after it waives nothing. A non-empty grey_reason alone
+    # is NOT the waiver: every grey row carries one (it is "why it is grey: the venue"), so
+    # exempting on it would make this rule unable to fail. The token is matched exactly, case
+    # included. Deliberately narrow, and a loosening of WP12 the owner is asked to confirm.
+    #
+    # An admission with no language recorded at all is read as English and NOT examined; it
+    # is counted and REPORTED rather than passed over in silence. The search-target count
+    # survives as a REPORTED line only: a target classifies what was sought, and a non-English
+    # search may honestly seek grey material.
     if "journal_article" not in dbcore.check_values(cx, "evidence_sources", "source_type"):
         raise SystemExit("R5: 'journal_article' is no longer in evidence_sources.source_type's "
                          "CHECK. This rule is a caller of that vocabulary (CLAUDE.md rule 4); "
@@ -447,31 +467,51 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                          f"{scope}", sargs)[0][0]
     n_no_lang = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
                           f"lang_detected IS NULL AND language IS NULL{scope}", sargs)[0][0]
-    downtiered = _rows(cx, f"SELECT ref_id, {lang}, COALESCE(source_type, '-') "
-                           f"FROM evidence_sources WHERE {lang} <> 'EN' "
-                           f"AND evidence_type = 'grey' AND (source_type = 'journal_article' "
-                           f"OR COALESCE(journal_name, '') <> '' OR COALESCE(doi, '') <> '')"
-                           f"{scope} ORDER BY ref_id", sargs)
+    matched = _rows(cx, f"SELECT ref_id, {lang}, COALESCE(source_type, '-'), "
+                        f"COALESCE(grey_reason, '') "
+                        f"FROM evidence_sources WHERE {lang} <> 'EN' "
+                        f"AND evidence_type = 'grey' AND (source_type = 'journal_article' "
+                        f"OR COALESCE(journal_name, '') <> '' OR COALESCE(doi, '') <> '')"
+                        f"{scope} ORDER BY ref_id", sargs)
+    downtiered, waived, blank_token = [], [], []
+    for ref, lg, st, why_grey in matched:
+        _before, token, after = why_grey.partition(R5_WAIVER_TOKEN)
+        if token and after.strip():
+            waived.append((ref, after.strip()))
+            continue
+        downtiered.append((ref, lg, st))
+        if token:
+            blank_token.append(ref)
     grey_sought = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE "
                             f"upper(language) <> 'EN' AND target_evidence_type = 'grey'{scope}",
                         sargs)[0][0]
-    r5_reported = (f"REPORTED, not asserted: {grey_sought} non-English search(es) targeted "
-                   f"'grey' (a target is what was sought, not how a source was filed); "
-                   f"{n_no_lang} admission(s) with no language recorded, read as English and "
-                   f"not examined")
+    r5_reported = (f"REPORTED, not asserted: {len(waived)} admission(s) waived by "
+                   f"{R5_WAIVER_TOKEN!r} in grey_reason"
+                   + ("" if not waived else " -- " + "; ".join(
+                       f"{r}: {why}" for r, why in waived))
+                   + f"; {grey_sought} non-English search(es) targeted 'grey' (a target is "
+                     f"what was sought, not how a source was filed); {n_no_lang} admission(s) "
+                     f"with no language recorded, read as English and not examined")
     if downtiered:
         fail("R5", f"{len(downtiered)} of {n_non_en} non-English admission(s) filed "
                    f"evidence_type 'grey' while carrying a mark of journal publication "
-                   f"(source_type journal_article, a journal name or a DOI): "
+                   f"(source_type journal_article, a journal name or a DOI), unwaived: "
                    + ", ".join(f"{r} ({lg}, {st})" for r, lg, st in downtiered[:8])
+                   + ("" if not blank_token else
+                      f" ({', '.join(blank_token)} carr{'ies' if len(blank_token) == 1 else 'y'}"
+                      f" {R5_WAIVER_TOKEN!r} with no reason after it, which waives nothing)")
                    + ". Non-indexation in PubMed/Scopus is an INDEXING fact, not a quality "
                      "fact: re-file a peer-reviewed article with db.py amend-source --field "
-                     "evidence_type. If the source genuinely is grey (a report with a "
-                     "repository DOI, a letter), record that as a reasoned waiver in the PR. "
-                   + r5_reported, len(downtiered))
+                     "evidence_type. If the source genuinely is grey (a thesis or report with "
+                     "a repository DOI, a letter printed in a journal), say why in its "
+                     "grey_reason, after the token: db.py amend-source --ref-id <REF> --field "
+                     "grey_reason --replacement '<the existing reason> "
+                   + R5_WAIVER_TOKEN + " <why grey is right for this source>' --reason "
+                     "'...' --session <S>. " + r5_reported, len(downtiered))
     else:
         ok("R5", (f"EXAMINED: {n_non_en} non-English admission(s); none filed grey with a "
-                  f"journal_article type, a journal name or a DOI" if n_non_en else
+                  f"journal_article type, a journal name or a DOI unless waived "
+                  f"({len(waived)} waived)" if n_non_en else
                   "EXAMINED: 0 non-English admissions, so this asserts nothing")
                  + ". " + r5_reported)
 
@@ -1204,14 +1244,18 @@ def selftest():
     #   obs 5  REF-ST2  unadjudicated                       R16-adjudicate counts it
     #   obs 6  REF-ST4  unadjudicated                       out of scope, must not count
     #   obs 7  REF-ST4  NAMES-EXISTING -> TERM-ST-X, undisposed   out of scope, must not count
+    #   obs 8  REF-ST2  NAMES-EXISTING -> TERM-ST-R, a RETIRED parameter           must not count
     # What each catches: an outcome filter that keeps only NAMES-NEW silences R16 (obs 1 is
     # NAMES-EXISTING, and obs 2's term is declined); a lost declination or parameter clause
     # takes R16 to 2; a lost escope takes either rule to 2; testing for "no NAMING
-    # adjudication" instead of "no adjudication" takes R16-adjudicate to 2 (obs 4).
+    # adjudication" instead of "no adjudication" takes R16-adjudicate to 2 (obs 4); reading
+    # only ACTIVE parameters takes R16 to 2 (obs 8: a retired or merged parameter is a
+    # recorded decision about the term, so it disposes of it -- added after the T2 review's
+    # mutation run showed `status='active'` left this selftest green).
     # Observations on REF-ST2 take it out of R11-harvest's subject; R11-harvest still fires
     # on this session's other admissions (REF-ST1, ST3, ST5, ST5R, ST6, ST7), none of which
     # carries an observation. REF-ST4's observations are a prior session's, outside it.
-    for tid in ("TERM-ST-U", "TERM-ST-D", "TERM-ST-P", "TERM-ST-X"):
+    for tid in ("TERM-ST-U", "TERM-ST-D", "TERM-ST-P", "TERM-ST-X", "TERM-ST-R"):
         cx.execute("INSERT INTO terms (term_id,canonical_en,created_at,created_by_session,"
                    "updated_at,updated_by_session) VALUES (?,?,'t',?,'t',?)",
                    (tid, tid.lower(), T, T))
@@ -1220,19 +1264,23 @@ def selftest():
                (T,))
     cx.execute("INSERT INTO base_parameters (term_id,created_at,created_by_session) "
                "VALUES ('TERM-ST-P','t',?)", (T,))
+    cx.execute("INSERT INTO base_parameters (term_id,status,created_at,created_by_session) "
+               "VALUES ('TERM-ST-R','retired','t',?)", (T,))
     for oid, ref in ((1, "REF-ST2"), (2, "REF-ST2"), (3, "REF-ST2"), (4, "REF-ST2"),
-                     (5, "REF-ST2"), (6, "REF-ST4"), (7, "REF-ST4")):
+                     (5, "REF-ST2"), (6, "REF-ST4"), (7, "REF-ST4"), (8, "REF-ST2")):
         cx.execute("INSERT INTO observed_terms (observation_id,ref_id,surface_form,language,"
                    "created_at,created_by_session) VALUES (?,?,?,'EN','t',?)",
                    (oid, ref, f"phrase {oid}", T))
     for oid, outcome, tid in ((1, "NAMES-EXISTING", "TERM-ST-U"), (2, "NAMES-NEW", "TERM-ST-D"),
                               (3, "NAMES-EXISTING", "TERM-ST-P"), (4, "NOT-OURS", None),
-                              (7, "NAMES-EXISTING", "TERM-ST-X")):
+                              (7, "NAMES-EXISTING", "TERM-ST-X"),
+                              (8, "NAMES-EXISTING", "TERM-ST-R")):
         cx.execute("INSERT INTO term_adjudications (observation_id,outcome,term_id,rationale,"
                    "created_at,created_by_session) VALUES (?,?,?,'fixture','t',?)",
                    (oid, outcome, tid, T))
-    # R5 (2026-10-02, plan WP12): the subject is non-English ADMISSIONS. Seven rows, each
-    # shaped so that one defect in the predicate moves the asserted COUNT off 3:
+    # R5 (2026-10-02, plan WP12, and the T2 review): the subject is non-English ADMISSIONS.
+    # Ten rows, each shaped so that one defect in the predicate or the waiver moves the
+    # asserted COUNT off 5:
     #   REF-ST8   id  grey      journal_article                  counts (journal_article)
     #   REF-ST9   NL  grey      report, names a journal          counts (journal_name; upper case)
     #   REF-ST10  sv  grey      report, carries a DOI            counts (doi)
@@ -1240,23 +1288,39 @@ def selftest():
     #   REF-ST12  en  grey      journal_article                  must not count (English)
     #   REF-ST13  pt  clinical  journal_article                  must not count (not filed grey)
     #   REF-ST14  de  grey      journal_article, PRIOR session   must not count (out of scope)
+    #   REF-ST15  fi  grey      thesis, DOI, token + reason      must not count; REPORTED as waived
+    #   REF-ST16  it  grey      report, journal, token, blank    counts (a bare token waives nothing)
+    #   REF-ST17  --  grey      journal_article, language 'ko'   counts (the `language` fallback)
     # THE NEGATIVE CASE THE MOVE IS ABOUT: exec 1 above is a non-English search targeted 'grey'
     # and must not count. The old search-target predicate fires once on it alone (count 1);
-    # keeping it beside the new one gives 4. Dropping any one disjunct gives 2; dropping the
-    # language, grey or upper() clause, or the scope, gives 4. Tier is NULL on every row so
-    # none enters R2's, R3's or R13's tier-banded arithmetic; REF-ST10's DOI is held by no
-    # stash row and no other source, so R9, R9a and R9b do not see it.
-    for ref, lg, et, st, jn, doi, sess in (
-            ("REF-ST8", "id", "grey", "journal_article", None, None, T),
-            ("REF-ST9", "NL", "grey", "report", "Tijdschrift voor fixtures", None, T),
-            ("REF-ST10", "sv", "grey", "report", None, "10.9999/st10-sv", T),
-            ("REF-ST11", "es", "grey", "report", None, None, T),
-            ("REF-ST12", "en", "grey", "journal_article", None, None, T),
-            ("REF-ST13", "pt", "clinical", "journal_article", None, None, T),
-            ("REF-ST14", "de", "grey", "journal_article", None, None, "PRIOR-SESSION")):
-        cx.execute("INSERT INTO evidence_sources (ref_id,lang_detected,evidence_type,"
-                   "source_type,journal_name,doi,created_by_session) VALUES (?,?,?,?,?,?,?)",
-                   (ref, lg, et, st, jn, doi, sess))
+    # keeping it beside the new one gives 6. Dropping the doi disjunct gives 4, and the
+    # journal_article or journal_name disjunct 3 (two rows each); dropping the language,
+    # grey or upper() clause, or the scope, gives 6; losing the `language` fallback
+    # (REF-ST17 has lang_detected NULL) gives 4. The WAIVER: no waiver at all gives 6 (REF-ST15
+    # counts) and the waived-row assertion below fails; a waiver on the token alone, without
+    # the non-blank reason, gives 4 (REF-ST16 escapes). Every row carries a grey_reason, as live
+    # grey rows do, so a waiver keyed on grey_reason being non-empty gives 0 on the grey rows
+    # here. Tier is NULL on every row so none enters R2's, R3's or R13's tier-banded
+    # arithmetic; the DOIs on REF-ST10 and REF-ST15 are held by no stash row and no other
+    # source, so R9, R9a and R9b do not see them.
+    why = "fixture: the venue"
+    for ref, lg, lang2, et, st, jn, doi, gr, sess in (
+            ("REF-ST8", "id", None, "grey", "journal_article", None, None, why, T),
+            ("REF-ST9", "NL", None, "grey", "report", "Tijdschrift voor fixtures", None, why, T),
+            ("REF-ST10", "sv", None, "grey", "report", None, "10.9999/st10-sv", why, T),
+            ("REF-ST11", "es", None, "grey", "report", None, None, why, T),
+            ("REF-ST12", "en", None, "grey", "journal_article", None, None, why, T),
+            ("REF-ST13", "pt", None, "clinical", "journal_article", None, None, None, T),
+            ("REF-ST14", "de", None, "grey", "journal_article", None, None, why,
+             "PRIOR-SESSION"),
+            ("REF-ST15", "fi", None, "grey", "thesis", None, "10.9999/st15-fi",
+             "doctoral thesis. R5-GREY-WARRANTED: unrefereed thesis with a repository DOI", T),
+            ("REF-ST16", "it", None, "grey", "report", "Rivista di fixtures", None,
+             "a report. R5-GREY-WARRANTED:   ", T),
+            ("REF-ST17", None, "ko", "grey", "journal_article", None, None, why, T)):
+        cx.execute("INSERT INTO evidence_sources (ref_id,lang_detected,language,evidence_type,"
+                   "source_type,journal_name,doi,grey_reason,created_by_session) "
+                   "VALUES (?,?,?,?,?,?,?,?,?)", (ref, lg, lang2, et, st, jn, doi, gr, sess))
     # R7 (2026-10-02, plan WP12): the candidate floor is gone and count integrity is the
     # predicate. Exec 5 screened more than it found and exec 6 admitted more than it screened,
     # one per clause, so the asserted count is 2; exec 7 has exec 5's defect in a PRIOR
@@ -1284,11 +1348,18 @@ def selftest():
     # in audit(); it simply was not used here.
     caught = {}
     real, DB_PATH = DB_PATH, Path(fd.name)
+    # The report is captured as well as printed: R5's waiver is REPORTED, not counted, so the
+    # only place a waived row can be shown to have been reported is the text.
+    import contextlib
+    import io
+    report = io.StringIO()
     try:
-        rc = audit(session=T, capture=caught)
+        with contextlib.redirect_stdout(report):
+            rc = audit(session=T, capture=caught)
     finally:
         DB_PATH = real
         os.unlink(fd.name)
+    print(report.getvalue(), end="")
     # Every rule the corpus PROVABLY fires must be asserted, not just the nine the
     # original comment named. R7, R13 and R14 were fired by this corpus all along
     # and went unasserted — the same blind spot this selftest was hardened to
@@ -1331,15 +1402,26 @@ def selftest():
     # COUNT ASSERTIONS (2026-10-02, plan WP12). R5 and R7 changed subject; a count of 1 is
     # what the OLD predicates produce on this corpus (each fired once, with no count), so
     # firing alone would have passed the code these replace. See the R5 and R7 fixture
-    # comments for what each other count means.
-    for rule, want in (("R5", 3), ("R7", 2)):
+    # comments for what each other count means. R5 became 5 with the T2 review's waiver and
+    # `language`-fallback rows.
+    for rule, want in (("R5", 5), ("R7", 2)):
         n = caught.get(rule, 0)
         if n != want:
             count_bad = True
             print(f"  **{rule} COUNT {n}, EXPECTED {want}** — the predicate is not the one "
                   f"this selftest was written against; see the {rule} fixture comment in "
                   f"selftest().")
-    if rc == 1 and not missed and not r9a_bad and not count_bad:
+    # R5's WAIVED row must be REPORTED with its reason, and must not appear as a failure.
+    # The R5 line is the one the gate prints for it (a FAIL here, since R5 fires).
+    r5_text = "".join(l for l in report.getvalue().splitlines(True) if "R5:" in l)
+    r5_failed_part, _sep, r5_reported_part = r5_text.partition("REPORTED, not asserted:")
+    waiver_bad = not ("REF-ST15: unrefereed thesis with a repository DOI" in r5_reported_part
+                      and "REF-ST15" not in r5_failed_part)
+    if waiver_bad:
+        print("  **R5 WAIVER NOT REPORTED** — REF-ST15 carries 'R5-GREY-WARRANTED: <reason>' "
+              "and must be listed with its reason as waived, not as a failure; see the R5 "
+              "fixture comment in selftest().")
+    if rc == 1 and not missed and not r9a_bad and not count_bad and not waiver_bad:
         print(f"SELFTEST: PASS — gate rejected the corpus AND all {len(expected)} "
               f"seeded rules fired")
         return 0
@@ -1352,6 +1434,9 @@ def selftest():
     if r9a_bad or count_bad:
         print("SELFTEST: FAIL — a seeded rule fired with the wrong count (see the ** lines "
               "above): firing alone does not prove the predicate kept its clauses.")
+    if waiver_bad:
+        print("SELFTEST: FAIL — R5's waived row was not reported as waived (see the ** line "
+              "above).")
     return 1
 
 
