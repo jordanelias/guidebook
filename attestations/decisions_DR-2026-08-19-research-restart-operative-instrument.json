@@ -22,7 +22,7 @@
   "deviations": [
     {
       "rule": "canonical-workplan",
-      "reason": "The authority for removing the R7 floor is the owner's 'approve all' of 2026-10-01 (references/project-standards.md), given in reply to the process-gap remediation plan whose owner-decision list named D1 to D4. The floor's removal is plan work package WP12, not one of those four decisions. This callout reads 'approve all' as approving the plan's work packages as well as its decisions, which is how the orchestrating session relayed it; this session did not see the owner's words in context and has not verified that reading independently. The weakening is also stated in the commit message and the contract's resolution so the owner can reject it in review."
+      "reason": "The authority for removing the R7 floor is the owner's 'approve all' of 2026-10-01 (references/project-standards.md), given in reply to the process-gap remediation plan whose owner-decision list named D1 to D4. The floor's removal is plan work package WP12, not one of those four decisions. This callout reads 'approve all' as approving the plan's work packages as well as its decisions, which is how the orchestrating session relayed it; this session did not see the owner's words in context and has not verified that reading independently. The weakening is also stated in the commit message and the contract's resolution so the owner can reject it in review, and, after the T2 adversarial review, the DR callout itself says that the entry enumerates D1 to D4, does not settle whether it extends to WP12, and asks the owner to confirm WP12 in the PR."
     },
     {
       "rule": "adherence-logging-and-attestation",

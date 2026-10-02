@@ -1769,7 +1769,9 @@ def main():
                           help="Promote an adjudicated term into base_parameters "
                                "(THE SUBJECT of a determination)")
     p_ap.add_argument("--term-id", dest="term_id", required=True,
-                      help="terms.term_id — must carry a NAMES-NEW/NAMES-EXISTING adjudication")
+                      help="terms.term_id. Refused if absent, declined, value-bearing or "
+                           "already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
+                           "REPORTED as provenance, not required (insert_parameter)")
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")

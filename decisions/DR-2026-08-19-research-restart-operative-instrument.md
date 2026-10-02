@@ -882,8 +882,10 @@ screened. **A staged description is a HYPOTHESIS** — it gets re-described from
 > (`scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md`, WP12; the
 > owner's "approve all" of 2026-10-01 is recorded in `references/project-standards.md`, "Owner
 > ruling 2026-10-01 — the process-gap remediation plan's decisions D1–D4 approved") removed the
-> floor from `scripts/audit/research_batch_dod.py`. The batch being judged types both
-> terms of that ratio, and batch 23 met it by recording rather than searching: it set
+> floor from `scripts/audit/research_batch_dod.py`. That entry enumerates decisions D1 to D4 and
+> WP12 is not one of them, so whether it extends to WP12 (the R7 floor removed, R5 re-aimed) is
+> not settled by it; the owner is asked to confirm WP12 in the PR. The batch being judged
+> types both terms of that ratio, and batch 23 met it by recording rather than searching: it set
 > `results_screened` equal to `results_found` on every web search, then staged seven
 > already-screened documents after the gate reported short (its session record, §2 items 3 and
 > 4). R7 now fails only a search log whose counts contradict each other — screened more than

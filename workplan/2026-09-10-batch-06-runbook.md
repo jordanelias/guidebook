@@ -348,8 +348,16 @@ PY
    `add-parameter` for a design quantity under determination (the JSON carries the
    `parameter_id` every later call keys on); `decline-parameter` for an element, a lens term or a
    method, with its reason. A disposition is per term and corpus-wide: one call, once, not once per
-   batch. `add-parameter` refuses a term with no NAMES-NEW/NAMES-EXISTING adjudication;
-   `decline-parameter` refuses a term that is already a parameter.
+   batch. `add-parameter` refuses a term that does not exist, a declined term, a term whose
+   name carries a value (a number, a comparator, a min/max word), and a term that is already a
+   parameter, whatever its status. It does **not** refuse a term with no NAMES-NEW/NAMES-EXISTING
+   adjudication (corrected 2026-10-02; this line said it did): base vocabulary predates
+   observe/adjudicate, so the JSON reports `"provenance": "adjudicated"` with the adjudication
+   it found, or `"base-vocabulary"` when there is none — information, not a gate. In this loop
+   the term was just named by step 3, so expect `adjudicated`. `decline-parameter` refuses a
+   term that does not exist, a blank reason, a term that is already a parameter (any status)
+   and a term already declined; it does not judge how good the reason is, which is the
+   adversarial pass's job (standing subject 4).
 
 5. **Direction, only where a source states it.** Where an admitted source states which way is
    better for a disabled person:
@@ -374,10 +382,12 @@ PY
    `--figure-role` and `--relation` are required. `--relation none` (alone, once) says the source
    states its figure absolutely; otherwise name each comparison edge with its aligned
    `--to-extraction`/`--to-label`, `--stated` and `--quote` (see `db.py add-extraction --help`). At
-   least one lens flag (`--identity`, `--icf`, `--needs`, `--medical`) is required. **A tier-4–6
-   source also needs a structured locator** — `--locator-scheme` plus one of the `--loc-*` flags;
-   `--source-section` alone is refused there (R3), and a code or standard with genuinely no clause
-   numbering says so with `[UNVERIFIED-QUANT]` in `--notes`. Add `--jurisdiction` for a code source.
+   least one lens flag (`--identity`, `--icf`, `--needs`, `--medical`) is required, and each
+   code given must be live in its own registry. **A row that states a value from a tier-4–6
+   source also needs a structured locator** — at least one of the `--loc-*` levels, with
+   `--locator-scheme` naming the family; `--source-section` alone is refused there (R3) unless
+   `--notes` carries `[UNVERIFIED-QUANT]` for an instrument with genuinely no clause numbering.
+   Add `--jurisdiction` for a code source.
 
 7. **Every `condition` row conditions something.** A condition row is written like any other
    figure (graded `qualitative`, it still takes a `--claimed-value`: the condition in words). For

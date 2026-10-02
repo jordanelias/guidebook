@@ -170,6 +170,34 @@ findings, including when you find nothing.
    with `subject_table` `source_value_extractions` or `observed_terms` and the payload as
    `artefact`.
 
+   **Read the answers that discharge the gates, not only that they exist** (added after the
+   T2 review). R16 is satisfied by any adjudication and any declination, so a `DEFERRED` with
+   a throwaway rationale, or a `decline-parameter --reason` of one word, clears it; R5 is
+   cleared by an `R5-GREY-WARRANTED: <reason>` in a source's `grey_reason`. Read every
+   `DEFERRED` rationale and every declination reason on the batch's admissions — the R16 PASS
+   line's REPORTED `DEFERRED` count is the trigger — and every R5-waived row, whose reason the
+   R5 line prints by `ref_id`: read it against the payload (a thesis or report, or a refereed
+   article filed grey?). A one-word reason is a finding. Declining a population-lens term
+   (`TERM-016` wheelchair user, for example) is a legitimate disposition, since a lens term is
+   not a quantity under determination, but it is an owner-level framing question: if it reads
+   as ritual rather than judgement, record it `WITHHELD-FOR-OWNER`.
+
+   ```sql
+   SELECT a.adjudication_id, o.ref_id, o.surface_form, a.rationale, a.created_by_session
+   FROM term_adjudications a
+   JOIN observed_terms o ON o.observation_id = a.observation_id
+   JOIN evidence_sources e ON e.ref_id = o.ref_id
+   WHERE a.outcome = 'DEFERRED' AND e.created_by_session = :batch;
+   SELECT DISTINCT d.term_id, d.reason, d.created_by_session
+   FROM parameter_declinations d
+   JOIN term_adjudications a ON a.term_id = d.term_id
+   JOIN observed_terms o ON o.observation_id = a.observation_id
+   JOIN evidence_sources e ON e.ref_id = o.ref_id
+   WHERE e.created_by_session = :batch;
+   SELECT ref_id, grey_reason FROM evidence_sources
+   WHERE grey_reason LIKE '%R5-GREY-WARRANTED:%' AND created_by_session = :batch;
+   ```
+
 ## Population match record (per cited study)
 
 ```bash
