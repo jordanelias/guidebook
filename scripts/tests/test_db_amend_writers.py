@@ -572,9 +572,16 @@ try:
         # THE CASE THAT FAILS ON THE OLD CODE: there was no verb, so the collision could
         # be cleared only by hand SQL or by a curated exemption that left it counted.
         d04, a09 = integrity_line("D04"), integrity_line("A09")
-        record("X08", "D04 goes quiet after the verb, and A09 (the pointer resolves) holds "
-               "with the tombstone in scope",
-               "[✓]" in d04 and "[✓]" in a09 and "NOTHING IN SCOPE" not in a09,
+        # The claim is about THIS fixture pair, not the whole database: D04's detail lists
+        # every live collision, so the pair must be absent from it. Asserting the line is
+        # green would make the test depend on the rest of the corpus holding no collision,
+        # which stopped being true once main carried REF-01019 and REF-01031 (a mirror and
+        # its official file, awaiting this very verb). `d04` must be non-empty: a missing
+        # line is a vacuous pass, not a quiet check.
+        record("X08", "D04 no longer names the fixture pair after the verb, and A09 (the "
+               "pointer resolves) holds with the tombstone in scope",
+               bool(d04) and XA not in d04 and XB not in d04
+               and "[✓]" in a09 and "NOTHING IN SCOPE" not in a09,
                f"{d04} | {a09}")
         msg = refusal(supersede, XA, XB, WHY, S)
         record("X09", "refuses a source already superseded, naming its target",
