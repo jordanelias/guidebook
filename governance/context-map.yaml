@@ -658,11 +658,16 @@ writers:
     scripts/audit/register_integrity_check.py:
     - specifications
     scripts/audit/research_batch_dod.py:
+    - base_parameters
     - evidence_sources
+    - observed_terms
+    - parameter_declinations
     - search_candidates
     - search_executions
     - source_locators
+    - term_adjudications
     - term_aliases
+    - terms
     scripts/audit_consolidator.py:
     - item_audit_runs
     scripts/db.py:

@@ -6,7 +6,7 @@ WHY THIS EXISTS. check_json.py, check_yaml.py and check_utf8_md.py each called
 `glob.glob("**/*.ext", recursive=True)`. That pattern does not match paths under
 dot-directories, so all three silently skipped `.github/` and `.claude/`:
 
-  * `.claude/settings.json` — which carries the R1-R15 research contract and whose
+  * `.claude/settings.json` — which carries the research contract and whose
     corruption disables both harness hooks — was never parsed.
   * The four LIVE workflows under `.github/workflows/` were never YAML-parsed,
     while the five RETIRED ones in `_archived/workflows/` were. The syntax gate

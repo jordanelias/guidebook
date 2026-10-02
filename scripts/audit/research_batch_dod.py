@@ -15,8 +15,8 @@ as a mechanical check that fires regardless of what any agent remembers.
   "compliance must not rely on Claude instructions that degrade or are ignored as context fills"
   — workplan/methodology-and-pipeline-enforcement-plan-2026-07-23.md, premise
 
-WHERE THE CONTRACT LIVES. governance/research-contract.yaml is the CANONICAL text of R1-R15
-(DR-2026-08-01-research-contract-single-source). Until then it existed as two hand-transcribed
+WHERE THE CONTRACT LIVES. governance/research-contract.yaml is the CANONICAL text of the research
+contract (DR-2026-08-01-research-contract-single-source). Until then it existed as two hand-transcribed
 copies — this docstring and the SessionStart hook in .claude/settings.json — with no comparator,
 and they had drifted on R1, R2 and R3; two of those changed what the contract obliges. The hook
 is now GENERATED from the contract, and `research_contract_sync` cross-references the rule ids
@@ -105,6 +105,20 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       is a HYPOTHESIS. Observed: a lead staged as "the direct built-environment claim" resolved
       to an SEM mechanism study in a general-population trait sample supplying no design
       parameter. Unchecked, that description would have hardened into fact in the register.
+
+  --- Added 2026-10-02, GAP-061 (process-gap remediation plan WP11). ---
+
+  R16-adjudicate EVERY OBSERVATION ON THE BATCH'S ADMISSIONS IS ADJUDICATED.  R11-harvest asserts
+      that each admission carries an observed phrase; nothing asserted that judgment ever
+      answered one. Observed: batch 23 passed R11-harvest with not one of its observations
+      adjudicated. An answer that names no term counts; silence does not.
+
+  R16 EVERY CONCEPT A SOURCE STATES A FIGURE FOR IS DISPOSED OF.  Every term an adjudication of
+      those observations names is a parameter (base_parameters) or is declined with its reason
+      (parameter_declinations). Observed: nothing promoted a harvested term to a parameter, so
+      every extraction in the database was filed under the one parameter that existed, and
+      what sources state for any other concept was lost. Both R16 predicates are scoped to the
+      batch's ADMISSIONS, as R11-harvest is, not to the session's writes.
 
 DESIGN RULES for anyone extending this gate (learned by attacking it on 2026-07-24, when eight
 of eight attacks succeeded):
@@ -754,6 +768,104 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
            "tested here — judgment adjudicates them" % harvested if harvested else
            "EXAMINED: 0 sources. This batch admitted none, so this asserts nothing")
 
+    # --- R16 / R16-adjudicate: every concept a source states a figure for is disposed of ---
+    # Added 2026-10-02 for GAP-061 (plan: scratchpad/session_2026-10-01-research-batch-23/
+    # process-gap-remediation-plan.md, WP11). R11-harvest above asserts that each admission
+    # carries an observation and stops there, and so did the loop: nothing promoted a
+    # harvested term to a parameter, every extraction was filed under the one parameter that
+    # existed, and batch 23 passed this gate with not one of its observations adjudicated.
+    #
+    # SCOPE IS THE BATCH'S ADMISSIONS (escope), as in R11-harvest, never this session's
+    # writes: a later session adjudicating batch 23's phrases discharges batch 23's debt,
+    # and a judgement-only pilot is gated through the batch whose sources it re-reads. The
+    # converse is the known gap: a session that adjudicates ANOTHER batch's observations is
+    # not gated here on the terms it names. `--all` and the baseline ratchet see that.
+    #
+    # R16-adjudicate: an observation with NO term_adjudications row. Any row answers it --
+    # one that names no term included. Divergent second rows are deliberate (adjudicate_term)
+    # and change nothing here.
+    whose = "the corpus's" if allmode else "this batch's"   # subject phrase, per scope
+    unadjudicated = _rows(cx,
+        "SELECT o.observation_id FROM observed_terms o "
+        "JOIN evidence_sources e ON e.ref_id = o.ref_id "
+        "WHERE NOT EXISTS (SELECT 1 FROM term_adjudications a "
+        "WHERE a.observation_id = o.observation_id)" + escope
+        + " ORDER BY o.observation_id", sargs)
+    if unadjudicated:
+        fail("R16-adjudicate",
+             "%d of %d observation(s) on %s admissions carry no term_adjudications "
+             "row: observation_id %s. A harvested phrase is not yet judged. Answer each with "
+             "db.py adjudicate-term --observation-id N --outcome ... (an outcome that names "
+             "no term is an answer), or db.py add-term --from-observation N for a concept "
+             "new to the vocabulary" % (
+                 len(unadjudicated), harvested, whose,
+                 ", ".join(str(r[0]) for r in unadjudicated[:8])),
+             len(unadjudicated))
+    else:
+        ok("R16-adjudicate",
+           "EXAMINED: %d observation(s) on %s admissions; every one adjudicated"
+           % (harvested, whose) if harvested else
+           "EXAMINED: 0 observations on %s admissions, so this asserts nothing (an "
+           "admission with no observation is R11-harvest's to fail)" % whose)
+
+    # R16: a term NAMED by an adjudication of those observations that holds neither a
+    # parameter (base_parameters, any status: a merged or retired parameter is a recorded
+    # decision about the term) nor a declination (parameter_declinations, migration 101).
+    # `a.term_id IS NOT NULL` is the schema's own pairing CHECK for the outcomes that name a
+    # term, so the outcome vocabulary stays out of this file (CLAUDE.md rule 8) and
+    # NAMES-EXISTING counts as well as NAMES-NEW: a phrase naming a term we already hold is
+    # still a concept the source states a figure for. Every named term can be disposed of by
+    # one call, add-parameter or decline-parameter, and neither refuses for want of anything
+    # this batch must first do, so the rule does not hold red a batch that did its judging.
+    # ONE EXCEPTION, stated rather than discovered: add-parameter refuses a term whose
+    # canonical_en carries a value (db.py _VALUE_BEARING) and canonical_en has no amend
+    # path, so such a term could be disposed of only by a declination that would be untrue.
+    # add-term refuses those names, and no live term carries one; re-derive by matching
+    # `select canonical_en from terms` against _VALUE_BEARING. Meeting one is a GAP to file.
+    # THE PREDICATE IS WIDER THAN THE RULE'S TITLE. Nothing here can tell whether a source
+    # states a figure for a named concept, so every named term must be disposed of, figure
+    # or none. A disposition is per term and corpus-wide, so that costs one call per term
+    # once, not one per batch.
+    # WHAT THIS DOES NOT TEST, stated so the PASS line is not "strengthened": a figure stated
+    # for a concept no observation records leaves no row here, and whether a parameter goes
+    # on to carry an extraction is not read either.
+    adj_join = ("FROM term_adjudications a "
+                "JOIN observed_terms o ON o.observation_id = a.observation_id "
+                "JOIN evidence_sources e ON e.ref_id = o.ref_id ")
+    undisposed = _rows(cx,
+        "SELECT DISTINCT a.term_id " + adj_join +
+        "WHERE a.term_id IS NOT NULL "
+        "AND NOT EXISTS (SELECT 1 FROM base_parameters p WHERE p.term_id = a.term_id) "
+        "AND NOT EXISTS (SELECT 1 FROM parameter_declinations d WHERE d.term_id = a.term_id)"
+        + escope + " ORDER BY a.term_id", sargs)
+    n_named = _rows(cx, "SELECT COUNT(DISTINCT a.term_id) " + adj_join +
+                    "WHERE a.term_id IS NOT NULL" + escope, sargs)[0][0]
+    # The outcomes that name no term, grouped from the rows rather than listed here.
+    unnamed = _rows(cx, "SELECT a.outcome, COUNT(*) " + adj_join +
+                    "WHERE a.term_id IS NULL" + escope + " GROUP BY a.outcome "
+                    "ORDER BY a.outcome", sargs)
+    unnamed_txt = ("%d adjudication(s) name no term (%s)" % (
+        sum(n for _o, n in unnamed), ", ".join("%s %d" % (o, n) for o, n in unnamed))
+        if unnamed else "0 adjudications name no term")
+    if undisposed:
+        fail("R16",
+             "%d of %d term(s) named by adjudications of %s observations hold "
+             "neither a parameter nor a declination: %s. A concept a source states a figure "
+             "for is filed against a parameter (db.py add-parameter --term-id T) or, if it is "
+             "not a quantity under determination (an element, a lens term, a method), "
+             "declined with its reason (db.py decline-parameter --term-id T --reason ...)" % (
+                 len(undisposed), n_named, whose,
+                 ", ".join(r[0] for r in undisposed[:8])),
+             len(undisposed))
+    else:
+        ok("R16",
+           ("EXAMINED: %d term(s) named by adjudications of %s observations; "
+            "every one is a parameter or declined" % (n_named, whose) if n_named else
+            "EXAMINED: 0 terms named by adjudications of %s observations, so "
+            "this asserts nothing" % whose)
+           + ". REPORTED, not asserted: %s. A figure stated for a concept never observed "
+             "is NOT tested here — adversarial standing subject 4" % unnamed_txt)
+
 
     # --- R12 structured homes used ----------------------------------------------------------
     econ_words = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE ("
@@ -984,6 +1096,44 @@ def selftest():
     # R15: a candidate marked ADMITTED whose description was never re-checked against the source.
     cx.execute("INSERT INTO search_candidates (candidate_id,found_under_slug,disposition,title,"
                "created_by_session,created_at) VALUES (1,'s','ADMITTED','a staged hypothesis',?,'t')", (T,))
+    # R16 / R16-adjudicate (2026-10-02, GAP-061). Observations on REF-ST2, this batch's
+    # tier-2 anchor, and on REF-ST4, a PRIOR session's admission. Each row is shaped so
+    # that one defect in either predicate moves an asserted COUNT off 1, so the assertion
+    # below is on the counts, as R9a's is, not merely on firing:
+    #   obs 1  REF-ST2  NAMES-EXISTING -> TERM-ST-U, no parameter, no declination  R16 counts it
+    #   obs 2  REF-ST2  NAMES-NEW      -> TERM-ST-D, declined                      must not count
+    #   obs 3  REF-ST2  NAMES-EXISTING -> TERM-ST-P, holds a parameter             must not count
+    #   obs 4  REF-ST2  NOT-OURS, no term                                          neither counts
+    #   obs 5  REF-ST2  unadjudicated                       R16-adjudicate counts it
+    #   obs 6  REF-ST4  unadjudicated                       out of scope, must not count
+    #   obs 7  REF-ST4  NAMES-EXISTING -> TERM-ST-X, undisposed   out of scope, must not count
+    # What each catches: an outcome filter that keeps only NAMES-NEW silences R16 (obs 1 is
+    # NAMES-EXISTING, and obs 2's term is declined); a lost declination or parameter clause
+    # takes R16 to 2; a lost escope takes either rule to 2; testing for "no NAMING
+    # adjudication" instead of "no adjudication" takes R16-adjudicate to 2 (obs 4).
+    # Observations on REF-ST2 take it out of R11-harvest's subject; R11-harvest still fires
+    # on this session's other admissions (REF-ST1, ST3, ST5, ST5R, ST6, ST7), none of which
+    # carries an observation. REF-ST4's observations are a prior session's, outside it.
+    for tid in ("TERM-ST-U", "TERM-ST-D", "TERM-ST-P", "TERM-ST-X"):
+        cx.execute("INSERT INTO terms (term_id,canonical_en,created_at,created_by_session,"
+                   "updated_at,updated_by_session) VALUES (?,?,'t',?,'t',?)",
+                   (tid, tid.lower(), T, T))
+    cx.execute("INSERT INTO parameter_declinations (term_id,reason,created_at,"
+               "created_by_session) VALUES ('TERM-ST-D','an element, not a quantity','t',?)",
+               (T,))
+    cx.execute("INSERT INTO base_parameters (term_id,created_at,created_by_session) "
+               "VALUES ('TERM-ST-P','t',?)", (T,))
+    for oid, ref in ((1, "REF-ST2"), (2, "REF-ST2"), (3, "REF-ST2"), (4, "REF-ST2"),
+                     (5, "REF-ST2"), (6, "REF-ST4"), (7, "REF-ST4")):
+        cx.execute("INSERT INTO observed_terms (observation_id,ref_id,surface_form,language,"
+                   "created_at,created_by_session) VALUES (?,?,?,'EN','t',?)",
+                   (oid, ref, f"phrase {oid}", T))
+    for oid, outcome, tid in ((1, "NAMES-EXISTING", "TERM-ST-U"), (2, "NAMES-NEW", "TERM-ST-D"),
+                              (3, "NAMES-EXISTING", "TERM-ST-P"), (4, "NOT-OURS", None),
+                              (7, "NAMES-EXISTING", "TERM-ST-X")):
+        cx.execute("INSERT INTO term_adjudications (observation_id,outcome,term_id,rationale,"
+                   "created_at,created_by_session) VALUES (?,?,?,'fixture','t',?)",
+                   (oid, outcome, tid, T))
     #
     # R7 INTERACTION, stated rather than discovered: the R15 candidate raises `cand` to 1, and R7
     # fires only while cand < max(1, screened // 25). The R12 fixture takes total screened from 5
@@ -1020,9 +1170,11 @@ def selftest():
     # and no observed_terms, so it fires without any new fixture — but it is listed
     # HERE because a rule that is not in `expected` is a rule this selftest does not
     # protect, which is the exact hole the 2026-08-04 note above describes closing.
+    # R16 and R16-adjudicate added 2026-10-02 with the rule, with the R9a-style count
+    # assertion below: each is seeded to fire exactly once beside rows that must not count.
     expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
                 "R9", "R9a", "R9b", "R10", "R10b", "R11", "R11-harvest",
-                "R12", "R13", "R14", "R15"}
+                "R12", "R13", "R14", "R15", "R16", "R16-adjudicate"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired
     print()
@@ -1037,7 +1189,16 @@ def selftest():
     if r9a_bad:
         print(f"  **R9a COUNT {r9a_n}, EXPECTED 1** — a RETIRED tombstone is being read as a "
               f"held identity again; see the status clause in R9a.")
-    if rc == 1 and not missed and not r9a_bad:
+    # NEGATIVE ASSERTIONS (2026-10-02). See the R16 fixture comment for what a count
+    # other than 1 means in each predicate.
+    r16_bad = False
+    for rule in ("R16", "R16-adjudicate"):
+        n = caught.get(rule, 0)
+        if n != 1:
+            r16_bad = True
+            print(f"  **{rule} COUNT {n}, EXPECTED 1** — a clause of the predicate has been "
+                  f"dropped or narrowed; see the R16 fixture comment in selftest().")
+    if rc == 1 and not missed and not r9a_bad and not r16_bad:
         print(f"SELFTEST: PASS — gate rejected the corpus AND all {len(expected)} "
               f"seeded rules fired")
         return 0
@@ -1047,6 +1208,9 @@ def selftest():
         print(f"SELFTEST: FAIL — the gate rejected the corpus, but {len(missed)} seeded "
               f"rule(s) did not fire: {sorted(missed)}. Detection for those rules has "
               f"rotted; exit 1 alone would have hidden it.")
+    if r9a_bad or r16_bad:
+        print("SELFTEST: FAIL — a seeded rule fired with the wrong count (see the ** lines "
+              "above): firing alone does not prove the predicate kept its clauses.")
     return 1
 
 

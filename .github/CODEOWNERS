@@ -15,7 +15,7 @@
 # without an owner ever seeing the diff:
 #
 #   .claude/settings.json      carries the SessionStart hook that injects the
-#                              R1-R15 research contract into every session, and
+#                              research contract into every session, and
 #                              the Stop hook that runs the definition-of-done
 #                              gate. Corrupting it disables both, silently.
 #   references/project-standards.md

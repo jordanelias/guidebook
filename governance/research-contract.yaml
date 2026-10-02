@@ -1,4 +1,4 @@
-# research-contract.yaml — the single source for the R1-R15 research contract.
+# research-contract.yaml — the single source for the research contract.
 #
 # STATUS: OPERATIVE. Adopted per DR-2026-07-25-research-contract-mechanical-enforcement
 # ("RESEARCH IS INVALID IF IT IS NOT COMPLIANT WITH OUR GOVERNANCE AND VERIFICATION
@@ -251,6 +251,27 @@ rules:
       harden into fact.
     anchor: "search_candidates; skills/citation-miner_SKILL.md"
     enforcer: R15
+
+  # R16 added 2026-10-02 for GAP-061 (nothing promoted a harvested term to a parameter, so
+  # every batch was confined to the one parameter that existed). Plan:
+  # scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md, WP11.
+  # The hook sentence is an application of D-0173 and the 2026-08-26 ruling, and goes to the
+  # owner for review in the PR that adds it (DG-REVIEW, governance/decision-protocol.md §2.2).
+  # Enforced as two predicates: R16-adjudicate (every observation on the batch's admissions
+  # has an adjudication) and R16 (every term those adjudications name is a parameter or is
+  # declined). Both are scoped to the batch's ADMISSIONS, as R11-harvest is.
+  - id: R16
+    phase: when-filing
+    title: "Every concept a source states a figure for is disposed of"
+    hook: >-
+      Every concept a source states a figure for is filed against a parameter, not
+      left in prose or a code lead: observe-term -> adjudicate-term (or add-term) ->
+      add-parameter -> add-extraction. A term that is not a design parameter is
+      declined with its reason (db.py decline-parameter). Every phrase observed on
+      this batch's admissions is adjudicated before the gate; NOT-OURS and DEFERRED
+      are answers.
+    anchor: "D-0173; owner ruling 2026-08-26 (the parameter is the judgment object); workplan/2026-09-10-batch-06-runbook.md Step 4b"
+    enforcer: R16
 
 # Lines appended verbatim after the phased rules. These are standing invariants
 # rather than per-phase research rules, so they are not numbered.
