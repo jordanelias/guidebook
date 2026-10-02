@@ -99,11 +99,17 @@ anywhere a brief would read. Cite all three by name in your findings, including 
 nothing.
 
 1. **Harm findings against the rows that claim them.** R7 prints the count of
-   `search_executions.harm_finding = 1` and asserts nothing about it — only
-   `candidates < screened/25` can fail that rule. Read the flagged rows' `findings_note` against
+   `search_executions.harm_finding = 1` and the candidate count, and asserts nothing about
+   either. Since 2026-10-02 the only thing that can fail R7 is a search log whose counts
+   contradict each other (screened more than found, or admitted more than screened); its
+   candidate floor was removed because the batch being judged typed both terms of it. That
+   leaves this subject, and RC1's `provenance_artefact_audit`, as R7's substantive
+   enforcers. Read the flagged rows' `findings_note` against
    what the batch actually recorded: a harm flag with no finding behind it, and a finding in the
    brief that never reached a flagged row, are both invisible to the gate. The batch-05 exec-32
-   filing gap was invisible by construction.
+   filing gap was invisible by construction. The same reading covers R7's other half: an
+   off-slug or unverified document the session record or transcript names that no
+   `search_candidates` row records stayed in prose, and no count can show it.
 
 2. **Each `mismatch_note` against the retained payload.** R13 tests that a population-match ROW
    exists; nothing reads `match_grade` or `mismatch_note`. A row whose stated rationale the

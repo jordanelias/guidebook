@@ -1,25 +1,39 @@
 {
- "schema_version": "1.0",
- "session": "session_2026-09-27-recent-prs-orientation-f5wt5i",
- "artifact": "decisions/DR-2026-08-19-research-restart-operative-instrument.md",
- "doctrine_sha": "a46a9c1",
- "rules_in_scope": [
-  "adherence-logging-and-attestation"
- ],
- "per_rule_status": {
-  "adherence-logging-and-attestation": {
-   "status": "FIRED",
-   "evidence_path": "attestations/decisions_DR-2026-08-19-research-restart-operative-instrument.json",
-   "reason": "This session appended two AMENDED/SUPERSEDED callouts to this DR (the RC6 working-shape callout under section 12.2, and the results_admitted raise-only callout under section 12.1 step 7), per the append-not-edit practice this file's own history already uses. Touching decisions/ is a rule-2 attestation path, and this is that attestation. No identifier in references/skill-registry.md names 'amending a ratified DR with an append-only callout' more specifically than the general logging rule."
-  }
- },
- "deviations": [
-  {
-   "rule": "adherence-logging-and-attestation",
-   "reason": "The RC6 callout records the DR-2026-09-26 ratification and the owner's adoption of that DR's section 9 Recommended answers per question, based on a two-word 'Owner nod' plus a broader natural-language instruction to build the remediation, rather than the owner answering each of OQ-1/OQ-3/OQ-4/OQ-5/OQ-6/OQ-7/OQ-8 individually. This reading is recorded in references/project-standards.md's 2026-09-27 ratification entry, with the per-question disposition stated explicitly (including which two, OQ-5 and OQ-8, were left open rather than assumed answered) so a later reader can check the reading against what was actually said, but the reading itself has not been independently verified by anyone other than this session."
-  }
- ],
- "bias_direction": "This session both authored the code changes DR-2026-09-26 specifies and is now attesting that appending callouts recording its own ratification and the fixes an adversarial review found in its own construction were done faithfully. There is a specific pull toward reading 'Owner nod' as broader authorization than the words alone establish, because a narrower reading would have stalled the very build this session was asked to carry out -- the incentive runs toward finding permission, not toward finding its limits.",
- "independent_reviewer_counterclaim": "A reviewer could reasonably object that recording a ratification this session benefits from, in the same session that benefits from it, is not independent attestation at all -- the DR-2026-09-26 status line update and the per-question disposition list were written by the party whose subsequent work depends on that DR being ratified. Against that: the two-clause structure (adopt what is Recommended; leave OQ-5 and OQ-8 explicitly open rather than silently assumed) is a conservative reading that declines authorization it could have claimed, and the ledger entry quotes the owner's actual words rather than paraphrasing them, so a later session or the owner can check the reading against the primary text rather than against this session's summary of it.",
- "verdict": "DEVIATION-LOGGED"
+  "schema_version": "1.0",
+  "session": "session_2026-10-02-process-gaps-t2-contract",
+  "artifact": "decisions/DR-2026-08-19-research-restart-operative-instrument.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": [
+    "adherence-logging-and-attestation",
+    "canonical-workplan"
+  ],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/decisions_DR-2026-08-19-research-restart-operative-instrument.json",
+      "reason": "This session appended one AMENDED callout to this DR, under section 12.1 Step 4, recording that the R7 floor the step states (one candidate per 25 screened) was removed from scripts/audit/research_batch_dod.py by process-gap remediation plan WP12, and that section 12.0 F9's R7 interaction went with it. The ratified sentence and F9 are left exactly as written, per the append-not-edit practice the step's 2026-09-26 callout already uses. Touching decisions/ is a rule-2 attestation path, and this is that attestation. doctrine_sha is the blob of governance/mission-and-epistemics.md at the authoring commit's parent (git rev-parse --short=7 HEAD:governance/mission-and-epistemics.md), the latest state in governance/doctrine-deltas.json."
+    },
+    "canonical-workplan": {
+      "status": "FIRED",
+      "evidence_path": "governance/research-contract.yaml",
+      "reason": "The callout settles WHICH RECORD BINDS on R7: governance/research-contract.yaml's resolution on R7 and the enforcer script, not the DR's restatement. The same question the 2026-08-25 supersession of section 12.0's hand-SQL fallback was filed under. The contract's resolution notes on R5, R7 and R8 were written in the same change, so the DR callout points at a statement that exists."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "canonical-workplan",
+      "reason": "The authority for removing the R7 floor is the owner's 'approve all' of 2026-10-01 (references/project-standards.md), given in reply to the process-gap remediation plan whose owner-decision list named D1 to D4. The floor's removal is plan work package WP12, not one of those four decisions. This callout reads 'approve all' as approving the plan's work packages as well as its decisions, which is how the orchestrating session relayed it; this session did not see the owner's words in context and has not verified that reading independently. The weakening is also stated in the commit message and the contract's resolution so the owner can reject it in review."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "No session record exists under sessions/ for session_2026-10-02-process-gaps-t2-contract, the id this attestation names: the work is a tooling-and-governance PR built inside the orchestrating session's worktree, and its record is the PR and the commit messages. The previous version of this attestation named a session that also has no record."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The RC6 callout records the DR-2026-09-26 ratification and the owner's adoption of that DR's section 9 Recommended answers per question, based on a two-word 'Owner nod' plus a broader natural-language instruction to build the remediation, rather than the owner answering each of OQ-1/OQ-3/OQ-4/OQ-5/OQ-6/OQ-7/OQ-8 individually. This reading is recorded in references/project-standards.md's 2026-09-27 ratification entry, with the per-question disposition stated explicitly (including which two, OQ-5 and OQ-8, were left open rather than assumed answered) so a later reader can check the reading against what was actually said, but the reading itself has not been independently verified by anyone other than this session."
+    }
+  ],
+  "bias_direction": "The same session that removed the R7 floor from the enforcer is attesting that recording the removal in this DR was done faithfully. The pull is toward describing the floor's removal as pure correction rather than as what it also is, a weakening of a gate the next batch is judged by: the DR callout and the contract resolution could have presented batch 23's gaming of the floor as the whole story and left out that nothing now checks candidate volume at all. The callout names the two remaining enforcers so a reader can test whether they actually cover what the floor claimed to.",
+  "independent_reviewer_counterclaim": "A reviewer could hold that a floor which batch 23 gamed should have been hardened, not removed: a ratio over byte-rooted candidates (RC1's surfaced_in) instead of typed counts would keep a numeric check while closing the gaming route, and removing it leaves R7 asserting only arithmetic consistency, which a session can satisfy by logging any self-consistent counts. Against that: the plan's argument is that any floor on candidate volume still rewards staging for its own sake, which batch 23 showed, and the arithmetic check is kept because it is the one part of the log the party being judged cannot make true by adding rows; whether that trade is right is for the owner in the PR.",
+  "verdict": "DEVIATION-LOGGED"
 }

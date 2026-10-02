@@ -128,6 +128,17 @@ rules:
       PubMed/Scopus is an INDEXING fact, not an evidence-quality fact.
     anchor: "governance/tier-system.md; DR-2026-05-09"
     enforcer: R5
+    resolution: >-
+      ENFORCER MOVED 2026-10-02 (process-gap remediation plan WP12, I4); hook text
+      unchanged. The enforcer failed a non-English SEARCH targeted 'grey'. A target is
+      what a search sought, not how a source was filed, so it tested a proxy: it could
+      not see a journal article filed grey from any other search, and it pushed batch 23
+      to retarget two searches that genuinely sought grey material to 'co1' to clear the
+      gate. It now fails a non-English ADMISSION filed evidence_type 'grey' that is a
+      journal article (source_type, from the column's own CHECK), names a journal or
+      carries a DOI. The search-target count is printed as a REPORTED line. Known limit:
+      a DOI or journal name marks publication, not peer review, so a non-English grey
+      report with a repository DOI fails and takes a reasoned waiver.
 
   - id: R6
     phase: when-filing
@@ -147,6 +158,18 @@ rules:
     also_phase: when-filing
     also_hook: >-
       Off-slug or unverified material -> search_candidates (REHOME/MISC/PENDING), not prose.
+    resolution: >-
+      FLOOR REMOVED 2026-10-02 (process-gap remediation plan WP12, I3); hook texts
+      unchanged. The enforcer asserted one registered candidate per 25 screened results.
+      The party being judged types both terms of that ratio, and batch 23 met it by
+      recording rather than searching (screened set equal to found; seven
+      already-screened documents staged after the gate reported short). That weakens R7,
+      and is said so here and in the PR. The enforcer now asserts count integrity only:
+      no search screened more than it found or admitted more than it screened. Candidate
+      and harm counts are REPORTED. The substance of this rule is enforced by RC1
+      (provenance_artefact_audit, blocking: a candidate is checked against the bytes its
+      search returned) and by adversarial standing subject 1 (whether harm and off-slug
+      material reached a row).
 
   - id: R8
     phase: while-searching
@@ -158,6 +181,16 @@ rules:
       unit of work. Never delete or backfill them.
     anchor: "references/project-standards.md; skills/research-log-manager_SKILL.md"
     enforcer: R8
+    resolution: >-
+      STATED HONESTLY 2026-10-02 (process-gap remediation plan WP12, I2). The hook's
+      obligation to write the prior BEFORE the search is unchanged: it is an
+      instruction, not a claim of enforcement. The enforcer tests that empties are kept
+      (no exec_id gap) and does NOT test that a prior preceded its search. log-search
+      writes the prior in the same row and call as the results, so the row exists only
+      after the search ran, and dbcore.now() stamps to the minute; batch 23 wrote its
+      whole log after admission and R8 read PASS. Its PASS line now says so. Until an
+      external timestamp exists, the adversarial pass and the transcript (and the
+      tool-call ledger, for a search it records) are the only witnesses.
 
   - id: R9
     phase: before-admitting

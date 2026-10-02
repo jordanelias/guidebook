@@ -49,7 +49,9 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
   R5  NON-ENGLISH WORK NOT DOWN-TIERED.  A peer-reviewed journal or professional-body standard is
       academic/professional literature in its own right; non-indexation in PubMed/Scopus is an
       INDEXING fact, not an evidence-quality fact.  Observed violation: ES/JA searches targeted
-      evidence_type='clinical' while ID searches were targeted 'grey'.
+      evidence_type='clinical' while ID searches were targeted 'grey'.  Since 2026-10-02 the
+      subject is the batch's non-English ADMISSIONS, not its search targets: one filed 'grey'
+      that is a journal article, names a journal or carries a DOI fails.
 
   R6  FINDINGS NOT SMUGGLED INTO deferred_reason.  deferred_reason means "deliberately NOT
       searched" and coverage views filter on it. Observed violation: 6 SEARCHED cells carried
@@ -59,10 +61,14 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
       evidence that the built environment FAILS people is first-class, not a by-product.
       Requires: harm findings flagged (search_executions.harm_finding / search_candidates), and
       off-slug or unverified material registered in search_candidates rather than left in prose.
+      Asserted here since 2026-10-02: count integrity only (screened <= found, admitted <=
+      screened). The candidate floor is gone; RC1 (provenance_artefact_audit) and adversarial
+      standing subject 1 enforce the substance.
 
   R8  EMPTIES AND DEFERRALS KEPT.  "It's okay if nothing surfaces so long as we know that we
       tried hard to find something to surface." A zero-yield logged search is a COMPLETED unit of
-      work. Requires: zero-yield searches are retained, never deleted or back-filled.
+      work. Requires: zero-yield searches are retained, never deleted or back-filled. NOT
+      tested: that a search's prior was written before it ran (no timestamp can witness it).
 
   R9  NO DUPLICATE-DOI ADMISSION.  DOI pre-check before creating a source; cross-file the existing
       ref_id instead. Observed violation: a duplicate slipped through and tripped D01.
@@ -147,6 +153,8 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO / "scripts"))
+import dbcore                                                        # noqa: E402
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
 BASELINE_PATH = REPO / "governance" / "research-contract-baseline.json"
 
@@ -178,10 +186,10 @@ CO1_HINTS = ("lived experience", "co-production", "co-design", "participatory", 
 # a floor against doing NOTHING, not a definition of systematic mining.
 R2_MINING_PER_ANCHORS = 4
 
-# R7 — screened results per registered candidate.
-# 1 candidate per 25 screened results. Rationale: most screened hits are correctly discarded; this
-# asserts only that a batch which screened hundreds of results found SOMETHING worth staging.
-R7_SCREENED_PER_CANDIDATE = 25
+# R7's threshold (registered candidates per screened result) was DELETED 2026-10-02, process-gap
+# remediation plan WP12. That weakens R7, and per this block's header the PR says so: the party
+# being judged typed both terms of the ratio, and batch 23 met the floor by recording rather than
+# by searching. R7 now asserts count integrity only; see its block for what enforces the rest.
 
 
 def _rows(cx, sql, args=()):
@@ -405,21 +413,67 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         ok("R4", f"{linked} population linkages produced across {total} searches")
 
     # --- R5 non-English not down-tiered --------------------------------------------------
-    # CASE BUG FIXED 2026-07-25: this compared `language <> 'en'` against a column that carries
-    # ISO codes in UPPERCASE in lang_jur_map and search_languages. SQLite '=' / '<>' on TEXT is
-    # case-sensitive, so every English-language row written as 'EN' was read as non-English and
-    # any English grey-targeted search failed R5 spuriously — while a genuinely non-English grey
-    # search written lowercase would still be caught only by luck of the writer's casing. Compare
-    # case-insensitively so the check tests the language, not the keystroke.
-    downtiered = _rows(cx, f"SELECT exec_id, language FROM search_executions WHERE "
-                           f"upper(language) <> 'EN' AND target_evidence_type = 'grey'{scope}",
-                       sargs)
+    # MOVED FROM SEARCH TARGETS TO ADMISSIONS 2026-10-02 (process-gap remediation plan WP12,
+    # I4). Until then this read search_executions and failed a non-English search whose
+    # target_evidence_type was 'grey'. That tested a proxy -- what a search SOUGHT -- and not
+    # the harm the rule names, which happens when a source is FILED: a non-English journal
+    # article filed evidence_type='grey' renders ○ where it is owed ● (governance/
+    # tier-system.md). The proxy was wrong both ways. It never saw a journal article filed
+    # grey from an untargeted or English-targeted search, and it pushed batch 23 to retarget
+    # two searches that genuinely sought grey material to 'co1' to clear the gate (session
+    # record §2.5), falsifying the column it read.
+    #
+    # The subject is the batch's non-English ADMISSIONS. One fails when it is filed grey AND
+    # carries a mark of journal publication: source_type 'journal_article' (a member of the
+    # column's own CHECK, asserted against dbcore.check_values below rather than trusted from
+    # this line), a journal_name, or a DOI. Language is read from lang_detected, then the
+    # older `language` column, the order db.py's own sort uses; case-insensitively, as the
+    # 2026-07-25 fix to the search form of this rule established ('EN' and 'en' both occur).
+    #
+    # WHAT THIS CANNOT TELL, stated so the PASS line is not strengthened. A DOI or a journal
+    # name marks publication, not peer review: a non-English grey report or thesis carrying a
+    # repository DOI, or a letter printed in a journal, fails here although grey may be right.
+    # The payload settles that and this gate cannot, so the FAIL names the waiver beside the
+    # correction. An admission with no language recorded at all is read as English and NOT
+    # examined; it is counted and REPORTED rather than passed over in silence.
+    # The search-target count survives as a REPORTED line only: a target classifies what was
+    # sought, and a non-English search may honestly seek grey material.
+    if "journal_article" not in dbcore.check_values(cx, "evidence_sources", "source_type"):
+        raise SystemExit("R5: 'journal_article' is no longer in evidence_sources.source_type's "
+                         "CHECK. This rule is a caller of that vocabulary (CLAUDE.md rule 4); "
+                         "re-derive the journal-publication mark before trusting R5 again.")
+    lang = "upper(COALESCE(lang_detected, language, 'EN'))"
+    n_non_en = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE {lang} <> 'EN'"
+                         f"{scope}", sargs)[0][0]
+    n_no_lang = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
+                          f"lang_detected IS NULL AND language IS NULL{scope}", sargs)[0][0]
+    downtiered = _rows(cx, f"SELECT ref_id, {lang}, COALESCE(source_type, '-') "
+                           f"FROM evidence_sources WHERE {lang} <> 'EN' "
+                           f"AND evidence_type = 'grey' AND (source_type = 'journal_article' "
+                           f"OR COALESCE(journal_name, '') <> '' OR COALESCE(doi, '') <> '')"
+                           f"{scope} ORDER BY ref_id", sargs)
+    grey_sought = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE "
+                            f"upper(language) <> 'EN' AND target_evidence_type = 'grey'{scope}",
+                        sargs)[0][0]
+    r5_reported = (f"REPORTED, not asserted: {grey_sought} non-English search(es) targeted "
+                   f"'grey' (a target is what was sought, not how a source was filed); "
+                   f"{n_no_lang} admission(s) with no language recorded, read as English and "
+                   f"not examined")
     if downtiered:
-        fail("R5", f"{len(downtiered)} non-English search(es) targeted as 'grey'. A peer-reviewed "
-                   f"journal or professional standard is academic literature in its own right; "
-                   f"non-indexation in PubMed/Scopus is an indexing fact, not a quality fact.")
+        fail("R5", f"{len(downtiered)} of {n_non_en} non-English admission(s) filed "
+                   f"evidence_type 'grey' while carrying a mark of journal publication "
+                   f"(source_type journal_article, a journal name or a DOI): "
+                   + ", ".join(f"{r} ({lg}, {st})" for r, lg, st in downtiered[:8])
+                   + ". Non-indexation in PubMed/Scopus is an INDEXING fact, not a quality "
+                     "fact: re-file a peer-reviewed article with db.py amend-source --field "
+                     "evidence_type. If the source genuinely is grey (a report with a "
+                     "repository DOI, a letter), record that as a reasoned waiver in the PR. "
+                   + r5_reported, len(downtiered))
     else:
-        ok("R5", "no non-English work pre-classified as grey")
+        ok("R5", (f"EXAMINED: {n_non_en} non-English admission(s); none filed grey with a "
+                  f"journal_article type, a journal name or a DOI" if n_non_en else
+                  "EXAMINED: 0 non-English admissions, so this asserts nothing")
+                 + ". " + r5_reported)
 
     # --- R6 findings not smuggled into deferred_reason -----------------------------------
     smuggled = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE deferred_reason IS NOT "
@@ -432,34 +486,62 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         ok("R6", "no findings smuggled into deferred_reason")
 
     # --- R7 failure/harm captured + candidates registered --------------------------------
+    # FLOOR REMOVED 2026-10-02 (process-gap remediation plan WP12, I3); COUNT INTEGRITY KEPT.
+    # This asserted one registered candidate per 25 screened results. Both terms of that ratio
+    # are typed by the party being judged, and batch 23 showed the floor gamed in both
+    # directions in one session (session record §2.3-2.4): results_screened was set equal to
+    # results_found on every web search, inflating the denominator, and the floor was then met
+    # by staging seven more already-screened documents after the gate reported short. A floor
+    # that is cleared by recording rather than by searching certifies nothing about whether
+    # material stayed in prose.
+    #
+    # R7'S SUBSTANTIVE ENFORCERS ARE ELSEWHERE, and this rule no longer pretends otherwise:
+    #   * RC1, provenance_artefact_audit (blocking): a candidate is checked against the bytes
+    #     its search actually returned, so a staged candidate is rooted in a payload;
+    #   * adversarial standing subject 1, "Harm findings against the rows that claim them"
+    #     (skills/adversarial-research_SKILL.md, "Standing subjects of every adversarial
+    #     pass"): whether harm and off-slug material REACHED a flagged row or a candidate is
+    #     not machine-decidable, and that pass is where it is decided.
+    #
+    # What stays asserted is the arithmetic the search log must obey whoever typed it: no
+    # search screened more results than it found, and none admitted more than it screened.
+    # One known route to the second: link-admission raises results_admitted on an existing
+    # row (raise-only, owner ruling 2026-09-26) and no verb amends results_screened, so a
+    # search whose screened count was under-logged fails here with no correction path: the
+    # PR states which count is wrong, and `--all` carries it as baselined debt. That is a
+    # true inconsistency in the record, not a false alarm.
+    #
+    # REPORTED, NEVER ASSERTED: the candidate and harm counts. Printing a number the check
+    # never tested is CLAUDE.md §5(a) at message level -- it is how the exec-32 filing gap
+    # stayed invisible while this line read PASS (softened deliberately 2026-09-03). Do NOT
+    # restore a confident wording, or a floor, without a predicate behind it that the party
+    # being judged cannot satisfy by typing.
     harm = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE harm_finding=1{scope}",
                  sargs)[0][0]
-    # HARDENED: threshold was "> 0", so ONE candidate satisfied it forever no matter how much
-    # material stayed in prose. Now proportionate to the yield actually screened.
     cand = _rows(cx, f"SELECT COUNT(*) FROM search_candidates WHERE 1=1{scope}", sargs)[0][0]
     screened = _rows(cx, f"SELECT COALESCE(SUM(results_screened),0) FROM search_executions "
                          f"WHERE 1=1{scope}", sargs)[0][0]
-    expected = max(1, screened // R7_SCREENED_PER_CANDIDATE) if screened else 0
-    if total and cand < expected:
-        fail("R7", f"only {cand} candidates registered for {screened} screened results "
-                   f"(expect >= {expected}). Off-slug / unverified material must land in "
-                   f"search_candidates, not in prose that evaporates.")
+    miscounted = _rows(cx, f"SELECT exec_id, results_found, results_screened, results_admitted "
+                           f"FROM search_executions WHERE (results_screened > results_found "
+                           f"OR results_admitted > results_screened){scope} ORDER BY exec_id",
+                       sargs)
+    r7_reported = (f"REPORTED, not asserted: {cand} candidate(s) registered for {screened} "
+                   f"screened; {harm} row(s) carry harm_finding=1. Whether harm and off-slug "
+                   f"material reached a row is adversarial standing subject 1")
+    if miscounted:
+        fail("R7", f"{len(miscounted)} of {total} search(es) carry counts that contradict "
+                   f"each other (results_screened > results_found, or results_admitted > "
+                   f"results_screened): "
+                   + ", ".join(f"exec {e} (found {f}, screened {s}, admitted {a})"
+                               for e, f, s, a in miscounted[:8])
+                   + ". A search cannot screen more than it found or admit more than it "
+                     "screened; the log is append-only, so say in the PR which count is "
+                     "wrong and why. " + r7_reported, len(miscounted))
     else:
-        # ASSERTED: cand >= max(1, screened//25). REPORTED, NEVER ASSERTED: the harm
-        # count. `harm` appears in this string and in no predicate anywhere in this
-        # file, and printing a number the check never tested is CLAUDE.md §2(a) at
-        # message level -- it is how the exec-32 filing gap stayed invisible while this
-        # line read PASS. Softened deliberately 2026-09-03. Do NOT restore the confident
-        # wording without putting a predicate behind it, and do not add one that merely
-        # counts rows: whether a batch's harm findings actually REACHED the flagged rows
-        # is not machine-decidable, which is why it is standing subject 1 of the
-        # adversarial pass instead -- skills/adversarial-research_SKILL.md, "Standing
-        # subjects of every adversarial pass". That section was written 2026-09-03
-        # because THIS COMMENT NAMED A HOME THAT DID NOT EXIST: an audit grepped for
-        # it and found the phrase only here and in a scratchpad no brief reads.
-        ok("R7", f"{cand} candidates for {screened} screened "
-                 f"(asserted: >= 1 per 25 screened). {harm} row(s) carry "
-                 f"harm_finding=1 -- REPORTED, not asserted")
+        ok("R7", (f"EXAMINED: {total} search(es); every one screened no more than it found "
+                  f"and admitted no more than it screened" if total else
+                  "EXAMINED: 0 searches, so this asserts nothing")
+                 + ". " + r7_reported)
 
     # --- R8 empties kept + APPEND-ONLY integrity -------------------------------------------
     # HARDENED: the original could never fail — it printed a count and passed. Deleting the
@@ -474,7 +556,20 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                    f"honesty record — 'we tried hard and nothing surfaced' — and must never be "
                    f"removed or back-filled.")
     else:
-        ok("R8", f"{empties} zero-yield searches retained; log intact (no deleted rows)")
+        # STATED HONESTLY 2026-10-02 (process-gap remediation plan WP12, I2). R8's hook text
+        # obliges a prior written BEFORE the search runs, and that stays an instruction. Nothing
+        # here, or anywhere in the database, can witness it: log-search writes the prior in the
+        # same row and the same call as the results, so the row exists only after the search
+        # did, and dbcore.now() stamps to the minute. Batch 23 wrote its whole log in one pass
+        # after admission (session record §2.3), and this line read PASS. The adversarial pass
+        # and the session transcript are the only witnesses, joined by the tool-call ledger
+        # (plan WP14) for a search it records; a two-phase log (plan WP15) is what would let a
+        # predicate here read precedence. Do not let this line claim it until one does.
+        ok("R8", f"{empties} zero-yield searches retained; log intact (no deleted rows). "
+                 f"NOT TESTED: that each prior preceded its search -- log-search writes the "
+                 f"prior with the results, after the search ran, and dbcore.now() is "
+                 f"minute-precision; the adversarial pass and the transcript (and the "
+                 f"tool-call ledger, for a search it records) are its only witnesses")
 
     # --- R9 duplicate DOI ------------------------------------------------------------------
     # Scoped to THIS batch: did this batch introduce a duplicate? (Corpus-wide duplicate debt is
@@ -1017,8 +1112,10 @@ def selftest():
             pass  # skip anything with unmet deps; the gate degrades gracefully on missing tables
     T = "SELFTEST-SESSION"
     # A corpus that violates: R1 (no co1), R2 (no mining), R3 (uncited tier-6 value),
-    # R4 (no population linkage), R5 (non-EN targeted grey), R6 (findings in deferred_reason),
-    # R8 (deleted row -> id gap), R10 (VERIFIED, no locator), R11 (alias w/o provenance).
+    # R4 (no population linkage), R6 (findings in deferred_reason), R8 (deleted row -> id
+    # gap), R10 (VERIFIED, no locator), R11 (alias w/o provenance). Exec 1 below is a
+    # non-English search targeted 'grey'; since 2026-10-02 that is R5's REPORTED line, not
+    # its subject, and the R5 fixture further down asserts that it no longer counts.
     cx.execute("INSERT INTO search_executions (exec_id,slug,jurisdiction,language,"
                "target_evidence_type,query_text,engine,depth_method,mining_direction,"
                "results_found,results_screened,results_admitted,deferred_reason,backfill,"
@@ -1134,12 +1231,45 @@ def selftest():
         cx.execute("INSERT INTO term_adjudications (observation_id,outcome,term_id,rationale,"
                    "created_at,created_by_session) VALUES (?,?,?,'fixture','t',?)",
                    (oid, outcome, tid, T))
-    #
-    # R7 INTERACTION, stated rather than discovered: the R15 candidate raises `cand` to 1, and R7
-    # fires only while cand < max(1, screened // 25). The R12 fixture takes total screened from 5
-    # to 55, so expected becomes 2 and 1 < 2 -- R7 still fires. Lower that fixture below 50 and
-    # expected falls to 1, R7 goes silent, and this selftest fails on the missing rule. That is
-    # the correct outcome: the arithmetic is load-bearing and must not be edited casually.
+    # R5 (2026-10-02, plan WP12): the subject is non-English ADMISSIONS. Seven rows, each
+    # shaped so that one defect in the predicate moves the asserted COUNT off 3:
+    #   REF-ST8   id  grey      journal_article                  counts (journal_article)
+    #   REF-ST9   NL  grey      report, names a journal          counts (journal_name; upper case)
+    #   REF-ST10  sv  grey      report, carries a DOI            counts (doi)
+    #   REF-ST11  es  grey      report, no journal, no DOI       must not count (a grey report)
+    #   REF-ST12  en  grey      journal_article                  must not count (English)
+    #   REF-ST13  pt  clinical  journal_article                  must not count (not filed grey)
+    #   REF-ST14  de  grey      journal_article, PRIOR session   must not count (out of scope)
+    # THE NEGATIVE CASE THE MOVE IS ABOUT: exec 1 above is a non-English search targeted 'grey'
+    # and must not count. The old search-target predicate fires once on it alone (count 1);
+    # keeping it beside the new one gives 4. Dropping any one disjunct gives 2; dropping the
+    # language, grey or upper() clause, or the scope, gives 4. Tier is NULL on every row so
+    # none enters R2's, R3's or R13's tier-banded arithmetic; REF-ST10's DOI is held by no
+    # stash row and no other source, so R9, R9a and R9b do not see it.
+    for ref, lg, et, st, jn, doi, sess in (
+            ("REF-ST8", "id", "grey", "journal_article", None, None, T),
+            ("REF-ST9", "NL", "grey", "report", "Tijdschrift voor fixtures", None, T),
+            ("REF-ST10", "sv", "grey", "report", None, "10.9999/st10-sv", T),
+            ("REF-ST11", "es", "grey", "report", None, None, T),
+            ("REF-ST12", "en", "grey", "journal_article", None, None, T),
+            ("REF-ST13", "pt", "clinical", "journal_article", None, None, T),
+            ("REF-ST14", "de", "grey", "journal_article", None, None, "PRIOR-SESSION")):
+        cx.execute("INSERT INTO evidence_sources (ref_id,lang_detected,evidence_type,"
+                   "source_type,journal_name,doi,created_by_session) VALUES (?,?,?,?,?,?,?)",
+                   (ref, lg, et, st, jn, doi, sess))
+    # R7 (2026-10-02, plan WP12): the candidate floor is gone and count integrity is the
+    # predicate. Exec 5 screened more than it found and exec 6 admitted more than it screened,
+    # one per clause, so the asserted count is 2; exec 7 has exec 5's defect in a PRIOR
+    # session and must not count. Execs 1, 3 and 4 above are consistent and must not count.
+    # The old floor fired once here (1 candidate for 58 screened, expected 2), so the old
+    # code's count is 1. Exec ids continue past 4, keeping the exec-2 gap R8 detects.
+    for eid, found, scr, adm, sess in ((5, 1, 2, 0, T), (6, 3, 1, 2, T),
+                                       (7, 1, 2, 0, "PRIOR-SESSION")):
+        cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
+                   "depth_method,mining_direction,results_found,results_screened,"
+                   "results_admitted,backfill,created_by_session,created_at) "
+                   "VALUES (?,'s','en','q','web','scoping','none',?,?,?,0,?,'t')",
+                   (eid, found, scr, adm, sess))
     cx.commit(); cx.close()
     # NOTE: inserts above are deliberately NOT wrapped in try/except. If the live schema changes
     # such that this corpus can no longer be built, the selftest must CRASH LOUDLY rather than
@@ -1191,14 +1321,25 @@ def selftest():
               f"held identity again; see the status clause in R9a.")
     # NEGATIVE ASSERTIONS (2026-10-02). See the R16 fixture comment for what a count
     # other than 1 means in each predicate.
-    r16_bad = False
+    count_bad = False
     for rule in ("R16", "R16-adjudicate"):
         n = caught.get(rule, 0)
         if n != 1:
-            r16_bad = True
+            count_bad = True
             print(f"  **{rule} COUNT {n}, EXPECTED 1** — a clause of the predicate has been "
                   f"dropped or narrowed; see the R16 fixture comment in selftest().")
-    if rc == 1 and not missed and not r9a_bad and not r16_bad:
+    # COUNT ASSERTIONS (2026-10-02, plan WP12). R5 and R7 changed subject; a count of 1 is
+    # what the OLD predicates produce on this corpus (each fired once, with no count), so
+    # firing alone would have passed the code these replace. See the R5 and R7 fixture
+    # comments for what each other count means.
+    for rule, want in (("R5", 3), ("R7", 2)):
+        n = caught.get(rule, 0)
+        if n != want:
+            count_bad = True
+            print(f"  **{rule} COUNT {n}, EXPECTED {want}** — the predicate is not the one "
+                  f"this selftest was written against; see the {rule} fixture comment in "
+                  f"selftest().")
+    if rc == 1 and not missed and not r9a_bad and not count_bad:
         print(f"SELFTEST: PASS — gate rejected the corpus AND all {len(expected)} "
               f"seeded rules fired")
         return 0
@@ -1208,7 +1349,7 @@ def selftest():
         print(f"SELFTEST: FAIL — the gate rejected the corpus, but {len(missed)} seeded "
               f"rule(s) did not fire: {sorted(missed)}. Detection for those rules has "
               f"rotted; exit 1 alone would have hidden it.")
-    if r9a_bad or r16_bad:
+    if r9a_bad or count_bad:
         print("SELFTEST: FAIL — a seeded rule fired with the wrong count (see the ** lines "
               "above): firing alone does not prove the predicate kept its clauses.")
     return 1
