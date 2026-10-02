@@ -877,6 +877,27 @@ screened. **A staged description is a HYPOTHESIS** — it gets re-described from
 > was already superseded on 2026-09-10 (see its head); this note corrects the one vocabulary it
 > states, because a reader who stops here still takes it as the list.
 
+> **⚠ AMENDED 2026-10-02 — APPENDED, NOT EDITED. "R7 floor: ≥1 candidate per 25 screened" no
+> longer describes R7.** The process-gap remediation plan
+> (`scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md`, WP12; the
+> owner's "approve all" of 2026-10-01 is recorded in `references/project-standards.md`, "Owner
+> ruling 2026-10-01 — the process-gap remediation plan's decisions D1–D4 approved") removed the
+> floor from `scripts/audit/research_batch_dod.py`. That entry enumerates decisions D1 to D4 and
+> WP12 is not one of them, so whether it extends to WP12 (the R7 floor removed, R5 re-aimed) is
+> not settled by it; the owner is asked to confirm WP12 in the PR. The batch being judged
+> types both terms of that ratio, and batch 23 met it by recording rather than searching: it set
+> `results_screened` equal to `results_found` on every web search, then staged seven
+> already-screened documents after the gate reported short (its session record, §2 items 3 and
+> 4). R7 now fails only a search log whose counts contradict each other — screened more than
+> found, or admitted more than screened — and prints candidate and harm counts as REPORTED.
+> Whether off-slug, unverified or harm material reached a row is decided by RC1's
+> `provenance_artefact_audit` (blocking) and by adversarial standing subject 1
+> (`skills/adversarial-research_SKILL.md`). The R7 interaction §12.0 F9 describes (`cand <
+> max(1, screened//25)`) is gone with the floor; F9 is left as the record of what that commit
+> did. The sentence above is left exactly as written, per the append-not-edit practice this
+> step's 2026-09-26 note already follows; `governance/research-contract.yaml`'s `resolution:` on
+> R7 is the operative statement, and the script is the rule.
+
 **Step 5 — DOI pre-check (R9).** Per candidate, against the scratch and — once §6 lands — against
 `source_locators` case-insensitively. An `evidence_sources` hit means cross-file; a lead hit means
 admit reusing the stash ref_id.

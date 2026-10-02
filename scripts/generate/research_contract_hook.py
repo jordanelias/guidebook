@@ -3,7 +3,7 @@
 scripts/generate/research_contract_hook.py — derive the SessionStart hook payload
 from governance/research-contract.yaml.
 
-The R1-R15 contract used to exist as two hand-transcribed copies with no
+The research contract used to exist as two hand-transcribed copies with no
 comparator: the hook text in .claude/settings.json and the rule table in
 scripts/audit/research_batch_dod.py. They drifted on R1, R2 and R3 — two of those
 changed what the contract obliges. This makes the hook a DERIVED artifact, in the
@@ -143,7 +143,14 @@ def main():
     # check and R11-harvest is R11's own "HARVEST AS YOU GO" clause, so the parent's hook
     # text already warns the session. The set comparison is on parents; the sub-ids are
     # reported so a reader knows they exist.
-    raw_ids = set(_re.findall(r"\bR(?:1[0-5]|[1-9])(?:[a-z]|-[a-z]+)?\b", enforcer_src))
+    #
+    # THE NUMBERS WERE CAPPED AT 15 TOO, the same defect in the other axis. `1[0-5]` cannot
+    # match R16, so a sixteenth rule added to both the contract and the enforcer would have
+    # been reported as "defined in the contract, unknown to the enforcer" — and a rule added
+    # to the enforcer alone would not have been reported at all. Widened 2026-10-02, when R16
+    # (GAP-061) was added, to any one- or two-digit id. Run against the enforcer as it stood
+    # before R16, the wider pattern collected the same ids as the narrow one.
+    raw_ids = set(_re.findall(r"\bR[1-9]\d?(?:[a-z]|-[a-z]+)?\b", enforcer_src))
     def _parent(rid):
         m = _re.match(r"(R\d+)", rid)
         return m.group(1)
