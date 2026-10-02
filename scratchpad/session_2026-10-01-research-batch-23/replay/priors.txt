@@ -1,0 +1,11 @@
+PRIORS WRITTEN 2026-10-01 BEFORE ANY BATCH-23 SEARCH WAS RUN (timestamp: see file mtime / commands.jsonl order)
+KR: Korea's accessibility law enforcement rule (장애인ㆍ노인ㆍ임산부 등의 편의증진 보장에 관한 법률 시행규칙 별표 1) sets a ramp gradient of 1/12 or less, with a relaxed ~1/8 allowance where terrain forbids; expect the text on law.go.kr (a JS-heavy site, so retrieval may be the hard part, not the value).
+SG: BCA Code on Accessibility in the Built Environment (2019) sets ramp gradient 1:12 max with rise/landing limits; expect a PDF on bca.gov.sg or a mirror; possibly gated by a bot-challenge.
+PT: Decreto-Lei 163/2006 Anexo gives ramp gradient as a tiered % table by length/height (about 6% general rising to 8% and 10% for short runs); expect Diario da Republica / a mirror PDF; value shape tiered, not single.
+EU: EN 17210:2021 (CEN) is the pan-European accessibility-of-built-environment standard; expect it to be paywalled with no free clause text, so the search will yield catalogue/preview pages and a lead, not a primary value.
+FR: Arrete du 20 avril 2017 art. 2 gives max ramp slope 5%, with exceptional 8% (<=2 m) and 10% (<=0.5 m) tolerances; Legifrance has returned 403 on every prior automated fetch (lead 86), so expect to need a different host (government ministry PDF or archive) for the same text.
+ES: CTE DB-SUA 9 (Accesibilidad) ramp slope tiered by length (<3 m 10%, <6 m 8%, else 6%); expect a codigotecnico.org PDF; lead 91 so far only vendor-restated.
+NL: Bouwbesluit 2012 / Besluit bouwwerken leefomgeving (Bbl) gives a hellingbaan ('ramp') gradient limit near 1:12 with a separate rule for small rises; expect wetten.overheid.nl to be retrievable.
+SE: Boverket BBR (BFS 2011:6 as amended) 3:14 ramp gradient limit near 1:12 with a 1:20 recommendation; expect a Boverket PDF; Sweden had 1 prior search, 0 admitted.
+AU: Livable Housing Design Standard / NCC 2022 Volume 2 H8 gives a ramp gradient near 1:14 for dwelling access; AS 1428.1 itself is paywalled; expect ABCB free text for the NCC.
+CO1-KR: a Korean-language lived-experience query ('wheelchair user ramp slope DPO testimony') will mostly return news/vendor pages; expect null or near-null on any DPO-authored gradient position.

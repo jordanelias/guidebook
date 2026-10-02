@@ -1,0 +1,1176 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<!-- mobile meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+<meta name="format-detection" content="telephone=no">
+<title>Statutes of the Republic of Korea</title>
+<link href="/css/kor_service/lawcontent.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/jquery/jquery-1.7.2.js"></script>
+<style type="text/css">
+	a:link		{font-size: 14px;color: #6a6a6a;text-decoration: none;}
+	a:visited	{font-size: 14px;color: #146625;text-decoration: none;}
+	a:hover	{font-size: 14px;color: #146625;text-decoration: none;}
+	a:active	{font-size: 14px;color: #146625;text-decoration: none;}
+	.JO {padding: 0 0 0 5px;}
+</style>
+<script type="text/javascript">
+window.onload = function() {
+	if($(".addendatitle").size() == 0)
+		$("#addendaSpan").css("display", "none");
+
+	/* 전체체크 선택 및 해제 */
+	$("#keyAll").click(function(){
+		if($(this).is(':checked')) {
+			$("input[name=boxname]").each(function() {
+				if($(this).is(':checked')) {
+					//이벤트없음
+				} else {
+					$(this).prop("checked", true);
+					$(this).change();
+					$("input[name=allCheck]").prop("checked", true);
+				};
+			});
+		} else {
+			$("input[name=boxname]").each(function() {
+				if($(this).is(':checked')) {
+					$(this).prop("checked", false);
+					$(this).change();
+				} else {
+					//이벤트없음
+				};
+			});
+		};
+	});
+};
+
+function checkViewBox(joId){
+
+	$("input[name=allCheck]").prop("checked", false);
+	var objDoc = top.document.getElementById("lawViewContent").contentWindow;
+
+	objDoc.Jodisplay(joId);
+}
+
+function goTitle(historySeq, idx) {
+	// 영문보기
+	var url = "/eng_service/lawViewContent.do?hseq=" + historySeq + "#" + idx;
+	parent.lawViewContent.document.location.href = url;
+}
+
+function fontSize(fontint) {
+	var tags = ["a", "span", "li", "label"];
+
+	for(var i = 0; i < tags.length; i++)
+	{
+		try{
+			$(tags[i]).css("font-size" , parseInt($(tags[i]).css("font-size")) + fontint + "px");
+			$(tags[i]).css("line-height" , parseInt($(tags[i]).css("line-height")) + fontint + "px");
+		}catch(e){};
+	}
+}
+</script>
+</head>
+<body id="body">
+<div id="lawtit">
+	<ul>
+		<li>No. 15272</li>
+		<li>Promulgation Date 2017-12-19</li>
+		<li>Ministry of Health and Welfare</li>
+	</ul>
+	<!-- 규정명 -->
+	
+	<span class="form"><input type="checkbox" id="keyAll" name="allCheck" checked="checked" style="border: 0;" alt="ALL" title="ALL" /><label for="keyAll">ALL</label></span>
+
+	
+		<!-- 조문 -->
+		
+		
+	
+		<!-- 조문 -->
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="CT2">
+				<span class="form"><input type="checkbox" id="1265012" name="boxname" checked="checked" onchange="checkViewBox(1265012);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265012">
+					<a href="javascript:goTitle('46425', '1265012');" title="CHAPTER I GENERAL PROVISIONS Article Link">
+						CHAPTER I GENERAL PROVISIONS
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265013" name="boxname" checked="checked" onchange="checkViewBox(1265013);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265013">
+					<a href="javascript:goTitle('46425', '1265013');" title="Article 1 (Purpose) Article Link">
+						Article 1 (Purpose)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265014" name="boxname" checked="checked" onchange="checkViewBox(1265014);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265014">
+					<a href="javascript:goTitle('46425', '1265014');" title="Article 2 (Disability and Persons with Disabilities) Article Link">
+						Article 2 (Disability and Persons with Disabilities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265015" name="boxname" checked="checked" onchange="checkViewBox(1265015);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265015">
+					<a href="javascript:goTitle('46425', '1265015');" title="Article 3 (Definitions) Article Link">
+						Article 3 (Definitions)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265016" name="boxname" checked="checked" onchange="checkViewBox(1265016);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265016">
+					<a href="javascript:goTitle('46425', '1265016');" title="Article 4 (Discriminatory Acts) Article Link">
+						Article 4 (Discriminatory Acts)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265017" name="boxname" checked="checked" onchange="checkViewBox(1265017);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265017">
+					<a href="javascript:goTitle('46425', '1265017');" title="Article 5 (Findings of Discrimination) Article Link">
+						Article 5 (Findings of Discrimination)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265018" name="boxname" checked="checked" onchange="checkViewBox(1265018);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265018">
+					<a href="javascript:goTitle('46425', '1265018');" title="Article 6 (Prohibition of Discrimination) Article Link">
+						Article 6 (Prohibition of Discrimination)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265019" name="boxname" checked="checked" onchange="checkViewBox(1265019);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265019">
+					<a href="javascript:goTitle('46425', '1265019');" title="Article 7 (Rights of Self-Determination and Selection) Article Link">
+						Article 7 (Rights of Self-Determination and Selection)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265020" name="boxname" checked="checked" onchange="checkViewBox(1265020);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265020">
+					<a href="javascript:goTitle('46425', '1265020');" title="Article 8 (Duties of State and Local Governments) Article Link">
+						Article 8 (Duties of State and Local Governments)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265021" name="boxname" checked="checked" onchange="checkViewBox(1265021);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265021">
+					<a href="javascript:goTitle('46425', '1265021');" title="Article 9 (Relationship with other Acts) Article Link">
+						Article 9 (Relationship with other Acts)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="CT2">
+				<span class="form"><input type="checkbox" id="1265022" name="boxname" checked="checked" onchange="checkViewBox(1265022);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265022">
+					<a href="javascript:goTitle('46425', '1265022');" title="CHAPTER II PROHIBITION OF DISCRIMINATION Article Link">
+						CHAPTER II PROHIBITION OF DISCRIMINATION
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="ST2">
+				<span class="form"><input type="checkbox" id="1265023" name="boxname" checked="checked" onchange="checkViewBox(1265023);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265023">
+					<a href="javascript:goTitle('46425', '1265023');" title="Section 1 Employment Article Link">
+						Section 1 Employment
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265024" name="boxname" checked="checked" onchange="checkViewBox(1265024);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265024">
+					<a href="javascript:goTitle('46425', '1265024');" title="Article 10 (Prohibition of Discrimination) Article Link">
+						Article 10 (Prohibition of Discrimination)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265025" name="boxname" checked="checked" onchange="checkViewBox(1265025);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265025">
+					<a href="javascript:goTitle('46425', '1265025');" title="Article 11 (Duty to Provide Legitimate Convenience) Article Link">
+						Article 11 (Duty to Provide Legitimate Convenience)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265026" name="boxname" checked="checked" onchange="checkViewBox(1265026);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265026">
+					<a href="javascript:goTitle('46425', '1265026');" title="Article 12 (Prohibition of Medical Examination) Article Link">
+						Article 12 (Prohibition of Medical Examination)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="ST2">
+				<span class="form"><input type="checkbox" id="1265027" name="boxname" checked="checked" onchange="checkViewBox(1265027);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265027">
+					<a href="javascript:goTitle('46425', '1265027');" title="Section 2 Education Article Link">
+						Section 2 Education
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265028" name="boxname" checked="checked" onchange="checkViewBox(1265028);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265028">
+					<a href="javascript:goTitle('46425', '1265028');" title="Article 13 (Prohibition of Discrimination) Article Link">
+						Article 13 (Prohibition of Discrimination)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265029" name="boxname" checked="checked" onchange="checkViewBox(1265029);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265029">
+					<a href="javascript:goTitle('46425', '1265029');" title="Article 14 (Duty to Provide Legitimate Convenience) Article Link">
+						Article 14 (Duty to Provide Legitimate Convenience)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="ST2">
+				<span class="form"><input type="checkbox" id="1265030" name="boxname" checked="checked" onchange="checkViewBox(1265030);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265030">
+					<a href="javascript:goTitle('46425', '1265030');" title="Section 3 Provision and Use of Goods and Services Article Link">
+						Section 3 Provision and Use of Goods and Services
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265031" name="boxname" checked="checked" onchange="checkViewBox(1265031);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265031">
+					<a href="javascript:goTitle('46425', '1265031');" title="Article 15 (Prohibition of Discrimination in Provision of Goods, Services, etc.) Article Link">
+						Article 15 (Prohibition of Discrimination in Provision of Goods, Services, etc.)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265032" name="boxname" checked="checked" onchange="checkViewBox(1265032);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265032">
+					<a href="javascript:goTitle('46425', '1265032');" title="Article 16 (Prohibition of Discrimination in Sale, Purchase or Lease of Land or Building) Article Link">
+						Article 16 (Prohibition of Discrimination in Sale, Purchase or Lease of Land or Building)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265033" name="boxname" checked="checked" onchange="checkViewBox(1265033);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265033">
+					<a href="javascript:goTitle('46425', '1265033');" title="Article 17 (Prohibition of Discrimination in Provision of Financial Products and Services) Article Link">
+						Article 17 (Prohibition of Discrimination in Provision of Financial Products and Services)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265034" name="boxname" checked="checked" onchange="checkViewBox(1265034);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265034">
+					<a href="javascript:goTitle('46425', '1265034');" title="Article 18 (Prohibition of Discrimination in Access to and Use of Buildings) Article Link">
+						Article 18 (Prohibition of Discrimination in Access to and Use of Buildings)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265035" name="boxname" checked="checked" onchange="checkViewBox(1265035);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265035">
+					<a href="javascript:goTitle('46425', '1265035');" title="Article 19 (Prohibition of Discrimination in Means of Mobility, Transportation, etc.) Article Link">
+						Article 19 (Prohibition of Discrimination in Means of Mobility, Transportation, etc.)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265036" name="boxname" checked="checked" onchange="checkViewBox(1265036);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265036">
+					<a href="javascript:goTitle('46425', '1265036');" title="Article 20 (Prohibition of Discrimination in Access to Information) Article Link">
+						Article 20 (Prohibition of Discrimination in Access to Information)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265037" name="boxname" checked="checked" onchange="checkViewBox(1265037);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265037">
+					<a href="javascript:goTitle('46425', '1265037');" title="Article 21 (Duty to Provide Legitimate Convenience in Information and Communications, Communication, etc.) Article Link">
+						Article 21 (Duty to Provide Legitimate Convenience in Information and Communications, Communication, etc.)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265038" name="boxname" checked="checked" onchange="checkViewBox(1265038);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265038">
+					<a href="javascript:goTitle('46425', '1265038');" title="Article 22 (Protection of Personal Information) Article Link">
+						Article 22 (Protection of Personal Information)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265039" name="boxname" checked="checked" onchange="checkViewBox(1265039);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265039">
+					<a href="javascript:goTitle('46425', '1265039');" title="Article 23 (Duties of the State and Local Governments in Access to Information and Communications) Article Link">
+						Article 23 (Duties of the State and Local Governments in Access to Information and Communications)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265040" name="boxname" checked="checked" onchange="checkViewBox(1265040);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265040">
+					<a href="javascript:goTitle('46425', '1265040');" title="Article 24 (Prohibition of Discrimination in Cultural and Artistic Activities) Article Link">
+						Article 24 (Prohibition of Discrimination in Cultural and Artistic Activities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265041" name="boxname" checked="checked" onchange="checkViewBox(1265041);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265041">
+					<a href="javascript:goTitle('46425', '1265041');" title="Article 24-2 (Prohibition of Discrimination in Tourism Activities) Article Link">
+						Article 24-2 (Prohibition of Discrimination in Tourism Activities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265042" name="boxname" checked="checked" onchange="checkViewBox(1265042);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265042">
+					<a href="javascript:goTitle('46425', '1265042');" title="Article 25 (Prohibition of Discrimination in Physical Activities) Article Link">
+						Article 25 (Prohibition of Discrimination in Physical Activities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="ST2">
+				<span class="form"><input type="checkbox" id="1265043" name="boxname" checked="checked" onchange="checkViewBox(1265043);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265043">
+					<a href="javascript:goTitle('46425', '1265043');" title="Section 4 Judicial and Administrative Procedures, Services and Political Rights Article Link">
+						Section 4 Judicial and Administrative Procedures, Services and Political Rights
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265044" name="boxname" checked="checked" onchange="checkViewBox(1265044);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265044">
+					<a href="javascript:goTitle('46425', '1265044');" title="Article 26 (Prohibition of Discrimination in Providing Judicial and Administrative Procedures and Services) Article Link">
+						Article 26 (Prohibition of Discrimination in Providing Judicial and Administrative Procedures and Services)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265045" name="boxname" checked="checked" onchange="checkViewBox(1265045);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265045">
+					<a href="javascript:goTitle('46425', '1265045');" title="Article 27 (Political Rights) Article Link">
+						Article 27 (Political Rights)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="ST2">
+				<span class="form"><input type="checkbox" id="1265046" name="boxname" checked="checked" onchange="checkViewBox(1265046);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265046">
+					<a href="javascript:goTitle('46425', '1265046');" title="Section 5 Motherhood, Fatherhood, Sexuality, etc. Article Link">
+						Section 5 Motherhood, Fatherhood, Sexuality, etc.
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265047" name="boxname" checked="checked" onchange="checkViewBox(1265047);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265047">
+					<a href="javascript:goTitle('46425', '1265047');" title="Article 28 (Prevention of Discrimination in Motherhood or Fatherhood) Article Link">
+						Article 28 (Prevention of Discrimination in Motherhood or Fatherhood)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265048" name="boxname" checked="checked" onchange="checkViewBox(1265048);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265048">
+					<a href="javascript:goTitle('46425', '1265048');" title="Article 29 (Prevention of Discrimination in Sexuality) Article Link">
+						Article 29 (Prevention of Discrimination in Sexuality)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="ST2">
+				<span class="form"><input type="checkbox" id="1265049" name="boxname" checked="checked" onchange="checkViewBox(1265049);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265049">
+					<a href="javascript:goTitle('46425', '1265049');" title="Section 6 Family, Home, Welfare Facilities, Right to Health, etc. Article Link">
+						Section 6 Family, Home, Welfare Facilities, Right to Health, etc.
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265050" name="boxname" checked="checked" onchange="checkViewBox(1265050);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265050">
+					<a href="javascript:goTitle('46425', '1265050');" title="Article 30 (Prevention of Discrimination in Family, Home, Welfare Facilities, etc.) Article Link">
+						Article 30 (Prevention of Discrimination in Family, Home, Welfare Facilities, etc.)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265051" name="boxname" checked="checked" onchange="checkViewBox(1265051);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265051">
+					<a href="javascript:goTitle('46425', '1265051');" title="Article 31 (Prevention of Discrimination in Right to Health) Article Link">
+						Article 31 (Prevention of Discrimination in Right to Health)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265052" name="boxname" checked="checked" onchange="checkViewBox(1265052);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265052">
+					<a href="javascript:goTitle('46425', '1265052');" title="Article 32 (Prevention of Harassment, etc.) Article Link">
+						Article 32 (Prevention of Harassment, etc.)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="CT2">
+				<span class="form"><input type="checkbox" id="1265053" name="boxname" checked="checked" onchange="checkViewBox(1265053);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265053">
+					<a href="javascript:goTitle('46425', '1265053');" title="CHAPTER III WOMEN WITH DISABILITIES AND CHILDREN WITH DISABILITIES, ETC. Article Link">
+						CHAPTER III WOMEN WITH DISABILITIES AND CHILDREN WITH DISABILITIES, ETC.
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265054" name="boxname" checked="checked" onchange="checkViewBox(1265054);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265054">
+					<a href="javascript:goTitle('46425', '1265054');" title="Article 33 (Prevention of Discrimination against Women with Disabilities) Article Link">
+						Article 33 (Prevention of Discrimination against Women with Disabilities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265055" name="boxname" checked="checked" onchange="checkViewBox(1265055);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265055">
+					<a href="javascript:goTitle('46425', '1265055');" title="Article 34 (Duties of State and Local Governments for Prevention of Discrimination against Women with Disabilities) Article Link">
+						Article 34 (Duties of State and Local Governments for Prevention of Discrimination against Women with Disabilities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265056" name="boxname" checked="checked" onchange="checkViewBox(1265056);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265056">
+					<a href="javascript:goTitle('46425', '1265056');" title="Article 35 (Prevention of Discrimination against Children with Disabilities) Article Link">
+						Article 35 (Prevention of Discrimination against Children with Disabilities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265057" name="boxname" checked="checked" onchange="checkViewBox(1265057);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265057">
+					<a href="javascript:goTitle('46425', '1265057');" title="Article 36 (Duties of State and Local Governments for Prevention of Discrimination against Children with Disabilities) Article Link">
+						Article 36 (Duties of State and Local Governments for Prevention of Discrimination against Children with Disabilities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265058" name="boxname" checked="checked" onchange="checkViewBox(1265058);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265058">
+					<a href="javascript:goTitle('46425', '1265058');" title="Article 37 (Prevention of Discrimination, etc. against Persons with Mental Disorder) Article Link">
+						Article 37 (Prevention of Discrimination, etc. against Persons with Mental Disorder)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="CT2">
+				<span class="form"><input type="checkbox" id="1265059" name="boxname" checked="checked" onchange="checkViewBox(1265059);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265059">
+					<a href="javascript:goTitle('46425', '1265059');" title="CHAPTER IV INSTITUTIONS IN CHARGE OF REMEDIES OF DISCRIMINATION FOR PERSONS WITH DISABILITIES AND SAFEGUARDING OF RIGHTS, ETC. Article Link">
+						CHAPTER IV INSTITUTIONS IN CHARGE OF REMEDIES OF DISCRIMINATION FOR PERSONS WITH DISABILITIES AND SAFEGUARDING OF RIGHTS, ETC.
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265060" name="boxname" checked="checked" onchange="checkViewBox(1265060);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265060">
+					<a href="javascript:goTitle('46425', '1265060');" title="Article 38 (Complaints) Article Link">
+						Article 38 (Complaints)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265061" name="boxname" checked="checked" onchange="checkViewBox(1265061);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265061">
+					<a href="javascript:goTitle('46425', '1265061');" title="Article 39 (Ex Officio Investigation) Article Link">
+						Article 39 (Ex Officio Investigation)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265062" name="boxname" checked="checked" onchange="checkViewBox(1265062);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265062">
+					<a href="javascript:goTitle('46425', '1265062');" title="Article 40 (Subcommittee on Remedies of Discrimination for Persons with Disabilities) Article Link">
+						Article 40 (Subcommittee on Remedies of Discrimination for Persons with Disabilities)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265063" name="boxname" checked="checked" onchange="checkViewBox(1265063);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265063">
+					<a href="javascript:goTitle('46425', '1265063');" title="Article 41 (Provisions Applicable Mutatis Mutandis) Article Link">
+						Article 41 (Provisions Applicable Mutatis Mutandis)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265064" name="boxname" checked="checked" onchange="checkViewBox(1265064);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265064">
+					<a href="javascript:goTitle('46425', '1265064');" title="Article 42 (Notices of Recommendation) Article Link">
+						Article 42 (Notices of Recommendation)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265065" name="boxname" checked="checked" onchange="checkViewBox(1265065);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265065">
+					<a href="javascript:goTitle('46425', '1265065');" title="Article 43 (Order for Correction) Article Link">
+						Article 43 (Order for Correction)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265066" name="boxname" checked="checked" onchange="checkViewBox(1265066);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265066">
+					<a href="javascript:goTitle('46425', '1265066');" title="Article 44 (Confirmation of Order for Correction) Article Link">
+						Article 44 (Confirmation of Order for Correction)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265067" name="boxname" checked="checked" onchange="checkViewBox(1265067);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265067">
+					<a href="javascript:goTitle('46425', '1265067');" title="Article 45 (Request for Submission of Compliance Report on Order for Correction, etc.) Article Link">
+						Article 45 (Request for Submission of Compliance Report on Order for Correction, etc.)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="CT2">
+				<span class="form"><input type="checkbox" id="1265068" name="boxname" checked="checked" onchange="checkViewBox(1265068);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265068">
+					<a href="javascript:goTitle('46425', '1265068');" title="CHAPTER V COMPENSATION FOR HARM, BURDEN OF PROOF, ETC. Article Link">
+						CHAPTER V COMPENSATION FOR HARM, BURDEN OF PROOF, ETC.
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265069" name="boxname" checked="checked" onchange="checkViewBox(1265069);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265069">
+					<a href="javascript:goTitle('46425', '1265069');" title="Article 46 (Compensation for Damage) Article Link">
+						Article 46 (Compensation for Damage)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265070" name="boxname" checked="checked" onchange="checkViewBox(1265070);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265070">
+					<a href="javascript:goTitle('46425', '1265070');" title="Article 47 (Allotment of Burden of Proof) Article Link">
+						Article 47 (Allotment of Burden of Proof)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265071" name="boxname" checked="checked" onchange="checkViewBox(1265071);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265071">
+					<a href="javascript:goTitle('46425', '1265071');" title="Article 48 (Remedial Measures by Court) Article Link">
+						Article 48 (Remedial Measures by Court)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="CT2">
+				<span class="form"><input type="checkbox" id="1265072" name="boxname" checked="checked" onchange="checkViewBox(1265072);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265072">
+					<a href="javascript:goTitle('46425', '1265072');" title="CHAPTER VI PENALTY PROVISIONS Article Link">
+						CHAPTER VI PENALTY PROVISIONS
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265073" name="boxname" checked="checked" onchange="checkViewBox(1265073);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265073">
+					<a href="javascript:goTitle('46425', '1265073');" title="Article 49 (Discrimination) Article Link">
+						Article 49 (Discrimination)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+		<!-- 조문 -->
+		
+			<div class="JO2">
+				<span class="form"><input type="checkbox" id="1265074" name="boxname" checked="checked" onchange="checkViewBox(1265074);" alt="Choosing Article" title="Choosing Article" />
+					<label for="1265074">
+					<a href="javascript:goTitle('46425', '1265074');" title="Article 50 (Administrative Fines) Article Link">
+						Article 50 (Administrative Fines)
+					</a>
+					</label>
+				</span>
+			</div>
+		
+		
+	
+	<p />
+	
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265075);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265075');" title="ADDENDA Addenda Link">
+							ADDENDA
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265076);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265076');" title="ADDENDA &lt;Act No. 8974, Mar. 21, 2008&gt; Addenda Link">
+							ADDENDA &lt;Act No. 8974, Mar. 21, 2008&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265077);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265077');" title="ADDENDA &lt;Act No. 9705, May 22, 2009&gt; Addenda Link">
+							ADDENDA &lt;Act No. 9705, May 22, 2009&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265078);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265078');" title="ADDENDUM &lt;Act No. 10280, May 11, 2010&gt; Addenda Link">
+							ADDENDUM &lt;Act No. 10280, May 11, 2010&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265079);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265079');" title="ADDENDA &lt;Act No. 10465, Mar. 29, 2011&gt; Addenda Link">
+							ADDENDA &lt;Act No. 10465, Mar. 29, 2011&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265080);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265080');" title="ADDENDA &lt;Act No. 10789, Jun. 7, 2011&gt; Addenda Link">
+							ADDENDA &lt;Act No. 10789, Jun. 7, 2011&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265081);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265081');" title="ADDENDUM &lt;Act No. 11522, Oct. 22, 2012&gt; Addenda Link">
+							ADDENDUM &lt;Act No. 11522, Oct. 22, 2012&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265082);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265082');" title="ADDENDA &lt;Act No. 11690, Mar. 23, 2013&gt; Addenda Link">
+							ADDENDA &lt;Act No. 11690, Mar. 23, 2013&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265083);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265083');" title="ADDENDA &lt;Act No. 12035, Aug. 13, 2013&gt; Addenda Link">
+							ADDENDA &lt;Act No. 12035, Aug. 13, 2013&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265084);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265084');" title="ADDENDUM &lt;Act No. 12365, Jan. 28, 2014&gt; Addenda Link">
+							ADDENDUM &lt;Act No. 12365, Jan. 28, 2014&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265085);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265085');" title="ADDENDA &lt;Act No. 13978, Feb. 3, 2016&gt; Addenda Link">
+							ADDENDA &lt;Act No. 13978, Feb. 3, 2016&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265086);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265086');" title="ADDENDA &lt;Act No. 14839, Jul. 26, 2017&gt; Addenda Link">
+							ADDENDA &lt;Act No. 14839, Jul. 26, 2017&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265087);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265087');" title="ADDENDUM &lt;Act No. 14893, Sep. 19, 2017&gt; Addenda Link">
+							ADDENDUM &lt;Act No. 14893, Sep. 19, 2017&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+			
+				<div class="ADtitle" style="padding-left:50px;padding-top: 5px;font-size:14px;">
+					<span class="form">
+						<input type="checkbox" id="" name="boxname" checked="checked" onchange="checkViewBox(1265088);" alt="Choosing Addenda" title="Choosing Addenda" />
+						<label for="">
+						<a href="javascript:goTitle('46425', '1265088');" title="ADDENDUM &lt;Act No. 15272, Dec. 19, 2017&gt; Addenda Link">
+							ADDENDUM &lt;Act No. 15272, Dec. 19, 2017&gt;
+						</a>
+						</label>
+					</span>
+				</div>
+			
+		
+	
+
+	
+	<p />
+
+</div>
+ </body>
+</html>
+

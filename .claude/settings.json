@@ -57,6 +57,16 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "WebSearch|WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/record-command.py\" 2>/dev/null || true",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "SessionStart": [

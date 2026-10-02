@@ -1,14 +1,23 @@
 #!/usr/bin/env python3
-"""PostToolUse(Bash) — persist the scratchpad mechanically, not by memory.
+"""PostToolUse(Bash; WebSearch|WebFetch) — persist the scratchpad mechanically, not by memory.
 
 Owner directive 2026-08-20: "the scratchpad needs to be getting saved always for
 provenance." Prose cannot deliver that: an agent must choose to load it, and
 attention degrades as context fills. This runs at the HARNESS level, so the
 record exists whether or not the session remembers to make one.
 
-Appends one JSON line per Bash call to scratchpad/<session>/commands.jsonl.
-The session stem is DERIVED (see `open_session` below), never read from a
-pointer that answers a different question.
+Appends one JSON line per Bash, WebSearch or WebFetch call to
+scratchpad/<session>/commands.jsonl. Every line carries `tool`; a line without
+it predates the WebSearch|WebFetch branch and is a Bash line. The session stem
+is DERIVED (see `open_session` below), never read from a pointer that answers a
+different question, and all three tools are routed by the same function.
+
+The WebSearch|WebFetch lines are the tool-call ledger that
+scripts/audit/search_log_completeness.py reads (I5, WP14): a search the agent
+RAN but never logged to search_executions is otherwise visible only to a reviewer
+diffing the transcript by hand. They are wired by a SECOND PostToolUse object
+whose matcher is `WebSearch|WebFetch` -- not `Bash|WebSearch|WebFetch`, which
+would fire this hook twice per Bash call beside the existing `Bash` object.
 
 Fails silently and always exits 0 by design: provenance capture must never block
 or fail the work it is recording. A missing line is a gap in the record; a
@@ -142,8 +151,72 @@ def open_session(root, sid=None):
     return openp[-1] if openp else ""
 
 
+def now_ts():
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def append_line(root, sid, rec):
+    """Route `rec` to the running session's log. ONE writer for every tool, so the
+    WebSearch|WebFetch ledger cannot drift from the Bash log's routing."""
+    sess=open_session(root,sid) or (sid or "unassigned")
+    p=root/"scratchpad"/sess
+    p.mkdir(parents=True,exist_ok=True)
+    with open(p/"commands.jsonl","a",encoding="utf-8") as fh:
+        fh.write(json.dumps(rec,ensure_ascii=False)+"\n")
+
+
+WEB_TOOLS=("WebSearch","WebFetch")
+
+
+def web_record(d, ts):
+    """The ledger line for a WebSearch or WebFetch call; None for any other tool.
+
+    WebFetch hands the agent a model-written SUMMARY, not the page's bytes, so its
+    hash proves only that a call returned something -- R10 persistence cannot be
+    satisfied by it, and search_log_completeness only REPORTS an unpersisted URL.
+
+    `input_keys` and `response_keys` record what the payload actually carried,
+    for the reason the Bash branch below records `response_keys`: the field names
+    read here (`tool_input.query`, `.allowed_domains`, `.blocked_domains`,
+    `.url`) were documented, not measured, when this was written. If a harness
+    names them differently, the line still lands with `query: null` and the keys
+    say what to read instead -- and the audit FAILs a query-less WebSearch line
+    rather than passing it, so the mismatch is loud on the first real search.
+    """
+    tool=d.get("tool_name")
+    if tool not in WEB_TOOLS:
+        return None
+    # Not `or {}`: a non-dict tool_input (a string, a list) is truthy, and `.get` on it
+    # raised inside the module try, so no line landed at all -- the opposite of the
+    # "line still lands" promise above.
+    raw=d.get("tool_input")
+    ti=raw if isinstance(raw,dict) else {}
+    tr=d.get("tool_response")
+    rec={"ts":ts,"tool":tool}
+    if tool=="WebSearch":
+        rec["query"]=ti.get("query")
+        rec["allowed_domains"]=ti.get("allowed_domains")
+        rec["blocked_domains"]=ti.get("blocked_domains")
+    else:
+        rec["url"]=ti.get("url")
+    body=tr if isinstance(tr,str) else json.dumps(tr,sort_keys=True,ensure_ascii=False,default=str)
+    rec["session_id"]=d.get("session_id")
+    rec["input_keys"]=sorted(raw) if isinstance(raw,dict) else None  # None: not a dict
+    rec["response_keys"]=sorted(tr) if isinstance(tr,dict) else None
+    rec["response_sha256"]=hashlib.sha256(body.encode("utf-8","replace")).hexdigest()
+    return rec
+
+
 try:
     d=json.load(sys.stdin)
+    # WebSearch / WebFetch first: neither carries tool_input.command, so the
+    # Bash path's `if not c` below would drop them. Nothing past this branch runs
+    # for them -- the git and commit-log skips are about Bash commands.
+    w=web_record(d, now_ts())
+    if w is not None:
+        append_line(pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or "."),
+                    d.get("session_id"), w)
+        sys.exit(0)
     ti=d.get("tool_input") or {}
     c=ti.get("command")
     if not c: sys.exit(0)
@@ -254,25 +327,26 @@ try:
     # What is lost is one line saying the log was committed, which the commit
     # itself already says, in git, with a timestamp. What is gained is that the
     # loop terminates.
-    # sys.exit(0), NOT return. This block is module-level, inside the `try:` at
-    # line 145 — a bare `return` here is a SyntaxError that takes the WHOLE hook
+    # sys.exit(0), NOT return. This block is module-level, inside the module's
+    # `try:` — a bare `return` here is a SyntaxError that takes the WHOLE hook
     # down, and settings.json wires it as `... 2>/dev/null || true`, so it fails
     # silently. It did: written 2026-09-03 01:28 to break the log/commit
     # recursion, it stopped every command from being logged for the next two
     # hours (the migrations, the db.py work, the contract amendment and the D-0173
     # harvest all have no entry) and was found by an adversarial audit, not by the
-    # test. The neighbouring early exits at 149/186/187 already use sys.exit(0);
-    # this line did not, and matching them is the whole fix.
+    # test. The neighbouring early exits (no command; commit/push; read-only git)
+    # already use sys.exit(0); this line did not, and matching them is the whole fix.
     if "session command log" in (c or ""):
         sys.exit(0)
     root=pathlib.Path(os.environ.get("CLAUDE_PROJECT_DIR") or ".")
     sid=d.get("session_id")
-    sess=open_session(root,sid) or (sid or "unassigned")
-    p=root/"scratchpad"/sess
-    p.mkdir(parents=True,exist_ok=True)
     b=out.encode("utf-8","replace")
     eb=errout.encode("utf-8","replace")
-    rec={"ts":datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+    rec={"ts":now_ts(),
+         # Additive key, 2026-10-01 (WP14). Lines written before it have no `tool`;
+         # readers treat a missing `tool` as Bash. The tool name is read, not
+         # assumed, so a payload routed here under any other name says so.
+         "tool":d.get("tool_name") or "Bash",
          "cwd":d.get("cwd"),"command":c,"exit":ec,"is_error":err,
          # Ground truth for WHICH SESSION issued this. Every other signal in this
          # hook is inferred from filenames; this one is stated. See open_session().
@@ -282,7 +356,6 @@ try:
          "stdout_sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b),
          "stderr_sha256":hashlib.sha256(eb).hexdigest() if eb else None,
          "stderr_bytes":len(eb)}
-    with open(p/"commands.jsonl","a",encoding="utf-8") as fh:
-        fh.write(json.dumps(rec,ensure_ascii=False)+"\n")
+    append_line(root,sid,rec)
 except Exception:
     pass

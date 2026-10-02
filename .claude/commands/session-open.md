@@ -4,7 +4,8 @@ argument-hint: "[short-slug, defaults to the branch name]"
 ---
 
 Do this FIRST, before any other work. `scratchpad/CURRENT` moves at OPEN, and the
-`PostToolUse` hook writes every Bash call to whatever it names. Leave it stale and
+`PostToolUse` hook writes every Bash, WebSearch and WebFetch call to whatever it names
+(the web lines are the ledger `search_log_completeness` reads). Leave it stale and
 this session's commands append to a merged PR's record — measured twice in this
 repository, most recently 2026-09-18.
 

@@ -99,13 +99,14 @@ exempt_paths:
   # itself an occurrence. Added 2026-09-03 with the .ignore entry, whose header
   # states that every path it hides is already adjudicated on this list.
   - "transcripts/**"               # verbatim agent transcripts, append-only
-  # A verbatim log of the shell commands a session ran. Same class as a search
-  # log: it preserves what was typed. Added 2026-08-24, when the M5 author sweep
+  # A verbatim log of the shell commands a session ran (and, since 2026-10-01, its
+  # WebSearch queries and WebFetch URLs). Same class as a search log: it preserves
+  # what was typed. Added 2026-08-24, when the M5 author sweep
   # turned this check red — not because any live surface used `doi_less_key`, but
   # because the sweep had GREPPED for it to prove no live surface did, and the
   # grep was logged. Unexempted, the check punishes the act of verifying it, and
   # every future session that searches for a retired term reddens it again.
-  - "scratchpad/**/commands.jsonl" # verbatim shell-command logs
+  - "scratchpad/**/commands.jsonl" # verbatim shell-command, web-search and web-fetch logs
   # THIRD-PARTY BYTES, AND THE MOST DANGEROUS OMISSION ON THIS LIST UNTIL 2026-09-11.
   # Retrieval payloads are what a publisher, Crossref, PubMed or WHO actually sent.
   # A retired term inside one is never this project's USE of it -- RV-010

@@ -100,8 +100,8 @@ each a prompt from this repository's own transcripts, written back out with the
 preconditions restored.
 
 `/session-open` exists because `scratchpad/CURRENT` moves at OPEN and the
-`PostToolUse` hook writes every Bash call to whatever it names. Twice now a
-session's commands have landed in a previous session's record.
+`PostToolUse` hook writes every Bash, WebSearch and WebFetch call to whatever it
+names. Twice now a session's commands have landed in a previous session's record.
 
 ---
 
