@@ -1296,7 +1296,7 @@ checks:
   level: advisory
   basis: unattributed
   cost: fast
-  no_floor: not-instrumented — R1-R15 each read a different table (searches, sources, admissions, DOIs,
+  no_floor: not-instrumented — the research contract's rules each read a different table (searches, sources, admissions, DOIs,
     ...) with no single honest count across them. A combined figure would misrepresent which rule
     examined what. Left uninstrumented on 2026-08-14 (A5). CORRECTED 2026-09-17, and the correction
     is the point — this reason justified itself with "Genuinely non-vacuous today (R1 fails

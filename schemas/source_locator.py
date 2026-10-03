@@ -16,7 +16,7 @@ WHAT THIS TABLE IS. Clues, in the owner's words 2026-08-23: "not stored as usabl
 case unless it is being read by a researcher." A researcher reads a row to decide what to
 search for. Nothing joins it, no determination may cite it, and it is NOT evidence —
 DR-2026-08-06 demoted this material and ruled that resuming research does not restore it.
-`status` defaults to REFERENCE-ONLY and admission runs the full R1-R15 path into
+`status` defaults to REFERENCE-ONLY and admission runs the full research-contract path into
 `evidence_sources`.
 
 WHY EVERY FIELD IS OPTIONAL EXCEPT THE KEY. The table is a full outer join of what two

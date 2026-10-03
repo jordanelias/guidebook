@@ -50,16 +50,23 @@ SESS=session_2026-09-10-batch-06
 mkdir -p "$S"
 sha256sum data/guidebook.db                                  # record; must equal step 6c's PRE value
 cp data/guidebook.db "$S/walk.db"
-python3 scripts/audit/research_batch_dod.py --selftest        # SELFTEST: PASS, 19/19 (18 + R10b, this commit)
+python3 scripts/audit/research_batch_dod.py --selftest        # SELFTEST: PASS, every seeded rule fired
 GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/audit/research_batch_dod.py --session "$SESS"
 ```
-**Expected:** `--selftest` prints `SELFTEST: PASS — gate rejected the corpus AND all 19 seeded
-rules fired`. The empty-session probe exits 1 with **three** failures — `R1`, `R9a`, `R9b`, both
-of the latter reading `NOTHING IN SCOPE` — not the single `R1` DR-2026-08-19 §12.1 claimed; R9a/R9b
-did not exist when that line was written. Any *other* rule firing on an empty session means the
+**Expected:** `--selftest` prints `SELFTEST: PASS — gate rejected the corpus AND all <n> seeded
+rules fired`, where `<n>` is the size of `expected` in `selftest()` (19 when this was walked;
+rules have been added since, so count it there rather than trusting a figure here). The
+empty-session probe exits 1 with **three** failures — `R1`, `R9a`, `R9b`, both of the latter
+reading `NOTHING IN SCOPE` — not the single `R1` DR-2026-08-19 §12.1 claimed; R9a/R9b did not
+exist when that line was written. Any *other* rule firing on an empty session means the
 session id is contaminated (reused from a prior run) — stop and pick a new one.
 
 ## Step 1 — base: mint the parameter (THE SUBJECT, owner 2026-08-26)
+
+**Run this step only when the cell under research has no parameter yet.** It mints the ONE
+parameter a batch sets out to research. Every other concept a source states a figure for is
+reached in step 4b's per-source loop, from that source's own words — not here, and not by
+pre-minting a list (amended 2026-10-02, GAP-061).
 
 A parameter is minted from a phrase a source already uses — `observe-term` requires an **admitted**
 source, so step 1 borrows one already in the corpus (here `REF-00784`) purely to name the concept;
@@ -90,8 +97,13 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-term \
 ```
 **Expected:** `{"term_id": "TERM-0NN", "canonical_en": "corridor clear width",
 "adjudication_id": 1, "from_surface_form": "corridor clear width", "from_ref_id": "REF-00784",
-"dry_run": false}`. `add-term` itself performs the NAMES-NEW adjudication — a second, separate
-`adjudicate-term` call for this observation is refused (already adjudicated).
+"dry_run": false}`. `add-term` itself performs the NAMES-NEW adjudication, so do NOT follow it
+with an `adjudicate-term` call for the same observation. **That call is not refused** (corrected
+2026-10-02; this line said it was): `adjudicate_term` writes a second `term_adjudications` row,
+prints `NOTE: observation N (...) already adjudicated by [...]. Writing a second row` to stderr,
+and returns `"contested": true`. Divergent adjudications are deliberate — an adversarial pass
+that disagrees lands a second row and the pair reads as a contest — so a second call made only
+to confirm the first records a contest that does not exist. Verified 2026-10-02 on a scratch copy.
 
 ```
 GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-parameter \
@@ -197,7 +209,9 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py observe-term \
 ```
 **Expected:** `{"observation_id": <N2>, "created": true}`. Verbatim, unjudged — R11's "harvest at
 evidence" half. `research_batch_dod.py`'s `R11-harvest` fails any admitted source with zero
-`observed_terms` rows, so this step is not optional on a real batch.
+`observed_terms` rows, so this step is not optional on a real batch. This harvests the phrase for
+the cell's own parameter; **step 4b's loop harvests every other concept the source states a figure
+for**, the same way, and one observation per source is the floor R11-harvest checks, not the job.
 
 ## Step 4 — judgment: adjudicate the harvested phrase (D-0173)
 
@@ -210,7 +224,8 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py adjudicate-term \
 `--outcome` is live vocabulary from the column's own CHECK (`NAMES-NEW|NAMES-EXISTING|NOT-OURS|...`);
 `NAMES-EXISTING`/`NAMES-NEW` require `--term-id`, refused otherwise. This is the crossing step
 owner ruling 2026-08-27 assigns to judgment, not evidence — the phrase was only *recorded* at step
-3; here it is decided.
+3; here it is decided. `NOT-OURS` and `DEFERRED` are answers too (no `--term-id`); silence is not,
+and R16-adjudicate fails any observation on the batch's admissions left without one (step 4b).
 
 **Also judgment: grade population-of-study vs population-served (R13).**
 ```
@@ -249,7 +264,7 @@ GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py log-search \
 "dry_run": false}`. A zero-yield row with **no** `findings_note` fails R14 — the note is what
 distinguishes "well-formed, nothing there" from "the query itself was broken."
 
-## Step 4b — judgment: EXTRACT what each source asserts for the parameter
+## Step 4b — judgment: the per-source loop — every figure, for any concept, reaches a parameter
 
 **ADDED 2026-09-10. This step did not exist, and its absence made the runbook produce a wrong
 answer while passing every gate.** After migration 073, `assess_cell.gather_sources(conn,
@@ -259,39 +274,141 @@ set is empty and step 5 emits `pending` on nothing — with `research_batch_dod.
 COMPLIANT, because no rule counts extractions. That is `CLAUDE.md` §5(a) at the one place it costs a
 determination.
 
-**One `add-extraction` per source that says something about the parameter.** Vocabularies below are
-read from the column's own CHECK (`dbcore.check_values()`), never from a list in code — re-derive
-them rather than trusting this list:
+**AMENDED 2026-10-02 (GAP-061): the loop runs per source and per figure, not per parameter.** This
+step said *"One `add-extraction` per source that says something about the parameter"* — the one
+parameter step 1 minted. Batches that followed it filed every extraction under that parameter, and
+every figure their sources stated for any other concept (a route width, a landing length, a
+handrail height) was lost: harvested as a phrase at best, then never adjudicated, never promoted,
+never extracted, while the gate read COMPLIANT. Run the loop below for **every admitted source**.
+
+**R16 is this step's gate** (`governance/research-contract.yaml` R16; `research_batch_dod.py
+--session "$SESS"`). `R16-adjudicate` fails any observation on the batch's admissions that carries
+no adjudication; `R16` fails any term those adjudications name that is neither a parameter
+(`base_parameters`) nor declined (`parameter_declinations`). Both are scoped to the batch's
+admissions, so a later session that finishes the judging discharges the batch's debt. Neither can
+see a figure for a concept no observation records, or a figure no extraction carries — the row that
+would be checked was never written. That is adversarial standing subject 4
+(`skills/adversarial-research_SKILL.md`), and the pass samples it once per admitted source.
+
+Vocabularies are read from each column's own CHECK (`dbcore.check_values()`), never from a list in
+code. Re-derive them rather than trusting any list typed here:
 
 ```
 python3 - <<'PY'
-import re, sqlite3
+import sqlite3, sys; sys.path.insert(0, 'scripts'); import dbcore
 con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
-ddl = con.execute("select sql from sqlite_master where name='source_value_extractions'").fetchone()[0]
-for col in ('claim_type','extraction_method','extraction_status','root_type',
-            'measurement_paradigm','device_class'):
-    m = re.search(col + r"[^,]*?CHECK\s*\(([^)]*)\)", ddl, re.S | re.I)
-    print(col, re.findall(r"'([^']+)'", m.group(1)) if m else '(no inline CHECK)')
+for t, cols in (('term_adjudications', ('outcome',)),
+                ('base_parameters', ('accessibility_direction',)),
+                ('source_value_extractions', ('claim_type', 'figure_role', 'comparator',
+                    'extraction_method', 'extraction_status', 'root_type',
+                    'measurement_paradigm', 'device_class')),
+                ('extraction_relations', ('relation', 'to_kind', 'stated', 'input_role'))):
+    for c in cols:
+        print(t, c, sorted(dbcore.check_values(con, t, c)))
 PY
 ```
 
-As measured 2026-09-10: `claim_type` `numerical|range|qualitative|framework|absent` ·
-`extraction_method` `skim|full-read|re-read|auto-mined` · `extraction_status`
-`preliminary|reviewed|verified|contradicted|absent-confirmed` · `root_type`
-`measurement_primary|participatory_finding|committee_assertion|derived_calculation|untraced` ·
-`measurement_paradigm` nine values including `instrumented_physical_measurement` and
-`stated_unmeasured` · `device_class` nine including `manual_self_propelled` and `not_device_scoped`.
+**For each admitted source `$REF`:**
 
-```
-GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-extraction \
-  --ref-id "$REF" --slug <slug> --parameter-id "$PID" --identity <POP> \
-  --claim-type range --claimed-value '<from the bytes>' --claimed-unit '<from the bytes>' \
-  --claim-text '<VERBATIM from the payload — see below>' \
-  --source-section '<locator>' --extraction-method full-read --extraction-status preliminary \
-  --root-type measurement_primary --root-ref-id "$REF" \
-  --measurement-paradigm instrumented_physical_measurement --device-class manual_self_propelled \
-  --session "$SESS"
-```
+1. **Read the persisted payload** — the `-text.txt` under `retrieval-log/<session>/`, falling back
+   to the raw artefact. `manifest.jsonl` maps a source to its artefacts (by `ref_id`, or by `url`,
+   plus any text file `derived_from` it). Note every figure the source states and the concept it
+   states it for.
+
+2. **Observe every concept phrase the source states a figure for** — verbatim, unjudged (D-0173):
+   ```
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py observe-term \
+     --ref-id "$REF" --surface-form '<the phrase as the source writes it>' --language <XX> \
+     --locator '<clause or page>' --context-quote '<the sentence it sits in>' --session "$SESS"
+   ```
+   **Expected:** `{"observation_id": <N>, "created": true}`. A phrase this source was already
+   observed using, in that language, returns `"created": false` with its existing id — reuse it.
+
+3. **Adjudicate each observation, exactly once** — one of:
+   ```
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py adjudicate-term \
+     --observation-id <N> --outcome NAMES-EXISTING --term-id <TERM-NNN> --rationale '<why>' --session "$SESS"
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-term \
+     --from-observation <N> --canonical-en '<the name, never a value>' --rationale '<why>' --session "$SESS"
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py adjudicate-term \
+     --observation-id <N> --outcome NOT-OURS --rationale '<why>' --session "$SESS"   # or DEFERRED
+   ```
+   `add-term` performs the NAMES-NEW adjudication in the same act. It refuses a name carrying a
+   number, a comparator or a min/max word, and a name `terms` already holds — that refusal prints
+   the NAMES-EXISTING call to make instead. `NOT-OURS` and `DEFERRED` take no `--term-id`. A second
+   adjudication of the same observation is written, not refused, and reads as a contest (step 1).
+
+4. **Dispose of every term named that holds neither a parameter nor a declination** — one of:
+   ```
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-parameter \
+     --term-id <TERM-NNN> --session "$SESS"
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py decline-parameter \
+     --term-id <TERM-NNN> --reason '<why it is not a quantity under determination>' --session "$SESS"
+   ```
+   `add-parameter` for a design quantity under determination (the JSON carries the
+   `parameter_id` every later call keys on); `decline-parameter` for an element, a lens term or a
+   method, with its reason. A disposition is per term and corpus-wide: one call, once, not once per
+   batch. `add-parameter` refuses a term that does not exist, a declined term, a term whose
+   name carries a value (a number, a comparator, a min/max word), and a term that is already a
+   parameter, whatever its status. It does **not** refuse a term with no NAMES-NEW/NAMES-EXISTING
+   adjudication (corrected 2026-10-02; this line said it did): base vocabulary predates
+   observe/adjudicate, so the JSON reports `"provenance": "adjudicated"` with the adjudication
+   it found, or `"base-vocabulary"` when there is none — information, not a gate. In this loop
+   the term was just named by step 3, so expect `adjudicated`. `decline-parameter` refuses a
+   term that does not exist, a blank reason, a term that is already a parameter (any status)
+   and a term already declined; it does not judge how good the reason is, which is the
+   adversarial pass's job (standing subject 4).
+
+5. **Direction, only where a source states it.** Where an admitted source states which way is
+   better for a disabled person:
+   ```
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py set-parameter-direction \
+     --parameter-id <P> --direction <from the CHECK> --rationale '<what the source says>' --session "$SESS"
+   ```
+   Otherwise leave it NULL; the column permits it, and an assumed direction is an invented one.
+
+6. **One `add-extraction` per figure**, under the parameter the figure is for:
+   ```
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py add-extraction \
+     --ref-id "$REF" --slug <slug> --parameter-id <P> --identity <POP> \
+     --claim-type range --claimed-value '<from the bytes>' --claimed-unit '<from the bytes>' \
+     --figure-role claim --comparator between --relation none \
+     --claim-text '<VERBATIM from the payload — see below>' \
+     --source-section '<locator>' --extraction-method full-read --extraction-status preliminary \
+     --root-type measurement_primary --root-ref-id "$REF" \
+     --measurement-paradigm instrumented_physical_measurement --device-class manual_self_propelled \
+     --session "$SESS"
+   ```
+   `--figure-role` and `--relation` are required. `--relation none` (alone, once) says the source
+   states its figure absolutely; otherwise name each comparison edge with its aligned
+   `--to-extraction`/`--to-label`, `--stated` and `--quote` (see `db.py add-extraction --help`). At
+   least one lens flag (`--identity`, `--icf`, `--needs`, `--medical`) is required, and each
+   code given must be live in its own registry. **A row that states a value from a tier-4–6
+   source also needs a structured locator** — at least one of the `--loc-*` levels, with
+   `--locator-scheme` naming the family; `--source-section` alone is refused there (R3) unless
+   `--notes` carries `[UNVERIFIED-QUANT]` for an instrument with genuinely no clause numbering.
+   Add `--jurisdiction` for a code source.
+
+7. **Every `condition` row conditions something.** A condition row is written like any other
+   figure (graded `qualitative`, it still takes a `--claimed-value`: the condition in words). For
+   each extraction graded `--figure-role condition`, point the figure it qualifies at it:
+   ```
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py relate-extraction \
+     --from <E, the figure it qualifies> --relation condition_on --to-extraction <E2, the condition row> \
+     --stated named --quote '<verbatim, from the payload>' --session "$SESS"
+   ```
+   (or pass the same edge on `add-extraction` with `--relation condition_on --to-extraction <E2>
+   --stated named --quote '...'`). `extraction_relations_integrity` fails a condition row that is
+   neither the target of an edge nor the source of a `condition_on` edge. A condition drawn from a
+   different `ref_id` takes `--cross-source '<reason>'`.
+
+**Then gate the loop:** `GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/audit/research_batch_dod.py
+--session "$SESS"` — read the `R16-adjudicate` and `R16` lines; each failure names the observation
+ids or term ids still open. Every command in this loop was executed on 2026-10-02 against a
+scratch copy of main plus PR #169's migrations, on REF-01030 (two observations; `add-term`;
+`add-parameter`; `decline-parameter`; three extractions, one of them a `condition` row; one
+`condition_on` edge): `extraction_relations_integrity` read CLEAN and both R16 rules PASS for
+batch 23.
 
 **`--claim-text` must be a byte-substring of the persisted payload.** That is the one thing the
 antagonist can check mechanically and it is the direct guard against the 2026-08-19 shape: a claim
@@ -320,17 +437,22 @@ is correct behaviour, not a defect to route around.
 missing step produced:
 
 ```
-GUIDEBOOK_DB_PATH="$S/walk.db" python3 - <<'PY'
+GUIDEBOOK_DB_PATH="$S/walk.db" SESS="$SESS" python3 - <<'PY'
 import os, sqlite3
 con = sqlite3.connect('file:%s?mode=ro' % os.environ['GUIDEBOOK_DB_PATH'], uri=True)
 for r in con.execute("select parameter_id, ref_id, claim_type, claimed_value, extraction_status "
                      "from source_value_extractions order by extraction_id"):
     print(r)
 print("EXTRACTIONS:", con.execute("select count(*) from source_value_extractions").fetchone()[0])
+for p, n in con.execute("select parameter_id, count(*) from source_value_extractions "
+                        "where created_by_session = ? group by 1", (os.environ['SESS'],)):
+    print("this session: parameter", p, "->", n, "extraction(s)")
 PY
 ```
 
-**A count of 0 here means step 5 will emit `pending` regardless of how good the search was.**
+**A count of 0 here means step 5 will emit `pending` regardless of how good the search was.** And
+every one of a session's extractions under a single parameter, beside payloads that state figures
+for other concepts, is the GAP-061 shape: the loop above was not run.
 
 ## Step 5 — specification: the engine determines ONE cell
 
@@ -439,13 +561,10 @@ migrate_db.py just changed, and both go red on the very next check run.
 ```
 python3 scripts/audit/research_batch_dod.py --session "$SESS"
 ```
-**Expected:** all rules `PASS` (18 through this commit's start, **19** from here on: R10b is new)
-ending `COMPLIANT — all research definition-of-done rules met.`, exit 0. Reproduced against this
-commit's rehearsal:
-```
-R1..R15, R9a, R9b, R10b: PASS (19 of 19)
-COMPLIANT — all research definition-of-done rules met.
-```
+**Expected:** every rule `PASS`, ending `COMPLIANT — all research definition-of-done rules met.`,
+exit 0. The 2026-09-10 rehearsal printed 19 PASS lines (R1..R15, R9a, R9b, R10b); R11-harvest,
+R16-adjudicate and R16 have been added since, so count the PASS lines your run prints rather than
+trusting a figure here. Read each one's EXAMINED count too: a PASS over 0 rows asserts nothing.
 
 ```
 python3 scripts/audit/citation_mining_completeness.py --session "$SESS.md"

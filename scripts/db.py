@@ -1434,13 +1434,19 @@ def main():
     p_am.add_argument("--append-note", required=True, dest="append_note",
                       help="Appended after a '|| CORRECTED <date>:' marker. The existing "
                            "note is never rewritten -- R8 makes this log append-only.")
-    # ADDED 2026-09-18 (batch 18). R5 fires on a NON-ENGLISH search targeted as 'grey',
-    # because treating non-English work as grey is the exact error R5 exists to stop:
-    # non-indexation in PubMed/Scopus is an INDEXING fact, not an evidence-quality fact.
-    # This batch made that error -- it targeted a Dutch 1981 research paper 'grey' because
-    # the item has no DOI -- and then had no way to correct it, because the log is
-    # append-only and amend-search could append only PROSE. A MISCLASSIFICATION THE GATE
-    # READS IS NOT FIXED BY A SENTENCE THE GATE DOES NOT READ.
+    # ADDED 2026-09-18 (batch 18), when R5 fired on a NON-ENGLISH search targeted as 'grey'.
+    # That batch had targeted a Dutch 1981 research paper 'grey' because the item has no
+    # DOI, and then had no way to correct it, because the log is append-only and
+    # amend-search could append only PROSE.
+    #
+    # R5 NO LONGER READS THIS COLUMN (2026-10-02, process-gap remediation plan WP12). It
+    # now fails a non-English ADMISSION filed evidence_type 'grey' that is a journal
+    # article, names a journal or carries a DOI -- corrected with amend-source --field
+    # evidence_type, not here -- and prints the non-English grey-target count as a
+    # REPORTED line only. A target says what a search SOUGHT, and a non-English search may
+    # honestly seek grey material. Use this flag to make a target TRUE, never to clear a
+    # gate: batch 23 retargeted two grey searches to 'co1' to clear the old R5, which made
+    # the column false (session record §2.5).
     #
     # Scoped to this one column on purpose: target_evidence_type classifies what was
     # SOUGHT, not what happened, so correcting it rewrites no history. The query text,
@@ -1763,7 +1769,9 @@ def main():
                           help="Promote an adjudicated term into base_parameters "
                                "(THE SUBJECT of a determination)")
     p_ap.add_argument("--term-id", dest="term_id", required=True,
-                      help="terms.term_id — must carry a NAMES-NEW/NAMES-EXISTING adjudication")
+                      help="terms.term_id. Refused if absent, declined, value-bearing or "
+                           "already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
+                           "REPORTED as provenance, not required (insert_parameter)")
     p_ap.add_argument("--notes")
     p_ap.add_argument("--session", required=True)
     p_ap.add_argument("--dry-run", action="store_true")

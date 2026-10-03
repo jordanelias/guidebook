@@ -1,11 +1,14 @@
 {
   "_comment": "Inherited research-contract debt at baseline. The gate fails only on counts EXCEEDING these \u2014 a permanently-red gate teaches people to ignore it. Lower these numbers as debt is remediated; never raise them to make a batch pass. Enforced by `--check-baseline`, which compares this file against origin/main and fails on any increase or removal: the ratchet lives in git, not in this comment.",
-  "captured_at": "2026-08-06",
+  "captured_at": "2026-10-02",
   "counts": {
     "R13": 494,
-    "R3": 303,
+    "R3": 8,
     "R9": 29,
     "R10": 1,
-    "R11": 856
+    "R11": 856,
+    "R16-adjudicate": 11,
+    "R16": 9,
+    "R7": 1
   }
 }

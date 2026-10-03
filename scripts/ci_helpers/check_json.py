@@ -2,7 +2,7 @@
 """Check all .json files in repo parse.
 
 Uses repo_files() rather than glob("**/*.json"): the glob form skipped
-dot-directories, so .claude/settings.json — which carries the R1-R15 research
+dot-directories, so .claude/settings.json — which carries the research
 contract and whose corruption silently disables both harness hooks — was never
 parsed. See scripts/ci_helpers/repo_files.py.
 """

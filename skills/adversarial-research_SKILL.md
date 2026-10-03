@@ -90,20 +90,26 @@ Specific finding that would invalidate the recommendation. Multiple disjunctive 
 
 ## Standing subjects of every adversarial pass
 
-**These three properties are NOT machine-decidable and no gate asserts them.** Each was raised as
-a defect whose gate could only ever report, never check (D05-021, D05-022, D05-023), and the
-remedy chosen was to give the property a durable home in the pass that *can* decide it. **This
-section is that home** — added 2026-09-03 after an audit found `research_batch_dod.py`'s R7 and
-R13 comments naming "a standing subject of the adversarial pass" while no such subject existed
-anywhere a brief would read. Cite all three by name in your findings, including when you find
-nothing.
+**These four properties are NOT machine-decidable and no gate asserts them.** Each was raised as
+a defect whose gate could only ever report, never check (D05-021, D05-022, D05-023; subject 4,
+GAP-061), and the remedy chosen was to give the property a durable home in the pass that *can*
+decide it. **This section is that home** — added 2026-09-03 after an audit found
+`research_batch_dod.py`'s R7 and R13 comments naming "a standing subject of the adversarial pass"
+while no such subject existed anywhere a brief would read. Cite all four by name in your
+findings, including when you find nothing.
 
 1. **Harm findings against the rows that claim them.** R7 prints the count of
-   `search_executions.harm_finding = 1` and asserts nothing about it — only
-   `candidates < screened/25` can fail that rule. Read the flagged rows' `findings_note` against
+   `search_executions.harm_finding = 1` and the candidate count, and asserts nothing about
+   either. Since 2026-10-02 the only thing that can fail R7 is a search log whose counts
+   contradict each other (screened more than found, or admitted more than screened); its
+   candidate floor was removed because the batch being judged typed both terms of it. That
+   leaves this subject, and RC1's `provenance_artefact_audit`, as R7's substantive
+   enforcers. Read the flagged rows' `findings_note` against
    what the batch actually recorded: a harm flag with no finding behind it, and a finding in the
    brief that never reached a flagged row, are both invisible to the gate. The batch-05 exec-32
-   filing gap was invisible by construction.
+   filing gap was invisible by construction. The same reading covers R7's other half: an
+   off-slug or unverified document the session record or transcript names that no
+   `search_candidates` row records stayed in prose, and no count can show it.
 
 2. **Each `mismatch_note` against the retained payload.** R13 tests that a population-match ROW
    exists; nothing reads `match_grade` or `mismatch_note`. A row whose stated rationale the
@@ -135,6 +141,62 @@ nothing.
    writes it going forward, so the standing query's population stops growing. A source mined after
    this date has no `connections_produced` entry to find here at all — check the mining search's
    own `search_executions` row (`mined_ref_id`) joined to `search_candidates.exec_id` instead.
+
+4. **Figures the payload states that no extraction carries, and concepts it names that no
+   observation records.** Added 2026-10-02 for GAP-061. R11-harvest tests that each admission
+   carries at least one observation; R16-adjudicate that every observation is adjudicated; R16
+   that every term an adjudication names is a parameter or declined. All three read rows that
+   exist. None can see a figure the source states for a concept nobody observed, or a figure for
+   an observed, parameterised concept that no extraction carries — the row that would be checked
+   was never written. That is how every figure batches stated for any concept but the one
+   parameter that existed was lost while the gate read green. Take one sample per admitted
+   source, not one per figure: open the persisted payload under `retrieval-log/<session>/` (the
+   `-text.txt` where one exists), list the figures it states and the concept each is stated
+   for, then read the record side for that `ref_id`:
+
+   ```sql
+   SELECT o.observation_id, o.surface_form, a.outcome, a.term_id, p.parameter_id
+   FROM observed_terms o
+   LEFT JOIN term_adjudications a ON a.observation_id = o.observation_id
+   LEFT JOIN base_parameters p ON p.term_id = a.term_id
+   WHERE o.ref_id = :ref;
+   SELECT extraction_id, parameter_id, figure_role, claimed_value, claimed_unit, claim_text
+   FROM source_value_extractions WHERE ref_id = :ref;
+   ```
+
+   A stated figure with no extraction, and a concept the payload states a figure for with no
+   observation, are each a finding. Record it under `L2-fidelity` (the record does not say what
+   the artefact says; there is no lens of its own, and the lens vocabulary is the column's CHECK),
+   with `subject_table` `source_value_extractions` or `observed_terms` and the payload as
+   `artefact`.
+
+   **Read the answers that discharge the gates, not only that they exist** (added after the
+   T2 review). R16 is satisfied by any adjudication and any declination, so a `DEFERRED` with
+   a throwaway rationale, or a `decline-parameter --reason` of one word, clears it; R5 is
+   cleared by an `R5-GREY-WARRANTED: <reason>` in a source's `grey_reason`. Read every
+   `DEFERRED` rationale and every declination reason on the batch's admissions — the R16 PASS
+   line's REPORTED `DEFERRED` count is the trigger — and every R5-waived row, whose reason the
+   R5 line prints by `ref_id`: read it against the payload (a thesis or report, or a refereed
+   article filed grey?). A one-word reason is a finding. Declining a population-lens term
+   (`TERM-016` wheelchair user, for example) is a legitimate disposition, since a lens term is
+   not a quantity under determination, but it is an owner-level framing question: if it reads
+   as ritual rather than judgement, record it `WITHHELD-FOR-OWNER`.
+
+   ```sql
+   SELECT a.adjudication_id, o.ref_id, o.surface_form, a.rationale, a.created_by_session
+   FROM term_adjudications a
+   JOIN observed_terms o ON o.observation_id = a.observation_id
+   JOIN evidence_sources e ON e.ref_id = o.ref_id
+   WHERE a.outcome = 'DEFERRED' AND e.created_by_session = :batch;
+   SELECT DISTINCT d.term_id, d.reason, d.created_by_session
+   FROM parameter_declinations d
+   JOIN term_adjudications a ON a.term_id = d.term_id
+   JOIN observed_terms o ON o.observation_id = a.observation_id
+   JOIN evidence_sources e ON e.ref_id = o.ref_id
+   WHERE e.created_by_session = :batch;
+   SELECT ref_id, grey_reason FROM evidence_sources
+   WHERE grey_reason LIKE '%R5-GREY-WARRANTED:%' AND created_by_session = :batch;
+   ```
 
 ## Population match record (per cited study)
 

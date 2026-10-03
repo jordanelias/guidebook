@@ -1,4 +1,4 @@
-# research-contract.yaml — the single source for the R1-R15 research contract.
+# research-contract.yaml — the single source for the research contract.
 #
 # STATUS: OPERATIVE. Adopted per DR-2026-07-25-research-contract-mechanical-enforcement
 # ("RESEARCH IS INVALID IF IT IS NOT COMPLIANT WITH OUR GOVERNANCE AND VERIFICATION
@@ -128,6 +128,25 @@ rules:
       PubMed/Scopus is an INDEXING fact, not an evidence-quality fact.
     anchor: "governance/tier-system.md; DR-2026-05-09"
     enforcer: R5
+    resolution: >-
+      ENFORCER MOVED 2026-10-02 (process-gap remediation plan WP12, I4); hook text
+      unchanged. The enforcer failed a non-English SEARCH targeted 'grey'. A target is
+      what a search sought, not how a source was filed, so it tested a proxy: it could
+      not see a journal article filed grey from any other search, and it pushed batch 23
+      to retarget two searches that genuinely sought grey material to 'co1' to clear the
+      gate. It now fails a non-English ADMISSION filed evidence_type 'grey' that is a
+      journal article (source_type, from the column's own CHECK), names a journal or
+      carries a DOI. The search-target count is printed as a REPORTED line. Known limit:
+      a DOI or journal name marks publication, not peer review, so a non-English grey
+      thesis or report with a repository DOI, or a letter printed in a journal, matches
+      although grey may be right. WAIVER, added in the same PR after its review: such a
+      row is not failed when its grey_reason carries the token `R5-GREY-WARRANTED:`
+      followed by a non-blank reason (written with `db.py amend-source --field
+      grey_reason`, after R1's `CO1-NOT-APPLICABLE: <reason>` precedent). Each waived
+      row is REPORTED by ref_id with its reason, and the adversarial pass reads every one
+      (standing subject 4). A token with nothing after it waives nothing. A non-empty
+      grey_reason alone is not a waiver, because every grey row carries one. A
+      deliberate, narrow loosening, for the owner to confirm.
 
   - id: R6
     phase: when-filing
@@ -147,6 +166,18 @@ rules:
     also_phase: when-filing
     also_hook: >-
       Off-slug or unverified material -> search_candidates (REHOME/MISC/PENDING), not prose.
+    resolution: >-
+      FLOOR REMOVED 2026-10-02 (process-gap remediation plan WP12, I3); hook texts
+      unchanged. The enforcer asserted one registered candidate per 25 screened results.
+      The party being judged types both terms of that ratio, and batch 23 met it by
+      recording rather than searching (screened set equal to found; seven
+      already-screened documents staged after the gate reported short). That weakens R7,
+      and is said so here and in the PR. The enforcer now asserts count integrity only:
+      no search screened more than it found or admitted more than it screened. Candidate
+      and harm counts are REPORTED. The substance of this rule is enforced by RC1
+      (provenance_artefact_audit, blocking: a candidate is checked against the bytes its
+      search returned) and by adversarial standing subject 1 (whether harm and off-slug
+      material reached a row).
 
   - id: R8
     phase: while-searching
@@ -158,6 +189,16 @@ rules:
       unit of work. Never delete or backfill them.
     anchor: "references/project-standards.md; skills/research-log-manager_SKILL.md"
     enforcer: R8
+    resolution: >-
+      STATED HONESTLY 2026-10-02 (process-gap remediation plan WP12, I2). The hook's
+      obligation to write the prior BEFORE the search is unchanged: it is an
+      instruction, not a claim of enforcement. The enforcer tests that empties are kept
+      (no exec_id gap) and does NOT test that a prior preceded its search. log-search
+      writes the prior in the same row and call as the results, so the row exists only
+      after the search ran, and dbcore.now() stamps to the minute; batch 23 wrote its
+      whole log after admission and R8 read PASS. Its PASS line now says so. Until an
+      external timestamp exists, the adversarial pass and the transcript (and the
+      tool-call ledger, for a search it records) are the only witnesses.
 
   - id: R9
     phase: before-admitting
@@ -251,6 +292,27 @@ rules:
       harden into fact.
     anchor: "search_candidates; skills/citation-miner_SKILL.md"
     enforcer: R15
+
+  # R16 added 2026-10-02 for GAP-061 (nothing promoted a harvested term to a parameter, so
+  # every batch was confined to the one parameter that existed). Plan:
+  # scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md, WP11.
+  # The hook sentence is an application of D-0173 and the 2026-08-26 ruling, and goes to the
+  # owner for review in the PR that adds it (DG-REVIEW, governance/decision-protocol.md §2.2).
+  # Enforced as two predicates: R16-adjudicate (every observation on the batch's admissions
+  # has an adjudication) and R16 (every term those adjudications name is a parameter or is
+  # declined). Both are scoped to the batch's ADMISSIONS, as R11-harvest is.
+  - id: R16
+    phase: when-filing
+    title: "Every concept a source states a figure for is disposed of"
+    hook: >-
+      A figure a source states is extracted against a parameter, never left only in
+      prose or a code lead (a lead records where to look; R12 keeps it): observe-term
+      -> adjudicate-term (or add-term) -> add-parameter -> add-extraction. Every phrase
+      observed on this batch's admissions is adjudicated (NOT-OURS and DEFERRED are
+      answers), and every term those adjudications name is a parameter or is declined
+      with its reason (db.py decline-parameter).
+    anchor: "D-0173; owner ruling 2026-08-26 (the parameter is the judgment object); workplan/2026-09-10-batch-06-runbook.md Step 4b"
+    enforcer: R16
 
 # Lines appended verbatim after the phased rules. These are standing invariants
 # rather than per-phase research rules, so they are not numbered.
