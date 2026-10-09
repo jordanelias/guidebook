@@ -187,6 +187,13 @@ R5_WAIVER_TOKEN = "R5-GREY-WARRANTED:"
 # the gate weaker; do that deliberately and say so in the PR, never to make a batch pass.
 # ---------------------------------------------------------------------------------------------
 
+# R16-scan — admissions created on or after this date owe a catalogue-mode reading in a
+# batch run; earlier ones are REPORTED there and counted in --all. Not a threshold of
+# leniency but the day after the reading record and its writer were built (tooling T1,
+# migration 103, 2026-10-09): no batch before it could have recorded a reading. Moving it
+# later forgives more; that is a change to say so in the PR, like every number here.
+R16_SCAN_FROM = "2026-10-10"
+
 # R2 — citation_mining rows expected per admitted tier-1..3 anchor.
 # 1/4 = "mine a meaningful minority of anchors per batch", not "mine everything" (which would
 # stall batches) and not ">0" (which one stub row satisfies forever). Deliberately weak-ish: it is
@@ -967,11 +974,15 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     adj_join = ("FROM term_adjudications a "
                 "JOIN observed_terms o ON o.observation_id = a.observation_id "
                 "JOIN evidence_sources e ON e.ref_id = o.ref_id ")
+    # A REVOKED declination (migration 104, `db.py revoke-declination`) disposes of nothing:
+    # someone decided the term may be a parameter after all, so it is owed a disposition
+    # again. The row stays as history; this predicate reads it as absent.
     undisposed = _rows(cx,
         "SELECT DISTINCT a.term_id " + adj_join +
         "WHERE a.term_id IS NOT NULL "
         "AND NOT EXISTS (SELECT 1 FROM base_parameters p WHERE p.term_id = a.term_id) "
-        "AND NOT EXISTS (SELECT 1 FROM parameter_declinations d WHERE d.term_id = a.term_id)"
+        "AND NOT EXISTS (SELECT 1 FROM parameter_declinations d WHERE d.term_id = a.term_id "
+        "AND d.revoked_at IS NULL)"
         + escope + " ORDER BY a.term_id", sargs)
     n_named = _rows(cx, "SELECT COUNT(DISTINCT a.term_id) " + adj_join +
                     "WHERE a.term_id IS NOT NULL" + escope, sargs)[0][0]
@@ -1000,6 +1011,95 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
             "this asserts nothing" % whose)
            + ". REPORTED, not asserted: %s. A figure stated for a concept never observed "
              "is NOT tested here — adversarial standing subject 4" % unnamed_txt)
+
+    # --- R16-scan: every admission is READ against the whole catalogue ----------------
+    # Added 2026-10-09, tooling T1 (owner approval D8 of catalogue-plan-v2 section 4.2),
+    # for the owner's requirement of the same day: "Slugs guide our searches, but they do
+    # not guide what we derive and mine from sources!" R11-harvest and R16 read rows that
+    # exist; neither can tell a source read against every parameter from one read for the
+    # one parameter its slug was about, which is how GAP-061's figures were lost. The
+    # reading record (source_scans, migration 103) makes the difference a row: each
+    # admission owes at least one CATALOGUE-mode reading (any text scope -- an abstract is
+    # read at abstract scope, and v_scan_ledger shows the difference). A targeted reading
+    # covers one parameter and does not discharge it. A tombstone is never read again
+    # (record-scan refuses one), so a superseded admission is out of the subject.
+    #
+    # GRANDFATHERED BY DATE IN A BATCH RUN, COUNTED IN --all. No reading could be recorded
+    # before source_scans existed, so a batch admitted earlier would fail a rule it could
+    # not have met -- and research_dod_session is BLOCKING on LATEST-RESEARCH (batch 23 when
+    # this landed). Admissions created before R16_SCAN_FROM are therefore REPORTED in a
+    # batch run, not failed; --all counts them all against the baseline, which ratchets
+    # down as the re-reading phase (plan section 7, P3) records their readings. The same
+    # forward-commitment shape as alias_provenance_audit's CUTOFF_SESSION_DATE. A row with
+    # no created_at is treated as owed (stricter, not looser).
+    grandfathered = []
+    if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='source_scans'")[0][0]:
+        cat_read = ("EXISTS (SELECT 1 FROM source_scans s WHERE s.ref_id = e.ref_id "
+                    "AND s.mode = 'catalogue')")
+        live_adm = " AND e.superseded_by_ref_id IS NULL"
+        if allmode:
+            owed_rows = _rows(cx, "SELECT e.ref_id, " + cat_read + " FROM evidence_sources e "
+                              "WHERE 1=1" + live_adm + escope + " ORDER BY e.ref_id", sargs)
+        else:
+            owed_rows = _rows(cx, "SELECT e.ref_id, " + cat_read + " FROM evidence_sources e "
+                              "WHERE COALESCE(e.created_at, '9999') >= ?" + live_adm + escope
+                              + " ORDER BY e.ref_id", (R16_SCAN_FROM,) + sargs)
+            grandfathered = [r[0] for r in _rows(
+                cx, "SELECT e.ref_id FROM evidence_sources e WHERE e.created_at < ? "
+                    "AND NOT " + cat_read + live_adm + escope + " ORDER BY e.ref_id",
+                (R16_SCAN_FROM,) + sargs)]
+        scan_owed = len(owed_rows)
+        missing_reads = [r[0] for r in owed_rows if not r[1]]
+        gf_txt = ("; REPORTED, not asserted: %d admission(s) predate the reading record "
+                  "(created before %s) and carry no catalogue reading: %s -- the re-reading "
+                  "phase owes them" % (len(grandfathered), R16_SCAN_FROM,
+                                       ", ".join(grandfathered[:8]))
+                  if grandfathered else "")
+        if missing_reads:
+            fail("R16-scan",
+                 "%d of %d admission(s) carry no catalogue-mode reading: %s. Read each "
+                 "source against the WHOLE parameter list, whatever slug it came in under, "
+                 "and record it: python3 scripts/research/full_text.py --ref-id R --session "
+                 "S (when a PDF or web page is held), then db.py record-scan --ref-id R "
+                 "--mode catalogue --file-sha256 <sha> --text-scope ... --method full-read%s"
+                 % (len(missing_reads), scan_owed, ", ".join(missing_reads[:8]), gf_txt),
+                 len(missing_reads))
+        else:
+            ok("R16-scan",
+               ("EXAMINED: %d admission(s); every one carries a catalogue-mode reading%s. "
+                "Whether the reading saw everything is NOT tested here -- adversarial "
+                "standing subject 4" % (scan_owed, gf_txt)) if scan_owed else
+               ("EXAMINED: 0 admissions owing a reading, so this asserts nothing%s"
+                % gf_txt))
+    else:
+        ok("R16-scan", "NOT CHECKED: source_scans is absent from this database (pre-103)")
+
+    # --- R17: every admission has a search behind it ----------------------------------
+    # Added 2026-10-09 with R16-scan (catalogue-plan-v2 section 4.2 item 5, critique F12).
+    # `add-source` needs no search, and log-search can only record an admission edge after
+    # the source exists, so a source admitted from a list with no logged search leaves no
+    # coverage record at all (v_coverage_jurisdiction reads search_executions) and no
+    # check flagged it. Batch-scoped here, not a refusal in add-source, because the edge is
+    # written after the admission. The remedy for a list-driven acquisition is
+    # `log-search --origin lead-index ... --admitted-ref-id R`; for an old row,
+    # `link-admission`. Two corpus rows owed it when this landed (derive:
+    # SELECT ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM
+    # search_admissions a WHERE a.ref_id = e.ref_id)); --all counts them against the
+    # baseline, which ratchets down only.
+    orphans = [r[0] for r in _rows(
+        cx, "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM "
+            "search_admissions a WHERE a.ref_id = e.ref_id)" + escope
+            + " ORDER BY e.ref_id", sargs)]
+    if orphans:
+        fail("R17",
+             "%d of %d admission(s) have no search_admissions edge: %s. A source admitted "
+             "with no logged search is invisible to search coverage. Log the search that "
+             "found it (db.py log-search --origin lead-index ... --admitted-ref-id R for a "
+             "list-driven acquisition) or link the one that did (db.py link-admission)"
+             % (len(orphans), n_adm, ", ".join(orphans[:8])), len(orphans))
+    else:
+        ok("R17", "EXAMINED: %d admission(s); every one has a search behind it" % n_adm
+           if n_adm else "EXAMINED: 0 admissions, so this asserts nothing")
 
 
     # --- R12 structured homes used ----------------------------------------------------------
@@ -1334,6 +1434,53 @@ def selftest():
                    "results_admitted,backfill,created_by_session,created_at) "
                    "VALUES (?,'s','en','q','web','scoping','none',?,?,?,0,?,'t')",
                    (eid, found, scr, adm, sess))
+    # R16 and a REVOKED declination (2026-10-09, tooling T1, migration 104). TERM-ST-V's
+    # declination is revoked, so it disposes of nothing and R16 must count the term: R16's
+    # asserted count becomes 2 (TERM-ST-U and TERM-ST-V). Reading every declination row as
+    # a disposition, the pre-104 predicate, gives 1.
+    cx.execute("INSERT INTO terms (term_id,canonical_en,created_at,created_by_session,"
+               "updated_at,updated_by_session) VALUES ('TERM-ST-V','term-st-v','t',?,'t',?)",
+               (T, T))
+    cx.execute("INSERT INTO parameter_declinations (term_id,reason,created_at,"
+               "created_by_session,revoked_at,revoked_by_session,revocation_reason) "
+               "VALUES ('TERM-ST-V','declined, then reconsidered','t',?,'t',?,"
+               "'fixture: revoked (decision: decisions/fixture.md)')", (T, T))
+    cx.execute("INSERT INTO observed_terms (observation_id,ref_id,surface_form,language,"
+               "created_at,created_by_session) VALUES (9,'REF-ST2','phrase 9','EN','t',?)",
+               (T,))
+    cx.execute("INSERT INTO term_adjudications (observation_id,outcome,term_id,rationale,"
+               "created_at,created_by_session) VALUES (9,'NAMES-EXISTING','TERM-ST-V',"
+               "'fixture','t',?)", (T,))
+    # R16-scan and R17 (2026-10-09, tooling T1). Two more admissions in this session:
+    #   REF-ST18  created 2026-01-01, before R16_SCAN_FROM: GRANDFATHERED -- reported by
+    #             R16-scan, never counted; counted by R17 (no edge)
+    #   REF-ST19  a TOMBSTONE (superseded by REF-ST2) WITH an admission edge: out of
+    #             R16-scan's subject, and not counted by R17
+    # plus readings and edges on existing rows:
+    #   REF-ST2   a CATALOGUE-mode reading: discharges R16-scan
+    #   REF-ST3   only a TARGETED reading: does NOT discharge it
+    #   REF-ST4   a catalogue reading in a PRIOR session's admission: out of scope
+    #   REF-ST1   an admission edge: not counted by R17
+    # This session's admissions are ST1-3, ST5, ST5R, ST6-13, ST15-19 (18). R16-scan
+    # counts 15 = 18 - ST19 (tombstone) - ST18 (grandfathered) - ST2 (read). A targeted
+    # reading wrongly discharging gives 14; losing the tombstone clause or the date gives
+    # 16; losing the scope or misreading the reading gives more. R17 counts 16 = 18 - ST1
+    # - ST19; losing escope adds ST4 and ST14 (18). Both rows carry article_number and no
+    # DOI, URL or language, keeping them out of R3, R9-R10b and R5.
+    for ref, created, sup in (("REF-ST18", "2026-01-01 00:00", None),
+                              ("REF-ST19", None, "REF-ST2")):
+        cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,article_number,"
+                   "superseded_by_ref_id,created_at,created_by_session) "
+                   "VALUES (?,6,'code','§1',?,?,?)", (ref, sup, created, T))
+    for ref, mode, target in (("REF-ST2", "catalogue", None), ("REF-ST3", "targeted", 1),
+                              ("REF-ST4", "catalogue", None)):
+        cx.execute("INSERT INTO source_scans (ref_id,mode,catalogue_version,"
+                   "target_parameter_id,text_scope,file_sha256,method,created_at,"
+                   "created_by_session) VALUES (?,?,1,?,'full',?,'full-read','t',?)",
+                   (ref, mode, target, "0" * 64, T))
+    for ref in ("REF-ST1", "REF-ST19"):
+        cx.execute("INSERT INTO search_admissions (exec_id,ref_id,created_at,"
+                   "created_by_session) VALUES (3,?,'t',?)", (ref, T))
     cx.commit(); cx.close()
     # NOTE: inserts above are deliberately NOT wrapped in try/except. If the live schema changes
     # such that this corpus can no longer be built, the selftest must CRASH LOUDLY rather than
@@ -1373,9 +1520,10 @@ def selftest():
     # protect, which is the exact hole the 2026-08-04 note above describes closing.
     # R16 and R16-adjudicate added 2026-10-02 with the rule, with the R9a-style count
     # assertion below: each is seeded to fire exactly once beside rows that must not count.
+    # R16-scan and R17 added 2026-10-09 with the rules (tooling T1), with count assertions.
     expected = {"R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8",
                 "R9", "R9a", "R9b", "R10", "R10b", "R11", "R11-harvest",
-                "R12", "R13", "R14", "R15", "R16", "R16-adjudicate"}
+                "R12", "R13", "R14", "R15", "R16", "R16-adjudicate", "R16-scan", "R17"}
     fired = {c for c, n in caught.items() if n}
     missed = expected - fired
     print()
@@ -1392,13 +1540,22 @@ def selftest():
               f"held identity again; see the status clause in R9a.")
     # NEGATIVE ASSERTIONS (2026-10-02). See the R16 fixture comment for what a count
     # other than 1 means in each predicate.
+    # R16 became 2 on 2026-10-09 with the revoked-declination fixture (TERM-ST-V).
     count_bad = False
-    for rule in ("R16", "R16-adjudicate"):
+    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 15), ("R17", 16)):
         n = caught.get(rule, 0)
-        if n != 1:
+        if n != want:
             count_bad = True
-            print(f"  **{rule} COUNT {n}, EXPECTED 1** — a clause of the predicate has been "
-                  f"dropped or narrowed; see the R16 fixture comment in selftest().")
+            print(f"  **{rule} COUNT {n}, EXPECTED {want}** — a clause of the predicate has "
+                  f"been dropped or narrowed; see the {rule} fixture comment in selftest().")
+    # R16-scan's grandfathered admission is REPORTED, never failed; the tombstone is neither.
+    scan_text = "".join(l for l in report.getvalue().splitlines(True) if "R16-scan:" in l)
+    scan_failed_part, _s, scan_reported_part = scan_text.partition("REPORTED, not asserted:")
+    if ("REF-ST18" not in scan_reported_part or "REF-ST18" in scan_failed_part
+            or "REF-ST19" in scan_text):
+        count_bad = True
+        print("  **R16-scan GRANDFATHERING WRONG** — REF-ST18 must be reported (not failed) "
+              "and the tombstone REF-ST19 must appear nowhere; see the R16-scan fixture.")
     # COUNT ASSERTIONS (2026-10-02, plan WP12). R5 and R7 changed subject; a count of 1 is
     # what the OLD predicates produce on this corpus (each fired once, with no count), so
     # firing alone would have passed the code these replace. See the R5 and R7 fixture
