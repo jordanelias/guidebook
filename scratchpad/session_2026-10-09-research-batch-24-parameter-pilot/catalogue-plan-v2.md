@@ -1053,3 +1053,25 @@ python3 scripts/audit/alias_provenance_audit.py
 | **Q13. Determination re-run.** A PR adding an extraction on a determined parameter without re-running the engine is red on K02. | F14 | Vacuous today (no live determination) | `python3 scripts/tests/test_db_integrity.py` |
 | **Q14. Your words are recorded verbatim.** Each quote in the ledger entry occurs in the transcript (T1 command), and "2" is marked ambiguous. | F8 | Not applicable until P1 | T1 command plus a `grep -F` per quote |
 | **Q15. The nine reach `main` properly.** The PR carrying `data_20261009055057_…` also carries a session record, an attestation and your recorded review. | F11 | **Red today** | `git ls-tree origin/main scripts/migrations/ \| grep 20261009` after merge; `attestation_presence` |
+
+---
+
+## Addendum 2026-10-09 (written after the paper): your answer to D1
+
+This addendum is appended, not edited into the sections above, so the paper still shows what was true when it was written. Sections 3.7, 4.2, 7.6 and 10 are read with this addendum.
+
+**Your words, verbatim:** "D1: yes figure from source filed by another slug allowed. skimmed values are not publishable"
+
+**How it is read (assumptions marked):**
+- **D1(b), yes.** A figure taken from a source filed under another slug may be extracted and may set a published value. Your earlier words, "we still tag it for follow up later" (03:08), were not withdrawn, so the follow-up tag stays. [ASSUMPTION: the tag is still wanted.]
+- **D1(a), no.** "Skimmed" is read as the typed column `extraction_method = 'skim'`. A skimmed extraction may be recorded and shown, marked as skimmed, but may not set a published value. [ASSUMPTION: that is what "skimmed" means to you.]
+- **Not settled (D1c).** Figures that were read in full but are still marked `preliminary` (not yet reviewed): the engine rule below does not exclude them. They keep governing exactly as they do today, and the new follow-up reader lists them. [OPEN: if you want them excluded as well, say so.]
+
+**What this changes in the plan**
+1. Tooling T1 gains the follow-up table described in section 3.7 under reading (b): typed reason, required warrant sentence, who raised it and who resolved it. Its first reason is `read-outside-admitting-purpose`.
+2. Tooling T1 gains one engine rule: the determination engine excludes skimmed extractions from the set that governs a value, and records each as excluded with a reason. The engine already has a way to record an excluded figure with a reason, and the integrity check that every figure is accounted for counts it. Today the engine reads neither `extraction_method` nor `extraction_status` (`grep -c "extraction_status\|extraction_method" scripts/assess/assess_cell.py` gives 0). The rule is the first reader of that column.
+3. D1 is closed except D1c. Section 7.6 ("determine late") no longer waits on D1.
+
+**An opportunity this opens (not scheduled).** 14 extractions are skimmed today, all on parameter 3 (`select count(*) from source_value_extractions where extraction_method='skim'`). They include both of REF-01002's extractions (44, 45) and both of REF-01004's (50, 51), which is why the ramp-gradient cell has been stuck: the one T1 source with a stated maximum is held only as an abstract. Once the rule exists, those rows leave the set that governs the value, so the cell would no longer depend on REF-01002, and the check that blocks a value resting on an unverified source would not be engaged by it. Parameter 3 for wheelchair users could then be determined from the full-read rows (codes, the grey and Co-1 sources, the reviews) without the 2009 study. [INFERRED: the engine has not been run.] The paper schedules determinations after reading debt is zero (section 7.6). You may bring this one forward.
+
+**Still to be recorded.** This answer goes into the ledger verbatim with the other words from section 2.5, in the first pull request that acts on it (P1).
