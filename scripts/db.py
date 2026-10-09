@@ -1722,10 +1722,19 @@ def main():
     p_obs.add_argument("--language", default="EN",
                        help="The language the phrase APPEARS IN, which need not be the "
                             "source's own language")
-    p_obs.add_argument("--locator", help="R3: where in the source it appears")
+    p_obs.add_argument("--locator",
+                       help="R3: where in the source it appears. REQUIRED for a new "
+                            "observation: an observation is one SIGHTING, keyed on the "
+                            "phrase and its place (migration 102)")
     p_obs.add_argument("--context-quote",
-                       help="Enough surrounding text that judgment can adjudicate "
-                            "without re-retrieving the source")
+                       help="REQUIRED for a new observation: the sentence the phrase sits "
+                            "in, verbatim. It must contain the phrase and be found in a "
+                            "file saved FOR this source (scripts/research/full_text.py "
+                            "registers one)")
+    p_obs.add_argument("--verbatim-exempt", dest="verbatim_exempt",
+                       help="Reason no artefact of this source can carry the quote (a page "
+                            "read from an image, say). LEDGERED onto the row's notes, and "
+                            "REFUSED if the quote does verify for this source")
     p_obs.add_argument("--notes")
     p_obs.add_argument("--session", required=True)
     p_obs.add_argument("--dry-run", action="store_true")
@@ -1777,7 +1786,7 @@ def main():
     p_ap.add_argument("--dry-run", action="store_true")
 
     # decline-parameter — the other answer to "is this term a parameter?" (migration 101).
-    # See decline_parameter for its refusals and for why there is no un-decline verb.
+    # See decline_parameter for its refusals; revoke-declination (below) reverses one.
     p_dp = sub.add_parser("decline-parameter",
                           help="Record that a term is NOT a design parameter, and why "
                                "(parameter_declinations)")
@@ -1790,6 +1799,142 @@ def main():
                            "cannot say why cannot be contested.")
     p_dp.add_argument("--session", required=True)
     p_dp.add_argument("--dry-run", action="store_true")
+
+    # Tooling T1 (owner approval D8, 2026-10-09): the reading record, the vocabulary
+    # lifecycle, the catalogue minting route and extraction follow-ups. Each function's
+    # docstring holds its refusals; vocabularies are read from each column's CHECK.
+    p_rsc = sub.add_parser(
+        "record-scan",
+        help="Record one READING of a source against the parameter list (source_scans); "
+             "the catalogue version and page coverage are computed, never typed")
+    p_rsc.add_argument("--ref-id", required=True)
+    p_rsc.add_argument("--mode", required=True,
+                       choices=dbcore.schema_choices("source_scans", "mode"),
+                       help="catalogue: every active parameter up to the computed "
+                            "catalogue version; targeted: one parameter")
+    p_rsc.add_argument("--target-parameter-id", dest="target_parameter_id", type=int,
+                       help="required with --mode targeted, refused otherwise")
+    p_rsc.add_argument("--text-scope", dest="text_scope", required=True,
+                       choices=dbcore.schema_choices("source_scans", "text_scope"),
+                       help="how much of the document the file read holds; 'full' is "
+                            "refused over a PDF and over a text missing pages")
+    p_rsc.add_argument("--file-sha256", dest="file_sha256", required=True,
+                       help="the manifest sha256 of the saved file read; it must be a "
+                            "file the retrieval-log holds for this source")
+    p_rsc.add_argument("--method", required=True,
+                       choices=dbcore.schema_choices("source_scans", "method"))
+    p_rsc.add_argument("--open-pass-done", dest="open_pass_done", action="store_true",
+                       help="the open pass for quantities the catalogue lacks was done")
+    p_rsc.add_argument("--catalogue-version", dest="catalogue_version",
+                       help=argparse.SUPPRESS)   # accepted only to be refused in words
+    p_rsc.add_argument("--notes")
+    p_rsc.add_argument("--session", required=True)
+    p_rsc.add_argument("--dry-run", action="store_true")
+
+    p_rp = sub.add_parser("retire-parameter",
+                          help="Retire a parameter IN PLACE (status retired; reason "
+                               "appended to notes); refused while a live determination or "
+                               "an open gate stands on it")
+    p_rp.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_rp.add_argument("--reason", required=True)
+    p_rp.add_argument("--session", required=True)
+    p_rp.add_argument("--dry-run", action="store_true")
+
+    p_mp = sub.add_parser("merge-parameter",
+                          help="Fold one parameter into another: status merged, "
+                               "merged_into set, every row holding it re-pointed with a "
+                               "dated note, in one transaction")
+    p_mp.add_argument("--from", dest="from_id", type=int, required=True)
+    p_mp.add_argument("--into", dest="into_id", type=int, required=True)
+    p_mp.add_argument("--reason", required=True)
+    p_mp.add_argument("--session", required=True)
+    p_mp.add_argument("--dry-run", action="store_true")
+
+    p_rnt = sub.add_parser("rename-term",
+                           help="Correct a term's canonical name from an observation or an "
+                                "owner ruling; the old name becomes a DEPRECATED alias")
+    p_rnt.add_argument("--term-id", dest="term_id", required=True)
+    p_rnt.add_argument("--canonical-en", dest="canonical_en", required=True)
+    p_rnt.add_argument("--from-observation", dest="from_observation", type=int,
+                       help="an English observation adjudicated to this term whose phrase "
+                            "contains the new name")
+    p_rnt.add_argument("--ruling-quote", dest="ruling_quote",
+                       help="the owner's words, verbatim, found exactly once in "
+                            "references/project-standards.md, containing the new name")
+    p_rnt.add_argument("--reason", required=True)
+    p_rnt.add_argument("--session", required=True)
+    p_rnt.add_argument("--dry-run", action="store_true")
+
+    p_rvd = sub.add_parser("revoke-declination",
+                           help="Revoke a parameter declination (recorded on the row, "
+                                "never deleted); needs a decision reference")
+    p_rvd.add_argument("--term-id", dest="term_id", required=True)
+    p_rvd.add_argument("--reason", required=True)
+    p_rvd.add_argument("--decision-ref", dest="decision_ref", required=True,
+                       help="decisions/DR-....md, or 'references/project-standards.md :: "
+                            "\"<verbatim quote>\"' found once")
+    p_rvd.add_argument("--session", required=True)
+    p_rvd.add_argument("--dry-run", action="store_true")
+
+    p_anp = sub.add_parser("annotate-parameter",
+                           help="Append a dated, attributed line to a parameter's notes "
+                                "(never overwrites)")
+    p_anp.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+    p_anp.add_argument("--note", required=True)
+    p_anp.add_argument("--session", required=True)
+    p_anp.add_argument("--dry-run", action="store_true")
+
+    p_aal = sub.add_parser("add-alias",
+                           help="Record a SOURCE-ATTESTED alias from an adjudicated "
+                                "observation (the phrase, language and jurisdiction are "
+                                "read, not typed)")
+    p_aal.add_argument("--term-id", dest="term_id", required=True)
+    p_aal.add_argument("--observation-id", dest="observation_id", type=int, required=True)
+    p_aal.add_argument("--alias-type", dest="alias_type", required=True,
+                       choices=dbcore.schema_choices("term_aliases", "alias_type"),
+                       help="from the column's CHECK; DEPRECATED is rename-term's")
+    p_aal.add_argument("--session", required=True)
+    p_aal.add_argument("--dry-run", action="store_true")
+
+    p_mtc = sub.add_parser("mint-term-from-catalogue",
+                           help="Mint a term from a PERMITTED catalogue on the owner's "
+                                "approval quoted once in the ledger (owner D3, 2026-10-09)")
+    p_mtc.add_argument("--catalogue", required=True,
+                       choices=dbcore.schema_choices("term_catalogue_origins",
+                                                     "catalogue"))
+    p_mtc.add_argument("--entry-ref", dest="entry_ref", required=True,
+                       help="the entry the name comes from: a registry standard_cited "
+                            "value, a verified-source ref_id, or terms:<TERM-ID> in the "
+                            "pre-reset corpus")
+    p_mtc.add_argument("--canonical-en", dest="canonical_en", required=True)
+    p_mtc.add_argument("--definition", required=True)
+    p_mtc.add_argument("--domain")
+    p_mtc.add_argument("--scope-note", dest="scope_note")
+    p_mtc.add_argument("--approval-quote", dest="approval_quote", required=True,
+                       help="the owner's approving words, verbatim, found exactly once in "
+                            "references/project-standards.md")
+    p_mtc.add_argument("--rationale", required=True)
+    p_mtc.add_argument("--session", required=True)
+    p_mtc.add_argument("--dry-run", action="store_true")
+
+    p_rfu = sub.add_parser("raise-follow-up",
+                           help="Tag an extraction for a reviewer to re-check "
+                                "(extraction_follow_ups; owner D1, 2026-10-09)")
+    p_rfu.add_argument("--extraction-id", dest="extraction_id", type=int, required=True)
+    p_rfu.add_argument("--reason", required=True,
+                       choices=dbcore.schema_choices("extraction_follow_ups", "reason"))
+    p_rfu.add_argument("--warrant", required=True,
+                       help="what a reviewer should re-check, and why")
+    p_rfu.add_argument("--session", required=True)
+    p_rfu.add_argument("--dry-run", action="store_true")
+
+    p_sfu = sub.add_parser("resolve-follow-up",
+                           help="Close an open extraction follow-up with what the re-check "
+                                "found")
+    p_sfu.add_argument("--follow-up-id", dest="follow_up_id", type=int, required=True)
+    p_sfu.add_argument("--resolution", required=True)
+    p_sfu.add_argument("--session", required=True)
+    p_sfu.add_argument("--dry-run", action="store_true")
 
     # add-population-icf-link / raise-determination-gate / resolve-determination-gate —
     # the writers migration 080's two tables shipped without. See the functions for the
@@ -2983,6 +3128,7 @@ def main():
             "ref_id": args.ref_id, "surface_form": args.surface_form,
             "language": args.language, "locator": args.locator,
             "context_quote": args.context_quote, "notes": args.notes,
+            "verbatim_exempt": args.verbatim_exempt,
         }, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-term":
@@ -3017,6 +3163,54 @@ def main():
             session=args.session,
             dry_run=args.dry_run,
         ))
+
+    elif args.command == "record-scan":
+        _emit(record_scan({
+            "ref_id": args.ref_id, "mode": args.mode,
+            "target_parameter_id": args.target_parameter_id,
+            "text_scope": args.text_scope, "file_sha256": args.file_sha256,
+            "method": args.method, "open_pass_done": args.open_pass_done,
+            "catalogue_version": args.catalogue_version, "notes": args.notes,
+        }, session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "retire-parameter":
+        _emit(retire_parameter(args.parameter_id, args.reason, session=args.session,
+                               dry_run=args.dry_run))
+
+    elif args.command == "merge-parameter":
+        _emit(merge_parameter(args.from_id, args.into_id, args.reason,
+                              session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "rename-term":
+        _emit(rename_term(args.term_id, args.canonical_en, args.reason,
+                          session=args.session, from_observation=args.from_observation,
+                          ruling_quote=args.ruling_quote, dry_run=args.dry_run))
+
+    elif args.command == "revoke-declination":
+        _emit(revoke_declination(args.term_id, args.reason, args.decision_ref,
+                                 session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "annotate-parameter":
+        _emit(annotate_parameter(args.parameter_id, args.note, session=args.session,
+                                 dry_run=args.dry_run))
+
+    elif args.command == "add-alias":
+        _emit(add_alias(args.term_id, args.observation_id, args.alias_type,
+                        session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "mint-term-from-catalogue":
+        _emit(mint_term_from_catalogue(
+            args.catalogue, args.entry_ref, args.canonical_en, args.definition,
+            args.approval_quote, args.rationale, session=args.session,
+            domain=args.domain, scope_note=args.scope_note, dry_run=args.dry_run))
+
+    elif args.command == "raise-follow-up":
+        _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
+                              session=args.session, dry_run=args.dry_run))
+
+    elif args.command == "resolve-follow-up":
+        _emit(resolve_follow_up(args.follow_up_id, args.resolution,
+                                session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-icf-code":
         _emit(insert_icf_code(
@@ -5959,6 +6153,27 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
     different stage with its own writer. A single call that could observe and classify
     at once would let the observation be born half-adjudicated, which is precisely the
     presupposition the ruling exists to prevent.
+
+    ONE SIGHTING, NOT ONE PHRASE (migration 102, tooling T1, 2026-10-09). The key was
+    (ref_id, surface_form, language), so a phrase a source uses for two quantities --
+    the ADA's "clear width" at a door clause and at a route clause -- folded its second
+    sighting into the first and the second sense was never judged (critique F3). The key
+    is now the phrase AT A PLACE: a repeat of the same sighting still returns the earlier
+    row with `created: False`; the same phrase at another locator is a new observation.
+
+    A NEW OBSERVATION MUST BE VERIFIABLE (critique F7). The verbatim check had one call
+    site, add-extraction; observations -- the material every term and parameter is minted
+    from -- carried a quote nothing compared with the source. Measured on the plan's 88
+    observations: 34 quotes in the source's own saved text, 37 only in another source's,
+    17 in no saved file. So a NEW observation now requires --locator (the sighting's key)
+    and --context-quote; the phrase must occur inside its own quote; and the quote must be
+    found in a file saved FOR THIS SOURCE (retrieval_log.locate_quote, scoped by ref_id).
+    A hit only in another source's bytes is refused, not passed: it proves the words are
+    in the corpus, not that this source says them. `--verbatim-exempt <reason>` is the
+    recorded route for text no artefact of this source can carry (a page read from an
+    image, say), mirroring add-extraction: ledgered on the row's notes, and refused when
+    the quote DOES verify for this source. Rows written before migration 102 are not
+    re-checked here; scripts/audit/observation_verbatim_audit.py reports them.
     """
     surface = (data.get("surface_form") or "").strip()
     if not surface:
@@ -5968,6 +6183,9 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
             "observe-term does not accept a term_id. Observing that a source uses a "
             "phrase is a fact about the document; deciding whether it names one of our "
             "concepts is judgment, and belongs to `db.py adjudicate-term` (D-0173).")
+    locator = (data.get("locator") or "").strip() or None
+    quote = (data.get("context_quote") or "").strip() or None
+    exempt = (data.get("verbatim_exempt") or "").strip() or None
     with connect(dry_run) as conn:
         ref = dbcore.fold_ref(data.get("ref_id"))
         if not dbcore.exists(conn, "evidence_sources", "ref_id", ref):
@@ -5975,23 +6193,90 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
                 f"ref_id {data.get('ref_id')!r} is not an admitted source. A term is "
                 f"observed IN a source; observe it after the source is filed.")
         _refuse_tombstone(conn, ref, "observe-term")
-        row = {"ref_id": ref, "surface_form": surface,
-               "language": (data.get("language") or "EN").strip().upper(),
-               "locator": data.get("locator"),
-               "context_quote": data.get("context_quote"),
-               "notes": data.get("notes")}
-        row.update(dbcore.stamp_for(conn, "observed_terms", session))
+        language = (data.get("language") or "EN").strip().upper()
         prior = conn.execute(
             "SELECT observation_id FROM observed_terms "
-            "WHERE ref_id=? AND surface_form=? AND language=?",
-            (ref, surface, row["language"])).fetchone()
+            "WHERE ref_id=? AND surface_form=? AND language=? "
+            "AND COALESCE(locator, '') = COALESCE(?, '')",
+            (ref, surface, language, locator)).fetchone()
         if prior:
             return {"observation_id": prior[0], "created": False,
-                    "reason": "this source was already observed using this phrase"}
+                    "reason": "this sighting -- the phrase at this locator in this "
+                              "source -- is already recorded"}
+        if not locator:
+            raise Refusal(
+                "observe-term: --locator is required for a new observation. An observation "
+                "is one SIGHTING, keyed on the phrase AND its place (migration 102); "
+                "without a place a second sense of the same phrase cannot be told from "
+                "the first. Give the clause, section or page as the source numbers it.")
+        if not quote:
+            raise Refusal(
+                "observe-term: --context-quote is required for a new observation: the "
+                "sentence the phrase sits in, verbatim, so judgment can adjudicate it and "
+                "the quote can be checked against the source's saved text (CLAUDE.md "
+                "5(c)).")
+        sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+        import retrieval_log                                      # noqa: E402
+        if retrieval_log.normalise_quote(surface) not in retrieval_log.normalise_quote(quote):
+            raise Refusal(
+                f"observe-term: --surface-form {surface!r} does not occur inside its own "
+                f"--context-quote. The quote is the sighting's evidence; a phrase that is "
+                f"not in it was not seen there. Nothing was written.")
+        marker = _require_scoped_verbatim(quote, ref, "--context-quote",
+                                          f"observe-term {ref}", exempt)
+        notes = (data.get("notes") or "").strip() or None
+        if marker:
+            notes = f"{notes} {marker}" if notes else marker
+        row = {"ref_id": ref, "surface_form": surface, "language": language,
+               "locator": locator, "context_quote": quote, "notes": notes}
+        row.update(dbcore.stamp_for(conn, "observed_terms", session))
         cols = ",".join(row)
         cur = conn.execute(f"INSERT INTO observed_terms ({cols}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
-        return {"observation_id": cur.lastrowid, "created": True}
+        return {"observation_id": cur.lastrowid, "created": True,
+                "verbatim": "exempt" if marker else "scoped"}
+
+
+def _require_scoped_verbatim(text, ref_id, field, context, exempt_reason=None):
+    """Refuse a quote not found in a file saved FOR `ref_id`; or return an exemption marker.
+
+    The scoped sibling of `_require_verbatim`, for observe-term (tooling T1, 2026-10-09).
+    `_require_verbatim` accepts an UNSCOPED hit -- words found in some other source's
+    artefact -- because add-extraction has always accepted it, and tightening that here
+    would change what an extraction may cite. An observation is the material vocabulary
+    is minted from, and the plan measured 37 of 88 resting only on unscoped hits, so
+    this one asks the stronger question and names the remedy for each answer.
+    Returns None when the quote verifies for this source, the ledger marker when an
+    exemption is accepted.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                          # noqa: E402
+    kind, where = retrieval_log.locate_quote(text, ref_id=ref_id)
+    if exempt_reason:
+        if kind == "scoped":
+            raise Refusal(
+                f"{context}: --verbatim-exempt was given, but {field} DOES occur in a file "
+                f"saved for {ref_id} ({where}). Drop the exemption -- it is for text no "
+                f"artefact of this source can carry, not for text that verifies.")
+        tail = f" (the words occur only UNSCOPED: {where.split(' -- ')[0]})" \
+            if kind == "unscoped" else ""
+        return f"[VERBATIM-EXEMPT: {exempt_reason}]{tail}"
+    if kind == "scoped":
+        return None
+    remedy = (f"Register this source's own text under its ref_id and quote from it -- "
+              f"python3 scripts/research/full_text.py --ref-id {ref_id} --session <session> "
+              f"-- or, if no artefact of this source can carry the text (a page read from "
+              f"an image, a document never persisted), pass --verbatim-exempt with the "
+              f"reason, which is ledgered on the row. Nothing was written.")
+    if kind == "unscoped":
+        raise Refusal(
+            f"{context}: {field} is not in any file saved for {ref_id}. The only match -- "
+            f"{where}. A quote found in another source's bytes proves the words are in the "
+            f"corpus, not that {ref_id} says them. {remedy}")
+    raise Refusal(
+        f"{context}: {field} does not occur in any persisted retrieval artefact ({where}). "
+        f"Either the payload was never retrieved and persisted (R10), or the text was "
+        f"typed from memory rather than read off the bytes (CLAUDE.md 5(c)). {remedy}")
 
 
 def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: str,
@@ -6103,11 +6388,7 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
                 f"({clash['canonical_en']!r}). That makes this NAMES-EXISTING, not "
                 f"NAMES-NEW:\n  db.py adjudicate-term --observation-id {from_observation} "
                 f"--outcome NAMES-EXISTING --term-id {clash['term_id']} --rationale ...")
-        # Computed, never stored -- a counter table would be a second home for a fact
-        # the column already states (rule 5). Same discipline as dbcore.next_ref_id.
-        top = conn.execute("SELECT max(CAST(substr(term_id,6) AS INTEGER)) FROM terms "
-                           "WHERE term_id LIKE 'TERM-___'").fetchone()[0] or 0
-        term_id = f"TERM-{top + 1:03d}"
+        term_id = _mint_term_id(conn)
         row = {"term_id": term_id, "canonical_en": canonical_en,
                "definition": definition, "domain": domain, "scope_note": scope_note}
         row.update(dbcore.stamp_for(conn, "terms", session))
@@ -6121,6 +6402,16 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         return {"term_id": term_id, "canonical_en": canonical_en,
                 "adjudication_id": cur.lastrowid, "from_surface_form": obs["surface_form"],
                 "from_ref_id": obs["ref_id"], "dry_run": dry_run}
+
+
+def _mint_term_id(conn) -> str:
+    """The next TERM-NNN. Computed, never stored -- a counter table would be a second
+    home for a fact the column already states (rule 5). Same discipline as
+    dbcore.next_ref_id. One home since 2026-10-09: add-term and mint-term-from-catalogue
+    both mint, and two copies of this arithmetic could disagree on the next id."""
+    top = conn.execute("SELECT max(CAST(substr(term_id,6) AS INTEGER)) FROM terms "
+                       "WHERE term_id LIKE 'TERM-___'").fetchone()[0] or 0
+    return f"TERM-{top + 1:03d}"
 
 
 _MD_CODE = re.compile(r"^MD-[A-Z]+(-[A-Z]+)*$")
@@ -6340,7 +6631,9 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
     * A DECLINED term (`parameter_declinations`, migration 101). Someone judged it not a
       design parameter and said why; promoting it would leave two answers to one
       question. Reversing a declination is a recorded decision, not a promotion, so the
-      refusal names the standing declination and there is no un-decline verb.
+      refusal names the standing declination and the verb that reverses it,
+      `revoke-declination` (migration 104), which needs a decision reference. A REVOKED
+      declination is history and does not block.
     DELIBERATELY NOT REFUSED: a term with no adjudication. The first cut of this writer
     demanded a NAMES-NEW/NAMES-EXISTING row, on the reasoning that a parameter is the
     output of judgment (D-0173). Exercised against a scratch copy, that refusal blocked
@@ -6380,15 +6673,16 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"--canonical-en '...' --rationale '...'")
         declined = conn.execute(
             "SELECT reason, created_at, created_by_session FROM parameter_declinations "
-            "WHERE term_id=?", [term_id]).fetchone()
+            "WHERE term_id=? AND revoked_at IS NULL", [term_id]).fetchone()
         if declined:
             raise Refusal(
                 f"{term_id} ({term['canonical_en']!r}) was DECLINED as a parameter by "
                 f"{declined['created_by_session']} at {declined['created_at']}: "
                 f"{declined['reason']!r}.\n"
                 f"Reversing a declination is a recorded decision "
-                f"(governance/decision-protocol.md) and a compensating migration, not a "
-                f"promotion. Nothing was written.")
+                f"(governance/decision-protocol.md), not a promotion: "
+                f"db.py revoke-declination --term-id {term_id} --reason ... "
+                f"--decision-ref ... first. Nothing was written.")
         if _VALUE_BEARING.search(term["canonical_en"]):
             raise Refusal(
                 f"{term_id} is named {term['canonical_en']!r}, which carries a number, a "
@@ -6453,9 +6747,12 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
     `insert_parameter` gives — the base vocabulary predates observe/adjudicate, and a gate
     on adjudication would make a writer that cannot write.
 
-    DELIBERATELY ABSENT: an un-decline verb. Reversing a declination is a recorded
-    decision and a compensating migration, and nothing reads an un-decline yet (CLAUDE.md
-    §8). `insert_parameter` refuses a declined term and names this row.
+    REVERSING ONE is `revoke-declination` (migration 104, tooling T1): a recorded decision
+    with a decision reference, kept on this row as revoked_* rather than deleting it. Its
+    reader is the cohort's vocabulary review (catalogue-plan-v2 section 3.4).
+    `insert_parameter` refuses a declined, unrevoked term and names this row.
+    KNOWN LIMIT: one row per term (the PRIMARY KEY), so a term whose declination was
+    revoked cannot be declined a second time; this refuses and says so.
     """
     term_id = (term_id or "").strip()
     if not term_id:
@@ -6483,8 +6780,16 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
                 f"Retiring a parameter is a different act on parameter "
                 f"{param['parameter_id']}'s own row, not a declination. Nothing was written.")
         prior = conn.execute(
-            "SELECT reason, created_at, created_by_session FROM parameter_declinations "
-            "WHERE term_id=?", [term_id]).fetchone()
+            "SELECT reason, created_at, created_by_session, revoked_at, revoked_by_session "
+            "FROM parameter_declinations WHERE term_id=?", [term_id]).fetchone()
+        if prior and prior["revoked_at"]:
+            raise Refusal(
+                f"{term_id} ({term['canonical_en']!r}) was declined by "
+                f"{prior['created_by_session']} and that declination was REVOKED by "
+                f"{prior['revoked_by_session']} at {prior['revoked_at']}. The table holds one "
+                f"row per term (its PRIMARY KEY), so a second declination cannot be "
+                f"recorded beside the revoked one; that needs a schema change and a "
+                f"decision, not this verb. Nothing was written.")
         if prior:
             raise Refusal(
                 f"{term_id} ({term['canonical_en']!r}) is already declined, by "
@@ -6568,6 +6873,886 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
         return {"parameter_id": parameter_id, "canonical_en": row["canonical_en"],
                 "accessibility_direction": direction, "direction_rationale": rationale.strip(),
                 "dry_run": dry_run}
+
+
+# --- Tooling T1: the vocabulary lifecycle, the reading record, follow-ups -------------
+# Owner approval 2026-10-09, "D8 approve tooling", of catalogue-plan-v2 section 4.2
+# (scratchpad/session_2026-10-09-research-batch-24-parameter-pilot/), and the owner's D1
+# and D3 answers of the same evening. The catalogue grows from what sources say ("Ensure
+# that we can add and expand parameter catalogue as required based on new information we
+# come across"), and before this block it could only grow: no verb retired, merged,
+# renamed or un-declined a parameter, `merged_into` had no writer, and no verb wrote
+# `term_aliases` at all (critique F5). Every verb below refuses in words before it
+# writes, writes in one transaction, and writes only tables whose INSERT or UPDATE the
+# capture path derives (dbcore.writable_tables reads this module's INSERT literals).
+
+#: Tables holding a parameter_id that merge-parameter deliberately does NOT re-point,
+#: each with its reason. Every OTHER foreign key into base_parameters(parameter_id) is
+#: found from the live schema (PRAGMA foreign_key_list) and re-pointed, so a table added
+#: later is moved by default and can only stay behind by being argued in here -- the
+#: burden-of-proof shape dbcore.NOT_CAPTURED uses for the capture set (CLAUDE.md rule 8).
+_MERGE_KEEPS_HISTORY = {
+    "specifications": (
+        "a determination is computed ON its parameter, and its derivation_sha hashes the "
+        "parameter_id. merge-parameter refuses while either parameter has a LIVE one, so "
+        "what remains is retired history, which stays on the parameter it was computed for "
+        "rather than claiming a subject it never had"),
+    "determination_gates": (
+        "a gate is raised against a parameter; merge-parameter refuses while either "
+        "parameter has an OPEN gate, so what remains is resolved history and stays where "
+        "it was raised"),
+}
+
+#: The prior-version item-code shape CLAUDE.md section 7 warns every grep meets
+#: (`E-08 Corridor Clear Width ...`). The owner's D3 guard is "Screen, then you approve",
+#: and the screen named it: no old item code in a minted name.
+_ITEM_CODE = re.compile(r"\b[A-Z]-[0-9]{2}\b")
+
+_LEDGER = dbcore.REPO_ROOT / "references" / "project-standards.md"
+
+
+def _ledger_quote_count(quote: str) -> int:
+    """How often `quote` occurs in the ledger's substantive prose (RC3 normalisation,
+    SUPERSEDES/BY citation lines excluded) -- the anchor dispose-adversarial-finding's
+    OWNER-RULED disposition and the SUPERSEDES grammar already use."""
+    text = _LEDGER.read_text(encoding="utf-8")
+    return dbcore.count_ledger_quote(dbcore.strip_supersedes_citations(text), quote)
+
+
+def _parameter_row(conn, parameter_id, verb: str):
+    row = conn.execute(
+        "SELECT p.parameter_id, p.term_id, p.status, p.merged_into, p.notes, "
+        "t.canonical_en FROM base_parameters p JOIN terms t ON t.term_id = p.term_id "
+        "WHERE p.parameter_id = ?", (parameter_id,)).fetchone()
+    if row is None:
+        raise Refusal(f"{verb}: parameter_id {parameter_id}: no such parameter.")
+    return row
+
+
+def _refuse_live_work(conn, parameter_id, verb: str):
+    """Refuse while a LIVE determination or an OPEN determination gate stands on it.
+
+    A retirement or a merge changes what the parameter IS. A live determination was
+    computed on it and would silently become a determination of a folded or abandoned
+    subject; an open gate is a question about it that nobody could then answer. Retired
+    determinations and resolved gates are history and do not block.
+    """
+    live = [r[0] for r in conn.execute(
+        "SELECT specification_id FROM specifications WHERE parameter_id = ? "
+        "AND retired_at IS NULL ORDER BY 1", (parameter_id,))]
+    if live:
+        raise Refusal(
+            f"{verb}: parameter {parameter_id} has LIVE determination(s) {live}. A "
+            f"determination was computed on this parameter, and changing what the "
+            f"parameter is would re-point it at a subject it was not computed for. Retire "
+            f"each first (db.py retire-specification --specification-id N --reason ...), "
+            f"then re-run this. Nothing was written.")
+    gates = [r[0] for r in conn.execute(
+        "SELECT gate_id FROM determination_gates WHERE parameter_id = ? "
+        "AND resolved_at IS NULL ORDER BY 1", (parameter_id,))]
+    if gates:
+        raise Refusal(
+            f"{verb}: parameter {parameter_id} has OPEN determination gate(s) {gates}. "
+            f"Resolve each with its rationale first (db.py resolve-determination-gate "
+            f"--gate-id N --rationale ...): an open gate is a question about this "
+            f"parameter that nobody could answer once it is retired or merged. Nothing was "
+            f"written.")
+
+
+def _updated(conn, table: str, session: str, stamp: str) -> dict:
+    """The updated_* columns this table actually has, set to one stamp."""
+    have = set(dbcore.columns(conn, table))
+    return {k: v for k, v in (("updated_at", stamp), ("updated_by_session", session))
+            if k in have}
+
+
+def retire_parameter(parameter_id: int, reason: str, session: str, dry_run: bool = False):
+    """Retire a parameter IN PLACE: status 'retired', the reason appended to its notes.
+
+    Owner ruling 2026-09-16, "retire in place then": no row is deleted and the number is
+    never reissued (base_parameters is AUTOINCREMENT, migration 076). The parameter's
+    extractions, readings and history stay; every reader that lists or counts parameters
+    filters on status (v_scan_ledger, v_value_independence since 104), and the writers
+    already refuse an inactive parameter (add-extraction, raise-determination-gate,
+    assess_cell's validate_parameter).
+
+    REFUSES: a blank reason; a parameter that is not active (retired already, or merged
+    -- its survivor is where work goes); a LIVE determination or an OPEN gate on it.
+    """
+    reason = dbcore.require_reason(
+        reason, f"parameter {parameter_id}",
+        why="A retirement that cannot say why cannot be reviewed or reversed by decision.")
+    with connect(dry_run) as conn:
+        row = _parameter_row(conn, parameter_id, "retire-parameter")
+        if row["status"] != "active":
+            target = f" into {row['merged_into']}" if row["merged_into"] else ""
+            raise Refusal(
+                f"retire-parameter: parameter {parameter_id} ({row['canonical_en']!r}) is "
+                f"already {row['status']}{target}. Nothing was written.")
+        _refuse_live_work(conn, parameter_id, "retire-parameter")
+        stamp = dbcore.now()
+        notes = dbcore.append_dated_note(row["notes"], "RETIRED", session, reason, stamp)
+        sets = {"status": "retired", "notes": notes}
+        sets.update(_updated(conn, "base_parameters", session, stamp))
+        conn.execute("UPDATE base_parameters SET " + ", ".join(f"{k} = ?" for k in sets)
+                     + " WHERE parameter_id = ?", list(sets.values()) + [parameter_id])
+        kept = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
+                            "WHERE parameter_id = ?", (parameter_id,)).fetchone()[0]
+        return {"parameter_id": parameter_id, "canonical_en": row["canonical_en"],
+                "status": "retired", "extractions_kept_as_history": kept,
+                "dry_run": dry_run}
+
+
+def merge_parameter(from_id: int, into_id: int, reason: str, session: str,
+                    dry_run: bool = False):
+    """Fold parameter `from_id` into `into_id`: two names for one quantity become one.
+
+    Sets the folded row to status 'merged' with merged_into = the survivor -- the shape
+    base_parameters' own CHECK has carried since 071 with no writer -- and RE-POINTS
+    every row that holds the folded parameter_id at the survivor, with a dated MERGED
+    line appended to each moved row's notes, in one transaction. The set of tables is
+    READ FROM THE LIVE SCHEMA (every foreign key into base_parameters.parameter_id,
+    including base_parameters.merged_into, so a chain of merges flattens onto the
+    survivor); `_MERGE_KEEPS_HISTORY` is the only exception list, each entry with its
+    reason. A table that holds the id but has no notes column is refused rather than
+    moved silently.
+
+    REFUSES: the same id twice; a blank reason; either parameter not active; a LIVE
+    determination or an OPEN gate on either. K02 then holds the survivor's next
+    determination to every extraction it gained.
+    """
+    if from_id == into_id:
+        raise Refusal("merge-parameter: --from and --into are the same parameter.")
+    reason = dbcore.require_reason(
+        reason, f"merge {from_id} -> {into_id}",
+        why="A merge that cannot say why two names are one quantity cannot be reviewed.")
+    with connect(dry_run) as conn:
+        a = _parameter_row(conn, from_id, "merge-parameter --from")
+        b = _parameter_row(conn, into_id, "merge-parameter --into")
+        for r, side in ((a, "--from"), (b, "--into")):
+            if r["status"] != "active":
+                raise Refusal(
+                    f"merge-parameter {side}: parameter {r['parameter_id']} "
+                    f"({r['canonical_en']!r}) is {r['status']}, not active. Nothing was "
+                    f"written.")
+        _refuse_live_work(conn, from_id, "merge-parameter --from")
+        _refuse_live_work(conn, into_id, "merge-parameter --into")
+        stamp = dbcore.now()
+        line = f"parameter_id {from_id} -> {into_id} (merge-parameter): {reason}"
+        moved, kept = {}, {}
+        tables = [t for (t,) in conn.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name")]
+        for t in tables:
+            for fk in conn.execute(f'PRAGMA foreign_key_list("{t}")').fetchall():
+                if fk[2] != "base_parameters" or (fk[4] or "parameter_id") != "parameter_id":
+                    continue
+                col = fk[3]
+                n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE "{col}" = ?',
+                                 (from_id,)).fetchone()[0]
+                if not n:
+                    continue
+                if t in _MERGE_KEEPS_HISTORY:
+                    kept[f"{t}.{col}"] = n
+                    continue
+                cols = dbcore.columns(conn, t)
+                if "notes" not in cols:
+                    raise Refusal(
+                        f"merge-parameter: {t}.{col} holds {n} row(s) for parameter "
+                        f"{from_id} and the table has no notes column to record the move "
+                        f"on. Moving them silently would leave no trace on the rows; add "
+                        f"the table to _MERGE_KEEPS_HISTORY with its reason, or give it a "
+                        f"notes column, in a tooling PR. Nothing was written.")
+                info = conn.execute(f'PRAGMA table_info("{t}")').fetchall()
+                pk = [r[1] for r in sorted((r for r in info if r[5]), key=lambda r: r[5])]
+                key = pk or ["rowid"]
+                rows = conn.execute(
+                    f'SELECT {", ".join(chr(34) + k + chr(34) for k in key)}, notes '
+                    f'FROM "{t}" WHERE "{col}" = ?', (from_id,)).fetchall()
+                for r in rows:
+                    sets = {col: into_id,
+                            "notes": dbcore.append_dated_note(r["notes"], "MERGED",
+                                                              session, line, stamp)}
+                    sets.update(_updated(conn, t, session, stamp))
+                    try:
+                        conn.execute(
+                            f'UPDATE "{t}" SET ' + ", ".join(f'"{k}" = ?' for k in sets)
+                            + " WHERE " + " AND ".join(f'"{k}" = ?' for k in key),
+                            list(sets.values()) + [r[k] for k in key])
+                    except sqlite3.IntegrityError as exc:
+                        raise Refusal(
+                            f"merge-parameter: re-pointing {t}.{col} collided with a row "
+                            f"the survivor already holds ({exc}). Resolve that row first. "
+                            f"Nothing was written.") from exc
+                moved[f"{t}.{col}"] = len(rows)
+        notes = dbcore.append_dated_note(
+            a["notes"], "MERGED", session,
+            f"merged into parameter {into_id} ({b['canonical_en']!r}): {reason}", stamp)
+        sets = {"status": "merged", "merged_into": into_id, "notes": notes}
+        sets.update(_updated(conn, "base_parameters", session, stamp))
+        conn.execute("UPDATE base_parameters SET " + ", ".join(f"{k} = ?" for k in sets)
+                     + " WHERE parameter_id = ?", list(sets.values()) + [from_id])
+        return {"from": from_id, "into": into_id, "from_name": a["canonical_en"],
+                "into_name": b["canonical_en"], "re_pointed": moved,
+                "kept_as_history": kept, "dry_run": dry_run}
+
+
+def annotate_parameter(parameter_id: int, note: str, session: str, dry_run: bool = False):
+    """Append a dated, attributed line to a parameter's notes. Never overwrites.
+
+    The correction route a wrong note lacked (critique F18: parameter 12's note says "no
+    source adjudication behind it" while TERM-091 carries a NAMES-NEW adjudication). Any
+    status: correcting the record of a retired parameter is still a correction.
+    """
+    note = (note or "").strip()
+    if not note:
+        raise Refusal("annotate-parameter: --note is required and may not be blank.")
+    if " || " in note:
+        raise Refusal("annotate-parameter: --note contains ' || ', the separator every "
+                      "dated line in notes begins with; it would make one annotation read "
+                      "as two. Nothing was written.")
+    with connect(dry_run) as conn:
+        row = _parameter_row(conn, parameter_id, "annotate-parameter")
+        stamp = dbcore.now()
+        sets = {"notes": dbcore.append_dated_note(row["notes"], "ANNOTATED", session,
+                                                  note, stamp)}
+        sets.update(_updated(conn, "base_parameters", session, stamp))
+        conn.execute("UPDATE base_parameters SET " + ", ".join(f"{k} = ?" for k in sets)
+                     + " WHERE parameter_id = ?", list(sets.values()) + [parameter_id])
+        return {"parameter_id": parameter_id, "annotated": True, "dry_run": dry_run}
+
+
+def _alias_language(conn, language: str) -> str:
+    """`language` in the letter case `term_aliases` itself uses, measured, not assumed.
+
+    observed_terms stores 'EN' and term_aliases stores 'en' (catalogue-plan-v2 section
+    1.2 item 4). A phrase observed in 'DE' and an alias in 'de' are the same language,
+    and a primary key that compared them as different would admit the same alias twice.
+    """
+    lo, up = conn.execute(
+        "SELECT SUM(language = lower(language)), SUM(language = upper(language)) "
+        "FROM term_aliases").fetchone()
+    return language.lower() if (lo or 0) >= (up or 0) else language.upper()
+
+
+def _names_term(conn, observation_id: int, term_id: str) -> bool:
+    """Does some adjudication of this observation name this term?"""
+    return conn.execute(
+        "SELECT 1 FROM term_adjudications WHERE observation_id = ? AND term_id = ?",
+        (observation_id, term_id)).fetchone() is not None
+
+
+def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
+                from_observation: int = None, ruling_quote: str = None,
+                dry_run: bool = False):
+    """Correct a term's canonical name, keeping the old one as a DEPRECATED alias.
+
+    `amend-term` refused canonical_en since 2026-09-25 ("a vocabulary decision with
+    callers, not a wording fix"), and no other verb could change it, so an answer-shaped
+    or mis-chosen name was permanent (critique F5; plan section 1.2 item 6: the held ADA
+    text says "turning space" 57 times and "turning circle" none). This is that vocabulary
+    decision, with its warrant required:
+
+      --from-observation N  the new name comes from a phrase a source USES: an English
+                            observation, adjudicated to THIS term, whose surface form
+                            contains the new name (the 2026-09-09 rule, kept by the owner
+                            on 2026-10-09: names come from observed phrases);
+      --ruling-quote "..."  or from the owner's own words, quoted verbatim and found
+                            exactly once in references/project-standards.md, containing
+                            the new name.
+
+    Nothing else moves: parameters, adjudications and extractions point at term_id, so the
+    name is reached, never copied (rule 5). The old name lands in term_aliases as
+    DEPRECATED, marked `curated` for alias_provenance_audit, and the change is recorded as
+    an AMENDED line on scope_note -- the trailer amend-term already writes, so its body
+    split keeps working. No other term may hold the new name, as a name or an alias.
+
+    REFUSES: neither or both warrants; a value-bearing name (_VALUE_BEARING, as add-term);
+    a quote not exactly once in the ledger or not containing the name; an observation that
+    is not English, not adjudicated to this term, or does not contain the name; a name
+    another term holds.
+    """
+    new = (canonical_en or "").strip()
+    if not new:
+        raise Refusal("rename-term: --canonical-en is required: a term is its name.")
+    reason = dbcore.require_reason(reason, term_id)
+    if (from_observation is None) == (not (ruling_quote or "").strip()):
+        raise Refusal(
+            "rename-term: give exactly one warrant for the new name -- --from-observation N "
+            "(a phrase an admitted source uses) or --ruling-quote '<the owner's words>' "
+            "(found once in references/project-standards.md). A name with no warrant is a "
+            "name typed by hand, which the 2026-09-09 rule forbids.")
+    if _VALUE_BEARING.search(new):
+        raise Refusal(
+            f"rename-term: {new!r} carries a number, a comparator or a min/max word, so it "
+            f"states a determination in its own name -- the item-layer defect "
+            f"(DR-2026-08-19 section 1.1). Name the quantity, never its value.")
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                          # noqa: E402
+    if ruling_quote:
+        n = _ledger_quote_count(ruling_quote)
+        if n != 1:
+            raise Refusal(
+                f"rename-term: the --ruling-quote occurs {n} time(s) in the ledger's "
+                f"substantive prose (references/project-standards.md, RC3 normalisation); "
+                f"it must occur exactly once to tie this rename to one ruling.")
+        if new.lower() not in dbcore.normalise_quote_text(ruling_quote).lower():
+            raise Refusal(f"rename-term: the quoted ruling does not contain {new!r}; the "
+                          f"words that authorise a name must say it.")
+    with connect(dry_run) as conn:
+        term = conn.execute("SELECT term_id, canonical_en, scope_note FROM terms "
+                            "WHERE term_id = ?", (term_id,)).fetchone()
+        if term is None:
+            raise Refusal(f"rename-term: {term_id!r}: no such term.")
+        old = term["canonical_en"]
+        if old == new:
+            return {"term_id": term_id, "changed": False, "dry_run": dry_run}
+        clash = conn.execute("SELECT term_id FROM terms WHERE lower(canonical_en) = lower(?) "
+                             "AND term_id <> ?", (new, term_id)).fetchone()
+        if clash:
+            raise Refusal(f"rename-term: {new!r} is already the name of {clash[0]}. Two "
+                          f"terms with one name are one concept twice; that is a merge "
+                          f"(db.py merge-parameter), not a rename. Nothing was written.")
+        aclash = conn.execute("SELECT term_id, alias_type FROM term_aliases "
+                              "WHERE lower(alias) = lower(?) AND term_id <> ?",
+                              (new, term_id)).fetchone()
+        if aclash:
+            raise Refusal(f"rename-term: {new!r} is an alias ({aclash[1]}) of {aclash[0]}. "
+                          f"A name another term answers to would make one phrase point at "
+                          f"two concepts. Nothing was written.")
+        if from_observation is not None:
+            obs = conn.execute("SELECT observation_id, ref_id, surface_form, language "
+                               "FROM observed_terms WHERE observation_id = ?",
+                               (from_observation,)).fetchone()
+            if obs is None:
+                raise Refusal(f"rename-term: observation {from_observation}: no such "
+                              f"observed term.")
+            if (obs["language"] or "").upper() != "EN":
+                raise Refusal(
+                    f"rename-term: observation {from_observation} is in "
+                    f"{obs['language']!r}. canonical_en is the English name; a phrase in "
+                    f"another language is an alias (db.py add-alias), not a canonical name.")
+            if not _names_term(conn, from_observation, term_id):
+                raise Refusal(
+                    f"rename-term: no adjudication of observation {from_observation} names "
+                    f"{term_id}. Judge first that the source's phrase names THIS concept "
+                    f"(db.py adjudicate-term --outcome NAMES-EXISTING --term-id {term_id}), "
+                    f"then rename from it. Nothing was written.")
+            if (retrieval_log.normalise_quote(new)
+                    not in retrieval_log.normalise_quote(obs["surface_form"])):
+                raise Refusal(
+                    f"rename-term: {new!r} is not in the observed phrase "
+                    f"{obs['surface_form']!r}. A name taken from a source is the source's "
+                    f"words. Nothing was written.")
+            warrant = (f"from observation {from_observation} ({obs['surface_form']!r} in "
+                       f"{obs['ref_id']})")
+        else:
+            warrant = f"from the owner's words in the ledger: \"{ruling_quote.strip()}\""
+        stamp = dbcore.now()
+        lang = _alias_language(conn, "EN")
+        why = (f"curated: former canonical_en of {term_id}, renamed to {new!r} by "
+               f"rename-term {warrant}. {reason}")
+        held = conn.execute("SELECT alias_type, notes FROM term_aliases WHERE term_id = ? "
+                            "AND alias = ? AND language = ?",
+                            (term_id, old, lang)).fetchone()
+        if held:
+            sets = {"alias_type": "DEPRECATED",
+                    "notes": dbcore.append_dated_note(held["notes"], "DEPRECATED", session,
+                                                      why, stamp)}
+            sets.update(_updated(conn, "term_aliases", session, stamp))
+            conn.execute("UPDATE term_aliases SET " + ", ".join(f"{k} = ?" for k in sets)
+                         + " WHERE term_id = ? AND alias = ? AND language = ?",
+                         list(sets.values()) + [term_id, old, lang])
+        else:
+            arow = {"term_id": term_id, "alias": old, "language": lang,
+                    "alias_type": "DEPRECATED", "notes": why}
+            arow.update(dbcore.stamp_for(conn, "term_aliases", session))
+            conn.execute(f"INSERT INTO term_aliases ({','.join(arow)}) "
+                         f"VALUES ({','.join('?' * len(arow))})", list(arow.values()))
+        scope = dbcore.append_dated_note(
+            term["scope_note"], _TERM_TRAILER, session,
+            f"canonical_en was '{old}' (rename-term, {warrant}). {reason}", stamp)
+        sets = {"canonical_en": new, "scope_note": scope}
+        sets.update(_updated(conn, "terms", session, stamp))
+        conn.execute("UPDATE terms SET " + ", ".join(f"{k} = ?" for k in sets)
+                     + " WHERE term_id = ?", list(sets.values()) + [term_id])
+        return {"term_id": term_id, "was": old, "now": new, "deprecated_alias": old,
+                "alias_language": lang, "changed": True, "dry_run": dry_run}
+
+
+def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
+              dry_run: bool = False):
+    """Record a SOURCE-ATTESTED alias: a phrase an admitted source uses for this term.
+
+    `term_aliases` had no writer at all (critique F5, missed by the critic: only the 057
+    baseline and a selftest inserted into it), so a new language alias had no sanctioned
+    path. Of 2,382 aliases 1,163 are marked model-generated and 880 predate provenance
+    marking (alias_provenance_audit); aliases are a reading aid, never evidence
+    (catalogue-plan-v2 section 3.9), and this is the route by which source-attested ones
+    grow.
+
+    NOTHING IS TYPED THAT THE MACHINE CAN READ (CLAUDE.md rule 8): the alias IS the
+    observation's surface form, its language is the observation's (in term_aliases' own
+    letter case, measured by _alias_language), and its jurisdiction is the source's. The
+    operator chooses only the alias type, from the column's CHECK.
+
+    REFUSES: an alias type outside the CHECK, or DEPRECATED (rename-term's record); an
+    unknown term or observation; an observation no adjudication names this term with; an
+    observation whose phrase is not inside its quote, or whose quote is not in a file saved
+    for its source (unless the observation carries a recorded VERBATIM-EXEMPT); an alias
+    the term already holds in that language. The notes carry `source-attested`, the
+    provenance marker alias_provenance_audit reads, with the observation and source.
+    """
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "term_aliases", "alias_type", alias_type,
+                              "add-alias --alias-type")
+        if alias_type == "DEPRECATED":
+            raise Refusal("add-alias: DEPRECATED marks a former canonical name, which only "
+                          "rename-term records. A phrase a source uses is a live alias.")
+        if not dbcore.exists(conn, "terms", "term_id", term_id):
+            raise Refusal(f"add-alias: {term_id!r}: no such term.")
+        obs = conn.execute(
+            "SELECT o.observation_id, o.ref_id, o.surface_form, o.language, o.locator, "
+            "o.context_quote, o.notes, e.jurisdiction FROM observed_terms o "
+            "JOIN evidence_sources e ON e.ref_id = o.ref_id WHERE o.observation_id = ?",
+            (observation_id,)).fetchone()
+        if obs is None:
+            raise Refusal(f"add-alias: observation {observation_id}: no such observed term.")
+        if not _names_term(conn, observation_id, term_id):
+            raise Refusal(
+                f"add-alias: no adjudication of observation {observation_id} names "
+                f"{term_id}. An alias says the source's phrase names THIS concept, which is "
+                f"a judgement: db.py adjudicate-term --observation-id {observation_id} "
+                f"--outcome NAMES-EXISTING --term-id {term_id} --rationale ... first.")
+        sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+        import retrieval_log                                      # noqa: E402
+        quote = obs["context_quote"] or ""
+        if (not quote.strip() or retrieval_log.normalise_quote(obs["surface_form"])
+                not in retrieval_log.normalise_quote(quote)):
+            raise Refusal(
+                f"add-alias: observation {observation_id} carries no context quote that "
+                f"contains its phrase, so nothing attests the phrase was seen. Observe the "
+                f"sighting again with --locator and --context-quote (db.py observe-term), "
+                f"adjudicate it, and alias from that observation.")
+        exempt = "[VERBATIM-EXEMPT:" in (obs["notes"] or "")
+        kind, where = retrieval_log.locate_quote(quote, ref_id=obs["ref_id"])
+        if kind != "scoped" and not exempt:
+            raise Refusal(
+                f"add-alias: observation {observation_id}'s quote is not in a file saved for "
+                f"{obs['ref_id']} ({where}), so 'source-attested' would be untrue. Register "
+                f"the source's text (scripts/research/full_text.py) and observe the sighting "
+                f"from it, or record why no artefact can carry it (observe-term "
+                f"--verbatim-exempt). Nothing was written.")
+        lang = _alias_language(conn, obs["language"] or "EN")
+        held = conn.execute("SELECT alias_type FROM term_aliases WHERE term_id = ? "
+                            "AND alias = ? AND language = ?",
+                            (term_id, obs["surface_form"], lang)).fetchone()
+        if held:
+            raise Refusal(f"add-alias: {term_id} already holds {obs['surface_form']!r} "
+                          f"({lang}) as {held[0]}. Nothing was written.")
+        others = [r[0] for r in conn.execute(
+            "SELECT DISTINCT term_id FROM term_aliases WHERE alias = ? AND language = ? "
+            "AND term_id <> ?", (obs["surface_form"], lang, term_id))]
+        note = (f"source-attested: observation {observation_id}, {obs['ref_id']} at "
+                f"{obs['locator']!r}; " + (f"quote verified in {where.split(',')[0]}"
+                                          if kind == "scoped" else
+                                          "the observation's quote is VERBATIM-EXEMPT"))
+        row = {"term_id": term_id, "alias": obs["surface_form"], "language": lang,
+               "alias_type": alias_type, "jurisdiction": obs["jurisdiction"],
+               "notes": note}
+        row.update(dbcore.stamp_for(conn, "term_aliases", session))
+        conn.execute(f"INSERT INTO term_aliases ({','.join(row)}) "
+                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        return {"term_id": term_id, "alias": obs["surface_form"], "language": lang,
+                "alias_type": alias_type, "jurisdiction": obs["jurisdiction"],
+                "also_an_alias_of": others, "dry_run": dry_run}
+
+
+def _decision_reference(ref: str) -> str:
+    """A decision reference that resolves, or a Refusal naming the two accepted forms.
+
+    Either a decision record under decisions/ that exists, or an owner ruling quoted
+    exactly once in the ledger, written `references/project-standards.md :: "<quote>"`
+    (the form dispose-adversarial-finding's OWNER-RULED disposition reads).
+    """
+    ref = (ref or "").strip()
+    m = re.match(r'^references/project-standards\.md :: "(.+)"$', ref, re.S)
+    if m:
+        n = _ledger_quote_count(m.group(1))
+        if n != 1:
+            raise Refusal(f"--decision-ref: the quote occurs {n} time(s) in the ledger's "
+                          f"substantive prose; it must occur exactly once.")
+        return ref
+    path = dbcore.resolve_under(dbcore.REPO_ROOT / "decisions", ref) if ref else None
+    if path is not None and path.is_file():
+        return ref
+    raise Refusal(
+        "--decision-ref must name the decision that reverses the declination: a decision "
+        "record that exists under decisions/ (decisions/DR-....md), or an owner ruling as "
+        "'references/project-standards.md :: \"<verbatim quote>\"', found once. Reversing "
+        "a declination is a recorded decision (governance/decision-protocol.md), not an "
+        f"edit. Got {ref!r}.")
+
+
+def revoke_declination(term_id: str, reason: str, decision_ref: str, session: str,
+                       dry_run: bool = False):
+    """Revoke a declination: the term may be promoted after all. The row stays.
+
+    Migration 101 shipped no un-decline verb, "nothing reads an un-decline yet". The
+    reader now exists: the cohort's vocabulary review (catalogue-plan-v2 section 3.4),
+    which may find a declined term is a quantity after all. Retire in place (owner
+    2026-09-16): revoked_at / revoked_by_session / revocation_reason are set (migration
+    104) and every reader treats a revoked declination as absent -- add-parameter's
+    declined-term refusal, research_batch_dod R16's 'disposed', the adversarial skill's
+    declination query.
+
+    REFUSES: a blank reason; a decision reference that does not resolve
+    (_decision_reference); a term with no declination; one already revoked.
+    KNOWN LIMIT, stated: one declination row per term (the PRIMARY KEY), so a revoked
+    declination cannot be followed by a second one; decline-parameter says so.
+    """
+    reason = dbcore.require_reason(
+        reason, term_id, why="A revocation that cannot say why cannot be contested.")
+    ref = _decision_reference(decision_ref)
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT reason, created_by_session, revoked_at, "
+                           "revoked_by_session FROM parameter_declinations "
+                           "WHERE term_id = ?", (term_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"revoke-declination: {term_id} is not declined. Nothing was "
+                          f"written.")
+        if row["revoked_at"]:
+            raise Refusal(f"revoke-declination: {term_id}'s declination was already "
+                          f"revoked by {row['revoked_by_session']} at {row['revoked_at']}. "
+                          f"Nothing was written.")
+        stamp = dbcore.now()
+        conn.execute("UPDATE parameter_declinations SET revoked_at = ?, "
+                     "revoked_by_session = ?, revocation_reason = ? WHERE term_id = ?",
+                     (stamp, session, f"{reason} (decision: {ref})", term_id))
+        return {"term_id": term_id, "revoked": True, "declination_was": row["reason"],
+                "decision": ref, "dry_run": dry_run}
+
+
+def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
+    """Prove `entry_ref` names an entry in the catalogue file; return how it resolved.
+
+    The catalogue value IS the file path (term_catalogue_origins' CHECK), so this reads
+    the file the CHECK names, dispatching on its format. A format with no resolver here
+    is refused: adding a catalogue is a schema change and an owner ruling, and its
+    resolver arrives with it.
+    """
+    path = dbcore.REPO_ROOT / catalogue
+    if not path.is_file():
+        raise Refusal(f"--catalogue {catalogue!r}: the file is not in this checkout.")
+    if path.suffix == ".md":
+        needle = f'standard_cited: "{entry_ref}"'
+        if needle not in path.read_text(encoding="utf-8"):
+            raise Refusal(f"--entry-ref {entry_ref!r}: no registry entry in {catalogue} "
+                          f"reads {needle}. Give the entry's standard_cited value exactly.")
+        return f"{catalogue} {needle}"
+    if path.suffix == ".json":
+        entries = json.loads(path.read_text(encoding="utf-8"))
+        if not any(isinstance(e, dict) and e.get("ref_id") == entry_ref for e in entries):
+            raise Refusal(f"--entry-ref {entry_ref!r}: no entry in {catalogue} has that "
+                          f"ref_id. Give the entry's ref_id exactly.")
+        return f"{catalogue} ref_id {entry_ref}"
+    if path.suffix == ".db":
+        m = re.fullmatch(r"terms:(TERM-\d+)", entry_ref)
+        if not m:
+            raise Refusal(
+                f"--entry-ref {entry_ref!r}: the pre-reset corpus is a permitted catalogue "
+                f"for its TERMS only, written terms:<TERM-ID>. The owner selected 'Old "
+                f"corpus terms' on 2026-10-09; the old Part 4 item names were offered and "
+                f"not selected, and the item layer stays deleted (2026-09-01).")
+        con = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
+        try:
+            hit = con.execute("SELECT canonical_en FROM terms WHERE term_id = ?",
+                              (m.group(1),)).fetchone()
+        finally:
+            con.close()
+        if hit is None:
+            raise Refusal(f"--entry-ref {entry_ref!r}: no such term in {catalogue}.")
+        return f"{catalogue} {entry_ref} ({hit[0]!r})"
+    raise Refusal(f"--catalogue {catalogue!r}: no resolver for a {path.suffix} catalogue. "
+                  f"Adding a catalogue is a schema change and an owner ruling, and its "
+                  f"resolver comes with it.")
+
+
+def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
+                             definition: str, approval_quote: str, rationale: str,
+                             session: str, domain: str = None, scope_note: str = None,
+                             dry_run: bool = False):
+    """Mint a term from a PERMITTED catalogue on the owner's recorded approval.
+
+    THE OWNER'S D3 ANSWER, 2026-10-09. "D3 keep the rule" (names that come out of
+    research come from observed phrases, add-term --from-observation), then "D3 for
+    parameter terms? it can be pulled from previous catalogues of entries for
+    prepopulating", and, from listed options, the catalogues "Code and standards
+    registries" and "Old corpus terms" (NOT the old Part 4 item names) and the guard
+    "Screen, then you approve". insert_term refuses to mint without an observation, so
+    this is the second route, and it is narrow by construction:
+
+      SCREEN: canonical_en with no digit, comparator or min/max word (_VALUE_BEARING, the
+      add-term guard) and no [A-Z]-NN item code; a definition with no value either; not a
+      name or alias any term already holds; and an entry_ref that resolves inside the
+      catalogue file (_resolve_catalogue_entry).
+      APPROVE: the owner's approving words, verbatim, occurring EXACTLY ONCE in
+      references/project-standards.md, so the approval is mechanically tied to one
+      ledger entry rather than asserted.
+
+    The term and its term_catalogue_origins row land in one transaction. No adjudication
+    row is written: there is no observation to adjudicate, and the origin row is this
+    term's provenance instead. validate_parameters P2 re-checks the approval quote.
+    """
+    canonical_en = (canonical_en or "").strip()
+    definition = (definition or "").strip()
+    entry_ref = (entry_ref or "").strip()
+    approval_quote = (approval_quote or "").strip()
+    rationale = (rationale or "").strip()
+    for flag, val in (("--canonical-en", canonical_en), ("--definition", definition),
+                      ("--entry-ref", entry_ref), ("--approval-quote", approval_quote),
+                      ("--rationale", rationale)):
+        if not val:
+            raise Refusal(f"mint-term-from-catalogue: {flag} is required and may not be "
+                          f"blank.")
+    if _ITEM_CODE.search(canonical_en) or _ITEM_CODE.search(entry_ref):
+        raise Refusal(
+            f"mint-term-from-catalogue: {canonical_en!r} / {entry_ref!r} carries an old "
+            f"item code ([A-Z]-NN). The old Part 4 item names are not a permitted catalogue "
+            f"(owner 2026-10-09), and the item layer was deleted because a container named "
+            f"for its answer biases every finding filed into it (2026-09-01).")
+    for flag, val in (("--canonical-en", canonical_en), ("--definition", definition)):
+        if _VALUE_BEARING.search(val):
+            raise Refusal(
+                f"mint-term-from-catalogue: {flag} {val!r} carries a number, a comparator "
+                f"or a min/max word. The owner asked for 'cleaned parameters without "
+                f"values': name and define the quantity, never its value.")
+    n = _ledger_quote_count(approval_quote)
+    if n != 1:
+        raise Refusal(
+            f"mint-term-from-catalogue: the --approval-quote occurs {n} time(s) in the "
+            f"ledger's substantive prose (references/project-standards.md). It must occur "
+            f"exactly once, so the approval is tied to one recorded ruling. Record the "
+            f"owner's approving words in the ledger first (CLAUDE.md rule 0).")
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "term_catalogue_origins", "catalogue", catalogue,
+                              "mint-term-from-catalogue --catalogue")
+        resolved = _resolve_catalogue_entry(catalogue, entry_ref)
+        clash = conn.execute("SELECT term_id FROM terms WHERE lower(canonical_en) = lower(?)",
+                             (canonical_en,)).fetchone()
+        if clash:
+            raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is already "
+                          f"{clash[0]}. Nothing was written.")
+        aclash = conn.execute("SELECT term_id, alias_type FROM term_aliases "
+                              "WHERE lower(alias) = lower(?)", (canonical_en,)).fetchone()
+        if aclash:
+            raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is an alias "
+                          f"({aclash[1]}) of {aclash[0]}: the concept is held. Nothing was "
+                          f"written.")
+        term_id = _mint_term_id(conn)
+        row = {"term_id": term_id, "canonical_en": canonical_en, "definition": definition,
+               "domain": (domain or "").strip() or None,
+               "scope_note": (scope_note or "").strip() or None}
+        row.update(dbcore.stamp_for(conn, "terms", session))
+        conn.execute(f"INSERT INTO terms ({','.join(row)}) "
+                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        origin = {"term_id": term_id, "catalogue": catalogue, "entry_ref": entry_ref,
+                  "approval_quote": approval_quote, "rationale": rationale}
+        origin.update(dbcore.stamp_for(conn, "term_catalogue_origins", session))
+        conn.execute(f"INSERT INTO term_catalogue_origins ({','.join(origin)}) "
+                     f"VALUES ({','.join('?' * len(origin))})", list(origin.values()))
+        return {"term_id": term_id, "canonical_en": canonical_en, "catalogue": catalogue,
+                "entry": resolved, "dry_run": dry_run}
+
+
+def record_scan(data: dict, session: str, dry_run: bool = False):
+    """Record one READING of one source against the parameter list (migration 103).
+
+    The scan contract (catalogue-plan-v2 section 3; owner 2026-10-09: "Slugs guide our
+    searches, but they do not guide what we derive and mine from sources!"): every
+    admitted source is read against the whole catalogue, and each reading leaves this
+    record, from which v_scan_ledger derives, for every (source, active parameter):
+    EXTRACTED, STATED-ABSENT, READ-NOTHING-FOUND, READ-PARTIAL or NOT-READ.
+
+    COMPUTED, NEVER TYPED (CLAUDE.md rule 8): `catalogue_version` is the highest
+    parameter_id at call time (ids are never reissued, so it says exactly which parameters
+    the reading could have covered), and pages read / pages total come from the file's
+    own page markers (retrieval_log.page_coverage) and, for a text derived from a PDF,
+    the PDF's page count.
+
+    REFUSES: a typed catalogue version; an unknown or superseded source (a tombstone is
+    never read again); a mode, scope or method outside the column's CHECK; a targeted
+    reading with no target, or a target that is not active; a catalogue reading when no
+    parameter exists; a --file-sha256 that is not a file the retrieval-log manifests hold
+    for this source, or whose bytes on disk no longer hash to it; `full` over a PDF (what
+    was read of a PDF is not knowable from the file: derive its text with
+    scripts/research/full_text.py and read that) and `full` over a text with fewer pages
+    than the document it was derived from.
+    """
+    if data.get("catalogue_version") is not None:
+        raise Refusal(
+            "record-scan: the catalogue version is COMPUTED, never typed -- it is the "
+            "highest parameter_id when the reading is recorded (CLAUDE.md rule 8). A typed "
+            "one could claim a reading covered parameters it never saw. Drop "
+            "--catalogue-version. Nothing was written.")
+    sha = (data.get("file_sha256") or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", sha):
+        raise Refusal("record-scan: --file-sha256 must be the full sha256 (64 hex "
+                      "characters) of the saved file read, as the manifest records it.")
+    mode = data.get("mode")
+    target = data.get("target_parameter_id")
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
+    import retrieval_log                                          # noqa: E402
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(data.get("ref_id"))
+        src = conn.execute("SELECT ref_id, url FROM evidence_sources WHERE ref_id = ?",
+                           (ref,)).fetchone()
+        if src is None:
+            raise Refusal(f"record-scan: {data.get('ref_id')!r} is not an admitted source.")
+        _refuse_tombstone(conn, ref, "record-scan")
+        for col, flag in (("mode", "--mode"), ("text_scope", "--text-scope"),
+                          ("method", "--method")):
+            dbcore.check_declared(conn, "source_scans", col, data.get(col),
+                                  f"record-scan {flag}")
+        top = conn.execute("SELECT MAX(parameter_id) FROM base_parameters").fetchone()[0]
+        if top is None:
+            raise Refusal("record-scan: base_parameters holds no rows, so there is no "
+                          "catalogue to read a source against.")
+        if mode == "targeted":
+            if target is None:
+                raise Refusal("record-scan: --mode targeted needs --target-parameter-id, "
+                              "the one parameter this reading looked for.")
+            prow = conn.execute("SELECT status FROM base_parameters WHERE parameter_id = ?",
+                                (target,)).fetchone()
+            if prow is None or prow["status"] != "active":
+                raise Refusal(f"record-scan: --target-parameter-id {target} is "
+                              f"{'not a parameter' if prow is None else prow['status']}; a "
+                              f"reading is for an active parameter.")
+        elif target is not None:
+            raise Refusal("record-scan: --target-parameter-id is for --mode targeted; a "
+                          "catalogue reading covers every active parameter up to the "
+                          "catalogue version.")
+        held = retrieval_log.artefacts_for_source(ref, src["url"])
+        match = [h for h in held if (h["sha256"] or "").lower() == sha]
+        if not match:
+            listed = "; ".join(f"{h['artefact']} {(h['sha256'] or '?')[:16]} ({h['via']})"
+                               for h in held) or "nothing"
+            raise Refusal(
+                f"record-scan: no file saved for {ref} has sha256 {sha[:16]}... The reading "
+                f"must name bytes the retrieval-log holds FOR this source. Saved for it: "
+                f"{listed}. Nothing was written.")
+        h = next((m for m in match if m["exists"]), match[0])
+        if not h["exists"]:
+            raise Refusal(f"record-scan: {h['session']}/{h['artefact']} is in the manifest "
+                          f"but not on disk. Nothing was written.")
+        import hashlib                                            # noqa: E402
+        if hashlib.sha256(h["path"].read_bytes()).hexdigest() != sha:
+            raise Refusal(f"record-scan: {h['session']}/{h['artefact']} no longer hashes "
+                          f"to its manifest sha256. Nothing was written.")
+        pages_read, pages_total = retrieval_log.page_coverage(h["path"])
+        if h["derived"] and h["derived_from"] and pages_read is not None:
+            sd, srec = retrieval_log._find_artefact(
+                h["derived_from"], prefer_dir=retrieval_log.LOG_ROOT / h["session"])
+            if srec is not None and srec["artefact"].lower().endswith(".pdf"):
+                held_pages = retrieval_log.pdf_page_count(sd / srec["artefact"])
+                if held_pages:
+                    pages_total = max(pages_total or 0, held_pages)
+        scope = data.get("text_scope")
+        if scope == "full":
+            if h["path"].suffix.lower() == ".pdf":
+                raise Refusal(
+                    f"record-scan: --text-scope full over a PDF ({h['artefact']}, "
+                    f"{pages_total or '?'} pages): what was read of a PDF is not knowable "
+                    f"from the file. Derive its text first -- python3 "
+                    f"scripts/research/full_text.py --ref-id {ref} --session {session} -- "
+                    f"and record the reading of that. Nothing was written.")
+            if pages_read is not None and pages_total and pages_read < pages_total:
+                raise Refusal(
+                    f"record-scan: --text-scope full, but {h['artefact']} carries "
+                    f"{pages_read} of {pages_total} pages. Record it as partial, or derive "
+                    f"every page (scripts/research/full_text.py) and read that. Nothing "
+                    f"was written.")
+        row = {"ref_id": ref, "mode": mode, "catalogue_version": top,
+               "target_parameter_id": target, "text_scope": scope,
+               "pages_read": pages_read, "pages_total": pages_total,
+               "file_sha256": sha, "open_pass_done": 1 if data.get("open_pass_done") else 0,
+               "method": data.get("method"),
+               "notes": (data.get("notes") or "").strip() or None}
+        row.update(dbcore.stamp_for(conn, "source_scans", session))
+        cur = conn.execute(f"INSERT INTO source_scans ({','.join(row)}) "
+                           f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        return {"scan_id": cur.lastrowid, "ref_id": ref, "catalogue_version": top,
+                "file": f"{h['session']}/{h['artefact']}", "pages_read": pages_read,
+                "pages_total": pages_total, "text_scope": scope, "dry_run": dry_run}
+
+
+def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
+                    dry_run: bool = False):
+    """Tag an extraction for a reviewer to re-check (migration 105).
+
+    The owner's D1 answer, 2026-10-09: a figure from a source filed under another slug may
+    set a published value, "but we still tag it for follow up later". Nothing can derive
+    that a figure was read outside the purpose its source was admitted for (no
+    slug-to-parameter map exists, and building one would be curation), so it is a
+    judgement with a required warrant. The plan's caution stands: under the scan contract
+    most whole-code figures are "from another slug", so tag only what a reviewer should
+    re-check against the parameter's own literature, and say why.
+
+    REFUSES: a reason outside the column's CHECK; a blank warrant; an unknown extraction;
+    a second OPEN follow-up for the same (extraction, reason), naming the open one.
+    """
+    warrant = (warrant or "").strip()
+    if not warrant:
+        raise Refusal("raise-follow-up: --warrant is required: what a reviewer should "
+                      "re-check, and why. A tag with no reason cannot be acted on.")
+    with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "extraction_follow_ups", "reason", reason,
+                              "raise-follow-up --reason")
+        if not dbcore.exists(conn, "source_value_extractions", "extraction_id",
+                             extraction_id):
+            raise Refusal(f"raise-follow-up: extraction {extraction_id}: no such "
+                          f"extraction.")
+        prior = conn.execute(
+            "SELECT follow_up_id, raised_by_session FROM extraction_follow_ups "
+            "WHERE extraction_id = ? AND reason = ? AND resolved_at IS NULL",
+            (extraction_id, reason)).fetchone()
+        if prior:
+            raise Refusal(f"raise-follow-up: extraction {extraction_id} already has open "
+                          f"follow-up {prior[0]} ({reason}, raised by {prior[1]}). "
+                          f"Nothing was written.")
+        stamp = dbcore.now()
+        cur = conn.execute(
+            "INSERT INTO extraction_follow_ups (extraction_id, reason, warrant, raised_at, "
+            "raised_by_session) VALUES (?, ?, ?, ?, ?)",
+            (extraction_id, reason, warrant, stamp, session))
+        return {"follow_up_id": cur.lastrowid, "extraction_id": extraction_id,
+                "reason": reason, "dry_run": dry_run}
+
+
+def resolve_follow_up(follow_up_id: int, resolution: str, session: str,
+                      dry_run: bool = False):
+    """Close an open follow-up with what the re-check found. The row stays as history.
+
+    REFUSES: a blank resolution; an unknown follow-up; one already resolved.
+    """
+    resolution = (resolution or "").strip()
+    if not resolution:
+        raise Refusal("resolve-follow-up: --resolution is required: what the re-check "
+                      "found. A follow-up closed with no reason was closed by nobody.")
+    with connect(dry_run) as conn:
+        row = conn.execute("SELECT resolved_at, resolved_by_session FROM "
+                           "extraction_follow_ups WHERE follow_up_id = ?",
+                           (follow_up_id,)).fetchone()
+        if row is None:
+            raise Refusal(f"resolve-follow-up: follow-up {follow_up_id}: no such row.")
+        if row["resolved_at"]:
+            raise Refusal(f"resolve-follow-up: follow-up {follow_up_id} was resolved by "
+                          f"{row['resolved_by_session']} at {row['resolved_at']}. Nothing "
+                          f"was written.")
+        stamp = dbcore.now()
+        conn.execute("UPDATE extraction_follow_ups SET resolved_at = ?, "
+                     "resolved_by_session = ?, resolution = ? WHERE follow_up_id = ?",
+                     (stamp, session, resolution, follow_up_id))
+        return {"follow_up_id": follow_up_id, "resolved": True, "dry_run": dry_run}
 
 
 # --- H3/H4: the two tables migration 080 created ---------------------------------
