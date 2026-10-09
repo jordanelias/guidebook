@@ -864,6 +864,8 @@ Only preferences, not hard dependencies:
 - `select count(*) from evidence_sources where created_by_session='session_2026-10-01-research-batch-23'` → 14
 - `ls retrieval-log/session_2026-10-01-research-batch-23 | wc -l` → 68
 
+> **SUPERSEDED IN PART 2026-10-09** by the owner statements recorded in `references/project-standards.md` ("Owner statements 2026-10-09"): "is replaced by the scan contract above". The sentence above is left as written.
+
 **Gating.** A session with no searches and no admissions fails R1, R9a and R9b (correction 9). The pilot therefore:
 - has its own stem (for example `session_2026-10-0X-research-batch-24-parameter-pilot`), set in `scratchpad/CURRENT` with a folder of the identical name (CLAUDE.md §7);
 - moves `sessions/LATEST` at close, and **does not move `sessions/LATEST-RESEARCH`**;
@@ -909,6 +911,8 @@ PY
    - the locator flags.
 7. `relate-extraction --from E --relation condition_on --to-extraction E2` for every `condition` row. `extraction_relations_integrity` requires it.
 
+> **SUPERSEDED IN PART 2026-10-09** by the owner statements recorded in `references/project-standards.md` ("Owner statements 2026-10-09"): "Observation is no longer limited to phrases that carry a figure". The sentence above is left as written.
+
 **Then:**
 - capture and apply;
 - `python3 scripts/audit/research_batch_dod.py --session session_2026-10-01-research-batch-23`: COMPLIANT, with R16 and R16-adjudicate EXAMINED above their pre-pilot values;
@@ -925,6 +929,8 @@ PY
 **Row budget.** These numbers are discretionary; they are stated so they can be audited.
 - **New parameters ≤ 4.** This is the number the session record's §4.5 scratch experiment promoted without tripping a content check (`grep -n 'promoting door width' sessions/session_2026-10-01-research-batch-23.md`). Count with `select count(*) from base_parameters where created_by_session='<pilot stem>'`.
 - **Extractions ≤ 2 × batch 23's.** `select count(*) from source_value_extractions where created_by_session='session_2026-10-01-research-batch-23'` → 30, so the cap is 60.
+
+> **SUPERSEDED IN PART 2026-10-09** by the owner statements recorded in `references/project-standards.md` ("Owner statements 2026-10-09"): "is withdrawn; the review unit is one source". The sentence above is left as written.
 
 **Stop conditions:**
 - the budget is reached;

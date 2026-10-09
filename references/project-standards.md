@@ -4363,3 +4363,52 @@ member.
 ACTION: (1) Read this entry as that authority. (2) Declaring `UG` licenses no research; the
 2026-09-28 ruling, not the enum, sets research scope.
 DATE: 2026-10-01 — owner approval, quoted above.
+
+## Owner statements 2026-10-09 — every source is scanned for every parameter; the parameter list is seeded from the existing terms; the catalogue plan, its critique and its tooling
+
+Given in the session https://claude.ai/code/session_01DYqutJg8mWCGUQvqKzqAeM and recorded on contact per `CLAUDE.md` rule 0. Each statement is quoted verbatim beside what it answered; times are UTC. The questions are in `scratchpad/session_2026-10-09-research-batch-24-parameter-pilot/catalogue-plan-v2.md` section 2.5 and its two addenda. The session record is `sessions/session_2026-10-09-research-batch-24-parameter-pilot.md`.
+
+**The method**, stated unprompted (02:35):
+
+> "note that while we search by slug, we scan each source for any and all applicable parameters. we may need to just prepopulate a parameters list."
+
+and, when commissioning the critique of the catalogue plan (20:22):
+
+> "Interrogate quality, logic, sequencing and flexibility of pipeline all directions as well as all gates, reads, writes, conditionals. Ensure that all of our terms/parameter in catalogued will be leveraged in such a way where we can scrape information across any parameter if it appears in any source no matter the slug. Slugs guide our searches, but they do not guide what we derive and mine from sources! Our terms/parameter catalogue will, which means I expect harvesting across multiple terms if a source discusses multiple terms. Ensure that we can add and expand parameter catalogue as required based on new information we come across."
+
+**Answers to the session's questions**, in order:
+
+- "Is the existing `terms` registry acceptable as the seed for the parameter list?" — "1 yes" (03:08).
+- "Does a `preliminary` or `skim` extraction ever govern a published cell?" — "2 ..yes? like, one pulled from another slug? should be yes, but we still tag it for follow up later" (03:08). This was ambiguous between a skimmed figure and a figure from another slug; D1 below resolved it.
+- "WP12: confirm the R7 floor removal?" — "3 don't know what is" (03:08), then, after a plain-words restatement, "keep wp12 rule" (05:48). The R7 floor stays removed and R5 stays re-aimed at admitted sources.
+- "populate a parameters table" (05:48), then, typed mid-turn, "we need like the 90+ cleaned parameters without values" (05:52).
+- "A. The 94 existing terms. I would turn each object into its measurable quantity ... and propose the new names for your review. B. The 93 old guidebook items with the numbers stripped ..." — "A" (06:01). The session then found that parameter names may not be invented (the 2026-09-09 ruling above), so A could not be carried out as offered.
+- "... why would you develop a parameter database for coverage of all accessible design terms possible by using batch 23 that came from a specific slug" (06:06). The session withdrew the batch 23 scan.
+- "pull from the major codes, literature and advocacy from major countries" (queued 06:07:12, before the session's "1. slug by slug / 2. you seed it" options arrived at 06:07:27, so that choice was never answered) and, typed mid-turn, "there should be an exhaustive bibliography that is outdated but correct that has info on each jurisdiction code bodies and major groups".
+- After the plan was rewritten: "D1: yes figure from source filed by another slug allowed. skimmed values are not publishable" (21:17), and then, later the same evening, "D2 yes, D3 keep the rule, D8 approve tooling".
+- Immediately after, on D3: "D3 for parameter terms? it can be pulled from previous catalogues of entries for prepopulating". It qualifies "keep the rule" and is read in item 3 below.
+
+**What these establish**
+
+1. **The scan contract.** Every admitted source is read against the whole parameter list, whatever slug it was filed under. Slugs plan and log searches; they do not decide what is taken from a source. One source can yield many parameters. Arguments and qualitative findings are mined as well as figures (the 2026-09-18 ruling in `sessions/session_2026-09-18-research-batch-15-t2-synthesis-threshold.md` is the root).
+2. **The seed.** The parameter list is seeded from the existing terms registry. Parameters 4 to 12 (corridor width, turning circle, operating force, reverberation time, LRV contrast, door width, colour temperature, headroom clearance, ramp run length), added on this branch by commit `a8b7c11`, are kept, not reverted, and go to `main` through a pull request (D2).
+3. **Names.** The 2026-09-09 rule stands for names that come out of research (D3, "keep the rule"): a name is minted only from a phrase an admitted source uses, through `db.py add-term --from-observation`, never by hand and never bearing a value. The owner then added that, for prepopulating the parameter list, names "can be pulled from previous catalogues of entries". That narrows the "never by hand" clause for prepopulation only. **Which previous catalogues, and what guard applies to names taken from them (values stripped, no old item code or old value crossing, the 2026-08-19 and 2026-09-01 rulings on item names), are NOT settled; nothing is minted from any previous catalogue until the owner says which.** The back-pointer grammar below cannot mark the 2026-09-09 clause because it sits in this ledger (see item 6); this item is the mark.
+4. **Cross-slug figures and skimmed figures (D1).** A figure taken from a source filed under another slug may be extracted and may set a published value, tagged for follow-up (the 03:08 words were not withdrawn). A skimmed figure (`extraction_method = 'skim'`) is not publishable: the determination engine must leave it out of what sets a value. Whether a figure read in full but still marked `preliminary` may set a value is NOT settled (D1c) and is not changed by this entry.
+5. **Tooling.** The first tooling pull request (T1, `catalogue-plan-v2.md` section 4.2 items 1 to 5) is approved and ships first, as its own pull request.
+6. **The critique was commissioned by the owner.** The owner commissioned a read-only adversarial critique of the catalogue plan, saved verbatim in `scratchpad/session_2026-10-09-research-batch-24-parameter-pilot/catalogue-plan-critique-fable.md`. That supersedes, for that plan only, the 2026-08-19 clause that plans, critiques and handoffs are not adversarial-pass subjects. The back-pointer grammar below cannot mark that clause: it sits in this ledger, and the audit counts a target quote in the target file's raw text, where the SUPERSEDES line itself would make a second copy. This paragraph is the mark.
+7. **The pilot's scope.** The batch 24 pilot in `process-gap-remediation-plan.md` section 7 is superseded in three places. The pilot's scope, a judgement-stage re-read of batch 23's fourteen sources, is replaced by the scan contract above. The pilot's cap of sixty extractions is withdrawn; the review unit is one source. Observation is no longer limited to phrases that carry a figure: arguments, qualitative findings and every quantity a source treats as a design quantity are observed.
+
+```
+SUPERSEDES: scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md :: "The pilot is a judgement-stage re-read of batch 23's 14 admitted sources."
+  BY: references/project-standards.md :: "is replaced by the scan contract above"
+SUPERSEDES: scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md :: "Extractions ≤ 2 × batch 23's."
+  BY: references/project-standards.md :: "is withdrawn; the review unit is one source"
+SUPERSEDES: scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md :: "Do this for every concept phrase the source states a figure for"
+  BY: references/project-standards.md :: "Observation is no longer limited to phrases that carry a figure"
+```
+
+**Not yet answered**, so nothing here approves them: which previous catalogues D3 refers to and under what guard; D4 (exhaustion judged per parameter and jurisdiction), D5 (who reviews vocabulary in bulk), D6 (an item is one parameter), D7 (the category list), D9 (publish Release 0), D10 (read what is held before fetching), D11 (read out-of-bucket sources already held), D12 (this entry, which `CLAUDE.md` rule 0 requires regardless), D13 (the two finished batch 23 scans as test material). The recommendations in `catalogue-plan-v2.md` section 10 stand unapproved. The batch 23 scan outputs are not data.
+
+CONDITION: any session asking how a source is scanned, whether a figure from another slug may be used or a skimmed one published, on whose authority parameters 4 to 12 exist, whether the pilot's cap or scope still binds, or whether a plan may be critiqued.
+ACTION: (1) Scan every admitted source for every parameter in the catalogue; never limit a reading to the slug a source was filed under. (2) Take names from observed phrases; mint nothing by hand. For prepopulation the owner permits names from previous catalogues, but mint none until the owner names the catalogues and the guard. (3) Treat a skimmed figure as not publishable; treat a cross-slug figure as allowed and tagged. (4) Build the first tooling pull request as its own pull request off `main` before any bulk promotion. (5) Do not read the pilot's scope, cap or figure-only step as binding. (6) A critique of a plan needs the owner's fresh commission; this one covered the catalogue plan only.
+DATE: 2026-10-09 — owner statements, quoted above.

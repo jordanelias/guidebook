@@ -1075,3 +1075,30 @@ This addendum is appended, not edited into the sections above, so the paper stil
 **An opportunity this opens (not scheduled).** 14 extractions are skimmed today, all on parameter 3 (`select count(*) from source_value_extractions where extraction_method='skim'`). They include both of REF-01002's extractions (44, 45) and both of REF-01004's (50, 51), which is why the ramp-gradient cell has been stuck: the one T1 source with a stated maximum is held only as an abstract. Once the rule exists, those rows leave the set that governs the value, so the cell would no longer depend on REF-01002, and the check that blocks a value resting on an unverified source would not be engaged by it. Parameter 3 for wheelchair users could then be determined from the full-read rows (codes, the grey and Co-1 sources, the reviews) without the 2009 study. [INFERRED: the engine has not been run.] The paper schedules determinations after reading debt is zero (section 7.6). You may bring this one forward.
 
 **Still to be recorded.** This answer goes into the ledger verbatim with the other words from section 2.5, in the first pull request that acts on it (P1).
+
+---
+
+## Addendum 2 (2026-10-09): your answers to D2, D3 and D8
+
+**Your words, verbatim:** "D2 yes, D3 keep the rule, D8 approve tooling"
+
+- **D2, yes.** The nine parameters (4 to 12) are kept and go to `main` through phase P1, with a session record, an attestation and the ledger entry. Nothing is reverted.
+- **D3, keep the rule**, qualified by the follow-up in Addendum 3. Parameter names that come out of research are minted only from a phrase an admitted source uses (`add-term --from-observation`), as the 2026-09-09 ruling says. Section 10 recommended also using your option A list as a search checklist for the readers; you did not answer that part, so it is not adopted. [OPEN: say if you want it.]
+- **D8, approve tooling.** Tooling PR T1 as listed in section 4.2, items 1 to 5, is approved and ships before any bulk promotion. T1 must be its own pull request off `main` (project rule 10), so it needs its own branch.
+
+**Still unanswered, with the recommendations in section 10 standing but unapproved:** D4, D5, D6, D7, D9, D10, D11, D12 (the ledger entry is written anyway because CLAUDE.md rule 0 requires it), D13.
+
+---
+
+## Addendum 3 (2026-10-09): your follow-up on D3
+
+**Your words, verbatim, sent right after "D2 yes, D3 keep the rule, D8 approve tooling":** "D3 for parameter terms? it can be pulled from previous catalogues of entries for prepopulating"
+
+**How it is read.** For prepopulating the parameter list, names may be taken from previous catalogues of entries. That narrows the 2026-09-09 rule ("never by hand") for prepopulation only; names that come out of research still come from observed phrases. Section 11.2 item 5 is therefore triggered: the supersession of the 2026-09-09 clause is recorded, in prose, in the 2026-10-09 ledger entry (the back-pointer grammar cannot mark a clause that sits in the ledger itself).
+
+**Not settled, and it matters (nothing is minted from a previous catalogue until you answer):**
+1. **Which previous catalogues?** The candidates, none of them chosen: the 93 old Part 4 item names (the list the 2026-09-01 ruling deleted); the terms and parameters held in the pre-reset corpus database; the code and standards registries (`references/standards-registry.md` and the verified-source files); or something else.
+2. **What guard applies to names taken from them?** The earlier rulings say a container whose name states its answer biases every finding (2026-09-01), that no old item name becomes a topic and no old value crosses (2026-08-19, DR §1.4), and the database already refuses a name carrying a digit or a min/max word. Your own earlier words were "cleaned parameters without values".
+3. **How is a name minted without a source phrase?** `insert_term` refuses to mint from nothing. This is the "you seed it" route: T1 gains a minting route on your authority, with the catalogue and the warrant recorded on each term, and the old item index is not read until you have named it as a source.
+
+**Effect on the sequence.** T1 (approved) gains item 3 above. Reading the held sources for the existing parameters (phase P3) does not depend on it and can go ahead. The open pass for new quantities still produces names from source phrases.
