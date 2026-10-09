@@ -54,5 +54,19 @@
     "bytes": 513216,
     "agent_id_prefix": "aee66249",
     "file": "2026-10-09T06-04-09_other_aee66249.jsonl"
+  },
+  {
+    "started": "2026-10-09T20:23:25",
+    "role": "antagonist",
+    "bytes": 1348555,
+    "agent_id_prefix": "a3a54cb3",
+    "file": "2026-10-09T20-23-25_antagonist_a3a54cb3.jsonl"
+  },
+  {
+    "started": "2026-10-09T20:39:30",
+    "role": "planner",
+    "bytes": 683849,
+    "agent_id_prefix": "af27dbb7",
+    "file": "2026-10-09T20-39-30_planner_af27dbb7.jsonl"
   }
 ]
