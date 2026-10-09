@@ -1314,8 +1314,12 @@ def run_checks(db_path):
         # source survive tier/verification/supersession) needs the engine and is not
         # re-derived here. The value-supplying half is a direct correspondence, and it is
         # the half that moves when someone re-grades a row.
-        for eid, role, frole in conn.execute(
-                "SELECT l.extraction_id, l.role, x.figure_role "
+        # SKIMMED ROWS NEVER GOVERN (owner 2026-10-09, "skimmed values are not
+        # publishable"; assess_cell.NOT_PUBLISHABLE_METHODS). extraction_method is
+        # amendable (amend-extraction), so a governing link whose row is re-marked
+        # 'skim' afterwards is the same stale-snapshot defect as a re-graded role.
+        for eid, role, frole, method in conn.execute(
+                "SELECT l.extraction_id, l.role, x.figure_role, x.extraction_method "
                 "FROM specification_extraction_links l "
                 "JOIN source_value_extractions x ON x.extraction_id = l.extraction_id "
                 "WHERE l.specification_id = ?", (cid,)):
@@ -1324,6 +1328,11 @@ def run_checks(db_path):
                     f"spec {cid}: extraction {eid} is linked 'governing' but its "
                     f"figure_role is now {frole!r}, which supplies no value — the "
                     f"determination rests on a row that has since been re-graded")
+            elif role == "governing" and method == "skim":
+                unaccounted.append(
+                    f"spec {cid}: extraction {eid} is linked 'governing' but it was "
+                    f"skimmed, and a skimmed figure is not publishable (owner "
+                    f"2026-10-09) — re-run the engine")
             elif role == "conditioning" and frole != "condition":
                 unaccounted.append(
                     f"spec {cid}: extraction {eid} is linked 'conditioning' but its "
