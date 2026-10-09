@@ -46,7 +46,18 @@ declaration (not `no_floor`) because a `base_parameters` row IS repo content the
 owner intends to populate, not a corpus retired to empty by decision -- the day the
 first parameter is minted, this floor is what turns a silent gap into a reported one.
 
-Exit codes: 0 = pass (including NOTHING-IN-SCOPE), 1 = a value-bearing name found.
+P2, ADDED 2026-10-09 (tooling T1, the owner's D3 answer): every term minted from a
+permitted catalogue (`db.py mint-term-from-catalogue`, `term_catalogue_origins`,
+migration 104) still has its approving words in references/project-standards.md. The
+writer refused unless the quote occurred exactly once when the term was minted; if the
+ledger is later edited so the quote no longer occurs, the term's only warrant is gone and
+nothing else would notice. A quote now occurring MORE than once is reported, not failed:
+the ledger may quote a ruling again, and the term's origin row still names the words. P2
+reports its own subject in words; EXAMINED stays the parameter count (a whole-check
+number, run_checks.py EXAMINED_RE), and zero origins is a true state today.
+
+Exit codes: 0 = pass (including NOTHING-IN-SCOPE), 1 = a value-bearing name found, or a
+catalogue-origin approval quote no longer in the ledger.
 """
 
 import os
@@ -57,8 +68,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from db import _VALUE_BEARING  # noqa: E402  (single source of truth; see header)
 
 import sqlite3  # noqa: E402
+import dbcore  # noqa: E402  (the ledger-quote normalisation has one home)
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
+LEDGER = dbcore.REPO_ROOT / "references" / "project-standards.md"
 
 
 def validate():
@@ -83,6 +96,11 @@ def validate():
         "FROM base_parameters bp JOIN terms t ON t.term_id = bp.term_id "
         "ORDER BY bp.parameter_id"
     ).fetchall()
+    origins = []
+    if "term_catalogue_origins" in tables:
+        origins = conn.execute(
+            "SELECT term_id, catalogue, entry_ref, approval_quote "
+            "FROM term_catalogue_origins ORDER BY term_id").fetchall()
     conn.close()
 
     errors = []
@@ -93,6 +111,22 @@ def validate():
                 f"canonical_en {r['canonical_en']!r} carries a number, a comparator, "
                 f"or a min/max word — it states a determination in its own name"
             )
+
+    # P2: the owner's approving words for each catalogue-minted term are still recorded.
+    if origins:
+        ledger = dbcore.strip_supersedes_citations(LEDGER.read_text(encoding="utf-8"))
+        for o in origins:
+            n = dbcore.count_ledger_quote(ledger, o["approval_quote"])
+            if n == 0:
+                errors.append(
+                    f"P2 FAIL term {o['term_id']} (from {o['catalogue']} "
+                    f"{o['entry_ref']}): its approval quote no longer occurs in "
+                    f"references/project-standards.md, so the name has lost its only "
+                    f"warrant. Restore the owner's words, or retire the parameter.")
+            elif n > 1:
+                print(f"  P2 note: term {o['term_id']}'s approval quote now occurs {n} "
+                      f"times in the ledger (reported, not failed)")
+    print(f"  P2: {len(origins)} catalogue-minted term(s) checked against the ledger")
 
     total = len(rows)
     if errors:

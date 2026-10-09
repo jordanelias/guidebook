@@ -11,6 +11,8 @@
     "R16": 9,
     "R7": 1,
     "R16-scan": 52,
-    "R17": 2
+    "R17": 2,
+    "observation-quote-missing": 17,
+    "observation-quote-unscoped": 37
   }
 }
