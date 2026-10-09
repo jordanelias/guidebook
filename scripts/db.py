@@ -7650,7 +7650,7 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
                           f"to its manifest sha256. Nothing was written.")
         pages_read, pages_total = retrieval_log.page_coverage(h["path"])
         if h["derived"] and h["derived_from"] and pages_read is not None:
-            sd, srec = retrieval_log._find_artefact(
+            sd, srec = retrieval_log.find_fetched_artefact(
                 h["derived_from"], prefer_dir=retrieval_log.LOG_ROOT / h["session"])
             if srec is not None and srec["artefact"].lower().endswith(".pdf"):
                 held_pages = retrieval_log.pdf_page_count(sd / srec["artefact"])

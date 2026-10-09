@@ -863,7 +863,7 @@ def locate_quote(quote, ref_id=None, session=None):
 PAGE_MARKER = re.compile(r"^\[PDF page (\d+) of (\d+)\]\s*$", re.M)
 
 
-def _find_artefact(name, prefer_dir=None):
+def find_fetched_artefact(name, prefer_dir=None):
     """(session_dir, manifest record) for an artefact file name, or (None, None).
 
     Artefact names are content-derived (sha256 prefix), so a name found in another
@@ -923,7 +923,7 @@ def artefacts_for_source(ref_id, url=None):
     held = list(out.values())
     for h in held:
         if h["derived"] and h["derived_from"]:
-            sd, srec = _find_artefact(h["derived_from"], prefer_dir=LOG_ROOT / h["session"])
+            sd, srec = find_fetched_artefact(h["derived_from"], prefer_dir=LOG_ROOT / h["session"])
             if srec is not None:
                 add(sd, srec, "derived-from")
     names = {h["artefact"] for h in held if not h["derived"]}
