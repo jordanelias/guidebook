@@ -43,7 +43,7 @@ The nine: corridor width (TERM-002), turning circle (TERM-003), operating force 
 
 ## 3. Owner statements
 
-All recorded verbatim in `references/project-standards.md`, "Owner statements 2026-10-09". The 03:08 answer "2 ..yes? like, one pulled from another slug? should be yes, but we still tag it for follow up later" was ambiguous; D1 resolved it (cross-slug figure allowed and tagged; skimmed figure not publishable; a figure read in full but still `preliminary` is NOT settled). D3 ("keep the rule") was qualified immediately by "D3 for parameter terms? it can be pulled from previous catalogues of entries for prepopulating"; which catalogues, and under what guard, is open and nothing was minted from any previous catalogue.
+All recorded verbatim in `references/project-standards.md`, "Owner statements 2026-10-09". The 03:08 answer "2 ..yes? like, one pulled from another slug? should be yes, but we still tag it for follow up later" was ambiguous; D1 resolved it (cross-slug figure allowed and tagged; skimmed figure not publishable; a figure read in full but still `preliminary` is NOT settled). D3 ("keep the rule") was qualified immediately by "D3 for parameter terms? it can be pulled from previous catalogues of entries for prepopulating"; the owner then selected the code and standards registries and the pre-reset corpus terms (not the old Part 4 item names) as the permitted catalogues, with the guard "Screen, then you approve" and a second branch for the first tooling pull request. Nothing was minted from any previous catalogue.
 
 ## 4. Disclosures
 
@@ -69,7 +69,7 @@ Measured 2026-10-09 after the migration, the record, the attestation and the led
 
 ## 6. What the next session takes
 
-1. **T1, the tooling pull request** (`catalogue-plan-v2.md` section 4.2, items 1 to 5, approved by the owner): its own pull request off `main`, merged before any bulk promotion. It needs its own branch; the session instructions allow pushes only to this one, so permission was requested.
-2. The owner's answer on which previous catalogues D3 allows names to come from, and under what guard.
+1. **T1, the tooling pull request** (`catalogue-plan-v2.md` section 4.2, items 1 to 5, approved by the owner): its own pull request off `main`, merged before any bulk promotion. It has its own branch off `main`, which the owner approved.
+2. Read the two permitted catalogues for candidate names (read-only), screen them, and bring the one approval table to the owner before anything is minted.
 3. Phase P3: read what is already held against the ten parameters, after T1.
 4. Undecided: D4 to D7, D9 to D11, D13.

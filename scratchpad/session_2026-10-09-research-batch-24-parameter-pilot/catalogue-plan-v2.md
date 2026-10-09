@@ -1102,3 +1102,19 @@ This addendum is appended, not edited into the sections above, so the paper stil
 3. **How is a name minted without a source phrase?** `insert_term` refuses to mint from nothing. This is the "you seed it" route: T1 gains a minting route on your authority, with the catalogue and the warrant recorded on each term, and the old item index is not read until you have named it as a source.
 
 **Effect on the sequence.** T1 (approved) gains item 3 above. Reading the held sources for the existing parameters (phase P3) does not depend on it and can go ahead. The open pass for new quantities still produces names from source phrases.
+
+---
+
+## Addendum 4 (2026-10-09): your answers on the previous catalogues, the guard and the T1 branch
+
+**Your selections (from listed options; not typed words):**
+- Previous catalogues that names may be pulled from: **"Code and standards registries"** and **"Old corpus terms"**. The old Part 4 item names were offered and not selected.
+- Guard: **"Screen, then you approve"**.
+- A second branch for tooling T1: **"Yes, second branch"**.
+
+**What follows.**
+1. The candidate pool for prepopulation is the two selected catalogues. The old item names stay out, as the 2026-08-19 and 2026-09-01 rulings keep them. Reading the pre-reset corpus database for its terms is a read of a lead list.
+2. Every candidate is screened (no digit, comparator or min/max word, no old item code) and shown to you in one table, with the catalogue and the entry it came from, before any is minted.
+3. Minting a name on this authority needs a route `insert_term` does not have. That is a new item in tooling T1, with the catalogue and the table row recorded on each term so the provenance is machine-readable.
+4. T1 is built on its own branch off `main`. This branch keeps the nine parameters, the records and the plan, and goes up first as its own pull request.
+5. The registries list code bodies and standards, not measurable quantities, so they will yield few parameter names. [INFERRED: not yet read for names.] The pre-reset terms are mostly the terms already in the live registry, since the live registry was seeded from them. [INFERRED: the archive has not been read for this.] Both are cheap to check before T1 is built.
