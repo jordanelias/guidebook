@@ -736,19 +736,44 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
     EXAMINED is in the detail on a miss (CLAUDE.md 5(a)): a check that reports "not found"
     without saying how much it looked at is indistinguishable from one that looked at
     nothing.
-    """
-    needle = normalise_quote(quote)
-    if not needle:
-        return False, "the quote contains no letters or digits to match"
-    root = LOG_ROOT
-    if not root.exists():
-        return False, "EXAMINED: 0 -- %s/ does not exist" % root
 
-    scoped_hit = unscoped_hit = None
-    examined = scoped_examined = 0
-    undecodable = []
+    A THIN WRAPPER OVER `locate_quote` since 2026-10-09 (tooling T1). `observe-term` must
+    tell a scoped hit from an unscoped one to REFUSE the second, and parsing this
+    function's prose for the word UNSCOPED would make a sentence load-bearing. The
+    matching rule has one home, below; this keeps the (found, detail) shape every older
+    caller reads, with the detail strings unchanged.
+    """
+    kind, detail = locate_quote(quote, ref_id=ref_id, session=session)
+    return kind != "missing", detail
+
+
+# Per-process memo of the decoded, normalised artefacts, keyed on the log root and the
+# session filter. ADDED 2026-10-09 (tooling T1) BECAUSE A CHECK NEEDS IT: measured the
+# same day, one quote_in_artefacts call over the 470 persisted files took ~1.7 s, almost
+# all of it decoding and normalising every artefact again, so verifying the corpus's 88
+# observations took minutes. The memo is invalidated by any manifest changing (mtime or
+# size of every manifest.jsonl, plus the set of session directories), so an artefact
+# persisted later in the same process is seen; artefact files themselves are written
+# once under a content-derived name and never rewritten.
+_ARTEFACT_INDEX = {}
+
+
+def _artefact_index(session=None):
+    """[(session_dir_name, artefact, rec_ref_id, normalised_body_or_None, encoding)]."""
+    root = LOG_ROOT
     dirs = [root / _session_stem(session)] if session else sorted(
         p for p in root.iterdir() if p.is_dir())
+    sig = []
+    for d in dirs:
+        man = d / "manifest.jsonl"
+        if man.exists():
+            st = man.stat()
+            sig.append((d.name, st.st_mtime_ns, st.st_size))
+    key = (str(root.resolve()), session)
+    hit = _ARTEFACT_INDEX.get(key)
+    if hit is not None and hit[0] == sig:
+        return hit[1]
+    entries = []
     for d in dirs:
         if not d.is_dir():
             continue
@@ -756,35 +781,61 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
             art = d / rec.get("artefact", "")
             if not art.exists():
                 continue
-            examined += 1
-            rec_ref = rec.get("ref_id")
-            if ref_id and rec_ref == ref_id:
-                scoped_examined += 1
             try:
                 raw = art.read_bytes()
             except OSError:
                 continue
             body, enc = decode_artefact(raw, rec.get("content_type"))
-            if body is None:
-                # NEVER SILENTLY SKIPPED. A miss below reports EXAMINED, and an artefact
-                # whose bytes could not be read is not examined -- saying "not found" over
-                # it would be CLAUDE.md §5(a) at the input, which is the same error this
-                # function's own docstring names one level up.
-                undecodable.append("%s/%s (%s)" % (d.name, rec["artefact"], enc))
-                continue
-            if needle in normalise_quote(body):
-                where = "%s/%s" % (d.name, rec["artefact"])
-                if ref_id and rec_ref == ref_id:
-                    scoped_hit = scoped_hit or where
-                else:
-                    unscoped_hit = unscoped_hit or where
+            entries.append((d.name, rec.get("artefact", ""), rec.get("ref_id"),
+                            normalise_quote(body) if body is not None else None, enc))
+    _ARTEFACT_INDEX[key] = (sig, entries)
+    return entries
+
+
+def locate_quote(quote, ref_id=None, session=None):
+    """Where does `quote` occur? Returns (kind, detail), kind in scoped|unscoped|missing.
+
+    `scoped`   -- in an artefact whose manifest line carries `ref_id`: the strong result.
+    `unscoped` -- only in some other artefact (no structured ref_id, or another one): the
+                  words are in the corpus, which does not prove they came from this source.
+    `missing`  -- in no persisted, decodable artefact; the detail says how much was
+                  examined and names any bytes that could not be decoded.
+    See `quote_in_artefacts` above for why each distinction is kept.
+    """
+    needle = normalise_quote(quote)
+    if not needle:
+        return "missing", "the quote contains no letters or digits to match"
+    root = LOG_ROOT
+    if not root.exists():
+        return "missing", "EXAMINED: 0 -- %s/ does not exist" % root
+
+    scoped_hit = unscoped_hit = None
+    examined = scoped_examined = 0
+    undecodable = []
+    for dname, artefact, rec_ref, body, enc in _artefact_index(session):
+        examined += 1
+        if ref_id and rec_ref == ref_id:
+            scoped_examined += 1
+        if body is None:
+            # NEVER SILENTLY SKIPPED. A miss below reports EXAMINED, and an artefact
+            # whose bytes could not be read is not examined -- saying "not found" over
+            # it would be CLAUDE.md §5(a) at the input, which is the same error this
+            # function's own docstring names one level up.
+            undecodable.append("%s/%s (%s)" % (dname, artefact, enc))
+            continue
+        if needle in body:
+            where = "%s/%s" % (dname, artefact)
+            if ref_id and rec_ref == ref_id:
+                scoped_hit = scoped_hit or where
+            else:
+                unscoped_hit = unscoped_hit or where
     if scoped_hit:
-        return True, "found in %s, retrieved for %s" % (scoped_hit, ref_id)
+        return "scoped", "found in %s, retrieved for %s" % (scoped_hit, ref_id)
     if unscoped_hit:
-        return True, ("found in %s -- UNSCOPED: that artefact carries no structured "
-                      "ref_id, or one that is not %s, so this proves the words are in "
-                      "the corpus, not that they came from this source"
-                      % (unscoped_hit, ref_id or "(none given)"))
+        return "unscoped", ("found in %s -- UNSCOPED: that artefact carries no structured "
+                            "ref_id, or one that is not %s, so this proves the words are in "
+                            "the corpus, not that they came from this source"
+                            % (unscoped_hit, ref_id or "(none given)"))
     detail = ("EXAMINED: %d persisted artefact(s) under %s/*/%s"
               % (examined, root,
                  " (%d retrieved for %s)" % (scoped_examined, ref_id)
@@ -795,7 +846,136 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
         # corpus. Naming them is what lets the next reader tell the two apart.
         detail += (" -- %d NOT SEARCHED, bytes undecodable: %s"
                    % (len(undecodable), "; ".join(undecodable[:5])))
-    return False, detail
+    return "missing", detail
+
+
+# ---------------------------------------------------------------------------
+# Which saved files belong to a source, and how much of a document a text covers
+# ---------------------------------------------------------------------------
+# ADDED 2026-10-09 (tooling T1, catalogue-plan-v2 section 3.8). `db.py record-scan`
+# refuses a reading of a file not saved for the source, and `full_text.py` must find the
+# held PDF or HTML to derive a full text from. Both ask the same question of the same
+# manifests, so it has one home here, beside the bytes, rather than one per caller.
+
+#: The page marker every derived PDF text in this log carries, one per page, at the head
+#: of the page's text. Batch 23 wrote it by hand (`[PDF page 27 of 79]`) and
+#: `full_text.py` writes the same form, so coverage is countable from the file alone.
+PAGE_MARKER = re.compile(r"^\[PDF page (\d+) of (\d+)\]\s*$", re.M)
+
+
+def _find_artefact(name, prefer_dir=None):
+    """(session_dir, manifest record) for an artefact file name, or (None, None).
+
+    Artefact names are content-derived (sha256 prefix), so a name found in another
+    session's log is the same bytes. `prefer_dir` is tried first because a derivation
+    usually sits beside its source.
+    """
+    roots = []
+    if prefer_dir is not None:
+        roots.append(prefer_dir)
+    roots += [m.parent for m in sorted(LOG_ROOT.glob("*/manifest.jsonl"))
+              if m.parent != prefer_dir]
+    for d in roots:
+        for rec in _manifest_records(d.name):
+            if rec.get("artefact") == name and not rec.get("derived"):
+                return d, rec
+    return None, None
+
+
+def artefacts_for_source(ref_id, url=None):
+    """Every manifest line that holds bytes FOR this source, with how it was matched.
+
+    Returns a list of dicts: session, artefact, path, exists, sha256, derived,
+    derived_from, url, ref_id, via. `via` is one of:
+
+      ref_id        the manifest line carries this ref_id (the strong match);
+      url           a fetched (non-derived) artefact at the source's own address --
+                    every artefact retrieved before 2026-09-13 carries no ref_id;
+      derived-from  the fetched artefact a held derivation was made from (the whole PDF
+                    behind a partial `-text.txt` registered under the ref_id);
+      derivation    a derived artefact made from a held one.
+
+    One step each way, never transitively: a chain longer than that is a provenance
+    question for a person, not a match this function should widen silently.
+    """
+    out = {}
+
+    def add(d, rec, via):
+        key = (d.name, rec.get("artefact"))
+        if key in out or not rec.get("artefact"):
+            return
+        path = d / rec["artefact"]
+        out[key] = {"session": d.name, "artefact": rec["artefact"], "path": path,
+                    "exists": path.exists(), "sha256": rec.get("sha256"),
+                    "derived": bool(rec.get("derived")),
+                    "derived_from": rec.get("derived_from"), "url": rec.get("url"),
+                    "ref_id": rec.get("ref_id"), "via": via}
+
+    recs = [(m.parent, r) for m in sorted(LOG_ROOT.glob("*/manifest.jsonl"))
+            for r in _manifest_records(m.parent.name)]
+    for d, rec in recs:
+        if ref_id and rec.get("ref_id") == ref_id:
+            add(d, rec, "ref_id")
+    if url:
+        for d, rec in recs:
+            if not rec.get("derived") and rec.get("url") == url:
+                add(d, rec, "url")
+    held = list(out.values())
+    for h in held:
+        if h["derived"] and h["derived_from"]:
+            sd, srec = _find_artefact(h["derived_from"], prefer_dir=LOG_ROOT / h["session"])
+            if srec is not None:
+                add(sd, srec, "derived-from")
+    names = {h["artefact"] for h in held if not h["derived"]}
+    for d, rec in recs:
+        if rec.get("derived") and rec.get("derived_from") in names:
+            add(d, rec, "derivation")
+    return sorted(out.values(), key=lambda r: (r["session"], r["artefact"]))
+
+
+def pdf_page_count(path):
+    """The page count of a PDF on disk, or None when it cannot be read here.
+
+    pymupdf is the `research` battery's declared reader (governance/check-registry.yaml);
+    a container without it degrades to None rather than raising, and callers say so.
+    """
+    try:
+        import pymupdf
+    except Exception:                                    # noqa: BLE001
+        return None
+    try:
+        with pymupdf.open(str(path)) as doc:
+            return doc.page_count
+    except Exception:                                    # noqa: BLE001
+        return None
+
+
+def page_coverage(path):
+    """(pages_read, pages_total) for a saved file, each None when it is not countable.
+
+    A derived text carrying `[PDF page N of M]` markers: pages_read is the number of
+    DISTINCT pages present, pages_total the largest M any marker states. A PDF: its page
+    count as the total, and pages_read None -- what was read of a PDF is not knowable from
+    the file, which is why `record-scan` refuses a `full` reading of one and asks for the
+    text to be derived first. Anything else (a web page, an API record): (None, None).
+    """
+    path = Path(path)
+    if path.suffix.lower() == ".pdf":
+        return None, pdf_page_count(path)
+    try:
+        raw = path.read_bytes()
+    except OSError:
+        return None, None
+    text, _enc = decode_artefact(raw)
+    if text is None:
+        return None, None
+    pages, total = set(), 0
+    for m in PAGE_MARKER.finditer(text):
+        pages.add(int(m.group(1)))
+        total = max(total, int(m.group(2)))
+    if not pages:
+        return None, None
+    return len(pages), total
 
 
 def identifying_locator(url):
