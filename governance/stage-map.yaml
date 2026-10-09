@@ -62,6 +62,15 @@ judged_on: '2026-09-17'
 # from any later stage, and its only reader is base's own writer (`add-parameter` refuses
 # a declined term), so it sits where `base_parameters` sits. Caught by this file's own
 # falsifier (`pipeline_walk.py --check`) as soon as the migration was applied.
+#
+# 2026-10-09, tooling T1 (scan contract and vocabulary lifecycle, migrations 103-105):
+# `source_scans` as EVIDENCE -- a record of what was read of an admitted source, beside
+# that source's extraction rows (CLAUDE.md §3: evidence holds "what was admitted, its
+# identity, verification and extraction"); `extraction_follow_ups` as JUDGMENT -- whether
+# an extraction should be re-checked is a judgement about its soundness, the stage
+# CLAUDE.md §3 defines as "whether an extraction is sound and how it weighs"; and
+# `term_catalogue_origins` as BASE -- the provenance of a vocabulary term, read only by
+# base's own validator, so it sits where `terms` sits.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -99,6 +108,7 @@ tables:
   evidence_source_authors: evidence
   evidence_sources: evidence
   external_root_registry: evidence
+  extraction_follow_ups: judgment
   extraction_population_links: judgment
   extraction_relations: evidence
   gap_mining: research
@@ -134,6 +144,7 @@ tables:
   situations: base
   slugs: base
   source_locators: research
+  source_scans: evidence
   source_slug_links: evidence
   source_value_extractions: evidence
   spec_value_probes: specification
@@ -143,6 +154,7 @@ tables:
   supersession_check: synthesis
   term_adjudications: judgment
   term_aliases: base
+  term_catalogue_origins: base
   term_item_links: render
   terms: base
   url_verification_runs: evidence
