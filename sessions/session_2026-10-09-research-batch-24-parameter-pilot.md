@@ -51,22 +51,24 @@ All recorded verbatim in `references/project-standards.md`, "Owner statements 20
 1. **The nine rows reached this branch without a pull request, a record or an attestation** when they were committed in `a8b7c11` (`[skip ci]`). This record and its attestation are the repair. The owner's D2 ("yes") is the review.
 2. **No adversarial pass.** The rows are in `base_parameters`, which is outside the 2026-08-19 rule's list of research tables (`python3 scripts/audit/adversarial_pass_audit.py --session session_2026-10-09-research-batch-24-parameter-pilot` reports NOTHING-IN-SCOPE). No gate examines the nine themselves: eight have no adjudication behind their term. The owner's recorded review is the only check.
 3. **A critique of a plan was run.** The 2026-08-19 rule bars critiques of plans. The owner commissioned this one, for the catalogue plan only; the supersession is recorded in prose in the ledger.
-4. **Derived outputs were regenerated** with `scripts/regenerate_derived.sh` after the migration, as the blocking freshness checks require. The context map and the other advisory freshness checks were stale on `main` before this session and were not touched.
+4. **Derived outputs were regenerated** with `scripts/regenerate_derived.sh` after each migration, as the blocking freshness checks require, and the context map with `python3 scripts/generate/context_map.py`. The other advisory freshness checks (site pages) were stale on `main` before this session and were not touched.
 5. **Commits carry `[skip ci]`**, because they carry only append-only logs, working papers and the rows; the final push to the pull request does not.
 6. **Agent work.** Read-only agents scanned, adjudicated, critiqued and drafted. The Opus agent wrote only `catalogue-plan-v2.md`. The orchestrator verified a sample of their claims (listed in the critique file) and did not verify the rest.
 7. **Edits to a closed session's file.** Three one-paragraph `SUPERSEDED IN PART` markers were inserted into `scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md`, which the back-pointer grammar requires (currency lives at the superseded text).
 
 ## 5. Gates
 
-Measured 2026-10-09 after the migration, the record, the attestation and the ledger entry were in place.
+Measured 2026-10-10 after the second migration, the code-review repairs, and the regenerated outputs; the figures are this run's, so re-run rather than trust them.
 
-- `python3 scripts/run_checks.py --changed-from origin/main --explain`: PASS, 61 green, 7 nothing-in-scope, 10 advisory failures, 0 blocking failures. The ten advisory failures are the ones present on `main` before this session (`migration_reproducibility_deep`, `validate_schema_cross_check`, `validate_pydantic_schemas`, `retired_vocabulary`, `research_protocol_audit`, `metadata_integrity_audit`, `validate_reasoning`, `context_map_fresh`, `site_pages_fresh`, `source_locators_integrity`). Nothing-in-scope includes `adversarial_pass_recorded` (this session wrote to no table on the rule's list) and `search_log_completeness` (no search was run).
+- `python3 scripts/run_checks.py --changed-from origin/main --explain`: PASS, 62 green, 7 nothing-in-scope, 9 advisory failures, 0 blocking failures. The nine advisory failures are `migration_reproducibility_deep`, `validate_schema_cross_check`, `validate_pydantic_schemas`, `retired_vocabulary`, `research_protocol_audit`, `metadata_integrity_audit`, `validate_reasoning`, `site_pages_fresh` and `source_locators_integrity`, all present on `main` before this session (`context_map_fresh` was a tenth until this session regenerated the map). Nothing-in-scope includes `adversarial_pass_recorded` (this session wrote to no table on the rule's list) and `search_log_completeness` (no search was run).
 - `python3 scripts/tests/test_db_integrity.py`: 71/71. K01, K02 and C10 still examine nothing (no live specification).
-- `python3 scripts/audit/research_batch_dod.py --session session_2026-10-01-research-batch-23`: COMPLIANT. Run on batch 23's name because this session admits nothing; run on this session's own name it would fail R1, R9a and R9b by design.
-- `python3 scripts/audit/research_batch_dod.py --all` and `--check-baseline origin/main`: COMPLIANT; the baseline ratchets down only (R16 now reads 8 against a baseline of 9, because TERM-091 is promoted; the baseline file is lowered in a later tooling pull request).
-- `python3 scripts/audit/supersession_backpointer_audit.py`: PASS, 7 `SUPERSEDES` lines examined (4 existing, 3 added here).
+- `python3 scripts/migrate_db.py --rebuild`: reproduces the nine `base_parameters` rows and the two amended definitions exactly.
+- `python3 scripts/audit/research_batch_dod.py --session session_2026-10-01-research-batch-23`: COMPLIANT.
+- **`python3 scripts/audit/research_batch_dod.py --session session_2026-10-09-research-batch-24-parameter-pilot`: NON-COMPLIANT, 3 rules unmet (R1, R9a, R9b).** This is `/batch-done`'s own first command and it fails by design: the session admitted no source, and those rules count admissions. This paragraph is the explicit reasoned waiver that command asks for; the owner reads it on the pull request. The batch is *not* finished in `/batch-done`'s sense, because it is not an acquisition batch.
+- `python3 scripts/audit/research_batch_dod.py --all` and `--check-baseline origin/main`: COMPLIANT. R16 debt is now below its old baseline because TERM-091 is promoted, and the baseline file is lowered to the live value in this pull request (the ratchet only goes down). Tooling T1 also edits that file, so whichever pull request merges second resolves a one-line conflict in it.
+- `python3 scripts/audit/supersession_backpointer_audit.py`: PASS (it prints how many `SUPERSEDES` lines it examined; re-run for the count).
 - The attestation validates against `schemas/attestation.schema.json`.
-- `scripts/regenerate_derived.sh` was run after the migration; the two blocking freshness checks pass.
+- `scripts/regenerate_derived.sh` and `scripts/generate/context_map.py --check` pass.
 
 ## 6. What the next session takes
 

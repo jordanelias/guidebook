@@ -68,5 +68,26 @@
     "bytes": 2634517,
     "agent_id_prefix": "af27dbb7",
     "file": "2026-10-09T20-39-30_planner_af27dbb7.jsonl"
+  },
+  {
+    "started": "2026-10-09T22:55:52",
+    "role": "other",
+    "bytes": 3692866,
+    "agent_id_prefix": "a42472f3",
+    "file": "2026-10-09T22-55-52_other_a42472f3.jsonl"
+  },
+  {
+    "started": "2026-10-09T23:33:16",
+    "role": "other",
+    "bytes": 1289826,
+    "agent_id_prefix": "ac0c8c92",
+    "file": "2026-10-09T23-33-16_other_ac0c8c92.jsonl"
+  },
+  {
+    "started": "2026-10-09T23:42:50",
+    "role": "other",
+    "bytes": 1424731,
+    "agent_id_prefix": "aa3ab35a",
+    "file": "2026-10-09T23-42-50_other_aa3ab35a.jsonl"
   }
 ]
