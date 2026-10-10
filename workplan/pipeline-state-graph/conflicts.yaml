@@ -242,17 +242,17 @@ conflicts:
 - id: C-017
   class: RULING-MECHANISM
   severity: S1
-  title: "'I don't want axis to be used' -- yet 'axis' remains a table, column and code vocabulary (the narrower ICF ruling is carried)"
-  atoms: [LED-076, LED-166, CLM-039, ENT-105, ENT-156, ENT-076, DRS-006, DRS-023, DRS-024, DRS-114, DRS-189, DRS-193, DRS-199]
+  title: "'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live"
+  atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166, LED-076, LED-166, CLM-039, ENT-105, ENT-156, ENT-076, DRS-006, DRS-023, DRS-024, DRS-114, DRS-189, DRS-193, DRS-199, OPI-049]
   sides:
-    - {atoms: [LED-076, LED-166, CLM-039], says: "owner: 'axis' must not name a vocabulary layer; AX- must never denote an ICF code anywhere; work in ICF/access-need codes AND names."}
-    - {atoms: [DRS-006], says: "08-24 header: the axes rename is 'authorized and owed'."}
-    - {atoms: [DRS-023, DRS-024], says: "the same DR's R8 item 3: 'NOT DECIDED HERE', must not be attempted piecemeal."}
-    - {atoms: [DRS-114, DRS-189, DRS-193, DRS-199, ENT-105, ENT-156, ENT-076], says: "D-0170 and D-0184 and functional-taxonomy still use `axes`, `item_axis_links`, `population_axis_map`, AX-* as live objects."}
+    - {atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166], says: "owner R3 (2026-08-18, DG-NON, 'standing decisions, do not relitigate'): 'axes' is a bad coined term; use ICF codes directly with their names; `axes` and `item_axis_links` are retired; `population_axis_map` is re-derived mechanically as population-to-ICF."}
+    - {atoms: [LED-076, LED-166, CLM-039], says: "owner 2026-08-24: 'I don't want axis to be used'; owner 2026-09-13: 'AX-' for ICF should never exist anywhere; work in ICF/access-need codes AND names."}
+    - {atoms: [DRS-006, DRS-023, DRS-024], says: "the 2026-08-24 DR: the rename is 'authorized and owed' yet 'NOT DECIDED HERE', to be done as one act and not piecemeal."}
+    - {atoms: [DRS-114, DRS-189, DRS-193, DRS-199, ENT-105, ENT-156, ENT-076, OPI-049], says: "D-0170, D-0184, functional-taxonomy and the operative instrument still treat `axes`, `item_axis_links`, `population_axis_map` and AX-* as live objects (the instrument quarantines the axis map under owner directive D-1)."}
   probe: [P-AXIS, P-G]
-  direction: "LED-166 (an AX- code in an ICF-typed column) is carried: P-G passes. LED-076 is not: P-AXIS lists the tables and columns that still carry the word. The 2026-08-18 'bad coined term, do not relitigate' ruling is cited in CLAUDE.md rule 0 but was not found in the ledger by the ENT extractor (ENT note 10); LED-076 and LED-166 are the recorded owner statements. The rename itself is 'NOT DECIDED HERE' (DRS-024) -- no decision record executes it."
-  resolver: OWNER
-  confidence: medium
+  direction: "The owner's rulings are consistent and the earliest is recorded, standing and unqualified (R3, with LED-076 and LED-166 later). The 2026-08-24 DR does not reverse them: it scopes WHEN the rename happens ('not piecemeal'), so the retirement is ruled and unexecuted. LED-166 is carried (P-G); the retirement of the vocabulary is not (P-AXIS lists the tables and columns). [CORRECTION: an earlier draft said the 2026-08-18 ruling could not be found; it is in workplan/2026-08-18-handoff-next-session.md section 2 and the research-frame proposal, which the operative instrument names as the RULING RECORD.]"
+  resolver: OWNER+AGENT
+  confidence: high
 
 - id: C-018
   class: RULING-MECHANISM
@@ -272,8 +272,9 @@ conflicts:
   class: RULING-MECHANISM
   severity: S1
   title: "The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents"
-  atoms: [CLM-048, CLM-042, CLM-034, PIP-07, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050]
+  atoms: [CLM-048, CLM-042, CLM-034, PIP-07, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050, WRK-169, WRK-170]
   sides:
+    - {atoms: [WRK-169, WRK-170], says: "owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database)."}
     - {atoms: [CLM-048, LED-091], says: "the item layer is emptied (P-UNWRITABLE lists what still points into it) and items is a Part-4 render rollup derived from specifications; never file into an [A-Z]-NN container."}
     - {atoms: [ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029], says: "conceptual-model and functional-taxonomy: items.item_code is the Part-4 organizing unit; specification values attach to items."}
     - {atoms: [PRC-027, PRC-059, PRC-068, OPI-047, OPI-048, OPI-050], says: "process rules and the operative instrument cross-reference item-layer cells (F-07, A-16, A-18, AUT)."}
@@ -686,3 +687,50 @@ conflicts:
   direction: "P-STATUS-WRITERS (lexical) lists the non-default values the column's CHECK accepts that no db.py line names beside the column. Those values are reachable only by hand SQL, so 'looked, nothing extractable' cannot be recorded, an absence the project treats as evidence (R7, R14). A Layer 1 gap: file it as a GAP and add the verb in a tooling PR (rule 10), not in a batch's data migration."
   resolver: AGENT
   confidence: medium
+
+- id: C-049
+  class: RULING-DOC
+  severity: S2
+  title: "Jurisdiction scope: five buckets and 'PROVISIONAL no longer waits for the Global South' (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document"
+  atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193, WRK-195, WRK-196, WRK-197, WRK-199, WRK-201, WRK-084, WRK-082, WRK-081, LED-193, SES-047, OPI-100, ENT-338]
+  sides:
+    - {atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193], says: "owner R5 (2026-08-18): five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order."}
+    - {atoms: [WRK-084, WRK-195, WRK-196, WRK-197, WRK-199, WRK-201], says: "owner R6: a BPC entry is PROVISIONAL until every jurisdiction in buckets 1-3 is recorded and the Co-1 pass covers at least 9 languages; section 2.3 of the philosophy document is amended; this needs its own decision record."}
+    - {atoms: [LED-193, SES-047], says: "owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug."}
+    - {atoms: [OPI-100], says: "the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open."}
+    - {atoms: [ENT-338], says: "governance/jurisdiction-philosophy.md section 2.3 still reads 'PROVISIONAL until all 24 jurisdictions are recorded' -- the amendment R6 requires has not been made."}
+  direction: "Later owner statements narrow rather than contradict: R6 (2026-08-18) releases buckets 4-5 from the gate, LED-193 (2026-09-28) narrows research to buckets 1-2 first. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038)."
+  resolver: OWNER
+  confidence: high
+
+- id: C-050
+  class: RULING-DOC
+  severity: S3
+  title: "'Three lenses' (R2, 2026-08-18) -- the lens count is now four, and the registries stay separate"
+  atoms: [WRK-004, WRK-016, WRK-173, WRK-174, WRK-177, LED-110, LED-121, LED-128, LED-168]
+  sides:
+    - {atoms: [WRK-004, WRK-173, WRK-174], says: "R2: three lenses (disability populations, ICF functional demands, access needs), three theoretical approaches, three tables."}
+    - {atoms: [LED-110, LED-128], says: "owner 2026-08-27/28: identity, icf, needs and medical are the lenses; 'because i said we need the medical model too'."}
+    - {atoms: [WRK-016, WRK-177, LED-121], says: "the lens registries stay separate and are never reconciled (the four taxonomies keep parallel base_taxonomy_* names)."}
+    - {atoms: [LED-168], says: "an owner statement naming three vocabularies on 2026-09-13 is not read as retiring the medical lens; unresolved."}
+  direction: "Not a contradiction of the 'separate and never reconciled' limb, which survives. The count in R2 is superseded by the later four-lens rulings; LED-168 stays open until the owner confirms."
+  resolver: NONE
+  confidence: medium
+
+status_corrections:
+  # Atoms whose recorded `status` is behind a later statement. `current` must equal the atom's status today, or the
+  # check fails (so a stale correction cannot linger once the atom is repaired). `by` are the atoms that decide it.
+  - {atom: LED-029, current: ACTIVE, should_be: SUPERSEDED, by: [LED-084], why: "2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken."}
+  - {atom: LED-018, current: ACTIVE, should_be: AMENDED, by: [LED-013, EVI-058], why: "Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis."}
+  - {atom: DRS-039, current: ACTIVE, should_be: SUPERSEDED, by: [LED-124, LED-125], why: "owner 2026-08-27: seven stages; specification is a stage."}
+  - {atom: DRS-040, current: ACTIVE, should_be: SUPERSEDED, by: [LED-124, LED-125], why: "owner 2026-08-27: seven stages; specification is a stage."}
+  - {atom: OPI-229, current: ACTIVE, should_be: AMENDED, by: [LED-151, LED-152], why: "owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact."}
+  - {atom: WRK-003, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "the operative instrument (1.4 rule 1) forbids making a slug by stripping an item name; its own supersession table records that R1's strip mechanism is overturned."}
+  - {atom: WRK-033, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003."}
+  - {atom: WRK-034, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003."}
+  - {atom: WRK-171, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003 (the handoff's restatement)."}
+  - {atom: WRK-172, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003 (the handoff's restatement)."}
+  - {atom: WRK-004, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
+  - {atom: WRK-173, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
+  - {atom: WRK-043, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications."}
+  - {atom: WRK-068, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "as WRK-043."}

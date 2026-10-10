@@ -581,6 +581,14 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
                 warns.append(f"{c['id']}: cites HISTORICAL atom {i}")
     ids = [c["id"] for c in conflicts["conflicts"]]
     if len(ids) != len(set(ids)): fails.append("duplicate conflict ids")
+    for sc in conflicts.get("status_corrections", []):
+        a = atoms.get(sc["atom"])
+        if a is None: fails.append(f"status_corrections: atom {sc['atom']} does not exist"); continue
+        if a["status"] != sc["current"]: fails.append(f"status_corrections: {sc['atom']} is now {a['status']}, not {sc['current']} -- the correction was applied or the atom changed; remove or update the entry")
+        if sc["should_be"] not in STA or sc["should_be"] == sc["current"]: fails.append(f"status_corrections: {sc['atom']} has a bad should_be")
+        for b in sc["by"]:
+            if b not in atoms: fails.append(f"status_corrections: {sc['atom']} cites missing atom {b}")
+    examined["status corrections owed (each atom's status re-read)"] = len(conflicts.get("status_corrections", []))
     examined["conflicts (atoms, class, probe exist)"] = n
     # 3 machines
     nt = ne = vocab_cmp = abstract = 0
@@ -706,6 +714,10 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
         if m["id"] == "M08": m["vocabs"][0]["values"] = m["vocabs"][0]["values"][:-1]
     f, _, _ = check_all(T, atoms, probes, conflicts, m5, caps)
     results.append(("a machine `vocabs` list that differs from the CHECK is caught", any("M08: vocabs" in x for x in f)))
+    # k) a stale status correction (the atom is no longer in the stated state) is caught
+    c4 = copy.deepcopy(conflicts); c4["status_corrections"][0]["current"] = "HISTORICAL"
+    f, _, _ = check_all(T, atoms, probes, c4, machines, caps)
+    results.append(("a stale status correction is caught", any("status_corrections" in x for x in f)))
     # f) an unknown probe id is caught
     c3 = copy.deepcopy(conflicts); c3["conflicts"][0]["probe"] = "P-NOPE"
     f, _, _ = check_all(T, atoms, probes, c3, machines, caps)
@@ -819,6 +831,10 @@ def render_conflicts(conflicts, atoms, probes):
     L += [f"{len(cs)} entries. Severity: " + ", ".join(f"{s} {c[s]}" for s in sorted(c)) + ". Class: " + ", ".join(f"{s} {k[s]}" for s in sorted(k)) + ".", "",
           "## Index", "", mdtable(["id", "sev", "class", "resolver", "probe -> live verdict", "title"],
                               [(x["id"], x["severity"], x["class"], x["resolver"], (", ".join(f"{p} -> {probes[p]['verdict']}" for p in as_list(x.get("probe"))) or "--"), x["title"]) for x in sorted(cs, key=lambda y: (y["severity"], y["id"]))]), ""]
+    sc = conflicts.get("status_corrections", [])
+    if sc:
+        L += ["## Status corrections owed", "", "Atoms whose recorded status is behind a later statement. The atom files record each document's own markers; these are the supersessions the documents themselves do not carry. Applying one means editing the atom's `status` and `superseded_by`; the check then fails until the entry here is removed.", "",
+              mdtable(["atom", "now", "should be", "decided by", "why"], [(x["atom"], x["current"], x["should_be"], ", ".join(x["by"]), x["why"]) for x in sc]), ""]
     for x in sorted(cs, key=lambda y: (y["severity"], y["id"])):
         L += [f"## {x['id']} [{x['severity']}] {x['title']}", "", f"**Class** {x['class']}  ·  **Resolver** {x['resolver']}  ·  **Confidence** {x['confidence']}" +
               ("".join(f"  ·  **Probe** `{p}` = **{probes[p]['verdict']}**" for p in as_list(x.get("probe")))), ""]
