@@ -78,7 +78,7 @@ database, with the rendering gated?
 |---|---|---|---|---|---|
 | C4.1 | a determination is keyed on parameter_id x at least one lens | **PASS** | PASS | P-Y = PASS | LED-091, LED-130 |
 | C4.2 | the state is computed by the engine from tier arithmetic | **PASS** | PASS | P-ENG-T3 = PASS | LED-151, LED-152, LED-010 |
-| C4.3 | a determination can be written today: its NOT NULL parent holds rows | **PASS** | PASS | base_parameters holds 10 row(s) | CLM-034 |
+| C4.3 | a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table | **PASS** | PASS | specifications has no NOT NULL FK into an emptied table | CLM-034 |
 | C4.4 | the engine can assign every value of the state vocabulary | **FAIL** | FAIL | P-ENG-STATE = FAIL | EVI-361 |
 | C4.5 | a determination can be retired in place and redetermined | **PASS** | PASS | verb retire-specification declared on this tree | LED-169 |
 | C4.6 | a live renderer reads parameter x lens determinations | **FAIL** | FAIL | P-K = FAIL | LED-103, PIP-06 |

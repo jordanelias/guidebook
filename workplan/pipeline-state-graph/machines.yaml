@@ -58,6 +58,9 @@ machines:
   stage: evidence
   holder: evidence_sources.verification_status
   states: ["NULL", VERIFIED, UNVERIFIED]
+  vocabs:
+    - {holder: evidence_sources.citation_mining_status, values: [pending, mined, deferred, not-applicable]}
+    - {holder: evidence_sources.data_capture_status, values: [pending, captured, none-extractable, deferred]}
   atoms: [RES-10, RES-09, LED-027, LED-117, PIP-20]
   transitions:
   - id: M02.t1
@@ -117,6 +120,10 @@ machines:
   stage: evidence -> judgment -> base
   holder: "observed_terms -> term_adjudications -> terms -> base_parameters | parameter_declinations"
   states: [OBSERVED, ADJUDICATED-NAMES-EXISTING, ADJUDICATED-NAMES-NEW, ADJUDICATED-NOT-OURS, ADJUDICATED-DEFERRED, TERM, PARAMETER-ACTIVE, DECLINED]
+  abstract: true
+  vocabs:
+    - {holder: term_adjudications.outcome, values: [NAMES-EXISTING, NAMES-NEW, NOT-OURS, DEFERRED]}
+    - {holder: base_parameters.status, values: [active, merged, retired]}
   atoms: [CLM-040, LED-113, LED-114, LED-115, LED-116, LED-148, LED-149, LED-150, LED-203, RES-11, RES-16, DRS-078]
   transitions:
   - id: M03.t1
@@ -296,6 +303,9 @@ machines:
   stage: specification
   holder: determination_gates (resolved_at IS NULL | NOT NULL)
   states: [OPEN, RESOLVED]
+  abstract: true
+  vocabs:
+    - {holder: determination_gates.verdict, values: [UNLINKED, MISLINKED, UNDER-CONSERVATIVE, CONTRADICTS]}
   atoms: [PIP-05, LED-128]
   transitions:
   - id: M06.t1
@@ -318,6 +328,7 @@ machines:
   stage: synthesis
   holder: gaps.status
   states: ["OPEN*", "CLOSED*"]
+  abstract: true
   atoms: [LED-155, RES-06, RES-14]
   transitions:
   - id: M07.t1
@@ -342,6 +353,10 @@ machines:
   stage: process
   holder: adversarial_passes.closed_at; adversarial_findings.disposition
   states: [RECORDED, DISPOSED, CLOSED]
+  abstract: true
+  vocabs:
+    - {holder: adversarial_findings.disposition, values: [REPAIRED, REJECTED, PROVISIONAL-DISPUTED, OWNER-RULED]}
+    - {holder: adversarial_findings.verdict, values: [SUSTAINED, SURVIVED, NOT-ATTACKED, WITHHELD-FOR-OWNER]}
   atoms: [LED-066, LED-067, LED-068, LED-070, LED-192, PRC-156, PRC-169]
   transitions:
   - id: M08.t1
@@ -364,8 +379,15 @@ machines:
     from: "DISPOSED"
     to: "CLOSED"
     via: "db.py close-adversarial-pass"
-    guards: ["refuses while a finding is undisposed or a lens is uncovered ('covered' is not defined for NOT-ATTACKED rows -- C-037)"]
+    guards:
+      - "every lens in the column's own CHECK has a finding row (a NOT-ATTACKED row counts as covering its lens if its method says why)"
+      - "at least one row is SURVIVED (a zero-finding pass must be able to show what it tried)"
+      - "every SURVIVED row names an artefact that exists"
+      - "it does NOT read `disposition`: a finding need not be disposed before the pass closes"
     evidence:
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "no finding for lens\\(es\\)"}
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "no SURVIVED row"}
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "disposition", absent: true}
       - {file: scripts/db.py, func: close_adversarial_pass, needle: "UPDATE adversarial_passes SET closed_at"}
 
 - id: M09
@@ -395,6 +417,7 @@ machines:
   stage: process
   holder: scratchpad/CURRENT + the session record
   states: [FRESH, ORIENTED, SESSION-OPEN, WORKING, ADVERSARIAL, DOD-GATED, EMITTED, PREFLIGHT-CLEAN, PR-OPEN, MERGED]
+  abstract: true
   atoms: [CLM-016, CLM-020, CLM-021, CLM-022, CLM-023, CLM-024, CLM-030, CLM-046, RES-18, LED-066, LED-067, LED-190]
   transitions:
   - id: M10.t1

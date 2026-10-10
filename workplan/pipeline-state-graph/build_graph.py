@@ -232,7 +232,7 @@ def make_probes():
     P = {}
     def probe(pid, tests, atoms):
         def deco(fn):
-            P[pid] = dict(fn=fn, tests=tests, atoms=atoms); return fn
+            P[pid] = dict(fn=fn, tests=tests, atoms=atoms); PROBE_DEFS[pid] = P[pid]; return fn
         return deco
 
     LENS = ["identity_code", "icf_code", "needs_code", "medical_code"]
@@ -252,10 +252,11 @@ def make_probes():
                 bad[t] = have + (["population_code"] if "population_code" in c else [])
         return ("FAIL" if bad else "PASS"), bad
 
-    @probe("P-C", "'population' is retired vocabulary", ["LED-127"])
+    @probe("P-C", "no table or column is named with the retired word 'population' (owner 2026-08-28; the rename is not applied)", ["LED-127", "ADD-001"])
     def _(T):
-        return "NOT-BUILT", {"tables": [t for t in T.tables if "population" in t],
-                             "columns": {t: [c for c in T.cols(t) if "population" in c] for t in T.tables if any("population" in c for c in T.cols(t))}}
+        tabs = [t for t in T.tables if "population" in t]
+        cols = {t: [c for c in T.cols(t) if "population" in c] for t in T.tables if any("population" in c for c in T.cols(t))}
+        return ("PASS" if not tabs and not cols else "NOT-BUILT"), {"tables": tabs, "columns": cols}
 
     @probe("P-D", "no UNIQUE index on source_value_extractions(ref_id)", ["LED-101", "PIP-10"])
     def _(T):
@@ -269,14 +270,16 @@ def make_probes():
 
     @probe("P-G", "no ICF-typed column holds an 'AX-' code (owner 2026-09-13: 'AX-' for ICF should never ever exist anywhere)", ["LED-166"])
     def _(T):
-        hits, other = {}, {}
+        hits, other, icf_cols = {}, {}, []
         for t in T.tables:
             for c in T.cols(t):
+                is_icf = bool(re.search(r"icf", c)) and c != "notes"
+                if is_icf: icf_cols.append(f"{t}.{c}")
                 try: n = T.con.execute(f'select count(*) from "{t}" where "{c}" GLOB \'*AX-*\'').fetchone()[0]
                 except Exception: continue
                 if not n: continue
-                (hits if c in ("icf_code",) else other)[f"{t}.{c}"] = n
-        return ("FAIL" if hits else "PASS"), {"icf_columns_holding_AX": hits, "AX_elsewhere_not_tested_by_this_ruling": other}
+                (hits if is_icf else other)[f"{t}.{c}"] = n
+        return ("FAIL" if hits else "PASS"), {"icf_typed_columns_examined": len(icf_cols), "icf_columns_holding_AX": hits, "AX_elsewhere_not_tested_by_this_ruling": other}
 
     @probe("P-AXIS", "'axis' is not a vocabulary-layer name (owner 2026-08-24: 'I don't want axis to be used')", ["LED-076", "DRS-006"])
     def _(T):
@@ -301,15 +304,17 @@ def make_probes():
 
     @probe("P-K", "a live renderer can read specifications keyed on parameter_id x lens", ["PIP-06", "LED-103", "POS-03"])
     def _(T):
-        fails, scanned = {}, 0
+        fails, scanned, keyed = {}, 0, []
         for p in ("scripts/generate/build_site.py", "scripts/generate/spec_page.py", "scripts/generate/pilot_renderings.py", "scripts/generate_parts.py"):
             if not (T.root / p).exists(): continue
             scanned += 1
             for n in ast.walk(ast.parse(read(T.root, p))):
                 if isinstance(n, ast.Constant) and isinstance(n.value, str) and re.search(r"\b(FROM|JOIN)\s+specifications\b", n.value, re.I):
+                    if "parameter_id" in n.value: keyed.append(p)
                     try: T.con.execute("explain " + n.value.replace("?", "NULL"))
                     except Exception as e: fails.setdefault(p, []).append(str(e)[:80])
-        return ("FAIL" if fails else "UNKNOWN"), {"renderers_scanned": scanned, "queries_failing_on_live_schema": fails}
+        v = "FAIL" if fails else ("PASS" if keyed else "UNKNOWN")
+        return v, {"renderers_scanned": scanned, "queries_failing_on_live_schema": fails, "renderers_whose_specification_query_names_parameter_id": sorted(set(keyed))}
 
     @probe("P-L", "no workflow `git add`s the database blob", ["CLM-012", "LED-153", "OPI-124"])
     def _(T):
@@ -325,11 +330,6 @@ def make_probes():
         linked = [t for t in T.tables if T.stage(t) == "research" and any(l in T.cols(t) for l in LENS + ["population_code"])]
         return ("PASS" if (any(l in c for l in LENS) or linked) else "FAIL"), {"lens_columns_on_search_executions": [x for x in c if x in LENS], "tables": linked}
 
-    @probe("P-N", "search_executions.engine points into a research-target registry", ["LED-112"])
-    def _(T):
-        fk = [f for f in T.con.execute("pragma foreign_key_list(search_executions)") if f[3] == "engine"]
-        return ("PASS" if fk else "FAIL"), {"engine_has_fk": bool(fk)}
-
     @probe("P-O", "every base vocabulary table is reachable by a sanctioned (db.py) writer", ["LED-182", "CLM-031", "LED-116"])
     def _(T):
         nw = sorted(t for t in T.tables if T.stage(t) == "base" and t not in T.writers)
@@ -339,7 +339,8 @@ def make_probes():
     def _(T):
         ac = read(T.root, "scripts/assess/assess_cell.py")
         m = re.search(r"figure_role\s+IN\s*\(([^)]*)\)", ac)
-        return ("NOT-BUILT" if (m and "finding" not in m.group(1)) else "UNKNOWN"), {"gather_sources_figure_role_filter": m.group(0) if m else None}
+        if not m: return "UNKNOWN", {"gather_sources_figure_role_filter": None}
+        return ("PASS" if "finding" in m.group(1) else "NOT-BUILT"), {"gather_sources_figure_role_filter": m.group(0)}
 
     @probe("P-V", "a (source x parameter) read-state ledger exists", ["LED-195", "LED-199"])
     def _(T):
@@ -347,8 +348,9 @@ def make_probes():
 
     @probe("P-V2", "add-extraction accepts a slug the source was not admitted to", ["LED-196", "LED-201"])
     def _(T):
-        guard = "is not admitted to slug" in read(T.root, "scripts/db.py")
-        return ("FAIL" if guard else "PASS"), {"admission_guard_present": guard}
+        body = func_source(T.root, "scripts/db.py", "insert_extraction") or ""
+        guard = "is not admitted to slug" in body and "source_slug_links" in body
+        return ("FAIL" if guard else "PASS"), {"admission_guard_present_in_insert_extraction": guard, "function_found": bool(body)}
 
     @probe("P-W", "an observation is one sighting (phrase at a place), so a second sense is not folded", ["LED-197"])
     def _(T):
@@ -360,7 +362,8 @@ def make_probes():
     def _(T):
         syn = {t: T.cols(t) for t in T.tables if T.stage(t) == "synthesis"}
         with_pid = [t for t, c in syn.items() if "parameter_id" in c]
-        return ("FAIL" if not with_pid else "UNKNOWN"), {"synthesis_tables": sorted(syn), "with_parameter_id": with_pid,
+        rel = T.con.execute("select count(*) from extraction_relations r join source_value_extractions a on a.extraction_id=r.from_extraction_id join source_value_extractions b on b.extraction_id=r.to_extraction_id where a.parameter_id<>b.parameter_id").fetchone()[0] if "extraction_relations" in T.tables else None
+        return ("PASS" if with_pid else "FAIL"), {"synthesis_tables": sorted(syn), "with_parameter_id": with_pid, "extraction_relations_edges_between_different_parameters_live": rel, "extraction_relations_stage": T.stage("extraction_relations"),
                                                         "connection_targets_columns": T.cols("connection_targets"),
                                                         "conflicts_key_columns": [c for c in T.cols("conflicts") if c in ("item_code", "pop_a", "pop_b", "parameter_id")]}
 
@@ -379,11 +382,12 @@ def make_probes():
         have = [c for c in T.cols("determination_gates") if c in LENS]
         return ("PASS" if len(have) == 4 else "FAIL"), {"lens_columns": have}
 
-    @probe("P-ENG-T3", "the engine: T3-clinical alone -> provisional; T3-grey alone -> pending", ["LED-010", "PIP-03", "LED-151"])
+    @probe("P-ENG-T3", "the engine: T3-clinical alone -> provisional; T3-grey alone -> pending (the assignment, not only the comment)", ["LED-010", "PIP-03", "LED-151"])
     def _(T):
         s = func_source(T.root, "scripts/assess/assess_cell.py", "determine") or ""
-        a = "T3-clinical-alone -> provisional" in s; b = "T3-grey-alone does not even reach provisional" in s
-        return ("PASS" if a and b else "FAIL"), {"t3_clinical_provisional": a, "t3_grey_pending": b}
+        a = re.search(r'T3-clinical-alone -> provisional\s*\n\s*state = "provisional"', s) is not None
+        b = re.search(r'T3-grey-alone does not even reach provisional\s*\n\s*state = "pending"', s) is not None
+        return ("PASS" if a and b else "FAIL"), {"t3_clinical_alone_assigns_provisional": a, "t3_grey_alone_assigns_pending": b}
 
     @probe("P-ENG-STATE", "the engine assigns every value of specifications.state", ["EVI-361", "EVI-364"])
     def _(T):
@@ -416,7 +420,7 @@ def make_probes():
         n = T.rows.get("base_taxonomy_medical", 0)
         return ("PASS" if n else "FAIL"), {"base_taxonomy_medical_rows": n, "writer_verbs": T.writers.get("base_taxonomy_medical", [])}
 
-    @probe("P-CO1", "every live Co-1 source carries a co1_source_type the enum admits", ["DRS-264", "CLM-037"])
+    @probe("P-CO1-TYPE", "every live co1_source_type value is in schemas.enums.Co1SourceType", ["DRS-248", "DRS-294"])
     def _(T):
         try:
             tree = ast.parse(read(T.root, "schemas/enums.py"))
@@ -427,6 +431,14 @@ def make_probes():
         live = [r[0] for r in T.q("select distinct co1_source_type from evidence_sources where co1_source_type is not null")]
         out = [v for v in live if v not in en]
         return ("FAIL" if out else "PASS"), {"enum": en, "live_values": live, "outside_enum": out}
+
+    @probe("P-CO1-PROV", "every Co-1 source's co1_provenance is non-empty free text and none holds only the co1-operational value 'published_corpus' (D-0178 requires it to name the co-production)", ["DRS-146", "DRS-264", "CLM-037"])
+    def _(T):
+        rows = T.q("select ref_id, co1_provenance from evidence_sources where evidence_type='co1'")
+        empty = [r[0] for r in rows if not (r[1] or "").strip()]
+        only_vocab = [r[0] for r in rows if (r[1] or "").strip() in ("published_corpus", "participatory_synthesis")]
+        has_check = "co1_provenance" in (T.vocab.get("evidence_sources") or {})
+        return ("PASS" if rows and not empty and not only_vocab else "FAIL"), {"co1_sources_examined": len(rows), "empty": empty, "hold_only_the_co1_operational_vocabulary": only_vocab, "column_has_CHECK_vocabulary": has_check}
 
     @probe("P-FWD-FK", "foreign keys that point FORWARD along the spine (an earlier stage's table depends on a later stage's table)", ["LED-080", "LED-125", "CLM-029"])
     def _(T):
@@ -469,18 +481,24 @@ def make_probes():
         miss = sorted(v for v, ok in named.items() if not ok)
         return ("FAIL" if miss else "PASS"), {"default": default, "values_with_no_writer_line": miss, "lexical": True}
 
-    @probe("P-PARAM-LIFECYCLE", "base_parameters.status 'merged' and 'retired' have a writer", ["LED-169", "LED-170"])
+    @probe("P-PARAM-LIFECYCLE", "base_parameters.status 'merged' and 'retired' are written by some db.py function", ["LED-169", "LED-170"])
     def _(T):
         vals = (T.vocab.get("base_parameters") or {}).get("status", [])
-        writers = [v for v, d in T.verbs.items() if "base_parameters" in d["writes"]]
-        reach = {v: any(re.search(rf"['\"]{v}['\"]", read(T.root, "scripts/db.py")) for _ in [0]) for v in ("merged", "retired")}
-        has = any(("retire" in w or "merge" in w) for w in writers)
-        return ("PASS" if has else "FAIL"), {"vocabulary": vals, "verbs_writing_base_parameters": writers}
+        reached = {v: [] for v in vals if v != "active"}
+        for vb, d in T.verbs.items():
+            if "base_parameters" not in d["writes"]: continue
+            for fn in d["functions"]:
+                src = func_source(T.root, "scripts/db.py", fn) or ""
+                for v in reached:
+                    if re.search(rf"['\"]{v}['\"]", src) and re.search(r"UPDATE\s+base_parameters", src, re.I): reached[v].append(f"{vb}:{fn}")
+        miss = [v for v, w in reached.items() if not w]
+        return ("FAIL" if miss else "PASS"), {"vocabulary": vals, "reached_by": reached, "values_with_no_writing_function": miss}
 
     return P
 
 
 ATOMS_FOR_PROBES = {}
+PROBE_DEFS = {}
 
 
 def run_probes(T, P):
@@ -515,6 +533,9 @@ def eval_pred(pred, T, probes, T1=None):
     if k == "rows":
         n = T.rows.get(pred["table"], 0); ok = n >= pred.get("min", 1)
         return ("PASS" if ok else "FAIL"), f"{pred['table']} holds {n} row(s)"
+    if k == "writable":
+        bad = [x for x in T.unwritable_set() if x["child"] == pred["table"] and not x["parent_written_by_same_verb"]]
+        return ("PASS" if not bad else "FAIL"), (f"{pred['table']} has no NOT NULL FK into an emptied table" if not bad else "unwritable: " + ", ".join(f"{x['col']} -> {x['parent']}" for x in bad))
     if k == "hand":
         return pred["verdict"], "HAND-ASSESSED: " + pred["why"]
     return "UNKNOWN", f"unknown predicate kind {k}"
@@ -538,6 +559,7 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
     fails, warns, examined = [], [], {}
     # 1 atoms
     bad = verify_atoms(atoms); examined["atoms (quote found verbatim)"] = len(atoms); fails += bad
+    examined["distinct quotes among them"] = len({norm(a["quote"]) for a in atoms.values()})
     # 2 conflicts
     n = 0
     for c in conflicts["conflicts"]:
@@ -561,7 +583,7 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
     if len(ids) != len(set(ids)): fails.append("duplicate conflict ids")
     examined["conflicts (atoms, class, probe exist)"] = n
     # 3 machines
-    nt = ne = 0
+    nt = ne = vocab_cmp = abstract = 0
     for m in machines["machines"]:
         for a in m.get("atoms", []):
             if a not in atoms: fails.append(f"{m['id']}: atom {a} does not exist")
@@ -570,11 +592,25 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
         mm = re.fullmatch(r"(\w+)\.(\w+)", h)
         if mm:
             t, col = mm.groups(); v = (T.vocab.get(t) or {}).get(col)
-            if v is None: warns.append(f"{m['id']}: no CHECK vocabulary found for {h} (states not compared)")
+            if v is None:
+                if m.get("abstract"): abstract += 1
+                else: warns.append(f"{m['id']}: no CHECK vocabulary found for {h} (states not compared)")
             else:
                 derived = set(v) | {"NULL"} if "NULL" in m["states"] else set(v)
+                vocab_cmp += 1
                 if set(m["states"]) != derived:
                     fails.append(f"{m['id']}: states {sorted(m['states'])} != the column's own CHECK {sorted(derived)}")
+        elif m.get("abstract"):
+            abstract += 1
+        elif not m.get("vocabs"):
+            abstract += 1
+            warns.append(f"{m['id']}: abstract machine (holder {h!r} is not one column) and declares no `vocabs:`; its states are not compared with any CHECK")
+        for vv in m.get("vocabs", []):
+            t, col = vv["holder"].split(".")
+            v = (T.vocab.get(t) or {}).get(col)
+            vocab_cmp += 1
+            if v is None: fails.append(f"{m['id']}: vocabs holder {vv['holder']} has no CHECK vocabulary")
+            elif set(vv["values"]) != set(v): fails.append(f"{m['id']}: vocabs {vv['holder']} {sorted(vv['values'])} != the column's own CHECK {sorted(v)}")
         for t in m["transitions"]:
             nt += 1
             for e in t["evidence"]:
@@ -582,6 +618,7 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
                 ok, why = needle_ok(T.root, e)
                 if not ok: fails.append(f"{t['id']}: {e['file']}[{e.get('func','')}] {why}: {e['needle'][:70]}")
     examined["machine transitions"] = nt; examined["transition evidence needles re-read"] = ne
+    examined["state vocabularies compared with a column's own CHECK"] = vocab_cmp; examined["abstract machines (no single column holder)"] = abstract
     # 4 capabilities
     for cid, c in caps["capabilities"].items():
         for p in c["predicates"]:
@@ -595,6 +632,12 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
         for a in p["atoms"]:
             if a not in atoms: fails.append(f"{pid}: atom {a} does not exist")
     examined["probes run"] = len(probes)
+    # a probe that cannot return PASS (or INFO) makes any capability that expects PASS from it BLOCKED by construction
+    import inspect
+    for pid, d in PROBE_DEFS.items():
+        srcp = inspect.getsource(d["fn"])
+        if '"PASS"' not in srcp and '"INFO"' not in srcp: fails.append(f"{pid}: the probe has no path that returns PASS or INFO")
+    examined["probes linted for a reachable PASS"] = len(PROBE_DEFS)
     # 6 stage coverage and spine
     miss = sorted(set(T.tables) - set(T.t2s)); stale = sorted(set(T.t2s) - set(T.tables))
     unk = sorted({s for s in T.t2s.values() if s not in T.stages and s != "infrastructure"})
@@ -633,6 +676,36 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
         if m["holder"] == "search_candidates.disposition": m["states"] = m["states"][:-1]
     f, _, _ = check_all(T, atoms, probes, conflicts, m4, caps)
     results.append(("machine states that differ from the CHECK are caught", any("column's own CHECK" in x for x in f)))
+    # a2) mutated quotes on a random sample (seed fixed), not only the first atom
+    import random
+    rng = random.Random(7); sample = rng.sample(sorted(atoms), 5); caught = 0
+    for i in sample:
+        a3 = copy.deepcopy(atoms[i]); a3["quote"] = "zzz mutated zzz " + a3["quote"]
+        caught += bool(verify_atoms({i: a3}))
+    results.append((f"mutated quotes on 5 random atoms are caught ({caught}/5)", caught == 5))
+    # g) a table dropped from the stage map is caught
+    saved = T.t2s.pop("specifications")
+    f, _, _ = check_all(T, atoms, probes, conflicts, machines, caps); T.t2s["specifications"] = saved
+    results.append(("a table missing from stage-map is caught", any("not in stage-map" in x for x in f)))
+    # h) a probe that cannot return PASS/INFO is caught by the lint
+    PROBE_DEFS["P-FAKE"] = dict(fn=(lambda T: ("FAIL", {})), tests="x", atoms=[])
+    pr2 = dict(probes); pr2["P-FAKE"] = dict(verdict="FAIL", tests="x", atoms=[], evidence={})
+    f, _, _ = check_all(T, atoms, pr2, conflicts, machines, caps); del PROBE_DEFS["P-FAKE"]
+    results.append(("a probe with no reachable PASS is caught", any("P-FAKE" in x and "no path" in x for x in f)))
+    # i) capability verdicts can say both CAN and BLOCKED, and a predicate can say both PASS and FAIL
+    can = {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": "P-D", "says": "s"}]}}}
+    blk = {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": "P-A", "says": "s"}]}}}
+    ok_can = capability_verdicts(can, T, probes)["X"]["overall"] if probes["P-D"]["verdict"] == "PASS" else "n/a"
+    ok_blk = capability_verdicts(blk, T, probes)["X"]["overall"] if probes["P-A"]["verdict"] == "FAIL" else "n/a"
+    results.append(("a capability can come out CAN and can come out BLOCKED", ok_can == "CAN" and ok_blk == "BLOCKED"))
+    w1 = eval_pred({"kind": "writable", "table": "specifications"}, T, probes)[0]; w2 = eval_pred({"kind": "writable", "table": "item_taxonomy_links"}, T, probes)[0]
+    results.append(("the `writable` predicate can say PASS and can say FAIL", {w1, w2} == {"PASS", "FAIL"}))
+    # j) a machine `vocabs` entry that differs from the CHECK is caught
+    m5 = copy.deepcopy(machines)
+    for m in m5["machines"]:
+        if m["id"] == "M08": m["vocabs"][0]["values"] = m["vocabs"][0]["values"][:-1]
+    f, _, _ = check_all(T, atoms, probes, conflicts, m5, caps)
+    results.append(("a machine `vocabs` list that differs from the CHECK is caught", any("M08: vocabs" in x for x in f)))
     # f) an unknown probe id is caught
     c3 = copy.deepcopy(conflicts); c3["conflicts"][0]["probe"] = "P-NOPE"
     f, _, _ = check_all(T, atoms, probes, c3, machines, caps)

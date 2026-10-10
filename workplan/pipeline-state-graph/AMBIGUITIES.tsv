@@ -1,6 +1,10 @@
 id	status	source	subject	ambiguity
+ADD-001	ACTIVE	references/project-standards.md:2453	the word 'population'	The owner's 'i think' qualifies only the sentence about 'base_taxonomy' instead of 'population'; this sentence is unqualified. The rename of the table/column names is not applied (probe P-C).
+ADD-002	ACTIVE	_archived/scripts/migrations/046_drop_render_manifest.sql:16	static build now, dynamic later	Recorded in the header of a retired migration; LED-103 and LED-104 quote the dynamic target only. Together they say: target dynamic, per-page HTML generated as a stopgap until then.
+ADD-003	ACTIVE	_archived/scripts/migrations/046_drop_render_manifest.sql:17	per-page HTML as a stopgap	Whether a live script still generates it is probed by P-I and P-K.
 CLM-012	ACTIVE	CLAUDE.md:85	direct DB writes	The scheduled source-verification workflow commits direct DB updates (CLAUDE.md rule 3 says so).
 CLM-020	ACTIVE	CLAUDE.md:191	PR watching	The harness system prompt instructs auto-subscribe and safety-net check-ins; CLAUDE.md says it defers to the owner.
+CLM-041	ACTIVE	CLAUDE.md:371	synthesis authorship	LED-061 and PIP-22 widen the floor to opus-class or fable-class; CLAUDE.md section 6 states only Opus-class.
 CLM-047	ACTIVE	CLAUDE.md:435	history rewriting	The harness system prompt prescribes `git checkout -B <branch> origin/<default>` after a merged PR.
 CLM-050	ACTIVE	CLAUDE.md:458	generated output	Ledger 2026-08-27: regenerate_derived.sh never rebuilds parts/ or site/ pages.
 RES-13	ACTIVE	governance/research-contract.yaml:270	R13 population grade	Owner 2026-09-25 (3) supersedes the 'no participants = PROXY' line as applied to a facility audit; wording not edited.
@@ -40,6 +44,7 @@ DRS-065	ACTIVE	decisions/DR-2026-08-27-base-building-three-levels-items-is-not-o
 DRS-068	ACTIVE	decisions/DR-2026-08-27-base-building-three-levels-items-is-not-one.md:17	items	The item layer was later deleted from the database (see DR-2026-09-02 restore-research-code-leads and strike-the-item-frame-pull).
 DRS-076	OPEN	decisions/DR-2026-08-27-base-sources-is-a-target-registry.md:42	name of base_sources	Later DRs (D-0169 naming grammar) use the base_ prefix generally; no DR in this batch records the name being resolved.
 DRS-078	ACTIVE	decisions/DR-2026-08-27-concept-vocabulary-harvested-at-evidence-adjudicated-at-judgment.md:1	concept vocabulary harvest	The same title also states the adjudication half (adjudicated at judgment), recorded as a separate atom.
+DRS-081	ACTIVE	decisions/DR-2026-08-27-concept-vocabulary-harvested-at-evidence-adjudicated-at-judgment.md:21	the vocabulary aporia the DR resolves	One horn of this tension, quoted alone, reads as a prohibition; the next sentence of the DR rejects the dilemma. The binding ruling is the adoption quoted in the DR header (LED-113 / D-0173).
 DRS-085	ACTIVE	decisions/DR-2026-08-27-concept-vocabulary-harvested-at-evidence-adjudicated-at-judgment.md:47	supersession of CLAUDE.md section 6 statements	Relevance DR of the same day (D-0174) still says applicability remains a synthesis judgement; D-0184 says D-0174 reserves applicability to synthesis; CLAUDE.md now says the crossing is judgment's output.
 DRS-097	ACTIVE	decisions/DR-2026-08-27-evidence-is-the-source-judgment-is-the-extraction.md:36	nature of the evidence collection stage	Relevance DR of the same day (D-0174) says evidence collection performs an adjudication of relevance ('evidence collection judges').
 DRS-098	ACTIVE	decisions/DR-2026-08-27-evidence-is-the-source-judgment-is-the-extraction.md:40	tier verdict stage	DR-2026-08-31 OD-D/OD-E rule on evidence_sources.tier and governance/co1-operational.md puts tier on the EvidenceSource entity.
@@ -168,6 +173,7 @@ EVI-044	ACTIVE	governance/tier-system.md:62	code_currency_status vocabulary	Voca
 EVI-049	ACTIVE	governance/tier-system.md:93	Weighted-strength anchor model	Methodology 2.2/2.3 withhold stated/provisional status from T3-alone and from a single T6 source (pending).
 EVI-052	ACTIVE	governance/tier-system.md:97	Full band	Methodology 2.2 says Tier 3 alone is not sufficient for stated and 1.6 says Tier 3 only "supports"; here T3-clinical anchors outright.
 EVI-055	ACTIVE	governance/tier-system.md:99	Weak band	Methodology 2.2 says T3-grey alone yields pending (no claim), not a weak-band claim.
+EVI-058	ACTIVE	governance/tier-system.md:101	Option A: T4-T6-only determination	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
 EVI-066	ACTIVE	governance/tier-system.md:106	Scoping/narrative review band	T3 grey maps to the open-circle band per section 5, so a grey-typed review cannot also be filled-circle.
 EVI-069	ACTIVE	governance/tier-system.md:111	Practitioner/firm work authority	Firm POE can be placed at T1, which ranks alongside Co-1.
 EVI-076	OPEN	governance/tier-system.md:116	Practice (Co-3) encoding	Section 1 states the ladder has only two parallel tracks (Co-1, Co-2).
@@ -190,6 +196,8 @@ EVI-207	ACTIVE	governance/evidence-architecture.md:143	H4 handshake gate	A grey-
 EVI-214	ACTIVE	governance/evidence-architecture.md:149	Participatory peer-reviewed claims narrowing	Narrows the boundary criterion, which lists participatory peer-reviewed work as community-rooted.
 EVI-219	ACTIVE	governance/evidence-architecture.md:163	Advocacy-brief use-pattern (G5)	Roles listed (including carer) number five while audiences number four.
 EVI-224	ACTIVE	governance/evidence-architecture.md:175	Register map row: provisional regulatory_stratum_only	Rows are described as illustrative; the full map ships with the pilot.
+EVI-229	ACTIVE	governance/evidence-architecture.md:184	Invariant I3	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
+EVI-230	ACTIVE	governance/evidence-architecture.md:184	Invariant I3: flag, caveat, ceiling	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
 EVI-239	ACTIVE	governance/evidence-architecture.md:198	Tier N reservation	evidence-methodology.md still uses "Tier 1"/"Tier 2" for design scales in sections 3.3, 4.2, 4.3 and 5.4.
 EVI-269	ACTIVE	governance/evidence-methodology.md:30	Size of hierarchy	Tier column is integer 1-6 (section 1.2); tier-system.md says T1-T6 plus two tracks.
 EVI-275	ACTIVE	governance/evidence-methodology.md:36	Tier 2 scope	"below international standards" conflicts with ladder order, where international standards are T4.
@@ -242,10 +250,12 @@ LED-088	ACTIVE	references/project-standards.md:1181	mobility split	'to start' lo
 LED-095	ACTIVE	references/project-standards.md:1491	hand-off object naming	Owner ruled naming and cardinality only; NOT NULL FKs, junctions and the fan-out/fan-in pivot are agent design (ledger correction 2026-08-27). Not implemented as renamed tables.
 LED-103	ACTIVE	references/project-standards.md:1654	rendering model	Quoted from migration 046's header (owner words); site/ and parts/ are nonetheless generated by scripts/regenerate_derived.sh.
 LED-104	ACTIVE	references/project-standards.md:1654	artefacts for rendering	CLAUDE.md 7 describes parts/, site/ and tools/*.html as generated, committed artefacts.
-LED-106	ACTIVE	references/project-standards.md:1890	source_value_extractions stage	CLAUDE.md section 3 puts extraction at evidence; stage-map.yaml places it at evidence as DISPUTED.
+LED-106	ACTIVE	references/project-standards.md:1890	source_value_extractions stage	The ledger heads this "Owner ruling 2026-08-27, adopting item #2 of the architecture note"; the sentence quoted is the ledger author's statement of the table assignment, not the owner's own words (the owner's words are the two quoted evidence/judgment descriptions above it).
 LED-108	ACTIVE	references/project-standards.md:1881	judgment stage output (tier)	tier is stored on evidence_sources; the move is queued, not done.
+LED-113	ACTIVE	references/project-standards.md:1998	concept crossing stage	That the crossing is judgment's output is stated in CLAUDE.md section 6 (CLM-040) citing this ruling; it is not in this quote.
 LED-127	ACTIVE	references/project-standards.md:2453	population vocabulary	Owner's base_taxonomy phrasing was 'i think'; identity put back for confirmation; rename not applied. Many live names still carry 'population'.
 LED-133	ACTIVE	references/project-standards.md:2925	lens mechanism (D-0184)	Text paraphrased from ledger line quoting D-0184; check DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md
+LED-154	ACTIVE	references/project-standards.md:2858	delegated adjudication (D-0188)	D-0188 (DRS-232) narrows this to "enumerated items and no further"; that narrowing is the DR's text, not part of the owner's words.
 LED-158	ACTIVE	references/project-standards.md:3051	medical lens population	Adversarial pass correction of an agent reading; not an owner quote.
 LED-159	ACTIVE	references/project-standards.md:3122	code value upgraded by confirmation	Which band an upgraded value lands in is unruled.
 LED-164	ACTIVE	references/project-standards.md:3257	grey echoing a code	The rebuttable-presumption shape is a proposal, not the ruling.
@@ -441,7 +451,7 @@ SES-022	ACTIVE	sessions/session_2026-09-18-research-batch-15-t2-synthesis-thresh
 SES-023	ACTIVE	sessions/session_2026-09-18-research-batch-15-t2-synthesis-threshold.md:51	highly relevant sources without a value still carry qualitative reasoning	Ledger line 4398 restates the principle (arguments and qualitative findings are mined) but not this sentence or its relevance trigger.
 SES-024	ACTIVE	sessions/session_2026-09-18-research-batch-15-t2-synthesis-threshold.md:52	anything relevant to accessibility may be mined from a source	The 2026-10-09 scan contract is scoped to the parameter list; the open-ended 'wherever is relevant to accessibility' breadth is not restated.
 SES-025	ACTIVE	sessions/session_2026-09-18-research-batch-15-t2-synthesis-threshold.md:53	search by slug but adjudicate by all slugs in a category	The 2026-10-09 scan contract (ledger 4398) extends this to the whole parameter list whatever slug; the 'category' unit is never restated, and the session does not say it was superseded.
-SES-027	ACTIVE	sessions/session_2026-09-18-research-batch-16-backward-mining-t2-anchors.md:184	retire in place, never hard-delete	The session cites it as 'owner ruling 2026-09-16' without quoting the words; code and scripts remain deletable per CLAUDE.md section 8.
+SES-027	ACTIVE	sessions/session_2026-09-18-research-batch-16-backward-mining-t2-anchors.md:184	a pass that runs carries a standing deferral's text into notes	The retire-in-place ruling itself is LED-169/LED-170/SES-ledger text; this atom records only the application the session made of it.
 SES-029	ACTIVE	sessions/session_2026-09-18-research-batch-16-backward-mining-t2-anchors.md:197	deferral is legitimate if it eventually runs	'Runs eventually' is an obligation with no ageing, backlog count or failing check, as the session itself notes.
 SES-030	ACTIVE	sessions/session_2026-09-18-research-batch-18-archive-route-ramp-threshold.md:45	1979 work is historical grounding, not a current standard	The session reads it as a currency judgement overriding a mechanical T1 reading; the generalisation to other age cutoffs is not stated.
 SES-032	ACTIVE	sessions/session_2026-09-20-research-batch-19-pre1990-chain-steinfeld-walter-templer.md:332	fix mechanisms, not hand edit	Given as an instruction mid-batch; the session also records the owner asking 'did we fix it mechanically?' at /simplify. Closest ledger text is CLAUDE.md rule 8, which does not carry this sentence.

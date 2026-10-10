@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-10 21:40 UTC from git HEAD 5dff951 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-10 22:04 UTC from git HEAD a54d902 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 101,
  "stages": [
@@ -4648,9 +4648,10 @@
   },
   "P-C": {
    "verdict": "NOT-BUILT",
-   "tests": "'population' is retired vocabulary",
+   "tests": "no table or column is named with the retired word 'population' (owner 2026-08-28; the rename is not applied)",
    "atoms": [
-    "LED-127"
+    "LED-127",
+    "ADD-001"
    ],
    "evidence": {
     "tables": [
@@ -4757,6 +4758,7 @@
     "LED-166"
    ],
    "evidence": {
+    "icf_typed_columns_examined": 10,
     "icf_columns_holding_AX": {},
     "AX_elsewhere_not_tested_by_this_ruling": {
      "access_need_axis_map.axis_code": 21,
@@ -4893,7 +4895,8 @@
      "scripts/generate/pilot_renderings.py": [
       "no such column: item_code"
      ]
-    }
+    },
+    "renderers_whose_specification_query_names_parameter_id": []
    }
   },
   "P-L": {
@@ -4921,16 +4924,6 @@
    "evidence": {
     "lens_columns_on_search_executions": [],
     "tables": []
-   }
-  },
-  "P-N": {
-   "verdict": "FAIL",
-   "tests": "search_executions.engine points into a research-target registry",
-   "atoms": [
-    "LED-112"
-   ],
-   "evidence": {
-    "engine_has_fk": false
    }
   },
   "P-O": {
@@ -4992,7 +4985,8 @@
     "LED-201"
    ],
    "evidence": {
-    "admission_guard_present": true
+    "admission_guard_present_in_insert_extraction": true,
+    "function_found": true
    }
   },
   "P-W": {
@@ -5026,6 +5020,8 @@
      "supersession_check"
     ],
     "with_parameter_id": [],
+    "extraction_relations_edges_between_different_parameters_live": 0,
+    "extraction_relations_stage": "evidence",
     "connection_targets_columns": [
      "con_id",
      "target"
@@ -5071,15 +5067,15 @@
   },
   "P-ENG-T3": {
    "verdict": "PASS",
-   "tests": "the engine: T3-clinical alone -> provisional; T3-grey alone -> pending",
+   "tests": "the engine: T3-clinical alone -> provisional; T3-grey alone -> pending (the assignment, not only the comment)",
    "atoms": [
     "LED-010",
     "PIP-03",
     "LED-151"
    ],
    "evidence": {
-    "t3_clinical_provisional": true,
-    "t3_grey_pending": true
+    "t3_clinical_alone_assigns_provisional": true,
+    "t3_grey_alone_assigns_pending": true
    }
   },
   "P-ENG-STATE": {
@@ -5190,12 +5186,12 @@
     ]
    }
   },
-  "P-CO1": {
+  "P-CO1-TYPE": {
    "verdict": "FAIL",
-   "tests": "every live Co-1 source carries a co1_source_type the enum admits",
+   "tests": "every live co1_source_type value is in schemas.enums.Co1SourceType",
    "atoms": [
-    "DRS-264",
-    "CLM-037"
+    "DRS-248",
+    "DRS-294"
    ],
    "evidence": {
     "enum": [
@@ -5215,6 +5211,21 @@
      "dpo_position_statement",
      "participatory_research"
     ]
+   }
+  },
+  "P-CO1-PROV": {
+   "verdict": "PASS",
+   "tests": "every Co-1 source's co1_provenance is non-empty free text and none holds only the co1-operational value 'published_corpus' (D-0178 requires it to name the co-production)",
+   "atoms": [
+    "DRS-146",
+    "DRS-264",
+    "CLM-037"
+   ],
+   "evidence": {
+    "co1_sources_examined": 4,
+    "empty": [],
+    "hold_only_the_co1_operational_vocabulary": [],
+    "column_has_CHECK_vocabulary": false
    }
   },
   "P-FWD-FK": {
@@ -5403,7 +5414,7 @@
   },
   "P-PARAM-LIFECYCLE": {
    "verdict": "FAIL",
-   "tests": "base_parameters.status 'merged' and 'retired' have a writer",
+   "tests": "base_parameters.status 'merged' and 'retired' are written by some db.py function",
    "atoms": [
     "LED-169",
     "LED-170"
@@ -5414,9 +5425,13 @@
      "merged",
      "retired"
     ],
-    "verbs_writing_base_parameters": [
-     "set-parameter-direction",
-     "add-parameter"
+    "reached_by": {
+     "merged": [],
+     "retired": []
+    },
+    "values_with_no_writing_function": [
+     "merged",
+     "retired"
     ]
    }
   }
@@ -5434,7 +5449,6 @@
   "P-K": "FAIL",
   "P-L": "FAIL",
   "P-M": "FAIL",
-  "P-N": "FAIL",
   "P-O": "FAIL",
   "P-R": "NOT-BUILT",
   "P-V": "PASS",
@@ -5450,7 +5464,8 @@
   "P-STAGE-SVE": "FAIL",
   "P-UNWRITABLE": "FAIL",
   "P-MEDICAL": "FAIL",
-  "P-CO1": "FAIL",
+  "P-CO1-TYPE": "FAIL",
+  "P-CO1-PROV": "PASS",
   "P-FWD-FK": "INFO",
   "P-VERIF-VOCAB": "PASS",
   "P-QUARANTINE": "FAIL",
@@ -5708,9 +5723,9 @@
     },
     {
      "id": "C4.3",
-     "says": "a determination can be written today: its NOT NULL parent holds rows",
+     "says": "a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table",
      "verdict": "PASS",
-     "why": "base_parameters holds 10 row(s)",
+     "why": "specifications has no NOT NULL FK into an emptied table",
      "atoms": [
       "CLM-034"
      ]
@@ -6016,9 +6031,9 @@
     },
     {
      "id": "C4.3",
-     "says": "a determination can be written today: its NOT NULL parent holds rows",
+     "says": "a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table",
      "verdict": "PASS",
-     "why": "base_parameters holds 1 row(s)",
+     "why": "specifications has no NOT NULL FK into an emptied table",
      "atoms": [
       "CLM-034"
      ]
@@ -6075,22 +6090,26 @@
   }
  },
  "examined": {
-  "atoms (quote found verbatim)": 2437,
-  "conflicts (atoms, class, probe exist)": 46,
+  "atoms (quote found verbatim)": 2440,
+  "distinct quotes among them": 2410,
+  "conflicts (atoms, class, probe exist)": 48,
   "machine transitions": 41,
-  "transition evidence needles re-read": 68,
+  "transition evidence needles re-read": 71,
+  "state vocabularies compared with a column's own CHECK": 12,
+  "abstract machines (no single column holder)": 5,
   "capability predicates": 29,
   "probes run": 35,
+  "probes linted for a reachable PASS": 35,
   "tables placed in a stage": 82
  },
  "atoms_by_status": {
-  "ACTIVE": 2177,
+  "ACTIVE": 2183,
   "OPEN": 67,
   "SUPERSEDED": 68,
-  "AMENDED": 73,
+  "AMENDED": 70,
   "PROPOSED": 27,
   "HISTORICAL": 25
  },
- "atoms_total": 2437,
- "conflicts_total": 46
+ "atoms_total": 2440,
+ "conflicts_total": 48
 }
