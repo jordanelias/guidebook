@@ -3,7 +3,7 @@
 **Session id:** `session_2026-10-09-research-batch-24-parameter-pilot`
 **Branch:** `ccr-544a80b2-4d4ils`
 **Session kind:** research (vocabulary rows only) plus planning working papers. No searches, no admissions, no extractions, no schema, script or check change.
-**Pointers:** `sessions/LATEST` and `sessions/LATEST-RESEARCH` are NOT moved. This is not an acquisition batch, and moving `LATEST-RESEARCH` would point the blocking batch gate at a session with no admissions.
+**Pointers:** `sessions/LATEST` (the continuity pointer: where did work leave off) moves to this session. `sessions/LATEST-RESEARCH` is NOT moved: this is not an acquisition batch, and moving it would point the blocking batch gate at a session with no admissions.
 
 **Derive every figure.** Re-run the command beside a number rather than trust the sentence.
 
@@ -11,7 +11,7 @@
 
 ## 0. What this session wrote to the database
 
-Nine `base_parameters` rows (ids 4 to 12) and nothing else, through `scripts/migrations/data_20261009055057_2026-10-09-research-batch-24-parameter-pilot.sql` (9 inserts, 0 updates, 0 deletes in its `-- Totals` header). The rows were written on a scratch copy with `db.py add-parameter` (replay: `scratchpad/session_2026-10-09-research-batch-24-parameter-pilot/replay/populate-parameters.sh`), captured with `emit_batch_sql.py`, and applied with `migrate_db.py`. The canonical blob's sha256 did not move until the migration.
+Nine `base_parameters` rows (ids 4 to 12) through `scripts/migrations/data_20261009055057_2026-10-09-research-batch-24-parameter-pilot.sql` (9 inserts, 0 updates, 0 deletes in its `-- Totals` header), then two `terms` definition updates (TERM-003 and TERM-005, the two whose definitions stated a floor or a ceiling) through `scripts/migrations/data_20261010000310_2026-10-09-research-batch-24-parameter-pilot.sql` (0 inserts, 2 updates, 0 deletes). Nothing else. The second migration is the repair for a `/code-review` finding; its replay is `replay/amend-term-definitions.sh`. The rows were written on a scratch copy with `db.py add-parameter` (replay: `scratchpad/session_2026-10-09-research-batch-24-parameter-pilot/replay/populate-parameters.sh`), captured with `emit_batch_sql.py`, and applied with `migrate_db.py`. The canonical blob's sha256 did not move until the migration.
 
 ```
 python3 - <<'PY'
@@ -38,8 +38,9 @@ The nine: corridor width (TERM-002), turning circle (TERM-003), operating force 
 - Recommended next action "retrieve REF-01002's full text": closed by the owner's 2026-09-25 ruling; GAP-016 is NOT-ADDRESSABLE. The session read only the first 1,800 characters of the gap and missed its correction block.
 - "Full text is saved for only 14 of 53 sources": wrong. 49 of 53 have a saved file (`catalogue-plan-v2.md` section 12, command A1). The session had counted only derived `-text.txt` files.
 - The adjudicator's claim of "0 PROPOSED decisions" was wrong: `select count(*) from decisions where status='PROPOSED'` gives 2.
-- A session-open misrouting: ten read-only commands run before `/session-open` were logged into batch 23's `commands.jsonl`. They were moved here and that file was restored to its committed state with `git checkout`.
-- The migration's note for parameter 12 (TERM-091) says "no source adjudication behind it"; TERM-091 does hold a NAMES-NEW adjudication from batch 20. The migration is append-only; the correction waits for the `annotate-parameter` verb in tooling T1.
+- A session-open misrouting: ten read-only commands run before `/session-open` were logged into batch 23's `commands.jsonl`. They were moved to `scratchpad/session_2026-10-08-orientation-state-and-adjudication/commands.jsonl`, an orientation folder with no session record and no database rows (the orientation turns that preceded `/session-open`; count with `wc -l`), and batch 23's file was restored to its committed state with `git checkout`. This session's own `commands.jsonl` begins at `/session-open`; the orientation folder is part of this session's record.
+- The nine migrated rows carry one identical hand-typed note. Its clause "no source adjudication behind it" is false for parameter 12 (TERM-091 holds a NAMES-NEW adjudication from batch 20), and the note's other clauses restate what the schema already derives (direction unset, who asked). The first migration is immutable once committed (`CLAUDE.md` rule 3), so it is not re-emitted. **Owed before this pull request merges:** after tooling T1 merges, `db.py annotate-parameter` (T1 adds it; it appends a dated line and never overwrites) is run on the nine rows through a compensating data migration. The false statement stands in the meantime and is recorded here, in the ledger entry's session record pointer, and in the pull request.
+- The `/code-review` of this branch (fourteen findings) is answered in section 7.
 
 ## 3. Owner statements
 
@@ -69,7 +70,29 @@ Measured 2026-10-09 after the migration, the record, the attestation and the led
 
 ## 6. What the next session takes
 
-1. **T1, the tooling pull request** (`catalogue-plan-v2.md` section 4.2, items 1 to 5, approved by the owner): its own pull request off `main`, merged before any bulk promotion. It has its own branch off `main`, which the owner approved.
+1. **T1, the tooling pull request** (`catalogue-plan-v2.md` section 4.2, items 1 to 5, approved by the owner as D8): its own pull request off `main` (branch `claude/t1-scan-contract-tooling`, which the owner approved), merged BEFORE this branch's pull request and before any bulk promotion. This branch's pull request was opened first and waits. Both change `data/guidebook.db` and `PRAGMA user_version`, so the second to merge takes `main`'s blob and re-runs `python3 scripts/migrate_db.py`. T1 was built by a subagent and carries more than items 1 to 5 (derive: `git diff --stat origin/main..claude/t1-scan-contract-tooling`); the extra items are for the owner to accept or strike (ledger entry, item 5). It had not been reviewed or gated by the orchestrator when this record was written, and no pull request exists for it. **Owed after T1 merges and before this pull request merges:** the compensating migration for the nine notes (section 2).
 2. Read the two permitted catalogues for candidate names (read-only), screen them, and bring the one approval table to the owner before anything is minted.
 3. Phase P3: read what is already held against the ten parameters, after T1.
 4. Undecided: D4 to D7, D9 to D11, D13.
+
+## 7. Answers to the code review
+
+A `/code-review` of this branch returned fourteen findings. Disposition of each, by what the finding said:
+
+| Finding | Disposition |
+|---|---|
+| The nine migrated notes are identical, restate derived facts, and are false for parameter 12 | Not re-emitted (the migration is immutable once committed). Compensating migration owed after T1 merges (section 2). |
+| Ledger item 7 presents the cap withdrawal as an owner statement | Reworded: the budgets lapse with the scope they budgeted; the one-source review unit is the session's recommendation, not an owner statement. |
+| Ledger item 4 dropped the `[ASSUMPTION]` label on "skimmed" | Restored, with the owner's actual words quoted. |
+| `/batch-done` on this session's own stem is NON-COMPLIANT | Disclosed in section 5 and the attestation as the explicit waiver; the failure is by design (no admissions). |
+| No mark at the 2026-09-09 naming clause; the CONDITION omits naming and minting | Marks added at the 2026-09-09 and 2026-08-19 entries; CONDITION and ACTION extended. The audit's raw-text target count (`supersession_backpointer_audit.py`) is not changed here (rule 10: tooling ships apart). |
+| TERM-003 and TERM-005 definitions state a direction | Repaired through a second data migration with `amend-term`. |
+| Ledger quote of the 20:22 commission dropped an "s" | Corrected; every quote in the entry was re-checked against the transcript. |
+| The "new parameters up to four" budget is unmarked | Marked, with a `SUPERSEDES` line and a back-pointer. |
+| Attestation says the ten commands were moved to this session's log | Corrected to name the orientation folder (section 2). |
+| The context map is stale | Regenerated. |
+| The R16 baseline sits at its old value | Lowered to the live value. |
+| The replay script takes its session stem from `CURRENT` | Pinned. |
+| Documents disagree on pull-request order and T1's contents | Reconciled in the ledger (items 3 and 5), plan v2 Addendum 4, and section 6. |
+| Plan v1 and the worklist carry claims later found wrong | A pointer to the correction was added at the head of each; the text below is left as written. |
+

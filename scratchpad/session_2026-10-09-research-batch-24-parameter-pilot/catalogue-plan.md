@@ -2,6 +2,8 @@
 
 Prepared 2026-10-09 in the batch 24 session. This is a working paper in the session folder. It proposes; it decides nothing and records no ruling. Every figure below was derived on 2026-10-09; the commands at the end recompute them (CLAUDE.md rule 7a: re-run, do not trust).
 
+> **SUPERSEDED 2026-10-10 by `catalogue-plan-v2.md`.** Do not act on this version. The corrections are in v2 sections 1 and 2 and the session record's section 2, among them: (1) the claim below that full text is saved for only a minority of the sources is wrong (most admitted sources have a saved file; v2 section 12, command A1 derives it, so re-run that rather than trust any figure here); (2) this version failed three of the owner's four requirements (`catalogue-plan-critique-fable.md`). Text below is left as written.
+
 ---
 
 # Part A. What we hold, organised

@@ -1,5 +1,7 @@
 # Major-sources worklist, bucket 1-2 jurisdictions (derived 2026-10-09; a LEAD LIST, not evidence)
 
+> **Known defects, found by the 2026-10-10 code review; re-derive before relying on any row.** A standard can appear on more than one row (jurisdictions that adopt the same instrument), so a row count is not a count of distinct standards: count distinct values of the `Standard cited` column. Rows in the later tables have empty cells where the database holds no value; an empty cell means unknown, not none. This file is a lead list only (DR-2026-08-06 section 4.1); nothing in it is admitted.
+
 Built from references/standards-registry.md (as of its own dates), research_code_leads, references/co1-verified-sources.json, references/co2-verified-sources.json. Every item still has to be re-retrieved and admitted on its own evidence (DR-2026-08-06 section 4.1).
 
 ## Code bodies and standards (standards-registry, bucket 1-2 + INT)

@@ -24,18 +24,26 @@
     },
     {
       "rule": "adherence-logging-and-attestation",
-      "reason": "Ten read-only commands run before /session-open were logged into the closed batch 23 session's commands.jsonl. They were moved to this session's log and the batch 23 file was restored to its committed state with git checkout, an edit to a closed session's record."
+      "reason": "Ten read-only commands run before /session-open were logged into the closed batch 23 session's commands.jsonl. They were moved to scratchpad/session_2026-10-08-orientation-state-and-adjudication/commands.jsonl, an orientation folder with no session record and no database rows, and the batch 23 file was restored to its committed state with git checkout, an edit to a closed session's record. This session's own commands.jsonl begins at /session-open; the orientation folder is part of this session's record."
     },
     {
       "rule": "adherence-logging-and-attestation",
-      "reason": "Three one-paragraph SUPERSEDED IN PART markers were inserted into scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md, a closed session's file, because the back-pointer audit requires currency to live at the superseded text. The migration note on parameter 12 states 'no source adjudication behind it', which is wrong for TERM-091; the migration is append-only and the correction waits for the annotate verb in tooling T1."
+      "reason": "Marker paragraphs were inserted into scratchpad/session_2026-10-01-research-batch-23/process-gap-remediation-plan.md, a closed session's file, because the back-pointer audit requires currency to live at the superseded text (one for the pilot scope, one for the figure-only step, one covering the pilot's two row budgets). The migration note on parameter 12 states 'no source adjudication behind it', which is wrong for TERM-091; the first migration is immutable once committed, so the repair is a compensating migration owed after tooling T1 merges (db.py annotate-parameter) and before this pull request merges."
     },
     {
       "rule": "adherence-logging-and-attestation",
       "reason": "Subagent reports (the adjudication, the critique and the plan rewrite) were verified only in part by the orchestrator; the claims it did not check are listed as unchecked in catalogue-plan-critique-fable.md. The owner's statement on D3 ('it can be pulled from previous catalogues of entries for prepopulating') arrived after the ledger text was drafted and was folded in before commit; which catalogues it means is unresolved and nothing was minted from any."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Run on this session's own stem, /batch-done's first command (research_batch_dod.py --session) is NON-COMPLIANT on R1, R9a and R9b by design: the session admitted no source, and those rules count admissions. The record reports the gate on batch 23's name as COMPLIANT and on this session's own name as failing, and that disclosure is the explicit waiver /batch-done asks for. The owner reads it on the pull request."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "A /code-review of the branch returned fourteen findings. Two ledger statements were not owner words (the cap withdrawal; the engine reading of 'skimmed') and were reworded, with the skimmed reading marked as an assumption. The migrated note on the nine parameters is not rewritten. Two definitions that stated a direction (turning circle, operating force) were repaired through a second data migration. The R16 baseline was lowered, sessions/LATEST was moved, the context map was regenerated, and the replay script's session stem was pinned."
     }
   ],
   "bias_direction": "The session that seeded the nine rows also wrote the record, the plan that justifies them, and the briefs given to the agents that reviewed that plan, so the review is shaped by what the author chose to show it; the nine terms were also chosen by the same author from definitions alone, with a conservative bias toward leaving out doubtful quantities.",
-  "independent_reviewer_counterclaim": "The strongest objection is that a session which first reported a retired determination as standing, and recommended a retrieval the owner had already ruled closed, should not be trusted to have chosen the nine terms either: at least two of them are named differently from the phrases the held codes use (turning circle where the ADA text says turning space; headroom clearance where sources say vertical clearance), one term's definition states a direction (operating force: 'Maximum force'), and no source has been read against any of the nine. The rows could be wrong in kind, not only in name, and the only review is the owner's one-word approval.",
+  "independent_reviewer_counterclaim": "The strongest objection is that a session which first reported a retired determination as standing, and recommended a retrieval the owner had already ruled closed, should not be trusted to have chosen the nine terms either: at least two of them are named differently from the phrases the held codes use (turning circle where the ADA text says turning space; headroom clearance where sources say vertical clearance), two terms' definitions stated a direction (turning circle: 'Minimum space'; operating force: 'Maximum force'; repaired by the second migration after the code review), and no source has been read against any of the nine. The rows could be wrong in kind, not only in name, and the only review is the owner's one-word approval.",
   "verdict": "DEVIATION-LOGGED"
 }
