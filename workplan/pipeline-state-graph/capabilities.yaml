@@ -1,0 +1,102 @@
+# capabilities.yaml -- the four-capability interrogation (owner's request, this session):
+#   C1 dynamic mining of information from one source across multiple parameters
+#   C2 the system can grow its own parameter base
+#   C3 the system can synthesize across parameters
+#   C4 the system can specify, then render
+#
+# A predicate is evaluated against the LIVE tree by build_graph.py. Kinds: probe (a probe verdict), verb (a db.py verb is
+# declared), needle (a regex found in a function), vocab (a CHECK vocabulary admits a value), rows (a table holds rows),
+# hand (a verdict the generator cannot compute; labelled HAND-ASSESSED in the output). `atoms` are the ruling(s) the
+# predicate tests; a predicate with no atom tests a plain capability, not a ruling.
+
+intro: |
+  The four capabilities are stated by the owner as what the pipeline must be able to do, not as a checklist of verbs.
+  A capability is judged here as CAN only if every predicate holds on the tree being examined; a single FAIL or a
+  construct that does not exist makes it BLOCKED, and the blocking predicates are named. The verdicts describe the
+  checkout the generator was run in; `--compare` adds a second tree (the unreleased tooling branch) as a column.
+  Predicates answer "can the machinery do this at all", not "has it been done": the live row counts are in
+  STATE-GRAPH.md. A predicate that tests a ruling the mechanism does not carry fails even where a workaround exists
+  (a hand-written migration is not the pipeline).
+
+capabilities:
+
+  C1:
+    name: "Mine one source across many parameters"
+    asks: |
+      Can a single admitted source be read once and yield values for several parameters, in every lens, with a
+      record of what was and was not looked for -- without the slug it happened to be filed under limiting what
+      is taken from it (owner, 2026-10-09: "every admitted source is scanned for any and all applicable parameters,
+      whatever slug it was filed under")?
+    predicates:
+      - {id: C1.1, kind: probe, probe: P-D, says: "no UNIQUE(ref_id) on the capture table: one source may yield many rows", atoms: [LED-100, LED-101]}
+      - {id: C1.2, kind: needle, file: scripts/db.py, func: observe_term, needle: "does not accept a term_id", says: "a phrase can be harvested from a source without presupposing a category", atoms: [LED-115, CLM-040]}
+      - {id: C1.3, kind: probe, probe: P-W, says: "one source can be harvested for more than one sense of the same phrase", atoms: [LED-197]}
+      - {id: C1.4, kind: probe, probe: P-V2, says: "an extraction can be filed under a slug other than the one the source was admitted to", atoms: [LED-196, LED-201]}
+      - {id: C1.5, kind: probe, probe: P-V, says: "a record exists of which parameters a source has been read for", atoms: [LED-195, LED-199]}
+      - {id: C1.6, kind: probe, probe: P-MEDICAL, says: "a value can be stated in every lens, including the medical lens", atoms: [LED-110, LED-154]}
+      - {id: C1.7, kind: vocab, table: source_value_extractions, column: claim_type, value: qualitative, says: "arguments and qualitative findings can be captured as well as numbers", atoms: [SES-022, SES-023]}
+      - {id: C1.8, kind: probe, probe: P-M, says: "a search records which slug x lens cells it covered", atoms: [LED-084, RES-04]}
+
+  C2:
+    name: "Grow its own parameter base"
+    asks: |
+      Can a concept met in a source become a parameter, and can the parameter list be extended, corrected, retired
+      and merged, through sanctioned writers and with the warrant recorded -- without a container that states its own
+      answer and without hand SQL?
+    predicates:
+      - {id: C2.1, kind: verb, verb: add-term, says: "a new concept enters only as a term minted from an observation", atoms: [LED-150, LED-203]}
+      - {id: C2.2, kind: needle, file: scripts/db.py, func: insert_term, needle: "states a determination in its own name", says: "a name may not state its own answer", atoms: [LED-148, PIP-16]}
+      - {id: C2.3, kind: verb, verb: add-parameter, says: "an adjudicated term can be promoted to a parameter", atoms: [LED-092]}
+      - {id: C2.4, kind: verb, verb: decline-parameter, says: "a term can be judged not-a-parameter, with the reason on record", atoms: [RES-16]}
+      - {id: C2.5, kind: probe, probe: P-PARAM-LIFECYCLE, says: "a parameter can be retired or merged on record (retire in place)", atoms: [LED-169, LED-170]}
+      - {id: C2.6, kind: verb, verb: mint-term-from-catalogue, says: "the list can be prepopulated from earlier catalogues under screening and owner approval", atoms: [LED-204, LED-205]}
+      - {id: C2.7, kind: verb, verb: set-parameter-direction, says: "which direction is better for a disabled person can be recorded per parameter", atoms: [LED-091]}
+      - {id: C2.8, kind: probe, probe: P-O, says: "the base vocabularies a parameter and a lens point into have a sanctioned writer", atoms: [LED-182, CLM-031]}
+
+  C3:
+    name: "Synthesize across parameters"
+    asks: |
+      Can the machinery combine what independent sources say about one parameter into a determination, show where
+      they diverge, and relate more than one parameter to another (interaction, compounding, conflict) -- so that a
+      finding that depends on two parameters has a place to be recorded and a source to be traced to?
+    predicates:
+      - {id: C3.1, kind: needle, file: scripts/assess/assess_cell.py, func: determine, needle: "anchors = anchoring", says: "independent sources for one (parameter x lens) cell are combined into one state", atoms: [LED-151, PIP-08]}
+      - {id: C3.2, kind: vocab, table: convergence_assessment, column: status, value: divergent, says: "divergence between sources is a recorded state", atoms: [MIS-06]}
+      - {id: C3.3, kind: needle, file: scripts/assess/assess_cell.py, func: compose_value, needle: "spread is rendered with each population", says: "a spread across lenses is carried with each lens's direction", atoms: [LED-176]}
+      - {id: C3.4, kind: probe, probe: P-R, says: "findings plus a threshold can reach a determination", atoms: [LED-174, LED-172]}
+      - {id: C3.5, kind: probe, probe: P-X, says: "a synthesis-stage structure can relate two or more parameters", atoms: [LED-097, LED-098]}
+
+  C4:
+    name: "Specify, then render"
+    asks: |
+      Can a determination be computed from the evidence, keyed on parameter x lens, written through a migration,
+      retired and redetermined; and can what is written be rendered to a reader at its stated strength, from the
+      database, with the rendering gated?
+    predicates:
+      - {id: C4.1, kind: probe, probe: P-Y, says: "a determination is keyed on parameter_id x at least one lens", atoms: [LED-091, LED-130]}
+      - {id: C4.2, kind: probe, probe: P-ENG-T3, says: "the state is computed by the engine from tier arithmetic", atoms: [LED-151, LED-152, LED-010]}
+      - {id: C4.3, kind: rows, table: base_parameters, min: 1, says: "a determination can be written today: its NOT NULL parent holds rows", atoms: [CLM-034]}
+      - {id: C4.4, kind: probe, probe: P-ENG-STATE, says: "the engine can assign every value of the state vocabulary", atoms: [EVI-361]}
+      - {id: C4.5, kind: verb, verb: retire-specification, says: "a determination can be retired in place and redetermined", atoms: [LED-169]}
+      - {id: C4.6, kind: probe, probe: P-K, says: "a live renderer reads parameter x lens determinations", atoms: [LED-103, PIP-06]}
+      - {id: C4.7, kind: probe, probe: P-I, says: "the derived surfaces can be regenerated from the database", atoms: [PIP-07, CLM-050]}
+      - {id: C4.8, kind: probe, probe: P-QUARANTINE, says: "the rendering invariants and tier-derivation consistency are gated", atoms: [PIP-06, POS-03]}
+
+components:
+  - {name: "Search log (log-search, search_executions)", stage: research, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "logs the query and the prior; has no lens column, so R4's slug x lens coverage cannot be shown (C1.8)."}
+  - {name: "Candidate staging (add-candidate, resolve-candidate)", stage: research, C1: "--", C2: "--", C3: "--", C4: "--", note: "holds what a search surfaced; any disposition can follow any other (M01.t3)."}
+  - {name: "Source admission (add-source, supersede-source, correct-source)", stage: evidence, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "admits a source to slugs; the slug link is what add-extraction later reads as its permission."}
+  - {name: "Citation mining (log-mining)", stage: evidence, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "discovery of further SOURCES, not values; a separate axis from extraction (pipeline-operations section 2)."}
+  - {name: "Term harvest (observe-term)", stage: evidence, C1: YES, C2: YES, C3: "--", C4: "--", note: "records any phrase a source uses, any number per source, unjudged; the entry point for new vocabulary."}
+  - {name: "Adjudication and minting (adjudicate-term, add-term)", stage: judgment, C1: "--", C2: YES, C3: "--", C4: "--", note: "the only route from a phrase to a term; divergent judgments are allowed to stand as a contest."}
+  - {name: "Parameter registry (add-parameter, decline-parameter, set-parameter-direction)", stage: base, C1: "--", C2: PARTIAL, C3: "--", C4: PARTIAL, note: "creates and declines; on the main tree nothing retires or merges a parameter (C2.5). Direction is the judgment the engine cannot make."}
+  - {name: "Lens registries (populations, base_icf, access_needs, base_taxonomy_medical)", stage: base, C1: PARTIAL, C2: PARTIAL, C3: "--", C4: PARTIAL, note: "add-extraction refuses a lens code whose registry is empty; the medical registry is empty (C1.6) and several base tables have no verb (C2.8)."}
+  - {name: "Extraction (add-extraction, derive-extraction, amend-extraction)", stage: judgment, C1: PARTIAL, C2: "--", C3: PARTIAL, C4: YES, note: "one parameter per call; refuses a slug the source was not admitted to (C1.4); requires a lens; is what the engine gathers by parameter."}
+  - {name: "Scan ledger (source_scans, v_scan_ledger)", stage: judgment, C1: "NO (main) / YES (unreleased branch)", C2: "--", C3: "--", C4: "--", note: "the (source x parameter) read-state record the scan contract needs; absent from the main tree (C1.5)."}
+  - {name: "Determination engine (assess_cell)", stage: specification, C1: "--", C2: "--", C3: PARTIAL, C4: YES, note: "computes state per (parameter x one lens) cell per run and emits SQL; combines sources within a cell, not across parameters (C3.5); cannot reach a determination from findings plus a threshold (C3.4)."}
+  - {name: "Determination gates (raise/resolve)", stage: specification, C1: "--", C2: "--", C3: PARTIAL, C4: PARTIAL, note: "records that a determination disagrees with a link; carries one lens column only (P-GT)."}
+  - {name: "Convergence assessment", stage: synthesis, C1: "--", C2: "--", C3: PARTIAL, C4: "--", note: "per-parameter convergence of independent roots; no cross-parameter form."}
+  - {name: "Connections and conflicts (add-connection, add-conflict)", stage: synthesis, C1: "--", C2: "--", C3: NO, C4: "--", note: "free-text targets and item-layer keys; no column can name a parameter (C3.5)."}
+  - {name: "Gaps (add-gap, assess_cell)", stage: synthesis, C1: "--", C2: "--", C3: PARTIAL, C4: "--", note: "records that a cell is pending and why; sub-vocabulary after OPEN/CLOSED is free text."}
+  - {name: "Renderers (build_site, spec_page, generate_parts, pilot_renderings, tools/*.html)", stage: render, C1: "--", C2: "--", C3: "--", C4: NO, note: "queries that still select item-layer columns fail on the live schema (C4.6); the regenerate script reaches none of parts/ or site/ (C4.7)."}
+  - {name: "Checks and gates (Layer 0)", stage: "Layer 0", C1: "--", C2: "--", C3: "--", C4: PARTIAL, note: "the checks that would hold rendering invariants and tier derivation are quarantined (C4.8)."}

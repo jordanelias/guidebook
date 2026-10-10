@@ -1,0 +1,6096 @@
+{
+ "generated": "Generated 2026-10-10 21:40 UTC from git HEAD 5dff951 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook",
+ "user_version": 101,
+ "stages": [
+  "base",
+  "research",
+  "evidence",
+  "judgment",
+  "synthesis",
+  "specification",
+  "render"
+ ],
+ "tables": {
+  "access_duration": {
+   "stage": "base",
+   "rows": 3,
+   "writers": [],
+   "cols": [
+    "code",
+    "definition",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "access_need_axis_map": {
+   "stage": "base",
+   "rows": 21,
+   "writers": [],
+   "cols": [
+    "need_code",
+    "axis_code",
+    "relationship",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "access_need_icf": {
+   "stage": "base",
+   "rows": 43,
+   "writers": [],
+   "cols": [
+    "need_code",
+    "icf_code",
+    "icf_type",
+    "confidence",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "access_needs": {
+   "stage": "base",
+   "rows": 17,
+   "writers": [],
+   "cols": [
+    "need_code",
+    "family",
+    "design_obligation",
+    "absorbs",
+    "typical_stakes",
+    "source_version",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "access_stakes": {
+   "stage": "base",
+   "rows": 3,
+   "writers": [],
+   "cols": [
+    "code",
+    "definition",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "adversarial_findings": {
+   "stage": "infrastructure",
+   "rows": 88,
+   "writers": [
+    "record-adversarial-pass",
+    "dispose-adversarial-finding"
+   ],
+   "cols": [
+    "finding_id",
+    "pass_id",
+    "lens",
+    "subject_table",
+    "subject_key",
+    "claim_attacked",
+    "method",
+    "artefact",
+    "verdict",
+    "severity",
+    "disposition",
+    "disposition_ref",
+    "disposed_by_session",
+    "disposed_at",
+    "created_by_session",
+    "created_at"
+   ]
+  },
+  "adversarial_passes": {
+   "stage": "infrastructure",
+   "rows": 4,
+   "writers": [
+    "record-adversarial-pass",
+    "close-adversarial-pass"
+   ],
+   "cols": [
+    "pass_id",
+    "subject_session",
+    "subject_commit",
+    "reviewer_transcript",
+    "reviewer_models",
+    "author_transcript",
+    "author_models",
+    "closed_at",
+    "created_by_session",
+    "created_at"
+   ]
+  },
+  "axes": {
+   "stage": "base",
+   "rows": 17,
+   "writers": [],
+   "cols": [
+    "axis_code",
+    "name",
+    "icf_b_anchors",
+    "icf_d_anchors",
+    "mechanism",
+    "design_domains",
+    "coverage_status",
+    "falsification_condition",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "base_icf": {
+   "stage": "base",
+   "rows": 72,
+   "writers": [
+    "add-icf-code",
+    "set-icf-title"
+   ],
+   "cols": [
+    "icf_code",
+    "component",
+    "is_range",
+    "title",
+    "title_source",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "base_parameters": {
+   "stage": "base",
+   "rows": 10,
+   "writers": [
+    "set-parameter-direction",
+    "add-parameter"
+   ],
+   "cols": [
+    "parameter_id",
+    "term_id",
+    "status",
+    "merged_into",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "direction_rationale",
+    "accessibility_direction"
+   ]
+  },
+  "base_taxonomy_medical": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [
+    "add-medical"
+   ],
+   "cols": [
+    "medical_code",
+    "display_name",
+    "description",
+    "status",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "icd11_anchors",
+    "icd11_verified_at"
+   ]
+  },
+  "bpc_metadata": {
+   "stage": "infrastructure",
+   "rows": 0,
+   "writers": [
+    "update-bpc"
+   ],
+   "cols": [
+    "slug",
+    "population",
+    "jurisdictions_searched",
+    "co1_pass_count",
+    "evidence_state",
+    "pico_complete",
+    "search_complete",
+    "bpc_complete",
+    "citation_mining_complete",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "supersession_check_complete",
+    "closure_definition_version"
+   ]
+  },
+  "case_studies": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [
+    "add-case-study"
+   ],
+   "cols": [
+    "case_study_id",
+    "slug",
+    "title",
+    "building_type",
+    "location",
+    "architect",
+    "year",
+    "setting",
+    "population_description",
+    "evidence_quality_tier",
+    "cost_data",
+    "cost_data_quality",
+    "part_section",
+    "limitations",
+    "harm_finding",
+    "status",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "design_intent",
+    "populations_served_note",
+    "outcome_data",
+    "conflict_documented",
+    "failure_notes",
+    "construction_cost",
+    "accessible_design_premium",
+    "funding_sources",
+    "operational_cost_change",
+    "remediation_cost",
+    "roi_data",
+    "financial_evidence_tier",
+    "financial_data_quality",
+    "evidence_contribution",
+    "part13_status",
+    "sources"
+   ]
+  },
+  "case_study_outcomes": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "outcome_id",
+    "case_study_id",
+    "metric",
+    "value",
+    "source",
+    "tier"
+   ]
+  },
+  "case_study_populations": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "case_study_id",
+    "population_code"
+   ]
+  },
+  "case_study_specs": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "case_study_id",
+    "item_code"
+   ]
+  },
+  "case_study_strategies": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "strategy_id",
+    "case_study_id",
+    "strategy"
+   ]
+  },
+  "citation_mining": {
+   "stage": "research",
+   "rows": 33,
+   "writers": [
+    "log-mining"
+   ],
+   "cols": [
+    "slug",
+    "local_ref_id",
+    "global_ref_id",
+    "doi",
+    "backward",
+    "forward",
+    "connections_produced",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "deferred_reason"
+   ]
+  },
+  "citation_population_links": {
+   "stage": "judgment",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "citation_id",
+    "population_code",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "conflicts": {
+   "stage": "synthesis",
+   "rows": 0,
+   "writers": [
+    "add-conflict",
+    "update-conflict"
+   ],
+   "cols": [
+    "conflict_id",
+    "item_code",
+    "domain",
+    "pop_a",
+    "pop_b",
+    "status",
+    "resolution",
+    "evidence",
+    "gap_id",
+    "source_skill",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "connection_targets": {
+   "stage": "synthesis",
+   "rows": 0,
+   "writers": [
+    "add-connection",
+    "delete-connection"
+   ],
+   "cols": [
+    "con_id",
+    "target"
+   ]
+  },
+  "connections": {
+   "stage": "synthesis",
+   "rows": 0,
+   "writers": [
+    "add-connection",
+    "update-connection",
+    "delete-connection"
+   ],
+   "cols": [
+    "con_id",
+    "status",
+    "confidence",
+    "connection_type",
+    "filed_in",
+    "description",
+    "source_skill",
+    "opus_reviewed",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "convergence_assessment": {
+   "stage": "synthesis",
+   "rows": 5,
+   "writers": [],
+   "cols": [
+    "convergence_id",
+    "status",
+    "clinical_sources",
+    "co1_sources",
+    "co2_sources",
+    "down_weighted_sources",
+    "discounted_sources",
+    "rationale",
+    "synthesis_approach",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "convergence_sources": {
+   "stage": "synthesis",
+   "rows": 69,
+   "writers": [],
+   "cols": [
+    "convergence_id",
+    "ref_id",
+    "role",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "data_migrations": {
+   "stage": "infrastructure",
+   "rows": 458,
+   "writers": [],
+   "cols": [
+    "migration_id",
+    "applied_at",
+    "content_sha",
+    "applied_by_session",
+    "notes"
+   ]
+  },
+  "decisions": {
+   "stage": "infrastructure",
+   "rows": 188,
+   "writers": [],
+   "cols": [
+    "decision_id",
+    "category",
+    "delegation",
+    "delegation_rationale",
+    "summary",
+    "outcome",
+    "rationale",
+    "decision_date",
+    "decided_by",
+    "model_routing",
+    "effort_level",
+    "status",
+    "review_status",
+    "supersedes",
+    "predecessors",
+    "decision_artifacts",
+    "alternatives_considered",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "determination_gates": {
+   "stage": "specification",
+   "rows": 1,
+   "writers": [
+    "raise-determination-gate",
+    "resolve-determination-gate"
+   ],
+   "cols": [
+    "gate_id",
+    "parameter_id",
+    "identity_code",
+    "verdict",
+    "trigger_ref_id",
+    "trigger_tier",
+    "trigger_evidence_type",
+    "detail",
+    "raised_at",
+    "raised_by_session",
+    "resolved_at",
+    "resolved_by_session",
+    "resolution_rationale"
+   ]
+  },
+  "economics_entries": {
+   "stage": "evidence",
+   "rows": 1,
+   "writers": [
+    "add-economics-entry"
+   ],
+   "cols": [
+    "entry_id",
+    "pillar",
+    "entry_type",
+    "source",
+    "ref_id",
+    "jurisdiction",
+    "finding",
+    "study_design",
+    "sample",
+    "value_numeric",
+    "value_unit",
+    "currency",
+    "bcr",
+    "evidence_tier",
+    "confidence",
+    "source_section",
+    "quant_status",
+    "year",
+    "journal",
+    "status",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "economics_entry_populations": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "entry_id",
+    "population_code"
+   ]
+  },
+  "economics_entry_specs": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "entry_id",
+    "item_code"
+   ]
+  },
+  "evidence_population_match": {
+   "stage": "judgment",
+   "rows": 54,
+   "writers": [
+    "add-population-match",
+    "amend-population-match"
+   ],
+   "cols": [
+    "match_id",
+    "source_ref",
+    "target_population",
+    "study_population",
+    "sample_size",
+    "match_grade",
+    "mismatch_note",
+    "created_at",
+    "created_by_session",
+    "ref_id",
+    "gap_id"
+   ]
+  },
+  "evidence_source_authors": {
+   "stage": "evidence",
+   "rows": 116,
+   "writers": [
+    "correct-source",
+    "add-source"
+   ],
+   "cols": [
+    "id",
+    "ref_id",
+    "position",
+    "last_name",
+    "first_name",
+    "suffix",
+    "orcid",
+    "is_corporate",
+    "corporate_name",
+    "corporate_name_en",
+    "role",
+    "created_at",
+    "created_by_session",
+    "corporate_name_note"
+   ]
+  },
+  "evidence_sources": {
+   "stage": "evidence",
+   "rows": 53,
+   "writers": [
+    "log-mining",
+    "correct-source",
+    "amend-source",
+    "supersede-source",
+    "add-extraction",
+    "derive-extraction",
+    "add-source"
+   ],
+   "cols": [
+    "ref_id",
+    "source_type",
+    "author_count",
+    "author_count_is_complete",
+    "first_author_last",
+    "first_author_first",
+    "is_corporate_primary",
+    "author_display",
+    "pub_year",
+    "pub_year_note",
+    "pub_title",
+    "pub_subtitle",
+    "chapter_title",
+    "original_title",
+    "lang_detected",
+    "lang_detection_method",
+    "pub_title_en",
+    "pub_subtitle_en",
+    "chapter_title_en",
+    "journal_name_en",
+    "translation_method",
+    "translation_reviewed",
+    "journal_name",
+    "journal_abbrev",
+    "volume",
+    "issue",
+    "pages_start",
+    "pages_end",
+    "article_number",
+    "publisher",
+    "publisher_location",
+    "edition",
+    "book_title",
+    "series",
+    "series_number",
+    "report_number",
+    "institution",
+    "standard_number",
+    "doi",
+    "pmid",
+    "pmcid",
+    "isbn",
+    "issn",
+    "url",
+    "url_accessed",
+    "handle",
+    "local_id",
+    "tier",
+    "evidence_type",
+    "jurisdiction",
+    "co1_provenance",
+    "co1_source_type",
+    "synthesis_attribution_required",
+    "metadata_quality",
+    "verification_status",
+    "doi_resolution_outcome",
+    "bpc_shorthand",
+    "bpc_note",
+    "grey_flag",
+    "grey_reason",
+    "verification_note",
+    "prior_expectation",
+    "search_queries_used",
+    "derivation_chain",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "verified_by_tool",
+    "last_verified_at",
+    "verification_attempt_count",
+    "superseded_by_ref_id",
+    "pages",
+    "pub_month",
+    "language",
+    "subtype",
+    "citation_count",
+    "url_resolution_outcome",
+    "url_last_fetched",
+    "url_match_similarity",
+    "metadata_integrity_status",
+    "metadata_integrity_detail",
+    "code_currency_status",
+    "code_currency_verified_at",
+    "code_currency_verified_by_session",
+    "code_currency_notes",
+    "scope",
+    "data_capture_status",
+    "citation_mining_status",
+    "processing_blocked_reason",
+    "standard_number_note",
+    "author_display_note",
+    "publisher_note",
+    "verification_disposition",
+    "verification_method",
+    "verification_closure_reason"
+   ]
+  },
+  "external_root_registry": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "root_id",
+    "description",
+    "root_type",
+    "provenance",
+    "root_population_note",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "extraction_population_links": {
+   "stage": "judgment",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "extraction_id",
+    "population_code",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "extraction_relations": {
+   "stage": "evidence",
+   "rows": 36,
+   "writers": [
+    "add-extraction",
+    "relate-extraction",
+    "derive-extraction"
+   ],
+   "cols": [
+    "relation_id",
+    "from_extraction_id",
+    "relation",
+    "to_extraction_id",
+    "to_label",
+    "to_kind",
+    "stated",
+    "input_role",
+    "quote",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "gap_mining": {
+   "stage": "research",
+   "rows": 0,
+   "writers": [
+    "add-gap-mining"
+   ],
+   "cols": [
+    "gap_mining_id",
+    "gap_id",
+    "created_at",
+    "created_by_session",
+    "search_strategy_record",
+    "candidates_returned",
+    "candidates_reviewed",
+    "outcome",
+    "discoveries_logged",
+    "candidate_dois",
+    "check_method",
+    "notes"
+   ]
+  },
+  "gaps": {
+   "stage": "synthesis",
+   "rows": 76,
+   "writers": [
+    "amend-gap",
+    "add-gap",
+    "close-gap",
+    "update-gap-addressability"
+   ],
+   "cols": [
+    "gap_id",
+    "category",
+    "priority",
+    "status",
+    "skill",
+    "section",
+    "description",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "falsification_condition",
+    "confidence_interval",
+    "shift_conditions",
+    "named_dissenter",
+    "mining_addressability"
+   ]
+  },
+  "icf_medical_map": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [
+    "add-medical"
+   ],
+   "cols": [
+    "icf_code",
+    "medical_code",
+    "role",
+    "mapping_confidence",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "identity_medical_map": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [
+    "add-medical"
+   ],
+   "cols": [
+    "identity_code",
+    "medical_code",
+    "relationship",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "item_audit_runs": {
+   "stage": "infrastructure",
+   "rows": 0,
+   "writers": [
+    "add-audit-run",
+    "update-audit-run"
+   ],
+   "cols": [
+    "run_id",
+    "item_code",
+    "steps_complete",
+    "steps_started",
+    "status",
+    "spec_hash",
+    "brief_path",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "item_bpc_links": {
+   "stage": "render",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "item_code",
+    "slug",
+    "link_type",
+    "rationale",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "item_population_elaborations": {
+   "stage": "render",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "elab_id",
+    "item_code",
+    "population_code",
+    "variant_distinction",
+    "spec_variant_a",
+    "spec_variant_b",
+    "evidence_ref_id",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "item_taxonomy_links": {
+   "stage": "render",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "item_code",
+    "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code",
+    "subtype",
+    "applicability",
+    "rationale_ref",
+    "mechanism_note",
+    "strength_band",
+    "use_mode",
+    "source",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "items": {
+   "stage": "render",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "item_code",
+    "item_id",
+    "category",
+    "name",
+    "bpc_source_slug",
+    "status",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "pmp_delta_min",
+    "pmp_direction",
+    "pmp_last_walk_at",
+    "pmp_empirical_ceiling",
+    "pmp_gap_signed"
+   ]
+  },
+  "jurisdictional_values": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [
+    "add-jurisdictional-value"
+   ],
+   "cols": [
+    "jv_id",
+    "item_code",
+    "jurisdiction",
+    "spec_id",
+    "standard_name",
+    "value_text",
+    "value_numeric",
+    "unit",
+    "is_code_minimum",
+    "evidence_tier",
+    "source_section",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "locator_scheme",
+    "loc_division",
+    "loc_part",
+    "loc_section",
+    "loc_subsection",
+    "loc_paragraph",
+    "loc_clause",
+    "loc_subclause",
+    "loc_division_end",
+    "loc_part_end",
+    "loc_section_end",
+    "loc_subsection_end",
+    "loc_paragraph_end",
+    "loc_clause_end",
+    "loc_subclause_end",
+    "loc_note"
+   ]
+  },
+  "lang_jur_map": {
+   "stage": "base",
+   "rows": 70,
+   "writers": [],
+   "cols": [
+    "language",
+    "jurisdiction",
+    "role",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "life_stage_modifiers": {
+   "stage": "base",
+   "rows": 2,
+   "writers": [],
+   "cols": [
+    "code",
+    "label",
+    "definition",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "observed_terms": {
+   "stage": "evidence",
+   "rows": 88,
+   "writers": [
+    "observe-term"
+   ],
+   "cols": [
+    "observation_id",
+    "ref_id",
+    "surface_form",
+    "language",
+    "locator",
+    "context_quote",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "parameter_declinations": {
+   "stage": "base",
+   "rows": 1,
+   "writers": [
+    "decline-parameter"
+   ],
+   "cols": [
+    "term_id",
+    "reason",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "pipeline_runs": {
+   "stage": "infrastructure",
+   "rows": 5,
+   "writers": [],
+   "cols": [
+    "run_id",
+    "started_at",
+    "completed_at",
+    "phase_0_extracted",
+    "phase_1a_resolved",
+    "phase_1a_no_match",
+    "phase_1a_transient",
+    "phase_1b_resolved",
+    "phase_1b_no_match",
+    "phase_1b_transient",
+    "phase_2a_resolved",
+    "phase_2a_no_match",
+    "phase_2b_resolved",
+    "phase_2b_no_match",
+    "phase_3_resolved",
+    "phase_3_no_match",
+    "doi_before",
+    "doi_after",
+    "verified_before",
+    "verified_after",
+    "pmcid_before",
+    "pmcid_after",
+    "total_resolved",
+    "created_by_session",
+    "phase_4_enriched",
+    "phase_4_complete",
+    "phase_4_transient",
+    "metadata_complete_before",
+    "metadata_complete_after"
+   ]
+  },
+  "population_axis_map": {
+   "stage": "base",
+   "rows": 53,
+   "writers": [],
+   "cols": [
+    "population_code",
+    "axis_code",
+    "role",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "population_icf_links": {
+   "stage": "base",
+   "rows": 61,
+   "writers": [
+    "add-population-icf-link"
+   ],
+   "cols": [
+    "link_id",
+    "population_code",
+    "icf_code",
+    "mechanism",
+    "mapping_confidence",
+    "provenance",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "populations": {
+   "stage": "base",
+   "rows": 23,
+   "writers": [],
+   "cols": [
+    "population_code",
+    "display_name",
+    "category",
+    "description",
+    "parent_code",
+    "is_compound",
+    "status",
+    "created_at",
+    "updated_at"
+   ]
+  },
+  "probe_population_links": {
+   "stage": "judgment",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "probe_id",
+    "population_code",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "reasoning_doc_citations": {
+   "stage": "synthesis",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "citation_id",
+    "reasoning_doc_slug",
+    "parameter",
+    "jurisdiction",
+    "population",
+    "claim_type",
+    "claimed_value",
+    "claimed_unit",
+    "claim_text",
+    "source_ref_id",
+    "source_section",
+    "value_match",
+    "claim_match",
+    "verified_at",
+    "created_by_session",
+    "paywall_purchase_candidate",
+    "notes",
+    "setting",
+    "locator_scheme",
+    "loc_division",
+    "loc_part",
+    "loc_section",
+    "loc_subsection",
+    "loc_paragraph",
+    "loc_clause",
+    "loc_subclause",
+    "loc_division_end",
+    "loc_part_end",
+    "loc_section_end",
+    "loc_subsection_end",
+    "loc_paragraph_end",
+    "loc_clause_end",
+    "loc_subclause_end",
+    "loc_note"
+   ]
+  },
+  "reference_stubs": {
+   "stage": "research",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "ref_id",
+    "authors",
+    "pub_year",
+    "title",
+    "tier_claimed",
+    "jurisdiction",
+    "used_in_bpcs",
+    "metadata_quality",
+    "status",
+    "recovered_from",
+    "notes"
+   ]
+  },
+  "research_code_leads": {
+   "stage": "research",
+   "rows": 96,
+   "writers": [
+    "add-code-lead",
+    "update-code-lead"
+   ],
+   "cols": [
+    "lead_id",
+    "jurisdiction",
+    "standard_name",
+    "clause",
+    "status",
+    "recovered_from",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "room_items": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "room_code",
+    "item_code",
+    "applicability",
+    "applicability_note",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "rooms": {
+   "stage": "base",
+   "rows": 17,
+   "writers": [],
+   "cols": [
+    "room_code",
+    "name",
+    "category",
+    "description",
+    "status",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "search_admissions": {
+   "stage": "research",
+   "rows": 55,
+   "writers": [
+    "link-admission",
+    "unlink-admission",
+    "log-search"
+   ],
+   "cols": [
+    "exec_id",
+    "ref_id",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "search_candidates": {
+   "stage": "research",
+   "rows": 147,
+   "writers": [
+    "add-candidate",
+    "reattribute-candidate",
+    "resolve-candidate"
+   ],
+   "cols": [
+    "candidate_id",
+    "exec_id",
+    "found_under_slug",
+    "suggested_slug",
+    "disposition",
+    "title",
+    "locator",
+    "locator_status",
+    "tier_guess",
+    "harm_finding",
+    "why_not_admitted",
+    "notes",
+    "created_by_session",
+    "created_at",
+    "resolved_ref_id",
+    "surfaced_in",
+    "surfaced_quote",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "search_coverage": {
+   "stage": "research",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "slug",
+    "jurisdiction",
+    "status",
+    "co1_attempted",
+    "tier5_attempted",
+    "tier6_attempted",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "search_execution_artefacts": {
+   "stage": "research",
+   "rows": 110,
+   "writers": [
+    "amend-search",
+    "log-search"
+   ],
+   "cols": [
+    "exec_id",
+    "artefact",
+    "created_by_session",
+    "created_at"
+   ]
+  },
+  "search_executions": {
+   "stage": "research",
+   "rows": 191,
+   "writers": [
+    "amend-search",
+    "link-admission",
+    "unlink-admission",
+    "log-search"
+   ],
+   "cols": [
+    "exec_id",
+    "slug",
+    "jurisdiction",
+    "language",
+    "target_tier",
+    "target_evidence_type",
+    "target_scope",
+    "query_text",
+    "terms_used",
+    "engine",
+    "depth_method",
+    "mining_direction",
+    "results_found",
+    "results_screened",
+    "results_admitted",
+    "saturation_signal",
+    "admitted_ref_ids",
+    "deferred_reason",
+    "backfill",
+    "created_by_session",
+    "created_at",
+    "findings_note",
+    "harm_finding",
+    "prior_expectation",
+    "origin",
+    "mined_ref_id",
+    "origin_pass_id",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "search_languages": {
+   "stage": "research",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "slug",
+    "language",
+    "status",
+    "results_count",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "situations": {
+   "stage": "base",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "situation_id",
+    "title",
+    "account_language",
+    "account_text_ref",
+    "translation_ref",
+    "attaches_items",
+    "attaches_axes",
+    "attaches_profiles",
+    "operational_access",
+    "co1_status",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "slugs": {
+   "stage": "base",
+   "rows": 106,
+   "writers": [],
+   "cols": [
+    "slug",
+    "topic_directory",
+    "sl_path",
+    "bpc_path",
+    "status",
+    "merged_into",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "serves_axes"
+   ]
+  },
+  "source_locators": {
+   "stage": "research",
+   "rows": 893,
+   "writers": [
+    "update-locator",
+    "add-locator"
+   ],
+   "cols": [
+    "ref_id",
+    "doi",
+    "url",
+    "pmid",
+    "pmcid",
+    "isbn",
+    "issn",
+    "standard_number",
+    "doi_resolution_outcome",
+    "url_resolution_outcome",
+    "url_last_fetched",
+    "recovered_from",
+    "authors",
+    "pub_year",
+    "title",
+    "tier_claimed",
+    "jurisdiction",
+    "used_in_bpcs",
+    "status",
+    "screened_reason",
+    "created_by_session",
+    "created_at",
+    "notes"
+   ]
+  },
+  "source_slug_links": {
+   "stage": "evidence",
+   "rows": 65,
+   "writers": [
+    "link-source-slug",
+    "add-source"
+   ],
+   "cols": [
+    "ref_id",
+    "slug",
+    "local_ref_id",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "relevance_note"
+   ]
+  },
+  "source_value_extractions": {
+   "stage": "evidence",
+   "rows": 101,
+   "writers": [
+    "add-extraction",
+    "amend-extraction",
+    "derive-extraction"
+   ],
+   "cols": [
+    "extraction_id",
+    "ref_id",
+    "slug",
+    "parameter_id",
+    "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code",
+    "jurisdiction",
+    "setting",
+    "claim_type",
+    "claimed_value",
+    "claimed_unit",
+    "claim_text",
+    "source_section",
+    "root_id",
+    "root_type",
+    "root_ref_id",
+    "echo_of",
+    "measurement_paradigm",
+    "device_class",
+    "root_population_note",
+    "root_classification_basis",
+    "contested",
+    "file_anchor",
+    "locator_scheme",
+    "loc_division",
+    "loc_part",
+    "loc_section",
+    "loc_subsection",
+    "loc_paragraph",
+    "loc_clause",
+    "loc_subclause",
+    "loc_division_end",
+    "loc_part_end",
+    "loc_section_end",
+    "loc_subsection_end",
+    "loc_paragraph_end",
+    "loc_clause_end",
+    "loc_subclause_end",
+    "loc_note",
+    "extraction_method",
+    "extraction_status",
+    "promoted_to_rdc_id",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "figure_role",
+    "comparator"
+   ]
+  },
+  "spec_value_probes": {
+   "stage": "specification",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "probe_id",
+    "walk_id",
+    "slug",
+    "item_code",
+    "spec_value_origin",
+    "spec_unit",
+    "direction",
+    "population",
+    "claim_type",
+    "step_index",
+    "phase",
+    "step_value",
+    "step_value_unit",
+    "search_query",
+    "search_query_alt",
+    "passes_strict",
+    "ref_id",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "setting"
+   ]
+  },
+  "specification_extraction_links": {
+   "stage": "specification",
+   "rows": 151,
+   "writers": [],
+   "cols": [
+    "specification_id",
+    "extraction_id",
+    "role",
+    "exclusion_reason",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "specification_source_links": {
+   "stage": "specification",
+   "rows": 38,
+   "writers": [],
+   "cols": [
+    "specification_id",
+    "ref_id",
+    "role",
+    "created_at",
+    "created_by_session"
+   ]
+  },
+  "specifications": {
+   "stage": "specification",
+   "rows": 8,
+   "writers": [
+    "retire-specification"
+   ],
+   "cols": [
+    "specification_id",
+    "parameter_id",
+    "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code",
+    "state",
+    "design_scale",
+    "convergence_id",
+    "confidence_dimensions_present",
+    "confidence_dimensions_absent",
+    "confidence_synthesis_basis",
+    "gap_register_id",
+    "not_applicable_rationale",
+    "tier_basis",
+    "governing_refs",
+    "rule_version",
+    "derivation_sha",
+    "code_floor_only",
+    "value_min",
+    "value_max",
+    "value_unit",
+    "falsification_condition",
+    "has_unverified_sources",
+    "all_sources_disqualified",
+    "regulatory_stratum_only",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session",
+    "value_note",
+    "functional_basis",
+    "derivation_rationale",
+    "cultural_claim_anchor",
+    "derivation_paths",
+    "retired_at",
+    "retired_by_session",
+    "retirement_reason",
+    "superseded_by_specification_id",
+    "rests_on_proxy_inference",
+    "value_notations"
+   ]
+  },
+  "supersession_check": {
+   "stage": "synthesis",
+   "rows": 0,
+   "writers": [
+    "add-supersession-check"
+   ],
+   "cols": [
+    "check_id",
+    "slug",
+    "local_ref_id",
+    "ref_id",
+    "anchor_tier",
+    "anchor_evidence_type",
+    "outcome",
+    "superseding_ref_ids",
+    "superseding_dois",
+    "refinement_dimension",
+    "divergence_notes",
+    "search_strategy_record",
+    "candidates_returned",
+    "candidates_reviewed",
+    "created_at",
+    "created_by_session",
+    "check_method",
+    "notes"
+   ]
+  },
+  "term_adjudications": {
+   "stage": "judgment",
+   "rows": 78,
+   "writers": [
+    "add-term",
+    "adjudicate-term"
+   ],
+   "cols": [
+    "adjudication_id",
+    "observation_id",
+    "outcome",
+    "term_id",
+    "rationale",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "term_aliases": {
+   "stage": "base",
+   "rows": 2382,
+   "writers": [],
+   "cols": [
+    "term_id",
+    "alias",
+    "language",
+    "alias_type",
+    "jurisdiction",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "term_item_links": {
+   "stage": "render",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "term_id",
+    "item_code",
+    "population",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "terms": {
+   "stage": "base",
+   "rows": 94,
+   "writers": [
+    "amend-term",
+    "add-term"
+   ],
+   "cols": [
+    "term_id",
+    "canonical_en",
+    "definition",
+    "domain",
+    "scope_note",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
+  "url_verification_runs": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [],
+   "cols": [
+    "run_id",
+    "started_at",
+    "completed_at",
+    "candidates_pool",
+    "attempted",
+    "verified",
+    "probabilistic",
+    "no_match",
+    "dead",
+    "wayback_verified",
+    "wayback_probabilistic",
+    "dead_dns",
+    "transient",
+    "verified_before",
+    "verified_after",
+    "created_by_session"
+   ]
+  },
+  "weighting_profile": {
+   "stage": "render",
+   "rows": 5,
+   "writers": [],
+   "cols": [
+    "audience",
+    "use_pattern",
+    "tier_weights",
+    "notes"
+   ]
+  }
+ },
+ "fks": [
+  {
+   "child": "access_need_axis_map",
+   "col": "axis_code",
+   "parent": "axes",
+   "notnull": true
+  },
+  {
+   "child": "access_need_axis_map",
+   "col": "need_code",
+   "parent": "access_needs",
+   "notnull": true
+  },
+  {
+   "child": "access_need_icf",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": true
+  },
+  {
+   "child": "access_need_icf",
+   "col": "need_code",
+   "parent": "access_needs",
+   "notnull": true
+  },
+  {
+   "child": "adversarial_findings",
+   "col": "pass_id",
+   "parent": "adversarial_passes",
+   "notnull": true
+  },
+  {
+   "child": "base_parameters",
+   "col": "merged_into",
+   "parent": "base_parameters",
+   "notnull": false
+  },
+  {
+   "child": "base_parameters",
+   "col": "term_id",
+   "parent": "terms",
+   "notnull": true
+  },
+  {
+   "child": "bpc_metadata",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": false
+  },
+  {
+   "child": "case_studies",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "case_study_outcomes",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true
+  },
+  {
+   "child": "case_study_populations",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "case_study_populations",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true
+  },
+  {
+   "child": "case_study_specs",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "case_study_specs",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true
+  },
+  {
+   "child": "case_study_strategies",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true
+  },
+  {
+   "child": "citation_mining",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "citation_population_links",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "citation_population_links",
+   "col": "citation_id",
+   "parent": "reasoning_doc_citations",
+   "notnull": true
+  },
+  {
+   "child": "conflicts",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": false
+  },
+  {
+   "child": "connection_targets",
+   "col": "con_id",
+   "parent": "connections",
+   "notnull": true
+  },
+  {
+   "child": "convergence_sources",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "convergence_sources",
+   "col": "convergence_id",
+   "parent": "convergence_assessment",
+   "notnull": true
+  },
+  {
+   "child": "determination_gates",
+   "col": "trigger_ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "determination_gates",
+   "col": "identity_code",
+   "parent": "populations",
+   "notnull": false
+  },
+  {
+   "child": "determination_gates",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": true
+  },
+  {
+   "child": "economics_entries",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "economics_entry_populations",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "economics_entry_populations",
+   "col": "entry_id",
+   "parent": "economics_entries",
+   "notnull": true
+  },
+  {
+   "child": "economics_entry_specs",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "economics_entry_specs",
+   "col": "entry_id",
+   "parent": "economics_entries",
+   "notnull": true
+  },
+  {
+   "child": "evidence_population_match",
+   "col": "gap_id",
+   "parent": "gaps",
+   "notnull": false
+  },
+  {
+   "child": "evidence_population_match",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "evidence_source_authors",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "extraction_population_links",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "extraction_population_links",
+   "col": "extraction_id",
+   "parent": "source_value_extractions",
+   "notnull": true
+  },
+  {
+   "child": "extraction_relations",
+   "col": "to_extraction_id",
+   "parent": "source_value_extractions",
+   "notnull": false
+  },
+  {
+   "child": "extraction_relations",
+   "col": "from_extraction_id",
+   "parent": "source_value_extractions",
+   "notnull": true
+  },
+  {
+   "child": "gap_mining",
+   "col": "gap_id",
+   "parent": "gaps",
+   "notnull": true
+  },
+  {
+   "child": "icf_medical_map",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": true
+  },
+  {
+   "child": "icf_medical_map",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": true
+  },
+  {
+   "child": "identity_medical_map",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": true
+  },
+  {
+   "child": "identity_medical_map",
+   "col": "identity_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "item_audit_runs",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "item_bpc_links",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "item_bpc_links",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "item_population_elaborations",
+   "col": "evidence_ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "item_population_elaborations",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "item_population_elaborations",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "rationale_ref",
+   "parent": "decisions",
+   "notnull": false
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "identity_code",
+   "parent": "populations",
+   "notnull": false
+  },
+  {
+   "child": "items",
+   "col": "bpc_source_slug",
+   "parent": "slugs",
+   "notnull": false
+  },
+  {
+   "child": "jurisdictional_values",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "observed_terms",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "parameter_declinations",
+   "col": "term_id",
+   "parent": "terms",
+   "notnull": false
+  },
+  {
+   "child": "population_axis_map",
+   "col": "axis_code",
+   "parent": "axes",
+   "notnull": true
+  },
+  {
+   "child": "population_axis_map",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "population_icf_links",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": true
+  },
+  {
+   "child": "population_icf_links",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "populations",
+   "col": "parent_code",
+   "parent": "populations",
+   "notnull": false
+  },
+  {
+   "child": "probe_population_links",
+   "col": "population_code",
+   "parent": "populations",
+   "notnull": true
+  },
+  {
+   "child": "probe_population_links",
+   "col": "probe_id",
+   "parent": "spec_value_probes",
+   "notnull": true
+  },
+  {
+   "child": "reasoning_doc_citations",
+   "col": "source_ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "reasoning_doc_citations",
+   "col": "reasoning_doc_slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "room_items",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "room_items",
+   "col": "room_code",
+   "parent": "rooms",
+   "notnull": true
+  },
+  {
+   "child": "search_admissions",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "search_admissions",
+   "col": "exec_id",
+   "parent": "search_executions",
+   "notnull": true
+  },
+  {
+   "child": "search_candidates",
+   "col": "resolved_ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "search_candidates",
+   "col": "suggested_slug",
+   "parent": "slugs",
+   "notnull": false
+  },
+  {
+   "child": "search_candidates",
+   "col": "found_under_slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "search_candidates",
+   "col": "exec_id",
+   "parent": "search_executions",
+   "notnull": false
+  },
+  {
+   "child": "search_coverage",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "search_execution_artefacts",
+   "col": "exec_id",
+   "parent": "search_executions",
+   "notnull": true
+  },
+  {
+   "child": "search_executions",
+   "col": "origin_pass_id",
+   "parent": "adversarial_passes",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
+   "col": "mined_ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "search_languages",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "slugs",
+   "col": "merged_into",
+   "parent": "slugs",
+   "notnull": false
+  },
+  {
+   "child": "source_slug_links",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "source_slug_links",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "promoted_to_rdc_id",
+   "parent": "reasoning_doc_citations",
+   "notnull": false
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "root_ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "identity_code",
+   "parent": "populations",
+   "notnull": false
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": true
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "source_value_extractions",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "spec_value_probes",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "spec_value_probes",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "spec_value_probes",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "specification_extraction_links",
+   "col": "extraction_id",
+   "parent": "source_value_extractions",
+   "notnull": true
+  },
+  {
+   "child": "specification_extraction_links",
+   "col": "specification_id",
+   "parent": "specifications",
+   "notnull": true
+  },
+  {
+   "child": "specification_source_links",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "specification_source_links",
+   "col": "specification_id",
+   "parent": "specifications",
+   "notnull": true
+  },
+  {
+   "child": "specifications",
+   "col": "superseded_by_specification_id",
+   "parent": "specifications",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "gap_register_id",
+   "parent": "gaps",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "convergence_id",
+   "parent": "convergence_assessment",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "identity_code",
+   "parent": "populations",
+   "notnull": false
+  },
+  {
+   "child": "specifications",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": true
+  },
+  {
+   "child": "supersession_check",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "supersession_check",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": true
+  },
+  {
+   "child": "term_adjudications",
+   "col": "term_id",
+   "parent": "terms",
+   "notnull": false
+  },
+  {
+   "child": "term_adjudications",
+   "col": "observation_id",
+   "parent": "observed_terms",
+   "notnull": true
+  },
+  {
+   "child": "term_aliases",
+   "col": "term_id",
+   "parent": "terms",
+   "notnull": true
+  },
+  {
+   "child": "term_item_links",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true
+  },
+  {
+   "child": "term_item_links",
+   "col": "term_id",
+   "parent": "terms",
+   "notnull": true
+  }
+ ],
+ "unwritable": [
+  {
+   "child": "case_study_outcomes",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "case_study_populations",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "case_study_specs",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "case_study_specs",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "case_study_strategies",
+   "col": "case_study_id",
+   "parent": "case_studies",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "citation_population_links",
+   "col": "citation_id",
+   "parent": "reasoning_doc_citations",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "connection_targets",
+   "col": "con_id",
+   "parent": "connections",
+   "notnull": true,
+   "verbs_child": [
+    "add-connection",
+    "delete-connection"
+   ],
+   "parent_written_by_same_verb": [
+    "add-connection",
+    "delete-connection"
+   ]
+  },
+  {
+   "child": "economics_entry_specs",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "icf_medical_map",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": true,
+   "verbs_child": [
+    "add-medical"
+   ],
+   "parent_written_by_same_verb": [
+    "add-medical"
+   ]
+  },
+  {
+   "child": "identity_medical_map",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": true,
+   "verbs_child": [
+    "add-medical"
+   ],
+   "parent_written_by_same_verb": [
+    "add-medical"
+   ]
+  },
+  {
+   "child": "item_audit_runs",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [
+    "add-audit-run",
+    "update-audit-run"
+   ],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "item_bpc_links",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "item_population_elaborations",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "item_taxonomy_links",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "jurisdictional_values",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [
+    "add-jurisdictional-value"
+   ],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "probe_population_links",
+   "col": "probe_id",
+   "parent": "spec_value_probes",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "room_items",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "spec_value_probes",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  },
+  {
+   "child": "term_item_links",
+   "col": "item_code",
+   "parent": "items",
+   "notnull": true,
+   "verbs_child": [],
+   "parent_written_by_same_verb": []
+  }
+ ],
+ "views": {
+  "v_best_practice": {
+   "reads": [
+    "specifications"
+   ],
+   "stages": [
+    "specification"
+   ],
+   "crosses": false,
+   "rows": 0
+  },
+  "v_code_floor_only": {
+   "reads": [
+    "base_parameters",
+    "specifications",
+    "terms"
+   ],
+   "stages": [
+    "base",
+    "specification"
+   ],
+   "crosses": true,
+   "rows": 0
+  },
+  "v_convergence_sources": {
+   "reads": [
+    "convergence_assessment",
+    "convergence_sources",
+    "evidence_sources"
+   ],
+   "stages": [
+    "evidence",
+    "synthesis"
+   ],
+   "crosses": true,
+   "rows": 69
+  },
+  "v_coverage_branch": {
+   "reads": [
+    "search_executions"
+   ],
+   "stages": [
+    "research"
+   ],
+   "crosses": false,
+   "rows": 84
+  },
+  "v_coverage_jurisdiction": {
+   "reads": [
+    "search_executions"
+   ],
+   "stages": [
+    "research"
+   ],
+   "crosses": false,
+   "rows": 27
+  },
+  "v_coverage_language": {
+   "reads": [
+    "search_executions"
+   ],
+   "stages": [
+    "research"
+   ],
+   "crosses": false,
+   "rows": 20
+  },
+  "v_coverage_priority": {
+   "reads": [
+    "lang_jur_map",
+    "search_executions",
+    "slugs"
+   ],
+   "stages": [
+    "base",
+    "research"
+   ],
+   "crosses": true,
+   "rows": 7190
+  },
+  "v_derived_figure_check": {
+   "reads": [
+    "extraction_relations",
+    "source_value_extractions"
+   ],
+   "stages": [
+    "evidence"
+   ],
+   "crosses": false,
+   "rows": 0
+  },
+  "v_determination_provenance": {
+   "reads": [
+    "base_parameters",
+    "evidence_sources",
+    "source_value_extractions",
+    "specification_extraction_links",
+    "specifications",
+    "terms"
+   ],
+   "stages": [
+    "base",
+    "evidence",
+    "specification"
+   ],
+   "crosses": true,
+   "rows": 0
+  },
+  "v_divergence": {
+   "reads": [
+    "convergence_assessment",
+    "specifications"
+   ],
+   "stages": [
+    "specification",
+    "synthesis"
+   ],
+   "crosses": true,
+   "rows": 0
+  },
+  "v_evidence_authors": {
+   "reads": [
+    "evidence_source_authors",
+    "evidence_sources"
+   ],
+   "stages": [
+    "evidence"
+   ],
+   "crosses": false,
+   "rows": 53
+  },
+  "v_item_provenance": {
+   "reads": [
+    "base_parameters",
+    "evidence_source_authors",
+    "evidence_sources",
+    "specification_source_links",
+    "specifications",
+    "terms"
+   ],
+   "stages": [
+    "base",
+    "evidence",
+    "specification"
+   ],
+   "crosses": true,
+   "rows": 0
+  },
+  "v_open_determination_gates": {
+   "reads": [
+    "determination_gates"
+   ],
+   "stages": [
+    "specification"
+   ],
+   "crosses": false,
+   "rows": 1
+  },
+  "v_pending": {
+   "reads": [
+    "gaps",
+    "specifications"
+   ],
+   "stages": [
+    "specification",
+    "synthesis"
+   ],
+   "crosses": true,
+   "rows": 0
+  },
+  "v_pmp_latest_walk": {
+   "reads": [
+    "spec_value_probes"
+   ],
+   "stages": [
+    "specification"
+   ],
+   "crosses": false,
+   "rows": 0
+  },
+  "v_registry_duplicate_descriptions": {
+   "reads": [
+    "external_root_registry"
+   ],
+   "stages": [
+    "evidence"
+   ],
+   "crosses": false,
+   "rows": 0
+  },
+  "v_root_id_conflicts": {
+   "reads": [
+    "source_value_extractions"
+   ],
+   "stages": [
+    "evidence"
+   ],
+   "crosses": false,
+   "rows": 0
+  },
+  "v_source_admission": {
+   "reads": [
+    "evidence_sources",
+    "search_admissions",
+    "search_executions"
+   ],
+   "stages": [
+    "evidence",
+    "research"
+   ],
+   "crosses": true,
+   "rows": 55
+  },
+  "v_source_reach_all": {
+   "reads": [
+    "base_parameters",
+    "evidence_sources",
+    "source_slug_links",
+    "specification_source_links",
+    "specifications",
+    "terms"
+   ],
+   "stages": [
+    "base",
+    "evidence",
+    "specification"
+   ],
+   "crosses": true,
+   "rows": 83
+  },
+  "v_unregistered_roots": {
+   "reads": [
+    "base_parameters",
+    "external_root_registry",
+    "source_value_extractions",
+    "terms"
+   ],
+   "stages": [
+    "base",
+    "evidence"
+   ],
+   "crosses": true,
+   "rows": 0
+  },
+  "v_value_independence": {
+   "reads": [
+    "base_parameters",
+    "external_root_registry",
+    "source_value_extractions",
+    "terms"
+   ],
+   "stages": [
+    "base",
+    "evidence"
+   ],
+   "crosses": true,
+   "rows": 1
+  }
+ },
+ "vocab": {
+  "access_duration": {
+   "code": [
+    "permanent",
+    "temporary",
+    "situational"
+   ]
+  },
+  "access_need_axis_map": {
+   "relationship": [
+    "primary",
+    "partial",
+    "spans"
+   ]
+  },
+  "access_need_icf": {
+   "icf_type": [
+    "b",
+    "d",
+    "e",
+    "s"
+   ],
+   "confidence": [
+    "confirmed",
+    "proposed"
+   ]
+  },
+  "access_needs": {
+   "family": [
+    "perceiving",
+    "communicating",
+    "operating",
+    "pacing",
+    "environment_safety"
+   ],
+   "typical_stakes": [
+    "safety-critical",
+    "exclusion",
+    "friction"
+   ]
+  },
+  "access_stakes": {
+   "code": [
+    "safety-critical",
+    "exclusion",
+    "friction"
+   ]
+  },
+  "adversarial_findings": {
+   "lens": [
+    "L1-existence",
+    "L2-fidelity",
+    "L3-independence",
+    "L4-tier",
+    "L5-population",
+    "L6-contrary",
+    "L7-recognition",
+    "L8-query-shape",
+    "S1-harm-reached-row",
+    "S2-mismatch-note-vs-payload",
+    "S3-containment"
+   ],
+   "verdict": [
+    "SUSTAINED",
+    "SURVIVED",
+    "NOT-ATTACKED",
+    "WITHHELD-FOR-OWNER"
+   ],
+   "severity": [
+    "CRITICAL",
+    "HIGH",
+    "MEDIUM",
+    "LOW"
+   ],
+   "disposition": [
+    "REPAIRED",
+    "REJECTED",
+    "PROVISIONAL-DISPUTED",
+    "OWNER-RULED"
+   ]
+  },
+  "axes": {
+   "coverage_status": [
+    "ESTABLISHED",
+    "PARTIAL",
+    "STUB"
+   ]
+  },
+  "base_icf": {
+   "component": [
+    "b",
+    "d",
+    "e",
+    "s"
+   ]
+  },
+  "base_parameters": {
+   "status": [
+    "active",
+    "merged",
+    "retired"
+   ],
+   "accessibility_direction": [
+    "higher_is_better",
+    "lower_is_better",
+    "contested"
+   ]
+  },
+  "base_taxonomy_medical": {
+   "status": [
+    "active",
+    "deprecated",
+    "superseded"
+   ]
+  },
+  "bpc_metadata": {
+   "closure_definition_version": [
+    "v1",
+    "v2"
+   ]
+  },
+  "case_studies": {
+   "cost_data_quality": [
+    "VERIFIED",
+    "PROVISIONAL",
+    "GREY"
+   ]
+  },
+  "conflicts": {
+   "status": [
+    "ACTIVE",
+    "PROPOSED",
+    "DEFERRED",
+    "RESOLVED-EVIDENCE",
+    "RESOLVED-CONSENSUS",
+    "UNRESOLVED",
+    "CLOSED",
+    "RETIRED",
+    "SUPERSEDED"
+   ]
+  },
+  "connections": {
+   "status": [
+    "PENDING",
+    "CONSUMED",
+    "CONSUMED-DEFERRED",
+    "CLOSED"
+   ],
+   "confidence": [
+    "HIGH",
+    "MODERATE",
+    "SPECULATIVE"
+   ],
+   "connection_type": [
+    "CROSS-POPULATION",
+    "CROSS-ITEM",
+    "COMPOUND-INTERACTION",
+    "METHODOLOGY"
+   ]
+  },
+  "convergence_assessment": {
+   "status": [
+    "convergent",
+    "divergent",
+    "single_axis",
+    "pending_assessment"
+   ]
+  },
+  "convergence_sources": {
+   "role": [
+    "clinical",
+    "co1",
+    "co2",
+    "down_weighted",
+    "discounted"
+   ]
+  },
+  "decisions": {
+   "category": [
+    "D-DOCT",
+    "D-METH",
+    "D-SCHEMA",
+    "D-OP",
+    "D-PRES"
+   ],
+   "delegation": [
+    "DG-NON",
+    "DG-REVIEW",
+    "DG-AUTO"
+   ],
+   "status": [
+    "ACTIVE",
+    "PROPOSED",
+    "DEFERRED",
+    "RESOLVED-EVIDENCE",
+    "RESOLVED-CONSENSUS",
+    "UNRESOLVED",
+    "CLOSED",
+    "RETIRED",
+    "SUPERSEDED"
+   ]
+  },
+  "determination_gates": {
+   "verdict": [
+    "UNLINKED",
+    "MISLINKED",
+    "UNDER-CONSERVATIVE",
+    "CONTRADICTS"
+   ]
+  },
+  "economics_entries": {
+   "pillar": [
+    "health",
+    "inaction",
+    "construction",
+    "market"
+   ],
+   "entry_type": [
+    "cost_premium",
+    "retrofit_multiplier",
+    "grant_programme",
+    "health_outcome",
+    "market_value",
+    "housing_deficit",
+    "research_gap"
+   ],
+   "confidence": [
+    "HIGH",
+    "MODERATE",
+    "LOW"
+   ],
+   "quant_status": [
+    "VERIFIED-QUANT",
+    "UNVERIFIED-QUANT"
+   ]
+  },
+  "evidence_population_match": {
+   "match_grade": [
+    "EXACT",
+    "PARTIAL",
+    "PROXY",
+    "MISMATCH"
+   ]
+  },
+  "evidence_sources": {
+   "source_type": [
+    "journal_article",
+    "book",
+    "book_chapter",
+    "conference_paper",
+    "thesis",
+    "primary_research",
+    "case_study",
+    "standard",
+    "guideline",
+    "report",
+    "grey",
+    "internal",
+    "letter",
+    "editorial",
+    "commentary",
+    "other",
+    "code"
+   ],
+   "metadata_quality": [
+    "COMPLETE",
+    "AUTHOR-TITLE-ONLY",
+    "GREY",
+    "PMID-ONLY",
+    "NULL",
+    "COMPLETE-STATUTORY"
+   ],
+   "verification_status": [
+    "VERIFIED",
+    "UNVERIFIED"
+   ],
+   "doi_resolution_outcome": [
+    "RESOLVED",
+    "NO-MATCH",
+    "REVERTED"
+   ],
+   "url_resolution_outcome": [
+    "MATCHED",
+    "PARTIAL",
+    "NO-MATCH",
+    "DEAD-LINK",
+    "DEAD-DNS",
+    "WAYBACK-MATCH",
+    "WAYBACK-PARTIAL",
+    "URL-NO-MATCH",
+    "RESOLVED",
+    "DEAD",
+    "RESOLVED-PARTIAL"
+   ],
+   "scope": [
+    "high_control",
+    "lower_control",
+    "national",
+    "international",
+    "intrinsic"
+   ],
+   "data_capture_status": [
+    "pending",
+    "captured",
+    "none-extractable",
+    "deferred"
+   ],
+   "citation_mining_status": [
+    "pending",
+    "mined",
+    "deferred",
+    "not-applicable"
+   ],
+   "verification_disposition": [
+    "OPEN",
+    "CLOSED"
+   ]
+  },
+  "external_root_registry": {
+   "root_type": [
+    "measurement_primary",
+    "participatory_finding",
+    "committee_assertion",
+    "derived_calculation",
+    "untraced"
+   ]
+  },
+  "extraction_relations": {
+   "relation": [
+    "tested_at",
+    "audited_against",
+    "confirms",
+    "insufficient",
+    "exceeds",
+    "delta_over",
+    "condition_on",
+    "derived_from"
+   ],
+   "to_kind": [
+    "standard",
+    "own_sample",
+    "prior_source",
+    "unnamed"
+   ],
+   "stated": [
+    "named",
+    "unnamed",
+    "inferred"
+   ],
+   "input_role": [
+    "base",
+    "delta",
+    "factor"
+   ],
+   "NOT": [
+    "condition_on",
+    "derived_from"
+   ]
+  },
+  "gap_mining": {
+   "check_method": [
+    "pubmed_cluster",
+    "scholar_gateway_lived_experience",
+    "cochrane_direct",
+    "standards_body_direct",
+    "multilingual_research",
+    "composite"
+   ]
+  },
+  "gaps": {
+   "category": [
+    "RP",
+    "SW",
+    "CR",
+    "ST",
+    "MX",
+    "CD",
+    "EC",
+    "EG",
+    "CI",
+    "DEC",
+    "CONF",
+    "AUDT"
+   ],
+   "priority": [
+    "P1",
+    "P2",
+    "P3"
+   ],
+   "mining_addressability": [
+    "ADDRESSABLE",
+    "NOT-ADDRESSABLE",
+    "TRIAGE-NEEDED"
+   ]
+  },
+  "icf_medical_map": {
+   "role": [
+    "PRIMARY",
+    "SECONDARY",
+    "SITUATIONAL"
+   ],
+   "mapping_confidence": [
+    "high_predictive",
+    "moderate",
+    "low",
+    "minimal"
+   ]
+  },
+  "identity_medical_map": {
+   "relationship": [
+    "names",
+    "member_of",
+    "identity_first"
+   ]
+  },
+  "item_audit_runs": {
+   "status": [
+    "IN-PROGRESS",
+    "COMPLETE",
+    "HANDED-OFF"
+   ]
+  },
+  "item_bpc_links": {
+   "link_type": [
+    "primary",
+    "parameter",
+    "context",
+    "secondary"
+   ]
+  },
+  "item_taxonomy_links": {
+   "applicability": [
+    "applies",
+    "applies_strictly",
+    "applies_loosely",
+    "context_dependent",
+    "does_not_apply"
+   ],
+   "strength_band": [
+    "full",
+    "partial",
+    "weak"
+   ],
+   "use_mode": [
+    "independent",
+    "assisted",
+    "collective"
+   ]
+  },
+  "items": {
+   "category": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K"
+   ],
+   "status": [
+    "draft",
+    "active",
+    "merged",
+    "retired"
+   ]
+  },
+  "lang_jur_map": {
+   "role": [
+    "PRIMARY",
+    "SECONDARY"
+   ]
+  },
+  "life_stage_modifiers": {
+   "code": [
+    "SEN",
+    "CHD"
+   ]
+  },
+  "population_axis_map": {
+   "role": [
+    "ALIAS",
+    "PRIMARY",
+    "SECONDARY",
+    "SITUATIONAL"
+   ]
+  },
+  "population_icf_links": {
+   "mapping_confidence": [
+    "high_predictive",
+    "moderate_contextual",
+    "low_indicative"
+   ]
+  },
+  "populations": {
+   "category": [
+    "mobility",
+    "sensory",
+    "cognitive",
+    "mental_health",
+    "pain_fatigue",
+    "neurological",
+    "developmental",
+    "general"
+   ],
+   "status": [
+    "active",
+    "deprecated"
+   ]
+  },
+  "reasoning_doc_citations": {
+   "claim_type": [
+    "numerical_spec",
+    "jurisdiction_value",
+    "qualitative",
+    "definitional"
+   ],
+   "value_match": [
+    "EXACT",
+    "WITHIN-TOLERANCE",
+    "DIFFERENT",
+    "NOT-FOUND",
+    "PAYWALL",
+    "SUPERSEDED"
+   ],
+   "claim_match": [
+    "SUPPORTED",
+    "PARTIAL",
+    "NOT-FOUND",
+    "PAYWALL",
+    "CONTRADICTED"
+   ]
+  },
+  "reference_stubs": {
+   "status": [
+    "REFERENCE-ONLY",
+    "PROMOTED",
+    "RETIRED"
+   ]
+  },
+  "research_code_leads": {
+   "status": [
+    "REFERENCE-ONLY",
+    "RETRIEVED",
+    "SUPERSEDED"
+   ]
+  },
+  "room_items": {
+   "applicability": [
+    "applies",
+    "conditional",
+    "not-applicable"
+   ]
+  },
+  "rooms": {
+   "status": [
+    "active",
+    "draft",
+    "retired"
+   ]
+  },
+  "search_candidates": {
+   "disposition": [
+    "REHOME",
+    "MISCELLANEOUS",
+    "PENDING-VERIFICATION",
+    "OUT-OF-SCOPE",
+    "ADMITTED",
+    "EXHAUSTED"
+   ],
+   "locator_status": [
+    "UNVERIFIED",
+    "RESOLVED",
+    "DEAD"
+   ]
+  },
+  "search_coverage": {
+   "status": [
+    "SEARCHED",
+    "THIN",
+    "NO-DATA",
+    "NOT-RUN"
+   ]
+  },
+  "search_executions": {
+   "target_evidence_type": [
+    "clinical",
+    "sr_meta",
+    "standard_eb",
+    "national_fw",
+    "code",
+    "co1",
+    "co2",
+    "grey"
+   ],
+   "target_scope": [
+    "intrinsic",
+    "lower_control",
+    "high_control",
+    "national",
+    "international"
+   ],
+   "depth_method": [
+    "scoping",
+    "systematic"
+   ],
+   "mining_direction": [
+    "none",
+    "backward",
+    "forward",
+    "both"
+   ],
+   "saturation_signal": [
+    "none",
+    "partial",
+    "saturated"
+   ],
+   "origin": [
+    "planned",
+    "incidental",
+    "adversarial-pass",
+    "owner-supplied",
+    "lead-index"
+   ]
+  },
+  "search_languages": {
+   "status": [
+    "SEARCHED",
+    "PARTIAL",
+    "NOT-RUN"
+   ]
+  },
+  "situations": {
+   "operational_access": [
+    "yes",
+    "no"
+   ]
+  },
+  "slugs": {
+   "status": [
+    "ACTIVE",
+    "MERGED",
+    "STUB",
+    "PROVISIONAL"
+   ]
+  },
+  "source_locators": {
+   "doi_resolution_outcome": [
+    "RESOLVED",
+    "NO-MATCH",
+    "REVERTED"
+   ],
+   "url_resolution_outcome": [
+    "MATCHED",
+    "PARTIAL",
+    "NO-MATCH",
+    "DEAD-LINK",
+    "DEAD-DNS",
+    "WAYBACK-MATCH",
+    "WAYBACK-PARTIAL",
+    "URL-NO-MATCH",
+    "RESOLVED",
+    "DEAD",
+    "RESOLVED-PARTIAL"
+   ],
+   "status": [
+    "REFERENCE-ONLY",
+    "PROMOTED",
+    "SCREENED-OUT",
+    "RETIRED"
+   ]
+  },
+  "source_value_extractions": {
+   "claim_type": [
+    "numerical",
+    "range",
+    "qualitative",
+    "framework",
+    "absent"
+   ],
+   "root_type": [
+    "measurement_primary",
+    "participatory_finding",
+    "committee_assertion",
+    "derived_calculation",
+    "untraced"
+   ],
+   "measurement_paradigm": [
+    "swept_path_dynamic",
+    "static_turning_circle",
+    "static_clearance",
+    "anthropometric_percentile",
+    "instrumented_physical_measurement",
+    "route_metric",
+    "field_observation",
+    "participatory_spatial",
+    "stated_unmeasured"
+   ],
+   "device_class": [
+    "manual_self_propelled",
+    "manual_attendant",
+    "power_chair",
+    "scooter",
+    "bariatric_manual",
+    "bariatric_power",
+    "walker_rollator",
+    "mixed",
+    "not_device_scoped"
+   ],
+   "extraction_method": [
+    "skim",
+    "full-read",
+    "re-read",
+    "auto-mined"
+   ],
+   "extraction_status": [
+    "preliminary",
+    "reviewed",
+    "verified",
+    "contradicted",
+    "absent-confirmed"
+   ],
+   "figure_role": [
+    "claim",
+    "finding",
+    "condition",
+    "derived"
+   ],
+   "comparator": [
+    "=",
+    "<",
+    "<=",
+    ">",
+    ">=",
+    "between",
+    "approx"
+   ]
+  },
+  "spec_value_probes": {
+   "direction": [
+    "up",
+    "down"
+   ],
+   "claim_type": [
+    "minimum",
+    "maximum",
+    "target",
+    "range_low",
+    "range_high"
+   ],
+   "phase": [
+    "outer-pass-1st",
+    "outer-pass-2nd",
+    "outer-stop",
+    "refinement-pass-1st",
+    "refinement-pass-2nd",
+    "refinement-stop",
+    "final"
+   ]
+  },
+  "specification_extraction_links": {
+   "role": [
+    "governing",
+    "conditioning",
+    "excluded"
+   ]
+  },
+  "specification_source_links": {
+   "role": [
+    "governing"
+   ]
+  },
+  "specifications": {
+   "state": [
+    "stated",
+    "provisional",
+    "pending",
+    "not_applicable"
+   ],
+   "design_scale": [
+    "universal",
+    "population",
+    "person"
+   ]
+  },
+  "supersession_check": {
+   "check_method": [
+    "pubmed_search",
+    "scholar_gateway",
+    "cochrane_direct",
+    "standards_body_direct",
+    "multilingual_research",
+    "composite"
+   ],
+   "outcome": [
+    "superseded_by",
+    "refined_by",
+    "divergent_no_supersession"
+   ]
+  },
+  "term_adjudications": {
+   "outcome": [
+    "NAMES-EXISTING",
+    "NAMES-NEW",
+    "NOT-OURS",
+    "DEFERRED"
+   ]
+  },
+  "term_aliases": {
+   "alias_type": [
+    "SYNONYM",
+    "TRANSLATION",
+    "NARROWER",
+    "BROADER",
+    "DEPRECATED",
+    "DOMAIN"
+   ]
+  }
+ },
+ "verbs": {
+  "migrate": {
+   "functions": [],
+   "writes": {},
+   "refusals": 0
+  },
+  "gaps": {
+   "functions": [
+    "get_open_gaps",
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "connections": {
+   "functions": [
+    "get_connections",
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "is-mined": {
+   "functions": [
+    "is_mined",
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "log-mining": {
+   "functions": [
+    "_emit",
+    "log_mining"
+   ],
+   "writes": {
+    "citation_mining": [
+     "INSERT",
+     "UPDATE"
+    ],
+    "evidence_sources": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "add-candidate": {
+   "functions": [
+    "insert_search_candidate",
+    "_emit"
+   ],
+   "writes": {
+    "search_candidates": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-population-match": {
+   "functions": [
+    "insert_population_match",
+    "_emit"
+   ],
+   "writes": {
+    "evidence_population_match": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-jurisdictional-value": {
+   "functions": [
+    "insert_jurisdictional_value",
+    "_emit"
+   ],
+   "writes": {
+    "jurisdictional_values": [
+     "INSERT"
+    ]
+   },
+   "refusals": 4
+  },
+  "add-economics-entry": {
+   "functions": [
+    "insert_economics_entry",
+    "_emit"
+   ],
+   "writes": {
+    "economics_entries": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-case-study": {
+   "functions": [
+    "insert_case_study",
+    "_emit"
+   ],
+   "writes": {
+    "case_studies": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-code-lead": {
+   "functions": [
+    "insert_code_lead",
+    "_emit"
+   ],
+   "writes": {
+    "research_code_leads": [
+     "INSERT"
+    ]
+   },
+   "refusals": 7
+  },
+  "update-code-lead": {
+   "functions": [
+    "_emit",
+    "update_code_lead"
+   ],
+   "writes": {
+    "research_code_leads": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 5
+  },
+  "correct-source": {
+   "functions": [
+    "correct_source",
+    "_emit"
+   ],
+   "writes": {
+    "evidence_source_authors": [
+     "DELETE",
+     "INSERT"
+    ],
+    "evidence_sources": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 5
+  },
+  "amend-search": {
+   "functions": [
+    "_emit",
+    "amend_search"
+   ],
+   "writes": {
+    "search_execution_artefacts": [
+     "INSERT"
+    ],
+    "search_executions": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 14
+  },
+  "amend-gap": {
+   "functions": [
+    "_emit",
+    "amend_gap"
+   ],
+   "writes": {
+    "gaps": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
+  },
+  "reattribute-candidate": {
+   "functions": [
+    "_emit",
+    "reattribute_candidate"
+   ],
+   "writes": {
+    "search_candidates": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 4
+  },
+  "record-adversarial-pass": {
+   "functions": [
+    "_emit",
+    "record_adversarial_pass"
+   ],
+   "writes": {
+    "adversarial_findings": [
+     "INSERT"
+    ],
+    "adversarial_passes": [
+     "INSERT"
+    ]
+   },
+   "refusals": 11
+  },
+  "dispose-adversarial-finding": {
+   "functions": [
+    "_emit",
+    "dispose_adversarial_finding"
+   ],
+   "writes": {
+    "adversarial_findings": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "close-adversarial-pass": {
+   "functions": [
+    "close_adversarial_pass",
+    "_emit"
+   ],
+   "writes": {
+    "adversarial_passes": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "resolve-candidate": {
+   "functions": [
+    "_emit",
+    "resolve_candidate"
+   ],
+   "writes": {
+    "search_candidates": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 8
+  },
+  "link-admission": {
+   "functions": [
+    "_emit",
+    "link_admission"
+   ],
+   "writes": {
+    "search_admissions": [
+     "INSERT"
+    ],
+    "search_executions": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 3
+  },
+  "unlink-admission": {
+   "functions": [
+    "_emit",
+    "unlink_admission"
+   ],
+   "writes": {
+    "search_admissions": [
+     "DELETE"
+    ],
+    "search_executions": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
+  },
+  "amend-population-match": {
+   "functions": [
+    "_emit",
+    "amend_population_match"
+   ],
+   "writes": {
+    "evidence_population_match": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 1
+  },
+  "amend-term": {
+   "functions": [
+    "_emit",
+    "amend_term"
+   ],
+   "writes": {
+    "terms": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 4
+  },
+  "amend-source": {
+   "functions": [
+    "_emit",
+    "amend_source"
+   ],
+   "writes": {
+    "evidence_sources": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 14
+  },
+  "link-source-slug": {
+   "functions": [
+    "_emit",
+    "link_source_slug"
+   ],
+   "writes": {
+    "source_slug_links": [
+     "INSERT",
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "supersede-source": {
+   "functions": [
+    "_emit",
+    "supersede_source"
+   ],
+   "writes": {
+    "evidence_sources": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "update-locator": {
+   "functions": [
+    "_emit",
+    "update_locator"
+   ],
+   "writes": {
+    "source_locators": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 4
+  },
+  "retire-specification": {
+   "functions": [
+    "_emit",
+    "retire_specification"
+   ],
+   "writes": {
+    "specifications": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "observe-term": {
+   "functions": [
+    "_emit",
+    "observe_term"
+   ],
+   "writes": {
+    "observed_terms": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-term": {
+   "functions": [
+    "_emit",
+    "insert_term"
+   ],
+   "writes": {
+    "term_adjudications": [
+     "INSERT"
+    ],
+    "terms": [
+     "INSERT"
+    ]
+   },
+   "refusals": 5
+  },
+  "set-parameter-direction": {
+   "functions": [
+    "_emit",
+    "set_parameter_direction"
+   ],
+   "writes": {
+    "base_parameters": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-parameter": {
+   "functions": [
+    "_emit",
+    "insert_parameter"
+   ],
+   "writes": {
+    "base_parameters": [
+     "INSERT"
+    ]
+   },
+   "refusals": 5
+  },
+  "decline-parameter": {
+   "functions": [
+    "_emit",
+    "decline_parameter"
+   ],
+   "writes": {
+    "parameter_declinations": [
+     "INSERT"
+    ]
+   },
+   "refusals": 4
+  },
+  "add-icf-code": {
+   "functions": [
+    "_emit",
+    "insert_icf_code"
+   ],
+   "writes": {
+    "base_icf": [
+     "INSERT"
+    ]
+   },
+   "refusals": 4
+  },
+  "set-icf-title": {
+   "functions": [
+    "_emit",
+    "set_icf_title"
+   ],
+   "writes": {
+    "base_icf": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 5
+  },
+  "add-population-icf-link": {
+   "functions": [
+    "_emit",
+    "insert_population_icf_link"
+   ],
+   "writes": {
+    "population_icf_links": [
+     "INSERT"
+    ]
+   },
+   "refusals": 4
+  },
+  "raise-determination-gate": {
+   "functions": [
+    "_emit",
+    "raise_determination_gate"
+   ],
+   "writes": {
+    "determination_gates": [
+     "INSERT"
+    ]
+   },
+   "refusals": 8
+  },
+  "resolve-determination-gate": {
+   "functions": [
+    "_emit",
+    "resolve_determination_gate"
+   ],
+   "writes": {
+    "determination_gates": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 3
+  },
+  "add-medical": {
+   "functions": [
+    "insert_medical"
+   ],
+   "writes": {
+    "base_taxonomy_medical": [
+     "INSERT"
+    ],
+    "icf_medical_map": [
+     "INSERT"
+    ],
+    "identity_medical_map": [
+     "INSERT"
+    ]
+   },
+   "refusals": 11
+  },
+  "add-extraction": {
+   "functions": [
+    "_build_relation_groups",
+    "_emit",
+    "insert_extraction"
+   ],
+   "writes": {
+    "evidence_sources": [
+     "UPDATE"
+    ],
+    "extraction_relations": [
+     "INSERT"
+    ],
+    "source_value_extractions": [
+     "INSERT"
+    ]
+   },
+   "refusals": 22
+  },
+  "relate-extraction": {
+   "functions": [
+    "_emit",
+    "repoint_extraction_relation",
+    "relate_extraction"
+   ],
+   "writes": {
+    "extraction_relations": [
+     "INSERT",
+     "UPDATE"
+    ]
+   },
+   "refusals": 6
+  },
+  "amend-extraction": {
+   "functions": [
+    "_emit",
+    "amend_extraction"
+   ],
+   "writes": {
+    "source_value_extractions": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 7
+  },
+  "derive-extraction": {
+   "functions": [
+    "_emit",
+    "derive_extraction"
+   ],
+   "writes": {
+    "evidence_sources": [
+     "UPDATE"
+    ],
+    "extraction_relations": [
+     "INSERT"
+    ],
+    "source_value_extractions": [
+     "INSERT"
+    ]
+   },
+   "refusals": 6
+  },
+  "adjudicate-term": {
+   "functions": [
+    "_emit",
+    "adjudicate_term"
+   ],
+   "writes": {
+    "term_adjudications": [
+     "INSERT"
+    ]
+   },
+   "refusals": 5
+  },
+  "add-locator": {
+   "functions": [
+    "insert_locator",
+    "_emit"
+   ],
+   "writes": {
+    "source_locators": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "next-id": {
+   "functions": [
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "coverage": {
+   "functions": [
+    "_emit",
+    "get_coverage_completeness"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "synonyms": {
+   "functions": [
+    "_emit",
+    "get_synonyms"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "add-gap": {
+   "functions": [
+    "next_gap_id",
+    "insert_gap",
+    "_emit"
+   ],
+   "writes": {
+    "gaps": [
+     "INSERT"
+    ]
+   },
+   "refusals": 0
+  },
+  "close-gap": {
+   "functions": [
+    "close_gap",
+    "_emit"
+   ],
+   "writes": {
+    "gaps": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 1
+  },
+  "add-connection": {
+   "functions": [
+    "insert_connection",
+    "_emit"
+   ],
+   "writes": {
+    "connection_targets": [
+     "INSERT"
+    ],
+    "connections": [
+     "INSERT"
+    ]
+   },
+   "refusals": 0
+  },
+  "update-connection": {
+   "functions": [
+    "update_connection_status",
+    "_emit"
+   ],
+   "writes": {
+    "connections": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 0
+  },
+  "unmined": {
+   "functions": [
+    "get_unmined_sources",
+    "get_unmined_for_all_slugs",
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "upsert-coverage": {
+   "functions": [],
+   "writes": {},
+   "refusals": 0
+  },
+  "upsert-language": {
+   "functions": [],
+   "writes": {},
+   "refusals": 0
+  },
+  "log-search": {
+   "functions": [
+    "log_search",
+    "_emit"
+   ],
+   "writes": {
+    "search_admissions": [
+     "INSERT"
+    ],
+    "search_execution_artefacts": [
+     "INSERT"
+    ],
+    "search_executions": [
+     "INSERT"
+    ]
+   },
+   "refusals": 11
+  },
+  "update-bpc": {
+   "functions": [
+    "update_bpc_metadata",
+    "_emit"
+   ],
+   "writes": {
+    "bpc_metadata": [
+     "INSERT",
+     "UPDATE"
+    ]
+   },
+   "refusals": 0
+  },
+  "add-source": {
+   "functions": [
+    "_check_slug_filable",
+    "_check_link_label",
+    "parse_author_flags",
+    "parse_author_display",
+    "insert_evidence_source",
+    "insert_source_slug_link",
+    "_emit"
+   ],
+   "writes": {
+    "evidence_source_authors": [
+     "INSERT"
+    ],
+    "evidence_sources": [
+     "INSERT"
+    ],
+    "source_slug_links": [
+     "INSERT"
+    ]
+   },
+   "refusals": 16
+  },
+  "add-conflict": {
+   "functions": [
+    "next_conf_id",
+    "insert_conflict",
+    "_emit"
+   ],
+   "writes": {
+    "conflicts": [
+     "INSERT"
+    ]
+   },
+   "refusals": 1
+  },
+  "update-conflict": {
+   "functions": [
+    "update_conflict",
+    "_emit"
+   ],
+   "writes": {
+    "conflicts": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 0
+  },
+  "conflicts": {
+   "functions": [
+    "get_conflicts",
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "delete-connection": {
+   "functions": [
+    "delete_connection",
+    "_emit"
+   ],
+   "writes": {
+    "connection_targets": [
+     "DELETE"
+    ],
+    "connections": [
+     "DELETE"
+    ]
+   },
+   "refusals": 0
+  },
+  "add-item": {
+   "functions": [],
+   "writes": {},
+   "refusals": 0
+  },
+  "items": {
+   "functions": [
+    "_emit",
+    "get_items"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "add-audit-run": {
+   "functions": [
+    "insert_audit_run",
+    "_emit"
+   ],
+   "writes": {
+    "item_audit_runs": [
+     "INSERT"
+    ]
+   },
+   "refusals": 0
+  },
+  "update-audit-run": {
+   "functions": [
+    "update_audit_run",
+    "_emit"
+   ],
+   "writes": {
+    "item_audit_runs": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 1
+  },
+  "audit-runs": {
+   "functions": [
+    "_emit",
+    "get_audit_runs"
+   ],
+   "writes": {},
+   "refusals": 0
+  },
+  "add-supersession-check": {
+   "functions": [
+    "add_supersession_check",
+    "_emit"
+   ],
+   "writes": {
+    "supersession_check": [
+     "INSERT"
+    ]
+   },
+   "refusals": 0
+  },
+  "add-gap-mining": {
+   "functions": [
+    "add_gap_mining",
+    "_emit"
+   ],
+   "writes": {
+    "gap_mining": [
+     "INSERT"
+    ]
+   },
+   "refusals": 0
+  },
+  "update-gap-addressability": {
+   "functions": [
+    "update_gap_addressability",
+    "_emit"
+   ],
+   "writes": {
+    "gaps": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 1
+  },
+  "unmined-gaps": {
+   "functions": [
+    "get_unmined_gaps",
+    "_emit"
+   ],
+   "writes": {},
+   "refusals": 0
+  }
+ },
+ "probes": {
+  "P-A": {
+   "verdict": "FAIL",
+   "tests": "the five splinter population_* link tables are deleted (owner 2026-08-28)",
+   "atoms": [
+    "LED-132"
+   ],
+   "evidence": {
+    "still_present": [
+     "extraction_population_links",
+     "probe_population_links",
+     "citation_population_links",
+     "case_study_populations",
+     "economics_entry_populations"
+    ],
+    "rows": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "P-B": {
+   "verdict": "FAIL",
+   "tests": "every table attaching a determination to a group has the four lens columns; population_code retired",
+   "atoms": [
+    "LED-128",
+    "CLM-042"
+   ],
+   "evidence": {
+    "access_need_icf": [
+     "icf_code"
+    ],
+    "base_icf": [
+     "icf_code"
+    ],
+    "base_taxonomy_medical": [
+     "medical_code"
+    ],
+    "case_study_populations": [
+     "population_code"
+    ],
+    "citation_population_links": [
+     "population_code"
+    ],
+    "determination_gates": [
+     "identity_code"
+    ],
+    "economics_entry_populations": [
+     "population_code"
+    ],
+    "extraction_population_links": [
+     "population_code"
+    ],
+    "icf_medical_map": [
+     "icf_code",
+     "medical_code"
+    ],
+    "identity_medical_map": [
+     "identity_code",
+     "medical_code"
+    ],
+    "item_population_elaborations": [
+     "population_code"
+    ],
+    "population_axis_map": [
+     "population_code"
+    ],
+    "population_icf_links": [
+     "icf_code",
+     "population_code"
+    ],
+    "populations": [
+     "population_code"
+    ],
+    "probe_population_links": [
+     "population_code"
+    ]
+   }
+  },
+  "P-C": {
+   "verdict": "NOT-BUILT",
+   "tests": "'population' is retired vocabulary",
+   "atoms": [
+    "LED-127"
+   ],
+   "evidence": {
+    "tables": [
+     "case_study_populations",
+     "citation_population_links",
+     "economics_entry_populations",
+     "evidence_population_match",
+     "extraction_population_links",
+     "item_population_elaborations",
+     "population_axis_map",
+     "population_icf_links",
+     "populations",
+     "probe_population_links"
+    ],
+    "columns": {
+     "bpc_metadata": [
+      "population"
+     ],
+     "case_studies": [
+      "population_description",
+      "populations_served_note"
+     ],
+     "case_study_populations": [
+      "population_code"
+     ],
+     "citation_population_links": [
+      "population_code"
+     ],
+     "economics_entry_populations": [
+      "population_code"
+     ],
+     "evidence_population_match": [
+      "target_population",
+      "study_population"
+     ],
+     "external_root_registry": [
+      "root_population_note"
+     ],
+     "extraction_population_links": [
+      "population_code"
+     ],
+     "item_population_elaborations": [
+      "population_code"
+     ],
+     "population_axis_map": [
+      "population_code"
+     ],
+     "population_icf_links": [
+      "population_code"
+     ],
+     "populations": [
+      "population_code"
+     ],
+     "probe_population_links": [
+      "population_code"
+     ],
+     "reasoning_doc_citations": [
+      "population"
+     ],
+     "source_value_extractions": [
+      "root_population_note"
+     ],
+     "spec_value_probes": [
+      "population"
+     ],
+     "term_item_links": [
+      "population"
+     ]
+    }
+   }
+  },
+  "P-D": {
+   "verdict": "PASS",
+   "tests": "no UNIQUE index on source_value_extractions(ref_id)",
+   "atoms": [
+    "LED-101",
+    "PIP-10"
+   ],
+   "evidence": {
+    "unique_indexes": []
+   }
+  },
+  "P-F": {
+   "verdict": "FAIL",
+   "tests": "the tier verdict is a judgment output, not a column on evidence_sources",
+   "atoms": [
+    "LED-108",
+    "OPS-06"
+   ],
+   "evidence": {
+    "case_study_outcomes": [
+     "tier"
+    ],
+    "evidence_sources": [
+     "tier",
+     "scope"
+    ]
+   }
+  },
+  "P-G": {
+   "verdict": "PASS",
+   "tests": "no ICF-typed column holds an 'AX-' code (owner 2026-09-13: 'AX-' for ICF should never ever exist anywhere)",
+   "atoms": [
+    "LED-166"
+   ],
+   "evidence": {
+    "icf_columns_holding_AX": {},
+    "AX_elsewhere_not_tested_by_this_ruling": {
+     "access_need_axis_map.axis_code": 21,
+     "access_need_axis_map.notes": 1,
+     "access_need_icf.notes": 3,
+     "access_needs.notes": 1,
+     "axes.axis_code": 17,
+     "axes.falsification_condition": 8,
+     "axes.notes": 1,
+     "decisions.rationale": 1,
+     "decisions.notes": 1,
+     "population_axis_map.axis_code": 53,
+     "search_executions.query_text": 1,
+     "search_executions.deferred_reason": 1,
+     "search_executions.findings_note": 1,
+     "slugs.serves_axes": 1,
+     "terms.scope_note": 17
+    }
+   }
+  },
+  "P-AXIS": {
+   "verdict": "FAIL",
+   "tests": "'axis' is not a vocabulary-layer name (owner 2026-08-24: 'I don't want axis to be used')",
+   "atoms": [
+    "LED-076",
+    "DRS-006"
+   ],
+   "evidence": {
+    "tables": [
+     "access_need_axis_map",
+     "axes",
+     "population_axis_map"
+    ],
+    "columns": {
+     "access_need_axis_map": [
+      "axis_code"
+     ],
+     "axes": [
+      "axis_code"
+     ],
+     "population_axis_map": [
+      "axis_code"
+     ],
+     "situations": [
+      "attaches_axes"
+     ],
+     "slugs": [
+      "serves_axes"
+     ]
+    }
+   }
+  },
+  "P-H": {
+   "verdict": "FAIL",
+   "tests": "every view reading a retirable table names its lifecycle column",
+   "atoms": [
+    "LED-171",
+    "LED-170"
+   ],
+   "evidence": {
+    "views_not_naming_lifecycle": {
+     "v_code_floor_only": [
+      "base_parameters"
+     ],
+     "v_convergence_sources": [
+      "evidence_sources"
+     ],
+     "v_determination_provenance": [
+      "evidence_sources"
+     ],
+     "v_evidence_authors": [
+      "evidence_sources"
+     ],
+     "v_item_provenance": [
+      "evidence_sources"
+     ],
+     "v_source_admission": [
+      "evidence_sources"
+     ],
+     "v_source_reach_all": [
+      "evidence_sources"
+     ],
+     "v_unregistered_roots": [
+      "base_parameters"
+     ],
+     "v_value_independence": [
+      "base_parameters"
+     ]
+    },
+    "note": "lexical test; a view may filter under another spelling"
+   }
+  },
+  "P-I": {
+   "verdict": "FAIL",
+   "tests": "regenerate_derived.sh regenerates parts/ and site/",
+   "atoms": [
+    "PIP-07",
+    "CLM-050"
+   ],
+   "evidence": {
+    "mentions_parts_or_site": false,
+    "tools_it_runs": [
+     "tools/pipeline_completeness.py",
+     "tools/evidentiary_audit.py",
+     "tools/regenerate_vetting_surface.py",
+     "tools/pipeline_walk.py",
+     "tools/schema_walkability.py",
+     "tools/data_atlas.py",
+     "tools/pipeline_completeness.py",
+     "tools/evidentiary_audit.py",
+     "tools/pipeline_walk.py",
+     "tools/schema_walkability.py",
+     "tools/data_atlas.py"
+    ]
+   }
+  },
+  "P-K": {
+   "verdict": "FAIL",
+   "tests": "a live renderer can read specifications keyed on parameter_id x lens",
+   "atoms": [
+    "PIP-06",
+    "LED-103",
+    "POS-03"
+   ],
+   "evidence": {
+    "renderers_scanned": 4,
+    "queries_failing_on_live_schema": {
+     "scripts/generate/build_site.py": [
+      "no such column: ecs.item_code"
+     ],
+     "scripts/generate/spec_page.py": [
+      "no such column: population_code"
+     ],
+     "scripts/generate/pilot_renderings.py": [
+      "no such column: item_code"
+     ]
+    }
+   }
+  },
+  "P-L": {
+   "verdict": "FAIL",
+   "tests": "no workflow `git add`s the database blob",
+   "atoms": [
+    "CLM-012",
+    "LED-153",
+    "OPI-124"
+   ],
+   "evidence": {
+    "workflows_that_git_add_the_db": [
+     "resolve-dois.yml",
+     "verify-urls.yml"
+    ]
+   }
+  },
+  "P-M": {
+   "verdict": "FAIL",
+   "tests": "a search can record which slug x lens cells it covered",
+   "atoms": [
+    "LED-084",
+    "RES-04"
+   ],
+   "evidence": {
+    "lens_columns_on_search_executions": [],
+    "tables": []
+   }
+  },
+  "P-N": {
+   "verdict": "FAIL",
+   "tests": "search_executions.engine points into a research-target registry",
+   "atoms": [
+    "LED-112"
+   ],
+   "evidence": {
+    "engine_has_fk": false
+   }
+  },
+  "P-O": {
+   "verdict": "FAIL",
+   "tests": "every base vocabulary table is reachable by a sanctioned (db.py) writer",
+   "atoms": [
+    "LED-182",
+    "CLM-031",
+    "LED-116"
+   ],
+   "evidence": {
+    "base_tables_with_no_db_py_writer": [
+     "access_duration",
+     "access_need_axis_map",
+     "access_need_icf",
+     "access_needs",
+     "access_stakes",
+     "axes",
+     "lang_jur_map",
+     "life_stage_modifiers",
+     "population_axis_map",
+     "populations",
+     "room_items",
+     "rooms",
+     "situations",
+     "slugs",
+     "term_aliases"
+    ]
+   }
+  },
+  "P-R": {
+   "verdict": "NOT-BUILT",
+   "tests": "the engine can reach a determination from findings plus a threshold",
+   "atoms": [
+    "LED-174",
+    "LED-172"
+   ],
+   "evidence": {
+    "gather_sources_figure_role_filter": "figure_role IN ('claim','derived')"
+   }
+  },
+  "P-V": {
+   "verdict": "NOT-BUILT",
+   "tests": "a (source x parameter) read-state ledger exists",
+   "atoms": [
+    "LED-195",
+    "LED-199"
+   ],
+   "evidence": {
+    "source_scans": false,
+    "v_scan_ledger": false
+   }
+  },
+  "P-V2": {
+   "verdict": "FAIL",
+   "tests": "add-extraction accepts a slug the source was not admitted to",
+   "atoms": [
+    "LED-196",
+    "LED-201"
+   ],
+   "evidence": {
+    "admission_guard_present": true
+   }
+  },
+  "P-W": {
+   "verdict": "FAIL",
+   "tests": "an observation is one sighting (phrase at a place), so a second sense is not folded",
+   "atoms": [
+    "LED-197"
+   ],
+   "evidence": {
+    "unique_indexes": [],
+    "locator_in_key": false
+   }
+  },
+  "P-X": {
+   "verdict": "FAIL",
+   "tests": "some synthesis-stage structure can relate more than one parameter",
+   "atoms": [
+    "LED-097",
+    "LED-098",
+    "MIS-06"
+   ],
+   "evidence": {
+    "synthesis_tables": [
+     "conflicts",
+     "connection_targets",
+     "connections",
+     "convergence_assessment",
+     "convergence_sources",
+     "gaps",
+     "reasoning_doc_citations",
+     "supersession_check"
+    ],
+    "with_parameter_id": [],
+    "connection_targets_columns": [
+     "con_id",
+     "target"
+    ],
+    "conflicts_key_columns": [
+     "item_code",
+     "pop_a",
+     "pop_b"
+    ]
+   }
+  },
+  "P-Y": {
+   "verdict": "PASS",
+   "tests": "specifications: parameter_id NOT NULL and the at-least-one-lens CHECK",
+   "atoms": [
+    "LED-130",
+    "LED-091"
+   ],
+   "evidence": {
+    "coalesce_check": true,
+    "parameter_id_not_null": true
+   }
+  },
+  "P-AB": {
+   "verdict": "PASS",
+   "tests": "source_value_extractions.parameter_id is NOT NULL",
+   "atoms": [
+    "LED-093"
+   ],
+   "evidence": {}
+  },
+  "P-GT": {
+   "verdict": "FAIL",
+   "tests": "determination_gates carries all four lens columns",
+   "atoms": [
+    "LED-128"
+   ],
+   "evidence": {
+    "lens_columns": [
+     "identity_code"
+    ]
+   }
+  },
+  "P-ENG-T3": {
+   "verdict": "PASS",
+   "tests": "the engine: T3-clinical alone -> provisional; T3-grey alone -> pending",
+   "atoms": [
+    "LED-010",
+    "PIP-03",
+    "LED-151"
+   ],
+   "evidence": {
+    "t3_clinical_provisional": true,
+    "t3_grey_pending": true
+   }
+  },
+  "P-ENG-STATE": {
+   "verdict": "FAIL",
+   "tests": "the engine assigns every value of specifications.state",
+   "atoms": [
+    "EVI-361",
+    "EVI-364"
+   ],
+   "evidence": {
+    "assigned_by_engine": {
+     "stated": true,
+     "provisional": true,
+     "pending": true,
+     "not_applicable": false
+    }
+   }
+  },
+  "P-TIER-DERIVE": {
+   "verdict": "FAIL",
+   "tests": "the tier-derivation consistency check is live (not quarantined)",
+   "atoms": [
+    "EVI-301",
+    "EVI-303",
+    "LED-108"
+   ],
+   "evidence": {
+    "adjudication_integrity": "quarantined",
+    "other_tier_derivation_checks_registered": []
+   }
+  },
+  "P-STAGE-SVE": {
+   "verdict": "FAIL",
+   "tests": "stage-map and the contract place source_value_extractions in the same stage",
+   "atoms": [
+    "LED-106",
+    "PIP-10"
+   ],
+   "evidence": {
+    "stage_map_places_it_at": "evidence",
+    "stage_map_marks_it_disputed": true
+   }
+  },
+  "P-UNWRITABLE": {
+   "verdict": "FAIL",
+   "tests": "no NOT NULL foreign key points into an emptied table",
+   "atoms": [
+    "CLM-034",
+    "CLM-048"
+   ],
+   "evidence": {
+    "count": 19,
+    "pairs": [
+     "case_study_outcomes.case_study_id -> case_studies",
+     "case_study_populations.case_study_id -> case_studies",
+     "case_study_specs.item_code -> items",
+     "case_study_specs.case_study_id -> case_studies",
+     "case_study_strategies.case_study_id -> case_studies",
+     "citation_population_links.citation_id -> reasoning_doc_citations",
+     "connection_targets.con_id -> connections",
+     "economics_entry_specs.item_code -> items",
+     "icf_medical_map.medical_code -> base_taxonomy_medical",
+     "identity_medical_map.medical_code -> base_taxonomy_medical",
+     "item_audit_runs.item_code -> items",
+     "item_bpc_links.item_code -> items",
+     "item_population_elaborations.item_code -> items",
+     "item_taxonomy_links.item_code -> items",
+     "jurisdictional_values.item_code -> items",
+     "probe_population_links.probe_id -> spec_value_probes",
+     "room_items.item_code -> items",
+     "spec_value_probes.item_code -> items",
+     "term_item_links.item_code -> items"
+    ],
+    "with_a_db_py_verb": [
+     "add-audit-run",
+     "add-connection",
+     "add-jurisdictional-value",
+     "add-medical",
+     "delete-connection",
+     "update-audit-run"
+    ],
+    "parent_written_by_same_verb": {
+     "connection_targets.con_id": [
+      "add-connection",
+      "delete-connection"
+     ],
+     "icf_medical_map.medical_code": [
+      "add-medical"
+     ],
+     "identity_medical_map.medical_code": [
+      "add-medical"
+     ]
+    }
+   }
+  },
+  "P-MEDICAL": {
+   "verdict": "FAIL",
+   "tests": "a medical-lens value can be written (the lens registry holds a row)",
+   "atoms": [
+    "LED-154",
+    "LED-156",
+    "DRS-229"
+   ],
+   "evidence": {
+    "base_taxonomy_medical_rows": 0,
+    "writer_verbs": [
+     "add-medical"
+    ]
+   }
+  },
+  "P-CO1": {
+   "verdict": "FAIL",
+   "tests": "every live Co-1 source carries a co1_source_type the enum admits",
+   "atoms": [
+    "DRS-264",
+    "CLM-037"
+   ],
+   "evidence": {
+    "enum": [
+     "academic_narrative",
+     "advocacy_position",
+     "dpo_research",
+     "peer_reviewed_literature",
+     "validated_tool"
+    ],
+    "live_values": [
+     "lived_experience_publication",
+     "dpo_position_statement",
+     "participatory_research"
+    ],
+    "outside_enum": [
+     "lived_experience_publication",
+     "dpo_position_statement",
+     "participatory_research"
+    ]
+   }
+  },
+  "P-FWD-FK": {
+   "verdict": "INFO",
+   "tests": "foreign keys that point FORWARD along the spine (an earlier stage's table depends on a later stage's table)",
+   "atoms": [
+    "LED-080",
+    "LED-125",
+    "CLM-029"
+   ],
+   "evidence": {
+    "count": 14,
+    "with_live_rows": [
+     "evidence_population_match.gap_id -> gaps",
+     "search_admissions.ref_id -> evidence_sources",
+     "search_candidates.resolved_ref_id -> evidence_sources",
+     "search_executions.mined_ref_id -> evidence_sources",
+     "source_value_extractions.promoted_to_rdc_id -> reasoning_doc_citations"
+    ],
+    "all": [
+     {
+      "fk": "case_study_specs.item_code -> items",
+      "from_stage": "evidence",
+      "to_stage": "render",
+      "child_rows": 0
+     },
+     {
+      "fk": "citation_population_links.citation_id -> reasoning_doc_citations",
+      "from_stage": "judgment",
+      "to_stage": "synthesis",
+      "child_rows": 0
+     },
+     {
+      "fk": "conflicts.item_code -> items",
+      "from_stage": "synthesis",
+      "to_stage": "render",
+      "child_rows": 0
+     },
+     {
+      "fk": "economics_entry_specs.item_code -> items",
+      "from_stage": "evidence",
+      "to_stage": "render",
+      "child_rows": 0
+     },
+     {
+      "fk": "evidence_population_match.gap_id -> gaps",
+      "from_stage": "judgment",
+      "to_stage": "synthesis",
+      "child_rows": 54
+     },
+     {
+      "fk": "gap_mining.gap_id -> gaps",
+      "from_stage": "research",
+      "to_stage": "synthesis",
+      "child_rows": 0
+     },
+     {
+      "fk": "jurisdictional_values.item_code -> items",
+      "from_stage": "evidence",
+      "to_stage": "render",
+      "child_rows": 0
+     },
+     {
+      "fk": "probe_population_links.probe_id -> spec_value_probes",
+      "from_stage": "judgment",
+      "to_stage": "specification",
+      "child_rows": 0
+     },
+     {
+      "fk": "room_items.item_code -> items",
+      "from_stage": "base",
+      "to_stage": "render",
+      "child_rows": 0
+     },
+     {
+      "fk": "search_admissions.ref_id -> evidence_sources",
+      "from_stage": "research",
+      "to_stage": "evidence",
+      "child_rows": 55
+     },
+     {
+      "fk": "search_candidates.resolved_ref_id -> evidence_sources",
+      "from_stage": "research",
+      "to_stage": "evidence",
+      "child_rows": 147
+     },
+     {
+      "fk": "search_executions.mined_ref_id -> evidence_sources",
+      "from_stage": "research",
+      "to_stage": "evidence",
+      "child_rows": 191
+     },
+     {
+      "fk": "source_value_extractions.promoted_to_rdc_id -> reasoning_doc_citations",
+      "from_stage": "evidence",
+      "to_stage": "synthesis",
+      "child_rows": 101
+     },
+     {
+      "fk": "spec_value_probes.item_code -> items",
+      "from_stage": "specification",
+      "to_stage": "render",
+      "child_rows": 0
+     }
+    ]
+   }
+  },
+  "P-VERIF-VOCAB": {
+   "verdict": "PASS",
+   "tests": "evidence_sources.verification_status admits only VERIFIED / UNVERIFIED (D-0157)",
+   "atoms": [
+    "EVI-365",
+    "EVI-369",
+    "LED-028"
+   ],
+   "evidence": {
+    "vocabulary": [
+     "VERIFIED",
+     "UNVERIFIED"
+    ]
+   }
+  },
+  "P-QUARANTINE": {
+   "verdict": "FAIL",
+   "tests": "the checks that guard rendering and tier derivation are live",
+   "atoms": [
+    "PIP-06",
+    "POS-03"
+   ],
+   "evidence": {
+    "quarantined": {
+     "register_integrity_check": "quarantined",
+     "adjudication_integrity": "quarantined"
+    },
+    "all_quarantined": [
+     "adjudication_integrity",
+     "code_currency_audit",
+     "pre_rehab_banner_audit",
+     "register_integrity_check"
+    ]
+   }
+  },
+  "P-LEDGER-GREP": {
+   "verdict": "FAIL",
+   "tests": "the owner statements recorded only in session records appear verbatim in the owner ledger",
+   "atoms": [
+    "SES-022",
+    "SES-023",
+    "SES-024",
+    "SES-025"
+   ],
+   "evidence": {
+    "control_found_in_ledger": true,
+    "verbatim_present_in_ledger": {
+     "SES-022": false,
+     "SES-023": false,
+     "SES-024": false,
+     "SES-025": false,
+     "SES-032": false,
+     "SES-045": false
+    },
+    "verbatim_absent": [
+     "SES-022",
+     "SES-023",
+     "SES-024",
+     "SES-025",
+     "SES-032",
+     "SES-045"
+    ]
+   }
+  },
+  "P-STATUS-WRITERS": {
+   "verdict": "FAIL",
+   "tests": "every non-default value of evidence_sources.data_capture_status is named beside the column in a writer",
+   "atoms": [
+    "OPS-04"
+   ],
+   "evidence": {
+    "default": "pending",
+    "values_with_no_writer_line": [
+     "deferred",
+     "none-extractable"
+    ],
+    "lexical": true
+   }
+  },
+  "P-PARAM-LIFECYCLE": {
+   "verdict": "FAIL",
+   "tests": "base_parameters.status 'merged' and 'retired' have a writer",
+   "atoms": [
+    "LED-169",
+    "LED-170"
+   ],
+   "evidence": {
+    "vocabulary": [
+     "active",
+     "merged",
+     "retired"
+    ],
+    "verbs_writing_base_parameters": [
+     "set-parameter-direction",
+     "add-parameter"
+    ]
+   }
+  }
+ },
+ "probes_comparison": {
+  "P-A": "FAIL",
+  "P-B": "FAIL",
+  "P-C": "NOT-BUILT",
+  "P-D": "PASS",
+  "P-F": "FAIL",
+  "P-G": "PASS",
+  "P-AXIS": "FAIL",
+  "P-H": "FAIL",
+  "P-I": "FAIL",
+  "P-K": "FAIL",
+  "P-L": "FAIL",
+  "P-M": "FAIL",
+  "P-N": "FAIL",
+  "P-O": "FAIL",
+  "P-R": "NOT-BUILT",
+  "P-V": "PASS",
+  "P-V2": "FAIL",
+  "P-W": "PASS",
+  "P-X": "FAIL",
+  "P-Y": "PASS",
+  "P-AB": "PASS",
+  "P-GT": "FAIL",
+  "P-ENG-T3": "PASS",
+  "P-ENG-STATE": "FAIL",
+  "P-TIER-DERIVE": "FAIL",
+  "P-STAGE-SVE": "FAIL",
+  "P-UNWRITABLE": "FAIL",
+  "P-MEDICAL": "FAIL",
+  "P-CO1": "FAIL",
+  "P-FWD-FK": "INFO",
+  "P-VERIF-VOCAB": "PASS",
+  "P-QUARANTINE": "FAIL",
+  "P-LEDGER-GREP": "UNKNOWN",
+  "P-STATUS-WRITERS": "FAIL",
+  "P-PARAM-LIFECYCLE": "PASS"
+ },
+ "capabilities": {
+  "C1": {
+   "name": "Mine one source across many parameters",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C1.1",
+     "says": "no UNIQUE(ref_id) on the capture table: one source may yield many rows",
+     "verdict": "PASS",
+     "why": "P-D = PASS",
+     "atoms": [
+      "LED-100",
+      "LED-101"
+     ]
+    },
+    {
+     "id": "C1.2",
+     "says": "a phrase can be harvested from a source without presupposing a category",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-115",
+      "CLM-040"
+     ]
+    },
+    {
+     "id": "C1.3",
+     "says": "one source can be harvested for more than one sense of the same phrase",
+     "verdict": "FAIL",
+     "why": "P-W = FAIL",
+     "atoms": [
+      "LED-197"
+     ]
+    },
+    {
+     "id": "C1.4",
+     "says": "an extraction can be filed under a slug other than the one the source was admitted to",
+     "verdict": "FAIL",
+     "why": "P-V2 = FAIL",
+     "atoms": [
+      "LED-196",
+      "LED-201"
+     ]
+    },
+    {
+     "id": "C1.5",
+     "says": "a record exists of which parameters a source has been read for",
+     "verdict": "NOT-BUILT",
+     "why": "P-V = NOT-BUILT",
+     "atoms": [
+      "LED-195",
+      "LED-199"
+     ]
+    },
+    {
+     "id": "C1.6",
+     "says": "a value can be stated in every lens, including the medical lens",
+     "verdict": "FAIL",
+     "why": "P-MEDICAL = FAIL",
+     "atoms": [
+      "LED-110",
+      "LED-154"
+     ]
+    },
+    {
+     "id": "C1.7",
+     "says": "arguments and qualitative findings can be captured as well as numbers",
+     "verdict": "PASS",
+     "why": "source_value_extractions.claim_type admits qualitative",
+     "atoms": [
+      "SES-022",
+      "SES-023"
+     ]
+    },
+    {
+     "id": "C1.8",
+     "says": "a search records which slug x lens cells it covered",
+     "verdict": "FAIL",
+     "why": "P-M = FAIL",
+     "atoms": [
+      "LED-084",
+      "RES-04"
+     ]
+    }
+   ]
+  },
+  "C2": {
+   "name": "Grow its own parameter base",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C2.1",
+     "says": "a new concept enters only as a term minted from an observation",
+     "verdict": "PASS",
+     "why": "verb add-term declared on this tree",
+     "atoms": [
+      "LED-150",
+      "LED-203"
+     ]
+    },
+    {
+     "id": "C2.2",
+     "says": "a name may not state its own answer",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-148",
+      "PIP-16"
+     ]
+    },
+    {
+     "id": "C2.3",
+     "says": "an adjudicated term can be promoted to a parameter",
+     "verdict": "PASS",
+     "why": "verb add-parameter declared on this tree",
+     "atoms": [
+      "LED-092"
+     ]
+    },
+    {
+     "id": "C2.4",
+     "says": "a term can be judged not-a-parameter, with the reason on record",
+     "verdict": "PASS",
+     "why": "verb decline-parameter declared on this tree",
+     "atoms": [
+      "RES-16"
+     ]
+    },
+    {
+     "id": "C2.5",
+     "says": "a parameter can be retired or merged on record (retire in place)",
+     "verdict": "FAIL",
+     "why": "P-PARAM-LIFECYCLE = FAIL",
+     "atoms": [
+      "LED-169",
+      "LED-170"
+     ]
+    },
+    {
+     "id": "C2.6",
+     "says": "the list can be prepopulated from earlier catalogues under screening and owner approval",
+     "verdict": "NOT-BUILT",
+     "why": "verb mint-term-from-catalogue absent on this tree",
+     "atoms": [
+      "LED-204",
+      "LED-205"
+     ]
+    },
+    {
+     "id": "C2.7",
+     "says": "which direction is better for a disabled person can be recorded per parameter",
+     "verdict": "PASS",
+     "why": "verb set-parameter-direction declared on this tree",
+     "atoms": [
+      "LED-091"
+     ]
+    },
+    {
+     "id": "C2.8",
+     "says": "the base vocabularies a parameter and a lens point into have a sanctioned writer",
+     "verdict": "FAIL",
+     "why": "P-O = FAIL",
+     "atoms": [
+      "LED-182",
+      "CLM-031"
+     ]
+    }
+   ]
+  },
+  "C3": {
+   "name": "Synthesize across parameters",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C3.1",
+     "says": "independent sources for one (parameter x lens) cell are combined into one state",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-151",
+      "PIP-08"
+     ]
+    },
+    {
+     "id": "C3.2",
+     "says": "divergence between sources is a recorded state",
+     "verdict": "PASS",
+     "why": "convergence_assessment.status admits divergent",
+     "atoms": [
+      "MIS-06"
+     ]
+    },
+    {
+     "id": "C3.3",
+     "says": "a spread across lenses is carried with each lens's direction",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-176"
+     ]
+    },
+    {
+     "id": "C3.4",
+     "says": "findings plus a threshold can reach a determination",
+     "verdict": "NOT-BUILT",
+     "why": "P-R = NOT-BUILT",
+     "atoms": [
+      "LED-174",
+      "LED-172"
+     ]
+    },
+    {
+     "id": "C3.5",
+     "says": "a synthesis-stage structure can relate two or more parameters",
+     "verdict": "FAIL",
+     "why": "P-X = FAIL",
+     "atoms": [
+      "LED-097",
+      "LED-098"
+     ]
+    }
+   ]
+  },
+  "C4": {
+   "name": "Specify, then render",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C4.1",
+     "says": "a determination is keyed on parameter_id x at least one lens",
+     "verdict": "PASS",
+     "why": "P-Y = PASS",
+     "atoms": [
+      "LED-091",
+      "LED-130"
+     ]
+    },
+    {
+     "id": "C4.2",
+     "says": "the state is computed by the engine from tier arithmetic",
+     "verdict": "PASS",
+     "why": "P-ENG-T3 = PASS",
+     "atoms": [
+      "LED-151",
+      "LED-152",
+      "LED-010"
+     ]
+    },
+    {
+     "id": "C4.3",
+     "says": "a determination can be written today: its NOT NULL parent holds rows",
+     "verdict": "PASS",
+     "why": "base_parameters holds 10 row(s)",
+     "atoms": [
+      "CLM-034"
+     ]
+    },
+    {
+     "id": "C4.4",
+     "says": "the engine can assign every value of the state vocabulary",
+     "verdict": "FAIL",
+     "why": "P-ENG-STATE = FAIL",
+     "atoms": [
+      "EVI-361"
+     ]
+    },
+    {
+     "id": "C4.5",
+     "says": "a determination can be retired in place and redetermined",
+     "verdict": "PASS",
+     "why": "verb retire-specification declared on this tree",
+     "atoms": [
+      "LED-169"
+     ]
+    },
+    {
+     "id": "C4.6",
+     "says": "a live renderer reads parameter x lens determinations",
+     "verdict": "FAIL",
+     "why": "P-K = FAIL",
+     "atoms": [
+      "LED-103",
+      "PIP-06"
+     ]
+    },
+    {
+     "id": "C4.7",
+     "says": "the derived surfaces can be regenerated from the database",
+     "verdict": "FAIL",
+     "why": "P-I = FAIL",
+     "atoms": [
+      "PIP-07",
+      "CLM-050"
+     ]
+    },
+    {
+     "id": "C4.8",
+     "says": "the rendering invariants and tier-derivation consistency are gated",
+     "verdict": "FAIL",
+     "why": "P-QUARANTINE = FAIL",
+     "atoms": [
+      "PIP-06",
+      "POS-03"
+     ]
+    }
+   ]
+  }
+ },
+ "capabilities_comparison": {
+  "C1": {
+   "name": "Mine one source across many parameters",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C1.1",
+     "says": "no UNIQUE(ref_id) on the capture table: one source may yield many rows",
+     "verdict": "PASS",
+     "why": "P-D = PASS",
+     "atoms": [
+      "LED-100",
+      "LED-101"
+     ]
+    },
+    {
+     "id": "C1.2",
+     "says": "a phrase can be harvested from a source without presupposing a category",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-115",
+      "CLM-040"
+     ]
+    },
+    {
+     "id": "C1.3",
+     "says": "one source can be harvested for more than one sense of the same phrase",
+     "verdict": "PASS",
+     "why": "P-W = PASS",
+     "atoms": [
+      "LED-197"
+     ]
+    },
+    {
+     "id": "C1.4",
+     "says": "an extraction can be filed under a slug other than the one the source was admitted to",
+     "verdict": "FAIL",
+     "why": "P-V2 = FAIL",
+     "atoms": [
+      "LED-196",
+      "LED-201"
+     ]
+    },
+    {
+     "id": "C1.5",
+     "says": "a record exists of which parameters a source has been read for",
+     "verdict": "PASS",
+     "why": "P-V = PASS",
+     "atoms": [
+      "LED-195",
+      "LED-199"
+     ]
+    },
+    {
+     "id": "C1.6",
+     "says": "a value can be stated in every lens, including the medical lens",
+     "verdict": "FAIL",
+     "why": "P-MEDICAL = FAIL",
+     "atoms": [
+      "LED-110",
+      "LED-154"
+     ]
+    },
+    {
+     "id": "C1.7",
+     "says": "arguments and qualitative findings can be captured as well as numbers",
+     "verdict": "PASS",
+     "why": "source_value_extractions.claim_type admits qualitative",
+     "atoms": [
+      "SES-022",
+      "SES-023"
+     ]
+    },
+    {
+     "id": "C1.8",
+     "says": "a search records which slug x lens cells it covered",
+     "verdict": "FAIL",
+     "why": "P-M = FAIL",
+     "atoms": [
+      "LED-084",
+      "RES-04"
+     ]
+    }
+   ]
+  },
+  "C2": {
+   "name": "Grow its own parameter base",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C2.1",
+     "says": "a new concept enters only as a term minted from an observation",
+     "verdict": "PASS",
+     "why": "verb add-term declared on this tree",
+     "atoms": [
+      "LED-150",
+      "LED-203"
+     ]
+    },
+    {
+     "id": "C2.2",
+     "says": "a name may not state its own answer",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-148",
+      "PIP-16"
+     ]
+    },
+    {
+     "id": "C2.3",
+     "says": "an adjudicated term can be promoted to a parameter",
+     "verdict": "PASS",
+     "why": "verb add-parameter declared on this tree",
+     "atoms": [
+      "LED-092"
+     ]
+    },
+    {
+     "id": "C2.4",
+     "says": "a term can be judged not-a-parameter, with the reason on record",
+     "verdict": "PASS",
+     "why": "verb decline-parameter declared on this tree",
+     "atoms": [
+      "RES-16"
+     ]
+    },
+    {
+     "id": "C2.5",
+     "says": "a parameter can be retired or merged on record (retire in place)",
+     "verdict": "PASS",
+     "why": "P-PARAM-LIFECYCLE = PASS",
+     "atoms": [
+      "LED-169",
+      "LED-170"
+     ]
+    },
+    {
+     "id": "C2.6",
+     "says": "the list can be prepopulated from earlier catalogues under screening and owner approval",
+     "verdict": "PASS",
+     "why": "verb mint-term-from-catalogue declared on this tree",
+     "atoms": [
+      "LED-204",
+      "LED-205"
+     ]
+    },
+    {
+     "id": "C2.7",
+     "says": "which direction is better for a disabled person can be recorded per parameter",
+     "verdict": "PASS",
+     "why": "verb set-parameter-direction declared on this tree",
+     "atoms": [
+      "LED-091"
+     ]
+    },
+    {
+     "id": "C2.8",
+     "says": "the base vocabularies a parameter and a lens point into have a sanctioned writer",
+     "verdict": "FAIL",
+     "why": "P-O = FAIL",
+     "atoms": [
+      "LED-182",
+      "CLM-031"
+     ]
+    }
+   ]
+  },
+  "C3": {
+   "name": "Synthesize across parameters",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C3.1",
+     "says": "independent sources for one (parameter x lens) cell are combined into one state",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-151",
+      "PIP-08"
+     ]
+    },
+    {
+     "id": "C3.2",
+     "says": "divergence between sources is a recorded state",
+     "verdict": "PASS",
+     "why": "convergence_assessment.status admits divergent",
+     "atoms": [
+      "MIS-06"
+     ]
+    },
+    {
+     "id": "C3.3",
+     "says": "a spread across lenses is carried with each lens's direction",
+     "verdict": "PASS",
+     "why": "matched",
+     "atoms": [
+      "LED-176"
+     ]
+    },
+    {
+     "id": "C3.4",
+     "says": "findings plus a threshold can reach a determination",
+     "verdict": "NOT-BUILT",
+     "why": "P-R = NOT-BUILT",
+     "atoms": [
+      "LED-174",
+      "LED-172"
+     ]
+    },
+    {
+     "id": "C3.5",
+     "says": "a synthesis-stage structure can relate two or more parameters",
+     "verdict": "FAIL",
+     "why": "P-X = FAIL",
+     "atoms": [
+      "LED-097",
+      "LED-098"
+     ]
+    }
+   ]
+  },
+  "C4": {
+   "name": "Specify, then render",
+   "overall": "BLOCKED",
+   "predicates": [
+    {
+     "id": "C4.1",
+     "says": "a determination is keyed on parameter_id x at least one lens",
+     "verdict": "PASS",
+     "why": "P-Y = PASS",
+     "atoms": [
+      "LED-091",
+      "LED-130"
+     ]
+    },
+    {
+     "id": "C4.2",
+     "says": "the state is computed by the engine from tier arithmetic",
+     "verdict": "PASS",
+     "why": "P-ENG-T3 = PASS",
+     "atoms": [
+      "LED-151",
+      "LED-152",
+      "LED-010"
+     ]
+    },
+    {
+     "id": "C4.3",
+     "says": "a determination can be written today: its NOT NULL parent holds rows",
+     "verdict": "PASS",
+     "why": "base_parameters holds 1 row(s)",
+     "atoms": [
+      "CLM-034"
+     ]
+    },
+    {
+     "id": "C4.4",
+     "says": "the engine can assign every value of the state vocabulary",
+     "verdict": "FAIL",
+     "why": "P-ENG-STATE = FAIL",
+     "atoms": [
+      "EVI-361"
+     ]
+    },
+    {
+     "id": "C4.5",
+     "says": "a determination can be retired in place and redetermined",
+     "verdict": "PASS",
+     "why": "verb retire-specification declared on this tree",
+     "atoms": [
+      "LED-169"
+     ]
+    },
+    {
+     "id": "C4.6",
+     "says": "a live renderer reads parameter x lens determinations",
+     "verdict": "FAIL",
+     "why": "P-K = FAIL",
+     "atoms": [
+      "LED-103",
+      "PIP-06"
+     ]
+    },
+    {
+     "id": "C4.7",
+     "says": "the derived surfaces can be regenerated from the database",
+     "verdict": "FAIL",
+     "why": "P-I = FAIL",
+     "atoms": [
+      "PIP-07",
+      "CLM-050"
+     ]
+    },
+    {
+     "id": "C4.8",
+     "says": "the rendering invariants and tier-derivation consistency are gated",
+     "verdict": "FAIL",
+     "why": "P-QUARANTINE = FAIL",
+     "atoms": [
+      "PIP-06",
+      "POS-03"
+     ]
+    }
+   ]
+  }
+ },
+ "examined": {
+  "atoms (quote found verbatim)": 2437,
+  "conflicts (atoms, class, probe exist)": 46,
+  "machine transitions": 41,
+  "transition evidence needles re-read": 68,
+  "capability predicates": 29,
+  "probes run": 35,
+  "tables placed in a stage": 82
+ },
+ "atoms_by_status": {
+  "ACTIVE": 2177,
+  "OPEN": 67,
+  "SUPERSEDED": 68,
+  "AMENDED": 73,
+  "PROPOSED": 27,
+  "HISTORICAL": 25
+ },
+ "atoms_total": 2437,
+ "conflicts_total": 46
+}
