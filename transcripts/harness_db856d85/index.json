@@ -89,5 +89,19 @@
     "bytes": 1424731,
     "agent_id_prefix": "aa3ab35a",
     "file": "2026-10-09T23-42-50_other_aa3ab35a.jsonl"
+  },
+  {
+    "started": "2026-10-10T00:10:22",
+    "role": "adversarial",
+    "bytes": 1020403,
+    "agent_id_prefix": "ad6c033a",
+    "file": "2026-10-10T00-10-22_adversarial_ad6c033a.jsonl"
+  },
+  {
+    "started": "2026-10-10T00:11:36",
+    "role": "other",
+    "bytes": 1312521,
+    "agent_id_prefix": "af1be638",
+    "file": "2026-10-10T00-11-36_other_af1be638.jsonl"
   }
 ]

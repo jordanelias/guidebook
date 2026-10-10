@@ -930,7 +930,7 @@ PY
 - **New parameters ≤ 4.** This is the number the session record's §4.5 scratch experiment promoted without tripping a content check (`grep -n 'promoting door width' sessions/session_2026-10-01-research-batch-23.md`). Count with `select count(*) from base_parameters where created_by_session='<pilot stem>'`.
 - **Extractions ≤ 2 × batch 23's.** `select count(*) from source_value_extractions where created_by_session='session_2026-10-01-research-batch-23'` → 30, so the cap is 60.
 
-> **SUPERSEDED IN PART 2026-10-09** by the ledger entry "Owner statements 2026-10-09" in `references/project-standards.md`, item 7: "belonged to that scope and lapse with it". Both row budgets above lapse because the pilot scope they budgeted is replaced. The owner did not rule on a cap; the one-source review unit that replaces it is the session's recommendation, awaiting the owner's decision. The sentences above are left as written.
+> **SUPERSEDED IN PART 2026-10-09** by the ledger entry "Owner statements 2026-10-09" in `references/project-standards.md`, item 7: "is superseded to that extent". This applies to the new-parameters budget only, which was exceeded on the owner's direction. **The extraction cap above is NOT superseded:** no owner words address it, and whether it carries over to the scan contract is put to the owner. The sentences above are left as written.
 
 **Stop conditions:**
 - the budget is reached;

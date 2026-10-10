@@ -41,6 +41,10 @@
     {
       "rule": "adherence-logging-and-attestation",
       "reason": "A /code-review of the branch returned fourteen findings. Two ledger statements were not owner words (the cap withdrawal; the engine reading of 'skimmed') and were reworded, with the skimmed reading marked as an assumption. The migrated note on the nine parameters is not rewritten. Two definitions that stated a direction (turning circle, operating force) were repaired through a second data migration. The R16 baseline was lowered, sessions/LATEST was moved, the context map was regenerated, and the replay script's session stem was pinned."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "A second /code-review found that [skip ci] had been used on a commit carrying the database write (rule 9 allows it only for append-only logs), that the pull request was opened before the work was finished, that two commit subjects carry estimated rather than date -u timestamps, and that ledger ACTION (5) had told sessions to disregard a pilot cap no owner words lifted. The first three are disclosed in the session record and not repaired (the branch is pushed; history is not rewritten); the fourth was corrected in the ledger and the batch 23 marker. Five debts rule 10 forbids patching inside a research batch were filed as gaps."
     }
   ],
   "bias_direction": "The session that seeded the nine rows also wrote the record, the plan that justifies them, and the briefs given to the agents that reviewed that plan, so the review is shaped by what the author chose to show it; the nine terms were also chosen by the same author from definitions alone, with a conservative bias toward leaving out doubtful quantities.",
