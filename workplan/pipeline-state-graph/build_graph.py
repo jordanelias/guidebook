@@ -105,7 +105,14 @@ def verify_atoms(atoms, repo=REPO):
         except FileNotFoundError:
             bad.append(f"{a['id']}: source not found {path}"); continue
         if not ok:
-            bad.append(f"{a['id']}: QUOTE NOT FOUND in {path}: {a['quote'][:80]!r}")
+            bad.append(f"{a['id']}: QUOTE NOT FOUND in {path}: {a['quote'][:80]!r}"); continue
+        lm = re.search(r":(\d+)$", a["source"])
+        if lm:                                   # the cited line must be where the quote starts (+-3 lines)
+            ln = int(lm.group(1)); lines = read(repo, path).split("\n")
+            window = norm("\n".join(re.sub(r"^\s*>\s?", "", x) for x in lines[max(0, ln - 4): ln + 3]))
+            head = norm(re.sub(r"^\s*>\s?", "", a["quote"]))[:50]
+            if head not in window:
+                bad.append(f"{a['id']}: quote found in {path} but not near cited line {ln}")
     return bad
 
 
@@ -335,12 +342,15 @@ def make_probes():
         nw = sorted(t for t in T.tables if T.stage(t) == "base" and t not in T.writers)
         return ("FAIL" if nw else "PASS"), {"base_tables_with_no_db_py_writer": nw}
 
-    @probe("P-R", "the engine can reach a determination from findings plus a threshold", ["LED-174", "LED-172"])
+    @probe("P-R", "the engine can reach a determination from findings plus a threshold (owner 2026-09-16)", ["LED-174", "LED-172"])
     def _(T):
         ac = read(T.root, "scripts/assess/assess_cell.py")
-        m = re.search(r"figure_role\s+IN\s*\(([^)]*)\)", ac)
-        if not m: return "UNKNOWN", {"gather_sources_figure_role_filter": None}
-        return ("PASS" if "finding" in m.group(1) else "NOT-BUILT"), {"gather_sources_figure_role_filter": m.group(0)}
+        gf = re.search(r"def gather_findings\(", ac) is not None
+        roles = re.search(r"DIRECTION_SUPPLYING_ROLES\s*=\s*\(([^)]*)\)", ac)
+        det = func_source(T.root, "scripts/assess/assess_cell.py", "determine") or ""
+        proxy = "rests_on_proxy_inference = 1" in det and "finding_anchors" in det
+        ok = gf and bool(roles and "finding" in roles.group(1)) and proxy
+        return ("PASS" if ok else "NOT-BUILT"), {"gather_findings_defined": gf, "direction_supplying_roles": roles.group(1) if roles else None, "determine_has_a_proxy_branch_from_finding_anchors": proxy}
 
     @probe("P-V", "a (source x parameter) read-state ledger exists", ["LED-195", "LED-199"])
     def _(T):
@@ -363,7 +373,7 @@ def make_probes():
         syn = {t: T.cols(t) for t in T.tables if T.stage(t) == "synthesis"}
         with_pid = [t for t, c in syn.items() if "parameter_id" in c]
         rel = T.con.execute("select count(*) from extraction_relations r join source_value_extractions a on a.extraction_id=r.from_extraction_id join source_value_extractions b on b.extraction_id=r.to_extraction_id where a.parameter_id<>b.parameter_id").fetchone()[0] if "extraction_relations" in T.tables else None
-        return ("PASS" if with_pid else "FAIL"), {"synthesis_tables": sorted(syn), "with_parameter_id": with_pid, "extraction_relations_edges_between_different_parameters_live": rel, "extraction_relations_stage": T.stage("extraction_relations"),
+        return ("PASS" if with_pid else "FAIL"), {"synthesis_tables": sorted(syn), "with_parameter_id": with_pid, "extraction_relations_edges_between_different_parameters_live": rel, "distinct_parameter_ids_among_extractions": T.con.execute("select count(distinct parameter_id) from source_value_extractions").fetchone()[0], "extraction_relations_stage": T.stage("extraction_relations"),
                                                         "connection_targets_columns": T.cols("connection_targets"),
                                                         "conflicts_key_columns": [c for c in T.cols("conflicts") if c in ("item_code", "pop_a", "pop_b", "parameter_id")]}
 
@@ -587,7 +597,10 @@ def check_all(T, atoms, probes, conflicts, machines, caps):
         if a["status"] != sc["current"]: fails.append(f"status_corrections: {sc['atom']} is now {a['status']}, not {sc['current']} -- the correction was applied or the atom changed; remove or update the entry")
         if sc["should_be"] not in STA or sc["should_be"] == sc["current"]: fails.append(f"status_corrections: {sc['atom']} has a bad should_be")
         for b in sc["by"]:
-            if b not in atoms: fails.append(f"status_corrections: {sc['atom']} cites missing atom {b}")
+            if b not in atoms: fails.append(f"status_corrections: {sc['atom']} cites missing atom {b}"); continue
+            da, db_ = a.get("date"), atoms[b].get("date")
+            if da and db_ and db_ < da: fails.append(f"status_corrections: {sc['atom']} ({da}) is decided by {b} ({db_}), which is EARLIER")
+            if atoms[b]["status"] in ("SUPERSEDED", "HISTORICAL"): fails.append(f"status_corrections: {sc['atom']} is decided by {b}, which is itself {atoms[b]['status']}")
     examined["status corrections owed (each atom's status re-read)"] = len(conflicts.get("status_corrections", []))
     examined["conflicts (atoms, class, probe exist)"] = n
     # 3 machines
@@ -718,6 +731,16 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     c4 = copy.deepcopy(conflicts); c4["status_corrections"][0]["current"] = "HISTORICAL"
     f, _, _ = check_all(T, atoms, probes, c4, machines, caps)
     results.append(("a stale status correction is caught", any("status_corrections" in x for x in f)))
+    # l) a quote cited at the wrong line is caught
+    a6 = copy.deepcopy(atoms[sorted(atoms)[0]]); path_, _, ln_ = a6["source"].rpartition(":")
+    a6["source"] = f"{path_}:{int(ln_) + 40}" if ln_.isdigit() else a6["source"]
+    results.append(("a quote cited 40 lines away from where it occurs is caught", bool(verify_atoms({a6['id']: a6})) if ln_.isdigit() else True))
+    # m) a status correction decided by an EARLIER atom is caught
+    c5 = copy.deepcopy(conflicts); sc0 = max(c5["status_corrections"], key=lambda x: atoms[x["atom"]].get("date") or "")
+    early = next(i for i, a in atoms.items() if a.get("date") and a["date"] < (atoms[sc0["atom"]].get("date") or "9999") and a["status"] not in ("SUPERSEDED", "HISTORICAL"))
+    sc0["by"] = [early]
+    f, _, _ = check_all(T, atoms, probes, c5, machines, caps)
+    results.append(("a status correction decided by an earlier atom is caught", any("EARLIER" in x for x in f)))
     # f) an unknown probe id is caught
     c3 = copy.deepcopy(conflicts); c3["conflicts"][0]["probe"] = "P-NOPE"
     f, _, _ = check_all(T, atoms, probes, c3, machines, caps)

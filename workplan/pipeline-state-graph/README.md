@@ -3,8 +3,9 @@
 A derived, self-checking model of the pipeline, tied to the owner's rulings and directions, for auditing agent work
 (mine included) before and after it is done. It is working material: **not a ruling, not registered as a check, and not
 in a PR.** Where it says a ruling is carried or not carried by the schema, code or CI, that is a probe result you can
-re-run; where it says a direction follows from CLAUDE.md rule 0, that is an inference an agent made and an
-independent adversarial pass has already corrected once (below).
+re-run; where it says a direction follows from CLAUDE.md rule 0, that is an inference an agent made. Two independent
+adversarial passes (a Fable 5.1 agent each; the second attacked the first's findings and the repairs) have corrected
+it; both are summarised below, and neither is proof.
 
 ## What is here
 
@@ -57,18 +58,26 @@ rather than trust one (rule 7a). `--check` prints `EXAMINED: n` for each class o
 
 ## What the checks prove, and what they do not
 
-- **Proved mechanically:** each atom's quote occurs verbatim in its source; each conflict cites atoms that exist and
+- **Proved mechanically:** each atom's quote occurs verbatim in its source, within three lines of the cited line; each conflict cites atoms that exist and
   probes that exist; each machine's state set (or `vocabs:` entry) equals the column's own CHECK, and the count of
   abstract machines with no single column is printed; each transition's guard still appears in the cited function (or,
   for `absent: true`, still does not); every stage assignment is complete and agrees with the contract; every probe ran
-  and has a path that can return PASS (or INFO). `--selftest` shows these checks fail when what they guard is broken,
+  and its source contains a literal path that can return PASS (or INFO) -- a reachability lint, **not** evidence that the
+  probe tests the right thing: P-R passed that lint while testing the wrong function and reporting a built feature as
+  not built; each status correction's `current` status is re-read and each deciding atom must exist, be dated no
+  earlier than the atom it corrects, and not itself be superseded -- nothing checks that it says what `why` claims. `--selftest` shows these checks fail when what they guard is broken,
   including a mutation of probe reachability, of a capability verdict and of the stage map.
 - **Not proved:** that an atom's `claim` is a fair reading of its quote (an adversarial pass drew 40 atoms at random
   and found 2 unfair, which were repaired; the remaining atoms are unaudited beyond that sample); that a conflict's
   direction is right (the same pass found several direction and speaker errors in the S1 entries, which were repaired
   and re-checked against the sources); that the transition guards are all the guards; that a lexical probe has no
   false negative. These are judgments, and each conflict records its confidence.
-- **The adversarial pass** is a review by a second agent, not a proof, and it also did not read every atom.
+- **The adversarial passes** are reviews by other agents, not proofs. Pass 1 found direction, speaker and probe errors
+  in the severity-1 entries; pass 2 found one false probe verdict (P-R), a settlement resting on an unsourced relay
+  (C-027), mis-tagged speakers and statuses (CLM-*, EVI-059/060, WRK-199/200/201/204/222), and a machine edge that
+  contradicted its own guard (M08), and sampled 30 of the workplan atoms (3 failures). The repairs were applied, the
+  remaining workplan atoms were **not** re-audited beyond that sample, and C-029, C-032, C-034 and C-039 were not
+  re-read by pass 2 beyond their atom lists.
 
 ## Known gaps in coverage
 
@@ -84,6 +93,12 @@ rather than trust one (rule 7a). `--check` prints `EXAMINED: n` for each class o
   `ambiguity` and in `conflicts.yaml`, not in `status`. About thirty quotes appear in more than one atom (a ledger entry
   restating a DR); `--check` prints the distinct-quote count.
 - The generator describes the checkout it is run in. The unreleased tooling branch is a column via `--compare`.
+
+## Process note
+
+Run the generator from the repository root. Calling it (or any other command) with the working directory inside this
+folder made the transcript-preservation hook write a copy of the transcripts under it, and a `git add` of the folder
+committed that copy; it was removed in a later commit, but the blobs remain in the branch's history.
 
 ## Status
 

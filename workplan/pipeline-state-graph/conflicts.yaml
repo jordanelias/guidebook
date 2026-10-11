@@ -58,7 +58,7 @@ conflicts:
     - {atoms: [LED-010, PIP-03, EVI-306, EVI-325, EVI-128], says: "T3 alone is not enough for `stated`: T3-clinical alone is provisional (tier3-stated-threshold DR, 2026-07-12; methodology 2.2; contract)."}
     - {atoms: [MIS-04], says: "the mission file's rule: stated = derived from >= Tier 3, Co-1 or Co-2 evidence."}
   probe: P-ENG-T3
-  direction: "Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 now tests the assignment, not the comment). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling."
+  direction: "Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 requires the documented comment and the assignment that immediately follows it; a reworded comment would turn it red without the logic having changed). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling."
   resolver: OWNER
   confidence: medium
 
@@ -71,7 +71,7 @@ conflicts:
     - {atoms: [EVI-049, EVI-055], says: "DR-2026-07-20 weighted-strength anchor model (owner directive 2026-07-20: 'all evidence tiers can be used to anchor a best practice claim ... T3-grey/T6 weak'): the weak band 'anchors only a floor/convergence claim', rendered with an honesty flag."}
     - {atoms: [EVI-326, EVI-338], says: "evidence-methodology (ratified 2026-07-13): T3-grey alone and a single T6 source yield pending, i.e. no claim."}
   probe: P-ENG-T3
-  direction: "The weak band comes from the 2026-07-20 owner directive, which is later than the 2026-07-12 tier3-stated-threshold DR and the 2026-07-13 methodology text the engine comment cites ('T3-grey-alone does not even reach provisional'). By rule 0 the later directive governs what it touches. Whether it lifts item 2 of the earlier DR for the STATE (the Option A DR keeps the state machine unchanged) or only weights claim strength is not stated, so whether the engine is behind or the directive is band-only is the owner's to say. [CONFIDENCE: medium -- the lone-T6 case is handled by the regulatory branch, which was not re-derived here.]"
+  direction: "The weak band comes from the 2026-07-20 owner directive, which is later than the 2026-07-12 tier3-stated-threshold DR and the 'tier3-threshold DR item 2' that the engine comment cites ('T3-grey-alone does not even reach provisional'), and the methodology text of 2026-07-13. By rule 0 the later directive governs what it touches. Whether it lifts item 2 of the earlier DR for the STATE (the Option A DR keeps the state machine unchanged) or only weights claim strength is not stated, so whether the engine is behind or the directive is band-only is the owner's to say. [CONFIDENCE: medium -- the lone-T6 case is handled by the regulatory branch, which was not re-derived here.]"
   resolver: OWNER
   confidence: medium
 
@@ -205,7 +205,7 @@ conflicts:
   atoms: [LED-113, LED-118, CLM-040, LED-085, DRS-052, DRS-053, DRS-054, DRS-055, DRS-056, DRS-117, DRS-134, DRS-153, DRS-157, DRS-158, DRS-193, ENT-164, ENT-183, ENT-151, ENT-152, OPI-147]
   sides:
     - {atoms: [DRS-052, DRS-053, DRS-054, DRS-055, DRS-056, ENT-151, ENT-152, OPI-147], says: "08-24 section 2.4 (and the operative instrument): applicability is an output of synthesis; zero links before synthesis is correct; writing applicability edges first is the forbidden presupposition."}
-    - {atoms: [LED-113, LED-118, CLM-040], says: "owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect."}
+    - {atoms: [LED-113, LED-118, CLM-040], says: "owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040, CLAUDE.md's own prose attributing it to the owner, not the owner's words) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect."}
     - {atoms: [DRS-117, DRS-193], says: "D-0174, issued the same day, still says 'applicability remains a synthesis judgement'; D-0184 builds on that reservation."}
     - {atoms: [DRS-134, DRS-153, DRS-157, DRS-158, ENT-164, ENT-183], says: "D-0175/6/7 fix or re-derive item-population link sets for named items before synthesis; functional-taxonomy schedules a serves_axes backfill and a zero-axes gap query."}
   direction: "LED-113 supersedes the 08-24 deferral on contact. D-0174's residual sentence and D-0184's reliance on it are not reconciled. D-0175-0177 operate on the deleted item layer (see C-019) and are inert."
@@ -310,16 +310,16 @@ conflicts:
   confidence: medium
 
 - id: C-022
-  class: RULING-RULING
+  class: RULING-DOC
   severity: S1
   title: "Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out"
   atoms: [LED-154, LED-156, LED-157, LED-158, DRS-194, DRS-229, DRS-231, DRS-232, DRS-233, PIP-04]
   sides:
     - {atoms: [DRS-194], says: "D-0184 (2026-09-01, an agent decision awaiting owner review, C-023): populating base_taxonomy_medical is 'the owner's alone' (DG-NON)."}
     - {atoms: [LED-154, DRS-229, DRS-231], says: "owner, 2026-09-11 (quoted): 'Fable 5.1 to adjudicate and resolve all items that are presented to me ... Ensure that medical gets filled out.'"}
-    - {atoms: [DRS-232, DRS-233], says: "D-0188's own text narrows the delegation to the 'enumerated items and no further'."}
+    - {atoms: [DRS-232, DRS-233], says: "D-0188's own text limits the delegation to the 'enumerated items and no further' -- which may be narrower than the owner's 'all items that are presented to me', depending on what was presented."}
   probe: P-MEDICAL
-  direction: "Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and is narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed."
+  direction: "Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and may be narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed."
   resolver: OWNER+AGENT
   confidence: high
 
@@ -383,16 +383,16 @@ conflicts:
 - id: C-027
   class: RULING-MECHANISM
   severity: S1
-  title: "Render: 'static build now, dynamic later' -- the sanctioned stopgap (per-page HTML generation) is not reachable"
+  title: "Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator"
   atoms: [LED-103, LED-104, LED-105, ADD-002, ADD-003, LED-057, PIP-06, PIP-07, CLM-050, POS-03]
   sides:
     - {atoms: [LED-103, LED-104, LED-105], says: "owner words (quoted from migration 046's header, 2026-08-27): the target is dynamic rendering from the database, no per-page build event, no reliance on artefacts for rendering."}
-    - {atoms: [ADD-002, ADD-003], says: "the same header continues: the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap."}
+    - {atoms: [ADD-002, ADD-003], says: "the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it)."}
     - {atoms: [PIP-07, CLM-050], says: "contract and CLAUDE.md: parts/ and site/ must not be stale relative to the DB; regenerate with scripts/regenerate_derived.sh."}
   probe: [P-I, P-K]
-  direction: "The three readings are consistent: dynamic is the target, static generation is the sanctioned stopgap, and so PIP-07 and CLAUDE.md are right to expect regeneration. What fails is the stopgap: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K), because they still select item-layer columns (C-019). Repairing the stopgap is tooling work; no owner decision is needed to do it. [CORRECTION: an earlier draft of this entry left 'what render IS' to the owner; ADD-002 answers it.]"
-  resolver: AGENT
-  confidence: high
+  direction: "UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way."
+  resolver: OWNER+AGENT
+  confidence: medium
 
 - id: C-028
   class: RULING-MECHANISM
@@ -664,14 +664,14 @@ conflicts:
   confidence: medium
 
 - id: C-047
-  class: RULING-DOC
+  class: DOC-DOC
   severity: S2
   title: "'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record'"
   atoms: [ENT-465, CLM-000, CLM-001, CLM-019]
   sides:
     - {atoms: [ENT-465], says: "architecture v2.3 (2026-04-30): code-enforced checks (hooks, CI) trump text rules for the matching invariant."}
     - {atoms: [CLM-000, CLM-001], says: "CLAUDE.md rule 0: a live owner statement supersedes every prior ratified record it touches, on contact; record the supersession, never weigh the ruling against the paperwork."}
-  direction: "Rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule."
+  direction: "Both are agent-maintained process texts (rule 0 cites an owner ruling as its proof, not as its source), so this is recency, not rank: rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule."
   resolver: AGENT
   confidence: medium
 
@@ -691,15 +691,16 @@ conflicts:
 - id: C-049
   class: RULING-DOC
   severity: S2
-  title: "Jurisdiction scope: five buckets and 'PROVISIONAL no longer waits for the Global South' (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document"
-  atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193, WRK-195, WRK-196, WRK-197, WRK-199, WRK-201, WRK-084, WRK-082, WRK-081, LED-193, SES-047, OPI-100, ENT-338]
+  title: "Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document"
+  atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193, WRK-084, WRK-195, WRK-196, WRK-199, WRK-200, WRK-201, WRK-204, WRK-082, WRK-081, LED-193, SES-047, OPI-100, ENT-338]
   sides:
-    - {atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193], says: "owner R5 (2026-08-18): five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order."}
-    - {atoms: [WRK-084, WRK-195, WRK-196, WRK-197, WRK-199, WRK-201], says: "owner R6: a BPC entry is PROVISIONAL until every jurisdiction in buckets 1-3 is recorded and the Co-1 pass covers at least 9 languages; section 2.3 of the philosophy document is amended; this needs its own decision record."}
+    - {atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193], says: "owner R5 (2026-08-18), as relayed by the handoff: five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order."}
+    - {atoms: [WRK-084, WRK-195], says: "owner R6 (2026-08-18): 'no longer need global South to move from provisional'; the PROVISIONAL gate no longer waits for the Global South."}
+    - {atoms: [WRK-196, WRK-199, WRK-200, WRK-201, WRK-204], says: "the handoff author's own derivation of R6: only the first conjunct of section 2.3 falls, the Co-1 >=9-language floor stays, replacement wording pinned at 'buckets 1-3', and a disclosure clause -- the handoff marks the bucket 4/5 split and the disclosure clause as authored proposals, not the owner's words."}
     - {atoms: [LED-193, SES-047], says: "owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug."}
     - {atoms: [OPI-100], says: "the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open."}
     - {atoms: [ENT-338], says: "governance/jurisdiction-philosophy.md section 2.3 still reads 'PROVISIONAL until all 24 jurisdictions are recorded' -- the amendment R6 requires has not been made."}
-  direction: "Later owner statements narrow rather than contradict: R6 (2026-08-18) releases buckets 4-5 from the gate, LED-193 (2026-09-28) narrows research to buckets 1-2 first. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038)."
+  direction: "Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038)."
   resolver: OWNER
   confidence: high
 
@@ -722,14 +723,13 @@ status_corrections:
   # check fails (so a stale correction cannot linger once the atom is repaired). `by` are the atoms that decide it.
   - {atom: LED-029, current: ACTIVE, should_be: SUPERSEDED, by: [LED-084], why: "2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken."}
   - {atom: LED-018, current: ACTIVE, should_be: AMENDED, by: [LED-013, EVI-058], why: "Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis."}
-  - {atom: DRS-039, current: ACTIVE, should_be: SUPERSEDED, by: [LED-124, LED-125], why: "owner 2026-08-27: seven stages; specification is a stage."}
-  - {atom: DRS-040, current: ACTIVE, should_be: SUPERSEDED, by: [LED-124, LED-125], why: "owner 2026-08-27: seven stages; specification is a stage."}
+  - {atom: DRS-039, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken."}
+  - {atom: DRS-040, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "as DRS-039."}
   - {atom: OPI-229, current: ACTIVE, should_be: AMENDED, by: [LED-151, LED-152], why: "owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact."}
-  - {atom: WRK-003, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "the operative instrument (1.4 rule 1) forbids making a slug by stripping an item name; its own supersession table records that R1's strip mechanism is overturned."}
-  - {atom: WRK-033, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003."}
-  - {atom: WRK-034, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003."}
-  - {atom: WRK-171, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003 (the handoff's restatement)."}
-  - {atom: WRK-172, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-022], why: "as WRK-003 (the handoff's restatement)."}
+  - {atom: WRK-003, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "the owner ratified the operative instrument on 2026-08-19 as OD-1, items-as-leads included (OPI-015); its section 1.4 rule 1 forbids making a slug by stripping an item name (OPI-022), and its supersession table records that R1's strip mechanism is overturned."}
+  - {atom: WRK-033, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "as WRK-003."}
+  - {atom: WRK-171, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "as WRK-003 (the handoff's restatement)."}
+  - {atom: WRK-172, current: ACTIVE, should_be: AMENDED, by: [OPI-015, OPI-022], why: "its first limb (the strip is done manually) is overtaken -- no item name becomes a slug by stripping at all; its second limb (a regex smuggles the bias through) is subsumed by the stronger rule and still stands."}
   - {atom: WRK-004, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
   - {atom: WRK-173, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
   - {atom: WRK-043, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications."}

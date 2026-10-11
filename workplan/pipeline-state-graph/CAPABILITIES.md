@@ -65,7 +65,7 @@ finding that depends on two parameters has a place to be recorded and a source t
 | C3.1 | independent sources for one (parameter x lens) cell are combined into one state | **PASS** | PASS | matched | LED-151, PIP-08 |
 | C3.2 | divergence between sources is a recorded state | **PASS** | PASS | convergence_assessment.status admits divergent | MIS-06 |
 | C3.3 | a spread across lenses is carried with each lens's direction | **PASS** | PASS | matched | LED-176 |
-| C3.4 | findings plus a threshold can reach a determination | **NOT-BUILT** | NOT-BUILT | P-R = NOT-BUILT | LED-174, LED-172 |
+| C3.4 | findings plus a threshold can reach a determination | **PASS** | PASS | P-R = PASS | LED-174, LED-172 |
 | C3.5 | a synthesis-stage structure can relate two or more parameters | **FAIL** | FAIL | P-X = FAIL | LED-097, LED-098 |
 
 ## C4 Specify, then render

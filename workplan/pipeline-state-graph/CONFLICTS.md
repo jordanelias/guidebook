@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-50 entries. Severity: S1 16, S2 18, S3 16. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 18, RULING-RULING 4, UNRECORDED 1.
+50 entries. Severity: S1 16, S2 18, S3 16. Class: DOC-DOC 16, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 18, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -13,9 +13,9 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-012 | S1 | RULING-MECHANISM | OWNER | P-STAGE-SVE -> FAIL | source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md) |
 | C-017 | S1 | RULING-MECHANISM | OWNER+AGENT | P-AXIS -> FAIL, P-G -> PASS | 'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live |
 | C-019 | S1 | RULING-MECHANISM | OWNER+AGENT | P-UNWRITABLE -> FAIL | The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents |
-| C-022 | S1 | RULING-RULING | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
+| C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
-| C-027 | S1 | RULING-MECHANISM | AGENT | P-I -> FAIL, P-K -> FAIL | Render: 'static build now, dynamic later' -- the sanctioned stopgap (per-page HTML generation) is not reachable |
+| C-027 | S1 | RULING-MECHANISM | OWNER+AGENT | P-I -> FAIL, P-K -> FAIL | Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants and tier-consistency have no live gate |
 | C-029 | S1 | RULING-MECHANISM | OWNER | P-L -> FAIL | Direct writes to the committed database by scheduled workflows |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> FAIL | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
@@ -39,9 +39,9 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-036 | S2 | UNRECORDED | OWNER | P-LEDGER-GREP -> FAIL | Owner statements whose only home is a session record |
 | C-037 | S2 | DOC-DOC | OWNER | -- | Process contradictions inside the commands, agents and rules |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
-| C-047 | S2 | RULING-DOC | AGENT | -- | 'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record' |
+| C-047 | S2 | DOC-DOC | AGENT | -- | 'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record' |
 | C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
-| C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: five buckets and 'PROVISIONAL no longer waits for the Global South' (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
+| C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
 | C-003 | S3 | DOC-DOC | OWNER | P-ENG-T3 -> PASS | 'Anchors outright' (band) versus 'T3 alone is provisional' (state): one word, two axes |
 | C-006 | S3 | DOC-DOC | OWNER | -- | Seven tiers, or T1-T6 plus two tracks |
 | C-010 | S3 | RULING-DOC | AGENT | -- | Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage' |
@@ -67,14 +67,13 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 |---|---|---|---|---|
 | LED-029 | ACTIVE | SUPERSEDED | LED-084 | 2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken. |
 | LED-018 | ACTIVE | AMENDED | LED-013, EVI-058 | Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis. |
-| DRS-039 | ACTIVE | SUPERSEDED | LED-124, LED-125 | owner 2026-08-27: seven stages; specification is a stage. |
-| DRS-040 | ACTIVE | SUPERSEDED | LED-124, LED-125 | owner 2026-08-27: seven stages; specification is a stage. |
+| DRS-039 | ACTIVE | SUPERSEDED | LED-094, LED-124 | owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken. |
+| DRS-040 | ACTIVE | SUPERSEDED | LED-094, LED-124 | as DRS-039. |
 | OPI-229 | ACTIVE | AMENDED | LED-151, LED-152 | owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact. |
-| WRK-003 | ACTIVE | SUPERSEDED | OPI-022 | the operative instrument (1.4 rule 1) forbids making a slug by stripping an item name; its own supersession table records that R1's strip mechanism is overturned. |
-| WRK-033 | ACTIVE | SUPERSEDED | OPI-022 | as WRK-003. |
-| WRK-034 | ACTIVE | SUPERSEDED | OPI-022 | as WRK-003. |
-| WRK-171 | ACTIVE | SUPERSEDED | OPI-022 | as WRK-003 (the handoff's restatement). |
-| WRK-172 | ACTIVE | SUPERSEDED | OPI-022 | as WRK-003 (the handoff's restatement). |
+| WRK-003 | ACTIVE | SUPERSEDED | OPI-015, OPI-022 | the owner ratified the operative instrument on 2026-08-19 as OD-1, items-as-leads included (OPI-015); its section 1.4 rule 1 forbids making a slug by stripping an item name (OPI-022), and its supersession table records that R1's strip mechanism is overturned. |
+| WRK-033 | ACTIVE | SUPERSEDED | OPI-015, OPI-022 | as WRK-003. |
+| WRK-171 | ACTIVE | SUPERSEDED | OPI-015, OPI-022 | as WRK-003 (the handoff's restatement). |
+| WRK-172 | ACTIVE | AMENDED | OPI-015, OPI-022 | its first limb (the strip is done manually) is overtaken -- no item name becomes a slug by stripping at all; its second limb (a regex smuggles the bias through) is subsumed by the stronger rule and still stands. |
 | WRK-004 | ACTIVE | AMENDED | LED-128, LED-110 | the lens count is four, not three. |
 | WRK-173 | ACTIVE | AMENDED | LED-128, LED-110 | the lens count is four, not three. |
 | WRK-043 | ACTIVE | SUPERSEDED | LED-091 | owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications. |
@@ -89,7 +88,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 - evidence-methodology (ratified 2026-07-13): T3-grey alone and a single T6 source yield pending, i.e. no claim.  
   _atoms:_ `EVI-326`(act), `EVI-338`(act)
 
-**Direction.** The weak band comes from the 2026-07-20 owner directive, which is later than the 2026-07-12 tier3-stated-threshold DR and the 2026-07-13 methodology text the engine comment cites ('T3-grey-alone does not even reach provisional'). By rule 0 the later directive governs what it touches. Whether it lifts item 2 of the earlier DR for the STATE (the Option A DR keeps the state machine unchanged) or only weights claim strength is not stated, so whether the engine is behind or the directive is band-only is the owner's to say. [CONFIDENCE: medium -- the lone-T6 case is handled by the regulatory branch, which was not re-derived here.]
+**Direction.** The weak band comes from the 2026-07-20 owner directive, which is later than the 2026-07-12 tier3-stated-threshold DR and the 'tier3-threshold DR item 2' that the engine comment cites ('T3-grey-alone does not even reach provisional'), and the methodology text of 2026-07-13. By rule 0 the later directive governs what it touches. Whether it lifts item 2 of the earlier DR for the STATE (the Option A DR keeps the state machine unchanged) or only weights claim strength is not stated, so whether the engine is behind or the directive is band-only is the owner's to say. [CONFIDENCE: medium -- the lone-T6 case is handled by the regulatory branch, which was not re-derived here.]
 
 ## C-005 [S1] A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known'
 
@@ -147,16 +146,16 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 ## C-022 [S1] Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out
 
-**Class** RULING-RULING  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-MEDICAL` = **FAIL**
+**Class** RULING-DOC  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-MEDICAL` = **FAIL**
 
 - D-0184 (2026-09-01, an agent decision awaiting owner review, C-023): populating base_taxonomy_medical is 'the owner's alone' (DG-NON).  
   _atoms:_ `DRS-194`(act)
 - owner, 2026-09-11 (quoted): 'Fable 5.1 to adjudicate and resolve all items that are presented to me ... Ensure that medical gets filled out.'  
   _atoms:_ `LED-154`(act), `DRS-229`(act), `DRS-231`(act)
-- D-0188's own text narrows the delegation to the 'enumerated items and no further'.  
+- D-0188's own text limits the delegation to the 'enumerated items and no further' -- which may be narrower than the owner's 'all items that are presented to me', depending on what was presented.  
   _atoms:_ `DRS-232`(act), `DRS-233`(act)
 
-**Direction.** Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and is narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed.
+**Direction.** Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and may be narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed.
 
 ## C-024 [S1] Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis)
 
@@ -169,18 +168,18 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** D-0178 is later and is the owner's ruling, so by rule 0 the co1-operational vocabulary and its 'every pre-launch Co-1 citation is published_corpus' clause are stale. The data already conforms: P-CO1-PROV finds each Co-1 source carrying prose that names the co-production and none holding only a co1-operational value; the column has no CHECK vocabulary, so nothing enforces it. Correcting co1-operational is a doctrine-document edit, owner-merged.
 
-## C-027 [S1] Render: 'static build now, dynamic later' -- the sanctioned stopgap (per-page HTML generation) is not reachable
+## C-027 [S1] Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator
 
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-I` = **FAIL**  ·  **Probe** `P-K` = **FAIL**
+**Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** medium  ·  **Probe** `P-I` = **FAIL**  ·  **Probe** `P-K` = **FAIL**
 
 - owner words (quoted from migration 046's header, 2026-08-27): the target is dynamic rendering from the database, no per-page build event, no reliance on artefacts for rendering.  
   _atoms:_ `LED-103`(act), `LED-104`(act), `LED-105`(act)
-- the same header continues: the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap.  
+- the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it).  
   _atoms:_ `ADD-002`(act), `ADD-003`(act)
 - contract and CLAUDE.md: parts/ and site/ must not be stale relative to the DB; regenerate with scripts/regenerate_derived.sh.  
   _atoms:_ `PIP-07`(act), `CLM-050`(act)
 
-**Direction.** The three readings are consistent: dynamic is the target, static generation is the sanctioned stopgap, and so PIP-07 and CLAUDE.md are right to expect regeneration. What fails is the stopgap: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K), because they still select item-layer columns (C-019). Repairing the stopgap is tooling work; no owner decision is needed to do it. [CORRECTION: an earlier draft of this entry left 'what render IS' to the owner; ADD-002 answers it.]
+**Direction.** UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way.
 
 ## C-028 [S1] Register invariants and tier-consistency have no live gate
 
@@ -366,7 +365,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 
 - 08-24 section 2.4 (and the operative instrument): applicability is an output of synthesis; zero links before synthesis is correct; writing applicability edges first is the forbidden presupposition.  
   _atoms:_ `DRS-052`(act), `DRS-053`(act), `DRS-054`(act), `DRS-055`(act), `DRS-056`(act), `ENT-151`(sup), `ENT-152`(act), `OPI-147`(sup)
-- owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect.  
+- owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040, CLAUDE.md's own prose attributing it to the owner, not the owner's words) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect.  
   _atoms:_ `LED-113`(act), `LED-118`(act), `CLM-040`(act)
 - D-0174, issued the same day, still says 'applicability remains a synthesis judgement'; D-0184 builds on that reservation.  
   _atoms:_ `DRS-117`(act), `DRS-193`(act)
@@ -481,14 +480,14 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 
 ## C-047 [S2] 'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record'
 
-**Class** RULING-DOC  ·  **Resolver** AGENT  ·  **Confidence** medium
+**Class** DOC-DOC  ·  **Resolver** AGENT  ·  **Confidence** medium
 
 - architecture v2.3 (2026-04-30): code-enforced checks (hooks, CI) trump text rules for the matching invariant.  
   _atoms:_ `ENT-465`(act)
 - CLAUDE.md rule 0: a live owner statement supersedes every prior ratified record it touches, on contact; record the supersession, never weigh the ruling against the paperwork.  
   _atoms:_ `CLM-000`(act), `CLM-001`(act)
 
-**Direction.** Rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule.
+**Direction.** Both are agent-maintained process texts (rule 0 cites an owner ruling as its proof, not as its source), so this is recency, not rank: rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule.
 
 ## C-048 [S2] A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names
 
@@ -501,14 +500,16 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 
 **Direction.** P-STATUS-WRITERS (lexical) lists the non-default values the column's CHECK accepts that no db.py line names beside the column. Those values are reachable only by hand SQL, so 'looked, nothing extractable' cannot be recorded, an absence the project treats as evidence (R7, R14). A Layer 1 gap: file it as a GAP and add the verb in a tooling PR (rule 10), not in a batch's data migration.
 
-## C-049 [S2] Jurisdiction scope: five buckets and 'PROVISIONAL no longer waits for the Global South' (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document
+## C-049 [S2] Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document
 
 **Class** RULING-DOC  ·  **Resolver** OWNER  ·  **Confidence** high
 
-- owner R5 (2026-08-18): five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order.  
+- owner R5 (2026-08-18), as relayed by the handoff: five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order.  
   _atoms:_ `WRK-186`(act), `WRK-187`(act), `WRK-188`(act), `WRK-189`(act), `WRK-193`(act)
-- owner R6: a BPC entry is PROVISIONAL until every jurisdiction in buckets 1-3 is recorded and the Co-1 pass covers at least 9 languages; section 2.3 of the philosophy document is amended; this needs its own decision record.  
-  _atoms:_ `WRK-084`(act), `WRK-195`(act), `WRK-196`(act), `WRK-197`(act), `WRK-199`(act), `WRK-201`(act)
+- owner R6 (2026-08-18): 'no longer need global South to move from provisional'; the PROVISIONAL gate no longer waits for the Global South.  
+  _atoms:_ `WRK-084`(act), `WRK-195`(act)
+- the handoff author's own derivation of R6: only the first conjunct of section 2.3 falls, the Co-1 >=9-language floor stays, replacement wording pinned at 'buckets 1-3', and a disclosure clause -- the handoff marks the bucket 4/5 split and the disclosure clause as authored proposals, not the owner's words.  
+  _atoms:_ `WRK-196`(act), `WRK-199`(act), `WRK-200`(act), `WRK-201`(act), `WRK-204`(act)
 - owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug.  
   _atoms:_ `LED-193`(act), `SES-047`(act)
 - the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open.  
@@ -516,7 +517,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 - governance/jurisdiction-philosophy.md section 2.3 still reads 'PROVISIONAL until all 24 jurisdictions are recorded' -- the amendment R6 requires has not been made.  
   _atoms:_ `ENT-338`(act)
 
-**Direction.** Later owner statements narrow rather than contradict: R6 (2026-08-18) releases buckets 4-5 from the gate, LED-193 (2026-09-28) narrows research to buckets 1-2 first. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038).
+**Direction.** Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038).
 
 ## C-003 [S3] 'Anchors outright' (band) versus 'T3 alone is provisional' (state): one word, two axes
 
@@ -529,7 +530,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 - the mission file's rule: stated = derived from >= Tier 3, Co-1 or Co-2 evidence.  
   _atoms:_ `MIS-04`(act)
 
-**Direction.** Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 now tests the assignment, not the comment). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling.
+**Direction.** Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 requires the documented comment and the assignment that immediately follows it; a reworded comment would turn it red without the logic having changed). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling.
 
 ## C-006 [S3] Seven tiers, or T1-T6 plus two tracks
 

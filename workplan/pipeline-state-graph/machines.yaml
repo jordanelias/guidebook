@@ -376,7 +376,7 @@ machines:
       - {file: scripts/db.py, func: dispose_adversarial_finding, needle: "disposition=REPAIRED requires --ref"}
       - {file: scripts/db.py, func: dispose_adversarial_finding, needle: "disposition=OWNER-RULED requires --ref"}
   - id: M08.t3
-    from: "DISPOSED"
+    from: "RECORDED (disposed or not)"
     to: "CLOSED"
     via: "db.py close-adversarial-pass"
     guards:

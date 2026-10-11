@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-10 22:24 UTC from git HEAD 1d62d80 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-11 07:14 UTC from git HEAD d326ecd (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 101,
  "stages": [
@@ -4955,14 +4955,16 @@
    }
   },
   "P-R": {
-   "verdict": "NOT-BUILT",
-   "tests": "the engine can reach a determination from findings plus a threshold",
+   "verdict": "PASS",
+   "tests": "the engine can reach a determination from findings plus a threshold (owner 2026-09-16)",
    "atoms": [
     "LED-174",
     "LED-172"
    ],
    "evidence": {
-    "gather_sources_figure_role_filter": "figure_role IN ('claim','derived')"
+    "gather_findings_defined": true,
+    "direction_supplying_roles": "\"finding\",",
+    "determine_has_a_proxy_branch_from_finding_anchors": true
    }
   },
   "P-V": {
@@ -5021,6 +5023,7 @@
     ],
     "with_parameter_id": [],
     "extraction_relations_edges_between_different_parameters_live": 0,
+    "distinct_parameter_ids_among_extractions": 1,
     "extraction_relations_stage": "evidence",
     "connection_targets_columns": [
      "con_id",
@@ -5450,7 +5453,7 @@
   "P-L": "FAIL",
   "P-M": "FAIL",
   "P-O": "FAIL",
-  "P-R": "NOT-BUILT",
+  "P-R": "PASS",
   "P-V": "PASS",
   "P-V2": "FAIL",
   "P-W": "PASS",
@@ -5677,8 +5680,8 @@
     {
      "id": "C3.4",
      "says": "findings plus a threshold can reach a determination",
-     "verdict": "NOT-BUILT",
-     "why": "P-R = NOT-BUILT",
+     "verdict": "PASS",
+     "why": "P-R = PASS",
      "atoms": [
       "LED-174",
       "LED-172"
@@ -5985,8 +5988,8 @@
     {
      "id": "C3.4",
      "says": "findings plus a threshold can reach a determination",
-     "verdict": "NOT-BUILT",
-     "why": "P-R = NOT-BUILT",
+     "verdict": "PASS",
+     "why": "P-R = PASS",
      "atoms": [
       "LED-174",
       "LED-172"
@@ -6092,7 +6095,7 @@
  "examined": {
   "atoms (quote found verbatim)": 2692,
   "distinct quotes among them": 2659,
-  "status corrections owed (each atom's status re-read)": 14,
+  "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 50,
   "machine transitions": 41,
   "transition evidence needles re-read": 71,
@@ -6104,12 +6107,12 @@
   "tables placed in a stage": 82
  },
  "atoms_by_status": {
-  "ACTIVE": 2311,
+  "ACTIVE": 2312,
   "OPEN": 75,
   "SUPERSEDED": 74,
-  "AMENDED": 78,
+  "AMENDED": 76,
   "PROPOSED": 129,
-  "HISTORICAL": 25
+  "HISTORICAL": 26
  },
  "atoms_total": 2692,
  "conflicts_total": 50
