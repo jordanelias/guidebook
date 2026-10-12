@@ -67,7 +67,7 @@ Tests: **(a)** accuracy, **(b)** code compliance, **(c)** walkability, **(d)** d
 | P16 | LED-202, preliminary figures | silent | adopts a side | the atom is OPEN *(pass)* | ideal ✗a | **DEFERRED;** nothing is built on either answer |
 | P17 | `v_render` lifecycle | n/a | claims every view filters lifecycle | `v_render` still shows a superseded source's reference *(pass)* | ideal ✗a | **ADOPTED into 3.R:** filter on `superseded_by_ref_id IS NULL` wherever the view joins a source |
 | P18 | the determination's marker | 3.R: a view that "already carries" it | `marker` column, CHECKed | **deferred after the fifth pass.** No view carries it; the logic is in `pilot_renderings.py`; all 8 live rows are retired *(checked)*. A CHECK added without the engine change stops `assess_cell.py` writing a live row (its INSERT names columns and has no `marker`) and fails four tests; the band has no source (P6) *(pass)* | plan ✗a; ideal ✗a | **DEFERRED behind C-002.** The marker, its CHECK and the engine's INSERT change ship in one PR after the markers ruling |
-| P19 | Pydantic mirrors | defer to the owner's ruling | generate the mirrors | a requirement the owner ratified (OD-7); a generated mirror cannot drift (rule 8) | — | **KEPT.** If the requirement stays, generate |
+| P19 | Pydantic mirrors | defer to the owner's ruling | generate the mirrors | a requirement stated in CLAUDE.md §4 and §7 (the instrument's OD-7 recommendation for it is OPEN, not approved); a generated mirror cannot drift (rule 8) | — | **KEPT.** If the requirement stays, generate |
 | P20 | walkers | `tools/` walkers go in 1.1 | one `walk` and one `walkability` check replace four walkers (2,635 lines) | the script reproduces 21 of 82 *(checked)*; `graph_audit` and `graph/` (1,444 lines) remain after 1.1; `db_path_env_audit.py` and `schema-reference-exemptions.yaml` name them *(pass)* | plan ✗c | **ADOPTED in Phase 4 (4.4),** with those two callers edited, and registered once the set it prints is resolvable |
 | P21 | hard-coded paths, clocks, connection | silent | `dbcore.connect`, `REPO_ROOT`, `now`, injected | 157 bindings, 69 and 58 files *(pass)* | plan ✗(rule 8) | **ADOPTED in Phase 4 (4.5),** file by file, behaviour-preserving, each binding deleted where replaced |
 | P22 | verbs | delete verbs used three times or fewer that nothing needs | 28 verbs | the figure turns on counting (29 or 12 of 72 at ten or more; plan §1) | — | **KEPT;** the ideal's merges are done where a stage repair touches them |
@@ -85,6 +85,8 @@ Tests: **(a)** accuracy, **(b)** code compliance, **(c)** walkability, **(d)** d
 - The ideal's file carries a banner: its DDL is a target shape, not a migration, and §5 of this file supersedes its adjudications where they differ.
 
 ## 7. Owner questions that remain
+
+Proposed rulings for these are in `RULINGS.md` (same folder): 38 of 42 questions ruled from premises, 4 undetermined; nothing is entered in the ledger.
 
 1. `slugs.serves_axes` value `["AX-BAL"]` may be destroyed (LED-169; step 1.4).
 2. T1 extras: strike or keep `term_catalogue_origins` (SES-063).
