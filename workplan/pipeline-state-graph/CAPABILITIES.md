@@ -12,12 +12,12 @@ STATE-GRAPH.md. A predicate that tests a ruling the mechanism does not carry fai
 
 ## Summary
 
-| capability | this tree | comparison tree |
-|---|---|---|
-| C1 Mine one source across many parameters | **BLOCKED** | **BLOCKED** |
-| C2 Grow its own parameter base | **BLOCKED** | **BLOCKED** |
-| C3 Synthesize across parameters | **BLOCKED** | **BLOCKED** |
-| C4 Specify, then render | **BLOCKED** | **BLOCKED** |
+| capability | this tree |
+|---|---|
+| C1 Mine one source across many parameters | **BLOCKED** |
+| C2 Grow its own parameter base | **BLOCKED** |
+| C3 Synthesize across parameters | **BLOCKED** |
+| C4 Specify, then render | **BLOCKED** |
 
 ## C1 Mine one source across many parameters
 
@@ -26,16 +26,16 @@ record of what was and was not looked for -- without the slug it happened to be 
 is taken from it (owner, 2026-10-09: "every admitted source is scanned for any and all applicable parameters,
 whatever slug it was filed under")?
 
-| pred | says | verdict | comparison | why | atoms |
-|---|---|---|---|---|---|
-| C1.1 | no UNIQUE(ref_id) on the capture table: one source may yield many rows | **PASS** | PASS | P-D = PASS | LED-100, LED-101 |
-| C1.2 | a phrase can be harvested from a source without presupposing a category | **PASS** | PASS | matched | LED-115, CLM-040 |
-| C1.3 | one source can be harvested for more than one sense of the same phrase | **FAIL** | PASS | P-W = FAIL | LED-197 |
-| C1.4 | an extraction can be filed under a slug other than the one the source was admitted to | **FAIL** | FAIL | P-V2 = FAIL | LED-196, LED-201 |
-| C1.5 | a record exists of which parameters a source has been read for | **NOT-BUILT** | PASS | P-V = NOT-BUILT | LED-195, LED-199 |
-| C1.6 | a value can be stated in every lens, including the medical lens | **FAIL** | FAIL | P-MEDICAL = FAIL | LED-110, LED-154 |
-| C1.7 | arguments and qualitative findings can be captured as well as numbers | **PASS** | PASS | source_value_extractions.claim_type admits qualitative | SES-022, SES-023 |
-| C1.8 | a search records which slug x lens cells it covered | **FAIL** | FAIL | P-M = FAIL | LED-084, RES-04 |
+| pred | says | verdict | why | atoms |
+|---|---|---|---|---|
+| C1.1 | no UNIQUE(ref_id) on the capture table: one source may yield many rows | **PASS** | P-D = PASS | LED-100, LED-101 |
+| C1.2 | a phrase can be harvested from a source without presupposing a category | **PASS** | matched | LED-115, CLM-040 |
+| C1.3 | one source can be harvested for more than one sense of the same phrase | **FAIL** | P-W = FAIL | LED-197 |
+| C1.4 | an extraction can be filed under a slug other than the one the source was admitted to | **FAIL** | P-V2 = FAIL | LED-196, LED-201 |
+| C1.5 | a record exists of which parameters a source has been read for | **NOT-BUILT** | P-V = NOT-BUILT | LED-195, LED-199 |
+| C1.6 | a value can be stated in every lens, including the medical lens | **FAIL** | P-MEDICAL = FAIL | LED-110, LED-154 |
+| C1.7 | arguments and qualitative findings can be captured as well as numbers | **PASS** | source_value_extractions.claim_type admits qualitative | SES-022, SES-023 |
+| C1.8 | a search records which slug x lens cells it covered | **FAIL** | P-M = FAIL | LED-084, RES-04 |
 
 ## C2 Grow its own parameter base
 
@@ -43,16 +43,16 @@ Can a concept met in a source become a parameter, and can the parameter list be 
 and merged, through sanctioned writers and with the warrant recorded -- without a container that states its own
 answer and without hand SQL?
 
-| pred | says | verdict | comparison | why | atoms |
-|---|---|---|---|---|---|
-| C2.1 | a new concept enters only as a term minted from an observation | **PASS** | PASS | verb add-term declared on this tree | LED-150, LED-203 |
-| C2.2 | a name may not state its own answer | **PASS** | PASS | matched | LED-148, PIP-16 |
-| C2.3 | an adjudicated term can be promoted to a parameter | **PASS** | PASS | verb add-parameter declared on this tree | LED-092 |
-| C2.4 | a term can be judged not-a-parameter, with the reason on record | **PASS** | PASS | verb decline-parameter declared on this tree | RES-16 |
-| C2.5 | a parameter can be retired or merged on record (retire in place) | **FAIL** | PASS | P-PARAM-LIFECYCLE = FAIL | LED-169, LED-170 |
-| C2.6 | the list can be prepopulated from earlier catalogues under screening and owner approval | **NOT-BUILT** | PASS | verb mint-term-from-catalogue absent on this tree | LED-204, LED-205 |
-| C2.7 | which direction is better for a disabled person can be recorded per parameter | **PASS** | PASS | verb set-parameter-direction declared on this tree | LED-091 |
-| C2.8 | the base vocabularies a parameter and a lens point into have a sanctioned writer | **FAIL** | FAIL | P-O = FAIL | LED-182, CLM-031 |
+| pred | says | verdict | why | atoms |
+|---|---|---|---|---|
+| C2.1 | a new concept enters only as a term minted from an observation | **PASS** | verb add-term declared on this tree | LED-150, LED-203 |
+| C2.2 | a name may not state its own answer | **PASS** | matched | LED-148, PIP-16 |
+| C2.3 | an adjudicated term can be promoted to a parameter | **PASS** | verb add-parameter declared on this tree | LED-092 |
+| C2.4 | a term can be judged not-a-parameter, with the reason on record | **PASS** | verb decline-parameter declared on this tree | RES-16 |
+| C2.5 | a parameter can be retired or merged on record (retire in place) | **FAIL** | P-PARAM-LIFECYCLE = FAIL | LED-169, LED-170 |
+| C2.6 | the list can be prepopulated from earlier catalogues under screening and owner approval | **NOT-BUILT** | verb mint-term-from-catalogue absent on this tree | LED-204, LED-205 |
+| C2.7 | which direction is better for a disabled person can be recorded per parameter | **PASS** | verb set-parameter-direction declared on this tree | LED-091 |
+| C2.8 | the base vocabularies a parameter and a lens point into have a sanctioned writer | **FAIL** | P-O = FAIL | LED-182, CLM-031 |
 
 ## C3 Synthesize across parameters
 
@@ -60,13 +60,13 @@ Can the machinery combine what independent sources say about one parameter into 
 they diverge, and relate more than one parameter to another (interaction, compounding, conflict) -- so that a
 finding that depends on two parameters has a place to be recorded and a source to be traced to?
 
-| pred | says | verdict | comparison | why | atoms |
-|---|---|---|---|---|---|
-| C3.1 | independent sources for one (parameter x lens) cell are combined into one state | **PASS** | PASS | matched | LED-151, PIP-08 |
-| C3.2 | divergence between sources is a recorded state | **PASS** | PASS | convergence_assessment.status admits divergent | MIS-06 |
-| C3.3 | a spread across lenses is carried with each lens's direction | **PASS** | PASS | matched | LED-176 |
-| C3.4 | findings plus a threshold can reach a determination | **PASS** | PASS | P-R = PASS | LED-174, LED-172 |
-| C3.5 | a synthesis-stage structure can relate two or more parameters | **FAIL** | FAIL | P-X = FAIL | LED-097, LED-098 |
+| pred | says | verdict | why | atoms |
+|---|---|---|---|---|
+| C3.1 | independent sources for one (parameter x lens) cell are combined into one state | **PASS** | matched | LED-151, PIP-08 |
+| C3.2 | divergence between sources is a recorded state | **PASS** | convergence_assessment.status admits divergent | MIS-06 |
+| C3.3 | a spread across lenses is carried with each lens's direction | **PASS** | matched | LED-176 |
+| C3.4 | findings plus a threshold can reach a determination | **PASS** | P-R = PASS | LED-174, LED-172 |
+| C3.5 | a synthesis-stage structure can relate two or more parameters | **FAIL** | P-X = FAIL | LED-097, LED-098 |
 
 ## C4 Specify, then render
 
@@ -74,16 +74,16 @@ Can a determination be computed from the evidence, keyed on parameter x lens, wr
 retired and redetermined; and can what is written be rendered to a reader at its stated strength, from the
 database, with the rendering gated?
 
-| pred | says | verdict | comparison | why | atoms |
-|---|---|---|---|---|---|
-| C4.1 | a determination is keyed on parameter_id x at least one lens | **PASS** | PASS | P-Y = PASS | LED-091, LED-130 |
-| C4.2 | the state is computed by the engine from tier arithmetic | **PASS** | PASS | P-ENG-T3 = PASS | LED-151, LED-152, LED-010 |
-| C4.3 | a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table | **PASS** | PASS | specifications has no NOT NULL FK into an emptied table | CLM-034 |
-| C4.4 | the engine can assign every value of the state vocabulary | **FAIL** | FAIL | P-ENG-STATE = FAIL | EVI-361 |
-| C4.5 | a determination can be retired in place and redetermined | **PASS** | PASS | verb retire-specification declared on this tree | LED-169 |
-| C4.6 | a live renderer reads parameter x lens determinations | **FAIL** | FAIL | P-K = FAIL | LED-103, PIP-06 |
-| C4.7 | the derived surfaces can be regenerated from the database | **FAIL** | FAIL | P-I = FAIL | PIP-07, CLM-050 |
-| C4.8 | the rendering invariants and tier-derivation consistency are gated | **FAIL** | FAIL | P-QUARANTINE = FAIL | PIP-06, POS-03 |
+| pred | says | verdict | why | atoms |
+|---|---|---|---|---|
+| C4.1 | a determination is keyed on parameter_id x at least one lens | **PASS** | P-Y = PASS | LED-091, LED-130 |
+| C4.2 | the state is computed by the engine from tier arithmetic | **PASS** | P-ENG-T3 = PASS | LED-151, LED-152, LED-010 |
+| C4.3 | a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table | **PASS** | specifications has no NOT NULL FK into an emptied table | CLM-034 |
+| C4.4 | the engine can assign every value of the state vocabulary | **FAIL** | P-ENG-STATE = FAIL | EVI-361 |
+| C4.5 | a determination can be retired in place and redetermined | **PASS** | verb retire-specification declared on this tree | LED-169 |
+| C4.6 | a live renderer reads parameter x lens determinations | **FAIL** | P-K = FAIL | LED-103, PIP-06 |
+| C4.7 | the derived surfaces can be regenerated from the database | **FAIL** | P-I = FAIL | PIP-07, CLM-050 |
+| C4.8 | the rendering invariants and tier-derivation consistency are gated | **FAIL** | P-QUARANTINE = FAIL | PIP-06, POS-03 |
 
 ## Components against the four capabilities
 

@@ -250,10 +250,11 @@ def make_probes():
         live = [t for t in sp if t in T.tables]
         return ("FAIL" if live else "PASS"), {"still_present": live, "rows": [T.rows[t] for t in live]}
 
-    @probe("P-B", "every table attaching a determination to a group has the four lens columns; population_code retired", ["LED-128", "CLM-042"])
+    @probe("P-B", "every non-base table attaching a determination to a group has the four lens columns; population_code retired", ["LED-128", "CLM-042"])
     def _(T):
         bad = {}
         for t in T.tables:
+            if T.stage(t) == "base": continue          # base holds the lens registries and crossing maps, which attach nothing to a determination
             c = T.cols(t); have = [l for l in LENS if l in c]
             if (have and len(have) < 4) or "population_code" in c:
                 bad[t] = have + (["population_code"] if "population_code" in c else [])
@@ -420,7 +421,7 @@ def make_probes():
 
     @probe("P-UNWRITABLE", "no NOT NULL foreign key points into an emptied table", ["CLM-034", "CLM-048"])
     def _(T):
-        u = T.unwritable_set()
+        u = [x for x in T.unwritable_set() if not x["parent_written_by_same_verb"]]    # a verb that writes the parent and child together makes the pair writable
         return ("FAIL" if u else "PASS"), {"count": len(u), "pairs": [f"{x['child']}.{x['col']} -> {x['parent']}" for x in u],
                                            "with_a_db_py_verb": sorted({v for x in u for v in x["verbs_child"]}),
                                            "parent_written_by_same_verb": {f"{x['child']}.{x['col']}": x["parent_written_by_same_verb"] for x in u if x["parent_written_by_same_verb"]}}

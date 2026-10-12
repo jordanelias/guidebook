@@ -102,7 +102,7 @@ committed that copy; it was removed in a later commit, but the blobs remain in t
 
 ## Status
 
-Committed to the working branch; not registered in `governance/check-registry.yaml`; no PR. The branch also carries
-the batch-24 research (PR #171, closed), and CLAUDE.md rule 10 says research and tooling ship apart, so this belongs on
-its own PR. If kept, `--check` is the candidate registry entry (it prints `EXAMINED:`, reads the repo only, and has a
+Committed to the working branch; not registered in `governance/check-registry.yaml`. PR #171 (batch-24 research) was merged
+on 2026-10-10, so the instrument and the workplan are the only unmerged content; they contain no research rows and ship as
+their own tooling-and-documents PR (CLAUDE.md rule 10). If kept, `--check` is the candidate registry entry (it prints `EXAMINED:`, reads the repo only, and has a
 self-test). The owner decides whether to keep it.

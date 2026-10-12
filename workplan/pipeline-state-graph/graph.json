@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-11 07:14 UTC from git HEAD d326ecd (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-12 01:08 UTC from git HEAD eda7de43 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 101,
  "stages": [
@@ -4590,21 +4590,12 @@
   },
   "P-B": {
    "verdict": "FAIL",
-   "tests": "every table attaching a determination to a group has the four lens columns; population_code retired",
+   "tests": "every non-base table attaching a determination to a group has the four lens columns; population_code retired",
    "atoms": [
     "LED-128",
     "CLM-042"
    ],
    "evidence": {
-    "access_need_icf": [
-     "icf_code"
-    ],
-    "base_icf": [
-     "icf_code"
-    ],
-    "base_taxonomy_medical": [
-     "medical_code"
-    ],
     "case_study_populations": [
      "population_code"
     ],
@@ -4620,25 +4611,7 @@
     "extraction_population_links": [
      "population_code"
     ],
-    "icf_medical_map": [
-     "icf_code",
-     "medical_code"
-    ],
-    "identity_medical_map": [
-     "identity_code",
-     "medical_code"
-    ],
     "item_population_elaborations": [
-     "population_code"
-    ],
-    "population_axis_map": [
-     "population_code"
-    ],
-    "population_icf_links": [
-     "icf_code",
-     "population_code"
-    ],
-    "populations": [
      "population_code"
     ],
     "probe_population_links": [
@@ -5130,7 +5103,7 @@
     "CLM-048"
    ],
    "evidence": {
-    "count": 19,
+    "count": 16,
     "pairs": [
      "case_study_outcomes.case_study_id -> case_studies",
      "case_study_populations.case_study_id -> case_studies",
@@ -5138,10 +5111,7 @@
      "case_study_specs.case_study_id -> case_studies",
      "case_study_strategies.case_study_id -> case_studies",
      "citation_population_links.citation_id -> reasoning_doc_citations",
-     "connection_targets.con_id -> connections",
      "economics_entry_specs.item_code -> items",
-     "icf_medical_map.medical_code -> base_taxonomy_medical",
-     "identity_medical_map.medical_code -> base_taxonomy_medical",
      "item_audit_runs.item_code -> items",
      "item_bpc_links.item_code -> items",
      "item_population_elaborations.item_code -> items",
@@ -5154,24 +5124,10 @@
     ],
     "with_a_db_py_verb": [
      "add-audit-run",
-     "add-connection",
      "add-jurisdictional-value",
-     "add-medical",
-     "delete-connection",
      "update-audit-run"
     ],
-    "parent_written_by_same_verb": {
-     "connection_targets.con_id": [
-      "add-connection",
-      "delete-connection"
-     ],
-     "icf_medical_map.medical_code": [
-      "add-medical"
-     ],
-     "identity_medical_map.medical_code": [
-      "add-medical"
-     ]
-    }
+    "parent_written_by_same_verb": {}
    }
   },
   "P-MEDICAL": {
@@ -5439,43 +5395,7 @@
    }
   }
  },
- "probes_comparison": {
-  "P-A": "FAIL",
-  "P-B": "FAIL",
-  "P-C": "NOT-BUILT",
-  "P-D": "PASS",
-  "P-F": "FAIL",
-  "P-G": "PASS",
-  "P-AXIS": "FAIL",
-  "P-H": "FAIL",
-  "P-I": "FAIL",
-  "P-K": "FAIL",
-  "P-L": "FAIL",
-  "P-M": "FAIL",
-  "P-O": "FAIL",
-  "P-R": "PASS",
-  "P-V": "PASS",
-  "P-V2": "FAIL",
-  "P-W": "PASS",
-  "P-X": "FAIL",
-  "P-Y": "PASS",
-  "P-AB": "PASS",
-  "P-GT": "FAIL",
-  "P-ENG-T3": "PASS",
-  "P-ENG-STATE": "FAIL",
-  "P-TIER-DERIVE": "FAIL",
-  "P-STAGE-SVE": "FAIL",
-  "P-UNWRITABLE": "FAIL",
-  "P-MEDICAL": "FAIL",
-  "P-CO1-TYPE": "FAIL",
-  "P-CO1-PROV": "PASS",
-  "P-FWD-FK": "INFO",
-  "P-VERIF-VOCAB": "PASS",
-  "P-QUARANTINE": "FAIL",
-  "P-LEDGER-GREP": "UNKNOWN",
-  "P-STATUS-WRITERS": "FAIL",
-  "P-PARAM-LIFECYCLE": "PASS"
- },
+ "probes_comparison": null,
  "capabilities": {
   "C1": {
    "name": "Mine one source across many parameters",
@@ -5784,314 +5704,7 @@
    ]
   }
  },
- "capabilities_comparison": {
-  "C1": {
-   "name": "Mine one source across many parameters",
-   "overall": "BLOCKED",
-   "predicates": [
-    {
-     "id": "C1.1",
-     "says": "no UNIQUE(ref_id) on the capture table: one source may yield many rows",
-     "verdict": "PASS",
-     "why": "P-D = PASS",
-     "atoms": [
-      "LED-100",
-      "LED-101"
-     ]
-    },
-    {
-     "id": "C1.2",
-     "says": "a phrase can be harvested from a source without presupposing a category",
-     "verdict": "PASS",
-     "why": "matched",
-     "atoms": [
-      "LED-115",
-      "CLM-040"
-     ]
-    },
-    {
-     "id": "C1.3",
-     "says": "one source can be harvested for more than one sense of the same phrase",
-     "verdict": "PASS",
-     "why": "P-W = PASS",
-     "atoms": [
-      "LED-197"
-     ]
-    },
-    {
-     "id": "C1.4",
-     "says": "an extraction can be filed under a slug other than the one the source was admitted to",
-     "verdict": "FAIL",
-     "why": "P-V2 = FAIL",
-     "atoms": [
-      "LED-196",
-      "LED-201"
-     ]
-    },
-    {
-     "id": "C1.5",
-     "says": "a record exists of which parameters a source has been read for",
-     "verdict": "PASS",
-     "why": "P-V = PASS",
-     "atoms": [
-      "LED-195",
-      "LED-199"
-     ]
-    },
-    {
-     "id": "C1.6",
-     "says": "a value can be stated in every lens, including the medical lens",
-     "verdict": "FAIL",
-     "why": "P-MEDICAL = FAIL",
-     "atoms": [
-      "LED-110",
-      "LED-154"
-     ]
-    },
-    {
-     "id": "C1.7",
-     "says": "arguments and qualitative findings can be captured as well as numbers",
-     "verdict": "PASS",
-     "why": "source_value_extractions.claim_type admits qualitative",
-     "atoms": [
-      "SES-022",
-      "SES-023"
-     ]
-    },
-    {
-     "id": "C1.8",
-     "says": "a search records which slug x lens cells it covered",
-     "verdict": "FAIL",
-     "why": "P-M = FAIL",
-     "atoms": [
-      "LED-084",
-      "RES-04"
-     ]
-    }
-   ]
-  },
-  "C2": {
-   "name": "Grow its own parameter base",
-   "overall": "BLOCKED",
-   "predicates": [
-    {
-     "id": "C2.1",
-     "says": "a new concept enters only as a term minted from an observation",
-     "verdict": "PASS",
-     "why": "verb add-term declared on this tree",
-     "atoms": [
-      "LED-150",
-      "LED-203"
-     ]
-    },
-    {
-     "id": "C2.2",
-     "says": "a name may not state its own answer",
-     "verdict": "PASS",
-     "why": "matched",
-     "atoms": [
-      "LED-148",
-      "PIP-16"
-     ]
-    },
-    {
-     "id": "C2.3",
-     "says": "an adjudicated term can be promoted to a parameter",
-     "verdict": "PASS",
-     "why": "verb add-parameter declared on this tree",
-     "atoms": [
-      "LED-092"
-     ]
-    },
-    {
-     "id": "C2.4",
-     "says": "a term can be judged not-a-parameter, with the reason on record",
-     "verdict": "PASS",
-     "why": "verb decline-parameter declared on this tree",
-     "atoms": [
-      "RES-16"
-     ]
-    },
-    {
-     "id": "C2.5",
-     "says": "a parameter can be retired or merged on record (retire in place)",
-     "verdict": "PASS",
-     "why": "P-PARAM-LIFECYCLE = PASS",
-     "atoms": [
-      "LED-169",
-      "LED-170"
-     ]
-    },
-    {
-     "id": "C2.6",
-     "says": "the list can be prepopulated from earlier catalogues under screening and owner approval",
-     "verdict": "PASS",
-     "why": "verb mint-term-from-catalogue declared on this tree",
-     "atoms": [
-      "LED-204",
-      "LED-205"
-     ]
-    },
-    {
-     "id": "C2.7",
-     "says": "which direction is better for a disabled person can be recorded per parameter",
-     "verdict": "PASS",
-     "why": "verb set-parameter-direction declared on this tree",
-     "atoms": [
-      "LED-091"
-     ]
-    },
-    {
-     "id": "C2.8",
-     "says": "the base vocabularies a parameter and a lens point into have a sanctioned writer",
-     "verdict": "FAIL",
-     "why": "P-O = FAIL",
-     "atoms": [
-      "LED-182",
-      "CLM-031"
-     ]
-    }
-   ]
-  },
-  "C3": {
-   "name": "Synthesize across parameters",
-   "overall": "BLOCKED",
-   "predicates": [
-    {
-     "id": "C3.1",
-     "says": "independent sources for one (parameter x lens) cell are combined into one state",
-     "verdict": "PASS",
-     "why": "matched",
-     "atoms": [
-      "LED-151",
-      "PIP-08"
-     ]
-    },
-    {
-     "id": "C3.2",
-     "says": "divergence between sources is a recorded state",
-     "verdict": "PASS",
-     "why": "convergence_assessment.status admits divergent",
-     "atoms": [
-      "MIS-06"
-     ]
-    },
-    {
-     "id": "C3.3",
-     "says": "a spread across lenses is carried with each lens's direction",
-     "verdict": "PASS",
-     "why": "matched",
-     "atoms": [
-      "LED-176"
-     ]
-    },
-    {
-     "id": "C3.4",
-     "says": "findings plus a threshold can reach a determination",
-     "verdict": "PASS",
-     "why": "P-R = PASS",
-     "atoms": [
-      "LED-174",
-      "LED-172"
-     ]
-    },
-    {
-     "id": "C3.5",
-     "says": "a synthesis-stage structure can relate two or more parameters",
-     "verdict": "FAIL",
-     "why": "P-X = FAIL",
-     "atoms": [
-      "LED-097",
-      "LED-098"
-     ]
-    }
-   ]
-  },
-  "C4": {
-   "name": "Specify, then render",
-   "overall": "BLOCKED",
-   "predicates": [
-    {
-     "id": "C4.1",
-     "says": "a determination is keyed on parameter_id x at least one lens",
-     "verdict": "PASS",
-     "why": "P-Y = PASS",
-     "atoms": [
-      "LED-091",
-      "LED-130"
-     ]
-    },
-    {
-     "id": "C4.2",
-     "says": "the state is computed by the engine from tier arithmetic",
-     "verdict": "PASS",
-     "why": "P-ENG-T3 = PASS",
-     "atoms": [
-      "LED-151",
-      "LED-152",
-      "LED-010"
-     ]
-    },
-    {
-     "id": "C4.3",
-     "says": "a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table",
-     "verdict": "PASS",
-     "why": "specifications has no NOT NULL FK into an emptied table",
-     "atoms": [
-      "CLM-034"
-     ]
-    },
-    {
-     "id": "C4.4",
-     "says": "the engine can assign every value of the state vocabulary",
-     "verdict": "FAIL",
-     "why": "P-ENG-STATE = FAIL",
-     "atoms": [
-      "EVI-361"
-     ]
-    },
-    {
-     "id": "C4.5",
-     "says": "a determination can be retired in place and redetermined",
-     "verdict": "PASS",
-     "why": "verb retire-specification declared on this tree",
-     "atoms": [
-      "LED-169"
-     ]
-    },
-    {
-     "id": "C4.6",
-     "says": "a live renderer reads parameter x lens determinations",
-     "verdict": "FAIL",
-     "why": "P-K = FAIL",
-     "atoms": [
-      "LED-103",
-      "PIP-06"
-     ]
-    },
-    {
-     "id": "C4.7",
-     "says": "the derived surfaces can be regenerated from the database",
-     "verdict": "FAIL",
-     "why": "P-I = FAIL",
-     "atoms": [
-      "PIP-07",
-      "CLM-050"
-     ]
-    },
-    {
-     "id": "C4.8",
-     "says": "the rendering invariants and tier-derivation consistency are gated",
-     "verdict": "FAIL",
-     "why": "P-QUARANTINE = FAIL",
-     "atoms": [
-      "PIP-06",
-      "POS-03"
-     ]
-    }
-   ]
-  }
- },
+ "capabilities_comparison": null,
  "examined": {
   "atoms (quote found verbatim)": 2692,
   "distinct quotes among them": 2659,
