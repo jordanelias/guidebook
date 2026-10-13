@@ -345,14 +345,14 @@
   {
     "started": "2026-10-13T22:48:22",
     "role": "other",
-    "bytes": 276469,
+    "bytes": 1159757,
     "agent_id_prefix": "a1e09183",
     "file": "2026-10-13T22-48-22_other_a1e09183.jsonl"
   },
   {
     "started": "2026-10-13T22:48:22",
     "role": "antagonist",
-    "bytes": 275187,
+    "bytes": 726679,
     "agent_id_prefix": "a1f31c97",
     "file": "2026-10-13T22-48-22_antagonist_a1f31c97.jsonl"
   }
