@@ -2,16 +2,20 @@
 """walkability.py: measure walkability in every direction over a database and a stage-map.
 usage: walkability.py [DB [STAGE_MAP]] [--json]     (defaults: data/guidebook.db, governance/stage-map.yaml)
 Read-only. Stage ids come from governance/pipeline-contract.yaml; table -> stage from the stage-map.
-Edges: every FOREIGN KEY (child -> parent) and every table a view reads (view -> table).
+Edges: every FOREIGN KEY (child -> parent; a composite key counts once) and every table a view reads (the tables
+named after FROM and JOIN once comments and string literals are stripped, through views that read views).
 Per ordered stage pair (a before b in the spine):
   up        tables of b that reach a table of a by following FKs child -> parent (transitively, through any stage)
   down      tables of a that reach a table of b by following FKs parent -> child
   skip      as up, but never passing through a table of a stage between a and b
   recvFK    FKs whose child is in b and parent in a (the later stage holds the pointer back: the normal direction)
   sendFK    FKs whose child is in a and parent in b (the earlier stage holds a pointer forward: re-entrant)
-Also: zigzag (shortest undirected path over FKs and view co-reads, never through a base table, for all FKs
-and for FKs with at least one non-NULL pointer), lateral components per stage, re-entrant FK edges with
-non-NULL counts, FK population, orphans, id columns with no FK, and views that span stages.
+Also: zigzag (shortest undirected path over FKs and view co-reads, never passing through a base, infrastructure
+or unmapped table; ties go to fewer view hops, then alphabetical order; for all FKs and for FKs with at least one
+non-NULL pointer), lateral components per stage (tables joined through a shared FK parent or child, or by a direct
+FK between two tables of the stage), re-entrant FK edges with non-NULL counts, FK population, orphans, id columns
+with no FK, and views that span stages. A view's stages are those of the tables it reads: a view that reads only
+tables of one stage is one-stage whatever it is for.
 """
 import sqlite3, sys, json, re, collections, itertools, yaml, os
 
@@ -33,11 +37,23 @@ idx = {s: i for i, s in enumerate(spine)}
 # FK edges: (child, parent, child_col, parent_col)
 fk = []
 for t in T:
+    seen_id = set()
     for f in c.execute(f'pragma foreign_key_list("{t}")'):
-        if f[2] in stage:
-            fk.append((t, f[2], f[3], f[4]))
-# view edges: view -> tables it reads
-vedge = {v: sorted({t for t in T if re.search(rf'\b{re.escape(t)}\b', s)}) for v, s in V.items()}
+        if f[2] in stage and f[0] not in seen_id:      # one edge per constraint, not per column
+            seen_id.add(f[0]); fk.append((t, f[2], f[3], f[4]))
+# view edges: view -> tables it reads (FROM/JOIN targets; comments and strings stripped; views expanded)
+_KW = r'\b(?:WHERE|GROUP|ORDER|UNION|LIMIT|HAVING|JOIN|LEFT|RIGHT|INNER|CROSS|FULL|NATURAL|ON|USING|SELECT|EXCEPT|INTERSECT|WINDOW)\b|[();]'
+def view_reads(v, seen=()):
+    s = re.sub(r"--[^\n]*|/\*.*?\*/|'(?:[^']|'')*'", ' ', V[v], flags=re.S)
+    names = set()
+    for m in re.finditer(r'\b(?:FROM|JOIN)\b', s, re.I):
+        for part in re.split(_KW, s[m.end():], maxsplit=1, flags=re.I)[0].split(','):
+            w = part.strip().split()
+            if w and re.fullmatch(r'"?\w+"?', w[0]): names.add(w[0].strip('"'))
+    out = {n for n in names if n in stage}
+    for n in names & set(V) - set(seen) - {v}: out |= view_reads(n, seen + (v,))
+    return out
+vedge = {v: sorted(view_reads(v)) for v in V}
 def vstages(v): return sorted({stage[t] for t in vedge[v] if stage[t] in idx}, key=idx.get)
 
 # adjacency (table graph)
@@ -140,69 +156,60 @@ out['views_no_stage'] = sorted(v for v in vedge if len(vstages(v)) <= 1)
 
 
 # --- zigzag walk: shortest undirected path between any table of stage a and any table of stage b, FK edges + view co-reads,
-#     never passing THROUGH a base table (base is shared vocabulary: it connects everything and walks nothing).
-und = collections.defaultdict(set)
-for ch, pa, *_ in fk: und[ch].add(pa); und[pa].add(ch)
-for v, ts in vedge.items():
-    ts = [x for x in ts if x in stage]
-    for x in ts:
-        for y in ts:
-            if x != y: und[x].add(y)
+#     never passing THROUGH a base, infrastructure or unmapped table (base is shared vocabulary: it connects everything and
+#     walks nothing; the others are not spine stages).
+NOWALK = {'base', 'infrastructure', 'UNMAPPED'}
+def build(fk_set, views):
+    g = collections.defaultdict(set)
+    for ch, pa in fk_set: g[ch].add(pa); g[pa].add(ch)
+    for v in views:
+        ts = [x for x in vedge[v] if x in stage]
+        for x in ts:
+            for y in ts:
+                if x != y: g[x].add(y)
+    return g
 fkpairs = {(ch, pa) for ch, pa, *_ in fk}
-def cost(path):
-    """shorter first, then fewer view hops, then alphabetical: a foreign key beats a view co-read at equal length"""
-    return (len(path), sum(not ((x, y) in fkpairs or (y, x) in fkpairs) for x, y in zip(path, path[1:])), path)
-def shortest(src, dst):
-    best = None
-    for s0 in sorted(src):
-        prev = {s0: None}; q = collections.deque([s0])
-        while q:
-            n = q.popleft()
-            if n in dst and n != s0 or (n in dst and s0 in dst and n == s0):
-                path = []; x = n
-                while x is not None: path.append(x); x = prev[x]
-                path = path[::-1]
-                if best is None or cost(path) < cost(best): best = path
-                break
-            if stage[n] == 'base' and n != s0: continue   # do not walk through vocabulary
-            for m in sorted(und[n]):
-                if m not in prev: prev[m] = n; q.append(m)
-    return best
-def fmt(path):
-    """a path with each hop labelled: ' - ' for a foreign key, ' ~view~ ' for two tables a view reads together"""
-    s = path[0]
-    for x, y in zip(path, path[1:]):
-        if (x, y) in fkpairs or (y, x) in fkpairs: s += f' - {y}'
-        else: s += f' ~{next(v for v in sorted(vedge) if x in vedge[v] and y in vedge[v])}~ {y}'
-    return s
-zz = {}
-for a, b in itertools.combinations([s for s in spine if s != 'base'], 2):
-    A, B = by_stage[a], by_stage[b]
-    pth = shortest(A, set(B)) if A and B else None
-    zz[f'{a}<->{b}'] = pth
-out['zigzag'] = zz
-
-# populated-only variant: an FK counts only if at least one child row carries a non-NULL pointer; a view counts only if it returns rows
 live_fk = {(ch, pa) for ch, pa, cc, _ in fk if c.execute(f'select 1 from "{ch}" where "{cc}" is not null limit 1').fetchone()}
 live_v = set()
 for v in vedge:
     try:
         if c.execute(f'select 1 from "{v}" limit 1').fetchone(): live_v.add(v)
     except Exception: pass
-und_all = und
-und = collections.defaultdict(set)
-for ch, pa in live_fk: und[ch].add(pa); und[pa].add(ch)
-for v in live_v:
-    ts = [x for x in vedge[v] if x in stage]
-    for x in ts:
-        for y in ts:
-            if x != y: und[x].add(y)
-zzp = {}
-for a, b in itertools.combinations([s for s in spine if s != 'base'], 2):
+def shortest(g, fks, src, dst):
+    """fewest hops; among equal lengths the fewest view hops, then alphabetical: computed over ALL shortest paths"""
+    best = None
+    for s0 in sorted(src):
+        layer = {s0: (0, (s0,))}; seen = {s0}
+        while layer:
+            hit = [(v, p) for n, (v, p) in layer.items() if n in dst]
+            if hit:
+                cand = min((v, p) for v, p in hit)
+                if best is None or (len(cand[1]), cand[0], cand[1]) < (len(best[1]), best[0], best[1]): best = cand
+                break
+            nxt = {}
+            for n, (v, p) in layer.items():
+                if n != s0 and stage[n] in NOWALK: continue
+                for m in sorted(g[n]):
+                    if m in seen: continue
+                    cand = (v + (not ((n, m) in fks or (m, n) in fks)), p + (m,))
+                    if m not in nxt or cand < nxt[m]: nxt[m] = cand
+            seen |= set(nxt); layer = nxt
+    return None if best is None else list(best[1])
+def fmt(path, fks, views):
+    """a path with each hop labelled: ' - ' for a foreign key, ' ~view~ ' for two tables a view reads together"""
+    s = path[0]
+    for x, y in zip(path, path[1:]):
+        if (x, y) in fks or (y, x) in fks: s += f' - {y}'
+        else: s += f' ~{next(v for v in sorted(views) if x in vedge[v] and y in vedge[v])}~ {y}'
+    return s
+nonbase = [s for s in spine if s != 'base']
+g_all, g_live = build(fkpairs, vedge), build(live_fk, live_v)
+zz, zzp = {}, {}
+for a, b in itertools.combinations(nonbase, 2):
     A, B = by_stage[a], by_stage[b]
-    zzp[f'{a}<->{b}'] = shortest(A, set(B)) if A and B else None
-out['zigzag_populated'] = zzp
-und = und_all
+    zz[f'{a}<->{b}'] = shortest(g_all, fkpairs, A, set(B)) if A and B else None
+    zzp[f'{a}<->{b}'] = shortest(g_live, live_fk, A, set(B)) if A and B else None
+out['zigzag'], out['zigzag_populated'] = zz, zzp
 
 if as_json:
     print(json.dumps(out, indent=1, default=str)); sys.exit()
@@ -212,10 +219,10 @@ print(f"{'pair':28} {'up':>4} {'down':>5} {'skip':>5} {'recvFK':>7} {'sendFK':>7
 for k, v in pairs.items():
     if v.get('note'): print(f'{k:28} {v["note"]}'); continue
     print(f"{k:28} {v['up']:>4} {v['down']:>5} {str(v['skip']):>5} {v['direct_fk']:>7} {v['send_fk']:>7}  {','.join(v['views'])[:60]}")
-print('\nZIGZAG WALK between non-base stages (shortest undirected path over FKs and view co-reads, not passing through base; - is a foreign key, ~v~ a view that reads both):')
-for k, pth in zz.items(): print(f"  {k:30} " + (fmt(pth) if pth else 'NO PATH'))
+print('\nZIGZAG WALK between non-base stages (shortest undirected path over FKs and view co-reads, not passing through base, infrastructure or unmapped tables; - is a foreign key, ~v~ a view that reads both):')
+for k, pth in zz.items(): print(f"  {k:30} " + (fmt(pth, fkpairs, vedge) if pth else 'NO PATH'))
 print('\nZIGZAG, POPULATED EDGES ONLY (an FK counts if some child row has a non-NULL pointer; a view if it returns a row):')
-for k, pth in zzp.items(): print(f"  {k:30} " + (fmt(pth) if pth else 'NO PATH'))
+for k, pth in zzp.items(): print(f"  {k:30} " + (fmt(pth, live_fk, live_v) if pth else 'NO PATH'))
 print('\nLATERAL (components of same-stage tables joined through a shared parent or child)')
 for s, v in lat.items(): print(f"  {s:15} tables {v['tables']:>2} components {v['components']:>2}  isolated: {', '.join(v['isolated'])[:110]}")
 print('\nRE-ENTRANT FK edges (child stage earlier than parent stage):')
