@@ -1,8 +1,8 @@
 # WALKABILITY: the pipeline walked in every direction
 
-**Status.** A measurement, 2026-10-13, not a ruling; nothing here is entered in the ledger. Instrument: `workplan/pipeline-state-graph/walkability.py` (read-only). It reads the schema, the stage-map and the spine in `governance/pipeline-contract.yaml`, counts non-NULL pointers, and asks of each view whether it returns a row; it reads no other row. Three states are measured: **live** (`data/guidebook.db`, `user_version 101`, 82 tables, 115 foreign keys, 21 views); **post-Phase-1 with R32**, the Phase 1 rehearsal clone (A2, commit `9cef95e`: 54 tables, 70 foreign keys, 20 views) with the stage-map edited so that `source_value_extractions` and `extraction_relations` sit in judgment, as `RULINGS.md` R32 rules and Phase 3 will do; and, still to come, the stacked v4 end-state [GAP: the stack is not built; this document is updated when it is].
+**Status.** A measurement, 2026-10-13, not a ruling; nothing here is entered in the ledger. Instrument: `workplan/pipeline-state-graph/walkability.py` (read-only). It reads the schema, the stage-map and the spine in `governance/pipeline-contract.yaml`, counts non-NULL pointers, and asks of each view whether it returns a row; it reads no other row. Three states are measured: **live** (`data/guidebook.db`, `user_version 101`, 82 tables, 115 foreign keys, 21 views); **post-Phase-1 with R32**, the Phase 1 rehearsal clone (A2, commit `9cef95e`: 54 tables, 70 foreign keys, 20 views) with the stage-map edited so that `source_value_extractions` and `extraction_relations` sit in judgment, as `RULINGS.md` R32 rules; and the **stacked end-state**, the rehearsal stack of every slice in the plan's order (`rehearsals/V4-stack`: 56 tables, 78 foreign keys, 22 views, `user_version 114`; the stage-map there already carries R32). The stack is a rehearsal, not an execution (plan §5a).
 
-**Verdict: no.** The chain from a determination back to the search that found its source has one broken link (synthesis does not point at judgment) and one reversed link (research holds the pointer to evidence, evidence holds none to research), and nothing in any stage reaches render. At the level of records, one parameter of ten and one slug of 106 reach an extraction. Phase 1 as rehearsed deletes 45 foreign keys and adds none; the four populated ones it removes are all in the two axis-map tables R3 retires, so no populated pointer on the spine is lost. What would repair the chain is already in the plan or the rulings (R32's map change, 3.R's view, data); one design question, whether a search may be recorded without a slug, is covered by no ruling (section 7, finding 4).
+**Verdict: no.** The chain from a determination back to the search that found its source has one broken link (synthesis does not point at judgment) and one reversed link (research holds the pointer to evidence, evidence holds none to research), and nothing in any stage reaches render. At the level of records, one parameter of ten and one slug of 106 reach an extraction. Phase 1 as rehearsed deletes 45 foreign keys and adds none; the four populated ones it removes are all in the two axis-map tables R3 retires, so no populated pointer on the spine is lost. **The whole stack then adds 8 declared pointers (T1's three, R24's one, R18's four lens keys) and populates none**: 78 foreign keys declared, 48 populated, the same 48 as after Phase 1. On the `IDEAL-GRAPH.md` §6 script 15 of 56 tables fail on the stack (21 of 82 live). What would repair the chain is already in the plan or the rulings (R32's map change, 3.R's view, data); one design question, whether a search may be recorded without a slug, is covered by no ruling (section 7, finding 4).
 
 ## 1. What is counted
 
@@ -21,35 +21,35 @@ A table is never a stage and the matrix is a function of the stage-map: a wrong 
 
 `up / down / skip / recvFK / sendFK`; – means no intermediate stage to skip.
 
-| pair | live: up / down / skip / recvFK / sendFK | post-Phase-1 with R32 |
-|---|---|---|
-| base → research | 7 / 1 / – / 6 / 0 | 5 / 1 / – / 4 / 0 |
-| base → evidence | 11 / 7 / 11 / 10 / 0 | 2 / 1 / 2 / 2 / 0 |
-| base → judgment | 4 / 7 / 4 / 4 / 0 | 3 / 7 / 3 / 7 / 0 |
-| base → synthesis | 3 / 1 / 3 / 2 / 0 | 2 / 1 / 2 / 2 / 0 |
-| base → specification | 5 / 7 / 5 / 8 / 0 | 4 / 7 / 4 / 7 / 0 |
-| base → render | 5 / 6 / 5 / 8 / 1 | 0 / 0 / 0 / 0 / 0 |
-| research → evidence | 0 / 0 / – / 0 / 3 | 0 / 0 / – / 0 / 3 |
-| research → judgment | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
-| research → synthesis | 0 / 0 / 0 / 0 / 1 | 0 / 0 / 0 / 0 / 1 |
-| research → specification | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
-| research → render | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
-| evidence → judgment | 5 / 3 / – / 3 / 0 | 4 / 2 / – / 4 / 0 |
-| evidence → synthesis | 3 / 1 / 3 / 3 / 1 | 3 / 1 / 3 / 3 / 0 |
-| evidence → specification | 4 / 2 / 4 / 4 / 0 | 3 / 1 / 2 / 2 / 0 |
-| evidence → render | 1 / 1 / 1 / 1 / 3 | 0 / 0 / 0 / 0 / 0 |
-| judgment → synthesis | 0 / 0 / – / 0 / 2 | 0 / 0 / – / 0 / 2 |
-| judgment → specification | 0 / 0 / 0 / 0 / 1 | 1 / 1 / 1 / 1 / 0 |
-| judgment → render | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
-| synthesis → specification | 3 / 3 / – / 2 / 0 | 3 / 3 / – / 2 / 0 |
-| synthesis → render | 0 / 0 / 0 / 0 / 1 | 0 / 0 / 0 / 0 / 0 |
-| specification → render | 0 / 0 / – / 0 / 1 | 0 / 0 / – / 0 / 0 |
+| pair | live | post-Phase-1 with R32 | stacked end-state |
+|---|---|---|---|
+| base → research | 7 / 1 / – / 6 / 0 | 5 / 1 / – / 4 / 0 | 5 / 5 / – / 8 / 0 |
+| base → evidence | 11 / 7 / 11 / 10 / 0 | 2 / 1 / 2 / 2 / 0 | 3 / 3 / 3 / 3 / 0 |
+| base → judgment | 4 / 7 / 4 / 4 / 0 | 3 / 7 / 3 / 7 / 0 | 4 / 7 / 4 / 7 / 0 |
+| base → synthesis | 3 / 1 / 3 / 2 / 0 | 2 / 1 / 2 / 2 / 0 | 2 / 1 / 2 / 2 / 0 |
+| base → specification | 5 / 7 / 5 / 8 / 0 | 4 / 7 / 4 / 7 / 0 | 4 / 7 / 4 / 7 / 0 |
+| base → render | 5 / 6 / 5 / 8 / 1 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| research → evidence | 0 / 0 / – / 0 / 3 | 0 / 0 / – / 0 / 3 | 0 / 0 / – / 0 / 3 |
+| research → judgment | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| research → synthesis | 0 / 0 / 0 / 0 / 1 | 0 / 0 / 0 / 0 / 1 | 0 / 0 / 0 / 0 / 1 |
+| research → specification | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| research → render | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| evidence → judgment | 5 / 3 / – / 3 / 0 | 4 / 2 / – / 4 / 0 | 5 / 3 / – / 5 / 0 |
+| evidence → synthesis | 3 / 1 / 3 / 3 / 1 | 3 / 1 / 3 / 3 / 0 | 3 / 1 / 3 / 3 / 0 |
+| evidence → specification | 4 / 2 / 4 / 4 / 0 | 3 / 1 / 2 / 2 / 0 | 3 / 2 / 2 / 2 / 0 |
+| evidence → render | 1 / 1 / 1 / 1 / 3 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| judgment → synthesis | 0 / 0 / – / 0 / 2 | 0 / 0 / – / 0 / 2 | 0 / 0 / – / 0 / 2 |
+| judgment → specification | 0 / 0 / 0 / 0 / 1 | 1 / 1 / 1 / 1 / 0 | 1 / 1 / 1 / 1 / 0 |
+| judgment → render | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| synthesis → specification | 3 / 3 / – / 2 / 0 | 3 / 3 / – / 2 / 0 | 3 / 3 / – / 2 / 0 |
+| synthesis → render | 0 / 0 / 0 / 0 / 1 | 0 / 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 / 0 |
+| specification → render | 0 / 0 / – / 0 / 1 | 0 / 0 / – / 0 / 0 | 0 / 0 / – / 0 / 0 |
 
-Reading it: research → evidence has `recvFK 0` and `sendFK 3` in both states: no evidence table points at a research table; `search_admissions.ref_id`, `search_executions.mined_ref_id` and `search_candidates.resolved_ref_id` point the other way. Judgment → synthesis is `0 / 0 / – / 0 / 2` in both: no synthesis table points at a judgment table, and the two forward keys hold no pointer (`evidence_population_match.gap_id`, and live `citation_population_links.citation_id`, post-R32 `source_value_extractions.promoted_to_rdc_id`). Every pair with render is 0 after Phase 1. Under the live map judgment is a leaf (no foreign key anywhere has a judgment table as parent); under R32 it is not (`specification_extraction_links.extraction_id` points at an extraction), which is why the second column differs.
+Reading it: research → evidence has `recvFK 0` and `sendFK 3` in both states: no evidence table points at a research table; `search_admissions.ref_id`, `search_executions.mined_ref_id` and `search_candidates.resolved_ref_id` point the other way. Judgment → synthesis is `0 / 0 / – / 0 / 2` in both: no synthesis table points at a judgment table, and the two forward keys hold no pointer (`evidence_population_match.gap_id`, and live `citation_population_links.citation_id`, post-R32 `source_value_extractions.promoted_to_rdc_id`). Every pair with render is 0 after Phase 1. Under the live map judgment is a leaf (no foreign key anywhere has a judgment table as parent); under R32 it is not (`specification_extraction_links.extraction_id` points at an extraction), which is why the second and third columns differ from the first. The stack differs from the second column only by T1's tables (evidence → judgment `recvFK` 4 → 5: `extraction_follow_ups` → an extraction; `source_scans` points at sources) and by R18's lens keys, which join `search_executions` to base vocabularies and so appear in the base rows (`base → research` 4 → 8).
 
 ## 3. The practical walk: zigzag over populated pointers
 
-| stages | live | post-Phase-1 with R32 |
+| stages | live | stacked end-state |
 |---|---|---|
 | research ↔ evidence | search_admissions - evidence_sources | search_admissions - evidence_sources |
 | research ↔ judgment | search_admissions - evidence_sources - evidence_population_match | search_admissions - evidence_sources - evidence_population_match |
@@ -73,12 +73,12 @@ Both columns use only foreign keys with a non-NULL pointer and views that return
 
 **Lateral** (components of same-stage tables joined through a shared parent or child):
 
-| stage | live: tables / components / isolated | post-Phase-1 with R32: tables / components / isolated |
+| stage | live: tables / components / isolated | stacked end-state: tables / components / isolated |
 |---|---|---|
 | base | 23 / 7 / access_duration, access_stakes, lang_jur_map, life_stage_modifiers, situations | 18 / 6 / access_duration, access_stakes, lang_jur_map, life_stage_modifiers, rooms |
 | research | 11 / 5 / gap_mining, reference_stubs, research_code_leads, source_locators | 8 / 4 / gap_mining, research_code_leads, source_locators |
-| evidence | 17 / 3 / external_root_registry, url_verification_runs | 7 / 2 / external_root_registry |
-| judgment | 5 / 3 / evidence_population_match, term_adjudications | 4 / 2 / term_adjudications |
+| evidence | 17 / 3 / external_root_registry, url_verification_runs | 8 / 1 / none |
+| judgment | 5 / 3 / evidence_population_match, term_adjudications | 5 / 2 / term_adjudications |
 | synthesis | 8 / 3 / conflicts | 8 / 3 / conflicts |
 | specification | 5 / 1 / none | 4 / 1 / none |
 | render | 6 / 2 / weighting_profile | 1 / 1 / weighting_profile |
@@ -86,7 +86,7 @@ Both columns use only foreign keys with a non-NULL pointer and views that return
 
 **Re-entrant foreign keys** (the earlier stage points forward):
 
-| FK (child → parent) | live non-NULL rows | post-Phase-1 |
+| FK (child → parent) | live non-NULL rows | stacked end-state |
 |---|---:|---|
 | `search_admissions.ref_id` → `evidence_sources` | 55 | kept |
 | `search_executions.mined_ref_id` → `evidence_sources` | 11 | kept |
@@ -103,11 +103,11 @@ Both columns use only foreign keys with a non-NULL pointer and views that return
 | `source_value_extractions.promoted_to_rdc_id` → `reasoning_doc_citations` | 0 | kept |
 | `spec_value_probes.item_code` → `items` | 0 | table dropped |
 
-The three populated edges are research recording what became evidence, the re-entry CLM-029 licenses. The other re-entrant keys are empty or all-NULL; `evidence_population_match.gap_id` is NULL on all 54 rows, and `gap_mining` is empty, so the gap-driven return from synthesis to research is declared and unused. Eight of the fourteen go with Phase 1 (six into `items`, two link tables). The probe's fourteen is between spine stages and counts six into `items`; `RULINGS.md` R42 also says fourteen but names seven into `items` (the seventh is `item_audit_runs`, which is infrastructure and outside the spine), so its own list sums to fifteen: the headline and the enumeration disagree by one, and the enumeration is what the probe confirms.
+The three populated edges are research recording what became evidence, the re-entry CLM-029 licenses. The other re-entrant keys are empty or all-NULL; `evidence_population_match.gap_id` is NULL on all 54 rows, and `gap_mining` is empty, so the gap-driven return from synthesis to research is declared and unused. Eight of the fourteen go with Phase 1 (the stack keeps the other six) (six into `items`, two link tables). The probe's fourteen is between spine stages and counts six into `items`; `RULINGS.md` R42 also says fourteen but names seven into `items` (the seventh is `item_audit_runs`, which is infrastructure and outside the spine), so its own list sums to fifteen: the headline and the enumeration disagree by one, and the enumeration is what the probe confirms.
 
-**Orphans** (no foreign key in or out, no view reads): live, 11 (`access_duration`, `access_stakes`, `data_migrations`, `life_stage_modifiers`, `pipeline_runs`, `reference_stubs`, `research_code_leads`, `situations`, `source_locators`, `url_verification_runs`, `weighting_profile`); post-Phase-1, 10 (`access_duration`, `access_stakes`, `conflicts`, `data_migrations`, `decisions`, `life_stage_modifiers`, `research_code_leads`, `rooms`, `source_locators`, `weighting_profile`). **Id columns with no foreign key:** `source_value_extractions.root_id` (R24 adds it) and `conflicts.gap_id`, both with 0 non-NULL rows, in both states.
+**Orphans** (no foreign key in or out, no view reads): live, 11 (`access_duration`, `access_stakes`, `data_migrations`, `life_stage_modifiers`, `pipeline_runs`, `reference_stubs`, `research_code_leads`, `situations`, `source_locators`, `url_verification_runs`, `weighting_profile`); post-Phase-1 and on the stack, 10 (`access_duration`, `access_stakes`, `conflicts`, `data_migrations`, `decisions`, `life_stage_modifiers`, `research_code_leads`, `rooms`, `source_locators`, `weighting_profile`). **Id columns with no foreign key:** live and post-Phase-1, `source_value_extractions.root_id` and `conflicts.gap_id`, both with 0 non-NULL rows; on the stack R24 gives `root_id` its key (still 0 non-NULL), leaving `conflicts.gap_id`.
 
-**Views spanning more than one stage:** 11 in both states, none reading render. After R32 `v_value_independence`, `v_unregistered_roots` and `v_determination_provenance` also read judgment.
+**Views spanning more than one stage:** 11 live and after Phase 1, 12 on the stack (T1's `v_scan_ledger` reads base, evidence and judgment), none reading render. After R32 `v_value_independence`, `v_unregistered_roots` and `v_determination_provenance` also read judgment.
 
 ## 5. Declared against populated
 
@@ -115,8 +115,9 @@ The three populated edges are research recording what became evidence, the re-en
 |---|---:|---:|---:|---:|
 | live | 115 | 52 | 52 | 11 |
 | post-Phase-1 | 70 | 48 | 11 | 11 |
+| stacked end-state | 78 | 48 | 14 | 16 |
 
-Phase 1 removes 45 foreign keys; 41 of them have no pointer. The 4 populated ones are the two keys each of `access_need_axis_map` (21 rows) and `population_axis_map` (53 rows), which R3 retires; the other row-bearing tables R3 drops, `axes` (17) and `pipeline_runs` (6), carry no populated key. The 11 all-NULL keys are the same 11 in both states: `evidence_population_match.gap_id` (54 rows), `populations.parent_code` (23), `search_executions.origin_pass_id` (191), `economics_entries.ref_id` (1), `base_parameters.merged_into` (10), `specifications` `icf_code`, `needs_code` and `medical_code` (8 each), and `source_value_extractions` `promoted_to_rdc_id`, `icf_code` and `medical_code` (101 each). Count after count, the declared graph is larger than the walked one.
+Phase 1 removes 45 foreign keys; 41 of them have no pointer. The 4 populated ones are the two keys each of `access_need_axis_map` (21 rows) and `population_axis_map` (53 rows), which R3 retires; the other row-bearing tables R3 drops, `axes` (17) and `pipeline_runs` (6), carry no populated key. The stack's 16 all-NULL keys are those 11 with `source_value_extractions.root_id` (101 rows) and R18's four lens keys on `search_executions` (191 rows each) added; its 14 empty-child keys add T1's `source_scans` and `extraction_follow_ups`. The 11 all-NULL keys of the first two states are the same 11: `evidence_population_match.gap_id` (54 rows), `populations.parent_code` (23), `search_executions.origin_pass_id` (191), `economics_entries.ref_id` (1), `base_parameters.merged_into` (10), `specifications` `icf_code`, `needs_code` and `medical_code` (8 each), and `source_value_extractions` `promoted_to_rdc_id`, `icf_code` and `medical_code` (101 each). Count after count, the declared graph is larger than the walked one.
 
 ## 6. Records: the funnel on the live database
 
@@ -152,7 +153,7 @@ Further: 2 of 53 sources (`REF-00987`, `REF-01010`; both VERIFIED, tier 6, `code
 
 ## 8. What the plan's steps change, by direction
 
-Measured means the Phase 1 clone or the R32 map; "pending" means the slice was rehearsed but is not in the measured state.
+Measured on the Phase 1 clone, on the clone with the R32 map, or on the stack (plan §5a); "pending" marks a slice not yet in a measured state.
 
 | step | down | up | lateral | skip | re-entrant |
 |---|---|---|---|---|---|
@@ -160,19 +161,20 @@ Measured means the Phase 1 clone or the R32 map; "pending" means the slice was r
 | 1.4–1.5 (axes, scheduled workflows) | 4 populated foreign keys lost, all in the axis maps | – | `situations`, `pipeline_runs`, `url_verification_runs` leave the orphans and isolated lists | – | – |
 | 1.6–1.8 (checks, skills, registry prose) | – | – | – | – | – (no schema change) |
 | R32 (map) | judgment → specification 0/0/0/0/0 → 1/1/1/1/0 (151 rows) | evidence → judgment `recvFK` 2 → 4 | judgment 2 → 4 tables, 2 components either way | – | `promoted_to_rdc_id` moves from evidence → synthesis to judgment → synthesis |
-| R24 (`root_id` key) | – | – | `external_root_registry` would join evidence | – | – (pending: key declared, no writer, still unpopulated) |
-| R18 (lens keys on `search_executions`) | – | – | research ↔ base lens | – | – (pending; a shared-vocabulary join, which the probe does not count) |
+| 0.2 (T1) | `extraction_follow_ups` → an extraction: evidence → judgment `recvFK` 4 → 5 (0 rows) | `source_scans` → sources and → a parameter (0 rows) | – | – | `v_scan_ledger` reads base, evidence and judgment |
+| R24 (`root_id` key) | – | `source_value_extractions.root_id` → `external_root_registry` declared; 101 rows, all NULL; the registry and the extraction table pass `IDEAL-GRAPH.md` §6 (21 → 19 failing in the D rehearsal) | – | – | – (no writer for the registry, so the key stays unpopulated) |
+| R18 (lens keys on `search_executions`) | `base → research` `recvFK` 4 → 8: four keys, NULL on all 191 rows | – | research ↔ base lens (a shared-vocabulary join, which the probe does not count; `v_coverage_lens` reads both sides) | – | – |
 | 3.R (view) | specification → render once the view is mapped to render | – | – | – | – (pending) |
 
 Not in the plan; each is a proposal for the owner or Fable, not a ruling:
 (a) Whether `search_executions.slug` and `search_candidates.found_under_slug` may be NULL when a search targets a parameter or a lens (finding 4).
 (b) Whether the 2 unadmitted sources and the 7 executions whose counts the rows do not show belong to Phase 5's backlog or are recorded as exceptions; they are rows, so they ship with research, not tooling (CLAUDE.md rule 10).
-(c) Whether the registered walk check (4.4) includes recvFK/sendFK and the lateral and re-entrant counts or stays the 40-line §6 script. This probe (`wc -l` counts it) is scaffolding that leaves with this folder in Phase 6 unless the owner keeps it, and it replaces the plan's statement that "the lateral, skip and re-entrant directions stay unmeasured". Net code added: this file; net code the plan removes is unchanged.
+(c) Whether the registered walk check (4.4) includes receiving and sending pointers and the lateral and re-entrant counts or stays the 40-line §6 script. This probe (`wc -l` counts it) is scaffolding that leaves with this folder in Phase 6 unless the owner keeps it; it replaces the plan's earlier statement that "the lateral, skip and re-entrant directions stay unmeasured". Net code added: this file.
 
 ## 9. Limits
 
-- [GAP: stacked end-state] The third state is not measured.
-- [GAP: A2 final] The post-Phase-1 state is the clone at `9cef95e`; the agent finishing A2 may amend it, and the figures are re-derived at the stack.
+- The stacked end-state is a rehearsal (plan §5a): R37, 3.R, Phase 2 and the Phase 4 steps are not in it, and its migrations are numbered 102 to 114 for the stack only.
+- The post-Phase-1 state is the A2 clone at `9cef95e`; A2's three later fix commits change scripts, not the schema.
 - [UNVERIFIED] The cause of the 10-result difference between `results_admitted` and `search_admissions`.
 - [NULL: unmapped tables] None on either measured state; the probe prints an UNMAPPED stage if there are any.
 - Re-derive any figure: `python3 workplan/pipeline-state-graph/walkability.py [DB [STAGE_MAP]]` (add `--json` for the raw structure). The funnel in section 6 is the queries named in its rows, run read-only through `sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)`.
