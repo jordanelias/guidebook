@@ -9,6 +9,10 @@
     "R11": 856,
     "R16-adjudicate": 11,
     "R16": 8,
-    "R7": 1
+    "R7": 1,
+    "R16-scan": 52,
+    "R17": 2,
+    "observation-quote-missing": 17,
+    "observation-quote-unscoped": 37
   }
 }

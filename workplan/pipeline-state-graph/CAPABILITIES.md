@@ -30,9 +30,9 @@ whatever slug it was filed under")?
 |---|---|---|---|---|
 | C1.1 | no UNIQUE(ref_id) on the capture table: one source may yield many rows | **PASS** | P-D = PASS | LED-100, LED-101 |
 | C1.2 | a phrase can be harvested from a source without presupposing a category | **PASS** | matched | LED-115, CLM-040 |
-| C1.3 | one source can be harvested for more than one sense of the same phrase | **FAIL** | P-W = FAIL | LED-197 |
+| C1.3 | one source can be harvested for more than one sense of the same phrase | **PASS** | P-W = PASS | LED-197 |
 | C1.4 | an extraction can be filed under a slug other than the one the source was admitted to | **FAIL** | P-V2 = FAIL | LED-196, LED-201 |
-| C1.5 | a record exists of which parameters a source has been read for | **NOT-BUILT** | P-V = NOT-BUILT | LED-195, LED-199 |
+| C1.5 | a record exists of which parameters a source has been read for | **PASS** | P-V = PASS | LED-195, LED-199 |
 | C1.6 | a value can be stated in every lens, including the medical lens | **FAIL** | P-MEDICAL = FAIL | LED-110, LED-154 |
 | C1.7 | arguments and qualitative findings can be captured as well as numbers | **PASS** | source_value_extractions.claim_type admits qualitative | SES-022, SES-023 |
 | C1.8 | a search records which slug x lens cells it covered | **FAIL** | P-M = FAIL | LED-084, RES-04 |
@@ -49,8 +49,8 @@ answer and without hand SQL?
 | C2.2 | a name may not state its own answer | **PASS** | matched | LED-148, PIP-16 |
 | C2.3 | an adjudicated term can be promoted to a parameter | **PASS** | verb add-parameter declared on this tree | LED-092 |
 | C2.4 | a term can be judged not-a-parameter, with the reason on record | **PASS** | verb decline-parameter declared on this tree | RES-16 |
-| C2.5 | a parameter can be retired or merged on record (retire in place) | **FAIL** | P-PARAM-LIFECYCLE = FAIL | LED-169, LED-170 |
-| C2.6 | the list can be prepopulated from earlier catalogues under screening and owner approval | **NOT-BUILT** | verb mint-term-from-catalogue absent on this tree | LED-204, LED-205 |
+| C2.5 | a parameter can be retired or merged on record (retire in place) | **PASS** | P-PARAM-LIFECYCLE = PASS | LED-169, LED-170 |
+| C2.6 | the list can be prepopulated from earlier catalogues under screening and owner approval | **PASS** | verb mint-term-from-catalogue declared on this tree | LED-204, LED-205 |
 | C2.7 | which direction is better for a disabled person can be recorded per parameter | **PASS** | verb set-parameter-direction declared on this tree | LED-091 |
 | C2.8 | the base vocabularies a parameter and a lens point into have a sanctioned writer | **FAIL** | P-O = FAIL | LED-182, CLM-031 |
 

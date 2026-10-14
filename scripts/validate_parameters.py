@@ -39,14 +39,23 @@ pattern here would recreate the identical fork alias-provenance and V5 (populati
 codes) rewrites both found and killed: a second copy that drifts the moment either
 one is edited and nobody remembers the other exists.
 
-`base_parameters` is empty today (2026-09-10) -- no owner batch has minted a
-parameter yet. That makes this check's live run NOTHING-IN-SCOPE, correctly: there
-is nothing to examine yet, not a broken sweep. `min_items: 1` is still the right
-declaration (not `no_floor`) because a `base_parameters` row IS repo content the
-owner intends to populate, not a corpus retired to empty by decision -- the day the
-first parameter is minted, this floor is what turns a silent gap into a reported one.
+`min_items: 1` (not `no_floor`) is the right declaration: a `base_parameters` row IS repo
+content the owner intends to populate, not a corpus retired to empty by decision, so the
+floor is what turns a silent gap into a reported one.
 
-Exit codes: 0 = pass (including NOTHING-IN-SCOPE), 1 = a value-bearing name found.
+P2, ADDED 2026-10-09 (tooling T1, the owner's D3 answer): every term minted from a
+permitted catalogue (`db.py mint-term-from-catalogue`; `terms.catalogue` is not NULL,
+migration 104) still has its approving ledger entry in references/project-standards.md,
+named by `terms.catalogue_approval_ref`, the entry's dated `## ` heading. The writer
+refused unless the heading occurred exactly once when the term was minted; if the ledger
+is later edited so it occurs no longer, or twice, the term's only warrant is gone or
+ambiguous and nothing else would notice. P2 cannot check that the entry approves this
+name; the pointer proves the entry exists once. P2 reports its own subject in words; EXAMINED
+stays the parameter count (a whole-check number, run_checks.py EXAMINED_RE), and zero
+catalogue-minted terms is a true state today.
+
+Exit codes: 0 = pass (including NOTHING-IN-SCOPE), 1 = a value-bearing name found, or a
+catalogue-minted term whose approval heading does not occur exactly once in the ledger.
 """
 
 import os
@@ -57,6 +66,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from db import _VALUE_BEARING  # noqa: E402  (single source of truth; see header)
 
 import sqlite3  # noqa: E402
+import dbcore  # noqa: E402  (the ledger-quote normalisation has one home)
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
 
@@ -83,6 +93,9 @@ def validate():
         "FROM base_parameters bp JOIN terms t ON t.term_id = bp.term_id "
         "ORDER BY bp.parameter_id"
     ).fetchall()
+    origins = conn.execute(
+        "SELECT term_id, catalogue, catalogue_entry_ref, catalogue_approval_ref "
+        "FROM terms WHERE catalogue IS NOT NULL ORDER BY term_id").fetchall()
     conn.close()
 
     errors = []
@@ -93,6 +106,20 @@ def validate():
                 f"canonical_en {r['canonical_en']!r} carries a number, a comparator, "
                 f"or a min/max word — it states a determination in its own name"
             )
+
+    # P2: the ledger entry that approved each catalogue-minted term still occurs once.
+    for o in origins:
+        n = dbcore.ledger_heading_count(o["catalogue_approval_ref"])
+        if n != 1:
+            errors.append(
+                f"P2 FAIL term {o['term_id']} (from {o['catalogue']} "
+                f"{o['catalogue_entry_ref']}): its approval entry "
+                f"{o['catalogue_approval_ref']!r} is the heading of {n} entries of "
+                f"references/project-standards.md, so the name has lost its only warrant "
+                f"or points ambiguously. Restore the entry's heading in the ledger; no verb "
+                f"rewrites terms.catalogue_approval_ref, so re-pointing is a compensating "
+                f"migration.")
+    print(f"  P2: {len(origins)} catalogue-minted term(s) checked against the ledger")
 
     total = len(rows)
     if errors:

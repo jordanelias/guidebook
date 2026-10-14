@@ -112,6 +112,8 @@ from fractions import Fraction
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
+sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
+import dbcore  # noqa: E402  -- stdlib only; the rulings several readers enforce live there
 
 from schemas.directness import (  # noqa: E402
     GRAIN_AGGREGATE, NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
@@ -294,17 +296,37 @@ def gather_sources(conn, parameter_id):
     has_disp = any(r[1] == "verification_disposition"
                    for r in conn.execute("PRAGMA table_info(evidence_sources)"))
     disp_col = "e.verification_disposition" if has_disp else "NULL"
+    # NOT-PUBLISHABLE METHODS ARE NOT GATHERED (owner 2026-10-09: "skimmed values are not
+    # publishable"). A source whose only value-supplying rows were skimmed does not enter
+    # the governing set; gather_extraction_links records each skimmed row as excluded with
+    # the reason. Fixture tolerance as above: a synthetic table without the column has no
+    # skimmed rows to leave out.
+    has_method = _has_column(conn, "source_value_extractions", "extraction_method")
+    method_clause = (f"AND x.extraction_method NOT IN "
+                     f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})"
+                     if has_method else "")
     q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
                    e.verification_status, {disp_col}, e.scope, e.jurisdiction
             FROM source_value_extractions x
             JOIN evidence_sources e ON e.ref_id = x.ref_id
             WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
               AND x.figure_role IN ('claim', 'derived')
+              {method_clause}
             ORDER BY e.ref_id"""
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
                       "verification_status", "verification_disposition",
                       "scope", "jurisdiction"), r))
-            for r in conn.execute(q, (parameter_id,))]
+            for r in conn.execute(q, (parameter_id,)
+                                  + (NOT_PUBLISHABLE_METHODS if has_method else ()))]
+
+
+def _has_column(conn, table, column):
+    """Fixture tolerance: does this database's `table` carry `column`?"""
+    return any(r[1] == column for r in conn.execute(f'PRAGMA table_info("{table}")'))
+
+
+#: The ruling lives in dbcore (stdlib only) so the stdlib-only checks can read it too.
+NOT_PUBLISHABLE_METHODS = dbcore.NOT_PUBLISHABLE_METHODS
 
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
@@ -393,14 +415,24 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
     # Positional, not by name: this module's connection carries no row_factory, and
     # assuming one made the first cut of this function raise `tuple indices must be
     # integers`. The column order here is the SELECT's, which is the only contract.
+    method_col = ("extraction_method"
+                  if _has_column(conn, "source_value_extractions", "extraction_method")
+                  else "NULL")
     rows = conn.execute(
-        "SELECT extraction_id, ref_id, figure_role, claim_type FROM "
+        f"SELECT extraction_id, ref_id, figure_role, claim_type, {method_col} FROM "
         "source_value_extractions WHERE parameter_id = ? ORDER BY extraction_id",
         (parameter_id,)).fetchall()
     gov = set(governing_refs or ())
     out = []
-    for eid, ref, frole, ctype in rows:
-        if frole in VALUE_SUPPLYING_ROLES and ref in gov:
+    for eid, ref, frole, ctype, method in rows:
+        if frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
+            # Checked BEFORE the governing branch: a skimmed row is left out even when its
+            # source governs through another, fully read row (owner 2026-10-09).
+            role, why = "excluded", (
+                f"extraction_method={method!r}: a skimmed figure is not publishable "
+                f"(owner ruling 2026-10-09, 'skimmed values are not publishable'); it is "
+                f"recorded and shown, never set as the value")
+        elif frole in VALUE_SUPPLYING_ROLES and ref in gov:
             role, why = "governing", None
         elif frole in CONDITIONING_ROLES:
             role, why = "conditioning", None
@@ -1542,6 +1574,12 @@ def determine(conn, parameter_id, lens, slug, note):
 
     return {
         "links": links,
+        # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
+        # the skimmed value-supplying rows left out of what sets this cell's value.
+        "excluded_not_publishable": [
+            l["extraction_id"] for l in links
+            if l["role"] == "excluded"
+            and (l["exclusion_reason"] or "").startswith("extraction_method=")],
         "value_min": value_min, "value_max": value_max, "value_unit": value_unit,
         "value_note": value_note, "value_notations": value_notations,
         "accessibility_direction": _direction,
@@ -2157,6 +2195,11 @@ def main():
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
               f"rso={r['regulatory_stratum_only']} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
+        if r["excluded_not_publishable"]:
+            # Said on the line a reader sees, not only in the junction: a value composed
+            # without figures the corpus holds must say which and why.
+            print(f"    excluded, not publishable (skimmed; owner 2026-10-09): extraction(s) "
+                  f"{r['excluded_not_publishable']}")
     print(f"\n{len(report)} cell(s) determined; SQL artifact: {args.emit_sql}\n"
           f"COMMITTED into {args.db} — those rows are in that scratch DB now, and\n"
           f"emit_batch_sql.py captures them from there. Applying the artifact AS WELL\n"

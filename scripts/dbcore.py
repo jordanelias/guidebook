@@ -34,6 +34,7 @@ That relative hop is the one piece of boilerplate consolidation cannot remove. I
 3-6 lines of per-file path/root/connect duplication and is identical everywhere but `N`.
 """
 
+import functools
 import os
 import re
 import sqlite3
@@ -305,9 +306,16 @@ def normalise_quote_text(s: str) -> str:
     return re.sub(r"\s+", " ", s.strip())
 
 
+@functools.lru_cache(maxsize=4)
+def _normalised_ledger(text: str) -> str:
+    """`normalise_ledger_quote(text)`, kept for the last few texts. Checking N quotes
+    against one ledger would otherwise re-normalise the whole ledger N times."""
+    return normalise_ledger_quote(text)
+
+
 def count_ledger_quote(text: str, quote: str) -> int:
     """How many times `quote` occurs in `text` under `normalise_ledger_quote`."""
-    return normalise_ledger_quote(text).count(normalise_quote_text(quote))
+    return _normalised_ledger(text).count(normalise_quote_text(quote))
 
 
 def strip_supersedes_citations(text: str) -> str:
@@ -320,6 +328,65 @@ def strip_supersedes_citations(text: str) -> str:
     many SUPERSEDES lines cite it -- a citation is not a second assertion of the fact.
     """
     return LEDGER_SUPERSEDES_RE.sub("", text)
+
+
+#: The ledger an owner's words are quoted from, and the form a reference to one takes
+#: wherever a record cites a ruling: `references/project-standards.md :: "<quote>"`.
+LEDGER_PATH = REPO_ROOT / "references" / "project-standards.md"
+LEDGER_REF_RE = re.compile(r'^references/project-standards\.md :: "(.+)"$', re.S)
+
+
+def ledger_quote_count(quote: str) -> int:
+    """How often `quote` occurs in the ledger's substantive prose (RC3 normalisation,
+    SUPERSEDES/BY citation lines excluded)."""
+    text = LEDGER_PATH.read_text(encoding="utf-8")
+    return count_ledger_quote(strip_supersedes_citations(text), quote)
+
+
+def ledger_heading_count(heading: str) -> int:
+    """How many `## ` headings of the ledger read exactly `heading` (whitespace collapsed).
+
+    A catalogue-minted term points at its approving ledger entry by that entry's dated
+    heading (terms.catalogue_approval_ref), so the writer and validate_parameters P2 share
+    this one lookup.
+    """
+    want = normalise_quote_text(heading)
+    return sum(1 for l in LEDGER_PATH.read_text(encoding="utf-8").splitlines()
+               if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
+
+
+def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
+    """Refuse unless `quote` is in the ledger exactly once -- tied to one recorded ruling.
+
+    `subject` names what carries the quote ("rename-term: the --ruling-quote") and opens
+    the refusal; `hint` closes it with whatever the caller can add.
+    """
+    n = ledger_quote_count(quote)
+    if n != 1:
+        raise Refusal(
+            f"{subject} occurs {n} time(s) in the ledger's substantive prose "
+            f"({LEDGER_PATH.relative_to(REPO_ROOT)}, RC3 normalisation, SUPERSEDES citation "
+            f"lines excluded); it must occur exactly once." + (f" {hint}" if hint else ""))
+
+
+#: EXTRACTION METHODS WHOSE FIGURES MAY NOT SET A PUBLISHED VALUE. Owner, 2026-10-09,
+#: answering D1 of catalogue-plan-v2: "D1: yes figure from source filed by another slug
+#: allowed. skimmed values are not publishable" (ledger, "Owner statements 2026-10-09").
+#: A skimmed figure is still recorded and shown, marked as skimmed; it is left out of the
+#: set that sets a value and recorded as an EXCLUDED link with its reason, so K02 still
+#: counts it as accounted for. A RULING, not a vocabulary: the members of
+#: `extraction_method` stay in the column's own CHECK, and test_scan_contract asserts this
+#: value is still one of them, so a renamed method cannot silently disarm the rule.
+#:
+#: DELIBERATELY NOT HERE: `extraction_status = 'preliminary'`. A figure read in full but
+#: not yet reviewed is a different question (D1c in catalogue-plan-v2 Addendum 1), which
+#: the owner has NOT decided; such rows keep governing exactly as before. Do not add the
+#: status here without that answer recorded in the ledger.
+#:
+#: HERE, NOT IN assess_cell, because the `data` and `db_integrity` batteries are stdlib
+#: only (governance/check-registry.yaml `deps: []`) and assess_cell imports pydantic. The
+#: engine, extraction_follow_up_audit and test_db_integrity K02 all read this one tuple.
+NOT_PUBLISHABLE_METHODS = ("skim",)
 
 
 def validate_cols(data_keys, whitelist: frozenset, context: str):
