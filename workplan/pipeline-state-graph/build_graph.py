@@ -404,7 +404,7 @@ def make_probes():
         b = re.search(r'T3-grey-alone does not even reach provisional\s*\n\s*state = "pending"', s) is not None
         return ("PASS" if a and b else "FAIL"), {"t3_clinical_alone_assigns_provisional": a, "t3_grey_alone_assigns_pending": b}
 
-    @probe("P-ENG-STATE", "the engine assigns every value of specifications.state", ["EVI-361", "EVI-364"])
+    @probe("P-ENG-STATE", "the engine assigns every value of specifications.state", ["EVI-172", "LED-151"])
     def _(T):
         s = func_source(T.root, "scripts/assess/assess_cell.py", "determine") or ""
         vals = (T.vocab.get("specifications") or {}).get("state", [])

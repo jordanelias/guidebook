@@ -16,7 +16,7 @@
 | T-04: sparse-evidence state machine (stated/provisional/pending/not_applicable) | Armature's evidence markers (●/○) are a user-facing presentation of the state machine. ● maps to `stated`. ○ maps to `provisional` or `pending` depending on evidence basis. Consistent. | No |
 | D-03 revised: pre-launch solo; Co-1 at evidence level only | Armature §9 (Authority and validation) is directly consistent. Three-tier validation framework (A: published literature / B: clinical specialist / C: PWLE/DPO) aligns with D-03's pre-launch solo + post-launch contingent structure. Tier A = D-03 pre-launch. Tier C = D-03 post-launch contingent. | No |
 | Design Modes | Armature carries Universal Mode/1/2 throughout. Maps to CRPD Art 9 / Art 5. Consistent. | No |
-| Seven-Tier Evidence Hierarchy | Armature references without modification. Synthesis method indicator is additive, not conflicting. | No |
+| Evidence Hierarchy | Armature references without modification. Synthesis method indicator is additive, not conflicting. | No |
 | Best practice = most accommodating evidence-supported condition | Armature output schema carries recommendation_strength. Consistent. | No |
 | Advocacy identity | Armature §7.1 carries advocacy-not-authority framing. Tier-appropriate specification language. Consistent. | No |
 | Audience priority: primary (designers, disabled people), secondary (OTs, policymakers) | Armature role layer: 5 roles. Designer and disabled person are listed. Audience-priority doc governs content layering when needs diverge — the armature's role layer is the mechanism for implementing this. Consistent. | No |

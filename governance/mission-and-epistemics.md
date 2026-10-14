@@ -45,7 +45,7 @@ Best practice is anchored by Tier 1 primary research (OT-prioritized but **not**
 
 Tiers 4–6 are a regulatory-baseline stratum: Tier 6 codes are the compliance floor, not the aspiration. **Amended 2026-07-21 (owner directive, Option A; `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`):** a best-practice claim derived solely from code consensus — convergence across Tier 4–6 sources — is **not *in error*; it is a weak-band (○) best-practice claim** ("best practice as currently known"), valid only when flagged code-derived with the convergence-not-evidence caveat, never rendered unflagged or above the weak band. (An unflagged or above-weak-band code-consensus best-practice claim *is* still in error.) Convergence is informative (it tells us multiple jurisdictions adopted a value) but is not itself strong evidence: the jurisdictions may be wrong together, or reading from a shared pre-evidence floor that none has updated — which is exactly why the claim sits at the weak band, not why it is excluded.
 
-The seven-tier hierarchy is operative throughout the guidebook; full schema is specified under §Epistemic commitments §Evidence hierarchy below.
+The evidence hierarchy is operative throughout the guidebook; full schema is specified under §Epistemic commitments §Evidence hierarchy below.
 
 ### 3. Co-1 evidence is co-primary with Tier 1
 
@@ -73,7 +73,7 @@ The guidebook organizes around questions readers should ask, not around answers 
 
 This commitment has both a doctrinal and an epistemic character. As doctrine: the project chooses questions-led structure as its pedagogical stance. As epistemic claim: the project hypothesizes that questions-led resources improve designer outcomes more than prescriptive ones. The doctrinal stance is held; the epistemic claim is tested. See §Epistemic commitments §Questions-led teaching as testable hypothesis.
 
-### 7. The guidebook teaches professional judgment, it does not substitute for it
+### 7. The guidebook does not substitute for professional judgment
 
 Population-level specifications (Universal Mode and Population Mode) are necessary but insufficient. Person-Mode co-design with an occupational therapist resolves the individual case. The guidebook equips professionals to ask better questions; it does not pretend to deliver final answers.
 
@@ -83,7 +83,7 @@ Population-level specifications (Universal Mode and Population Mode) are necessa
 
 The guidebook's epistemic commitments specify *how the project knows what it claims to know* — the evidence types it draws on, the states it permits its claims to occupy, and the limits it declares about its own production.
 
-### Evidence hierarchy (seven tiers)
+### Evidence hierarchy
 
 | Position | Type | Source examples |
 |---|---|---|
@@ -108,11 +108,11 @@ Evidence is located on two orthogonal axes of *coverage*, both always consulted:
 
 ### Evidence-state machine for best-practice claims
 
-Each (parameter × population) cell holds one of four states (per Stage 0.5 Decision T-04):
+Each cell (a parameter under at least one lens; `governance/evidence-architecture.md`) holds one of four states (per Stage 0.5 Decision T-04):
 
 | State | Display | Meaning | Validator behavior |
 |---|---|---|---|
-| `stated` | normal | Best practice derived from ≥Tier 3 OR Co-1 OR Co-2 evidence | Schema-validated; passes evidence-tier-validator |
+| `stated` | normal | Best practice derived from evidence meeting `governance/evidence-methodology.md` §2.2 | Schema-validated; passes evidence-tier-validator |
 | `provisional` | flagged with confidence | Synthesis based on partial evidence dimension; rich in at least one dimension | Schema-validated; renders with confidence flag |
 | `pending` | `[BEST-PRACTICE-PENDING]` + gap link | Evidence sparse across all dimensions | Validator requires gap-register entry |
 | `not_applicable` | "Not applicable" | Parameter has no design implication for this population | Validator requires explicit rationale |
@@ -133,7 +133,7 @@ Where they diverge, the divergence is itself evidence about how the parameter op
 
 ### Citation discipline
 
-- Every Part-4 specification carries an evidence marker: ● (filled circle, evidence-based) or ○ (empty circle, inferred from clinical reasoning or expert consensus). Unmarked = error.
+- Every Part-4 specification carries an evidence marker: ● (confirmed), ◐ (policy/standards only) or ○ (grey/thin), the band assigned per `governance/tier-system.md` §5/§8. Unmarked = error.
 - Quantified outcome claims require DOI + page/table reference, or failing that, direct URL to source. Unverified claims carry `[UNVERIFIED-QUANT]` flag.
 - Two failed independent searches → CLOSED-DELETED disposition for unverifiable values; do not accumulate unresolvable UNVERIFIED flags.
 - Source authenticity: confirmed real before citation. "I don't know" governs over invention.
@@ -177,7 +177,7 @@ Every methodological, architectural, and editorial decision in the project must 
 3. Does it grade best practice by the evidence hierarchy — treating code consensus as the weak (○) band, flagged, rather than as full strength or as excluded?
 4. Does it surface where Co-1 evidence governs, where Tier 1 clinical evidence governs, where they converge, and where they diverge?
 5. Does it respect the operational reality on Co-1 (pre-launch solo synthesis from published corpus) and document the partial-honoring limit honestly?
-6. Does it teach professional judgment rather than substitute for it?
+6. Does it leave professional judgment to the reader rather than substitute for it?
 7. Is the underlying data verifiable (clean data) and the methodology declared (transparent methodology)?
 8. Does it align with the audience-priority structure in `governance/audience-priority.md` — primary needs governing direct content, secondary needs governing cross-references and supplements?
 
@@ -186,8 +186,6 @@ Decisions that fail this test must be revised, document a justified exception, o
 ---
 
 ## Status
-
-CANONICAL-TRACK — ITERATION 1 (= A1-A2 iter 2). Not yet operative.
 
 | Field | Value |
 |---|---|

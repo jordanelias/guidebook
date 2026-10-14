@@ -35,7 +35,7 @@ The answer exists. It was decided incrementally — T-03/T-04 (Stage 0.5), A5/A6
 
 ## 2. One ladder
 
-There is exactly **one** evidence hierarchy: seven tiers with two co-primary community-knowledge tracks (`governance/tier-system.md` §1). Its governing principle: **tier reflects what kind of claim a source can anchor, not how good the source is.**
+There is exactly **one** evidence hierarchy: tiers T1–T6 with two co-primary community-knowledge tracks (`governance/tier-system.md` §1). Its governing principle: **tier reflects what kind of claim a source can anchor, not how good the source is.**
 
 - **T1** — primary research with intervention-level or biomechanical control; OT-prioritized, not OT-exclusive (decision D-E).
 - **Co-1** — disability-led lived-experience evidence (CRPD Art. 4.3), **co-primary with T1**: primary-research evidence and lived-experience evidence are non-substitutable on different claim types. T1 anchors claims that turn on mechanism; Co-1 anchors claims that turn on user-stated preference, dignity, autonomy, self-determined accommodation.

@@ -89,9 +89,11 @@ Enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md` per own
 
 | Band | Tiers | Anchoring behaviour |
 |---|---|---|
-| **● Full** | T1, Co-1, T2, Co-2, T3-clinical | Anchors outright (adjudicated evidence). |
+| **● Full** | T1, Co-1, T2, Co-2, T3-clinical | Full strength (adjudicated evidence). |
 | **◐ Partial** | T4, T5 | Anchors, rendered as *current standards practice* — flagged "standards basis, not primary evidence." |
 | **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* |
+
+A band grades the strength of a claim; it does not set the cell's state (`governance/evidence-methodology.md` §2.2): T3-clinical alone is full band and `provisional`; T3-grey alone is weak band and `pending`.
 
 Convergence-not-evidence (§3) is retained as the honesty rule within the weak band. **Amended 2026-07-21 (owner directive, Option A; `decisions/DR-2026-07-21-evidence-architecture-option-a-execution.md`):** a T4–T6-only determination *is* rendered as **weak-band (○) "best practice as currently known"** — best available given that nothing stronger says otherwise — always flagged weak/code-derived with the convergence-not-evidence caveat, never unflagged and never above the ○ band. This supersedes the prior wording ("never relabelled 'best practice'"): such a claim is now stated-and-flagged as weak-band best practice, not suppressed and not merely labelled "regulatory floor," when no stronger evidence exists. **Band assignment at determination level:** a cell whose entire basis is T4–T6 takes ○ even where T4/T5 sources are present; the ◐ "current standards practice" band in the table above applies to individual T4/T5 *citations* within an otherwise-anchored cell, and to source-level `●◐○` markers (§5), which are unchanged (DR-2026-07-21 §2.3).
 

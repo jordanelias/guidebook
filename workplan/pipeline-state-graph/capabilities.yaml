@@ -76,7 +76,7 @@ capabilities:
       - {id: C4.1, kind: probe, probe: P-Y, says: "a determination is keyed on parameter_id x at least one lens", atoms: [LED-091, LED-130]}
       - {id: C4.2, kind: probe, probe: P-ENG-T3, says: "the state is computed by the engine from tier arithmetic", atoms: [LED-151, LED-152, LED-010]}
       - {id: C4.3, kind: writable, table: specifications, says: "a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table", atoms: [CLM-034]}
-      - {id: C4.4, kind: probe, probe: P-ENG-STATE, says: "the engine can assign every value of the state vocabulary", atoms: [EVI-361]}
+      - {id: C4.4, kind: probe, probe: P-ENG-STATE, says: "the engine can assign every value of the state vocabulary", atoms: [EVI-172, LED-151]}
       - {id: C4.5, kind: verb, verb: retire-specification, says: "a determination can be retired in place and redetermined", atoms: [LED-169]}
       - {id: C4.6, kind: probe, probe: P-K, says: "a live renderer reads parameter x lens determinations", atoms: [LED-103, PIP-06]}
       - {id: C4.8, kind: probe, probe: P-QUARANTINE, says: "the rendering invariants and tier-derivation consistency are gated", atoms: [PIP-06, POS-03]}

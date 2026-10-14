@@ -6,7 +6,7 @@ Changes here require a Change Order (CO) because they affect validation
 across all entity types.
 
 Population codes: workplan-orchestrator §Population Codes (canonical).
-Evidence tiers: project-standards §Core Doctrine (seven-tier hierarchy).
+Evidence tiers: `governance/tier-system.md` §1.
 Jurisdiction codes: jurisdiction-tracker §4.7.3 (24 canonical + meta-codes).
 """
 

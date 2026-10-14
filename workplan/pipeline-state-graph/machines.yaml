@@ -247,7 +247,7 @@ machines:
   stage: specification
   holder: specifications.state
   states: [stated, provisional, pending, not_applicable]
-  atoms: [LED-010, LED-056, LED-151, LED-152, LED-153, PIP-01, PIP-02, PIP-03, PIP-05, EVI-361, EVI-364, EVI-052]
+  atoms: [LED-010, LED-056, LED-151, LED-152, LED-153, PIP-01, PIP-02, PIP-03, PIP-05, EVI-172, EVI-052]
   transitions:
   - id: M05.t1
     from: "(none)"
@@ -292,7 +292,7 @@ machines:
       - {file: scripts/db.py, func: retire_specification, needle: "Retiring it twice records nothing new"}
       - {file: scripts/db.py, func: retire_specification, needle: "LINKING IS A SECOND CALL BY DESIGN"}
   - id: M05.t5
-    claim: "'not_applicable' has NO producer on main: the engine never assigns it (only a NULL not_applicable_rationale is written). The documented 'any -> not_applicable' edge (EVI-361) is therefore not realised."
+    claim: "'not_applicable' has NO producer on main: the engine never assigns it (only a NULL not_applicable_rationale is written). R20: flagged unbuilt, not required."
     from: "any"
     to: "not_applicable"
     via: "(none)"
@@ -300,7 +300,7 @@ machines:
     evidence:
       - {file: scripts/assess/assess_cell.py, func: determine, needle: "state = \"not_applicable\"", absent: true}
   - id: M05.t6
-    claim: "The engine stores no from-state: a state change is retire + re-determine, so the documented transition table (EVI-361/364) is not enforced as a relation."
+    claim: "The engine stores no from-state: a state change is retire + re-determine, so there is no transition relation to enforce (methodology 2.7 says so)."
     from: "any"
     to: "any"
     via: "retire-specification then assess_cell"
