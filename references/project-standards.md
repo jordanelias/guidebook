@@ -4509,3 +4509,17 @@ D-0174's title, "applicability remains a synthesis judgement", is read as `RULIN
 
 CONDITION: any session reading the 2026-08-25 stage list, the instrument's permanently-manual paragraph, the 2026-08-18 research-frame proposal or handoff, DR-2026-09-26's list of what a new table must add, D-0184's review status, or D-0170's crossing-map consequence, and asking whether it still holds.
 DATE: 2026-10-14 — recorded under RULINGS R5, R15 and the supersessions the stage graph owed; the superseding words are quoted above or at the ledger line each mark names.
+
+## Recording 2026-10-14, third part — the root registry: a `root_id` references the registry and nothing else
+
+**What this does.** The delegation entry of 2026-10-14 decided one supersession (RULINGS R24) and left its back-pointer to the pull request that builds the key, because `supersession_backpointer_audit` requires the target document to carry the mark in the same change. That change is migration 115: `source_value_extractions.root_id` now carries a foreign key to `external_root_registry`. This entry writes the pair and nothing else. It makes no ruling.
+
+```
+SUPERSEDES: governance/evidence-architecture.md :: "a `root_id` must resolve either to a `root_ref_id` in `evidence_sources` or to a registered external-root stub"
+  BY: references/project-standards.md :: "the rule becomes that `source_value_extractions.root_id` references `external_root_registry` and nothing else"
+```
+
+The sentence is overtaken in its first alternative only: an in-corpus root is named by `root_ref_id`, never by `root_id`, which is how the two columns already divided. The mark in the target says so.
+
+CONDITION: any session asking what a `root_id` may name, or reading the "Root registry" discipline in `governance/evidence-architecture.md`.
+DATE: 2026-10-14 — recorded under RULINGS R24; the superseding words are the delegation entry's, quoted at the ledger line the mark names.

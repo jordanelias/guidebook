@@ -463,7 +463,7 @@ try:
     expect_refusal("L07", "a retired parameter takes no new extraction (the existing writer's "
                    "refusal, now reachable)",
                    "retired", fn("insert_extraction"),
-                         {"ref_id": REF_A, "slug": SLUG_A, "parameter_id": P["R"],
+                         {"ref_id": REF_A, "parameter_id": P["R"],
                           "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
                           "claim_text": "fixture", "extraction_method": "full-read"}, S,
                          relations=[], verbatim_exempt="fixture")
@@ -765,7 +765,7 @@ try:
 
     def claim(ref, value, method):
         out = attempt(db.insert_extraction,
-                      {"ref_id": ref, "slug": SLUG_A, "parameter_id": PE,
+                      {"ref_id": ref, "parameter_id": PE,
                        "identity_code": POP, "claim_type": "numerical",
                        "claimed_value": value, "claimed_unit": "mm", "comparator": "<=",
                        "figure_role": "claim", "extraction_method": method,
