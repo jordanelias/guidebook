@@ -120,7 +120,7 @@ Per Stage 0.5 Decision T-04 (DECIDED, locked): each cell in the guidebook's spec
 | `stated` | Normal rendering | Best-practice claim derived from sufficient evidence. The claim is defensible at the evidence tier cited. |
 | `provisional` | Confidence flag rendered | Synthesis based on evidence that is rich enough to produce a qualified claim, but does not meet the `stated` threshold. |
 | `pending` | `[BEST-PRACTICE-PENDING]` + gap-register link | Evidence too sparse across all dimensions to synthesize. The absence is visible and traced. |
-| `not_applicable` | "Not applicable" + rationale | The parameter has no design implication for this population. Not a gap — a genuine non-intersection. |
+| `not_applicable` | "Not applicable" + rationale | The parameter has no design implication under this lens. Not a gap — a genuine non-intersection. |
 
 ### 2.2 The `stated` threshold
 

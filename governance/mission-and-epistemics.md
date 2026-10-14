@@ -115,7 +115,7 @@ Each cell (a parameter under at least one lens; `governance/evidence-architectur
 | `stated` | normal | Best practice derived from evidence meeting `governance/evidence-methodology.md` §2.2 | Schema-validated; passes evidence-tier-validator |
 | `provisional` | flagged with confidence | Synthesis based on partial evidence dimension; rich in at least one dimension | Schema-validated; renders with confidence flag |
 | `pending` | `[BEST-PRACTICE-PENDING]` + gap link | Evidence sparse across all dimensions | Validator requires gap-register entry |
-| `not_applicable` | "Not applicable" | Parameter has no design implication for this population | Validator requires explicit rationale |
+| `not_applicable` | "Not applicable" | Parameter has no design implication under this lens | Validator requires explicit rationale |
 
 **Silence on evidence-thin populations is not the default.** The Cochrane yardstick distinguishing absence-of-evidence from evidence-of-absence from primary-non-clinical-tier evidence is honored at the cell level (Altman & Bland, 1995, DOI: 10.1136/bmj.311.7003.485; operationalized in Higgins et al., 2024, Cochrane Handbook v6.5, DOI: 10.1002/9781119536604).
 
