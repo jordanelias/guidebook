@@ -747,19 +747,44 @@ def quote_in_artefacts(quote, ref_id=None, session=None):
     return kind != "missing", detail
 
 
-# Per-process memo of the decoded, normalised artefacts, keyed on the log root and the
-# session filter. ADDED 2026-10-09 (tooling T1) BECAUSE A CHECK NEEDS IT: measured the
-# same day, one quote_in_artefacts call over the 470 persisted files took ~1.7 s, almost
-# all of it decoding and normalising every artefact again, so verifying the corpus's 88
-# observations took minutes. The memo is invalidated by any manifest changing (mtime or
-# size of every manifest.jsonl, plus the set of session directories), so an artefact
-# persisted later in the same process is seen; artefact files themselves are written
-# once under a content-derived name and never rewritten.
+# Per-process memo of the persisted artefacts, keyed on the log root and the session
+# filter. ADDED 2026-10-09 (tooling T1) BECAUSE A CHECK NEEDS IT: decoding and normalising
+# every artefact for every quote made verifying the corpus's observations take minutes.
+# The memo is invalidated by any manifest changing (mtime or size of every manifest.jsonl,
+# plus the set of session directories), so an artefact persisted later in the same process
+# is seen; artefact files themselves are written once under a content-derived name and
+# never rewritten. Each entry decodes and normalises its file on FIRST USE, not when the
+# index is built: a CLI verb is a fresh process, so an eager index paid for the whole log
+# on every call, when a quote is nearly always in a file saved for its own source.
 _ARTEFACT_INDEX = {}
 
 
+class _Artefact:
+    """One manifest line's saved file; `body()` reads, decodes and normalises it once."""
+    __slots__ = ("dname", "artefact", "ref_id", "path", "content_type", "_done", "_body",
+                 "_enc")
+
+    def __init__(self, dname, artefact, ref_id, path, content_type):
+        self.dname, self.artefact, self.ref_id = dname, artefact, ref_id
+        self.path, self.content_type = path, content_type
+        self._done, self._body, self._enc = False, None, None
+
+    def body(self):
+        """(normalised body, encoding), or (None, why) when the bytes cannot be read."""
+        if not self._done:
+            try:
+                raw = self.path.read_bytes()
+            except OSError as exc:
+                self._body, self._enc = None, "unreadable: %s" % type(exc).__name__
+            else:
+                text, self._enc = decode_artefact(raw, self.content_type)
+                self._body = normalise_quote(text) if text is not None else None
+            self._done = True
+        return self._body, self._enc
+
+
 def _artefact_index(session=None):
-    """[(session_dir_name, artefact, rec_ref_id, normalised_body_or_None, encoding)]."""
+    """[_Artefact] for every manifest line that names an existing FILE, in manifest order."""
     root = LOG_ROOT
     dirs = [root / _session_stem(session)] if session else sorted(
         p for p in root.iterdir() if p.is_dir())
@@ -779,15 +804,9 @@ def _artefact_index(session=None):
             continue
         for rec in _manifest_records(d.name):
             art = d / rec.get("artefact", "")
-            if not art.exists():
-                continue
-            try:
-                raw = art.read_bytes()
-            except OSError:
-                continue
-            body, enc = decode_artefact(raw, rec.get("content_type"))
-            entries.append((d.name, rec.get("artefact", ""), rec.get("ref_id"),
-                            normalise_quote(body) if body is not None else None, enc))
+            if art.is_file():
+                entries.append(_Artefact(d.name, rec.get("artefact", ""), rec.get("ref_id"),
+                                         art, rec.get("content_type")))
     _ARTEFACT_INDEX[key] = (sig, entries)
     return entries
 
@@ -801,6 +820,9 @@ def locate_quote(quote, ref_id=None, session=None):
     `missing`  -- in no persisted, decodable artefact; the detail says how much was
                   examined and names any bytes that could not be decoded.
     See `quote_in_artefacts` above for why each distinction is kept.
+
+    The files saved for `ref_id` are read FIRST and a hit there returns without opening
+    any other file; only a scoped miss has to read the rest, to tell unscoped from missing.
     """
     needle = normalise_quote(quote)
     if not needle:
@@ -809,28 +831,31 @@ def locate_quote(quote, ref_id=None, session=None):
     if not root.exists():
         return "missing", "EXAMINED: 0 -- %s/ does not exist" % root
 
-    scoped_hit = unscoped_hit = None
+    entries = _artefact_index(session)
+    if ref_id:
+        for a in entries:
+            if a.ref_id == ref_id:
+                body, _enc = a.body()
+                if body is not None and needle in body:
+                    return "scoped", "found in %s/%s, retrieved for %s" % (
+                        a.dname, a.artefact, ref_id)
+    unscoped_hit = None
     examined = scoped_examined = 0
     undecodable = []
-    for dname, artefact, rec_ref, body, enc in _artefact_index(session):
+    for a in entries:
         examined += 1
-        if ref_id and rec_ref == ref_id:
+        if ref_id and a.ref_id == ref_id:
             scoped_examined += 1
+        body, enc = a.body()
         if body is None:
             # NEVER SILENTLY SKIPPED. A miss below reports EXAMINED, and an artefact
             # whose bytes could not be read is not examined -- saying "not found" over
             # it would be CLAUDE.md §5(a) at the input, which is the same error this
             # function's own docstring names one level up.
-            undecodable.append("%s/%s (%s)" % (dname, artefact, enc))
+            undecodable.append("%s/%s (%s)" % (a.dname, a.artefact, enc))
             continue
-        if needle in body:
-            where = "%s/%s" % (dname, artefact)
-            if ref_id and rec_ref == ref_id:
-                scoped_hit = scoped_hit or where
-            else:
-                unscoped_hit = unscoped_hit or where
-    if scoped_hit:
-        return "scoped", "found in %s, retrieved for %s" % (scoped_hit, ref_id)
+        if unscoped_hit is None and needle in body:
+            unscoped_hit = "%s/%s" % (a.dname, a.artefact)
     if unscoped_hit:
         return "unscoped", ("found in %s -- UNSCOPED: that artefact carries no structured "
                             "ref_id, or one that is not %s, so this proves the words are in "
@@ -847,6 +872,41 @@ def locate_quote(quote, ref_id=None, session=None):
         detail += (" -- %d NOT SEARCHED, bytes undecodable: %s"
                    % (len(undecodable), "; ".join(undecodable[:5])))
     return "missing", detail
+
+
+#: The ledger marker an observation's `notes` carries when its quote is exempt from the
+#: saved-text check. The observation writers build it with `exempt_marker` and the readers
+#: test `EXEMPT_MARK in notes`. (extraction_relations notes keep their own, unbracketed
+#: `VERBATIM-EXEMPT: <reason>` form, which nothing here reads.)
+EXEMPT_MARK = "[VERBATIM-EXEMPT:"
+
+
+def exempt_marker(reason, tail=""):
+    """`[VERBATIM-EXEMPT: <reason>]` (+ `tail`), the form `EXEMPT_MARK` is the head of."""
+    return "%s %s]%s" % (EXEMPT_MARK, reason, tail)
+
+
+def phrase_in_quote(phrase, quote):
+    """Does `phrase` occur in `quote` under `normalise_quote`? The one phrase-in-sentence test."""
+    return normalise_quote(phrase) in normalise_quote(quote)
+
+
+def classify_observation(surface, quote, notes, ref_id):
+    """(kind, detail, phrase_inside_quote) for one observed term, kind in
+    scoped|unscoped|missing|exempt.
+
+    One reading of an observation's quote for every caller -- `db.py add-alias` refuses
+    on it, `observation_verbatim_audit.py` counts on it. A recorded exemption is read
+    FIRST and not searched for; a blank quote is `missing`; otherwise `locate_quote`
+    decides, scoped by `ref_id`.
+    """
+    inside = bool(quote) and phrase_in_quote(surface, quote)
+    if EXEMPT_MARK in (notes or ""):
+        return "exempt", "recorded exemption on the row", inside
+    if not (quote or "").strip():
+        return "missing", "no context_quote", inside
+    kind, detail = locate_quote(quote, ref_id=ref_id)
+    return kind, detail, inside
 
 
 # ---------------------------------------------------------------------------

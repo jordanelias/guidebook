@@ -6,8 +6,8 @@ WHY THIS EXISTS (tooling T1, 2026-10-09; catalogue-plan-v2 section 8.2, critique
 An observation records that a source USES a phrase, with the sentence it sits in. Every
 term and parameter the project mints comes from one. Until migration 102 nothing compared
 that sentence with the source: the verbatim check had one call site, add-extraction. The
-plan measured the 88 observations then held: 34 quotes in a file saved for their own
-source, 37 only in some other source's file, 17 in no saved file at all. `db.py
+plan found that many of the observations then held verified only against another
+source's file, or none (this audit prints the split). `db.py
 observe-term` now refuses a new observation whose quote is not in its source's saved text
 (or records an exemption); this is the BACKSTOP for the rows written before that, and for
 any row arriving by another route (a data migration written by hand).
@@ -51,25 +51,14 @@ DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db
 BASELINE_PATH = REPO / "governance" / "research-contract-baseline.json"
 #: The two baselined classes, keyed as the baseline file names them.
 KEYS = {"missing": "observation-quote-missing", "unscoped": "observation-quote-unscoped"}
-EXEMPT_MARK = "[VERBATIM-EXEMPT:"
 
 
 def classify(conn):
     """[(observation_id, ref_id, kind, detail, phrase_inside_quote)] for every row."""
-    out = []
-    for oid, ref, surface, quote, notes in conn.execute(
-            "SELECT observation_id, ref_id, surface_form, context_quote, notes "
-            "FROM observed_terms ORDER BY observation_id"):
-        inside = bool(quote) and (retrieval_log.normalise_quote(surface)
-                                  in retrieval_log.normalise_quote(quote))
-        if EXEMPT_MARK in (notes or ""):
-            out.append((oid, ref, "exempt", "recorded exemption on the row", inside))
-        elif not (quote or "").strip():
-            out.append((oid, ref, "missing", "no context_quote", inside))
-        else:
-            kind, detail = retrieval_log.locate_quote(quote, ref_id=ref)
-            out.append((oid, ref, kind, detail, inside))
-    return out
+    return [(oid, ref) + retrieval_log.classify_observation(surface, quote, notes, ref)
+            for oid, ref, surface, quote, notes in conn.execute(
+                "SELECT observation_id, ref_id, surface_form, context_quote, notes "
+                "FROM observed_terms ORDER BY observation_id")]
 
 
 def main():

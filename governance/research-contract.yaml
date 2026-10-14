@@ -332,7 +332,8 @@ rules:
   # R17 added 2026-10-09 with R16-scan (catalogue-plan-v2 section 4.2 item 5; critique F12).
   # Batch-scoped like the rest: add-source cannot refuse it, because log-search records the
   # admission edge only after the source exists. Seeded at the corpus count in the baseline
-  # (two admissions owed an edge when it landed), so it is not red on main.
+  # (governance/research-contract-baseline.json holds the current figure), so it is not red
+  # on main.
   - id: R17
     phase: before-admitting
     title: "Every admission has a logged search behind it"

@@ -424,11 +424,8 @@ checks:
     check is the backstop for what that refusal cannot cover -- a migration written directly against
     dbcore, or a future writer that does not route through `db.py` -- not a first line of defense.
 
-    CORRECTED 2026-10-09 (rule 7a, catalogue-plan-v2 section 1.2 item 7): this said
-    `base_parameters` was empty and the check NOTHING-IN-SCOPE; it has held rows since 2026-09-16
-    (derive: SELECT COUNT(*) FROM base_parameters). min_items:1, not no_floor: unlike `items`,
-    this table was never emptied by ruling, and the floor is what makes a silently-reopened
-    item-layer defect visible instead of silent. P2, added 2026-10-09 (tooling T1, the owner''s D3
+    min_items:1, not no_floor: unlike `items`, `base_parameters` was never emptied by ruling, and
+    the floor is what makes a silently-reopened item-layer defect visible instead of silent. P2, added 2026-10-09 (tooling T1, the owner''s D3
     answer): every term minted from a permitted catalogue (term_catalogue_origins) still has its
     approving words in references/project-standards.md; an origin whose quote is gone fails.
     Fault-injected in test_scan_contract.py (M10, M11). Fault-injected 2026-09-10: a scratch-DB row named
@@ -538,7 +535,7 @@ checks:
     unsuperseded source or no active parameter, a corpus clear, which should be visible.
     Its readers: the next cohort''s worklist (the pairs it prints), the catalogue''s
     evidence-state line, and the Release 0 acceptance test (plan section 12, Q12). Expect it
-    red once the nine parameters of PR #171 reach main: every source is then owed a reading
+    red once the parameters of PR #171 reach main: every source is then owed a reading
     for each of them. Fault-injected in test_scan_contract.py (S12/S14).'
 - id: extraction_follow_up_audit
   cmd:
@@ -1878,9 +1875,8 @@ checks:
     batch rules R16-scan and R17 on a copy (G), capture through emit_batch_sql with a
     replay (C), and CLI wiring (CLI). Runs on a COPY of the canonical DB with
     GUIDEBOOK_RETRIEVAL_LOG pointed at a temp log of fixture artefacts, so it never writes
-    retrieval-log/ or data/. Red on origin/main 3077b99 (no verb, no table): 100 of its
-    103 cases fail there; the three that pass (O02, O10, N08) are invariants that hold
-    before and after. H01/H02 need pymupdf (the research battery declares it); without it
+    retrieval-log/ or data/. Red on origin/main before T1 (no verb, no table): nearly all of its
+    cases fail there; those that pass are invariants that hold before and after. H01/H02 need pymupdf (the research battery declares it); without it
     they print NOT RUN and the full text is written by hand in the helper''s format. Its
     assertion count is its own EXAMINED line -- re-run, do not trust a figure here.'
 - id: test_author_presence

@@ -71,7 +71,6 @@ import sqlite3  # noqa: E402
 import dbcore  # noqa: E402  (the ledger-quote normalisation has one home)
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
-LEDGER = dbcore.REPO_ROOT / "references" / "project-standards.md"
 
 
 def validate():
@@ -114,7 +113,8 @@ def validate():
 
     # P2: the owner's approving words for each catalogue-minted term are still recorded.
     if origins:
-        ledger = dbcore.strip_supersedes_citations(LEDGER.read_text(encoding="utf-8"))
+        ledger = dbcore.strip_supersedes_citations(
+            dbcore.LEDGER_PATH.read_text(encoding="utf-8"))
         for o in origins:
             n = dbcore.count_ledger_quote(ledger, o["approval_quote"])
             if n == 0:

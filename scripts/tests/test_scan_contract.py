@@ -93,6 +93,14 @@ def refusal(f, *a, **k):
     return None
 
 
+def expect_refusal(tid, name, needles, f, *a, **k):
+    """record(): `f(*a, **k)` refuses, and the Refusal's text holds every needle."""
+    msg = refusal(f, *a, **k)
+    record(tid, name, msg and all(n in msg for n in
+                                  ((needles,) if isinstance(needles, str) else needles)),
+           msg)
+
+
 def attempt(f, *a, **k):
     try:
         return f(*a, **k)
@@ -255,25 +263,22 @@ try:
     record("O02", "the same sighting again returns the earlier row, created False",
            o3.get("created") is False and o3.get("observation_id") == o1.get("observation_id"),
            f"{o3}")
-    msg = refusal(observe, obs("door leaf", None, "the clear width of a door leaf"), S)
-    record("O03", "a new observation with no --locator is refused", msg and "--locator" in msg,
-           msg)
-    msg = refusal(observe, obs("door leaf", "PDF page 1", None), S)
-    record("O04", "a new observation with no --context-quote is refused",
-           msg and "--context-quote" in msg, msg)
-    msg = refusal(observe, obs("handrail", "PDF page 1",
-                               "the clear width of a door leaf is measured here"), S)
-    record("O05", "a phrase not inside its own quote is refused",
-           msg and "does not occur inside" in msg, msg)
-    msg = refusal(observe, obs("shared sentence", "p1",
-                               "A shared sentence held only by another source."), S)
-    record("O06", "a quote found only in ANOTHER source's file is refused (UNSCOPED is not "
-           "a pass) and names both remedies",
-           msg and "UNSCOPED" in msg and "full_text.py" in msg and "--verbatim-exempt" in msg,
-           msg)
-    msg = refusal(observe, obs("door leaf", "p9", "the door leaf typed from memory"), S)
-    record("O07", "a quote in no saved file is refused", msg and "does not occur in any" in msg,
-           msg)
+    expect_refusal("O03", "a new observation with no --locator is refused",
+                   "--locator",
+                   observe, obs("door leaf", None, "the clear width of a door leaf"), S)
+    expect_refusal("O04", "a new observation with no --context-quote is refused",
+                   "--context-quote", observe, obs("door leaf", "PDF page 1", None), S)
+    expect_refusal("O05", "a phrase not inside its own quote is refused",
+                   "does not occur inside", observe, obs("handrail", "PDF page 1",
+                                      "the clear width of a door leaf is measured here"), S)
+    expect_refusal("O06", "a quote found only in ANOTHER source's file is refused (UNSCOPED is not "
+                   "a pass) and names both remedies",
+                   ("UNSCOPED", "full_text.py", "--verbatim-exempt"),
+                   observe, obs("shared sentence", "p1",
+                                      "A shared sentence held only by another source."), S)
+    expect_refusal("O07", "a quote in no saved file is refused",
+                   "does not occur in any",
+                   observe, obs("door leaf", "p9", "the door leaf typed from memory"), S)
     o8 = attempt(observe, obs("door leaf", "p9", "the door leaf typed from memory",
                               verbatim_exempt="fixture: read from a page image"), S)
     note8 = q("SELECT notes FROM observed_terms WHERE observation_id=?",
@@ -282,11 +287,10 @@ try:
            o8.get("created") is True and note8
            and "[VERBATIM-EXEMPT: fixture: read from a page image]" in (note8[0][0] or ""),
            f"{o8} {note8}")
-    msg = refusal(observe, obs("door leaf", "PDF page 1 again",
-                               "the clear width of a door leaf is measured here",
-                               verbatim_exempt="not needed"), S)
-    record("O09", "an exemption is refused when the quote DOES verify for this source",
-           msg and "Drop the exemption" in msg, msg)
+    expect_refusal("O09", "an exemption is refused when the quote DOES verify for this source",
+                   "Drop the exemption", observe, obs("door leaf", "PDF page 1 again",
+                                      "the clear width of a door leaf is measured here",
+                                      verbatim_exempt="not needed"), S)
     try:
         x("INSERT INTO observed_terms (ref_id, surface_form, language, locator, "
           "context_quote, created_at, created_by_session) VALUES (?, 'clear width', 'EN', "
@@ -317,32 +321,26 @@ try:
 
     n_scan = q("SELECT COUNT(*) FROM source_scans")[0][0] if q(
         "SELECT 1 FROM sqlite_master WHERE name='source_scans'") else None
-    msg = refusal(scan, sc(catalogue_version=3), S)
-    record("S01", "a typed catalogue version is refused (it is computed)",
-           msg and "COMPUTED" in msg, msg)
+    expect_refusal("S01", "a typed catalogue version is refused (it is computed)",
+                   "COMPUTED", scan, sc(catalogue_version=3), S)
     msg = refusal(scan, sc(ref_id=TOMB), S) if TOMB else "no tombstone in the copy"
     record("S02", "a superseded source (a tombstone) is refused",
            msg and ("superseded" in msg or "tombstone" in msg), msg)
-    msg = refusal(scan, sc(file_sha256=OTHER_SHA), S)
-    record("S03", "a file saved for ANOTHER source is refused, listing what this one holds",
-           msg and "no file saved for" in msg and "fixture3pages" in msg, msg)
-    msg = refusal(scan, sc(text_scope="full", file_sha256=PDF_SHA), S)
-    record("S04", "'full' over a PDF is refused and names full_text.py",
-           msg and "full_text.py" in msg, msg)
-    msg = refusal(scan, sc(text_scope="full"), S)
-    record("S05", "'full' over a text carrying 2 of 3 pages is refused (Q5)",
-           msg and "2 of 3" in msg, msg)
+    expect_refusal("S03", "a file saved for ANOTHER source is refused, listing what this one holds",
+                   ("no file saved for", "fixture3pages"), scan, sc(file_sha256=OTHER_SHA), S)
+    expect_refusal("S04", "'full' over a PDF is refused and names full_text.py",
+                   "full_text.py", scan, sc(text_scope="full", file_sha256=PDF_SHA), S)
+    expect_refusal("S05", "'full' over a text carrying 2 of 3 pages is refused (Q5)",
+                   "2 of 3", scan, sc(text_scope="full"), S)
     s6 = attempt(scan, sc(), S)
     top = q("SELECT MAX(parameter_id) FROM base_parameters")[0][0]
     record("S06", "a partial reading lands with pages and catalogue version COMPUTED",
            s6.get("pages_read") == 2 and s6.get("pages_total") == 3
            and s6.get("catalogue_version") == top, f"{s6} top={top}")
-    msg = refusal(scan, sc(mode="targeted"), S)
-    record("S07", "a targeted reading with no target is refused",
-           msg and "--target-parameter-id" in msg, msg)
-    msg = refusal(scan, sc(mode="catalogue", target_parameter_id=P["A"]), S)
-    record("S08", "a catalogue reading with a target is refused",
-           msg and "targeted" in msg, msg)
+    expect_refusal("S07", "a targeted reading with no target is refused",
+                   "--target-parameter-id", scan, sc(mode="targeted"), S)
+    expect_refusal("S08", "a catalogue reading with a target is refused",
+                   "targeted", scan, sc(mode="catalogue", target_parameter_id=P["A"]), S)
 
     def ledger(ref, pid):
         r = q("SELECT status, text_scope FROM v_scan_ledger WHERE ref_id=? AND "
@@ -425,21 +423,21 @@ try:
 
     # ── L: the lifecycle verbs ──────────────────────────────────────────────────────
     retire, merge = fn("retire_parameter"), fn("merge_parameter")
-    msg = refusal(retire, P["A"], "  ", S)
-    record("L01", "retire-parameter refuses a blank reason", msg and "--reason" in msg, msg)
+    expect_refusal("L01", "retire-parameter refuses a blank reason",
+                   "--reason", retire, P["A"], "  ", S)
     gate_pid = q("SELECT parameter_id FROM determination_gates WHERE resolved_at IS NULL "
                  "LIMIT 1")
     if gate_pid:
-        msg = refusal(retire, gate_pid[0][0], "fixture", S)
-        record("L02", "retire-parameter refuses a parameter with an OPEN gate, naming the "
-               "resolve verb", msg and "resolve-determination-gate" in msg, msg)
+        expect_refusal("L02", "retire-parameter refuses a parameter with an OPEN gate, naming the "
+                       "resolve verb",
+                       "resolve-determination-gate", retire, gate_pid[0][0], "fixture", S)
     # A LIVE determination: assess_cell writes them only on a scratch run with every
     # anchoring gate satisfied, which a fixture cannot honestly supply, so it is set here.
     SPEC = x("INSERT INTO specifications (parameter_id, identity_code, state, created_at, "
              "created_by_session) VALUES (?, ?, 'pending', 't', ?)", P["E"], POP, S)
-    msg = refusal(retire, P["E"], "fixture", S)
-    record("L03", "retire-parameter refuses a parameter with a LIVE determination, naming "
-           "retire-specification", msg and "retire-specification" in msg, msg)
+    expect_refusal("L03", "retire-parameter refuses a parameter with a LIVE determination, naming "
+                   "retire-specification",
+                   "retire-specification", retire, P["E"], "fixture", S)
     # An extraction with a measured root on P[R], so v_value_independence lists it.
     x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, identity_code, "
       "claim_type, claimed_value, claim_text, extraction_method, created_at, updated_at, "
@@ -459,27 +457,23 @@ try:
                                    P["R"])
            and not q("SELECT 1 FROM v_scan_ledger WHERE parameter_id=?", P["R"]),
            f"listed_before={listed_before}")
-    msg = refusal(retire, P["R"], "again", S)
-    record("L06", "retire-parameter refuses a parameter that is not active",
-           msg and "already retired" in msg, msg)
-    msg = refusal(fn("insert_extraction"),
-                  {"ref_id": REF_A, "slug": SLUG_A, "parameter_id": P["R"],
-                   "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
-                   "claim_text": "fixture", "extraction_method": "full-read"}, S,
-                  relations=[], verbatim_exempt="fixture")
-    record("L07", "a retired parameter takes no new extraction (the existing writer's "
-           "refusal, now reachable)", msg and "retired" in msg, msg)
+    expect_refusal("L06", "retire-parameter refuses a parameter that is not active",
+                   "already retired", retire, P["R"], "again", S)
+    expect_refusal("L07", "a retired parameter takes no new extraction (the existing writer's "
+                   "refusal, now reachable)",
+                   "retired", fn("insert_extraction"),
+                         {"ref_id": REF_A, "slug": SLUG_A, "parameter_id": P["R"],
+                          "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
+                          "claim_text": "fixture", "extraction_method": "full-read"}, S,
+                         relations=[], verbatim_exempt="fixture")
 
     # merge: P[C] is folded into P[A] first, then P[A] into P[B] -- the chain flattens.
-    msg = refusal(merge, P["A"], P["A"], "x", S)
-    record("L08", "merge-parameter refuses the same parameter twice",
-           msg and "same parameter" in msg, msg)
-    msg = refusal(merge, P["R"], P["A"], "x", S)
-    record("L09", "merge-parameter refuses a parameter that is not active",
-           msg and "not active" in msg, msg)
-    msg = refusal(merge, P["E"], P["A"], "x", S)
-    record("L10", "merge-parameter refuses while either side has a live determination",
-           msg and "LIVE determination" in msg, msg)
+    expect_refusal("L08", "merge-parameter refuses the same parameter twice",
+                   "same parameter", merge, P["A"], P["A"], "x", S)
+    expect_refusal("L09", "merge-parameter refuses a parameter that is not active",
+                   "not active", merge, P["R"], P["A"], "x", S)
+    expect_refusal("L10", "merge-parameter refuses while either side has a live determination",
+                   "LIVE determination", merge, P["E"], P["A"], "x", S)
     attempt(merge, P["C"], P["A"], "fixture: one quantity", S)
     XA = x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
            "identity_code, claim_type, claim_text, extraction_method, created_at, "
@@ -528,27 +522,26 @@ try:
     o_tz = attempt(observe, obs("turnwise clearance zone", "PDF page 3",
                                 "the turnwise clearance zone of a wheelchair"), S)
     OTZ = o_tz.get("observation_id")
-    msg = refusal(rename, TR, "turnwise clearance zone", "fixture", S)
-    record("N01", "rename-term refuses a rename with no warrant",
-           msg and "exactly one warrant" in msg, msg)
-    msg = refusal(rename, TR, "turnwise clearance zone", "fixture", S,
-                  from_observation=OTZ, ruling_quote="x")
-    record("N02", "rename-term refuses two warrants at once",
-           msg and "exactly one warrant" in msg, msg)
-    msg = refusal(rename, TR, "turning circle 1500", "fixture", S, from_observation=OTZ)
-    record("N03", "rename-term refuses a value-bearing name", msg and "value" in msg, msg)
-    msg = refusal(rename, TR, "turnwise clearance zone", "fixture", S, from_observation=OTZ)
-    record("N04", "rename-term refuses an observation no adjudication names this term "
-           "with", msg and "adjudicat" in msg, msg)
+    expect_refusal("N01", "rename-term refuses a rename with no warrant",
+                   "exactly one warrant", rename, TR, "turnwise clearance zone", "fixture", S)
+    expect_refusal("N02", "rename-term refuses two warrants at once",
+                   "exactly one warrant", rename, TR, "turnwise clearance zone", "fixture", S,
+                         from_observation=OTZ, ruling_quote="x")
+    expect_refusal("N03", "rename-term refuses a value-bearing name",
+                   "value", rename, TR, "turning circle 1500", "fixture", S, from_observation=OTZ)
+    expect_refusal("N04", "rename-term refuses an observation no adjudication names this term "
+                   "with",
+                   "adjudicat",
+                   rename, TR, "turnwise clearance zone", "fixture", S, from_observation=OTZ)
     attempt(adj, OTZ, "NAMES-EXISTING", "fixture: the phrase names this concept", S,
             term_id=TR)
-    msg = refusal(rename, TR, "turnwise zone", "fixture", S, from_observation=OTZ)
-    record("N05", "rename-term refuses a name the observed phrase does not contain",
-           msg and "not in the observed phrase" in msg, msg)
+    expect_refusal("N05", "rename-term refuses a name the observed phrase does not contain",
+                   "not in the observed phrase",
+                   rename, TR, "turnwise zone", "fixture", S, from_observation=OTZ)
     other_name = q("SELECT canonical_en FROM terms WHERE term_id=?", FREE[8])[0][0]
-    msg = refusal(rename, TR, other_name, "fixture", S, from_observation=OTZ)
-    record("N06", "rename-term refuses a name another term holds",
-           msg and "already the name of" in msg, msg)
+    expect_refusal("N06", "rename-term refuses a name another term holds",
+                   "already the name of",
+                   rename, TR, other_name, "fixture", S, from_observation=OTZ)
     old_name = q("SELECT canonical_en FROM terms WHERE term_id=?", TR)[0][0]
     n7 = attempt(rename, TR, "turnwise clearance zone", "fixture: the sources' own phrase",
                  S, from_observation=OTZ)
@@ -579,10 +572,9 @@ try:
                   and not q("SELECT 1 FROM terms WHERE lower(canonical_en)=?", f"{a} {b}")
                   and not q("SELECT 1 FROM term_aliases WHERE lower(alias)=?", f"{a} {b}")),
                  None)
-    msg = refusal(rename, FREE[9], RNAME or "x", "fixture", S,
-                  ruling_quote="fixture: words the owner never said")
-    record("N09", "rename-term refuses a ruling quote not found exactly once in the ledger",
-           msg and "exactly once" in msg, msg)
+    expect_refusal("N09", "rename-term refuses a ruling quote not found exactly once in the ledger",
+                   "exactly once", rename, FREE[9], RNAME or "x", "fixture", S,
+                         ruling_quote="fixture: words the owner never said")
     n10 = attempt(rename, FREE[9], RNAME, "fixture: the owner's words", S,
                   ruling_quote=QUOTE)
     record("N10", "rename-term renames from an owner ruling quoted once in the ledger",
@@ -594,12 +586,10 @@ try:
     attempt(db.decline_parameter, TD, "fixture: an element, not a quantity", S)
     DR = sorted(p.relative_to(REPO).as_posix()
                 for p in (REPO / "decisions").glob("DR-*.md"))[0]
-    msg = refusal(revoke, FREE[11], "fixture", DR, S)
-    record("V01", "revoke-declination refuses a term that is not declined",
-           msg and "not declined" in msg, msg)
-    msg = refusal(revoke, TD, "fixture", "a decision somewhere", S)
-    record("V02", "revoke-declination refuses a decision reference that does not resolve",
-           msg and "--decision-ref" in msg, msg)
+    expect_refusal("V01", "revoke-declination refuses a term that is not declined",
+                   "not declined", revoke, FREE[11], "fixture", DR, S)
+    expect_refusal("V02", "revoke-declination refuses a decision reference that does not resolve",
+                   "--decision-ref", revoke, TD, "fixture", "a decision somewhere", S)
     v3 = attempt(revoke, TD, "fixture: it is a quantity after all", DR, S)
     p3 = attempt(db.insert_parameter, TD, S)
     record("V03", "a revoked declination is history: the row stays, revoked, and "
@@ -607,22 +597,21 @@ try:
            v3.get("revoked") is True and p3.get("parameter_id")
            and q("SELECT revoked_by_session FROM parameter_declinations WHERE term_id=?",
                  TD)[0][0] == S, f"{v3} {p3}")
-    msg = refusal(revoke, TD, "again", DR, S)
-    record("V04", "revoke-declination refuses a second revocation",
-           msg and "already revoked" in msg, msg)
+    expect_refusal("V04", "revoke-declination refuses a second revocation",
+                   "already revoked", revoke, TD, "again", DR, S)
     msg = refusal(db.decline_parameter, FREE[12], "fixture", S)  # control: still declines
     TD2 = FREE[12]
     attempt(revoke, TD2, "fixture", DR, S)
-    msg = refusal(db.decline_parameter, TD2, "fixture: again", S)
-    record("V05", "decline-parameter refuses to re-decline a revoked term, saying why (one "
-           "row per term)", msg and "REVOKED" in msg, msg)
+    expect_refusal("V05", "decline-parameter refuses to re-decline a revoked term, saying why (one "
+                   "row per term)",
+                   "REVOKED", db.decline_parameter, TD2, "fixture: again", S)
 
     # annotate-parameter
     annotate = fn("annotate_parameter")
-    msg = refusal(annotate, P["B"], "  ", S)
-    record("A01", "annotate-parameter refuses a blank note", msg and "--note" in msg, msg)
-    msg = refusal(annotate, P["B"], "a || b", S)
-    record("A02", "annotate-parameter refuses the separator", msg and "' || '" in msg, msg)
+    expect_refusal("A01", "annotate-parameter refuses a blank note",
+                   "--note", annotate, P["B"], "  ", S)
+    expect_refusal("A02", "annotate-parameter refuses the separator",
+                   "' || '", annotate, P["B"], "a || b", S)
     before = q("SELECT notes FROM base_parameters WHERE parameter_id=?", P["B"])[0][0] or ""
     attempt(annotate, P["B"], "fixture: the earlier note was wrong", S)
     after = q("SELECT notes FROM base_parameters WHERE parameter_id=?", P["B"])[0][0] or ""
@@ -636,21 +625,18 @@ try:
     o_cw = attempt(observe, obs("door leaf", "PDF page 1 / door",
                                 "the clear width of a door leaf is measured here"), S)
     OCW = o_cw.get("observation_id")
-    msg = refusal(add_alias, TA, OCW, "DEPRECATED", S)
-    record("AL01", "add-alias refuses DEPRECATED (rename-term's record)",
-           msg and "DEPRECATED" in msg, msg)
-    msg = refusal(add_alias, TA, OCW, "SYNONYM", S)
-    record("AL02", "add-alias refuses an observation no adjudication names the term with",
-           msg and "adjudicat" in msg, msg)
+    expect_refusal("AL01", "add-alias refuses DEPRECATED (rename-term's record)",
+                   "DEPRECATED", add_alias, TA, OCW, "DEPRECATED", S)
+    expect_refusal("AL02", "add-alias refuses an observation no adjudication names the term with",
+                   "adjudicat", add_alias, TA, OCW, "SYNONYM", S)
     attempt(adj, OCW, "NAMES-EXISTING", "fixture", S, term_id=TA)
     legacy = q("SELECT o.observation_id FROM observed_terms o WHERE o.created_by_session "
                "<> ? AND COALESCE(o.notes,'') NOT LIKE '%VERBATIM-EXEMPT%' ORDER BY 1 LIMIT 1",
                S)[0][0]
     attempt(adj, legacy, "NAMES-EXISTING", "fixture", S, term_id=TA)
-    msg = refusal(add_alias, TA, legacy, "SYNONYM", S)
-    record("AL03", "add-alias refuses an observation whose quote is not in its own source's "
-           "saved text (the fixture log holds none of the corpus)",
-           msg and "source-attested" in msg, msg)
+    expect_refusal("AL03", "add-alias refuses an observation whose quote is not in its own source's "
+                   "saved text (the fixture log holds none of the corpus)",
+                   "source-attested", add_alias, TA, legacy, "SYNONYM", S)
     a4 = attempt(add_alias, TA, OCW, "SYNONYM", S)
     arow = q("SELECT alias, language, jurisdiction, notes FROM term_aliases WHERE term_id=? "
              "AND alias='door leaf'", TA)
@@ -659,9 +645,8 @@ try:
            "source's jurisdiction, and the 'source-attested' marker",
            arow and arow[0][1] == "en" and arow[0][2] == jur
            and arow[0][3].startswith("source-attested"), f"{a4} {arow}")
-    msg = refusal(add_alias, TA, OCW, "SYNONYM", S)
-    record("AL05", "add-alias refuses an alias the term already holds",
-           msg and "already holds" in msg, msg)
+    expect_refusal("AL05", "add-alias refuses an alias the term already holds",
+                   "already holds", add_alias, TA, OCW, "SYNONYM", S)
 
     # ── M: mint-term-from-catalogue ──────────────────────────────────────────────────
     mint = fn("mint_term_from_catalogue")
@@ -675,30 +660,28 @@ try:
         a.update(k)
         return a
 
-    msg = refusal(mint, **mt(canonical_en="tactile surface 600"))
-    record("M01", "mint refuses a value-bearing name", msg and "values" in msg, msg)
-    msg = refusal(mint, **mt(canonical_en="E-08 corridor"))
-    record("M02", "mint refuses an old item code", msg and "item code" in msg, msg)
+    expect_refusal("M01", "mint refuses a value-bearing name",
+                   "values", mint, **mt(canonical_en="tactile surface 600"))
+    expect_refusal("M02", "mint refuses an old item code",
+                   "item code", mint, **mt(canonical_en="E-08 corridor"))
     msg = refusal(mint, **mt(catalogue="_archived/data/corpus-pre-reset-2026-08-06.db",
                              entry_ref="items:E-08"))
     record("M03", "mint refuses the old Part 4 item table of the pre-reset corpus",
            msg and ("not selected" in msg or "item code" in msg), msg)
-    msg = refusal(mint, **mt(entry_ref="Tier9_999"))
-    record("M04", "mint refuses an entry that does not resolve in the catalogue file",
-           msg and "no entry" in msg, msg)
-    msg = refusal(mint, **mt(approval_quote="fixture: approval the owner never gave"))
-    record("M05", "mint refuses an approval quote not found exactly once in the ledger",
-           msg and "exactly once" in msg, msg)
-    msg = refusal(mint, **mt(catalogue="references/not-a-catalogue.md"))
-    record("M06", "mint refuses a catalogue outside the CHECK (adding one is a ruling)",
-           msg and "CHECK" in msg, msg)
+    expect_refusal("M04", "mint refuses an entry that does not resolve in the catalogue file",
+                   "no entry", mint, **mt(entry_ref="Tier9_999"))
+    expect_refusal("M05", "mint refuses an approval quote not found exactly once in the ledger",
+                   "exactly once",
+                   mint, **mt(approval_quote="fixture: approval the owner never gave"))
+    expect_refusal("M06", "mint refuses a catalogue outside the CHECK (adding one is a ruling)",
+                   "CHECK", mint, **mt(catalogue="references/not-a-catalogue.md"))
     mt7 = attempt(mint, **mt())
     orow = q("SELECT catalogue, entry_ref, approval_quote FROM term_catalogue_origins WHERE "
              "term_id=?", mt7.get("term_id", ""))
     record("M07", "mint writes the term AND its origin row (catalogue, entry, approval)",
            mt7.get("term_id") and orow == [(TIER456, ENTRY, QUOTE)], f"{mt7} {orow}")
-    msg = refusal(mint, **mt())
-    record("M08", "mint refuses a name a term already holds", msg and "already" in msg, msg)
+    expect_refusal("M08", "mint refuses a name a term already holds",
+                   "already", mint, **mt())
     oldterm = q("SELECT term_id FROM terms ORDER BY term_id DESC LIMIT 1")[0][0]
     corpus = "_archived/data/corpus-pre-reset-2026-08-06.db"
     cterm = sqlite3.connect(f"file:{REPO / corpus}?mode=ro&immutable=1", uri=True).execute(
@@ -775,20 +758,17 @@ try:
     # ── U: follow-ups, and the advisory reader ───────────────────────────────────────
     raise_fu, resolve_fu = fn("raise_follow_up"), fn("resolve_follow_up")
     RSN = "read-outside-admitting-purpose"
-    msg = refusal(raise_fu, 10 ** 9, RSN, "w", S)
-    record("U01", "raise-follow-up refuses an unknown extraction",
-           msg and "no such extraction" in msg, msg)
-    msg = refusal(raise_fu, E_FULL, RSN, "  ", S)
-    record("U02", "raise-follow-up refuses a blank warrant", msg and "--warrant" in msg, msg)
-    msg = refusal(raise_fu, E_FULL, "a-new-reason", "w", S)
-    record("U03", "raise-follow-up refuses a reason outside the column's CHECK",
-           msg and "CHECK" in msg, msg)
+    expect_refusal("U01", "raise-follow-up refuses an unknown extraction",
+                   "no such extraction", raise_fu, 10 ** 9, RSN, "w", S)
+    expect_refusal("U02", "raise-follow-up refuses a blank warrant",
+                   "--warrant", raise_fu, E_FULL, RSN, "  ", S)
+    expect_refusal("U03", "raise-follow-up refuses a reason outside the column's CHECK",
+                   "CHECK", raise_fu, E_FULL, "a-new-reason", "w", S)
     u4 = attempt(raise_fu, E_FULL, RSN, "fixture: re-check against the parameter's own "
                  "literature", S)
     record("U04", "raise-follow-up writes an open follow-up", u4.get("follow_up_id"), u4)
-    msg = refusal(raise_fu, E_FULL, RSN, "again", S)
-    record("U05", "a second OPEN follow-up for the same extraction and reason is refused",
-           msg and "already has open" in msg, msg)
+    expect_refusal("U05", "a second OPEN follow-up for the same extraction and reason is refused",
+                   "already has open", raise_fu, E_FULL, RSN, "again", S)
     fa1 = run_audit("extraction_follow_up_audit.py")
     # A LIVE determination governed by that extraction: set by SQL, as in L03.
     LIVE = x("INSERT INTO specifications (parameter_id, identity_code, state, created_at, "

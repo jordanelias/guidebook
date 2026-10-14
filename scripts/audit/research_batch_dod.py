@@ -1026,8 +1026,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     #
     # GRANDFATHERED BY DATE IN A BATCH RUN, COUNTED IN --all. No reading could be recorded
     # before source_scans existed, so a batch admitted earlier would fail a rule it could
-    # not have met -- and research_dod_session is BLOCKING on LATEST-RESEARCH (batch 23 when
-    # this landed). Admissions created before R16_SCAN_FROM are therefore REPORTED in a
+    # not have met -- and research_dod_session is BLOCKING on LATEST-RESEARCH (the batch it
+    # names). Admissions created before R16_SCAN_FROM are therefore REPORTED in a
     # batch run, not failed; --all counts them all against the baseline, which ratchets
     # down as the re-reading phase (plan section 7, P3) records their readings. The same
     # forward-commitment shape as alias_provenance_audit's CUTOFF_SESSION_DATE. A row with
@@ -1082,7 +1082,7 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # check flagged it. Batch-scoped here, not a refusal in add-source, because the edge is
     # written after the admission. The remedy for a list-driven acquisition is
     # `log-search --origin lead-index ... --admitted-ref-id R`; for an old row,
-    # `link-admission`. Two corpus rows owed it when this landed (derive:
+    # `link-admission`. Corpus rows owed it when this landed (derive:
     # SELECT ref_id FROM evidence_sources e WHERE NOT EXISTS (SELECT 1 FROM
     # search_admissions a WHERE a.ref_id = e.ref_id)); --all counts them against the
     # baseline, which ratchets down only.

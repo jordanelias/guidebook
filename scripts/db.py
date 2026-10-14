@@ -64,6 +64,19 @@ import dbcore                                                      # noqa: E402
 from dbcore import Refusal                                         # noqa: E402
 
 
+def _retrieval_log():
+    """`scripts/research/retrieval_log`, imported on first use.
+
+    It lives beside the bytes and outside the write path on purpose (its own docstring says
+    why), and most verbs never need it, so it is not imported at module load.
+    """
+    research = str(Path(__file__).resolve().parent / "research")
+    if research not in sys.path:
+        sys.path.insert(0, research)
+    import retrieval_log                                              # noqa: E402
+    return retrieval_log
+
+
 def _ladder_evidence_types():
     """The evidence-type vocabulary, from the ratified ladder (CLAUDE.md rule 8).
 
@@ -646,8 +659,7 @@ def _link_result_artefacts(conn, exec_id, artefacts, *, mined_ref_id, query_text
     """
     if not artefacts:
         return
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                              # noqa: E402
+    retrieval_log = _retrieval_log()
     for artefact in artefacts:
         try:
             if mined_ref_id:
@@ -4138,8 +4150,7 @@ def _correctable():
     pub_title_en, so the verifier compares a SET of columns where this writer targets one).
     That exception is stated here rather than left implicit.
     """
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                              # noqa: E402
+    retrieval_log = _retrieval_log()
     out = {"pub_title": lambda m: next((t for t in (m.get("title") or []) if t), None)}
     out.update(dict(retrieval_log.PAYLOAD_FIELDS))
     return out
@@ -4150,8 +4161,7 @@ _CORRECTABLE = _correctable()
 
 def _payload_for(ref_id, doi, log_session):
     """The logged payload for one DOI, or a refusal explaining what is missing."""
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                              # noqa: E402
+    retrieval_log = _retrieval_log()
     payloads = retrieval_log._logged_payloads(log_session)
     if not payloads:
         raise Refusal(
@@ -4914,20 +4924,12 @@ def dispose_adversarial_finding(finding_id: int, disposition: str, ref: str, ses
                     f"existing file under scripts/migrations/ matching "
                     f"migrate_db.DATA_PATTERN; got {ref!r}.")
         elif disposition == "OWNER-RULED":
-            m = re.match(r'^references/project-standards\.md :: "(.+)"$', ref or "", re.S)
+            m = dbcore.LEDGER_REF_RE.match(ref or "")
             if not m:
                 raise Refusal(
                     f"finding {finding_id}: disposition=OWNER-RULED requires --ref of the "
                     f"form 'references/project-standards.md :: \"<verbatim quote>\"'.")
-            quote = m.group(1)
-            text = (dbcore.REPO_ROOT / "references" / "project-standards.md").read_text(
-                encoding="utf-8")
-            n = dbcore.count_ledger_quote(dbcore.strip_supersedes_citations(text), quote)
-            if n != 1:
-                raise Refusal(
-                    f"finding {finding_id}: the quote occurs {n} time(s) in the ledger's "
-                    f"substantive prose (RC3 normalisation, excluding SUPERSEDES citation "
-                    f"lines); it must occur exactly once.")
+            dbcore.require_ledger_quote_once(m.group(1), f"finding {finding_id}: the quote")
         elif disposition in ("REJECTED", "PROVISIONAL-DISPUTED"):
             reason = dbcore.require_reason(reason, f"finding {finding_id}")
             ref = reason
@@ -6163,9 +6165,10 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
 
     A NEW OBSERVATION MUST BE VERIFIABLE (critique F7). The verbatim check had one call
     site, add-extraction; observations -- the material every term and parameter is minted
-    from -- carried a quote nothing compared with the source. Measured on the plan's 88
-    observations: 34 quotes in the source's own saved text, 37 only in another source's,
-    17 in no saved file. So a NEW observation now requires --locator (the sighting's key)
+    from -- carried a quote nothing compared with the source. Many of the observations held
+    when this was written verified only against another source's text, or against none
+    (scripts/audit/observation_verbatim_audit.py derives the split). So a NEW observation
+    now requires --locator (the sighting's key)
     and --context-quote; the phrase must occur inside its own quote; and the quote must be
     found in a file saved FOR THIS SOURCE (retrieval_log.locate_quote, scoped by ref_id).
     A hit only in another source's bytes is refused, not passed: it proves the words are
@@ -6215,9 +6218,7 @@ def observe_term(data: dict, session: str, dry_run: bool = False):
                 "sentence the phrase sits in, verbatim, so judgment can adjudicate it and "
                 "the quote can be checked against the source's saved text (CLAUDE.md "
                 "5(c)).")
-        sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-        import retrieval_log                                      # noqa: E402
-        if retrieval_log.normalise_quote(surface) not in retrieval_log.normalise_quote(quote):
+        if not _retrieval_log().phrase_in_quote(surface, quote):
             raise Refusal(
                 f"observe-term: --surface-form {surface!r} does not occur inside its own "
                 f"--context-quote. The quote is the sighting's evidence; a phrase that is "
@@ -6249,8 +6250,7 @@ def _require_scoped_verbatim(text, ref_id, field, context, exempt_reason=None):
     Returns None when the quote verifies for this source, the ledger marker when an
     exemption is accepted.
     """
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                          # noqa: E402
+    retrieval_log = _retrieval_log()
     kind, where = retrieval_log.locate_quote(text, ref_id=ref_id)
     if exempt_reason:
         if kind == "scoped":
@@ -6260,7 +6260,7 @@ def _require_scoped_verbatim(text, ref_id, field, context, exempt_reason=None):
                 f"artefact of this source can carry, not for text that verifies.")
         tail = f" (the words occur only UNSCOPED: {where.split(' -- ')[0]})" \
             if kind == "unscoped" else ""
-        return f"[VERBATIM-EXEMPT: {exempt_reason}]{tail}"
+        return retrieval_log.exempt_marker(exempt_reason, tail)
     if kind == "scoped":
         return None
     remedy = (f"Register this source's own text under its ref_id and quote from it -- "
@@ -6380,12 +6380,11 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
                 f"FROM an observed phrase (db.py observe-term), never from nothing -- that "
                 f"is what makes the vocabulary an output of the work rather than a "
                 f"presupposition.")
-        clash = conn.execute("SELECT term_id, canonical_en FROM terms "
-                             "WHERE lower(canonical_en)=lower(?)", [canonical_en]).fetchone()
+        clash = _name_holder(conn, canonical_en, aliases=False)
         if clash:
             raise Refusal(
                 f"{canonical_en!r} is already TERM {clash['term_id']} "
-                f"({clash['canonical_en']!r}). That makes this NAMES-EXISTING, not "
+                f"({clash['detail']!r}). That makes this NAMES-EXISTING, not "
                 f"NAMES-NEW:\n  db.py adjudicate-term --observation-id {from_observation} "
                 f"--outcome NAMES-EXISTING --term-id {clash['term_id']} --rationale ...")
         term_id = _mint_term_id(conn)
@@ -6412,6 +6411,27 @@ def _mint_term_id(conn) -> str:
     top = conn.execute("SELECT max(CAST(substr(term_id,6) AS INTEGER)) FROM terms "
                        "WHERE term_id LIKE 'TERM-___'").fetchone()[0] or 0
     return f"TERM-{top + 1:03d}"
+
+
+def _name_holder(conn, name, *, aliases=True, exclude_term=None):
+    """Who already answers to `name`, case-folded, or None.
+
+    A dict {kind, term_id, detail}: kind 'term' (detail its canonical_en) or 'alias'
+    (detail its alias_type). `exclude_term` is a term that may keep a name it already
+    holds (the one being renamed). `aliases=False` looks at canonical names only, which
+    is all add-term has ever checked. With no `exclude_term` nothing is filtered, and
+    with one it is `IS NOT`, not `<>`: terms.term_id is a bare TEXT primary key, which
+    SQLite lets be NULL, and `NULL <> 'x'` would hide such a row.
+    """
+    held = conn.execute("SELECT term_id, canonical_en FROM terms "
+                        "WHERE lower(canonical_en) = lower(?) AND (? IS NULL OR term_id IS NOT ?)",
+                        (name, exclude_term, exclude_term)).fetchone()
+    if held:
+        return {"kind": "term", "term_id": held[0], "detail": held[1]}
+    held = aliases and conn.execute(
+        "SELECT term_id, alias_type FROM term_aliases WHERE lower(alias) = lower(?) "
+        "AND (? IS NULL OR term_id IS NOT ?)", (name, exclude_term, exclude_term)).fetchone()
+    return {"kind": "alias", "term_id": held[0], "detail": held[1]} if held else None
 
 
 _MD_CODE = re.compile(r"^MD-[A-Z]+(-[A-Z]+)*$")
@@ -6908,15 +6928,6 @@ _MERGE_KEEPS_HISTORY = {
 #: and the screen named it: no old item code in a minted name.
 _ITEM_CODE = re.compile(r"\b[A-Z]-[0-9]{2}\b")
 
-_LEDGER = dbcore.REPO_ROOT / "references" / "project-standards.md"
-
-
-def _ledger_quote_count(quote: str) -> int:
-    """How often `quote` occurs in the ledger's substantive prose (RC3 normalisation,
-    SUPERSEDES/BY citation lines excluded) -- the anchor dispose-adversarial-finding's
-    OWNER-RULED disposition and the SUPERSEDES grammar already use."""
-    text = _LEDGER.read_text(encoding="utf-8")
-    return dbcore.count_ledger_quote(dbcore.strip_supersedes_citations(text), quote)
 
 
 def _parameter_row(conn, parameter_id, verb: str):
@@ -7149,7 +7160,7 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
     `amend-term` refused canonical_en since 2026-09-25 ("a vocabulary decision with
     callers, not a wording fix"), and no other verb could change it, so an answer-shaped
     or mis-chosen name was permanent (critique F5; plan section 1.2 item 6: the held ADA
-    text says "turning space" 57 times and "turning circle" none). This is that vocabulary
+    text says "turning space" and not "turning circle"). This is that vocabulary
     decision, with its warrant required:
 
       --from-observation N  the new name comes from a phrase a source USES: an English
@@ -7186,15 +7197,9 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
             f"rename-term: {new!r} carries a number, a comparator or a min/max word, so it "
             f"states a determination in its own name -- the item-layer defect "
             f"(DR-2026-08-19 section 1.1). Name the quantity, never its value.")
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                          # noqa: E402
     if ruling_quote:
-        n = _ledger_quote_count(ruling_quote)
-        if n != 1:
-            raise Refusal(
-                f"rename-term: the --ruling-quote occurs {n} time(s) in the ledger's "
-                f"substantive prose (references/project-standards.md, RC3 normalisation); "
-                f"it must occur exactly once to tie this rename to one ruling.")
+        dbcore.require_ledger_quote_once(ruling_quote, "rename-term: the --ruling-quote",
+                                         "That ties this rename to one ruling.")
         if new.lower() not in dbcore.normalise_quote_text(ruling_quote).lower():
             raise Refusal(f"rename-term: the quoted ruling does not contain {new!r}; the "
                           f"words that authorise a name must say it.")
@@ -7206,19 +7211,15 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
         old = term["canonical_en"]
         if old == new:
             return {"term_id": term_id, "changed": False, "dry_run": dry_run}
-        clash = conn.execute("SELECT term_id FROM terms WHERE lower(canonical_en) = lower(?) "
-                             "AND term_id <> ?", (new, term_id)).fetchone()
-        if clash:
-            raise Refusal(f"rename-term: {new!r} is already the name of {clash[0]}. Two "
-                          f"terms with one name are one concept twice; that is a merge "
+        clash = _name_holder(conn, new, exclude_term=term_id)
+        if clash and clash["kind"] == "term":
+            raise Refusal(f"rename-term: {new!r} is already the name of {clash['term_id']}. "
+                          f"Two terms with one name are one concept twice; that is a merge "
                           f"(db.py merge-parameter), not a rename. Nothing was written.")
-        aclash = conn.execute("SELECT term_id, alias_type FROM term_aliases "
-                              "WHERE lower(alias) = lower(?) AND term_id <> ?",
-                              (new, term_id)).fetchone()
-        if aclash:
-            raise Refusal(f"rename-term: {new!r} is an alias ({aclash[1]}) of {aclash[0]}. "
-                          f"A name another term answers to would make one phrase point at "
-                          f"two concepts. Nothing was written.")
+        if clash:
+            raise Refusal(f"rename-term: {new!r} is an alias ({clash['detail']}) of "
+                          f"{clash['term_id']}. A name another term answers to would make "
+                          f"one phrase point at two concepts. Nothing was written.")
         if from_observation is not None:
             obs = conn.execute("SELECT observation_id, ref_id, surface_form, language "
                                "FROM observed_terms WHERE observation_id = ?",
@@ -7237,8 +7238,7 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                     f"{term_id}. Judge first that the source's phrase names THIS concept "
                     f"(db.py adjudicate-term --outcome NAMES-EXISTING --term-id {term_id}), "
                     f"then rename from it. Nothing was written.")
-            if (retrieval_log.normalise_quote(new)
-                    not in retrieval_log.normalise_quote(obs["surface_form"])):
+            if not _retrieval_log().phrase_in_quote(new, obs["surface_form"]):
                 raise Refusal(
                     f"rename-term: {new!r} is not in the observed phrase "
                     f"{obs['surface_form']!r}. A name taken from a source is the source's "
@@ -7285,8 +7285,8 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
 
     `term_aliases` had no writer at all (critique F5, missed by the critic: only the 057
     baseline and a selftest inserted into it), so a new language alias had no sanctioned
-    path. Of 2,382 aliases 1,163 are marked model-generated and 880 predate provenance
-    marking (alias_provenance_audit); aliases are a reading aid, never evidence
+    path. Existing aliases are model-generated, curated, or predate provenance marking
+    (alias_provenance_audit counts each class); aliases are a reading aid, never evidence
     (catalogue-plan-v2 section 3.9), and this is the route by which source-attested ones
     grow.
 
@@ -7323,19 +7323,16 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 f"{term_id}. An alias says the source's phrase names THIS concept, which is "
                 f"a judgement: db.py adjudicate-term --observation-id {observation_id} "
                 f"--outcome NAMES-EXISTING --term-id {term_id} --rationale ... first.")
-        sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-        import retrieval_log                                      # noqa: E402
         quote = obs["context_quote"] or ""
-        if (not quote.strip() or retrieval_log.normalise_quote(obs["surface_form"])
-                not in retrieval_log.normalise_quote(quote)):
+        kind, where, inside = _retrieval_log().classify_observation(
+            obs["surface_form"], quote, obs["notes"], obs["ref_id"])
+        if not quote.strip() or not inside:
             raise Refusal(
                 f"add-alias: observation {observation_id} carries no context quote that "
                 f"contains its phrase, so nothing attests the phrase was seen. Observe the "
                 f"sighting again with --locator and --context-quote (db.py observe-term), "
                 f"adjudicate it, and alias from that observation.")
-        exempt = "[VERBATIM-EXEMPT:" in (obs["notes"] or "")
-        kind, where = retrieval_log.locate_quote(quote, ref_id=obs["ref_id"])
-        if kind != "scoped" and not exempt:
+        if kind not in ("scoped", "exempt"):
             raise Refusal(
                 f"add-alias: observation {observation_id}'s quote is not in a file saved for "
                 f"{obs['ref_id']} ({where}), so 'source-attested' would be untrue. Register "
@@ -7375,12 +7372,9 @@ def _decision_reference(ref: str) -> str:
     (the form dispose-adversarial-finding's OWNER-RULED disposition reads).
     """
     ref = (ref or "").strip()
-    m = re.match(r'^references/project-standards\.md :: "(.+)"$', ref, re.S)
+    m = dbcore.LEDGER_REF_RE.match(ref)
     if m:
-        n = _ledger_quote_count(m.group(1))
-        if n != 1:
-            raise Refusal(f"--decision-ref: the quote occurs {n} time(s) in the ledger's "
-                          f"substantive prose; it must occur exactly once.")
+        dbcore.require_ledger_quote_once(m.group(1), "--decision-ref: the quote")
         return ref
     path = dbcore.resolve_under(dbcore.REPO_ROOT / "decisions", ref) if ref else None
     if path is not None and path.is_file():
@@ -7526,28 +7520,22 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
                 f"mint-term-from-catalogue: {flag} {val!r} carries a number, a comparator "
                 f"or a min/max word. The owner asked for 'cleaned parameters without "
                 f"values': name and define the quantity, never its value.")
-    n = _ledger_quote_count(approval_quote)
-    if n != 1:
-        raise Refusal(
-            f"mint-term-from-catalogue: the --approval-quote occurs {n} time(s) in the "
-            f"ledger's substantive prose (references/project-standards.md). It must occur "
-            f"exactly once, so the approval is tied to one recorded ruling. Record the "
-            f"owner's approving words in the ledger first (CLAUDE.md rule 0).")
+    dbcore.require_ledger_quote_once(
+        approval_quote, "mint-term-from-catalogue: the --approval-quote",
+        "That ties the approval to one recorded ruling. Record the owner's approving "
+        "words in the ledger first (CLAUDE.md rule 0).")
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "term_catalogue_origins", "catalogue", catalogue,
                               "mint-term-from-catalogue --catalogue")
         resolved = _resolve_catalogue_entry(catalogue, entry_ref)
-        clash = conn.execute("SELECT term_id FROM terms WHERE lower(canonical_en) = lower(?)",
-                             (canonical_en,)).fetchone()
-        if clash:
+        clash = _name_holder(conn, canonical_en)
+        if clash and clash["kind"] == "term":
             raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is already "
-                          f"{clash[0]}. Nothing was written.")
-        aclash = conn.execute("SELECT term_id, alias_type FROM term_aliases "
-                              "WHERE lower(alias) = lower(?)", (canonical_en,)).fetchone()
-        if aclash:
+                          f"{clash['term_id']}. Nothing was written.")
+        if clash:
             raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is an alias "
-                          f"({aclash[1]}) of {aclash[0]}: the concept is held. Nothing was "
-                          f"written.")
+                          f"({clash['detail']}) of {clash['term_id']}: the concept is held. "
+                          f"Nothing was written.")
         term_id = _mint_term_id(conn)
         row = {"term_id": term_id, "canonical_en": canonical_en, "definition": definition,
                "domain": (domain or "").strip() or None,
@@ -7600,8 +7588,7 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
                       "characters) of the saved file read, as the manifest records it.")
     mode = data.get("mode")
     target = data.get("target_parameter_id")
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                          # noqa: E402
+    retrieval_log = _retrieval_log()
     with connect(dry_run) as conn:
         ref = dbcore.fold_ref(data.get("ref_id"))
         src = conn.execute("SELECT ref_id, url FROM evidence_sources WHERE ref_id = ?",
@@ -8226,9 +8213,7 @@ def _verbatim(text: str, ref_id: str = None):
     function normalises to letters and digits, so a quote must still be a quote but no
     longer has to survive the publisher's typography.
     """
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                          # noqa: E402
-    return retrieval_log.quote_in_artefacts(text, ref_id=ref_id)
+    return _retrieval_log().quote_in_artefacts(text, ref_id=ref_id)
 
 
 def _require_verbatim(text: str, ref_id: str, field: str, context: str,
@@ -8266,7 +8251,7 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
                 f"{context}: --verbatim-exempt was given, but {field} DOES occur in a "
                 f"persisted artefact ({where}). Drop the exemption -- it is for text no "
                 f"retrieval artefact can carry, not for text that verifies.")
-        return f"[VERBATIM-EXEMPT: {exempt_reason}]"
+        return _retrieval_log().exempt_marker(exempt_reason)
 
     found, where = _verbatim(text, ref_id)
     if not found:
@@ -8347,9 +8332,7 @@ def _cjk_to_arabic(text):
 
 def _verbatim_norm(text):
     """The shared normalisation, for the digit test. One home (retrieval_log)."""
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                          # noqa: E402
-    return retrieval_log.normalise_quote(text)
+    return _retrieval_log().normalise_quote(text)
 
 
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
@@ -10018,8 +10001,7 @@ def _check_surfaced_in(conn, exec_id, surfaced_in, surfaced_quote, locator, labe
     independent of the write path (dbcore.py's docstring: "a writer that verifies
     itself verifies nothing").
     """
-    sys.path.insert(0, str(Path(__file__).resolve().parent / "research"))
-    import retrieval_log                                              # noqa: E402
+    retrieval_log = _retrieval_log()
     try:
         return retrieval_log.check_surfaced_in(exec_id, surfaced_in, surfaced_quote, locator)
     except ValueError as e:

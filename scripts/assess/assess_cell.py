@@ -112,6 +112,8 @@ from fractions import Fraction
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
+sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
+import dbcore  # noqa: E402  -- stdlib only; the rulings several readers enforce live there
 
 from schemas.directness import (  # noqa: E402
     GRAIN_AGGREGATE, NOT_ASSESSED, SCALE_POPULATION, SCALE_UNIVERSAL,
@@ -323,20 +325,8 @@ def _has_column(conn, table, column):
     return any(r[1] == column for r in conn.execute(f'PRAGMA table_info("{table}")'))
 
 
-#: EXTRACTION METHODS WHOSE FIGURES MAY NOT SET A PUBLISHED VALUE. Owner, 2026-10-09,
-#: answering D1 of catalogue-plan-v2: "D1: yes figure from source filed by another slug
-#: allowed. skimmed values are not publishable" (ledger, "Owner statements 2026-10-09").
-#: A skimmed figure is still recorded and shown, marked as skimmed; it is left out of the
-#: set that sets a value and recorded as an EXCLUDED link with its reason, so K02 still
-#: counts it as accounted for. A RULING, not a vocabulary: the members of
-#: `extraction_method` stay in the column's own CHECK, and test_scan_contract asserts this
-#: value is still one of them, so a renamed method cannot silently disarm the rule.
-#:
-#: DELIBERATELY NOT HERE: `extraction_status = 'preliminary'`. A figure read in full but
-#: not yet reviewed is a different question (D1c in catalogue-plan-v2 Addendum 1), which
-#: the owner has NOT decided; such rows keep governing exactly as before. Do not add the
-#: status here without that answer recorded in the ledger.
-NOT_PUBLISHABLE_METHODS = ("skim",)
+#: The ruling lives in dbcore (stdlib only) so the stdlib-only checks can read it too.
+NOT_PUBLISHABLE_METHODS = dbcore.NOT_PUBLISHABLE_METHODS
 
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077).

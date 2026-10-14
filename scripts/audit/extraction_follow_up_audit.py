@@ -8,7 +8,7 @@ source filed by another slug allowed. skimmed values are not publishable", read 
 earlier "should be yes, but we still tag it for follow up later" (ledger, "Owner
 statements 2026-10-09"). So a figure read outside its source's admitting purpose MAY set a
 published value while tagged (`db.py raise-follow-up`, extraction_follow_ups), and a
-skimmed figure may NOT (assess_cell.NOT_PUBLISHABLE_METHODS). This is the reader of both
+skimmed figure may NOT (dbcore.NOT_PUBLISHABLE_METHODS). This is the reader of both
 answers.
 
 WHAT IT DOES:
@@ -38,6 +38,9 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO / "scripts"))
+import dbcore                                                          # noqa: E402
+
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 
 
@@ -67,13 +70,15 @@ def main():
             "JOIN extraction_follow_ups f ON f.extraction_id = l.extraction_id "
             "WHERE s.retired_at IS NULL AND l.role = 'governing' AND f.resolved_at IS NULL "
             "ORDER BY 1, 2").fetchall()
+        skim = dbcore.NOT_PUBLISHABLE_METHODS
         on_skim = conn.execute(
             "SELECT DISTINCT s.specification_id, l.extraction_id "
             "FROM specifications s "
             "JOIN specification_extraction_links l ON l.specification_id = s.specification_id "
             "JOIN source_value_extractions x ON x.extraction_id = l.extraction_id "
             "WHERE s.retired_at IS NULL AND l.role = 'governing' "
-            "AND x.extraction_method = 'skim' ORDER BY 1, 2").fetchall()
+            f"AND x.extraction_method IN ({','.join('?' * len(skim))}) ORDER BY 1, 2",
+            skim).fetchall()
     finally:
         conn.close()
 
