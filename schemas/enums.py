@@ -180,14 +180,19 @@ class JurisdictionCode(str, Enum):
 
 
 class EvidenceMarker(str, Enum):
-    """Evidence specification markers per project-standards.
+    """The three bands of tier-system section 5, as the glyphs a determination carries.
 
-    ● (filled) = evidence-based specification (Tier 1–6).
-    ○ (empty) = inferred from clinical reasoning or expert consensus.
-    Every specification sentence carries either ● or ○. Unmarked = error.
+    Declared strongest first: that order is the ordinal (FULL 3, PARTIAL 2, WEAK 1) the
+    owner's 2026-09-13 floor-of-the-mean ruling averages. `schemas.tier_derivation.band`
+    maps a source to one; `floor_mean` combines several.
     """
-    EVIDENCE_BASED = "●"
-    INFERRED = "○"
+    FULL = "\u25cf"      # confirmed evidence base
+    PARTIAL = "\u25d0"   # policy or standards basis only
+    WEAK = "\u25cb"      # grey literature, expert consensus, thin base
+
+    @property
+    def ordinal(self) -> int:
+        return len(EvidenceMarker) - list(EvidenceMarker).index(self)
 
 
 class EvidenceType(str, Enum):
@@ -253,16 +258,15 @@ class Co1Provenance(str, Enum):
 
 
 class Co1SourceType(str, Enum):
-    """Co-1 source type taxonomy per A5 §1.1.
+    """Co-1 source types: the values `evidence_sources.co1_source_type` holds.
 
-    The live column's values differ from these; RULINGS R11 corrects the enum
-    from the column in plan step 3.
+    The column declares no CHECK, so this enum is its vocabulary (RULINGS R11: corrected
+    from the live sample, with `add-source` and `amend-source` constrained to it). A new
+    type is added here, in the same change as the first source that carries it.
     """
-    PEER_REVIEWED_LITERATURE = "peer_reviewed_literature"
-    DPO_RESEARCH = "dpo_research"
-    ADVOCACY_POSITION = "advocacy_position"
-    ACADEMIC_NARRATIVE = "academic_narrative"
-    VALIDATED_TOOL = "validated_tool"
+    DPO_POSITION_STATEMENT = "dpo_position_statement"
+    LIVED_EXPERIENCE_PUBLICATION = "lived_experience_publication"
+    PARTICIPATORY_RESEARCH = "participatory_research"
 
 
 class VerificationStatus(str, Enum):

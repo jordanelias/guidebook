@@ -24,20 +24,12 @@ and untouched in another.
 | 1 | **Search execution** | a query × index × language × jurisdiction | screened results | `search_candidates` | `search_executions` |
 | 2 | **Citation mining** *(anchor-driven discovery)* | one confirmed source, as an anchor | further candidate **sources** | `search_candidates` / new `evidence_sources` | `citation_mining` (per slug × local ref) + `evidence_sources.citation_mining_status` |
 | 3 | **Gap-driven mining** *(gap-driven discovery)* | one open row in `gaps` | further candidate **sources** | `search_candidates` | `gap_mining` |
-| 4 | **Data extraction** *(value capture)* | one source we hold | **values**, with locator and lens grain, keyed on the parameter (`db.py add-extraction`) | `source_value_extractions`, `spec_value_probes`, `jurisdictional_values`, `economics_entries` | `evidence_sources.data_capture_status` |
+| 4 | **Data extraction** *(value capture)* | one source we hold | **values**, with locator and lens grain, keyed on the parameter (`db.py add-extraction`) | `source_value_extractions`, `spec_value_probes`, `jurisdictional_values`, `economics_entries` | the extraction rows, each carrying its session |
 | 5 | **Synthesis** | extracted values across sources for one (parameter × lens) | a **best-practice statement** with an evidence marker | `specifications` + `convergence_assessment` | `specifications.derivation_sha`, attestations |
 
 *Rows 4 and 5 read `(item × population)` until 2026-09-10. Migrations 071 and 073 re-keyed both
 tables onto `parameter_id` and the four lens columns (owner 2026-08-26 and 2026-08-28); the item
 layer was emptied 2026-09-01 and `items` is a Part-4 render rollup derived from specifications.*
-
-*Row 4's status column is **maintained by `db.py add-extraction`**, which sets
-`data_capture_status='captured'` in the same transaction as the INSERT — before that it had no
-writer at all, and the first extraction row would have turned the blocking `test_db_integrity`
-C06 red. Read the comment at that UPDATE before relying on it: the column is a derived duplicate
-of "does a capture row exist", C06 is therefore a parity check over a dual home, and CLAUDE.md
-rule 5 says such a check makes the dual home survivable rather than curing it. This row and C06/C07
-are the readers a writer-retire must re-point at the four capture tables' own EXISTS predicates.*
 
 Adjudication (does this source qualify for admission, at which tier) is not a sixth operation —
 it is the gate between 1–3 and 4, recorded on the source itself
@@ -92,10 +84,9 @@ operations 2 and 4 at source grain.
 
 **A status column without a biconditional check is an assertion nobody verifies.** The first
 backfill of `citation_mining_status` resolved rows by `global_ref_id` alone — NULL in 146 of 183
-rows — and left 80 sources reading `pending` while holding a non-deferred mining row. The capture
-status had check `C06` from the start; the mining status had no counterpart, so nothing
-contradicted it. Both now have one (`C06`, `C08`). Any future status column ships with its check
-or it does not ship.
+rows — and left 80 sources reading `pending` while holding a non-deferred mining row. The mining
+status had no check, so nothing contradicted it; it has one now (`C08`). Any future status column
+ships with its check or it does not ship.
 
 **Unresolved (⚑8 in the current plan):** under migrations-only, a log row is authored by the same
 session whose compliance it attests, at commit time, with self-reported timestamps. R8's

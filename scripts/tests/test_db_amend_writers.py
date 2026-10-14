@@ -633,6 +633,10 @@ try:
                and f"File it against {XB}" in msg
                and counts("source_value_extractions") == n_sve,
                f"first={first} msg={msg!r}")
+        record("X15a", "add-extraction leaves evidence_sources.data_capture_status alone (its writer is retired)",
+               "extraction_id" in first
+               and q("SELECT data_capture_status FROM evidence_sources WHERE ref_id=?", XD)[0][0] == "pending",
+               f"first={first}")
         n_obs = counts("observed_terms")
         # Migration 102: a new observation needs a locator and a verifiable quote (or the
         # recorded exemption), so the fixture supplies them; the tombstone refusal fires
@@ -892,7 +896,7 @@ try:
     r_a = admit(EA, "clinical", HI)
     EC = next_ref()
     r_c = admit(EC, "co1", None, "--co1-provenance", PROV, "--co1-source-type",
-                "dpo_research")
+                "dpo_position_statement")
     if r_a.returncode or r_c.returncode:
         record("E00", "fixture sources admitted for the retype cases", False,
                f"clinical={r_a.returncode} {r_a.stderr[-200:]!r} "
@@ -971,7 +975,7 @@ try:
                and row["co1_provenance"] is None and row["co1_source_type"] is None
                and row["evidence_type"] == "grey"
                and f"tier {TIER_MAP[('co1', 'intrinsic')]} -> {grey_tier}" in seg
-               and PROV in seg and "dpo_research" in seg,
+               and PROV in seg and "dpo_position_statement" in seg,
                f"msg={msg!r} out={out} seg={seg!r}")
         # THE CASE THAT FAILS ON THE PRE-FIX CODE: a move to co1 wrote a Co-1 row with
         # co1_source_type NULL, which co1_field_consistency rejects and grain_for grades
@@ -1520,6 +1524,45 @@ try:
            and "fixture N: parameter only" in ln and "NULL, %d," % PARAM in ln]
     record("N05", "emit_batch_sql captures a slugless search (the write can be shipped)",
            len(hit) == 1, captured[-400:])
+
+    # ── O: the tier is derived from (evidence_type, scope), never asked for (step 3 evidence) ─────
+    from schemas.tier_derivation import TIER_MAP as _TM  # noqa: E402
+
+    def add_o(label, *extra):
+        ref = next_ref()
+        r = run_cli("add-source", "--ref-id", ref, "--author", "corp|Fixture Body", "--year", "2020",
+                    "--title", f"fixture O {label}", "--session", S, *extra)
+        return ref, r
+
+    def tier_of(ref):
+        rows = q("SELECT tier FROM evidence_sources WHERE ref_id=?", ref)
+        return rows[0][0] if rows else None
+
+    n_src = counts("evidence_sources")
+    ref_bad, r_bad = add_o("tier contradicts", "--evidence-type", "grey", "--tier", "1")
+    record("O01", "add-source refuses a --tier the ladder does not derive, and writes nothing",
+           r_bad.returncode != 0 and "contradicts the ratified ladder" in (r_bad.stdout + r_bad.stderr)
+           and counts("evidence_sources") == n_src, f"rc={r_bad.returncode} {(r_bad.stdout + r_bad.stderr)[-200:]}")
+    ref_g, r_g = add_o("grey derived", "--evidence-type", "grey")
+    ref_c, r_c = add_o("clinical derived", "--evidence-type", "clinical", "--scope", "high_control")
+    record("O02", "add-source with no --tier stores the tier the ladder derives",
+           r_g.returncode == 0 and r_c.returncode == 0
+           and (tier_of(ref_g), tier_of(ref_c)) == (_TM[("grey", "intrinsic")], _TM[("clinical", "high_control")]),
+           f"{r_g.stderr[-200:]} {r_c.stderr[-200:]} {(tier_of(ref_g), tier_of(ref_c))}")
+    r_am = run_cli("amend-source", "--ref-id", ref_c, "--field", "scope", "--replacement", "lower_control",
+                   "--reason", "fixture: re-scoped", "--session", S)
+    record("O03", "amend-source --field scope moves the tier to the derived value with no --tier",
+           r_am.returncode == 0 and tier_of(ref_c) == _TM[("clinical", "lower_control")],
+           f"rc={r_am.returncode} {(r_am.stdout + r_am.stderr)[-200:]} tier={tier_of(ref_c)}")
+    n_src = counts("evidence_sources")
+    _, r_old = add_o("old co1 type", "--evidence-type", "co1", "--co1-provenance", "fixture: named co-production",
+                     "--co1-source-type", "peer_reviewed_literature")
+    ref_live, r_live = add_o("live co1 type", "--evidence-type", "co1", "--co1-provenance",
+                             "fixture: named co-production", "--co1-source-type", "dpo_position_statement")
+    record("O04", "add-source constrains --co1-source-type to the enum: a retired value refuses, a live one lands",
+           r_old.returncode != 0 and "is not a member of" in (r_old.stdout + r_old.stderr)
+           and r_live.returncode == 0 and counts("evidence_sources")[0] == n_src[0] + 1,
+           f"old rc={r_old.returncode} {(r_old.stdout + r_old.stderr)[-150:]} live rc={r_live.returncode} {r_live.stderr[-150:]}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

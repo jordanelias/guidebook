@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 08:58 UTC from git HEAD 8aca4ae (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 09:10 UTC from git HEAD 92d13b0 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 114,
  "stages": [
@@ -496,8 +496,6 @@
     "correct-source",
     "amend-source",
     "supersede-source",
-    "add-extraction",
-    "derive-extraction",
     "add-source"
    ],
    "cols": [
@@ -3116,7 +3114,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 14
+   "refusals": 12
   },
   "link-source-slug": {
    "functions": [
@@ -3438,9 +3436,6 @@
     "insert_extraction"
    ],
    "writes": {
-    "evidence_sources": [
-     "UPDATE"
-    ],
     "extraction_relations": [
      "INSERT"
     ],
@@ -3482,9 +3477,6 @@
     "derive_extraction"
    ],
    "writes": {
-    "evidence_sources": [
-     "UPDATE"
-    ],
     "extraction_relations": [
      "INSERT"
     ],
@@ -4135,29 +4127,23 @@
    }
   },
   "P-CO1-TYPE": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "every live co1_source_type value is in schemas.enums.Co1SourceType",
    "atoms": [
     "DRS-248"
    ],
    "evidence": {
     "enum": [
-     "academic_narrative",
-     "advocacy_position",
-     "dpo_research",
-     "peer_reviewed_literature",
-     "validated_tool"
+     "dpo_position_statement",
+     "lived_experience_publication",
+     "participatory_research"
     ],
     "live_values": [
      "lived_experience_publication",
      "dpo_position_statement",
      "participatory_research"
     ],
-    "outside_enum": [
-     "lived_experience_publication",
-     "dpo_position_statement",
-     "participatory_research"
-    ]
+    "outside_enum": []
    }
   },
   "P-CO1-PROV": {
@@ -4282,21 +4268,6 @@
      "SES-045": true
     },
     "verbatim_absent": []
-   }
-  },
-  "P-STATUS-WRITERS": {
-   "verdict": "FAIL",
-   "tests": "every non-default value of evidence_sources.data_capture_status is named beside the column in a writer",
-   "atoms": [
-    "OPS-04"
-   ],
-   "evidence": {
-    "default": "pending",
-    "values_with_no_writer_line": [
-     "deferred",
-     "none-extractable"
-    ],
-    "lexical": true
    }
   },
   "P-PARAM-LIFECYCLE": {
@@ -4627,17 +4598,17 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2599,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 290,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 289,
   "distinct quotes among all atoms": 2567,
   "status corrections owed (each atom's status re-read)": 0,
-  "conflicts (atoms, class, probe exist)": 29,
-  "machine transitions": 42,
-  "transition evidence needles re-read": 72,
-  "state vocabularies compared with a column's own CHECK": 12,
+  "conflicts (atoms, class, probe exist)": 27,
+  "machine transitions": 41,
+  "transition evidence needles re-read": 71,
+  "state vocabularies compared with a column's own CHECK": 11,
   "abstract machines (no single column holder)": 5,
   "capability predicates": 28,
-  "probes run": 34,
-  "probes linted for a reachable PASS": 34,
+  "probes run": 33,
+  "probes linted for a reachable PASS": 33,
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
@@ -4649,5 +4620,5 @@
   "HISTORICAL": 26
  },
  "atoms_total": 2599,
- "conflicts_total": 29
+ "conflicts_total": 27
 }

@@ -103,7 +103,7 @@ def grain_for(evidence_type: str, tier: Optional[int],
     """G3 + G6: grain from (evidence_type x tier x co1_source_type); the
     GRAIN_FROM_EVIDENCE_TYPE default map otherwise. Returns (grain, reason).
 
-    G3  Co-1 grain follows co1_source_type: dpo_research / advocacy_position
+    G3  Co-1 grain follows co1_source_type: dpo_position_statement
         -> aggregate (population-grain); every other value, including an
         unrecognised one (e.g. a co1_source_type outside schemas.enums.
         Co1SourceType) -> specific (individual-grain), noted.
@@ -112,8 +112,7 @@ def grain_for(evidence_type: str, tier: Optional[int],
         see G1).
     """
     if evidence_type == "co1":
-        if co1_source_type in (Co1SourceType.DPO_RESEARCH.value,
-                               Co1SourceType.ADVOCACY_POSITION.value):
+        if co1_source_type == Co1SourceType.DPO_POSITION_STATEMENT.value:
             return GRAIN_AGGREGATE, "G3:population-grain co1"
         return GRAIN_SPECIFIC, "G3:individual-grain co1"
     if evidence_type == "standard_eb":

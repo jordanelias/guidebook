@@ -368,7 +368,7 @@ def main():
     # 8c. THE DIGNITY LINE. A community-rooted claim stays fully assertable as
     # population_only and owes NO rationale: "there is no bottom-up override of Co-1."
     d = determine(synth_db([{"tier": 1, "evidence_type": "co1",
-                             "co1_source_type": "dpo_research"}]),
+                             "co1_source_type": "dpo_position_statement"}]),
                   1, {"identity_code": "MOB"}, "syn-slug", "co1-anchored")
     expect("H2: Co-1 community provenance => cultural_claim_anchor recorded",
            bool(d["cultural_claim_anchor"]))
@@ -662,6 +662,18 @@ def main():
         1, {"identity_code": "MOB"}, "syn-slug", "unparsable-reported")
     expect("COMPOSE: a claim stating no number is REPORTED, not silently dropped",
            d["value_note"] and "2 of 3" in d["value_note"], str(d["value_note"]))
+
+    # band() and floor_mean(): tier-system section 5, and the owner's five rows of 2026-09-13.
+    from schemas.enums import EvidenceMarker as M  # noqa: E402
+    from schemas.tier_derivation import band, floor_mean  # noqa: E402
+    T1, T4, T6 = band(1, "clinical"), band(4, "standard_eb"), band(6, "code")
+    expect("BAND: section 5 reads off (tier, evidence_type)",
+           [band(1, "co1"), band(2, "sr_meta"), band(2, "co2"), band(3, "clinical"),
+            band(5, "national_fw"), band(3, "grey"), band(3, "standard_eb")]
+           == [M.FULL] * 4 + [M.PARTIAL, M.WEAK, M.WEAK] and (T1, T4, T6) == (M.FULL, M.PARTIAL, M.WEAK))
+    expect("BAND: floor_mean reproduces the owner's five rows (2 x T1 + T4 is the acceptance case)",
+           [floor_mean(x) for x in ([T1, T1, T4], [T1] * 3, [T1, T1, T6], [T1, T6, T6], [T1] * 99 + [T4])]
+           == [M.PARTIAL, M.FULL, M.PARTIAL, M.WEAK, M.PARTIAL])
 
     if FAILED:
         print(f"\nFAIL: {len(FAILED)} test(s): {FAILED}")

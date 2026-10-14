@@ -89,12 +89,10 @@ check("sr_meta=AGGREGATE, clinical=SPECIFIC, code=CODE",
 # while GRAIN_FROM_EVIDENCE_TYPE above stated co1->specific / standard_eb->code
 # UNCONDITIONALLY. These assertions are what makes that disagreement
 # impossible now: the ratified, conditional rule is tested where it lives.
-check("grain_for: co1 + dpo_research => AGGREGATE (G3, population-grain)",
-      d.grain_for("co1", 1, "dpo_research")[0] == d.GRAIN_AGGREGATE)
-check("grain_for: co1 + advocacy_position => AGGREGATE (G3, population-grain)",
-      d.grain_for("co1", 1, "advocacy_position")[0] == d.GRAIN_AGGREGATE)
-check("grain_for: co1 + academic_narrative => SPECIFIC (G3, individual-grain)",
-      d.grain_for("co1", 1, "academic_narrative")[0] == d.GRAIN_SPECIFIC)
+check("grain_for: co1 + dpo_position_statement => AGGREGATE (G3, population-grain)",
+      d.grain_for("co1", 1, "dpo_position_statement")[0] == d.GRAIN_AGGREGATE)
+check("grain_for: co1 + participatory_research => SPECIFIC (G3, individual-grain)",
+      d.grain_for("co1", 1, "participatory_research")[0] == d.GRAIN_SPECIFIC)
 check("grain_for: co1 + None => SPECIFIC (G3 default, individual-grain)",
       d.grain_for("co1", 1, None)[0] == d.GRAIN_SPECIFIC)
 check("grain_for: co1 + an unrecognised co1_source_type => SPECIFIC, not a crash",

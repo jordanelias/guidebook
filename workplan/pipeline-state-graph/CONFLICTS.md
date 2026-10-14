@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-29 entries. Severity: S1 10, S2 6, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 15.
+27 entries. Severity: S1 10, S2 5, S3 12. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 13.
 
 ## Index
 
@@ -23,11 +23,9 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
-| C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
 | C-011 | S3 | RULING-DOC | NONE | -- | Is `base` a stage, and is it 'substrate'? |
 | C-015 | S3 | DOC-DOC | OWNER | -- | Evidence collection: 'a cursory scan' or a stage that judges relevance |
 | C-016 | S3 | DOC-DOC | AGENT | -- | Pointer discipline: enforced by schema shape, or not enforced |
-| C-025 | S3 | RULING-MECHANISM | AGENT | P-CO1-TYPE -> FAIL | Co-1 source types: the live column holds values the enum does not (R11: the enum is corrected from the column) |
 | C-030 | S3 | DOC-DOC | AGENT | -- | How checks are added and what gates a merge |
 | C-038 | S3 | DOC-DOC | AGENT | -- | Hand-written counts and enumerations that disagree with each other or with the schema |
 | C-041 | S3 | DOC-DOC | OWNER | -- | Scope of the operative instrument's supersession and the read-set it prescribes |
@@ -225,17 +223,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 
 **Direction.** UNSETTLED. [CONFIDENCE: low -- the extractor did not record this pair inside RC-153; read RC-153 and LED-079 together before acting.] They agree if 'retire' means NULL-forward rather than drop, and disagree on the order of writer and readers.
 
-## C-048 [S2] A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names
-
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-STATUS-WRITERS` = **FAIL**
-
-- when the CLI cannot reach a column, add the verb and do not claim the write; a table the CLI cannot reach is a coverage bug to fix.  
-  _atoms:_ `LED-182`(act), `CLM-031`(act)
-- any status column ships with its biconditional check or it does not ship (C06 covers the 'captured' value).  
-  _atoms:_ `OPS-04`(act)
-
-**Direction.** P-STATUS-WRITERS (lexical) lists the non-default values the column's CHECK accepts that no db.py line names beside the column. Those values are reachable only by hand SQL, so 'looked, nothing extractable' cannot be recorded, an absence the project treats as evidence (R7, R14). A Layer 1 gap: file it as a GAP and add the verb in a tooling PR (rule 10), not in a batch's data migration.
-
 ## C-011 [S3] Is `base` a stage, and is it 'substrate'?
 
 **Class** RULING-DOC  ·  **Resolver** NONE  ·  **Confidence** medium
@@ -272,15 +259,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
   _atoms:_ `DRS-064`(act), `DRS-227`(act), `DRS-228`(act)
 
 **Direction.** CLAUDE.md (newer, process rule) is the better statement of enforcement; the DR sentences are stale.
-
-## C-025 [S3] Co-1 source types: the live column holds values the enum does not (R11: the enum is corrected from the column)
-
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-CO1-TYPE` = **FAIL**
-
-- co1-operational 1.1 lists four Co-1 source types; the column has no CHECK, and the live values, schemas.enums.Co1SourceType and that list disagree.  
-  _atoms:_ `DRS-248`(act)
-
-**Direction.** RULINGS R11: the enum is corrected from the column's CHECK if one exists, else from the live sample with the writer constrained to it (plan step 3, evidence). The document no longer lists values.
 
 ## C-030 [S3] How checks are added and what gates a merge
 

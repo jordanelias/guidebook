@@ -22,7 +22,7 @@ CLI usage:
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
+    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --evidence-type clinical --scope high_control --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
         (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
@@ -1434,11 +1434,10 @@ def main():
                        help="Why the previous text was wrong. Recorded in "
                             "metadata_integrity_detail with the replaced text.")
     p_ams.add_argument("--tier", type=int, default=None,
-                       help="With --field scope, required when the new scope derives a "
-                            "different tier; with --field evidence_type, optional. Either "
-                            "way it must equal the one value the ratified ladder "
-                            "produces, and moves in the same statement. The tier is "
-                            "never set on its own.")
+                       help="Optional with --field scope or --field evidence_type: the tier "
+                            "moves to the one value the ratified ladder derives, in the "
+                            "same statement, and a value that disagrees is refused. The "
+                            "tier is never set on its own.")
     p_ams.add_argument("--scope", default=None,
                        help="Only with --field evidence_type: the scope the new tier is "
                             "derived from. Required when the new type spans more than one "
@@ -2304,7 +2303,9 @@ def main():
     p_as.add_argument("--grey-reason", help="WHY it is grey: the venue, in a phrase")
     p_as.add_argument("--year", required=True, type=int)
     p_as.add_argument("--title", required=True)
-    p_as.add_argument("--tier", required=True, type=int)
+    p_as.add_argument("--tier", type=int,
+                      help="optional: the tier is derived from --evidence-type and --scope; a value that "
+                           "disagrees is refused")
     p_as.add_argument("--doi")
     p_as.add_argument("--pmid")
     p_as.add_argument("--jurisdiction")
@@ -3095,30 +3096,12 @@ def main():
             # and 0 is a real, meaningful value that `if _v` would discard.
             if _v is not None:
                 data[_col] = _v
-        # THE TIER MUST BE DERIVABLE, NOT MERELY ASSERTED (2026-09-10).
-        #
-        # schemas/tier_derivation.py calls TIER_MAP "the ratified ladder as a total
-        # function" over (evidence_type, scope). This CLI could write --tier and had no
-        # --scope, so the ladder had no input and the tier was whatever the operator
-        # typed. Every one of the 9 admitted sources carries scope NULL, and
-        # adjudication_integrity.py reports 9 of 9 stored tiers as underivable — a field
-        # that is POPULATED but not TRUE, which is CLAUDE.md §5(c)'s failure exactly, and
-        # tier is what drives weight, which drives the determination.
-        #
-        # Six of the eight evidence types admit exactly one scope, so demanding a flag
-        # nobody could get wrong would be friction without a decision. It is supplied.
-        # The two that carry a real judgment — clinical (how controlled) and standard_eb
-        # (whose standard) — must be said, and are refused if silent.
-        #
-        # THIS IS A PARITY CHECK, AND RULE 5 SAYS A PARITY CHECK IS NOT A FIX: it makes a
-        # dual home survivable, therefore permanent. Once `scope` is recorded, `tier` IS
-        # derive_tier(evidence_type, scope) — a stored copy of a computed fact. The
-        # sanctioned end state is to retire it: writer-retire --tier, reader-retire the
-        # column, NULL forward (CLAUDE.md §5). That is a sweep across every reader of
-        # evidence_sources.tier, including the determination engine, and it is not this
-        # change. What this change does is stop the two from diverging any further, so the
-        # retirement has a consistent corpus to work from. Do not read the guard as the
-        # remedy.
+        # THE TIER IS DERIVED, NOT ASKED FOR (2026-09-10; --tier made optional in step 3 evidence).
+        # schemas/tier_derivation.py's TIER_MAP is the ratified ladder as a total function of
+        # (evidence_type, scope); the column stays (23 committed data migrations insert it) but
+        # no operator retypes it. A --tier that disagrees is refused. Six of the eight types
+        # admit exactly one scope, which is supplied; clinical and standard_eb carry a real
+        # judgment and must say it. The ladder is IMPORTED, never restated here.
         #
         # LAYER: this is a Layer 1 refusal in a Layer 1 writer, deriving from the Layer 1
         # model. The ladder is IMPORTED from schemas/tier_derivation.py, never restated
@@ -3167,7 +3150,7 @@ def main():
                     f"--scope {_scope!r} is not admissible for --evidence-type "
                     f"{_etype!r}; valid: {sorted(_valid)}")
             _derived = derive_tier(_etype, _scope)
-            if args.tier != _derived:
+            if args.tier is not None and args.tier != _derived:
                 raise Refusal(
                     f"--tier {args.tier} contradicts the ratified ladder: "
                     f"({_etype}, {_scope}) derives tier {_derived}.\n"
@@ -3175,6 +3158,7 @@ def main():
                     f"type and its scope. Either the scope is wrong or the tier is; "
                     f"say which, do not assert past it.")
             data["scope"] = _scope
+            data["tier"] = _derived
 
         # THE CO-1 WARRANT REFUSAL (D-0178, ratified 2026-08-31). A Co-1 admission whose
         # warrant is not stated is "unwarranted-pending", and Co-1 is co-primary with T1
@@ -3188,6 +3172,14 @@ def main():
                 "--co1-provenance is REQUIRED for --evidence-type co1. "
                 + CO1_WARRANT_REQUIRED
                 + "admit it at its actual tier and say why in --notes.")
+        if args.co1_source_type is not None:
+            from schemas.enums import Co1SourceType  # noqa: E402
+            _members = sorted(m.value for m in Co1SourceType)
+            if args.co1_source_type not in _members:
+                raise Refusal(
+                    f"--co1-source-type {args.co1_source_type!r} is not a member of "
+                    f"schemas.enums.Co1SourceType: {_members}. The column declares no CHECK, "
+                    f"so the enum is its vocabulary. Nothing was written.")
         # THE SLUG AND ITS LABEL ARE RESOLVED READ-ONLY BEFORE ANY WRITE, and the
         # source and its link are then written in ONE transaction.
         #
@@ -5500,47 +5492,16 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                     f"{ref_id}: scope {replacement!r} is not admissible for "
                     f"evidence_type {_et!r}; valid: {sorted(_valid)}")
             _derived = derive_tier(_et, replacement)
-            if cur["tier"] != _derived:
-                # PAIRED CHANGE, added 2026-09-12. Until now this was a flat refusal,
-                # and `tier` was reachable by NO sanctioned writer: `_AMENDABLE` omits
-                # it and `correct-source` takes bibliographic fields from a payload.
-                # So the only way to re-tier a source was hand SQL against a table the
-                # CLI can reach, which CLAUDE.md 4 calls a coverage bug to fix rather
-                # than a licence to bypass. The wrong thing that reached the guidebook
-                # without it (the 8 bar): REF-00784 stood at Tier 1 -- co-primary
-                # anchoring strength -- on a design its own abstract calls "Case
-                # series" with a "sample of convenience", recorded as wrong by the
-                # 2026-07-20 anchor sweep and unfixable for fifty-four days.
-                #
-                # The refusal is kept and NARROWED rather than removed. A tier still
-                # cannot be asserted: it can only be moved to the one value the ladder
-                # derives from the new scope, in the same statement as that scope, with
-                # a reason. There is no path here that writes a row the ladder cannot
-                # produce -- which was the original refusal's whole point.
-                #
-                # THE SECOND PATH, added 2026-10-01 (I1): `--field evidence_type` moves
-                # the tier with the TYPE by the same derivation (_retype_source), with
-                # --tier optional there and refused when it disagrees. `tier` itself is
-                # still in neither _AMENDABLE nor _CORRECTABLE.
-                if tier is None:
-                    raise Refusal(
-                        f"{ref_id}: amending scope to {replacement!r} would make the "
-                        f"stored tier {cur['tier']} contradict the ratified ladder, "
-                        f"which derives {_derived} from ({_et}, {replacement}).\n"
-                        f"Amending the scope is amending the tier. If the scope is what "
-                        f"the bytes say, re-run with --tier {_derived} and the two move "
-                        f"together; this path will not write a row the ladder cannot "
-                        f"produce.")
-                if int(tier) != _derived:
-                    raise Refusal(
-                        f"{ref_id}: --tier {tier} is not derivable from "
-                        f"({_et}, {replacement}); the ladder derives {_derived}. The "
-                        f"tier is not a free field -- correct the scope instead.")
-                new_tier, old_tier = _derived, cur["tier"]
-            elif tier is not None and int(tier) != _derived:
+            if tier is not None and int(tier) != _derived:
                 raise Refusal(
                     f"{ref_id}: --tier {tier} contradicts the ladder, which derives "
-                    f"{_derived} from ({_et}, {replacement}).")
+                    f"{_derived} from ({_et}, {replacement}). The tier is not a free "
+                    f"field; drop --tier or correct the scope.")
+            if cur["tier"] != _derived:
+                # Amending the scope is amending the tier: the two move together, in one
+                # statement with the reason. There is no path here that writes a row the
+                # ladder cannot produce.
+                new_tier, old_tier = _derived, cur["tier"]
         stamp = audit(session)
         # THE LEDGER IS THE RECORD, and it is prose on purpose. Migration 094 added an
         # `amendments` table here and 095 dropped it: nothing read it, seven other amending
@@ -8261,12 +8222,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       capture assert it would mint an extraction that claims to have been verified
       before it was read twice.
 
-    ONE SIDE EFFECT ON ANOTHER TABLE, and it is not free: the ref's
-    `evidence_sources.data_capture_status` is set to 'captured' in the SAME
-    transaction. See the comment at the UPDATE for what breaks without it (blocking
-    check C06), what the other three capture-table writers do (nothing), and the
-    rule 5 tension it stops rather than cures.
-
     ADDED 2026-09-13 BY MIGRATION 075's WRITER, and refused the same way as
     everything above: `--figure-role` (REQUIRED -- a value with no role reads as a
     claim), `--comparator`, and `relations` -- a list of edge dicts written into
@@ -8552,65 +8507,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 cross_source_reason=edge.get("cross_source_reason"),
                 session=session, context="add-extraction"))
 
-        # THE STATUS THIS ROW MAKES TRUE — set in the SAME transaction as the INSERT,
-        # so the two can never be observed apart. `dbcore.connect()` commits once at
-        # the end of the with-block and rolls back on any exception, so either both
-        # land or neither does.
-        #
-        # WHAT BREAKS WITHOUT IT: test_db_integrity C06 asserts
-        # `evidence_sources.data_capture_status='captured'` <=> a joinable capture row
-        # exists, and `source_value_extractions` is one of its four capture tables.
-        # test_db_integrity is BLOCKING. `add-extraction` shipped as the table's first
-        # writer, so its first row turned a green blocking gate red -- reproduced
-        # 2026-09-10: one extraction, `C06 (9 examined) ... 1 have rows but do not claim
-        # it`, 68/69.
-        #
-        # WHAT THE OTHER THREE CAPTURE-TABLE WRITERS DO: NOTHING, AND MOSTLY THEY DO
-        # NOT EXIST. Measured 2026-09-10 -- `reasoning_doc_citations`
-        # has no `db.py` writer at all; `economics_entries`
-        # has `insert_economics_entry`, which never touches `data_capture_status`. So
-        # this is not a convention being followed, it is the first writer to maintain
-        # the biconditional at all. C06 is green over those three only because all
-        # three tables hold 0 rows. WHEN ANY OF THEM GAINS A WRITER, IT NEEDS THIS
-        # SAME BLOCK, and this comment is where that is recorded.
-        #
-        # RULE 5 TENSION, STATED RATHER THAN PAPERED OVER. `data_capture_status` is a
-        # DERIVED DUPLICATE of "does a capture row exist for this ref" -- a fact whose
-        # real home is the four capture tables. C06 is therefore a PARITY CHECK over a
-        # dual home, and CLAUDE.md rule 5 is explicit that "a parity check is not a fix
-        # -- it makes a dual home survivable, therefore permanent". THIS BLOCK STOPS
-        # THE BLEED; IT DOES NOT CURE IT. The cure is rule 5's own sequence:
-        #   1. WRITER-RETIRE  -- this block, plus the same in any future capture-table
-        #                        writer, is the last thing that should ever set the
-        #                        column. No new writer of it.
-        #   2. READER-RETIRE  -- the live readers are test_db_integrity C06/C07 and
-        #                        `governance/pipeline-operations.md`'s stage-4 row.
-        #                        Re-point them at the four EXISTS() predicates, which
-        #                        are the fact itself rather than a summary of it, and
-        #                        C06 dissolves rather than passing.
-        #   3. NULL FORWARD   -- the column is NOT NULL with a CHECK, so retiring it
-        #                        needs a compensating migration; that migration is the
-        #                        right place, not here, because dropping it while a
-        #                        blocking check still reads it is how a gate goes red
-        #                        on untouched main.
-        # AND NOTE WHAT THIS BLOCK HAD TO DO TO EXIST: a JUDGMENT-stage writer reaching
-        # back to UPDATE an EVIDENCE-stage row. The 2026-08-27 hand-off ruling names
-        # that act directly -- a back-pointer filled in later "require[s] a write into a
-        # completed stage, which is what rule 5 exists to stop", and its answer there was
-        # to move the fact to the stage that owns it. That the only way to keep C06
-        # honest is a cross-stage write is not an argument for the write; it is the
-        # clearest available evidence that the column is in the wrong home. Recorded
-        # here rather than resolved, because resolving it is the compensating migration
-        # in step 3 above.
-        #
-        # Grep `data_capture_status` before touching any of this: the whole reader set
-        # is four files and it is small on purpose.
-        _upd = dbcore.upd(session)
-        captured = conn.execute(
-            "UPDATE evidence_sources SET data_capture_status='captured', "
-            "updated_at=?, updated_by_session=? "
-            "WHERE ref_id=? AND data_capture_status<>'captured'",
-            (_upd["updated_at"], _upd["updated_by_session"], ref)).rowcount
         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
                 "slug": row.get("slug"),
                 "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
@@ -8618,10 +8514,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "figure_role": figure_role, "comparator": row.get("comparator"),
                 "relation_ids": relation_ids,
                 "siblings_for_this_parameter": len(prior),
-                # Reported, not silent: a status change on ANOTHER table is exactly
-                # the kind of side effect an operator should see in the same output
-                # as the write that caused it.
-                "data_capture_status_set_captured": bool(captured),
                 "dry_run": dry_run}
 
 
