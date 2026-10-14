@@ -20,8 +20,10 @@
 # it went blind eight times. The consumer reads the live table list from
 # sqlite_master, not from this file: a table here that the schema lacks, a table
 # the schema has that is missing here, and a stage id the contract does not
-# define are each reported and each fail `pipeline_walk.py --check`. A new table
-# cannot hide by being left out.
+# define are each reported and each fail `workplan/pipeline-state-graph/build_graph.py
+# --check`. The original falsifier, tools/pipeline_walk.py, was deleted with the render
+# apparatus (plan step 1.1); no registered check reads this file until step 4.4 registers
+# its successor. A new table is mapped here in the PR that adds it, by review until then.
 #
 # `infrastructure` is not a stage. It marks tables recording the repository's own
 # operation — migration ledgers, run records — rather than pipeline content.

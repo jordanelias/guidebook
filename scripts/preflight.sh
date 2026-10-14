@@ -19,7 +19,7 @@
 # prose. Run this first; narrative confidence is not a gate.
 #
 # Read-only: it runs validators, it does NOT regenerate. To fix a staleness
-# failure, run scripts/regenerate_derived.sh.
+# failure, run python3 scripts/generate/context_map.py.
 #
 # Needs pydantic + PyYAML (+ jsonschema for the attestation checks):
 #     pip install -r requirements.txt jsonschema
@@ -32,9 +32,9 @@
 # NB (L2 baseline lesson): a [FAIL] here may be PRE-EXISTING owner-gated debt on
 # main, not your change. Before assuming you broke it, confirm the delta — e.g.
 # run the same check in a throwaway `git worktree add /tmp/base origin/main` and
-# diff. test_db_integrity and evidentiary_audit_fresh were both red on main as of
-# 2026-08-01 (see references/tooling-register.md §4) but both now PASS as of
-# 2026-08-14 — re-verify against the live repo rather than trusting either date.
+# diff. test_db_integrity was red on main as of 2026-08-01 (see
+# references/tooling-register.md §4) but passes as of 2026-08-14 — re-verify
+# against the live repo rather than trusting either date.
 #
 # Usage:
 #     scripts/preflight.sh                      # gate what you changed vs origin/main
@@ -100,6 +100,6 @@ if [ "$status" -eq 0 ]; then
   echo "  (gated on your diff — run 'scripts/preflight.sh --all' for the full battery.)"
 else
   echo "PREFLIGHT: FAIL — fix the blocking failures above before pushing."
-  echo "  (stale --check? run: scripts/regenerate_derived.sh)"
+  echo "  (stale context map? run: python3 scripts/generate/context_map.py)"
 fi
 exit "$status"

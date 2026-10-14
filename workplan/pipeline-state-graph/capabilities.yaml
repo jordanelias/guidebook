@@ -79,7 +79,6 @@ capabilities:
       - {id: C4.4, kind: probe, probe: P-ENG-STATE, says: "the engine can assign every value of the state vocabulary", atoms: [EVI-361]}
       - {id: C4.5, kind: verb, verb: retire-specification, says: "a determination can be retired in place and redetermined", atoms: [LED-169]}
       - {id: C4.6, kind: probe, probe: P-K, says: "a live renderer reads parameter x lens determinations", atoms: [LED-103, PIP-06]}
-      - {id: C4.7, kind: probe, probe: P-I, says: "the derived surfaces can be regenerated from the database", atoms: [PIP-07, CLM-050]}
       - {id: C4.8, kind: probe, probe: P-QUARANTINE, says: "the rendering invariants and tier-derivation consistency are gated", atoms: [PIP-06, POS-03]}
 
 components:
@@ -98,5 +97,5 @@ components:
   - {name: "Convergence assessment", stage: synthesis, C1: "--", C2: "--", C3: PARTIAL, C4: "--", note: "per-parameter convergence of independent roots; no cross-parameter form."}
   - {name: "Connections and conflicts (add-connection, add-conflict)", stage: synthesis, C1: "--", C2: "--", C3: NO, C4: "--", note: "free-text targets and item-layer keys; no column can name a parameter (C3.5)."}
   - {name: "Gaps (add-gap, assess_cell)", stage: synthesis, C1: "--", C2: "--", C3: PARTIAL, C4: "--", note: "records that a cell is pending and why; sub-vocabulary after OPEN/CLOSED is free text."}
-  - {name: "Renderers (build_site, spec_page, generate_parts, pilot_renderings, tools/*.html)", stage: render, C1: "--", C2: "--", C3: "--", C4: NO, note: "queries that still select item-layer columns fail on the live schema (C4.6); the regenerate script reaches none of parts/ or site/ (C4.7)."}
+  - {name: "Renderers", stage: render, C1: "--", C2: "--", C3: "--", C4: NO, note: "none exist: the render apparatus was deleted (plan step 1.1; RULINGS R1) and the one view and one renderer of step 3.R are not built (C4.6)."}
   - {name: "Checks and gates (Layer 0)", stage: "Layer 0", C1: "--", C2: "--", C3: "--", C4: PARTIAL, note: "the checks that would hold rendering invariants and tier derivation are quarantined (C4.8)."}

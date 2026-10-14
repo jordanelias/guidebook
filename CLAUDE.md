@@ -254,7 +254,7 @@ vocabulary layer the machine gates as a stage; the id is `evidence`, and its dis
 | **judgment** | Whether an extraction is sound and how it weighs |
 | **synthesis** | What the judgments say together — weighing, convergence, cross-slug findings |
 | **specification** | The determination: *therefore 1200 mm, marked ●* |
-| **render** | Book surfaces — `site/`, `parts/`, `tools/*.html` |
+| **render** | Book surfaces, read from the database when rendered (owner, 2026-08-27); no committed file is one |
 
 **Rule 5 is unusable without this table** — you cannot tell a stage-specific fact from a copy
 without knowing which stage a table is in. **Derive any table-to-stage assignment against these
@@ -455,9 +455,6 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
   `research_contract_hook.py` reads `SessionStart[0]["hooks"][0]["command"]` by hardcoded index; an
   insert turns the blocking `research_contract_sync` red with a diff that reads as contract drift.
-- **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate
-  `tools/*.html` and `audits/evidentiary-base-audit*` with `scripts/regenerate_derived.sh`, which does
-  not reach `parts/` or `site/`.
 - **`schemas/*.py` ↔ SQLite drift is a bug**, not a convention.
 - **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is live
   and legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.
@@ -482,12 +479,6 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   diff-scoped form, and `--battery <name>` answers a targeted question. Reach for
   `--all` when the question really is corpus-wide, not to re-confirm a result the
   scoped run already gave.
-- **`tools/*.html` are hidden from ripgrep and the Grep tool** (`.ignore`), because
-  the rendered dashboards embed their row data (`du -ch tools/*.html`) and a search for any table
-  or column name matches the rendering louder than the code that produced it. A hit
-  inside one was never the answer to "where is this referenced". `governance/context-map.yaml`
-  is deliberately NOT hidden: it is generated too, but it is the one derived file a
-  session is meant to search.
 
 ---
 
@@ -506,10 +497,9 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 - **Nothing is added without naming what reads it.** An unread field, an uncalled script and an
   unregistered check are the same defect.
 - **Net-negative** (owner, 2026-10-12: as little code as possible). A PR touching `scripts/`,
-  `tools/`, `schemas/`, `.github/` or `skills/` does not raise their physical-line total unless its
+  `schemas/`, `.github/` or `skills/` does not raise their physical-line total unless its
   description names the exception and the code it replaces (it may replace none, and then says so).
-  Measure: `git diff --shortstat origin/main -- scripts tools schemas .github skills ':!scripts/migrations'
-  ':!tools/*.html'`. Enforced by review, not by a check.
+  Measure: `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`. Enforced by review, not by a check.
 - **A specific, ratified authorisation beats a blanket caution.** Blanket removal-friction winning
   ties against specific removal-permission is how this file became a ratchet.
 

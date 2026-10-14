@@ -311,12 +311,6 @@ def make_probes():
                 if re.search(rf"\b{t}\b", sql) and not re.search(pat, sql): bad.setdefault(v, []).append(t)
         return ("FAIL" if bad else "PASS"), {"views_not_naming_lifecycle": bad, "note": "lexical test, views only: it reads view SQL, so a view that merely names the column passes and no non-view reader is examined"}
 
-    @probe("P-I", "regenerate_derived.sh regenerates parts/ and site/", ["PIP-07", "CLM-050"])
-    def _(T):
-        sh = read(T.root, "scripts/regenerate_derived.sh")
-        m = bool(re.search(r"parts/|site/|build_site|generate_parts", sh))
-        return ("PASS" if m else "FAIL"), {"mentions_parts_or_site": m, "tools_it_runs": re.findall(r"python3 (tools/\S+)", sh)}
-
     @probe("P-K", "a live renderer can read specifications keyed on parameter_id x lens", ["PIP-06", "LED-103", "POS-03"])
     def _(T):
         fails, scanned, keyed = {}, 0, []
@@ -328,7 +322,7 @@ def make_probes():
                     if "parameter_id" in n.value: keyed.append(p)
                     try: T.con.execute("explain " + n.value.replace("?", "NULL"))
                     except Exception as e: fails.setdefault(p, []).append(str(e)[:80])
-        v = "FAIL" if fails else ("PASS" if keyed else "UNKNOWN")
+        v = "FAIL" if fails else ("PASS" if keyed else ("NOT-BUILT" if not scanned else "UNKNOWN"))   # step 1.1 deleted every renderer: none to scan
         return v, {"renderers_scanned": scanned, "queries_failing_on_live_schema": fails, "renderers_whose_specification_query_names_parameter_id": sorted(set(keyed))}
 
     @probe("P-L", "no workflow `git add`s the database blob", ["CLM-012", "LED-153", "OPI-124"])

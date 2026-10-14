@@ -13,7 +13,6 @@ CLM-041	ACTIVE	CLAUDE.md:371	synthesis authorship	LED-061 and PIP-22 widen the f
 CLM-042	ACTIVE	CLAUDE.md:377	lens columns	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 CLM-047	ACTIVE	CLAUDE.md:435	history rewriting	The harness system prompt prescribes `git checkout -B <branch> origin/<default>` after a merged PR.
 CLM-048	ACTIVE	CLAUDE.md:445	item codes	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
-CLM-050	ACTIVE	CLAUDE.md:458	generated output	Ledger 2026-08-27: regenerate_derived.sh never rebuilds parts/ or site/ pages.
 RES-13	ACTIVE	governance/research-contract.yaml:270	R13 population grade	Owner 2026-09-25 (3) supersedes the 'no participants = PROXY' line as applied to a facility audit; wording not edited.
 RES-16	ACTIVE	governance/research-contract.yaml:308	R16 every figure disposed	Speaks of 'a figure'; the 2026-10-09 scan contract also mines arguments and qualitative findings.
 PIP-12	ACTIVE	governance/pipeline-contract.yaml:338	doctrine recheck cadence	Ledger 2026-08-19 struck the RULE_REVISION trigger; two cadences remain.

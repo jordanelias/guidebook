@@ -21,9 +21,8 @@ the source. Nothing volatile is typed by hand.
 
 DETERMINISM IS THE CONTRACT. Output is a pure function of (git HEAD, the DB, the
 filesystem). No wall-clock time is recorded -- the provenance line carries the
-commit sha and a DB fingerprint instead, following the precedent set by
-scripts/generate_parts.py. Re-running against an unchanged repo yields a
-byte-identical file, which is what makes --check meaningful.
+commit sha and a DB fingerprint instead. Re-running against an unchanged repo
+yields a byte-identical file, which is what makes --check meaningful.
 
 USAGE
   python3 scripts/generate/context_map.py              # write governance/context-map.yaml
@@ -63,12 +62,9 @@ DIRECTORY_ROLES = {
     "workplan":      ("dated plans; several coexist -- read the newest", "canonical"),
     "sessions":      ("per-session records and the continuity pointers", "frozen-record"),
     "audits":        ("dated audit reports", "frozen-record"),
-    "parts":         ("the guidebook as chaptered markdown", "generated"),
-    "site":          ("the generated static site", "generated"),
-    "specs":         ("hand-authored spec briefs (reference since the 2026-08-06 reset)", "reference"),
+    "parts":         ("retired: only _MOVED.md stubs remain (the chaptered markdown was deleted with the render apparatus)", "frozen-record"),
     "_archived":     ("retired-but-preserved content, mirroring origin paths", "frozen-record"),
     "versions":      ("version snapshots", "frozen-record"),
-    "tools":         ("surface regenerators", "canonical"),
     ".github":       ("CI workflows and CODEOWNERS", "canonical"),
 }
 
@@ -138,7 +134,7 @@ def script_facts(table_names):
     """Which code writes which tables, split by MECHANISM.
 
     The split is the point. A table written only by `scripts/migrations/*.sql` is on
-    the sanctioned path; a table written by a `.py` under `scripts/` or `tools/` is a
+    the sanctioned path; a table written by a `.py` under `scripts/` is a
     direct writer, which CLAUDE.md §0 rule 4 forbids; a table nothing writes is either
     dead or waiting on unwritten code, and those two look identical in a schema dump.
     An earlier draft scanned Python only and therefore reported 38 tables as having no
@@ -147,7 +143,7 @@ def script_facts(table_names):
     """
     want = set(table_names)
     py, sql = {}, {}
-    for root in ("scripts", "tools"):
+    for root in ("scripts",):
         base = REPO / root
         if not base.exists():
             continue
@@ -293,7 +289,7 @@ def build():
         },
         "writers": {
             "_note": (
-                "direct_python lists every .py under scripts/ or tools/ containing an "
+                "direct_python lists every .py under scripts/ containing an "
                 "INSERT/UPDATE/DELETE naming the table. Where such a script writes the "
                 "CANONICAL DB it is outside the migration path, which CLAUDE.md §0 rule 4 "
                 "forbids, and it is listed so the divergence between rule and practice is "

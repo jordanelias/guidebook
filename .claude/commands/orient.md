@@ -26,7 +26,7 @@ Read, in this order, and only these:
    supersede every ratified record they touch on contact (rule 0)
 
 **Two traps that make a confident answer wrong.** `.ignore` hides `sessions/`,
-`_archived/`, `audits/`, `versions/` and `tools/*.html` from ripgrep and the Grep
+`_archived/`, `audits/` and `versions/` from ripgrep and the Grep
 tool, and owner rulings live overwhelmingly in `sessions/` — use `grep -r` or
 `git grep`, and never report a ruling absent from a search that could not have
 seen it. `sessions/LATEST` and `LATEST-RESEARCH` move at CLOSE, so both name the

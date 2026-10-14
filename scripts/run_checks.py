@@ -102,8 +102,8 @@ def glob_to_re(pattern):
     """Translate a registry path glob to a regex.
 
     `**` crosses directory separators; `*` and `?` do not. fnmatch is not usable
-    here because its `*` also crosses separators, which would make `tools/*.html`
-    match `tools/nested/x.html`.
+    here because its `*` also crosses separators, which would make `t/*.html`
+    match `t/nested/x.html`.
     """
     out, i = [], 0
     while i < len(pattern):
@@ -720,7 +720,7 @@ def selftest(reg):
         ("references/connection-reasoning/CON-1.md", "synthesis"),
         ("sessions/LATEST", "synthesis"),
         ("parts/v10/part04.md", "render"),
-        ("tools/evidentiary-audit-dashboard.html", "render"),
+        ("index.html", "render"),
         ("scripts/validate_bpc.py", "tooling"),
         (".github/workflows/ci.yml", "tooling"),
         ("requirements.txt", "tooling"),
@@ -734,9 +734,9 @@ def selftest(reg):
     check("C4 README.md -> no kind (docs-only)", kinds == set(), f"got {kinds}")
 
     # `**` crosses separators, plain `*` must not.
-    kinds, _ = classify(["tools/nested/deep.html"], reg)
-    check("C4 tools/nested/deep.html is NOT render (single-* must not cross '/')",
-          "render" not in kinds, f"got {kinds}")
+    check("C4 a single `*` does not cross '/' (glob_to_re)",
+          bool(re.fullmatch(glob_to_re("t/*.html"), "t/x.html"))
+          and not re.fullmatch(glob_to_re("t/*.html"), "t/n/x.html"))
 
     # C5 — selection
     sel = {c["id"] for c, ok, _ in select(reg, set()) if ok}
@@ -747,8 +747,6 @@ def selftest(reg):
     sel_data = {c["id"] for c, ok, _ in select(reg, {"data"}) if ok}
     check("C5 kind 'data' selects the reproducibility gate",
           "migration_reproducibility" in sel_data)
-    check("C5 kind 'data' does not select render-only browser audit",
-          "render_audit_browser" not in sel_data)
 
     sel_syn = {c["id"] for c, ok, _ in select(reg, {"synthesis"}) if ok}
     check("C5 kind 'synthesis' selects validate_evidence_state (2026-07-23 plan F2)",

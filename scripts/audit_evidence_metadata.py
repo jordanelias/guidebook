@@ -66,7 +66,7 @@ EXCLUDED_DISPOSITION = {"CLOSED"}   # only meaningful when status != 'VERIFIED'
 EXCLUDED_METHOD = {"corroborated-not-retrieved"}
 EXCLUDED_CLOSURE_REASON = {"disputed-existence"}
 # Until those 7 rows carry the closure reason, the sweep's own note stamp is the
-# durable marker -- the same marker tools/evidentiary_audit.py gates on.
+# durable marker.
 EXCLUDED_NOTE_MARKER = "DISPUTED 2026-07-20 correctness-sweep"
 
 

@@ -32,15 +32,12 @@ kinds:
     - parts/**
     - site/**
     - specs/**
-    - tools/*.html
-    - audits/evidentiary-base-audit*
     - index.html
     - assets/**
   tooling:
     description: The apparatus itself — scripts, generators, workflows, hooks, deps.
     paths:
     - scripts/**
-    - tools/**
     - .github/**
     - .claude/**
     - requirements.txt
@@ -1333,7 +1330,7 @@ checks:
     — and they had drifted on R1, R2 and R3, two of which changed what the contract obliges. governance/research-contract.yaml
     is now the single source; the hook is generated from it and this check fails on drift, plus cross-references
     the rule ids against the enforcer so a rule defined in one and absent from the other is caught. Same
-    shape as the other derived-artifact gates (pipeline_completeness --check, evidentiary_audit --check).
+    shape as a derived-artifact gate (context_map_fresh --check).
     Advisory during shakedown per the house norm; it is green today and is a candidate for promotion.'
 - id: research_dod_selftest
   cmd:
@@ -1985,42 +1982,6 @@ checks:
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
   note: 'Partially vacuous by design: its live-smoke leg SKIPs when /tmp/work14.db is absent (it is, in
     CI) and the rest still asserts. Recorded so the pass is not read as broader than it is.'
-- id: pipeline_completeness_fresh
-  cmd:
-  - python3
-  - tools/pipeline_completeness.py
-  - --check
-  battery: render
-  kinds:
-  - data
-  - render
-  level: blocking
-  basis: unattributed
-  cost: fast
-  no_floor: not-instrumented — this dashboard aggregates scalar counts from many unrelated tables (items,
-    BPC slugs, evidence sources, judgment cells, gaps, ...) with no single subject the freshness comparison
-    "iterates" the way a file-glob or row-scan check does; picking any one metric (e.g. slugs_total, which
-    happens to be 0 today because bpc_metadata is empty post clean-room-reset) would misrepresent a multi-metric
-    dashboard as a single-corpus scan. Considered and reverted on 2026-08-14 (A5) — see tools/pipeline_completeness.py's
-    --check branch for the reasoning left in the source.
-- id: evidentiary_audit_fresh
-  cmd:
-  - python3
-  - tools/evidentiary_audit.py
-  - --check
-  battery: render
-  kinds:
-  - data
-  - render
-  level: blocking
-  basis: unattributed
-  cost: fast
-  min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(records), one row per ACTIVE slug actually
-    walked by compute() (80 today) — unlike pipeline_completeness_fresh, this genuinely is a single per-slice
-    loop, not a bag of unrelated scalars. min_items:1. STALE on main as of 2026-08-01 — the committed
-    evidentiary-base-audit outputs do not match a fresh regeneration from the DB. Fix with scripts/regenerate_derived.sh,
-    not by demoting the check.'
 - id: column_vocabulary_audit
   cmd:
   - python3
@@ -2049,74 +2010,6 @@ checks:
     definition and unrenameable, because migrate_db.py writes that ledger row
     during the very run that would rename the column. Migration 085 carries the
     same reasoning.'
-- id: schema_walkability_fresh
-  cmd:
-  - python3
-  - tools/schema_walkability.py
-  - --check
-  battery: render
-  kinds:
-  - data
-  - schema
-  - render
-  - tooling
-  level: advisory
-  basis: render/render-freshness
-  cost: fast
-  min_items: 1
-  note: 'The committed schema-walkability page is stale against the live schema.
-    WHY THIS IS REGISTERED RATHER THAN LEFT TO THE REGENERATION SCRIPT. CLAUDE.md
-    section 8 asks what wrong thing reaches the GUIDEBOOK if a check does not exist,
-    and the answer here is specific rather than about the apparatus: this page is
-    the only thing in the repository that says which views are CROSS-STAGE POINTERS.
-    Section 3 calls a cross-stage view the most protected object in the schema and
-    says to ask which stages it spans before deleting one -- and stage-map.yaml
-    records the per-view pointer list as STILL OWED, so nothing else can answer it.
-    A stale page answers it WRONG, and the wrong answer is the one that gets a
-    pointer deleted, after which the next reader copies the fact instead and rule 5
-    is broken in the data rather than in a document. Migration 064 exists because a
-    sweep missed v_item_provenance and a byte-exact diff called it clean because the
-    view rendered 0 rows, and several of the pointers this page finds render 0 rows
-    today, so that failure mode is live rather than historical. DERIVE THAT, DO NOT
-    QUOTE IT -- this sentence first read "five of the six" and the tool reported
-    four, a hand-typed count going stale inside the note justifying the check, which
-    is rule 7a and is already listed in CLAUDE.md section 8 as an outstanding
-    violation of exactly this file. The command: python3 -c "import json,re;h=open(
-    ''tools/schema-walkability.html'').read();d=json.loads(re.search(r''<script id=
-    .data. type=.application/json.>(.*?)</script>'',h,re.S).group(1));cv=[v for v in
-    d[''views''] if v[''crosses'']];print(len(cv),sum(1 for v in cv if v[''rows'']==0))".
-    ALSO CORRECTED: the kinds list omitted `tooling`, so a diff touching only the
-    GENERATOR -- the change most likely to stale the page -- did not select this
-    check at all under --changed-from. Its sibling pipeline_walk_fresh declares it. Advisory rather than
-    blocking because a stale render misinforms a reader, it does not corrupt data,
-    and the repository has learned that a gate red by construction teaches its
-    reader to ignore it.'
-- id: pipeline_walk_fresh
-  cmd:
-  - python3
-  - tools/pipeline_walk.py
-  - --check
-  battery: render
-  kinds:
-  - data
-  - schema
-  - render
-  - tooling
-  level: advisory
-  basis: render/render-freshness
-  cost: fast
-  min_items: 1
-  note: 'Two failures in one gate, deliberately. (1) The committed page is stale
-    against the live DB -- a rendered claim about what a session wrote that no longer
-    matches the database is CLAUDE.md 5(b) exactly. (2) The judged table->stage map
-    has drifted: a live table it does not name, or a name the schema no longer has.
-    The second is why this is registered at all. dbcore.WRITABLE_TABLES went blind
-    EIGHT times because a curated list can silently omit a live table; this map is
-    also curated, so it is given the falsifier that one lacked -- the table list is
-    read from sqlite_master and an unassigned table fails the gate rather than
-    vanishing from the page. ADVISORY, not blocking: it renders and reports, it
-    gates no write path, and a stale view surface must not stop a research batch
-    landing.'
 - id: context_map_fresh
   cmd:
   - python3
@@ -2129,7 +2022,7 @@ checks:
   - tooling
   - governance
   level: advisory
-  basis: render/render-freshness
+  basis: hygiene
   cost: fast
   min_items: 1
   note: 'Regenerates `governance/context-map.yaml` and compares it to the committed file. The map is the
@@ -2148,70 +2041,6 @@ checks:
     Advisory while it earns trust; it is mechanically checkable and cheap, so it is a candidate for promotion
     once it has survived a few regenerations. `min_items: 1` is honest here: the subject is one file that
     always exists, so an empty subject is a real failure and not a ratified-empty state.'
-- id: site_pages_fresh
-  cmd:
-  - python3
-  - scripts/generate/build_site.py
-  - --check
-  battery: render
-  kinds:
-  - data
-  - render
-  level: advisory
-  basis: render/render-freshness
-  cost: fast
-  min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(rows), the page count built from `items` (93
-    today). min_items:1 — items is populated repo content (CLAUDE.md §1), not a corpus that legitimately
-    empties. Re-renders every site/specs page from the committed DB and compares against what is on disk.
-    Catches two things nothing else did: generated output that drifted from its source, and generated
-    output that was hand-edited (which CLAUDE.md forbids). Also flags orphan pages whose item no longer
-    exists in `items` — those cannot be found by re-rendering, because the build walks `items`. Advisory
-    until the committed-vs-generated policy is settled; the check is mutation-tested for both failure
-    modes.'
-# DELETED 2026-09-10 (P7): `check_rendered_docs`, which ran `scripts/audit/check_rendered_docs.py
-# --all` (script also deleted, same commit). basis was `unattributed`, so no pipeline-contract
-# criterion is orphaned by this removal.
-#
-# Its subject was hand-authored `specs/*.html` -- a directory the live render path does not write to
-# at all. `scripts/generate/spec_page.py` and `population_page.py` write to `site/specs/` and
-# `site/populations/`, a DIFFERENT directory tree; `specs/` holds one file
-# (`specs/e-08-brief.html`), reference-only since the 2026-08-06 clean-room reset because it cites
-# REF-ids that reset removed. `--all` therefore examined 0 documents by policy, forever, while
-# registered BLOCKING -- proven live: `python3 scripts/audit/check_rendered_docs.py --all` printed
-# `EXAMINED: 0 rendered document(s) — 1 present under specs/, reference-only... pass --doc to check a
-# live one` and exited 0. A blocking gate whose one possible subject is permanently excluded by policy
-# gates nothing (CLAUDE.md §5a), and the DB→generator render path it would need to gain a subject
-# writes somewhere else entirely, so it can never gain one without a directory change no ruling calls
-# for.
-# Caller sweep (git grep, this commit): no import, no workflow step, no skill, no hook referenced the
-# script by name outside prose in decisions/, references/project-standards.md, and workplan/ (frozen
-# records of why the gate was built, not live callers) and `scripts/audit/render_audit.js`'s own
-# docstring (describes the split with check_rendered_docs.py, does not invoke it -- render_audit.js
-# stays; nothing calls it either way). `--doc specs/e-08-brief.html` still finding 26 C1 failures on
-# that one reference-only brief is exactly the state DR-2026-07-25 already named as known and
-# unenforced; deleting the always-vacuous `--all` gate changes nothing about that.
-- id: render_audit_browser
-  cmd:
-  - node
-  - scripts/audit/render_audit.js
-  battery: render
-  kinds:
-  - render
-  level: advisory
-  basis: unattributed
-  cost: slow
-  min_items: 1
-  optional_exit2: true
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints docs.length, the count of rendered specs/*.html
-    documents audited (1 today). min_items:1 — file-glob-derived: zero documents means nothing was ever
-    rendered under specs/, which is the failure mode the pre-existing "No rendered documents found" branch
-    already treats as worth printing loudly. Exit 2 means "node/browser unavailable here", which is reported
-    as SKIP — loudly. A gate that quietly does nothing is worse than no gate. Corrected 2026-08-01: the
-    script''s top-level catch also exited 2, so any uncaught error — a bug, a changed DOM, a missing module
-    — was reported as "no browser available" and was indistinguishable from a legitimate skip. A crash
-    now exits 3 and fails. Exit 2 is reserved for the one branch that genuinely means the environment
-    cannot run it.'
 - id: judgment_handoff_shape
   cmd:
   - python3

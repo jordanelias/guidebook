@@ -8,8 +8,8 @@ Checks:
   3. Part section references (§X.Y) resolve to existing headings in correct part file
   4. BPC ↔ search-log co-existence (every BPC has matching search-log, vice versa)
   NB checks 1-2 (slug + CON-ID resolution against SQLite) run over LIVE surfaces
-  only. After the 2026-08-06 clean-room reset the reference corpus — parts/v10,
-  references/bpc, references/connections, specs/, site/ — cites entities the DB
+  only. After the 2026-08-06 clean-room reset the reference corpus — the retired parts/v10,
+  references/bpc, references/connections, specs/ — cites entities the DB
   no longer holds, by design: those files are preserved AS REFERENCE and the DB
   was reset around them. Validating reference prose against a reset database
   produced 1,191 failures that were all the check misunderstanding its own
