@@ -371,7 +371,7 @@ umbrellas. **The crossing is JUDGMENT's output** (owner, 2026-08-27, overruling 
 judgment. Zero links **after judgment** is a defect. Only Opus-class models write
 `best_practice_synthesis`.
 
-**Both halves of the determination's key are RULED, and both sweeps are done.**
+**Both halves of the determination's key are RULED.**
 
 - **Lens.** Owner ruling 2026-08-28 (`references/project-standards.md`): any table attaching a
   determination to a group of disabled people takes **four lens columns, one CHECK, real FKs, and
@@ -389,7 +389,7 @@ judgment. Zero links **after judgment** is a defect. Only Opus-class models writ
 A ruling can be in the repository, in the file §9 sends you to, and still fail to bind if the search
 stops at the first answer it finds: search for **both** halves of any question before calling either
 open. Do not read `slug × population` as any part of the answer: `populations` IS the identity lens
-(`base_taxonomy_identity`), so that key reintroduces the traversal D-0184 measured and rejected.
+(its owner-ruled name is `base_taxonomy_identity`, not yet applied), so that key reintroduces the traversal D-0184 measured and rejected.
 
 ---
 
@@ -455,8 +455,10 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
   `research_contract_hook.py` reads `SessionStart[0]["hooks"][0]["command"]` by hardcoded index; an
   insert turns the blocking `research_contract_sync` red with a diff that reads as contract drift.
-- **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate
-  with `scripts/regenerate_derived.sh`.
+- **Don't hand-edit generated output**: `parts/`, `site/`, `audits/evidentiary-base-audit*` (the rest of
+  `audits/` is hand-written) and `tools/*.html` except `data_atlas_template.html`, the hand-written input
+  of `tools/data_atlas.py`. `scripts/regenerate_derived.sh` regenerates the `tools/` pages and those audit
+  files; it does not reach `parts/` or `site/`.
 - **`schemas/*.py` ↔ SQLite drift is a bug**, not a convention.
 - **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is live
   and legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.
@@ -504,6 +506,11 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   not exist.** If the answer is about the apparatus rather than the book, do not add it.
 - **Nothing is added without naming what reads it.** An unread field, an uncalled script and an
   unregistered check are the same defect.
+- **Net-negative** (owner, 2026-10-12: as little code as possible). A PR touching `scripts/`,
+  `tools/`, `schemas/`, `.github/` or `skills/` does not raise their physical-line total unless its
+  description names the exception and the code it replaces (it may replace none, and then says so).
+  Measure (one line): `git diff --shortstat origin/main -- scripts tools schemas .github skills ':!scripts/migrations' ':!tools/*.html'`.
+  Enforced by review, not by a check.
 - **A specific, ratified authorisation beats a blanket caution.** Blanket removal-friction winning
   ties against specific removal-permission is how this file became a ratchet.
 

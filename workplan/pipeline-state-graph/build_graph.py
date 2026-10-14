@@ -84,8 +84,14 @@ def load_atoms():
     return atoms, problems
 
 
-def verify_atoms(atoms, repo=REPO):
-    """Every quote must occur verbatim (whitespace collapsed, leading '> ' ignored) in its source file."""
+def verify_atoms(atoms, repo=REPO, only=None, stats=None):
+    """Every quote must occur verbatim (whitespace collapsed, leading '> ' ignored) in its source file.
+
+    `only`, when given, limits the QUOTE and line checks to those atom ids (the atoms something still
+    cites); the structural checks (keys, modality, speaker, status) run on every atom. `stats`, when
+    given, receives `verified`: how many atoms had their quote actually read, which is what an
+    EXAMINED line must report (the size of the input set is not that figure).
+    """
     bad, cache = [], {}
     def doc(path):
         if path not in cache:
@@ -99,6 +105,8 @@ def verify_atoms(atoms, repo=REPO):
         if a["modality"] not in MOD: bad.append(f"{a['id']}: bad modality {a['modality']}")
         if a["speaker"] not in SPK: bad.append(f"{a['id']}: bad speaker {a['speaker']}")
         if a["status"] not in STA: bad.append(f"{a['id']}: bad status {a['status']}")
+        if only is not None and a["id"] not in only: continue
+        if stats is not None: stats["verified"] = stats.get("verified", 0) + 1
         path = a["source"].split(":")[0]
         try:
             ok = norm(re.sub(r"^\s*>\s?", "", a["quote"])) in doc(path)
@@ -471,7 +479,7 @@ def make_probes():
         want = ["register_integrity_check", "adjudication_integrity"]
         return ("FAIL" if any(q.get(w) == "quarantined" for w in want) else "PASS"), {"quarantined": {w: q.get(w) for w in want}, "all_quarantined": sorted(k for k, v in q.items() if v == "quarantined")}
 
-    @probe("P-LEDGER-GREP", "the owner statements recorded only in session records appear verbatim in the owner ledger", ["SES-022", "SES-023", "SES-024", "SES-025"])
+    @probe("P-LEDGER-GREP", "the owner statements recorded only in session records appear verbatim in the owner ledger", ["SES-022", "SES-023", "SES-024", "SES-025", "SES-032", "SES-045", "LED-195"])
     def _(T):
         led = norm(read(T.root, "references/project-standards.md"))
         sq = {}
@@ -568,11 +576,30 @@ def capability_verdicts(caps, T, probes):
 
 
 # ----------------------------------------------------------------------------------------------- checks
+def cited_atom_ids(probes, conflicts, machines, caps):
+    """The atoms something still cites: a conflict, a status correction, a machine, a capability
+    predicate or a probe. Only these have their quote verified (W9); ATOMS.tsv marks them."""
+    cited = set()
+    for c in conflicts["conflicts"]: cited |= set(c["atoms"]) | {i for s in c["sides"] for i in s["atoms"]}
+    for sc in conflicts.get("status_corrections", []): cited |= {sc["atom"], *sc["by"]}
+    for m in machines["machines"]: cited |= set(m.get("atoms", []))
+    for c in caps["capabilities"].values():
+        for p in c["predicates"]: cited |= set(p.get("atoms", []))
+    for p in probes.values(): cited |= set(p["atoms"])
+    return cited
+
+
 def check_all(T, atoms, probes, conflicts, machines, caps):
     fails, warns, examined = [], [], {}
     # 1 atoms
-    bad = verify_atoms(atoms); examined["atoms (quote found verbatim)"] = len(atoms); fails += bad
-    examined["distinct quotes among them"] = len({norm(a["quote"]) for a in atoms.values()})
+    # A quote is verified only for an atom a conflict, status correction, machine, predicate or probe
+    # still cites (W9): an atom nothing cites is a record, and a resolved entry stops needing its source.
+    cited = cited_atom_ids(probes, conflicts, machines, caps)
+    stats = {}
+    bad = verify_atoms(atoms, only=cited, stats=stats); fails += bad
+    examined["atoms in all (structure checked)"] = len(atoms)
+    examined["atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)"] = stats.get("verified", 0)
+    examined["distinct quotes among all atoms"] = len({norm(a["quote"]) for a in atoms.values()})
     # 2 conflicts
     n = 0
     for c in conflicts["conflicts"]:
@@ -706,7 +733,18 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     for i in sample:
         a3 = copy.deepcopy(atoms[i]); a3["quote"] = "zzz mutated zzz " + a3["quote"]
         caught += bool(verify_atoms({i: a3}))
-    results.append((f"mutated quotes on 5 random atoms are caught ({caught}/5)", caught == 5))
+    results.append((f"verify_atoms catches mutated quotes on 5 random atoms ({caught}/5; the function, not the --check gate: see m)", caught == 5))
+    # m) THE GATE (check_all), not the function: a bad quote on an atom something cites is caught; on one nothing cites it is
+    #    not read (W9); and the EXAMINED figure is the number of quotes actually read, so a gate wired to read none cannot pass.
+    cited_ids = cited_atom_ids(probes, conflicts, machines, caps)
+    ci = sorted(cited_ids & set(atoms))[0]; ui = sorted(set(atoms) - cited_ids)[0]
+    for tag, i, want in (("cited", ci, True), ("uncited", ui, False)):
+        a4 = copy.deepcopy(atoms); a4[i]["quote"] = "zzz mutated zzz " + a4[i]["quote"]
+        f, _, ex = check_all(T, a4, probes, conflicts, machines, caps)
+        results.append((f"--check {'catches' if want else 'does not read'} a mutated quote on a {tag} atom", any(i in x for x in f) == want))
+    f, _, ex = check_all(T, atoms, probes, conflicts, machines, caps)
+    results.append(("the EXAMINED quote count equals the cited atoms actually read",
+                    ex["atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)"] == len(cited_ids & set(atoms))))
     # g) a table dropped from the stage map is caught
     saved = T.t2s.pop("specifications")
     f, _, _ = check_all(T, atoms, probes, conflicts, machines, caps); T.t2s["specifications"] = saved
@@ -950,9 +988,9 @@ def main():
         with open(HERE / name, "w", encoding="utf-8") as fh:
             fh.write("\t".join(hdr) + "\n")
             for r in rows: fh.write("\t".join(str(x).replace("\t", " ").replace("\n", " ") for x in r) + "\n")
-    A = list(atoms.values())
-    tsv("ATOMS.tsv", [(a["id"], a["status"], a["modality"], a["speaker"], a.get("date") or "", a["source"], ",".join(a["scope"].get("stages", [])) if isinstance(a.get("scope"), dict) else "", a["subject"], a["claim"], a.get("enforcement") or "") for a in A],
-        ["id", "status", "modality", "speaker", "date", "source", "stages", "subject", "claim", "enforcement"])
+    A = list(atoms.values()); cited = cited_atom_ids(probes, conflicts, machines, caps)
+    tsv("ATOMS.tsv", [(a["id"], a["status"], a["modality"], a["speaker"], a.get("date") or "", a["source"], ",".join(a["scope"].get("stages", [])) if isinstance(a.get("scope"), dict) else "", a["subject"], a["claim"], a.get("enforcement") or "", "yes" if a["id"] in cited else "no") for a in A],
+        ["id", "status", "modality", "speaker", "date", "source", "stages", "subject", "claim", "enforcement", "quote_checked"])
     tsv("OPEN-QUESTIONS.tsv", [(a["id"], a["source"], a["subject"], a["claim"]) for a in A if a["status"] in ("OPEN", "PROPOSED")], ["id", "source", "subject", "claim"])
     tsv("AMBIGUITIES.tsv", [(a["id"], a["status"], a["source"], a["subject"], a["ambiguity"]) for a in A if a.get("ambiguity")], ["id", "status", "source", "subject", "ambiguity"])
     graph = dict(generated=stamp, tree=str(T.root), user_version=T.user_version, stages=T.stages,

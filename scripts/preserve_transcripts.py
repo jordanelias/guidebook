@@ -31,7 +31,7 @@ from pathlib import Path
 
 ROOT = Path(os.environ.get("GUIDEBOOK_TRANSCRIPT_ROOT",
                            Path.home() / ".claude" / "projects"))
-OUT = Path("transcripts")
+OUT = Path(__file__).resolve().parents[1] / "transcripts"
 
 
 def _role_of(path):

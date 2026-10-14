@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 03:49 UTC from git HEAD 410b449 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 04:28 UTC from git HEAD 3a745d1 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-p0fix",
  "user_version": 106,
  "stages": [
   "base",
@@ -5565,7 +5565,10 @@
     "SES-022",
     "SES-023",
     "SES-024",
-    "SES-025"
+    "SES-025",
+    "SES-032",
+    "SES-045",
+    "LED-195"
    ],
    "evidence": {
     "control_found_in_ledger": true,
@@ -5938,8 +5941,9 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms (quote found verbatim)": 2692,
-  "distinct quotes among them": 2659,
+  "atoms in all (structure checked)": 2692,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 465,
+  "distinct quotes among all atoms": 2659,
   "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 50,
   "machine transitions": 42,
