@@ -11,13 +11,14 @@ it; both are summarised below, and neither is proof.
 
 | file | what it is | how it is made |
 |---|---|---|
-| `atoms/atoms-*.jsonl` | one claim per line — the owner's rulings, ratified governance documents, process rules, CLAUDE.md — each with a **verbatim quote**, source `file:line`, modality, speaker, date, status, enforcement | extracted by reading; quotes verified mechanically; claims reviewed only on a sample |
+| `atoms/atoms-*.jsonl` | one claim per line — the owner's rulings, ratified governance documents, process rules, CLAUDE.md — each with a **verbatim quote**, source `file:line`, modality, speaker, date, status, enforcement | extracted by reading; quotes verified mechanically **for the atoms a conflict, machine, probe or predicate still cites** (an uncited atom is a record, its structure is checked and its quote is not); claims reviewed only on a sample |
 | `conflicts.yaml` → `CONFLICTS.md` | the **active-conflicts register**: adjudicated disagreements between atoms, or between an atom and the mechanism, plus a table of atom statuses that lag a later ruling | hand-adjudicated; atom ids, classes and probes checked |
 | `machines.yaml` → `STATE-GRAPH.md` §3 | state machines: who moves a row between states, under what guard | hand-authored; every guard carries a code needle re-read on each run |
 | `STATE-GRAPH.md` §1, 2, 2a, 4–9 | stages, tables, foreign keys (including forward-pointing ones), views, writers, the UNWRITABLE set, quarantined checks, ruling-vs-mechanism probes, tree delta | **derived** from the live repo |
 | `capabilities.yaml` → `CAPABILITIES.md` | the four-capability interrogation (mine one source across many parameters · grow the parameter base · synthesize across parameters · specify then render) | predicates evaluated against the live tree |
 | `ATOMS.tsv`, `OPEN-QUESTIONS.tsv`, `AMBIGUITIES.tsv`, `graph.json` | flat views for grep | generated |
 | `build_graph.py` | the generator, checker and self-test | — |
+| `walkability.py` → `WALKABILITY.md` | every table's reach in every direction (down, up, lateral, skip, re-entrant), declared and populated, on the live database or a scratch clone | `python3 workplan/pipeline-state-graph/walkability.py`; scaffolding that leaves with this folder in Phase 6, not a registered check |
 | `verify_atoms.py` | stand-alone quote verifier for one atoms file | — |
 
 `atoms-added.jsonl` (`ADD-nnn`) holds atoms added after the adversarial review; `atoms-wrk.jsonl` (`WRK-nnn`)
@@ -58,7 +59,7 @@ rather than trust one (rule 7a). `--check` prints `EXAMINED: n` for each class o
 
 ## What the checks prove, and what they do not
 
-- **Proved mechanically:** each atom's quote occurs verbatim in its source, within three lines of the cited line; each conflict cites atoms that exist and
+- **Proved mechanically:** each CITED atom's quote occurs verbatim in its source, within three lines of the cited line (an atom no conflict, machine, probe or predicate cites is not re-read, so resolving a conflict stops it needing its sources); each conflict cites atoms that exist and
   probes that exist; each machine's state set (or `vocabs:` entry) equals the column's own CHECK, and the count of
   abstract machines with no single column is printed; each transition's guard still appears in the cited function (or,
   for `absent: true`, still does not); every stage assignment is complete and agrees with the contract; every probe ran

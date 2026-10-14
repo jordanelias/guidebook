@@ -84,8 +84,12 @@ def load_atoms():
     return atoms, problems
 
 
-def verify_atoms(atoms, repo=REPO):
-    """Every quote must occur verbatim (whitespace collapsed, leading '> ' ignored) in its source file."""
+def verify_atoms(atoms, repo=REPO, only=None):
+    """Every quote must occur verbatim (whitespace collapsed, leading '> ' ignored) in its source file.
+
+    `only`, when given, limits the QUOTE and line checks to those atom ids (the atoms something still
+    cites); the structural checks (keys, modality, speaker, status) run on every atom.
+    """
     bad, cache = [], {}
     def doc(path):
         if path not in cache:
@@ -99,6 +103,7 @@ def verify_atoms(atoms, repo=REPO):
         if a["modality"] not in MOD: bad.append(f"{a['id']}: bad modality {a['modality']}")
         if a["speaker"] not in SPK: bad.append(f"{a['id']}: bad speaker {a['speaker']}")
         if a["status"] not in STA: bad.append(f"{a['id']}: bad status {a['status']}")
+        if only is not None and a["id"] not in only: continue
         path = a["source"].split(":")[0]
         try:
             ok = norm(re.sub(r"^\s*>\s?", "", a["quote"])) in doc(path)
@@ -471,7 +476,7 @@ def make_probes():
         want = ["register_integrity_check", "adjudication_integrity"]
         return ("FAIL" if any(q.get(w) == "quarantined" for w in want) else "PASS"), {"quarantined": {w: q.get(w) for w in want}, "all_quarantined": sorted(k for k, v in q.items() if v == "quarantined")}
 
-    @probe("P-LEDGER-GREP", "the owner statements recorded only in session records appear verbatim in the owner ledger", ["SES-022", "SES-023", "SES-024", "SES-025"])
+    @probe("P-LEDGER-GREP", "the owner statements recorded only in session records appear verbatim in the owner ledger", ["SES-022", "SES-023", "SES-024", "SES-025", "SES-032", "SES-045", "LED-195"])
     def _(T):
         led = norm(read(T.root, "references/project-standards.md"))
         sq = {}
@@ -571,7 +576,18 @@ def capability_verdicts(caps, T, probes):
 def check_all(T, atoms, probes, conflicts, machines, caps):
     fails, warns, examined = [], [], {}
     # 1 atoms
-    bad = verify_atoms(atoms); examined["atoms (quote found verbatim)"] = len(atoms); fails += bad
+    # A quote is verified only for an atom a conflict, status correction, machine, predicate or probe
+    # still cites (W9): an atom nothing cites is a record, and a resolved entry stops needing its source.
+    cited = set()
+    for c in conflicts["conflicts"]: cited |= set(c["atoms"]) | {i for s in c["sides"] for i in s["atoms"]}
+    for sc in conflicts.get("status_corrections", []): cited |= {sc["atom"], *sc["by"]}
+    for m in machines["machines"]: cited |= set(m.get("atoms", []))
+    for c in caps["capabilities"].values():
+        for p in c["predicates"]: cited |= set(p.get("atoms", []))
+    for p in probes.values(): cited |= set(p["atoms"])
+    bad = verify_atoms(atoms, only=cited); fails += bad
+    examined["atoms in all (structure checked)"] = len(atoms)
+    examined["atoms cited by a conflict, machine, probe or predicate (quote found verbatim)"] = len(cited & set(atoms))
     examined["distinct quotes among them"] = len({norm(a["quote"]) for a in atoms.values()})
     # 2 conflicts
     n = 0
