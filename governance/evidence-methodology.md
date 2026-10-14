@@ -59,8 +59,8 @@ Per A5 (`governance/co1-operational.md`, CANONICAL), every Co-1 citation carries
 |---|---|---|
 | `tier` | int | `1` |
 | `evidence_type` | enum | `co1` |
-| `co1_provenance` | enum | `published_corpus` (pre-launch all) or `participatory_synthesis` (post-launch contingent) |
-| `co1_source_type` | enum | `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
+| `co1_provenance` | text | Names the co-production (D-0178) |
+| `co1_source_type` | text | The column's own vocabulary (`SELECT DISTINCT co1_source_type`) |
 | `verification_status` | enum | `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count` |
 | `synthesis_attribution_required` | bool | `true` if the guidebook substantially synthesizes from this source (A5 §3.4 Tier 2 obligation) |
 
@@ -196,13 +196,13 @@ A cell's state is recomputed from its evidence on each run (`scripts/assess/asse
 
 ### 2.8 Evidence-state and verification status interaction — resolves Q8 partial
 
-Per A5 §6.3: validators block migration of cells whose only Co-1 source has `verification_status ∈ {UNVERIFIED-CLOSED, CLOSED-DELETED}`. The interaction with the state machine:
+How verification standing interacts with the state machine:
 
 | Verification status of the cell's sources | State-machine effect |
 |---|---|
 | All cited sources `VERIFIED` | No effect — state determined by tier/type per §§2.2–2.5 |
 | At least one source `UNVERIFIED` with `verification_disposition='OPEN'` | Cell retains its state but carries an `[UNVERIFIED-PENDING]` flag. The flag triggers a re-search before the cell's state can be used in downstream synthesis (ISW, Part 4 specification). Migration is not blocked — the cell exists in the corpus — but final synthesis is gated. |
-| Cell's only qualifying source(s) are `UNVERIFIED-CLOSED` or `CLOSED-DELETED` | Cell state downgrades to `pending`. The evidence that supported the prior state has been disqualified. A gap-register entry is created if one does not exist. |
+| Cell's only qualifying source(s) are `UNVERIFIED` with `verification_disposition='CLOSED'` | Cell state downgrades to `pending`. The evidence that supported the prior state has been disqualified. A gap-register entry is created if one does not exist. |
 | Cell has both verified and unverified sources, and the verified sources alone still meet the state threshold | Cell retains its state. Unverified sources are flagged but do not downgrade the cell. |
 
 This resolves the Q8 partial identified in the A6 handoff. Full Q8 resolution (implementation details for the validator's handling of OPEN-disposition re-search triggering) is deferred to Session 2 code implementation.
@@ -461,7 +461,7 @@ The skill is prose-only (no Python validator). Its quality depends on the author
 | Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Person-Mode handoff. Applies at Population Mode only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
 | Q6 — Design-pedagogy tier classification | Meta-methodological: outside the evidence hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
 | Q7 — Epistemic-defense skill specification | Seven challenge categories with response patterns; five-step decision sequence; voice conventions; C2 skill build forward spec. Requirements only — C2 builds implementation. | high — direct application of advocacy identity + evidence hierarchy + framing standards | §6 |
-| Q8 — Verification status interaction (partial) | `UNVERIFIED`/OPEN: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |
+| Q8 — Verification status interaction (partial) | `UNVERIFIED`/OPEN: flag but don't downgrade. `UNVERIFIED` with disposition `CLOSED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high | §2.8 |
 
 ---
 
@@ -480,7 +480,7 @@ Delivered in A6 Session 2 (2026-04-29 18:05):
 ### Remaining forward items
 
 - **Multilingual-research output validator** — wrapper validator for Co-1 provenance on non-English literature review outputs. Deferred: may fold into C-stage multilingual-research skill rebuild. Not blocking A6 closure.
-- **B1 schema design** — inherits convergence assessment specification (§3.2) and Co-1 field requirements (§1.3, A5 §7.1) as binding input.
+- **B1 schema design** — inherits convergence assessment specification (§3.2) and Co-1 field requirements (§1.3) as binding input.
 - **C2 skill builds** — epistemic-defense skill (§6.5 forward spec) and values-criteria integration into cross-population-conflict-mapper.
 - **C7 evidence migration** — 584 sources + 81 unverified residual disposition bound to A6 schema and validator.
 

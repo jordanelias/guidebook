@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 06:51 UTC from git HEAD 1ff6cfd (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 07:00 UTC from git HEAD c235b9a (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 111,
  "stages": [
@@ -4094,8 +4094,7 @@
    "verdict": "FAIL",
    "tests": "every live co1_source_type value is in schemas.enums.Co1SourceType",
    "atoms": [
-    "DRS-248",
-    "DRS-294"
+    "DRS-248"
    ],
    "evidence": {
     "enum": [
@@ -4122,7 +4121,7 @@
    "tests": "every Co-1 source's co1_provenance is non-empty free text and none holds only the co1-operational value 'published_corpus' (D-0178 requires it to name the co-production)",
    "atoms": [
     "DRS-146",
-    "DRS-264",
+    "DRS-263",
     "CLM-037"
    ],
    "evidence": {
@@ -4193,7 +4192,6 @@
    "verdict": "PASS",
    "tests": "evidence_sources.verification_status admits only VERIFIED / UNVERIFIED (D-0157)",
    "atoms": [
-    "EVI-365",
     "EVI-369",
     "LED-028"
    ],
@@ -4591,11 +4589,11 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms in all (structure checked)": 2639,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 406,
-  "distinct quotes among all atoms": 2606,
+  "atoms in all (structure checked)": 2621,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 390,
+  "distinct quotes among all atoms": 2589,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 39,
+  "conflicts (atoms, class, probe exist)": 38,
   "machine transitions": 42,
   "transition evidence needles re-read": 72,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -4606,13 +4604,13 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2259,
+  "ACTIVE": 2245,
   "SUPERSEDED": 85,
   "OPEN": 71,
-  "AMENDED": 69,
+  "AMENDED": 65,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
- "atoms_total": 2639,
- "conflicts_total": 39
+ "atoms_total": 2621,
+ "conflicts_total": 38
 }

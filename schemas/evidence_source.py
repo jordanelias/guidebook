@@ -73,7 +73,7 @@ class EvidenceSource(GuidebookEntity):
     verification_closure_reason: Optional[VerificationClosureReason] = None
     verification_attempt_count: Optional[int] = None
 
-    # Co-1 fields (A5 §6.1 — required when evidence_type == co1)
+    # Co-1 fields (required when evidence_type == co1)
     co1_provenance: Optional[Co1Provenance] = None
     co1_source_type: Optional[Co1SourceType] = None
     synthesis_attribution_required: Optional[bool] = None
@@ -130,7 +130,7 @@ class EvidenceSource(GuidebookEntity):
 
     @model_validator(mode="after")
     def co1_field_consistency(self) -> "EvidenceSource":
-        """Enforce A5 §6.1: Co-1 sources require Co-1-specific fields."""
+        """Co-1 sources require Co-1-specific fields."""
         et = self.evidence_type
         if isinstance(et, str):
             is_co1 = et == "co1"
@@ -144,11 +144,11 @@ class EvidenceSource(GuidebookEntity):
                 )
             if self.co1_provenance is None:
                 raise ValueError(
-                    "Co-1 source requires co1_provenance field (A5 §6.1)"
+                    "Co-1 source requires co1_provenance field"
                 )
             if self.co1_source_type is None:
                 raise ValueError(
-                    "Co-1 source requires co1_source_type field (A5 §6.1)"
+                    "Co-1 source requires co1_source_type field"
                 )
         else:
             # Non-Co-1 sources must not carry Co-1-specific fields

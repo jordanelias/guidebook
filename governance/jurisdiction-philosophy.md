@@ -90,7 +90,7 @@ Every BPC entry's jurisdiction-coverage section records the research status for 
 | `tier5_attempted` | bool | Whether Tier 5 (beyond-code framework) evidence was searched |
 | `tier6_attempted` | bool | Whether Tier 6 (code) evidence was searched |
 
-A BPC entry is PROVISIONAL until all 24 jurisdictions are recorded AND the Co-1 pass covers ≥9 languages.
+A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages.
 
 ---
 

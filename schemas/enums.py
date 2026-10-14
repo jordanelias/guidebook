@@ -243,10 +243,10 @@ class ConvergenceStatus(str, Enum):
 
 
 class Co1Provenance(str, Enum):
-    """Co-1 evidence provenance per A5 §3.1.
+    """Co-1 evidence provenance (co1-operational §3.1).
 
-    Pre-launch: all Co-1 citations are published_corpus.
-    participatory_synthesis is post-launch contingent.
+    D-0178: the Co-1 warrant is the named co-production, which neither value
+    states. RULINGS R11 corrects this enum from the live column in plan step 3.
     """
     PUBLISHED_CORPUS = "published_corpus"
     PARTICIPATORY_SYNTHESIS = "participatory_synthesis"
@@ -255,7 +255,8 @@ class Co1Provenance(str, Enum):
 class Co1SourceType(str, Enum):
     """Co-1 source type taxonomy per A5 §1.1.
 
-    The four types of Co-1 source plus validated_tool (A5 §6.1).
+    The live column's values differ from these; RULINGS R11 corrects the enum
+    from the column in plan step 3.
     """
     PEER_REVIEWED_LITERATURE = "peer_reviewed_literature"
     DPO_RESEARCH = "dpo_research"

@@ -98,11 +98,11 @@ conflicts:
   class: RULING-MECHANISM
   severity: S2
   title: "The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission"
-  atoms: [LED-108, OPS-06, DRS-098, DRS-099, DRS-164, DRS-249, DRS-298, DRS-151]
+  atoms: [LED-108, OPS-06, DRS-098, DRS-099, DRS-164, DRS-249, DRS-151]
   sides:
     - {atoms: [LED-108, DRS-098, DRS-099], says: "judgment delivers the tier verdict; evidence_sources.tier is to be retired (D-0168)."}
     - {atoms: [OPS-06], says: "pipeline-operations: admission and tier adjudication are the gate between discovery and extraction, recorded on the source."}
-    - {atoms: [DRS-164, DRS-249, DRS-298, DRS-151], says: "D-0179 sets evidence_sources.tier for a source; co1-operational puts tier (int 1-6) on EvidenceSource; D-0178 notes the column carries no CHECK."}
+    - {atoms: [DRS-164, DRS-249, DRS-151], says: "D-0179 sets evidence_sources.tier for a source; D-0178 notes the column carries no CHECK."}
   probe: P-F
   direction: "Ruled but not executed (LED-108 ambiguity: 'the move is queued, not done'). Readers that must be re-pointed first: add-extraction's R3 guard and assess_cell's gather both read evidence_sources.tier."
   resolver: AGENT
@@ -233,32 +233,20 @@ conflicts:
   resolver: OWNER
   confidence: high
 
-- id: C-024
-  class: RULING-DOC
-  severity: S1
-  title: "Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis)"
-  atoms: [DRS-146, DRS-147, DRS-148, DRS-264, DRS-265, DRS-251, CLM-037, LED-021, LED-022]
-  sides:
-    - {atoms: [DRS-146, DRS-147, DRS-148, CLM-037], says: "D-0178 (owner ruling relayed, 2026-08-31): a Co-1 tier is unwarranted-pending unless co1_provenance names the co-production; published_corpus is not a warrant."}
-    - {atoms: [DRS-264, DRS-265, DRS-251], says: "co1-operational (2026-04-29): co1_provenance takes exactly two values and every pre-launch Co-1 citation is published_corpus; grounds Co-1 in peer review, organisational accountability or scholarly authorship."}
-  probe: P-CO1-PROV
-  direction: "D-0178 is later and is the owner's ruling, so by rule 0 the co1-operational vocabulary and its 'every pre-launch Co-1 citation is published_corpus' clause are stale. The data already conforms: P-CO1-PROV finds each Co-1 source carrying prose that names the co-production and none holding only a co1-operational value; the column has no CHECK vocabulary, so nothing enforces it. Correcting co1-operational is a doctrine-document edit, owner-merged."
-  resolver: OWNER
-  confidence: high
+
 
 - id: C-025
-  class: DOC-DOC
+  class: RULING-MECHANISM
   severity: S3
-  title: "Co-1 operational record: sub-type lists, retired verification values, ref-id format"
-  atoms: [DRS-248, DRS-294, DRS-274, DRS-301, DRS-241, DRS-242, DRS-293, DRS-295, DRS-296, EVI-365, EVI-369, LED-028]
+  title: "Co-1 source types: the live column holds values the enum does not (R11: the enum is corrected from the column)"
+  atoms: [DRS-248]
   sides:
-    - {atoms: [DRS-248, DRS-294], says: "four Co-1 source types in section 1.1, five co1_source_type values in section 6.1 (adds validated_tool)."}
-    - {atoms: [DRS-274, DRS-301, EVI-365, EVI-369, LED-028], says: "sections 3.4 and 6.3, methodology 2.8 and an old ledger rule still test UNVERIFIED-CLOSED and CLOSED-DELETED; D-0157 made verification_status binary."}
-    - {atoms: [DRS-293, DRS-295, DRS-296], says: "co1-operational prescribes Co1-NN ref ids and puts population_codes and parameters_supported on the Co-1 record; CLAUDE.md requires dbcore.next_ref_id and each stage holds only its own data."}
-  probe: [P-VERIF-VOCAB, P-CO1-TYPE]
-  direction: "The schema CHECK on evidence_sources.verification_status admits VERIFIED and UNVERIFIED only; the retired values cannot be written. P-CO1-TYPE compares the live co1_source_type values with schemas.enums.Co1SourceType, a drift independent of the warrant question (C-024). The co1-operational sections that cite them are stale (DRS-274 and DRS-301 are already marked AMENDED)."
+    - {atoms: [DRS-248], says: "co1-operational 1.1 lists four Co-1 source types; the column has no CHECK, and the live values, schemas.enums.Co1SourceType and that list disagree."}
+  probe: P-CO1-TYPE
+  direction: "RULINGS R11: the enum is corrected from the column's CHECK if one exists, else from the live sample with the writer constrained to it (plan step 3, evidence). The document no longer lists values."
   resolver: AGENT
   confidence: high
+
 
 # ---------------------------------------------------------------- D. rendering and machinery
 - id: C-028
