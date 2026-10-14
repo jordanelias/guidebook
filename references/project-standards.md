@@ -4470,8 +4470,7 @@ DATE: 2026-10-14 — recorded under RULINGS R13; the date of each statement is g
 **Superseding words that live outside this ledger, quoted here once so the audit can anchor on them.**
 
 - The operative instrument, section 1.4 rule 1 (`decisions/DR-2026-08-19-research-restart-operative-instrument.md:178`), ratified 2026-08-19 as OD-1: "**No item name becomes a slug by strip.**" It overturns the 2026-08-18 proposal's mechanism for making a slug from an item name.
-- R5, adopted by the entry of 2026-10-14 above, in the words this entry records for it: a new table needs no Pydantic mirror and no entry in a curated map. The mirrors nothing imports, and the script that compared them with the tables, were deleted in plan step 1.10.
-- D-0184 (`decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md`): The lens is a COLUMN, not a traversal. R15 holds it in force. Its review, which that file's header marks pending, is discharged by the delegation recorded above. It replaces the consequence D-0170 drew, that lens-switching runs through the crossing maps.
+The other anchors are in this ledger already and are not repeated. R5 is adopted by the delegation entry above; its words are in `workplan/pipeline-state-graph/RULINGS.md`: "Retire the requirement. Delete the unread mirrors, `validate_pydantic_schemas.py` and its map". The consequence D-0170 drew, that lens-switching runs through the crossing maps, is overtaken by the owner's ruling of 2026-08-28 on the lens columns. D-0184 (`decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md`) carries that ruling out and R15 holds it in force; the review its header marks pending is discharged by the delegation recorded above.
 
 ```
 SUPERSEDES: decisions/DR-2026-08-24-scaffolding-is-phase-specific.md :: "`research → evidence collection → judgment → synthesis → render`"
@@ -4497,11 +4496,11 @@ SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "The strip is manual,
 SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "three lenses, three theoretical approaches, three tables"
   BY: references/project-standards.md :: "because i said we need the medical model too"
 SUPERSEDES: decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md :: "The Pydantic mirror must be added. So must an entry in"
-  BY: references/project-standards.md :: "a new table needs no Pydantic mirror and no entry in a curated map"
+  BY: references/project-standards.md :: "the proposed rulings R1 to R42 are adopted as amended by the rehearsals"
 SUPERSEDES: decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md :: "the review it awaits is the owner's"
   BY: references/project-standards.md :: "resolve them for me in a logical manner"
 SUPERSEDES: decisions/DR-2026-08-27-four-taxonomies-are-browsing-lenses.md :: "lens-switching runs through"
-  BY: references/project-standards.md :: "The lens is a COLUMN, not a traversal"
+  BY: references/project-standards.md :: "four typed columns, one per lens"
 SUPERSEDES: decisions/DR-2026-08-27-relevance-is-adjudicated-at-collection.md :: "applicability remains a synthesis judgement"
   BY: references/project-standards.md :: "we go evidence>judgment>synthesis"
 ```

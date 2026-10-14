@@ -780,9 +780,10 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
         c = copy.deepcopy(conflicts)
         c["status_corrections"] = [dict({"atom": late["id"], "current": late["status"], "should_be": "SUPERSEDED", "by": [early["id"]], "why": "planted by the selftest"}, **kw)]
         return c
-    c4 = planted(current="HISTORICAL")
+    #    decided by the atom itself, so only the stale-status branch can fire (the EARLIER branch would also say "status_corrections")
+    c4 = planted(current="HISTORICAL", by=[late["id"]])
     f, _, _ = check_all(T, atoms, probes, c4, machines, caps)
-    results.append(("a stale status correction is caught", any("status_corrections" in x for x in f)))
+    results.append(("a stale status correction is caught", any("is now ACTIVE, not HISTORICAL" in x for x in f)))
     # l) a quote cited at the wrong line is caught
     a6 = copy.deepcopy(atoms[sorted(atoms)[0]]); path_, _, ln_ = a6["source"].rpartition(":")
     a6["source"] = f"{path_}:{int(ln_) + 40}" if ln_.isdigit() else a6["source"]
