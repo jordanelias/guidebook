@@ -27,7 +27,6 @@ MISSION_CRITICAL = {
     "convergence_assessment": 1,
     "reasoning_doc_citations": 1,
     "gap_mining": 1,
-    "extraction_population_links": 1,
     "lang_jur_map": 1,
     "specifications": 20,   # 7 pilot rows today; full backfill is ~ hundreds
 }

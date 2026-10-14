@@ -30,7 +30,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
-| C-020 | S2 | RULING-MECHANISM | AGENT | P-A -> FAIL | Splinter population link tables: 'both sweeps are done' versus five tables still present |
+| C-020 | S2 | RULING-MECHANISM | AGENT | P-A -> PASS | Splinter population link tables: 'both sweeps are done' versus five tables still present |
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
@@ -358,7 +358,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 
 ## C-020 [S2] Splinter population link tables: 'both sweeps are done' versus five tables still present
 
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-A` = **FAIL**
+**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-A` = **PASS**
 
 - owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns.  
   _atoms:_ `LED-132`(act), `CLM-042`(act)
