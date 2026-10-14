@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 08:51 UTC from git HEAD 8aebc0b (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 08:58 UTC from git HEAD 8aca4ae (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 113,
+ "user_version": 114,
  "stages": [
   "base",
   "research",
@@ -967,6 +967,7 @@
    "cols": [
     "exec_id",
     "slug",
+    "parameter_id",
     "jurisdiction",
     "language",
     "target_tier",
@@ -1553,7 +1554,7 @@
    "child": "search_candidates",
    "col": "found_under_slug",
    "parent": "slugs",
-   "notnull": true
+   "notnull": false
   },
   {
    "child": "search_candidates",
@@ -1605,9 +1606,15 @@
   },
   {
    "child": "search_executions",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
    "col": "slug",
    "parent": "slugs",
-   "notnull": true
+   "notnull": false
   },
   {
    "child": "slugs",
@@ -2877,7 +2884,7 @@
      "INSERT"
     ]
    },
-   "refusals": 3
+   "refusals": 4
   },
   "add-population-match": {
    "functions": [
@@ -3603,7 +3610,7 @@
      "INSERT"
     ]
    },
-   "refusals": 11
+   "refusals": 12
   },
   "add-source": {
    "functions": [

@@ -582,8 +582,12 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                origin_pass_id: int = None, result_artefacts=None,
                identity_code: str = None, icf_code: str = None,
                needs_code: str = None, medical_code: str = None,
-               dry_run: bool = False) -> int:
+               parameter_id: int = None, dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
+
+    A search names what it looked for: a `slug`, a `parameter_id` (a catalogue
+    search for one design parameter, R43) or a `mined_ref_id` (a pass over one
+    source). Any one will do; none is refused.
 
     A row here is a completed
     unit of work whether or not it found anything: R8 says keep the empties, and
@@ -632,6 +636,12 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
     # cannot correct this column either, so a wrong code here costs a compensating
     # migration.
     dbcore.check_jurisdiction(jurisdiction, "log-search --jurisdiction")
+    if not (slug or parameter_id is not None or mined_ref_id):
+        raise Refusal(
+            "A search names what it looked for: pass --slug, --parameter (a "
+            "base_parameters.parameter_id) or --mined-ref-id. The table's CHECK refuses a "
+            "row with none of the three, and a search that looked for nothing has no "
+            "coverage to record.")
 
     # RC5 (DR-2026-09-26 5.2c). `origin` is the INITIATION axis (why the step ran);
     # `mining_direction` is the METHOD axis (how) -- orthogonal, so neither can stand
@@ -731,12 +741,13 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # jurisdiction, so a wrong code costs a compensating migration.
         "identity_code": identity_code, "icf_code": icf_code,
         "needs_code": needs_code, "medical_code": medical_code,
+        "parameter_id": parameter_id,
     }
     with connect(dry_run) as conn:
         # Each lens code must name a row of the registry its own foreign key points at. Read
         # from PRAGMA foreign_key_list, so no vocabulary is restated here, and a blank value
         # is refused rather than dropped: a blank is not an absence.
-        for col in _LENS_COLUMNS:
+        for col in (*_LENS_COLUMNS, "parameter_id"):
             dbcore.fk_declared(conn, "search_executions", col, row[col], f"log-search {col}")
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
@@ -1097,7 +1108,8 @@ def main():
     # ---- ACT 2 (2026-08-25): the tables the CLI could not write ----
     p_cand = sub.add_parser("add-candidate", help="Stage a screened candidate (search_candidates)")
     p_cand.add_argument("--exec-id", type=int)
-    p_cand.add_argument("--found-under-slug", required=True)
+    p_cand.add_argument("--found-under-slug",
+                        help="required unless --exec-id names a search that has no slug")
     p_cand.add_argument("--suggested-slug")
     p_cand.add_argument("--disposition", required=True,
                         help="Live vocabulary, derived from the table; not a list in this file")
@@ -2168,7 +2180,11 @@ def main():
                            "bias. This is the only moment it can honestly be recorded -- "
                            "a prior written after reading the results is a "
                            "rationalisation wearing the field that prevents one.")
-    p_ls.add_argument("--slug", required=True)
+    p_ls.add_argument("--slug", help="the slug searched; omit it for a search that names "
+                                     "--parameter or --mined-ref-id instead (R43)")
+    p_ls.add_argument("--parameter", type=int,
+                      help="base_parameters.parameter_id this search looked for (R43); "
+                           "with no --slug, this or --mined-ref-id must name the subject")
     p_ls.add_argument("--language", required=True, help="ISO 639-1, uppercase (EN, FR)")
     p_ls.add_argument("--query-text", required=True,
                       help="the query VERBATIM (R8: log it before screening)")
@@ -2636,7 +2652,7 @@ def main():
             result_artefacts=args.result_artefacts,
             identity_code=args.identity, icf_code=args.icf,
             needs_code=args.needs, medical_code=args.medical,
-            dry_run=args.dry_run)
+            parameter_id=args.parameter, dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "admitted": len(args.admitted_ref_ids or []),
                "linked_artefacts": len(args.result_artefacts or []),
@@ -9591,7 +9607,16 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
         _check_surfaced_in(conn, data.get("exec_id"), data.get("surfaced_in"),
                            data.get("surfaced_quote"), data.get("locator"),
                            "add-candidate")
-        if not dbcore.exists(conn, "slugs", "slug", data.get("found_under_slug")):
+        if data.get("found_under_slug") is None:
+            slugless = data.get("exec_id") is not None and conn.execute(
+                "SELECT slug IS NULL FROM search_executions WHERE exec_id=?",
+                [data["exec_id"]]).fetchone()[0]
+            if not slugless:
+                raise Refusal(
+                    "found_under_slug is required unless --exec-id names a search that has no "
+                    "slug (one logged with --parameter or --mined-ref-id): a candidate found "
+                    "under a slug says which.")
+        elif not dbcore.exists(conn, "slugs", "slug", data["found_under_slug"]):
             raise Refusal(
                 f"found_under_slug {data.get('found_under_slug')!r} is not in `slugs`.")
         dbcore.check_vocab(conn, "search_candidates", "disposition",

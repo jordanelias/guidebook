@@ -1466,6 +1466,60 @@ try:
            and ln.rstrip().endswith("'%s', '%s', '%s', NULL);" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"]))]
     record("M03", "emit_batch_sql captures the lens columns of a logged search (the write can be shipped)",
            len(hit) == 1, captured[-400:])
+
+    # ── N: a search with no slug (R43) ──────────────────────────────────────────────────
+    # `search_executions.slug` is nullable once the search names a parameter or a mined source;
+    # the CHECK refuses all three NULL. Through argparse again, for the same reason as M.
+    (PARAM,) = q("SELECT parameter_id FROM base_parameters ORDER BY parameter_id LIMIT 1")[0]
+
+    def ls_bare(label, *extra):
+        return run_cli("log-search", "--language", "EN", "--query-text", f"fixture N: {label}",
+                       "--engine", "manual", "--depth-method", "scoping", "--session", S,
+                       "--prior-expectation", "fixture prior, written before the call", *extra)
+
+    n_before = counts("search_executions")
+    r = ls_bare("names nothing")
+    record("N01", "log-search refuses a search naming no slug, parameter or mined source, and writes nothing",
+           r.returncode != 0 and "names what it looked for" in (r.stdout + r.stderr)
+           and counts("search_executions") == n_before, f"rc={r.returncode} {(r.stdout + r.stderr)[-200:]}")
+    r = ls_bare("unknown parameter", "--parameter", "999999")
+    record("N02", "an unknown --parameter is refused naming its registry, and writes nothing",
+           r.returncode != 0 and "has no matching row in" in (r.stdout + r.stderr)
+           and counts("search_executions") == n_before, f"rc={r.returncode} {(r.stdout + r.stderr)[-200:]}")
+    r = ls_bare("parameter only", "--parameter", str(PARAM))
+    row = q("SELECT slug, parameter_id FROM search_executions WHERE query_text=?", "fixture N: parameter only")
+    record("N03", "a search naming only a parameter is stored with a NULL slug",
+           r.returncode == 0 and row == [(None, PARAM)], f"rc={r.returncode} {r.stderr[-200:]} {row}")
+
+    def ls_cand(exec_id, *extra):
+        return run_cli("add-candidate", "--exec-id", str(exec_id), "--disposition", "PENDING-VERIFICATION",
+                       "--title", "fixture N candidate", "--surfaced-in", "transcripts/README.md",
+                       "--surfaced-quote", "single home for what the agents actually did", "--session", S, *extra)
+
+    (ex_bare,) = q("SELECT exec_id FROM search_executions WHERE query_text=?", "fixture N: parameter only")[0]
+    (ex_slug,) = q("SELECT exec_id FROM search_executions WHERE query_text=?", "fixture M: live codes")[0]
+    c_before = counts("search_candidates")
+    r_no = ls_cand(ex_slug)
+    r_bad = ls_cand(ex_bare, "--found-under-slug", "NOT-A-SLUG")
+    refused_ok = (r_no.returncode != 0 and "found_under_slug is required" in (r_no.stdout + r_no.stderr)
+                  and r_bad.returncode != 0 and "is not in `slugs`" in (r_bad.stdout + r_bad.stderr)
+                  and counts("search_candidates") == c_before)
+    r_ok = ls_cand(ex_bare)
+    stored = q("SELECT found_under_slug FROM search_candidates WHERE exec_id=? AND title=?",
+               ex_bare, "fixture N candidate")
+    record("N04", "a candidate needs --found-under-slug unless its search has no slug; an unknown slug is still refused",
+           refused_ok and r_ok.returncode == 0 and stored == [(None,)],
+           f"slugged-no-flag rc={r_no.returncode} bad-slug rc={r_bad.returncode} slugless rc={r_ok.returncode} "
+           f"{r_ok.stderr[-200:]} {stored}")
+    try:
+        emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+        captured = open(sql_out, encoding="utf-8").read()
+    except SystemExit as exc:
+        captured = f"emit refused: {exc}"
+    hit = [ln for ln in captured.splitlines() if ln.startswith('INSERT INTO "search_executions"')
+           and "fixture N: parameter only" in ln and "NULL, %d," % PARAM in ln]
+    record("N05", "emit_batch_sql captures a slugless search (the write can be shipped)",
+           len(hit) == 1, captured[-400:])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
