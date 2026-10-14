@@ -250,27 +250,27 @@ def selftest():
     # `classify_check("scripts/migrate_db.py") == "VERIFIABLE"` — encoding the very
     # defect being fixed: migrate_db.py exists but no registry entry runs it, so
     # "the file is there" was being read as "the criterion is enforced".
+    # The fixtures name files that exist and a SYNTHETIC registry. A fixture that names a live
+    # check is a caller of the registry: this one broke on 2026-08-04 (register_integrity_check
+    # de-quarantined), again on 2026-08-20 (validate_conflicts deleted), and again when a
+    # deletion step emptied the quarantine. Whether the live registry is read correctly is its
+    # own case, below.
+    registry = {"scripts/db.py": ("fixture_active", "ACTIVE"),
+                "scripts/dbcore.py": ("fixture_shelved", "QUARANTINED")}
     fixtures = {
         # id                         path                                         expected
         "missing path":              ("scripts/does/not/exist.py",                "BROKEN"),
-        "active registered check":   ("scripts/audit/graph_audit.py",             "VERIFIABLE"),
-        # This fixture was register_integrity_check.py until 2026-08-04, when the
-        # DR-2026-07-21 Option A rework de-quarantined it and the selftest
-        # correctly began failing — a fixture that names a specific check is a
-        # caller of the registry, and rule #5's sweep applies. validate_conflicts
-        # replaced it, and was itself deleted by the 2026-08-20 cull — the second
-        # time this one fixture has been broken by a change to its subject. If it
-        # breaks a third time, stop re-pointing it and derive the path from the
-        # registry's quarantine list at runtime; the hardcoded name is the defect.
-        "quarantined check":         ("scripts/audit/pre_rehab_banner_audit.py",  "QUARANTINED"),
+        "active registered check":   ("scripts/db.py",                            "VERIFIABLE"),
+        "quarantined check":         ("scripts/dbcore.py",                        "QUARANTINED"),
         "exists but unregistered":   ("scripts/migrate_db.py",                    "UNREGISTERED"),
         "no enforcer named":         (None,                                       "INCOMPLETE"),
     }
-    registry = _registry_index()
     for label, (path, expected) in fixtures.items():
         got = classify_check(path, registry)
         results.append((f"{label} -> {expected}" + ("" if got == expected else f" (got {got})"),
                         got == expected))
+    results.append(("the live registry index lists this audit as an ACTIVE check",
+                    _registry_index().get("scripts/audit/pipeline_contract_audit.py", (None, None))[1] == "ACTIVE"))
 
     ok_all = True
     for name, passed in results:

@@ -268,6 +268,21 @@ conflicts:
   resolver: OWNER
   confidence: high
 
+- id: C-019
+  class: RULING-MECHANISM
+  severity: S1
+  title: "The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules"
+  atoms: [CLM-048, CLM-042, CLM-034, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050, WRK-169, WRK-170]
+  sides:
+    - {atoms: [WRK-169, WRK-170], says: "owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database)."}
+    - {atoms: [CLM-048, LED-091], says: "the item layer is emptied (P-UNWRITABLE lists what still points into it) and items is a Part-4 render rollup derived from specifications; never file into an [A-Z]-NN container."}
+    - {atoms: [ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029], says: "conceptual-model and functional-taxonomy: items.item_code is the Part-4 organizing unit; specification values attach to items."}
+    - {atoms: [PRC-027, PRC-059, PRC-068, OPI-047, OPI-048, OPI-050], says: "process rules and the operative instrument cross-reference item-layer cells (F-07, A-16, A-18, AUT)."}
+  probe: P-UNWRITABLE
+  direction: "Mechanism half executed: migration drop_item_layer_cluster dropped the tables, and the renderers that selected item_code went with step 1.1. Documents half OPEN: the rulings of 2026-08-26 and 2026-09-01 supersede the item-keyed sentences on contact, but RULINGS R36 assigns the edit of the taxonomy documents to an owner merge and no plan step makes it."
+  resolver: OWNER
+  confidence: high
+
 - id: C-020
   class: RULING-MECHANISM
   severity: S2

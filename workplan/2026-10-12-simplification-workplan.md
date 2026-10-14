@@ -238,7 +238,7 @@ Each conflict's ruling and step are in the index of `RULINGS.md`; this table add
 | 0.2; ruling: base-vocabulary writers | C-034 | — | — |
 | 0.3 | C-031 | P-H | — |
 | 1.1 | — | P-I (deleted with its subject) | C4.7 (deleted) |
-| 1.2 | C-019, C-026 | — | — |
+| 1.2 | C-026 (C-019 narrowed to its documents half, which stays open) | — | — |
 | 1.2, 1.3, 5 | — | P-UNWRITABLE | — |
 | 1.3 | C-020 | P-A | — |
 | 1.4 | C-017 | P-AXIS | — |

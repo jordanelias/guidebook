@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 04:43 UTC from git HEAD f17acde (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 05:18 UTC from git HEAD 9455315 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-p12fix",
  "user_version": 107,
  "stages": [
   "base",
@@ -4078,7 +4078,7 @@
      "INSERT"
     ]
    },
-   "refusals": 1
+   "refusals": 2
   },
   "update-conflict": {
    "functions": [
@@ -5168,10 +5168,10 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2690,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 435,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 451,
   "distinct quotes among all atoms": 2657,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 47,
+  "conflicts (atoms, class, probe exist)": 48,
   "machine transitions": 42,
   "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -5182,13 +5182,13 @@
   "tables placed in a stage": 72
  },
  "atoms_by_status": {
-  "ACTIVE": 2307,
-  "SUPERSEDED": 77,
-  "OPEN": 75,
+  "ACTIVE": 2302,
+  "SUPERSEDED": 83,
+  "OPEN": 74,
   "AMENDED": 76,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
  "atoms_total": 2690,
- "conflicts_total": 47
+ "conflicts_total": 48
 }

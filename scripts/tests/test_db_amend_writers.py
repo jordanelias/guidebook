@@ -1410,6 +1410,20 @@ try:
                        capture_output=True, text=True)
     record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
            r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
+
+    # J13: migration `drop_item_layer_cluster` removed the foreign key that refused an item
+    # code on conflicts.item_code, so the writer refuses it (CLAUDE.md section 7). The control
+    # is the same row without the code: a refusal that also refused that would prove nothing.
+    base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": "AAA", "pop_b": "BBB",
+            "status": "PROPOSED"}
+    msg = refusal(db.insert_conflict, {**base, "item_code": "E-08"}, S, dry_run=True)
+    ok_id = None
+    try:
+        ok_id = db.insert_conflict(base, S, dry_run=True)
+    except Exception as exc:  # noqa: BLE001 -- the control failing is a defect to see
+        print(f"      CONTROL defect: {exc.__class__.__name__}: {exc}")
+    record("J13", "insert_conflict refuses an item code and still writes the same row without one",
+           msg is not None and "item layer" in msg and ok_id == "CONF-9999", f"refusal={msg!r} control={ok_id!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
