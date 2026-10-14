@@ -52,7 +52,7 @@ import tempfile
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # The invariants are DERIVED, not listed. This was six hardcoded table names --
-# evidence_sources, citation_mining, source_slug_links, gaps, connections, slugs --
+# evidence_sources, citation_mining, source_slug_links, gaps, connections, items --
 # and a handler that turned sqlite3.OperationalError into a silent `skip (no such
 # table)`. Measured 2026-08-28 against the pending seven-stage rename: ALL SIX
 # skipped, and the check printed `EXAMINED: 7` while examining one thing, the

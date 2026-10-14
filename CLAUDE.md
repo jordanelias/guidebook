@@ -426,7 +426,7 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   merged PR leaves unmerged commits on your branch, `git merge origin/main` reaches the same state
   without rewriting anything — the branch carries a merge commit rather than a replay.
 - **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** Its tables
-  were dropped by migration `drop_item_layer_cluster` and a rebuild does not restore them — but the prior version's corpus still publishes the
+  were dropped by migration `drop_item_layer_cluster` and a rebuild does not restore them (`conflicts.item_code` survives as a plain column, and `add-conflict` refuses it) — but the prior version's corpus still publishes the
   codes and their names across `references/` and `working/`, which `.ignore` does **not** hide.
   (`versions/` and `_archived/` carry them too and **are** hidden.)
   So a session that greps for a topic still meets **`E-08 Corridor Clear Width

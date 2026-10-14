@@ -52,12 +52,7 @@ A separate canonical clarification, surfaced 2026-05-25 during reverification sc
 
 When a BPC cites a T4–T6 source, the citation must additionally confirm that the cited edition is the **current legally-in-force edition** — not a superseded edition. Pre-existing supersession_check rows surface this for the supersession protocol; the same check applies inline to any new T4–T6 citation.
 
-**Enforcement (Level 2 audit script, added 2026-05-25):** `scripts/audit/code_currency_audit.py` is the mechanical check. Per architecture v2.3 `<enforcement_spectrum>`, this rule is promoted from text rule (Level 1) to audit script (Level 2) because (a) it is mechanically checkable from `evidence_sources.tier` + `pub_year` + the new `code_currency_*` columns, and (b) drift was observably costly during the 2026-05-25 reverification scoping (DIN 18040-1:2010 and NZS 4121:2001 both surfaced as cases where edition currency required direct jurisdiction-source checks that no inline rule had previously required).
-
-The audit fires per-tier age thresholds (T4: 7 years; T5/T6: 5 years) and lists rows for jurisdiction-tracker review. Suppression criteria documented in the audit script header:
-- `code_currency_status IN ('VERIFIED-CURRENT','PERMANENT-FRAMEWORK')` with `code_currency_verified_at` within 365 days;
-- OR `supersession_check` row with outcome in `{current_best, co1_addition_logged, refined_by}` within 365 days (any slug);
-- OR `pub_year` within tier-specific freshness threshold.
+**Enforcement.** The currency fact is carried in the `evidence_sources.code_currency_*` columns; no mechanical check reads it since `scripts/audit/code_currency_audit.py` was deleted (plan step 1.6, RULINGS R4).
 
 `code_currency_status` enum: `VERIFIED-CURRENT`, `PERMANENT-FRAMEWORK` (foundational references like CRPD, ICF, WHO Child Growth Standards that do not revise on the same cadence), `SUPERSEDED-PENDING-REPLACEMENT`, `UNVERIFIED-CHECK-DEFERRED` (e.g., T6 codes flagged in MOB Pass-2 supersession audit as out-of-scope per DR-2026-05-24).
 
