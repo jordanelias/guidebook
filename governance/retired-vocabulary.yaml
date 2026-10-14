@@ -886,9 +886,10 @@ deferred:
       to UPL" makes the next session write a query against a code that does not
       exist.
       WHAT IS ALREADY ENFORCED, so this deferral is narrower than it looks: the
-      DATABASE side is checked. scripts/validate_population.py (rewritten
-      2026-08-05) grades every population-bearing column against the live taxonomy
-      and reports retired codes with the crosswalk above. What is deferred is the
+      DATABASE side is checked. the check that graded every
+      population-bearing column against the live taxonomy (scripts/validate_population.py)
+      was deleted in plan step 1.6; population_icf_links.population_code is held by its
+      foreign key. What is deferred is the
       PROSE, not the data.
       Promotion path, if the owner scopes it: add these as entries with the
       infrastructure directories in scope and the corpus deferred — which needs a

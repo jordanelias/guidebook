@@ -37,7 +37,7 @@ ENT-448	governance/legal-regulatory.md:213	counsel question L-Q7	Open (major; sh
 ENT-449	governance/legal-regulatory.md:214	counsel question L-Q8	Open (blocking if any jurisdiction requires it): does any jurisdiction's accessibility legislation require a guidebook of this type to register, certify or seek approval before publication?
 ENT-450	governance/legal-regulatory.md:215	counsel question L-Q9	Open (minor): are there data-protection considerations for publishing a methodology that engages identifiable Co-1 sources by name?
 ENT-451	governance/legal-regulatory.md:216	counsel question L-Q10	Open (minor): what counsel-review cadence is recommended for the disclaimer language?
-EVI-076	governance/tier-system.md:116	Practice (Co-3) encoding	A dedicated practice (Co-3) encoding exists in the DR but its audit representation is deferred to the audit rework.
+EVI-076	governance/tier-system.md:111	Practice (Co-3) encoding	A dedicated practice (Co-3) encoding exists in the DR but its audit representation is deferred to the audit rework.
 EVI-215	governance/evidence-architecture.md:149	Participatory flag	When a participatory flag exists, the cultural-exemption predicate in assess_cell.derivation_handshake() is to be widened.
 EVI-216	governance/evidence-architecture.md:155	derivation_handshake_integrity blocking promotion	Whether derivation_handshake_integrity is promoted to blocking is an owner call, deliberately not taken.
 EVI-436	governance/evidence-methodology.md:465	epistemic-defense skill form	The epistemic-defense skill is prose-only with no Python validator.

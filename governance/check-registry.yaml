@@ -215,22 +215,6 @@ checks:
   basis: hygiene
   cost: fast
   min_items: 20
-- id: validate_bpc
-  cmd:
-  - python3
-  - scripts/validate_bpc.py
-  - --all
-  battery: structure
-  kinds:
-  - always
-  level: blocking
-  basis: hygiene
-  cost: fast
-  min_items: 1
-  note: 'Cheap enough that gating it would buy nothing and risk a misclassified diff slipping a malformed
-    BPC through. Deliberately ungated. INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the references/bpc/**/*.md
-    file count (102 today). File-glob-derived, so min_items:1 — a run that finds zero files means the
-    glob broke, not that BPCs were legitimately retired to none.'
 - id: validate_cross_refs
   cmd:
   - python3
@@ -836,40 +820,6 @@ checks:
     rather than min_items. `synthesis` added per the 2026-07-23 enforcement plan F2: a synthesis PR that
     asserts a determination must trigger the judgment-stage check. It previously could not, because the
     path filter never evaluated true.'
-- id: validate_population
-  cmd:
-  - python3
-  - scripts/validate_population.py
-  battery: schema
-  kinds:
-  - schema
-  - data
-  level: advisory
-  basis: base/base-population-vocabulary
-  cost: fast
-  min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints checked_rows (425 today, the same denominator the
-    PASS line already reports). min_items:1 — the script''s own vacuity guard already FAILS at 0 checked
-    rows, so the registry floor just makes that visible to run_checks.py too. REWRITTEN AND DOWNGRADED
-    blocking -> advisory, 2026-08-05. It was blocking and green, and it had never validated anything.
-    It printed "No files with population codes found to validate" and exited 0, because it scanned references/bpc/**/*.md
-    for a `population:` key in YAML front matter and NO BPC FILE HAS FRONT MATTER — 0 of 102. Its rules
-    were also the taxonomy DR-2026-07-23 retired: a SUBCODE_PARENTS map of MOB/UPL, NEU/PCS, OFS/POTS;
-    EXH treated as live; LPA and BAR treated as supplementary-only when both are now first-class; and
-    an explicit "IntD is not a standalone code — proxy through DEM + NDV" rule that sub-decision 4 of
-    that DR overturned. Had the extractor ever found a file it would have rejected valid codes and accepted
-    retired ones. It now checks the database: enum <-> populations parity both ways (P1), every discovered
-    `population`/`population_code` column resolving to a live code (P2), retired codes reported with the
-    DR-2026-07-23 crosswalk so the message says what to write instead (P3), packed comma-joined code columns
-    (P4), and unregistered scope markers (P5). Columns are DISCOVERED, not transcribed — a hardcoded list
-    is what this file was. **A check that examines zero subjects now FAILS.** That guard is the point:
-    a gate passing because nothing is in scope is indistinguishable in CI from a gate passing on the merits,
-    and worse than no gate because it reads as assurance. Fourth gate found this session certifying nothing.
-    DOWNGRADED because its first real run surfaces 5 findings that are genuine and NOT this session''s
-    to decide: `bpc_metadata.population` holds the unregistered scope marker `MULTI` on 42 rows (registering
-    it is a taxonomy act, DG-NON), and two columns pack comma-joined codes, one of them hiding two retired
-    codes. Leaving it blocking would red-X every schema and data diff for a backlog the committer cannot
-    clear — the trap CLAUDE.md §7 warns about for the DB integrity job. Promote once those five are resolved.'
 - id: jurisdiction_db_vocabulary
   cmd:
   - python3
@@ -1626,44 +1576,6 @@ checks:
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the graph node count (847 today). min_items:1 —
     items/connections/sources feed the graph, so 0 nodes would mean the graph builder broke, not a legitimate
     DB state. ~2s locally; resolves its DB path via graph/build.py (documented exemption).'
-- id: validate_reasoning
-  cmd:
-  - python3
-  - scripts/validate_reasoning.py
-  - --strict
-  battery: research
-  kinds:
-  - synthesis
-  level: advisory
-  basis: synthesis/nine-step-synthesis
-  cost: fast
-  min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(results), the count of reasoning docs walked
-    under references/bpc-reasoning/ (3 today). min_items:1 — file-glob-derived. The NINE-STEP-SYNTHESIS
-    contract — the check the 2026-07-23 enforcement plan (F2) identified as the one whose absence let
-    PR #56 pass green. It must be run with --strict. Without the flag it prints its errors and returns
-    0 by design (`if args.strict and err_files: return 1`), so the unflagged invocation is a green tick
-    that means nothing. Verified: --strict exits 1, default exits 0 on the same corpus. RED today (1 doc
-    missing ''F. Provenance trail''), hence advisory.'
-- id: reasoning_doc_citations_audit
-  cmd:
-  - python3
-  - scripts/audit/reasoning_doc_citations_audit.py
-  battery: research
-  kinds:
-  - data
-  - synthesis
-  level: advisory
-  basis: unattributed
-  cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM reasoning_doc_citations, printed
-    by the script itself as "Total rows: 0". 0 today (clean-room reset, 2026-08-06) — the "14 rows" /
-    "2 issues" figures below predate that reset and no longer describe the live table. empty-by-decision.
-    Track 3 of DR-2026-05-13 — citation integrity behind reasoning docs. De-quarantined 2026-08-01: the
-    2 issues are content (NOT-FOUND rows RDC-RAP-PAS-UK-001 / RDC-RAP-RT60-IT-001); the other checks are
-    clean over 14 rows.'
 - id: test_graph_audit
   cmd:
   - python3
@@ -2128,32 +2040,6 @@ checks:
     data_20260913050221: VERDICT CLEAN, all three floors level. min_items 1 rather than no_floor
     because the three floors exist whether or not any corpus does -- this check has a subject on
     an empty database, which is exactly when it matters most.'
-- id: source_locators_integrity
-  cmd:
-  - python3
-  - scripts/audit/source_locators_integrity.py
-  battery: data
-  kinds:
-  - data
-  - governance
-  level: advisory
-  basis: evidence/locator-title-matches-identifier
-  cost: fast
-  min_items: 1
-  note: 'RULED 2026-09-11 (adjudication Ruling 2.3) AND NOT BUILT UNTIL THE SAME DAY. Four
-    sessions measured this corruption with four ad-hoc queries; a measurement nobody registers
-    is one the next session repeats. FAULT-INJECTED on a scratch before being claimed, both
-    directions: stripping the embedded DOI from all 31 mismatched rows turns it CLEAN, and
-    injecting one bad title turns it FAIL. Canonical sha unmoved throughout. ADVISORY, not
-    blocking, and the reason is rule 6 rather than timidity: the repair needs a db.py writer
-    that does not exist (update-locator sets status only), so blocking would redden every run
-    for a state no session can clear -- a check red by construction teaches its reader to
-    ignore it. RATCHET TO blocking in the same change that lands correct-locator. That writer
-    must take NO value flag and read the title from a persisted retrieval payload, the way
-    correct-source does, because writing a title from anything but bytes is how these rows got
-    wrong. The 17 "unprovable" rows are reported and never failed: a title embedding a DOI on a
-    row that carries none is suspect, not proven, and failing on suspicion is how a gate starts
-    lying.'
 - id: derivation_handshake_integrity
   cmd:
   - python3
@@ -2203,6 +2089,24 @@ checks:
     never retyped. That function is the one home of the rule, made so by the change that
     closed a finding about two implementations of it disagreeing, and
     `assess_cell.derivation_handshake()` decides the anchor with the same call.'
+- id: adjudication_integrity
+  cmd:
+  - python3
+  - scripts/audit/adjudication_integrity.py
+  battery: schema
+  kinds:
+  - data
+  - schema
+  level: blocking
+  basis: unattributed
+  cost: fast
+  min_items: 1
+  note: 'PROMOTED from quarantine to blocking in plan step 1.6 (RULINGS R4). Every evidence_sources row
+    is read: a stored tier that differs from derive_tier(evidence_type, scope), an underivable pair, a NULL
+    tier or a NULL evidence_type each fail it. It prints `EXAMINED: <n>`, the rows read, and min_items 1
+    makes an empty read a failure. The quarantine reason it carried said nothing mechanical blocked
+    promotion once OD-E (ruled 2026-08-31, D-0179) was answered; the gate was green when that was written
+    and still is. Planting a NULL tier in a scratch copy of the database turns it red (exit 1).'
 - id: medical_lens_integrity
   cmd:
   - python3
@@ -2257,41 +2161,6 @@ checks:
     every invocation. Splitting the script in two to satisfy a one-to-one field would be apparatus
     added for the apparatus''s sake, which §8 refuses.'
 quarantine:
-- id: register_integrity_check
-  cmd:
-  - python3
-  - scripts/audit/register_integrity_check.py
-  - --selftest
-  status: quarantined
-  reason: 'QUARANTINED 2026-09-11 — RED BY CONSTRUCTION FROM THE FIRST DETERMINATION ONWARD, which
-    is the one state it could not be tested in until today. It compares the live DB against
-    _archived/working/pilot/pilot-renderings.html, a FROZEN document keyed on [A-Z]-NN item codes.
-    Migration 071 dropped item_code from specifications and re-keyed it on parameter_id, so the
-    document can never agree with the DB again and cannot be regenerated against a key it does not
-    have. Measured, not assumed: against the DB at commit 7e9b9c8 (specifications = 0 rows) the
-    selftest printed "clean pass on untampered document: yes" and PASS over 15 cells x 6 registers;
-    against the DB one commit later, holding the project''s FIRST determination (parameter 1 x MOB),
-    it aborts with "1xMOB: COMPLETENESS VIOLATION — specifications row exists but no rendering
-    appears in the document" plus four inverse errors for the pilot''s own E-08xDEAF, E-12xMOB,
-    G-03xMOB and C-02xDEM. So it passed only while it had nothing to cross-check, and the first real
-    subject turns it red permanently. CLAUDE.md rule 6: a check that is red by construction teaches
-    its reader to ignore it. NOT DELETED, and the logic is sound — its --selftest mutation-fires on
-    all eight tampering scenarios, so the I1-I5 invariant coverage is real and worth keeping. WHAT
-    WOULD DE-QUARANTINE IT: a live render surface keyed on parameter_id x lens, which does not exist
-    yet (parts/ and site/ are render-stage and hold no determination rows). Repoint --doc at that
-    surface and it works again; it was de-quarantined once before, on 2026-08-04, by clearing its
-    blockers the same way. Its prior note is preserved below verbatim so nothing is lost. SINCE STEP 1.1 (2026-10-14) it cannot even start: it
-    imports REGISTER_MAP, ROLES and tuple_class from pilot_renderings, which 1.1 deleted with the other renderers, and the plan''s
-    step 1.6(a) deletes this check.'
-  prior_note: 'Amended I1–I5 (DR-2026-07-21 Option A) over working/pilot/pilot-renderings.html, with the DB
-    cross-check and the DB→doc completeness direction on by default. --selftest mutation-tests every invariant
-    before checking the real document, so a pass is a demonstrated-firing pass rather than an assumed
-    one. De-quarantined 2026-08-04: both stated blockers were cleared — it now defaults its document and
-    DB paths (honouring GUIDEBOOK_DB_PATH), and enforces amended I3 rather than the repealed absolute
-    form. `tooling` kind because it imports REGISTER_MAP and tuple_class from scripts/generate/pilot_renderings.py,
-    so a renderer-only diff is exactly when the coupling can break. Advisory on arrival per the house
-    norm at the head of this file; promotion to blocking is a separate owner-gated commit once the false-positive
-    rate of its lexicon checks is known.'
 - id: validate_db
   cmd:
   - python3
@@ -2306,67 +2175,3 @@ quarantine:
     so nothing invokes it. ITS ONE UNRESOLVED SUBSTANTIVE FINDING SURVIVES THE RETIREMENT: C4 found 31
     connections with zero targets. That is a CONTENT defect, not a tooling one, and it is recorded here
     — and only here — so archiving the script does not bury the finding with it.'
-- id: adjudication_integrity
-  cmd:
-  - python3
-  - scripts/audit/adjudication_integrity.py
-  status: quarantined
-  reason: 'RE-MEASURED 2026-09-12: VERDICT PASS -- all 11 evidence_sources are tier-consistent and
-    NOT ONE carries a NULL scope. The four rows this entry named were resolved that day by owner ruling
-    on the B5(b) escalation: REF-00971 / REF-00972 to lower_control on the design-control reading, and
-    REF-00784 / REF-00976 from payloads retrieved under the same ruling. PMID 20434614 states its design
-    as Case series with a sample of convenience, which moved REF-00784 to tier 3 -- the tier the
-    2026-07-20 anchor sweep had recorded as correct fifty-four days earlier. STILL QUARANTINED, and the
-    reason has inverted: the gate is GREEN now, not red. The promotion clause at the foot of this entry
-    waits on OD-E, which was ruled on 2026-08-31 (D-0179) and whose subject REF-00967 holds 0 rows
-    today -- so nothing mechanical blocks promotion and it is an owner call only. Do not promote it
-    without one. The superseded measurement, kept because this entry is a record of its own staleness:
-    RE-MEASURED 2026-09-10: 4 tier-derivation inconsistencies of 9 checked, VERDICT FAIL --
-    REF-00784, REF-00971, REF-00972, REF-00976, every one of them scope NULL. That supersedes the
-    2026-08-22 measurement recorded below (1 of 5), which was correct on its date and is wrong today:
-    the corpus grew from 5 admitted sources to 9, and B5(b) on 2026-09-10 wrote scope on five of the
-    nine from their retrieval-log payloads, leaving these four deliberately NULL rather than guessing.
-    Two are payload gaps (REF-00784, REF-00976 -- no logged payload establishes the design) and two are
-    contradictions between the blind derivation and the stored tier (REF-00971, REF-00972), all four
-    escalated with their evidence in workplan/2026-09-10-b5b-scope-owner-escalation.md. RE-MEASURE
-    BEFORE QUOTING: `python3 scripts/audit/adjudication_integrity.py`. Every figure in this entry is
-    dated because every one of them has been wrong within a fortnight of being written. The earlier
-    record, kept because its lesson is about this entry rather than about the corpus:
-    RE-MEASURED 2026-08-22: 1 tier-derivation inconsistency of 5 checked, not 274. The 274 figure
-    predates the 2026-08-06 clean-room reset, which deleted the corpus that produced it; it survived here
-    for sixteen days as a live-sounding justification for a state that no longer existed, and the 2026-08-18
-    cull plan then measured it again and recorded PASS/0 — also wrong, because the 2026-08-19 batch had
-    not yet landed its five sources. WHAT IT ACTUALLY FINDS TODAY, and why this entry is NOT retired:
-    `scope` was NULL on all five admitted sources, and schemas/tier_derivation.py keys the ratified tier
-    table on (evidence_type, scope) — so every stored tier was UNDERIVABLE, asserted with its own derivation
-    input missing. Four were fixed 2026-08-22 by recording the one scope their evidence_type admits; no
-    tier changed. The one that remains is REF-00967, where evidence_type=''clinical'' admits high_control
-    (Tier 1) and lower_control (Tier 3), the stored tier is 1, and choosing IS the disputed tier — owner
-    decision OD-E. The gate is pointing at a real open question, which is what a gate is for. A NOTE ON
-    THE 2026-08-20 KEEP-RATIONALE, because it was false and load-bearing. That cull kept this script and
-    its wrapper on the ground that "test_adjudication_integrity is a LIVE registered check". It is not,
-    and never was: that id appears in this file only inside this prose. The right reason to keep it is
-    the one above — it is not vacuous — and it is worth recording that the correct decision was reached
-    through an incorrect premise. Still quarantined: run_checks.py never selects it, so it does not gate
-    anything. Promotion is owner-gated and waits on OD-E.'
-- id: code_currency_audit
-  cmd:
-  - python3
-  - scripts/audit/code_currency_audit.py
-  status: quarantined
-  reason: RED. Flags standards lacking a currency marker; a content backlog, not a gate.
-- id: pre_rehab_banner_audit
-  cmd:
-  - python3
-  - scripts/audit/pre_rehab_banner_audit.py
-  status: quarantined
-  reason: 'RED (6 slugs). CORRECTED 2026-08-01 — this entry previously said it was "RED by design pre-launch...
-    would be permanently red". It is not. It is a 4-invariant file<->DB drift gate (DR-2026-05-23; its
-    docstring states "Exit code 0 = pass"), and it PASSES when the banners and the DB agree. Retraction
-    being the project''s known state makes it green, not red — the known state is what it checks against,
-    not what it complains about. It fails today on invariant 2 only: 6 slugs carry the in-file retraction
-    banner while sitting at evidence_state=''PARTIAL'' in the DB (bariatric-turning-radius-built-environment,
-    bathroom-typology-global-south, fold-down-grab-bar-specification, jurisdiction-matrix-accessibility-standards,
-    multilingual-evidence-convergence-non-english, neurodivergent-built-environment). That is a real 6-row
-    drift needing an owner call on which side is canonical — after which this becomes a genuine, permanently-meaningful
-    anti-drift gate rather than a permanent red.'

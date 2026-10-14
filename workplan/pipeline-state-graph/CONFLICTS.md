@@ -14,7 +14,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> PASS | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
-| C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants and tier-consistency have no live gate |
+| C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants have no live gate (tier-consistency has one since step 1.6) |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> FAIL | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
 | C-033 | S1 | RULING-MECHANISM | AGENT | P-M -> FAIL | Every slug is searched against every lens -- the search log cannot say which lens a search covered |
 | C-034 | S1 | RULING-MECHANISM | AGENT | P-O -> FAIL | The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer |
@@ -25,7 +25,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-002 | S2 | RULING-DOC | OWNER | -- | Two markers or three |
 | C-007 | S2 | DOC-DOC | OWNER | P-ENG-STATE -> FAIL | Cell-state transition table contradicts itself |
 | C-008 | S2 | RULING-DOC | AGENT | -- | Cell key still written (parameter x population) in the methodology |
-| C-009 | S2 | DOC-DOC | OWNER | P-TIER-DERIVE -> FAIL | Source-type to tier mapping: national frameworks and standards |
+| C-009 | S2 | DOC-DOC | OWNER | P-TIER-DERIVE -> PASS | Source-type to tier mapping: national frameworks and standards |
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
@@ -149,14 +149,14 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** D-0178 is later and is the owner's ruling, so by rule 0 the co1-operational vocabulary and its 'every pre-launch Co-1 citation is published_corpus' clause are stale. The data already conforms: P-CO1-PROV finds each Co-1 source carrying prose that names the co-production and none holding only a co1-operational value; the column has no CHECK vocabulary, so nothing enforces it. Correcting co1-operational is a doctrine-document edit, owner-merged.
 
-## C-028 [S1] Register invariants and tier-consistency have no live gate
+## C-028 [S1] Register invariants have no live gate (tier-consistency has one since step 1.6)
 
 **Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-QUARANTINE` = **FAIL**
 
 - every rendering carries the identical tuple across registers; every rendered figure carries its strength flag; unmarked is an error.  
   _atoms:_ `PIP-06`(act), `POS-03`(act), `LED-019`(act)
 
-**Direction.** The check that enforces these (register_integrity_check) is QUARANTINED because it is red by construction from the first determination onward; adjudication_integrity (tier derivation) is QUARANTINED and currently green. The generator reads the registry to list what is quarantined. Nothing live gates the weak-band rendering rule.
+**Direction.** The check that enforced these (register_integrity_check) read a frozen document keyed on item codes and could never agree with the DB again, so step 1.6 deleted it (RULINGS R4); adjudication_integrity (tier derivation) was promoted to blocking in the same step. Nothing live gates the weak-band rendering rule until step 3.R builds a render surface keyed on parameter_id x lens for a check to read.
 
 ## C-032 [S1] Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug
 
@@ -294,7 +294,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 
 ## C-009 [S2] Source-type to tier mapping: national frameworks and standards
 
-**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-TIER-DERIVE` = **FAIL**
+**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-TIER-DERIVE` = **PASS**
 
 - methodology 1.5: a source's tier follows from its type; Tier 2 organizational guidelines may carry national_fw.  
   _atoms:_ `EVI-301`(act), `EVI-302`(act)
@@ -338,11 +338,9 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 - owner 2026-08-28: "we don't use the word 'population' though" (unqualified); the lenses are identity, icf, needs, medical. Only the choice of 'base_taxonomy' as the replacement carries the owner's 'i think'; identity was put back for confirmation and the rename was not applied.  
   _atoms:_ `LED-127`(act), `ADD-001`(act)
 - contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'.  
-  _atoms:_ `PIP-15`(act), `PRC-082`(act), `ENT-236`(ame), `ENT-247`(ame), `ENT-222`(sup)
-- conceptual-model counts 24 population codes; the population-taxonomy banner says a flat 23.  
-  _atoms:_ `ENT-040`(act), `ENT-192`(act)
+  _atoms:_ `PRC-082`(act), `ENT-236`(ame), `ENT-247`(ame), `ENT-222`(sup)
 
-**Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PIP-15, PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
+**Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
 
 ## C-020 [S2] Splinter population link tables: 'both sweeps are done' versus five tables still present
 

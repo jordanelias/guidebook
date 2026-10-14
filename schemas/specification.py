@@ -22,7 +22,6 @@ from schemas.enums import (
     CurationStatus,
     DiagramType,
     ItemAssignmentStatus,
-    PopulationCode,
     RecommendationStrength,
     RetrofitCategory,
     ValueType,
@@ -62,7 +61,7 @@ class Specification(GuidebookEntity):
     recommendation_qualifier: Optional[str] = None  # Free-text qualifier
 
     # Populations
-    populations: list[str] = []  # PopulationCode values
+    populations: list[str] = []  # populations.population_code values
 
     # Jurisdictions
     jurisdictions_supporting: list[str] = []  # JurisdictionCode values
@@ -119,7 +118,7 @@ class Specification(GuidebookEntity):
     failures_json: Optional[list[str]] = None  # failure pattern strings
     install_notes_json: Optional[list[str]] = None  # installation notes
     detail_groups_json: Optional[list[dict]] = None  # {title, items[]}
-    pop_reasons_json: Optional[dict[str, str]] = None  # keyed by PopulationCode
+    pop_reasons_json: Optional[dict[str, str]] = None  # keyed by population_code
     topics_json: Optional[list[str]] = None  # topic strings
 
     # --- Validators ---
@@ -148,18 +147,6 @@ class Specification(GuidebookEntity):
                 f"Sentinel parameter name not allowed: '{v}'. "
                 "Assign a descriptive snake_case name."
             )
-        return v
-
-    @field_validator("populations")
-    @classmethod
-    def valid_population_codes(cls, v: list[str]) -> list[str]:
-        valid = {e.value for e in PopulationCode}
-        for code in v:
-            if code not in valid:
-                raise ValueError(
-                    f"Unknown population code: '{code}'. "
-                    f"Valid codes: {sorted(valid)}"
-                )
         return v
 
     @field_validator("conflict_domains")

@@ -184,19 +184,19 @@ The validator scans:
 
 ---
 
-## 5. Enum alignment
+## 5. Where the codes live
 
-The `PopulationCode` enum in `schemas/enums.py` is the single source of truth for valid population codes. This governance document does not add or remove codes — it documents the rules governing those codes.
+The `populations` table (`population_code`) is the single source of truth for valid population codes; the `PopulationCode` enum that mirrored it in `schemas/enums.py` was retired in plan step 1.6 (RULINGS R44), because a copy kept beside the table only disagrees with it. This governance document does not add or remove codes — it documents the rules governing those codes.
 
 If a new population code is needed (e.g., a new sub-code for an emerging evidence base), the process is:
 
 1. Proposal with evidence basis (what functional profile does this code capture that is not covered by existing codes?)
 2. Decision via project-standards RULE
-3. Addition to `PopulationCode` enum
+3. Addition of a `populations` row
 4. Update to this governance document
 5. Update to workplan-orchestrator §Population Codes
 
-Changes to the enum without governance documentation are validator errors at the next doctrine-recheck (A13).
+Changes to the table without governance documentation are validator errors at the next doctrine-recheck (A13).
 
 ---
 

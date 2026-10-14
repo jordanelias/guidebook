@@ -481,8 +481,6 @@ writers:
     - populations
     scripts/audit/migration_reproducibility.py:
     - slugs
-    scripts/audit/register_integrity_check.py:
-    - specifications
     scripts/audit/research_batch_dod.py:
     - base_parameters
     - evidence_sources
@@ -1209,14 +1207,6 @@ checks:
     - tooling
     min_items: 1
     cmd: python3 scripts/audit/readonly_db_open_audit.py
-  - id: reasoning_doc_citations_audit
-    level: advisory
-    battery: research
-    kinds:
-    - data
-    - synthesis
-    min_items: null
-    cmd: python3 scripts/audit/reasoning_doc_citations_audit.py
   - id: research_dod
     level: advisory
     battery: research
@@ -1262,14 +1252,6 @@ checks:
     - synthesis
     min_items: null
     cmd: python3 scripts/audit/search_log_completeness.py --session @SESSION@
-  - id: source_locators_integrity
-    level: advisory
-    battery: data
-    kinds:
-    - data
-    - governance
-    min_items: 1
-    cmd: python3 scripts/audit/source_locators_integrity.py
   - id: supersession_backpointer_audit
     level: advisory
     battery: governance
@@ -1371,14 +1353,6 @@ checks:
     - schema
     min_items: 1
     cmd: python3 scripts/validate_parameters.py
-  - id: validate_population
-    level: advisory
-    battery: schema
-    kinds:
-    - schema
-    - data
-    min_items: 1
-    cmd: python3 scripts/validate_population.py
   - id: validate_pydantic_schemas
     level: advisory
     battery: schema
@@ -1387,13 +1361,6 @@ checks:
     - data
     min_items: 1
     cmd: python3 scripts/audit/validate_pydantic_schemas.py --strict
-  - id: validate_reasoning
-    level: advisory
-    battery: research
-    kinds:
-    - synthesis
-    min_items: 1
-    cmd: python3 scripts/validate_reasoning.py --strict
   - id: validate_schema_cross_check
     level: advisory
     battery: schema
@@ -1402,6 +1369,14 @@ checks:
     - data
     min_items: 1
     cmd: python3 scripts/validate_schema.py --cross-check
+  - id: adjudication_integrity
+    level: blocking
+    battery: schema
+    kinds:
+    - data
+    - schema
+    min_items: 1
+    cmd: python3 scripts/audit/adjudication_integrity.py
   - id: alias_provenance_audit
     level: blocking
     battery: data
@@ -1607,13 +1582,6 @@ checks:
     - schema
     min_items: 1
     cmd: python3 scripts/tests/test_db_integrity.py
-  - id: validate_bpc
-    level: blocking
-    battery: structure
-    kinds:
-    - always
-    min_items: 1
-    cmd: python3 scripts/validate_bpc.py --all
   - id: validate_cross_refs
     level: blocking
     battery: structure
@@ -1662,10 +1630,6 @@ checks:
     min_items: 1
     cmd: python3 scripts/audit/citation_mining_completeness.py --tier-max 2
   quarantined:
-  - adjudication_integrity
-  - code_currency_audit
-  - pre_rehab_banner_audit
-  - register_integrity_check
   - validate_db
   batteries:
   - attestation

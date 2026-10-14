@@ -243,13 +243,12 @@ conflicts:
   class: RULING-MECHANISM
   severity: S2
   title: "'We don't use the word population' -- the schema, the methodology and three DRs still do"
-  atoms: [LED-127, ADD-001, PIP-15, PRC-082, EVI-171, ENT-040, ENT-192, ENT-206, ENT-236, ENT-247, ENT-222, CLM-043]
+  atoms: [LED-127, ADD-001, PRC-082, EVI-171, ENT-192, ENT-206, ENT-236, ENT-247, ENT-222, CLM-043]
   sides:
     - {atoms: [LED-127, ADD-001], says: "owner 2026-08-28: \"we don't use the word 'population' though\" (unqualified); the lenses are identity, icf, needs, medical. Only the choice of 'base_taxonomy' as the replacement carries the owner's 'i think'; identity was put back for confirmation and the rename was not applied."}
-    - {atoms: [PIP-15, PRC-082, ENT-236, ENT-247, ENT-222], says: "contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'."}
-    - {atoms: [ENT-040, ENT-192], says: "conceptual-model counts 24 population codes; the population-taxonomy banner says a flat 23."}
+    - {atoms: [PRC-082, ENT-236, ENT-247, ENT-222], says: "contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'."}
   probe: P-C
-  direction: "The retirement of the word is ruled and unqualified (ADD-001), so PIP-15, PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C)."
+  direction: "The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C)."
   resolver: OWNER
   confidence: high
 
@@ -353,12 +352,12 @@ conflicts:
 - id: C-028
   class: RULING-MECHANISM
   severity: S1
-  title: "Register invariants and tier-consistency have no live gate"
+  title: "Register invariants have no live gate (tier-consistency has one since step 1.6)"
   atoms: [PIP-06, EVI-229, EVI-230, POS-03, LED-019, LED-020]
   sides:
     - {atoms: [PIP-06, POS-03, LED-019], says: "every rendering carries the identical tuple across registers; every rendered figure carries its strength flag; unmarked is an error."}
   probe: P-QUARANTINE
-  direction: "The check that enforces these (register_integrity_check) is QUARANTINED because it is red by construction from the first determination onward; adjudication_integrity (tier derivation) is QUARANTINED and currently green. The generator reads the registry to list what is quarantined. Nothing live gates the weak-band rendering rule."
+  direction: "The check that enforced these (register_integrity_check) read a frozen document keyed on item codes and could never agree with the DB again, so step 1.6 deleted it (RULINGS R4); adjudication_integrity (tier derivation) was promoted to blocking in the same step. Nothing live gates the weak-band rendering rule until step 3.R builds a render surface keyed on parameter_id x lens for a check to read."
   resolver: OWNER+AGENT
   confidence: high
 

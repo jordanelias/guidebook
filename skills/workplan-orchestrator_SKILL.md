@@ -138,7 +138,7 @@ _exists() { curl -so /dev/null -w "%{http_code}" -H "$AUTH" \
   "https://api.github.com/repos/$REPO/contents/$1"; }
 
 # Gate checks
-B0=$([ "$(_exists scripts/validate_bpc.py)" = "200" ] && \
+B0=$([ "$(_exists scripts/run_checks.py)" = "200" ] && \
      [ "$(_exists .github/workflows/ci.yml)" = "200" ] && echo PASS || echo FAIL)
 
 B1=$([ "$B0" = "PASS" ] && \
@@ -233,8 +233,8 @@ python3 -c "import sqlite3; c=sqlite3.connect('file:data/guidebook.db?mode=ro',u
   [print(f'{r[0]:<12}{r[1]}') for r in c.execute('SELECT population_code, display_name FROM populations ORDER BY 1')]"
 ```
 
-The set is **23 flat codes**, ratified by `DR-2026-07-23` and mirrored exactly by
-`schemas/enums.py:PopulationCode`. Curate *from the functional axes* — never coin
+The set is **23 flat codes**, ratified by `DR-2026-07-23` and held by the `populations`
+table. Curate *from the functional axes* — never coin
 umbrella codes (`governance/functional-taxonomy.md` §3.3, RULE 2026-07-22,
 `DR-2026-07-22-work-from-axes`).
 
@@ -441,7 +441,7 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 | Infrastructure (CO-0008) | validate_schema.py, convert_spec_db.py | evidence_auditor_validate.py (proof of concept) |
 | A3 (Conceptual model) | validate_entities.py, validate_cross_refs.py (rewrite), convert_bpc_metadata.py, convert_connections.py | — |
 | A6 (Evidence methodology) | validate_evidence_state.py, convert_sources.py | multilingual-research output validator |
-| A7 (Population taxonomy) | validate_population.py | — |
+| A7 (Population taxonomy) | — | — |
 | A8 (Jurisdiction philosophy) | validate_jurisdiction.py, convert_jurisdictions.py | jurisdiction-tracker output validator |
 | A9 (Time model) | ~~validate_temporal.py~~ (DELETED 2026-08-20 — quarantined 2026-08-04 as passing on zero records, `data/temporal/` never existed), version_retrofit.py (its generator, never run) | — |
 | A10 (Adversarial-use review) | audit_adversarial_use.py | — |

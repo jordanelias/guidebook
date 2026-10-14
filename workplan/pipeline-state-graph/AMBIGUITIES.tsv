@@ -16,7 +16,6 @@ CLM-048	ACTIVE	CLAUDE.md:435	item codes	CLAUDE.md prose (or heading) attributing
 RES-13	ACTIVE	governance/research-contract.yaml:270	R13 population grade	Owner 2026-09-25 (3) supersedes the 'no participants = PROXY' line as applied to a facility audit; wording not edited.
 RES-16	ACTIVE	governance/research-contract.yaml:308	R16 every figure disposed	Speaks of 'a figure'; the 2026-10-09 scan contract also mines arguments and qualitative findings.
 PIP-12	ACTIVE	governance/pipeline-contract.yaml:338	doctrine recheck cadence	Ledger 2026-08-19 struck the RULE_REVISION trigger; two cadences remain.
-PIP-15	ACTIVE	governance/pipeline-contract.yaml:37	population vocabulary resolves	'population' is retired vocabulary (2026-08-28).
 MIS-02	ACTIVE	governance/mission-and-epistemics.md:76	teaching professional judgment	Contradicted by ledger 2026-04-26 19:25: 'does not teach professional judgment'.
 MIS-03	ACTIVE	governance/mission-and-epistemics.md:136	evidence marker (two-marker form)	Ledger and tier-system use three markers ●/◐/○; ledger notes the two-marker rule was reconciled 2026-07-13.
 MIS-04	ACTIVE	governance/mission-and-epistemics.md:115	stated state rule	Conflicts with 'T3-alone never reaches stated' unless '>=Tier 3' is read as tier numbers 1-3 with T3 requiring a second axis.
@@ -107,7 +106,6 @@ ENT-030	ACTIVE	governance/conceptual-model.md:111	BPC key-source REF-ID resoluti
 ENT-031	ACTIVE	governance/conceptual-model.md:119	BPC metadata cross-system check	A3 Session 3 plan item; data/sources/ may no longer be the live home of citation records.
 ENT-032	ACTIVE	governance/conceptual-model.md:126	connection primary_target item_code resolution	A3 Session 4 plan item that presupposes the item index as a live reference.
 ENT-039	ACTIVE	governance/conceptual-model.md:187	EvidenceType member count	The §4 code block lists only seven members, so seven and nine are both stated for the same enum.
-ENT-040	ACTIVE	governance/conceptual-model.md:185	PopulationCode member count at sign-off	Point-in-time sign-off audit of 2026-04-26; the population-taxonomy.md banner (DR-2026-07-23) states a flat set of 23 codes.
 ENT-045	ACTIVE	governance/conceptual-model.md:206	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
 ENT-048	ACTIVE	governance/functional-taxonomy.md:13	two-layer population architecture	"Layer 1" and "Layer 2" here name taxonomy layers, a different numbering from the project's five-layer Layer 0-4 model.
 ENT-059	ACTIVE	governance/functional-taxonomy.md:85	axis values as stored attributes	Unclear whether this bars stored mapping tables (population_axis_map, slug serves_axes) or only per-person attributes.
@@ -136,7 +134,6 @@ ENT-236	AMENDED	governance/population-taxonomy.md:135	one slug one population	fu
 ENT-240	AMENDED	governance/population-taxonomy.md:141	Universal Mode register	"Tier 1" and "Tier 2" here name specification modes, not evidence tiers; legal-regulatory.md equates Universal Mode with code values.
 ENT-241	AMENDED	governance/population-taxonomy.md:142	Tier 1 mode register	"Tier 1" here is a specification mode, not an evidence tier.
 ENT-242	AMENDED	governance/population-taxonomy.md:143	Tier 2 mode register	"Tier 2" here is a specification mode, not an evidence tier.
-ENT-250	AMENDED	governance/population-taxonomy.md:189	PopulationCode enum as source of truth	Architecture says the SQLite database is the single source of truth for project content, and CLAUDE.md says vocabularies come from the column's own CHECK.
 ENT-257	ACTIVE	governance/population-taxonomy.md:209	population-taxonomy status field	The header and banner state SUPERSEDED (population code set), contradicting the CANONICAL value in the status table.
 ENT-260	ACTIVE	governance/decision-protocol.md:31	cross-category decisions	The section 3 field list has no dedicated secondary-category field, so where the cross-reference goes is unspecified.
 ENT-272	ACTIVE	governance/decision-protocol.md:67	D-DOCT downgrade	Section 2.4 item 7 lists the licensing model as always DG-NON, yet this passage uses adopting a licence as an example of a DG-REVIEW downgrade.
@@ -177,15 +174,15 @@ EVI-032	ACTIVE	governance/tier-system.md:37	National standards and design guides
 EVI-035	ACTIVE	governance/tier-system.md:45	Labelling converged code value best practice	Read absolutely this conflicts with Option A (section 8), which permits flagged weak-band "best practice as currently known" when no stronger evidence exists; evidence-architecture 8.1 limits the prohibition to cells that have anchoring evidence.
 EVI-038	AMENDED	governance/tier-system.md:49	T4-T6-only claim	"partial/weak" vs section 8 which assigns T4-T6-only determinations to the weak band only.
 EVI-044	ACTIVE	governance/tier-system.md:62	code_currency_status vocabulary	Vocabulary should come from the column CHECK, not this list (CLAUDE.md rule 8).
-EVI-049	ACTIVE	governance/tier-system.md:93	Weighted-strength anchor model	Methodology 2.2/2.3 withhold stated/provisional status from T3-alone and from a single T6 source (pending).
-EVI-052	ACTIVE	governance/tier-system.md:97	Full band	Methodology 2.2 says Tier 3 alone is not sufficient for stated and 1.6 says Tier 3 only "supports"; here T3-clinical anchors outright.
-EVI-055	ACTIVE	governance/tier-system.md:99	Weak band	Methodology 2.2 says T3-grey alone yields pending (no claim), not a weak-band claim.
-EVI-058	ACTIVE	governance/tier-system.md:101	Option A: T4-T6-only determination	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
+EVI-049	ACTIVE	governance/tier-system.md:88	Weighted-strength anchor model	Methodology 2.2/2.3 withhold stated/provisional status from T3-alone and from a single T6 source (pending).
+EVI-052	ACTIVE	governance/tier-system.md:92	Full band	Methodology 2.2 says Tier 3 alone is not sufficient for stated and 1.6 says Tier 3 only "supports"; here T3-clinical anchors outright.
+EVI-055	ACTIVE	governance/tier-system.md:94	Weak band	Methodology 2.2 says T3-grey alone yields pending (no claim), not a weak-band claim.
+EVI-058	ACTIVE	governance/tier-system.md:96	Option A: T4-T6-only determination	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
 EVI-059	ACTIVE	governance/tier-system.md:101	Option A: flag and ceiling	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
 EVI-060	ACTIVE	governance/tier-system.md:101	Option A: no suppression	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
 EVI-066	ACTIVE	governance/tier-system.md:106	Scoping/narrative review band	T3 grey maps to the open-circle band per section 5, so a grey-typed review cannot also be filled-circle.
-EVI-069	ACTIVE	governance/tier-system.md:111	Practitioner/firm work authority	Firm POE can be placed at T1, which ranks alongside Co-1.
-EVI-076	OPEN	governance/tier-system.md:116	Practice (Co-3) encoding	Section 1 states the ladder has only two parallel tracks (Co-1, Co-2).
+EVI-069	ACTIVE	governance/tier-system.md:106	Practitioner/firm work authority	Firm POE can be placed at T1, which ranks alongside Co-1.
+EVI-076	OPEN	governance/tier-system.md:111	Practice (Co-3) encoding	Section 1 states the ladder has only two parallel tracks (Co-1, Co-2).
 EVI-078	ACTIVE	governance/evidence-architecture.md:4	New doctrine in this document	Says G1-G6, but G7, G8 and G1b are also flagged; the [NEW - DR-gated] flags remain though the document is declared ratified 2026-07-13.
 EVI-080	ACTIVE	governance/evidence-architecture.md:19	Canonical home of ladder	Calls it a 7-tier ladder; tier-system.md says T1-T6 plus two tracks.
 EVI-085	ACTIVE	governance/evidence-architecture.md:38	One evidence hierarchy	tier-system.md says T1-T6 (six tiers) with two tracks.

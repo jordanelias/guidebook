@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 05:27 UTC from git HEAD c93781f (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 05:36 UTC from git HEAD 83275d5 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 110,
  "stages": [
@@ -4185,7 +4185,7 @@
    }
   },
   "P-TIER-DERIVE": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "the tier-derivation consistency check is live (not quarantined)",
    "atoms": [
     "EVI-301",
@@ -4193,7 +4193,7 @@
     "LED-108"
    ],
    "evidence": {
-    "adjudication_integrity": "quarantined",
+    "adjudication_integrity": null,
     "other_tier_derivation_checks_registered": []
    }
   },
@@ -4354,22 +4354,15 @@
   },
   "P-QUARANTINE": {
    "verdict": "FAIL",
-   "tests": "the checks that guard rendering and tier derivation are live",
+   "tests": "the checks that guard rendering and tier derivation are live (an active registry check each)",
    "atoms": [
     "PIP-06",
     "POS-03"
    ],
    "evidence": {
-    "quarantined": {
-     "register_integrity_check": "quarantined",
-     "adjudication_integrity": "quarantined"
-    },
-    "all_quarantined": [
-     "adjudication_integrity",
-     "code_currency_audit",
-     "pre_rehab_banner_audit",
-     "register_integrity_check"
-    ]
+    "tier_derivation_check_level": "blocking",
+    "register_invariants_check": null,
+    "register_invariants_check_registered": false
    }
   },
   "P-LEDGER-GREP": {
@@ -4745,9 +4738,9 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms in all (structure checked)": 2690,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 433,
-  "distinct quotes among all atoms": 2657,
+  "atoms in all (structure checked)": 2678,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 431,
+  "distinct quotes among all atoms": 2645,
   "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 46,
   "machine transitions": 42,
@@ -4760,13 +4753,13 @@
   "tables placed in a stage": 60
  },
  "atoms_by_status": {
-  "ACTIVE": 2298,
+  "ACTIVE": 2289,
   "SUPERSEDED": 89,
   "OPEN": 72,
-  "AMENDED": 76,
+  "AMENDED": 73,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
- "atoms_total": 2690,
+ "atoms_total": 2678,
  "conflicts_total": 46
 }

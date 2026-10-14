@@ -37,7 +37,7 @@ class Question(GuidebookEntity):
     question_text: str  # The question, e.g. "Can two power wheelchairs pass?"
 
     # Classification
-    applies_to_population: Optional[str] = None  # PopulationCode or None (universal)
+    applies_to_population: Optional[str] = None  # a population_code or None (universal)
     parameter_class: Optional[str] = None  # A3 §1.4 hierarchical class
     design_stage: Optional[str] = None  # When in design this question arises
     audience: Optional[str] = None  # "architect", "disabled-person", "OT", "policymaker"

@@ -15,13 +15,15 @@ evidence-architecture §10 checks and remain authoritative:
   - validate_evidence_state.py    §10.4  per-cell state machine (governing_refs
                                   non-empty; code_floor_only / regulatory_stratum_only
                                   never `stated`; Tier-3-alone threshold)
-  - register_integrity_check.py   §10.3  render invariants I1–I5
 
 Check (the additive one):
   1. tier_derivation_consistency — every evidence_source's stored `tier` equals
      derive_tier(evidence_type, scope); an underivable (type, scope) pair is a
      violation too. This guards against hand-set tiers that break the ratified
-     (type × scope) → tier ladder. Exit 1 on any violation.
+     (type × scope) → tier ladder. A NULL tier or a NULL evidence_type is a violation
+     too: a source with no tier cannot be weighed, and a skipped row is how this check
+     passed while examining nothing. Exit 1 on any violation. Prints `EXAMINED: <n>`,
+     the number of evidence_sources rows read.
 
 Readiness (INFO — honest coverage, not a green light): the determination field is
 largely unbuilt pre-C1 (specifications is pilot-only; source_value_extractions
@@ -56,7 +58,9 @@ def tier_violations(rows):
     out = []
     for ref_id, et, scope, tier in rows:
         if tier is None or et is None:
-            continue  # nothing to check (tier not yet assigned)
+            out.append((ref_id, et, scope, tier,
+                        "NULL tier" if tier is None else "NULL evidence_type"))
+            continue
         try:
             derived = derive_tier(et, scope)
         except TierDerivationError as e:
@@ -110,7 +114,7 @@ def audit():
         "SELECT ref_id, evidence_type, scope, tier FROM evidence_sources ORDER BY ref_id"
     ).fetchall()
     viol = tier_violations(rows)
-    checked = sum(1 for _, et, _, t in rows if et is not None and t is not None)
+    checked = len(rows)
     if viol:
         print(f"[1] FAIL: {len(viol)} tier-derivation inconsistency(ies) of {checked} checked:")
         for ref_id, et, scope, tier, reason in viol[:20]:
@@ -126,11 +130,12 @@ def audit():
         print(f"    {line}")
     print("\n[siblings] authoritative §10 enforcers (not re-run here):")
     print("    matrix_consistency.py (grain×scale matrix) · validate_evidence_state.py "
-          "(per-cell state machine) · register_integrity_check.py (render I1–I5)")
+          "(per-cell state machine)")
 
     conn.close()
     print()
     print(SEP)
+    print(f"EXAMINED: {checked}")
     print(f"VERDICT: {'PASS' if not viol else 'FAIL'}   (tier inconsistencies={len(viol)})")
     print(SEP)
     return 0 if not viol else 1
@@ -154,9 +159,10 @@ def selftest():
     results.append(("consistent row not flagged", "REF-A" not in flagged))
     results.append(("inconsistent stored tier flagged", "REF-B" in flagged))
     results.append(("underivable (type, scope) flagged", "REF-C" in flagged))
-    results.append(("null tier / null type are skipped, not flagged",
-                    tier_violations([("REF-D", "clinical", "high_control", None),
-                                     ("REF-E", None, "intrinsic", 2)]) == []))
+    null_tier = tier_violations([("REF-D", "clinical", "high_control", None)])
+    null_type = tier_violations([("REF-E", None, "intrinsic", 2)])
+    results.append(("a NULL tier is flagged, not skipped", [r[0] for r in null_tier] == ["REF-D"]))
+    results.append(("a NULL evidence_type is flagged, not skipped", [r[0] for r in null_type] == ["REF-E"]))
 
     ok = True
     for name, passed in results:

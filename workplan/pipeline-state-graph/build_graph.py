@@ -467,11 +467,14 @@ def make_probes():
         v = (T.vocab.get("evidence_sources") or {}).get("verification_status", [])
         return ("PASS" if sorted(v) == ["UNVERIFIED", "VERIFIED"] else "FAIL"), {"vocabulary": v}
 
-    @probe("P-QUARANTINE", "the checks that guard rendering and tier derivation are live", ["PIP-06", "POS-03"])
+    @probe("P-QUARANTINE", "the checks that guard rendering and tier derivation are live (an active registry check each)", ["PIP-06", "POS-03"])
     def _(T):
-        q = {x["id"]: x.get("status") for x in (T.registry.get("quarantine") or [])}
-        want = ["register_integrity_check", "adjudication_integrity"]
-        return ("FAIL" if any(q.get(w) == "quarantined" for w in want) else "PASS"), {"quarantined": {w: q.get(w) for w in want}, "all_quarantined": sorted(k for k, v in q.items() if v == "quarantined")}
+        level = {c["id"]: c.get("level") for c in T.registry["checks"]}
+        crit = next((c for s in T.contract["stages"] for c in s.get("criteria", []) if c["id"] == "register-invariants"), {})
+        rcheck = crit.get("check")
+        render_live = bool(rcheck) and any(rcheck in (c.get("cmd") or []) for c in T.registry["checks"])
+        tier_live = level.get("adjudication_integrity") == "blocking"
+        return ("PASS" if render_live and tier_live else "FAIL"), {"tier_derivation_check_level": level.get("adjudication_integrity"), "register_invariants_check": rcheck, "register_invariants_check_registered": render_live}
 
     @probe("P-LEDGER-GREP", "the owner statements recorded only in session records appear verbatim in the owner ledger", ["SES-022", "SES-023", "SES-024", "SES-025", "SES-032", "SES-045", "LED-195"])
     def _(T):
