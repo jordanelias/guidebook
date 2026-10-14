@@ -283,6 +283,8 @@ PY
   - #2: an untested Table 20 cell typed `measurement_primary`;
   - #1: a comparison checked against only one of footnote c's two warrants.
 
+**SUPERSEDED** 2026-10-14 in this one clause, by RULINGS R5 as adopted in `references/project-standards.md`: "a new table needs no Pydantic mirror and no entry in a curated map". The rest of this rule stands. See the ledger entry "Recording 2026-10-14, second part".
+
   Only a fresh reader caught either.
 
 ### §1.4 Owner-gating

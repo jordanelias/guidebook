@@ -74,10 +74,14 @@ All are DG-NON (owner-only). They were given across one session and are recorded
 Item codes (`E-08`, `A-03`) bias research at this stage. **93 `items` rows are archived, not deleted.**
 Item names with their determinations stripped become **research slugs**.
 
+**SUPERSEDED** by the operative instrument (section 1.4 rule 1, ratified 2026-08-19 as OD-1), quoted in `references/project-standards.md`: "No item name becomes a slug by strip." Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
+
 The strip is manual, not mechanical — a regex smuggles the bias through in words instead of numbers.
 `A-03 Acoustic Door (STC ≥35) at All Sensitive Space Boundaries` regex-strips to
 `acoustic-door-at-all-sensitive-space-boundaries`, and *"at All Sensitive Space Boundaries"* is still
 an answer. **28 of 93 carry a numeric determination; 23 of 93 carry a prescriptive condition clause.**
+
+**AMENDED** by the operative instrument (section 1.4 rule 1, ratified 2026-08-19 as OD-1), quoted in `references/project-standards.md`: "No item name becomes a slug by strip." Its second limb, that a regex smuggles the bias through in words instead of numbers, still stands. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
 
 **Zero of the 93 stripped names match an existing slug exactly.** 106 + 93 = 199 topics, no dedup.
 
@@ -85,6 +89,8 @@ an answer. **28 of 93 carry a numeric determination; 23 of 93 carry a prescripti
 **Disability populations** · **ICF functional demands** · **access needs**. These are not one taxonomy
 seen three ways; they demand different thinking about how to design for accessibility, which is why
 all three are researched against the slugs. **They stay separate tables and are never reconciled.**
+
+**AMENDED** The owner's rulings of 2026-08-27 and 2026-08-28 make the lenses identity, ICF, needs and medical: "because i said we need the medical model too" (`references/project-standards.md`). The count of three is overtaken. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
 
 ### R3 — "axes" is a bad coined term; use ICF codes directly
 The 17 coined axes collapse 46 ICF codes and are non-disjoint. Replace with ICF codes carrying their

@@ -771,8 +771,15 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
         if m["id"] == "M08": m["vocabs"][0]["values"] = m["vocabs"][0]["values"][:-1]
     f, _, _ = check_all(T, atoms, probes, conflicts, m5, caps)
     results.append(("a machine `vocabs` list that differs from the CHECK is caught", any("M08: vocabs" in x for x in f)))
-    # k) a stale status correction (the atom is no longer in the stated state) is caught
-    c4 = copy.deepcopy(conflicts); c4["status_corrections"][0]["current"] = "HISTORICAL"
+    # k) a stale status correction (the atom is no longer in the stated state) is caught.
+    #    Applied corrections are deleted (W9), so the list may be empty: the test plants its own.
+    dated = sorted((a for a in atoms.values() if a.get("date") and a["status"] == "ACTIVE"), key=lambda a: a["date"])
+    late, early = dated[-1], dated[0]
+    def planted(**kw):
+        c = copy.deepcopy(conflicts)
+        c["status_corrections"] = [dict({"atom": late["id"], "current": late["status"], "should_be": "SUPERSEDED", "by": [early["id"]], "why": "planted by the selftest"}, **kw)]
+        return c
+    c4 = planted(current="HISTORICAL")
     f, _, _ = check_all(T, atoms, probes, c4, machines, caps)
     results.append(("a stale status correction is caught", any("status_corrections" in x for x in f)))
     # l) a quote cited at the wrong line is caught
@@ -780,9 +787,7 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     a6["source"] = f"{path_}:{int(ln_) + 40}" if ln_.isdigit() else a6["source"]
     results.append(("a quote cited 40 lines away from where it occurs is caught", bool(verify_atoms({a6['id']: a6})) if ln_.isdigit() else True))
     # m) a status correction decided by an EARLIER atom is caught
-    c5 = copy.deepcopy(conflicts); sc0 = max(c5["status_corrections"], key=lambda x: atoms[x["atom"]].get("date") or "")
-    early = next(i for i, a in atoms.items() if a.get("date") and a["date"] < (atoms[sc0["atom"]].get("date") or "9999") and a["status"] not in ("SUPERSEDED", "HISTORICAL"))
-    sc0["by"] = [early]
+    c5 = planted()
     f, _, _ = check_all(T, atoms, probes, c5, machines, caps)
     results.append(("a status correction decided by an earlier atom is caught", any("EARLIER" in x for x in f)))
     # f) an unknown probe id is caught

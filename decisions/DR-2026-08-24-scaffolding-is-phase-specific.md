@@ -232,8 +232,12 @@ those was a copy where a pointer belonged.** The rule is not "warrant each cross
 >
 > **`research → evidence collection → judgment → synthesis → render`**
 >
+> **SUPERSEDED** by the owner's ruling of 2026-08-27 recorded in `references/project-standards.md`, which ends "specify syntheses, and render specifications": specification is a stage, and a table is never one. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
+>
 > `judgment` is restored as its own stage; `specifications` is **not** a stage but a table that
 > `judgment` writes. Recorded in `references/project-standards.md`, RULE 2026-08-25.
+>
+> **SUPERSEDED** by the owner's ruling of 2026-08-27 recorded in `references/project-standards.md`, which ends "specify syntheses, and render specifications": specification is a stage, and a table is never one. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
 >
 > **The pointer discipline this section states is UNCHANGED and still binding** — only the list of
 > stage names is superseded. Per `CLAUDE.md` rule 0 this section is kept as written rather than

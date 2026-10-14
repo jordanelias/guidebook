@@ -4463,3 +4463,51 @@ DATE: 2026-10-14 — owner statements, quoted above.
 
 CONDITION: any session asking whether research mines arguments and qualitative reasoning as well as values and parameters, whether a highly relevant source with no stated value is mined, how far the mining of a source reaches, whether a source is adjudicated by slug or by category, whether a defect is fixed by hand or at its mechanism, whether a sub-national jurisdiction can satisfy a bucket country, whether a mining pass may destroy the text of a standing deferral it discharges, or whether a record marked above still holds.
 DATE: 2026-10-14 — recorded under RULINGS R13; the date of each statement is given beside it.
+
+## Recording 2026-10-14, second part — the back-pointers: where the adopted rulings supersede text outside this ledger
+
+**What this does.** The first part marked the records in this ledger. This part marks, at the text itself and in the grammar of `DR-2026-09-26` section 4, the records outside it that the rulings adopted on 2026-10-14 overtake: eleven status corrections the stage graph owed (`RULINGS.md` R10 to R18 and the supersessions the instrument already recorded), the requirement that a new table gain a Pydantic mirror (R5), the pending review of D-0184 and the consequence of D-0170 that D-0184 replaces (R15). It makes no ruling. Each local mark was appended immediately after the superseded text, which is otherwise untouched.
+
+**Superseding words that live outside this ledger, quoted here once so the audit can anchor on them.**
+
+- The operative instrument, section 1.4 rule 1 (`decisions/DR-2026-08-19-research-restart-operative-instrument.md:178`), ratified 2026-08-19 as OD-1: "**No item name becomes a slug by strip.**" It overturns the 2026-08-18 proposal's mechanism for making a slug from an item name.
+- R5, adopted by the entry of 2026-10-14 above, in the words this entry records for it: a new table needs no Pydantic mirror and no entry in a curated map. The mirrors nothing imports, and the script that compared them with the tables, were deleted in plan step 1.10.
+- D-0184 (`decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md`): The lens is a COLUMN, not a traversal. R15 holds it in force. Its review, which that file's header marks pending, is discharged by the delegation recorded above. It replaces the consequence D-0170 drew, that lens-switching runs through the crossing maps.
+
+```
+SUPERSEDES: decisions/DR-2026-08-24-scaffolding-is-phase-specific.md :: "`research → evidence collection → judgment → synthesis → render`"
+  BY: references/project-standards.md :: "specify syntheses, and render specifications"
+SUPERSEDES: decisions/DR-2026-08-24-scaffolding-is-phase-specific.md :: "`specifications` is **not** a stage but a table that `judgment` writes."
+  BY: references/project-standards.md :: "specify syntheses, and render specifications"
+SUPERSEDES: decisions/DR-2026-08-19-research-restart-operative-instrument.md :: "anything touching `specifications` or the reasoning doc"
+  BY: references/project-standards.md :: "you have to compute it"
+SUPERSEDES: workplan/2026-08-18-research-frame-proposal.md :: "item names are stripped of their determinations and become research slugs"
+  BY: references/project-standards.md :: "No item name becomes a slug by strip."
+SUPERSEDES: workplan/2026-08-18-research-frame-proposal.md :: "The item conversion is manual, not mechanical"
+  BY: references/project-standards.md :: "No item name becomes a slug by strip."
+SUPERSEDES: workplan/2026-08-18-research-frame-proposal.md :: "the frame is slugs, three population lenses, multilingual aliases, and jurisdictions"
+  BY: references/project-standards.md :: "because i said we need the medical model too"
+SUPERSEDES: workplan/2026-08-18-research-frame-proposal.md :: "`specifications` is not re-keyed now."
+  BY: references/project-standards.md :: "The judgment object is the **canonical parameter**"
+SUPERSEDES: workplan/2026-08-18-research-frame-proposal.md :: "Leave it 0-row and unbuilt; it is a stage-7 output whose key is a stage-6 finding"
+  BY: references/project-standards.md :: "The judgment object is the **canonical parameter**"
+SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "Item names with their determinations stripped become **research slugs**."
+  BY: references/project-standards.md :: "No item name becomes a slug by strip."
+SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "The strip is manual, not mechanical"
+  BY: references/project-standards.md :: "No item name becomes a slug by strip."
+SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "three lenses, three theoretical approaches, three tables"
+  BY: references/project-standards.md :: "because i said we need the medical model too"
+SUPERSEDES: decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md :: "The Pydantic mirror must be added. So must an entry in"
+  BY: references/project-standards.md :: "a new table needs no Pydantic mirror and no entry in a curated map"
+SUPERSEDES: decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md :: "the review it awaits is the owner's"
+  BY: references/project-standards.md :: "resolve them for me in a logical manner"
+SUPERSEDES: decisions/DR-2026-08-27-four-taxonomies-are-browsing-lenses.md :: "lens-switching runs through"
+  BY: references/project-standards.md :: "The lens is a COLUMN, not a traversal"
+SUPERSEDES: decisions/DR-2026-08-27-relevance-is-adjudicated-at-collection.md :: "applicability remains a synthesis judgement"
+  BY: references/project-standards.md :: "we go evidence>judgment>synthesis"
+```
+
+D-0174's title, "applicability remains a synthesis judgement", is read as `RULINGS.md` R33 reads it: applicability is never presupposed and never defaulted at collection, and the crossing is judgment's output. Three of the other targets are partly overtaken, not wholly: the second limb of the handoff's "The strip is manual, not mechanical" (a regex smuggles the bias through in words) still stands under the instrument's stronger rule, and the permanently-manual paragraph of the instrument still governs the reasoning doc, the Opus floor and the B-before-E gate. The marks say so.
+
+CONDITION: any session reading the 2026-08-25 stage list, the instrument's permanently-manual paragraph, the 2026-08-18 research-frame proposal or handoff, DR-2026-09-26's list of what a new table must add, D-0184's review status, or D-0170's crossing-map consequence, and asking whether it still holds.
+DATE: 2026-10-14 — recorded under RULINGS R5, R15 and the supersessions the stage graph owed; the superseding words are quoted above or at the ledger line each mark names.

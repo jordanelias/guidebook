@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 07:36 UTC from git HEAD e0005a9 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 07:51 UTC from git HEAD f3b4567 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 111,
  "stages": [
@@ -4583,10 +4583,10 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2599,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 361,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 312,
   "distinct quotes among all atoms": 2567,
-  "status corrections owed (each atom's status re-read)": 11,
-  "conflicts (atoms, class, probe exist)": 35,
+  "status corrections owed (each atom's status re-read)": 0,
+  "conflicts (atoms, class, probe exist)": 31,
   "machine transitions": 42,
   "transition evidence needles re-read": 72,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -4597,13 +4597,13 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2219,
-  "SUPERSEDED": 87,
-  "OPEN": 71,
-  "AMENDED": 67,
+  "ACTIVE": 2204,
+  "SUPERSEDED": 95,
+  "OPEN": 70,
+  "AMENDED": 75,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
  "atoms_total": 2599,
- "conflicts_total": 35
+ "conflicts_total": 31
 }

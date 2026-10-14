@@ -29,6 +29,8 @@ never sees it. Consistent with CRPD Art 4.3. Structural consequence: lens-switch
 the crossing maps, so a medical taxonomy needs the same crossings into the other three or the
 lens cannot switch. It is a schema change, not a vocabulary addition.
 
+**SUPERSEDED** 2026-10-14 in this one consequence, by D-0184: "The lens is a COLUMN, not a traversal" (`references/project-standards.md`, which quotes the decision's title). A lens is a column on the row, so nothing crosses between taxonomies by a crossing map. The rest of this decision stands. See the ledger entry "Recording 2026-10-14, second part".
+
 ## Alternatives considered
 
 - Omit the medical model as inconsistent with the social-model posture -- rejected by the owner;

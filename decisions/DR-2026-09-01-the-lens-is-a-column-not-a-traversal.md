@@ -4,6 +4,8 @@
 `CLAUDE.md` §1, which places code and tables outside the owner gate. It is landed and live; the
 review it awaits is the owner's, and `review_status` in the register is `PENDING` until then.
 
+**SUPERSEDED** 2026-10-14. The pending review is discharged by the owner's delegation recorded in `references/project-standards.md` ("resolve them for me in a logical manner"); RULINGS R15 holds D-0184 in force. See the ledger entry "Recording 2026-10-14, second part".
+
 **Register row:** `D-0184` · category `D-SCHEMA` · delegation `DG-REVIEW` ·
 decided by `session_2026-09-01-lens-architecture` on 2026-09-01 19:20 · `data/decisions/decision_register.yaml`
 

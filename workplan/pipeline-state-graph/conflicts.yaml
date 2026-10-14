@@ -56,18 +56,6 @@ conflicts:
 
 
 # ---------------------------------------------------------------- B. pipeline structure and stage assignment
-- id: C-010
-  class: RULING-DOC
-  severity: S3
-  title: "Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage'"
-  atoms: [DRS-038, DRS-039, DRS-040, DRS-124, DRS-125, DRS-131, LED-087, LED-124, LED-125, CLM-027]
-  sides:
-    - {atoms: [DRS-038, LED-087], says: "five-stage spine; DRS-038 and LED-087 are already marked SUPERSEDED."}
-    - {atoms: [DRS-039, DRS-040], says: "08-24 section 2.2: specifications is a table judgment writes, not a stage -- not marked superseded."}
-    - {atoms: [LED-124, LED-125, CLM-027, DRS-124, DRS-125, DRS-131], says: "owner 2026-08-27: seven stages; a table is never a stage; specification is a stage."}
-  direction: "LED-124 (owner, 2026-08-27) supersedes DRS-039/DRS-040 on contact. Status correction owed on those two atoms: mark SUPERSEDED."
-  resolver: AGENT
-  confidence: high
 
 - id: C-011
   class: RULING-DOC
@@ -108,19 +96,6 @@ conflicts:
   resolver: AGENT
   confidence: high
 
-- id: C-014
-  class: RULING-RULING
-  severity: S2
-  title: "When does the crossing happen: at judgment, or is applicability a synthesis output?"
-  atoms: [LED-113, LED-118, CLM-040, LED-085, DRS-052, DRS-053, DRS-054, DRS-055, DRS-056, DRS-117, DRS-134, DRS-153, DRS-157, DRS-158, DRS-193, ENT-164, ENT-183, ENT-151, ENT-152, OPI-147]
-  sides:
-    - {atoms: [DRS-052, DRS-053, DRS-054, DRS-055, DRS-056, ENT-151, ENT-152, OPI-147], says: "08-24 section 2.4 (and the operative instrument): applicability is an output of synthesis; zero links before synthesis is correct; writing applicability edges first is the forbidden presupposition."}
-    - {atoms: [LED-113, LED-118, CLM-040], says: "owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040, CLAUDE.md's own prose attributing it to the owner, not the owner's words) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect."}
-    - {atoms: [DRS-117, DRS-193], says: "D-0174, issued the same day, still says 'applicability remains a synthesis judgement'; D-0184 builds on that reservation."}
-    - {atoms: [DRS-134, DRS-153, DRS-157, DRS-158, ENT-164, ENT-183], says: "D-0175/6/7 fix or re-derive item-population link sets for named items before synthesis; functional-taxonomy schedules a serves_axes backfill and a zero-axes gap query."}
-  direction: "LED-113 supersedes the 08-24 deferral on contact. D-0174's residual sentence and D-0184's reliance on it are not reconciled. D-0175-0177 operate on the deleted item layer (see C-019) and are inert."
-  resolver: OWNER
-  confidence: medium
 
 - id: C-015
   class: DOC-DOC
@@ -219,19 +194,6 @@ conflicts:
   resolver: OWNER+AGENT
   confidence: high
 
-- id: C-023
-  class: PROVENANCE
-  severity: S2
-  title: "D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding"
-  atoms: [DRS-200, DRS-180, DRS-181, DRS-189, DRS-193, DRS-237, DRS-104, LED-133, CLM-042]
-  sides:
-    - {atoms: [DRS-200], says: "D-0184 is 'ADOPTED, REVIEW PENDING': a session decision the owner has not yet reviewed (AGENT_PROPOSAL)."}
-    - {atoms: [DRS-180, DRS-181, DRS-189, DRS-193, DRS-237], says: "D-0182 and D-0188 treat it as in force; D-0182 says crossings 'stop being render machinery'."}
-    - {atoms: [DRS-104], says: "D-0170: lens-switching runs through the crossing maps; D-0188 records that mechanism as superseded but D-0170's own text is unmarked."}
-    - {atoms: [LED-133, CLM-042], says: "the ledger quotes the owner ruling of 2026-08-28/2026-09-01 on which D-0184 is built."}
-  direction: "The owner rulings underneath (LED-128, LED-130) are recorded and binding; the specific mechanism D-0184 chooses (lens as column, crossing maps as authoring aid) rests on an unreviewed DR. D-0170 should carry a BY back-pointer."
-  resolver: OWNER
-  confidence: high
 
 
 
@@ -378,18 +340,6 @@ conflicts:
   confidence: high
 
 # ---------------------------------------------------------------- H. the operative instrument and the remediation DR
-- id: C-040
-  class: RULING-RULING
-  severity: S1
-  title: "'Tier and evidence-type assignment' and 'anything touching specifications' are permanently manual -- but the determination is computed and the tier is derived"
-  atoms: [OPI-226, OPI-229, LED-151, LED-152, LED-153, CLM-002, CLM-019]
-  sides:
-    - {atoms: [OPI-226, OPI-229], says: "DR-2026-08-19 section 12.5: tier and evidence-type assignment, and anything touching specifications or the reasoning doc, are permanently manual."}
-    - {atoms: [LED-151, LED-152], says: "owner 2026-09-09 evening: 'you have to compute it. I can't handle this load manually'; the determination state is computed by assess_cell from tier arithmetic."}
-  probe: P-ENG-T3
-  direction: "Rule 0 and CLAUDE.md's own worked example: the 2026-09-09 evening ruling superseded section 12.5's clause on contact, with no edit to the DR. OPI-229 is still ACTIVE in the atom set because the DR's text is unmarked; status correction owed (AMENDED, by LED-151). What section 12.5 still governs (the reasoning doc, the Opus floor, the B-before-E gate) is untouched. Tier DERIVATION from (evidence_type, scope) is machine work; evidence_type ASSIGNMENT remains a judgment (OPI-226 survives in that part)."
-  resolver: AGENT
-  confidence: high
 
 - id: C-041
   class: DOC-DOC
@@ -507,28 +457,15 @@ conflicts:
 - id: C-050
   class: RULING-DOC
   severity: S3
-  title: "'Three lenses' (R2, 2026-08-18) -- the lens count is now four, and the registries stay separate"
-  atoms: [WRK-004, WRK-016, WRK-173, WRK-174, WRK-177, LED-110, LED-121, LED-128, LED-168]
+  title: "An owner statement of 2026-09-13 names three vocabularies; the four-lens rulings stand until the owner confirms"
+  atoms: [LED-110, LED-128, LED-168]
   sides:
-    - {atoms: [WRK-004, WRK-173, WRK-174], says: "R2: three lenses (disability populations, ICF functional demands, access needs), three theoretical approaches, three tables."}
     - {atoms: [LED-110, LED-128], says: "owner 2026-08-27/28: identity, icf, needs and medical are the lenses; 'because i said we need the medical model too'."}
-    - {atoms: [WRK-016, WRK-177, LED-121], says: "the lens registries stay separate and are never reconciled (the four taxonomies keep parallel base_taxonomy_* names)."}
     - {atoms: [LED-168], says: "an owner statement naming three vocabularies on 2026-09-13 is not read as retiring the medical lens; unresolved."}
-  direction: "Not a contradiction of the 'separate and never reconciled' limb, which survives. The count in R2 is superseded by the later four-lens rulings; LED-168 stays open until the owner confirms."
+  direction: "RULINGS R39 (b): four lenses stand; the owner is asked to confirm. The R2 count of three is marked AMENDED where it is written (the 2026-08-18 proposal and handoff)."
   resolver: NONE
   confidence: medium
 
-status_corrections:
+status_corrections: []
   # Atoms whose recorded `status` is behind a later statement. `current` must equal the atom's status today, or the
   # check fails (so a stale correction cannot linger once the atom is repaired). `by` are the atoms that decide it.
-  - {atom: DRS-039, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken."}
-  - {atom: DRS-040, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "as DRS-039."}
-  - {atom: OPI-229, current: ACTIVE, should_be: AMENDED, by: [LED-151, LED-152], why: "owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact."}
-  - {atom: WRK-003, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "the owner ratified the operative instrument on 2026-08-19 as OD-1, items-as-leads included (OPI-015); its section 1.4 rule 1 forbids making a slug by stripping an item name (OPI-022), and its supersession table records that R1's strip mechanism is overturned."}
-  - {atom: WRK-033, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "as WRK-003."}
-  - {atom: WRK-171, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "as WRK-003 (the handoff's restatement)."}
-  - {atom: WRK-172, current: ACTIVE, should_be: AMENDED, by: [OPI-015, OPI-022], why: "its first limb (the strip is done manually) is overtaken -- no item name becomes a slug by stripping at all; its second limb (a regex smuggles the bias through) is subsumed by the stronger rule and still stands."}
-  - {atom: WRK-004, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
-  - {atom: WRK-173, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
-  - {atom: WRK-043, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications."}
-  - {atom: WRK-068, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "as WRK-043."}

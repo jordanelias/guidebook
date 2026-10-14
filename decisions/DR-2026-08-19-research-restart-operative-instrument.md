@@ -1059,3 +1059,5 @@ assignment; population-of-study grading and its mismatch note; R15 re-descriptio
 the Co-1 waiver text; anything touching `specifications` or the reasoning doc, which sits at the
 Opus synthesis floor behind the B-before-E gate. The contract's premise is that these are judgment
 acts machinery can only *check*.
+
+**AMENDED** 2026-10-14. "anything touching `specifications`" is no longer permanently manual: the owner ruled on 2026-09-09 (evening) that the determination is computed, "you have to compute it" (`references/project-standards.md`). What this paragraph still governs is the reasoning doc, the Opus floor and the B-before-E gate. No edit to the paragraph above; see the ledger entry "Recording 2026-10-14, second part".

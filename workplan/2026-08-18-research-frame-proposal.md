@@ -6,6 +6,8 @@ stripped of their determinations and become research slugs; the frame is slugs, 
 lenses, multilingual aliases, and jurisdictions; research is polynomial search across them.
 **Marked for Fable 5**, which is returning to improve this — §7 lists what I could not settle.
 
+**SUPERSEDED** by the operative instrument (section 1.4 rule 1, ratified 2026-08-19 as OD-1), quoted in `references/project-standards.md`: "No item name becomes a slug by strip." Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part"). **AMENDED** The owner's rulings of 2026-08-27 and 2026-08-28 make the lenses identity, ICF, needs and medical: "because i said we need the medical model too" (`references/project-standards.md`). The count of three is overtaken. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
+
 **Revised 2026-08-18** on two further owner rulings: **§9** corrects this document's own §7.6 (
 `specifications` is a derived output at the end of the pipeline, not a table to re-key now), and
 **§10** answers §7.3 by adopting three prioritised jurisdiction buckets, with four corrections. §8
@@ -225,6 +227,8 @@ determinations stripped out.
 
 ## 6. The item conversion is manual, not mechanical
 
+**SUPERSEDED** by the operative instrument (section 1.4 rule 1, ratified 2026-08-19 as OD-1), quoted in `references/project-standards.md`: "No item name becomes a slug by strip." Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
+
 Stripping parentheses is not sufficient, and a regex would smuggle the bias through in words instead of
 numbers:
 
@@ -280,6 +284,8 @@ affordance, not a solved problem.
    replaced was wrong: it fixes the shape of a determination before any data exists to shape it.
    `specifications` is not re-keyed now. It is deferred to derived-output status at the *end* of the
    pipeline.
+
+**SUPERSEDED** by the owner's ruling of 2026-08-26 in `references/project-standards.md`: "The judgment object is the **canonical parameter**", and migration 071 re-keyed `specifications`. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
 
 ---
 
@@ -378,6 +384,8 @@ absence is on the record rather than being discovered at the moment it is needed
 | `items` = removed axis, rows archived | unchanged — **archive now**, they bias research at this stage |
 | `specifications` = re-key to `(slug, lens_type, lens_code)` | **do not re-key.** Leave it 0-row and unbuilt; it is a stage-7 output whose key is a stage-6 finding |
 | The 93 stripped item names = slugs | unchanged — but their status changes meaning: they are demoted from *categories* to *questions* |
+
+**SUPERSEDED** by the owner's ruling of 2026-08-26 in `references/project-standards.md`: "The judgment object is the **canonical parameter**", and migration 071 re-keyed `specifications`. Marked 2026-10-14 (ledger entry "Recording 2026-10-14, second part").
 
 That last row is the point of the whole conversion and is worth being explicit about. `E-08 Corridor
 Clear Width (≥1200 mm)` asserts a category *and* an answer. `corridor-clear-width` asserts only that

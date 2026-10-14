@@ -1,5 +1,7 @@
 # DR-2026-08-27 — Relevance is an adjudication made at evidence collection, against a topic; applicability remains a synthesis judgement
 
+**AMENDED** 2026-10-14, read as RULINGS R33 reads it: applicability is never presupposed and never defaulted at collection, and the crossing is judgment's output, because the owner overruled the 2026-08-24 deferral with "we go evidence>judgment>synthesis" (`references/project-standards.md`). See the ledger entry "Recording 2026-10-14, second part".
+
 **Status:** **RATIFIED ON CONTACT** — this is an owner ruling, and `CLAUDE.md` rule 0 holds that
 a live owner statement supersedes every prior ratified record it touches **on contact**. Owner
 rulings do not await ratification; this record exists so the ruling is citable by the machine and

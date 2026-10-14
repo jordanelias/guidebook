@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-35 entries. Severity: S1 13, S2 9, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 16, RULING-RULING 3.
+31 entries. Severity: S1 12, S2 7, S3 12. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 16, RULING-RULING 1.
 
 ## Index
 
@@ -20,17 +20,13 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-034 | S1 | RULING-MECHANISM | AGENT | P-O -> FAIL | The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer |
 | C-035 | S1 | RULING-MECHANISM | OWNER+AGENT | P-X -> FAIL | Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters |
 | C-039 | S1 | OPEN-QUESTION | OWNER | -- | Questions only the owner can answer that block engine or writer behaviour |
-| C-040 | S1 | RULING-RULING | AGENT | P-ENG-T3 -> PASS | 'Tier and evidence-type assignment' and 'anything touching specifications' are permanently manual -- but the determination is computed and the tier is derived |
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
-| C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
-| C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
 | C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
 | C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
-| C-010 | S3 | RULING-DOC | AGENT | -- | Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage' |
 | C-011 | S3 | RULING-DOC | NONE | -- | Is `base` a stage, and is it 'substrate'? |
 | C-015 | S3 | DOC-DOC | OWNER | -- | Evidence collection: 'a cursory scan' or a stage that judges relevance |
 | C-016 | S3 | DOC-DOC | AGENT | -- | Pointer discipline: enforced by schema shape, or not enforced |
@@ -42,25 +38,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-043 | S3 | DOC-DOC | NONE | -- | Edit-in-place versus append for corrections to the instrument; migration-number allocator; open decisions |
 | C-045 | S3 | PROVENANCE | NONE | -- | Status of DR-2026-09-26 and of the DOI-stash design in the operative instrument |
 | C-046 | S3 | RULING-MECHANISM | OWNER | P-FWD-FK -> INFO | Pointers run from a later stage to an earlier one -- some foreign keys run the other way |
-| C-050 | S3 | RULING-DOC | NONE | -- | 'Three lenses' (R2, 2026-08-18) -- the lens count is now four, and the registries stay separate |
-
-## Status corrections owed
-
-Atoms whose recorded status is behind a later statement. The atom files record each document's own markers; these are the supersessions the documents themselves do not carry. Applying one means editing the atom's `status` and `superseded_by`; the check then fails until the entry here is removed.
-
-| atom | now | should be | decided by | why |
-|---|---|---|---|---|
-| DRS-039 | ACTIVE | SUPERSEDED | LED-094, LED-124 | owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken. |
-| DRS-040 | ACTIVE | SUPERSEDED | LED-094, LED-124 | as DRS-039. |
-| OPI-229 | ACTIVE | AMENDED | LED-151, LED-152 | owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact. |
-| WRK-003 | ACTIVE | SUPERSEDED | OPI-015, OPI-022 | the owner ratified the operative instrument on 2026-08-19 as OD-1, items-as-leads included (OPI-015); its section 1.4 rule 1 forbids making a slug by stripping an item name (OPI-022), and its supersession table records that R1's strip mechanism is overturned. |
-| WRK-033 | ACTIVE | SUPERSEDED | OPI-015, OPI-022 | as WRK-003. |
-| WRK-171 | ACTIVE | SUPERSEDED | OPI-015, OPI-022 | as WRK-003 (the handoff's restatement). |
-| WRK-172 | ACTIVE | AMENDED | OPI-015, OPI-022 | its first limb (the strip is done manually) is overtaken -- no item name becomes a slug by stripping at all; its second limb (a regex smuggles the bias through) is subsumed by the stronger rule and still stands. |
-| WRK-004 | ACTIVE | AMENDED | LED-128, LED-110 | the lens count is four, not three. |
-| WRK-173 | ACTIVE | AMENDED | LED-128, LED-110 | the lens count is four, not three. |
-| WRK-043 | ACTIVE | SUPERSEDED | LED-091 | owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications. |
-| WRK-068 | ACTIVE | SUPERSEDED | LED-091 | as WRK-043. |
+| C-050 | S3 | RULING-DOC | NONE | -- | An owner statement of 2026-09-13 names three vocabularies; the four-lens rulings stand until the owner confirms |
 
 ## C-004 [S1] T3-grey and a lone T6 source may anchor a floor claim (owner directive 2026-07-20) -- the engine returns pending for T3-grey alone
 
@@ -216,17 +194,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** Not conflicts of statements: gaps in what has been ruled. Listed so the engine/writers are not made to guess.
 
-## C-040 [S1] 'Tier and evidence-type assignment' and 'anything touching specifications' are permanently manual -- but the determination is computed and the tier is derived
-
-**Class** RULING-RULING  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-ENG-T3` = **PASS**
-
-- DR-2026-08-19 section 12.5: tier and evidence-type assignment, and anything touching specifications or the reasoning doc, are permanently manual.  
-  _atoms:_ `OPI-226`(act), `OPI-229`(act)
-- owner 2026-09-09 evening: 'you have to compute it. I can't handle this load manually'; the determination state is computed by assess_cell from tier arithmetic.  
-  _atoms:_ `LED-151`(act), `LED-152`(act)
-
-**Direction.** Rule 0 and CLAUDE.md's own worked example: the 2026-09-09 evening ruling superseded section 12.5's clause on contact, with no edit to the DR. OPI-229 is still ACTIVE in the atom set because the DR's text is unmarked; status correction owed (AMENDED, by LED-151). What section 12.5 still governs (the reasoning doc, the Opus floor, the B-before-E gate) is untouched. Tier DERIVATION from (evidence_type, scope) is machine work; evidence_type ASSIGNMENT remains a judgment (OPI-226 survives in that part).
-
 ## C-013 [S2] The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission
 
 **Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-F` = **FAIL**
@@ -239,21 +206,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `DRS-164`(act), `DRS-249`(act), `DRS-151`(act)
 
 **Direction.** Ruled but not executed (LED-108 ambiguity: 'the move is queued, not done'). Readers that must be re-pointed first: add-extraction's R3 guard and assess_cell's gather both read evidence_sources.tier.
-
-## C-014 [S2] When does the crossing happen: at judgment, or is applicability a synthesis output?
-
-**Class** RULING-RULING  ·  **Resolver** OWNER  ·  **Confidence** medium
-
-- 08-24 section 2.4 (and the operative instrument): applicability is an output of synthesis; zero links before synthesis is correct; writing applicability edges first is the forbidden presupposition.  
-  _atoms:_ `DRS-052`(act), `DRS-053`(act), `DRS-054`(act), `DRS-055`(act), `DRS-056`(act), `ENT-151`(sup), `ENT-152`(act), `OPI-147`(sup)
-- owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040, CLAUDE.md's own prose attributing it to the owner, not the owner's words) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect.  
-  _atoms:_ `LED-113`(act), `LED-118`(act), `CLM-040`(act)
-- D-0174, issued the same day, still says 'applicability remains a synthesis judgement'; D-0184 builds on that reservation.  
-  _atoms:_ `DRS-117`(act), `DRS-193`(act)
-- D-0175/6/7 fix or re-derive item-population link sets for named items before synthesis; functional-taxonomy schedules a serves_axes backfill and a zero-axes gap query.  
-  _atoms:_ `DRS-134`(act), `DRS-153`(act), `DRS-157`(act), `DRS-158`(act), `ENT-164`(act), `ENT-183`(act)
-
-**Direction.** LED-113 supersedes the 08-24 deferral on contact. D-0174's residual sentence and D-0184's reliance on it are not reconciled. D-0175-0177 operate on the deleted item layer (see C-019) and are inert.
 
 ## C-018 [S2] 'We don't use the word population' -- the schema, the methodology and three DRs still do
 
@@ -276,21 +228,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `PIP-04`(act)
 
 **Direction.** P-GT: determination_gates carries identity_code only. Whether PIP-04 is enforced anywhere is not probed; the specifications CHECK is 'at least one' (LED-130), which admits medical alone.
-
-## C-023 [S2] D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding
-
-**Class** PROVENANCE  ·  **Resolver** OWNER  ·  **Confidence** high
-
-- D-0184 is 'ADOPTED, REVIEW PENDING': a session decision the owner has not yet reviewed (AGENT_PROPOSAL).  
-  _atoms:_ `DRS-200`(ope)
-- D-0182 and D-0188 treat it as in force; D-0182 says crossings 'stop being render machinery'.  
-  _atoms:_ `DRS-180`(act), `DRS-181`(act), `DRS-189`(act), `DRS-193`(act), `DRS-237`(act)
-- D-0170: lens-switching runs through the crossing maps; D-0188 records that mechanism as superseded but D-0170's own text is unmarked.  
-  _atoms:_ `DRS-104`(act)
-- the ledger quotes the owner ruling of 2026-08-28/2026-09-01 on which D-0184 is built.  
-  _atoms:_ `LED-133`(act), `CLM-042`(act)
-
-**Direction.** The owner rulings underneath (LED-128, LED-130) are recorded and binding; the specific mechanism D-0184 chooses (lens as column, crossing maps as authoring aid) rests on an unreviewed DR. D-0170 should carry a BY back-pointer.
 
 ## C-031 [S2] Retire in place requires every reader to filter status first -- some views do not
 
@@ -343,19 +280,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `ENT-338`(act)
 
 **Direction.** Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038).
-
-## C-010 [S3] Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage'
-
-**Class** RULING-DOC  ·  **Resolver** AGENT  ·  **Confidence** high
-
-- five-stage spine; DRS-038 and LED-087 are already marked SUPERSEDED.  
-  _atoms:_ `DRS-038`(sup), `LED-087`(sup)
-- 08-24 section 2.2: specifications is a table judgment writes, not a stage -- not marked superseded.  
-  _atoms:_ `DRS-039`(act), `DRS-040`(act)
-- owner 2026-08-27: seven stages; a table is never a stage; specification is a stage.  
-  _atoms:_ `LED-124`(act), `LED-125`(act), `CLM-027`(act), `DRS-124`(act), `DRS-125`(act), `DRS-131`(act)
-
-**Direction.** LED-124 (owner, 2026-08-27) supersedes DRS-039/DRS-040 on contact. Status correction owed on those two atoms: mark SUPERSEDED.
 
 ## C-011 [S3] Is `base` a stage, and is it 'substrate'?
 
@@ -508,18 +432,14 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** UNSETTLED. P-FWD-FK lists every foreign key whose child sits in an earlier stage than its parent (STATE-GRAPH.md 2a). Research tables pointing at admitted evidence are the re-entrancy CLM-029 licenses; the others (a table in the capture stage pointing at a synthesis-stage citation table, a judgment table pointing at gaps, tables pointing at the emptied `items` table that the map files under render) are either misclassified or genuine upward dependencies. Which, is the owner's classification.
 
-## C-050 [S3] 'Three lenses' (R2, 2026-08-18) -- the lens count is now four, and the registries stay separate
+## C-050 [S3] An owner statement of 2026-09-13 names three vocabularies; the four-lens rulings stand until the owner confirms
 
 **Class** RULING-DOC  ·  **Resolver** NONE  ·  **Confidence** medium
 
-- R2: three lenses (disability populations, ICF functional demands, access needs), three theoretical approaches, three tables.  
-  _atoms:_ `WRK-004`(act), `WRK-173`(act), `WRK-174`(act)
 - owner 2026-08-27/28: identity, icf, needs and medical are the lenses; 'because i said we need the medical model too'.  
   _atoms:_ `LED-110`(act), `LED-128`(act)
-- the lens registries stay separate and are never reconciled (the four taxonomies keep parallel base_taxonomy_* names).  
-  _atoms:_ `WRK-016`(act), `WRK-177`(act), `LED-121`(act)
 - an owner statement naming three vocabularies on 2026-09-13 is not read as retiring the medical lens; unresolved.  
   _atoms:_ `LED-168`(ope)
 
-**Direction.** Not a contradiction of the 'separate and never reconciled' limb, which survives. The count in R2 is superseded by the later four-lens rulings; LED-168 stays open until the owner confirms.
+**Direction.** RULINGS R39 (b): four lenses stand; the owner is asked to confirm. The R2 count of three is marked AMENDED where it is written (the 2026-08-18 proposal and handoff).
 
