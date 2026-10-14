@@ -456,7 +456,8 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   `research_contract_hook.py` reads `SessionStart[0]["hooks"][0]["command"]` by hardcoded index; an
   insert turns the blocking `research_contract_sync` red with a diff that reads as contract drift.
 - **Don't hand-edit generated output** (`parts/`, `site/`, `audits/`, `tools/*.html`) — regenerate
-  `tools/*.html` with `scripts/regenerate_derived.sh`, which does not reach `parts/` or `site/`.
+  `tools/*.html` and `audits/evidentiary-base-audit*` with `scripts/regenerate_derived.sh`, which does
+  not reach `parts/` or `site/`.
 - **`schemas/*.py` ↔ SQLite drift is a bug**, not a convention.
 - **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is live
   and legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.

@@ -176,7 +176,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `LED-103`(act), `LED-104`(act), `LED-105`(act)
 - the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it).  
   _atoms:_ `ADD-002`(act), `ADD-003`(act)
-- contract: parts/ and site/ must not be stale relative to the DB; CLAUDE.md now says regenerate_derived.sh regenerates tools/*.html and does not reach parts/ or site/ (step 0.5).  
+- contract: parts/ and site/ must not be stale relative to the DB; CLAUDE.md now says regenerate_derived.sh regenerates tools/*.html and audits/evidentiary-base-audit* and does not reach parts/ or site/ (step 0.5).  
   _atoms:_ `PIP-07`(act), `CLM-050`(act)
 
 **Direction.** UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way.

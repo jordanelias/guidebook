@@ -46,7 +46,7 @@ CLM-046	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:424	cross	scratchpad/CURRENT	scratch
 CLM-047	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:435	cross	history rewriting	git rebase and git checkout -B are blocked; use git merge origin/main.	
 CLM-048	ACTIVE	MUST_NOT	OWNER_RELAYED	2026-09-01	CLAUDE.md:445	cross	item codes	Never file into a [A-Z]-NN item-code container.	
 CLM-049	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:453	cross	session id forms	Session ids are bare stems in the DB and .md in pointers and emit_data_migration --session.	
-CLM-050	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:458	render	generated output	Do not hand-edit parts/, site/, audits/, tools/*.html; regenerate tools/*.html with scripts/regenerate_derived.sh, which does not reach parts/ or site/.	
+CLM-050	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:458	render	generated output	Do not hand-edit parts/, site/, audits/, tools/*.html; regenerate tools/*.html and audits/evidentiary-base-audit* with scripts/regenerate_derived.sh, which does not reach parts/ or site/.	
 CLM-051	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:460	cross	schema drift	schemas/*.py and SQLite must not drift.	validate_pydantic_schemas (advisory)
 CLM-052	ACTIVE	ORDER	PROCESS_RULE		CLAUDE.md:495	cross	burden of proof	Adding apparatus carries the burden of proof; removing code, checks, scripts, dead tables and views needs evidence, not owner permission.	
 CLM-053	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:501	cross	owner sign-off scope	Owner sign-off is required for content and doctrine (mission, audience, CRPD posture, taxonomy, tier definitions, jurisdiction, licensing, trajectory), not for code.	
