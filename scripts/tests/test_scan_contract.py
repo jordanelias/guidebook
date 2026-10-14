@@ -218,8 +218,8 @@ try:
     TOMB = q("SELECT ref_id FROM evidence_sources WHERE superseded_by_ref_id IS NOT NULL "
              "ORDER BY ref_id LIMIT 1")
     TOMB = TOMB[0][0] if TOMB else None
-    (POP,), = q("SELECT population_code FROM populations WHERE population_code <> 'ALL' "
-                "ORDER BY population_code LIMIT 1")
+    (POP,), = q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code <> 'ALL' "
+                "ORDER BY identity_code LIMIT 1")
     FREE = [t for (t,) in q(
         "SELECT term_id FROM terms t WHERE NOT EXISTS (SELECT 1 FROM base_parameters p "
         "WHERE p.term_id = t.term_id) AND NOT EXISTS (SELECT 1 FROM parameter_declinations "

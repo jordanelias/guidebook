@@ -1750,7 +1750,7 @@ def main():
         "add-population-icf-link",
         help="Map a population to an ICF activity it has a functional deficit in (H3)")
     p_pil.add_argument("--population", required=True,
-                       help="populations.population_code — LIVE code, not a retired one")
+                       help="base_taxonomy_identity.identity_code — LIVE code, not a retired one")
     p_pil.add_argument("--icf-code", dest="icf_code", required=True,
                        help="d### or a range d###–d###. Free text by design: there is no "
                             "d-code registry to point at yet (080)")
@@ -1759,7 +1759,7 @@ def main():
                             "cognitive. The same population may reach one code by two "
                             "mechanisms and both are real rows")
     p_pil.add_argument("--mapping-confidence", dest="mapping_confidence", required=True,
-                       choices=dbcore.schema_choices("population_icf_links",
+                       choices=dbcore.schema_choices("identity_icf_map",
                                                      "mapping_confidence"))
     p_pil.add_argument("--provenance", required=True,
                        help="WHERE this row came from: a ref_id, or the promotion that "
@@ -1774,7 +1774,7 @@ def main():
         help="Raise an H4 gate: cap a cell at provisional until it is resolved")
     p_gate.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
     p_gate.add_argument("--identity",
-                        help="populations.population_code. OMIT to gate every lens on "
+                        help="base_taxonomy_identity.identity_code. OMIT to gate every lens on "
                              "this parameter — what an audit that does not yet know "
                              "which cells exist should do")
     p_gate.add_argument("--verdict", required=True,
@@ -1818,7 +1818,7 @@ def main():
                       help="path under retrieval-log/ whose bytes CONTAIN every --icd11 "
                            "code. ONLY this sets icd11_verified_at; absent means NULL, "
                            "and NULL means not verified")
-    p_md.add_argument("--identity", help="populations.population_code to cross to")
+    p_md.add_argument("--identity", help="base_taxonomy_identity.identity_code to cross to")
     p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
                       help="required with --identity")
     p_md.add_argument("--icf", help="base_icf.icf_code to cross to")
@@ -1845,7 +1845,7 @@ def main():
                       help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
     # The four lenses. At least one is required (D-0182); the CLI names them by lens
     # rather than by column so the operator is choosing a LENS, not filling a field.
-    p_ax.add_argument("--identity", help="populations.population_code")
+    p_ax.add_argument("--identity", help="base_taxonomy_identity.identity_code")
     p_ax.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     p_ax.add_argument("--needs", help="access_needs.need_code")
     p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
@@ -6110,13 +6110,13 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
         # message, which is still the difference between a user fixing a typo and a user
         # filing a bug.
         if identity:
-            if not conn.execute("SELECT 1 FROM populations WHERE population_code = ?",
+            if not conn.execute("SELECT 1 FROM base_taxonomy_identity WHERE identity_code = ?",
                                 (identity,)).fetchone():
                 near = [r[0] for r in conn.execute(
-                    "SELECT population_code FROM populations ORDER BY population_code")]
+                    "SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code")]
                 raise Refusal(
-                    f"--identity {identity!r} REFUSED: not a population_code. The identity "
-                    f"lens is `populations`, and its live vocabulary is: {', '.join(near)}")
+                    f"--identity {identity!r} REFUSED: not an identity_code. The identity "
+                    f"lens is `base_taxonomy_identity`, and its live vocabulary is: {', '.join(near)}")
         if icf:
             # INVERTED 2026-09-13, and the old message is worth remembering because it
             # stated the ruled-out state as doctrine: it read "specifications.icf_code FKs
@@ -7359,19 +7359,19 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
                 f"  db.py add-icf-code --icf-code {icf_code} --session ...\n"
                 f"If it is an AX- demand code, it is not an ICF code and never was (owner "
                 f"ruling 2026-09-13).")
-        if not dbcore.exists(conn, "populations", "population_code", population):
+        if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", population):
             live = sorted(r[0] for r in
-                          conn.execute("SELECT population_code FROM populations"))
+                          conn.execute("SELECT identity_code FROM base_taxonomy_identity"))
             raise Refusal(
                 f"{population!r} is not a live population code. The taxonomy was "
                 f"replaced by DR-2026-07-23; a retired code (UPL, VIS, OFS, ABI, ASD, "
                 f"PCS, NEU, DBL, ...) must be crosswalked before it can be written.\n"
                 f"Live codes: {', '.join(live)}")
-        dbcore.check_declared(conn, "population_icf_links", "mapping_confidence",
+        dbcore.check_declared(conn, "identity_icf_map", "mapping_confidence",
                               mapping_confidence, "add-population-icf-link")
         clash = conn.execute(
-            "SELECT link_id, provenance FROM population_icf_links "
-            "WHERE population_code=? AND icf_code=? AND mechanism=?",
+            "SELECT link_id, provenance FROM identity_icf_map "
+            "WHERE identity_code=? AND icf_code=? AND mechanism=?",
             [population, icf_code, mechanism]).fetchone()
         if clash:
             raise Refusal(
@@ -7379,13 +7379,13 @@ def insert_population_icf_link(*, population: str, icf_code: str, mechanism: str
                 f"this mechanism (provenance {clash['provenance']!r}). One row per "
                 f"(population, code, mechanism) -- a second is the dual home rule 5 "
                 f"forbids. A DIFFERENT mechanism is a different row and is allowed.")
-        row = {"population_code": population, "icf_code": icf_code,
+        row = {"identity_code": population, "icf_code": icf_code,
                "mechanism": mechanism, "mapping_confidence": mapping_confidence,
                "provenance": provenance, "notes": notes}
-        row.update(dbcore.stamp_for(conn, "population_icf_links", session))
-        cur = conn.execute(f"INSERT INTO population_icf_links ({','.join(row)}) "
+        row.update(dbcore.stamp_for(conn, "identity_icf_map", session))
+        cur = conn.execute(f"INSERT INTO identity_icf_map ({','.join(row)}) "
                            f"VALUES ({','.join('?'*len(row))})", list(row.values()))
-        return {"link_id": cur.lastrowid, "population_code": population,
+        return {"link_id": cur.lastrowid, "identity_code": population,
                 "icf_code": icf_code, "mechanism": mechanism,
                 "mapping_confidence": mapping_confidence, "dry_run": dry_run}
 
@@ -7580,7 +7580,7 @@ def raise_determination_gate(*, parameter_id: int, verdict: str, detail: str,
                 + (f" (merged into {param['merged_into']})" if param["merged_into"] else "")
                 + ". Gating a parameter that no longer stands on its own pins cells "
                   "nobody will look at.")
-        if identity and not dbcore.exists(conn, "populations", "population_code", identity):
+        if identity and not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", identity):
             raise Refusal(
                 f"{identity!r} is not a live population code. Omit --identity to raise "
                 f"the gate against EVERY lens on this parameter, which is what an audit "
@@ -7667,7 +7667,7 @@ def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
 # extraction and the determination it feeds must name the lens the same way, or the
 # hand-off needs a translation nobody wrote.
 _LENS_COLUMNS = {
-    "identity_code": ("populations", "population_code"),
+    "identity_code": ("base_taxonomy_identity", "identity_code"),
     # RE-POINTED 2026-09-13 by owner ruling ("keep the ICF lens, give it real ICF
     # codes"), executed by migration 081. It read ("axes", "axis_code") until then, so
     # the column called `icf_code` resolved to an AX- functional-demand code -- which
@@ -8185,7 +8185,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       absence. `--identity ""` is normalised to None before anything reads it:
       assess_cell records the live incident where a blank skipped validation (falsy),
       satisfied the at-least-one test at the NEXT lens (truthy), was INSERTed as '',
-      and produced a `PRAGMA foreign_key_check` violation against `populations`.
+      and produced a `PRAGMA foreign_key_check` violation against `base_taxonomy_identity`.
 
     * NO LENS AT ALL. D-0182: absence in a lens is fine, absence in all four is not.
       A value attached to no lens is a value about nobody.
@@ -9624,9 +9624,9 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
                 f"match AFTER admission -- a match row for a source that does not exist "
                 f"is a claim about nothing.")
         _refuse_tombstone(conn, ref, "add-population-match")
-        if not dbcore.exists(conn, "populations", "population_code", data.get("target_population")):
+        if not dbcore.exists(conn, "base_taxonomy_identity", "identity_code", data.get("target_population")):
             raise Refusal(
-                f"target_population {data.get('target_population')!r} is not in `populations`.")
+                f"target_population {data.get('target_population')!r} is not in `base_taxonomy_identity`.")
         dbcore.check_vocab(conn, "evidence_population_match", "match_grade",
                            data.get("match_grade"), "insert_population_match")
         if data.get("match_grade") == "MISMATCH" and not (data.get("mismatch_note") or "").strip():

@@ -230,17 +230,17 @@ Full old→new mapping: `workplan/P1-D2-D3-co0004-remapping.md`.
 
 ```bash
 python3 -c "import sqlite3; c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True); \
-  [print(f'{r[0]:<12}{r[1]}') for r in c.execute('SELECT population_code, display_name FROM populations ORDER BY 1')]"
+  [print(f'{r[0]:<12}{r[1]}') for r in c.execute('SELECT identity_code, display_name FROM base_taxonomy_identity ORDER BY 1')]"
 ```
 
-The set is **23 flat codes**, ratified by `DR-2026-07-23` and held by the `populations`
+The set is **23 flat codes**, ratified by `DR-2026-07-23` and held by the `base_taxonomy_identity`
 table. Curate *from the functional axes* — never coin
 umbrella codes (`governance/functional-taxonomy.md` §3.3, RULE 2026-07-22,
 `DR-2026-07-22-work-from-axes`).
 
 > **[CORRECTED 2026-08-04] The table that stood here was wrong on roughly half its
 > rows and was labelled "canonical".** It listed `VIS`, `NEU`, `DBL`, `OFS`,
-> `IntD` and `NDV/MH` — **none of which exist** in `populations`. The
+> `IntD` and `NDV/MH` — **none of which exist** in `base_taxonomy_identity`. The
 > 2026-07-21/22 reclassification replaced them (`VIS`→`BLIND`, `DBL`→`DEAFBLIND`,
 > the orthostatic/fatigue group→`COM`, `IntD`→`ID`, and so on) and added `LMB`,
 > `MOVE`, `BRAIN`, `LPA`, `TALL`, `VES`, `EPI`, `MS`, `SCI`.

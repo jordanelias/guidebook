@@ -108,8 +108,8 @@ tables:
   life_stage_modifiers: base
   observed_terms: evidence
   parameter_declinations: base
-  population_icf_links: base
-  populations: base
+  identity_icf_map: base
+  base_taxonomy_identity: base
   reasoning_doc_citations: synthesis
   research_code_leads: research
   rooms: base

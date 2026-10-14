@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 07:53 UTC from git HEAD 73819ab (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 08:03 UTC from git HEAD 400cb11 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 111,
+ "user_version": 112,
  "stages": [
   "base",
   "research",
@@ -150,6 +150,22 @@
     "updated_by_session",
     "direction_rationale",
     "accessibility_direction"
+   ]
+  },
+  "base_taxonomy_identity": {
+   "stage": "base",
+   "rows": 23,
+   "writers": [],
+   "cols": [
+    "identity_code",
+    "display_name",
+    "category",
+    "description",
+    "parent_code",
+    "is_compound",
+    "status",
+    "created_at",
+    "updated_at"
    ]
   },
   "base_taxonomy_medical": {
@@ -706,6 +722,24 @@
     "created_by_session"
    ]
   },
+  "identity_icf_map": {
+   "stage": "base",
+   "rows": 61,
+   "writers": [
+    "add-population-icf-link"
+   ],
+   "cols": [
+    "link_id",
+    "identity_code",
+    "icf_code",
+    "mechanism",
+    "mapping_confidence",
+    "provenance",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
   "identity_medical_map": {
    "stage": "base",
    "rows": 0,
@@ -781,40 +815,6 @@
     "revoked_at",
     "revoked_by_session",
     "revocation_reason"
-   ]
-  },
-  "population_icf_links": {
-   "stage": "base",
-   "rows": 61,
-   "writers": [
-    "add-population-icf-link"
-   ],
-   "cols": [
-    "link_id",
-    "population_code",
-    "icf_code",
-    "mechanism",
-    "mapping_confidence",
-    "provenance",
-    "notes",
-    "created_at",
-    "created_by_session"
-   ]
-  },
-  "populations": {
-   "stage": "base",
-   "rows": 23,
-   "writers": [],
-   "cols": [
-    "population_code",
-    "display_name",
-    "category",
-    "description",
-    "parent_code",
-    "is_compound",
-    "status",
-    "created_at",
-    "updated_at"
    ]
   },
   "reasoning_doc_citations": {
@@ -1360,6 +1360,12 @@
    "notnull": true
   },
   {
+   "child": "base_taxonomy_identity",
+   "col": "parent_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
    "child": "case_studies",
    "col": "slug",
    "parent": "slugs",
@@ -1398,7 +1404,7 @@
   {
    "child": "determination_gates",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -1468,6 +1474,18 @@
    "notnull": true
   },
   {
+   "child": "identity_icf_map",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": true
+  },
+  {
+   "child": "identity_icf_map",
+   "col": "identity_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": true
+  },
+  {
    "child": "identity_medical_map",
    "col": "medical_code",
    "parent": "base_taxonomy_medical",
@@ -1476,7 +1494,7 @@
   {
    "child": "identity_medical_map",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": true
   },
   {
@@ -1489,24 +1507,6 @@
    "child": "parameter_declinations",
    "col": "term_id",
    "parent": "terms",
-   "notnull": false
-  },
-  {
-   "child": "population_icf_links",
-   "col": "icf_code",
-   "parent": "base_icf",
-   "notnull": true
-  },
-  {
-   "child": "population_icf_links",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "populations",
-   "col": "parent_code",
-   "parent": "populations",
    "notnull": false
   },
   {
@@ -1644,7 +1644,7 @@
   {
    "child": "source_value_extractions",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -1728,7 +1728,7 @@
   {
    "child": "specifications",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -2165,6 +2165,22 @@
     "contested"
    ]
   },
+  "base_taxonomy_identity": {
+   "category": [
+    "mobility",
+    "sensory",
+    "cognitive",
+    "mental_health",
+    "pain_fatigue",
+    "neurological",
+    "developmental",
+    "general"
+   ],
+   "status": [
+    "active",
+    "deprecated"
+   ]
+  },
   "base_taxonomy_medical": {
    "status": [
     "active",
@@ -2464,6 +2480,13 @@
     "minimal"
    ]
   },
+  "identity_icf_map": {
+   "mapping_confidence": [
+    "high_predictive",
+    "moderate_contextual",
+    "low_indicative"
+   ]
+  },
   "identity_medical_map": {
    "relationship": [
     "names",
@@ -2481,29 +2504,6 @@
    "code": [
     "SEN",
     "CHD"
-   ]
-  },
-  "population_icf_links": {
-   "mapping_confidence": [
-    "high_predictive",
-    "moderate_contextual",
-    "low_indicative"
-   ]
-  },
-  "populations": {
-   "category": [
-    "mobility",
-    "sensory",
-    "cognitive",
-    "mental_health",
-    "pain_fatigue",
-    "neurological",
-    "developmental",
-    "general"
-   ],
-   "status": [
-    "active",
-    "deprecated"
    ]
   },
   "reasoning_doc_citations": {
@@ -3339,7 +3339,7 @@
     "insert_population_icf_link"
    ],
    "writes": {
-    "population_icf_links": [
+    "identity_icf_map": [
      "INSERT"
     ]
    },
@@ -3710,16 +3710,14 @@
   },
   "P-C": {
    "verdict": "NOT-BUILT",
-   "tests": "no table or column is named with the retired word 'population' (owner 2026-08-28; the rename is not applied)",
+   "tests": "no table or column is named with the retired word 'population' (owner 2026-08-28)",
    "atoms": [
     "LED-127",
     "ADD-001"
    ],
    "evidence": {
     "tables": [
-     "evidence_population_match",
-     "population_icf_links",
-     "populations"
+     "evidence_population_match"
     ],
     "columns": {
      "case_studies": [
@@ -3732,12 +3730,6 @@
      ],
      "external_root_registry": [
       "root_population_note"
-     ],
-     "population_icf_links": [
-      "population_code"
-     ],
-     "populations": [
-      "population_code"
      ],
      "reasoning_doc_citations": [
       "population"
@@ -3883,9 +3875,9 @@
      "access_need_icf",
      "access_needs",
      "access_stakes",
+     "base_taxonomy_identity",
      "lang_jur_map",
      "life_stage_modifiers",
-     "populations",
      "rooms",
      "slugs"
     ]

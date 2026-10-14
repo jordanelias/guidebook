@@ -10,12 +10,12 @@ Checks (data layer, increment 1):
   ref.unresolved_conn_target   connection_target not resolving to item/slug (WARN),
                                split into phantom-item vs unresolved-identifier
   ref.dangling_structural      self_ref edge pointing at a missing node (ERROR) —
-                               referential corruption in populations.parent_code that
+                               referential corruption in base_taxonomy_identity.parent_code that
                                no other check covered
   table.empty_mission_critical curated mission-critical table at/near 0 rows (INFO)
   table.missing_mission_critical curated mission-critical table ABSENT from the DB (WARN)
   connection.empty_description connection rows with empty description (INFO)
-  cycle.population_parent      populations.parent_code cycle (ERROR)
+  cycle.population_parent      base_taxonomy_identity.parent_code cycle (ERROR)
   state.distribution           lifecycle state distributions (INFO)
   graph.components             connected-component / island count (INFO)
 """
@@ -111,7 +111,7 @@ def unresolved_connection_targets(store):
 
 def dangling_structural_refs(store):
     """Structural edges resolving to a missing node: self_ref
-    (populations.parent_code -> parent). Referential corruption in them would otherwise
+    (base_taxonomy_identity.parent_code -> parent). Referential corruption in them would otherwise
     pass silently — dangling value-layer citations and connection-target junctions each
     have their own check; these did not. ERROR (must be 0 on a healthy DB)."""
     import json

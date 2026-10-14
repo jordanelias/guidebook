@@ -197,12 +197,12 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 
 **Class** RULING-MECHANISM  ·  **Resolver** OWNER  ·  **Confidence** high  ·  **Probe** `P-C` = **NOT-BUILT**
 
-- owner 2026-08-28: "we don't use the word 'population' though" (unqualified); the lenses are identity, icf, needs, medical. Only the choice of 'base_taxonomy' as the replacement carries the owner's 'i think'; identity was put back for confirmation and the rename was not applied.  
+- owner 2026-08-28: "we don't use the word 'population' though" (unqualified); the lenses are identity, icf, needs, medical. The replacement name was put back for confirmation; RULINGS R49 (c) records it.  
   _atoms:_ `LED-127`(act), `ADD-001`(act)
 - contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'.  
   _atoms:_ `PRC-082`(act), `ENT-236`(ame), `ENT-222`(sup)
 
-**Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
+**Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/222 and the methodology wording are stale on contact. Migration 112 renamed the identity registry and its ICF map (base_taxonomy_identity, identity_icf_map; plan Phase 3 base). What stays open is the word in other names: evidence_population_match and its two columns await the owner's choice of name (LED-127 names served_group and study_group), and seven columns and the verb and flag names still carry it, which is why P-C stays NOT-BUILT.
 
 ## C-021 [S2] determination_gates attaches to a group through one lens column
 

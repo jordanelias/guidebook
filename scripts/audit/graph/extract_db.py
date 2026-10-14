@@ -20,7 +20,7 @@ from model import node_id
 # table -> (node kind, primary-key column)
 PRIMARY = {
     "evidence_sources": ("source", "ref_id"),
-    "populations": ("population", "population_code"),
+    "base_taxonomy_identity": ("population", "identity_code"),
     "connections": ("connection", "con_id"),
     "gaps": ("gap", "gap_id"),
     "slugs": ("slug", "slug"),
@@ -32,7 +32,7 @@ STATE_COLS = {
     "connections": ["status", "confidence"],
     "gaps": ["status", "priority"],
     "slugs": ["status"],
-    "populations": ["status"],
+    "base_taxonomy_identity": ["status"],
     "evidence_sources": ["verification_status", "metadata_quality", "metadata_integrity_status"],
     "specifications": ["state", "design_scale"],
     "convergence_assessment": ["status"],
@@ -131,11 +131,11 @@ def extract(gdb, store):
                                attrs={"raw": str(raw)})
 
     # 5. a primary structural FK edge (population self-reference)
-    if "populations" in tables and "parent_code" in _columns(cur, "populations"):
+    if "base_taxonomy_identity" in tables and "parent_code" in _columns(cur, "base_taxonomy_identity"):
         for pop, parent in cur.execute(
-                "SELECT population_code, parent_code FROM populations WHERE parent_code IS NOT NULL"):
+                "SELECT identity_code, parent_code FROM base_taxonomy_identity WHERE parent_code IS NOT NULL"):
             store.add_edge(node_id("population", pop), node_id("population", parent), "self_ref",
-                           attrs={"via": "populations.parent_code"})
+                           attrs={"via": "base_taxonomy_identity.parent_code"})
 
     # 6. controlled-vocabulary edges (added 2026-07-25).
     # `terms` was already registered in PRIMARY, so 47 term nodes existed, but

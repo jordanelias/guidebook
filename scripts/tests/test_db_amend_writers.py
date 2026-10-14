@@ -150,7 +150,7 @@ try:
     merged = q("SELECT slug FROM slugs WHERE status='MERGED' ORDER BY slug LIMIT 1")
     MERGED = merged[0][0] if merged else None
     (REF,), (REF2,) = q("SELECT ref_id FROM evidence_sources ORDER BY ref_id LIMIT 2")
-    (POP,) = q("SELECT population_code FROM populations ORDER BY population_code LIMIT 1")[0]
+    (POP,) = q("SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code LIMIT 1")[0]
     (TERM, DEF) = q("SELECT term_id, definition FROM terms ORDER BY term_id LIMIT 1")[0]
 
     def search(label):

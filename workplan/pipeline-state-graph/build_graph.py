@@ -268,7 +268,7 @@ def make_probes():
                 bad[t] = have + (["population_code"] if "population_code" in c else [])
         return ("FAIL" if bad else "PASS"), bad
 
-    @probe("P-C", "no table or column is named with the retired word 'population' (owner 2026-08-28; the rename is not applied)", ["LED-127", "ADD-001"])
+    @probe("P-C", "no table or column is named with the retired word 'population' (owner 2026-08-28)", ["LED-127", "ADD-001"])
     def _(T):
         tabs = [t for t in T.tables if "population" in t]
         cols = {t: [c for c in T.cols(t) if "population" in c] for t in T.tables if any("population" in c for c in T.cols(t))}
