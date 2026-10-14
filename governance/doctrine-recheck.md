@@ -49,11 +49,11 @@ A new RULE that doesn't supersede or revise an existing one is not a trigger. A 
 
 ### 2.1 Scope and sequence
 
-A periodic recheck (§1.1) runs five passes:
+A periodic recheck (§1.1) runs four passes:
 
 | Pass | Examines | Reference |
 |---|---|---|
-| 2.2 Doctrine inventory | All 13 CANONICAL governance docs; project-standards CANONICAL rules | A1–A13 governance corpus |
+| 2.2 Doctrine inventory | All CANONICAL governance docs; project-standards CANONICAL rules | A1–A13 governance corpus |
 | 2.3 Cross-reference consistency | Each governance doc against the doctrine it depends on | doctrinal_basis fields per governance doc |
 | 2.4 Drift detection | Current doctrine vs. prior recheck baseline | Prior recheck record |
 | 2.6 Contamination resampling | N≥15 BPC stratified sample; classify each per the four-state rubric | §3 below |
@@ -165,7 +165,7 @@ A periodic recheck (§1.1) runs in fresh context. The recheck session loads only
 
 Fresh-context decision-checking is built into the recheck procedure; it is not a separate practice. The cadence (§1.1) ensures it runs.
 
-### 4.4 D-04 partial resolution
+### 4.3 D-04 partial resolution
 
 Audit finding D-04 (epistemic defense doc-only) names a separate concern: the project's claims should be testable against simulated external critique. The `epistemic-defense` skill (referenced in workplan-v3 §A6.213) is the operational form. A13 partially resolves D-04 by establishing the recheck cadence; the skill itself is built in C2 per workplan-v3. The recheck procedure runs the skill when the skill is built (post-Stage-A); pre-skill, the recheck performs structural consistency checks (§2.3) and contamination sampling (§3) only.
 

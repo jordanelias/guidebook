@@ -88,7 +88,7 @@ For each file below that was modified or referenced this session: GET current co
 | connection_register | ✓ | N | N | N |
 | sessions | ✓ | N | N | N |
 
-### 1c. CS8 decision capture (per A12 decision-protocol)
+### 1c. Doctrine-recheck trigger
 Run after Step 1b — before pattern extraction.
 
 **Working-session counter.** A "working session" produces or substantively modifies project content. Sessions that only adjust skills, fix typos, or rebase commits do not count.

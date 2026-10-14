@@ -481,13 +481,13 @@ conflicts:
   class: DOC-DOC
   severity: S3
   title: "Hand-written counts and enumerations that disagree with each other or with the schema"
-  atoms: [ENT-338, ENT-360, ENT-418, ENT-402, ENT-039, ENT-036, LED-031, ENT-308, ENT-363, ENT-311, ENT-312, ENT-290, ENT-304, ENT-314, ENT-272, ENT-280, ENT-361, ENT-043, ENT-410]
+  atoms: [ENT-338, ENT-360, ENT-418, ENT-402, ENT-039, ENT-036, LED-031, ENT-363, ENT-307, ENT-272, ENT-280, ENT-361, ENT-043, ENT-410]
   sides:
     - {atoms: [ENT-338, ENT-360, ENT-418, ENT-402], says: "'24 countries plus 2 meta', a 24/46/49 jurisdiction structure; the section table has 25 country rows."}
     - {atoms: [ENT-036, ENT-039], says: "EvidenceType has 7 members in one block and 9 in the audit."}
     - {atoms: [LED-031], says: "all 14 languages searched on every run; the research skill obliges 19; jurisdiction scope later limited to Buckets 1-2 (LED-193)."}
     - {atoms: [ENT-272, ENT-280], says: "adopting CC BY-SA 4.0 is a DG-REVIEW example in one section and licensing is always DG-NON in another."}
-    - {atoms: [ENT-363, ENT-311, ENT-312, ENT-308, ENT-290, ENT-304, ENT-314], says: "model-version pins that the decision protocol says are stripped on touch; effort_level 'numeric only' against an example and a regex that admit 'none'."}
+    - {atoms: [ENT-363, ENT-307], says: "jurisdiction-philosophy pins a model version on the jurisdiction-tracker skill; the decision protocol says any version number in routing text is stripped when touched."}
     - {atoms: [ENT-361, ENT-043, ENT-410], says: "standards-registry.md kept as markdown against the owner directive that citation data in .md goes into a table; a differently named tracker."}
   direction: "CLAUDE.md rule 7a: every figure is a command. These sentences are stale or internally inconsistent; none is an owner statement."
   resolver: AGENT

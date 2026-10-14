@@ -40,7 +40,7 @@ Conventional locations:
 
 When a reference file accumulates session-specific notes, dated commentary, or resolved-item logs, that content is extracted to the appropriate directory above. Reference files should read the same six months from now as they do today.
 
-**Decisions vs. Decision Records.** `decisions/DR-YYYY-MM-DD-slug.md` are standalone Decision Records, analogous to ADRs, and the owner ledger (`references/project-standards.md`) is the single home of rulings. The `D-NNNN` register (`data/decisions/decision_register.yaml`) was retired in plan step 1.12 (RULINGS R30) and sits in `_archived/data/decisions/`; the `decisions` table is a frozen residual.
+**Decisions vs. Decision Records.** `decisions/DR-YYYY-MM-DD-slug.md` are standalone Decision Records, analogous to ADRs, and the owner ledger (`references/project-standards.md`) is the single home of rulings.
 </reference_files_pattern>
 
 <skill_registry_pattern>
