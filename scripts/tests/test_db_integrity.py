@@ -1036,41 +1036,6 @@ def run_checks(db_path):
     # the writer-retire would have caused. ARRAY_ROWS and EDGE_JSON went with them, having
     # no remaining reader.
 
-    # ── J: RETIRED 2026-09-10 by migration 073 ────────────────────────────────
-    # J01/J02/J03 policed `source_value_extractions.item_code` -- the hop-4
-    # extraction->item edge that migration 052 created. Migration 073 retired that
-    # column, so all three checks now name a column that does not exist and would
-    # raise `no such column: item_code` rather than fail honestly.
-    #
-    # THIS IS A DELETION WITH EVIDENCE, NOT A CONVENIENCE (CLAUDE.md §8: "removing
-    # apparatus does not carry the burden of proof ... You need evidence --
-    # unreferenced, vacuous after a real batch, or superseded"). All three are
-    # superseded, and each was already weak on its own terms:
-    #
-    #   J01 -- "an extraction's item belongs to the extraction's slug". Its own
-    #     comment recorded that an adversarial review DISPROVED it by injection:
-    #     setting extraction 6 to A-10b passed both J01 and J02, because A-10b shares
-    #     the slug. "J01 guards the least-likely class", in its own words.
-    #   J02 -- agreement with a named PMP probe. `spec_value_probes` holds 0 rows, so
-    #     its subject was empty even before the column went.
-    #   J03 -- pinned 8 RT60 extractions to item A-18. Those rows were deleted with
-    #     the 2026-08-06 clean-room reset; the check has examined 0 rows since, and
-    #     its own comment says "a pinning check whose pins are gone has pinned
-    #     nothing".
-    #
-    # All three appeared in the 2026-09-10 baseline run's PASSED HAVING EXAMINED
-    # NOTHING list. What replaced the edge they guarded is `parameter_id`, which is
-    # NOT NULL with a real FK at `base_parameters` -- the database enforces it on
-    # every row, which is strictly stronger than three checks over an empty table.
-    #
-    # WHAT IS *NOT* REPLACED, recorded so the deletion does not silently lower the
-    # bar: nothing here now asserts that an extraction's PARAMETER is coherent with
-    # its SLUG. That is not an oversight -- it is not a defect either. A source
-    # admitted under one slug may legitimately be read for a parameter that another
-    # slug also governs, and `db.py add-extraction` requires both independently.
-    # A check asserting otherwise would encode the cross-slug assumption J01's own
-    # comment flagged as the thing to revisit rather than silently widen.
-
     # ── K: determination attestation (derivation_sha) ─────────────────────────
     # evidence-architecture §10 mechanical check 2: "same evidence + same
     # rule_version ⇒ same state + same derivation_sha". The sha is computed by

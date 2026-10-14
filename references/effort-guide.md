@@ -46,7 +46,6 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 
 | Skill | Rationale |
 |---|---|
-| item-specification-writer | Evidence and framing decisions; three-tier hierarchy; BPC synthesis gate check |
 | economics-researcher | Cost claim verification; cross-jurisdictional economic evidence |
 
 ### 100 — Structured protocol with meaningful cross-referential judgment
@@ -58,7 +57,6 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 | citation-verifier | Tool-dependent lookup and classify; tier-1 sources require judgment |
 | gap-driven-mining | Gap-keyed search-matrix execution with outcome judgment; depth-1 constraint; rule #7/#8/#10 interlocks (DR-2026-05-26) |
 | workplan-orchestrator | Multi-skill workflow coordination; risk escalation decisions |
-| specification-curator | Per-specification evidence curation in jurisdiction comparison tables |
 | reasoning-doc-citations | Per-cell verification recording for synthesis claims (skill placeholder) |
 | connection-discovery | Identify candidate cross-BPC connections |
 | cross-reference-resolver | Audit and classify broken refs; mechanical repair handoff |
