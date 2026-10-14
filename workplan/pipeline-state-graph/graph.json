@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 09:10 UTC from git HEAD 92d13b0 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 10:08 UTC from git HEAD eaec3db (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-w-ev",
  "user_version": 114,
  "stages": [
   "base",
@@ -2882,7 +2882,7 @@
      "INSERT"
     ]
    },
-   "refusals": 4
+   "refusals": 5
   },
   "add-population-match": {
    "functions": [

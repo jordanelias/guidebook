@@ -979,8 +979,8 @@ rejected:
       `populations` fails admission test 4: it is an English word as well as the old table
       name, and only reading the sentence separates a query from a sentence about disabled
       people. `population_icf_links` is unambiguous, but registering it was tried and
-      returned 46 occurrences, nearly all in scratchpad/ session files and architecture
-      design records that name the table by the name it had on their date: test 3 fails
+      its hits (re-derive: add it to `tokens:` and run `run_checks.py --battery retired_vocabulary`)
+      were nearly all in scratchpad/ session files and architecture design records that name the table by the name it had on their date: test 3 fails
       in the other direction (hits that are accurate history), and exempting those paths
       is the global-exemption widening this file warns against. Every stale use in code,
       skills and governance YAML was swept by hand in the migration's own step (plan
