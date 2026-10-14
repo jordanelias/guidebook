@@ -40,7 +40,7 @@ Conventional locations:
 
 When a reference file accumulates session-specific notes, dated commentary, or resolved-item logs, that content is extracted to the appropriate directory above. Reference files should read the same six months from now as they do today.
 
-**Decisions vs. Decision Records — two systems, different granularities.** `data/decisions/decision_register.yaml` (mirrored into the canonical `decisions` table) tracks granular in-session decisions with `D-NNNN` identifiers, schema-validated per `governance/decision-protocol.md` and checked by `scripts/decision_capture.py`. `decisions/DR-YYYY-MM-DD-slug.md` are standalone Decision Records, analogous to ADRs. The two are related but distinct, and **neither supersedes the other**: a DR typically records the reasoning behind one or more register decisions, and a register decision may exist with no DR at all. The naming is close enough that they have been mistaken for two representations of one dataset — they are not. *(Added 2026-08-15 per DR-2026-07-12-decision-tracking-naming-and-schema-doc-currency item 1, ratified 2026-07-13.)*
+**Decisions vs. Decision Records.** `decisions/DR-YYYY-MM-DD-slug.md` are standalone Decision Records, analogous to ADRs, and the owner ledger (`references/project-standards.md`) is the single home of rulings. The `D-NNNN` register (`data/decisions/decision_register.yaml`) was retired in plan step 1.12 (RULINGS R30) and sits in `_archived/data/decisions/`; the `decisions` table is a frozen residual.
 </reference_files_pattern>
 
 <skill_registry_pattern>

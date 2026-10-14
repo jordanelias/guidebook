@@ -598,22 +598,6 @@ checks:
   basis: DR-2026-08-19 §7 adversarial pass, lens L1 (2026-08-19)
   cost: fast
   min_items: 1
-- id: decision_capture
-  cmd:
-  - python3
-  - scripts/decision_capture.py
-  battery: governance
-  kinds:
-  - governance
-  - data
-  - schema
-  level: blocking
-  basis: unattributed
-  cost: fast
-  no_floor: not-instrumented — C1-C9 each examine a different subject (decisions-register rows, DR files
-    on disk, canonical rules extracted from prose, rationale sentence counts) with no single honest count
-    across them. Genuinely non-vacuous today (C9 reports 49 orphan DRs on live data), so there's no urgency,
-    but any one combined figure would misrepresent the others. Left uninstrumented on 2026-08-14 (A5).
 - id: doctrine_recheck
   cmd:
   - python3

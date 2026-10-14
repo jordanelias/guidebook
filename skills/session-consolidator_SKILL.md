@@ -75,7 +75,6 @@ For each file below that was modified or referenced this session: GET current co
 - If file-splitter ran: verify manifest exists and is complete.
 
 **workplan/ directory** (v10.1 addition)
-- If Decision Register was updated this session: verify `SQLite decisions table (canonical per A12 §5.1; legacy workplan/v10-1-decision-register.md superseded)` reflects changes.
 - If Change Orders were issued: verify `references/change-orders/` contains the CO file.
 - For each watched directory (`workplan/`, `versions/current/`): GET listing. If >1 non-directory file outside the directory's `deprecated/` subdirectory, and a new file was committed to that directory this session: invoke `github-filing` on that directory before writing session YAML. Report result in reconciliation block.
 
@@ -104,21 +103,6 @@ Run after Step 1b — before pattern extraction.
   A periodic cadence needs a clock that runs. If one is wanted, derive it from something that
   moves on its own — commit dates, or `evidence_sources` growth — not from a hand-incremented file.
 - If this session closed a stage transition: include `recheck_due: STAGE_TRANSITION` in session close YAML.
-
-**Decision capture.** For each decision made this session in any of the 5 categories (D-DOCT / D-METH / D-SCHEMA / D-OP / D-PRES per A12 §1):
-- Build a Decision record per A12 §3.2 (16 fields). Required: decision_id (next D-NNNN), category, delegation, summary, outcome, rationale, decision_date, decided_by, model_routing (per A12 §4.4 notation), effort_level, decision_artifacts, status=ACTIVE, review_status (NA for DG-NON/DG-AUTO; PENDING for DG-REVIEW).
-- D-DOCT records require `alternatives_considered`; D-DOCT or D-METH with `delegation: DG-AUTO` (default departure) require `delegation_rationale`.
-- GET `SQLite decisions table`. Append the new Decision records. Validate the register through `scripts/decision_capture.py --register-only` before writing back.
-- Each new RULE appended to `references/project-standards.md` (Step 3) MUST be paired with a Decision record. The RULE's section reference appears in the Decision's `decision_artifacts`.
-
-**Detection heuristics for "decision made this session":**
-- New CANONICAL governance doc → 1 D-DOCT
-- New RULE in project-standards.md → 1 record (category by content)
-- New schema entity, enum, or validator behaviour → 1 D-SCHEMA
-- New session_close.next_action that pivots from prior session's plan → 1 D-OP
-- Voice / formatting / register conventions adopted → 1 D-PRES
-
-If the session made no doctrinal decisions, this step is a no-op (counter increments anyway).
 
 ### 2. Extract patterns
 From session history and reconciliation findings:

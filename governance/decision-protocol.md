@@ -207,9 +207,7 @@ A phase (e.g., A6 evidence-methodology, A12 decision-protocol) may have multiple
 
 ### 5.1 Location
 
-The canonical decision register lives at `data/decisions/decision_register.yaml`. Per-decision detail (where rationale exceeds register-summary length) lives at `data/decisions/{decision_id}.yaml` — one file per decision, optional. The register itself records the `decision_id`, summary fields, and a `detail_file` pointer if a detail file exists.
-
-`workplan/v10-1-decision-register.md` (referenced in session-consolidator §1b) is a legacy path that was never populated. A12 supersedes that path: the canonical location is `data/decisions/decision_register.yaml`; the legacy reference in session-consolidator is updated to point to the new location at the next session-consolidator skill update.
+The register was retired in plan step 1.12 (RULINGS R30). The owner ledger (`references/project-standards.md`) is the single home of rulings; DR files remain as records and point at their ledger entry; the `decisions` table is a frozen residual and `decision_register.yaml` is in `_archived/data/decisions/`. Sections 5.2 to 6.2 describe the retired register.
 
 ### 5.2 Register structure
 
@@ -275,65 +273,11 @@ CS8 (cross-stage 8) per `workplan/workplan-co0007-v3.md`: "decision capture acti
 
 ### 6.2 session-consolidator integration
 
-The session-consolidator skill (per `skills/session-consolidator_SKILL.md`) is updated to:
-
-1. Detect decisions made in the session (proxy: any new RULE in project-standards.md, any new governance doc, any session_close.next_action change).
-2. For each detected decision, produce a Decision record (decision_id, category, delegation, summary, outcome, rationale, decision_artifacts).
-3. Append the new records to `data/decisions/decision_register.yaml`.
-4. Validate the appended records against the validator (§7 C1, C2, C4) before commit.
-
-The session-consolidator update is a separate task scheduled for A12 Session 2 (alongside seeding extraction). This Session 1 establishes the protocol; Session 2 wires the protocol into the consolidator.
+Retired with the register (R30): session close produces no Decision records.
 
 ### 6.3 What this is not
 
 CS8 is not a "every minute decision needs a record" protocol. The five categories (§1) define the scope. A typing choice (`int` vs. `str` for a Pydantic field) is a schema implementation detail, not a Decision in the protocol's sense. A schema decision that survives review and codifies a pattern (e.g., "all enum-defaulted fields use string defaults to dodge the model_dump quirk") is a Decision. The discriminator: would a future agent need to read the rationale to understand why this is the way it is? If yes, it is a Decision. If no, it is implementation detail.
-
----
-
-## 7. Validator specification (`scripts/decision_capture.py`)
-
-### 7.1 Scope
-
-The validator enforces register format and rationale completeness. It does not validate semantic content (i.e., it cannot tell whether a rationale is "good" — only whether it is present and meets length norms).
-
-### 7.2 Inputs
-
-| Path | Purpose |
-|---|---|
-| `data/decisions/decision_register.yaml` | The register itself |
-| `data/decisions/D-NNNN.yaml` (optional) | Per-decision detail files |
-| `references/project-standards.md` | Cross-reference: every CANONICAL RULE should map to one or more Decision records (after seeding) |
-
-### 7.3 Checks
-
-| Check | Severity | Description |
-|---|---|---|
-| C1 register well-formed | ERROR | Loads + validates against DecisionRegister schema |
-| C2 unique decision_ids | ERROR | No duplicate D-NNNN |
-| C3 rationale length compliant | WARNING | Per §3.3 norms; below norm flags warning |
-| C4 model-routing format | ERROR | Matches §4.4 regex |
-| C5 supersedes consistency | ERROR | If `supersedes` lists D-XXXX, then D-XXXX must exist and have status=SUPERSEDED |
-| C6 rationale anti-pattern | WARNING | Detects §3.4 patterns: tautology, authority-without-content, outcome-as-rationale |
-| C7 RULE coverage (post-seeding) | WARNING | Every CANONICAL RULE in project-standards has at least one Decision record |
-| C8 review_status consistency | ERROR | DG-NON/DG-AUTO → review_status=NA; DG-REVIEW → review_status one of PENDING/CONFIRMED |
-
-### 7.4 CLI
-
-| Flag | Behaviour |
-|---|---|
-| `--register-only` | Run C1–C6 against the register; skip C7 RULE-coverage |
-| `--decision-id D-NNNN` | Validate only the named decision |
-| `--report` | Print summary; exit 0 always |
-
-Exit codes: 0 = pass, 1 = errors, 2 = config error.
-
-### 7.5 What the validator does NOT do
-
-- It does not validate rationale quality (only length and anti-pattern).
-- It does not detect missing decisions (it only checks coverage of existing CANONICAL RULEs in project-standards; it does not detect a decision that should have been recorded but was not).
-- It does not enforce categorical correctness (it cannot tell whether a decision should be D-METH vs. D-DOCT).
-
-These are human-judgment calls. The validator enforces format; doctrine-recheck (A13) audits semantic correctness.
 
 ---
 

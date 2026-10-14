@@ -26,6 +26,13 @@ from schemas.temporal import DATETIME_PATTERN, DATE_ONLY_PATTERN
 RECHECK_ID_PATTERN = re.compile(r"^RC-\d{3,4}$")
 FINDING_ID_PATTERN = re.compile(r"^RC-\d{3,4}-\d{2,3}$")
 
+# model_routing notation (governance/decision-protocol.md section 4.4). Tiers name a model CLASS,
+# never a version number.
+MODEL_ROUTING_PATTERN = re.compile(
+    r"^(opus|fable|sonnet|haiku|human|legacy)/(200|150|125|100|75|50|none)/"
+    r"(synth|arbitrate|extract|format|route|none)$"
+)
+
 
 # --- Entities ---
 
@@ -142,7 +149,6 @@ class RecheckSession(GuidebookEntity):
     @classmethod
     def valid_model_routing(cls, v: str) -> str:
         # Match A12 §4 notation
-        from schemas.decision import MODEL_ROUTING_PATTERN
         if not MODEL_ROUTING_PATTERN.match(v):
             raise ValueError(
                 f"model_routing must match A12 §4 notation, got: '{v}'"
@@ -218,7 +224,7 @@ class DoctrineSnapshot(GuidebookEntity):
     snapshot_date: str  # YYYY-MM-DD HH:MM
     governance_docs: list[str]  # paths to CANONICAL governance docs
     canonical_rules: list[str]  # one-line summaries of CANONICAL RULEs
-    decision_ids: list[str]  # ACTIVE Decision IDs from register
+    decision_ids: list[str] = []  # the decision register was retired (step 1.12); kept so committed snapshots load
     bpc_count: int  # total BPC files at snapshot time
 
     @field_validator("snapshot_date")
