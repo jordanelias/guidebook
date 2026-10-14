@@ -15,8 +15,10 @@
 --       2026-08-24 06:33 | 0 | 32697832238        2026-09-28 06:06 | 0 | 36384796860
 --       2026-09-07 10:57 | 0 | 34114064926        2026-10-05 06:10 | 0 | 37271064510
 --       2026-09-21 11:20 | 0 | 35593474934        2026-10-12 06:09 | 0 | 38211139899
---   The bot commits that wrote them are on main under the subject prefix "source-verification:". No run
---   resolved a DOI (total_resolved is 0 in all six). Four of them enriched `evidence_sources` rows in
+--   Four of them (2026-09-21 onward) were written by bot commits on main under the subject prefix
+--   "source-verification:"; the 2026-08-24 and 2026-09-07 rows first appear in the blob at root commit 55ae5c1
+--   (`git log -S<run created_by_session> -- data/guidebook.db`), under no such commit. No run
+--   resolved a DOI (total_resolved is 0 in all six); four runs enriched `evidence_sources` rows in
 --   phase 4 (phase_4_enriched 0, 0, 1, 1, 2, 1 in date order); those rewrites are the divergence that
 --   plan steps 1.5b and 1.5c deal with, and dropping this table does not undo them.
 --   `url_verification_runs` holds 0 rows.

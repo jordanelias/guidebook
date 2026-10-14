@@ -111,11 +111,10 @@ Time-Version (ENT-19) ──── attached_to ──── all mutable entities
 - **Cross-system check:** every REF-ID cited in a BPC key sources table must exist in data/sources/
 
 ### Session 3: BPC Metadata (ENT-03) schema + conversion
-- **Input:** bpc/ directory (76 files), validate_bpc.py (existing)
+- **Input:** bpc/ directory (76 files)
 - **Schema:** BPCMetadata model — extracted YAML frontmatter from BPC markdown files
 - **Fields:** slug, population, topic, last_updated, opus_synthesis status, T-04 state, key_sources (list of REF-IDs), co1_pass_summary, jurisdiction_coverage
 - **Conversion:** convert_bpc_metadata.py — extracts metadata from BPC markdown → YAML under data/bpc-metadata/
-- **Validator:** validate_bpc.py rewrite — consumes Pydantic model instead of regex parsing
 - **Cross-system check:** every slug in data/bpc-metadata/ must exist in slug-registry; every REF-ID in key_sources must exist in data/sources/
 
 ### Session 4: Connection (ENT-04) schema + conversion

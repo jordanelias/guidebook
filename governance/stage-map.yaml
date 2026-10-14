@@ -50,7 +50,7 @@ judged_on: '2026-09-17'
 #
 # 2026-09-27, session_2026-09-27-recent-prs-orientation-f5wt5i: added
 # `adversarial_passes`/`adversarial_findings` (migration 097, RC4) as INFRASTRUCTURE --
-# same reasoning as `item_audit_runs`/`pipeline_runs` above: a record OF a diff and the
+# same reasoning as the infrastructure entries above: a record OF a diff and the
 # review that attacked it, keyed on a session stem, a git sha and two transcript paths,
 # none of them stage content. Migration 097's own header corrects a first-draft claim
 # that these sit at judgment: `subject_table`/`subject_key` are untyped, unenforced

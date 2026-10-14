@@ -3,19 +3,19 @@ ADD-001	ACTIVE	references/project-standards.md:2453	the word 'population'	The ow
 ADD-002	SUPERSEDED	_archived/scripts/migrations/046_drop_render_manifest.sql:16	static build now, dynamic later	Recorded in the header of a retired migration; LED-103 and LED-104 quote the dynamic target only. Together they say: target dynamic, per-page HTML generated as a stopgap until then. No primary record of this choice was found (grep of sessions/, the ledger, decisions/ and workplan/): the only home is a comment in a retired migration, written by an agent. Treat as unconfirmed.
 ADD-003	SUPERSEDED	_archived/scripts/migrations/046_drop_render_manifest.sql:17	per-page HTML as a stopgap	Whether a live script still generates it is probed by P-I and P-K. No primary record of this choice was found (grep of sessions/, the ledger, decisions/ and workplan/): the only home is a comment in a retired migration, written by an agent. Treat as unconfirmed.
 CLM-012	ACTIVE	CLAUDE.md:85	direct DB writes	The scheduled source-verification workflow commits direct DB updates (CLAUDE.md rule 3 says so).
-CLM-018	ACTIVE	CLAUDE.md:131	numbers as commands	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
+CLM-018	ACTIVE	CLAUDE.md:123	numbers as commands	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 CLM-020	ACTIVE	CLAUDE.md:183	PR watching	The harness system prompt instructs auto-subscribe and safety-net check-ins; CLAUDE.md says it defers to the owner. CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 CLM-021	ACTIVE	CLAUDE.md:188	PR timing	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 CLM-024	ACTIVE	CLAUDE.md:26	suite frequency	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 CLM-027	ACTIVE	CLAUDE.md:232	stage spine	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 CLM-040	ACTIVE	CLAUDE.md:360	harvest/adjudicate	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
-CLM-041	ACTIVE	CLAUDE.md:371	synthesis authorship	LED-061 and PIP-22 widen the floor to opus-class or fable-class; CLAUDE.md section 6 states only Opus-class.
+CLM-041	ACTIVE	CLAUDE.md:361	synthesis authorship	LED-061 and PIP-22 widen the floor to opus-class or fable-class; CLAUDE.md section 6 states only Opus-class.
 CLM-042	ACTIVE	CLAUDE.md:367	lens columns	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
-CLM-047	ACTIVE	CLAUDE.md:435	history rewriting	The harness system prompt prescribes `git checkout -B <branch> origin/<default>` after a merged PR.
+CLM-047	ACTIVE	CLAUDE.md:425	history rewriting	The harness system prompt prescribes `git checkout -B <branch> origin/<default>` after a merged PR.
 CLM-048	ACTIVE	CLAUDE.md:435	item codes	CLAUDE.md prose (or heading) attributing the rule to the owner; the owner's own words, where recorded, are in the ledger or a session record.
 RES-13	ACTIVE	governance/research-contract.yaml:270	R13 population grade	Owner 2026-09-25 (3) supersedes the 'no participants = PROXY' line as applied to a facility audit; wording not edited.
 RES-16	ACTIVE	governance/research-contract.yaml:308	R16 every figure disposed	Speaks of 'a figure'; the 2026-10-09 scan contract also mines arguments and qualitative findings.
-PIP-12	ACTIVE	governance/pipeline-contract.yaml:338	doctrine recheck cadence	Ledger 2026-08-19 struck the RULE_REVISION trigger; two cadences remain.
+PIP-12	ACTIVE	governance/pipeline-contract.yaml:294	doctrine recheck cadence	Ledger 2026-08-19 struck the RULE_REVISION trigger; two cadences remain.
 MIS-02	ACTIVE	governance/mission-and-epistemics.md:76	teaching professional judgment	Contradicted by ledger 2026-04-26 19:25: 'does not teach professional judgment'.
 MIS-03	ACTIVE	governance/mission-and-epistemics.md:136	evidence marker (two-marker form)	Ledger and tier-system use three markers ●/◐/○; ledger notes the two-marker rule was reconciled 2026-07-13.
 MIS-04	ACTIVE	governance/mission-and-epistemics.md:115	stated state rule	Conflicts with 'T3-alone never reaches stated' unless '>=Tier 3' is read as tier numbers 1-3 with T3 requiring a second axis.
@@ -110,7 +110,7 @@ ENT-045	ACTIVE	governance/conceptual-model.md:206	entity count	Section 1 gives t
 ENT-048	ACTIVE	governance/functional-taxonomy.md:13	two-layer population architecture	"Layer 1" and "Layer 2" here name taxonomy layers, a different numbering from the project's five-layer Layer 0-4 model.
 ENT-059	ACTIVE	governance/functional-taxonomy.md:85	axis values as stored attributes	Unclear whether this bars stored mapping tables (population_axis_map, slug serves_axes) or only per-person attributes.
 ENT-067	ACTIVE	governance/functional-taxonomy.md:129	canonical codes as Layer 2 identifiers	The population-taxonomy.md banner (DR-2026-07-23) retires the canonical code set that this sentence retains.
-ENT-076	ACTIVE	governance/functional-taxonomy.md:163	AX-COG-L scope	AX-COG-L is a retired code (RULINGS R35; AX- strings fall under step 1.6(c)); the requirement to assess information-access demand across scripts and literacy levels survives under the ICF code that replaced it.
+ENT-076	ACTIVE	governance/functional-taxonomy.md:163	AX-COG-L scope	AX-COG-L is a retired code (RULINGS R35; AX- strings fall under step 1.6(c)); the requirement to assess information-access demand across scripts and literacy levels survives under the ICF codes its row carried (b117, b167, d166, d310, d315, all in base_icf).
 ENT-082	ACTIVE	governance/functional-taxonomy.md:178	IntD treatment	population-taxonomy.md banner (DR-2026-07-23) makes ID first-class, ending the proxy; this sentence still frames IntD as the minimal-predictive case.
 ENT-089	OPEN	governance/functional-taxonomy.md:205	respiratory / oxygen-dependency axis	The work-from-axes passage (section 3.3) cites "respiratory dismissed as decomposed" as a self-caught erasure, while the register has no respiratory axis and R8 stays open.
 ENT-097	ACTIVE	governance/functional-taxonomy.md:233	role versus confidence columns	The same paragraph says mapping-confidence "replaces v1.0's flat PRIMARY/SECONDARY roles as the honesty mechanism" yet the schema keeps both.
@@ -122,7 +122,7 @@ ENT-140	ACTIVE	governance/functional-taxonomy.md:308	admitted anthropometric pro
 ENT-141	ACTIVE	governance/functional-taxonomy.md:310	OAD profile	population-taxonomy.md banner (DR-2026-07-23) says life stage (older adults, children) is an orthogonal modifier, not a population.
 ENT-148	ACTIVE	governance/functional-taxonomy.md:324	attachment of spec values	The item layer is described as deleted from the database in CLAUDE.md section 7.
 ENT-155	ACTIVE	governance/functional-taxonomy.md:336	slug-to-axis layering	The clause that required every slug to declare serves_axes is struck as superseded, so whether "slugs serve axes" remains a rule or only a description of layering is unclear.
-ENT-156	SUPERSEDED	governance/functional-taxonomy.md:339	search-log axis codes	CLAUDE.md section 6 says to work from ICF/access-need codes AND names, never bare axis codes.
+ENT-156	AMENDED	governance/functional-taxonomy.md:339	search-log axis codes	CLAUDE.md section 6 says to work from ICF/access-need codes AND names, never bare axis codes.
 ENT-164	ACTIVE	governance/functional-taxonomy.md:365	axis coverage gap queries	DR-2026-08-24 (cited in section 5 item 3) makes zero links before synthesis the correct state, so a standing gap query for zero axis coverage reads as a defect from the outset.
 ENT-172	ACTIVE	governance/functional-taxonomy.md:387	item codes unchanged	CLAUDE.md section 7 says the item layer is gone from the database and its codes are prior-version content.
 ENT-178	AMENDED	governance/functional-taxonomy.md:415	lived experience as completeness gate	The profile layer is described elsewhere as co-produced ("nothing about us without us"), while this item bars representative sign-off.
@@ -134,7 +134,7 @@ ENT-236	AMENDED	governance/population-taxonomy.md:135	one slug one population	fu
 ENT-240	AMENDED	governance/population-taxonomy.md:141	Universal Mode register	"Tier 1" and "Tier 2" here name specification modes, not evidence tiers; legal-regulatory.md equates Universal Mode with code values.
 ENT-241	AMENDED	governance/population-taxonomy.md:142	Tier 1 mode register	"Tier 1" here is a specification mode, not an evidence tier.
 ENT-242	AMENDED	governance/population-taxonomy.md:143	Tier 2 mode register	"Tier 2" here is a specification mode, not an evidence tier.
-ENT-257	ACTIVE	governance/population-taxonomy.md:209	population-taxonomy status field	The header and banner state SUPERSEDED (population code set), contradicting the CANONICAL value in the status table.
+ENT-257	ACTIVE	governance/population-taxonomy.md:171	population-taxonomy status field	The header and banner state SUPERSEDED (population code set), contradicting the CANONICAL value in the status table.
 ENT-260	ACTIVE	governance/decision-protocol.md:31	cross-category decisions	The section 3 field list has no dedicated secondary-category field, so where the cross-reference goes is unspecified.
 ENT-272	ACTIVE	governance/decision-protocol.md:67	D-DOCT downgrade	Section 2.4 item 7 lists the licensing model as always DG-NON, yet this passage uses adopting a licence as an example of a DG-REVIEW downgrade.
 ENT-290	ACTIVE	governance/decision-protocol.md:113	effort_level vocabulary	Section 4.4 regex also admits "none" as an effort level (human/none/none), which this list excludes.
@@ -173,14 +173,14 @@ EVI-024	ACTIVE	governance/tier-system.md:22	T6	AS 1428.1 and NZS 4121 are nation
 EVI-032	ACTIVE	governance/tier-system.md:37	National standards and design guides tier	Professional-body standards are also T2(b) and OT professional-body CPGs are Co-2; the boundary is evidence-based vs guidance.
 EVI-035	ACTIVE	governance/tier-system.md:45	Labelling converged code value best practice	Read absolutely this conflicts with Option A (section 8), which permits flagged weak-band "best practice as currently known" when no stronger evidence exists; evidence-architecture 8.1 limits the prohibition to cells that have anchoring evidence.
 EVI-038	AMENDED	governance/tier-system.md:49	T4-T6-only claim	"partial/weak" vs section 8 which assigns T4-T6-only determinations to the weak band only.
-EVI-044	ACTIVE	governance/tier-system.md:62	code_currency_status vocabulary	Vocabulary should come from the column CHECK, not this list (CLAUDE.md rule 8).
+EVI-044	ACTIVE	governance/tier-system.md:57	code_currency_status vocabulary	Vocabulary should come from the column CHECK, not this list (CLAUDE.md rule 8).
 EVI-049	ACTIVE	governance/tier-system.md:88	Weighted-strength anchor model	Methodology 2.2/2.3 withhold stated/provisional status from T3-alone and from a single T6 source (pending).
 EVI-052	ACTIVE	governance/tier-system.md:92	Full band	Methodology 2.2 says Tier 3 alone is not sufficient for stated and 1.6 says Tier 3 only "supports"; here T3-clinical anchors outright.
 EVI-055	ACTIVE	governance/tier-system.md:94	Weak band	Methodology 2.2 says T3-grey alone yields pending (no claim), not a weak-band claim.
 EVI-058	ACTIVE	governance/tier-system.md:96	Option A: T4-T6-only determination	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
-EVI-059	ACTIVE	governance/tier-system.md:101	Option A: flag and ceiling	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
-EVI-060	ACTIVE	governance/tier-system.md:101	Option A: no suppression	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
-EVI-066	ACTIVE	governance/tier-system.md:106	Scoping/narrative review band	T3 grey maps to the open-circle band per section 5, so a grey-typed review cannot also be filled-circle.
+EVI-059	ACTIVE	governance/tier-system.md:96	Option A: flag and ceiling	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
+EVI-060	ACTIVE	governance/tier-system.md:96	Option A: no suppression	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
+EVI-066	ACTIVE	governance/tier-system.md:101	Scoping/narrative review band	T3 grey maps to the open-circle band per section 5, so a grey-typed review cannot also be filled-circle.
 EVI-069	ACTIVE	governance/tier-system.md:106	Practitioner/firm work authority	Firm POE can be placed at T1, which ranks alongside Co-1.
 EVI-076	OPEN	governance/tier-system.md:111	Practice (Co-3) encoding	Section 1 states the ladder has only two parallel tracks (Co-1, Co-2).
 EVI-078	ACTIVE	governance/evidence-architecture.md:4	New doctrine in this document	Says G1-G6, but G7, G8 and G1b are also flagged; the [NEW - DR-gated] flags remain though the document is declared ratified 2026-07-13.

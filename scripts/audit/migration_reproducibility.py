@@ -282,7 +282,7 @@ def deep_compare(committed_path, rebuilt_path):
 
     for table in sorted(tc & tr):
         if table in EXEMPT_TABLES:
-            rows.append((table, "EXEMPT", "job-owned per DR-2026-05-28"))
+            rows.append((table, "EXEMPT", "exempt per DR-2026-05-28 until its divergence is reverted"))
             continue
         cols = [r[1] for r in committed.execute(f"PRAGMA table_info({q(table)})")]
         rcols = [r[1] for r in rebuilt.execute(f"PRAGMA table_info({q(table)})")]
@@ -434,7 +434,7 @@ def audit(rebuilt_to=None, deep=False):
         if deep_volatile:
             print(f"  ({len(deep_volatile)} more differ only in timestamp/session columns:")
             print(f"    {', '.join(sorted(deep_volatile))})")
-        print("  Either those writes owe a data migration, or the table is job-owned")
+        print("  Either those writes owe a data migration, or the table is exempt")
         print("  and DR-2026-05-28's exemption list needs widening. Both are owner")
         print("  calls; this check reports the divergence rather than choosing.")
         print("VERDICT: FAIL (deep)")
