@@ -752,11 +752,12 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     f, _, _ = check_all(T, atoms, pr2, conflicts, machines, caps); del PROBE_DEFS["P-FAKE"]
     results.append(("a probe with no reachable PASS is caught", any("P-FAKE" in x and "no path" in x for x in f)))
     # i) capability verdicts can say both CAN and BLOCKED, and a predicate can say both PASS and FAIL
-    can = {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": "P-D", "says": "s"}]}}}
-    blk = {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": "P-A", "says": "s"}]}}}
-    ok_can = capability_verdicts(can, T, probes)["X"]["overall"] if probes["P-D"]["verdict"] == "PASS" else "n/a"
-    ok_blk = capability_verdicts(blk, T, probes)["X"]["overall"] if probes["P-A"]["verdict"] == "FAIL" else "n/a"
-    results.append(("a capability can come out CAN and can come out BLOCKED", ok_can == "CAN" and ok_blk == "BLOCKED"))
+    #    The probe verdicts are planted: a case that reads a live probe turns "n/a" the day that probe flips.
+    planted_probes = {"P-PASS": dict(verdict="PASS"), "P-FAIL": dict(verdict="FAIL")}
+    cap = lambda pid: {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": pid, "says": "s"}]}}}
+    results.append(("a capability can come out CAN and can come out BLOCKED",
+                    capability_verdicts(cap("P-PASS"), T, planted_probes)["X"]["overall"] == "CAN"
+                    and capability_verdicts(cap("P-FAIL"), T, planted_probes)["X"]["overall"] == "BLOCKED"))
     # the FAIL case is planted in a scratch copy of the database, so `unwritable_set` itself derives it (the live schema may hold no such pair)
     with tempfile.TemporaryDirectory() as td:
         for d in ("governance", "scripts", ".github"): os.symlink(REPO / d, Path(td) / d)      # what Tree reads besides the database
