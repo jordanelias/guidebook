@@ -169,11 +169,7 @@ When citation-miner is invoked directly:
    python3 scripts/db.py unmined --slug {slug} --tier-max 3
    ```
 2. For each: mine backward + forward, log both directions
-3. After completing all sources in a slug:
-   ```bash
-   python3 scripts/db.py update-bpc --slug {slug} --citation-mining-complete 1 --session {session}
-   ```
-4. Report: total mined, new sources discovered, remaining unmined
+3. Report: total mined, new sources discovered, remaining unmined
 
 **Depth-1 enforced:** discovered sources added to evidence_sources but NOT mined this run.
 

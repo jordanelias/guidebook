@@ -21,8 +21,7 @@ CLI usage:
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
-        --depth-method scoping --session SESSION      (upsert-coverage/-language are frozen; see log_search)
-    python3 scripts/db.py update-bpc --slug SLUG --citation-mining-complete 1 --session SESSION
+        --depth-method scoping --session SESSION
     python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --tier 1 --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
         (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
@@ -96,19 +95,6 @@ def _ladder_evidence_types():
 # DB_PATH stays a module attribute because callers and tests read it. It is resolved
 # through dbcore so there is one resolution, not two.
 DB_PATH = dbcore.db_path()
-
-# Column whitelists — validated before any f-string SQL construction
-_COVERAGE_COLS = frozenset({
-    "status", "co1_attempted", "tier5_attempted", "tier6_attempted", "notes"
-})
-_LANGUAGE_COLS = frozenset({"status", "results_count", "notes"})
-_BPC_META_COLS = frozenset({
-    "population", "last_updated", "jurisdictions_searched", "co1_pass_count",
-    "evidence_state", "pico_complete", "search_complete", "bpc_complete",
-    "citation_mining_complete",
-    # DR-2026-05-24: best-practice supersession protocol (migration 015)
-    "supersession_check_complete", "closure_definition_version",
-})
 
 
 # connect(), now(), audit(), _upd() and _validate_cols() MOVED to scripts/dbcore.py.
@@ -555,97 +541,6 @@ def log_mining(slug: str, ref_id: str, direction: str,
     return out
 
 
-class FrozenGridError(Refusal):
-    """Raised on any attempt to write a legacy coverage grid. See _FROZEN_MSG.
-
-    A Refusal, not the RuntimeError it was until 2026-09-10, because _FROZEN_MSG is a
-    refusal in every sense that matters: it says the table no longer accepts writes, why
-    it was frozen, and what replaced it. Its own class survives for anyone catching it
-    specifically; only the base moved.
-
-    NO OPERATOR MEETS IT TODAY, and the honest version of this note says so. The CLI never
-    calls the two functions that raise it -- `main()`'s `upsert-coverage`/`upsert-language`
-    branch prints _FROZEN_MSG itself and exits 2 -- so `upsert_search_coverage()` and
-    `upsert_search_languages()` currently have no caller at all, and this class is
-    classified correctly rather than usefully. That makes them a deletion candidate under
-    CLAUDE.md §8 ("an uncalled script and an unread field are the same defect"), which is
-    a separate judgment from this one and is not made here.
-    """
-
-
-# ---------------------------------------------------------------------------
-# THE LEGACY COVERAGE GRIDS ARE FROZEN.
-#
-# `search_coverage` (slug x jurisdiction) and `search_languages` (slug x
-# language) are hand-kept STATE matrices. `search_executions` is an event LOG:
-# one row per query actually run, with its text, terms, engine, depth, results
-# and admissions. State and log are different kinds of statement and both are
-# worth having — but only if the state is DERIVED from the log. These were
-# written independently, so the grid could assert coverage the log could not
-# corroborate, and nothing could contradict it.
-#
-# It did, in both directions, measured 2026-08-06:
-#   * 634 cells say SEARCHED. 15 have an execution logged for that exact
-#     (slug, jurisdiction); 172 have any execution on the slug at all.
-#   * 31 executions land on cells the grid still calls NOT-RUN — the log
-#     records work the grid denies.
-# The grid simultaneously over-claims and under-claims. It is not a coverage
-# map; it is an artifact of whoever last remembered to update it.
-#
-# THIS IS NOT A NEW DECISION. `workplan/search-coverage-completion-workplan.md`
-# already ruled it: replace the placeholder grids with a single logged event
-# table and "derive every coverage matrix as a VIEW over that log"; the legacy
-# grids are "frozen read-only as historical artifacts". It also ruled that the
-# pre-log history is NOT to be reconstructed — the 617 SEARCHED rows written
-# 2026-05-09 record real work whose query terms are unrecoverable, and inventing
-# executions for them would be worse than leaving them.
-#
-# The log was built. The views were built (v_coverage_jurisdiction,
-# v_coverage_language, v_coverage_branch). The FREEZE was not — because this
-# function was the live write path and `research-log-manager_SKILL.md` still
-# told every research session to call it. That is how six cells were marked
-# SEARCHED on 2026-07-24, after the log existed, against two logged searches
-# with different jurisdiction scoping.
-#
-# So the grids stop accepting writes here, which is the freeze, and `log_search`
-# below gives the successor the write path it never had. A store cannot be
-# retired while it is the only one that is easy to write to.
-# ---------------------------------------------------------------------------
-_FROZEN_MSG = (
-    "{table} is FROZEN as a historical artifact and no longer accepts writes.\n"
-    "\n"
-    "It is a hand-kept grid that drifted from the search log in both directions;\n"
-    "workplan/search-coverage-completion-workplan.md replaced it with the\n"
-    "search_executions log plus derived views, and this closes the write path\n"
-    "that kept it alive.\n"
-    "\n"
-    "Log the search itself instead — it carries what the grid could not (the\n"
-    "query text, the terms, the engine, the depth, what came back):\n"
-    "\n"
-    "  python3 scripts/db.py log-search --slug SLUG --language EN \\\n"
-    "      --jurisdiction AU --query-text '...' --engine pubmed \\\n"
-    "      --depth-method scoping --results-found N --results-screened N \\\n"
-    "      --session SESSION\n"
-    "\n"
-    "A search you deliberately did NOT run is also a logged row — pass\n"
-    "--deferred-reason and say why. Coverage then reads out of\n"
-    "v_coverage_jurisdiction / v_coverage_language, which cannot claim more\n"
-    "than was logged."
-)
-
-
-def upsert_search_coverage(slug: str, jurisdiction: str,
-                           data: dict, session: str,
-                           dry_run: bool = False):
-    raise FrozenGridError(_FROZEN_MSG.format(table="search_coverage"))
-
-
-def upsert_search_language(slug: str, language: str,
-                           data: dict, session: str,
-                           dry_run: bool = False):
-    raise FrozenGridError(_FROZEN_MSG.format(table="search_languages"))
-
-
 def _link_result_artefacts(conn, exec_id, artefacts, *, mined_ref_id, query_text,
                            session, ts):
     """Validate and insert `search_execution_artefacts` rows for `artefacts`.
@@ -688,7 +583,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
-    The successor to upsert-coverage/upsert-language. A row here is a completed
+    A row here is a completed
     unit of work whether or not it found anything: R8 says keep the empties, and
     a zero-yield search with a well-formed query is evidence about the world,
     not a failure to record. A search deliberately not run is also a row —
@@ -993,11 +888,6 @@ def get_coverage_completeness(slug: str) -> dict:
     are hand-kept and were never reconciled against the log; the log is the only
     store that can show its work.
 
-    The grid's numbers are still returned, under `legacy_grid`, because they are
-    the record of pre-log work that genuinely happened and is genuinely
-    unrecoverable in query terms. They are labelled, not deleted — an
-    unattributed number is what caused this. Nothing computes `complete` from
-    them any more.
     """
     with connect(readonly=True) as conn:
         jur = conn.execute(
@@ -1010,12 +900,6 @@ def get_coverage_completeness(slug: str) -> dict:
         deferred = conn.execute(
             "SELECT COUNT(*) AS n FROM search_executions "
             "WHERE slug=? AND deferred_reason IS NOT NULL", [slug]).fetchone()["n"]
-        g_jur = conn.execute(
-            "SELECT COUNT(*) AS n FROM search_coverage "
-            "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
-        g_lang = conn.execute(
-            "SELECT COUNT(*) AS n FROM search_languages "
-            "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
         # Required scope comes from lang_jur_map, the bridge that declares it —
         # not from a literal. These were hardcoded 24 and 14 while
         # a dashboard computed against 48, so "how much coverage is owed" had two
@@ -1032,13 +916,6 @@ def get_coverage_completeness(slug: str) -> dict:
         "languages_required": req_lang,
         "searches_deferred_with_reason": deferred,
         "complete": jur >= req_jur and lang >= req_lang,
-        "legacy_grid": {
-            "jurisdictions": g_jur,
-            "languages": g_lang,
-            "note": "frozen hand-kept grids; pre-log work, query terms "
-                    "unrecoverable. Not evidence of a search — see "
-                    "workplan/search-coverage-completion-workplan.md",
-        },
     }
 
 
@@ -2270,28 +2147,10 @@ def main():
     p_um.add_argument("--slug", help="Filter to specific slug")
     p_um.add_argument("--tier-max", type=int, default=3)
 
-    # upsert-coverage
-    p_ucov = sub.add_parser("upsert-coverage", help="Update search coverage for slug+jurisdiction")
-    p_ucov.add_argument("--slug", required=True)
-    p_ucov.add_argument("--jurisdiction", required=True)
-    p_ucov.add_argument("--status", default="searched")
-    p_ucov.add_argument("--co1-attempted", type=int, default=0)
-    p_ucov.add_argument("--session", required=True)
-    p_ucov.add_argument("--dry-run", action="store_true")
-
-    # upsert-language
-    p_ul = sub.add_parser("upsert-language", help="Update search language for slug")
-    p_ul.add_argument("--slug", required=True)
-    p_ul.add_argument("--language", required=True)
-    p_ul.add_argument("--status", default="searched")
-    p_ul.add_argument("--results-count", type=int, default=0)
-    p_ul.add_argument("--session", required=True)
-    p_ul.add_argument("--dry-run", action="store_true")
-
-    # log-search — the successor to the two frozen grids above.
+    # log-search
     p_ls = sub.add_parser(
         "log-search",
-        help="Append one row to search_executions (replaces upsert-coverage/-language)")
+        help="Append one row to search_executions")
     p_ls.add_argument("--prior-expectation", dest="prior_expectation",
                       help="What you expect this search to find, written BEFORE you run "
                            "it. DR-2026-05-09: logged in advance to expose confirmation "
@@ -2357,22 +2216,6 @@ def main():
                            "artefact this search's own query_text or mined_ref_id "
                            "identifies.")
     p_ls.add_argument("--dry-run", action="store_true")
-
-    # update-bpc
-    p_ubpc = sub.add_parser("update-bpc", help="Update bpc_metadata for a slug")
-    p_ubpc.add_argument("--slug", required=True)
-    p_ubpc.add_argument("--session", required=True)
-    p_ubpc.add_argument("--citation-mining-complete", type=int, choices=[0, 1])
-    p_ubpc.add_argument("--bpc-complete", type=int, choices=[0, 1])
-    p_ubpc.add_argument("--search-complete", type=int, choices=[0, 1])
-    p_ubpc.add_argument("--pico-complete", type=int, choices=[0, 1])
-    p_ubpc.add_argument("--evidence-state")
-    # DR-2026-05-24 supersession protocol
-    p_ubpc.add_argument("--supersession-check-complete", type=int, choices=[0, 1],
-                        help="DR-2026-05-24: set when all cited anchor sources have terminal supersession outcomes")
-    p_ubpc.add_argument("--closure-definition-version", choices=dbcore.schema_choices("bpc_metadata", "closure_definition_version"),
-                        help="DR-2026-05-24: v2 requires citation_mining_complete=1 AND supersession_check_complete=1")
-    p_ubpc.add_argument("--dry-run", action="store_true")
 
     # add-source
     p_as = sub.add_parser("add-source", help="Insert an evidence source")
@@ -2753,14 +2596,6 @@ def main():
             rows = get_unmined_for_all_slugs(tier_max=args.tier_max)
         _emit(rows)
 
-    elif args.command in ("upsert-coverage", "upsert-language"):
-        # Kept as commands rather than deleted, so the skills and sessions that
-        # still reach for them get the redirect instead of "invalid choice".
-        table = ("search_coverage" if args.command == "upsert-coverage"
-                 else "search_languages")
-        print(_FROZEN_MSG.format(table=table), file=sys.stderr)
-        sys.exit(2)
-
     elif args.command == "log-search":
         exec_id = log_search(
             slug=args.slug, language=args.language, query_text=args.query_text,
@@ -2786,30 +2621,6 @@ def main():
                "admitted": len(args.admitted_ref_ids or []),
                "linked_artefacts": len(args.result_artefacts or []),
                "dry_run": args.dry_run})
-
-    elif args.command == "update-bpc":
-        data = {}
-        if args.citation_mining_complete is not None:
-            data["citation_mining_complete"] = args.citation_mining_complete
-        if args.bpc_complete is not None:
-            data["bpc_complete"] = args.bpc_complete
-        if args.search_complete is not None:
-            data["search_complete"] = args.search_complete
-        if args.pico_complete is not None:
-            data["pico_complete"] = args.pico_complete
-        if args.evidence_state is not None:
-            data["evidence_state"] = args.evidence_state
-        # DR-2026-05-24
-        if args.supersession_check_complete is not None:
-            data["supersession_check_complete"] = args.supersession_check_complete
-        if args.closure_definition_version is not None:
-            data["closure_definition_version"] = args.closure_definition_version
-        if not data:
-            print(json.dumps({"error": "No fields to update"}))
-            sys.exit(1)
-        update_bpc_metadata(args.slug, data,
-                            session=args.session, dry_run=args.dry_run)
-        _emit({"updated": True, "slug": args.slug, "fields": list(data.keys())})
 
     elif args.command == "add-candidate":
         cid = insert_search_candidate({
@@ -3536,32 +3347,6 @@ def main():
 
 
 # --- Additional Python functions ---
-
-
-def update_bpc_metadata(slug: str, data: dict, session: str,
-                        dry_run: bool = False):
-    """Update bpc_metadata for a slug. data keys validated against _BPC_META_COLS."""
-    _validate_cols(data.keys(), _BPC_META_COLS, "update_bpc_metadata")
-    u = _upd(session)
-    with connect(dry_run) as conn:
-        exists = conn.execute(
-            "SELECT 1 FROM bpc_metadata WHERE slug=?", [slug]
-        ).fetchone()
-        if exists:
-            sets = ", ".join(f"{k}=?" for k in data)
-            conn.execute(
-                f"UPDATE bpc_metadata SET {sets}, "
-                "updated_at=?, updated_by_session=? WHERE slug=?",
-                [*data.values(), u["updated_at"], u["updated_by_session"], slug]
-            )
-        else:
-            row = {"slug": slug, **data, **audit(session)}
-            cols = ", ".join(row)
-            ph = ", ".join(["?"] * len(row))
-            conn.execute(
-                f"INSERT INTO bpc_metadata ({cols}) VALUES ({ph})",
-                list(row.values())
-            )
 
 
 def parse_author_flags(flags: list[str]) -> list[dict]:

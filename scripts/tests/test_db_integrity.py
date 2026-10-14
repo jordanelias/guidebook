@@ -104,12 +104,6 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM evidence_population_match WHERE ref_id IS NOT NULL"))
 
-    record("A06", "bpc_metadata → slugs",
-        conn.execute("""SELECT COUNT(*) FROM bpc_metadata b
-            WHERE NOT EXISTS (SELECT 1 FROM slugs s WHERE s.slug=b.slug)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
-
     # A07 WIDENED 2026-09-02, and it is the replacement migration 067 said was owed.
     # It used to require the anchor resolve through source_slug_links, i.e. that a mined
     # anchor be an ADMITTED, slug-linked source. That was true while the only ref_ids
@@ -728,14 +722,6 @@ def run_checks(db_path):
                subject=len(refs_v1 | refs_v2))
     else:
         record("D02", "v1_legacy ref_id parity (table dropped, check skipped)", True, subject=0)
-
-    # Duplicate slugs in bpc_metadata
-    dup_slugs = conn.execute("""SELECT slug, COUNT(*) FROM bpc_metadata
-        GROUP BY slug HAVING COUNT(*) > 1""").fetchall()
-    record("D03", "No duplicate slugs in bpc_metadata",
-           len(dup_slugs) == 0,
-           f"duplicates: {[dict(r) for r in dup_slugs]}" if dup_slugs else "",
-           subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
     # D04 — the DOI-less half of D01.
     #

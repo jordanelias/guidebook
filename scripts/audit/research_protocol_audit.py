@@ -11,10 +11,8 @@ Flags:
 6. NONE FOUND dissenter entries that lack logged search queries
 7. Verified citations lacking prior_expectation (added 2026-05-10 Stage B.5)
 8. Verified citations lacking search_queries_used (added 2026-05-10 Stage B.5)
-9. search_languages with status=SEARCHED but no PROTOCOL: marker in notes
-   (added 2026-05-10 Stage B.5; supports multilingual remediation auditability)
 
-Per DR-2026-05-09 (CHECK 1-6) and Stage B.5 audit findings 2026-05-10 (CHECK 7-9).
+Per DR-2026-05-09 (CHECK 1-6) and Stage B.5 audit findings 2026-05-10 (CHECK 7-8).
 Run before each session close.
 """
 import os
@@ -201,17 +199,6 @@ def audit():
         HAVING COALESCE(MAX(NULLIF(TRIM(v.query_text), '')), '') = ''
     """).fetchall()
 
-    # CHECK 9 (added 2026-05-10): search_languages with status=SEARCHED but no
-    # PROTOCOL: marker in notes. Markers are: 'PROTOCOL: FULL', 'PROTOCOL: PARTIAL',
-    # 'PROTOCOL: PRE-REMEDIATION'. Without these, multilingual remediation
-    # compliance is unverifiable from the DB.
-    unmarked_langs = db.execute("""
-        SELECT slug, language FROM search_languages
-        WHERE status = 'SEARCHED'
-        AND (notes IS NULL OR notes NOT LIKE 'PROTOCOL:%')
-        ORDER BY slug, language
-    """).fetchall()
-
     # Report
     print("=" * 60)
     print("ADVERSARIAL RESEARCH PROTOCOL — COMPLIANCE AUDIT")
@@ -299,38 +286,24 @@ def audit():
     for ref_id, title in verified_no_queries[:5]:
         print(f"  ⚠ {ref_id}: {(title or '')[:70]}")
 
-    print(f"\n[CHECK 9] search_languages with no PROTOCOL: marker: {len(unmarked_langs)}")
-    if unmarked_langs:
-        # Group by slug for compact output
-        by_slug = {}
-        for slug, lang in unmarked_langs:
-            by_slug.setdefault(slug, []).append(lang)
-        for slug in sorted(by_slug)[:5]:
-            langs = ','.join(sorted(by_slug[slug]))
-            print(f"  ⚠ {slug}: {langs}")
-        if len(by_slug) > 5:
-            print(f"  ... and {len(by_slug) - 5} more slugs")
-
     # Summary
     total_issues = (len(deficient) + len(unmatched_verified) + 
                     (1 if suspicious_grades else 0) + len(narrative_ci) + 
                     len(topic_evidence_pattern) + len(unlogged_none_found) +
                     len(verified_no_prior) + len(no_admitting_search) +
                     len(_backfilled_only) +
-                    len(verified_no_queries) +
-                    len(unmarked_langs))
+                    len(verified_no_queries))
     
     # EXAMINED: the corpus rows actually queried across checks 1-9, not the
     # issue counts above (an issue count of 0 is ambiguous between "checked
     # and clean" and "nothing to check" — this disambiguates). Four source
-    # tables feed these nine checks; summing their row counts is unambiguous
+    # tables feed these checks; summing their row counts is unambiguous
     # here because every one of them is presently empty (2026-08-06 clean-room
     # reset), so no combination could read as anything but zero.
     n_gaps = db.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
     n_sources = db.execute("SELECT COUNT(*) FROM evidence_sources").fetchone()[0]
     n_matches = db.execute("SELECT COUNT(*) FROM evidence_population_match").fetchone()[0]
-    n_langs = db.execute("SELECT COUNT(*) FROM search_languages").fetchone()[0]
-    n_examined = n_gaps + n_sources + n_matches + n_langs
+    n_examined = n_gaps + n_sources + n_matches
 
     print(f"\n--- TOTAL ISSUES: {total_issues} ---")
     print(f"EXAMINED: {n_examined}")

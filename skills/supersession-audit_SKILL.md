@@ -6,8 +6,7 @@ description: >
   parameter × population × outcome it supports?" — a temporal-and-tier search across
   PubMed, Scholar Gateway, Cochrane, and standards bodies. Runs in two modes: PER-SLUG
   (at slug closure under v2 closure-definition) and SEMIANNUAL (sweep across full
-  corpus every 6 months). Produces per-source supersession_check records that gate
-  bpc_metadata.supersession_check_complete and the v2 slug closure bar. ALWAYS use when
+  corpus every 6 months). Produces per-source supersession_check records. ALWAYS use when
   asked to: check supersession, audit anchor sources, verify best evidence, run
   semiannual sweep, close slug under v2 definition. Trigger on: "supersession check",
   "audit anchor sources", "is this still best evidence", "semiannual sweep", "v2 closure",
@@ -18,7 +17,7 @@ description: >
 **Connectors:** PubMed (required), Scholar Gateway (required for design/OT/Co-1), Cochrane (web_fetch acceptable), CrossRef (web_fetch acceptable). Activate for the audit.
 **SQLite:** `data/guidebook.db` via `scripts/db.py`
 **Authoritative DR:** `decisions/DR-2026-05-24-best-practice-supersession-protocol.md`
-**Schema:** `supersession_check` table; `bpc_metadata.supersession_check_complete` flag (migration 015)
+**Schema:** `supersession_check` table (the `bpc_metadata` closure flags went with that table, plan step 1.9)
 
 ---
 
@@ -193,20 +192,6 @@ python3 scripts/db.py add-supersession-check \
 The `superseding_dois` field is the key gate: rule #10 forbids INSERTing candidates as evidence_sources rows without verification. Supersession candidates that are not yet verified live in `superseding_dois` (DOI list) rather than `superseding_ref_ids` (FK list). When a candidate is subsequently verified and INSERTed to evidence_sources, the supersession_check row should be UPDATED to move the DOI from `superseding_dois` to `superseding_ref_ids`.
 
 ---
-
-## 5. Closing the slug under v2 definition
-
-After every cited anchor source has a terminal supersession_check outcome (i.e., none `pending`):
-
-```bash
-python3 scripts/db.py update-bpc \
-    --slug {slug} \
-    --supersession-check-complete 1 \
-    --closure-definition-version v2 \
-    --session {SESSION}
-```
-
-This is in addition to `citation_mining_complete = 1`. The v2 closure bar requires both.
 
 ---
 
