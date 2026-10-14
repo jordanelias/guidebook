@@ -3,10 +3,16 @@
 --
 -- THE OWNER'S REASON. "Axes" is a coined term the owner ruled bad and retired (2026-08-18, "standing
 -- decisions, do not relitigate"; again 2026-08-24, "I don't want axis to be used"; 2026-09-13, "AX-"
--- for an ICF code must never exist). ICF codes with their names replace it, and `population_icf_links`
--- is the mechanical re-derivation of `population_axis_map` (WRK-181). DR-2026-08-24 section R8 required
--- the retirement to be one act with a full caller sweep, never piecemeal: this migration is the schema
--- half and the same commit carries the sweep.
+-- for an ICF code must never exist). ICF codes with their names replace it. WRK-181 directs that
+-- `population_axis_map` be re-derived as population-to-ICF pairs; `population_icf_links` (61 rows) is the
+-- derivation that exists, and it is NOT complete: the map covered 20 populations and the links cover 12
+-- (derive: select distinct population_code from each, in a rebuild at schema 108). ADHD, DEAFBLIND, EPI,
+-- MS and VES, served populations, have map rows and no link row; BAR, LPA and TALL fall under the
+-- 2026-09-11 ruling that they take no anchor. The dropped rows stay reconstructible by `--rebuild` at schema
+-- 108 or earlier (R3's boundary), and re-deriving the five populations' links is an owner item.
+-- DR-2026-08-24 section R8 required the retirement to be one act with a full caller sweep: this commit sweeps
+-- the code, registry, tests, skills and instrument; the documents R35 declares stale (D-0170, D-0184,
+-- functional-taxonomy) are not edited here and stay an owner merge.
 --
 -- R3 MARKER (LED-169 ACTION (4); this migration destroys rows, and the departure is recorded here).
 -- Rows destroyed, measured 2026-10-14 before the migration (re-run rather than trust):

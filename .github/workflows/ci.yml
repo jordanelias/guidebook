@@ -29,8 +29,8 @@ name: Guidebook CI
 #   - schema/db_integrity/governance actually gate PRs now.
 #   - validate_evidence_state additionally fires on synthesis diffs, per the
 #     2026-07-23 enforcement plan finding F2.
-#   - validate_axes and validate_verification_consistency reach CI; they ran only
-#     in preflight before, so CI never saw them.
+#   - validate_verification_consistency reaches CI; it ran only in preflight
+#     before, so CI never saw it.
 #   - Newly-wired checks (matrix_consistency, audit_evidence_metadata,
 #     pipeline_contract_audit) are ADVISORY, per the repo's shakedown norm. None
 #     was promoted to blocking in the commit that first wired it.

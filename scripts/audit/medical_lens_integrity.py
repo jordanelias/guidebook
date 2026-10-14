@@ -105,7 +105,7 @@ def main(argv=None):
         print("  licensing — the owner ruled 'use ICD-11' on 2026-09-11, which this message")
         print("  went on claiming for an hour after the fact (swept 2026-09-11, rule 4:")
         print("  prose callers are the ones no gate covers).")
-        print("  The lens is populated by CORRESPONDENCE from the identity and ICF")
+        print("  The lens is populated by CORRESPONDENCE from the identity and axis")
         print("  registries, bounded at roughly 15-20 rows, plus on demand thereafter.")
         print("  See references/project-standards.md, the 2026-09-11 entries.")
     print(f"\n  unverified anchors: {len(notes)} of {len(rows)}")
