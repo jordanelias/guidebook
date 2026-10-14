@@ -239,6 +239,21 @@ conflicts:
   confidence: medium
 
 # ---------------------------------------------------------------- C. vocabulary and lens
+- id: C-017
+  class: RULING-MECHANISM
+  severity: S1
+  title: "'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word"
+  atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166, LED-076, LED-166, CLM-039, ENT-105, ENT-156, ENT-076, DRS-006, DRS-023, DRS-024, DRS-114, DRS-189, DRS-193, DRS-199, OPI-049]
+  sides:
+    - {atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166], says: "owner R3 (2026-08-18, DG-NON, 'standing decisions, do not relitigate'): 'axes' is a bad coined term; use ICF codes directly with their names; `axes` and `item_axis_links` are retired; `population_axis_map` is re-derived mechanically as population-to-ICF."}
+    - {atoms: [LED-076, LED-166, CLM-039], says: "owner 2026-08-24: 'I don't want axis to be used'; owner 2026-09-13: 'AX-' for ICF should never exist anywhere; work in ICF/access-need codes AND names."}
+    - {atoms: [DRS-006, DRS-023, DRS-024], says: "the 2026-08-24 DR: the rename is 'authorized and owed' yet 'NOT DECIDED HERE', to be done as one act and not piecemeal."}
+    - {atoms: [DRS-114, DRS-189, DRS-193, DRS-199, ENT-105, ENT-156, ENT-076, OPI-049], says: "D-0170, D-0184, functional-taxonomy and the operative instrument still treat `axes`, `item_axis_links`, `population_axis_map` and AX-* as live objects (the instrument quarantines the axis map under owner directive D-1)."}
+  probe: [P-AXIS, P-G]
+  direction: "Mechanism executed by step 1.4 (migration drop_axes; validate_axes and its criterion deleted). Open: DRS-024 says the retirement is one act, never piecemeal, and R35 leaves the documents (D-0170, D-0184, functional-taxonomy, the operative instrument) and the AX- strings in references/ to an owner merge and step 1.6(c); the atoms that treated axes as live are marked SUPERSEDED, but their documents still say it."
+  resolver: OWNER
+  confidence: high
+
 - id: C-018
   class: RULING-MECHANISM
   severity: S2
@@ -265,19 +280,6 @@ conflicts:
   probe: P-UNWRITABLE
   direction: "Mechanism half executed: migration drop_item_layer_cluster dropped the tables, and the renderers that selected item_code went with step 1.1. Documents half OPEN: the rulings of 2026-08-26 and 2026-09-01 supersede the item-keyed sentences on contact, but RULINGS R36 assigns the edit of the taxonomy documents to an owner merge and no plan step makes it."
   resolver: OWNER
-  confidence: high
-
-- id: C-020
-  class: RULING-MECHANISM
-  severity: S2
-  title: "Splinter population link tables: 'both sweeps are done' versus five tables still present"
-  atoms: [LED-132, LED-128, CLM-042]
-  sides:
-    - {atoms: [LED-132, CLM-042], says: "owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns."}
-    - {atoms: [CLM-042], says: "CLAUDE.md section 6 stated both sweeps were done; step 0.5 removed the claim and left the accurate sentence that migration 071 dropped population_code and item_code from specifications."}
-  probe: P-A
-  direction: "Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. The doc overstated and no longer does (step 0.5); the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10), plan step 1.3."
-  resolver: AGENT
   confidence: high
 
 - id: C-021

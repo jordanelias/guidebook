@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 05:36 UTC from git HEAD 83275d5 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 06:09 UTC from git HEAD 1bc5d5b (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-m16",
  "user_version": 110,
  "stages": [
   "base",
@@ -4739,7 +4739,7 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2678,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 431,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 447,
   "distinct quotes among all atoms": 2645,
   "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 46,
@@ -4754,9 +4754,9 @@
  },
  "atoms_by_status": {
   "ACTIVE": 2289,
-  "SUPERSEDED": 89,
+  "SUPERSEDED": 88,
   "OPEN": 72,
-  "AMENDED": 73,
+  "AMENDED": 74,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
