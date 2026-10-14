@@ -271,6 +271,9 @@ PY
 
 - **Rule 3.** One additive schema migration. Rows enter only through db.py, then emit, then migrate. Once a committed data migration INSERTs into these tables they can never be dropped (rule 5), so reversing them means retiring the writer, not dropping the table.
 - **Rule 4.** Nothing is renamed. `dbcore.writable_tables` derives the capture set from INSERT literals, so the new tables are captured automatically; assert this with `dbcore --selftest`. The Pydantic mirror must be added. So must an entry in `validate_pydantic_schemas`' curated `MODEL_TABLE_MAP`, which rule 8 names as a violation: this adds one entry to it and fixes nothing. `SESSION_POINTERS` gains a key and nothing is removed from it.
+
+**SUPERSEDED** 2026-10-14 in this one clause, by RULINGS R5 (`workplan/pipeline-state-graph/RULINGS.md`: "Retire the requirement. Delete the unread mirrors, `validate_pydantic_schemas.py` and its map"), as adopted in `references/project-standards.md`: "the proposed rulings R1 to R42 are adopted as amended by the rehearsals". The rest of this rule stands. See the ledger entry "Recording 2026-10-14, second part".
+
 - **Rule 5.** Findings point at `(subject_table, subject_key)` and copy nothing. The model columns hold facts about Layer-4 transcripts, which SQL cannot query, and the writer is their only author.
 - **Rule 7a.** No counts. The lens set lives in the CHECK, the table set lives in the RULE, and the check prints `EXAMINED`.
 - **Rule 8.** Vocabularies come through `dbcore.schema_choices`. Models are derived. Independence is computed. The scoped tables are parsed from the ruling.
@@ -282,8 +285,6 @@ PY
 - **§8: what reaches the book without it.** An interpretive overclaim reaches a governing source's extraction. Batch 20 §0b had two:
   - #2: an untested Table 20 cell typed `measurement_primary`;
   - #1: a comparison checked against only one of footnote c's two warrants.
-
-**SUPERSEDED** 2026-10-14 in this one clause, by RULINGS R5 as adopted in `references/project-standards.md`: "a new table needs no Pydantic mirror and no entry in a curated map". The rest of this rule stands. See the ledger entry "Recording 2026-10-14, second part".
 
   Only a fresh reader caught either.
 

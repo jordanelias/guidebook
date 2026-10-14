@@ -752,11 +752,12 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     f, _, _ = check_all(T, atoms, pr2, conflicts, machines, caps); del PROBE_DEFS["P-FAKE"]
     results.append(("a probe with no reachable PASS is caught", any("P-FAKE" in x and "no path" in x for x in f)))
     # i) capability verdicts can say both CAN and BLOCKED, and a predicate can say both PASS and FAIL
-    can = {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": "P-D", "says": "s"}]}}}
-    blk = {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": "P-A", "says": "s"}]}}}
-    ok_can = capability_verdicts(can, T, probes)["X"]["overall"] if probes["P-D"]["verdict"] == "PASS" else "n/a"
-    ok_blk = capability_verdicts(blk, T, probes)["X"]["overall"] if probes["P-A"]["verdict"] == "FAIL" else "n/a"
-    results.append(("a capability can come out CAN and can come out BLOCKED", ok_can == "CAN" and ok_blk == "BLOCKED"))
+    #    The probe verdicts are planted: a case that reads a live probe turns "n/a" the day that probe flips.
+    planted_probes = {"P-PASS": dict(verdict="PASS"), "P-FAIL": dict(verdict="FAIL")}
+    cap = lambda pid: {"capabilities": {"X": {"name": "x", "asks": "", "predicates": [{"id": "X.1", "kind": "probe", "probe": pid, "says": "s"}]}}}
+    results.append(("a capability can come out CAN and can come out BLOCKED",
+                    capability_verdicts(cap("P-PASS"), T, planted_probes)["X"]["overall"] == "CAN"
+                    and capability_verdicts(cap("P-FAIL"), T, planted_probes)["X"]["overall"] == "BLOCKED"))
     # the FAIL case is planted in a scratch copy of the database, so `unwritable_set` itself derives it (the live schema may hold no such pair)
     with tempfile.TemporaryDirectory() as td:
         for d in ("governance", "scripts", ".github"): os.symlink(REPO / d, Path(td) / d)      # what Tree reads besides the database
@@ -779,9 +780,10 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
         c = copy.deepcopy(conflicts)
         c["status_corrections"] = [dict({"atom": late["id"], "current": late["status"], "should_be": "SUPERSEDED", "by": [early["id"]], "why": "planted by the selftest"}, **kw)]
         return c
-    c4 = planted(current="HISTORICAL")
+    #    decided by the atom itself, so only the stale-status branch can fire (the EARLIER branch would also say "status_corrections")
+    c4 = planted(current="HISTORICAL", by=[late["id"]])
     f, _, _ = check_all(T, atoms, probes, c4, machines, caps)
-    results.append(("a stale status correction is caught", any("status_corrections" in x for x in f)))
+    results.append(("a stale status correction is caught", any("is now ACTIVE, not HISTORICAL" in x for x in f)))
     # l) a quote cited at the wrong line is caught
     a6 = copy.deepcopy(atoms[sorted(atoms)[0]]); path_, _, ln_ = a6["source"].rpartition(":")
     a6["source"] = f"{path_}:{int(ln_) + 40}" if ln_.isdigit() else a6["source"]

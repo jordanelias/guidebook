@@ -76,7 +76,7 @@ Six additional vectors fall out cleanly from prior phase work. They are catalogu
 
 **Mechanism.** Citing a Co-1 source (lived-experience research, DPO position) as endorsement of a design when the source's actual position diverges from the citation. A variant: paraphrasing a Co-1 source in a way that flattens or inverts its argument.
 
-**Mitigation.** A5 §3.4: synthesis_attribution_required field on EvidenceSource. Substantial synthesis from a Co-1 source must declare the synthesis. A5 §6.1: every Co-1 citation carries six required schema fields including verification_status. The verification report (A5 §6.3) records whether the cited claim is faithful to the source.
+**Mitigation.** A5 §3.4: synthesis_attribution_required field on EvidenceSource. Substantial synthesis from a Co-1 source must declare the synthesis. A Co-1 source must name its co-production in `co1_provenance` (D-0178); `db.py add-source` refuses one that does not.
 
 ### 2.3 Evidence-tier laundering (V-06)
 
@@ -114,7 +114,7 @@ Every catalogue entry maps to one or more mitigations already present in the pro
 | V-02 exclusionary ROI | mission CRPD basis, DAR principle, Part 11 framing, population variability |
 | V-03 surveillance via inferred functional needs | A7 §3.4 (codes are organising principles), no person-assessment instrument |
 | V-04 selective citation | A6 §3.2 convergence assessment recorded |
-| V-05 Co-1 instrumentalization | A5 §3.4 synthesis_attribution_required, A5 §6.3 verification report |
+| V-05 Co-1 instrumentalization | A5 §3.4 synthesis_attribution_required, `co1_provenance` (D-0178) |
 | V-06 evidence-tier laundering | A6 §1 tier-type validation, project-standards L20 |
 | V-07 anti-DAR deferral | Part 10 prose framing, framing-checker |
 | V-08 adversarial litigation citation | A11 framework + front-matter disclaimer |

@@ -89,8 +89,7 @@ vectors:
   severity: HIGH
   primary_mitigations:
   - A5 §3.4 (synthesis_attribution_required field on EvidenceSource)
-  - A5 §6.1 (six required schema fields including verification_status)
-  - A5 §6.3 (verification report records faithfulness to source)
+  - co1_provenance names the co-production, and db.py add-source refuses a Co-1 source without it (D-0178)
   doctrinal_basis:
   - governance/adversarial-use-framework.md §2.2
   status: ACTIVE

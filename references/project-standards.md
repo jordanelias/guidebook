@@ -4440,14 +4440,14 @@ DATE: 2026-10-14 — owner statements, quoted above.
 
 ## Recording 2026-10-14 — records the adopted rulings supersede, marked; the owner statements whose only home was a session record, appended
 
-**What this does.** `CLAUDE.md` rule 0 requires a supersession to be recorded, not argued. The rulings adopted by the entry above (`workplan/pipeline-state-graph/RULINGS.md` R5, R8, R10, R11, R18, R22, R30) change some records in this ledger on contact, and nothing at those records said so. This entry marks them, and appends eight records whose only home was a file under `sessions/`, which `.ignore` hides from ripgrep and the Grep tool (R13). It makes no new ruling and cites no new owner words.
+**What this does.** `CLAUDE.md` rule 0 requires a supersession to be recorded, not argued. The rulings adopted by the entry above (`workplan/pipeline-state-graph/RULINGS.md` R5, R8, R10, R11, R18, R22, R30) change some records in this ledger on contact, and nothing at those records said so. This entry marks them, and appends the records listed below, whose only home was a file under `sessions/`, which `.ignore` hides from ripgrep and the Grep tool (R13). It makes no new ruling and cites no new owner words.
 
 **Marked here.** The targets are in this ledger, so this paragraph is the mark, as item 6 of the 2026-10-09 entry explains for a ledger target: the back-pointer grammar cannot mark one. Line numbers are of this file at this entry; the ledger is append-only, so they do not move.
 
-1. **AMENDED** (R10). The sentence in the markers RULE at line 26, that a T4–6-only basis never renders best-practice language in any register, is amended by the Option A directive recorded at line 20: a code-consensus-only claim may render at the weak (○) band when flagged as code-derived, and is never rendered unflagged or above that band. What line 26 says about an unflagged claim stands.
+1. **AMENDED** (R10). The sentence in the markers RULE at line 26, that a T4–6-only basis never renders best-practice language in any register, is amended by the Option A directive recorded at line 20: a code-consensus-only claim may render at the weak (○) band when flagged as code-derived, and is never rendered unflagged or above that band.
 2. **SUPERSEDED** (R18). The RULE at line 118, "Each slug covers exactly one population", by the ruling at line 939 that every research slug is cross-referenced against a population code, access need or ICF code.
 3. **SUPERSEDED in part** (R5, R22, R30). The RULES at lines 545 and 548 and the selection at line 2392 name the decision register, the sixteen-field capture protocol, `decision_capture.py` as its validator, pass 2.5 of the doctrine recheck and the Decision-record mechanism for B-06. Those parts are retired: the register is archived and its script deleted (plan step 1.12), and line 2392 is moot. The categories, delegation rules and recheck passes 2.2 to 2.4 and 2.6 stand.
-4. **SUPERSEDED in part** (R8). The words "seven tiers" at line 17, and "seven-tier" at line 520: the hierarchy is T1 to T6 with the Co-1 and Co-2 tracks, as `governance/tier-system.md` section 1 says. The rest of both lines stands.
+4. **SUPERSEDED in part** (R8). The words "seven tiers" at line 17, and "seven-tier" at lines 484 and 520: the hierarchy is T1 to T6 with the Co-1 and Co-2 tracks, as `governance/tier-system.md` section 1 says. The rest of both lines stands.
 5. **AMENDED and SUPERSEDED in part** (R11). The RULE at line 504 sends a reader to `governance/co1-operational.md` section 6.1 for six required fields, and says every pre-launch `co1_provenance` value is `published_corpus`. That section is deleted: a Co-1 citation's fields are the columns of `evidence_sources`. D-0178 (2026-08-31) holds that `published_corpus` says where a source was published and is not a co-production warrant, so `co1_provenance` names the co-production.
 
 **Appended, verbatim, with the file and line each came from (R13).** Recording is not ruling: each stands as stated, on the authority of the words quoted and of nothing else. Whether each is the owner's own words or the session's report of them is stated.
@@ -4459,7 +4459,6 @@ DATE: 2026-10-14 — owner statements, quoted above.
 - 2026-09-16 ruling, applied 2026-09-18, `sessions/session_2026-09-18-research-batch-16-backward-mining-t2-anchors.md:183-185`, the session's own rule and not the owner's words: "a pass that runs now discharges a standing deferral and **carries its text into `notes`** rather than destroying it (2026-09-16 retire-in-place)"
 - 2026-09-20, `sessions/session_2026-09-20-research-batch-19-pre1990-chain-steinfeld-walter-templer.md:332`, the owner's instruction mid-batch, as quoted: "fix mechanisms, not hand edit"
 - 2026-09-28, `sessions/session_2026-09-28-research-batch-22-selection.md:72`, relayed by the session; the owner's words are not quoted there: "per the user's own guidance that sub-national jurisdictions may satisfy a bucket country's coverage"
-- 2026-10-01, `sessions/session_2026-10-01-research-batch-23.md:7`, relayed by the session; the owner's words are the 2026-09-28 entry at line 4291: "the owner's 2026-09-28 standing order"
 
 CONDITION: any session asking whether research mines arguments and qualitative reasoning as well as values and parameters, whether a highly relevant source with no stated value is mined, how far the mining of a source reaches, whether a source is adjudicated by slug or by category, whether a defect is fixed by hand or at its mechanism, whether a sub-national jurisdiction can satisfy a bucket country, whether a mining pass may destroy the text of a standing deferral it discharges, or whether a record marked above still holds.
 DATE: 2026-10-14 — recorded under RULINGS R13; the date of each statement is given beside it.
@@ -4471,8 +4470,7 @@ DATE: 2026-10-14 — recorded under RULINGS R13; the date of each statement is g
 **Superseding words that live outside this ledger, quoted here once so the audit can anchor on them.**
 
 - The operative instrument, section 1.4 rule 1 (`decisions/DR-2026-08-19-research-restart-operative-instrument.md:178`), ratified 2026-08-19 as OD-1: "**No item name becomes a slug by strip.**" It overturns the 2026-08-18 proposal's mechanism for making a slug from an item name.
-- R5, adopted by the entry of 2026-10-14 above, in the words this entry records for it: a new table needs no Pydantic mirror and no entry in a curated map. The mirrors nothing imports, and the script that compared them with the tables, were deleted in plan step 1.10.
-- D-0184 (`decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md`): The lens is a COLUMN, not a traversal. R15 holds it in force. Its review, which that file's header marks pending, is discharged by the delegation recorded above. It replaces the consequence D-0170 drew, that lens-switching runs through the crossing maps.
+The other anchors are in this ledger already and are not repeated. R5 is adopted by the delegation entry above; its words are in `workplan/pipeline-state-graph/RULINGS.md`: "Retire the requirement. Delete the unread mirrors, `validate_pydantic_schemas.py` and its map". The consequence D-0170 drew, that lens-switching runs through the crossing maps, is overtaken by the owner's ruling of 2026-08-28 on the lens columns. D-0184 (`decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md`) carries that ruling out and R15 holds it in force; the review its header marks pending is discharged by the delegation recorded above.
 
 ```
 SUPERSEDES: decisions/DR-2026-08-24-scaffolding-is-phase-specific.md :: "`research → evidence collection → judgment → synthesis → render`"
@@ -4498,11 +4496,11 @@ SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "The strip is manual,
 SUPERSEDES: workplan/2026-08-18-handoff-next-session.md :: "three lenses, three theoretical approaches, three tables"
   BY: references/project-standards.md :: "because i said we need the medical model too"
 SUPERSEDES: decisions/DR-2026-09-26-recurring-defect-shapes-remediation.md :: "The Pydantic mirror must be added. So must an entry in"
-  BY: references/project-standards.md :: "a new table needs no Pydantic mirror and no entry in a curated map"
+  BY: references/project-standards.md :: "the proposed rulings R1 to R42 are adopted as amended by the rehearsals"
 SUPERSEDES: decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md :: "the review it awaits is the owner's"
   BY: references/project-standards.md :: "resolve them for me in a logical manner"
 SUPERSEDES: decisions/DR-2026-08-27-four-taxonomies-are-browsing-lenses.md :: "lens-switching runs through"
-  BY: references/project-standards.md :: "The lens is a COLUMN, not a traversal"
+  BY: references/project-standards.md :: "four typed columns, one per lens"
 SUPERSEDES: decisions/DR-2026-08-27-relevance-is-adjudicated-at-collection.md :: "applicability remains a synthesis judgement"
   BY: references/project-standards.md :: "we go evidence>judgment>synthesis"
 ```
