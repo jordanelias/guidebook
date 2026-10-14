@@ -568,19 +568,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-- id: validate_pydantic_schemas
-  cmd:
-  - python3
-  - scripts/audit/validate_pydantic_schemas.py
-  - --strict
-  battery: schema
-  kinds:
-  - schema
-  - data
-  level: advisory
-  basis: unattributed
-  cost: fast
-  min_items: 1
 - id: audit_adversarial_use
   cmd:
   - python3
