@@ -1,0 +1,486 @@
+# machines.yaml -- hand-authored state machines for the MAIN tree. Every transition carries `evidence`: (file, func,
+# needle) triples that `build_graph.py --check` re-reads. A needle that no longer matches is a FALSIFIED edge, not a
+# stale comment. `absent: true` means the needle must NOT match inside `func` (a claimed absence of a guard).
+#
+# What is DERIVED (not written here): the state vocabulary of each holder column (read from the table's own CHECK and
+# compared with `states` below), the tables each verb writes, the stage of each table, and which vocabulary values have
+# no writer. This file holds only what a CHECK cannot say: who moves a row between states, under what guard.
+#
+# T1 (the unreleased tooling branch) adds verbs and tables that change several machines; those are reported by the
+# generator's tree comparison, not asserted here.
+
+machines:
+
+- id: M01
+  name: "Staged search candidate"
+  stage: research
+  holder: search_candidates.disposition
+  states: [REHOME, MISCELLANEOUS, PENDING-VERIFICATION, OUT-OF-SCOPE, ADMITTED, EXHAUSTED]
+  atoms: [RES-07, RES-15, LED-185, OPS-02]
+  transitions:
+  - id: M01.t1
+    from: "(none)"
+    to: "any state"
+    via: "db.py add-candidate"
+    guards:
+      - "exec_id, if given, names a live search_executions row (a candidate is something a SEARCH surfaced)"
+      - "found_under_slug is a live slug; disposition is in the column's own CHECK"
+      - "REHOME needs a valid destination slug (_check_rehome_destination)"
+      - "ADMITTED requires locator_status = RESOLVED (R15: a staged description is a hypothesis)"
+    evidence:
+      - {file: scripts/db.py, func: insert_search_candidate, needle: "is not a live search_executions row"}
+      - {file: scripts/db.py, func: insert_search_candidate, needle: "disposition=ADMITTED requires locator_status=RESOLVED"}
+      - {file: scripts/db.py, func: insert_search_candidate, needle: "_check_rehome_destination"}
+  - id: M01.t2
+    from: "any state"
+    to: "any state"
+    via: "db.py resolve-candidate"
+    guards:
+      - "a non-blank re-description FROM THE SOURCE (R15); the hypothesis is appended to, never overwritten"
+      - "ADMITTED needs --admitted-ref-id naming an existing evidence_sources row; the edge is written to resolved_ref_id"
+      - "--suggested-slug only with REHOME"
+    evidence:
+      - {file: scripts/db.py, func: resolve_candidate, needle: "requires a re-description FROM THE SOURCE"}
+      - {file: scripts/db.py, func: resolve_candidate, needle: "ADMITTED without --admitted-ref-id"}
+      - {file: scripts/db.py, func: resolve_candidate, needle: "resolved_ref_id=COALESCE"}
+  - id: M01.t3
+    claim: "NO from-state guard: ADMITTED -> OUT-OF-SCOPE (or any other move) is accepted. There is no verb that deletes a candidate."
+    from: "any state"
+    to: "any state"
+    via: "db.py resolve-candidate"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: resolve_candidate, needle: "row\\[\"disposition\"\\]\\s*(==|!=|in\\b)", absent: true}
+  unreachable_note: "EXHAUSTED and PENDING-VERIFICATION are reachable only as a chosen value; no rule moves a row into or out of them (LED-185 is a convention)."
+
+- id: M02
+  name: "Admitted source -- verification, supersession"
+  stage: evidence
+  holder: evidence_sources.verification_status
+  states: ["NULL", VERIFIED, UNVERIFIED]
+  vocabs:
+    - {holder: evidence_sources.citation_mining_status, values: [pending, mined, deferred, not-applicable]}
+    - {holder: evidence_sources.data_capture_status, values: [pending, captured, none-extractable, deferred]}
+  atoms: [RES-10, RES-09, LED-027, LED-117, PIP-20]
+  transitions:
+  - id: M02.t1
+    from: "(none)"
+    to: "NULL | VERIFIED | UNVERIFIED"
+    via: "db.py add-source"
+    guards:
+      - "a duplicate DOI is refused and the existing ref_id cross-filed (R9)"
+      - "the source is admitted to at least one live slug (source_slug_links)"
+      - "NULL is representable, but R10 forbids leaving it on a URL-bearing source (the scheduled URL cron claims that pool)"
+    evidence:
+      - {file: scripts/db.py, func: insert_evidence_source, needle: "def insert_evidence_source"}
+      - {file: scripts/db.py, func: _check_slug_filable, needle: "def _check_slug_filable"}
+  - id: M02.t2
+    from: "UNVERIFIED"
+    to: "VERIFIED"
+    via: "db.py amend-source (and the scheduled resolve-dois / verify-urls workflows, which bypass migrations)"
+    guards:
+      - "the field is in _AMENDABLE; leaving verification_disposition='CLOSED' over a non-VERIFIED row is refused"
+    evidence:
+      - {file: scripts/db.py, func: amend_source, needle: "verification_disposition='CLOSED' over a non-VERIFIED row"}
+      - {file: .github/workflows/resolve-dois.yml, needle: "git add data/guidebook.db"}
+      - {file: .github/workflows/verify-urls.yml, needle: "git add data/guidebook.db"}
+  - id: M02.t3
+    from: "live"
+    to: "tombstone (superseded_by_ref_id set)"
+    via: "db.py supersede-source"
+    guards:
+      - "both rows admitted; A != B; neither already superseded; no chains"
+      - "refused while a LIVE determination rests on A (retire the specification first)"
+      - "a blank reason is refused; NO un-supersede verb exists"
+    evidence:
+      - {file: scripts/db.py, func: supersede_source, needle: "itself superseded by"}
+      - {file: scripts/db.py, func: supersede_source, needle: "carries a live determination"}
+      - {file: scripts/db.py, func: supersede_source, needle: "determinations_resting_on"}
+  - id: M02.t4
+    claim: "citation_mining_status: pending -> mined | deferred; an executed pass is never regressed to 'deferred' without an explicit --status"
+    from: "pending"
+    to: "mined | deferred | not-applicable"
+    via: "db.py log-mining"
+    guards: ["a deferral over a 'mined' source is refused unless --status is passed"]
+    evidence:
+      - {file: scripts/db.py, func: log_mining, needle: "would regress it to 'deferred'"}
+  - id: M02.t5
+    claim: "data_capture_status: pending -> captured, written by add-extraction / derive-extraction in the same transaction (a cross-stage write, judgment -> evidence); never moves back."
+    from: "pending"
+    to: "captured"
+    via: "db.py add-extraction | derive-extraction"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: insert_extraction, needle: "SET data_capture_status='captured'"}
+  unreachable_note: "data_capture_status 'none-extractable' and 'deferred' have no writer on main (PRC/OPS-04 require a status column to ship with its writer)."
+  probe: P-STATUS-WRITERS
+
+- id: M03
+  name: "Vocabulary growth -- observed phrase to parameter"
+  stage: evidence -> judgment -> base
+  holder: "observed_terms -> term_adjudications -> terms -> base_parameters | parameter_declinations"
+  states: [OBSERVED, ADJUDICATED-NAMES-EXISTING, ADJUDICATED-NAMES-NEW, ADJUDICATED-NOT-OURS, ADJUDICATED-DEFERRED, TERM, PARAMETER-ACTIVE, DECLINED]
+  abstract: true
+  vocabs:
+    - {holder: term_adjudications.outcome, values: [NAMES-EXISTING, NAMES-NEW, NOT-OURS, DEFERRED]}
+    - {holder: base_parameters.status, values: [active, merged, retired]}
+  atoms: [CLM-040, LED-113, LED-114, LED-115, LED-116, LED-148, LED-149, LED-150, LED-203, RES-11, RES-16, DRS-078]
+  transitions:
+  - id: M03.t1
+    from: "(none)"
+    to: "OBSERVED"
+    via: "db.py observe-term"
+    guards:
+      - "accepts NO term_id (an observation is unjudged)"
+      - "the source is admitted and not a tombstone; one row per (ref, surface form, language)"
+    evidence:
+      - {file: scripts/db.py, func: observe_term, needle: "does not accept a term_id"}
+      - {file: scripts/db.py, func: observe_term, needle: "_refuse_tombstone"}
+  - id: M03.t2
+    from: "OBSERVED"
+    to: "ADJUDICATED-*"
+    via: "db.py adjudicate-term"
+    guards:
+      - "a rationale is required; NAMES-* needs a term_id that exists; NOT-OURS and DEFERRED must carry none"
+      - "divergent adjudications are DELIBERATELY allowed (no uniqueness on observation_id) -- a contest, not an error"
+    evidence:
+      - {file: scripts/db.py, func: adjudicate_term, needle: "Divergent adjudications are DELIBERATELY permitted"}
+      - {file: scripts/db.py, func: adjudicate_term, needle: "names a term, so --term-id is required"}
+  - id: M03.t3
+    from: "OBSERVED"
+    to: "TERM + ADJUDICATED-NAMES-NEW (one act)"
+    via: "db.py add-term --from-observation"
+    guards:
+      - "a canonical name carrying a digit, comparator or min/max word is refused (the container may not state its answer)"
+      - "a name that already exists is refused and pointed at NAMES-EXISTING"
+      - "a term can only be minted FROM an observation"
+    evidence:
+      - {file: scripts/db.py, func: insert_term, needle: "states a determination in its own name"}
+      - {file: scripts/db.py, func: insert_term, needle: "That makes this NAMES-EXISTING"}
+  - id: M03.t4
+    from: "TERM"
+    to: "PARAMETER-ACTIVE"
+    via: "db.py add-parameter"
+    guards:
+      - "refused for a DECLINED term; refused for a value-bearing name; one parameter per term"
+      - "DELIBERATELY NOT refused: a term with no adjudication (the base vocabulary predates observe/adjudicate)"
+      - "created active; there is no --status and no --merged-into"
+    evidence:
+      - {file: scripts/db.py, func: insert_parameter, needle: "was DECLINED as a parameter by"}
+      - {file: scripts/db.py, func: insert_parameter, needle: "One parameter per term"}
+      - {file: scripts/db.py, func: insert_parameter, needle: "DELIBERATELY NOT REFUSED: a term with no adjudication"}
+  - id: M03.t5
+    from: "TERM"
+    to: "DECLINED (terminal)"
+    via: "db.py decline-parameter"
+    guards:
+      - "refused if the term is already a parameter of ANY status; one declination per term; a reason is required"
+      - "there is NO un-decline verb: reversal is a recorded decision and a compensating migration"
+    evidence:
+      - {file: scripts/db.py, func: decline_parameter, needle: "DELIBERATELY ABSENT: an un-decline verb"}
+      - {file: scripts/db.py, func: decline_parameter, needle: "is already declined, by"}
+  - id: M03.t6
+    claim: "base_parameters.status 'merged' and 'retired' have NO writer on main; the only UPDATE of base_parameters is set-parameter-direction."
+    from: "PARAMETER-ACTIVE"
+    to: "merged | retired"
+    via: "(none on main)"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: set_parameter_direction, needle: "UPDATE base_parameters SET"}
+  probe: P-PARAM-LIFECYCLE
+
+- id: M04
+  name: "Captured value (source_value_extractions)"
+  stage: judgment
+  holder: source_value_extractions.extraction_status
+  states: [preliminary, reviewed, verified, contradicted, absent-confirmed]
+  atoms: [LED-093, LED-100, LED-101, LED-106, LED-201, LED-202, RES-03, RES-16, PIP-09, PIP-10]
+  transitions:
+  - id: M04.t1
+    from: "(none)"
+    to: "preliminary (default) | any value passed"
+    via: "db.py add-extraction"
+    guards:
+      - "the source is admitted and not a tombstone"
+      - "the source is admitted to the NAMED slug (source_slug_links) -- ref<->slug coherence, NOT parameter<->slug"
+      - "parameter_id required, parameter exists and is ACTIVE; at least one lens column, and that lens code must exist in its registry table"
+      - "a claim_text is required; claim_type 'absent' carries no value and must be figure_role 'finding'"
+      - "a value from a tier >= 4 source needs a structured locator or [UNVERIFIED-QUANT]"
+      - "figure_role is required; --relation is required ('none' or edges); 'derived' needs a derived_from base edge"
+    evidence:
+      - {file: scripts/db.py, func: insert_extraction, needle: "is not admitted to slug"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "--parameter-id is required"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "an extraction must be stated in at least one lens"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "--figure-role is required"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "--relation is required"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "R3: \\{ref\\} is tier"}
+  - id: M04.t2
+    from: "any"
+    to: "any (extraction_method, extraction_status, figure_role, comparator, root_type, root_ref_id only)"
+    via: "db.py amend-extraction"
+    guards: ["a changed claimed_value or claim_text is NOT amendable: it is a second row and a contest (D-0168)"]
+    evidence:
+      - {file: scripts/db.py, needle: "_AMENDABLE_SVE_FIELDS = frozenset"}
+  - id: M04.t3
+    from: "(none)"
+    to: "preliminary | ..."
+    via: "db.py derive-extraction"
+    guards: ["the base figure must already be extracted (add-extraction first); a derived row without a base is refused"]
+    evidence:
+      - {file: scripts/db.py, func: derive_extraction, needle: "extract the base figure first with add-extraction"}
+  unreachable_note: "No verb deletes an extraction. Which of reviewed / verified / contradicted / absent-confirmed may set a published value is OPEN (LED-202)."
+  probe: P-V2
+
+- id: M05
+  name: "Determination (specifications)"
+  stage: specification
+  holder: specifications.state
+  states: [stated, provisional, pending, not_applicable]
+  atoms: [LED-010, LED-056, LED-151, LED-152, LED-153, PIP-01, PIP-02, PIP-03, PIP-05, EVI-361, EVI-364, EVI-052]
+  transitions:
+  - id: M05.t1
+    from: "(none)"
+    to: "stated"
+    via: "scripts/assess/assess_cell.py --emit-sql -> emit_batch_sql -> emit_data_migration -> migrate_db"
+    guards:
+      - "at least one anchoring source among T1 / Co-1 / T2 / Co-2 that survived the anchoring gates (B5a tier derivability, non-anchoring conditioning)"
+      - "governing_refs non-empty"
+    evidence:
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "state = \"stated\""}
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "anchors = anchoring\\(b\\[\"t1\"\\]\\)"}
+  - id: M05.t2
+    from: "(none)"
+    to: "provisional"
+    via: "assess_cell.determine"
+    guards:
+      - "T3-clinical is the only anchoring axis (tier3-stated-threshold DR, 2026-07-12)"
+      - "or: a derivation-handshake gate BINDS on a cell that would be stated (the cap); the gate id is not copied onto the row"
+      - "or: a regulatory-stratum-only basis (a floor claim, never best practice)"
+    evidence:
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "T3-clinical-alone -> provisional"}
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "if state == \"stated\" and any\\(g\\[\"binds\"\\] for g in gates\\)"}
+  - id: M05.t3
+    from: "(none)"
+    to: "pending (+ a gap row)"
+    via: "assess_cell.determine"
+    guards:
+      - "no extraction for this parameter, or every holder is disqualified, or every one failed the tier gate"
+      - "or: T3-grey is the only evidence (does not even reach provisional)"
+    evidence:
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "T3-grey-alone does not even reach provisional"}
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "gap_needed = True"}
+  - id: M05.t4
+    from: "live"
+    to: "retired (row stays as history)"
+    via: "db.py retire-specification"
+    guards:
+      - "a reason is required (a trigger also refuses a retirement without one)"
+      - "retired twice is refused; --superseded-by may fill an empty pointer later; a determination is superseded once"
+      - "the replacement does not exist at retirement: the order is retire, re-determine, then link"
+    evidence:
+      - {file: scripts/db.py, func: retire_specification, needle: "Retiring it twice records nothing new"}
+      - {file: scripts/db.py, func: retire_specification, needle: "LINKING IS A SECOND CALL BY DESIGN"}
+  - id: M05.t5
+    claim: "'not_applicable' has NO producer on main: the engine never assigns it (only a NULL not_applicable_rationale is written). The documented 'any -> not_applicable' edge (EVI-361) is therefore not realised."
+    from: "any"
+    to: "not_applicable"
+    via: "(none)"
+    guards: []
+    evidence:
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "state = \"not_applicable\"", absent: true}
+  - id: M05.t6
+    claim: "The engine stores no from-state: a state change is retire + re-determine, so the documented transition table (EVI-361/364) is not enforced as a relation."
+    from: "any"
+    to: "any"
+    via: "retire-specification then assess_cell"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: retire_specification, needle: "the engine refuses to run while a live row stands"}
+  probe: P-ENG-STATE
+
+- id: M06
+  name: "Determination gate"
+  stage: specification
+  holder: determination_gates (resolved_at IS NULL | NOT NULL)
+  states: [OPEN, RESOLVED]
+  abstract: true
+  vocabs:
+    - {holder: determination_gates.verdict, values: [UNLINKED, MISLINKED, UNDER-CONSERVATIVE, CONTRADICTS]}
+  atoms: [PIP-05, LED-128]
+  transitions:
+  - id: M06.t1
+    from: "(none)"
+    to: "OPEN (verdict UNLINKED | MISLINKED | UNDER-CONSERVATIVE | CONTRADICTS)"
+    via: "db.py raise-determination-gate"
+    guards: ["verdict is in the column's own CHECK; the row carries identity_code only (P-GT)"]
+    evidence:
+      - {file: scripts/db.py, func: raise_determination_gate, needle: "def raise_determination_gate"}
+  - id: M06.t2
+    from: "OPEN"
+    to: "RESOLVED"
+    via: "db.py resolve-determination-gate"
+    guards: ["a rationale is required"]
+    evidence:
+      - {file: scripts/db.py, func: resolve_determination_gate, needle: "UPDATE determination_gates SET resolved_at"}
+
+- id: M07
+  name: "Gap"
+  stage: synthesis
+  holder: gaps.status
+  states: ["OPEN*", "CLOSED*"]
+  abstract: true
+  atoms: [LED-155, RES-06, RES-14]
+  transitions:
+  - id: M07.t1
+    from: "(none)"
+    to: "OPEN"
+    via: "db.py add-gap | assess_cell (INSERT INTO gaps when gap_needed)"
+    guards: []
+    evidence:
+      - {file: scripts/assess/assess_cell.py, needle: "INSERT INTO gaps"}
+      - {file: scripts/db.py, func: insert_gap, needle: "def insert_gap"}
+  - id: M07.t2
+    from: "OPEN"
+    to: "CLOSED"
+    via: "db.py close-gap"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: close_gap, needle: "def close_gap"}
+  unreachable_note: "status is constrained only by LIKE 'OPEN%' / LIKE 'CLOSED%'; the sub-vocabulary after the prefix is free text."
+
+- id: M08
+  name: "Adversarial pass and its findings"
+  stage: process
+  holder: adversarial_passes.closed_at; adversarial_findings.disposition
+  states: [RECORDED, DISPOSED, CLOSED]
+  abstract: true
+  vocabs:
+    - {holder: adversarial_findings.disposition, values: [REPAIRED, REJECTED, PROVISIONAL-DISPUTED, OWNER-RULED]}
+    - {holder: adversarial_findings.verdict, values: [SUSTAINED, SURVIVED, NOT-ATTACKED, WITHHELD-FOR-OWNER]}
+  atoms: [LED-066, LED-067, LED-068, LED-070, LED-192, PRC-156, PRC-169]
+  transitions:
+  - id: M08.t1
+    from: "(none)"
+    to: "RECORDED"
+    via: "db.py record-adversarial-pass"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: record_adversarial_pass, needle: "def record_adversarial_pass"}
+  - id: M08.t2
+    from: "RECORDED"
+    to: "DISPOSED (REPAIRED | REJECTED | PROVISIONAL-DISPUTED | OWNER-RULED)"
+    via: "db.py dispose-adversarial-finding"
+    guards:
+      - "REPAIRED needs --ref to be a real repair; OWNER-RULED needs --ref naming the ruling"
+    evidence:
+      - {file: scripts/db.py, func: dispose_adversarial_finding, needle: "disposition=REPAIRED requires --ref"}
+      - {file: scripts/db.py, func: dispose_adversarial_finding, needle: "disposition=OWNER-RULED requires --ref"}
+  - id: M08.t3
+    from: "RECORDED (disposed or not)"
+    to: "CLOSED"
+    via: "db.py close-adversarial-pass"
+    guards:
+      - "every lens in the column's own CHECK has a finding row (a NOT-ATTACKED row counts as covering its lens if its method says why)"
+      - "at least one row is SURVIVED (a zero-finding pass must be able to show what it tried)"
+      - "every SURVIVED row names an artefact that exists"
+      - "it does NOT read `disposition`: a finding need not be disposed before the pass closes"
+    evidence:
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "no finding for lens\\(es\\)"}
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "no SURVIVED row"}
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "disposition", absent: true}
+      - {file: scripts/db.py, func: close_adversarial_pass, needle: "UPDATE adversarial_passes SET closed_at"}
+
+- id: M09
+  name: "Code lead (clue store)"
+  stage: research
+  holder: research_code_leads.status
+  states: [REFERENCE-ONLY, RETRIEVED, SUPERSEDED]
+  atoms: [RES-12, DRS-209, DRS-218]
+  transitions:
+  - id: M09.t1
+    from: "(none)"
+    to: "REFERENCE-ONLY"
+    via: "db.py add-code-lead"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: insert_code_lead, needle: "INSERT INTO research_code_leads"}
+  - id: M09.t2
+    from: "REFERENCE-ONLY"
+    to: "RETRIEVED | SUPERSEDED"
+    via: "db.py update-code-lead"
+    guards: []
+    evidence:
+      - {file: scripts/db.py, func: update_code_lead, needle: "def update_code_lead"}
+
+- id: M10
+  name: "Research batch / session (process machine)"
+  stage: process
+  holder: scratchpad/CURRENT + the session record
+  states: [FRESH, ORIENTED, SESSION-OPEN, WORKING, ADVERSARIAL, DOD-GATED, EMITTED, PREFLIGHT-CLEAN, PR-OPEN, MERGED]
+  abstract: true
+  atoms: [CLM-016, CLM-020, CLM-021, CLM-022, CLM-023, CLM-024, CLM-030, CLM-046, RES-18, LED-066, LED-067, LED-190]
+  transitions:
+  - id: M10.t1
+    from: "FRESH"
+    to: "ORIENTED"
+    via: "bash .claude/hooks/ensure-deps.sh; /orient"
+    guards: ["ensure-deps exits 0 on failure by design, so the install is checked before any red result is believed"]
+    evidence:
+      - {file: CLAUDE.md, needle: "exits 0 on failure by design"}
+      - {file: .claude/commands/orient.md, needle: "before doing anything else"}
+  - id: M10.t2
+    from: "ORIENTED"
+    to: "SESSION-OPEN"
+    via: "/session-open (creates the batch folder and sets scratchpad/CURRENT)"
+    guards: ["CURRENT holds the DB session stem; the scratchpad folder is named identically"]
+    evidence:
+      - {file: .claude/commands/session-open.md, needle: "Do this FIRST"}
+  - id: M10.t3
+    from: "SESSION-OPEN"
+    to: "WORKING"
+    via: "scratch DB copy + db.py verbs (GUIDEBOOK_DB_PATH inline on every call)"
+    guards: ["the canonical DB's sha256 must not move until the migration is applied"]
+    evidence:
+      - {file: CLAUDE.md, needle: "The canonical DB's sha256 must not move"}
+  - id: M10.t4
+    from: "WORKING"
+    to: "ADVERSARIAL"
+    via: "/adversarial (at most one pass per batch; no pass on a pass; no remediation scheduling)"
+    guards: []
+    evidence:
+      - {file: .claude/commands/adversarial.md, needle: "adversarial"}
+  - id: M10.t5
+    from: "ADVERSARIAL"
+    to: "DOD-GATED"
+    via: "/batch-done (research_batch_dod, adversarial_pass_audit, search_log_completeness on CURRENT)"
+    guards: ["the session id is the bare stem in the DB and carries .md in pointer files; the wrong form scopes the gate to zero rows"]
+    evidence:
+      - {file: .claude/commands/batch-done.md, needle: "research_batch_dod.py --session"}
+  - id: M10.t6
+    from: "DOD-GATED"
+    to: "EMITTED"
+    via: "scripts/research/emit_batch_sql.py -> scripts/emit_data_migration.py -> scripts/migrate_db.py"
+    guards: ["a data migration is append-only and immutable once committed; fix forward"]
+    evidence:
+      - {file: CLAUDE.md, needle: "scratch copy → `scripts/db.py` subcommands"}
+  - id: M10.t7
+    from: "EMITTED"
+    to: "PREFLIGHT-CLEAN"
+    via: "scripts/preflight.sh; run_checks.py --changed-from origin/main --explain; --selftest after any rename"
+    guards: ["run once, when the diff is ready -- not after every edit"]
+    evidence:
+      - {file: CLAUDE.md, needle: "run_checks.py --selftest"}
+  - id: M10.t8
+    from: "PREFLIGHT-CLEAN"
+    to: "PR-OPEN"
+    via: "create_pull_request, then unsubscribe_pr_activity immediately"
+    guards: ["no subscribe_pr_activity, no send_later, no create_trigger; the final push is never [skip ci]"]
+    evidence:
+      - {file: CLAUDE.md, needle: "Do not watch PRs. Open the PR last"}
+  - id: M10.t9
+    from: "PR-OPEN"
+    to: "MERGED"
+    via: "the owner"
+    guards: ["a research PR follows the tooling-only PR (rule 10); if the PR merges mid-session, CURRENT and the folder are moved together"]
+    evidence:
+      - {file: CLAUDE.md, needle: "Research and the tooling it uses ship apart"}

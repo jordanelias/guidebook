@@ -1,0 +1,736 @@
+# conflicts.yaml -- the ACTIVE-CONFLICTS REGISTER. Hand-adjudicated; every atom id below is checked to exist
+# by `build_graph.py --check`, and every `probe` id must exist in the generator and be re-run on each build.
+#
+# WHAT A CONFLICT IS HERE: two or more ACTIVE atoms (or an atom and a measured mechanism) that cannot both be
+# obeyed/true. A candidate pair from the mechanical detector is NOT a conflict until it is adjudicated here.
+# Nothing in this file is a ruling. `direction` states what CLAUDE.md rule 0 / the precedence chain implies and
+# says who can actually settle it; where the later statement is not an owner statement the direction is
+# "UNSETTLED". Doctrine (mission, tiers, taxonomy, CRPD posture, licensing, jurisdiction) is owner-gated
+# (CLAUDE.md section 8), so resolver=OWNER for those even when the direction is clear.
+#
+# class:    RULING-RULING   two ratified/owner statements disagree
+#           RULING-DOC      a standing document restates something a later ruling changed (stale doc loses)
+#           RULING-MECHANISM  a ruling the schema/code/CI does not carry (measured by a probe, not read off prose)
+#           DOC-DOC         two documents disagree and no later owner statement decides between them
+#           UNRECORDED      an owner statement whose only home is a session record (invisible to a ledger search)
+#           PROVENANCE      a statement is treated as binding although its recorded speaker/status is weaker
+# severity: S1 changes what work may be done, or what a gate/engine permits, today
+#           S2 misleads a reader or agent; no gate or engine is affected
+#           S3 housekeeping (count drift, stale cross-reference)
+# Each `sides` entry: atoms (ids) + says (the reading of those atoms, one line).
+
+conflicts:
+
+# ---------------------------------------------------------------- A. doctrine and evidence model
+- id: C-001
+  class: RULING-DOC
+  severity: S2
+  title: "Does the guidebook teach professional judgment?"
+  atoms: [MIS-02, LED-024, MIS-08, POS-04]
+  sides:
+    - {atoms: [MIS-02], says: "mission-and-epistemics.md: 'The guidebook teaches professional judgment; it does not substitute for it.'"}
+    - {atoms: [LED-024], says: "ledger 2026-04-26 19:25: the guidebook 'does not teach professional judgment' and confers no competence."}
+    - {atoms: [MIS-08], says: "the mission file's header says CANONICAL/locked 2026-04-26 05:29 while its Status section says 'not yet operative'."}
+  direction: "The ledger entry (a ratified RULE block recording the owner's ruling, LED-024) is later than the header lock (19:25 vs 05:29), so by rule 0 it supersedes the mission sentence on contact; the mission text is therefore stale. POS-04 records that the mission file is already owed an edit (adjudicate-vs-dictate)."
+  resolver: OWNER
+  confidence: high
+  note: "Mission text is doctrine; an agent may not edit it without owner sign-off (CLAUDE.md section 8)."
+
+- id: C-002
+  class: RULING-DOC
+  severity: S2
+  title: "Two markers or three"
+  atoms: [MIS-03, LED-015, LED-016, LED-017, CLM-038]
+  sides:
+    - {atoms: [MIS-03], says: "mission file: every specification carries one of two markers, filled or empty."}
+    - {atoms: [LED-015, LED-016, LED-017, CLM-038], says: "three markers: filled (confirmed), half (policy/standards only), empty (grey/thin); unmarked is an error."}
+  direction: "Ledger records the two-marker rule as reconciled 2026-07-13 (LED-015 AMENDED). Three markers govern; the mission file is stale."
+  resolver: OWNER
+  confidence: high
+
+- id: C-003
+  class: DOC-DOC
+  severity: S3
+  title: "'Anchors outright' (band) versus 'T3 alone is provisional' (state): one word, two axes"
+  atoms: [MIS-04, LED-010, PIP-03, EVI-052, EVI-306, EVI-325, EVI-128]
+  sides:
+    - {atoms: [EVI-052], says: "tier-system section 8 (owner directive 2026-07-20, DR-2026-07-20 weighted-strength anchor model): T3-clinical sits in the Full band, which 'anchors a best-practice claim outright'."}
+    - {atoms: [LED-010, PIP-03, EVI-306, EVI-325, EVI-128], says: "T3 alone is not enough for `stated`: T3-clinical alone is provisional (tier3-stated-threshold DR, 2026-07-12; methodology 2.2; contract)."}
+    - {atoms: [MIS-04], says: "the mission file's rule: stated = derived from >= Tier 3, Co-1 or Co-2 evidence."}
+  probe: P-ENG-T3
+  direction: "Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 requires the documented comment and the assignment that immediately follows it; a reworded comment would turn it red without the logic having changed). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-004
+  class: RULING-MECHANISM
+  severity: S1
+  title: "T3-grey and a lone T6 source may anchor a floor claim (owner directive 2026-07-20) -- the engine returns pending for T3-grey alone"
+  atoms: [EVI-049, EVI-055, EVI-326, EVI-338, LED-013, POS-03]
+  sides:
+    - {atoms: [EVI-049, EVI-055], says: "DR-2026-07-20 weighted-strength anchor model (owner directive 2026-07-20: 'all evidence tiers can be used to anchor a best practice claim ... T3-grey/T6 weak'): the weak band 'anchors only a floor/convergence claim', rendered with an honesty flag."}
+    - {atoms: [EVI-326, EVI-338], says: "evidence-methodology (ratified 2026-07-13): T3-grey alone and a single T6 source yield pending, i.e. no claim."}
+  probe: P-ENG-T3
+  direction: "The weak band comes from the 2026-07-20 owner directive, which is later than the 2026-07-12 tier3-stated-threshold DR and the 'tier3-threshold DR item 2' that the engine comment cites ('T3-grey-alone does not even reach provisional'), and the methodology text of 2026-07-13. By rule 0 the later directive governs what it touches. Whether it lifts item 2 of the earlier DR for the STATE (the Option A DR keeps the state machine unchanged) or only weights claim strength is not stated, so whether the engine is behind or the directive is band-only is the owner's to say. [CONFIDENCE: medium -- the lone-T6 case is handled by the regulatory branch, which was not re-derived here.]"
+  resolver: OWNER
+  confidence: medium
+
+- id: C-005
+  class: RULING-RULING
+  severity: S1
+  title: "A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known'"
+  atoms: [LED-018, LED-013, LED-014, EVI-034, EVI-035, EVI-058, EVI-094, EVI-241, EVI-394, EVI-229, EVI-230, EVI-194, PIP-06, POS-03]
+  sides:
+    - {atoms: [LED-018, EVI-034, EVI-035], says: "2026-07-13 and tier-system section 3: a basis of T4-T6 only never renders best-practice language in any register; a converged T5/T6 value is never 'best practice'."}
+    - {atoms: [LED-013, LED-014, EVI-094, EVI-241, POS-03], says: "2026-07-21 Option A: code-consensus-only claims may render at the weak band if flagged; never unflagged or above weak."}
+    - {atoms: [EVI-394], says: "methodology 3.4 offers the bare construction 'Code requires [value] per [standard]' for T4-T6-only cells, against the I3 flag-and-caveat requirement (EVI-229/230/194)."}
+  direction: "Option A (2026-07-21) is the later owner directive, and EVI-058/EVI-229/EVI-230 quote its amended text, which is live. LED-018 (2026-07-13) is not marked amended in the ledger; treat it as amended in part and correct its status. EVI-034/EVI-035 (the unamended tier-system section 3 prohibition) stand only for cells without anchoring evidence. Render-side enforcement is the quarantined register check (see C-028)."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-006
+  class: DOC-DOC
+  severity: S3
+  title: "Seven tiers, or T1-T6 plus two tracks"
+  atoms: [EVI-002, EVI-085, EVI-269, PRC-100, ENT-392, EVI-003, EVI-284, EVI-010, EVI-275, EVI-076, EVI-069, EVI-070]
+  sides:
+    - {atoms: [EVI-002], says: "tier-system: T1-T6 plus Co-1 and Co-2 tracks; the schema column `tier` is an integer 1-6."}
+    - {atoms: [EVI-085, EVI-269, PRC-100, ENT-392], says: "evidence-architecture, evidence-methodology, the process rules and legal-regulatory speak of 'seven tiers'."}
+    - {atoms: [EVI-003, EVI-284], says: "tier number is a claim-type, not quality (tier-system) vs 'higher numbers = weaker evidence' (methodology 1.2)."}
+    - {atoms: [EVI-010, EVI-275], says: "T2 is described as 'below international standards' though standards are T4, which rank lower."}
+    - {atoms: [EVI-076, EVI-069, EVI-070], says: "the practice (Co-3) encoding sits 'below Co-1/Co-2' yet a firm POE can be placed at T1, which ranks alongside Co-1."}
+  direction: "Tier definitions are doctrine; no later owner statement decides between the readings."
+  resolver: OWNER
+  confidence: high
+
+- id: C-007
+  class: DOC-DOC
+  severity: S2
+  title: "Cell-state transition table contradicts itself"
+  atoms: [EVI-361, EVI-364, EVI-352, EVI-322, EVI-323]
+  sides:
+    - {atoms: [EVI-361], says: "transition table: any -> not_applicable."}
+    - {atoms: [EVI-364], says: "the same section lists stated -> not_applicable among transitions that do not occur."}
+    - {atoms: [EVI-352], says: "methodology 2.6 cites 'section 2.2 condition (3)' for Co-2; after the G7 insertion Co-2 is condition 4 (EVI-322, EVI-323)."}
+  probe: P-ENG-STATE
+  direction: "The engine recomputes state per run and stores no from-state, so the table is not enforced as a transition relation; see machine M05."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-008
+  class: RULING-DOC
+  severity: S2
+  title: "Cell key still written (parameter x population) in the methodology"
+  atoms: [EVI-171, EVI-314, EVI-351, EVI-374, EVI-239, EVI-235, EVI-388, EVI-415, EVI-407]
+  sides:
+    - {atoms: [EVI-171], says: "evidence-architecture: a cell is parameter_id x at least one lens column."}
+    - {atoms: [EVI-314, EVI-351, EVI-374], says: "evidence-methodology 2.1, 2.5, 3.2 still say (parameter x population), with population-specific rationales."}
+    - {atoms: [EVI-239, EVI-235], says: "architecture reserves 'Tier N' for the evidence ladder and forbids 'Tier 1/Tier 2' as design modes."}
+    - {atoms: [EVI-388, EVI-415, EVI-407], says: "methodology 3.2-4.3 still use 'Tier 1 design range', 'routes to Tier 2', 'applies at Tier 1 only'."}
+  direction: "Owner rulings 2026-08-26 (subject) and 2026-08-28/2026-09-01 (lens) are later than the methodology text; the methodology is stale."
+  resolver: AGENT
+  confidence: high
+  note: "Pure restatement drift; correcting it changes no doctrine but the methodology is a ratified document, so list it for the owner's merge."
+
+- id: C-009
+  class: DOC-DOC
+  severity: S2
+  title: "Source-type to tier mapping: national frameworks and standards"
+  atoms: [EVI-301, EVI-302, EVI-303, EVI-280]
+  sides:
+    - {atoms: [EVI-301, EVI-302], says: "methodology 1.5: a source's tier follows from its type; Tier 2 organizational guidelines may carry national_fw."}
+    - {atoms: [EVI-303, EVI-280], says: "section 1.1 table: national_fw is Tier 5; standard_eb spans T2/T4/T5, occasionally T3 (architecture G6)."}
+  probe: P-TIER-DERIVE
+  direction: "UNSETTLED in prose. The ratified table schemas/tier_derivation.py keys tier on (evidence_type, scope); the adjudication_integrity check that would compare stored tier to it is QUARANTINED (see C-031)."
+  resolver: OWNER
+  confidence: medium
+
+# ---------------------------------------------------------------- B. pipeline structure and stage assignment
+- id: C-010
+  class: RULING-DOC
+  severity: S3
+  title: "Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage'"
+  atoms: [DRS-038, DRS-039, DRS-040, DRS-124, DRS-125, DRS-131, LED-087, LED-124, LED-125, CLM-027]
+  sides:
+    - {atoms: [DRS-038, LED-087], says: "five-stage spine; DRS-038 and LED-087 are already marked SUPERSEDED."}
+    - {atoms: [DRS-039, DRS-040], says: "08-24 section 2.2: specifications is a table judgment writes, not a stage -- not marked superseded."}
+    - {atoms: [LED-124, LED-125, CLM-027, DRS-124, DRS-125, DRS-131], says: "owner 2026-08-27: seven stages; a table is never a stage; specification is a stage."}
+  direction: "LED-124 (owner, 2026-08-27) supersedes DRS-039/DRS-040 on contact. Status correction owed on those two atoms: mark SUPERSEDED."
+  resolver: AGENT
+  confidence: high
+
+- id: C-011
+  class: RULING-DOC
+  severity: S3
+  title: "Is `base` a stage, and is it 'substrate'?"
+  atoms: [DRS-126, DRS-127, DRS-130, DRS-132, DRS-157, LED-123, LED-124]
+  sides:
+    - {atoms: [DRS-126, DRS-127, DRS-130, DRS-132, LED-123, LED-124], says: "D-0167: base is stage one; 'substrate' was never owner vocabulary and is reserved for construction elements."}
+    - {atoms: [DRS-157], says: "D-0175 is titled 'item_population_links are SUBSTRATE, provisionally'."}
+  direction: "D-0167 and the owner's 2026-08-27 words (LED-123) are later than D-0175's title only if D-0175 is read as an earlier usage; dates in the DR set make D-0175 later. UNSETTLED which wins; the term is retired in practice and D-0175's subject (the item layer) is gone."
+  resolver: NONE
+  confidence: medium
+
+- id: C-012
+  class: RULING-MECHANISM
+  severity: S1
+  title: "source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md)"
+  atoms: [LED-106, LED-100, LED-108, OPS-03, PIP-10]
+  sides:
+    - {atoms: [LED-106], says: "ledger entry headed 'Owner ruling 2026-08-27, adopting item #2 of the architecture note' (the owner's words are the two quoted evidence/judgment descriptions; the table assignment is the ledger author's application, which the owner adopted)."}
+    - {atoms: [PIP-10], says: "pipeline-contract: the hand-off from evidence to judgment is source_value_extractions.ref_id NOT NULL, no UNIQUE -- the fan-out from one source to many judgment rows."}
+  probe: P-STAGE-SVE
+  direction: "governance/stage-map.yaml renders the table at EVIDENCE and records the dispute as open (disputed: block). CLAUDE.md section 3's stage table says evidence holds 'extraction'. LED-106 is the adopted ruling (OWNER_RELAYED); under rule 0 the map and CLAUDE.md are what to correct. The consequence is not cosmetic: add-extraction writes evidence_sources.data_capture_status in the same transaction, a judgment-to-evidence write that the code comment itself calls 'evidence the column is in the wrong home'."
+  resolver: OWNER
+  confidence: high
+
+- id: C-013
+  class: RULING-MECHANISM
+  severity: S2
+  title: "The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission"
+  atoms: [LED-108, OPS-06, DRS-098, DRS-099, DRS-164, DRS-249, DRS-298, DRS-151]
+  sides:
+    - {atoms: [LED-108, DRS-098, DRS-099], says: "judgment delivers the tier verdict; evidence_sources.tier is to be retired (D-0168)."}
+    - {atoms: [OPS-06], says: "pipeline-operations: admission and tier adjudication are the gate between discovery and extraction, recorded on the source."}
+    - {atoms: [DRS-164, DRS-249, DRS-298, DRS-151], says: "D-0179 sets evidence_sources.tier for a source; co1-operational puts tier (int 1-6) on EvidenceSource; D-0178 notes the column carries no CHECK."}
+  probe: P-F
+  direction: "Ruled but not executed (LED-108 ambiguity: 'the move is queued, not done'). Readers that must be re-pointed first: add-extraction's R3 guard and assess_cell's gather both read evidence_sources.tier."
+  resolver: AGENT
+  confidence: high
+
+- id: C-014
+  class: RULING-RULING
+  severity: S2
+  title: "When does the crossing happen: at judgment, or is applicability a synthesis output?"
+  atoms: [LED-113, LED-118, CLM-040, LED-085, DRS-052, DRS-053, DRS-054, DRS-055, DRS-056, DRS-117, DRS-134, DRS-153, DRS-157, DRS-158, DRS-193, ENT-164, ENT-183, ENT-151, ENT-152, OPI-147]
+  sides:
+    - {atoms: [DRS-052, DRS-053, DRS-054, DRS-055, DRS-056, ENT-151, ENT-152, OPI-147], says: "08-24 section 2.4 (and the operative instrument): applicability is an output of synthesis; zero links before synthesis is correct; writing applicability edges first is the forbidden presupposition."}
+    - {atoms: [LED-113, LED-118, CLM-040], says: "owner 2026-08-27 (D-0173): 'overrule Aug 24 DR. we go evidence>judgment>synthesis' -- CLAUDE.md section 6 (CLM-040, CLAUDE.md's own prose attributing it to the owner, not the owner's words) states the consequence, that the crossing is judgment's output and zero links after judgment is a defect."}
+    - {atoms: [DRS-117, DRS-193], says: "D-0174, issued the same day, still says 'applicability remains a synthesis judgement'; D-0184 builds on that reservation."}
+    - {atoms: [DRS-134, DRS-153, DRS-157, DRS-158, ENT-164, ENT-183], says: "D-0175/6/7 fix or re-derive item-population link sets for named items before synthesis; functional-taxonomy schedules a serves_axes backfill and a zero-axes gap query."}
+  direction: "LED-113 supersedes the 08-24 deferral on contact. D-0174's residual sentence and D-0184's reliance on it are not reconciled. D-0175-0177 operate on the deleted item layer (see C-019) and are inert."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-015
+  class: DOC-DOC
+  severity: S3
+  title: "Evidence collection: 'a cursory scan' or a stage that judges relevance"
+  atoms: [DRS-097, DRS-120, DRS-116, DRS-121, LED-114, LED-195, LED-197]
+  sides:
+    - {atoms: [DRS-097, LED-114], says: "D-0168: the owner defines evidence collection as a cursory scan that lists every concept/topic/phrase; judgment deep-reads."}
+    - {atoms: [DRS-120, DRS-116, DRS-121], says: "D-0174: evidence collection judges relevance and must not be treated as a pure log."}
+    - {atoms: [LED-195, LED-197], says: "2026-10-09 scan contract: every admitted source is scanned for any and all applicable parameters; a multi-term source is harvested across all of them."}
+  direction: "UNSETTLED between D-0168 and D-0174 (same-day DRs). The scan contract (owner, 2026-10-09) is later and asks for more than 'cursory', but it names the verb (scan) rather than the stage; stage placement of the scan is not stated."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-016
+  class: DOC-DOC
+  severity: S3
+  title: "Pointer discipline: enforced by schema shape, or not enforced"
+  atoms: [DRS-046, DRS-037, CLM-015, LED-077, LED-078, DRS-062, DRS-064, DRS-227, DRS-228]
+  sides:
+    - {atoms: [DRS-046, DRS-037], says: "08-24 DR: pointer discipline is enforced by schema shape, not by a gate."}
+    - {atoms: [CLM-015], says: "CLAUDE.md rule 5: NOT ENFORCED -- you are the gate."}
+    - {atoms: [DRS-064, DRS-227, DRS-228], says: "generated DRs say 'edit the register, not this file' and that C9 catches drift; D-0188 says no generator exists, the header is wrong and C9 only checks each file is cited."}
+  direction: "CLAUDE.md (newer, process rule) is the better statement of enforcement; the DR sentences are stale."
+  resolver: AGENT
+  confidence: medium
+
+# ---------------------------------------------------------------- C. vocabulary and lens
+- id: C-017
+  class: RULING-MECHANISM
+  severity: S1
+  title: "'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live"
+  atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166, LED-076, LED-166, CLM-039, ENT-105, ENT-156, ENT-076, DRS-006, DRS-023, DRS-024, DRS-114, DRS-189, DRS-193, DRS-199, OPI-049]
+  sides:
+    - {atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166], says: "owner R3 (2026-08-18, DG-NON, 'standing decisions, do not relitigate'): 'axes' is a bad coined term; use ICF codes directly with their names; `axes` and `item_axis_links` are retired; `population_axis_map` is re-derived mechanically as population-to-ICF."}
+    - {atoms: [LED-076, LED-166, CLM-039], says: "owner 2026-08-24: 'I don't want axis to be used'; owner 2026-09-13: 'AX-' for ICF should never exist anywhere; work in ICF/access-need codes AND names."}
+    - {atoms: [DRS-006, DRS-023, DRS-024], says: "the 2026-08-24 DR: the rename is 'authorized and owed' yet 'NOT DECIDED HERE', to be done as one act and not piecemeal."}
+    - {atoms: [DRS-114, DRS-189, DRS-193, DRS-199, ENT-105, ENT-156, ENT-076, OPI-049], says: "D-0170, D-0184, functional-taxonomy and the operative instrument still treat `axes`, `item_axis_links`, `population_axis_map` and AX-* as live objects (the instrument quarantines the axis map under owner directive D-1)."}
+  probe: [P-AXIS, P-G]
+  direction: "The owner's rulings are consistent and the earliest is recorded, standing and unqualified (R3, with LED-076 and LED-166 later). The 2026-08-24 DR does not reverse them: it scopes WHEN the rename happens ('not piecemeal'), so the retirement is ruled and unexecuted. LED-166 is carried (P-G); the retirement of the vocabulary is not (P-AXIS lists the tables and columns). [CORRECTION: an earlier draft said the 2026-08-18 ruling could not be found; it is in workplan/2026-08-18-handoff-next-session.md section 2 and the research-frame proposal, which the operative instrument names as the RULING RECORD.]"
+  resolver: OWNER+AGENT
+  confidence: high
+
+- id: C-018
+  class: RULING-MECHANISM
+  severity: S2
+  title: "'We don't use the word population' -- the schema, the methodology and three DRs still do"
+  atoms: [LED-127, ADD-001, PIP-15, PRC-082, EVI-171, ENT-040, ENT-192, ENT-206, ENT-236, ENT-247, ENT-222, CLM-043]
+  sides:
+    - {atoms: [LED-127, ADD-001], says: "owner 2026-08-28: \"we don't use the word 'population' though\" (unqualified); the lenses are identity, icf, needs, medical. Only the choice of 'base_taxonomy' as the replacement carries the owner's 'i think'; identity was put back for confirmation and the rename was not applied."}
+    - {atoms: [PIP-15, PRC-082, ENT-236, ENT-247, ENT-222], says: "contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'."}
+    - {atoms: [ENT-040, ENT-192], says: "conceptual-model counts 24 population codes; the population-taxonomy banner says a flat 23."}
+  probe: P-C
+  direction: "The retirement of the word is ruled and unqualified (ADD-001), so PIP-15, PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C)."
+  resolver: OWNER
+  confidence: high
+
+- id: C-019
+  class: RULING-MECHANISM
+  severity: S1
+  title: "The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents"
+  atoms: [CLM-048, CLM-042, CLM-034, PIP-07, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050, WRK-169, WRK-170]
+  sides:
+    - {atoms: [WRK-169, WRK-170], says: "owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database)."}
+    - {atoms: [CLM-048, LED-091], says: "the item layer is emptied (P-UNWRITABLE lists what still points into it) and items is a Part-4 render rollup derived from specifications; never file into an [A-Z]-NN container."}
+    - {atoms: [ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029], says: "conceptual-model and functional-taxonomy: items.item_code is the Part-4 organizing unit; specification values attach to items."}
+    - {atoms: [PRC-027, PRC-059, PRC-068, OPI-047, OPI-048, OPI-050], says: "process rules and the operative instrument cross-reference item-layer cells (F-07, A-16, A-18, AUT)."}
+  probe: P-UNWRITABLE
+  direction: "Rulings of 2026-08-26 and 2026-09-01 supersede the item-keyed documents on contact. Mechanism: the derived UNWRITABLE set (see STATE-GRAPH.md) is the measured residue; renderer queries that still select item_code fail (P-K)."
+  resolver: OWNER+AGENT
+  confidence: high
+
+- id: C-020
+  class: RULING-MECHANISM
+  severity: S2
+  title: "Splinter population link tables: 'both sweeps are done' versus five tables still present"
+  atoms: [LED-132, LED-128, CLM-042]
+  sides:
+    - {atoms: [LED-132, CLM-042], says: "owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns."}
+    - {atoms: [CLM-042], says: "CLAUDE.md section 6 states both sweeps are done (and that migration 071 dropped population_code from specifications)."}
+  probe: P-A
+  direction: "Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. Doc overstates; the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10)."
+  resolver: AGENT
+  confidence: high
+
+- id: C-021
+  class: RULING-MECHANISM
+  severity: S2
+  title: "determination_gates attaches to a group through one lens column"
+  atoms: [LED-128, LED-130, PIP-04]
+  sides:
+    - {atoms: [LED-128], says: "any table attaching a determination to a group has four lens columns."}
+    - {atoms: [PIP-04], says: "a medical lens always accompanies another lens; no determination is keyed on medical_code alone."}
+  probe: P-GT
+  direction: "P-GT: determination_gates carries identity_code only. Whether PIP-04 is enforced anywhere is not probed; the specifications CHECK is 'at least one' (LED-130), which admits medical alone."
+  resolver: AGENT
+  confidence: medium
+
+- id: C-022
+  class: RULING-DOC
+  severity: S1
+  title: "Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out"
+  atoms: [LED-154, LED-156, LED-157, LED-158, DRS-194, DRS-229, DRS-231, DRS-232, DRS-233, PIP-04]
+  sides:
+    - {atoms: [DRS-194], says: "D-0184 (2026-09-01, an agent decision awaiting owner review, C-023): populating base_taxonomy_medical is 'the owner's alone' (DG-NON)."}
+    - {atoms: [LED-154, DRS-229, DRS-231], says: "owner, 2026-09-11 (quoted): 'Fable 5.1 to adjudicate and resolve all items that are presented to me ... Ensure that medical gets filled out.'"}
+    - {atoms: [DRS-232, DRS-233], says: "D-0188's own text limits the delegation to the 'enumerated items and no further' -- which may be narrower than the owner's 'all items that are presented to me', depending on what was presented."}
+  probe: P-MEDICAL
+  direction: "Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and may be narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed."
+  resolver: OWNER+AGENT
+  confidence: high
+
+- id: C-023
+  class: PROVENANCE
+  severity: S2
+  title: "D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding"
+  atoms: [DRS-200, DRS-180, DRS-181, DRS-189, DRS-193, DRS-237, DRS-104, LED-133, CLM-042]
+  sides:
+    - {atoms: [DRS-200], says: "D-0184 is 'ADOPTED, REVIEW PENDING': a session decision the owner has not yet reviewed (AGENT_PROPOSAL)."}
+    - {atoms: [DRS-180, DRS-181, DRS-189, DRS-193, DRS-237], says: "D-0182 and D-0188 treat it as in force; D-0182 says crossings 'stop being render machinery'."}
+    - {atoms: [DRS-104], says: "D-0170: lens-switching runs through the crossing maps; D-0188 records that mechanism as superseded but D-0170's own text is unmarked."}
+    - {atoms: [LED-133, CLM-042], says: "the ledger quotes the owner ruling of 2026-08-28/2026-09-01 on which D-0184 is built."}
+  direction: "The owner rulings underneath (LED-128, LED-130) are recorded and binding; the specific mechanism D-0184 chooses (lens as column, crossing maps as authoring aid) rests on an unreviewed DR. D-0170 should carry a BY back-pointer."
+  resolver: OWNER
+  confidence: high
+
+- id: C-024
+  class: RULING-DOC
+  severity: S1
+  title: "Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis)"
+  atoms: [DRS-146, DRS-147, DRS-148, DRS-264, DRS-265, DRS-251, CLM-037, LED-021, LED-022]
+  sides:
+    - {atoms: [DRS-146, DRS-147, DRS-148, CLM-037], says: "D-0178 (owner ruling relayed, 2026-08-31): a Co-1 tier is unwarranted-pending unless co1_provenance names the co-production; published_corpus is not a warrant."}
+    - {atoms: [DRS-264, DRS-265, DRS-251], says: "co1-operational (2026-04-29): co1_provenance takes exactly two values and every pre-launch Co-1 citation is published_corpus; grounds Co-1 in peer review, organisational accountability or scholarly authorship."}
+  probe: P-CO1-PROV
+  direction: "D-0178 is later and is the owner's ruling, so by rule 0 the co1-operational vocabulary and its 'every pre-launch Co-1 citation is published_corpus' clause are stale. The data already conforms: P-CO1-PROV finds each Co-1 source carrying prose that names the co-production and none holding only a co1-operational value; the column has no CHECK vocabulary, so nothing enforces it. Correcting co1-operational is a doctrine-document edit, owner-merged."
+  resolver: OWNER
+  confidence: high
+
+- id: C-025
+  class: DOC-DOC
+  severity: S3
+  title: "Co-1 operational record: sub-type lists, retired verification values, ref-id format"
+  atoms: [DRS-248, DRS-294, DRS-274, DRS-301, DRS-241, DRS-242, DRS-293, DRS-295, DRS-296, EVI-365, EVI-369, LED-028]
+  sides:
+    - {atoms: [DRS-248, DRS-294], says: "four Co-1 source types in section 1.1, five co1_source_type values in section 6.1 (adds validated_tool)."}
+    - {atoms: [DRS-274, DRS-301, EVI-365, EVI-369, LED-028], says: "sections 3.4 and 6.3, methodology 2.8 and an old ledger rule still test UNVERIFIED-CLOSED and CLOSED-DELETED; D-0157 made verification_status binary."}
+    - {atoms: [DRS-293, DRS-295, DRS-296], says: "co1-operational prescribes Co1-NN ref ids and puts population_codes and parameters_supported on the Co-1 record; CLAUDE.md requires dbcore.next_ref_id and each stage holds only its own data."}
+  probe: [P-VERIF-VOCAB, P-CO1-TYPE]
+  direction: "The schema CHECK on evidence_sources.verification_status admits VERIFIED and UNVERIFIED only; the retired values cannot be written. P-CO1-TYPE compares the live co1_source_type values with schemas.enums.Co1SourceType, a drift independent of the warrant question (C-024). The co1-operational sections that cite them are stale (DRS-274 and DRS-301 are already marked AMENDED)."
+  resolver: AGENT
+  confidence: high
+
+- id: C-026
+  class: DOC-DOC
+  severity: S3
+  title: "jurisdictional_values: reference-only (D-0181) versus restored as research_code_leads (D-0185)"
+  atoms: [DRS-169, DRS-209, DRS-218, DRS-159, DRS-162, DRS-186, OPI-204, OPI-193, OPI-190]
+  sides:
+    - {atoms: [DRS-169], says: "D-0181 calls jurisdictional_values REFERENCE-ONLY, not to be written."}
+    - {atoms: [DRS-209, DRS-218], says: "D-0185 says D-0181 had 'already called these rows research' and restores them as research_code_leads."}
+    - {atoms: [OPI-204, OPI-193, OPI-190], says: "operative instrument: the minimum viable batch lists 1-2 jurisdictional_values backfills, while its own STOP notice (2026-08-22) forbids writing any value into jurisdictional_values."}
+    - {atoms: [DRS-159, DRS-162, DRS-186], says: "D-0175 and D-0183 require a rationale_ref on determination edges; the column is nullable and the enforcing check was never built."}
+  probe: P-UNWRITABLE
+  direction: "D-0185 is later. add-jurisdictional-value exists but its table has a NOT NULL FK into the empty items table (P-UNWRITABLE lists it), so the verb cannot write."
+  resolver: AGENT
+  confidence: medium
+
+# ---------------------------------------------------------------- D. rendering and machinery
+- id: C-027
+  class: RULING-MECHANISM
+  severity: S1
+  title: "Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator"
+  atoms: [LED-103, LED-104, LED-105, ADD-002, ADD-003, LED-057, PIP-06, PIP-07, CLM-050, POS-03]
+  sides:
+    - {atoms: [LED-103, LED-104, LED-105], says: "owner words (quoted from migration 046's header, 2026-08-27): the target is dynamic rendering from the database, no per-page build event, no reliance on artefacts for rendering."}
+    - {atoms: [ADD-002, ADD-003], says: "the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it)."}
+    - {atoms: [PIP-07, CLM-050], says: "contract and CLAUDE.md: parts/ and site/ must not be stale relative to the DB; regenerate with scripts/regenerate_derived.sh."}
+  probe: [P-I, P-K]
+  direction: "UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way."
+  resolver: OWNER+AGENT
+  confidence: medium
+
+- id: C-028
+  class: RULING-MECHANISM
+  severity: S1
+  title: "Register invariants and tier-consistency have no live gate"
+  atoms: [PIP-06, EVI-229, EVI-230, POS-03, LED-019, LED-020]
+  sides:
+    - {atoms: [PIP-06, POS-03, LED-019], says: "every rendering carries the identical tuple across registers; every rendered figure carries its strength flag; unmarked is an error."}
+  probe: P-QUARANTINE
+  direction: "The check that enforces these (register_integrity_check) is QUARANTINED because it is red by construction from the first determination onward; adjudication_integrity (tier derivation) is QUARANTINED and currently green. The generator reads the registry to list what is quarantined. Nothing live gates the weak-band rendering rule."
+  resolver: OWNER+AGENT
+  confidence: high
+
+- id: C-029
+  class: RULING-MECHANISM
+  severity: S1
+  title: "Direct writes to the committed database by scheduled workflows"
+  atoms: [CLM-012, CLM-013, LED-153, PIP-18, ENT-468, ENT-499, OPI-124]
+  sides:
+    - {atoms: [CLM-012, LED-153, ENT-468, OPI-124], says: "the database is never written directly; nothing but migrate_db.py opens it read-write (OPI-124); direct writes fail the reproducibility check."}
+    - {atoms: [PIP-18], says: "the committed DB reproduces the core invariants from migration history; job-owned tables are the only exception."}
+  probe: P-L
+  direction: "CLAUDE.md names one workflow (source-verification / resolve-dois.yml). P-L finds every workflow that `git add`s the DB blob. migration_reproducibility compares row counts only and exempts the author and run tables, so UPDATEs are invisible."
+  resolver: OWNER
+  confidence: high
+
+- id: C-030
+  class: DOC-DOC
+  severity: S3
+  title: "How checks are added and what gates a merge"
+  atoms: [CLM-055, PRC-077, PRC-078, PRC-091, PRC-093, PRC-105, PRC-084, PRC-088, ENT-468, ENT-499, ENT-484, ENT-487, ENT-520, ENT-461, ENT-531, ENT-503, ENT-477, ENT-527, CLM-052]
+  sides:
+    - {atoms: [CLM-055, CLM-052], says: "checks are added only through governance/check-registry.yaml; run_checks.py is the sole invoker; deleting code, checks and scripts needs evidence, not permission; git history is the archive."}
+    - {atoms: [PRC-077, ENT-468, ENT-499, ENT-484, ENT-487, ENT-520], says: "process and architecture documents add blocking checks as CI workflow jobs and keep the branch-protection ruleset on."}
+    - {atoms: [PRC-091, PRC-093], says: "the same process section keeps the ruleset DISABLED during Phase A; PRC-093 does not say whether Phase A ended."}
+    - {atoms: [PRC-084, PRC-088], says: "owner-gated removal of BPC validation; 'archive' a retired script to _archived/."}
+    - {atoms: [ENT-461, ENT-531, ENT-503, ENT-477, ENT-527], says: "the architecture assumes the claude.ai chat surface, a PI bootstrap block and skills/<name>_SKILL.md; CLAUDE.md describes Claude Code, PRs and .claude/skills/."}
+  direction: "CLAUDE.md is the current process; the architecture (v2.3) and the 2026-04 process rules are stale on these points. The stale statements are listed so a reader does not obey them."
+  resolver: AGENT
+  confidence: medium
+
+- id: C-031
+  class: RULING-MECHANISM
+  severity: S2
+  title: "Retire in place requires every reader to filter status first -- some views do not"
+  atoms: [LED-169, LED-170, LED-171, SES-027, DRS-064]
+  sides:
+    - {atoms: [LED-169, LED-170, SES-027], says: "owner 2026-09-16: retire data rows and identifiers in place via the status the table carries; never hard-delete."}
+    - {atoms: [LED-171], says: "precondition: before any retirement, every reader/view that could surface the row must filter on status."}
+  probe: P-H
+  direction: "P-H lists views over base_parameters/specifications/evidence_sources whose SQL names no lifecycle column. On main, base_parameters has no verb that reaches 'merged' or 'retired'; the unreleased T1 branch adds retire-parameter and merge-parameter, so P-H on the T1 tree is the precondition check for that PR. The regex is a lexical test: a view may filter by a different spelling."
+  resolver: AGENT
+  confidence: medium
+
+# ---------------------------------------------------------------- E. research conduct and scan contract
+- id: C-032
+  class: RULING-MECHANISM
+  severity: S1
+  title: "Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug"
+  atoms: [LED-195, LED-196, LED-197, LED-199, LED-201, RES-16, SES-024, SES-025, SES-054, SES-057]
+  sides:
+    - {atoms: [LED-195, LED-196, LED-197, LED-199], says: "owner 2026-10-09: every admitted source is scanned for any and all applicable parameters; slugs guide searches only and do not limit what is mined."}
+    - {atoms: [LED-201, SES-057], says: "a figure from a source filed under another slug may be extracted and set a published value, tagged for follow-up."}
+    - {atoms: [SES-024, SES-025], says: "the earlier 2026-09-18 statements ('anything relevant to accessibility may be mined', 'search by slug, adjudicate by all slugs in a category') are not restated; 'category' is never defined."}
+  probe: P-V2
+  direction: "P-V: the (source x parameter) read-state ledger does not exist on main (built in the unmerged T1 branch). P-V2: add-extraction refuses a ref that source_slug_links does not hold for the named slug; its comment argues ref-slug coherence is the stronger invariant, the opposite of LED-196. The ruling is not carried until T1 merges and the guard is reconciled."
+  resolver: OWNER+AGENT
+  confidence: high
+
+- id: C-033
+  class: RULING-MECHANISM
+  severity: S1
+  title: "Every slug is searched against every lens -- the search log cannot say which lens a search covered"
+  atoms: [LED-084, RES-04, LED-029, ENT-236, ENT-247, ENT-222]
+  sides:
+    - {atoms: [LED-084, RES-04], says: "owner/contract 2026-08-24: every slug is searched against every population/access-need/ICF code (R4 adds the medical lens)."}
+    - {atoms: [LED-029, ENT-236, ENT-247, ENT-222], says: "2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population."}
+  probe: P-M
+  direction: "LED-084 supersedes LED-029 on contact (status correction owed: LED-029 -> SUPERSEDED). Mechanism: search_executions has no lens column and no linked table records slug x lens coverage, so R4 cannot be shown to have been done."
+  resolver: AGENT
+  confidence: high
+
+- id: C-034
+  class: RULING-MECHANISM
+  severity: S1
+  title: "The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer"
+  atoms: [LED-116, LED-150, LED-203, LED-204, LED-205, LED-182, CLM-031, SES-058, SES-065]
+  sides:
+    - {atoms: [LED-150, LED-203, SES-065], says: "parameter names are minted only from an observed phrase via add-term --from-observation."}
+    - {atoms: [LED-204, LED-205, SES-058], says: "2026-10-09 amends that for prepopulation: names may come from previous catalogues, screened, listed once with source and approved by the owner before minting."}
+    - {atoms: [LED-182, CLM-031], says: "when no verb can write a column, add the verb before claiming the write; a table the CLI cannot reach is a coverage bug."}
+  probe: P-O
+  direction: "Prepopulation has no verb on main (the T1 branch adds mint-term-from-catalogue). P-O lists base tables that no db.py verb writes. These are Layer 1 gaps, filed as GAPS rather than patched with SQL (rule 10)."
+  resolver: AGENT
+  confidence: high
+
+- id: C-035
+  class: RULING-MECHANISM
+  severity: S1
+  title: "Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters"
+  atoms: [LED-097, LED-098, LED-100, MIS-06, PIP-08, RES-04, SES-014]
+  sides:
+    - {atoms: [LED-097, LED-098], says: "owner 2026-08-27: many judgment rows feed one synthesis; many synthesis rows feed one specification."}
+    - {atoms: [MIS-06, PIP-08], says: "a synthesis must show Co-1/Tier-1 divergence and which dimension governs; convergence counts independent roots."}
+  probe: P-X
+  direction: "P-X: no synthesis-stage table carries parameter_id; connections hold free-text targets and conflicts are keyed on item_code/pop_a/pop_b (item-layer columns). A determination is one parameter x one lens; the engine takes one cell per run. Cross-parameter synthesis has no place to be recorded."
+  resolver: OWNER+AGENT
+  confidence: high
+
+# ---------------------------------------------------------------- F. process and records
+- id: C-036
+  class: UNRECORDED
+  severity: S2
+  title: "Owner statements whose only home is a session record"
+  atoms: [SES-022, SES-023, SES-024, SES-025, SES-032, SES-045, SES-047, SES-015, SES-018, SES-020, SES-027]
+  sides:
+    - {atoms: [SES-022, SES-023, SES-024, SES-025], says: "four 2026-09-18 statements (mine arguments and qualitative work; relevant sources carry qualitative mining; anything relevant to accessibility may be mined; search by slug, adjudicate by category) have no ledger entry of their own."}
+    - {atoms: [SES-032, SES-045, SES-047, SES-027], says: "'fix mechanisms, not hand edit'; sub-national jurisdiction satisfies a bucket; a Buckets 1-2 restatement; and a 2026-09-16 ruling cited without its words."}
+    - {atoms: [SES-015, SES-018, SES-020], says: "the session reports the owner raised a point but the owner's words are not quoted."}
+  probe: P-LEDGER-GREP
+  direction: "Rule 0 binds on contact whether or not the ledger records the statement, so these bind. The risk is a search that cannot see them (.ignore hides sessions/): P-LEDGER-GREP asserts that the quoted phrases are absent from references/project-standards.md. Recording each is an append to the owner ledger; whether an agent may append on the owner's behalf is the owner's call."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-037
+  class: DOC-DOC
+  severity: S2
+  title: "Process contradictions inside the commands, agents and rules"
+  atoms: [PRC-169, LED-192, PRC-259, PRC-184, PRC-203, PRC-207, PRC-214, PRC-216, PRC-160, PRC-195, PRC-182, PRC-176, PRC-220]
+  sides:
+    - {atoms: [PRC-169, LED-192], says: "RC4 fails unless an adversarial pass is closed; /adversarial says passes 1 and 2 are never to be closed; the owner ruled not to chase pass 1 closed."}
+    - {atoms: [PRC-259], says: "the adversarial closing block carries a hand-written count of lenses ('eleven'); close-adversarial-pass itself defines coverage as a finding row for every lens in the column's CHECK (M08.t3), so the count is the only drift."}
+    - {atoms: [PRC-184, PRC-203], says: "/orient and /session-open each claim to be the first thing run."}
+    - {atoms: [PRC-207, PRC-214, PRC-216], says: "the scratchpad folder must be named identically to CURRENT, yet it is to be renamed after the PR number exists while CURRENT keeps the DB stem."}
+    - {atoms: [PRC-160, PRC-182], says: "/batch-done is 'the only definition of finished' but does not list the gate CLAUDE.md section 1 prescribes; a corpus-wide --all reflex is warned against elsewhere."}
+    - {atoms: [PRC-176], says: "invariant I5 leaves MCP-tool searches unwitnessed while R8 requires every search be logged."}
+  direction: "CLAUDE.md rule 0 does not decide between two process documents; these are for the owner or for the next session that touches the commands."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-038
+  class: DOC-DOC
+  severity: S3
+  title: "Hand-written counts and enumerations that disagree with each other or with the schema"
+  atoms: [ENT-338, ENT-360, ENT-418, ENT-402, ENT-039, ENT-036, LED-031, ENT-308, ENT-363, ENT-311, ENT-312, ENT-290, ENT-304, ENT-314, ENT-272, ENT-280, ENT-361, ENT-043, ENT-410]
+  sides:
+    - {atoms: [ENT-338, ENT-360, ENT-418, ENT-402], says: "'24 countries plus 2 meta', a 24/46/49 jurisdiction structure; the section table has 25 country rows."}
+    - {atoms: [ENT-036, ENT-039], says: "EvidenceType has 7 members in one block and 9 in the audit."}
+    - {atoms: [LED-031], says: "all 14 languages searched on every run; the research skill obliges 19; jurisdiction scope later limited to Buckets 1-2 (LED-193)."}
+    - {atoms: [ENT-272, ENT-280], says: "adopting CC BY-SA 4.0 is a DG-REVIEW example in one section and licensing is always DG-NON in another."}
+    - {atoms: [ENT-363, ENT-311, ENT-312, ENT-308, ENT-290, ENT-304, ENT-314], says: "model-version pins that the decision protocol says are stripped on touch; effort_level 'numeric only' against an example and a regex that admit 'none'."}
+    - {atoms: [ENT-361, ENT-043, ENT-410], says: "standards-registry.md kept as markdown against the owner directive that citation data in .md goes into a table; a differently named tracker."}
+  direction: "CLAUDE.md rule 7a: every figure is a command. These sentences are stale or internally inconsistent; none is an owner statement."
+  resolver: AGENT
+  confidence: medium
+
+# ---------------------------------------------------------------- G. open owner questions (OPEN atoms are listed in full in OPEN-QUESTIONS.tsv)
+- id: C-039
+  class: OPEN-QUESTION
+  severity: S1
+  title: "Questions only the owner can answer that block engine or writer behaviour"
+  atoms: [LED-159, LED-168, LED-191, LED-202, LED-208, LED-209, SES-041, SES-029, OPI-105, RC-224, RC-238]
+  sides:
+    - {atoms: [LED-159], says: "which band a code value upgraded by confirmation lands in is unruled."}
+    - {atoms: [LED-168], says: "the lens set: an owner statement naming three vocabularies, not read as retiring the medical lens; unresolved."}
+    - {atoms: [LED-202], says: "whether a preliminary-status full-read figure may set a published value."}
+    - {atoms: [LED-208, LED-209], says: "whether the pilot extraction cap carries to the scan contract; owner decisions D4-D13."}
+    - {atoms: [OPI-105, RC-224, RC-238], says: "OD-7 recommends retiring the decisions YAML register; DR-2026-09-26 OQ-5 re-asks the same question and leaves it open while its section 11 adds a register row on landing."}
+    - {atoms: [LED-191, SES-041, SES-029], says: "OQ-5 and OQ-8; whether to guard against spurious infrastructure; mining deferral has no ageing or backlog failure condition."}
+  direction: "Not conflicts of statements: gaps in what has been ruled. Listed so the engine/writers are not made to guess."
+  resolver: OWNER
+  confidence: high
+
+# ---------------------------------------------------------------- H. the operative instrument and the remediation DR
+- id: C-040
+  class: RULING-RULING
+  severity: S1
+  title: "'Tier and evidence-type assignment' and 'anything touching specifications' are permanently manual -- but the determination is computed and the tier is derived"
+  atoms: [OPI-226, OPI-229, LED-151, LED-152, LED-153, CLM-002, CLM-019]
+  sides:
+    - {atoms: [OPI-226, OPI-229], says: "DR-2026-08-19 section 12.5: tier and evidence-type assignment, and anything touching specifications or the reasoning doc, are permanently manual."}
+    - {atoms: [LED-151, LED-152], says: "owner 2026-09-09 evening: 'you have to compute it. I can't handle this load manually'; the determination state is computed by assess_cell from tier arithmetic."}
+  probe: P-ENG-T3
+  direction: "Rule 0 and CLAUDE.md's own worked example: the 2026-09-09 evening ruling superseded section 12.5's clause on contact, with no edit to the DR. OPI-229 is still ACTIVE in the atom set because the DR's text is unmarked; status correction owed (AMENDED, by LED-151). What section 12.5 still governs (the reasoning doc, the Opus floor, the B-before-E gate) is untouched. Tier DERIVATION from (evidence_type, scope) is machine work; evidence_type ASSIGNMENT remains a judgment (OPI-226 survives in that part)."
+  resolver: AGENT
+  confidence: high
+
+- id: C-041
+  class: DOC-DOC
+  severity: S3
+  title: "Scope of the operative instrument's supersession and the read-set it prescribes"
+  atoms: [OPI-001, OPI-002, OPI-005, OPI-007, OPI-009, OPI-013, OPI-058, OPI-096, OPI-099, OPI-003, RC-012]
+  sides:
+    - {atoms: [OPI-001, OPI-002, OPI-005], says: "the instrument supersedes all other planning documents and every document in its supersession table becomes 'binding on nothing'."}
+    - {atoms: [OPI-007, OPI-009], says: "yet its section B labels some of those files OPERATIVE (the 2026-08-22 master execution plan, the 2026-08-20 A-18 adjudication)."}
+    - {atoms: [OPI-096, OPI-099], says: "a fresh session reads exactly four documents, two labelled SPENT or HISTORY ONLY, against section A's two live companions; 'no fifth document'."}
+    - {atoms: [OPI-013, OPI-058, RC-012], says: "'no successor to this document may be written' against DR-2026-09-26's 'a decision record, not a plan'; OPI-013 is already marked AMENDED."}
+    - {atoms: [OPI-003], says: "the instrument outranks CLAUDE.md; CLAUDE.md adds that a live owner ruling outranks the instrument -- the instrument's text carries no such exception."}
+  direction: "CLAUDE.md states the precedence chain (owner ruling > DR-2026-08-19 > CLAUDE.md). The instrument's internal OPERATIVE labels and the four-document read set are not reconciled; no later statement decides."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-042
+  class: DOC-DOC
+  severity: S3
+  title: "What a research batch's changeset contains, and how it is classified"
+  atoms: [OPI-217, OPI-215, OPI-216, RC-189, RC-205, CLM-016, CLM-022]
+  sides:
+    - {atoms: [OPI-217], says: "the changeset is exactly the DB, one data_*.sql, two pointers, the session record and one attestation, nothing else."}
+    - {atoms: [CLM-016, CLM-022, RC-189], says: "commit the scratchpad and agent transcripts at every natural break; tooling and research ship in separate PRs."}
+    - {atoms: [OPI-215, OPI-216, RC-205], says: "acceptance names checks H03/H04/H05/H07, which DR-2026-09-26 section 2.1 says are deleted, and expects the changeset to classify as data where the RC DR says data migrations classify as schema."}
+  direction: "CLAUDE.md rule 6 and DR-2026-09-26 are later than the operative instrument's acceptance text; OPI-217 and OPI-215/216 are stale."
+  resolver: AGENT
+  confidence: medium
+
+- id: C-043
+  class: DOC-DOC
+  severity: S3
+  title: "Edit-in-place versus append for corrections to the instrument; migration-number allocator; open decisions"
+  atoms: [OPI-057, OPI-131, OPI-006, RC-201, OPI-120, OPI-016, OPI-110, OPI-063, OPI-064]
+  sides:
+    - {atoms: [OPI-057], says: "2026-08-22 note edits the instrument in place ('correcting it here is the cheaper repair')."}
+    - {atoms: [OPI-131], says: "2026-08-25 callout: rewriting in place destroys the record; append, do not edit."}
+    - {atoms: [OPI-006, RC-201], says: "the 2026-08-17 plan's table is 'the sole allocator' of migration numbers; DR-2026-09-26 assigns the next free number at build time."}
+    - {atoms: [OPI-120, OPI-016, OPI-110], says: "'opens zero new DEFERRED/PENDING markers' against OD-2 to OD-12 left open and OD-11/OD-12 recorded as explicit deferrals; OD-10 is both open and SIGNED."}
+    - {atoms: [OPI-063, OPI-064], says: "DR-2026-07-21 consequence 2 'remains in force' and is 'implemented by' a mechanism stated to be satisfied, spent and retired."}
+  direction: "Later statement wins in each pair (OPI-131 over OPI-057; RC-201 over OPI-006); the open-decisions and consequence-2 pairs are internal inconsistencies with no later statement."
+  resolver: NONE
+  confidence: medium
+
+- id: C-044
+  class: DOC-DOC
+  severity: S2
+  title: "Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5)"
+  atoms: [RC-153, LED-079, CLM-015]
+  sides:
+    - {atoms: [RC-153], says: "citation_mining.connections_produced is retired in the order readers, then rebuild, then writer."}
+    - {atoms: [LED-079, CLM-015], says: "a column a committed data migration INSERTs can never be dropped: writer-retire, reader-retire, NULL forward."}
+  direction: "UNSETTLED. [CONFIDENCE: low -- the extractor did not record this pair inside RC-153; read RC-153 and LED-079 together before acting.] They agree if 'retire' means NULL-forward rather than drop, and disagree on the order of writer and readers."
+  resolver: OWNER
+  confidence: low
+
+- id: C-045
+  class: PROVENANCE
+  severity: S3
+  title: "Status of DR-2026-09-26 and of the DOI-stash design in the operative instrument"
+  atoms: [RC-001, RC-011, RC-067, RC-116, RC-142, RC-225]
+  sides:
+    - {atoms: [RC-001], says: "DR-2026-09-26 (v2) is ratified as of 2026-09-27 by owner nod, with PR #159 merged."}
+    - {atoms: [RC-011], says: "its section 0 header still reads 'v2, PROPOSED'."}
+    - {atoms: [RC-067, RC-116], says: "it adds an entry to validate_pydantic_schemas' curated MODEL_TABLE_MAP, which CLAUDE.md rule 8 names as an outstanding derive-it violation; it proposes no CHECK on search_executions.engine, while rule 8 says vocabularies come from CHECKs."}
+    - {atoms: [RC-142, RC-225], says: "seed 3 is 'not shipped' in one place, and the recommended answer to OQ-6 refers to it in another."}
+  direction: "Treated as ratified (owner nod recorded, RC-001). The two apparatus choices (curated map, free-text engine) are knowingly retained and recorded by the DR itself."
+  resolver: NONE
+  confidence: medium
+
+- id: C-046
+  class: RULING-MECHANISM
+  severity: S3
+  title: "Pointers run from a later stage to an earlier one -- some foreign keys run the other way"
+  atoms: [LED-080, LED-125, LED-124, CLM-029, CLM-028, CLM-015]
+  sides:
+    - {atoms: [LED-080, CLM-015], says: "a stage holds only its own data; earlier-stage facts are reached by a pointer on the shared reference id."}
+    - {atoms: [CLM-029], says: "a walk re-enters stages: write order and what a stage may hold are separate questions."}
+    - {atoms: [LED-125, LED-124], says: "a table is never a stage; the stage assignment of a table is a classification the map carries, and the map's own `disputed:` block lists tables it could not place."}
+  probe: P-FWD-FK
+  direction: "UNSETTLED. P-FWD-FK lists every foreign key whose child sits in an earlier stage than its parent (STATE-GRAPH.md 2a). Research tables pointing at admitted evidence are the re-entrancy CLM-029 licenses; the others (a table in the capture stage pointing at a synthesis-stage citation table, a judgment table pointing at gaps, tables pointing at the emptied `items` table that the map files under render) are either misclassified or genuine upward dependencies. Which, is the owner's classification."
+  resolver: OWNER
+  confidence: medium
+
+- id: C-047
+  class: DOC-DOC
+  severity: S2
+  title: "'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record'"
+  atoms: [ENT-465, CLM-000, CLM-001, CLM-019]
+  sides:
+    - {atoms: [ENT-465], says: "architecture v2.3 (2026-04-30): code-enforced checks (hooks, CI) trump text rules for the matching invariant."}
+    - {atoms: [CLM-000, CLM-001], says: "CLAUDE.md rule 0: a live owner statement supersedes every prior ratified record it touches, on contact; record the supersession, never weigh the ruling against the paperwork."}
+  direction: "Both are agent-maintained process texts (rule 0 cites an owner ruling as its proof, not as its source), so this is recency, not rank: rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule."
+  resolver: AGENT
+  confidence: medium
+
+- id: C-048
+  class: RULING-MECHANISM
+  severity: S2
+  title: "A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names"
+  atoms: [LED-182, CLM-031, OPS-04]
+  sides:
+    - {atoms: [LED-182, CLM-031], says: "when the CLI cannot reach a column, add the verb and do not claim the write; a table the CLI cannot reach is a coverage bug to fix."}
+    - {atoms: [OPS-04], says: "any status column ships with its biconditional check or it does not ship (C06 covers the 'captured' value)."}
+  probe: P-STATUS-WRITERS
+  direction: "P-STATUS-WRITERS (lexical) lists the non-default values the column's CHECK accepts that no db.py line names beside the column. Those values are reachable only by hand SQL, so 'looked, nothing extractable' cannot be recorded, an absence the project treats as evidence (R7, R14). A Layer 1 gap: file it as a GAP and add the verb in a tooling PR (rule 10), not in a batch's data migration."
+  resolver: AGENT
+  confidence: medium
+
+- id: C-049
+  class: RULING-DOC
+  severity: S2
+  title: "Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document"
+  atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193, WRK-084, WRK-195, WRK-196, WRK-199, WRK-200, WRK-201, WRK-204, WRK-082, WRK-081, LED-193, SES-047, OPI-100, ENT-338]
+  sides:
+    - {atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193], says: "owner R5 (2026-08-18), as relayed by the handoff: five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order."}
+    - {atoms: [WRK-084, WRK-195], says: "owner R6 (2026-08-18): 'no longer need global South to move from provisional'; the PROVISIONAL gate no longer waits for the Global South."}
+    - {atoms: [WRK-196, WRK-199, WRK-200, WRK-201, WRK-204], says: "the handoff author's own derivation of R6: only the first conjunct of section 2.3 falls, the Co-1 >=9-language floor stays, replacement wording pinned at 'buckets 1-3', and a disclosure clause -- the handoff marks the bucket 4/5 split and the disclosure clause as authored proposals, not the owner's words."}
+    - {atoms: [LED-193, SES-047], says: "owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug."}
+    - {atoms: [OPI-100], says: "the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open."}
+    - {atoms: [ENT-338], says: "governance/jurisdiction-philosophy.md section 2.3 still reads 'PROVISIONAL until all 24 jurisdictions are recorded' -- the amendment R6 requires has not been made."}
+  direction: "Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038)."
+  resolver: OWNER
+  confidence: high
+
+- id: C-050
+  class: RULING-DOC
+  severity: S3
+  title: "'Three lenses' (R2, 2026-08-18) -- the lens count is now four, and the registries stay separate"
+  atoms: [WRK-004, WRK-016, WRK-173, WRK-174, WRK-177, LED-110, LED-121, LED-128, LED-168]
+  sides:
+    - {atoms: [WRK-004, WRK-173, WRK-174], says: "R2: three lenses (disability populations, ICF functional demands, access needs), three theoretical approaches, three tables."}
+    - {atoms: [LED-110, LED-128], says: "owner 2026-08-27/28: identity, icf, needs and medical are the lenses; 'because i said we need the medical model too'."}
+    - {atoms: [WRK-016, WRK-177, LED-121], says: "the lens registries stay separate and are never reconciled (the four taxonomies keep parallel base_taxonomy_* names)."}
+    - {atoms: [LED-168], says: "an owner statement naming three vocabularies on 2026-09-13 is not read as retiring the medical lens; unresolved."}
+  direction: "Not a contradiction of the 'separate and never reconciled' limb, which survives. The count in R2 is superseded by the later four-lens rulings; LED-168 stays open until the owner confirms."
+  resolver: NONE
+  confidence: medium
+
+status_corrections:
+  # Atoms whose recorded `status` is behind a later statement. `current` must equal the atom's status today, or the
+  # check fails (so a stale correction cannot linger once the atom is repaired). `by` are the atoms that decide it.
+  - {atom: LED-029, current: ACTIVE, should_be: SUPERSEDED, by: [LED-084], why: "2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken."}
+  - {atom: LED-018, current: ACTIVE, should_be: AMENDED, by: [LED-013, EVI-058], why: "Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis."}
+  - {atom: DRS-039, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken."}
+  - {atom: DRS-040, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "as DRS-039."}
+  - {atom: OPI-229, current: ACTIVE, should_be: AMENDED, by: [LED-151, LED-152], why: "owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact."}
+  - {atom: WRK-003, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "the owner ratified the operative instrument on 2026-08-19 as OD-1, items-as-leads included (OPI-015); its section 1.4 rule 1 forbids making a slug by stripping an item name (OPI-022), and its supersession table records that R1's strip mechanism is overturned."}
+  - {atom: WRK-033, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "as WRK-003."}
+  - {atom: WRK-171, current: ACTIVE, should_be: SUPERSEDED, by: [OPI-015, OPI-022], why: "as WRK-003 (the handoff's restatement)."}
+  - {atom: WRK-172, current: ACTIVE, should_be: AMENDED, by: [OPI-015, OPI-022], why: "its first limb (the strip is done manually) is overtaken -- no item name becomes a slug by stripping at all; its second limb (a regex smuggles the bias through) is subsumed by the stronger rule and still stands."}
+  - {atom: WRK-004, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
+  - {atom: WRK-173, current: ACTIVE, should_be: AMENDED, by: [LED-128, LED-110], why: "the lens count is four, not three."}
+  - {atom: WRK-043, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "owner 2026-08-26 keyed the determination on the canonical parameter; migration 071 re-keyed specifications."}
+  - {atom: WRK-068, current: ACTIVE, should_be: SUPERSEDED, by: [LED-091], why: "as WRK-043."}
