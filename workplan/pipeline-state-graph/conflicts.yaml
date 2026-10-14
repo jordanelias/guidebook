@@ -258,12 +258,12 @@ conflicts:
   class: RULING-MECHANISM
   severity: S2
   title: "'We don't use the word population' -- the schema, the methodology and three DRs still do"
-  atoms: [LED-127, ADD-001, PRC-082, EVI-171, ENT-192, ENT-206, ENT-236, ENT-247, ENT-222, CLM-043]
+  atoms: [LED-127, ADD-001, PRC-082, EVI-171, ENT-192, ENT-206, ENT-236, ENT-222, CLM-043]
   sides:
     - {atoms: [LED-127, ADD-001], says: "owner 2026-08-28: \"we don't use the word 'population' though\" (unqualified); the lenses are identity, icf, needs, medical. Only the choice of 'base_taxonomy' as the replacement carries the owner's 'i think'; identity was put back for confirmation and the rename was not applied."}
-    - {atoms: [PRC-082, ENT-236, ENT-247, ENT-222], says: "contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'."}
+    - {atoms: [PRC-082, ENT-236, ENT-222], says: "contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'."}
   probe: P-C
-  direction: "The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C)."
+  direction: "The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C)."
   resolver: OWNER
   confidence: high
 
@@ -410,10 +410,10 @@ conflicts:
   class: RULING-MECHANISM
   severity: S1
   title: "Every slug is searched against every lens -- the search log cannot say which lens a search covered"
-  atoms: [LED-084, RES-04, LED-029, ENT-236, ENT-247, ENT-222]
+  atoms: [LED-084, RES-04, LED-029, ENT-236, ENT-222]
   sides:
     - {atoms: [LED-084, RES-04], says: "owner/contract 2026-08-24: every slug is searched against every population/access-need/ICF code (R4 adds the medical lens)."}
-    - {atoms: [LED-029, ENT-236, ENT-247, ENT-222], says: "2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population."}
+    - {atoms: [LED-029, ENT-236, ENT-222], says: "2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population."}
   probe: P-M
   direction: "LED-084 supersedes LED-029 on contact (status correction owed: LED-029 -> SUPERSEDED). Mechanism: search_executions has no lens column and no linked table records slug x lens coverage, so R4 cannot be shown to have been done."
   resolver: AGENT

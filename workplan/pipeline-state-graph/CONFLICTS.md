@@ -193,7 +193,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 - owner/contract 2026-08-24: every slug is searched against every population/access-need/ICF code (R4 adds the medical lens).  
   _atoms:_ `LED-084`(act), `RES-04`(act)
 - 2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population.  
-  _atoms:_ `LED-029`(act), `ENT-236`(ame), `ENT-247`(ame), `ENT-222`(sup)
+  _atoms:_ `LED-029`(act), `ENT-236`(ame), `ENT-222`(sup)
 
 **Direction.** LED-084 supersedes LED-029 on contact (status correction owed: LED-029 -> SUPERSEDED). Mechanism: search_executions has no lens column and no linked table records slug x lens coverage, so R4 cannot be shown to have been done.
 
@@ -353,9 +353,9 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 - owner 2026-08-28: "we don't use the word 'population' though" (unqualified); the lenses are identity, icf, needs, medical. Only the choice of 'base_taxonomy' as the replacement carries the owner's 'i think'; identity was put back for confirmation and the rename was not applied.  
   _atoms:_ `LED-127`(act), `ADD-001`(act)
 - contract and process rules still require population codes/keys; population-taxonomy retains 'one slug, one population'.  
-  _atoms:_ `PRC-082`(act), `ENT-236`(ame), `ENT-247`(ame), `ENT-222`(sup)
+  _atoms:_ `PRC-082`(act), `ENT-236`(ame), `ENT-222`(sup)
 
-**Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
+**Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PRC-082, ENT-236/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
 
 ## C-021 [S2] determination_gates attaches to a group through one lens column
 
