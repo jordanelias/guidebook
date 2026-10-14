@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 04:07 UTC from git HEAD 3a745d1 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 04:32 UTC from git HEAD ea8b963 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-p11fix",
  "user_version": 106,
  "stages": [
   "base",
@@ -5898,8 +5898,8 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2690,
-  "atoms cited by a conflict, machine, probe or predicate (quote found verbatim)": 458,
-  "distinct quotes among them": 2657,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 458,
+  "distinct quotes among all atoms": 2657,
   "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 49,
   "machine transitions": 42,

@@ -11,7 +11,7 @@ it; both are summarised below, and neither is proof.
 
 | file | what it is | how it is made |
 |---|---|---|
-| `atoms/atoms-*.jsonl` | one claim per line — the owner's rulings, ratified governance documents, process rules, CLAUDE.md — each with a **verbatim quote**, source `file:line`, modality, speaker, date, status, enforcement | extracted by reading; quotes verified mechanically **for the atoms a conflict, machine, probe or predicate still cites** (an uncited atom is a record, its structure is checked and its quote is not); claims reviewed only on a sample |
+| `atoms/atoms-*.jsonl` | one claim per line — the owner's rulings, ratified governance documents, process rules, CLAUDE.md — each with a **verbatim quote**, source `file:line`, modality, speaker, date, status, enforcement | extracted by reading; quotes verified mechanically **for the atoms a conflict, machine, probe or predicate still cites** (an uncited atom is a record, its structure is checked and its quote is not; the `quote_checked` column of `ATOMS.tsv` says which is which); claims reviewed only on a sample |
 | `conflicts.yaml` → `CONFLICTS.md` | the **active-conflicts register**: adjudicated disagreements between atoms, or between an atom and the mechanism, plus a table of atom statuses that lag a later ruling | hand-adjudicated; atom ids, classes and probes checked |
 | `machines.yaml` → `STATE-GRAPH.md` §3 | state machines: who moves a row between states, under what guard | hand-authored; every guard carries a code needle re-read on each run |
 | `STATE-GRAPH.md` §1, 2, 2a, 4–9 | stages, tables, foreign keys (including forward-pointing ones), views, writers, the UNWRITABLE set, quarantined checks, ruling-vs-mechanism probes, tree delta | **derived** from the live repo |
