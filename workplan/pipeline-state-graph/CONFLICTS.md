@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-49 entries. Severity: S1 16, S2 17, S3 16. Class: DOC-DOC 16, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 17, RULING-RULING 3, UNRECORDED 1.
+50 entries. Severity: S1 16, S2 18, S3 16. Class: DOC-DOC 16, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 18, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -35,6 +35,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-020 | S2 | RULING-MECHANISM | AGENT | P-A -> FAIL | Splinter population link tables: 'both sweeps are done' versus five tables still present |
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
+| C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-036 | S2 | UNRECORDED | OWNER | P-LEDGER-GREP -> FAIL | Owner statements whose only home is a session record |
 | C-037 | S2 | DOC-DOC | OWNER | -- | Process contradictions inside the commands, agents and rules |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
@@ -343,7 +344,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 - section 1.1 table: national_fw is Tier 5; standard_eb spans T2/T4/T5, occasionally T3 (architecture G6).  
   _atoms:_ `EVI-303`(act), `EVI-280`(act)
 
-**Direction.** UNSETTLED in prose. The ratified table schemas/tier_derivation.py keys tier on (evidence_type, scope); the adjudication_integrity check that would compare stored tier to it is QUARANTINED (see C-028).
+**Direction.** UNSETTLED in prose. The ratified table schemas/tier_derivation.py keys tier on (evidence_type, scope); the adjudication_integrity check that would compare stored tier to it is QUARANTINED (see C-031).
 
 ## C-013 [S2] The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission
 
@@ -422,6 +423,17 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `LED-133`(act), `CLM-042`(act)
 
 **Direction.** The owner rulings underneath (LED-128, LED-130) are recorded and binding; the specific mechanism D-0184 chooses (lens as column, crossing maps as authoring aid) rests on an unreviewed DR. D-0170 should carry a BY back-pointer.
+
+## C-031 [S2] Retire in place requires every reader to filter status first -- some views do not
+
+**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-H` = **FAIL**
+
+- owner 2026-09-16: retire data rows and identifiers in place via the status the table carries; never hard-delete.  
+  _atoms:_ `LED-169`(act), `LED-170`(act), `SES-027`(act)
+- precondition: before any retirement, every reader/view that could surface the row must filter on status.  
+  _atoms:_ `LED-171`(act)
+
+**Direction.** Step 0.3 (migration views_filter_retired) made the views over base_parameters filter status, and two source views filter supersession; P-H, now matching the column and not the substring, lists the four evidence_sources views left alone: v_convergence_sources, v_determination_provenance, v_evidence_authors, v_source_admission. Each is held back for a reason in that migration's header (supersede-source's refusal ignores specification_extraction_links; a recorded assessment's participants; ref_id lookups read by a blocking test). LED-171 says every READER, and P-H reads views only: non-view readers (audit_evidence_metadata, metadata_integrity_audit, research_batch_dod R2/R4/R13, get_unmined, validate_parameters) still surface a tombstone or a retired parameter. Open: GAP-062 (a data row, not amended here).
 
 ## C-036 [S2] Owner statements whose only home is a session record
 

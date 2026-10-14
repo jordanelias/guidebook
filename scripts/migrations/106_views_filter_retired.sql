@@ -1,39 +1,58 @@
 -- 106_views_filter_retired.sql
--- SCHEMA migration -- every view that LISTS parameters, determinations or sources filters
--- on the lifecycle column its table carries. Plan step 0.3
+-- SCHEMA migration -- the views that read base_parameters filter its lifecycle column, and
+-- two source views filter supersession where that is safe. Plan step 0.3
 -- (workplan/2026-10-12-simplification-workplan.md), LED-171: "No row is retired in place
 -- until every reader that could surface it filters on status."
 --
--- WHY NOW. Migration 104 gave base_parameters its first writers of 'retired' and 'merged'
--- (db.py retire-parameter, merge-parameter), and db.py supersede-source has written
--- evidence_sources.superseded_by_ref_id since 2026-10-01 with its own docstring naming the
--- views as a KNOWN GAP "in its own migration". This is that migration. v_value_independence
--- already filters (104).
+-- WHAT THIS DOES AND DOES NOT CLAIM. LED-171 speaks of EVERY reader. This migration changes
+-- VIEWS, and only the ones named below. Readers that are not views (audit_evidence_metadata,
+-- metadata_integrity_audit, research_batch_dod R2/R4/R13, db.py get_unmined,
+-- validate_parameters, the render and scheduled-writer scripts that 1.1 and 1.5 delete) still
+-- surface a retired parameter or a superseded source; so do four source views left alone
+-- below. LED-171 is therefore NOT fully met by this change. The probe P-H
+-- (workplan/pipeline-state-graph/build_graph.py) reads view SQL only and reports the four.
 --
--- WHAT CHANGES, view by view. Each is recreated verbatim from its stored SQL plus the
--- predicate(s) named; a predicate that sits on the nullable side of a LEFT JOIN is in the
--- ON clause so the row it would hide is not deleted from the listing.
+-- WHY NOW. Migration 104 gave base_parameters its first writers of 'retired' and 'merged'
+-- (db.py retire-parameter, merge-parameter). Both refuse while a LIVE determination or an
+-- open gate stands on the parameter (checked on a scratch copy), and assess_cell refuses to
+-- determine an inactive one. v_value_independence already filters (104).
+--
+-- WHAT CHANGES. Each view is recreated verbatim from its stored SQL plus the predicate(s)
+-- named; a predicate on the nullable side of a LEFT JOIN is in the ON clause so it deletes
+-- no row from the listing.
 --   v_code_floor_only          bp.status = 'active'
---   v_convergence_sources      es.superseded_by_ref_id IS NULL
---   v_determination_provenance p.status = 'active'; e.superseded_by_ref_id IS NULL
+--   v_determination_provenance p.status = 'active'
 --   v_item_provenance          bp.status = 'active'; es.superseded_by_ref_id IS NULL
 --   v_source_reach_all         bp.status = 'active'; es.superseded_by_ref_id IS NULL (WHERE)
 --   v_unregistered_roots       p.status = 'active', in both halves
--- The determination views read LIVE specifications only, and neither retire-parameter,
--- merge-parameter nor supersede-source permits a live determination on the row it changes
--- (assess_cell also refuses an inactive parameter), so there the predicate states the
--- invariant and changes no row. The live data agrees: every parameter is active, and the
--- one superseded source appears in none of these views except v_source_reach_all, which
--- loses exactly that row (83 to 82).
+-- Where the predicate removes a parameter from a view of LIVE specifications it states an
+-- invariant the verbs already enforce and changes no row. The source predicate in
+-- v_item_provenance is the same kind: supersede-source refuses while a live determination
+-- rests on the source through specification_source_links (dbcore.determinations_resting_on).
+-- v_source_reach_all lists SOURCES, so a tombstone is the wrong subject and is dropped (its
+-- rows are junction rows: 83 to 82 rows, 53 to 52 sources). v_unregistered_roots lists
+-- extraction defects and is filtered by parameter status: a retired parameter's extractions
+-- stay as history (db.py retire-parameter), so their root defects stop being reported. That
+-- is a judgment, not a derivation; recreating the view without the predicate reverses it.
 --
--- WHAT DOES NOT CHANGE, AND WHY. v_evidence_authors and v_source_admission still show a
--- superseded source. They are lookups keyed on ref_id, and every reader of them
--- (code_currency_audit, citation_mining_completeness [blocking], source_slug_links_duplicates,
--- audit_evidence_metadata, research_protocol_audit) LEFT JOINs them from a query on
--- evidence_sources that does not itself filter supersession. Filtering the lookup would make
--- those audits report the tombstone as authorless or never admitted; the filter belongs in
--- those readers' own queries, a separate change that moves audit populations.
--- build_graph.py probe P-H names the two as judged exemptions.
+-- WHAT DOES NOT CHANGE, AND WHY.
+--   v_convergence_sources, v_evidence_authors, v_source_admission, and the source side of
+--   v_determination_provenance still show a superseded source.
+--   * v_determination_provenance: supersede-source does NOT refuse a source linked to a live
+--     determination only through specification_extraction_links (determinations_resting_on
+--     consults two junctions, not that one; reproduced on a scratch copy). Filtering the
+--     LEFT JOIN there would blank the tier and evidence type of a live determination's
+--     source while leaving its ref_id: worse than showing the tombstone.
+--   * v_convergence_sources: lists the participants of a RECORDED assessment; supersede-source
+--     is allowed when no live determination rests on it, and hiding the participant then
+--     contradicts convergence_sources (15 recorded, 14 shown).
+--   * v_evidence_authors, v_source_admission: ref_id lookups that readers LEFT JOIN from
+--     their own queries on evidence_sources, which do not filter supersession; on the one
+--     tombstone today (REF-01019) filtering the lookups changes no audit outcome, but the
+--     blocking test_db_integrity C03 reads v_evidence_authors and would go red on a
+--     COMPLETE-quality tombstone. The filter belongs in those readers.
+--   The fix for the first is in supersede-source's refusal, the rest is a decision about
+--   what a recorded fact shows after supersession; both are outside this step (GAP-062).
 --
 -- NO TABLE IS CHANGED: no AFTER_DATA marker is needed (no backfill, no rebuild).
 
@@ -46,20 +65,6 @@ CREATE VIEW v_code_floor_only AS
     JOIN terms t            ON t.term_id       = bp.term_id
     WHERE ecs.code_floor_only = 1
       AND ecs.retired_at IS NULL;
-
-DROP VIEW v_convergence_sources;
-CREATE VIEW v_convergence_sources AS
-SELECT cs.convergence_id,
-       ca.status            AS convergence_status,
-       cs.role,
-       cs.ref_id,
-       es.tier,
-       es.evidence_type,
-       es.verification_status
-  FROM convergence_sources cs
-  JOIN convergence_assessment ca ON ca.convergence_id = cs.convergence_id
-  JOIN evidence_sources es       ON es.ref_id         = cs.ref_id
-                                AND es.superseded_by_ref_id IS NULL;
 
 DROP VIEW v_determination_provenance;
 CREATE VIEW v_determination_provenance AS
@@ -87,7 +92,6 @@ SELECT s.specification_id,
                                        AND p.status             = 'active'
   JOIN terms                          t ON t.term_id          = p.term_id
   LEFT JOIN evidence_sources          e ON e.ref_id           = x.ref_id
-                                       AND e.superseded_by_ref_id IS NULL
  WHERE s.retired_at IS NULL;
 
 DROP VIEW v_item_provenance;

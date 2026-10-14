@@ -9701,13 +9701,15 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
     extracted from the superseded row stops being gathered, so re-extract it from `by` if
     `by` does not already carry it.
 
-    VIEWS: v_convergence_sources, v_determination_provenance, v_item_provenance and
-    v_source_reach_all skip a tombstone (migration 106_views_filter_retired). Two lookups
-    keyed on ref_id still show one on purpose, v_evidence_authors and v_source_admission:
-    five audits LEFT JOIN them from queries on evidence_sources that do not filter
-    supersession, so filtering the lookup would report the tombstone as authorless or never
-    admitted. The filter belongs in those queries, a separate change. Re-derive rather
-    than trust the list:
+    KNOWN GAPS, NOT FIXED HERE.
+    (1) The refusal above consults two junctions (dbcore.determinations_resting_on:
+    specification_source_links and convergence_sources) and NOT specification_extraction_links.
+    A live determination that rests on a source only through an extraction link is not
+    refused, and v_determination_provenance still shows that source.
+    (2) Views: v_item_provenance and v_source_reach_all skip a tombstone (migration
+    106_views_filter_retired). v_convergence_sources, v_determination_provenance,
+    v_evidence_authors and v_source_admission still show one, each for a reason in that
+    migration's header. Readers that are not views still list it too. Re-derive the views:
         select name from sqlite_master where type='view' and sql like '%evidence_sources%'
            and sql not like '%superseded_by_ref_id%';
 

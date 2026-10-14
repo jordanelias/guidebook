@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 03:30 UTC from git HEAD feb01e8 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 03:49 UTC from git HEAD 410b449 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 106,
  "stages": [
@@ -5030,19 +5030,28 @@
    }
   },
   "P-H": {
-   "verdict": "PASS",
+   "verdict": "FAIL",
    "tests": "every view reading a retirable table names its lifecycle column",
    "atoms": [
     "LED-171",
     "LED-170"
    ],
    "evidence": {
-    "views_not_naming_lifecycle": {},
-    "judged_exempt_lookups": [
-     "v_evidence_authors",
-     "v_source_admission"
-    ],
-    "note": "lexical test; a view may filter under another spelling"
+    "views_not_naming_lifecycle": {
+     "v_convergence_sources": [
+      "evidence_sources"
+     ],
+     "v_determination_provenance": [
+      "evidence_sources"
+     ],
+     "v_evidence_authors": [
+      "evidence_sources"
+     ],
+     "v_source_admission": [
+      "evidence_sources"
+     ]
+    },
+    "note": "lexical test, views only: it reads view SQL, so a view that merely names the column passes and no non-view reader is examined"
    }
   },
   "P-I": {
@@ -5932,7 +5941,7 @@
   "atoms (quote found verbatim)": 2692,
   "distinct quotes among them": 2659,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 49,
+  "conflicts (atoms, class, probe exist)": 50,
   "machine transitions": 42,
   "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -5951,5 +5960,5 @@
   "HISTORICAL": 26
  },
  "atoms_total": 2692,
- "conflicts_total": 49
+ "conflicts_total": 50
 }

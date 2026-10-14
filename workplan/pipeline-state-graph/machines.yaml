@@ -90,7 +90,7 @@ machines:
     via: "db.py supersede-source"
     guards:
       - "both rows admitted; A != B; neither already superseded; no chains"
-      - "refused while a LIVE determination rests on A (retire the specification first)"
+      - "refused while a LIVE determination rests on A through specification_source_links or convergence_sources (NOT specification_extraction_links: step 0.3 found the hole) (retire the specification first)"
       - "a blank reason is refused; NO un-supersede verb exists"
     evidence:
       - {file: scripts/db.py, func: supersede_source, needle: "itself superseded by"}
