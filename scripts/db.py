@@ -3096,7 +3096,7 @@ def main():
                 data[_col] = _v
         # THE TIER IS DERIVED, NOT ASKED FOR (2026-09-10; --tier made optional in step 3 evidence).
         # schemas/tier_derivation.py's TIER_MAP is the ratified ladder as a total function of
-        # (evidence_type, scope); the column stays (23 committed data migrations insert it) but
+        # (evidence_type, scope); the column stays (committed data migrations insert it: `grep -lE 'INSERT INTO "?evidence_sources"? \([^)]*\btier\b' scripts/migrations/data_*.sql`) but
         # no operator retypes it. A --tier that disagrees is refused. Six of the eight types
         # admit exactly one scope, which is supplied; clinical and standard_eb carry a real
         # judgment and must say it. The ladder is IMPORTED, never restated here.
@@ -5409,6 +5409,15 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                            f"amend-source --field {field}")
         dbcore.check_declared(conn, "evidence_sources", field, replacement,
                               f"amend-source --field {field}")
+        if field == "co1_source_type":
+            # The column declares no CHECK, so the enum is its vocabulary (RULINGS R11) and the
+            # generic path above gates nothing. add-source and the evidence_type move gate it.
+            from schemas.enums import Co1SourceType  # noqa: E402
+            if replacement not in {m.value for m in Co1SourceType}:
+                raise Refusal(
+                    f"{ref_id}: --replacement {replacement!r} is not a member of "
+                    f"schemas.enums.Co1SourceType: {sorted(m.value for m in Co1SourceType)}. "
+                    f"Nothing was written.")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the
@@ -9461,15 +9470,20 @@ def insert_search_candidate(data: dict, session: str, dry_run: bool = False) -> 
         _check_surfaced_in(conn, data.get("exec_id"), data.get("surfaced_in"),
                            data.get("surfaced_quote"), data.get("locator"),
                            "add-candidate")
+        slugless = data.get("exec_id") is not None and conn.execute(
+            "SELECT slug IS NULL FROM search_executions WHERE exec_id=?",
+            [data["exec_id"]]).fetchone()[0]
         if data.get("found_under_slug") is None:
-            slugless = data.get("exec_id") is not None and conn.execute(
-                "SELECT slug IS NULL FROM search_executions WHERE exec_id=?",
-                [data["exec_id"]]).fetchone()[0]
             if not slugless:
                 raise Refusal(
                     "found_under_slug is required unless --exec-id names a search that has no "
                     "slug (one logged with --parameter or --mined-ref-id): a candidate found "
                     "under a slug says which.")
+        elif slugless:
+            raise Refusal(
+                f"found_under_slug {data['found_under_slug']!r} on a candidate of exec "
+                f"{data['exec_id']}, a search that searched no slug. A candidate is found under "
+                f"the slug its search had; where it belongs is --suggested-slug.")
         elif not dbcore.exists(conn, "slugs", "slug", data["found_under_slug"]):
             raise Refusal(
                 f"found_under_slug {data.get('found_under_slug')!r} is not in `slugs`.")

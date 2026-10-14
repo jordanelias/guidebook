@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 09:31 UTC from git HEAD 15c54e8 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 10:13 UTC from git HEAD 49e6c07 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-w-sp",
  "user_version": 116,
  "stages": [
   "base",
@@ -2898,7 +2898,7 @@
      "INSERT"
     ]
    },
-   "refusals": 4
+   "refusals": 5
   },
   "add-population-match": {
    "functions": [
@@ -3130,7 +3130,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 12
+   "refusals": 13
   },
   "link-source-slug": {
    "functions": [
@@ -4613,9 +4613,9 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms in all (structure checked)": 2599,
+  "atoms in all (structure checked)": 2598,
   "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 288,
-  "distinct quotes among all atoms": 2567,
+  "distinct quotes among all atoms": 2566,
   "status corrections owed (each atom's status re-read)": 0,
   "conflicts (atoms, class, probe exist)": 26,
   "machine transitions": 41,
@@ -4628,13 +4628,13 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2203,
+  "ACTIVE": 2202,
   "SUPERSEDED": 95,
   "OPEN": 70,
   "AMENDED": 76,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
- "atoms_total": 2599,
+ "atoms_total": 2598,
  "conflicts_total": 26
 }
