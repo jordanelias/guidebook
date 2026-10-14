@@ -76,7 +76,7 @@ citation-miner                    economics-researcher              integrity-pr
 citation-verifier                 evidence-auditor                  jurisdiction-tracker              toc-editor
 connection-discovery              evidence-metadata-rehabilitation  multilingual-research             voice-style
 content-gap-analyzer              find-and-replace                  prose-style-checker               workplan-orchestrator
-cross-population-conflict-mapper  functional-deficit-researcher     reasoning-doc-citations
+cross-population-conflict-mapper  functional-deficit-researcher
 ```
 
 ## Retired rule identifiers
