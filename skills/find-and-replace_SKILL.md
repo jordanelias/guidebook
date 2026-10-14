@@ -173,4 +173,4 @@ If downstream impacts are unresolved, open a new gap register item for each pend
 
 ## Relationship to Other Skills
 
-Use this skill for mechanical substitution only. Framing/evidence corrections → `framing-checker` or `evidence-auditor` first. Item code changes → `volii-validator` validation pass. Broken ref repair → `cross-reference-resolver` audit first. Heading level changes → `structure-auditor`. Bibliography strings → do not alter.
+Use this skill for mechanical substitution only. Framing/evidence corrections → `framing-checker` or `evidence-auditor` first. Broken ref repair → `cross-reference-resolver` audit first. Bibliography strings → do not alter.

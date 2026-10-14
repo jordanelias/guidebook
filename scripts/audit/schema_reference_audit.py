@@ -25,7 +25,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 DB = os.environ.get("GUIDEBOOK_DB_PATH", os.path.join(ROOT, "data", "guidebook.db"))
 
 SCAN = ("scripts/", "tools/", "schemas/", "governance/", "skills/", ".github/workflows/")
-SKIP = ("scripts/migrations/", "skills/deprecated/", "_archived/", "versions/",
+SKIP = ("scripts/migrations/", "_archived/", "versions/",
         "audits/", "sessions/", "scratchpad/", "workplan/", "working/")
 EXTS = (".py", ".sh", ".yaml", ".yml", ".md", ".sql")
 EXEMPTIONS = os.path.join("governance", "schema-reference-exemptions.yaml")
