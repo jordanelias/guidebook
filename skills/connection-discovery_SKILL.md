@@ -9,7 +9,7 @@ description: >
   Use this skill whenever: new citation mining has completed for a slug, a new item
   specification has been written or materially updated, a new BPC synthesis has been
   completed, or a research session has produced sources not yet scanned for connections.
-  Do NOT use for auditing or validating existing connections — the connection-auditor skill that did this was deleted (plan step 1.7).
+  Do NOT use for auditing or validating existing connections.
   Merged: absorbs connection-scout (D-0146, 2026-05-05). connection-scout is deprecated.
 ---
 

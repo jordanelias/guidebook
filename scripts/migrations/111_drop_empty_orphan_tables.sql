@@ -11,8 +11,10 @@
 --       pragma foreign_key_list on every table; sqlite_master
 --   * data migrations that write them:
 --       grep -lE "(INSERT( OR [A-Z]+)? INTO|UPDATE|DELETE FROM) \"?<table>\"?[ (]" scripts/migrations/data_*.sql
---     finds only data_20260823223839 (reference_stubs: it inserts 531 rows and deletes them again).
---     It precedes 095's AFTER_DATA marker, which every later schema migration inherits, so a rebuild
+--     finds data_20260823223839 (reference_stubs: inserts 531 rows), and, because the pattern's trailing
+--     [ (] cannot match a statement ending in a semicolon, data_20260823225142 only by a second grep
+--     for `DELETE FROM reference_stubs;` (it copies the rows into source_locators and deletes them).
+--     Both precede 095's AFTER_DATA marker, which every later schema migration inherits, so a rebuild
 --     replays it before this migration and then drops the empty table; no marker is needed here.
 --
 -- THE COVERAGE GRIDS (search_coverage, search_languages) were frozen when search_executions became the

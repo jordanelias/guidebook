@@ -8,8 +8,7 @@ description: >
   cross-reference each other. Outputs a conflict matrix with resolution status
   and evidence quality. ALWAYS use this skill when: writing Universal Mode or Tier 1
   specifications for shared spaces; item-specification-writer encounters a space
-  serving multiple populations; sensory-coherence-checker finds an unresolved conflict
-  needing evidence; connection-scout identifies a cross-population tension; any
+  serving multiple populations; any
   specification mentions "adjustable", "zoned", or "user-controlled" without documenting
   which populations conflict. Trigger on: "cross-population conflict", "competing
   access needs", "accommodation conflict", "which populations conflict here",
@@ -61,7 +60,6 @@ For each active domain, search in this order:
 
 **Priority 1 — Existing project evidence:**
 - `references/bpc/` per-slug files for relevant populations
-- `sensory-coherence-checker` known conflict patterns (§3)
 - SQLite `connections` table for PENDING connections: `python3 scripts/db.py connections --status PENDING`
 
 **Priority 2 — Aged care / dementia facility POEs:**
@@ -210,14 +208,12 @@ Known resolution archetypes (apply where evidence supports):
 
 **Feeds FROM:**
 - `item-specification-writer` (item specs requiring conflict check)
-- `sensory-coherence-checker` (unresolved conflicts needing evidence)
 - `connection-discovery` (cross-population tensions discovered — replaces connection-scout)
 - `content-gap-analyzer` (population coverage revealing conflict)
 - `multilingual-research` / `functional-deficit-researcher` (population-specific evidence)
 
 **Feeds INTO:**
 - `item-specification-writer` (conflict matrix informs spec ranges and DAR)
-- `sensory-coherence-checker` (pre-populates known conflicts for Phase 5 QA)
 - SQLite `conflicts` table (all conflicts via `db.py add-conflict`)
 - SQLite `gaps` table (UNRESOLVED only via `db.py add-gap --category CONF`)
 - Part 8 §8.4 (conflict resolution guidance)
