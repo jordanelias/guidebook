@@ -3098,7 +3098,7 @@ def main():
                 data[_col] = _v
         # THE TIER IS DERIVED, NOT ASKED FOR (2026-09-10; --tier made optional in step 3 evidence).
         # schemas/tier_derivation.py's TIER_MAP is the ratified ladder as a total function of
-        # (evidence_type, scope); the column stays (23 committed data migrations insert it) but
+        # (evidence_type, scope); the column stays (committed data migrations insert it: `grep -lE 'INSERT INTO "?evidence_sources"? \([^)]*\btier\b' scripts/migrations/data_*.sql`) but
         # no operator retypes it. A --tier that disagrees is refused. Six of the eight types
         # admit exactly one scope, which is supplied; clinical and standard_eb carry a real
         # judgment and must say it. The ladder is IMPORTED, never restated here.
@@ -5411,6 +5411,15 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                            f"amend-source --field {field}")
         dbcore.check_declared(conn, "evidence_sources", field, replacement,
                               f"amend-source --field {field}")
+        if field == "co1_source_type":
+            # The column declares no CHECK, so the enum is its vocabulary (RULINGS R11) and the
+            # generic path above gates nothing. add-source and the evidence_type move gate it.
+            from schemas.enums import Co1SourceType  # noqa: E402
+            if replacement not in {m.value for m in Co1SourceType}:
+                raise Refusal(
+                    f"{ref_id}: --replacement {replacement!r} is not a member of "
+                    f"schemas.enums.Co1SourceType: {sorted(m.value for m in Co1SourceType)}. "
+                    f"Nothing was written.")
         if field == "verification_status":
             # The live vocabulary, read from the column rather than retyped beside it
             # (rule 8). This column carries no CHECK, so check_vocab falls back to the

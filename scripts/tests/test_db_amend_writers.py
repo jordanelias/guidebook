@@ -1567,6 +1567,15 @@ try:
            r_old.returncode != 0 and "is not a member of" in (r_old.stdout + r_old.stderr)
            and r_live.returncode == 0 and counts("evidence_sources")[0] == n_src[0] + 1,
            f"old rc={r_old.returncode} {(r_old.stdout + r_old.stderr)[-150:]} live rc={r_live.returncode} {r_live.stderr[-150:]}")
+    r_am_old = run_cli("amend-source", "--ref-id", ref_live, "--field", "co1_source_type", "--replacement",
+                       "peer_reviewed_literature", "--reason", "fixture: retired value", "--session", S)
+    r_am_ok = run_cli("amend-source", "--ref-id", ref_live, "--field", "co1_source_type", "--replacement",
+                      "participatory_research", "--reason", "fixture: live value", "--session", S)
+    record("O05", "amend-source --field co1_source_type refuses a value outside the enum and accepts one inside it",
+           r_am_old.returncode != 0 and "is not a member of" in (r_am_old.stdout + r_am_old.stderr)
+           and r_am_ok.returncode == 0
+           and q("SELECT co1_source_type FROM evidence_sources WHERE ref_id=?", ref_live) == [("participatory_research",)],
+           f"old rc={r_am_old.returncode} {(r_am_old.stdout + r_am_old.stderr)[-150:]} ok rc={r_am_ok.returncode} {r_am_ok.stderr[-150:]}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
