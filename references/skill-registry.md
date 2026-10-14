@@ -60,10 +60,10 @@ therefore still resolves every existing citation.
 
 ## Conventions
 
-- **Active** — skill file present in `skills/` and not flagged deprecated.
+- **Active** — skill file present in `skills/`.
 - **PI placeholder** — skill name appears in PI `<skills_assigned>` but no skill file exists; reserved for future authoring or informational hook.
 
-Each active skill's effort level is in `references/effort-guide.md`. Triggers and protocols live in the skill file itself.
+Triggers and protocols live in the skill file itself.
 
 ---
 
