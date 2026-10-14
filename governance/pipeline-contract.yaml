@@ -278,11 +278,16 @@ stages:
     kind: integrity
     criterion: 'Every rendering of a cell carries the identical determination tuple across registers; no
       unflagged and no above-weak-band best-practice language on regulatory-stratum cells under any
-      weighting profile; no register exceeds its map row (amended I1-I5). UNENFORCED: the check that enforced this, register_integrity_check, read a frozen
-      document keyed on [A-Z]-NN item codes and could never agree with the DB again once migration 071 re-keyed
-      specifications on parameter_id, so it was deleted (plan step 1.6); its I1-I5 logic is in git history.
-      What is missing is a live render surface keyed on parameter_id x lens.'
-    references: evidence-architecture.md §6 I1-I5
+      weighting profile; no register exceeds its map row (amended I1-I5). UNENFORCED SINCE 2026-09-11,
+      and the reason is worth reading before anyone re-points it: register_integrity_check enforced
+      this over _archived/working/pilot/pilot-renderings.html, a frozen document keyed on [A-Z]-NN item
+      codes. Migration 071 re-keyed specifications on parameter_id, so the document and the DB can
+      never agree again. The check passed only while specifications held 0 rows; the project''s FIRST
+      determination turned it red permanently, so it is quarantined (see governance/check-registry.yaml,
+      quarantine section, for the measurement). The invariant logic is sound and mutation-tested --
+      what is missing is a live render surface keyed on parameter_id x lens for it to read.'
+    references: evidence-architecture.md §6 I1-I5; governance/check-registry.yaml quarantine entry for
+      register_integrity_check
     check: null
   - id: mode-stratum-matrix-consistency
     kind: integrity
