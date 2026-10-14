@@ -61,7 +61,7 @@ mirrors the table's own claim/value CHECK. Retiring the other two is a separate 
 with its own sweep, not a side effect of this one.
 
 Lens CODES are likewise not validated here — a code's vocabulary is its own base
-registry, reached by a real typed FK (populations / axes / access_needs /
+registry, reached by a real typed FK (populations / base_icf / access_needs /
 base_taxonomy_medical). `at_least_one_lens` below validates the SHAPE, which the
 database also states, and nothing else.
 

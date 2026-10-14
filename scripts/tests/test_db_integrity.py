@@ -110,6 +110,15 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
+    # The one populated column that holds population codes and carries no foreign key
+    # (validate_population discovered columns by name and never saw it; it was deleted in step 1.6).
+    record("A14", "evidence_population_match.target_population → populations",
+        conn.execute("""SELECT COUNT(*) FROM evidence_population_match m
+            WHERE target_population IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM populations p WHERE p.population_code = m.target_population)
+        """).fetchone()[0] == 0,
+        subject=subj("SELECT COUNT(*) FROM evidence_population_match WHERE target_population IS NOT NULL"))
+
     # A07 WIDENED 2026-09-02, and it is the replacement migration 067 said was owed.
     # It used to require the anchor resolve through source_slug_links, i.e. that a mined
     # anchor be an ADMITTED, slug-linked source. That was true while the only ref_ids
@@ -882,6 +891,14 @@ def run_checks(db_path):
            ic == "ok",
            f"integrity_check: {ic}" if ic != "ok" else "",
            subject=1)
+
+    # Declared foreign keys bind a connection only at write time, so a row written past them
+    # (the direct-blob writers rule 3 names) stays invisible until something reads the blob.
+    fkv = conn.execute("PRAGMA foreign_key_check").fetchall()
+    record("E07", "PRAGMA foreign_key_check reports no violation",
+           not fkv, f"{len(fkv)} violation(s), first: {[tuple(r) for r in fkv[:3]]}" if fkv else "",
+           subject=sum(len(conn.execute(f'PRAGMA foreign_key_list("{t}")').fetchall())
+                       for (t,) in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")))
 
     # ── G: Evidence chain integrity ───────────────────────────────────────────
     print("\n[G] Evidence chain integrity")
