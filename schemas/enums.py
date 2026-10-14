@@ -246,7 +246,7 @@ class Co1Provenance(str, Enum):
     """Co-1 evidence provenance (co1-operational §3.1).
 
     D-0178: the Co-1 warrant is the named co-production, which neither value
-    states. RULINGS R11 corrects this enum from the live column in plan step 3.
+    states.
     """
     PUBLISHED_CORPUS = "published_corpus"
     PARTICIPATORY_SYNTHESIS = "participatory_synthesis"
