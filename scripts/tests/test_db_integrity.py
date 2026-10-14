@@ -1309,7 +1309,7 @@ def run_checks(db_path):
     # ── L04: sessions/LATEST-RESEARCH vs what the DB says research did ────────
     #
     # Folded in from a standalone audit on 2026-08-06 rather than kept as its own
-    # file. It is the same species as L01/L02/L03 — a file store checked against
+    # file. It is the same species as L02/L03 — a file store checked against
     # the DB — and this repo's standing constraint is that every extra enforcer
     # file is another thing to drift.
     #
@@ -1355,7 +1355,7 @@ def run_checks(db_path):
         # ANDed with False. `load_registry` rather than a fifth hand-rolled reader
         # of the same path (rule 5, and the precedent in audit/adherence_log_audit).
         # It is reached under the `_yaml is not None` guard this function already
-        # established at L01, because run_checks exits at import when PyYAML is
+        # established, because run_checks exits at import when PyYAML is
         # missing and `except Exception` would not catch SystemExit.
         #
         # `.get("level", "blocking")` MATCHES THE RUNNER, which defaults a missing

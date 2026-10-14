@@ -76,7 +76,6 @@ For each file below that was modified or referenced this session: GET current co
 
 **workplan/ directory** (v10.1 addition)
 - If Change Orders were issued: verify `references/change-orders/` contains the CO file.
-- For each watched directory (`workplan/`, `versions/current/`): GET listing. If >1 non-directory file outside the directory's `deprecated/` subdirectory, and a new file was committed to that directory this session: invoke `github-filing` on that directory before writing session YAML. Report result in reconciliation block.
 
 **Reconciliation output** — compact table, reported to user and included in session YAML:
 
@@ -89,7 +88,7 @@ For each file below that was modified or referenced this session: GET current co
 | connection_register | ✓ | N | N | N |
 | sessions | ✓ | N | N | N |
 
-### 1c. CS8 decision capture (per A12 decision-protocol)
+### 1c. Doctrine-recheck trigger
 Run after Step 1b — before pattern extraction.
 
 **Working-session counter.** A "working session" produces or substantively modifies project content. Sessions that only adjust skills, fix typos, or rebase commits do not count.

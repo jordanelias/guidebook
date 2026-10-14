@@ -238,7 +238,7 @@ rules:
     hook: >-
       Case studies -> case_studies. Economics -> economics_entries. Code values ->
       research_code_leads. Never leave them in prose notes.
-    anchor: "schemas/case_study.py; schemas/economics.py; scripts/migrations/066_research_code_leads.sql"
+    anchor: "scripts/migrations/066_research_code_leads.sql"
     enforcer: R12
     resolution: >-
       CORRECTED 2026-09-02. The clause read "Code values -> jurisdictional_values",

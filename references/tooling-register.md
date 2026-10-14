@@ -100,14 +100,7 @@ diff by default; `--all` runs everything.
 Each check declares the **work kinds** it is relevant to. `run_checks.py` classifies a diff
 into kinds and runs the intersection.
 
-| Kind | Paths |
-|---|---|
-| `schema` | `schemas/**`, `scripts/migrations/**` |
-| `governance` | `governance/**`, `decisions/**`, `attestations/**`, `references/project-standards.md`, `references/skill-registry.md`, `architecture/**` |
-| `synthesis` | `references/bpc-reasoning/**`, `references/connection-reasoning/**`, `references/bpc/**`, `sessions/**` |
-| `data` | `data/**` |
-| `render` | `parts/**`, `site/**`, `specs/**`, `index.html`, `assets/**` |
-| `tooling` | `scripts/**`, `.github/**`, `.claude/**`, `requirements.txt` |
+The kinds and their paths are the `kinds:` block of `governance/check-registry.yaml`; they are not restated here.
 
 Resulting selectivity, out of 51 registered checks:
 
@@ -322,7 +315,7 @@ rather than a hand-edited DB**:
 |---|---|---|
 | `evidence_sources` | 277 rows — `subtype`, `citation_count`, `pages`, `pub_month` | `scripts/resolve_dois.py` writes Crossref enrichment straight into it |
 | `url_verification_runs` | 1 row | `verify-urls.yml` inserts its run record |
-| `bpc_metadata`, `gaps`, `slugs`, `source_slug_links` | timestamps only | — |
+| `gaps`, `slugs`, `source_slug_links` | timestamps only | — |
 
 Both substantive tables are written by the same scheduled workflows that
 DR-2026-05-28 already exempted `evidence_source_authors` and `pipeline_runs` for.

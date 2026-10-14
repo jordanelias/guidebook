@@ -299,38 +299,6 @@ Guidance for Claude's judgment where output is not mechanically validatable. Voi
 | **Infrastructure Build** | [throughline analysis] → [schema scaffolding] → [validator runner] → [proof-of-concept conversion] → [CI expansion] → [commit] |
 | **Session Wrap** | session-consolidator |
 
-### Dormant Workflows (Phase 2B — reactivate at Stage C)
-
-These workflows are structurally sound but depend on skills that will be rebuilt as Python-backed tools during Stage A and C. Do not run until their constituent skills have been converted.
-
-| Workflow | Skill sequence | Reactivation gate |
-|---|---|---|
-| **DOCX Conversion Prep** | fix-linebreaks → haiku-chunker → [analysis skills] | C-stage |
-| **Full Section Review** | haiku-chunker → [structure-auditor · markdown-formatter · guidebook-auditor · content-gap-analyzer · framing-checker · evidence-auditor] → [research-log-manager CHECK · multilingual-research · citation-verifier · research-log-manager LOG] → [guidebook-auditor C · volii-validator · cross-reference-resolver] → prose-style-checker → critique-report-writer | C-stage: all analysis skills Python-backed |
-| **Item Specification** | item-consolidation-analyzer → research-log-manager RETRIEVE → item-specification-writer (REF-IDs + sources-cited) → vol2-item-formatter (REF-ID validation) → [framing-checker · evidence-auditor] → prose-style-checker → volii-validator | A6 (evidence methodology): ISW output validator built |
-| **Structural Change** | [structure-auditor · markdown-formatter (parallel)] → cross-reference-resolver → find-and-replace → guidebook-auditor A | C-stage |
-| **Structural Nomenclature Change** | toc-editor → find-and-replace (per Change Order) → cross-reference-resolver → guidebook-auditor A | C-stage |
-| **Bulk Text Change** | find-and-replace (all stages) | C-stage |
-| **Citation Audit** | citation-verifier → critique-report-writer §7 | C-stage |
-| **Evidence Gap** | content-gap-analyzer → research-log-manager CHECK → multilingual-research → research-log-manager LOG → gap list | A6 |
-| **Format Check** | structure-auditor → markdown-formatter → guidebook-auditor A+B | C-stage |
-| **Framing + Style** | framing-checker → prose-style-checker | Available (prose-only) |
-| **New Chapter** | Compose: Evidence Gap → Item Specification workflows. | A6 |
-| **Research Retrieval** | research-log-manager CHECK → if COMPLETE: RETRIEVE BPC · if PARTIAL/STALE/NOT FOUND: multilingual-research → research-log-manager LOG | Available (prose skills) |
-| **Multilingual Research (full)** | research-log-manager CHECK → [view Keyword Compendium Part 3 + view Protocol v4 Networks] → multilingual-research (Step 1–4) → citation-miner → pre-LOG completeness check → research-log-manager LOG | Available (prose skills) |
-| **Citation Mining** | citation-miner (backward) → citation-miner (forward) → research-log-manager LOG | Available (prose skills) |
-| **Version Comparison** | version-diff on two aligned chunks | C-stage |
-| **Supplementary Volume** | supplemental-integrator → [find-and-replace · volii-validator · cross-reference-resolver] → guidebook-auditor A | C-stage |
-| **Document Assembly** | chunk-assembler → [bibliography-compiler · table-formatter (parallel)] → cross-reference-resolver → guidebook-auditor A | C-stage |
-| **Renumbering** | bulk-renumber (from Change Order map) → cross-reference-resolver → structure-auditor | C-stage |
-| **File Decomposition** | file-splitter → manifest verification | C-stage |
-| **Evidence Marker Pass** | evidence-marker (classification) → evidence-auditor (marker verification). Audit mode only — runs on assembled volumes post-chunk-assembler. | C-stage |
-| **Sensory QA** | sensory-coherence-checker → gap register updates → Part 5 development | C-stage |
-
-**Note:** "Available" workflows use prose-only skills that remain functional. "C-stage" workflows depend on skills being rebuilt. Framing + Style and Research workflows can run now.
-
-**Parallel rule:** L2 and L4 agents in Full Section Review run independently. No L2/L4 agent takes another's output as input within the same level.
-
 ---
 
 ## Gap Register — Write Protocol
@@ -352,6 +320,7 @@ Never overwrite CLOSED items.
 
 ---
 
+<<<<<<< HEAD
 ## Skill Index (CO-0008 classification)
 
 ### Python Tool (11)
@@ -450,6 +419,8 @@ poe-assessor · intersectionality-checker · index-generator · glossary-manager
 
 ---
 
+=======
+>>>>>>> stack/1.11-bpc-reasoning-layer
 ## Risk Escalation
 After each analysis level: tally escalation signals (→ `references/project-standards.md`). ≥2 signals → record a REVIEW gap with `python3 scripts/db.py add-gap` (see the Gap Register write protocol above; the `SQLite gaps table` placeholder that stood here was a find-and-replace artifact).
 
