@@ -45,7 +45,7 @@ judged_on: '2026-09-17'
 # below records for extraction_relations); and `amendments` (migration 094) as
 # INFRASTRUCTURE -- since dropped by migration 095, which nothing read. Only
 # `convergence_sources` remains of that pair. It was caught by
-# this file's OWN falsifier (`pipeline_walk.py --check` reported them unassigned within a
+# this file's OWN falsifier (`pipeline_walk.py --check`, since deleted, reported them unassigned within a
 # minute of the migrations landing), which is the behaviour its header asks for.
 #
 # 2026-09-27, session_2026-09-27-recent-prs-orientation-f5wt5i: added
@@ -63,7 +63,7 @@ judged_on: '2026-09-17'
 # to be a design parameter, with its reason. It holds a term_id and a reason and nothing
 # from any later stage, and its only reader is base's own writer (`add-parameter` refuses
 # a declined term), so it sits where `base_parameters` sits. Caught by this file's own
-# falsifier (`pipeline_walk.py --check`) as soon as the migration was applied.
+# falsifier (`pipeline_walk.py --check`, since deleted) as soon as the migration was applied.
 #
 # 2026-10-09, tooling T1 (scan contract and vocabulary lifecycle, migrations 103-105):
 # `source_scans` as EVIDENCE -- a record of what was read of an admitted source, beside

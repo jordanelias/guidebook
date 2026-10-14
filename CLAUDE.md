@@ -387,7 +387,7 @@ judgment. Zero links **after judgment** is a defect. Only Opus-class models writ
 A ruling can be in the repository, in the file §9 sends you to, and still fail to bind if the search
 stops at the first answer it finds: search for **both** halves of any question before calling either
 open. Do not read `slug × population` as any part of the answer: `populations` IS the identity lens
-(`base_taxonomy_identity`), so that key reintroduces the traversal D-0184 measured and rejected.
+(its owner-ruled name is `base_taxonomy_identity`, not yet applied), so that key reintroduces the traversal D-0184 measured and rejected.
 
 ---
 
@@ -496,7 +496,8 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 - **Net-negative** (owner, 2026-10-12: as little code as possible). A PR touching `scripts/`,
   `schemas/`, `.github/` or `skills/` does not raise their physical-line total unless its
   description names the exception and the code it replaces (it may replace none, and then says so).
-  Measure: `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`. Enforced by review, not by a check.
+  Measure (one line): `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`.
+  Enforced by review, not by a check.
 - **A specific, ratified authorisation beats a blanket caution.** Blanket removal-friction winning
   ties against specific removal-permission is how this file became a ratchet.
 

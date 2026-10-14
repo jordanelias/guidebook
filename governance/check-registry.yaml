@@ -1531,7 +1531,7 @@ checks:
     zero research paths and zero tooling paths is a routine, correct PASS (a doc-only or
     prose-only commit). FAILS only when the SAME changeset carries both a research-data path
     (`data/**`, or a `scripts/migrations/data_*.sql` file) and a tooling path (`scripts/**`,
-    `tools/**`, `.github/**`, `.claude/**`, a numbered schema migration, or `schemas/**`).
+    `.github/**`, `.claude/**`, a numbered schema migration, or `schemas/**`).
     `data/guidebook.db` itself is a named exception when the changeset is schema-migration-only
     (see the script''s own docstring) — a schema bump shipping with its own blob is the
     established convention, not the shape this check exists to catch. Named residual: a
@@ -2338,7 +2338,9 @@ quarantine:
     WOULD DE-QUARANTINE IT: a live render surface keyed on parameter_id x lens, which does not exist
     yet (parts/ and site/ are render-stage and hold no determination rows). Repoint --doc at that
     surface and it works again; it was de-quarantined once before, on 2026-08-04, by clearing its
-    blockers the same way. Its prior note is preserved below verbatim so nothing is lost.'
+    blockers the same way. Its prior note is preserved below verbatim so nothing is lost. SINCE STEP 1.1 (2026-10-14) it cannot even start: it
+    imports REGISTER_MAP, ROLES and tuple_class from pilot_renderings, which 1.1 deleted with the other renderers, and the plan''s
+    step 1.6(a) deletes this check.'
   prior_note: 'Amended I1–I5 (DR-2026-07-21 Option A) over working/pilot/pilot-renderings.html, with the DB
     cross-check and the DB→doc completeness direction on by default. --selftest mutation-tests every invariant
     before checking the real document, so a pass is a demonstrated-firing pass rather than an assumed
