@@ -1,6 +1,5 @@
 id	source	subject	claim
 MIS-08	governance/mission-and-epistemics.md:190	mission status	The Status section says the file is not yet operative, contradicting its header (CANONICAL, locked).
-DRS-023	decisions/DR-2026-08-24-scaffolding-is-phase-specific.md:159	rename of the axes layer	Whether and how the axes rename (4 tables, 6 columns, validate_axes, 297 files) is executed is not decided by this DR.
 DRS-025	decisions/DR-2026-08-24-scaffolding-is-phase-specific.md:163	folding axes into access_needs	Whether axes is folded into access_needs is not decided by this DR.
 DRS-071	decisions/DR-2026-08-27-base-building-three-levels-items-is-not-one.md:38	one self-referential table versus three tables for base_building	Whether base_building is three separate tables or one self-referential table is open (a parent across three tables is polymorphic and SQLite cannot key it).
 DRS-076	decisions/DR-2026-08-27-base-sources-is-a-target-registry.md:42	name of base_sources	The name base_sources must be resolved (sources would do two jobs, where to look versus what we found) before the table is created.
@@ -11,7 +10,6 @@ DRS-139	decisions/DR-2026-08-31-a18-applies-to-deaf-aut-ndv-dem.md:40	tension wi
 DRS-154	decisions/DR-2026-08-31-deaf-and-com-belong-on-room-acoustic-performance.md:38	writing the DEAF and COM links	The links are authorised by this ruling but were not written in this batch; writing them is a separate act.
 DRS-162	decisions/DR-2026-08-31-item-population-links-are-substrate-provisionally.md:42	enforcer for the OD-A obligation	A check is owed that fails a determination migration citing an item_population_links edge whose rationale_ref is NULL; it was not built.
 DRS-198	decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md:52	identity-only row beside a wide row	An audit for identity-only rows sitting beside wide rows carrying the same identity is owed; it is not a constraint.
-DRS-199	decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md:58	graph extractor draws only the identity lens	Registering axes in the graph extractor's PRIMARY node registry is owed so the ICF lens edge is drawn.
 DRS-200	decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md:4	owner review of D-0184	D-0184 was adopted by a session and awaits the owner's review (review_status PENDING).
 DRS-206	decisions/DR-2026-09-02-finish-the-render-sweep.md:30	root index.html front page	Root index.html must stop stating the Corridor Clear Width determination as fact on its front page.
 DRS-215	decisions/DR-2026-09-02-restore-research-code-leads.md:30	v_code_floor_only	What v_code_floor_only becomes is undecided, because it joins on item_code which the owner ruled out of existence.

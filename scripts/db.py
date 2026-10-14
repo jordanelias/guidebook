@@ -1939,7 +1939,7 @@ def main():
     p_md.add_argument("--identity", help="populations.population_code to cross to")
     p_md.add_argument("--relationship", choices=dbcore.schema_choices("identity_medical_map", "relationship"),
                       help="required with --identity")
-    p_md.add_argument("--icf", help="axes.axis_code to cross to")
+    p_md.add_argument("--icf", help="base_icf.icf_code to cross to")
     p_md.add_argument("--role", choices=dbcore.schema_choices("icf_medical_map", "role"),
                       help="required with --icf. No ALIAS: a diagnosis is never an alias "
                            "of a functional demand (074)")
@@ -7884,8 +7884,8 @@ _LENS_COLUMNS = {
     # codes"), executed by migration 081. It read ("axes", "axis_code") until then, so
     # the column called `icf_code` resolved to an AX- functional-demand code -- which
     # the same day's ruling bans outright: "'AX-' for ICF should never ever exist
-    # anywhere". The demand layer keeps its rows and its maps; it is simply no longer
-    # a lens.
+    # anywhere". The demand layer is simply no longer a lens, and migration `drop_axes`
+    # dropped its tables.
     "icf_code": ("base_icf", "icf_code"),
     "needs_code": ("access_needs", "need_code"),
     "medical_code": ("base_taxonomy_medical", "medical_code"),

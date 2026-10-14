@@ -75,13 +75,11 @@ judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-c
 
 tables:
   access_duration: base
-  access_need_axis_map: base
   access_need_icf: base
   access_needs: base
   access_stakes: base
   adversarial_findings: infrastructure
   adversarial_passes: infrastructure
-  axes: base
   base_icf: base
   base_parameters: base
   base_taxonomy_medical: base
@@ -112,7 +110,6 @@ tables:
   observed_terms: evidence
   parameter_declinations: base
   pipeline_runs: infrastructure
-  population_axis_map: base
   population_icf_links: base
   populations: base
   reasoning_doc_citations: synthesis
@@ -125,7 +122,6 @@ tables:
   search_execution_artefacts: research
   search_executions: research
   search_languages: research
-  situations: base
   slugs: base
   source_locators: research
   source_scans: evidence
