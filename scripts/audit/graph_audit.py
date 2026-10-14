@@ -11,9 +11,8 @@ Checks (data + code + content layers):
   1. orphan.dangling_citation     (ERROR) value-layer ref with no evidence_sources row
                                   — the vetting-surface `orphan_links` invariant; must be 0
   2. cycle.population_parent      (ERROR) populations.parent_code forms a cycle
-  3. ref.dangling_structural      (ERROR) fk / self_ref / item-population junction edge to
-                                  a missing node (items.bpc_source_slug, populations.parent_code,
-                                  item_taxonomy_links) — corruption no other check covered
+  3. ref.dangling_structural      (ERROR) fk / self_ref edge to a missing node
+                                  (populations.parent_code) — corruption no other check covered
   4. orphan.uncited_source        (WARN)  evidence source cited by nothing
   5. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
                                   (phantom-item vs unresolved-identifier)
@@ -355,10 +354,10 @@ def selftest():
 
         # 6. code table-ref detector fires on injected SQL, ignores non-SQL prose
         import extract_code
-        refs = set(extract_code.iter_table_refs("SELECT x FROM zzz_phantom JOIN items ON 1"))
+        refs = set(extract_code.iter_table_refs("SELECT x FROM zzz_phantom JOIN slugs ON 1"))
         no_sql = list(extract_code.iter_table_refs("plain prose from here to there"))
         results.append(("code table-ref detector: phantom+real found, prose ignored",
-                        "zzz_phantom" in refs and "items" in refs and no_sql == []))
+                        "zzz_phantom" in refs and "slugs" in refs and no_sql == []))
 
         # 6b. f-string verb-scoping: a verb in one constant part gates a table token in a
         #     LATER part (the per-part-gate blind spot); a part with no verb anywhere stays inert.
@@ -386,35 +385,17 @@ def selftest():
         results.append(("code+content checks execute on real repo", has_code and has_ref))
         s.close()
 
-        # 9. dangling structural refs (fk / self_ref / item-population junction) all fire —
-        #    the three relationships no topology check previously covered.
+        # 9. a dangling structural reference (populations.parent_code, self_ref) fires.
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
         con.execute("PRAGMA foreign_keys=OFF")
-        # Seed our own item rather than borrowing a live one. Until 2026-09-01 this
-        # read `SELECT item_code FROM items LIMIT 1` and subscripted the result, so
-        # it raised TypeError the moment the table was empty — which it became when
-        # the owner ruled the item layer out of existence that day. A selftest that
-        # proves dangling-reference detection must not itself depend on the live
-        # corpus having rows; the fixture is the point.
-        row = con.execute("SELECT item_code FROM items LIMIT 1").fetchone()
-        if row is None:
-            it = "ZZ-SELFTEST-ITEM"
-            con.execute("INSERT INTO items (item_code, item_id, name, category, status, "
-                        "created_at, created_by_session, updated_at, updated_by_session) "
-                        "VALUES (?, 9999, 'graph_audit selftest fixture', 'A', 'active', "
-                        "'2026-01-01', 'selftest', '2026-01-01', 'selftest')", (it,))
-        else:
-            it = row[0]
-        con.execute("UPDATE items SET bpc_source_slug='zz-phantom-slug' WHERE item_code=?", (it,))
         pop = con.execute("SELECT population_code FROM populations LIMIT 1").fetchone()[0]
         con.execute("UPDATE populations SET parent_code='ZZ-PHANTOM-POP' WHERE population_code=?", (pop,))
-        _insert_row(con, "item_taxonomy_links", {"item_code": it, "identity_code": "ZZ-PHANTOM-POP2"})
         con.commit()
         con.close()
         s = gbuild.build(audit_db=os.path.join(tmpd, "a9.db"), guidebook_db=copy)
-        results.append(("dangling fk/self_ref/item-junction all fire (ERROR)",
-                        _count_check(s, "ref.dangling_structural", "ERROR") >= 3))
+        results.append(("dangling self_ref fires (ERROR)",
+                        _count_check(s, "ref.dangling_structural", "ERROR") >= 1))
         s.close()
 
         # 10. a DROPPED mission-critical table is flagged (fail-loud), not silently skipped

@@ -314,9 +314,7 @@ rebuild reproduces it exactly, and every gate stays green over a table that cann
 `parameter_id NOT NULL REFERENCES base_parameters(parameter_id)` while `base_parameters` was empty;
 minting a parameter (`db.py add-parameter`) released it. Whether a determination can be written today
 is a question for the derivation below and for `specifications`' live rows, not for this file.
-`item_taxonomy_links` is unwritable on the
-original mechanism — its `item_code` FK still reaches into the emptied `items` — which means
-**D-0184's own object cannot accept a row either**. This is rule 4's "treat a 0-row object as
+This is rule 4's "treat a 0-row object as
 unproven, not clean" with teeth. Derive the live set before planning any write, and never quote it:
 
 ```
@@ -435,16 +433,15 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 - **`git rebase` and `git checkout -B` are blocked in this harness** as history-rewriting. When a
   merged PR leaves unmerged commits on your branch, `git merge origin/main` reaches the same state
   without rewriting anything — the branch carries a merge commit rather than a replay.
-- **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** `items` holds
-  0 rows and a rebuild does not restore it — but the prior version's corpus still publishes the
+- **THE ITEM LAYER IS GONE FROM THE DATABASE AND STILL LIVE ON THE READING SURFACE.** Its tables
+  were dropped by migration `drop_item_layer_cluster` and a rebuild does not restore them — but the prior version's corpus still publishes the
   codes and their names across `references/` and `working/`, which `.ignore` does **not** hide.
   (`versions/` and `_archived/` carry them too and **are** hidden.)
   So a session that greps for a topic still meets **`E-08 Corridor Clear Width
   (≥1200 mm Minimum on All Primary Routes)`** — a container whose name states its answer, which is
   the whole reason the owner deleted the layer: *if E-08 already exists then the work is predisposed
   to filing into a container that already exists, and that biases every finding.* **Treat every
-  `[A-Z]-NN` code you meet as prior-version content, never as a container to file into.** `db.py
-  add-item` refuses for this reason. **The prefixes run wider than any range you would guess** —
+  `[A-Z]-NN` code you meet as prior-version content, never as a container to file into.** **The prefixes run wider than any range you would guess** —
   derive them, and note the archived index is now their only home:
   `grep -rhoE '\b[A-Z]-[0-9]{2}\b' _archived/references/part04-item-index.md | cut -c1 | sort -u`.
   Then derive the LIVE surface before framing anything — the two are different questions and only

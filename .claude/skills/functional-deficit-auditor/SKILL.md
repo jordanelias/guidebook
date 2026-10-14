@@ -1,1 +1,0 @@
-../../../skills/functional-deficit-auditor_SKILL.md

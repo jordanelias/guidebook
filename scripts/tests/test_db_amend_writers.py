@@ -1379,12 +1379,8 @@ try:
            f"({OTHER_NEW})", out and jur_of(RJ) == OTHER_NEW, f"{msg!r} {jur_of(RJ)!r}")
     msg = refusal(db.insert_economics_entry, {"entry_id": "FIXTURE-J10",
                                               "jurisdiction": "MULTI"}, S)
-    msg2 = refusal(db.insert_jurisdictional_value, {"jv_id": "FIXTURE-J10",
-                                                     "jurisdiction": UNDECLARED}, S)
-    record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) and "
-           "add-jurisdictional-value refuses XX, both by the vocabulary",
-           msg and "JurisdictionCode" in msg and msg2 and "JurisdictionCode" in msg2,
-           f"got {msg!r} / {msg2!r}")
+    record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) by the "
+           "vocabulary", msg and "JurisdictionCode" in msg, f"got {msg!r}")
 
     # Mirror, not stricter: every value LIVE in a table the audit gates passes the
     # writers' refusal, so a real batch writing UK, EU, ISO, INT ... is never blocked by

@@ -234,6 +234,5 @@ Failing any predicate: the row is NOT eligible to support a synthesis claim. The
 ## Integration with related skills
 
 - `adversarial-research`: applies AFTER this skill clears a row's metadata. This skill provides existence + content-attribution; `adversarial-research` provides the dissenter/falsification framing for any synthesis built on the row.
-- `progressive-measurement`: applies to numerical-spec claims that cite rows this skill rehabilitated. Spec verification is content-level; this skill is attribution-level.
 - `citation-miner`: feeds candidates INTO this skill. When mining surfaces a new reference, this skill processes it through type-routing on first ingest.
 - `manual-statutory-verification`: deprecated by this skill's statutory path. Use this skill going forward; preserve `manual-statutory-verification` references for historical sessions.

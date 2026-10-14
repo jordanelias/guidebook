@@ -732,7 +732,9 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     ok_can = capability_verdicts(can, T, probes)["X"]["overall"] if probes["P-D"]["verdict"] == "PASS" else "n/a"
     ok_blk = capability_verdicts(blk, T, probes)["X"]["overall"] if probes["P-A"]["verdict"] == "FAIL" else "n/a"
     results.append(("a capability can come out CAN and can come out BLOCKED", ok_can == "CAN" and ok_blk == "BLOCKED"))
-    w1 = eval_pred({"kind": "writable", "table": "specifications"}, T, probes)[0]; w2 = eval_pred({"kind": "writable", "table": "item_taxonomy_links"}, T, probes)[0]
+    class _StubTree:      # a tree in which one table has a NOT NULL FK into an emptied table (no live table does since step 1.2)
+        def unwritable_set(self): return [{"child": "zzz_child", "col": "p", "parent": "zzz_parent", "parent_written_by_same_verb": False}]
+    w1 = eval_pred({"kind": "writable", "table": "specifications"}, T, probes)[0]; w2 = eval_pred({"kind": "writable", "table": "zzz_child"}, _StubTree(), probes)[0]
     results.append(("the `writable` predicate can say PASS and can say FAIL", {w1, w2} == {"PASS", "FAIL"}))
     # j) a machine `vocabs` entry that differs from the CHECK is caught
     m5 = copy.deepcopy(machines)

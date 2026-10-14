@@ -1043,42 +1043,9 @@ def get_coverage_completeness(slug: str) -> dict:
     }
 
 
-def get_synonyms(item_code: str, language: str = None) -> list[dict]:
-    q = """
-        SELECT t.term_id, t.canonical_en, ta.alias, ta.language,
-               ta.alias_type, ta.jurisdiction
-        FROM term_item_links til
-        JOIN terms t ON til.term_id = t.term_id
-        JOIN term_aliases ta ON t.term_id = ta.term_id
-        WHERE til.item_code=?
-    """
-    params = [item_code]
-    if language:
-        q += " AND ta.language=?"
-        params.append(language)
-    q += " ORDER BY t.canonical_en, ta.language, ta.alias"
-    with connect(readonly=True) as conn:
-        return [dict(r) for r in conn.execute(q, params).fetchall()]
-
-
 # ── CO-0009 Phase 1 Session 1b additions ──────────────────────────────────
 
 import re as _re
-
-# _VALID_CONFLICT_STATUS / _VALID_ITEM_STATUS / _VALID_RUN_STATUS RETIRED 2026-09-27
-# (RC2, DR-2026-09-26-recurring-defect-shapes-remediation.md section 3.2b): each equalled
-# a live column CHECK exactly (conflicts.status, items.status, item_audit_runs.status
-# respectively) — derived_not_curated_audit.py Class 3 now fails a curated copy of one of
-# these outright. Replaced by dbcore.check_declared / dbcore.schema_choices at every
-# call site; the owner ruling and migration each cited are unaffected, only their
-# vocabulary's SECOND home is gone.
-_ITEM_CODE_RE        = _re.compile(r"^[A-K]-\d{2}[a-z]?$")
-_CATEGORY_RE         = _re.compile(r"^[A-K]$")
-_PIPELINE_STEPS      = frozenset({
-    "connection-discovery-spec", "connection-discovery-evidence",
-    "conflict-mapper", "content-gap-analyzer", "evidence-auditor",
-    "functional-deficit-auditor", "economics-auditor", "audit-consolidator",
-})
 
 
 def next_conf_id() -> str:
@@ -1163,74 +1130,6 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
     with connect(dry_run) as conn:
         conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
         conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
-
-
-def get_items(category: str = None, status: str = None) -> list:
-    q      = "SELECT * FROM items WHERE 1=1"
-    params = []
-    if category:
-        q += " AND category=?"; params.append(category)
-    if status:
-        q += " AND status=?";   params.append(status)
-    q += " ORDER BY item_code"
-    with connect(readonly=True) as conn:
-        return [dict(r) for r in conn.execute(q, params).fetchall()]
-
-
-def insert_audit_run(data: dict, session: str, dry_run: bool = False) -> str:
-    row = {**data, **audit(session)}
-    with connect(dry_run) as conn:
-        if data.get("status") is not None:
-            dbcore.check_declared(conn, "item_audit_runs", "status", data["status"],
-                                  "insert_audit_run")
-        cols = ", ".join(row)
-        ph   = ", ".join(["?"] * len(row))
-        conn.execute(f"INSERT INTO item_audit_runs ({cols}) VALUES ({ph})", list(row.values()))
-    return data["run_id"]
-
-
-def update_audit_run(run_id: str, session: str,
-                     status: str = None, steps_complete: list = None,
-                     steps_started: list = None, brief_path: str = None,
-                     spec_hash: str = None, dry_run: bool = False):
-    # Validate step names
-    for step_list in [steps_complete or [], steps_started or []]:
-        unknown = [s for s in step_list if s not in _PIPELINE_STEPS]
-        if unknown:
-            raise Refusal(f"Unknown pipeline step(s): {unknown}. Valid: {sorted(_PIPELINE_STEPS)}")
-    u    = _upd(session)
-    sets = ["updated_at=?", "updated_by_session=?"]
-    vals = [u["updated_at"], u["updated_by_session"]]
-    if status is not None:
-        sets.append("status=?");          vals.append(status)
-    if steps_complete is not None:
-        sets.append("steps_complete=?");  vals.append(json.dumps(steps_complete))
-    if steps_started is not None:
-        sets.append("steps_started=?");   vals.append(json.dumps(steps_started))
-    if brief_path is not None:
-        sets.append("brief_path=?");      vals.append(brief_path)
-    if spec_hash is not None:
-        sets.append("spec_hash=?");       vals.append(spec_hash)
-    vals.append(run_id)
-    with connect(dry_run) as conn:
-        if status is not None:
-            dbcore.check_declared(conn, "item_audit_runs", "status", status,
-                                  "update_audit_run")
-        conn.execute(
-            f"UPDATE item_audit_runs SET {', '.join(sets)} WHERE run_id=?", vals
-        )
-
-
-def get_audit_runs(item_code: str = None, status: str = None) -> list:
-    q      = "SELECT * FROM item_audit_runs WHERE 1=1"
-    params = []
-    if item_code:
-        q += " AND item_code=?"; params.append(item_code)
-    if status:
-        q += " AND status=?";    params.append(status)
-    q += " ORDER BY created_at DESC"
-    with connect(readonly=True) as conn:
-        return [dict(r) for r in conn.execute(q, params).fetchall()]
 
 
 # --- CLI ---
@@ -1340,24 +1239,6 @@ def main():
     p_epm.add_argument("--gap-id")
     p_epm.add_argument("--session", required=True)
     p_epm.add_argument("--dry-run", action="store_true")
-
-    p_jv = sub.add_parser("add-jurisdictional-value",
-                          help="Record a code/regulatory value (T4-T6 stratum)")
-    p_jv.add_argument("--jv-id")
-    p_jv.add_argument("--item-code", required=True)
-    p_jv.add_argument("--jurisdiction", required=True)
-    p_jv.add_argument("--standard-name")
-    p_jv.add_argument("--value-text")
-    p_jv.add_argument("--value-numeric", type=float)
-    p_jv.add_argument("--unit")
-    p_jv.add_argument("--is-code-minimum", type=int, choices=[0, 1])
-    p_jv.add_argument("--evidence-tier", type=int, required=True)
-    p_jv.add_argument("--source-section")
-    p_jv.add_argument("--loc-section")
-    p_jv.add_argument("--loc-clause")
-    p_jv.add_argument("--notes")
-    p_jv.add_argument("--session", required=True)
-    p_jv.add_argument("--dry-run", action="store_true")
 
     p_econ = sub.add_parser("add-economics-entry", help="Record a Part-13 economics finding")
     p_econ.add_argument("--entry-id", required=True)
@@ -2339,11 +2220,6 @@ def main():
     p_cov = sub.add_parser("coverage", help="Check search coverage")
     p_cov.add_argument("--slug", required=True)
 
-    # synonyms
-    p_syn = sub.add_parser("synonyms", help="Get synonyms for item")
-    p_syn.add_argument("--item", required=True)
-    p_syn.add_argument("--language")
-
     # add-gap
     p_ag = sub.add_parser("add-gap", help="Insert a new gap record")
     p_ag.add_argument("--category", required=True)
@@ -2674,54 +2550,6 @@ def main():
     p_dc.add_argument("--session", required=True)
     p_dc.add_argument("--dry-run", action="store_true")
 
-    # add-item — REFUSES. The item layer was deleted by owner ruling 2026-09-01;
-    # the handler explains why and what to do instead. Every argument is optional
-    # ON PURPOSE: `required=True` would make a bare `db.py add-item` die in argparse
-    # with "the following arguments are required", and the caller would never reach
-    # the refusal that tells them the layer is gone. An error that teaches beats an
-    # error that is merely correct.
-    p_ai = sub.add_parser("add-item",
-                          help="REFUSED — the item layer was deleted (owner, 2026-09-01)")
-    p_ai.add_argument("--item-code")
-    p_ai.add_argument("--category")
-    p_ai.add_argument("--name")
-    p_ai.add_argument("--bpc-source-slug")
-    p_ai.add_argument("--status", default="draft",
-                      choices=dbcore.schema_choices("items", "status"))
-    p_ai.add_argument("--item-id")
-    p_ai.add_argument("--session")
-    p_ai.add_argument("--dry-run", action="store_true")
-
-    # items
-    p_items = sub.add_parser("items", help="Query items")
-    p_items.add_argument("--category")
-    p_items.add_argument("--status")
-
-    # add-audit-run
-    p_aar = sub.add_parser("add-audit-run", help="Create an item_audit_runs record")
-    p_aar.add_argument("--item-code", required=True)
-    p_aar.add_argument("--session", required=True)
-    p_aar.add_argument("--spec-hash")
-    p_aar.add_argument("--status", default="IN-PROGRESS",
-                       choices=dbcore.schema_choices("item_audit_runs", "status"))
-    p_aar.add_argument("--dry-run", action="store_true")
-
-    # update-audit-run
-    p_uar = sub.add_parser("update-audit-run", help="Update an item_audit_runs record")
-    p_uar.add_argument("--run-id", required=True)
-    p_uar.add_argument("--session", required=True)
-    p_uar.add_argument("--status", choices=dbcore.schema_choices("item_audit_runs", "status"))
-    p_uar.add_argument("--steps-complete", help="JSON array of completed step names")
-    p_uar.add_argument("--steps-started",  help="JSON array of started step names")
-    p_uar.add_argument("--brief-path")
-    p_uar.add_argument("--spec-hash")
-    p_uar.add_argument("--dry-run", action="store_true")
-
-    # audit-runs
-    p_ar = sub.add_parser("audit-runs", help="Query item_audit_runs")
-    p_ar.add_argument("--item")
-    p_ar.add_argument("--status")
-
     # ── DR-2026-05-24: best-practice supersession protocol (migration 015) ─────
     # add-supersession-check
     p_asc = sub.add_parser("add-supersession-check",
@@ -2872,9 +2700,6 @@ def main():
     elif args.command == "coverage":
         _emit(get_coverage_completeness(args.slug))
 
-    elif args.command == "synonyms":
-        _emit(get_synonyms(args.item, language=args.language))
-
     elif args.command == "add-gap":
         gap_id = next_gap_id()
         data = {
@@ -3002,18 +2827,6 @@ def main():
             "gap_id": args.gap_id,
         }, session=args.session, dry_run=args.dry_run)
         _emit({"match_id": mid, "dry_run": args.dry_run})
-
-    elif args.command == "add-jurisdictional-value":
-        jv = insert_jurisdictional_value({
-            "jv_id": args.jv_id, "item_code": args.item_code,
-            "jurisdiction": args.jurisdiction, "standard_name": args.standard_name,
-            "value_text": args.value_text, "value_numeric": args.value_numeric,
-            "unit": args.unit, "is_code_minimum": args.is_code_minimum,
-            "evidence_tier": args.evidence_tier, "source_section": args.source_section,
-            "loc_section": args.loc_section, "loc_clause": args.loc_clause,
-            "notes": args.notes,
-        }, session=args.session, dry_run=args.dry_run)
-        _emit({"jv_id": jv, "dry_run": args.dry_run})
 
     elif args.command == "add-economics-entry":
         eid = insert_economics_entry({
@@ -3610,72 +3423,6 @@ def main():
     elif args.command == "delete-connection":
         delete_connection(args.con_id, session=args.session, dry_run=args.dry_run)
         _emit({"deleted": args.con_id, "dry_run": args.dry_run})
-
-    elif args.command == "add-item":
-        raise SystemExit(
-            "add-item REFUSES: the item layer was deleted by owner ruling 2026-09-01 "
-            "and there is no ruling to restore it.\n"
-            "\n"
-            "WHY, in the owner's terms: if E-08 already exists then the work is "
-            "predisposed to filing into a container that already exists, and that "
-            "biases every finding. Measured in DR-2026-08-19 1.1, 42 of the 93 item "
-            "names embedded a determination -- `E-08 Corridor Clear Width (>=1200 mm "
-            "Minimum on All Primary Routes)` states its answer in its own name, so a "
-            "search framed on it is a search for confirmation. That is why the layer "
-            "went, and why a writer that can retype an old code verbatim is the "
-            "contamination path rather than a convenience.\n"
-            "\n"
-            "This refusal is deliberately not a deletion. Deleting the subcommand "
-            "would send you to hand-written SQL against `items`, which CLAUDE.md 4 "
-            "names as the exact temptation to refuse.\n"
-            "\n"
-            "WHAT TO DO INSTEAD -- and this is RULED, not open. Owner ruling "
-            "2026-08-26 (references/project-standards.md, grep -n 'judgment object "
-            "is the'): the judgment object is the CANONICAL PARAMETER, and `items` "
-            "is the render rollup -- derived FROM specifications, never keying "
-            "them. specifications.item_code is dropped alongside population_code in "
-            "the same migration. Read that ruling's five-clause ACTION before "
-            "touching any of it. Do not reach for `slug x population` either: "
-            "`populations` is only the identity lens.\n"
-            "\n"
-            "(This text called the subject an OPEN OWNER DECISION until 2026-09-09, "
-            "while the ruling had stood since 2026-08-26. Declaring open a question "
-            "already answered is CLAUDE.md rule 4b wearing its other face.)\n"
-            "\n"
-            "A subject the pipeline PRODUCES is the point. An item must be an output "
-            "of the work, never a container chosen before it."
-        )
-
-    elif args.command == "items":
-        _emit(get_items(category=args.category, status=args.status))
-
-    elif args.command == "add-audit-run":
-        run_id = f"{args.item_code}_{args.session}"
-        data   = {
-            "run_id":    run_id,
-            "item_code": args.item_code,
-            # `"session": args.session` stood here until migration 085 DROPPED
-            # item_audit_runs.session as a duplicate of created_by_session,
-            # which insert_audit_run's own audit() stamp supplies.
-            "status":    args.status,
-        }
-        if args.spec_hash: data["spec_hash"] = args.spec_hash
-        insert_audit_run(data, session=args.session, dry_run=args.dry_run)
-        _emit({"run_id": run_id, "dry_run": args.dry_run})
-
-    elif args.command == "update-audit-run":
-        sc = json.loads(args.steps_complete) if args.steps_complete else None
-        ss = json.loads(args.steps_started)  if args.steps_started  else None
-        update_audit_run(
-            args.run_id, session=args.session,
-            status=args.status, steps_complete=sc, steps_started=ss,
-            brief_path=args.brief_path, spec_hash=args.spec_hash,
-            dry_run=args.dry_run,
-        )
-        _emit({"updated": args.run_id})
-
-    elif args.command == "audit-runs":
-        _emit(get_audit_runs(item_code=args.item, status=args.status))
 
     elif args.command == "add-supersession-check":
         # DR-2026-05-24 — per-anchor-source supersession outcome
@@ -8995,8 +8742,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # it`, 68/69.
         #
         # WHAT THE OTHER THREE CAPTURE-TABLE WRITERS DO: NOTHING, AND MOSTLY THEY DO
-        # NOT EXIST. Measured 2026-09-10 -- `spec_value_probes` and
-        # `reasoning_doc_citations` have no `db.py` writer at all; `economics_entries`
+        # NOT EXIST. Measured 2026-09-10 -- `reasoning_doc_citations`
+        # has no `db.py` writer at all; `economics_entries`
         # has `insert_economics_entry`, which never touches `data_capture_status`. So
         # this is not a convention being followed, it is the first writer to maintain
         # the biconditional at all. C06 is green over those three only because all
@@ -9989,7 +9736,7 @@ def get_unmined_gaps(*, gap_id: str | None = None,
 #
 # WHY THESE EXIST AT ALL. CLAUDE.md §4 said, in terms: db.py has no subcommand
 # for search_candidates, evidence_population_match, economics_entries,
-# case_studies or jurisdictional_values, so "those need hand-written SQL against
+# case_studies or jurisdictional_values (since dropped), so "those need hand-written SQL against
 # the scratch, and THAT GAP IS WHERE THE FABRICATION OF 2026-08-19 ENTERED."
 # The gap was the cause, not the setting. These writers close it.
 #
@@ -10144,48 +9891,6 @@ def insert_population_match(data: dict, session: str, dry_run: bool = False):
     return row["match_id"]
 
 
-def insert_jurisdictional_value(data: dict, session: str, dry_run: bool = False):
-    """Record a code/regulatory value for an item in a jurisdiction (T4-T6 stratum)."""
-    _COLS = frozenset({
-        "jv_id", "item_code", "jurisdiction", "standard_name", "value_text",
-        "value_numeric", "unit", "is_code_minimum", "evidence_tier", "source_section",
-        "notes", "locator_scheme", "loc_division", "loc_part", "loc_section",
-        "loc_subsection", "loc_paragraph", "loc_clause", "loc_subclause", "loc_note",
-    })
-    dbcore.validate_cols(data.keys(), _COLS, "insert_jurisdictional_value")
-    dbcore.check_jurisdiction(data.get("jurisdiction"),
-                              "add-jurisdictional-value --jurisdiction")
-    with dbcore.connect(dry_run) as conn:
-        if not dbcore.exists(conn, "items", "item_code", data.get("item_code")):
-            raise Refusal(f"item_code {data.get('item_code')!r} is not in `items`.")
-        tier = data.get("evidence_tier")
-        # RANGE_GUARDS in scripts/emit_data_migration.py owns the 1-6 band and cites
-        # schemas/evidence_source.py:85 as its authority. Not restated here (rule 5) --
-        # the same band is asserted, and the guard remains the place it is DEFINED.
-        if tier is None or not (1 <= int(tier) <= 6):
-            raise Refusal(
-                f"evidence_tier {tier!r} is outside the ratified 1-6 band "
-                f"(RANGE_GUARDS in emit_data_migration.py; governance/tier-system.md).")
-        # R3: a quantified value needs a locator or an explicit unverified marker.
-        loc_fields = [k for k in _COLS if k.startswith("loc_")] + ["source_section"]
-        has_locator = any((data.get(k) or "").strip() for k in loc_fields
-                          if isinstance(data.get(k), str))
-        if data.get("value_numeric") is not None:
-            if not data.get("unit"):
-                raise Refusal("--value-numeric requires --unit. A number without a "
-                                 "unit is not a value.")
-            if not has_locator and "[UNVERIFIED-QUANT]" not in (data.get("notes") or ""):
-                raise Refusal(
-                    "R3: a quantified code value needs a locator (clause/section/page) "
-                    "or an explicit [UNVERIFIED-QUANT] marker in --notes. Nothing written.")
-        row = dict(data)
-        row.update(dbcore.stamp_for(conn, "jurisdictional_values", session))
-        cols = ",".join(row)
-        conn.execute(f"INSERT INTO jurisdictional_values ({cols}) "
-                     f"VALUES ({','.join('?'*len(row))})", list(row.values()))
-    return data.get("jv_id")
-
-
 def insert_economics_entry(data: dict, session: str, dry_run: bool = False):
     """Record a Part-13 economics finding."""
     _COLS = frozenset({
@@ -10265,9 +9970,8 @@ def insert_case_study(data: dict, session: str, dry_run: bool = False):
         if dbcore.REF_ID_SHAPE.search(data.get("sources") or ""):
             raise Refusal(
                 "--sources contains a REF-NNNNN. A reference id in a prose field is a "
-                "flattened pointer (CLAUDE.md rule 5). Link the source through "
-                "case_study_specs / the evidence tables, and keep --sources for material "
-                "that has no ref_id.")
+                "flattened pointer (CLAUDE.md rule 5). A source that has a ref_id is an "
+                "evidence_sources row; keep --sources for material that has no ref_id.")
         row = dict(data)
         row.update(dbcore.stamp_for(conn, "case_studies", session))
         cols = ",".join(row)

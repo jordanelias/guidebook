@@ -1,1 +1,0 @@
-../../../skills/item-audit-pipeline_SKILL.md

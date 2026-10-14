@@ -1677,25 +1677,6 @@ checks:
     0 by design (`if args.strict and err_files: return 1`), so the unflagged invocation is a green tick
     that means nothing. Verified: --strict exits 1, default exits 0 on the same corpus. RED today (1 doc
     missing ''F. Provenance trail''), hence advisory.'
-- id: pmp_audit
-  cmd:
-  - python3
-  - scripts/audit/pmp_audit.py
-  battery: research
-  kinds:
-  - data
-  - synthesis
-  level: advisory
-  basis: research/pmp-strict-termination
-  cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM spec_value_probes, the table checks
-    2-6 all walk. 0 today (clean-room reset, 2026-08-06) — the "3 issues" figure below predates that reset
-    and no longer describes the live table. empty-by-decision. Rule #8 / #10.1 — numerical-spec claims
-    must cite an active PMP walk. De-quarantined 2026-08-01 after triage: the 3 issues are content (walks
-    PMP-A08-001/A18-003/A18-004 have no passing strict step), not tool defects, and checks 1/2/4/5/6 are
-    clean. Advisory per the shakedown norm.'
 - id: reasoning_doc_citations_audit
   cmd:
   - python3

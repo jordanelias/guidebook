@@ -52,7 +52,7 @@ import tempfile
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # The invariants are DERIVED, not listed. This was six hardcoded table names --
-# evidence_sources, citation_mining, source_slug_links, gaps, connections, items --
+# evidence_sources, citation_mining, source_slug_links, gaps, connections, slugs --
 # and a handler that turned sqlite3.OperationalError into a silent `skip (no such
 # table)`. Measured 2026-08-28 against the pending seven-stage rename: ALL SIX
 # skipped, and the check printed `EXAMINED: 7` while examining one thing, the
@@ -142,7 +142,7 @@ def _usable_cache(path):
             present = {n for (n,) in con.execute(
                 "SELECT name FROM sqlite_master WHERE type='table'")}
             needed = {"evidence_sources", "citation_mining", "source_slug_links",
-                      "gaps", "connections", "items"}
+                      "gaps", "connections", "slugs"}
             return needed <= present
         finally:
             con.close()
@@ -470,11 +470,11 @@ def selftest():
             con = sqlite3.connect(path)
             con.execute("PRAGMA user_version = 42")
             for table in ("evidence_sources", "citation_mining", "source_slug_links",
-                          "gaps", "connections", "items"):
+                          "gaps", "connections", "slugs"):
                 con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
                 con.execute(f"INSERT INTO {table} (id) VALUES (1)")
             for i in range(extra):
-                con.execute("INSERT INTO items (id) VALUES (?)", (100 + i,))
+                con.execute("INSERT INTO slugs (id) VALUES (?)", (100 + i,))
             con.commit()
             con.close()
 
@@ -482,8 +482,8 @@ def selftest():
         check("identical DBs report no mismatch", not same, str(same))
 
         _, differ = compare(a, b)
-        check("a one-row divergence in `items` IS reported",
-              any(label == "items count" for label, _, _ in differ), str(differ))
+        check("a one-row divergence in `slugs` IS reported",
+              any(label == "slugs count" for label, _, _ in differ), str(differ))
 
         # A missing table must be skipped, not crash the comparator.
         c = os.path.join(tmpdir, "c.db")
@@ -506,7 +506,7 @@ def selftest():
             con = sqlite3.connect(path)
             con.execute("PRAGMA user_version = 42")
             for table in ("evidence_sources", "citation_mining", "source_slug_links",
-                          "gaps", "connections", "items"):
+                          "gaps", "connections", "slugs"):
                 con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
                 con.execute(f"INSERT INTO {table} (id) VALUES (1)")
             con.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, title TEXT, updated_at TEXT)")
@@ -528,7 +528,7 @@ def selftest():
         con = sqlite3.connect(f)
         con.execute("PRAGMA user_version = 42")
         for table in ("evidence_sources", "citation_mining", "source_slug_links",
-                      "gaps", "connections", "items"):
+                      "gaps", "connections", "slugs"):
             con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
             con.execute(f"INSERT INTO {table} (id) VALUES (1)")
         con.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, title TEXT, updated_at TEXT)")
@@ -549,7 +549,7 @@ def selftest():
             con = sqlite3.connect(path)
             con.execute("PRAGMA user_version = 42")
             for table in ("evidence_sources", "citation_mining", "source_slug_links",
-                          "gaps", "connections", "items"):
+                          "gaps", "connections", "slugs"):
                 con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
                 con.execute(f"INSERT INTO {table} (id) VALUES (1)")
             con.execute("CREATE TABLE vf (updated_at TEXT, name TEXT)")
@@ -572,10 +572,10 @@ def selftest():
             con = sqlite3.connect(path)
             con.execute("PRAGMA user_version = 42")
             for table in ("evidence_sources", "citation_mining", "source_slug_links",
-                          "gaps", "connections", "items"):
+                          "gaps", "connections", "slugs"):
                 con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
                 con.execute(f"INSERT INTO {table} (id) VALUES (1)")
-            con.execute(f"CREATE VIEW v_guard AS SELECT * FROM items {where}")
+            con.execute(f"CREATE VIEW v_guard AS SELECT * FROM slugs {where}")
             con.commit()
             con.close()
         _, subst4, _ = deep_compare(i_, j_)
@@ -587,7 +587,7 @@ def selftest():
         con = sqlite3.connect(k_)
         con.execute("PRAGMA user_version = 42")
         for table in ("evidence_sources", "citation_mining", "source_slug_links",
-                      "gaps", "connections", "items"):
+                      "gaps", "connections", "slugs"):
             con.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY)")
             con.execute(f"INSERT INTO {table} (id) VALUES (1)")
         con.execute('CREATE TABLE "odd name" (id INTEGER PRIMARY KEY)')

@@ -8,8 +8,7 @@ Flags:
    recorded indicates a backdoor closure that bypassed the protocol).
 2. gap_mining rows with outcome=closure_evidence_found whose gap lacks the four
    adversarial-research fields (rule #7 interlock).
-3. gap_mining rows with outcome=closure_evidence_found on a numerical-spec gap
-   that lacks a matching spec_value_probes walk (rule #8 interlock).
+3. (retired with the item layer: a PMP walk behind a numerical-spec closure.)
 4. gap_mining rows with outcome=gap_recategorized whose gap.mining_addressability
    is still ADDRESSABLE (re-categorization not committed to the gap row).
 5. gaps with mining_addressability IS NULL and status LIKE 'OPEN%' — triage
@@ -51,13 +50,6 @@ MINING_ADDRESSABLE_SIGNALS = re.compile(
     r"|population structurally invisible",
     re.IGNORECASE
 )
-
-# Numerical-spec signals (mm, s, lux, dB, NRC, NC, °C, %, N, LRV, kg, etc.)
-NUMERICAL_SPEC_SIGNALS = re.compile(
-    r"\b\d+\s*(mm|cm|m|s|ms|lux|lx|dB|dBA|dB\(A\)|NC|NRC|°C|C|%|N|kg|kN|mPa|Pa|LRV|cd/m)",
-    re.IGNORECASE
-)
-
 
 def audit():
     if not DB_PATH.exists():
@@ -124,32 +116,8 @@ def audit():
                 f"closure_evidence_found but gap missing rule #7 fields: {missing}"
             )
 
-    # ─── CHECK 3: numerical-spec closures lacking PMP walk ───────────────
-    for row in closure_rows:
-        # Re-fetch gap description and section to detect numerical-spec shape
-        g = db.execute(
-            "SELECT description, section FROM gaps WHERE gap_id = ?",
-            (row["gap_id"],)
-        ).fetchone()
-        if not g:
-            continue
-        scan = f"{g['description'] or ''} {g['section'] or ''}"
-        if NUMERICAL_SPEC_SIGNALS.search(scan):
-            # Numerical-spec gap; require spec_value_probes row mentioning this
-            # gap_id OR the gap's slug section.
-            section = g["section"] or ""
-            probe = db.execute("""
-                SELECT 1 FROM spec_value_probes
-                 WHERE slug = ?
-                    OR notes LIKE ?
-                 LIMIT 1
-            """, (section, f"%{row['gap_id']}%")).fetchone()
-            if not probe:
-                issues_failure.append(
-                    f"CHECK 3: gap_mining_id={row['gap_mining_id']} ({row['gap_id']}) "
-                    f"closure on numerical-spec gap but no spec_value_probes walk "
-                    f"found (section={section!r}). Rule #8 interlock."
-                )
+    # CHECK 3 (a PMP walk behind a numerical-spec closure) retired with the item layer
+    # (plan step 1.2): spec_value_probes and the pmp-strict-termination criterion are gone.
 
     # ─── CHECK 4: gap_recategorized rows where gap.mining_addressability is
     #             still ADDRESSABLE ─────────────────────────────────────────

@@ -19,7 +19,6 @@ from model import node_id
 
 # table -> (node kind, primary-key column)
 PRIMARY = {
-    "items": ("item", "item_code"),
     "evidence_sources": ("source", "ref_id"),
     "populations": ("population", "population_code"),
     "connections": ("connection", "con_id"),
@@ -30,7 +29,6 @@ PRIMARY = {
 
 # lifecycle / CHECK-enum columns worth capturing per table for the state-machine layer
 STATE_COLS = {
-    "items": ["status"],
     "connections": ["status", "confidence"],
     "gaps": ["status", "priority"],
     "slugs": ["status"],
@@ -132,31 +130,7 @@ def extract(gdb, store):
                 store.add_edge(node_id("connection", str(con_id)), dst, "junction",
                                attrs={"raw": str(raw)})
 
-    # 5. a few primary structural FK edges (item->slug, item<->population)
-    if "items" in tables and "bpc_source_slug" in _columns(cur, "items"):
-        for item_code, slug in cur.execute(
-                "SELECT item_code, bpc_source_slug FROM items WHERE bpc_source_slug IS NOT NULL"):
-            store.add_edge(node_id("item", item_code), node_id("slug", slug), "fk",
-                           attrs={"via": "items.bpc_source_slug"})
-    if "item_taxonomy_links" in tables:
-        # Since migration 065 this one table carries all four lenses. Only the
-        # IDENTITY lens is drawn, which is exactly the item->population edge this
-        # graph has always drawn -- the filter is what keeps an ICF-only row from
-        # being emitted as an item->population edge with a NULL target.
-        #
-        # The ICF lens is deliberately NOT drawn here. `axes` is absent from
-        # PRIMARY, so no axis node exists, and emitting the edge would make all
-        # 158 folded rows fire ref.dangling_structural as ERRORs -- an instrument
-        # reporting its own blind spot as corruption. Registering `axes` in
-        # PRIMARY is the one-line fix and it changes audit output, so it is
-        # recorded as owed rather than smuggled into a rename sweep. Coverage of
-        # the ICF lens is unchanged by this migration: item_axis_links was never
-        # extracted either.
-        for item_code, pop in cur.execute(
-                "SELECT item_code, identity_code FROM item_taxonomy_links "
-                "WHERE identity_code IS NOT NULL"):
-            store.add_edge(node_id("item", item_code), node_id("population", pop), "junction",
-                           attrs={"via": "item_taxonomy_links.identity_code"})
+    # 5. a primary structural FK edge (population self-reference)
     if "populations" in tables and "parent_code" in _columns(cur, "populations"):
         for pop, parent in cur.execute(
                 "SELECT population_code, parent_code FROM populations WHERE parent_code IS NOT NULL"):
@@ -164,17 +138,8 @@ def extract(gdb, store):
                            attrs={"via": "populations.parent_code"})
 
     # 6. controlled-vocabulary edges (added 2026-07-25).
-    # `terms` was already registered in PRIMARY, so 47 term nodes existed — but
-    # term_aliases and term_item_links emitted no edges, leaving every term node
-    # an isolated island. The audit therefore could not see the vocabulary layer
-    # at all: a term_item_links row pointing at a nonexistent item was
-    # structurally invisible (that column carries no FK constraint, so the FK
-    # passes above could not catch it either).
-    if "term_item_links" in tables:
-        for term_id, item_code in cur.execute(
-                "SELECT term_id, item_code FROM term_item_links"):
-            store.add_edge(node_id("term", term_id), node_id("item", item_code),
-                           "junction", attrs={"via": "term_item_links"})
+    # `terms` was already registered in PRIMARY, so 47 term nodes existed, but
+    # term_aliases emitted no edges, leaving every term node an isolated island.
     if "term_aliases" in tables:
         # One edge per (term, language) rather than per alias: the audit needs to
         # know which terms carry which language coverage, not to re-store 2k aliases.

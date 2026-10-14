@@ -711,7 +711,7 @@ def selftest(reg):
     cases = [
         ("data/guidebook.db", "data"),
         ("data/decisions/decision_register.yaml", "data"),
-        ("schemas/item.py", "schema"),
+        ("schemas/enums.py", "schema"),
         ("scripts/migrations/013_x.sql", "schema"),
         ("governance/mission-and-epistemics.md", "governance"),
         ("decisions/DR-2026-08-01-x.md", "governance"),

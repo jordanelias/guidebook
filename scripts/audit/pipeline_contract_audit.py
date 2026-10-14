@@ -253,7 +253,7 @@ def selftest():
     fixtures = {
         # id                         path                                         expected
         "missing path":              ("scripts/does/not/exist.py",                "BROKEN"),
-        "active registered check":   ("scripts/audit/pmp_audit.py",               "VERIFIABLE"),
+        "active registered check":   ("scripts/audit/graph_audit.py",             "VERIFIABLE"),
         # This fixture was register_integrity_check.py until 2026-08-04, when the
         # DR-2026-07-21 Option A rework de-quarantined it and the selftest
         # correctly began failing — a fixture that names a specific check is a
