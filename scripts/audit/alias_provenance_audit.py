@@ -46,7 +46,13 @@ DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db
 CUTOFF_SESSION_DATE = "2026-07-24"
 
 VERIFIED_MARKERS = ("VERIFIED-GLOSSARY", "VERIFIED-NATIVE", "VERIFIED-CROSS")
-PROVENANCE_MARKERS = ("model-generated", "curated", "repo shorthand") + VERIFIED_MARKERS
+# "source-attested", added 2026-10-09 (tooling T1): written by `db.py add-alias`, which
+# takes the alias from an adjudicated observation whose quote is in the source's own saved
+# text (catalogue-plan-v2 section 3.9). A distinct class, because a phrase one admitted
+# source uses is neither a model's guess nor a glossary's verification -- and reporting it
+# as either would overstate or understate it.
+PROVENANCE_MARKERS = ("model-generated", "curated", "repo shorthand",
+                      "source-attested") + VERIFIED_MARKERS
 
 
 def classify(notes):
@@ -54,6 +60,8 @@ def classify(notes):
     for m in VERIFIED_MARKERS:
         if m in n:
             return m
+    if "source-attested" in n:
+        return "SOURCE-ATTESTED"
     if "model-generated" in n:
         return "MODEL-GENERATED"
     if "curated" in n:
@@ -97,7 +105,8 @@ def main():
     print(f"aliases:  {len(rows)}")
     print(f"EXAMINED: {len(rows)}\n")
 
-    hdr = f"{'lang':<6}{'total':>7}{'verified':>10}{'model-gen':>11}{'curated':>9}{'code':>6}{'UNKNOWN':>9}"
+    hdr = (f"{'lang':<6}{'total':>7}{'verified':>10}{'attested':>10}{'model-gen':>11}"
+           f"{'curated':>9}{'code':>6}{'UNKNOWN':>9}")
     print(hdr)
     print("-" * len(hdr))
     tot_unknown = tot_verified = 0
@@ -108,10 +117,12 @@ def main():
         unk = d.get("UNKNOWN", 0)
         tot_unknown += unk
         tot_verified += ver
-        print(f"{lang:<6}{tot:>7}{ver:>10}{d.get('MODEL-GENERATED',0):>11}"
+        print(f"{lang:<6}{tot:>7}{ver:>10}{d.get('SOURCE-ATTESTED',0):>10}"
+              f"{d.get('MODEL-GENERATED',0):>11}"
               f"{d.get('CURATED-EN',0):>9}{d.get('PROJECT-CODE',0):>6}{unk:>9}")
     print("-" * len(hdr))
     print(f"{'all':<6}{len(rows):>7}{tot_verified:>10}"
+          f"{sum(d.get('SOURCE-ATTESTED',0) for d in by_lang.values()):>10}"
           f"{sum(d.get('MODEL-GENERATED',0) for d in by_lang.values()):>11}"
           f"{sum(d.get('CURATED-EN',0) for d in by_lang.values()):>9}"
           f"{sum(d.get('PROJECT-CODE',0) for d in by_lang.values()):>6}{tot_unknown:>9}")

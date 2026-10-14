@@ -424,11 +424,11 @@ checks:
     check is the backstop for what that refusal cannot cover -- a migration written directly against
     dbcore, or a future writer that does not route through `db.py` -- not a first line of defense.
 
-    `base_parameters` is empty today (2026-09-10, no batch has minted a parameter yet), so this reports
-    NOTHING-IN-SCOPE. min_items:1, not no_floor: unlike `items`, this table was never emptied by ruling
-    -- it is the intended home for exactly the work the owner wants done next, so an empty result today
-    is a stage with no subject yet, and the day it gets one this floor is what makes a silently-reopened
-    item-layer defect visible instead of silent. Fault-injected 2026-09-10: a scratch-DB row named
+    min_items:1, not no_floor: unlike `items`, `base_parameters` was never emptied by ruling, and
+    the floor is what makes a silently-reopened item-layer defect visible instead of silent. P2, added 2026-10-09 (tooling T1, the owner''s D3
+    answer): every term minted from a permitted catalogue (terms.catalogue) still has its
+    approving ledger entry, named by catalogue_approval_ref, occurring once in references/project-standards.md.
+    Fault-injected in test_scan_contract.py (M10, M11). Fault-injected 2026-09-10: a scratch-DB row named
     `corridor width >=1200 mm` was rejected (EXAMINED:1, exit 1); a row named `corridor width` passed
     (EXAMINED:1, exit 0).'
 - id: readonly_db_open_audit
@@ -490,6 +490,74 @@ checks:
   note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the term_aliases row count (2382 today). min_items:1
     — the controlled vocabulary is populated repo content, not a corpus that could legitimately empty
     out.'
+- id: observation_verbatim_audit
+  cmd:
+  - python3
+  - scripts/audit/observation_verbatim_audit.py
+  battery: data
+  kinds:
+  - data
+  level: advisory
+  basis: unattributed
+  cost: fast
+  min_items: 1
+  note: 'Tooling T1, 2026-10-09 (catalogue-plan-v2 section 8.2, critique F7). Is each
+    observation''s context quote in a file saved FOR its own source? db.py observe-term
+    refuses a new observation that fails this (or records an exemption); this is the
+    backstop for rows written before migration 102 and for rows arriving by another route.
+    It classifies every observation scoped / unscoped / missing / exempt through
+    retrieval_log.locate_quote (one matching rule) and FAILS when the unscoped or missing
+    count rises above its entry in governance/research-contract-baseline.json
+    (observation-quote-unscoped, observation-quote-missing), whose ratchet git witnesses
+    (research_contract_baseline_ratchet, blocking). Re-derive the counts by running it;
+    never quote them. Phrases outside their own quote are REPORTED, not counted. EXAMINED is
+    the observation count; min_items:1 because observations are populated repo content.
+    Fault-injected in scripts/tests/test_scan_contract.py (A04): an observation inserted past
+    the writer with an invented quote turns it red.'
+- id: scan_debt
+  cmd:
+  - python3
+  - scripts/audit/scan_debt.py
+  battery: data
+  kinds:
+  - data
+  level: advisory
+  basis: unattributed
+  cost: fast
+  min_items: 1
+  note: 'Tooling T1, 2026-10-09 (catalogue-plan-v2 sections 3.8 and 8.2, critique F13).
+    Counts the (unsuperseded source x active parameter) pairs v_scan_ledger (migration 103)
+    reports NOT-READ or READ-PARTIAL -- the reading the catalogue still owes, including the
+    back-fill a newly promoted parameter creates in every source read before it. Red
+    whenever that debt is above zero; NO DEBT BASELINE, deliberately: debt rises
+    legitimately with every promotion and admission, so a ratchet would turn red on correct
+    work. EXAMINED is the number of ledger pairs; min_items:1 because zero pairs means no
+    unsuperseded source or no active parameter, a corpus clear, which should be visible.
+    Its readers: the next cohort''s worklist (the pairs it prints), the catalogue''s
+    evidence-state line, and the Release 0 acceptance test (plan section 12, Q12). Expect it
+    red once the parameters of PR #171 reach main: every source is then owed a reading
+    for each of them. Fault-injected in test_scan_contract.py (S12/S14).'
+- id: extraction_follow_up_audit
+  cmd:
+  - python3
+  - scripts/audit/extraction_follow_up_audit.py
+  battery: data
+  kinds:
+  - data
+  level: advisory
+  basis: unattributed
+  cost: fast
+  no_floor: vocabulary-owed — no follow-up has been raised and no live determination
+    exists, so both subjects are empty; follow-ups are OWED by research under the owner's
+    2026-10-09 D1 answer (a cross-slug figure is tagged for follow-up). The first run that
+    examines a row contradicts this reason, which is the signal to ratchet to min_items 1.
+  note: 'Tooling T1, 2026-10-09, the reader of the owner''s D1 answer ("D1: yes figure from
+    source filed by another slug allowed. skimmed values are not publishable"). Lists every
+    open extraction follow-up (db.py raise-follow-up), and FAILS a LIVE determination
+    governed by an extraction with an open follow-up (allowed, but the reader must be told
+    and nothing renders that yet) or by a skimmed extraction (the engine refuses to produce
+    one; this is the backstop). Vacuous today and says so on every run. Fault-injected in
+    test_scan_contract.py (U06, U07).'
 - id: citation_mining_session
   cmd:
   - python3
@@ -1786,6 +1854,31 @@ checks:
     day is accepted, the other gated writers refuse, every value live in a gated table
     still passes, and jurisdiction_db_vocabulary is green on the copy afterwards -- red
     on the pre-WP7 code (writers accepted any string; FI, UG, UN undeclared).'
+- id: test_scan_contract
+  cmd:
+  - python3
+  - scripts/tests/test_scan_contract.py
+  battery: tests
+  kinds:
+  - tooling
+  - schema
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+  note: 'Tooling T1, 2026-10-09 (catalogue-plan-v2 section 4.2, owner approval D8): every
+    refusal of observe-term per sighting and its scoped verbatim check (O), record-scan and
+    v_scan_ledger (S), scripts/research/full_text.py (H), retire / merge / rename /
+    revoke-declination / annotate / add-alias (L, N, V, A, AL), mint-term-from-catalogue
+    and validate_parameters P2 (M), raise/resolve-follow-up and its audit (U), the
+    engine''s exclusion of skimmed figures (E), the observation-quote backstop (A04), the
+    batch rules R16-scan and R17 on a copy (G), capture through emit_batch_sql with a
+    replay (C), and CLI wiring (CLI). Runs on a COPY of the canonical DB with
+    GUIDEBOOK_RETRIEVAL_LOG pointed at a temp log of fixture artefacts, so it never writes
+    retrieval-log/ or data/. Red on origin/main before T1 (no verb, no table): nearly all of its
+    cases fail there; those that pass are invariants that hold before and after. H01/H02 need pymupdf (the research battery declares it); without it
+    they print NOT RUN and the full text is written by hand in the helper''s format. Its
+    assertion count is its own EXAMINED line -- re-run, do not trust a figure here.'
 - id: test_author_presence
   cmd:
   - python3

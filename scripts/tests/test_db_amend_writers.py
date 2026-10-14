@@ -320,9 +320,17 @@ try:
         record("D00", "db.decline_parameter exists (migration 101's writer)", False,
                "no such function -- parameter_declinations has no writer")
     else:
+        # A sighting since migration 102: a new observation carries a locator and a quote
+        # containing the phrase, and a fixture quote no artefact holds takes the recorded
+        # exemption route (observe-term --verbatim-exempt), as a real one would.
+        def sighting(ref, phrase):
+            return {"ref_id": ref, "surface_form": phrase, "language": "EN",
+                    "locator": "fixture locator",
+                    "context_quote": f"a fixture sentence using {phrase} once",
+                    "verbatim_exempt": "fixture text: no retrieval artefact carries it"}
+
         def fixture_term(name):
-            obs = db.observe_term({"ref_id": REF, "surface_form": f"fixture phrase: {name}"},
-                                  S)
+            obs = db.observe_term(sighting(REF, f"fixture phrase: {name}"), S)
             return db.insert_term(obs["observation_id"], name, "fixture rationale",
                                   S)["term_id"]
 
@@ -626,8 +634,14 @@ try:
                and counts("source_value_extractions") == n_sve,
                f"first={first} msg={msg!r}")
         n_obs = counts("observed_terms")
-        msg = refusal(db.observe_term, {"ref_id": XA, "surface_form": "fixture phrase X",
-                                        "language": "EN"}, S)
+        # Migration 102: a new observation needs a locator and a verifiable quote (or the
+        # recorded exemption), so the fixture supplies them; the tombstone refusal fires
+        # before either is examined.
+        obs_x = {"ref_id": XA, "surface_form": "fixture phrase X", "language": "EN",
+                 "locator": "fixture locator",
+                 "context_quote": "a fixture sentence using fixture phrase X once",
+                 "verbatim_exempt": "fixture text: no retrieval artefact carries it"}
+        msg = refusal(db.observe_term, obs_x, S)
         record("X16", "observe-term refuses a superseded source and writes nothing",
                msg and f"superseded by {XB}" in msg and counts("observed_terms") == n_obs,
                f"got {msg!r}")
@@ -638,8 +652,7 @@ try:
                msg and f"superseded by {XB}" in msg
                and counts("evidence_population_match") == n_epm, f"got {msg!r}")
         try:
-            live = db.observe_term({"ref_id": XB, "surface_form": "fixture phrase X",
-                                    "language": "EN"}, S)
+            live = db.observe_term(dict(obs_x, ref_id=XB), S)
         except Exception as exc:  # noqa: BLE001 -- recorded red below
             live = {"error": f"{exc.__class__.__name__}: {exc}"}
         record("X18", "the superseding (live) source is still accepted by observe-term",

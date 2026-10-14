@@ -171,22 +171,35 @@ machines:
       - {file: scripts/db.py, func: insert_parameter, needle: "DELIBERATELY NOT REFUSED: a term with no adjudication"}
   - id: M03.t5
     from: "TERM"
-    to: "DECLINED (terminal)"
+    to: "DECLINED"
     via: "db.py decline-parameter"
     guards:
       - "refused if the term is already a parameter of ANY status; one declination per term; a reason is required"
-      - "there is NO un-decline verb: reversal is a recorded decision and a compensating migration"
+      - "reversing one is `revoke-declination` (migration 104): a recorded decision, the row stays"
     evidence:
-      - {file: scripts/db.py, func: decline_parameter, needle: "DELIBERATELY ABSENT: an un-decline verb"}
+      - {file: scripts/db.py, func: decline_parameter, needle: "REVERSING ONE is `revoke-declination`"}
       - {file: scripts/db.py, func: decline_parameter, needle: "is already declined, by"}
+  - id: M03.t5r
+    from: "DECLINED"
+    to: "TERM"
+    via: "db.py revoke-declination"
+    guards:
+      - "a reason and a resolving decision reference are required; refused for a term with no declination or one already revoked"
+      - "the row is retired in place (revoked_at, revoked_by_session, revocation_reason); one declination per term, so a revoked one cannot be followed by a second"
+    evidence:
+      - {file: scripts/db.py, func: revoke_declination, needle: "KNOWN LIMIT, stated: one declination row per term"}
+      - {file: scripts/db.py, func: revoke_declination, needle: "a decision reference that does not resolve"}
   - id: M03.t6
-    claim: "base_parameters.status 'merged' and 'retired' have NO writer on main; the only UPDATE of base_parameters is set-parameter-direction."
+    claim: "base_parameters.status 'retired' is written by retire-parameter and 'merged' by merge-parameter, both in place (no row deleted, the number never reissued)."
     from: "PARAMETER-ACTIVE"
     to: "merged | retired"
-    via: "(none on main)"
-    guards: []
+    via: "db.py retire-parameter | db.py merge-parameter"
+    guards:
+      - "retire-parameter refuses a parameter that is not active, and a live determination or open gate on it"
+      - "merge-parameter re-points every row that holds the folded id, read from the live foreign keys"
     evidence:
-      - {file: scripts/db.py, func: set_parameter_direction, needle: "UPDATE base_parameters SET"}
+      - {file: scripts/db.py, func: retire_parameter, needle: "Retire a parameter IN PLACE"}
+      - {file: scripts/db.py, func: merge_parameter, needle: "Fold parameter `from_id` into `into_id`"}
   probe: P-PARAM-LIFECYCLE
 
 - id: M04

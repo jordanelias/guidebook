@@ -83,13 +83,15 @@ class BaseParameter(BaseModel):
 
 class ParameterDeclination(BaseModel):
     """A term judged NOT to be a design parameter. Mirrors `parameter_declinations`
-    (migration 101).
+    (migration 101, revocation columns migration 104).
 
     One row per term: `term_id` is the primary key, so a second declination is refused
     rather than becoming a second answer to one question. `reason` is required and
     non-blank in the schema too (CHECK length(trim(reason)) > 0) — a declination that
-    cannot say why cannot be contested. No `updated_*` pair: the row is never amended;
-    reversing a declination is a recorded decision, not an edit.
+    cannot say why cannot be contested. No `updated_*` pair: the declination itself is
+    never amended. Since migration 104 it can be REVOKED (`db.py revoke-declination`), and
+    the revocation is recorded on the row rather than deleting it (retire in place, owner
+    2026-09-16): every reader treats a revoked declination as absent.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -100,11 +102,22 @@ class ParameterDeclination(BaseModel):
     created_at: Optional[str] = None
     created_by_session: Optional[str] = None
 
+    revoked_at: Optional[str] = None
+    revoked_by_session: Optional[str] = None
+    revocation_reason: Optional[str] = None
+
     @model_validator(mode="after")
     def reason_not_blank(self) -> "ParameterDeclination":
-        """Mirrors the table's CHECK on `reason`."""
+        """Mirrors the table's CHECKs on `reason` and on the revocation triple."""
         if not self.reason.strip():
             raise ValueError(
                 "reason is blank — a declination that cannot say why cannot be contested."
             )
+        triple = [self.revoked_at, self.revoked_by_session, self.revocation_reason]
+        if any(v is not None for v in triple) and not all(
+                v is not None and str(v).strip() for v in triple):
+            raise ValueError(
+                "a revocation needs revoked_at, revoked_by_session and a non-blank "
+                "revocation_reason together — a revocation that cannot say why cannot "
+                "be contested either.")
         return self

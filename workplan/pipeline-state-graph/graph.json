@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-12 01:08 UTC from git HEAD eda7de43 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 02:21 UTC from git HEAD a1ea6f8 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 101,
+ "user_version": 105,
  "stages": [
   "base",
   "research",
@@ -164,7 +164,10 @@
    "rows": 10,
    "writers": [
     "set-parameter-direction",
-    "add-parameter"
+    "add-parameter",
+    "retire-parameter",
+    "merge-parameter",
+    "annotate-parameter"
    ],
    "cols": [
     "parameter_id",
@@ -722,6 +725,25 @@
     "created_by_session"
    ]
   },
+  "extraction_follow_ups": {
+   "stage": "judgment",
+   "rows": 0,
+   "writers": [
+    "raise-follow-up",
+    "resolve-follow-up"
+   ],
+   "cols": [
+    "follow_up_id",
+    "extraction_id",
+    "reason",
+    "warrant",
+    "raised_at",
+    "raised_by_session",
+    "resolved_at",
+    "resolved_by_session",
+    "resolution"
+   ]
+  },
   "extraction_population_links": {
    "stage": "judgment",
    "rows": 0,
@@ -1021,18 +1043,22 @@
    "stage": "base",
    "rows": 1,
    "writers": [
-    "decline-parameter"
+    "decline-parameter",
+    "revoke-declination"
    ],
    "cols": [
     "term_id",
     "reason",
     "created_at",
-    "created_by_session"
+    "created_by_session",
+    "revoked_at",
+    "revoked_by_session",
+    "revocation_reason"
    ]
   },
   "pipeline_runs": {
    "stage": "infrastructure",
-   "rows": 5,
+   "rows": 6,
    "writers": [],
    "cols": [
     "run_id",
@@ -1439,6 +1465,31 @@
     "notes"
    ]
   },
+  "source_scans": {
+   "stage": "evidence",
+   "rows": 0,
+   "writers": [
+    "record-scan"
+   ],
+   "cols": [
+    "scan_id",
+    "ref_id",
+    "mode",
+    "catalogue_version",
+    "target_parameter_id",
+    "text_scope",
+    "pages_read",
+    "pages_total",
+    "file_sha256",
+    "open_pass_done",
+    "method",
+    "notes",
+    "created_at",
+    "created_by_session",
+    "updated_at",
+    "updated_by_session"
+   ]
+  },
   "source_slug_links": {
    "stage": "evidence",
    "rows": 65,
@@ -1671,7 +1722,10 @@
   "term_aliases": {
    "stage": "base",
    "rows": 2382,
-   "writers": [],
+   "writers": [
+    "rename-term",
+    "add-alias"
+   ],
    "cols": [
     "term_id",
     "alias",
@@ -1705,7 +1759,9 @@
    "rows": 94,
    "writers": [
     "amend-term",
-    "add-term"
+    "add-term",
+    "rename-term",
+    "mint-term-from-catalogue"
    ],
    "cols": [
     "term_id",
@@ -1716,7 +1772,10 @@
     "created_at",
     "created_by_session",
     "updated_at",
-    "updated_by_session"
+    "updated_by_session",
+    "catalogue",
+    "catalogue_entry_ref",
+    "catalogue_approval_ref"
    ]
   },
   "url_verification_runs": {
@@ -1951,6 +2010,12 @@
    "child": "evidence_source_authors",
    "col": "ref_id",
    "parent": "evidence_sources",
+   "notnull": true
+  },
+  {
+   "child": "extraction_follow_ups",
+   "col": "extraction_id",
+   "parent": "source_value_extractions",
    "notnull": true
   },
   {
@@ -2246,6 +2311,18 @@
    "col": "merged_into",
    "parent": "slugs",
    "notnull": false
+  },
+  {
+   "child": "source_scans",
+   "col": "target_parameter_id",
+   "parent": "base_parameters",
+   "notnull": false
+  },
+  {
+   "child": "source_scans",
+   "col": "ref_id",
+   "parent": "evidence_sources",
+   "notnull": true
   },
   {
    "child": "source_slug_links",
@@ -2819,6 +2896,20 @@
    "crosses": false,
    "rows": 0
   },
+  "v_scan_ledger": {
+   "reads": [
+    "base_parameters",
+    "evidence_sources",
+    "source_scans",
+    "source_value_extractions"
+   ],
+   "stages": [
+    "base",
+    "evidence"
+   ],
+   "crosses": true,
+   "rows": 520
+  },
   "v_source_admission": {
    "reads": [
     "evidence_sources",
@@ -3205,6 +3296,11 @@
     "untraced"
    ]
   },
+  "extraction_follow_ups": {
+   "reason": [
+    "read-outside-admitting-purpose"
+   ]
+  },
   "extraction_relations": {
    "relation": [
     "tested_at",
@@ -3553,6 +3649,22 @@
     "RETIRED"
    ]
   },
+  "source_scans": {
+   "mode": [
+    "catalogue",
+    "targeted"
+   ],
+   "text_scope": [
+    "full",
+    "partial",
+    "fragment",
+    "abstract"
+   ],
+   "method": [
+    "full-read",
+    "pre-screen"
+   ]
+  },
   "source_value_extractions": {
    "claim_type": [
     "numerical",
@@ -3697,6 +3809,15 @@
     "BROADER",
     "DEPRECATED",
     "DOMAIN"
+   ]
+  },
+  "terms": {
+   "catalogue": [
+    "references/standards-registry.md",
+    "references/tier456-verified-sources.json",
+    "references/co1-verified-sources.json",
+    "references/co2-verified-sources.json",
+    "_archived/data/corpus-pre-reset-2026-08-06.db"
    ]
   }
  },
@@ -3910,7 +4031,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 6
+   "refusals": 5
   },
   "close-adversarial-pass": {
    "functions": [
@@ -4061,7 +4182,7 @@
      "INSERT"
     ]
    },
-   "refusals": 3
+   "refusals": 6
   },
   "add-term": {
    "functions": [
@@ -4112,7 +4233,131 @@
      "INSERT"
     ]
    },
+   "refusals": 5
+  },
+  "record-scan": {
+   "functions": [
+    "_emit",
+    "record_scan"
+   ],
+   "writes": {
+    "source_scans": [
+     "INSERT"
+    ]
+   },
+   "refusals": 12
+  },
+  "retire-parameter": {
+   "functions": [
+    "_emit",
+    "retire_parameter"
+   ],
+   "writes": {
+    "base_parameters": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 1
+  },
+  "merge-parameter": {
+   "functions": [
+    "_emit",
+    "merge_parameter"
+   ],
+   "writes": {
+    "base_parameters": [
+     "UPDATE"
+    ]
+   },
    "refusals": 4
+  },
+  "rename-term": {
+   "functions": [
+    "_emit",
+    "rename_term"
+   ],
+   "writes": {
+    "term_aliases": [
+     "INSERT",
+     "UPDATE"
+    ],
+    "terms": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 11
+  },
+  "revoke-declination": {
+   "functions": [
+    "_emit",
+    "revoke_declination"
+   ],
+   "writes": {
+    "parameter_declinations": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
+  },
+  "annotate-parameter": {
+   "functions": [
+    "_emit",
+    "annotate_parameter"
+   ],
+   "writes": {
+    "base_parameters": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 2
+  },
+  "add-alias": {
+   "functions": [
+    "_emit",
+    "add_alias"
+   ],
+   "writes": {
+    "term_aliases": [
+     "INSERT"
+    ]
+   },
+   "refusals": 7
+  },
+  "mint-term-from-catalogue": {
+   "functions": [
+    "_emit",
+    "mint_term_from_catalogue"
+   ],
+   "writes": {
+    "terms": [
+     "INSERT"
+    ]
+   },
+   "refusals": 7
+  },
+  "raise-follow-up": {
+   "functions": [
+    "_emit",
+    "raise_follow_up"
+   ],
+   "writes": {
+    "extraction_follow_ups": [
+     "INSERT"
+    ]
+   },
+   "refusals": 3
+  },
+  "resolve-follow-up": {
+   "functions": [
+    "_emit",
+    "resolve_follow_up"
+   ],
+   "writes": {
+    "extraction_follow_ups": [
+     "UPDATE"
+    ]
+   },
+   "refusals": 3
   },
   "add-icf-code": {
    "functions": [
@@ -4816,9 +5061,6 @@
      ],
      "v_unregistered_roots": [
       "base_parameters"
-     ],
-     "v_value_independence": [
-      "base_parameters"
      ]
     },
     "note": "lexical test; a view may filter under another spelling"
@@ -4922,8 +5164,7 @@
      "room_items",
      "rooms",
      "situations",
-     "slugs",
-     "term_aliases"
+     "slugs"
     ]
    }
   },
@@ -4941,15 +5182,15 @@
    }
   },
   "P-V": {
-   "verdict": "NOT-BUILT",
+   "verdict": "PASS",
    "tests": "a (source x parameter) read-state ledger exists",
    "atoms": [
     "LED-195",
     "LED-199"
    ],
    "evidence": {
-    "source_scans": false,
-    "v_scan_ledger": false
+    "source_scans": true,
+    "v_scan_ledger": true
    }
   },
   "P-V2": {
@@ -4965,14 +5206,16 @@
    }
   },
   "P-W": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "an observation is one sighting (phrase at a place), so a second sense is not folded",
    "atoms": [
     "LED-197"
    ],
    "evidence": {
-    "unique_indexes": [],
-    "locator_in_key": false
+    "unique_indexes": [
+     "ux_observed_terms_sighting"
+    ],
+    "locator_in_key": true
    }
   },
   "P-X": {
@@ -5372,7 +5615,7 @@
    }
   },
   "P-PARAM-LIFECYCLE": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "base_parameters.status 'merged' and 'retired' are written by some db.py function",
    "atoms": [
     "LED-169",
@@ -5385,13 +5628,14 @@
      "retired"
     ],
     "reached_by": {
-     "merged": [],
-     "retired": []
+     "merged": [
+      "merge-parameter:merge_parameter"
+     ],
+     "retired": [
+      "retire-parameter:retire_parameter"
+     ]
     },
-    "values_with_no_writing_function": [
-     "merged",
-     "retired"
-    ]
+    "values_with_no_writing_function": []
    }
   }
  },
@@ -5424,8 +5668,8 @@
     {
      "id": "C1.3",
      "says": "one source can be harvested for more than one sense of the same phrase",
-     "verdict": "FAIL",
-     "why": "P-W = FAIL",
+     "verdict": "PASS",
+     "why": "P-W = PASS",
      "atoms": [
       "LED-197"
      ]
@@ -5443,8 +5687,8 @@
     {
      "id": "C1.5",
      "says": "a record exists of which parameters a source has been read for",
-     "verdict": "NOT-BUILT",
-     "why": "P-V = NOT-BUILT",
+     "verdict": "PASS",
+     "why": "P-V = PASS",
      "atoms": [
       "LED-195",
       "LED-199"
@@ -5527,8 +5771,8 @@
     {
      "id": "C2.5",
      "says": "a parameter can be retired or merged on record (retire in place)",
-     "verdict": "FAIL",
-     "why": "P-PARAM-LIFECYCLE = FAIL",
+     "verdict": "PASS",
+     "why": "P-PARAM-LIFECYCLE = PASS",
      "atoms": [
       "LED-169",
       "LED-170"
@@ -5537,8 +5781,8 @@
     {
      "id": "C2.6",
      "says": "the list can be prepopulated from earlier catalogues under screening and owner approval",
-     "verdict": "NOT-BUILT",
-     "why": "verb mint-term-from-catalogue absent on this tree",
+     "verdict": "PASS",
+     "why": "verb mint-term-from-catalogue declared on this tree",
      "atoms": [
       "LED-204",
       "LED-205"
@@ -5710,14 +5954,14 @@
   "distinct quotes among them": 2659,
   "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 50,
-  "machine transitions": 41,
-  "transition evidence needles re-read": 71,
+  "machine transitions": 42,
+  "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 12,
   "abstract machines (no single column holder)": 5,
   "capability predicates": 29,
   "probes run": 35,
   "probes linted for a reachable PASS": 35,
-  "tables placed in a stage": 82
+  "tables placed in a stage": 84
  },
  "atoms_by_status": {
   "ACTIVE": 2312,

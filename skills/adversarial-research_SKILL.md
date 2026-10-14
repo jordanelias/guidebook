@@ -188,7 +188,8 @@ findings, including when you find nothing.
    JOIN observed_terms o ON o.observation_id = a.observation_id
    JOIN evidence_sources e ON e.ref_id = o.ref_id
    WHERE a.outcome = 'DEFERRED' AND e.created_by_session = :batch;
-   SELECT DISTINCT d.term_id, d.reason, d.created_by_session
+   SELECT DISTINCT d.term_id, d.reason, d.created_by_session,
+          d.revoked_at, d.revocation_reason   -- a revoked declination disposes of nothing (104)
    FROM parameter_declinations d
    JOIN term_adjudications a ON a.term_id = d.term_id
    JOIN observed_terms o ON o.observation_id = a.observation_id

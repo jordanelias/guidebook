@@ -301,6 +301,7 @@ rules:
   # Enforced as two predicates: R16-adjudicate (every observation on the batch's admissions
   # has an adjudication) and R16 (every term those adjudications name is a parameter or is
   # declined). Both are scoped to the batch's ADMISSIONS, as R11-harvest is.
+  # R16-scan, the third predicate, added 2026-10-09 (tooling T1; see `resolution:`).
   - id: R16
     phase: when-filing
     title: "Every concept a source states a figure for is disposed of"
@@ -310,9 +311,39 @@ rules:
       -> adjudicate-term (or add-term) -> add-parameter -> add-extraction. Every phrase
       observed on this batch's admissions is adjudicated (NOT-OURS and DEFERRED are
       answers), and every term those adjudications name is a parameter or is declined
-      with its reason (db.py decline-parameter).
-    anchor: "D-0173; owner ruling 2026-08-26 (the parameter is the judgment object); workplan/2026-09-10-batch-06-runbook.md Step 4b"
+      with its reason (db.py decline-parameter). Read EVERY admission against the WHOLE
+      parameter list, whatever slug it came in under, and record the reading (db.py
+      record-scan --mode catalogue): slugs guide searches, not what is mined from a source.
+    anchor: "D-0173; owner ruling 2026-08-26 (the parameter is the judgment object); owner statements 2026-10-09 (the scan contract); workplan/2026-09-10-batch-06-runbook.md Step 4b"
     enforcer: R16
+    resolution: >-
+      R16-scan ADDED 2026-10-09 (tooling T1, owner approval D8 of
+      catalogue-plan-v2 section 4.2). The owner, the same day: "Slugs guide our
+      searches, but they do not guide what we derive and mine from sources!" R16's
+      two predicates read rows that exist and could not tell a source read against
+      every parameter from one read for its slug's parameter alone. R16-scan fails
+      an admission with no catalogue-mode reading in source_scans (migration 103);
+      a targeted reading covers one parameter and does not discharge it, and a
+      superseded admission is out of the subject. Admissions created before
+      R16_SCAN_FROM (research_batch_dod.py) predate the reading record and are
+      REPORTED in a batch run, never failed; --all counts them against the
+      baseline, which ratchets down as they are re-read.
+
+  # R17 added 2026-10-09 with R16-scan (catalogue-plan-v2 section 4.2 item 5; critique F12).
+  # Batch-scoped like the rest: add-source cannot refuse it, because log-search records the
+  # admission edge only after the source exists. Seeded at the corpus count in the baseline
+  # (governance/research-contract-baseline.json holds the current figure), so it is not red
+  # on main.
+  - id: R17
+    phase: before-admitting
+    title: "Every admission has a logged search behind it"
+    hook: >-
+      Every admission has a logged search behind it. A source taken from a list is
+      logged as one (db.py log-search --origin lead-index ... --admitted-ref-id R), so
+      search coverage sees it; a held source with no edge gets one (db.py
+      link-admission).
+    anchor: "catalogue-plan-v2 section 4.2 item 5; search_admissions; v_coverage_jurisdiction"
+    enforcer: R17
 
 # Lines appended verbatim after the phased rules. These are standing invariants
 # rather than per-phase research rules, so they are not numbered.

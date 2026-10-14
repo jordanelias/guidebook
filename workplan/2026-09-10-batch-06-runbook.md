@@ -313,7 +313,17 @@ PY
 1. **Read the persisted payload** — the `-text.txt` under `retrieval-log/<session>/`, falling back
    to the raw artefact. `manifest.jsonl` maps a source to its artefacts (by `ref_id`, or by `url`,
    plus any text file `derived_from` it). Note every figure the source states and the concept it
-   states it for.
+   states it for. **AMENDED 2026-10-09 (tooling T1, the scan contract):** read the source against
+   the WHOLE parameter list, not the parameter its slug was about. Where a PDF or web page is held,
+   derive its whole text under the source's ref_id first, and record the reading when done (R16-scan
+   fails an admission with no catalogue-mode reading; `--text-scope full` is refused over a PDF or
+   a text missing pages, and the catalogue version and page counts are computed, never typed):
+   ```
+   python3 scripts/research/full_text.py --ref-id "$REF" --session "$SESS"
+   GUIDEBOOK_DB_PATH="$S/walk.db" python3 scripts/db.py record-scan --ref-id "$REF" \
+     --mode catalogue --file-sha256 <sha256 of the file read> --text-scope <full|partial|fragment|abstract> \
+     --method full-read [--open-pass-done] --session "$SESS"
+   ```
 
 2. **Observe every concept phrase the source states a figure for** — verbatim, unjudged (D-0173):
    ```
@@ -321,8 +331,12 @@ PY
      --ref-id "$REF" --surface-form '<the phrase as the source writes it>' --language <XX> \
      --locator '<clause or page>' --context-quote '<the sentence it sits in>' --session "$SESS"
    ```
-   **Expected:** `{"observation_id": <N>, "created": true}`. A phrase this source was already
-   observed using, in that language, returns `"created": false` with its existing id — reuse it.
+   **Expected:** `{"observation_id": <N>, "created": true}`. An observation is one SIGHTING since
+   migration 102 (2026-10-09): the same phrase at the same locator returns `"created": false` with
+   its existing id — reuse it — and the same phrase at ANOTHER locator is a new observation, judged
+   on its own. A new one needs `--locator` and `--context-quote`; the phrase must be inside the
+   quote, and the quote must be in a file saved for THIS source (derive it with `full_text.py`), or
+   carry `--verbatim-exempt '<why no artefact can hold it>'`.
 
 3. **Adjudicate each observation, exactly once** — one of:
    ```

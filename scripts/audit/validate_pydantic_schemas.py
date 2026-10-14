@@ -68,6 +68,10 @@ MODEL_TABLE_MAP = {
     # Migration 101 created its negative space -- a term judged NOT a parameter -- in the
     # same change that added this mirror, so neither side is ever invisible here.
     "base_parameter.ParameterDeclination": "parameter_declinations",
+    # Migrations 103 and 105 (tooling T1, 2026-10-09) created two tables in the same change
+    # that added these mirrors, on the same reasoning as the two entries above.
+    "source_scan.SourceScan": "source_scans",
+    "extraction_follow_up.ExtractionFollowUp": "extraction_follow_ups",
     "bpc_metadata.BPCMetadata": "bpc_metadata",
     "connection.Connection": "connections",
     "conflict.Conflict": "conflicts",
