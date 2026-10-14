@@ -93,8 +93,8 @@ JBI maintains separate hierarchies per question type (effectiveness, meaningfuln
 |---|---|---|
 | Co-1 (qualitative meta-synthesis) | Level 1 (SR of qualitative studies) | Rare in the current corpus |
 | Co-1 (mixed-methods/qualitative synthesis short of full SR) | Level 2 (synthesis of qualitative findings) | JBI Level 2 is a *synthesis* level, not a single-study level |
-| Co-1 (individual participatory/phenomenological study; `co1_source_type: peer_reviewed_literature`, `dpo_research`) | Level 3 (single qualitative study) | The modal Co-1 entry — corrected from v1, which placed single studies at Level 2 |
-| Co-1 (testimony/report; `academic_narrative`, `advocacy_position`) | Level 3–4 (single descriptive study / expert opinion) | CRPD shadow reports, DPO submissions — note these carry different *grain* (G3, `evidence-architecture.md` §4): organisational positions are population-grain, narratives individual-grain |
+| Co-1 (individual participatory/phenomenological study; `co1_source_type: participatory_research`) | Level 3 (single qualitative study) | The modal Co-1 entry — corrected from v1, which placed single studies at Level 2 |
+| Co-1 (testimony/report; `lived_experience_publication`, `dpo_position_statement`) | Level 3–4 (single descriptive study / expert opinion) | CRPD shadow reports, DPO submissions — note these carry different *grain* (G3, `evidence-architecture.md` §4): organisational positions are population-grain, narratives individual-grain |
 | Tier 2 — standard_eb without primary basis | Level 4 | Named-org guidance whose evidence basis is not documented |
 
 ### 4.4 Why JBI is the closest framework

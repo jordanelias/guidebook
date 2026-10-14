@@ -1207,8 +1207,12 @@ def determination_marker(conn, state, governing, recs, finding_anchors, links,
     """The evidence marker a determination carries (tier-system section 5; RULINGS R7, R39).
 
     Only a stated or provisional cell is marked. Normally each governing source takes its
-    section 5 band and the cell takes the floor of their mean (owner, 2026-09-13), so a cell
-    is full only if every governing source is.
+    section 5 band and the cell takes the floor of their mean, so a cell is full only if every
+    governing source is. THE FUNCTION IS THE OWNER'S, THE SUBJECT IS NOT YET: the 2026-09-13
+    rulings (ledger, "a derived figure takes a WEIGHTED AVERAGE of its inputs" and "mean of band
+    ordinals, ROUNDED DOWN") are about a `derived` figure's inputs. Applying it to a determination's
+    governing sources, and to the codes a finding confirms, is RULINGS R7 as amended by R49(a) and
+    has not been put to the owner at this level.
 
     A value read off the regulatory stratum -- a floor claim, or the threshold of a proxy
     inference -- is the weak band unless an anchoring FINDING confirms the governing code
@@ -1216,8 +1220,8 @@ def determination_marker(conn, state, governing, recs, finding_anchors, links,
     is upgraded): such a code takes the band of the confirming study, the floor of their
     mean when several confirm it (R39), and the cell the floor of the mean of its codes. A
     code is one input however many of its clauses govern, as `gather_sources` counts it.
-    Only a `confirms` edge whose far end is a governing extraction ROW counts; one aimed at
-    a label (`to_label`) cannot reach a figure. The `regulatory_stratum_only` CHECK on the
+    Only a `confirms` edge between two rows of the SAME parameter, whose far end is a governing
+    extraction row, counts; one aimed at a label (`to_label`) cannot reach a figure. The `regulatory_stratum_only` CHECK on the
     column pins a floor claim at the weak band, which this reproduces.
     """
     if state not in ("stated", "provisional"):
@@ -1233,6 +1237,8 @@ def determination_marker(conn, state, governing, recs, finding_anchors, links,
         for to_id, from_ref in conn.execute(
                 "SELECT r.to_extraction_id, x.ref_id FROM extraction_relations r "
                 "JOIN source_value_extractions x ON x.extraction_id = r.from_extraction_id "
+                "JOIN source_value_extractions t ON t.extraction_id = r.to_extraction_id "
+                "AND t.parameter_id = x.parameter_id "
                 "WHERE r.relation = 'confirms' AND x.figure_role = 'finding' "
                 f"AND r.to_extraction_id IN ({','.join('?' * len(ids))})", ids):
             if from_ref in anchor_band:
