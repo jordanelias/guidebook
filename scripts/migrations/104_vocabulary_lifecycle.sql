@@ -32,6 +32,8 @@
 --     separate table would add a join and a second key for no cardinality (RULINGS R25).
 --     The three are all-or-nothing, and the CHECK sits on the last column added so SQLite
 --     can evaluate it against both siblings (the 078 precedent for ADD COLUMN checks).
+--     Every set branch tests IS NOT NULL before length(trim(...)): a NULL CHECK result is
+--     not a violation, so `length(trim(NULL)) > 0` alone would let a partial row in.
 --
 --     THE CATALOGUE CHECK LISTS THE FILES THE LEDGER NAMES FOR THE OWNER'S SELECTION, and
 --     nothing else: "Code and standards registries" is references/standards-registry.md
@@ -47,6 +49,13 @@
 --     `terms:<TERM-ID>` in the archived corpus. `catalogue_approval_ref` is the dated `## `
 --     heading of the ledger entry that records the owner's approval. Both are pointers,
 --     never copies of the entry or of the owner's words (rule 5).
+--
+--     WHAT THE POINTERS PROVE, AND WHAT THEY DO NOT. The writer proves the entry resolves
+--     inside the catalogue file and the heading occurs exactly once in the ledger. Nothing
+--     compares either with the NAME: that the owner approved this name from this entry is
+--     the "Screen, then you approve" step the ledger records (2026-10-09), a process step
+--     no code can verify. The pointer replaced a copy of the owner's words (RULINGS R25,
+--     accepted R49(e)); it is weaker evidence and cheaper to keep true.
 --
 --     Its reader: scripts/validate_parameters.py (P2), which fails a catalogue-minted term
 --     whose approval heading no longer occurs exactly once in references/project-standards.md.
@@ -66,15 +75,16 @@ ALTER TABLE parameter_declinations ADD COLUMN revoked_by_session TEXT;
 ALTER TABLE parameter_declinations ADD COLUMN revocation_reason TEXT
     CHECK ((revoked_at IS NULL AND revoked_by_session IS NULL AND revocation_reason IS NULL)
         OR (revoked_at IS NOT NULL AND revoked_by_session IS NOT NULL
-            AND length(trim(revocation_reason)) > 0));
+            AND revocation_reason IS NOT NULL AND length(trim(revocation_reason)) > 0));
 
 ALTER TABLE terms ADD COLUMN catalogue TEXT
     CHECK (catalogue IN ('references/standards-registry.md', 'references/tier456-verified-sources.json', 'references/co1-verified-sources.json', 'references/co2-verified-sources.json', '_archived/data/corpus-pre-reset-2026-08-06.db'));
 ALTER TABLE terms ADD COLUMN catalogue_entry_ref TEXT;
 ALTER TABLE terms ADD COLUMN catalogue_approval_ref TEXT
     CHECK ((catalogue IS NULL AND catalogue_entry_ref IS NULL AND catalogue_approval_ref IS NULL)
-        OR (catalogue IS NOT NULL AND length(trim(catalogue_entry_ref)) > 0
-            AND length(trim(catalogue_approval_ref)) > 0));
+        OR (catalogue IS NOT NULL
+            AND catalogue_entry_ref IS NOT NULL AND length(trim(catalogue_entry_ref)) > 0
+            AND catalogue_approval_ref IS NOT NULL AND length(trim(catalogue_approval_ref)) > 0));
 
 DROP VIEW v_value_independence;
 CREATE VIEW v_value_independence AS

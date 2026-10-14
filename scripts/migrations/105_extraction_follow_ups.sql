@@ -43,7 +43,7 @@ CREATE TABLE extraction_follow_ups (
     resolution          TEXT,
     CHECK ((resolved_at IS NULL AND resolved_by_session IS NULL AND resolution IS NULL)
         OR (resolved_at IS NOT NULL AND resolved_by_session IS NOT NULL
-            AND length(trim(resolution)) > 0))
+            AND resolution IS NOT NULL AND length(trim(resolution)) > 0))
 );
 
 CREATE UNIQUE INDEX ux_extraction_follow_ups_open

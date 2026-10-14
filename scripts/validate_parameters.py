@@ -39,12 +39,9 @@ pattern here would recreate the identical fork alias-provenance and V5 (populati
 codes) rewrites both found and killed: a second copy that drifts the moment either
 one is edited and nobody remembers the other exists.
 
-`base_parameters` is empty today (2026-09-10) -- no owner batch has minted a
-parameter yet. That makes this check's live run NOTHING-IN-SCOPE, correctly: there
-is nothing to examine yet, not a broken sweep. `min_items: 1` is still the right
-declaration (not `no_floor`) because a `base_parameters` row IS repo content the
-owner intends to populate, not a corpus retired to empty by decision -- the day the
-first parameter is minted, this floor is what turns a silent gap into a reported one.
+`min_items: 1` (not `no_floor`) is the right declaration: a `base_parameters` row IS repo
+content the owner intends to populate, not a corpus retired to empty by decision, so the
+floor is what turns a silent gap into a reported one.
 
 P2, ADDED 2026-10-09 (tooling T1, the owner's D3 answer): every term minted from a
 permitted catalogue (`db.py mint-term-from-catalogue`; `terms.catalogue` is not NULL,
@@ -52,7 +49,8 @@ migration 104) still has its approving ledger entry in references/project-standa
 named by `terms.catalogue_approval_ref`, the entry's dated `## ` heading. The writer
 refused unless the heading occurred exactly once when the term was minted; if the ledger
 is later edited so it occurs no longer, or twice, the term's only warrant is gone or
-ambiguous and nothing else would notice. P2 reports its own subject in words; EXAMINED
+ambiguous and nothing else would notice. P2 cannot check that the entry approves this
+name; the pointer proves the entry exists once. P2 reports its own subject in words; EXAMINED
 stays the parameter count (a whole-check number, run_checks.py EXAMINED_RE), and zero
 catalogue-minted terms is a true state today.
 
@@ -118,7 +116,9 @@ def validate():
                 f"{o['catalogue_entry_ref']}): its approval entry "
                 f"{o['catalogue_approval_ref']!r} is the heading of {n} entries of "
                 f"references/project-standards.md, so the name has lost its only warrant "
-                f"or points ambiguously. Restore the entry, or retire the parameter.")
+                f"or points ambiguously. Restore the entry's heading in the ledger; no verb "
+                f"rewrites terms.catalogue_approval_ref, so re-pointing is a compensating "
+                f"migration.")
     print(f"  P2: {len(origins)} catalogue-minted term(s) checked against the ledger")
 
     total = len(rows)

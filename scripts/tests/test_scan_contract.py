@@ -677,6 +677,29 @@ try:
     expect_refusal("M05", "mint refuses an approval entry not found exactly once in the ledger",
                    "exactly one",
                    mint, **mt(approval_ref="Fixture entry 2026-01-01 the owner never gave"))
+    expect_refusal("M05b", "mint refuses an approval ref that carries no date", "no date",
+                   mint, **mt(approval_ref="Fixture entry the owner never gave"))
+    expect_refusal("M04b", "mint refuses the registry's bracketed template placeholder",
+                   "placeholder", mint, **mt(
+                       catalogue="references/standards-registry.md",
+                       entry_ref="[Standard identifier and year as cited in guidebook]"))
+    real_ledger = dbcore.LEDGER_PATH
+    fake = pathlib.Path(TMP) / "ledger.md"
+    try:
+        dbcore.LEDGER_PATH = fake
+        fake.write_text(f"## {APPROVAL}\n\n## {APPROVAL}\n", encoding="utf-8")
+        expect_refusal("M05c", "mint refuses an approval heading that occurs twice",
+                       "exactly one", mint, **mt())
+        fake.write_text(f"{APPROVAL}\n", encoding="utf-8")
+        expect_refusal("M05d", "mint counts `## ` headings only, not any line that reads the "
+                       "same", "exactly one", mint, **mt())
+        fake.write_text(f"## {APPROVAL}\n", encoding="utf-8")
+        m05e = attempt(mint, **mt(approval_ref=f"## {APPROVAL}", canonical_en="fixture "
+                                  "prefix name"), dry_run=True)
+        record("M05e", "mint takes the heading with or without its `## ` prefix",
+               bool(m05e.get("term_id")), m05e)
+    finally:
+        dbcore.LEDGER_PATH = real_ledger
     expect_refusal("M06", "mint refuses a catalogue outside the CHECK (adding one is a ruling)",
                    "CHECK", mint, **mt(catalogue="references/not-a-catalogue.md"))
     mt7 = attempt(mint, **mt())
@@ -706,6 +729,33 @@ try:
            vp.returncode == 1 and "P2 FAIL" in vp.stdout, vp.stdout[-400:])
     x("UPDATE terms SET catalogue=NULL, catalogue_entry_ref=NULL, "
       "catalogue_approval_ref=NULL WHERE term_id=?", FREE[14])  # restore the copy
+    # M12: a SET-but-incomplete triple is refused by the table, not admitted as a NULL CHECK.
+    # `length(trim(NULL)) > 0` is NULL, which SQLite does not count as a violation, so each
+    # set branch must test IS NOT NULL first (migrations 104 and 105).
+    con = sqlite3.connect(DB)
+    admitted = []
+    try:
+        for label, sql, args in (
+                ("terms", "UPDATE terms SET catalogue=?, catalogue_entry_ref=NULL, "
+                 "catalogue_approval_ref='h 2026-01-01' WHERE term_id=?", (TIER456, FREE[14])),
+                ("parameter_declinations", "UPDATE parameter_declinations SET revoked_at='t', "
+                 "revoked_by_session='s' WHERE term_id=(SELECT term_id FROM "
+                 "parameter_declinations WHERE revoked_at IS NULL LIMIT 1)", ()),
+                ("extraction_follow_ups", "INSERT INTO extraction_follow_ups (extraction_id, "
+                 "reason, warrant, raised_at, raised_by_session, resolved_at, "
+                 "resolved_by_session) SELECT MIN(extraction_id), "
+                 "'read-outside-admitting-purpose', 'w', 't', 's', 't', 's' FROM "
+                 "source_value_extractions", ())):
+            try:
+                con.execute(sql, args)
+                admitted.append(label)
+            except sqlite3.IntegrityError:
+                pass
+            con.rollback()
+    finally:
+        con.close()
+    record("M12", "the all-or-none CHECKs refuse a partial triple (NULL is not a pass)",
+           not admitted, admitted)
 
     # ── E: the engine leaves skimmed figures out of what sets a value ────────────────
     sys.path.insert(0, str(REPO / "scripts" / "assess"))
@@ -888,7 +938,7 @@ try:
         sql = open(out_sql, encoding="utf-8").read()
     except SystemExit as exc:
         sql = f"emit refused: {exc}"
-    want = ['INSERT INTO "source_scans"', '"catalogue_approval_ref"',
+    want = ['INSERT INTO "source_scans"', APPROVAL.replace("'", "''"),
             'INSERT INTO "extraction_follow_ups"', 'UPDATE "parameter_declinations"',
             'UPDATE "base_parameters"', 'INSERT INTO "term_aliases"',
             'UPDATE "source_value_extractions"', 'UPDATE "terms"']

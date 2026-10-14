@@ -1909,8 +1909,9 @@ def main():
     p_aal.add_argument("--dry-run", action="store_true")
 
     p_mtc = sub.add_parser("mint-term-from-catalogue",
-                           help="Mint a term from a PERMITTED catalogue on the owner's "
-                                "approval quoted once in the ledger (owner D3, 2026-10-09)")
+                           help="Mint a term from a PERMITTED catalogue, pointing at the "
+                                "ledger entry that records the owner's approval "
+                                "(owner D3, 2026-10-09)")
     p_mtc.add_argument("--catalogue", required=True,
                        choices=dbcore.schema_choices("terms", "catalogue"))
     p_mtc.add_argument("--entry-ref", dest="entry_ref", required=True,
@@ -7437,6 +7438,9 @@ def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
     if not path.is_file():
         raise Refusal(f"--catalogue {catalogue!r}: the file is not in this checkout.")
     if path.suffix == ".md":
+        if entry_ref.startswith("["):
+            raise Refusal(f"--entry-ref {entry_ref!r}: a bracketed value is the registry's "
+                          f"template placeholder, not an entry.")
         needle = f'standard_cited: "{entry_ref}"'
         if needle not in path.read_text(encoding="utf-8"):
             raise Refusal(f"--entry-ref {entry_ref!r}: no registry entry in {catalogue} "
@@ -7489,8 +7493,10 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
       name or alias any term already holds; and an entry_ref that resolves inside the
       catalogue file (_resolve_catalogue_entry).
       APPROVE: a pointer to the ledger entry that records the owner's approval, its dated
-      `## ` heading, occurring EXACTLY ONCE in references/project-standards.md, so the
-      approval is mechanically tied to one recorded entry rather than asserted.
+      `## ` heading, occurring EXACTLY ONCE in references/project-standards.md. That proves
+      the entry exists and is unambiguous. It does NOT prove the entry approves this name,
+      or that the name appears in the entry_ref: neither is compared, and the owner's
+      "Screen, then you approve" step (ledger 2026-10-09) is a process step no code checks.
 
     The catalogue, the entry and the approval pointer are written on the term row itself
     (terms.catalogue, catalogue_entry_ref, catalogue_approval_ref; RULINGS R25). No

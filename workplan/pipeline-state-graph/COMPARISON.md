@@ -89,7 +89,7 @@ Tests: **(a)** accuracy, **(b)** code compliance, **(c)** walkability, **(d)** d
 Proposed rulings for these are in `RULINGS.md` (same folder): 38 of 42 questions ruled from premises, 4 undetermined; nothing is entered in the ledger.
 
 1. `slugs.serves_axes` value `["AX-BAL"]` may be destroyed (LED-169; step 1.4).
-2. T1 extras: strike or keep `term_catalogue_origins` (SES-063).
+2. T1 extras (SES-063): ruled by R25 (three columns on `terms`) and accepted by R49(e).
 3. `case_studies` and `economics_entries`: fold into sources and extractions (RES-12)?
 4. The registry and map names (P15).
 5. LED-202: may a preliminary full-read figure set a published value?
