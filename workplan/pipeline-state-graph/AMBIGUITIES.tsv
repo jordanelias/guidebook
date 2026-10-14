@@ -106,7 +106,7 @@ ENT-030	ACTIVE	governance/conceptual-model.md:111	BPC key-source REF-ID resoluti
 ENT-031	ACTIVE	governance/conceptual-model.md:119	BPC metadata cross-system check	A3 Session 3 plan item; data/sources/ may no longer be the live home of citation records.
 ENT-032	ACTIVE	governance/conceptual-model.md:126	connection primary_target item_code resolution	A3 Session 4 plan item that presupposes the item index as a live reference.
 ENT-039	ACTIVE	governance/conceptual-model.md:187	EvidenceType member count	The §4 code block lists only seven members, so seven and nine are both stated for the same enum.
-ENT-045	ACTIVE	governance/conceptual-model.md:206	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
+ENT-045	ACTIVE	governance/conceptual-model.md:199	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
 ENT-048	ACTIVE	governance/functional-taxonomy.md:13	two-layer population architecture	"Layer 1" and "Layer 2" here name taxonomy layers, a different numbering from the project's five-layer Layer 0-4 model.
 ENT-059	ACTIVE	governance/functional-taxonomy.md:85	axis values as stored attributes	Unclear whether this bars stored mapping tables (population_axis_map, slug serves_axes) or only per-person attributes.
 ENT-067	ACTIVE	governance/functional-taxonomy.md:129	canonical codes as Layer 2 identifiers	The population-taxonomy.md banner (DR-2026-07-23) retires the canonical code set that this sentence retains.

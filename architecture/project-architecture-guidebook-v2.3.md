@@ -46,7 +46,7 @@ When a reference file accumulates session-specific notes, dated commentary, or r
 <skill_registry_pattern>
 PI declares skill *assignments* — one-line entries naming which skills the PI itself invokes. Detail (location, status, purpose, triggers, dependencies) lives in `references/skill-registry.md`.
 
-Skill files are flat: `skills/<name>_SKILL.md`. Deprecated skills live in `skills/deprecated/` and are not loaded on trigger.
+Skill files are flat: `skills/<name>_SKILL.md`.
 
 **Universality requirement.** A skill file describes a protocol Claude executes when invoked. The protocol is generic over inputs: it cites no specific session IDs, no specific dates, no commit SHAs, no specific gaps, no embedded changelog. Project-specific state that the skill operates on lives in the database or in DRs the skill references by stable identifier. If a skill cannot be authored without specific project state, the state belongs in the PI rule that invokes the skill, not in the skill itself.
 
