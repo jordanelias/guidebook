@@ -9701,14 +9701,15 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
     extracted from the superseded row stops being gathered, so re-extract it from `by` if
     `by` does not already carry it.
 
-    KNOWN GAP, NOT FIXED HERE: the views that read evidence_sources do not filter on
-    supersession, so a tombstone still appears in them -- v_convergence_sources,
-    v_determination_provenance, v_evidence_authors, v_item_provenance,
-    v_source_admission and v_source_reach_all as of 2026-10-01. Re-derive rather than
-    trust the list:
+    VIEWS: v_convergence_sources, v_determination_provenance, v_item_provenance and
+    v_source_reach_all skip a tombstone (migration 106_views_filter_retired). Two lookups
+    keyed on ref_id still show one on purpose, v_evidence_authors and v_source_admission:
+    five audits LEFT JOIN them from queries on evidence_sources that do not filter
+    supersession, so filtering the lookup would report the tombstone as authorless or never
+    admitted. The filter belongs in those queries, a separate change. Re-derive rather
+    than trust the list:
         select name from sqlite_master where type='view' and sql like '%evidence_sources%'
            and sql not like '%superseded_by_ref_id%';
-    A view change is a schema change, and it belongs in its own migration.
 
     Refuses: A == B; either missing; A already superseded; B itself superseded (no
     chains); a blank reason; and a LIVE determination resting on A
