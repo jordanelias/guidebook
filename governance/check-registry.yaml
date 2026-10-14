@@ -740,13 +740,14 @@ checks:
     it -- which is the state .claude/settings.json blames for the 2026-07-24 run that
     skipped Co-1, citation mining, clause citation and combinatorial pairing while the
     rules for all four sat documented. Non-compliant research is what lands.
-    ADVISORY, and the reason is the level's own doctrine rather than timidity. Six
-    skills carry no `description:` and cannot be linked until a human writes one --
-    adversarial-research, evidence-metadata-rehabilitation, integrity-protocol,
-    progressive-measurement, reasoning-doc-citations, voice-style. A blocking gate
+    ADVISORY, and the reason is the level's own doctrine rather than timidity. Skills
+    that carry no `description:` cannot be linked until a human writes one -- derive the
+    list from the script; at last writing it was adversarial-research,
+    evidence-metadata-rehabilitation, integrity-protocol, reasoning-doc-citations,
+    voice-style. A blocking gate
     would be red by construction until then, and a check that is red by construction
-    teaches its reader to ignore it (CLAUDE.md rule 6). RATCHET TO BLOCKING once those
-    six carry descriptions and this reports IN SYNC on a clean tree; derive that count
+    teaches its reader to ignore it (CLAUDE.md rule 6). RATCHET TO BLOCKING once they
+    carry descriptions and this reports IN SYNC on a clean tree; derive that count
     from the script, never from this note.
 
 - id: claude_md_spine
