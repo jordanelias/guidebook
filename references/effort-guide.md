@@ -88,4 +88,3 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 ## Notes
 
 - When a skill is not listed here, sessions invoking it default to 100. Numerical and qualitative levels coexist: qualitative levels (low/medium/high/max) apply when the user invokes `/effort low|medium|high|max`; numerical values document the skill's expected reasoning depth for routing decisions.
-- **Deprecated skills** (`skills/deprecated/`) are not assigned an effort level. If a deprecated skill must be invoked, default to 50.
