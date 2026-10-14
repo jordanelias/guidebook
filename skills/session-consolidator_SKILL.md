@@ -77,7 +77,6 @@ For each file below that was modified or referenced this session: GET current co
 **workplan/ directory** (v10.1 addition)
 - If Decision Register was updated this session: verify `SQLite decisions table (canonical per A12 §5.1; legacy workplan/v10-1-decision-register.md superseded)` reflects changes.
 - If Change Orders were issued: verify `references/change-orders/` contains the CO file.
-- For each watched directory (`workplan/`, `versions/current/`): GET listing. If >1 non-directory file outside the directory's `deprecated/` subdirectory, and a new file was committed to that directory this session: invoke `github-filing` on that directory before writing session YAML. Report result in reconciliation block.
 
 **Reconciliation output** — compact table, reported to user and included in session YAML:
 
