@@ -119,7 +119,7 @@ def band(tier: int, evidence_type: str) -> EvidenceMarker:
 
 def floor_mean(bands: Iterable[EvidenceMarker]) -> EvidenceMarker:
     """The band of several equally weighted inputs: the floor of the mean of their ordinals
-    (owner, 2026-09-13: "yeah round down"). Only an all-FULL set is FULL."""
+    (owner, 2026-09-13, for a derived figure: "yeah round down"). Only an all-FULL set is FULL."""
     ordinals = [b.ordinal for b in bands]
     if not ordinals:
         raise TierDerivationError("floor_mean of no bands")

@@ -167,8 +167,8 @@ mission's post-launch participation commitment — "to be answered with disabled
 people, not for them" — with its honest calibration that this may never activate.
 
 **Instrument.** Situations attach to items and profiles and render beside
-specifications; provenance chips distinguish `dpo_research` from `advocacy_position`
-from clinical sources; evidence-state cells distinguish absence-of-evidence from
+specifications; provenance chips distinguish DPO position statements from
+other Co-1 sources and from clinical sources; evidence-state cells distinguish absence-of-evidence from
 evidence-of-absence (mission, Cochrane yardstick).
 
 **Standing question.** *What does the framework see that no witness can — and what did
@@ -212,8 +212,8 @@ fail to see without it?*
 
 **Poles.** Five epistemic communities with different validity criteria: what happened
 to me (witness); what my community strategically demands (advocate — motivated by
-function, not flaw; the schema already distinguishes `dpo_research` from
-`advocacy_position`); what survives review and budget (policy); what my client will
+function, not flaw; the schema already distinguishes `dpo_position_statement`
+from the other Co-1 source types); what survives review and budget (policy); what my client will
 accept by Friday (designer); what this client's body can do (practitioner). "Best
 practice" means five different things across these chairs.
 

@@ -52,8 +52,8 @@ rather than trust one (rule 7a). `--check` prints `EXAMINED: n` for each class o
    say so when you act on it.
 4. **Check the mechanism, not the prose.** A `FAIL` or `NOT-BUILT` probe means the ruling is not carried by the schema,
    code or CI, so compliance is yours (the rule 5 / rule 7 "you are the gate" case). A `PASS` means the probe could see
-   the thing and found it; it does not mean the ruling is fully carried. Several probes are lexical (P-H, P-O,
-   P-STATUS-WRITERS) and the register says so.
+   the thing and found it; it does not mean the ruling is fully carried. Several probes are lexical (P-H, P-O)
+   and the register says so.
 5. **After acting**, run `--check`. If you changed a guard, a vocabulary or a ruling-bearing file, regenerate and read
    the diff of `CONFLICTS.md` and the probe table.
 
