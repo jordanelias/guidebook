@@ -268,19 +268,6 @@ conflicts:
   resolver: OWNER
   confidence: high
 
-- id: C-020
-  class: RULING-MECHANISM
-  severity: S2
-  title: "Splinter population link tables: 'both sweeps are done' versus five tables still present"
-  atoms: [LED-132, LED-128, CLM-042]
-  sides:
-    - {atoms: [LED-132, CLM-042], says: "owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns."}
-    - {atoms: [CLM-042], says: "CLAUDE.md section 6 stated both sweeps were done; step 0.5 removed the claim and left the accurate sentence that migration 071 dropped population_code and item_code from specifications."}
-  probe: P-A
-  direction: "Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. The doc overstated and no longer does (step 0.5); the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10), plan step 1.3."
-  resolver: AGENT
-  confidence: high
-
 - id: C-021
   class: RULING-MECHANISM
   severity: S2

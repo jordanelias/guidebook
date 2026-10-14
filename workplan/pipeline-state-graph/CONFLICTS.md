@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-47 entries. Severity: S1 14, S2 18, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
+46 entries. Severity: S1 14, S2 17, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 15, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -30,7 +30,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
-| C-020 | S2 | RULING-MECHANISM | AGENT | P-A -> PASS | Splinter population link tables: 'both sweeps are done' versus five tables still present |
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
@@ -355,17 +354,6 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `ENT-040`(act), `ENT-192`(act)
 
 **Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PIP-15, PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
-
-## C-020 [S2] Splinter population link tables: 'both sweeps are done' versus five tables still present
-
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-A` = **PASS**
-
-- owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns.  
-  _atoms:_ `LED-132`(act), `CLM-042`(act)
-- CLAUDE.md section 6 stated both sweeps were done; step 0.5 removed the claim and left the accurate sentence that migration 071 dropped population_code and item_code from specifications.  
-  _atoms:_ `CLM-042`(act)
-
-**Direction.** Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. The doc overstated and no longer does (step 0.5); the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10), plan step 1.3.
 
 ## C-021 [S2] determination_gates attaches to a group through one lens column
 
