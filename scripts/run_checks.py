@@ -719,7 +719,7 @@ def selftest(reg):
         ("references/bpc-reasoning/x.md", "synthesis"),
         ("references/connection-reasoning/CON-1.md", "synthesis"),
         ("sessions/LATEST", "synthesis"),
-        ("parts/v10/part04.md", "render"),
+        ("parts/x/part04.md", "render"),
         ("index.html", "render"),
         ("scripts/validate_bpc.py", "tooling"),
         (".github/workflows/ci.yml", "tooling"),
@@ -747,6 +747,12 @@ def selftest(reg):
     sel_data = {c["id"] for c, ok, _ in select(reg, {"data"}) if ok}
     check("C5 kind 'data' selects the reproducibility gate",
           "migration_reproducibility" in sel_data)
+    # The negative leg, derived from the registry so it has a subject whatever the checks are: a check
+    # declaring neither 'data' nor 'always' must stay out of a data-only selection.
+    outside = {c["id"] for c in reg["checks"]
+               if not ({"data", "always"} & set(c.get("kinds", [])))}
+    check(f"C5 kind 'data' selects none of the {len(outside)} checks that declare neither 'data' nor 'always'",
+          bool(outside) and not (outside & sel_data), f"{len(outside)} such checks; selected: {sorted(outside & sel_data)}")
 
     sel_syn = {c["id"] for c, ok, _ in select(reg, {"synthesis"}) if ok}
     check("C5 kind 'synthesis' selects validate_evidence_state (2026-07-23 plan F2)",

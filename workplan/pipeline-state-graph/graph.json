@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 04:32 UTC from git HEAD ea8b963 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 04:34 UTC from git HEAD fd8b931 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook-p11fix",
  "user_version": 106,
  "stages": [
@@ -5912,9 +5912,9 @@
   "tables placed in a stage": 84
  },
  "atoms_by_status": {
-  "ACTIVE": 2310,
+  "ACTIVE": 2307,
+  "SUPERSEDED": 77,
   "OPEN": 75,
-  "SUPERSEDED": 74,
   "AMENDED": 76,
   "PROPOSED": 129,
   "HISTORICAL": 26
