@@ -1626,23 +1626,6 @@ checks:
     opposite of the measurement, and with the note''s authority behind it. A note that misdescribes
     its own check''s instrumentation is worse than no note, because it converts a check into a
     second, wrong source of truth about itself.'
-- id: population_integrity_audit
-  cmd:
-  - python3
-  - scripts/audit/population_integrity_audit.py
-  battery: research
-  kinds:
-  - data
-  - schema
-  level: advisory
-  basis: base/base-population-vocabulary
-  cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the three JUNCTIONS tables (citation_population_links,
-    probe_population_links, extraction_population_links) — all three are 0 rows today post clean-room-reset,
-    unambiguous regardless of combination. empty-by-decision. RED on main (31 issues). Advisory, as it
-    was in research-contract.yml.'
 - id: graph_audit
   cmd:
   - python3

@@ -268,21 +268,6 @@ conflicts:
   resolver: OWNER
   confidence: high
 
-- id: C-019
-  class: RULING-MECHANISM
-  severity: S1
-  title: "The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents"
-  atoms: [CLM-048, CLM-042, CLM-034, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050, WRK-169, WRK-170]
-  sides:
-    - {atoms: [WRK-169, WRK-170], says: "owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database)."}
-    - {atoms: [CLM-048, LED-091], says: "the item layer is emptied (P-UNWRITABLE lists what still points into it) and items is a Part-4 render rollup derived from specifications; never file into an [A-Z]-NN container."}
-    - {atoms: [ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029], says: "conceptual-model and functional-taxonomy: items.item_code is the Part-4 organizing unit; specification values attach to items."}
-    - {atoms: [PRC-027, PRC-059, PRC-068, OPI-047, OPI-048, OPI-050], says: "process rules and the operative instrument cross-reference item-layer cells (F-07, A-16, A-18, AUT)."}
-  probe: P-UNWRITABLE
-  direction: "Rulings of 2026-08-26 and 2026-09-01 supersede the item-keyed documents on contact. Mechanism: the derived UNWRITABLE set (see STATE-GRAPH.md) is the measured residue; renderer queries that still select item_code fail (P-K)."
-  resolver: OWNER+AGENT
-  confidence: high
-
 - id: C-020
   class: RULING-MECHANISM
   severity: S2
@@ -363,21 +348,6 @@ conflicts:
   direction: "The schema CHECK on evidence_sources.verification_status admits VERIFIED and UNVERIFIED only; the retired values cannot be written. P-CO1-TYPE compares the live co1_source_type values with schemas.enums.Co1SourceType, a drift independent of the warrant question (C-024). The co1-operational sections that cite them are stale (DRS-274 and DRS-301 are already marked AMENDED)."
   resolver: AGENT
   confidence: high
-
-- id: C-026
-  class: DOC-DOC
-  severity: S3
-  title: "jurisdictional_values: reference-only (D-0181) versus restored as research_code_leads (D-0185)"
-  atoms: [DRS-169, DRS-209, DRS-218, DRS-159, DRS-162, DRS-186, OPI-204, OPI-193, OPI-190]
-  sides:
-    - {atoms: [DRS-169], says: "D-0181 calls jurisdictional_values REFERENCE-ONLY, not to be written."}
-    - {atoms: [DRS-209, DRS-218], says: "D-0185 says D-0181 had 'already called these rows research' and restores them as research_code_leads."}
-    - {atoms: [OPI-204, OPI-193, OPI-190], says: "operative instrument: the minimum viable batch lists 1-2 jurisdictional_values backfills, while its own STOP notice (2026-08-22) forbids writing any value into jurisdictional_values."}
-    - {atoms: [DRS-159, DRS-162, DRS-186], says: "D-0175 and D-0183 require a rationale_ref on determination edges; the column is nullable and the enforcing check was never built."}
-  probe: P-UNWRITABLE
-  direction: "D-0185 is later. add-jurisdictional-value exists but its table has a NOT NULL FK into the empty items table (P-UNWRITABLE lists it), so the verb cannot write."
-  resolver: AGENT
-  confidence: medium
 
 # ---------------------------------------------------------------- D. rendering and machinery
 - id: C-028

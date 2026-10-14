@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 04:34 UTC from git HEAD fd8b931 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook-p11fix",
- "user_version": 106,
+ "generated": "Generated 2026-10-14 04:43 UTC from git HEAD f17acde (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook",
+ "user_version": 107,
  "stages": [
   "base",
   "research",
@@ -293,15 +293,6 @@
     "population_code"
    ]
   },
-  "case_study_specs": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "case_study_id",
-    "item_code"
-   ]
-  },
   "case_study_strategies": {
    "stage": "evidence",
    "rows": 0,
@@ -542,15 +533,6 @@
    "cols": [
     "entry_id",
     "population_code"
-   ]
-  },
-  "economics_entry_specs": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "entry_id",
-    "item_code"
    ]
   },
   "evidence_population_match": {
@@ -859,141 +841,6 @@
     "created_by_session"
    ]
   },
-  "item_audit_runs": {
-   "stage": "infrastructure",
-   "rows": 0,
-   "writers": [
-    "add-audit-run",
-    "update-audit-run"
-   ],
-   "cols": [
-    "run_id",
-    "item_code",
-    "steps_complete",
-    "steps_started",
-    "status",
-    "spec_hash",
-    "brief_path",
-    "created_at",
-    "created_by_session",
-    "updated_at",
-    "updated_by_session"
-   ]
-  },
-  "item_bpc_links": {
-   "stage": "render",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "item_code",
-    "slug",
-    "link_type",
-    "rationale",
-    "created_at",
-    "created_by_session"
-   ]
-  },
-  "item_population_elaborations": {
-   "stage": "render",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "elab_id",
-    "item_code",
-    "population_code",
-    "variant_distinction",
-    "spec_variant_a",
-    "spec_variant_b",
-    "evidence_ref_id",
-    "notes",
-    "created_at",
-    "created_by_session"
-   ]
-  },
-  "item_taxonomy_links": {
-   "stage": "render",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "item_code",
-    "identity_code",
-    "icf_code",
-    "needs_code",
-    "medical_code",
-    "subtype",
-    "applicability",
-    "rationale_ref",
-    "mechanism_note",
-    "strength_band",
-    "use_mode",
-    "source",
-    "created_at",
-    "created_by_session"
-   ]
-  },
-  "items": {
-   "stage": "render",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "item_code",
-    "item_id",
-    "category",
-    "name",
-    "bpc_source_slug",
-    "status",
-    "created_at",
-    "created_by_session",
-    "updated_at",
-    "updated_by_session",
-    "pmp_delta_min",
-    "pmp_direction",
-    "pmp_last_walk_at",
-    "pmp_empirical_ceiling",
-    "pmp_gap_signed"
-   ]
-  },
-  "jurisdictional_values": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [
-    "add-jurisdictional-value"
-   ],
-   "cols": [
-    "jv_id",
-    "item_code",
-    "jurisdiction",
-    "spec_id",
-    "standard_name",
-    "value_text",
-    "value_numeric",
-    "unit",
-    "is_code_minimum",
-    "evidence_tier",
-    "source_section",
-    "notes",
-    "created_at",
-    "created_by_session",
-    "updated_at",
-    "updated_by_session",
-    "locator_scheme",
-    "loc_division",
-    "loc_part",
-    "loc_section",
-    "loc_subsection",
-    "loc_paragraph",
-    "loc_clause",
-    "loc_subclause",
-    "loc_division_end",
-    "loc_part_end",
-    "loc_section_end",
-    "loc_subsection_end",
-    "loc_paragraph_end",
-    "loc_clause_end",
-    "loc_subclause_end",
-    "loc_note"
-   ]
-  },
   "lang_jur_map": {
    "stage": "base",
    "rows": 70,
@@ -1139,18 +986,6 @@
     "updated_at"
    ]
   },
-  "probe_population_links": {
-   "stage": "judgment",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "probe_id",
-    "population_code",
-    "notes",
-    "created_at",
-    "created_by_session"
-   ]
-  },
   "reasoning_doc_citations": {
    "stage": "synthesis",
    "rows": 0,
@@ -1229,19 +1064,6 @@
     "created_by_session",
     "updated_at",
     "updated_by_session"
-   ]
-  },
-  "room_items": {
-   "stage": "base",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "room_code",
-    "item_code",
-    "applicability",
-    "applicability_note",
-    "created_at",
-    "created_by_session"
    ]
   },
   "rooms": {
@@ -1570,34 +1392,6 @@
     "comparator"
    ]
   },
-  "spec_value_probes": {
-   "stage": "specification",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "probe_id",
-    "walk_id",
-    "slug",
-    "item_code",
-    "spec_value_origin",
-    "spec_unit",
-    "direction",
-    "population",
-    "claim_type",
-    "step_index",
-    "phase",
-    "step_value",
-    "step_value_unit",
-    "search_query",
-    "search_query_alt",
-    "passes_strict",
-    "ref_id",
-    "notes",
-    "created_at",
-    "created_by_session",
-    "setting"
-   ]
-  },
   "specification_extraction_links": {
    "stage": "specification",
    "rows": 151,
@@ -1739,21 +1533,6 @@
     "updated_by_session"
    ]
   },
-  "term_item_links": {
-   "stage": "render",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "term_id",
-    "item_code",
-    "population",
-    "notes",
-    "created_at",
-    "created_by_session",
-    "updated_at",
-    "updated_by_session"
-   ]
-  },
   "terms": {
    "stage": "base",
    "rows": 94,
@@ -1887,18 +1666,6 @@
    "notnull": true
   },
   {
-   "child": "case_study_specs",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "case_study_specs",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true
-  },
-  {
    "child": "case_study_strategies",
    "col": "case_study_id",
    "parent": "case_studies",
@@ -1921,12 +1688,6 @@
    "col": "citation_id",
    "parent": "reasoning_doc_citations",
    "notnull": true
-  },
-  {
-   "child": "conflicts",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": false
   },
   {
    "child": "connection_targets",
@@ -1978,18 +1739,6 @@
   },
   {
    "child": "economics_entry_populations",
-   "col": "entry_id",
-   "parent": "economics_entries",
-   "notnull": true
-  },
-  {
-   "child": "economics_entry_specs",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "economics_entry_specs",
    "col": "entry_id",
    "parent": "economics_entries",
    "notnull": true
@@ -2073,90 +1822,6 @@
    "notnull": true
   },
   {
-   "child": "item_audit_runs",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "item_bpc_links",
-   "col": "slug",
-   "parent": "slugs",
-   "notnull": true
-  },
-  {
-   "child": "item_bpc_links",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "item_population_elaborations",
-   "col": "evidence_ref_id",
-   "parent": "evidence_sources",
-   "notnull": false
-  },
-  {
-   "child": "item_population_elaborations",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "item_population_elaborations",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "rationale_ref",
-   "parent": "decisions",
-   "notnull": false
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "medical_code",
-   "parent": "base_taxonomy_medical",
-   "notnull": false
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "needs_code",
-   "parent": "access_needs",
-   "notnull": false
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "icf_code",
-   "parent": "base_icf",
-   "notnull": false
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "identity_code",
-   "parent": "populations",
-   "notnull": false
-  },
-  {
-   "child": "items",
-   "col": "bpc_source_slug",
-   "parent": "slugs",
-   "notnull": false
-  },
-  {
-   "child": "jurisdictional_values",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
    "child": "observed_terms",
    "col": "ref_id",
    "parent": "evidence_sources",
@@ -2199,18 +1864,6 @@
    "notnull": false
   },
   {
-   "child": "probe_population_links",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "probe_population_links",
-   "col": "probe_id",
-   "parent": "spec_value_probes",
-   "notnull": true
-  },
-  {
    "child": "reasoning_doc_citations",
    "col": "source_ref_id",
    "parent": "evidence_sources",
@@ -2220,18 +1873,6 @@
    "child": "reasoning_doc_citations",
    "col": "reasoning_doc_slug",
    "parent": "slugs",
-   "notnull": true
-  },
-  {
-   "child": "room_items",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "room_items",
-   "col": "room_code",
-   "parent": "rooms",
    "notnull": true
   },
   {
@@ -2391,24 +2032,6 @@
    "notnull": true
   },
   {
-   "child": "spec_value_probes",
-   "col": "ref_id",
-   "parent": "evidence_sources",
-   "notnull": false
-  },
-  {
-   "child": "spec_value_probes",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "spec_value_probes",
-   "col": "slug",
-   "parent": "slugs",
-   "notnull": true
-  },
-  {
    "child": "specification_extraction_links",
    "col": "extraction_id",
    "parent": "source_value_extractions",
@@ -2509,18 +2132,6 @@
    "col": "term_id",
    "parent": "terms",
    "notnull": true
-  },
-  {
-   "child": "term_item_links",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true
-  },
-  {
-   "child": "term_item_links",
-   "col": "term_id",
-   "parent": "terms",
-   "notnull": true
   }
  ],
  "unwritable": [
@@ -2534,22 +2145,6 @@
   },
   {
    "child": "case_study_populations",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "case_study_specs",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "case_study_specs",
    "col": "case_study_id",
    "parent": "case_studies",
    "notnull": true,
@@ -2587,14 +2182,6 @@
    ]
   },
   {
-   "child": "economics_entry_specs",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
    "child": "icf_medical_map",
    "col": "medical_code",
    "parent": "base_taxonomy_medical",
@@ -2617,83 +2204,6 @@
    "parent_written_by_same_verb": [
     "add-medical"
    ]
-  },
-  {
-   "child": "item_audit_runs",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [
-    "add-audit-run",
-    "update-audit-run"
-   ],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "item_bpc_links",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "item_population_elaborations",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "item_taxonomy_links",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "jurisdictional_values",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [
-    "add-jurisdictional-value"
-   ],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "probe_population_links",
-   "col": "probe_id",
-   "parent": "spec_value_probes",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "room_items",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "spec_value_probes",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "term_item_links",
-   "col": "item_code",
-   "parent": "items",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
   }
  ],
  "views": {
@@ -2864,16 +2374,6 @@
     "synthesis"
    ],
    "crosses": true,
-   "rows": 0
-  },
-  "v_pmp_latest_walk": {
-   "reads": [
-    "spec_value_probes"
-   ],
-   "stages": [
-    "specification"
-   ],
-   "crosses": false,
    "rows": 0
   },
   "v_registry_duplicate_descriptions": {
@@ -3389,61 +2889,6 @@
     "identity_first"
    ]
   },
-  "item_audit_runs": {
-   "status": [
-    "IN-PROGRESS",
-    "COMPLETE",
-    "HANDED-OFF"
-   ]
-  },
-  "item_bpc_links": {
-   "link_type": [
-    "primary",
-    "parameter",
-    "context",
-    "secondary"
-   ]
-  },
-  "item_taxonomy_links": {
-   "applicability": [
-    "applies",
-    "applies_strictly",
-    "applies_loosely",
-    "context_dependent",
-    "does_not_apply"
-   ],
-   "strength_band": [
-    "full",
-    "partial",
-    "weak"
-   ],
-   "use_mode": [
-    "independent",
-    "assisted",
-    "collective"
-   ]
-  },
-  "items": {
-   "category": [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K"
-   ],
-   "status": [
-    "draft",
-    "active",
-    "merged",
-    "retired"
-   ]
-  },
   "lang_jur_map": {
    "role": [
     "PRIMARY",
@@ -3522,13 +2967,6 @@
     "REFERENCE-ONLY",
     "RETRIEVED",
     "SUPERSEDED"
-   ]
-  },
-  "room_items": {
-   "applicability": [
-    "applies",
-    "conditional",
-    "not-applicable"
    ]
   },
   "rooms": {
@@ -3731,28 +3169,6 @@
     "approx"
    ]
   },
-  "spec_value_probes": {
-   "direction": [
-    "up",
-    "down"
-   ],
-   "claim_type": [
-    "minimum",
-    "maximum",
-    "target",
-    "range_low",
-    "range_high"
-   ],
-   "phase": [
-    "outer-pass-1st",
-    "outer-pass-2nd",
-    "outer-stop",
-    "refinement-pass-1st",
-    "refinement-pass-2nd",
-    "refinement-stop",
-    "final"
-   ]
-  },
   "specification_extraction_links": {
    "role": [
     "governing",
@@ -3890,18 +3306,6 @@
     ]
    },
    "refusals": 3
-  },
-  "add-jurisdictional-value": {
-   "functions": [
-    "insert_jurisdictional_value",
-    "_emit"
-   ],
-   "writes": {
-    "jurisdictional_values": [
-     "INSERT"
-    ]
-   },
-   "refusals": 4
   },
   "add-economics-entry": {
    "functions": [
@@ -4538,14 +3942,6 @@
    "writes": {},
    "refusals": 0
   },
-  "synonyms": {
-   "functions": [
-    "_emit",
-    "get_synonyms"
-   ],
-   "writes": {},
-   "refusals": 0
-  },
   "add-gap": {
    "functions": [
     "next_gap_id",
@@ -4719,51 +4115,6 @@
    },
    "refusals": 0
   },
-  "add-item": {
-   "functions": [],
-   "writes": {},
-   "refusals": 0
-  },
-  "items": {
-   "functions": [
-    "_emit",
-    "get_items"
-   ],
-   "writes": {},
-   "refusals": 0
-  },
-  "add-audit-run": {
-   "functions": [
-    "insert_audit_run",
-    "_emit"
-   ],
-   "writes": {
-    "item_audit_runs": [
-     "INSERT"
-    ]
-   },
-   "refusals": 0
-  },
-  "update-audit-run": {
-   "functions": [
-    "update_audit_run",
-    "_emit"
-   ],
-   "writes": {
-    "item_audit_runs": [
-     "UPDATE"
-    ]
-   },
-   "refusals": 1
-  },
-  "audit-runs": {
-   "functions": [
-    "_emit",
-    "get_audit_runs"
-   ],
-   "writes": {},
-   "refusals": 0
-  },
   "add-supersession-check": {
    "functions": [
     "add_supersession_check",
@@ -4819,13 +4170,11 @@
    "evidence": {
     "still_present": [
      "extraction_population_links",
-     "probe_population_links",
      "citation_population_links",
      "case_study_populations",
      "economics_entry_populations"
     ],
     "rows": [
-     0,
      0,
      0,
      0,
@@ -4855,12 +4204,6 @@
     ],
     "extraction_population_links": [
      "population_code"
-    ],
-    "item_population_elaborations": [
-     "population_code"
-    ],
-    "probe_population_links": [
-     "population_code"
     ]
    }
   },
@@ -4878,11 +4221,9 @@
      "economics_entry_populations",
      "evidence_population_match",
      "extraction_population_links",
-     "item_population_elaborations",
      "population_axis_map",
      "population_icf_links",
-     "populations",
-     "probe_population_links"
+     "populations"
     ],
     "columns": {
      "bpc_metadata": [
@@ -4911,9 +4252,6 @@
      "extraction_population_links": [
       "population_code"
      ],
-     "item_population_elaborations": [
-      "population_code"
-     ],
      "population_axis_map": [
       "population_code"
      ],
@@ -4923,20 +4261,11 @@
      "populations": [
       "population_code"
      ],
-     "probe_population_links": [
-      "population_code"
-     ],
      "reasoning_doc_citations": [
       "population"
      ],
      "source_value_extractions": [
       "root_population_note"
-     ],
-     "spec_value_probes": [
-      "population"
-     ],
-     "term_item_links": [
-      "population"
      ]
     }
    }
@@ -4976,7 +4305,7 @@
     "LED-166"
    ],
    "evidence": {
-    "icf_typed_columns_examined": 10,
+    "icf_typed_columns_examined": 9,
     "icf_columns_holding_AX": {},
     "AX_elsewhere_not_tested_by_this_ruling": {
      "access_need_axis_map.axis_code": 21,
@@ -5115,7 +4444,6 @@
      "life_stage_modifiers",
      "population_axis_map",
      "populations",
-     "room_items",
      "rooms",
      "situations",
      "slugs"
@@ -5300,30 +4628,14 @@
     "CLM-048"
    ],
    "evidence": {
-    "count": 16,
+    "count": 4,
     "pairs": [
      "case_study_outcomes.case_study_id -> case_studies",
      "case_study_populations.case_study_id -> case_studies",
-     "case_study_specs.item_code -> items",
-     "case_study_specs.case_study_id -> case_studies",
      "case_study_strategies.case_study_id -> case_studies",
-     "citation_population_links.citation_id -> reasoning_doc_citations",
-     "economics_entry_specs.item_code -> items",
-     "item_audit_runs.item_code -> items",
-     "item_bpc_links.item_code -> items",
-     "item_population_elaborations.item_code -> items",
-     "item_taxonomy_links.item_code -> items",
-     "jurisdictional_values.item_code -> items",
-     "probe_population_links.probe_id -> spec_value_probes",
-     "room_items.item_code -> items",
-     "spec_value_probes.item_code -> items",
-     "term_item_links.item_code -> items"
+     "citation_population_links.citation_id -> reasoning_doc_citations"
     ],
-    "with_a_db_py_verb": [
-     "add-audit-run",
-     "add-jurisdictional-value",
-     "update-audit-run"
-    ],
+    "with_a_db_py_verb": [],
     "parent_written_by_same_verb": {}
    }
   },
@@ -5393,7 +4705,7 @@
     "CLM-029"
    ],
    "evidence": {
-    "count": 14,
+    "count": 7,
     "with_live_rows": [
      "evidence_population_match.gap_id -> gaps",
      "search_admissions.ref_id -> evidence_sources",
@@ -5403,27 +4715,9 @@
     ],
     "all": [
      {
-      "fk": "case_study_specs.item_code -> items",
-      "from_stage": "evidence",
-      "to_stage": "render",
-      "child_rows": 0
-     },
-     {
       "fk": "citation_population_links.citation_id -> reasoning_doc_citations",
       "from_stage": "judgment",
       "to_stage": "synthesis",
-      "child_rows": 0
-     },
-     {
-      "fk": "conflicts.item_code -> items",
-      "from_stage": "synthesis",
-      "to_stage": "render",
-      "child_rows": 0
-     },
-     {
-      "fk": "economics_entry_specs.item_code -> items",
-      "from_stage": "evidence",
-      "to_stage": "render",
       "child_rows": 0
      },
      {
@@ -5436,24 +4730,6 @@
       "fk": "gap_mining.gap_id -> gaps",
       "from_stage": "research",
       "to_stage": "synthesis",
-      "child_rows": 0
-     },
-     {
-      "fk": "jurisdictional_values.item_code -> items",
-      "from_stage": "evidence",
-      "to_stage": "render",
-      "child_rows": 0
-     },
-     {
-      "fk": "probe_population_links.probe_id -> spec_value_probes",
-      "from_stage": "judgment",
-      "to_stage": "specification",
-      "child_rows": 0
-     },
-     {
-      "fk": "room_items.item_code -> items",
-      "from_stage": "base",
-      "to_stage": "render",
       "child_rows": 0
      },
      {
@@ -5479,12 +4755,6 @@
       "from_stage": "evidence",
       "to_stage": "synthesis",
       "child_rows": 101
-     },
-     {
-      "fk": "spec_value_probes.item_code -> items",
-      "from_stage": "specification",
-      "to_stage": "render",
-      "child_rows": 0
      }
     ]
    }
@@ -5898,10 +5168,10 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2690,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 458,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 435,
   "distinct quotes among all atoms": 2657,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 49,
+  "conflicts (atoms, class, probe exist)": 47,
   "machine transitions": 42,
   "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -5909,7 +5179,7 @@
   "capability predicates": 28,
   "probes run": 34,
   "probes linted for a reachable PASS": 34,
-  "tables placed in a stage": 84
+  "tables placed in a stage": 72
  },
  "atoms_by_status": {
   "ACTIVE": 2307,
@@ -5920,5 +5190,5 @@
   "HISTORICAL": 26
  },
  "atoms_total": 2690,
- "conflicts_total": 49
+ "conflicts_total": 47
 }

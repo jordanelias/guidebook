@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-49 entries. Severity: S1 15, S2 18, S3 16. Class: DOC-DOC 16, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 17, RULING-RULING 3, UNRECORDED 1.
+47 entries. Severity: S1 14, S2 18, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -12,7 +12,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-005 | S1 | RULING-RULING | OWNER | -- | A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known' |
 | C-012 | S1 | RULING-MECHANISM | OWNER | P-STAGE-SVE -> FAIL | source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md) |
 | C-017 | S1 | RULING-MECHANISM | OWNER+AGENT | P-AXIS -> FAIL, P-G -> PASS | 'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live |
-| C-019 | S1 | RULING-MECHANISM | OWNER+AGENT | P-UNWRITABLE -> FAIL | The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents |
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants and tier-consistency have no live gate |
@@ -48,7 +47,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-015 | S3 | DOC-DOC | OWNER | -- | Evidence collection: 'a cursory scan' or a stage that judges relevance |
 | C-016 | S3 | DOC-DOC | AGENT | -- | Pointer discipline: enforced by schema shape, or not enforced |
 | C-025 | S3 | DOC-DOC | AGENT | P-VERIF-VOCAB -> PASS, P-CO1-TYPE -> FAIL | Co-1 operational record: sub-type lists, retired verification values, ref-id format |
-| C-026 | S3 | DOC-DOC | AGENT | P-UNWRITABLE -> FAIL | jurisdictional_values: reference-only (D-0181) versus restored as research_code_leads (D-0185) |
 | C-030 | S3 | DOC-DOC | AGENT | -- | How checks are added and what gates a merge |
 | C-038 | S3 | DOC-DOC | AGENT | -- | Hand-written counts and enumerations that disagree with each other or with the schema |
 | C-041 | S3 | DOC-DOC | OWNER | -- | Scope of the operative instrument's supersession and the read-set it prescribes |
@@ -127,21 +125,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `DRS-114`(act), `DRS-189`(act), `DRS-193`(act), `DRS-199`(ope), `ENT-105`(act), `ENT-156`(act), `ENT-076`(act), `OPI-049`(act)
 
 **Direction.** The owner's rulings are consistent and the earliest is recorded, standing and unqualified (R3, with LED-076 and LED-166 later). The 2026-08-24 DR does not reverse them: it scopes WHEN the rename happens ('not piecemeal'), so the retirement is ruled and unexecuted. LED-166 is carried (P-G); the retirement of the vocabulary is not (P-AXIS lists the tables and columns). [CORRECTION: an earlier draft said the 2026-08-18 ruling could not be found; it is in workplan/2026-08-18-handoff-next-session.md section 2 and the research-frame proposal, which the operative instrument names as the RULING RECORD.]
-
-## C-019 [S1] The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents
-
-**Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-UNWRITABLE` = **FAIL**
-
-- owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database).  
-  _atoms:_ `WRK-169`(act), `WRK-170`(act)
-- the item layer is emptied (P-UNWRITABLE lists what still points into it) and items is a Part-4 render rollup derived from specifications; never file into an [A-Z]-NN container.  
-  _atoms:_ `CLM-048`(act), `LED-091`(act)
-- conceptual-model and functional-taxonomy: items.item_code is the Part-4 organizing unit; specification values attach to items.  
-  _atoms:_ `ENT-023`(act), `ENT-148`(act), `ENT-172`(act), `ENT-002`(act), `ENT-003`(act), `ENT-029`(act)
-- process rules and the operative instrument cross-reference item-layer cells (F-07, A-16, A-18, AUT).  
-  _atoms:_ `PRC-027`(act), `PRC-059`(act), `PRC-068`(act), `OPI-047`(ope), `OPI-048`(ame), `OPI-050`(act)
-
-**Direction.** Rulings of 2026-08-26 and 2026-09-01 supersede the item-keyed documents on contact. Mechanism: the derived UNWRITABLE set (see STATE-GRAPH.md) is the measured residue; renderer queries that still select item_code fail (P-K).
 
 ## C-022 [S1] Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out
 
@@ -597,21 +580,6 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `DRS-293`(act), `DRS-295`(act), `DRS-296`(act)
 
 **Direction.** The schema CHECK on evidence_sources.verification_status admits VERIFIED and UNVERIFIED only; the retired values cannot be written. P-CO1-TYPE compares the live co1_source_type values with schemas.enums.Co1SourceType, a drift independent of the warrant question (C-024). The co1-operational sections that cite them are stale (DRS-274 and DRS-301 are already marked AMENDED).
-
-## C-026 [S3] jurisdictional_values: reference-only (D-0181) versus restored as research_code_leads (D-0185)
-
-**Class** DOC-DOC  ·  **Resolver** AGENT  ·  **Confidence** medium  ·  **Probe** `P-UNWRITABLE` = **FAIL**
-
-- D-0181 calls jurisdictional_values REFERENCE-ONLY, not to be written.  
-  _atoms:_ `DRS-169`(act)
-- D-0185 says D-0181 had 'already called these rows research' and restores them as research_code_leads.  
-  _atoms:_ `DRS-209`(act), `DRS-218`(act)
-- operative instrument: the minimum viable batch lists 1-2 jurisdictional_values backfills, while its own STOP notice (2026-08-22) forbids writing any value into jurisdictional_values.  
-  _atoms:_ `OPI-204`(act), `OPI-193`(act), `OPI-190`(sup)
-- D-0175 and D-0183 require a rationale_ref on determination edges; the column is nullable and the enforcing check was never built.  
-  _atoms:_ `DRS-159`(act), `DRS-162`(ope), `DRS-186`(act)
-
-**Direction.** D-0185 is later. add-jurisdictional-value exists but its table has a NOT NULL FK into the empty items table (P-UNWRITABLE lists it), so the verb cannot write.
 
 ## C-030 [S3] How checks are added and what gates a merge
 
