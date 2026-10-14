@@ -14,3 +14,11 @@ Owner items:
   (retires PI rule #8 interlock in effect: gap-driven-mining "No PMP required" clause and gap_mining_audit check 3's PMP clause go with it).
 Commit hygiene disclosure: four commits on the stack (fd8b931, d6c2008, f5a0596, 9455315) carry [YYYY-MM-DD HH:MM] stamps I typed rather than took from
 `date -u` (05:00/05:40/05:50/06:30 against real 04:32/04:37/04:37/04:45). Harness refused to amend/rewrite. check_commit_msg checks format, not truth.
+
+## After the adversarial pass (Fable 5.1, read-only, isolated worktree): c52f6be on stack/1.2, merged up the stack
+F1 repaired (add-conflict refuses item_code; J13 proven red). F2 repaired (C-019 restored narrowed to its documents half; R36 written back to
+DRS-159/162/186, DRS-169, OPI-193, OPI-204). F3 rejected deliberately (skill-registry left for 1.7 with R45; removing early would fail 23
+attestations). F4 accepted: migration_reproducibility --selftest is red before and after (asserts pre-2026-08-28 skip behaviour), no gate runs it.
+F5 partly rejected: the validate_axes.py edit WAS needed (unedited, schema_reference_audit reports MISSING item_taxonomy_links at :77); deviation from the plan's
+"do not edit" instruction. F6-F9, F11, F12 repaired. F10 partly (research-contract.yaml:255 dated note, pipeline-contract anchor "rule #8 (PMP)" left: owner).
+Owner item added: PI rule #8 (PMP) interlock retired in effect.
