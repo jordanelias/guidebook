@@ -379,8 +379,7 @@ IBD/ostomy (CNT) — named so their absence is visible.
 | MOB "balance" (FDA mechanism text) | AX-BAL |
 
 Post-ratification the FDA skill §§1–2 regenerate from the axis register, ending
-skill↔DB drift; the `PopulationCode` enum change follows population-taxonomy §5's
-process.
+skill↔DB drift.
 
 ## §7 Compatibility — what this document does NOT change
 
