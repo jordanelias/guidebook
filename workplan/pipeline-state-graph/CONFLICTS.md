@@ -433,7 +433,7 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
 - precondition: before any retirement, every reader/view that could surface the row must filter on status.  
   _atoms:_ `LED-171`(act)
 
-**Direction.** P-H lists views over base_parameters/specifications/evidence_sources whose SQL names no lifecycle column. On main, base_parameters has no verb that reaches 'merged' or 'retired'; the unreleased T1 branch adds retire-parameter and merge-parameter, so P-H on the T1 tree is the precondition check for that PR. The regex is a lexical test: a view may filter by a different spelling.
+**Direction.** Step 0.3 (migration views_filter_retired) made the views over base_parameters filter status, and two source views filter supersession; P-H, now matching the column and not the substring, lists the four evidence_sources views left alone: v_convergence_sources, v_determination_provenance, v_evidence_authors, v_source_admission. Each is held back for a reason in that migration's header (supersede-source's refusal ignores specification_extraction_links; a recorded assessment's participants; ref_id lookups read by a blocking test). LED-171 says every READER, and P-H reads views only: non-view readers (audit_evidence_metadata, metadata_integrity_audit, research_batch_dod R2/R4/R13, get_unmined, validate_parameters) still surface a tombstone or a retired parameter. Open: GAP-062 (a data row, not amended here).
 
 ## C-036 [S2] Owner statements whose only home is a session record
 

@@ -297,12 +297,14 @@ def make_probes():
 
     @probe("P-H", "every view reading a retirable table names its lifecycle column", ["LED-171", "LED-170"])
     def _(T):
-        life = {"base_parameters": r"status", "specifications": r"retired_at|superseded_by", "evidence_sources": r"superseded_by_ref_id"}
+        # \bstatus\b, not `status`: `verification_status` and `convergence_status` in a view
+        # that reads base_parameters were counted as its lifecycle filter (step 0.3).
+        life = {"base_parameters": r"\bstatus\b", "specifications": r"retired_at|superseded_by", "evidence_sources": r"superseded_by_ref_id"}
         bad = {}
         for v, sql in T.views.items():
             for t, pat in life.items():
                 if re.search(rf"\b{t}\b", sql) and not re.search(pat, sql): bad.setdefault(v, []).append(t)
-        return ("FAIL" if bad else "PASS"), {"views_not_naming_lifecycle": bad, "note": "lexical test; a view may filter under another spelling"}
+        return ("FAIL" if bad else "PASS"), {"views_not_naming_lifecycle": bad, "note": "lexical test, views only: it reads view SQL, so a view that merely names the column passes and no non-view reader is examined"}
 
     @probe("P-I", "regenerate_derived.sh regenerates parts/ and site/", ["PIP-07", "CLM-050"])
     def _(T):

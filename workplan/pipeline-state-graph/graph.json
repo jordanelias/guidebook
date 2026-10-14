@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 02:47 UTC from git HEAD 072982b (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 03:49 UTC from git HEAD 410b449 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 105,
+ "user_version": 106,
  "stages": [
   "base",
   "research",
@@ -2938,7 +2938,7 @@
     "specification"
    ],
    "crosses": true,
-   "rows": 83
+   "rows": 82
   },
   "v_unregistered_roots": {
    "reads": [
@@ -5038,9 +5038,6 @@
    ],
    "evidence": {
     "views_not_naming_lifecycle": {
-     "v_code_floor_only": [
-      "base_parameters"
-     ],
      "v_convergence_sources": [
       "evidence_sources"
      ],
@@ -5050,20 +5047,11 @@
      "v_evidence_authors": [
       "evidence_sources"
      ],
-     "v_item_provenance": [
-      "evidence_sources"
-     ],
      "v_source_admission": [
       "evidence_sources"
-     ],
-     "v_source_reach_all": [
-      "evidence_sources"
-     ],
-     "v_unregistered_roots": [
-      "base_parameters"
      ]
     },
-    "note": "lexical test; a view may filter under another spelling"
+    "note": "lexical test, views only: it reads view SQL, so a view that merely names the column passes and no non-view reader is examined"
    }
   },
   "P-I": {
