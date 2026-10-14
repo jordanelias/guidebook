@@ -1332,7 +1332,7 @@ LED-025	ACTIVE	MUST_NOT	RATIFIED_DOC	2026-04-26	references/project-standards.md:
 LED-026	ACTIVE	MUST	RATIFIED_DOC		references/project-standards.md:32	specification,render	range mode handoff	A range must always state which end applies at which mode.		no
 LED-027	ACTIVE	MUST	RATIFIED_DOC		references/project-standards.md:67	evidence,synthesis,render	source existence	Every source must be confirmed real before it is cited.	R10; citation-verifier; metadata_integrity_audit	yes
 LED-028	ACTIVE	MUST	RATIFIED_DOC	2026-03-18	references/project-standards.md:73	evidence,judgment	unverifiable value handling	Two failed independent searches close an unverifiable value as CLOSED-DELETED.		yes
-LED-029	SUPERSEDED	MUST	RATIFIED_DOC	2026-03-18	references/project-standards.md:118	research,base	slug-population cardinality	Each research slug covers exactly one population.		yes
+LED-029	SUPERSEDED	MUST	RATIFIED_DOC	2026-03-18	references/project-standards.md:118	research,base	slug-population cardinality	Each research slug covers exactly one population.		no
 LED-030	ACTIVE	MUST	RATIFIED_DOC	2026-03-18	references/project-standards.md:124	research	citation mining scope	Every confirmed Tier 1-2 source must be mined forward and backward.	R2; citation_mining_completeness (reads row presence, overstated)	no
 LED-031	ACTIVE	MUST	RATIFIED_DOC	2026-03-18	references/project-standards.md:127	research	language coverage	All 14 languages are searched to completion on every run (IntD excepted).		yes
 LED-032	ACTIVE	ORDER	RATIFIED_DOC	2026-03-19	references/project-standards.md:130	research	search framing order	Search framing begins with population need and functional outcome evidence, standards at Step 2.		no

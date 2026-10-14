@@ -254,18 +254,6 @@ conflicts:
   resolver: OWNER+AGENT
   confidence: high
 
-- id: C-033
-  class: RULING-MECHANISM
-  severity: S1
-  title: "Every slug is searched against every lens -- the search log cannot say which lens a search covered"
-  atoms: [LED-084, RES-04, LED-029, ENT-236, ENT-222]
-  sides:
-    - {atoms: [LED-084, RES-04], says: "owner/contract 2026-08-24: every slug is searched against every population/access-need/ICF code (R4 adds the medical lens)."}
-    - {atoms: [LED-029, ENT-236, ENT-222], says: "2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population."}
-  probe: P-M
-  direction: "LED-084 supersedes LED-029 on contact (status correction owed: LED-029 -> SUPERSEDED). Mechanism: search_executions has no lens column and no linked table records slug x lens coverage, so R4 cannot be shown to have been done."
-  resolver: AGENT
-  confidence: high
 
 - id: C-034
   class: RULING-MECHANISM

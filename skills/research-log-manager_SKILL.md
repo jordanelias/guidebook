@@ -64,6 +64,7 @@ After multilingual-research completes:
      --slug {slug} \
      --language {lang_code} \
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
+     --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry (--medical once that registry has rows)
      --query-text '{the query, exactly as fired}' \
      --terms-used '["alias1","MeSH term","alias2"]' \   # JSON array — the column is json_valid-checked
      --engine {pubmed|crossref|web|...} \
@@ -90,7 +91,7 @@ After multilingual-research completes:
    **"nothing found"**. That distinction is the thing the whole pipeline exists
    to preserve; a missing row erases it.
 
-   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language`); read it with
+   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens`); read it with
    > `python3 scripts/db.py coverage --slug {slug}`. The hand-kept grids and their verbs are deleted.
 
 4. **Add new evidence sources:**

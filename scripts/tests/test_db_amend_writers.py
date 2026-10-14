@@ -1424,6 +1424,48 @@ try:
         print(f"      CONTROL defect: {exc.__class__.__name__}: {exc}")
     record("J13", "insert_conflict refuses an item code and still writes the same row without one",
            msg is not None and "item layer" in msg and ok_id == "CONF-9999", f"refusal={msg!r} control={ok_id!r}")
+
+    # ── M: log-search records the lens a search covered (R18) ───────────────────────────
+    # Four optional columns on search_executions, each checked against the registry its own foreign
+    # key names. Through argparse (run_cli), not the function: an unwired flag is invisible to a
+    # function call, and the dispatch block is where the flags are passed on.
+    lens_live = {"--identity": q("SELECT identity_code FROM base_taxonomy_identity ORDER BY 1 LIMIT 1")[0][0],
+                 "--icf": q("SELECT icf_code FROM base_icf ORDER BY 1 LIMIT 1")[0][0],
+                 "--needs": q("SELECT need_code FROM access_needs ORDER BY 1 LIMIT 1")[0][0]}
+
+    def ls_lens(label, *extra):
+        return run_cli("log-search", "--slug", A, "--language", "EN", "--query-text", f"fixture M: {label}",
+                       "--engine", "manual", "--depth-method", "scoping", "--session", S,
+                       "--prior-expectation", "fixture prior, written before the call", *extra)
+
+    n_before = counts("search_executions")
+    refused = {}
+    for flag in ("--identity", "--icf", "--needs", "--medical"):
+        r = ls_lens(f"bad {flag}", flag, "NOT-A-CODE")
+        refused[flag] = (r.returncode, "has no matching row in" in (r.stdout + r.stderr))
+    record("M01", "log-search refuses an unknown lens code on each of the four flags and writes nothing",
+           all(rc != 0 and named for rc, named in refused.values()) and counts("search_executions") == n_before,
+           f"{refused} rows {n_before} -> {counts('search_executions')}")
+    r = ls_lens("live codes", *[x for kv in lens_live.items() for x in kv])
+    row = q("SELECT identity_code, icf_code, needs_code, medical_code FROM search_executions "
+            "WHERE query_text=?", "fixture M: live codes")
+    record("M02", "live codes land in their columns and the medical column stays NULL",
+           r.returncode == 0 and row == [(lens_live["--identity"], lens_live["--icf"], lens_live["--needs"], None)],
+           f"rc={r.returncode} {r.stderr[-300:]} {row}")
+    import importlib                                               # noqa: E402
+    sys.path.insert(0, str(REPO / "scripts" / "research"))
+    emit_mod = importlib.import_module("emit_batch_sql")
+    sql_out = os.path.join(TMP, "capture-lens.sql")
+    try:
+        emit_mod.emit(DB, str(REPO / "data" / "guidebook.db"), sql_out)
+        captured = open(sql_out, encoding="utf-8").read()
+    except SystemExit as exc:
+        captured = f"emit refused: {exc}"
+    hit = [ln for ln in captured.splitlines() if ln.startswith('INSERT INTO "search_executions"')
+           and "fixture M: live codes" in ln
+           and ln.rstrip().endswith("'%s', '%s', '%s', NULL);" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"]))]
+    record("M03", "emit_batch_sql captures the lens columns of a logged search (the write can be shipped)",
+           len(hit) == 1, captured[-400:])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

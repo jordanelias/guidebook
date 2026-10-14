@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 08:03 UTC from git HEAD 400cb11 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 08:10 UTC from git HEAD 543c989 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 112,
+ "user_version": 113,
  "stages": [
   "base",
   "research",
@@ -993,7 +993,11 @@
     "mined_ref_id",
     "origin_pass_id",
     "updated_at",
-    "updated_by_session"
+    "updated_by_session",
+    "identity_code",
+    "icf_code",
+    "needs_code",
+    "medical_code"
    ]
   },
   "slugs": {
@@ -1565,6 +1569,30 @@
   },
   {
    "child": "search_executions",
+   "col": "medical_code",
+   "parent": "base_taxonomy_medical",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
+   "col": "needs_code",
+   "parent": "access_needs",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
+   "col": "identity_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
+   "child": "search_executions",
    "col": "origin_pass_id",
    "parent": "adversarial_passes",
    "notnull": false
@@ -1874,6 +1902,16 @@
    ],
    "crosses": false,
    "rows": 20
+  },
+  "v_coverage_lens": {
+   "reads": [
+    "search_executions"
+   ],
+   "stages": [
+    "research"
+   ],
+   "crosses": false,
+   "rows": 39
   },
   "v_coverage_priority": {
    "reads": [
@@ -3772,7 +3810,7 @@
     "LED-166"
    ],
    "evidence": {
-    "icf_typed_columns_examined": 7,
+    "icf_typed_columns_examined": 8,
     "icf_columns_holding_AX": {},
     "AX_elsewhere_not_tested_by_this_ruling": {
      "access_need_icf.notes": 3,
@@ -3850,15 +3888,22 @@
    }
   },
   "P-M": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "a search can record which slug x lens cells it covered",
    "atoms": [
     "LED-084",
     "RES-04"
    ],
    "evidence": {
-    "lens_columns_on_search_executions": [],
-    "tables": []
+    "lens_columns_on_search_executions": [
+     "identity_code",
+     "icf_code",
+     "needs_code",
+     "medical_code"
+    ],
+    "tables": [
+     "search_executions"
+    ]
    }
   },
   "P-O": {
@@ -4350,8 +4395,8 @@
     {
      "id": "C1.8",
      "says": "a search records which slug x lens cells it covered",
-     "verdict": "FAIL",
-     "why": "P-M = FAIL",
+     "verdict": "PASS",
+     "why": "P-M = PASS",
      "atoms": [
       "LED-084",
       "RES-04"
@@ -4575,10 +4620,10 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2599,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 291,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 290,
   "distinct quotes among all atoms": 2567,
   "status corrections owed (each atom's status re-read)": 0,
-  "conflicts (atoms, class, probe exist)": 30,
+  "conflicts (atoms, class, probe exist)": 29,
   "machine transitions": 42,
   "transition evidence needles re-read": 72,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -4597,5 +4642,5 @@
   "HISTORICAL": 26
  },
  "atoms_total": 2599,
- "conflicts_total": 30
+ "conflicts_total": 29
 }

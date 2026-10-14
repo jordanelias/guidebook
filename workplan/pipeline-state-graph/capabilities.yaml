@@ -82,7 +82,7 @@ capabilities:
       - {id: C4.8, kind: probe, probe: P-QUARANTINE, says: "the rendering invariants and tier-derivation consistency are gated", atoms: [PIP-06, POS-03]}
 
 components:
-  - {name: "Search log (log-search, search_executions)", stage: research, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "logs the query and the prior; has no lens column, so R4's slug x lens coverage cannot be shown (C1.8)."}
+  - {name: "Search log (log-search, search_executions)", stage: research, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "logs the query, the prior and, optionally, the lens it covered; v_coverage_lens lists the cells logged, so a never-searched cell is not derivable from it."}
   - {name: "Candidate staging (add-candidate, resolve-candidate)", stage: research, C1: "--", C2: "--", C3: "--", C4: "--", note: "holds what a search surfaced; any disposition can follow any other (M01.t3)."}
   - {name: "Source admission (add-source, supersede-source, correct-source)", stage: evidence, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "admits a source to slugs; the slug link is what add-extraction later reads as its permission."}
   - {name: "Citation mining (log-mining)", stage: evidence, C1: PARTIAL, C2: "--", C3: "--", C4: "--", note: "discovery of further SOURCES, not values; a separate axis from extraction (pipeline-operations section 2)."}

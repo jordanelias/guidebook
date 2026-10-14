@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-30 entries. Severity: S1 11, S2 6, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 16.
+29 entries. Severity: S1 10, S2 6, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 15.
 
 ## Index
 
@@ -15,7 +15,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants have no live gate (tier-consistency has one since step 1.6) |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> FAIL | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
-| C-033 | S1 | RULING-MECHANISM | AGENT | P-M -> FAIL | Every slug is searched against every lens -- the search log cannot say which lens a search covered |
 | C-034 | S1 | RULING-MECHANISM | AGENT | P-O -> FAIL | The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer |
 | C-035 | S1 | RULING-MECHANISM | OWNER+AGENT | P-X -> FAIL | Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters |
 | C-039 | S1 | OPEN-QUESTION | OWNER | -- | Questions only the owner can answer that block engine or writer behaviour |
@@ -125,17 +124,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
   _atoms:_ `SES-024`(act), `SES-025`(act)
 
 **Direction.** P-V: the (source x parameter) read-state ledger does not exist on main (built in the unmerged T1 branch). P-V2: add-extraction refuses a ref that source_slug_links does not hold for the named slug; its comment argues ref-slug coherence is the stronger invariant, the opposite of LED-196. The ruling is not carried until T1 merges and the guard is reconciled.
-
-## C-033 [S1] Every slug is searched against every lens -- the search log cannot say which lens a search covered
-
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-M` = **FAIL**
-
-- owner/contract 2026-08-24: every slug is searched against every population/access-need/ICF code (R4 adds the medical lens).  
-  _atoms:_ `LED-084`(act), `RES-04`(act)
-- 2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population.  
-  _atoms:_ `LED-029`(sup), `ENT-236`(ame), `ENT-222`(sup)
-
-**Direction.** LED-084 supersedes LED-029 on contact (status correction owed: LED-029 -> SUPERSEDED). Mechanism: search_executions has no lens column and no linked table records slug x lens coverage, so R4 cannot be shown to have been done.
 
 ## C-034 [S1] The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer
 
