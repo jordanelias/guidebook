@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-36 entries. Severity: S1 13, S2 10, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
+35 entries. Severity: S1 13, S2 9, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 16, RULING-RULING 3.
 
 ## Index
 
@@ -27,7 +27,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
-| C-036 | S2 | UNRECORDED | OWNER | P-LEDGER-GREP -> FAIL | Owner statements whose only home is a session record |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
 | C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
 | C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
@@ -51,8 +50,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 | atom | now | should be | decided by | why |
 |---|---|---|---|---|
-| LED-029 | ACTIVE | SUPERSEDED | LED-084 | 2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken. |
-| LED-018 | ACTIVE | AMENDED | LED-013, EVI-058 | Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis. |
 | DRS-039 | ACTIVE | SUPERSEDED | LED-094, LED-124 | owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken. |
 | DRS-040 | ACTIVE | SUPERSEDED | LED-094, LED-124 | as DRS-039. |
 | OPI-229 | ACTIVE | AMENDED | LED-151, LED-152 | owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact. |
@@ -81,7 +78,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 **Class** RULING-RULING  ·  **Resolver** OWNER  ·  **Confidence** medium
 
 - 2026-07-13 and tier-system section 3: a basis of T4-T6 only never renders best-practice language in any register; a converged T5/T6 value is never 'best practice'.  
-  _atoms:_ `LED-018`(act), `EVI-034`(act), `EVI-035`(act)
+  _atoms:_ `LED-018`(ame), `EVI-034`(act), `EVI-035`(act)
 - 2026-07-21 Option A: code-consensus-only claims may render at the weak band if flagged; never unflagged or above weak.  
   _atoms:_ `LED-013`(act), `LED-014`(act), `EVI-094`(act), `EVI-241`(act), `POS-03`(act)
 - methodology 3.4 offers the bare construction 'Code requires [value] per [standard]' for T4-T6-only cells, against the I3 flag-and-caveat requirement (EVI-229/230/194).  
@@ -172,7 +169,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 - owner/contract 2026-08-24: every slug is searched against every population/access-need/ICF code (R4 adds the medical lens).  
   _atoms:_ `LED-084`(act), `RES-04`(act)
 - 2026-03-18 and population-taxonomy: each slug covers exactly one population; one slug, one population.  
-  _atoms:_ `LED-029`(act), `ENT-236`(ame), `ENT-222`(sup)
+  _atoms:_ `LED-029`(sup), `ENT-236`(ame), `ENT-222`(sup)
 
 **Direction.** LED-084 supersedes LED-029 on contact (status correction owed: LED-029 -> SUPERSEDED). Mechanism: search_executions has no lens column and no linked table records slug x lens coverage, so R4 cannot be shown to have been done.
 
@@ -305,19 +302,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `LED-171`(act)
 
 **Direction.** Step 0.3 (migration views_filter_retired) made the views over base_parameters filter status, and two source views filter supersession; P-H, now matching the column and not the substring, lists the four evidence_sources views left alone: v_convergence_sources, v_determination_provenance, v_evidence_authors, v_source_admission. Each is held back for a reason in that migration's header (supersede-source's refusal ignores specification_extraction_links; a recorded assessment's participants; ref_id lookups read by a blocking test). LED-171 says every READER, and P-H reads views only: non-view readers (audit_evidence_metadata, metadata_integrity_audit, research_batch_dod R2/R4/R13, get_unmined, validate_parameters) still surface a tombstone or a retired parameter. Open: GAP-062 (a data row, not amended here).
-
-## C-036 [S2] Owner statements whose only home is a session record
-
-**Class** UNRECORDED  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-LEDGER-GREP` = **FAIL**
-
-- four 2026-09-18 statements (mine arguments and qualitative work; relevant sources carry qualitative mining; anything relevant to accessibility may be mined; search by slug, adjudicate by category) have no ledger entry of their own.  
-  _atoms:_ `SES-022`(act), `SES-023`(act), `SES-024`(act), `SES-025`(act)
-- 'fix mechanisms, not hand edit'; sub-national jurisdiction satisfies a bucket; a Buckets 1-2 restatement; and a 2026-09-16 ruling cited without its words.  
-  _atoms:_ `SES-032`(act), `SES-045`(act), `SES-047`(act), `SES-027`(act)
-- the session reports the owner raised a point but the owner's words are not quoted.  
-  _atoms:_ `SES-015`(his), `SES-018`(his), `SES-020`(his)
-
-**Direction.** Rule 0 binds on contact whether or not the ledger records the statement, so these bind. The risk is a search that cannot see them (.ignore hides sessions/): P-LEDGER-GREP asserts that the quoted phrases are absent from references/project-standards.md. Recording each is an append to the owner ledger; whether an agent may append on the owner's behalf is the owner's call.
 
 ## C-044 [S2] Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5)
 

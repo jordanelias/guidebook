@@ -345,19 +345,6 @@ conflicts:
   confidence: high
 
 # ---------------------------------------------------------------- F. process and records
-- id: C-036
-  class: UNRECORDED
-  severity: S2
-  title: "Owner statements whose only home is a session record"
-  atoms: [SES-022, SES-023, SES-024, SES-025, SES-032, SES-045, SES-047, SES-015, SES-018, SES-020, SES-027]
-  sides:
-    - {atoms: [SES-022, SES-023, SES-024, SES-025], says: "four 2026-09-18 statements (mine arguments and qualitative work; relevant sources carry qualitative mining; anything relevant to accessibility may be mined; search by slug, adjudicate by category) have no ledger entry of their own."}
-    - {atoms: [SES-032, SES-045, SES-047, SES-027], says: "'fix mechanisms, not hand edit'; sub-national jurisdiction satisfies a bucket; a Buckets 1-2 restatement; and a 2026-09-16 ruling cited without its words."}
-    - {atoms: [SES-015, SES-018, SES-020], says: "the session reports the owner raised a point but the owner's words are not quoted."}
-  probe: P-LEDGER-GREP
-  direction: "Rule 0 binds on contact whether or not the ledger records the statement, so these bind. The risk is a search that cannot see them (.ignore hides sessions/): P-LEDGER-GREP asserts that the quoted phrases are absent from references/project-standards.md. Recording each is an append to the owner ledger; whether an agent may append on the owner's behalf is the owner's call."
-  resolver: OWNER
-  confidence: medium
 
 
 - id: C-038
@@ -534,8 +521,6 @@ conflicts:
 status_corrections:
   # Atoms whose recorded `status` is behind a later statement. `current` must equal the atom's status today, or the
   # check fails (so a stale correction cannot linger once the atom is repaired). `by` are the atoms that decide it.
-  - {atom: LED-029, current: ACTIVE, should_be: SUPERSEDED, by: [LED-084], why: "2026-08-24: every slug is searched against every lens; 'one slug, one population' (2026-03-18) is overtaken."}
-  - {atom: LED-018, current: ACTIVE, should_be: AMENDED, by: [LED-013, EVI-058], why: "Option A (2026-07-21) permits a flagged weak-band rendering of a T4-T6-only basis."}
   - {atom: DRS-039, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "owner 2026-08-27: base is a stage (LED-124) and the stage verbs end 'specify syntheses, and render specifications' (LED-094), so specification is a stage; the 2026-08-24 five-stage list that said otherwise is overtaken."}
   - {atom: DRS-040, current: ACTIVE, should_be: SUPERSEDED, by: [LED-094, LED-124], why: "as DRS-039."}
   - {atom: OPI-229, current: ACTIVE, should_be: AMENDED, by: [LED-151, LED-152], why: "owner 2026-09-09 (evening): the determination is computed; section 12.5's 'permanently manual ... specifications' clause is superseded on contact."}

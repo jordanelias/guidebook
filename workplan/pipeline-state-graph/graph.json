@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 07:29 UTC from git HEAD 0858241 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 07:36 UTC from git HEAD e0005a9 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 111,
  "stages": [
@@ -4216,7 +4216,7 @@
    }
   },
   "P-LEDGER-GREP": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "the owner statements recorded only in session records appear verbatim in the owner ledger",
    "atoms": [
     "SES-022",
@@ -4230,21 +4230,14 @@
    "evidence": {
     "control_found_in_ledger": true,
     "verbatim_present_in_ledger": {
-     "SES-022": false,
-     "SES-023": false,
-     "SES-024": false,
-     "SES-025": false,
-     "SES-032": false,
-     "SES-045": false
+     "SES-022": true,
+     "SES-023": true,
+     "SES-024": true,
+     "SES-025": true,
+     "SES-032": true,
+     "SES-045": true
     },
-    "verbatim_absent": [
-     "SES-022",
-     "SES-023",
-     "SES-024",
-     "SES-025",
-     "SES-032",
-     "SES-045"
-    ]
+    "verbatim_absent": []
    }
   },
   "P-STATUS-WRITERS": {
@@ -4590,10 +4583,10 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2599,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 364,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 361,
   "distinct quotes among all atoms": 2567,
-  "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 36,
+  "status corrections owed (each atom's status re-read)": 11,
+  "conflicts (atoms, class, probe exist)": 35,
   "machine transitions": 42,
   "transition evidence needles re-read": 72,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -4604,13 +4597,13 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2223,
-  "SUPERSEDED": 85,
+  "ACTIVE": 2219,
+  "SUPERSEDED": 87,
   "OPEN": 71,
-  "AMENDED": 65,
+  "AMENDED": 67,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
  "atoms_total": 2599,
- "conflicts_total": 36
+ "conflicts_total": 35
 }
