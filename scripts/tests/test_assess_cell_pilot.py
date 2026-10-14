@@ -535,11 +535,15 @@ def main():
 
     # R39: a code CONFIRMED by an anchoring finding takes the confirming study's band, and the cell the floor of
     # the mean over its codes. Only a `confirms` edge from a finding to a governing extraction ROW counts.
-    def _proxy_marker(n_confirmed, relation="confirms", to_row=True):
+    def _proxy_marker(n_confirmed, relation="confirms", to_row=True, from_other_parameter=False):
         c = synth_db(_t6 + _find)
         c.execute("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                   "from_extraction_id INTEGER, to_extraction_id INTEGER, relation TEXT)")
         f = c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id='REF-FIND-1'").fetchone()[0]
+        if from_other_parameter:      # the same source's finding row, but about a different parameter
+            f = c.execute("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, identity_code, claim_type, "
+                          "claimed_value, figure_role) VALUES ('REF-FIND-1', 'syn-slug', 2, 'MOB', 'qualitative', 'x', "
+                          "'finding')").lastrowid
         for (t,) in c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id LIKE 'REF-SYN-%' "
                               "ORDER BY extraction_id LIMIT ?", (n_confirmed,)).fetchall():
             c.execute("INSERT INTO extraction_relations (from_extraction_id, to_extraction_id, relation) "
@@ -553,6 +557,8 @@ def main():
            _proxy_marker(1) == EvidenceMarker.WEAK.value)
     expect("MARKER: a tested_at edge is not a confirmation",
            _proxy_marker(3, relation="tested_at") == EvidenceMarker.WEAK.value)
+    expect("MARKER: a confirms edge from a finding about ANOTHER parameter is not a confirmation",
+           _proxy_marker(3, from_other_parameter=True) == EvidenceMarker.WEAK.value)
     expect("MARKER: a confirms edge aimed at a label reaches no figure",
            _proxy_marker(3, to_row=False) == EvidenceMarker.WEAK.value)
     # The invariant migration 075 exists for, and stop condition 6: a finding never
