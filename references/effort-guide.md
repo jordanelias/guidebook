@@ -47,59 +47,39 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 | Skill | Rationale |
 |---|---|
 | item-specification-writer | Evidence and framing decisions; three-tier hierarchy; BPC synthesis gate check |
-| sensory-coherence-checker | Cross-domain judgment across acoustic, visual, thermal, olfactory specs |
-| literature-review-planner | PRISMA protocol construction; evidence hierarchy mapping |
 | economics-researcher | Cost claim verification; cross-jurisdictional economic evidence |
-| progressive-measurement | Iterative spec-value probing with strict termination criteria; heavy reasoning per step |
-| economics-auditor | Cost-data verification across jurisdictions and contexts |
-| functional-deficit-auditor | Audit pass over functional-deficit research output |
 
 ### 100 — Structured protocol with meaningful cross-referential judgment
 
 | Skill | Rationale |
 |---|---|
 | content-gap-analyzer | Systematic coverage mapping; evidence type assessment across taxonomy |
-| critique-report-writer | Editorial synthesis across upstream outputs |
-| item-consolidation-analyzer | Redundancy/overload judgment; typology scope assignment |
-| supplemental-integrator | Cross-volume taxonomy coordination; code relocation decisions |
 | citation-miner | Forward/backward citation network traversal; tier classification |
 | citation-verifier | Tool-dependent lookup and classify; tier-1 sources require judgment |
 | gap-driven-mining | Gap-keyed search-matrix execution with outcome judgment; depth-1 constraint; rule #7/#8/#10 interlocks (DR-2026-05-26) |
-| guidebook-auditor | Multi-mode audit; Modes B and D require Sonnet judgment |
 | workplan-orchestrator | Multi-skill workflow coordination; risk escalation decisions |
-| structure-auditor | Structural integrity judgment; orphan detection |
-| audit-consolidator | Cross-audit synthesis; finding deduplication |
-| item-audit-pipeline | Multi-stage audit pipeline coordination |
 | specification-curator | Per-specification evidence curation in jurisdiction comparison tables |
 | reasoning-doc-citations | Per-cell verification recording for synthesis claims (skill placeholder) |
 | connection-discovery | Identify candidate cross-BPC connections |
-| connection-auditor | Audit existing connections for validity and currency |
 | cross-reference-resolver | Audit and classify broken refs; mechanical repair handoff |
 | doctrine-recheck | A13 doctrine snapshot + cross-reference recheck |
-| relational-integrity-checker | DB referential integrity validation |
 
 ### 75 — Single-pass pattern recognition; limited judgment; tool-dependent
 
 | Skill | Rationale |
 |---|---|
-| practice-note-generator | Drafting from confirmed upstream evidence; limited new judgment |
 | prose-style-checker | Register pattern recognition; single-pass rewrite |
 | voice-style | Style conformance; single-pass framing check |
 | jurisdiction-tracker | Web search + CURRENT/UPDATED/SUPERSEDED classification |
 | session-consolidator | Pattern extraction from bounded session context; YAML write |
-| question-author | Generate per-spec question framings from prepared evidence |
 | bibliography-compiler | Deduplication and sequential numbering |
-| version-diff | Semantic comparison with improvement/regression assessment |
 
 ### 50 — Mechanical; extraction, assembly, format correction, I/O
 
 | Skill | Rationale |
 |---|---|
-| table-formatter | Format detection and conversion |
 | find-and-replace | Mechanical string substitution |
-| markdown-formatter | Heading hierarchy correction |
 | github-io | Pure I/O; no judgment |
-| github-filing | File move operations |
 | toc-editor | Structural change recording; Change Order generation (frontmatter and codes only) |
 | research-log-manager | Log read/write; BPC retrieval |
 

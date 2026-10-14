@@ -179,14 +179,20 @@ def _attestation_path_for(synthesis_path):
 
 
 def _load_skill_ids():
-    """Parse the 'All active skills' code block in skill-registry.md."""
+    """Parse the 'All active skills' and 'Retired rule identifiers' code blocks in
+    skill-registry.md. The second block keeps the names of deleted skills valid as rule
+    identifiers, because committed attestations cite them and are append-only (R45)."""
     if not SKILL_REGISTRY.exists():
         return set()
     text = SKILL_REGISTRY.read_text()
     m = re.search(r"## All active skills.*?```\n(.*?)\n```", text, re.DOTALL)
     if not m:
         return set()
-    return set(re.findall(r"\b[a-z][a-z0-9-]{2,}\b", m.group(1)))
+    ids = set(re.findall(r"\b[a-z][a-z0-9-]{2,}\b", m.group(1)))
+    r = re.search(r"## Retired rule identifiers.*?```\n(.*?)\n```", text, re.DOTALL)
+    if r:
+        ids |= set(re.findall(r"\b[a-z][a-z0-9-]{2,}\b", r.group(1)))
+    return ids
 
 
 def _all_valid_rule_ids():

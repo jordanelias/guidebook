@@ -61,7 +61,6 @@ therefore still resolves every existing citation.
 ## Conventions
 
 - **Active** — skill file present in `skills/` and not flagged deprecated.
-- **Deprecated** — skill file in `skills/deprecated/`. Do not invoke; superseded or retired.
 - **PI placeholder** — skill name appears in PI `<skills_assigned>` but no skill file exists; reserved for future authoring or informational hook.
 
 Each active skill's effort level is in `references/effort-guide.md`. Triggers and protocols live in the skill file itself.
@@ -71,47 +70,28 @@ Each active skill's effort level is in `references/effort-guide.md`. Triggers an
 ## All active skills
 
 ```
-adversarial-research              cross-reference-resolver         literature-review-planner        research-log-manager
-audit-consolidator                doctrine-recheck                 markdown-formatter               sensory-coherence-checker
-bibliography-compiler             economics-auditor                multilingual-research            session-consolidator
-citation-miner                    economics-researcher             practice-note-generator          structure-auditor
-citation-verifier                 evidence-auditor                 progressive-measurement          supplemental-integrator
-connection-auditor                evidence-metadata-rehabilitation prose-style-checker              table-formatter
-connection-discovery              find-and-replace                 question-author                  toc-editor
-content-gap-analyzer              functional-deficit-auditor       reasoning-doc-citations          version-diff
-critique-report-writer            functional-deficit-researcher    relational-integrity-checker     voice-style
-cross-population-conflict-mapper  gap-driven-mining                                                 workplan-orchestrator
-                                  github-filing
-                                  github-io
-                                  guidebook-auditor
-                                  integrity-protocol
-                                  item-audit-pipeline
-                                  item-consolidation-analyzer
-                                  jurisdiction-tracker
+adversarial-research              cross-reference-resolver          gap-driven-mining                 research-log-manager
+bibliography-compiler             doctrine-recheck                  github-io                         session-consolidator
+citation-miner                    economics-researcher              integrity-protocol                supersession-audit
+citation-verifier                 evidence-auditor                  jurisdiction-tracker              toc-editor
+connection-discovery              evidence-metadata-rehabilitation  multilingual-research             voice-style
+content-gap-analyzer              find-and-replace                  prose-style-checker               workplan-orchestrator
+cross-population-conflict-mapper  functional-deficit-researcher     reasoning-doc-citations
+```
+
+## Retired rule identifiers
+
+Names that were skills and are still cited as rule identifiers by committed attestations. The attestations are append-only records and are not edited, so `scripts/audit/adherence_log_audit.py` reads this block together with the one above (RULINGS R45). Do not invoke these; no skill file exists.
+
+```
+audit-consolidator
+connection-auditor
+guidebook-auditor
+relational-integrity-checker
+structure-auditor
 ```
 
 Use the skill file at `skills/<name>_SKILL.md` for trigger conditions and protocols.
-
----
-
-## Deprecated skills
-
-In `skills/deprecated/`. Listed for archaeological reference; do not invoke.
-
-| Skill | Supersession / reason |
-|---|---|
-| bibliography-updater | Superseded by `bibliography-compiler` + `citation-miner` pipeline |
-| bulk-renumber | One-time migration tool; retired |
-| chunk-assembler | Pre-DB era; SQLite assembly handles this |
-| connection-scout | Superseded by `connection-discovery` |
-| evidence-marker | Pre-DB era; tier marks now live in `evidence_sources.tier` column |
-| file-splitter | One-time migration tool |
-| fix-linebreaks | One-time conversion tool |
-| haiku-chunker | Model-specific pre-Sonnet helper; retired |
-| keyword-lookup | Superseded by `multilingual-research` keyword compendiums |
-| neufert-image-analyzer | Image-extraction tool; retired |
-| vol2-item-formatter | Pre-DB era formatter |
-| volii-validator | Pre-DB era validator; superseded by `validate_bpc.py` |
 
 ---
 
@@ -119,7 +99,7 @@ In `skills/deprecated/`. Listed for archaeological reference; do not invoke.
 
 | Name | Purpose |
 |---|---|
-| `bpc-curator` | Informational; current BPC maintenance is via `scripts/validate_bpc.py` and ad-hoc Opus sessions |
+| `bpc-curator` | Informational; BPC maintenance is ad-hoc Opus session work (`scripts/validate_bpc.py` was deleted in plan step 1.6) |
 | `gap-register` | Informational; gaps live in the `gaps` table, accessed via `scripts/db.py` |
 | `bpc-writer` | Informational; BPC synthesis is ad-hoc Opus session work |
 | `opus-synthesis` | Informational; synonym for `bpc-writer` |

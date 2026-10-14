@@ -411,8 +411,8 @@ Unchanged.
 | github-filing |
 
 ### Deprecated (5)
-Replaced by Python tools or absorbed into other skills. These are the files that
-actually live in `skills/deprecated/`:
+Replaced by Python tools or absorbed into other skills. These files lived in
+`skills/deprecated/`, which plan step 1.7 deleted (git history keeps them):
 
 chunk-assembler · file-splitter · fix-linebreaks · haiku-chunker · vol2-item-formatter
 

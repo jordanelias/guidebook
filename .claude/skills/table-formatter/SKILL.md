@@ -1,1 +1,0 @@
-../../../skills/table-formatter_SKILL.md
