@@ -378,8 +378,7 @@ judgment. Zero links **after judgment** is a defect. Only Opus-class models writ
 
 A ruling can be in the repository, in the file §9 sends you to, and still fail to bind if the search
 stops at the first answer it finds: search for **both** halves of any question before calling either
-open. Do not read `slug × population` as any part of the answer: `base_taxonomy_identity` IS the identity lens
-(its owner-ruled name is `base_taxonomy_identity`, not yet applied), so that key reintroduces the traversal D-0184 measured and rejected.
+open. Do not read `slug × population` as any part of the answer: `base_taxonomy_identity` IS the identity lens, so that key reintroduces the traversal D-0184 measured and rejected.
 
 ---
 

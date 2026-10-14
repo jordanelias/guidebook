@@ -1504,14 +1504,18 @@ try:
     (ex_slug,) = q("SELECT exec_id FROM search_executions WHERE query_text=?", "fixture M: live codes")[0]
     c_before = counts("search_candidates")
     r_no = ls_cand(ex_slug)
-    r_bad = ls_cand(ex_bare, "--found-under-slug", "NOT-A-SLUG")
+    r_bad = ls_cand(ex_slug, "--found-under-slug", "NOT-A-SLUG")
     refused_ok = (r_no.returncode != 0 and "found_under_slug is required" in (r_no.stdout + r_no.stderr)
                   and r_bad.returncode != 0 and "is not in `slugs`" in (r_bad.stdout + r_bad.stderr)
+                  and counts("search_candidates") == c_before)
+    r_slug_on_bare = ls_cand(ex_bare, "--found-under-slug", A)
+    refused_ok = (refused_ok and r_slug_on_bare.returncode != 0
+                  and "searched no slug" in (r_slug_on_bare.stdout + r_slug_on_bare.stderr)
                   and counts("search_candidates") == c_before)
     r_ok = ls_cand(ex_bare)
     stored = q("SELECT found_under_slug FROM search_candidates WHERE exec_id=? AND title=?",
                ex_bare, "fixture N candidate")
-    record("N04", "a candidate needs --found-under-slug unless its search has no slug; an unknown slug is still refused",
+    record("N04", "a candidate needs --found-under-slug unless its search has no slug, and then refuses one; an unknown slug is still refused",
            refused_ok and r_ok.returncode == 0 and stored == [(None,)],
            f"slugged-no-flag rc={r_no.returncode} bad-slug rc={r_bad.returncode} slugless rc={r_ok.returncode} "
            f"{r_ok.stderr[-200:]} {stored}")
@@ -1563,6 +1567,15 @@ try:
            r_old.returncode != 0 and "is not a member of" in (r_old.stdout + r_old.stderr)
            and r_live.returncode == 0 and counts("evidence_sources")[0] == n_src[0] + 1,
            f"old rc={r_old.returncode} {(r_old.stdout + r_old.stderr)[-150:]} live rc={r_live.returncode} {r_live.stderr[-150:]}")
+    r_am_old = run_cli("amend-source", "--ref-id", ref_live, "--field", "co1_source_type", "--replacement",
+                       "peer_reviewed_literature", "--reason", "fixture: retired value", "--session", S)
+    r_am_ok = run_cli("amend-source", "--ref-id", ref_live, "--field", "co1_source_type", "--replacement",
+                      "participatory_research", "--reason", "fixture: live value", "--session", S)
+    record("O05", "amend-source --field co1_source_type refuses a value outside the enum and accepts one inside it",
+           r_am_old.returncode != 0 and "is not a member of" in (r_am_old.stdout + r_am_old.stderr)
+           and r_am_ok.returncode == 0
+           and q("SELECT co1_source_type FROM evidence_sources WHERE ref_id=?", ref_live) == [("participatory_research",)],
+           f"old rc={r_am_old.returncode} {(r_am_old.stdout + r_am_old.stderr)[-150:]} ok rc={r_am_ok.returncode} {r_am_ok.stderr[-150:]}")
 
     # ── V: an extraction asks for no slug, and a root_id must be registered (step 3 judgment) ───────
     ref_p, _ = add_o("extraction, admitted to no slug", "--evidence-type", "grey")
