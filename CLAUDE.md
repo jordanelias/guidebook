@@ -76,8 +76,8 @@ names. Naming them is yours.
 `date -u '+%Y-%m-%d %H:%M'`. Use `governance` when no project skill fits.
 → Enforced by `check_commit_msg.py`, **push events only** (`ci.yml:257`) — skipped on every PR.
 
-**2. Attestation on synthesis paths.** Touching `references/bpc-reasoning/`,
-`references/connection-reasoning/`, `decisions/` or `sessions/` needs `attestations/<slug>.json`
+**2. Attestation on synthesis paths.** Touching `references/connection-reasoning/`,
+`decisions/` or `sessions/` needs `attestations/<slug>.json`
 against `schemas/attestation.schema.json`.
 → Enforced by `attestation_presence`, `attestation_schema` (both blocking). **No gate reads the free
 text for meaning**, which is where attestations have actually caught deviations.

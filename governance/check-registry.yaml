@@ -18,7 +18,6 @@ kinds:
     description: Reasoning docs and the BPC corpus — the synthesis paths that carry the doctrine token
       and the attestation requirement.
     paths:
-    - references/bpc-reasoning/**
     - references/connection-reasoning/**
     - references/bpc/**
     - sessions/**

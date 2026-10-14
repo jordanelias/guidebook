@@ -5,7 +5,7 @@ purpose: Verify that a specific cited source actually contains the value or clai
 status: active
 adopted: 2026-05-13
 decision_record: decisions/DR-2026-05-13-evidence-verification-methodology.md
-governs: All citations in `references/bpc-reasoning/<slug>.md` that support jurisdiction-comparison cells (rule #9 step 3), qualitative claims, or definitional claims
+governs: All citations in `_archived/references/bpc-reasoning/<slug>.md` that support jurisdiction-comparison cells (rule #9 step 3), qualitative claims, or definitional claims
 enforcement: Level 1 (text rule); the Level 2 audit query was deleted in plan step 1.6
 companion: adversarial-research (claim validation across the literature)
 ---
@@ -43,7 +43,7 @@ Read this first. Do not skip:
 
 | Input | Source | Notes |
 |---|---|---|
-| `reasoning_doc_slug` | reasoning doc filename | matches `references/bpc-reasoning/<slug>.md`; the BPC's slug |
+| `reasoning_doc_slug` | reasoning doc filename | matches `_archived/references/bpc-reasoning/<slug>.md`; the BPC's slug |
 | `parameter` | reasoning doc | the parameter name as declared in step 1 of the 9-step rule |
 | `jurisdiction` | reasoning doc, step 3 row | required if `claim_type='jurisdiction_value'`; else NULL |
 | `population` | reasoning doc, step 2 | per-population worst-case user statement; nullable for definitional claims that are population-agnostic |
@@ -194,7 +194,7 @@ Schema check constraints enforce:
 - `claim_type IN ('qualitative','definitional')` requires `claim_text IS NOT NULL` AND `claim_match IS NOT NULL`
 - `source_ref_id` FK to `evidence_sources(ref_id)`
 
-No write to `items` is required by this skill. Reasoning docs are markdown in `references/bpc-reasoning/` and are not row-keyed in `items`.
+No write to `items` is required by this skill. Reasoning docs are markdown in `_archived/references/bpc-reasoning/` and are not row-keyed in `items`.
 
 ## Integration with sibling skills
 
@@ -240,7 +240,7 @@ If the answer is "speaks to the topic," `value_match` or `claim_match` MUST be `
 
 ## Worked example — generic structure
 
-Reasoning doc `references/bpc-reasoning/<slug>.md` declares parameter P with worst-case point W. Step 3 of the 9-step rule produces a jurisdiction-comparison table including:
+Reasoning doc `_archived/references/bpc-reasoning/<slug>.md` declares parameter P with worst-case point W. Step 3 of the 9-step rule produces a jurisdiction-comparison table including:
 
 | Jurisdiction | Value at W | Source | Section |
 |---|---|---|---|
