@@ -178,21 +178,34 @@ def _attestation_path_for(synthesis_path):
     return ATTESTATIONS_DIR / f"{prefix}_{stem}.json"
 
 
-def _load_skill_ids():
-    """Parse the 'All active skills' and 'Retired rule identifiers' code blocks in
-    skill-registry.md. The second block keeps the names of deleted skills valid as rule
-    identifiers, because committed attestations cite them and are append-only (R45)."""
+def _registry_block(heading):
+    """The identifiers in the code block under `## <heading>` of skill-registry.md."""
     if not SKILL_REGISTRY.exists():
         return set()
-    text = SKILL_REGISTRY.read_text()
-    m = re.search(r"## All active skills.*?```\n(.*?)\n```", text, re.DOTALL)
-    if not m:
-        return set()
-    ids = set(re.findall(r"\b[a-z][a-z0-9-]{2,}\b", m.group(1)))
-    r = re.search(r"## Retired rule identifiers.*?```\n(.*?)\n```", text, re.DOTALL)
-    if r:
-        ids |= set(re.findall(r"\b[a-z][a-z0-9-]{2,}\b", r.group(1)))
-    return ids
+    m = re.search(rf"## {heading}.*?```\n(.*?)\n```", SKILL_REGISTRY.read_text(), re.DOTALL)
+    return set(re.findall(r"\b[a-z][a-z0-9-]{2,}\b", m.group(1))) if m else set()
+
+
+def _load_skill_ids():
+    return _registry_block("All active skills")
+
+
+def _load_retired_ids():
+    """Names of deleted skills that committed attestations still cite. Committed
+    attestations are append-only, so these stay valid for a file that already exists at
+    the base ref (R45) and for no new one."""
+    return _registry_block("Retired rule identifiers")
+
+
+_BASE = DEFAULT_BASE
+
+
+def _existed_at_base(rel):
+    try:
+        _git("cat-file", "-e", f"{_BASE}:{rel}")
+        return True
+    except subprocess.CalledProcessError:
+        return False
 
 
 def _all_valid_rule_ids():
@@ -261,16 +274,18 @@ def check_1_schema(changed, issues):
 def check_3_rule_resolution(changed, issues):
     """Every rule identifier resolves to a stable identifier."""
     valid = _all_valid_rule_ids()
+    retired = _load_retired_ids()
     for f in _attestations_in_changeset(changed):
         data = _load_json(REPO / f)
         if data is None:
             continue
+        valid_f = valid | retired if _existed_at_base(f) else valid
         ids = set(data.get("rules_in_scope", []))
         ids |= set(data.get("per_rule_status", {}).keys())
         for d in data.get("deviations", []):
             if "rule" in d:
                 ids.add(d["rule"])
-        unknown = ids - valid
+        unknown = ids - valid_f
         if unknown:
             issues.append(f"CHECK 3: {f} unknown rule identifiers: {sorted(unknown)}")
 
@@ -545,6 +560,8 @@ def _non_compliant_verdicts(changed):
 
 
 def audit(check_filter=None, base=DEFAULT_BASE, head="HEAD"):
+    global _BASE
+    _BASE = base
     issues = []
     changed = _changed_files(base, head)
     if check_filter:
