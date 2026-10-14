@@ -11,7 +11,7 @@ Checks (data + code + content layers):
   1. orphan.dangling_citation     (ERROR) value-layer ref with no evidence_sources row
                                   — the vetting-surface `orphan_links` invariant; must be 0
   2. cycle.population_parent      (ERROR) populations.parent_code forms a cycle
-  3. ref.dangling_structural      (ERROR) fk / self_ref edge to a missing node
+  3. ref.dangling_structural      (ERROR) self_ref edge to a missing node
                                   (populations.parent_code) — corruption no other check covered
   4. orphan.uncited_source        (WARN)  evidence source cited by nothing
   5. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug

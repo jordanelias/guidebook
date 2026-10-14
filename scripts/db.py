@@ -15,10 +15,9 @@ CLI usage:
                           [--dry-run]
     python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
-    python3 scripts/db.py synonyms --item A-16 [--language JA]
     python3 scripts/db.py add-gap --category RES --priority P2 --description "..." --session SESSION
     python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --session SESSION
-    python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-scout --targets '["item:A-02"]' --session SESSION
+    python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-scout --targets '["sensory-environment"]' --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
@@ -1061,6 +1060,12 @@ def next_conf_id() -> str:
 
 
 def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
+    if data.get("item_code"):
+        raise Refusal(
+            f"item_code {data['item_code']!r} REFUSED: the item layer was deleted and the "
+            f"column is retired. A [A-Z]-NN code is prior-version content, never a container "
+            f"to file into (CLAUDE.md section 7); migration `drop_item_layer_cluster` removed "
+            f"the foreign key that used to refuse it, so this writer does.")
     if data.get("pop_a") and data.get("pop_b"):
         if data["pop_a"] > data["pop_b"]:
             raise Refusal(
@@ -2249,7 +2254,7 @@ def main():
     p_ac.add_argument("--description", required=True)
     p_ac.add_argument("--source-skill", required=True)
     p_ac.add_argument("--targets", required=True,
-                      help="JSON array of target strings e.g. [item:E-08]")
+                      help="JSON array of target strings e.g. [\"sensory-environment\"]")
     p_ac.add_argument("--session", required=True)
     p_ac.add_argument("--dry-run", action="store_true")
 
@@ -2513,7 +2518,6 @@ def main():
     # add-conflict
     p_aconf = sub.add_parser("add-conflict", help="Insert a conflict record")
     p_aconf.add_argument("--conflict-id", help="CONF-NNNN (auto-generated if omitted)")
-    p_aconf.add_argument("--item-code")
     p_aconf.add_argument("--domain", required=True)
     p_aconf.add_argument("--pop-a", required=True, help="Population A (wrapper must ensure pop_a < pop_b)")
     p_aconf.add_argument("--pop-b", required=True, help="Population B")
@@ -3397,7 +3401,6 @@ def main():
             "status":      args.status,
             "source_skill": args.source_skill,
         }
-        if args.item_code:   data["item_code"]  = args.item_code
         if args.resolution:  data["resolution"] = args.resolution
         if args.evidence:    data["evidence"]   = args.evidence
         if args.gap_id:      data["gap_id"]     = args.gap_id

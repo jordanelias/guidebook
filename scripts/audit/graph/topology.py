@@ -9,7 +9,7 @@ Checks (data layer, increment 1):
   orphan.dangling_citation     value-layer ref with no evidence_sources row (ERROR)
   ref.unresolved_conn_target   connection_target not resolving to item/slug (WARN),
                                split into phantom-item vs unresolved-identifier
-  ref.dangling_structural      fk / self_ref edge pointing at a missing node (ERROR) —
+  ref.dangling_structural      self_ref edge pointing at a missing node (ERROR) —
                                referential corruption in populations.parent_code that
                                no other check covered
   table.empty_mission_critical curated mission-critical table at/near 0 rows (INFO)
@@ -110,7 +110,7 @@ def unresolved_connection_targets(store):
 
 
 def dangling_structural_refs(store):
-    """Structural edges resolving to a missing node: fk and self_ref
+    """Structural edges resolving to a missing node: self_ref
     (populations.parent_code -> parent). Referential corruption in them would otherwise
     pass silently — dangling value-layer citations and connection-target junctions each
     have their own check; these did not. ERROR (must be 0 on a healthy DB)."""
@@ -118,7 +118,7 @@ def dangling_structural_refs(store):
     cur = store.conn.cursor()
     rows = cur.execute(
         "SELECT src, dst, etype, attrs FROM edges WHERE resolved=0 AND ("
-        "etype IN ('fk','self_ref')"
+        "etype = 'self_ref'"
         ") ORDER BY etype, src, dst"
     ).fetchall()
     for src, dst, etype, attrs in rows:
@@ -134,7 +134,7 @@ def dangling_structural_refs(store):
                           node_id=src, attrs={"etype": etype, "dst": dst, "via": via})
     store.add_finding("ref.dangling_structural", "INFO",
                       f"{len(rows)} dangling structural reference(s) "
-                      f"(fk / self_ref).",
+                      f"(self_ref).",
                       attrs={"count": len(rows)})
 
 
