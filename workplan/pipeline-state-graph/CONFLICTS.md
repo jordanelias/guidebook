@@ -2,14 +2,13 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-31 entries. Severity: S1 12, S2 7, S3 12. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 16, RULING-RULING 1.
+30 entries. Severity: S1 11, S2 6, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 1, RULING-DOC 4, RULING-MECHANISM 16.
 
 ## Index
 
 | id | sev | class | resolver | probe -> live verdict | title |
 |---|---|---|---|---|---|
 | C-004 | S1 | RULING-MECHANISM | OWNER | P-ENG-T3 -> PASS | T3-grey and a lone T6 source may anchor a floor claim (owner directive 2026-07-20) -- the engine returns pending for T3-grey alone |
-| C-005 | S1 | RULING-RULING | OWNER | -- | A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known' |
 | C-012 | S1 | RULING-MECHANISM | OWNER | P-STAGE-SVE -> FAIL | source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md) |
 | C-017 | S1 | RULING-MECHANISM | OWNER | P-AXIS -> PASS, P-G -> PASS | 'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word |
 | C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> PASS | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
@@ -26,7 +25,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
 | C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
-| C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
 | C-011 | S3 | RULING-DOC | NONE | -- | Is `base` a stage, and is it 'substrate'? |
 | C-015 | S3 | DOC-DOC | OWNER | -- | Evidence collection: 'a cursory scan' or a stage that judges relevance |
 | C-016 | S3 | DOC-DOC | AGENT | -- | Pointer discipline: enforced by schema shape, or not enforced |
@@ -38,6 +36,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-043 | S3 | DOC-DOC | NONE | -- | Edit-in-place versus append for corrections to the instrument; migration-number allocator; open decisions |
 | C-045 | S3 | PROVENANCE | NONE | -- | Status of DR-2026-09-26 and of the DOI-stash design in the operative instrument |
 | C-046 | S3 | RULING-MECHANISM | OWNER | P-FWD-FK -> INFO | Pointers run from a later stage to an earlier one -- some foreign keys run the other way |
+| C-049 | S3 | RULING-DOC | OWNER | -- | Jurisdiction scope: the instrument still records the R5 fill order and the R6 amendment as an open owner decision (OD-2) |
 | C-050 | S3 | RULING-DOC | NONE | -- | An owner statement of 2026-09-13 names three vocabularies; the four-lens rulings stand until the owner confirms |
 
 ## C-004 [S1] T3-grey and a lone T6 source may anchor a floor claim (owner directive 2026-07-20) -- the engine returns pending for T3-grey alone
@@ -50,19 +49,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
   _atoms:_ `EVI-326`(act), `EVI-338`(act)
 
 **Direction.** The weak band comes from the 2026-07-20 owner directive, which is later than the 2026-07-12 tier3-stated-threshold DR and the 'tier3-threshold DR item 2' that the engine comment cites ('T3-grey-alone does not even reach provisional'), and the methodology text of 2026-07-13. By rule 0 the later directive governs what it touches. Whether it lifts item 2 of the earlier DR for the STATE (the Option A DR keeps the state machine unchanged) or only weights claim strength is not stated, so whether the engine is behind or the directive is band-only is the owner's to say. [CONFIDENCE: medium -- the lone-T6 case is handled by the regulatory branch, which was not re-derived here.]
-
-## C-005 [S1] A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known'
-
-**Class** RULING-RULING  ·  **Resolver** OWNER  ·  **Confidence** medium
-
-- 2026-07-13 and tier-system section 3: a basis of T4-T6 only never renders best-practice language in any register; a converged T5/T6 value is never 'best practice'.  
-  _atoms:_ `LED-018`(ame), `EVI-034`(act), `EVI-035`(act)
-- 2026-07-21 Option A: code-consensus-only claims may render at the weak band if flagged; never unflagged or above weak.  
-  _atoms:_ `LED-013`(act), `LED-014`(act), `EVI-094`(act), `EVI-241`(act), `POS-03`(act)
-- methodology 3.4 offers the bare construction 'Code requires [value] per [standard]' for T4-T6-only cells, against the I3 flag-and-caveat requirement (EVI-229/230/194).  
-  _atoms:_ `EVI-394`(act)
-
-**Direction.** Option A (2026-07-21) is the later owner directive, and EVI-058/EVI-229/EVI-230 quote its amended text, which is live. LED-018 (2026-07-13) is not marked amended in the ledger; treat it as amended in part and correct its status. EVI-034/EVI-035 (the unamended tier-system section 3 prohibition) stand only for cells without anchoring evidence. Render-side enforcement is the quarantined register check (see C-028).
 
 ## C-012 [S1] source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md)
 
@@ -262,25 +248,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 
 **Direction.** P-STATUS-WRITERS (lexical) lists the non-default values the column's CHECK accepts that no db.py line names beside the column. Those values are reachable only by hand SQL, so 'looked, nothing extractable' cannot be recorded, an absence the project treats as evidence (R7, R14). A Layer 1 gap: file it as a GAP and add the verb in a tooling PR (rule 10), not in a batch's data migration.
 
-## C-049 [S2] Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document
-
-**Class** RULING-DOC  ·  **Resolver** OWNER  ·  **Confidence** high
-
-- owner R5 (2026-08-18), as relayed by the handoff: five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order.  
-  _atoms:_ `WRK-186`(act), `WRK-187`(act), `WRK-188`(act), `WRK-189`(act), `WRK-193`(act)
-- owner R6 (2026-08-18): 'no longer need global South to move from provisional'; the PROVISIONAL gate no longer waits for the Global South.  
-  _atoms:_ `WRK-084`(act), `WRK-195`(act)
-- the handoff author's own derivation of R6: only the first conjunct of section 2.3 falls, the Co-1 >=9-language floor stays, replacement wording pinned at 'buckets 1-3', and a disclosure clause -- the handoff marks the bucket 4/5 split and the disclosure clause as authored proposals, not the owner's words.  
-  _atoms:_ `WRK-196`(act), `WRK-199`(act), `WRK-200`(act), `WRK-201`(act), `WRK-204`(act)
-- owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug.  
-  _atoms:_ `LED-193`(act), `SES-047`(act)
-- the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open.  
-  _atoms:_ `OPI-100`(ope)
-- governance/jurisdiction-philosophy.md section 2.3 still reads 'PROVISIONAL until all 24 jurisdictions are recorded' -- the amendment R6 requires has not been made.  
-  _atoms:_ `ENT-338`(act)
-
-**Direction.** Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038).
-
 ## C-011 [S3] Is `base` a stage, and is it 'substrate'?
 
 **Class** RULING-DOC  ·  **Resolver** NONE  ·  **Confidence** medium
@@ -431,6 +398,19 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
   _atoms:_ `LED-125`(act), `LED-124`(act)
 
 **Direction.** UNSETTLED. P-FWD-FK lists every foreign key whose child sits in an earlier stage than its parent (STATE-GRAPH.md 2a). Research tables pointing at admitted evidence are the re-entrancy CLM-029 licenses; the others (a table in the capture stage pointing at a synthesis-stage citation table, a judgment table pointing at gaps, tables pointing at the emptied `items` table that the map files under render) are either misclassified or genuine upward dependencies. Which, is the owner's classification.
+
+## C-049 [S3] Jurisdiction scope: the instrument still records the R5 fill order and the R6 amendment as an open owner decision (OD-2)
+
+**Class** RULING-DOC  ·  **Resolver** OWNER  ·  **Confidence** high
+
+- owner R6 (2026-08-18): 'no longer need global South to move from provisional'; the PROVISIONAL gate no longer waits for the Global South.  
+  _atoms:_ `WRK-084`(act), `WRK-195`(act)
+- owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug.  
+  _atoms:_ `LED-193`(act), `SES-047`(act)
+- the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open.  
+  _atoms:_ `OPI-100`(ope)
+
+**Direction.** Step 2.2b made the section 2.3 amendment (the 'all 24 jurisdictions' conjunct deleted, the Co-1 language floor kept, RULINGS R12). The instrument's OD-2 line is unmarked and the instrument is append-only (OPI-131); the owner confirms the amendment or closes OD-2.
 
 ## C-050 [S3] An owner statement of 2026-09-13 names three vocabularies; the four-lens rulings stand until the owner confirms
 

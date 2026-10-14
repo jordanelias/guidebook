@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 07:51 UTC from git HEAD f3b4567 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 07:53 UTC from git HEAD 73819ab (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 111,
  "stages": [
@@ -4583,10 +4583,10 @@
  "capabilities_comparison": null,
  "examined": {
   "atoms in all (structure checked)": 2599,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 312,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 291,
   "distinct quotes among all atoms": 2567,
   "status corrections owed (each atom's status re-read)": 0,
-  "conflicts (atoms, class, probe exist)": 31,
+  "conflicts (atoms, class, probe exist)": 30,
   "machine transitions": 42,
   "transition evidence needles re-read": 72,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -4605,5 +4605,5 @@
   "HISTORICAL": 26
  },
  "atoms_total": 2599,
- "conflicts_total": 31
+ "conflicts_total": 30
 }

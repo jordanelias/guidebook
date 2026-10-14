@@ -2,7 +2,7 @@
 
 **Status:** OPERATIVE — 2026-05-25; amended 2026-07-20 (§8–§10 added; §3 binary rule superseded).
 **Source decision:** Owner directive 2026-05-25 ("t2>t3 this is enshrined") closing GAP-273 and resolving GAP-296; owner directive 2026-07-20 (weighted-strength anchoring) enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md`, closing GAP-298 and GAP-299.
-**Supersedes:** drift between PI v10.14 line 138 implicit usage and `skills/guidebook-auditor_SKILL.md` §4.1 explicit ladder.
+**Supersedes:** drift between PI v10.14 line 138 implicit usage and the explicit ladder of the guidebook-auditor skill, since deleted.
 
 ---
 
@@ -60,16 +60,16 @@ Worked example surfaced 2026-05-25: `accessible-circulation-geometry.md` cites D
 
 ## 5. evidence_quality marker mapping
 
-`skills/guidebook-auditor_SKILL.md` §4.2 inline quality markers map to the canonical ladder:
+The inline quality markers map to the canonical ladder:
 - `●` confirmed evidence base: T1, T2 (sr_meta + standard_eb + co2), **T3 clinical** (lower-control primary clinical research — confirmed primary evidence, lower control level), Co-1, Co-2
 - `◐` policy or standards basis only, not primary evidence: T4, T5
 - `○` grey literature, expert consensus, thin base, unconfirmed: T3 grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 (code-floor)
 
 The T3 split is deliberate: T3 holds two species (per §1) — lower-control *primary clinical* research and *grey-literature* primary research. The clinical species is confirmed primary evidence (just lower control) and maps to `●`; the grey species maps to `○`. The earlier version of this map listed only "T3 grey → ○" and left T3-clinical unplaced (R9-c).
 
-## 6. Mapping back to legacy guidebook-auditor SKILL §4.1
+## 6. Systematic review / meta-analysis is Tier 2
 
-The previous guidebook-auditor SKILL §4.1 had `[Tier 4]` = systematic review / meta-analysis. That mapping is **superseded**. SR / meta-analysis is `[Tier 2]` per this document. The SKILL file is amended in lock-step with this canonicalization.
+An earlier mapping had `[Tier 4]` = systematic review / meta-analysis. That mapping is **superseded**. SR / meta-analysis is `[Tier 2]` per this document.
 
 ## 7. Migration provenance
 
@@ -78,7 +78,6 @@ The previous guidebook-auditor SKILL §4.1 had `[Tier 4]` = systematic review / 
 | Owner decision | 2026-05-25 directive "t2>t3 this is enshrined" |
 | Migration | `scripts/migrations/data_20260525070000_sr_meta_t2_canonicalization.sql` |
 | Gap closure | GAP-273 (CLOSED-FIXED), GAP-296 (CLOSED-FIXED) |
-| Skill amendment | `skills/guidebook-auditor_SKILL.md` §4.1 |
 | Session | `session_2026-05-23-bpc-rewrite-phase-b-closure` |
 
 ## 8. Weighted-strength anchor model (2026-07-20)

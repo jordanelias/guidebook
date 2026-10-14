@@ -38,18 +38,6 @@ conflicts:
   resolver: OWNER
   confidence: medium
 
-- id: C-005
-  class: RULING-RULING
-  severity: S1
-  title: "A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known'"
-  atoms: [LED-018, LED-013, LED-014, EVI-034, EVI-035, EVI-058, EVI-094, EVI-241, EVI-394, EVI-229, EVI-230, EVI-194, PIP-06, POS-03]
-  sides:
-    - {atoms: [LED-018, EVI-034, EVI-035], says: "2026-07-13 and tier-system section 3: a basis of T4-T6 only never renders best-practice language in any register; a converged T5/T6 value is never 'best practice'."}
-    - {atoms: [LED-013, LED-014, EVI-094, EVI-241, POS-03], says: "2026-07-21 Option A: code-consensus-only claims may render at the weak band if flagged; never unflagged or above weak."}
-    - {atoms: [EVI-394], says: "methodology 3.4 offers the bare construction 'Code requires [value] per [standard]' for T4-T6-only cells, against the I3 flag-and-caveat requirement (EVI-229/230/194)."}
-  direction: "Option A (2026-07-21) is the later owner directive, and EVI-058/EVI-229/EVI-230 quote its amended text, which is live. LED-018 (2026-07-13) is not marked amended in the ledger; treat it as amended in part and correct its status. EVI-034/EVI-035 (the unamended tier-system section 3 prohibition) stand only for cells without anchoring evidence. Render-side enforcement is the quarantined register check (see C-028)."
-  resolver: OWNER
-  confidence: medium
 
 
 
@@ -440,17 +428,14 @@ conflicts:
 
 - id: C-049
   class: RULING-DOC
-  severity: S2
-  title: "Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document"
-  atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193, WRK-084, WRK-195, WRK-196, WRK-199, WRK-200, WRK-201, WRK-204, WRK-082, WRK-081, LED-193, SES-047, OPI-100, ENT-338]
+  severity: S3
+  title: "Jurisdiction scope: the instrument still records the R5 fill order and the R6 amendment as an open owner decision (OD-2)"
+  atoms: [WRK-084, WRK-195, LED-193, SES-047, OPI-100]
   sides:
-    - {atoms: [WRK-186, WRK-187, WRK-188, WRK-189, WRK-193], says: "owner R5 (2026-08-18), as relayed by the handoff: five prioritised buckets; the jurisdiction-scope question is settled at the 48-scope, not the 27-code enum; R5 is only a fill order."}
     - {atoms: [WRK-084, WRK-195], says: "owner R6 (2026-08-18): 'no longer need global South to move from provisional'; the PROVISIONAL gate no longer waits for the Global South."}
-    - {atoms: [WRK-196, WRK-199, WRK-200, WRK-201, WRK-204], says: "the handoff author's own derivation of R6: only the first conjunct of section 2.3 falls, the Co-1 >=9-language floor stays, replacement wording pinned at 'buckets 1-3', and a disclosure clause -- the handoff marks the bucket 4/5 split and the disclosure clause as authored proposals, not the owner's words."}
     - {atoms: [LED-193, SES-047], says: "owner 2026-09-28: research scope is bucket 1 and bucket 2 only until both are categorically exhausted for the slug."}
     - {atoms: [OPI-100], says: "the operative instrument lists the R5 fill order and the R6 amendment as owner decision OD-2, still open."}
-    - {atoms: [ENT-338], says: "governance/jurisdiction-philosophy.md section 2.3 still reads 'PROVISIONAL until all 24 jurisdictions are recorded' -- the amendment R6 requires has not been made."}
-  direction: "Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038)."
+  direction: "Step 2.2b made the section 2.3 amendment (the 'all 24 jurisdictions' conjunct deleted, the Co-1 language floor kept, RULINGS R12). The instrument's OD-2 line is unmarked and the instrument is append-only (OPI-131); the owner confirms the amendment or closes OD-2."
   resolver: OWNER
   confidence: high
 
