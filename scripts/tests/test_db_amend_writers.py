@@ -1500,14 +1500,18 @@ try:
     (ex_slug,) = q("SELECT exec_id FROM search_executions WHERE query_text=?", "fixture M: live codes")[0]
     c_before = counts("search_candidates")
     r_no = ls_cand(ex_slug)
-    r_bad = ls_cand(ex_bare, "--found-under-slug", "NOT-A-SLUG")
+    r_bad = ls_cand(ex_slug, "--found-under-slug", "NOT-A-SLUG")
     refused_ok = (r_no.returncode != 0 and "found_under_slug is required" in (r_no.stdout + r_no.stderr)
                   and r_bad.returncode != 0 and "is not in `slugs`" in (r_bad.stdout + r_bad.stderr)
+                  and counts("search_candidates") == c_before)
+    r_slug_on_bare = ls_cand(ex_bare, "--found-under-slug", A)
+    refused_ok = (refused_ok and r_slug_on_bare.returncode != 0
+                  and "searched no slug" in (r_slug_on_bare.stdout + r_slug_on_bare.stderr)
                   and counts("search_candidates") == c_before)
     r_ok = ls_cand(ex_bare)
     stored = q("SELECT found_under_slug FROM search_candidates WHERE exec_id=? AND title=?",
                ex_bare, "fixture N candidate")
-    record("N04", "a candidate needs --found-under-slug unless its search has no slug; an unknown slug is still refused",
+    record("N04", "a candidate needs --found-under-slug unless its search has no slug, and then refuses one; an unknown slug is still refused",
            refused_ok and r_ok.returncode == 0 and stored == [(None,)],
            f"slugged-no-flag rc={r_no.returncode} bad-slug rc={r_bad.returncode} slugless rc={r_ok.returncode} "
            f"{r_ok.stderr[-200:]} {stored}")
