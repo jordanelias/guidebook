@@ -109,7 +109,6 @@ tables:
   life_stage_modifiers: base
   observed_terms: evidence
   parameter_declinations: base
-  pipeline_runs: infrastructure
   population_icf_links: base
   populations: base
   reasoning_doc_citations: synthesis
@@ -134,7 +133,6 @@ tables:
   term_adjudications: judgment
   term_aliases: base
   terms: base
-  url_verification_runs: evidence
   weighting_profile: render
 
 # Where the repository contradicts ITSELF about a table's stage. The map still has

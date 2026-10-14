@@ -1848,32 +1848,6 @@ checks:
     turned the 403 case red; asserting a one-word head turned the FAQ case red;
     restored, green. Its assertion count is its own EXAMINED
     line.'
-- id: test_url_verifier
-  cmd:
-  - python3
-  - scripts/tests/test_url_verifier.py
-  battery: tests
-  kinds:
-  - tooling
-  level: advisory
-  basis: hygiene
-  cost: fast
-  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 25/25 assertions.
-- id: test_verification_pipeline
-  cmd:
-  - python3
-  - scripts/tests/test_verification_pipeline.py
-  battery: tests
-  kinds:
-  - tooling
-  level: advisory
-  basis: hygiene
-  cost: fast
-  no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'Derive the assertion count, never quote it (rule 7a): `python3 scripts/tests/test_verification_pipeline.py
-    | tail -3`. G01-G03 asserted corpus sizes an owner ruling had cleared, so the file was red on main
-    while this note read "18/18"; they were deleted 2026-10-01. G04 still reads the live pipeline_runs.'
 - id: test_assess_cell_pilot
   cmd:
   - python3
