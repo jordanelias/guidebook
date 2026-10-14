@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 09:19 UTC from git HEAD eaec3db (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 09:31 UTC from git HEAD 15c54e8 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 115,
+ "user_version": 116,
  "stages": [
   "base",
   "research",
@@ -1226,7 +1226,8 @@
     "retirement_reason",
     "superseded_by_specification_id",
     "rests_on_proxy_inference",
-    "value_notations"
+    "value_notations",
+    "marker"
    ]
   },
   "supersession_check": {
@@ -2791,6 +2792,11 @@
     "universal",
     "population",
     "person"
+   ],
+   "marker": [
+    "●",
+    "◐",
+    "○"
    ]
   },
   "supersession_check": {

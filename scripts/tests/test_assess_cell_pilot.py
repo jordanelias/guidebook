@@ -28,6 +28,7 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
 from assess_cell import determine  # noqa: E402
+from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
 
 
@@ -169,6 +170,7 @@ def main():
                   1, {"identity_code": "MOB"}, "syn-slug", "co2-only")
     expect("Co-2-only => stated", d["state"] == "stated", d["state"])
     expect("Co-2-only tier_basis == CO2", d["tier_basis"] == "CO2", d["tier_basis"])
+    expect("MARKER: a stated Co-2 cell is full", d["marker"] == EvidenceMarker.FULL.value, str(d["marker"]))
 
     # 2. T6-only, 3 distinct jurisdictions -> provisional + cfo + rso + universal
     d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": j}
@@ -179,12 +181,24 @@ def main():
     expect("T6-only => regulatory_stratum_only=1", d["regulatory_stratum_only"] == 1)
     expect("T6-only => design_scale universal", d["design_scale"] == "universal")
     expect("T6-only never stated", d["state"] != "stated")
+    expect("MARKER: a T6-only floor claim is weak", d["marker"] == EvidenceMarker.WEAK.value, str(d["marker"]))
 
     # 3. T6-only, one jurisdiction x3 -> pending (jurisdiction distinctness)
     d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": "US"}
                             for _ in range(3)]),
                   1, {"identity_code": "DEM"}, "syn-slug", "t6-mono")
     expect("T6-only(1 jur) => pending", d["state"] == "pending", d["state"])
+    expect("MARKER: a pending cell carries none", d["marker"] is None, str(d["marker"]))
+
+    # T3 splits on its type (tier-system section 5): clinical is a confirmed basis, grey is not.
+    d = determine(synth_db([{"tier": 3, "evidence_type": "clinical"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t3-clinical")
+    expect("MARKER: T3-clinical alone is provisional and full",
+           (d["state"], d["marker"]) == ("provisional", EvidenceMarker.FULL.value), f"{d['state']} {d['marker']}")
+    d = determine(synth_db([{"tier": 3, "evidence_type": "grey"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t3-grey")
+    expect("MARKER: T3-grey alone is pending and unmarked",
+           (d["state"], d["marker"]) == ("pending", None), f"{d['state']} {d['marker']}")
 
     # 3b-3d. jurisdiction distinctness must be NORMALISED before counting (audit
     # Task 4, fixed 2026-09-10). Uses tier 5 (national_fw), never tier 4: a T4
@@ -442,7 +456,7 @@ def main():
             probe.executescript(isql)
         base = {"parameter_id": 1, "state": "stated", "code_floor_only": 0,
                 "has_unverified_sources": 0, "all_sources_disqualified": 0,
-                "regulatory_stratum_only": 0}
+                "regulatory_stratum_only": 0, "marker": EvidenceMarker.FULL.value}
         seq = [0]
 
         def try_row(**extra):
@@ -475,6 +489,19 @@ def main():
         expect("H2 CHECK: population_only WITH a rationale is accepted",
                try_row(derivation_paths="population_only",
                        derivation_rationale="no function path") is None)
+        # Migration 116: the marker's two CHECKs. Each is asserted against the control above, so a
+        # refusal here is the marker's and nothing else's.
+        expect("MARKER CHECK: a live stated row without a marker is REFUSED",
+               try_row(marker=None) is not None)
+        expect("MARKER CHECK: a live pending row WITH a marker is REFUSED",
+               try_row(state="pending", marker=EvidenceMarker.FULL.value) is not None)
+        expect("MARKER CHECK: a pending row without one is accepted",
+               try_row(state="pending", marker=None) is None)
+        expect("MARKER CHECK: a glyph outside the vocabulary is REFUSED",
+               try_row(marker="x") is not None)
+        expect("MARKER CHECK: a regulatory-stratum-only row cannot be marked above the weak band",
+               try_row(regulatory_stratum_only=1, marker=EvidenceMarker.FULL.value) is not None
+               and try_row(regulatory_stratum_only=1, marker=EvidenceMarker.WEAK.value) is None)
         expect("H2 CHECK: function_only without a rationale is REFUSED",
                try_row(derivation_paths="function_only") is not None)
         expect("H2 CHECK: dual owes neither", try_row(derivation_paths="dual") is None)
@@ -503,6 +530,31 @@ def main():
            and not d["tier_basis"].endswith("(regulatory_stratum_only)"), d["tier_basis"])
     expect("PROXY: state is provisional, NEVER stated (ACTION 1)",
            d["state"] == "provisional", d["state"])
+    expect("MARKER: an unconfirmed proxy threshold is weak", d["marker"] == EvidenceMarker.WEAK.value,
+           str(d["marker"]))
+
+    # R39: a code CONFIRMED by an anchoring finding takes the confirming study's band, and the cell the floor of
+    # the mean over its codes. Only a `confirms` edge from a finding to a governing extraction ROW counts.
+    def _proxy_marker(n_confirmed, relation="confirms", to_row=True):
+        c = synth_db(_t6 + _find)
+        c.execute("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                  "from_extraction_id INTEGER, to_extraction_id INTEGER, relation TEXT)")
+        f = c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id='REF-FIND-1'").fetchone()[0]
+        for (t,) in c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id LIKE 'REF-SYN-%' "
+                              "ORDER BY extraction_id LIMIT ?", (n_confirmed,)).fetchall():
+            c.execute("INSERT INTO extraction_relations (from_extraction_id, to_extraction_id, relation) "
+                      "VALUES (?,?,?)", (f, t if to_row else None, relation))
+        return determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "proxy-confirmed")["marker"]
+    expect("MARKER: all three codes confirmed by a T1 finding => full",
+           _proxy_marker(3) == EvidenceMarker.FULL.value)
+    expect("MARKER: two of three confirmed => the floor of the mean, partial",
+           _proxy_marker(2) == EvidenceMarker.PARTIAL.value)
+    expect("MARKER: one of three confirmed does not lift the cell off weak",
+           _proxy_marker(1) == EvidenceMarker.WEAK.value)
+    expect("MARKER: a tested_at edge is not a confirmation",
+           _proxy_marker(3, relation="tested_at") == EvidenceMarker.WEAK.value)
+    expect("MARKER: a confirms edge aimed at a label reaches no figure",
+           _proxy_marker(3, to_row=False) == EvidenceMarker.WEAK.value)
     # The invariant migration 075 exists for, and stop condition 6: a finding never
     # governs. It supplies direction and lands in `supporting`.
     expect("PROXY: the finding does NOT govern",

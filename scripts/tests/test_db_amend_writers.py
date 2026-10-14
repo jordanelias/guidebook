@@ -90,6 +90,7 @@ os.environ["GUIDEBOOK_DB_PATH"] = DB          # before db/dbcore resolve a path
 sys.path.insert(0, str(REPO / "scripts"))
 import db        # noqa: E402
 import dbcore    # noqa: E402
+from schemas.enums import EvidenceMarker  # noqa: E402
 from dbcore import Refusal  # noqa: E402
 
 S = "session_test-db-amend-writers"
@@ -703,8 +704,11 @@ try:
         else:
             SPEC, LREF, CREF = pick[0]
             con = sqlite3.connect(DB)
-            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
-                        (SPEC,))
+            # Live again means a live stated or provisional row carries a marker (migration 116); the weak
+            # band is legal on any row, and a pending one carries none.
+            con.execute("UPDATE specifications SET retired_at=NULL, marker=CASE WHEN state IN "
+                        "('stated','provisional') THEN ? END WHERE specification_id=?",
+                        (EvidenceMarker.WEAK.value, SPEC))
             con.commit()
             con.close()
             msg_l = refusal(supersede, LREF, XB, WHY, S)
@@ -1035,8 +1039,11 @@ try:
         else:
             SPEC, LREF, CREF, R_AT, R_BY, R_WHY = pick[0]
             con = sqlite3.connect(DB)
-            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
-                        (SPEC,))
+            # Live again means a live stated or provisional row carries a marker (migration 116); the weak
+            # band is legal on any row, and a pending one carries none.
+            con.execute("UPDATE specifications SET retired_at=NULL, marker=CASE WHEN state IN "
+                        "('stated','provisional') THEN ? END WHERE specification_id=?",
+                        (EvidenceMarker.WEAK.value, SPEC))
             con.commit()
             con.close()
             types = {r: source_row(r)["evidence_type"] for r in (LREF, CREF)}
@@ -1055,7 +1062,7 @@ try:
                    f"l={msg_l!r} c={msg_c!r}")
             con = sqlite3.connect(DB)
             con.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, "
-                        "retirement_reason=? WHERE specification_id=?",
+                        "retirement_reason=?, marker=NULL WHERE specification_id=?",
                         (R_AT, R_BY, R_WHY, SPEC))
             con.commit()
             con.close()

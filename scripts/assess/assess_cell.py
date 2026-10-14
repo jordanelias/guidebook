@@ -118,9 +118,9 @@ from schemas.directness import (  # noqa: E402
     COND_DIRECT, COND_DOWN_WEIGHTED, COND_DISCOUNTED, COND_NON_ANCHORING,
     consolidate, grain_for, population_directness_from_match_grade, scale_directness,
 )
-from schemas.tier_derivation import check_tier_consistency  # noqa: E402
+from schemas.tier_derivation import band, check_tier_consistency, floor_mean  # noqa: E402
 from schemas.enums import (  # noqa: E402
-    ConvergenceStatus, EvidenceCellState,
+    ConvergenceStatus, EvidenceCellState, EvidenceMarker,
     VerificationStatus,
 )
 from schemas.evidence_state import (  # noqa: E402
@@ -1202,6 +1202,48 @@ def sha(parameter_id, lens, links):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
+def determination_marker(conn, state, governing, recs, finding_anchors, links,
+                         regulatory_stratum_only, rests_on_proxy_inference):
+    """The evidence marker a determination carries (tier-system section 5; RULINGS R7, R39).
+
+    Only a stated or provisional cell is marked. Normally each governing source takes its
+    section 5 band and the cell takes the floor of their mean (owner, 2026-09-13), so a cell
+    is full only if every governing source is.
+
+    A value read off the regulatory stratum -- a floor claim, or the threshold of a proxy
+    inference -- is the weak band unless an anchoring FINDING confirms the governing code
+    (owner, 2026-09-13: a code "confirmed as genuine best practice according to studies"
+    is upgraded): such a code takes the band of the confirming study, the floor of their
+    mean when several confirm it (R39), and the cell the floor of the mean of its codes. A
+    code is one input however many of its clauses govern, as `gather_sources` counts it.
+    Only a `confirms` edge whose far end is a governing extraction ROW counts; one aimed at
+    a label (`to_label`) cannot reach a figure. The `regulatory_stratum_only` CHECK on the
+    column pins a floor claim at the weak band, which this reproduces.
+    """
+    if state not in ("stated", "provisional"):
+        return None
+    if not (regulatory_stratum_only or rests_on_proxy_inference):
+        by_ref = {r["ref_id"]: r for r in recs}
+        return floor_mean(band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
+                          for g in governing).value
+    anchor_band = {r["ref_id"]: band(r["tier"], r["evidence_type"]) for r in finding_anchors}
+    ids = [l["extraction_id"] for l in links if l["role"] == "governing"]
+    confirmed = {}   # governing extraction_id -> the bands of the anchoring findings confirming it
+    if ids and anchor_band and _table_exists(conn, "extraction_relations"):
+        for to_id, from_ref in conn.execute(
+                "SELECT r.to_extraction_id, x.ref_id FROM extraction_relations r "
+                "JOIN source_value_extractions x ON x.extraction_id = r.from_extraction_id "
+                "WHERE r.relation = 'confirms' AND x.figure_role = 'finding' "
+                f"AND r.to_extraction_id IN ({','.join('?' * len(ids))})", ids):
+            if from_ref in anchor_band:
+                confirmed.setdefault(to_id, []).append(anchor_band[from_ref])
+    per_code = {}
+    for l in links:
+        if l["role"] == "governing":
+            per_code.setdefault(l["ref_id"], []).extend(confirmed.get(l["extraction_id"], []))
+    return floor_mean(floor_mean(b) if b else EvidenceMarker.WEAK for b in per_code.values()).value
+
+
 def determine(conn, parameter_id, lens, slug, note):
     """The pure determination function. Returns (record dicts for insert, log).
 
@@ -1566,6 +1608,9 @@ def determine(conn, parameter_id, lens, slug, note):
                   "gate caps it at `provisional` until resolved. Resolve the gate to "
                   "restore the cell, never re-run the engine to route around it.")
 
+    marker = determination_marker(conn, state, governing, recs, finding_anchors, links,
+                                  regulatory_stratum_only, rests_on_proxy_inference)
+
     return {
         "links": links,
         # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
@@ -1586,6 +1631,7 @@ def determine(conn, parameter_id, lens, slug, note):
         "gap_needed": gap_needed, "code_floor_only": code_floor_only,
         "regulatory_stratum_only": regulatory_stratum_only,
         "rests_on_proxy_inference": rests_on_proxy_inference,
+        "marker": marker,
         # Counted so the GAP DESCRIPTION can name the right absence. A parameter read
         # only into `finding` rows has sources that qualify perfectly well and supply
         # no value, which is a different fact from having none and a different fact
@@ -1790,6 +1836,7 @@ def validate_with_models(det, gap_id):
         **det["lens"],
         design_scale=det["design_scale"],
         state=EvidenceCellState(det["state"]),
+        marker=EvidenceMarker(det["marker"]) if det["marker"] else None,
         convergence=conv_model, confidence_flag=flag,
         gap_register_id=gap_id,
         not_applicable_rationale=None)
@@ -2051,6 +2098,8 @@ def main():
                 # regulatory_stratum_only: the value was selected under a proxy inference
                 # from findings rather than stated by a source (owner 2026-09-16).
                 det["rests_on_proxy_inference"],
+                # 116. The evidence marker: the band of the sources the cell rests on.
+                det["marker"],
                 # 080. `derivation_paths` carries a CHECK that a single-path row owes
                 # either a rationale or a cultural anchor, so these four are written
                 # together or the database refuses the row -- which is the dignity line
@@ -2068,7 +2117,7 @@ def main():
                 "value_min, value_max, value_unit, value_note, value_notations, "
                 "falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
-                "rests_on_proxy_inference, "
+                "rests_on_proxy_inference, marker, "
                 "functional_basis, derivation_paths, derivation_rationale, "
                 "cultural_claim_anchor, "
                 "created_at, created_by_session, updated_at, updated_by_session")
@@ -2121,11 +2170,12 @@ def main():
                         "value_notations", "accessibility_direction",
                         "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
-                        "regulatory_stratum_only", "rests_on_proxy_inference",
+                        "regulatory_stratum_only", "rests_on_proxy_inference", "marker",
                         "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "n_extractions", "non_anchoring_on_tier",
-                        "needs_population_assessment", "tier_inconsistent", "falsification")}
+                        "needs_population_assessment", "tier_inconsistent", "falsification",
+                        "excluded_not_publishable")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "specification_id": specification_id,
                          "convergence_id": this_conv,
@@ -2137,28 +2187,9 @@ def main():
                                               "tier_consistent")}
                                             for r in det["source_records"]]})
 
-    # REMOVED 2026-08-22 (BRK-26). An interim v_best_practice amendment used to sit
-    # here: it DROPped and re-CREATEd the view mid-determination and shipped that DDL
-    # inside the emitted replayable SQL, so the redefinition travelled into whatever
-    # migration carried the rows. Its own comment said it held "until migration 027
-    # adds a real regulatory_stratum_only column".
-    #
-    # That column exists. Migration 027 landed it, and migration 029 then went
-    # further, under RATIFIED DR-2026-07-21-product-posture-thinking-tool-not-authority:
-    # a determination whose entire evidence basis is the regulatory stratum IS a
-    # best-practice determination at the WEAK band — surfaced, flagged with
-    # strength_band, never suppressed. 029 deliberately DROPPED the two 027 guards
-    # this block reproduced.
-    #
-    # So replaying this DDL would not have "restored a guard". It would have reverted
-    # ratified doctrine: dropping the strength_band column and re-imposing an
-    # exclusion the owner's own decision removed — and doing it by a fragile
-    # `tier_basis LIKE '%(regulatory_stratum_only)'` string match rather than the
-    # column test that now exists. Standing proof it travels:
-    # working/pilot/data_20260712_pilot-cell-backfill.sql:23-24 still carries it.
-    #
-    # A determination engine has no business rewriting the schema it writes into.
-    # The view is defined by migration and belongs to the migration layer.
+    # No view DDL is emitted here (BRK-26): a redefinition of v_best_practice shipped inside the
+    # replayable SQL travelled into whatever migration carried the rows. A determination engine
+    # has no business rewriting the schema it writes into; the view belongs to the migration layer.
     conn.commit()
     with open(args.emit_sql, "w") as f:
         f.write("\n".join(sql_lines) + "\n")
@@ -2177,7 +2208,7 @@ def main():
               f"refs={len(r['governing_refs'])} sources={r['n_sources']} "
               f"extractions={r['n_extractions']} "
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
-              f"rso={r['regulatory_stratum_only']} "
+              f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
         if r["excluded_not_publishable"]:
             # Said on the line a reader sees, not only in the junction: a value composed

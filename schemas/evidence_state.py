@@ -47,6 +47,7 @@ from schemas.directness import ALL_SCALES
 from schemas.enums import (
     ConvergenceStatus,
     EvidenceCellState,
+    EvidenceMarker,
     VerificationStatus,
 )
 
@@ -161,6 +162,10 @@ class EvidenceStateRecord(BaseModel):
 
     # State
     state: EvidenceCellState
+
+    # The evidence marker of a stated or provisional cell (tier-system section 5). The column's
+    # CHECK holds the biconditional with state; this only types the glyph.
+    marker: Optional[EvidenceMarker] = None
 
     # Convergence (required for stated and provisional; None for pending/n_a)
     convergence: Optional[ConvergenceAssessment] = None
