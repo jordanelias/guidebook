@@ -185,12 +185,7 @@ evidence_type: EvidenceType
 | schemas/enums.py — EvidenceType (9 values per T-03) | ✓ |
 | schemas/enums.py — JurisdictionCode (count the members, never quote them: `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"`) | ✓ |
 | schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
-| schemas/specification.py (73 records, cross-cutting fields) | ✓ |
 | schemas/evidence_source.py (531 records) | ✓ |
-| schemas/bpc_metadata.py (78 records) | ✓ |
-| schemas/connection.py (191 records) | ✓ |
-| schemas/slug.py (64 records) | ✓ |
-| schemas/gap.py (161 records) | ✓ |
 | scripts/validate_schema.py (6 entity types + cross-check) | ✓ |
 | CI schema job (validate + cross-entity) | ✓ |
 | T-03 reconciliation (tier + evidence_type) | ✓ |

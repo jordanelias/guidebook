@@ -610,11 +610,12 @@ checks:
   level: blocking
   basis: cross_stage/doctrine-recheck
   cost: fast
-  no_floor: not-instrumented — the snapshot line alone reports four distinct subjects (CANONICAL governance
-    docs, CANONICAL rules, ACTIVE decisions, BPC files), each with its own count and no single one honestly
-    speaks for cross-reference + decision-register + drift checking as a whole. Genuinely non-vacuous
-    today (11/8/158/102 respectively). Left uninstrumented on 2026-08-14 (A5) rather than invent a combined
-    figure.
+  no_floor: not-instrumented — the snapshot line reports three subjects (CANONICAL governance docs, CANONICAL
+    rules, BPC files), each with its own count, and no single one speaks for cross-reference checking as a
+    whole. The registered command runs pass 2.3 only, because `--cross-ref` skips drift detection (2.4); removing
+    a governance document does not turn this gate red; `--baseline-against <snapshot>` does, and is not
+    registered because it reports ERRORs for documents whose Status is no longer CANONICAL. Left
+    uninstrumented on 2026-08-14 (A5) rather than invent a combined figure.
 - id: retired_vocabulary
   cmd:
   - python3

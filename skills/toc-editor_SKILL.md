@@ -194,8 +194,6 @@ requiring a follow-up pass with `cross-reference-resolver`:
 |---|---|---|
 | find-and-replace | [specific substitution] | P1 |
 | cross-reference-resolver | [scope] | P1/P2 |
-| guidebook-auditor | Verify heading hierarchy post-change | P2 |
-| volii-validator | Re-validate item codes if recoded | P1 if RECODE |
 | find-and-replace | Apply RENUMBER mapping table in sequence (low→high) | P1 if RENUMBER |
 
 ---
@@ -262,7 +260,6 @@ To read the register: `python3 scripts/db.py gaps --status OPEN`.
 NEXT STEPS:
 1. Run find-and-replace using CO-{NNNN} instructions (P1 items first)
 2. Run cross-reference-resolver on scope: [list]
-3. Run guidebook-auditor A after all substitutions complete
 ```
 
 ---

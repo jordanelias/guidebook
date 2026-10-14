@@ -57,7 +57,6 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 | citation-verifier | Tool-dependent lookup and classify; tier-1 sources require judgment |
 | gap-driven-mining | Gap-keyed search-matrix execution with outcome judgment; depth-1 constraint; rule #7/#8/#10 interlocks (DR-2026-05-26) |
 | workplan-orchestrator | Multi-skill workflow coordination; risk escalation decisions |
-| reasoning-doc-citations | Per-cell verification recording for synthesis claims (skill placeholder) |
 | connection-discovery | Identify candidate cross-BPC connections |
 | cross-reference-resolver | Audit and classify broken refs; mechanical repair handoff |
 | doctrine-recheck | A13 doctrine snapshot + cross-reference recheck |
@@ -86,4 +85,3 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 ## Notes
 
 - When a skill is not listed here, sessions invoking it default to 100. Numerical and qualitative levels coexist: qualitative levels (low/medium/high/max) apply when the user invokes `/effort low|medium|high|max`; numerical values document the skill's expected reasoning depth for routing decisions.
-- **Deprecated skills** (`skills/deprecated/`) are not assigned an effort level. If a deprecated skill must be invoked, default to 50.

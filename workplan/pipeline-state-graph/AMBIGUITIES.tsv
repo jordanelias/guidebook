@@ -102,7 +102,7 @@ ENT-030	ACTIVE	governance/conceptual-model.md:111	BPC key-source REF-ID resoluti
 ENT-031	ACTIVE	governance/conceptual-model.md:119	BPC metadata cross-system check	A3 Session 3 plan item; data/sources/ may no longer be the live home of citation records.
 ENT-032	ACTIVE	governance/conceptual-model.md:126	connection primary_target item_code resolution	A3 Session 4 plan item that presupposes the item index as a live reference.
 ENT-039	ACTIVE	governance/conceptual-model.md:187	EvidenceType member count	The §4 code block lists only seven members, so seven and nine are both stated for the same enum.
-ENT-045	ACTIVE	governance/conceptual-model.md:206	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
+ENT-045	ACTIVE	governance/conceptual-model.md:199	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
 ENT-048	ACTIVE	governance/functional-taxonomy.md:13	two-layer population architecture	"Layer 1" and "Layer 2" here name taxonomy layers, a different numbering from the project's five-layer Layer 0-4 model.
 ENT-059	ACTIVE	governance/functional-taxonomy.md:85	axis values as stored attributes	Unclear whether this bars stored mapping tables (population_axis_map, slug serves_axes) or only per-person attributes.
 ENT-067	ACTIVE	governance/functional-taxonomy.md:129	canonical codes as Layer 2 identifiers	The population-taxonomy.md banner (DR-2026-07-23) retires the canonical code set that this sentence retains.
@@ -133,9 +133,7 @@ ENT-242	AMENDED	governance/population-taxonomy.md:143	Tier 2 mode register	"Tier
 ENT-257	ACTIVE	governance/population-taxonomy.md:171	population-taxonomy status field	The header and banner state SUPERSEDED (population code set), contradicting the CANONICAL value in the status table.
 ENT-260	ACTIVE	governance/decision-protocol.md:31	cross-category decisions	The section 3 field list has no dedicated secondary-category field, so where the cross-reference goes is unspecified.
 ENT-272	ACTIVE	governance/decision-protocol.md:67	D-DOCT downgrade	Section 2.4 item 7 lists the licensing model as always DG-NON, yet this passage uses adopting a licence as an example of a DG-REVIEW downgrade.
-ENT-290	ACTIVE	governance/decision-protocol.md:113	effort_level vocabulary	Section 4.4 regex also admits "none" as an effort level (human/none/none), which this list excludes.
-ENT-304	ACTIVE	governance/decision-protocol.md:164	model-routing effort_level vocabulary	The example human/none/none and the section 4.4 regex use "none" for effort_level, which this required list does not include.
-ENT-308	ACTIVE	governance/decision-protocol.md:172	synthesis-capable tiers	The example sonnet/125/synth is allowed as synthesis that is "not best-practice synthesis", so the meaning of the synth modifier differs by tier.
+ENT-308	ACTIVE	governance/decision-protocol.md:149	synthesis-capable tiers	The example sonnet/125/synth is allowed as synthesis that is "not best-practice synthesis", so the meaning of the synth modifier differs by tier.
 ENT-338	ACTIVE	governance/jurisdiction-philosophy.md:13	canonical jurisdictions	The table in section 1.1 lists 25 country rows (AU BD BR CA CH CN DE DK EG FR ID IE IN JP KE KR NG NL NO NZ SE SG UK US ZA), not 24.
 ENT-342	ACTIVE	governance/jurisdiction-philosophy.md:39	canonical country codes	The country code ID (Indonesia) shares its spelling with the population code ID (intellectual disability) in population-taxonomy.md.
 ENT-361	ACTIVE	governance/jurisdiction-philosophy.md:101	standards registry	Citation-like records are held in a markdown file, while conceptual-model.md relays an owner directive that citation data stored in .md is to be recorded in a table.

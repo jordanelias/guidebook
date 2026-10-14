@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 06:51 UTC from git HEAD 1ff6cfd (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook",
+ "generated": "Generated 2026-10-14 07:23 UTC from git HEAD c235b9a (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-n22a",
  "user_version": 111,
  "stages": [
   "base",
@@ -4591,9 +4591,9 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms in all (structure checked)": 2639,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 406,
-  "distinct quotes among all atoms": 2606,
+  "atoms in all (structure checked)": 2622,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 401,
+  "distinct quotes among all atoms": 2589,
   "status corrections owed (each atom's status re-read)": 13,
   "conflicts (atoms, class, probe exist)": 39,
   "machine transitions": 42,
@@ -4606,13 +4606,13 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2259,
+  "ACTIVE": 2242,
   "SUPERSEDED": 85,
   "OPEN": 71,
   "AMENDED": 69,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
- "atoms_total": 2639,
+ "atoms_total": 2622,
  "conflicts_total": 39
 }
