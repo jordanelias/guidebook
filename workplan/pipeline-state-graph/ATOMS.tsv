@@ -46,13 +46,13 @@ CLM-046	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:424	cross	scratchpad/CURRENT	scratch
 CLM-047	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:435	cross	history rewriting	git rebase and git checkout -B are blocked; use git merge origin/main.	
 CLM-048	ACTIVE	MUST_NOT	OWNER_RELAYED	2026-09-01	CLAUDE.md:445	cross	item codes	Never file into a [A-Z]-NN item-code container.	
 CLM-049	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:453	cross	session id forms	Session ids are bare stems in the DB and .md in pointers and emit_data_migration --session.	
-CLM-050	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:458	render	generated output	Do not hand-edit parts/, site/, audits/, tools/*.html; regenerate with scripts/regenerate_derived.sh.	
+CLM-050	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:458	render	generated output	Do not hand-edit parts/, site/, audits/, tools/*.html; regenerate tools/*.html with scripts/regenerate_derived.sh, which does not reach parts/ or site/.	
 CLM-051	ACTIVE	MUST_NOT	PROCESS_RULE		CLAUDE.md:460	cross	schema drift	schemas/*.py and SQLite must not drift.	validate_pydantic_schemas (advisory)
 CLM-052	ACTIVE	ORDER	PROCESS_RULE		CLAUDE.md:495	cross	burden of proof	Adding apparatus carries the burden of proof; removing code, checks, scripts, dead tables and views needs evidence, not owner permission.	
 CLM-053	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:501	cross	owner sign-off scope	Owner sign-off is required for content and doctrine (mission, audience, CRPD posture, taxonomy, tier definitions, jurisdiction, licensing, trajectory), not for code.	
 CLM-054	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:503	cross	justify apparatus by guidebook harm	Before adding a check, script or table, state what wrong thing reaches the guidebook without it; nothing is added without naming what reads it.	
-CLM-055	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:510	cross	check registration	A check is added only through governance/check-registry.yaml; run_checks.py is the only invoker.	
-CLM-056	ACTIVE	DEFINES	PROCESS_RULE		CLAUDE.md:518	cross	project identity	The guidebook is a thinking tool and advocacy project, not an authority; not a prescription manual, legal authority, or substitute for professional judgment.	
+CLM-055	ACTIVE	MUST	PROCESS_RULE		CLAUDE.md:515	cross	check registration	A check is added only through governance/check-registry.yaml; run_checks.py is the only invoker.	
+CLM-056	ACTIVE	DEFINES	PROCESS_RULE		CLAUDE.md:523	cross	project identity	The guidebook is a thinking tool and advocacy project, not an authority; not a prescription manual, legal authority, or substitute for professional judgment.	
 RES-01	ACTIVE	ORDER	RATIFIED_DOC		governance/research-contract.yaml:64	research,evidence	R1 Co-1/T2/Co-2 first	The Co-1/Tier 2/Co-2 pass precedes other admissions.	R1 (research_batch_dod)
 RES-02	ACTIVE	MUST	RATIFIED_DOC		governance/research-contract.yaml:79	research	R2 citation mining	Every confirmed T1-T2 anchor is mined backward and forward.	R2
 RES-03	ACTIVE	MUST	RATIFIED_DOC		governance/research-contract.yaml:100	evidence,judgment	R3 locator	Quantified values carry a locator (clause/section/page; outcome claims DOI + page/table or direct URL) or the [UNVERIFIED-QUANT] flag.	R3

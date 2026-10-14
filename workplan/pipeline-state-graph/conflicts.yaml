@@ -290,9 +290,9 @@ conflicts:
   atoms: [LED-132, LED-128, CLM-042]
   sides:
     - {atoms: [LED-132, CLM-042], says: "owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns."}
-    - {atoms: [CLM-042], says: "CLAUDE.md section 6 states both sweeps are done (and that migration 071 dropped population_code from specifications)."}
+    - {atoms: [CLM-042], says: "CLAUDE.md section 6 stated both sweeps were done; step 0.5 removed the claim and left the accurate sentence that migration 071 dropped population_code and item_code from specifications."}
   probe: P-A
-  direction: "Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. Doc overstates; the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10)."
+  direction: "Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. The doc overstated and no longer does (step 0.5); the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10), plan step 1.3."
   resolver: AGENT
   confidence: high
 
@@ -388,7 +388,7 @@ conflicts:
   sides:
     - {atoms: [LED-103, LED-104, LED-105], says: "owner words (quoted from migration 046's header, 2026-08-27): the target is dynamic rendering from the database, no per-page build event, no reliance on artefacts for rendering."}
     - {atoms: [ADD-002, ADD-003], says: "the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it)."}
-    - {atoms: [PIP-07, CLM-050], says: "contract and CLAUDE.md: parts/ and site/ must not be stale relative to the DB; regenerate with scripts/regenerate_derived.sh."}
+    - {atoms: [PIP-07, CLM-050], says: "contract: parts/ and site/ must not be stale relative to the DB; CLAUDE.md now says regenerate_derived.sh regenerates tools/*.html and does not reach parts/ or site/ (step 0.5)."}
   probe: [P-I, P-K]
   direction: "UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way."
   resolver: OWNER+AGENT
