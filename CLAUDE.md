@@ -177,7 +177,7 @@ argparse `choices=` lists that duplicate a column's CHECK — **count them, neve
 `grep -c 'choices=' scripts/db.py` against
 `grep -c 'choices=dbcore\.\(schema_choices\|check_values\)' scripts/db.py`, and
 `derived_not_curated_audit.py` reports how many of the remainder mirror a live CHECK —
-`add-source --ref-id` and `amend-source --tier` asking for values the machine can derive,
+`add-source --ref-id` asking for a value the machine can derive,
 and the hand-written "N today" counts
 throughout `governance/check-registry.yaml`.
 **9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call

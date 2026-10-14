@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-14 09:31 UTC from git HEAD 15c54e8 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-14 09:38 UTC from git HEAD 49e6c07 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 116,
  "stages": [
@@ -2843,11 +2843,6 @@
   }
  },
  "verbs": {
-  "migrate": {
-   "functions": [],
-   "writes": {},
-   "refusals": 0
-  },
   "gaps": {
    "functions": [
     "get_open_gaps",

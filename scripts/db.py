@@ -5,8 +5,6 @@ Environment:
     GUIDEBOOK_DB_PATH   Path to database file (default: data/guidebook.db)
 
 CLI usage:
-    python3 scripts/db.py init
-    python3 scripts/db.py migrate
     python3 scripts/db.py gaps [--priority P1] [--status OPEN]
     python3 scripts/db.py connections [--status PENDING] [--confidence HIGH] [--summary]
     python3 scripts/db.py is-mined --slug SLUG --ref REF-ID
@@ -25,7 +23,6 @@ CLI usage:
     python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --evidence-type clinical --scope high_control --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
         (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
-    python3 scripts/db.py validate
     python3 scripts/db.py record-adversarial-pass --subject-session S --subject-commit SHA \
         --reviewer-transcript transcripts/.../reviewer.jsonl --author-transcript transcripts/.../author.jsonl \
         --session SESSION      (RC4; then dispose-adversarial-finding and close-adversarial-pass)
@@ -219,19 +216,6 @@ def close_gap(gap_id: str, status: str,
             "UPDATE gaps SET status=?, updated_at=?, updated_by_session=? "
             "WHERE gap_id=?",
             [status, u["updated_at"], u["updated_by_session"], gap_id]
-        )
-
-
-def update_gap_priority(gap_id: str, priority: str,
-                        session: str, dry_run: bool = False):
-    if priority not in ("P1", "P2", "P3"):
-        raise Refusal(f"Invalid priority: {priority}")
-    u = _upd(session)
-    with connect(dry_run) as conn:
-        conn.execute(
-            "UPDATE gaps SET priority=?, updated_at=?, updated_by_session=? "
-            "WHERE gap_id=?",
-            [priority, u["updated_at"], u["updated_by_session"], gap_id]
         )
 
 
@@ -1050,9 +1034,6 @@ def main():
     # working database; `migrate_db.py --rebuild` is the real path and is what
     # CLAUDE.md §4 already tells readers to use instead. (Pointer corrected
     # 2026-08-22, was §10.)
-
-    # migrate
-    sub.add_parser("migrate", help="Run pending schema migrations")
 
     # gaps
     p_gaps = sub.add_parser("gaps", help="Query gaps")
@@ -2512,12 +2493,6 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(1)
-
-    if args.command == "migrate":
-        import subprocess
-        sys.exit(subprocess.call(
-            [sys.executable, str(Path(__file__).parent / "migrate_db.py")]
-        ))
 
     if args.command == "gaps":
         rows = get_open_gaps(priority=args.priority)
