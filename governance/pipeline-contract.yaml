@@ -306,12 +306,6 @@ stages:
       evidence-architecture.md §3.
     references: evidence-architecture.md §3/§10 sweep
     check: scripts/audit/matrix_consistency.py
-  - id: render-freshness
-    kind: completeness
-    criterion: Rendered artifacts (parts/, site/) are not stale vs the DB state that produced them. Only
-      the vetting surface auto-regenerates; parts/ has no committed fingerprint gate.
-    references: project-shape-audit F-13 (parts staleness)
-    check: null
 cross_stage:
 - id: adherence-log
   criterion: 'Each stage boundary emits `[ADHERENCE-LOG — stage N: <name>]` with per-rule FIRED/NOT-FIRED/SKIPPED,

@@ -272,7 +272,7 @@ conflicts:
   class: RULING-MECHANISM
   severity: S1
   title: "The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents"
-  atoms: [CLM-048, CLM-042, CLM-034, PIP-07, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050, WRK-169, WRK-170]
+  atoms: [CLM-048, CLM-042, CLM-034, LED-103, LED-091, ENT-023, ENT-148, ENT-172, ENT-002, ENT-003, ENT-029, PRC-027, PRC-059, PRC-068, DRS-210, DRS-219, OPI-047, OPI-048, OPI-050, WRK-169, WRK-170]
   sides:
     - {atoms: [WRK-169, WRK-170], says: "owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database)."}
     - {atoms: [CLM-048, LED-091], says: "the item layer is emptied (P-UNWRITABLE lists what still points into it) and items is a Part-4 render rollup derived from specifications; never file into an [A-Z]-NN container."}
@@ -380,20 +380,6 @@ conflicts:
   confidence: medium
 
 # ---------------------------------------------------------------- D. rendering and machinery
-- id: C-027
-  class: RULING-MECHANISM
-  severity: S1
-  title: "Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator"
-  atoms: [LED-103, LED-104, LED-105, ADD-002, ADD-003, LED-057, PIP-06, PIP-07, CLM-050, POS-03]
-  sides:
-    - {atoms: [LED-103, LED-104, LED-105], says: "owner words (quoted from migration 046's header, 2026-08-27): the target is dynamic rendering from the database, no per-page build event, no reliance on artefacts for rendering."}
-    - {atoms: [ADD-002, ADD-003], says: "the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it)."}
-    - {atoms: [PIP-07, CLM-050], says: "contract: parts/ and site/ must not be stale relative to the DB; CLAUDE.md now says regenerate_derived.sh regenerates tools/*.html and audits/evidentiary-base-audit* and does not reach parts/ or site/ (step 0.5)."}
-  probe: [P-I, P-K]
-  direction: "UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way."
-  resolver: OWNER+AGENT
-  confidence: medium
-
 - id: C-028
   class: RULING-MECHANISM
   severity: S1

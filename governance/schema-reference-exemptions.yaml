@@ -22,18 +22,6 @@ evidence_sources_v1_legacy: >-
   SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_sources_v1_legacy'
   returns non-zero -- the parity check runs only while the legacy table exists.
 
-room: &room_disposal >-
-  scripts/generate/room_page.py is KNOWN-BROKEN and owner-gated, not a rename
-  casualty. Recorded 2026-08-02 ("room_page.py crashes on no such table: room",
-  "Six phantom tables; tied to the website-v0 path") as disposal item flag 3,
-  awaiting owner decision 8 on the room stratum. It queries four tables that
-  have never existed in this schema; the live tables are rooms and room_items.
-  Exempted rather than fixed because fixing it means deciding what the room
-  stratum IS, which is content doctrine (DG-NON), not a sweep.
-room_item_population: *room_disposal
-room_dar_provision: *room_disposal
-room_conflict: *room_disposal
-
 specification: >-
   Two distinct pre-existing findings, neither a rename casualty, both recorded
   here rather than fixed because fixing either decides content, not naming.
@@ -45,5 +33,4 @@ specification: >-
   exist (it is `specifications`), `spec_id` and `title` are not columns of it,
   and `question_heading` exists in NO table in the schema. The skill's entire
   write path has never been runnable. Where question headings live is an open
-  content question. (3) scripts/generate/room_page.py:51 is the same owner-gated
-  disposal as the `room` entry above.
+  content question.

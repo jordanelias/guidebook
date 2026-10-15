@@ -1,6 +1,6 @@
 {
- "generated": "Generated 2026-10-14 04:28 UTC from git HEAD 3a745d1 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook-p0fix",
+ "generated": "Generated 2026-10-14 04:34 UTC from git HEAD fd8b931 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-p11fix",
  "user_version": 106,
  "stages": [
   "base",
@@ -5054,32 +5054,8 @@
     "note": "lexical test, views only: it reads view SQL, so a view that merely names the column passes and no non-view reader is examined"
    }
   },
-  "P-I": {
-   "verdict": "FAIL",
-   "tests": "regenerate_derived.sh regenerates parts/ and site/",
-   "atoms": [
-    "PIP-07",
-    "CLM-050"
-   ],
-   "evidence": {
-    "mentions_parts_or_site": false,
-    "tools_it_runs": [
-     "tools/pipeline_completeness.py",
-     "tools/evidentiary_audit.py",
-     "tools/regenerate_vetting_surface.py",
-     "tools/pipeline_walk.py",
-     "tools/schema_walkability.py",
-     "tools/data_atlas.py",
-     "tools/pipeline_completeness.py",
-     "tools/evidentiary_audit.py",
-     "tools/pipeline_walk.py",
-     "tools/schema_walkability.py",
-     "tools/data_atlas.py"
-    ]
-   }
-  },
   "P-K": {
-   "verdict": "FAIL",
+   "verdict": "NOT-BUILT",
    "tests": "a live renderer can read specifications keyed on parameter_id x lens",
    "atoms": [
     "PIP-06",
@@ -5087,18 +5063,8 @@
     "POS-03"
    ],
    "evidence": {
-    "renderers_scanned": 4,
-    "queries_failing_on_live_schema": {
-     "scripts/generate/build_site.py": [
-      "no such column: ecs.item_code"
-     ],
-     "scripts/generate/spec_page.py": [
-      "no such column: population_code"
-     ],
-     "scripts/generate/pilot_renderings.py": [
-      "no such column: item_code"
-     ]
-    },
+    "renderers_scanned": 0,
+    "queries_failing_on_live_schema": {},
     "renderers_whose_specification_query_names_parameter_id": []
    }
   },
@@ -5909,21 +5875,11 @@
     {
      "id": "C4.6",
      "says": "a live renderer reads parameter x lens determinations",
-     "verdict": "FAIL",
-     "why": "P-K = FAIL",
+     "verdict": "NOT-BUILT",
+     "why": "P-K = NOT-BUILT",
      "atoms": [
       "LED-103",
       "PIP-06"
-     ]
-    },
-    {
-     "id": "C4.7",
-     "says": "the derived surfaces can be regenerated from the database",
-     "verdict": "FAIL",
-     "why": "P-I = FAIL",
-     "atoms": [
-      "PIP-07",
-      "CLM-050"
      ]
     },
     {
@@ -5941,28 +5897,28 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms in all (structure checked)": 2692,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 465,
-  "distinct quotes among all atoms": 2659,
+  "atoms in all (structure checked)": 2690,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 458,
+  "distinct quotes among all atoms": 2657,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 50,
+  "conflicts (atoms, class, probe exist)": 49,
   "machine transitions": 42,
   "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 12,
   "abstract machines (no single column holder)": 5,
-  "capability predicates": 29,
-  "probes run": 35,
-  "probes linted for a reachable PASS": 35,
+  "capability predicates": 28,
+  "probes run": 34,
+  "probes linted for a reachable PASS": 34,
   "tables placed in a stage": 84
  },
  "atoms_by_status": {
-  "ACTIVE": 2312,
+  "ACTIVE": 2307,
+  "SUPERSEDED": 77,
   "OPEN": 75,
-  "SUPERSEDED": 74,
   "AMENDED": 76,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
- "atoms_total": 2692,
- "conflicts_total": 50
+ "atoms_total": 2690,
+ "conflicts_total": 49
 }

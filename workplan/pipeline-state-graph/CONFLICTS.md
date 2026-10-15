@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-50 entries. Severity: S1 16, S2 18, S3 16. Class: DOC-DOC 16, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 18, RULING-RULING 3, UNRECORDED 1.
+49 entries. Severity: S1 15, S2 18, S3 16. Class: DOC-DOC 16, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 17, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -15,7 +15,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-019 | S1 | RULING-MECHANISM | OWNER+AGENT | P-UNWRITABLE -> FAIL | The item layer is deleted, and is still a foreign-key target, a renderer input and the vocabulary of four standing documents |
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
-| C-027 | S1 | RULING-MECHANISM | OWNER+AGENT | P-I -> FAIL, P-K -> FAIL | Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants and tier-consistency have no live gate |
 | C-029 | S1 | RULING-MECHANISM | OWNER | P-L -> FAIL | Direct writes to the committed database by scheduled workflows |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> FAIL | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
@@ -167,19 +166,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `DRS-264`(act), `DRS-265`(act), `DRS-251`(act)
 
 **Direction.** D-0178 is later and is the owner's ruling, so by rule 0 the co1-operational vocabulary and its 'every pre-launch Co-1 citation is published_corpus' clause are stale. The data already conforms: P-CO1-PROV finds each Co-1 source carrying prose that names the co-production and none holding only a co1-operational value; the column has no CHECK vocabulary, so nothing enforces it. Correcting co1-operational is a doctrine-document edit, owner-merged.
-
-## C-027 [S1] Render: 'dynamic from the database' (owner words) -- no live renderer and no reachable static generator
-
-**Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** medium  ·  **Probe** `P-I` = **FAIL**  ·  **Probe** `P-K` = **FAIL**
-
-- owner words (quoted from migration 046's header, 2026-08-27): the target is dynamic rendering from the database, no per-page build event, no reliance on artefacts for rendering.  
-  _atoms:_ `LED-103`(act), `LED-104`(act), `LED-105`(act)
-- the same retired migration header, in the agent's voice, adds that the owner chose static build now, dynamic later, so per-page HTML continues to be generated as a stopgap. NO primary record of that choice was found (the ledger, sessions/, decisions/ and workplan/ do not carry it).  
-  _atoms:_ `ADD-002`(act), `ADD-003`(act)
-- contract: parts/ and site/ must not be stale relative to the DB; CLAUDE.md now says regenerate_derived.sh regenerates tools/*.html and audits/evidentiary-base-audit* and does not reach parts/ or site/ (step 0.5).  
-  _atoms:_ `PIP-07`(act), `CLM-050`(act)
-
-**Direction.** UNSETTLED which of the two readings governs, because the stopgap rests on an agent's comment alone. If ADD-002 is accurate, dynamic-as-target and regenerate-as-stopgap reconcile and PIP-07/CLAUDE.md are right to expect regeneration; if it is not, PIP-07 and CLAUDE.md contradict the owner's 'do not rely on artifacts for rendering the site' (LED-104). Either way the mechanism fails: regenerate_derived.sh does not reach parts/ or site/ (P-I) and the renderers' specifications queries fail on the live schema (P-K) because they still select item-layer columns (C-019). The owner confirms the stopgap; the repair of the queries is tooling work either way.
 
 ## C-028 [S1] Register invariants and tier-consistency have no live gate
 

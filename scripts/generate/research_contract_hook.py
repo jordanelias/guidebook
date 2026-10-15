@@ -7,8 +7,8 @@ The research contract used to exist as two hand-transcribed copies with no
 comparator: the hook text in .claude/settings.json and the rule table in
 scripts/audit/research_batch_dod.py. They drifted on R1, R2 and R3 — two of those
 changed what the contract obliges. This makes the hook a DERIVED artifact, in the
-same shape as the repo's other freshness gates (tools/pipeline_completeness.py
---check, tools/evidentiary_audit.py --check): regenerate, compare, fail on drift.
+same shape as the repo's other freshness gate (scripts/generate/context_map.py
+--check): regenerate, compare, fail on drift.
 
 Usage:
     python3 scripts/generate/research_contract_hook.py --check   # gate (registered)

@@ -16,7 +16,7 @@ You run sweeps and return findings. You do not adjudicate them.
 
 **Search correctly or your answer is wrong.** `.ignore` hides `_archived/`,
 `audits/`, `sessions/`, `references/search-log/`, `versions/`,
-`workplan/_superseded/`, `tools/*.html` and the JSONL under `transcripts/` from
+`workplan/_superseded/` and the JSONL under `transcripts/` from
 ripgrep and from the Grep tool. Owner rulings live overwhelmingly in
 `sessions/`. So:
 
