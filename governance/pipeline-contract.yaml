@@ -38,11 +38,6 @@ stages:
       retired codes are not taught.
     references: D-0170 (taxonomies are browsing lenses); validate_population.py RETIRED_CROSSWALK
     check: scripts/validate_population.py
-  - id: base-demand-vocabulary
-    kind: integrity
-    criterion: Every ICF/demand code referenced downstream resolves to a live row in the ICF taxonomy.
-    references: D-0169 (base_taxonomy_icf); DR-2026-08-24 §R8
-    check: scripts/validate_axes.py
   - id: base-medical-lens-offered-not-adopted
     kind: integrity
     criterion: Every medical-lens row carries an MD- code with no digit, states no determination in

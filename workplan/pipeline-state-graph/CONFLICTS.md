@@ -11,7 +11,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-004 | S1 | RULING-MECHANISM | OWNER | P-ENG-T3 -> PASS | T3-grey and a lone T6 source may anchor a floor claim (owner directive 2026-07-20) -- the engine returns pending for T3-grey alone |
 | C-005 | S1 | RULING-RULING | OWNER | -- | A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known' |
 | C-012 | S1 | RULING-MECHANISM | OWNER | P-STAGE-SVE -> FAIL | source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md) |
-| C-017 | S1 | RULING-MECHANISM | OWNER+AGENT | P-AXIS -> FAIL, P-G -> PASS | 'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live |
+| C-017 | S1 | RULING-MECHANISM | OWNER | P-AXIS -> PASS, P-G -> PASS | 'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word |
 | C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> PASS | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
@@ -111,20 +111,20 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** governance/stage-map.yaml renders the table at EVIDENCE and records the dispute as open (disputed: block). CLAUDE.md section 3's stage table says evidence holds 'extraction'. LED-106 is the adopted ruling (OWNER_RELAYED); under rule 0 the map and CLAUDE.md are what to correct. The consequence is not cosmetic: add-extraction writes evidence_sources.data_capture_status in the same transaction, a judgment-to-evidence write that the code comment itself calls 'evidence the column is in the wrong home'.
 
-## C-017 [S1] 'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live
+## C-017 [S1] 'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word
 
-**Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-AXIS` = **FAIL**  ·  **Probe** `P-G` = **PASS**
+**Class** RULING-MECHANISM  ·  **Resolver** OWNER  ·  **Confidence** high  ·  **Probe** `P-AXIS` = **PASS**  ·  **Probe** `P-G` = **PASS**
 
 - owner R3 (2026-08-18, DG-NON, 'standing decisions, do not relitigate'): 'axes' is a bad coined term; use ICF codes directly with their names; `axes` and `item_axis_links` are retired; `population_axis_map` is re-derived mechanically as population-to-ICF.  
   _atoms:_ `WRK-178`(act), `WRK-179`(act), `WRK-180`(act), `WRK-181`(act), `WRK-007`(act), `WRK-031`(act), `WRK-166`(act)
 - owner 2026-08-24: 'I don't want axis to be used'; owner 2026-09-13: 'AX-' for ICF should never exist anywhere; work in ICF/access-need codes AND names.  
   _atoms:_ `LED-076`(act), `LED-166`(act), `CLM-039`(act)
 - the 2026-08-24 DR: the rename is 'authorized and owed' yet 'NOT DECIDED HERE', to be done as one act and not piecemeal.  
-  _atoms:_ `DRS-006`(act), `DRS-023`(ope), `DRS-024`(act)
+  _atoms:_ `DRS-006`(sup), `DRS-023`(sup), `DRS-024`(act)
 - D-0170, D-0184, functional-taxonomy and the operative instrument still treat `axes`, `item_axis_links`, `population_axis_map` and AX-* as live objects (the instrument quarantines the axis map under owner directive D-1).  
-  _atoms:_ `DRS-114`(act), `DRS-189`(act), `DRS-193`(act), `DRS-199`(ope), `ENT-105`(act), `ENT-156`(act), `ENT-076`(act), `OPI-049`(act)
+  _atoms:_ `DRS-114`(act), `DRS-189`(act), `DRS-193`(act), `DRS-199`(sup), `ENT-105`(sup), `ENT-156`(ame), `ENT-076`(act), `OPI-049`(sup)
 
-**Direction.** The owner's rulings are consistent and the earliest is recorded, standing and unqualified (R3, with LED-076 and LED-166 later). The 2026-08-24 DR does not reverse them: it scopes WHEN the rename happens ('not piecemeal'), so the retirement is ruled and unexecuted. LED-166 is carried (P-G); the retirement of the vocabulary is not (P-AXIS lists the tables and columns). [CORRECTION: an earlier draft said the 2026-08-18 ruling could not be found; it is in workplan/2026-08-18-handoff-next-session.md section 2 and the research-frame proposal, which the operative instrument names as the RULING RECORD.]
+**Direction.** Mechanism executed by step 1.4 (migration drop_axes; validate_axes and its criterion deleted). Open: DRS-024 says the retirement is one act, never piecemeal, and R35 leaves the documents (D-0170, D-0184, functional-taxonomy, the operative instrument) and the AX- strings in references/ to an owner merge and step 1.6(c); the atoms that treated axes as live are marked SUPERSEDED, but their documents still say it.
 
 ## C-019 [S1] The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules
 

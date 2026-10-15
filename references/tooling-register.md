@@ -35,7 +35,6 @@ already drifted apart:
 
 | Check | `ci.yml` | `audit.yml` | `research-contract.yml` | `preflight.sh` |
 |---|:--:|:--:|:--:|:--:|
-| `validate_axes` | — | — | — | ✓ |
 | `validate_verification_consistency` | — | — | — | ✓ |
 | `validate_jurisdiction` | ✓ | — | — | — |
 | ~~`validate_temporal`~~ | — | — | — | — | *(QUARANTINED 2026-08-04 — it was blocking while examining zero records; `data/temporal/` does not exist. See `check-registry.yaml`.)* |
@@ -133,7 +132,7 @@ only when a *blocking* check fails, which is why `continue-on-error:` no longer 
 scattered through job definitions where it was easy to lose track of.
 
 Every check newly wired by this change — `matrix_consistency`, `audit_evidence_metadata`,
-`pipeline_contract_audit`, `validate_axes`, `validate_verification_consistency`,
+`pipeline_contract_audit`, `validate_verification_consistency`,
 `validate_reasoning --strict`, and the eight `tests` battery entries — landed as
 **advisory**, per the repo's shakedown norm (precedent: `audit.yml`'s `attestation_evidence`,
 all of `research-contract.yml`). Nothing was promoted to blocking in the commit that first
