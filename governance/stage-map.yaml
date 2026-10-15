@@ -87,11 +87,7 @@ tables:
   base_taxonomy_medical: base
   bpc_metadata: infrastructure
   case_studies: evidence
-  case_study_outcomes: evidence
-  case_study_populations: evidence
-  case_study_strategies: evidence
   citation_mining: research
-  citation_population_links: judgment
   conflicts: synthesis
   connection_targets: synthesis
   connections: synthesis
@@ -101,13 +97,11 @@ tables:
   decisions: infrastructure
   determination_gates: specification
   economics_entries: evidence
-  economics_entry_populations: evidence
   evidence_population_match: judgment
   evidence_source_authors: evidence
   evidence_sources: evidence
   external_root_registry: evidence
   extraction_follow_ups: judgment
-  extraction_population_links: judgment
   extraction_relations: evidence
   gap_mining: research
   gaps: synthesis

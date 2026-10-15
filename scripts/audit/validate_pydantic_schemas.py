@@ -91,8 +91,6 @@ MODEL_TABLE_MAP = {
     "adversarial.AdversarialPass": "adversarial_passes",
     "adversarial.AdversarialFinding": "adversarial_findings",
     "population.Population": "populations",
-    "population_links.CitationPopulationLink": "citation_population_links",
-    "population_links.ExtractionPopulationLink": "extraction_population_links",
     "slug.Slug": "slugs",
     "source_value_extraction.SourceValueExtraction": "source_value_extractions",
 }

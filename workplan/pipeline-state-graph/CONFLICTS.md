@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-48 entries. Severity: S1 15, S2 18, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 17, RULING-RULING 3, UNRECORDED 1.
+47 entries. Severity: S1 15, S2 17, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -12,7 +12,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-005 | S1 | RULING-RULING | OWNER | -- | A T4-T6-only basis: never best-practice language, or weak-band best practice 'as currently known' |
 | C-012 | S1 | RULING-MECHANISM | OWNER | P-STAGE-SVE -> FAIL | source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md) |
 | C-017 | S1 | RULING-MECHANISM | OWNER+AGENT | P-AXIS -> FAIL, P-G -> PASS | 'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live |
-| C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> FAIL | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
+| C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> PASS | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants and tier-consistency have no live gate |
@@ -31,7 +31,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
-| C-020 | S2 | RULING-MECHANISM | AGENT | P-A -> FAIL | Splinter population link tables: 'both sweeps are done' versus five tables still present |
 | C-021 | S2 | RULING-MECHANISM | AGENT | P-GT -> FAIL | determination_gates attaches to a group through one lens column |
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
@@ -129,7 +128,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 ## C-019 [S1] The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules
 
-**Class** RULING-MECHANISM  ·  **Resolver** OWNER  ·  **Confidence** high  ·  **Probe** `P-UNWRITABLE` = **FAIL**
+**Class** RULING-MECHANISM  ·  **Resolver** OWNER  ·  **Confidence** high  ·  **Probe** `P-UNWRITABLE` = **PASS**
 
 - owner R1 (2026-08-18): item codes bias research at this stage; the items rows are archived, not deleted (the instrument later suspends the archival, OD-12, and CLAUDE.md says the rows are gone from the database).  
   _atoms:_ `WRK-169`(act), `WRK-170`(act)
@@ -371,17 +370,6 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `ENT-040`(act), `ENT-192`(act)
 
 **Direction.** The retirement of the word is ruled and unqualified (ADD-001), so PIP-15, PRC-082, ENT-236/247/222 and the methodology wording are stale on contact. What is open is the replacement name ('base_taxonomy ... i think') and the confirmation LED-127 asks for, which is not recorded: until then `populations` is the identity lens table (CLM-043) and no rename has been applied (P-C).
-
-## C-020 [S2] Splinter population link tables: 'both sweeps are done' versus five tables still present
-
-**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-A` = **FAIL**
-
-- owner 2026-08-28: no population_* link table may exist; every table attaching a determination to a group takes four lens columns.  
-  _atoms:_ `LED-132`(act), `CLM-042`(act)
-- CLAUDE.md section 6 stated both sweeps were done; step 0.5 removed the claim and left the accurate sentence that migration 071 dropped population_code and item_code from specifications.  
-  _atoms:_ `CLM-042`(act)
-
-**Direction.** Only `specifications` was swept. P-A and P-B measure the tables and columns that were not. The doc overstated and no longer does (step 0.5); the empty tables are removable without owner sign-off (CLAUDE.md section 8) through a tooling migration (rule 10), plan step 1.3.
 
 ## C-021 [S2] determination_gates attaches to a group through one lens column
 

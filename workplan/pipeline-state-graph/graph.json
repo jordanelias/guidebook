@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 05:18 UTC from git HEAD 9455315 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook-p12fix",
- "user_version": 107,
+ "generated": "Generated 2026-10-14 06:01 UTC from git HEAD 7888bb9 (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-m13",
+ "user_version": 108,
  "stages": [
   "base",
   "research",
@@ -271,38 +271,6 @@
     "sources"
    ]
   },
-  "case_study_outcomes": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "outcome_id",
-    "case_study_id",
-    "metric",
-    "value",
-    "source",
-    "tier"
-   ]
-  },
-  "case_study_populations": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "case_study_id",
-    "population_code"
-   ]
-  },
-  "case_study_strategies": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "strategy_id",
-    "case_study_id",
-    "strategy"
-   ]
-  },
   "citation_mining": {
    "stage": "research",
    "rows": 33,
@@ -323,18 +291,6 @@
     "updated_at",
     "updated_by_session",
     "deferred_reason"
-   ]
-  },
-  "citation_population_links": {
-   "stage": "judgment",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "citation_id",
-    "population_code",
-    "notes",
-    "created_at",
-    "created_by_session"
    ]
   },
   "conflicts": {
@@ -526,15 +482,6 @@
     "updated_by_session"
    ]
   },
-  "economics_entry_populations": {
-   "stage": "evidence",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "entry_id",
-    "population_code"
-   ]
-  },
   "evidence_population_match": {
    "stage": "judgment",
    "rows": 54,
@@ -724,18 +671,6 @@
     "resolved_at",
     "resolved_by_session",
     "resolution"
-   ]
-  },
-  "extraction_population_links": {
-   "stage": "judgment",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "extraction_id",
-    "population_code",
-    "notes",
-    "created_at",
-    "created_by_session"
    ]
   },
   "extraction_relations": {
@@ -1648,45 +1583,9 @@
    "notnull": true
   },
   {
-   "child": "case_study_outcomes",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true
-  },
-  {
-   "child": "case_study_populations",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "case_study_populations",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true
-  },
-  {
-   "child": "case_study_strategies",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true
-  },
-  {
    "child": "citation_mining",
    "col": "slug",
    "parent": "slugs",
-   "notnull": true
-  },
-  {
-   "child": "citation_population_links",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "citation_population_links",
-   "col": "citation_id",
-   "parent": "reasoning_doc_citations",
    "notnull": true
   },
   {
@@ -1732,18 +1631,6 @@
    "notnull": false
   },
   {
-   "child": "economics_entry_populations",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "economics_entry_populations",
-   "col": "entry_id",
-   "parent": "economics_entries",
-   "notnull": true
-  },
-  {
    "child": "evidence_population_match",
    "col": "gap_id",
    "parent": "gaps",
@@ -1763,18 +1650,6 @@
   },
   {
    "child": "extraction_follow_ups",
-   "col": "extraction_id",
-   "parent": "source_value_extractions",
-   "notnull": true
-  },
-  {
-   "child": "extraction_population_links",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "extraction_population_links",
    "col": "extraction_id",
    "parent": "source_value_extractions",
    "notnull": true
@@ -2135,38 +2010,6 @@
   }
  ],
  "unwritable": [
-  {
-   "child": "case_study_outcomes",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "case_study_populations",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "case_study_strategies",
-   "col": "case_study_id",
-   "parent": "case_studies",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
-  {
-   "child": "citation_population_links",
-   "col": "citation_id",
-   "parent": "reasoning_doc_citations",
-   "notnull": true,
-   "verbs_child": [],
-   "parent_written_by_same_verb": []
-  },
   {
    "child": "connection_targets",
    "col": "con_id",
@@ -4162,24 +4005,14 @@
  },
  "probes": {
   "P-A": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "the five splinter population_* link tables are deleted (owner 2026-08-28)",
    "atoms": [
     "LED-132"
    ],
    "evidence": {
-    "still_present": [
-     "extraction_population_links",
-     "citation_population_links",
-     "case_study_populations",
-     "economics_entry_populations"
-    ],
-    "rows": [
-     0,
-     0,
-     0,
-     0
-    ]
+    "still_present": [],
+    "rows": []
    }
   },
   "P-B": {
@@ -4190,20 +4023,8 @@
     "CLM-042"
    ],
    "evidence": {
-    "case_study_populations": [
-     "population_code"
-    ],
-    "citation_population_links": [
-     "population_code"
-    ],
     "determination_gates": [
      "identity_code"
-    ],
-    "economics_entry_populations": [
-     "population_code"
-    ],
-    "extraction_population_links": [
-     "population_code"
     ]
    }
   },
@@ -4216,11 +4037,7 @@
    ],
    "evidence": {
     "tables": [
-     "case_study_populations",
-     "citation_population_links",
-     "economics_entry_populations",
      "evidence_population_match",
-     "extraction_population_links",
      "population_axis_map",
      "population_icf_links",
      "populations"
@@ -4233,24 +4050,12 @@
       "population_description",
       "populations_served_note"
      ],
-     "case_study_populations": [
-      "population_code"
-     ],
-     "citation_population_links": [
-      "population_code"
-     ],
-     "economics_entry_populations": [
-      "population_code"
-     ],
      "evidence_population_match": [
       "target_population",
       "study_population"
      ],
      "external_root_registry": [
       "root_population_note"
-     ],
-     "extraction_population_links": [
-      "population_code"
      ],
      "population_axis_map": [
       "population_code"
@@ -4289,9 +4094,6 @@
     "OPS-06"
    ],
    "evidence": {
-    "case_study_outcomes": [
-     "tier"
-    ],
     "evidence_sources": [
      "tier",
      "scope"
@@ -4621,20 +4423,15 @@
    }
   },
   "P-UNWRITABLE": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "no NOT NULL foreign key points into an emptied table",
    "atoms": [
     "CLM-034",
     "CLM-048"
    ],
    "evidence": {
-    "count": 4,
-    "pairs": [
-     "case_study_outcomes.case_study_id -> case_studies",
-     "case_study_populations.case_study_id -> case_studies",
-     "case_study_strategies.case_study_id -> case_studies",
-     "citation_population_links.citation_id -> reasoning_doc_citations"
-    ],
+    "count": 0,
+    "pairs": [],
     "with_a_db_py_verb": [],
     "parent_written_by_same_verb": {}
    }
@@ -4705,7 +4502,7 @@
     "CLM-029"
    ],
    "evidence": {
-    "count": 7,
+    "count": 6,
     "with_live_rows": [
      "evidence_population_match.gap_id -> gaps",
      "search_admissions.ref_id -> evidence_sources",
@@ -4714,12 +4511,6 @@
      "source_value_extractions.promoted_to_rdc_id -> reasoning_doc_citations"
     ],
     "all": [
-     {
-      "fk": "citation_population_links.citation_id -> reasoning_doc_citations",
-      "from_stage": "judgment",
-      "to_stage": "synthesis",
-      "child_rows": 0
-     },
      {
       "fk": "evidence_population_match.gap_id -> gaps",
       "from_stage": "judgment",
@@ -5171,7 +4962,7 @@
   "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 451,
   "distinct quotes among all atoms": 2657,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 48,
+  "conflicts (atoms, class, probe exist)": 47,
   "machine transitions": 42,
   "transition evidence needles re-read": 74,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -5179,7 +4970,7 @@
   "capability predicates": 28,
   "probes run": 34,
   "probes linted for a reachable PASS": 34,
-  "tables placed in a stage": 72
+  "tables placed in a stage": 66
  },
  "atoms_by_status": {
   "ACTIVE": 2302,
@@ -5190,5 +4981,5 @@
   "HISTORICAL": 26
  },
  "atoms_total": 2690,
- "conflicts_total": 48
+ "conflicts_total": 47
 }

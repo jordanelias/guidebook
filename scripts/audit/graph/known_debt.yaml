@@ -40,13 +40,6 @@ entries:
     lift_when_sql: "SELECT COUNT(*) FROM conflicts"
     lift_when_ge: 1
 
-  - id: extraction-population-links-empty
-    check_id: table.empty_mission_critical
-    table: extraction_population_links
-    warrant: "downstream of empty source_value_extractions (B6 backfill pending)"
-    lift_when_sql: "SELECT COUNT(*) FROM extraction_population_links"
-    lift_when_ge: 1
-
   - id: lang-jur-map-deferred
     check_id: table.empty_mission_critical
     table: lang_jur_map
