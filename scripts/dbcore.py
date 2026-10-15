@@ -1037,11 +1037,6 @@ def check_jurisdiction(value, context: str):
 NOT_CAPTURED = {
     "data_migrations": "migrate_db.py's own ledger — written BY the replay, never in it",
     "sqlite_sequence": "SQLite internal; AUTOINCREMENT state, maintained by the engine",
-    "pipeline_runs": (
-        "written directly into the blob by the scheduled source-verification workflow, "
-        "not through the migration path (CLAUDE.md rule 3 names this as the repository "
-        "breaking its own rule on a timer); it is also in migration_reproducibility's "
-        "EXEMPT_TABLES for the same reason"),
 }
 
 _INSERT_RE = re.compile(r'INSERT\s+(?:OR\s+\w+\s+)?INTO\s+"?(\w+)"?', re.I)

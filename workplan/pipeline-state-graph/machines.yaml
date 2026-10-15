@@ -77,13 +77,11 @@ machines:
   - id: M02.t2
     from: "UNVERIFIED"
     to: "VERIFIED"
-    via: "db.py amend-source (and the scheduled resolve-dois / verify-urls workflows, which bypass migrations)"
+    via: "db.py amend-source"
     guards:
       - "the field is in _AMENDABLE; leaving verification_disposition='CLOSED' over a non-VERIFIED row is refused"
     evidence:
       - {file: scripts/db.py, func: amend_source, needle: "verification_disposition='CLOSED' over a non-VERIFIED row"}
-      - {file: .github/workflows/resolve-dois.yml, needle: "git add data/guidebook.db"}
-      - {file: .github/workflows/verify-urls.yml, needle: "git add data/guidebook.db"}
   - id: M02.t3
     from: "live"
     to: "tombstone (superseded_by_ref_id set)"

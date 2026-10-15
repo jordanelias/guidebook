@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-47 entries. Severity: S1 15, S2 17, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
+46 entries. Severity: S1 14, S2 17, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 15, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -16,7 +16,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
 | C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants and tier-consistency have no live gate |
-| C-029 | S1 | RULING-MECHANISM | OWNER | P-L -> FAIL | Direct writes to the committed database by scheduled workflows |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> FAIL | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
 | C-033 | S1 | RULING-MECHANISM | AGENT | P-M -> FAIL | Every slug is searched against every lens -- the search log cannot say which lens a search covered |
 | C-034 | S1 | RULING-MECHANISM | AGENT | P-O -> FAIL | The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer |
@@ -173,17 +172,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `PIP-06`(act), `POS-03`(act), `LED-019`(act)
 
 **Direction.** The check that enforces these (register_integrity_check) is QUARANTINED because it is red by construction from the first determination onward; adjudication_integrity (tier derivation) is QUARANTINED and currently green. The generator reads the registry to list what is quarantined. Nothing live gates the weak-band rendering rule.
-
-## C-029 [S1] Direct writes to the committed database by scheduled workflows
-
-**Class** RULING-MECHANISM  ·  **Resolver** OWNER  ·  **Confidence** high  ·  **Probe** `P-L` = **FAIL**
-
-- the database is never written directly; nothing but migrate_db.py opens it read-write (OPI-124); direct writes fail the reproducibility check.  
-  _atoms:_ `CLM-012`(act), `LED-153`(act), `ENT-468`(act), `OPI-124`(act)
-- the committed DB reproduces the core invariants from migration history; job-owned tables are the only exception.  
-  _atoms:_ `PIP-18`(act)
-
-**Direction.** CLAUDE.md names one workflow (source-verification / resolve-dois.yml). P-L finds every workflow that `git add`s the DB blob. migration_reproducibility compares row counts only and exempts the author and run tables, so UPDATEs are invisible.
 
 ## C-032 [S1] Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug
 

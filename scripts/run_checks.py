@@ -291,8 +291,8 @@ EXAMINED_RE = re.compile(r"^\s*EXAMINED:\s*(\d+)\b", re.MULTILINE)
 # matched, so "NOTHING-IN-SCOPE is what we avoid here" relabelled a check that
 # examined 900 rows — and worse, this runner's own summary line reads
 # "NOTHING-IN-SCOPE (5): a, b, c", so nesting a run inside a check, or a check
-# quoting a transcript, relabelled itself. Both live emitters
-# (citation_mining_completeness.py, verify_urls.py) print the verdict form, so
+# quoting a transcript, relabelled itself. The live emitters
+# (citation_mining_completeness.py among them) print the verdict form, so
 # requiring it costs nothing and closes the whole class.
 NOTHING_IN_SCOPE_RE = re.compile(r"^\s*VERDICT:\s*NOTHING-IN-SCOPE\b", re.MULTILINE)
 
