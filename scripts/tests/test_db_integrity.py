@@ -899,6 +899,14 @@ def run_checks(db_path):
            f"integrity_check: {ic}" if ic != "ok" else "",
            subject=1)
 
+    # Declared foreign keys bind a connection only at write time, so a row written past them
+    # (the direct-blob writers rule 3 names) stays invisible until something reads the blob.
+    fkv = conn.execute("PRAGMA foreign_key_check").fetchall()
+    record("E07", "PRAGMA foreign_key_check reports no violation",
+           not fkv, f"{len(fkv)} violation(s), first: {[tuple(r) for r in fkv[:3]]}" if fkv else "",
+           subject=sum(len(conn.execute(f'PRAGMA foreign_key_list("{t}")').fetchall())
+                       for (t,) in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")))
+
     # ── F: Pipeline run health ────────────────────────────────────────────────
     print("\n[F] Pipeline run health")
 

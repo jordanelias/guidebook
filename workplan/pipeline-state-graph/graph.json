@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-14 06:01 UTC from git HEAD 7888bb9 (working tree, uncommitted changes included)",
- "tree": "/home/user/guidebook-m13",
- "user_version": 108,
+ "generated": "Generated 2026-10-14 08:31 UTC from git HEAD 81efe4a (working tree, uncommitted changes included)",
+ "tree": "/home/user/guidebook-m14",
+ "user_version": 109,
  "stages": [
   "base",
   "research",
@@ -19,19 +19,6 @@
    "cols": [
     "code",
     "definition",
-    "created_at",
-    "created_by_session"
-   ]
-  },
-  "access_need_axis_map": {
-   "stage": "base",
-   "rows": 21,
-   "writers": [],
-   "cols": [
-    "need_code",
-    "axis_code",
-    "relationship",
-    "notes",
     "created_at",
     "created_by_session"
    ]
@@ -121,24 +108,6 @@
     "closed_at",
     "created_by_session",
     "created_at"
-   ]
-  },
-  "axes": {
-   "stage": "base",
-   "rows": 17,
-   "writers": [],
-   "cols": [
-    "axis_code",
-    "name",
-    "icf_b_anchors",
-    "icf_d_anchors",
-    "mechanism",
-    "design_domains",
-    "coverage_status",
-    "falsification_condition",
-    "notes",
-    "created_at",
-    "created_by_session"
    ]
   },
   "base_icf": {
@@ -874,19 +843,6 @@
     "metadata_complete_after"
    ]
   },
-  "population_axis_map": {
-   "stage": "base",
-   "rows": 53,
-   "writers": [],
-   "cols": [
-    "population_code",
-    "axis_code",
-    "role",
-    "notes",
-    "created_at",
-    "created_by_session"
-   ]
-  },
   "population_icf_links": {
    "stage": "base",
    "rows": 61,
@@ -1152,25 +1108,6 @@
     "updated_by_session"
    ]
   },
-  "situations": {
-   "stage": "base",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "situation_id",
-    "title",
-    "account_language",
-    "account_text_ref",
-    "translation_ref",
-    "attaches_items",
-    "attaches_axes",
-    "attaches_profiles",
-    "operational_access",
-    "co1_status",
-    "created_at",
-    "created_by_session"
-   ]
-  },
   "slugs": {
    "stage": "base",
    "rows": 106,
@@ -1185,8 +1122,7 @@
     "created_at",
     "created_by_session",
     "updated_at",
-    "updated_by_session",
-    "serves_axes"
+    "updated_by_session"
    ]
   },
   "source_locators": {
@@ -1529,18 +1465,6 @@
  },
  "fks": [
   {
-   "child": "access_need_axis_map",
-   "col": "axis_code",
-   "parent": "axes",
-   "notnull": true
-  },
-  {
-   "child": "access_need_axis_map",
-   "col": "need_code",
-   "parent": "access_needs",
-   "notnull": true
-  },
-  {
    "child": "access_need_icf",
    "col": "icf_code",
    "parent": "base_icf",
@@ -1707,18 +1631,6 @@
    "col": "term_id",
    "parent": "terms",
    "notnull": false
-  },
-  {
-   "child": "population_axis_map",
-   "col": "axis_code",
-   "parent": "axes",
-   "notnull": true
-  },
-  {
-   "child": "population_axis_map",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
   },
   {
    "child": "population_icf_links",
@@ -2320,13 +2232,6 @@
     "situational"
    ]
   },
-  "access_need_axis_map": {
-   "relationship": [
-    "primary",
-    "partial",
-    "spans"
-   ]
-  },
   "access_need_icf": {
    "icf_type": [
     "b",
@@ -2391,13 +2296,6 @@
     "REJECTED",
     "PROVISIONAL-DISPUTED",
     "OWNER-RULED"
-   ]
-  },
-  "axes": {
-   "coverage_status": [
-    "ESTABLISHED",
-    "PARTIAL",
-    "STUB"
    ]
   },
   "base_icf": {
@@ -2744,14 +2642,6 @@
     "CHD"
    ]
   },
-  "population_axis_map": {
-   "role": [
-    "ALIAS",
-    "PRIMARY",
-    "SECONDARY",
-    "SITUATIONAL"
-   ]
-  },
   "population_icf_links": {
    "mapping_confidence": [
     "high_predictive",
@@ -2888,12 +2778,6 @@
     "SEARCHED",
     "PARTIAL",
     "NOT-RUN"
-   ]
-  },
-  "situations": {
-   "operational_access": [
-    "yes",
-    "no"
    ]
   },
   "slugs": {
@@ -4038,7 +3922,6 @@
    "evidence": {
     "tables": [
      "evidence_population_match",
-     "population_axis_map",
      "population_icf_links",
      "populations"
     ],
@@ -4056,9 +3939,6 @@
      ],
      "external_root_registry": [
       "root_population_note"
-     ],
-     "population_axis_map": [
-      "population_code"
      ],
      "population_icf_links": [
       "population_code"
@@ -4107,57 +3987,30 @@
     "LED-166"
    ],
    "evidence": {
-    "icf_typed_columns_examined": 9,
+    "icf_typed_columns_examined": 7,
     "icf_columns_holding_AX": {},
     "AX_elsewhere_not_tested_by_this_ruling": {
-     "access_need_axis_map.axis_code": 21,
-     "access_need_axis_map.notes": 1,
      "access_need_icf.notes": 3,
      "access_needs.notes": 1,
-     "axes.axis_code": 17,
-     "axes.falsification_condition": 8,
-     "axes.notes": 1,
      "decisions.rationale": 1,
      "decisions.notes": 1,
-     "population_axis_map.axis_code": 53,
      "search_executions.query_text": 1,
      "search_executions.deferred_reason": 1,
      "search_executions.findings_note": 1,
-     "slugs.serves_axes": 1,
      "terms.scope_note": 17
     }
    }
   },
   "P-AXIS": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "'axis' is not a vocabulary-layer name (owner 2026-08-24: 'I don't want axis to be used')",
    "atoms": [
     "LED-076",
     "DRS-006"
    ],
    "evidence": {
-    "tables": [
-     "access_need_axis_map",
-     "axes",
-     "population_axis_map"
-    ],
-    "columns": {
-     "access_need_axis_map": [
-      "axis_code"
-     ],
-     "axes": [
-      "axis_code"
-     ],
-     "population_axis_map": [
-      "axis_code"
-     ],
-     "situations": [
-      "attaches_axes"
-     ],
-     "slugs": [
-      "serves_axes"
-     ]
-    }
+    "tables": [],
+    "columns": {}
    }
   },
   "P-H": {
@@ -4237,17 +4090,13 @@
    "evidence": {
     "base_tables_with_no_db_py_writer": [
      "access_duration",
-     "access_need_axis_map",
      "access_need_icf",
      "access_needs",
      "access_stakes",
-     "axes",
      "lang_jur_map",
      "life_stage_modifiers",
-     "population_axis_map",
      "populations",
      "rooms",
-     "situations",
      "slugs"
     ]
    }
@@ -4970,13 +4819,13 @@
   "capability predicates": 28,
   "probes run": 34,
   "probes linted for a reachable PASS": 34,
-  "tables placed in a stage": 66
+  "tables placed in a stage": 62
  },
  "atoms_by_status": {
-  "ACTIVE": 2302,
-  "SUPERSEDED": 83,
-  "OPEN": 74,
-  "AMENDED": 76,
+  "ACTIVE": 2298,
+  "SUPERSEDED": 88,
+  "OPEN": 72,
+  "AMENDED": 77,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },

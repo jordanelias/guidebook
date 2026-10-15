@@ -242,7 +242,7 @@ conflicts:
 - id: C-017
   class: RULING-MECHANISM
   severity: S1
-  title: "'Axes' is a bad coined term and the axes tables are retired (owner R3, 2026-08-18; again 2026-08-24) -- the tables, columns and codes are live"
+  title: "'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word"
   atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166, LED-076, LED-166, CLM-039, ENT-105, ENT-156, ENT-076, DRS-006, DRS-023, DRS-024, DRS-114, DRS-189, DRS-193, DRS-199, OPI-049]
   sides:
     - {atoms: [WRK-178, WRK-179, WRK-180, WRK-181, WRK-007, WRK-031, WRK-166], says: "owner R3 (2026-08-18, DG-NON, 'standing decisions, do not relitigate'): 'axes' is a bad coined term; use ICF codes directly with their names; `axes` and `item_axis_links` are retired; `population_axis_map` is re-derived mechanically as population-to-ICF."}
@@ -250,8 +250,8 @@ conflicts:
     - {atoms: [DRS-006, DRS-023, DRS-024], says: "the 2026-08-24 DR: the rename is 'authorized and owed' yet 'NOT DECIDED HERE', to be done as one act and not piecemeal."}
     - {atoms: [DRS-114, DRS-189, DRS-193, DRS-199, ENT-105, ENT-156, ENT-076, OPI-049], says: "D-0170, D-0184, functional-taxonomy and the operative instrument still treat `axes`, `item_axis_links`, `population_axis_map` and AX-* as live objects (the instrument quarantines the axis map under owner directive D-1)."}
   probe: [P-AXIS, P-G]
-  direction: "The owner's rulings are consistent and the earliest is recorded, standing and unqualified (R3, with LED-076 and LED-166 later). The 2026-08-24 DR does not reverse them: it scopes WHEN the rename happens ('not piecemeal'), so the retirement is ruled and unexecuted. LED-166 is carried (P-G); the retirement of the vocabulary is not (P-AXIS lists the tables and columns). [CORRECTION: an earlier draft said the 2026-08-18 ruling could not be found; it is in workplan/2026-08-18-handoff-next-session.md section 2 and the research-frame proposal, which the operative instrument names as the RULING RECORD.]"
-  resolver: OWNER+AGENT
+  direction: "Mechanism executed by step 1.4 (migration drop_axes; validate_axes and its criterion deleted). Open: DRS-024 says the retirement is one act, never piecemeal, and R35 leaves the documents (D-0170, D-0184, functional-taxonomy, the operative instrument) and the AX- strings in references/ to an owner merge and step 1.6(c); the atoms that treated axes as live are marked SUPERSEDED, but their documents still say it."
+  resolver: OWNER
   confidence: high
 
 - id: C-018
