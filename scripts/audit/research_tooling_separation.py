@@ -20,7 +20,7 @@ home of the distinction the kind glob cannot make:
 
   * RESEARCH DATA: a path classified `data` (today, only `data/**`), OR a path under
     `scripts/migrations/` whose basename matches `migrate_db.DATA_PATTERN`.
-  * TOOLING: a path classified `tooling` (scripts, tools, .github, .claude), OR a path
+  * TOOLING: a path classified `tooling` (scripts, .github, .claude), OR a path
     classified `schema` that is NOT a data migration -- a numbered migration
     (`migrate_db.SCHEMA_PATTERN`) or anything under `schemas/**`.
 

@@ -19,7 +19,6 @@ search_visibility:
   - references/audits/
   - references/search-log/
   - sessions/**
-  - tools/*.html
   - transcripts/**/*.jsonl
   - transcripts/*.jsonl
   - versions/
@@ -61,8 +60,8 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
   parts:
-    role: the guidebook as chaptered markdown
-    authority: generated
+    role: 'retired: only _MOVED.md stubs remain (the chaptered markdown was deleted with the render apparatus)'
+    authority: frozen-record
     hidden_from_ripgrep: false
   references:
     role: 'working corpus: BPCs, reasoning docs, registers'
@@ -80,20 +79,8 @@ directories:
     role: per-session records and the continuity pointers
     authority: frozen-record
     hidden_from_ripgrep: false
-  site:
-    role: the generated static site
-    authority: generated
-    hidden_from_ripgrep: false
   skills:
     role: project-domain authoring protocols (not harness skills)
-    authority: canonical
-    hidden_from_ripgrep: false
-  specs:
-    role: hand-authored spec briefs (reference since the 2026-08-06 reset)
-    authority: reference
-    hidden_from_ripgrep: false
-  tools:
-    role: surface regenerators
     authority: canonical
     hidden_from_ripgrep: false
   versions:
@@ -646,12 +633,12 @@ database:
   - situations
   - spec_value_probes
 writers:
-  _note: 'direct_python lists every .py under scripts/ or tools/ containing an INSERT/UPDATE/DELETE naming
-    the table. Where such a script writes the CANONICAL DB it is outside the migration path, which CLAUDE.md
-    §0 rule 4 forbids, and it is listed so the divergence between rule and practice is visible rather
-    than asserted. READ THE SCRIPT BEFORE CONCLUDING THAT: the detection is textual, so a script whose
-    only INSERTs build a throwaway selftest fixture, or which emits SQL as text while opening every connection
-    mode=ro, is listed here too and violates nothing. Membership is a prompt to check, not a finding.'
+  _note: 'direct_python lists every .py under scripts/ containing an INSERT/UPDATE/DELETE naming the table.
+    Where such a script writes the CANONICAL DB it is outside the migration path, which CLAUDE.md §0 rule
+    4 forbids, and it is listed so the divergence between rule and practice is visible rather than asserted.
+    READ THE SCRIPT BEFORE CONCLUDING THAT: the detection is textual, so a script whose only INSERTs build
+    a throwaway selftest fixture, or which emits SQL as text while opening every connection mode=ro, is
+    listed here too and violates nothing. Membership is a prompt to check, not a finding.'
   direct_python:
     scripts/assess/assess_cell.py:
     - convergence_assessment
@@ -1417,16 +1404,6 @@ checks:
     - tooling
     min_items: 1
     cmd: python3 scripts/audit/pipeline_contract_audit.py
-  - id: pipeline_walk_fresh
-    level: advisory
-    battery: render
-    kinds:
-    - data
-    - schema
-    - render
-    - tooling
-    min_items: 1
-    cmd: python3 tools/pipeline_walk.py --check
   - id: pmp_audit
     level: advisory
     battery: research
@@ -1466,13 +1443,6 @@ checks:
     - synthesis
     min_items: null
     cmd: python3 scripts/audit/reasoning_doc_citations_audit.py
-  - id: render_audit_browser
-    level: advisory
-    battery: render
-    kinds:
-    - render
-    min_items: 1
-    cmd: node scripts/audit/render_audit.js
   - id: research_dod
     level: advisory
     battery: research
@@ -1510,16 +1480,6 @@ checks:
     - data
     min_items: 1
     cmd: python3 scripts/audit/scan_debt.py
-  - id: schema_walkability_fresh
-    level: advisory
-    battery: render
-    kinds:
-    - data
-    - schema
-    - render
-    - tooling
-    min_items: 1
-    cmd: python3 tools/schema_walkability.py --check
   - id: search_log_completeness
     level: advisory
     battery: research
@@ -1528,14 +1488,6 @@ checks:
     - synthesis
     min_items: null
     cmd: python3 scripts/audit/search_log_completeness.py --session @SESSION@
-  - id: site_pages_fresh
-    level: advisory
-    battery: render
-    kinds:
-    - data
-    - render
-    min_items: 1
-    cmd: python3 scripts/generate/build_site.py --check
   - id: source_locators_integrity
     level: advisory
     battery: data
@@ -1791,14 +1743,6 @@ checks:
     - synthesis
     min_items: null
     cmd: python3 scripts/doctrine_recheck.py --cross-ref
-  - id: evidentiary_audit_fresh
-    level: blocking
-    battery: render
-    kinds:
-    - data
-    - render
-    min_items: 1
-    cmd: python3 tools/evidentiary_audit.py --check
   - id: extraction_relations_integrity
     level: blocking
     battery: db_integrity
@@ -1842,14 +1786,6 @@ checks:
     - schema
     min_items: 1
     cmd: python3 scripts/audit/migration_reproducibility.py
-  - id: pipeline_completeness_fresh
-    level: blocking
-    battery: render
-    kinds:
-    - data
-    - render
-    min_items: null
-    cmd: python3 tools/pipeline_completeness.py --check
   - id: provenance_artefact_audit
     level: blocking
     battery: research

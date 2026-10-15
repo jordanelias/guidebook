@@ -107,8 +107,8 @@ into kinds and runs the intersection.
 | `governance` | `governance/**`, `decisions/**`, `attestations/**`, `references/project-standards.md`, `references/skill-registry.md`, `architecture/**` |
 | `synthesis` | `references/bpc-reasoning/**`, `references/connection-reasoning/**`, `references/bpc/**`, `sessions/**` |
 | `data` | `data/**` |
-| `render` | `parts/**`, `site/**`, `specs/**`, `tools/*.html`, `audits/evidentiary-base-audit*`, `index.html`, `assets/**` |
-| `tooling` | `scripts/**`, `tools/**`, `.github/**`, `.claude/**`, `requirements.txt` |
+| `render` | `parts/**`, `site/**`, `specs/**`, `index.html`, `assets/**` |
+| `tooling` | `scripts/**`, `.github/**`, `.claude/**`, `requirements.txt` |
 
 Resulting selectivity, out of 51 registered checks:
 

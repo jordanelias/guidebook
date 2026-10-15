@@ -1019,8 +1019,8 @@ def get_coverage_completeness(slug: str) -> dict:
             "WHERE slug=? AND status != 'NOT-RUN'", [slug]).fetchone()["n"]
         # Required scope comes from lang_jur_map, the bridge that declares it —
         # not from a literal. These were hardcoded 24 and 14 while
-        # tools/pipeline_completeness.py computed against 48, so "how much
-        # coverage is owed" had two answers differing 2x, shipped the same day.
+        # a dashboard computed against 48, so "how much coverage is owed" had two
+        # answers differing 2x, shipped the same day.
         req_jur = conn.execute(
             "SELECT COUNT(DISTINCT jurisdiction) AS n FROM lang_jur_map").fetchone()["n"]
         req_lang = conn.execute(
@@ -8749,10 +8749,9 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # column's FK points at `slugs`, so the database is satisfied by ANY live
         # slug -- it cannot see that this source was never admitted to this topic.
         # Without this refusal an extraction lands under a slug whose own
-        # `linked_sources` does not contain the ref, and
-        # tools/regenerate_vetting_surface.py renders it there: the vetting surface
-        # would show a value mined under a topic the source was never admitted to,
-        # which is the one thing that surface exists to make impossible to miss.
+        # `linked_sources` does not contain the ref, and a surface that lists a
+        # slug's sources would show a value mined under a topic the source was never
+        # admitted to, which is the one thing such a surface must make impossible to miss.
         #
         # THIS IS REF<->SLUG COHERENCE, NOT PARAMETER<->SLUG COHERENCE, and the two
         # are deliberately different. test_db_integrity's retired J01 asserted that

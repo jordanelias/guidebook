@@ -5,8 +5,7 @@ AST-parses the repo's Python scripts and records, as graph edges, every SQL tabl
 reference (FROM / JOIN / INTO / UPDATE <table>) found inside string literals.
 Resolved against the db_table nodes from extract_db (tables AND views), a reference
 to a relation that does not exist in guidebook.db surfaces as a dangling `table_ref`
-edge — i.e. a phantom-table reference (e.g. scripts/generate/room_page.py querying
-`room`, `room_item`, ... which were never migrated).
+edge — i.e. a phantom-table reference (a query naming a table that was never migrated).
 
 This SUPERSEDES scripts/audit/schema_reference_drift_audit.py (deleted 2026-08-20;
 its coverage is owned here), lifting it from

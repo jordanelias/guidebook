@@ -1078,7 +1078,7 @@ def run_checks(db_path):
     # The copy is now retired instead of policed. `specification_source_links` is the one
     # home; every reader was switched to it (validate_evidence_state's anti-hallucination
     # gate, validate_verification_consistency's dangling-ref check, C10 above,
-    # derivation_handshake_integrity, register_integrity_check, pipeline_completeness);
+    # derivation_handshake_integrity, register_integrity_check);
     # the writer stopped setting the JSON, which is rule 5's "NULL forward" because twelve
     # committed data migrations INSERT the column and rule 3 makes those immutable.
     #

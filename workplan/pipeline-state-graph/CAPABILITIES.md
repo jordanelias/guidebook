@@ -81,8 +81,7 @@ database, with the rendering gated?
 | C4.3 | a determination can be written today: no NOT NULL foreign key of specifications points into an emptied table | **PASS** | specifications has no NOT NULL FK into an emptied table | CLM-034 |
 | C4.4 | the engine can assign every value of the state vocabulary | **FAIL** | P-ENG-STATE = FAIL | EVI-361 |
 | C4.5 | a determination can be retired in place and redetermined | **PASS** | verb retire-specification declared on this tree | LED-169 |
-| C4.6 | a live renderer reads parameter x lens determinations | **FAIL** | P-K = FAIL | LED-103, PIP-06 |
-| C4.7 | the derived surfaces can be regenerated from the database | **FAIL** | P-I = FAIL | PIP-07, CLM-050 |
+| C4.6 | a live renderer reads parameter x lens determinations | **NOT-BUILT** | P-K = NOT-BUILT | LED-103, PIP-06 |
 | C4.8 | the rendering invariants and tier-derivation consistency are gated | **FAIL** | P-QUARANTINE = FAIL | PIP-06, POS-03 |
 
 ## Components against the four capabilities
@@ -104,6 +103,6 @@ database, with the rendering gated?
 | Convergence assessment | synthesis | -- | -- | PARTIAL | -- | per-parameter convergence of independent roots; no cross-parameter form. |
 | Connections and conflicts (add-connection, add-conflict) | synthesis | -- | -- | False | -- | free-text targets and item-layer keys; no column can name a parameter (C3.5). |
 | Gaps (add-gap, assess_cell) | synthesis | -- | -- | PARTIAL | -- | records that a cell is pending and why; sub-vocabulary after OPEN/CLOSED is free text. |
-| Renderers (build_site, spec_page, generate_parts, pilot_renderings, tools/*.html) | render | -- | -- | -- | False | queries that still select item-layer columns fail on the live schema (C4.6); the regenerate script reaches none of parts/ or site/ (C4.7). |
+| Renderers | render | -- | -- | -- | False | none exist: the render apparatus was deleted (plan step 1.1; RULINGS R1) and the one view and one renderer of step 3.R are not built (C4.6). |
 | Checks and gates (Layer 0) | Layer 0 | -- | -- | -- | PARTIAL | the checks that would hold rendering invariants and tier derivation are quarantined (C4.8). |
 

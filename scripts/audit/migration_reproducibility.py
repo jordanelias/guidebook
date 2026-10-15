@@ -233,8 +233,7 @@ def compare(committed_path, rebuilt_path):
 def q(identifier):
     """Quote an identifier. Table names reach PRAGMA and ORDER BY from sqlite_master,
     so an unquoted interpolation turns an odd-but-legal name into an OperationalError
-    — a crash where a verdict belongs, which is the conflation this repo just fixed
-    in render_audit.js."""
+    — a crash where a verdict belongs."""
     return '"' + str(identifier).replace('"', '""') + '"'
 
 

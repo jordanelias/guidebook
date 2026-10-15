@@ -293,30 +293,27 @@ entries:
     match: literal
     severity: stale-pointer
     retired_by: "2026-08-01 workflow consolidation"
-    replacement: "regenerate-derived.yml — leg 1 of the 3-leg matrix"
+    replacement: "none: regenerate-derived.yml, which absorbed it, was deleted with the render apparatus (plan step 1.1; render is dynamic, RULINGS R1)"
     exempt_paths:
       - "_archived/workflows/README.md"
-      - ".github/workflows/regenerate-derived.yml"   # header states what it absorbed
 
   - id: RV-006
     token: regenerate-evidentiary-audit.yml
     match: literal
     severity: stale-pointer
     retired_by: "2026-08-01 workflow consolidation"
-    replacement: "regenerate-derived.yml — leg 2 of the 3-leg matrix"
+    replacement: "none: regenerate-derived.yml, which absorbed it, was deleted with the render apparatus (plan step 1.1; render is dynamic, RULINGS R1)"
     exempt_paths:
       - "_archived/workflows/README.md"
-      - ".github/workflows/regenerate-derived.yml"   # header states what it absorbed
 
   - id: RV-007
     token: regenerate-pipeline-completeness.yml
     match: literal
     severity: stale-pointer
     retired_by: "2026-08-01 workflow consolidation"
-    replacement: "regenerate-derived.yml — leg 3 of the 3-leg matrix"
+    replacement: "none: regenerate-derived.yml, which absorbed it, was deleted with the render apparatus (plan step 1.1; render is dynamic, RULINGS R1)"
     exempt_paths:
       - "_archived/workflows/README.md"
-      - ".github/workflows/regenerate-derived.yml"   # header states what it absorbed
 
   - id: RV-008
     token: data/db/guidebook.db
@@ -414,8 +411,6 @@ entries:
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
       - "scripts/audit_evidence_metadata.py"
-      - "scripts/generate/spec_page.py"
-      - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
@@ -442,8 +437,6 @@ entries:
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
       - "scripts/audit_evidence_metadata.py"
-      - "scripts/generate/spec_page.py"
-      - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
@@ -473,8 +466,6 @@ entries:
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
       - "scripts/audit_evidence_metadata.py"
-      - "scripts/generate/spec_page.py"
-      - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
@@ -501,8 +492,6 @@ entries:
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
       - "scripts/audit_evidence_metadata.py"
-      - "scripts/generate/spec_page.py"
-      - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson
@@ -533,8 +522,6 @@ entries:
       - "scripts/tests/test_db_integrity.py"
       - "scripts/validate_verification_consistency.py"
       - "scripts/audit_evidence_metadata.py"
-      - "scripts/generate/spec_page.py"
-      - "tools/regenerate_vetting_surface.py"
       - "governance/evidence-methodology.md"      # carries the D-0157 amendment banner
       - "governance/co1-operational.md"           # ditto
       - "skills/integrity-protocol_SKILL.md"      # narrates the incident as a lesson

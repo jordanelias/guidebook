@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Do the tables agree on what to call the same thing?
 
-WHY THIS EXISTS. `tools/pipeline_walk.py` shipped a session-attribution helper
+WHY THIS EXISTS. A pipeline-walk tool (since deleted) shipped a session-attribution helper
 matching two column names, `created_by_session` and `session`. The corpus spells
 that one role EIGHT ways, so the tool silently reported fifteen tables --
 including `source_locators`, the largest it places -- as "not attributable to a

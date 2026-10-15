@@ -1085,8 +1085,7 @@ def governing_refs(conn, specification_id) -> list:
 
     The `role` filter is not decoration: `specification_source_links.role` carries a
     CHECK admitting only 'governing' today, and without the filter these two
-    definitions agree only until a second role exists (build_site.py already filters
-    for the same reason). Verified 2026-09-21 against all 8 live rows: the junction
+    definitions agree only until a second role exists. Verified 2026-09-21 against all 8 live rows: the junction
     under role='governing' reproduces the JSON exactly.
     """
     return [r[0] for r in conn.execute(
