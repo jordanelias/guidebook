@@ -89,7 +89,6 @@ tables:
   case_studies: evidence
   case_study_outcomes: evidence
   case_study_populations: evidence
-  case_study_specs: evidence
   case_study_strategies: evidence
   citation_mining: research
   citation_population_links: judgment
@@ -103,7 +102,6 @@ tables:
   determination_gates: specification
   economics_entries: evidence
   economics_entry_populations: evidence
-  economics_entry_specs: evidence
   evidence_population_match: judgment
   evidence_source_authors: evidence
   evidence_sources: evidence
@@ -115,12 +113,6 @@ tables:
   gaps: synthesis
   icf_medical_map: base
   identity_medical_map: base
-  item_audit_runs: infrastructure
-  item_bpc_links: render
-  item_population_elaborations: render
-  item_taxonomy_links: render
-  items: render
-  jurisdictional_values: evidence
   lang_jur_map: base
   life_stage_modifiers: base
   observed_terms: evidence
@@ -129,11 +121,9 @@ tables:
   population_axis_map: base
   population_icf_links: base
   populations: base
-  probe_population_links: judgment
   reasoning_doc_citations: synthesis
   reference_stubs: research
   research_code_leads: research
-  room_items: base
   rooms: base
   search_admissions: research
   search_candidates: research
@@ -147,14 +137,12 @@ tables:
   source_scans: evidence
   source_slug_links: evidence
   source_value_extractions: evidence
-  spec_value_probes: specification
   specification_extraction_links: specification
   specification_source_links: specification
   specifications: specification
   supersession_check: synthesis
   term_adjudications: judgment
   term_aliases: base
-  term_item_links: render
   terms: base
   url_verification_runs: evidence
   weighting_profile: render

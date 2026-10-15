@@ -1,1 +1,0 @@
-../../../skills/question-author_SKILL.md

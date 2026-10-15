@@ -169,9 +169,11 @@ entries:
     match: identifier
     severity: broken
     retired_by: "schema migration — column dropped from `items`"
-    replacement: "item_taxonomy_links (the junction that replaced the packed column;
-      named item_population_links from 2026-05-11 until migration 065 folded the ICF
-      lens in and made the lens a column)"
+    replacement: "a junction table replaced the packed column (item_population_links from
+      2026-05-11, then item_taxonomy_links once migration 065 folded the ICF lens in and
+      made the lens a column); migration `drop_item_layer_cluster` dropped it with the item
+      layer, and a determination now reaches a group of disabled people through the four
+      lens columns (LED-132)"
     note: >-
       Not a naming preference: the column DOES NOT EXIST in the live schema
       (verified against data/guidebook.db 2026-08-05 — all 67 tables and all 18

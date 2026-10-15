@@ -214,7 +214,6 @@ Known resolution archetypes (apply where evidence supports):
 - `connection-discovery` (cross-population tensions discovered — replaces connection-scout)
 - `content-gap-analyzer` (population coverage revealing conflict)
 - `multilingual-research` / `functional-deficit-researcher` (population-specific evidence)
-- `item-audit-pipeline` (Step 3 of pipeline wrapper)
 
 **Feeds INTO:**
 - `item-specification-writer` (conflict matrix informs spec ranges and DAR)

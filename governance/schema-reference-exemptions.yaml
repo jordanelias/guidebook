@@ -21,16 +21,3 @@ evidence_sources_v1_legacy: >-
   Guarded reference. scripts/tests/test_db_integrity.py reads it only after
   SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_sources_v1_legacy'
   returns non-zero -- the parity check runs only while the legacy table exists.
-
-specification: >-
-  Two distinct pre-existing findings, neither a rename casualty, both recorded
-  here rather than fixed because fixing either decides content, not naming.
-  (1) skills/item-specification-writer_SKILL.md:76 is a CORRECTION NOTE quoting
-  the wrong SQL in order to say it was wrong -- it already states "That table
-  does not exist". The check cannot tell a quoted error from a live query.
-  (2) skills/question-author_SKILL.md teaches UPDATE specification SET
-  question_heading WHERE spec_id, and measured 2026-08-28: the table does not
-  exist (it is `specifications`), `spec_id` and `title` are not columns of it,
-  and `question_heading` exists in NO table in the schema. The skill's entire
-  write path has never been runnable. Where question headings live is an open
-  content question.

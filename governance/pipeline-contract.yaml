@@ -110,12 +110,6 @@ stages:
       confidence_interval, shift_conditions, named_dissenter) before status CLOSED.
     references: 'PI rule #7; DR-2026-05-09 adversarial-research-protocol'
     check: scripts/audit/research_protocol_audit.py
-  - id: pmp-strict-termination
-    kind: integrity
-    criterion: 'Progressive-Measurement-Probe walks terminate strictly: no pass rows without a phase=''final''
-      step.'
-    references: 'PI rule #8; DR-2026-05-10 (PMP); pmp_audit.py C2'
-    check: scripts/audit/pmp_audit.py
 - id: evidence
   anchor: 'EvidenceSource corpus (ENT-02); PI rule #2 (Sonnet evidence inventories)'
   entry:

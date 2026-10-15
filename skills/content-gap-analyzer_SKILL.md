@@ -46,7 +46,7 @@ description: >
      Category mapping: evidence gaps → RP · missing population coverage → MX ·
      structure gaps → ST · content development gaps → CD
 
-   **Session-groupable output summary** (always include at end of run, parseable by audit-consolidator):
+   **Session-groupable output summary** (always include at end of run):
    ```
    CONTENT-GAP-ANALYZER COMPLETE
    Session: [session-name]

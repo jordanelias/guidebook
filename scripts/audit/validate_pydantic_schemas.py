@@ -85,16 +85,6 @@ MODEL_TABLE_MAP = {
     "evidence_state.ConvergenceAssessment": "convergence_assessment",
     "evidence_state.EvidenceStateRecord": "specifications",
     "gap.Gap": "gaps",
-    "item.Item": "items",
-    # Migration 053 put 16 locator columns into three tables. Two of the three
-    # were invisible to this audit and for different reasons, which is why both
-    # entries land together: reasoning_doc_citations had no model at all (written
-    # 2026-08-09), and jurisdictional_values had one that was simply never mapped
-    # here. An unmapped model is the quieter failure -- the table is reported in
-    # the "no model" list exactly as if none existed, so the mirror can drift with
-    # nothing to notice. See probe D5b in
-    # workplan/2026-08-09-locator-hierarchy-and-enforcement-probes.md.
-    "jurisdictional_value.JurisdictionalValueRecord": "jurisdictional_values",
     "reasoning_doc_citation.ReasoningDocCitation": "reasoning_doc_citations",
     # Migration 097 (RC4, 2026-09-27) created both tables in the same change that added
     # both mirrors below -- neither side of the pair is ever invisible to this audit.
@@ -102,7 +92,6 @@ MODEL_TABLE_MAP = {
     "adversarial.AdversarialFinding": "adversarial_findings",
     "population.Population": "populations",
     "population_links.CitationPopulationLink": "citation_population_links",
-    "population_links.ProbePopulationLink": "probe_population_links",
     "population_links.ExtractionPopulationLink": "extraction_population_links",
     "slug.Slug": "slugs",
     "source_value_extraction.SourceValueExtraction": "source_value_extractions",

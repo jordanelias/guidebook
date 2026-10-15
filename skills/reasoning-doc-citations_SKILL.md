@@ -7,7 +7,7 @@ adopted: 2026-05-13
 decision_record: decisions/DR-2026-05-13-evidence-verification-methodology.md
 governs: All citations in `references/bpc-reasoning/<slug>.md` that support jurisdiction-comparison cells (rule #9 step 3), qualitative claims, or definitional claims
 enforcement: Level 2 (audit query at scripts/audit/reasoning_doc_citations_audit.py)
-companion: adversarial-research (claim validation across the literature); progressive-measurement (numerical-value boundary probing)
+companion: adversarial-research (claim validation across the literature)
 ---
 
 # Skill: Reasoning Document Citations
@@ -25,7 +25,7 @@ Also trigger during:
 - Audit-phase re-evaluation of an existing reasoning doc when a cited source has been superseded by a new edition
 
 Do NOT invoke for:
-- **Numerical specification values** asserted in a BPC item (mm, s, NC, lux, °C, %, N, LRV, dB(A), NRC, ratio, count) — these route to `progressive-measurement` per rule #8 sub-rule 1. A `reasoning_doc_citations` row of `claim_type='numerical_spec'` is permitted by schema and may corroborate a PMP walk, but the PMP `spec_value_probes` walk is the primary evidence path; this skill does not substitute for it.
+- **Numerical specification values** asserted in a BPC item (mm, s, NC, lux, °C, %, N, LRV, dB(A), NRC, ratio, count) — these are extracted against their parameter (`db.py add-extraction`), which is the primary evidence path; this skill does not substitute for it.
 - Existence-level source verification (catalog reachable, DOI resolves, designation exists) — that's the Phase B `verification_status` gate, populated by the `citation-miner` and ingestion pipelines.
 - Claims where the underlying validity-for-population question has not yet cleared `adversarial-research`. This skill verifies that the source contains the claim; it does NOT verify that the claim is correct.
 
@@ -47,7 +47,7 @@ Read this first. Do not skip:
 | `parameter` | reasoning doc | the parameter name as declared in step 1 of the 9-step rule |
 | `jurisdiction` | reasoning doc, step 3 row | required if `claim_type='jurisdiction_value'`; else NULL |
 | `population` | reasoning doc, step 2 | per-population worst-case user statement; nullable for definitional claims that are population-agnostic |
-| `claim_type` | author decision | one of `jurisdiction_value`, `qualitative`, `definitional` (also `numerical_spec` if corroborating PMP — uncommon) |
+| `claim_type` | author decision | one of `jurisdiction_value`, `qualitative`, `definitional` (also `numerical_spec` — uncommon) |
 | `claimed_value` + `claimed_unit` | reasoning doc | required for `jurisdiction_value` and `numerical_spec`; the value as the doc states it, in native units |
 | `claim_text` | reasoning doc | required for `qualitative` and `definitional`; the doc's assertion verbatim or near-verbatim |
 | `source_ref_id` | `evidence_sources.ref_id` | must already exist and clear the existence gate (see pre-check below) |
@@ -201,15 +201,13 @@ No write to `items` is required by this skill. Reasoning docs are markdown in `r
 | Question | Skill | Output |
 |---|---|---|
 | Is the claim itself correct for this population? | `adversarial-research` | `named_dissenter`, `confidence_interval`, `falsification_condition` |
-| At what value does the empirical evidence stop validating a numerical claim? | `progressive-measurement` | `pmp_empirical_ceiling`, `pmp_gap_signed` |
 | Does the specific cited source contain the value or claim attributed to it? | **this skill** | `value_match`, `claim_match` |
 
 Order within Phase E.1 reasoning-doc authoring:
 1. `adversarial-research` clears the underlying claim across the literature.
-2. For numerical specs, `progressive-measurement` probes the value boundary.
-3. For each citation in the reasoning doc, this skill confirms the specific source contains what the doc says it contains.
+2. For each citation in the reasoning doc, this skill confirms the specific source contains what the doc says it contains.
 
-Skipping step 3 means the BPC ships with citations that may or may not say what the doc claims they say. Rule #10 makes this a synthesis-blocking gate.
+Skipping step 2 means the BPC ships with citations that may or may not say what the doc claims they say. Rule #10 makes this a synthesis-blocking gate.
 
 ## Multilingual scope
 
@@ -284,7 +282,6 @@ Beyond the pilot:
 - `decisions/DR-2026-05-13-evidence-verification-methodology.md` — adoption record; existence-vs-claim separation rationale
 - `scripts/audit/reasoning_doc_citations_audit.py` — audit script (level 2)
 - `skills/adversarial-research_SKILL.md` — companion: validates claim across literature
-- `skills/progressive-measurement_SKILL.md` — companion: numerical-value boundary probing
 - `skills/citation-miner_SKILL.md` — upstream: source existence verification (Phase B)
 - `references/keyword-compendiums/<lang>.md` — multilingual term references (Phase A.11)
 - `workplan/bpc-rewrite-workplan-2026-05-11.md` — Phase E.1 execution context

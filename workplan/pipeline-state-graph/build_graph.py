@@ -16,7 +16,7 @@ probe verdicts, capability verdicts. What is HAND-AUTHORED: the atoms (each with
 conflict adjudications, the transition guards (each with a needle re-read here), and the capability predicates.
 Every `EXAMINED:` line below is a count of subjects a check actually looked at; a zero is reported, not passed over.
 """
-import argparse, ast, collections, copy, datetime, glob, hashlib, json, re, sqlite3, subprocess, sys
+import argparse, ast, collections, copy, datetime, glob, hashlib, json, os, re, shutil, sqlite3, subprocess, sys, tempfile
 from pathlib import Path
 import yaml
 
@@ -754,7 +754,13 @@ def selftest(T, atoms, probes, conflicts, machines, caps):
     ok_can = capability_verdicts(can, T, probes)["X"]["overall"] if probes["P-D"]["verdict"] == "PASS" else "n/a"
     ok_blk = capability_verdicts(blk, T, probes)["X"]["overall"] if probes["P-A"]["verdict"] == "FAIL" else "n/a"
     results.append(("a capability can come out CAN and can come out BLOCKED", ok_can == "CAN" and ok_blk == "BLOCKED"))
-    w1 = eval_pred({"kind": "writable", "table": "specifications"}, T, probes)[0]; w2 = eval_pred({"kind": "writable", "table": "item_taxonomy_links"}, T, probes)[0]
+    # the FAIL case is planted in a scratch copy of the database, so `unwritable_set` itself derives it (the live schema may hold no such pair)
+    with tempfile.TemporaryDirectory() as td:
+        for d in ("governance", "scripts", ".github"): os.symlink(REPO / d, Path(td) / d)      # what Tree reads besides the database
+        (Path(td) / "data").mkdir(); shutil.copy(REPO / "data" / "guidebook.db", Path(td) / "data" / "guidebook.db")
+        cx = sqlite3.connect(Path(td) / "data" / "guidebook.db")
+        cx.executescript("create table zzz_parent(id integer primary key); create table zzz_child(p integer not null references zzz_parent(id));"); cx.commit(); cx.close()
+        w1 = eval_pred({"kind": "writable", "table": "specifications"}, T, probes)[0]; w2 = eval_pred({"kind": "writable", "table": "zzz_child"}, Tree(td), probes)[0]
     results.append(("the `writable` predicate can say PASS and can say FAIL", {w1, w2} == {"PASS", "FAIL"}))
     # j) a machine `vocabs` entry that differs from the CHECK is caught
     m5 = copy.deepcopy(machines)

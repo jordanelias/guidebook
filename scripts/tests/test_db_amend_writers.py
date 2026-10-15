@@ -1379,12 +1379,8 @@ try:
            f"({OTHER_NEW})", out and jur_of(RJ) == OTHER_NEW, f"{msg!r} {jur_of(RJ)!r}")
     msg = refusal(db.insert_economics_entry, {"entry_id": "FIXTURE-J10",
                                               "jurisdiction": "MULTI"}, S)
-    msg2 = refusal(db.insert_jurisdictional_value, {"jv_id": "FIXTURE-J10",
-                                                     "jurisdiction": UNDECLARED}, S)
-    record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) and "
-           "add-jurisdictional-value refuses XX, both by the vocabulary",
-           msg and "JurisdictionCode" in msg and msg2 and "JurisdictionCode" in msg2,
-           f"got {msg!r} / {msg2!r}")
+    record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) by the "
+           "vocabulary", msg and "JurisdictionCode" in msg, f"got {msg!r}")
 
     # Mirror, not stricter: every value LIVE in a table the audit gates passes the
     # writers' refusal, so a real batch writing UK, EU, ISO, INT ... is never blocked by
@@ -1414,6 +1410,20 @@ try:
                        capture_output=True, text=True)
     record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
            r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
+
+    # J13: migration `drop_item_layer_cluster` removed the foreign key that refused an item
+    # code on conflicts.item_code, so the writer refuses it (CLAUDE.md section 7). The control
+    # is the same row without the code: a refusal that also refused that would prove nothing.
+    base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": "AAA", "pop_b": "BBB",
+            "status": "PROPOSED"}
+    msg = refusal(db.insert_conflict, {**base, "item_code": "E-08"}, S, dry_run=True)
+    ok_id = None
+    try:
+        ok_id = db.insert_conflict(base, S, dry_run=True)
+    except Exception as exc:  # noqa: BLE001 -- the control failing is a defect to see
+        print(f"      CONTROL defect: {exc.__class__.__name__}: {exc}")
+    record("J13", "insert_conflict refuses an item code and still writes the same row without one",
+           msg is not None and "item layer" in msg and ok_id == "CONF-9999", f"refusal={msg!r} control={ok_id!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

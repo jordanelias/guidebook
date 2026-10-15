@@ -71,7 +71,6 @@ verdicts as typed `connections` rows and log unexamined pairs as gaps.
 - After any citation mining session (`db.py log-mining` has just been called)
 - After ISW produces a new item specification
 - After a BPC synthesis is completed or materially revised
-- As Step 1 and Step 2 of the item-audit-pipeline wrapper
 - Explicitly invoked: "run connection discovery on [slug/item]"
 
 Do not run mid-session on material you have not yet finished processing.
@@ -118,15 +117,6 @@ connection_type as an existing entry is a duplicate — skip it.
 ### spec mode
 1. Item specification — full item text (Population Mode + Person Mode notes + population annotations)
 2. Cross-reference tables in the spec (explicit cross-refs already noted by the author)
-3. `item_taxonomy_links` — population scope of the item in its IDENTITY lens, one
-   row per (`item_code`, `identity_code`), each carrying an `applicability`. Read the
-   applicability: `does_not_apply` records the *opposite* of a claim to the space.
-   ```sql
-   SELECT identity_code, applicability FROM item_taxonomy_links
-   WHERE item_code = ? AND identity_code IS NOT NULL ORDER BY identity_code
-   ```
-   (This said "Items table for `applicable_groups`" — a CSV column dropped when  <!-- [RETIRED-VOCAB-OK] -->
-   the junction replaced it. A query written from it raised `no such column`.)
 
 ### evidence mode
 Sources in priority order:
@@ -308,5 +298,5 @@ Duplicates skipped: N
 5. Per-topic connection markdown files archived (Phase 1-E) — descriptions live in `connections.description`
 6. Do NOT read or write `references/connection-register-active.md` (archived)
 7. Do NOT read or write `gap_register.md` directly — use `db.py` CLI only
-8. Feeds into: cross-population-conflict-mapper (conflicts), item-audit-pipeline (steps 1+2)
+8. Feeds into: cross-population-conflict-mapper (conflicts)
 9. Non-connection findings always exit via `db.py add-gap` — never as SPECULATIVE connection
