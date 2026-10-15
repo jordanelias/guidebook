@@ -78,7 +78,7 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
                               and the reason is not emptiness: no value-directness
                               grading rule exists in this repository and inventing
                               one is stop condition 4 (G2; never silently EXACT)
-  schemas.population, schemas.population_links, schemas.slug, schemas.bpc_metadata,
+  schemas.population, schemas.slug, schemas.bpc_metadata,
   schemas.gap                 identity/attribution semantics (lens codes validated
                               against their own live base tables)
 

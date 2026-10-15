@@ -88,10 +88,8 @@ RISKY_PATTERNS = [
 # reinterpret the tier vocabulary.
 #
 # Shape: (column, min, max, enforced_by). `column` is matched bare (like
-# the deleted ENUM_GUARDS), not table-qualified: `case_study_outcomes.tier` is a distinct
-# column with its own, stricter DB-level CHECK (1-3, see
-# scripts/migrations/057_baseline_2026-08-12.sql:918) that this guard's wider
-# 1-6 band cannot false-positive against, since 1-3 is a strict subset of 1-6.
+# the deleted ENUM_GUARDS), not table-qualified, so a `tier` column added to another table is
+# held to the same 1-6 band.
 #
 # BLOCKING — not a warning. (ENUM_GUARDS, its former sibling, was deleted
 # 2026-09-21 once 091/092 gave its two vocabularies real CHECKs; this one
