@@ -1,1 +1,0 @@
-../../../skills/economics-auditor_SKILL.md

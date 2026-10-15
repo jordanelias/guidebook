@@ -10,7 +10,6 @@ These extend the project's established population-junction idiom
 (item_taxonomy_links, evidence_population_match) to the value-claim tables:
 
     reasoning_doc_citations  --(citation_population_links)-->  populations
-    spec_value_probes        --(probe_population_links)----->  populations
     source_value_extractions --(extraction_population_links)->  populations
 
 The population_code FK to populations(population_code) makes population
@@ -19,8 +18,8 @@ first-class multi-row sets rather than comma-separated strings.
 
 The scalar population / population_code columns on the parent tables are
 deprecated transition aliases kept in sync; the junction is authoritative.
-scripts/audit/population_integrity_audit.py enforces scalar<->junction
-consistency (Level 2).
+population_integrity_audit.py, which enforced scalar<->junction consistency, was
+deleted in plan step 1.2; probe_population_links went with spec_value_probes.
 """
 
 from datetime import datetime
@@ -35,16 +34,6 @@ class CitationPopulationLink(BaseModel):
     citation_id: str = Field(..., description="FK reasoning_doc_citations.citation_id")
     population_code: str = Field(..., description="FK populations.population_code")
     notes: Optional[str] = None  # optional per-population qualifier
-    created_at: Optional[datetime] = None
-    created_by_session: Optional[str] = None
-
-
-class ProbePopulationLink(BaseModel):
-    """One (spec_value_probe, population) membership row."""
-
-    probe_id: str = Field(..., description="FK spec_value_probes.probe_id")
-    population_code: str = Field(..., description="FK populations.population_code")
-    notes: Optional[str] = None
     created_at: Optional[datetime] = None
     created_by_session: Optional[str] = None
 

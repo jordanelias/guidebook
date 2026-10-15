@@ -53,14 +53,13 @@ _GET "workplan/bpc-rewrite-workplan-2026-05-11.md" /tmp/workplan.md || { echo "H
 # ---------------------------------------------------------------------------
 # State queries from SQLite
 # ---------------------------------------------------------------------------
-P1="?"; PMP_BACKLOG="?"; ATT_ONLY="?"; UNVERIFIED="?"; VERS_BACKFILL="?"
+P1="?"; ATT_ONLY="?"; UNVERIFIED="?"; VERS_BACKFILL="?"
 RDC_TOTAL="?"; RDC_PAYWALL="?"; ES_TOTAL="?"; REASONING_BPC_TARGET="?"; REASONING_CON_TARGET="?"
 
 if _GET_BIN "data/guidebook.db" /tmp/guidebook.db; then
   Q() { python3 -c "import sqlite3;print(sqlite3.connect('/tmp/guidebook.db').execute(\"$1\").fetchone()[0])" 2>/dev/null || echo "?"; }
   ES_TOTAL=$(Q "SELECT COUNT(*) FROM evidence_sources")
   P1=$(Q "SELECT COUNT(*) FROM gaps WHERE priority='P1' AND status NOT LIKE 'CLOSED%'")
-  PMP_BACKLOG=$(Q "SELECT COUNT(DISTINCT i.item_code) FROM items i WHERE i.pmp_last_walk_at IS NULL AND i.status NOT IN ('archived','superseded')")
   ATT_ONLY=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='AUTHOR-TITLE-ONLY'")
   UNVERIFIED=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE verification_status IS NULL OR verification_status=''")
   VERS_BACKFILL=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id IS NOT NULL OR edition IS NOT NULL")
@@ -94,7 +93,6 @@ echo "=== STATUS ==="
 echo "session: $SESSION"
 grep -E "^## (Headline|Known broken|Next-action|Next action)" /tmp/session.md
 echo "P1 OPEN: $P1"
-echo "PMP backlog: $PMP_BACKLOG"
 echo "Evidence AUTHOR-TITLE-ONLY: $ATT_ONLY / $ES_TOTAL  (ineligible for synthesis per rule #10)"
 echo "Evidence verification_status NULL: $UNVERIFIED / $ES_TOTAL"
 echo "Versioning backfilled: $VERS_BACKFILL / 675  (Track 1)"

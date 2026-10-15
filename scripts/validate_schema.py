@@ -30,8 +30,7 @@ import yaml
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # (No entity model is imported: ENTITY_REGISTRY is empty as of 2026-09-01.
-#  schemas/jurisdictional_value.py still exists and is still covered by
-#  validate_pydantic_schemas; only this caller's reference is removed.)
+#  schemas/jurisdictional_value.py was deleted with its table in plan step 1.2.)
 
 
 # Registry: maps data/ subdirectory to its Pydantic model.

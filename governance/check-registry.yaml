@@ -740,13 +740,14 @@ checks:
     it -- which is the state .claude/settings.json blames for the 2026-07-24 run that
     skipped Co-1, citation mining, clause citation and combinatorial pairing while the
     rules for all four sat documented. Non-compliant research is what lands.
-    ADVISORY, and the reason is the level's own doctrine rather than timidity. Six
-    skills carry no `description:` and cannot be linked until a human writes one --
-    adversarial-research, evidence-metadata-rehabilitation, integrity-protocol,
-    progressive-measurement, reasoning-doc-citations, voice-style. A blocking gate
+    ADVISORY, and the reason is the level's own doctrine rather than timidity. Skills
+    that carry no `description:` cannot be linked until a human writes one -- derive the
+    list from the script; at last writing it was adversarial-research,
+    evidence-metadata-rehabilitation, integrity-protocol, reasoning-doc-citations,
+    voice-style. A blocking gate
     would be red by construction until then, and a check that is red by construction
-    teaches its reader to ignore it (CLAUDE.md rule 6). RATCHET TO BLOCKING once those
-    six carry descriptions and this reports IN SYNC on a clean tree; derive that count
+    teaches its reader to ignore it (CLAUDE.md rule 6). RATCHET TO BLOCKING once they
+    carry descriptions and this reports IN SYNC on a clean tree; derive that count
     from the script, never from this note.
 
 - id: claude_md_spine
@@ -1626,23 +1627,6 @@ checks:
     opposite of the measurement, and with the note''s authority behind it. A note that misdescribes
     its own check''s instrumentation is worse than no note, because it converts a check into a
     second, wrong source of truth about itself.'
-- id: population_integrity_audit
-  cmd:
-  - python3
-  - scripts/audit/population_integrity_audit.py
-  battery: research
-  kinds:
-  - data
-  - schema
-  level: advisory
-  basis: base/base-population-vocabulary
-  cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the three JUNCTIONS tables (citation_population_links,
-    probe_population_links, extraction_population_links) — all three are 0 rows today post clean-room-reset,
-    unambiguous regardless of combination. empty-by-decision. RED on main (31 issues). Advisory, as it
-    was in research-contract.yml.'
 - id: graph_audit
   cmd:
   - python3
@@ -1677,25 +1661,6 @@ checks:
     0 by design (`if args.strict and err_files: return 1`), so the unflagged invocation is a green tick
     that means nothing. Verified: --strict exits 1, default exits 0 on the same corpus. RED today (1 doc
     missing ''F. Provenance trail''), hence advisory.'
-- id: pmp_audit
-  cmd:
-  - python3
-  - scripts/audit/pmp_audit.py
-  battery: research
-  kinds:
-  - data
-  - synthesis
-  level: advisory
-  basis: research/pmp-strict-termination
-  cost: fast
-  no_floor: empty-by-decision — instrumented and examining 0 because the corpus was emptied by decision,
-    not by accident; see note
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints COUNT(*) FROM spec_value_probes, the table checks
-    2-6 all walk. 0 today (clean-room reset, 2026-08-06) — the "3 issues" figure below predates that reset
-    and no longer describes the live table. empty-by-decision. Rule #8 / #10.1 — numerical-spec claims
-    must cite an active PMP walk. De-quarantined 2026-08-01 after triage: the 3 issues are content (walks
-    PMP-A08-001/A18-003/A18-004 have no passing strict step), not tool defects, and checks 1/2/4/5/6 are
-    clean. Advisory per the shakedown norm.'
 - id: reasoning_doc_citations_audit
   cmd:
   - python3

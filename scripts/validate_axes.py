@@ -8,13 +8,11 @@ referential integrity or surfaced its coverage gaps. This does both:
 INTEGRITY (ERROR, exit 1) — profile-layer containment:
   - every population_axis_map.axis_code resolves to an axes row
   - every population_axis_map.population_code resolves to a populations row
-  - every item_taxonomy_links.icf_code resolves to an axes row (when any is set)
   - every access_need_axis_map.axis_code resolves to an axes row (when present)
   - population_axis_map.role ∈ {PRIMARY, SECONDARY, ALIAS, SITUATIONAL}
 
 COVERAGE (WARN, non-fatal) — surfaced so the debt is visible, not hidden:
   - axes with zero population mappings
-  - axes with zero item links (the E3 debt — items not yet linked to axes)
   - a per-axis coverage summary
 
 Read-only. Exit 0 = no integrity errors (coverage warnings do not fail). GUIDEBOOK_DB_PATH honored.
@@ -38,7 +36,7 @@ def _check(con):
     """Returns (errors, warnings, summary_lines, n_examined).
 
     n_examined is the count of rows actually walked for referential integrity —
-    every population_axis_map / item_taxonomy_links / access_need_axis_map row, not
+    every population_axis_map / access_need_axis_map row, not
     the axis vocabulary size (which would be non-zero even if every mapping
     table were empty and nothing was actually checked).
     """
@@ -67,20 +65,6 @@ def _check(con):
                     f"population_axis_map: role {role!r} (pop {pop}, axis {ax}) not in {sorted(VALID_ROLES)}"
                 )
 
-    # --- INTEGRITY: the ICF lens of item_taxonomy_links ---
-    # Was item_axis_links until migration 065 folded it in. The lens is a COLUMN
-    # now, so the filter is what scopes this check to the ICF lens; without it
-    # every identity-only row arrives as a NULL axis_code and reads as an error.
-    covered_by_item = set()
-    if _has_table(c, "item_taxonomy_links"):
-        for (ax,) in c.execute(
-                "SELECT icf_code FROM item_taxonomy_links WHERE icf_code IS NOT NULL"):
-            n_examined += 1
-            if ax not in axis_codes:
-                errors.append(f"item_taxonomy_links.icf_code: {ax!r} not in axes")
-            else:
-                covered_by_item.add(ax)
-
     # --- INTEGRITY: access_need_axis_map ---
     if _has_table(c, "access_need_axis_map"):
         for (ax,) in c.execute("SELECT axis_code FROM access_need_axis_map"):
@@ -90,16 +74,9 @@ def _check(con):
 
     # --- COVERAGE (warnings) ---
     no_pop = sorted(axis_codes - covered_by_pop)
-    no_item = sorted(axis_codes - covered_by_item)
     if no_pop:
         warnings.append(f"{len(no_pop)} axes with zero population mappings: {no_pop}")
-    if no_item:
-        warnings.append(
-            f"{len(no_item)} axes with zero item_taxonomy_links.icf_code rows "
-            f"(E3 debt — items not linked to axes): {no_item}"
-        )
     summary.append(f"axes with ≥1 population mapping: {len(covered_by_pop)}/{len(axis_codes)}")
-    summary.append(f"axes with ≥1 item link: {len(covered_by_item)}/{len(axis_codes)}")
     return errors, warnings, summary, n_examined
 
 

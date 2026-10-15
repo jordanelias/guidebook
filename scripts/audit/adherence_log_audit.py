@@ -25,8 +25,7 @@ Checks performed (per PI v10.12 rule #11):
    form db://<table>/<id-pattern> for DB-backed evidence.
 
 5. Cross-reference per-rule evidence inference. For rules with
-   automatable inference (rule 'pmp' -> row in spec_value_probes;
-   rule 'adversarial-research' -> four gap fields populated for cited
+   automatable inference (rule 'adversarial-research' -> four gap fields populated for cited
    sources; rule 'jurisdictional-synthesis' -> reasoning_doc_citations
    row per cell), verify that FIRED claims correspond to actual
    repository state.
@@ -346,18 +345,6 @@ def check_5_cross_reference(changed, issues):
         prs = data.get("per_rule_status", {})
         artifact = data.get("artifact", "")
         slug = Path(artifact).stem
-        # pmp / progressive-measurement
-        pmp = prs.get("pmp") or prs.get("progressive-measurement")
-        if pmp and pmp.get("status") == "FIRED":
-            row = db.execute(
-                "SELECT COUNT(*) FROM spec_value_probes WHERE slug LIKE ?",
-                (f"%{slug}%",),
-            ).fetchone()
-            if row[0] == 0:
-                issues.append(
-                    f"CHECK 5: {f} pmp FIRED but no spec_value_probes rows "
-                    f"match slug pattern '{slug}'"
-                )
         # jurisdictional-synthesis
         js = prs.get("jurisdictional-synthesis")
         if js and js.get("status") == "FIRED":

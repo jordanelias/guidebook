@@ -97,47 +97,6 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM source_slug_links"))
 
-    record("A02", "item_taxonomy_links → items",
-        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
-            WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=l.item_code)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links"))
-
-    record("A03", "item_taxonomy_links → populations",
-        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
-            WHERE l.identity_code IS NOT NULL
-              AND NOT EXISTS (SELECT 1 FROM populations p WHERE p.population_code=l.identity_code)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE identity_code IS NOT NULL"))
-
-    # A03b/A03c did not exist before migration 065 because the ICF and needs lenses
-    # had no shared home to check. Folding item_axis_links in gave them one.
-    record("A03b", "item_taxonomy_links → axes",
-        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
-            WHERE l.icf_code IS NOT NULL
-              AND NOT EXISTS (SELECT 1 FROM axes a WHERE a.axis_code=l.icf_code)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE icf_code IS NOT NULL"))
-
-    record("A03c", "item_taxonomy_links → access_needs",
-        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links l
-            WHERE l.needs_code IS NOT NULL
-              AND NOT EXISTS (SELECT 1 FROM access_needs n WHERE n.need_code=l.needs_code)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links WHERE needs_code IS NOT NULL"))
-
-    record("A03d", "item_taxonomy_links states at least one lens",
-        conn.execute("""SELECT COUNT(*) FROM item_taxonomy_links
-            WHERE COALESCE(identity_code, icf_code, needs_code, medical_code) IS NULL
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_taxonomy_links"))
-
-    record("A04", "spec_value_probes → items",
-        conn.execute("""SELECT COUNT(*) FROM spec_value_probes p
-            WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=p.item_code)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM spec_value_probes"))
-
     record("A05", "evidence_population_match → evidence_sources",
         conn.execute("""SELECT COUNT(*) FROM evidence_population_match m
             WHERE ref_id IS NOT NULL
@@ -168,12 +127,6 @@ def run_checks(db_path):
             AND NOT EXISTS (SELECT 1 FROM evidence_sources e WHERE e.ref_id=c.global_ref_id)
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM citation_mining WHERE global_ref_id IS NOT NULL"))
-
-    record("A08", "item_population_elaborations → items",
-        conn.execute("""SELECT COUNT(*) FROM item_population_elaborations e
-            WHERE NOT EXISTS (SELECT 1 FROM items i WHERE i.item_code=e.item_code)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM item_population_elaborations"))
 
     # A09 stands in for a foreign key that migration 039 deliberately did NOT
     # declare. Every other soft edge in that migration became a real FK; this
@@ -533,11 +486,8 @@ def run_checks(db_path):
 
     # C06 — data_capture_status must agree with the joinable evidence tables in
     # BOTH directions. A status that can drift from the rows it summarises is
-    # worse than no status: it looks authoritative while being wrong. When W5.4
-    # gives jurisdictional_values a ref_id, add it to this predicate AND to the
-    # backfill in data_20260802215744.
+    # worse than no status: it looks authoritative while being wrong.
     CAPTURED = """(EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.ref_id=s.ref_id)
-                OR EXISTS (SELECT 1 FROM spec_value_probes p       WHERE p.ref_id=s.ref_id)
                 OR EXISTS (SELECT 1 FROM reasoning_doc_citations r WHERE r.source_ref_id=s.ref_id)
                 OR EXISTS (SELECT 1 FROM economics_entries e       WHERE e.ref_id=s.ref_id))"""
     claims_not_held = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s

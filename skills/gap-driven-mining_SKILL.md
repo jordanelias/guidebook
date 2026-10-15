@@ -142,7 +142,7 @@ Each entry below specifies primary / secondary / tertiary strategies. Mining run
 
 **Required connectors:** PubMed. Scholar Gateway preferred.
 
-**Mandatory follow-up if discoveries surface:** the gap's outcome cannot be `closure_evidence_found` until the discovered source's spec value is validated by `progressive-measurement` skill (PMP walk). The intermediate state is `partial_evidence_found` with `notes` recording the PMP queue position. See §4 for the closure workflow.
+**Follow-up if discoveries surface:** the gap's outcome is `partial_evidence_found` until the discovered source's value is read and extracted against its parameter (`db.py add-extraction`). See §4 for the closure workflow.
 
 ### 3.4 qualitative_uncited
 
@@ -165,8 +165,6 @@ Each entry below specifies primary / secondary / tertiary strategies. Mining run
 **Secondary:** Multilingual-research skill if the standard is non-English (e.g., JGJ is Chinese; standards-body publication is in Chinese).
 
 **Required connectors:** web_fetch to the standards-body catalog; multilingual-research as needed.
-
-**No PMP required.** Standards-promotion gaps are about adding an existing real standard to the evidence base, not validating a numerical value.
 
 ### 3.6 cross_population_invisibility
 
@@ -195,7 +193,7 @@ For each gap, after running the matrix:
 
 ### 4.1 Five-outcome decision rules
 
-**`closure_evidence_found`**: at least one candidate is verified-grade evidence (`metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}`, `verification_status = 'VERIFIED'`) AND addresses the gap's parameter × population × outcome AND (if a numerical-spec gap) has cleared the PMP walk under `progressive-measurement` AND the four rule #7 fields (`falsification_condition`, `confidence_interval`, `shift_conditions`, `named_dissenter`) populate before the gap moves to `CLOSED-FIXED`.
+**`closure_evidence_found`**: at least one candidate is verified-grade evidence (`metadata_quality ∈ {COMPLETE, COMPLETE-STATUTORY}`, `verification_status = 'VERIFIED'`) AND addresses the gap's parameter × population × outcome AND the four rule #7 fields (`falsification_condition`, `confidence_interval`, `shift_conditions`, `named_dissenter`) populate before the gap moves to `CLOSED-FIXED`.
 
 > **D-0157 translation note (2026-08-05).** This gate previously read
 > `verification_status ∈ {VERIFIED, UNVERIFIED-1}`. That vocabulary was retired by
@@ -215,7 +213,7 @@ For each gap, after running the matrix:
 > rather than "established", the successor test is `verification_attempt_count`, which is
 > the column that actually tracks attempts. Raise a DR if this reading is wrong.
 
-**`partial_evidence_found`**: candidates exist but none alone closes the gap. Common cases: (a) Co-1 evidence below the worked-example threshold for the slug; (b) numerical-spec gap where the PMP walk is queued but not complete; (c) cross-population-invisibility gap where some BPCs gained coverage but others did not. The `notes` field enumerates the remaining shortfall.
+**`partial_evidence_found`**: candidates exist but none alone closes the gap. Common cases: (a) Co-1 evidence below the worked-example threshold for the slug; (b) numerical-spec gap where the figure is not yet extracted; (c) cross-population-invisibility gap where some BPCs gained coverage but others did not. The `notes` field enumerates the remaining shortfall.
 
 **`null_result`**: every matrix strategy ran cleanly (all required connectors available, all queries executed) and returned 0 relevant candidates. The gap stays OPEN; re-eligible after 6 months per §5.
 
@@ -264,8 +262,7 @@ The `gap_mining` row alone does NOT close the gap. The closure workflow:
    > `add-gap`. Amending them on an existing gap has no writer today; that is a real
    > coverage gap, and the honest move is to record it rather than to name a
    > subcommand that does not exist.
-5. (Numerical-spec gaps only) Run `progressive-measurement` skill PMP walk. The PMP walk produces `spec_value_probes` rows; the gap cannot close until strict-termination is met.
-6. (Discoveries that supersede existing anchors only) Write a `supersession_check` row per `supersession-audit` skill §4. The gap_mining row and the supersession_check row both reference the same discovery; they describe orthogonal relationships (gap-closure vs anchor-replacement).
+5. (Discoveries that supersede existing anchors only) Write a `supersession_check` row per `supersession-audit` skill §4. The gap_mining row and the supersession_check row both reference the same discovery; they describe orthogonal relationships (gap-closure vs anchor-replacement).
 7. Close the gap:
    ```bash
    python3 scripts/db.py close-gap --gap-id GAP-NNN --status CLOSED-FIXED --session {SESSION}
@@ -325,8 +322,6 @@ Per-session attestation requirement: when this skill writes any `gap_mining` row
 **Treating citation-miner and gap-driven-mining as substitutes.** Citation-miner is anchor-source-keyed (start from a confirmed source, traverse its citation network). Gap-driven-mining is gap-keyed (start from a parameter × population × outcome shortfall, search for evidence that addresses it regardless of whether it cites existing anchors). Each closes a different class of evidence-base failure. Running citation-miner on a slug whose gaps are not anchor-shaped will not close those gaps; running gap-driven-mining on a slug whose anchors are simply unmined will produce noise.
 
 **Auto-promoting candidates to evidence_sources.** PI rule #10 forbids INSERTing search candidates as `evidence_sources` rows without verification (existence + content). Candidates live as DOIs in `gap_mining.candidate_dois` until verified. The verification is a separate operation governed by `citation-verifier` skill.
-
-**Closing a numerical-spec gap without PMP.** Rule #8 requires the PMP walk for any BPC item asserting a numerical spec value. A `gap_mining` row with `outcome = closure_evidence_found` on a numerical-spec gap is invalid without a corresponding `spec_value_probes` walk passing strict-termination. The `gap_mining_audit.py` Level-2 audit script checks this invariant.
 
 **Substituting one connector for another on Co-1.** PubMed indexes biomedical literature; Scholar Gateway indexes design / lived-experience / DPO publications. They do not overlap on the corpus Co-1 evidence requires. Running PubMed search on a `co1_zero_jurisdictions` gap is the topic-evidence vs. claim-evidence anti-pattern (rule #7) in connector form.
 
