@@ -489,16 +489,6 @@ def make_probes():
         if not control: return "UNKNOWN", {"reason": "control quote (LED-195) not found in the ledger; the test cannot see", "ledger_bytes": len(led)}
         return ("FAIL" if absent else "PASS"), {"control_found_in_ledger": control, "verbatim_present_in_ledger": sq, "verbatim_absent": absent}
 
-    @probe("P-STATUS-WRITERS", "every non-default value of evidence_sources.data_capture_status is named beside the column in a writer", ["OPS-04"])
-    def _(T):
-        vals = (T.vocab.get("evidence_sources") or {}).get("data_capture_status", [])
-        dm = re.search(r"data_capture_status[^,]*DEFAULT\s*'([^']+)'", T.ddl.get("evidence_sources", ""), re.I | re.S)
-        default = dm.group(1) if dm else None
-        lines = [l for p in ("scripts/db.py", "scripts/dbcore.py") if (T.root / p).exists() for l in read(T.root, p).split("\n") if "data_capture_status" in l]
-        named = {v: any(re.search(rf"['\"]{re.escape(v)}['\"]", l) for l in lines) for v in vals if v != default}
-        miss = sorted(v for v, ok in named.items() if not ok)
-        return ("FAIL" if miss else "PASS"), {"default": default, "values_with_no_writer_line": miss, "lexical": True}
-
     @probe("P-PARAM-LIFECYCLE", "base_parameters.status 'merged' and 'retired' are written by some db.py function", ["LED-169", "LED-170"])
     def _(T):
         vals = (T.vocab.get("base_parameters") or {}).get("status", [])

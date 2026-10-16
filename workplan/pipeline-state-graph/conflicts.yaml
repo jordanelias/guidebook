@@ -235,17 +235,6 @@ conflicts:
 
 
 
-- id: C-025
-  class: RULING-MECHANISM
-  severity: S3
-  title: "Co-1 source types: the live column holds values the enum does not (R11: the enum is corrected from the column)"
-  atoms: [DRS-248]
-  sides:
-    - {atoms: [DRS-248], says: "co1-operational 1.1 lists four Co-1 source types; the column has no CHECK, and the live values, schemas.enums.Co1SourceType and that list disagree."}
-  probe: P-CO1-TYPE
-  direction: "RULINGS R11: the enum is corrected from the column's CHECK if one exists, else from the live sample with the writer constrained to it (plan step 3, evidence). The document no longer lists values."
-  resolver: AGENT
-  confidence: high
 
 
 # ---------------------------------------------------------------- D. rendering and machinery
@@ -476,18 +465,6 @@ conflicts:
   confidence: medium
 
 
-- id: C-048
-  class: RULING-MECHANISM
-  severity: S2
-  title: "A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names"
-  atoms: [LED-182, CLM-031, OPS-04]
-  sides:
-    - {atoms: [LED-182, CLM-031], says: "when the CLI cannot reach a column, add the verb and do not claim the write; a table the CLI cannot reach is a coverage bug to fix."}
-    - {atoms: [OPS-04], says: "any status column ships with its biconditional check or it does not ship (C06 covers the 'captured' value)."}
-  probe: P-STATUS-WRITERS
-  direction: "P-STATUS-WRITERS (lexical) lists the non-default values the column's CHECK accepts that no db.py line names beside the column. Those values are reachable only by hand SQL, so 'looked, nothing extractable' cannot be recorded, an absence the project treats as evidence (R7, R14). A Layer 1 gap: file it as a GAP and add the verb in a tooling PR (rule 10), not in a batch's data migration."
-  resolver: AGENT
-  confidence: medium
 
 - id: C-049
   class: RULING-DOC

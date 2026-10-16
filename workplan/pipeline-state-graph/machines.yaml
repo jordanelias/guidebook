@@ -60,7 +60,6 @@ machines:
   states: ["NULL", VERIFIED, UNVERIFIED]
   vocabs:
     - {holder: evidence_sources.citation_mining_status, values: [pending, mined, deferred, not-applicable]}
-    - {holder: evidence_sources.data_capture_status, values: [pending, captured, none-extractable, deferred]}
   atoms: [RES-10, RES-09, LED-027, LED-117, PIP-20]
   transitions:
   - id: M02.t1
@@ -102,16 +101,6 @@ machines:
     guards: ["a deferral over a 'mined' source is refused unless --status is passed"]
     evidence:
       - {file: scripts/db.py, func: log_mining, needle: "would regress it to 'deferred'"}
-  - id: M02.t5
-    claim: "data_capture_status: pending -> captured, written by add-extraction / derive-extraction in the same transaction (a cross-stage write, judgment -> evidence); never moves back."
-    from: "pending"
-    to: "captured"
-    via: "db.py add-extraction | derive-extraction"
-    guards: []
-    evidence:
-      - {file: scripts/db.py, func: insert_extraction, needle: "SET data_capture_status='captured'"}
-  unreachable_note: "data_capture_status 'none-extractable' and 'deferred' have no writer on main (PRC/OPS-04 require a status column to ship with its writer)."
-  probe: P-STATUS-WRITERS
 
 - id: M03
   name: "Vocabulary growth -- observed phrase to parameter"

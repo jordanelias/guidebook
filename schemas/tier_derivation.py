@@ -31,7 +31,9 @@ scope carries the sentinel 'intrinsic':
   national_fw -> 5   code -> 6
 """
 
-from typing import Optional
+from typing import Iterable, Optional
+
+from schemas.enums import EvidenceMarker
 
 # --- Scope discriminator values ---
 SCOPE_HIGH_CONTROL = "high_control"
@@ -95,6 +97,33 @@ def derive_tier(evidence_type: str, scope: Optional[str]) -> int:
         f"no ratified tier for (evidence_type={evidence_type!r}, scope={scope!r}); "
         f"valid scopes for this type: {valid or 'UNKNOWN evidence_type'}"
     )
+
+
+def band(tier: int, evidence_type: str) -> EvidenceMarker:
+    """A source's evidence band, per tier-system section 5.
+
+    FULL: T1, T2, Co-1, Co-2 and T3 clinical. PARTIAL: T4, T5 (a policy or standards basis,
+    not primary evidence). WEAK: T3 other than clinical (grey literature) and T6 (the code
+    floor). The T3 split is the one place the type matters.
+    """
+    if tier in (1, 2):
+        return EvidenceMarker.FULL
+    if tier == 3:
+        return EvidenceMarker.FULL if evidence_type == "clinical" else EvidenceMarker.WEAK
+    if tier in (4, 5):
+        return EvidenceMarker.PARTIAL
+    if tier == 6:
+        return EvidenceMarker.WEAK
+    raise TierDerivationError(f"no band for tier {tier!r}")
+
+
+def floor_mean(bands: Iterable[EvidenceMarker]) -> EvidenceMarker:
+    """The band of several equally weighted inputs: the floor of the mean of their ordinals
+    (owner, 2026-09-13: "yeah round down"). Only an all-FULL set is FULL."""
+    ordinals = [b.ordinal for b in bands]
+    if not ordinals:
+        raise TierDerivationError("floor_mean of no bands")
+    return next(m for m in EvidenceMarker if m.ordinal == sum(ordinals) // len(ordinals))
 
 
 def expected_scope_from_tier(evidence_type: str, tier: int) -> Optional[str]:
