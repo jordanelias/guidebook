@@ -29,7 +29,9 @@ caught, and a deletion never happens unless the operator names the table.
 """
 
 import argparse
+import atexit
 import os
+import shutil
 import sqlite3
 import sys
 import tempfile
@@ -113,7 +115,9 @@ def replay_state():
     under `migrate_db.py --rebuild`. It differs from the blob wherever the blob diverged."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "audit"))
     import migration_reproducibility
-    path = os.path.join(tempfile.mkdtemp(), "replay.db")
+    tmp = tempfile.mkdtemp()
+    atexit.register(shutil.rmtree, tmp, True)
+    path = os.path.join(tmp, "replay.db")
     ok, msg = migration_reproducibility.rebuild(path)
     if not ok:
         sys.exit("ERROR: the migration chain does not rebuild, so a replay-safe capture cannot be "
@@ -170,12 +174,17 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=(), replay_path=No
 
         # A new key the blob lacks but the chain holds (the blob diverged): a plain INSERT would
         # fail at --rebuild, so it is preceded by a keyed DELETE and the pair reads "the end state
-        # is this row", replaying identically on both. Every other INSERT is untouched.
+        # is this row", replaying identically on both. Every other INSERT is untouched. Primary-key
+        # collisions only: a UNIQUE collision under a different key still fails at --rebuild, which
+        # is the right outcome while the deep check reports the divergence.
         r_rows = {}
         if any(k not in c_rows for k in s_rows):
             rc = rc or ro(replay_path or replay_state())
-            if columns(rc, table) == cols:
-                r_rows = load(rc, table, cols, pk)
+            if columns(rc, table) != cols:
+                sys.exit(f"ERROR: column set for {table} differs between the migration chain and "
+                         "the canonical DB, so the capture cannot be made replay-safe. The blocking "
+                         "reproducibility gate reports this divergence; fix it first.")
+            r_rows = load(rc, table, cols, pk)
         inserts, updates, restores = [], [], 0
         for key, row in s_rows.items():                     # already PK-ordered
             if key not in c_rows:
@@ -401,6 +410,15 @@ def selftest():
                 ok = False
             check("the restore replays to the batch's state on the %s" % os.path.basename(base), ok)
             con.close()
+        # a chain whose columns differ from the blob's cannot be made replay-safe: refused, not skipped
+        con = sqlite3.connect(chain)
+        con.execute("ALTER TABLE evidence_sources ADD COLUMN extra TEXT"); con.commit(); con.close()
+        try:
+            emit(sc2, db2, os.path.join(tmp, "batch5.sql"), replay_path=chain)
+            refused = False
+        except SystemExit as e:
+            refused = "differs between the migration chain" in str(e)
+        check("a chain with a different column set is refused, not silently skipped", refused)
 
     dbcore.writable_tables = _real_writable
     print("\n--- emit_batch_sql selftest ---")
