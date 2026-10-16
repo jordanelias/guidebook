@@ -245,7 +245,6 @@ def run(repo_root: str = ".", fast: bool = False, warn_only: bool = False) -> in
 REFERENCE_ONLY = (
     "parts/",
     "references/bpc/",
-    "references/bpc-reasoning/",
     "references/connections/",
     "references/connection-reasoning/",
     "specs/",

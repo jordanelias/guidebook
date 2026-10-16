@@ -716,7 +716,7 @@ def selftest(reg):
         ("governance/mission-and-epistemics.md", "governance"),
         ("decisions/DR-2026-08-01-x.md", "governance"),
         ("references/project-standards.md", "governance"),
-        ("references/bpc-reasoning/x.md", "synthesis"),
+        ("references/bpc/x.md", "synthesis"),
         ("references/connection-reasoning/CON-1.md", "synthesis"),
         ("sessions/LATEST", "synthesis"),
         ("parts/x/part04.md", "render"),

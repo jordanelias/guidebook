@@ -54,7 +54,7 @@ _GET "workplan/bpc-rewrite-workplan-2026-05-11.md" /tmp/workplan.md || { echo "H
 # State queries from SQLite
 # ---------------------------------------------------------------------------
 P1="?"; ATT_ONLY="?"; UNVERIFIED="?"; VERS_BACKFILL="?"
-RDC_TOTAL="?"; RDC_PAYWALL="?"; ES_TOTAL="?"; REASONING_BPC_TARGET="?"; REASONING_CON_TARGET="?"
+RDC_TOTAL="?"; RDC_PAYWALL="?"; ES_TOTAL="?"; REASONING_CON_TARGET="?"
 
 if _GET_BIN "data/guidebook.db" /tmp/guidebook.db; then
   Q() { python3 -c "import sqlite3;print(sqlite3.connect('/tmp/guidebook.db').execute(\"$1\").fetchone()[0])" 2>/dev/null || echo "?"; }
@@ -63,7 +63,6 @@ if _GET_BIN "data/guidebook.db" /tmp/guidebook.db; then
   ATT_ONLY=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='AUTHOR-TITLE-ONLY'")
   UNVERIFIED=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE verification_status IS NULL OR verification_status=''")
   VERS_BACKFILL=$(Q "SELECT COUNT(*) FROM evidence_sources WHERE superseded_by_ref_id IS NOT NULL OR edition IS NOT NULL")
-  REASONING_BPC_TARGET=$(Q "SELECT COUNT(*) FROM slugs WHERE status='ACTIVE'")
   REASONING_CON_TARGET=$(Q "SELECT COUNT(*) FROM connections")
   RDC_EXISTS=$(python3 -c "import sqlite3;print(1 if sqlite3.connect('/tmp/guidebook.db').execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='reasoning_doc_citations'\").fetchone() else 0)" 2>/dev/null)
   if [ "$RDC_EXISTS" = "1" ]; then
@@ -76,7 +75,6 @@ else
   echo "[GAP: data/guidebook.db — not fetched]"
 fi
 
-REASONING_BPC=$(_GH_LEN "references/bpc-reasoning")
 REASONING_CON=$(_GH_LEN "references/connection-reasoning")
 SKILLS_ACTIVE=$(_GH_SKILLS)
 
@@ -98,7 +96,6 @@ echo "Evidence verification_status NULL: $UNVERIFIED / $ES_TOTAL"
 echo "Versioning backfilled: $VERS_BACKFILL / 675  (Track 1)"
 echo "reasoning_doc_citations rows: $RDC_TOTAL  (Track 3)"
 echo "PAYWALL candidates flagged: $RDC_PAYWALL"
-echo "BPC reasoning docs: $REASONING_BPC / $REASONING_BPC_TARGET  (Phase E target — active slugs)"
 echo "Connection reasoning docs: $REASONING_CON / $REASONING_CON_TARGET  (Phase D target — connections)"
 echo "Skills: $SKILLS_ACTIVE active  (count of skills/*_SKILL.md)"
 echo "Workplan: bpc-rewrite-workplan-2026-05-11 (LIVE) | superseded: workplan-co0007-v4"
