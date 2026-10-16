@@ -15,7 +15,7 @@ DRS-216	decisions/DR-2026-09-02-restore-research-code-leads.md:30	standards in b
 DRS-217	decisions/DR-2026-09-02-restore-research-code-leads.md:30	jurisdiction vocabulary for research_code_leads	A real jurisdiction vocabulary must be registered and research_code_leads.jurisdiction pointed at it; no CHECK exists today.
 DRS-225	decisions/DR-2026-09-02-strike-the-item-frame-pull.md:30	route from terms to slugs	terms and term_aliases have no route to a research slug now that term_item_links is empty; R11's terms_used has no slug route.
 DRS-226	decisions/DR-2026-09-02-strike-the-item-frame-pull.md:30	slugs.serves_axes coverage	slugs.serves_axes is populated on almost no slugs, so the ICF-first cross-product pulled is generic rather than slug-specific.
-DRS-278	governance/co1-operational.md:229	post-launch notification of tool authors	If the guidebook becomes public, authors of adapted Co-1 tools should be notified.
+DRS-278	governance/co1-operational.md:224	post-launch notification of tool authors	If the guidebook becomes public, authors of adapted Co-1 tools should be notified.
 ENT-081	governance/functional-taxonomy.md:176	AX-BAL proposed slug	A slug vestibular-balance-built-environment is proposed for AX-BAL and queued per section 8.
 ENT-086	governance/functional-taxonomy.md:194	transfer capacity folded into AX-WHM	Open: whether transfer stays folded into wheeled movement or is split per the armature.
 ENT-088	governance/functional-taxonomy.md:200	cognitive-processing axis granularity	Open: the granularity of cognitive-processing axes (memory, executive, speed, abstract) is unresolved, checklist item R7.

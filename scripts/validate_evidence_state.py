@@ -80,7 +80,7 @@ def validate_file(path: str, model_class) -> list:
 def validate_source_co1_fields(path: str) -> list:
     """Additional Co-1 field validation beyond Pydantic schema.
 
-    Checks A5 §6.3 verification-status rules for Co-1 sources.
+    Checks the closed-unverifiable rule (methodology §2.8) for Co-1 sources.
     """
     errors = []
     try:

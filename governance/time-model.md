@@ -138,7 +138,7 @@ The guidebook itself has a launch state machine. Per A5 RULE 2026-04-26 03:45, t
 
 | Phase | Marker | Operational implications |
 |---|---|---|
-| `pre_launch` | current | Solo authorship; co1_provenance=published_corpus only; CS2 INOPERATIVE |
+| `pre_launch` | current | Solo authorship; CS2 INOPERATIVE |
 | `launched` | initial public release | Public access to V{N}.0; collaborator infrastructure may activate if resources allow |
 | `maintained` | ongoing edition cycle | Versioned releases on a cadence; participatory synthesis may engage |
 
@@ -150,7 +150,7 @@ A `LaunchPhaseRecord` captures the current phase and any prior phase transitions
 
 ### 5.3 Effect on validation
 
-Several A6/A8 rules behave differently across phases. The clearest case: `co1_provenance` validators currently require `published_corpus` for all Co-1 sources because the project is pre-launch (A5 §6.1). After launch, `participatory_synthesis` becomes valid. The launch-phase record drives this — validators read the singleton to determine which value set to accept. Pre-launch hard-codes published_corpus only.
+Several A6/A8 rules behave differently across phases.
 
 ---
 

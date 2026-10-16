@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-39 entries. Severity: S1 14, S2 12, S3 13. Class: DOC-DOC 11, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 6, RULING-MECHANISM 15, RULING-RULING 3, UNRECORDED 1.
+38 entries. Severity: S1 13, S2 12, S3 13. Class: DOC-DOC 10, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -14,7 +14,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-017 | S1 | RULING-MECHANISM | OWNER | P-AXIS -> PASS, P-G -> PASS | 'Axes' is retired and its tables, column and check are dropped (step 1.4); the one-act sweep is partial and the documents still use the word |
 | C-019 | S1 | RULING-MECHANISM | OWNER | P-UNWRITABLE -> PASS | The item layer is deleted from the database (step 1.2) and is still the vocabulary of standing documents and process rules |
 | C-022 | S1 | RULING-DOC | OWNER+AGENT | P-MEDICAL -> FAIL | Medical lens: D-0184 reserves the rows to the owner; the owner's 2026-09-11 words say to fill it out |
-| C-024 | S1 | RULING-DOC | OWNER | P-CO1-PROV -> PASS | Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis) |
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants have no live gate (tier-consistency has one since step 1.6) |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> FAIL | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
 | C-033 | S1 | RULING-MECHANISM | AGENT | P-M -> FAIL | Every slug is searched against every lens -- the search log cannot say which lens a search covered |
@@ -38,7 +37,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-011 | S3 | RULING-DOC | NONE | -- | Is `base` a stage, and is it 'substrate'? |
 | C-015 | S3 | DOC-DOC | OWNER | -- | Evidence collection: 'a cursory scan' or a stage that judges relevance |
 | C-016 | S3 | DOC-DOC | AGENT | -- | Pointer discipline: enforced by schema shape, or not enforced |
-| C-025 | S3 | DOC-DOC | AGENT | P-VERIF-VOCAB -> PASS, P-CO1-TYPE -> FAIL | Co-1 operational record: sub-type lists, retired verification values, ref-id format |
+| C-025 | S3 | RULING-MECHANISM | AGENT | P-CO1-TYPE -> FAIL | Co-1 source types: the live column holds values the enum does not (R11: the enum is corrected from the column) |
 | C-030 | S3 | DOC-DOC | AGENT | -- | How checks are added and what gates a merge |
 | C-038 | S3 | DOC-DOC | AGENT | -- | Hand-written counts and enumerations that disagree with each other or with the schema |
 | C-041 | S3 | DOC-DOC | OWNER | -- | Scope of the operative instrument's supersession and the read-set it prescribes |
@@ -146,17 +145,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** Rule 0: the owner's words of 2026-09-11 outrank D-0184's reservation to the extent of those words ('all items that are presented to me'; 'ensure that medical gets filled out'). D-0188's 'enumerated items and no further' is the agent's text and may be narrower than the owner's; whether that narrowing is intended is the owner's to confirm. Mechanism: add-extraction refuses a lens code whose registry table is empty; P-MEDICAL shows the medical registry empty although its writer (add-medical) exists. The instruction has not been executed.
 
-## C-024 [S1] Co-1's warrant: D-0178 (name the co-production) versus co1-operational (published_corpus / participatory_synthesis)
-
-**Class** RULING-DOC  ·  **Resolver** OWNER  ·  **Confidence** high  ·  **Probe** `P-CO1-PROV` = **PASS**
-
-- D-0178 (owner ruling relayed, 2026-08-31): a Co-1 tier is unwarranted-pending unless co1_provenance names the co-production; published_corpus is not a warrant.  
-  _atoms:_ `DRS-146`(act), `DRS-147`(act), `DRS-148`(act), `CLM-037`(act)
-- co1-operational (2026-04-29): co1_provenance takes exactly two values and every pre-launch Co-1 citation is published_corpus; grounds Co-1 in peer review, organisational accountability or scholarly authorship.  
-  _atoms:_ `DRS-264`(act), `DRS-265`(act), `DRS-251`(act)
-
-**Direction.** D-0178 is later and is the owner's ruling, so by rule 0 the co1-operational vocabulary and its 'every pre-launch Co-1 citation is published_corpus' clause are stale. The data already conforms: P-CO1-PROV finds each Co-1 source carrying prose that names the co-production and none holding only a co1-operational value; the column has no CHECK vocabulary, so nothing enforces it. Correcting co1-operational is a doctrine-document edit, owner-merged.
-
 ## C-028 [S1] Register invariants have no live gate (tier-consistency has one since step 1.6)
 
 **Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-QUARANTINE` = **FAIL**
@@ -252,8 +240,8 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `LED-108`(act), `DRS-098`(act), `DRS-099`(ope)
 - pipeline-operations: admission and tier adjudication are the gate between discovery and extraction, recorded on the source.  
   _atoms:_ `OPS-06`(act)
-- D-0179 sets evidence_sources.tier for a source; co1-operational puts tier (int 1-6) on EvidenceSource; D-0178 notes the column carries no CHECK.  
-  _atoms:_ `DRS-164`(act), `DRS-249`(act), `DRS-298`(act), `DRS-151`(act)
+- D-0179 sets evidence_sources.tier for a source; D-0178 notes the column carries no CHECK.  
+  _atoms:_ `DRS-164`(act), `DRS-249`(act), `DRS-151`(act)
 
 **Direction.** Ruled but not executed (LED-108 ambiguity: 'the move is queued, not done'). Readers that must be re-pointed first: add-extraction's R3 guard and assess_cell's gather both read evidence_sources.tier.
 
@@ -454,18 +442,14 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** CLAUDE.md (newer, process rule) is the better statement of enforcement; the DR sentences are stale.
 
-## C-025 [S3] Co-1 operational record: sub-type lists, retired verification values, ref-id format
+## C-025 [S3] Co-1 source types: the live column holds values the enum does not (R11: the enum is corrected from the column)
 
-**Class** DOC-DOC  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-VERIF-VOCAB` = **PASS**  ·  **Probe** `P-CO1-TYPE` = **FAIL**
+**Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-CO1-TYPE` = **FAIL**
 
-- four Co-1 source types in section 1.1, five co1_source_type values in section 6.1 (adds validated_tool).  
-  _atoms:_ `DRS-248`(act), `DRS-294`(act)
-- sections 3.4 and 6.3, methodology 2.8 and an old ledger rule still test UNVERIFIED-CLOSED and CLOSED-DELETED; D-0157 made verification_status binary.  
-  _atoms:_ `DRS-274`(ame), `DRS-301`(ame), `EVI-365`(ame), `EVI-369`(ame), `LED-028`(act)
-- co1-operational prescribes Co1-NN ref ids and puts population_codes and parameters_supported on the Co-1 record; CLAUDE.md requires dbcore.next_ref_id and each stage holds only its own data.  
-  _atoms:_ `DRS-293`(act), `DRS-295`(act), `DRS-296`(act)
+- co1-operational 1.1 lists four Co-1 source types; the column has no CHECK, and the live values, schemas.enums.Co1SourceType and that list disagree.  
+  _atoms:_ `DRS-248`(act)
 
-**Direction.** The schema CHECK on evidence_sources.verification_status admits VERIFIED and UNVERIFIED only; the retired values cannot be written. P-CO1-TYPE compares the live co1_source_type values with schemas.enums.Co1SourceType, a drift independent of the warrant question (C-024). The co1-operational sections that cite them are stale (DRS-274 and DRS-301 are already marked AMENDED).
+**Direction.** RULINGS R11: the enum is corrected from the column's CHECK if one exists, else from the live sample with the writer constrained to it (plan step 3, evidence). The document no longer lists values.
 
 ## C-030 [S3] How checks are added and what gates a merge
 

@@ -26,7 +26,7 @@
 
 ## 1. What Co-1 is
 
-Co-1 is the evidence tier that the Seven-Tier Evidence Hierarchy designates as **co-primary with Tier 1 OT-intervention clinical research** for purposes of best-practice claims in this guidebook. The full canonical text is in `governance/mission-and-epistemics.md` §Doctrinal commitments §3 and §Epistemic commitments §Evidence hierarchy. This specification operates within that text; it does not revise it.
+Co-1 is the evidence tier that the Evidence Hierarchy designates as **co-primary with Tier 1 OT-intervention clinical research** for purposes of best-practice claims in this guidebook. The full canonical text is in `governance/mission-and-epistemics.md` §Doctrinal commitments §3 and §Epistemic commitments §Evidence hierarchy. This specification operates within that text; it does not revise it.
 
 ### 1.1 Definition
 
@@ -63,7 +63,7 @@ CRPD Article 4.3 establishes the State Party obligation to "closely consult with
 
 The mission-and-epistemics §Doctrinal commitments §3 grounds Co-1's co-primary status in this principle. The reasoning: Tier 1 OT clinical research, however rigorous, does not by its method include disabled-people-as-co-producers-of-knowledge. CRPD Art. 4.3 names that absence as a thing that needs filling. Co-1 evidence — produced by disabled people, by their representative organizations, or under their methodological authority — fills it.
 
-This is not a courtesy; it is a methodological commitment. A best-practice claim in a domain where Co-1 evidence is available, made without engaging Co-1 evidence, is methodologically incomplete. The seven-tier hierarchy makes this explicit.
+This is not a courtesy; it is a methodological commitment. A best-practice claim in a domain where Co-1 evidence is available, made without engaging Co-1 evidence, is methodologically incomplete. The evidence hierarchy makes this explicit.
 
 ---
 
@@ -135,12 +135,7 @@ The handoff document `workplan/a5-handoff.md` §4 surfaced five substantive judg
 
 **Resolution:** Three-part rule.
 
-**Part A — This guidebook treats provenance marking as mandatory.** Every Co-1 citation in the guidebook carries explicit provenance. The schema (B1) needs a `co1_provenance` field on the EvidenceSource entity. The values:
-
-- `published_corpus` — peer-reviewed Co-1 literature, DPO research outputs, named advocacy positions, Co-1-authored academic narratives that the guidebook engages by reading and citing
-- `participatory_synthesis` — guidebook content produced through Co-1 collaborator participation in the synthesis itself
-
-**Pre-launch, every Co-1 citation has `co1_provenance: published_corpus`.** None has `participatory_synthesis`. This is the schematic correlate of the §2.2 evidence-level-vs-participation-level distinction. Post-launch, if Co-1 collaboration activates, some new citations may carry `participatory_synthesis` — but the pre-launch corpus citations do not retroactively become participatory.
+**Part A — This guidebook treats provenance marking as mandatory.** Every Co-1 citation in the guidebook carries explicit provenance. The schema carries a `co1_provenance` field on the EvidenceSource entity. It names the co-production (D-0178, `decisions/DR-2026-08-31-co1-warrant-must-name-the-co-production.md`), because where a source was published is not a warrant.
 
 **Part B — Voice conventions distinguish single-source citation from multi-source synthesis.** Per A4 voice-style §8.1, specification voice locates authority appropriately. For Co-1, two patterns:
 
@@ -216,7 +211,7 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 1. **Full attribution.** Author/organization name, year, title, publisher/journal, DOI or URL. The format already in use across the corpus (per `references/co1-verified-sources.json`) is the operative format.
 2. **Source-type identification.** Whether the source is peer-reviewed literature, DPO research, organizational position, or academic narrative — per the four-type taxonomy in §1.1.
-3. **Verification status.** The status vocabulary is `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count`. (The 2026-04-23 verification report's five-value taxonomy was retired by D-0157.) Any cited Co-1 source must hold one of these statuses; cells citing `UNVERIFIED-CLOSED` or `CLOSED-DELETED` sources are themselves removed or marked `[BEST-PRACTICE-PENDING]` per T-04.
+3. **Verification status.** The status vocabulary is `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count`. (The 2026-04-23 verification report's five-value taxonomy was retired by D-0157.) Any cited Co-1 source must hold one of these statuses; what an unverified source does to a cell is `governance/evidence-methodology.md` §2.8.
 
 **Tier 2 obligation — Co-1 sources whose work the guidebook substantially synthesizes.** Where the guidebook draws on a Co-1 source for multiple cells or builds significant synthesis from a single source, an additional obligation applies:
 
@@ -242,9 +237,9 @@ But the link is operational, not definitional. Audience-priority is about who re
 
 **The Design Modes** locates *the kind of design decision*: Universal Mode (universal, code-compliant); Population Mode (population-informed); Person Mode (person-specific, OT-resolved). It answers: *what kind of design problem is this?*
 
-**The Seven-Tier Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 primary research (OT-prioritized but not OT-exclusive, per D-E), Co-1 lived experience, Tier 2 synthesis (systematic reviews / meta-analyses and named-organisation evidence-based standards), Co-2 OT CPGs, Tier 3 lower-control primary clinical and grey-literature primary research, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
+**The Evidence Hierarchy** locates *what evidence supports the value*: Tier 1 primary research (OT-prioritized but not OT-exclusive, per D-E), Co-1 lived experience, Tier 2 synthesis (systematic reviews / meta-analyses and named-organisation evidence-based standards), Co-2 OT CPGs, Tier 3 lower-control primary clinical and grey-literature primary research, Tier 4 international standards, Tier 5 national frameworks, Tier 6 codes. It answers: *what is the basis for this number/range/specification?*
 
-**The two interact at every cell** in the guidebook's specification matrix. A Tier 1 design specification (population-informed range) may be supported by:
+**The two interact at every cell** in the guidebook's specification matrix. A Population Mode design specification (population-informed range) may be supported by:
 
 - Tier 1 OT clinical research (e.g., AOTA grab-bar grip-strength studies)
 - Co-1 lived experience (e.g., DSDG signing-space dimensions)
@@ -362,9 +357,9 @@ Use when Tier 1 OT clinical research and Co-1 evidence converge on the same valu
 
 Use when Tier 1 and Co-1 diverge on a parameter. Per mission §3, both are presented; divergence is documented; synthesis approach is specified per parameter.
 
-> Construction: "Tier 1 OT evidence ([source]) shows [finding-1]. Co-1 sources ([sources]) document [finding-2]. The Tier 1 design range encompasses both: [range]. [Synthesis approach.]"
+> Construction: "Tier 1 OT evidence ([source]) shows [finding-1]. Co-1 sources ([sources]) document [finding-2]. The Population Mode design range encompasses both: [range]. [Synthesis approach.]"
 
-> Example: "Tier 1 OT evidence (Smith 2022 SR on threshold-height-and-fall-risk) supports threshold height ≤ 6 mm. Co-1 sources (*Concrete Change* 1987 visitability framework; *PVA Accessible Home Design* 2021; *Habinteg IHDG* 2024) document zero-step preference at primary residential entrances, framed by visitability advocacy and aging-in-place evidence over the building life-cycle. The Tier 1 design range is 0–6 mm. Population-informed default for residential primary entrances: 0 mm (zero-step), per the Co-1 visitability framework's broader claim that any threshold above zero forecloses a substantial population from entering. The 6 mm Tier 1 OT clinical maximum applies where structural constraints prevent zero-step."
+> Example: "Tier 1 OT evidence (Smith 2022 SR on threshold-height-and-fall-risk) supports threshold height ≤ 6 mm. Co-1 sources (*Concrete Change* 1987 visitability framework; *PVA Accessible Home Design* 2021; *Habinteg IHDG* 2024) document zero-step preference at primary residential entrances, framed by visitability advocacy and aging-in-place evidence over the building life-cycle. The Population Mode design range is 0–6 mm. Population-informed default for residential primary entrances: 0 mm (zero-step), per the Co-1 visitability framework's broader claim that any threshold above zero forecloses a substantial population from entering. The 6 mm Tier 1 OT clinical maximum applies where structural constraints prevent zero-step."
 
 ### 5.2 What these patterns rule out
 
@@ -398,30 +393,9 @@ This A5 specification updates `skills/voice-style_SKILL.md` §8.1 with the four 
 
 ## 6. Documentation requirements per Co-1 citation
 
-This section formalizes the obligations from §3.4 (Q3) into a concrete documentation specification for every Co-1 citation in the guidebook.
+The fields a Co-1 citation carries are the columns of `evidence_sources`; their vocabularies are the columns' own and are not listed here. What follows is how those fields surface.
 
-### 6.1 Required fields per Co-1 citation
-
-Every Co-1 citation in the corpus carries (in the underlying evidence record, even if not all are surfaced inline):
-
-| Field | Source | Required values |
-|---|---|---|
-| `ref_id` | Project-assigned | `Co1-NN` format per `references/co1-verified-sources.json` |
-| `tier` | Schema | `1` |
-| `evidence_type` | Schema | `co1` |
-| `co1_provenance` | Schema (new, per A5) | `published_corpus` (pre-launch all) or `participatory_synthesis` (post-launch contingent) |
-| `co1_source_type` | A5-defined | One of: `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
-| `verification_status` | Per DR-2026-08-04 (D-0157) | `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count` |
-| `authors` | Source | Full attribution |
-| `year` | Source | Publication year |
-| `title` | Source | Full title |
-| `publisher_or_journal` | Source | Publisher or journal name |
-| `doi_or_url` | Source | DOI preferred; URL fallback |
-| `population_codes` | Project synthesis | List of MOB/VIS/DEAF/etc. that the source supports |
-| `parameters_supported` | Project synthesis | List of design parameters drawing on this source |
-| `synthesis_attribution_required` | Project synthesis | Boolean: true if Tier 2 obligation per §3.4 applies (substantial synthesis) |
-
-### 6.2 Inline-rendered fields per citation context
+### 6.1 Inline-rendered fields per citation context
 
 Not all underlying fields surface in every citation. Three contexts:
 
@@ -431,61 +405,25 @@ Not all underlying fields surface in every citation. Three contexts:
 
 **Bibliography entry:** All fields surfaced.
 
-### 6.3 Validation
-
-Post-A6 evidence-state validator (per A6 governance + code phase) should:
-
-- Reject any citation lacking required schema fields
-- Flag citations with `verification_disposition = 'OPEN'` for re-search
-- Block migration of cells whose only Co-1 source is `UNVERIFIED-CLOSED` or `CLOSED-DELETED`
-- Surface `synthesis_attribution_required: true` cells for editorial review of front-matter attribution
-
-This is a B2 / A6 implementation specification; the rules are stated here so A6 design has explicit Co-1 requirements as input.
-
 ---
 
-## 7. Schema implications and pointers to B1
+## 7. Integration with the voice-style skill, audience priority and A6
 
-This section consolidates schema implications surfaced across §§3–6 as a pointer document for B1 (storage form decision and schema design).
+This section consolidates cross-document integration notes surfaced across §§3–6.
 
-### 7.1 Required EvidenceSource entity fields
-
-Per §6.1, the EvidenceSource entity (already specified at A3 conceptual model level) requires the following fields to support Co-1 evidence handling:
-
-| Field | Type | Source phase | Notes |
-|---|---|---|---|
-| `tier` | int 1–6 | A3 (existing) | Unchanged |
-| `evidence_type` | enum | T-03 (Stage 0.5) | Unchanged; values include `co1` |
-| `co1_provenance` | enum | **A5 (new)** | `published_corpus` or `participatory_synthesis` |
-| `co1_source_type` | enum | **A5 (new)** | `peer_reviewed_literature`, `dpo_research`, `advocacy_position`, `academic_narrative`, `validated_tool` |
-| `verification_status` | enum | DR-2026-08-04 (D-0157) | `VERIFIED`, `UNVERIFIED` — plus `verification_disposition` (OPEN/CLOSED), `verification_method`, `verification_closure_reason`, `verification_attempt_count` |
-| `synthesis_attribution_required` | bool | A5 (new) | Per Tier 2 obligation §3.4 |
-
-B1 schema design integrates these as part of the EvidenceSource specification. No new entity is required; these are EvidenceSource fields.
-
-### 7.2 Required EvidenceSource methods (B2 validator-time)
-
-Per §6.3, validator behavior:
-
-- Schema-level: required-field check on all six A5-affected fields above
-- Cross-entity: parameter cells citing Co-1 sources must verify `verification_status = 'VERIFIED'`
-- State-machine integration: cells with only `UNVERIFIED-CLOSED` or `CLOSED-DELETED` Co-1 sources route to T-04 `pending` state
-
-### 7.3 Voice-style skill integration
+### 7.1 Voice-style skill integration
 
 Per §5.4, voice-style §8.1 is updated with the four Co-1 voice patterns. This is a parallel deliverable to this document, committed alongside.
 
-### 7.4 Audience-priority and CS5 integration
+### 7.2 Audience-priority and CS5 integration
 
 Per §3.3 (Q5), audience-priority "disabled people" and Co-1 evidence are operationally linked but definitionally distinct. CS5 corpus-representation monitoring (§4.2) operates on Co-1 evidence; audience-priority representation-checking (per `governance/audience-priority.md`) operates on the rendered guidebook prose. Both are operative pre-launch; both feed gap-register entries; both inform synthesis quality. Their distinction is preserved in this document and should be preserved in B1 schema (separate fields, separate gap-register categorization).
 
-### 7.5 A6 evidence methodology dependencies
+### 7.3 A6 evidence methodology dependencies
 
 A6 (next governance+code phase) operationalizes T-03 + T-04 in the evidence-state validator. A6 must:
 
 - Implement the four Co-1 voice patterns from §5 as voice-validator checks (Pattern Co-1-A through Co-1-D detection)
-- Enforce required EvidenceSource fields per §6.1 + §7.1
-- Integrate `co1_provenance` into the evidence-state machine (cells with `participatory_synthesis` flagged separately, post-launch only)
 
 A6 inherits this A5 specification as a binding input.
 
@@ -503,8 +441,7 @@ All §§4–7 deferred at end of Session 1 are now resolved. Q3 and Q4 resolutio
 | **CS5** (Co-1 representation monitoring) | Specification COMPLETE — pre-launch corpus-representation monitoring form fully specified (§4.2); post-launch expansion form documented. |
 | **CS8** (Decision capture) | Five substantive resolutions (Q1–Q5) captured per §§3.1–3.5 with [CONFIDENCE] flags. CS8 LIVE from A12 will retro-format these per protocol; provisional capture is sufficient for now. |
 | **CS4** (Re-issue cadence) | A5 closure does not trigger synthesis re-issue. Full Stage A close (post-A13) does. |
-| **B1** (schema design) | Six new EvidenceSource fields specified (§7.1) as binding input to B1 schema design. |
-| **A6** (evidence methodology — next phase) | Voice-validator pattern specifications (§5), required-field rules (§6.1, §7.1), state-machine integration (§7.5) carried forward as binding input. |
+| **A6** (evidence methodology — next phase) | Voice-validator pattern specifications (§5), state-machine integration (§7.3) carried forward as binding input. |
 | **A11** (legal and regulatory framework) | Q3 Tier 3 obligation §3.4(7) — post-launch Co-1 source notification protocols — flagged for A11 + counsel review. Not deferred within A5; resolved here as a forward-pointer. |
 
 
@@ -525,7 +462,7 @@ CANONICAL — A5 complete (Session 2 of 2; no Session 3 needed).
 | Doctrinal anchor | D-03 revised (`pre-stage-a-decisions.md`) + Amendment 7 + Mission §3, §Operational reality, §Epistemic commitments + project-standards 2026-04-26 03:45 |
 | Companion governance | `governance/mission-and-epistemics.md` (canonical) · `governance/audience-priority.md` (canonical) · `governance/pre-stage-a-decisions.md` |
 | Resolves Q's | Q1 (representation honesty); Q2 (CS2/CS5 pre-launch substitute); Q3 (attribution/disclosure); Q4 (Co-1 ↔ Three-Tier interaction); Q5 (audience ↔ Co-1 distinction) — all five resolved |
-| Forward dependencies | A6 evidence methodology (binding input from §§5, 6.1, 7.5); B1 schema design (binding input from §7.1); A11 legal/regulatory (forward pointer from §3.4 Tier 3 §7) |
+| Forward dependencies | A6 evidence methodology (binding input from §§5, 7.3); A11 legal/regulatory (forward pointer from §3.4 Tier 3 §7) |
 
 **Next phase entry condition:** A6 starts with this document, the existing T-03/T-04 specifications, and `governance/mission-and-epistemics.md` §Epistemic commitments as binding doctrinal inputs.
 

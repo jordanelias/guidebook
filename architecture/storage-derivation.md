@@ -39,7 +39,7 @@ The storage form must satisfy three load-bearing doctrinal commitments (mission 
 > Co-1 evidence — lived experience and participatory design (CRPD Art. 4.3) — is not subordinate to clinical research. The two answer different questions. Where they converge, the convergence is itself evidence. Where they diverge, the divergence is documented and a synthesis approach is specified per parameter.
 > — mission §Doctrinal commitments 3
 
-**Storage implication:** Co-1 sources must carry distinguishing schema fields (per A5 co1-operational.md §6.1: tier, evidence_type, co1_provenance, co1_source_type, verification_status, synthesis_attribution_required) that are enforced at write — not optional, not narrative. The framework operationalized this as criterion **C-3.1 (six required Co-1 fields enforced; non-conformance blocked at write)** at weight 3 (critical-binding).
+**Storage implication:** Co-1 sources must carry distinguishing schema fields (tier, evidence_type, co1_provenance, co1_source_type, verification_status, synthesis_attribution_required) that are enforced at write — not optional, not narrative. The framework operationalized this as criterion **C-3.1 (six required Co-1 fields enforced; non-conformance blocked at write)** at weight 3 (critical-binding).
 
 ### 2.3 DC-6 — Questions-led teaching is the project's pedagogical commitment
 
