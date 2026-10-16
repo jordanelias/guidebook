@@ -244,60 +244,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  floor_basis: 'INSTRUMENTED 2026-08-24. This entry read `no_floor: not-instrumented — ... it prints no
-    whole-check EXAMINED count, so no floor is declarable yet`, and that was accurate: the gate printed
-    70 green ticks with no denominator anywhere, so a pass could not be told apart from an abstention.
-    Every sub-check now declares its subject and the run prints a whole-check `EXAMINED: <n>` line, so
-    a floor is declarable and this is it.
-
-    min_items:1, not a larger number, and the reason is on the record: the 2026-08-06 clean-room reset
-    took evidence_sources from 863 rows to 10. A floor pinned to a corpus size would have gone red on
-    a deliberate decision and stayed red. What this floor asserts is the one thing that must never stop
-    being true — that the gate looked at SOMETHING. Derive the live figure; do not read a number here.
-
-    WHAT THE INSTRUMENTATION FOUND, and it is the reason this was worth doing: 29 of the 70 sub-checks
-    currently pass HAVING EXAMINED NOTHING, including all four of section F (pipeline_runs is empty),
-    all of J and K, and D04/D05. They were indistinguishable from real coverage. They are now listed by
-    id at the end of every run under `PASSED HAVING EXAMINED NOTHING`. They are reported, not failed:
-    an empty scope is often simply true — D04/D05 examine DOI-less sources and every live source has a
-    DOI — and failing on it would turn the gate red for a correct state, which is not what CLAUDE.md §2(a)
-    asks for.
-
-    '
-  note: "RE-MEASURED 2026-08-22: 72/72 checks pass. The previous text here read \"RED on main (63/69 checks\
-    \ pass as of 2026-08-04)\" and was carried unchanged for eighteen days after it stopped being true\
-    \ — a hardcoded volatile fact inside the gate inventory itself, which is the CLAUDE.md §2(b) failure\
-    \ one level up from where that rule is usually applied. Correcting it was scheduled by the 2026-08-16,\
-    \ 08-17 and 08-18 plans and skipped three times. Derive it; do not read a number here: `python3 scripts/tests/test_db_integrity.py`.\
-    \ Level left as declared, and held in its own battery so enabling branch protection does not deadlock\
-    \ every data-touching PR on a content backlog. SUPERSEDED 2026-08-04 — everything below this line\
-    \ about the verification_status vocabulary describes a database that no longer exists, and is retained\
-    \ only so the reasoning is auditable. D-0157 (DR-2026-08-04-verification-status-is-a- standing-not-a-history)\
-    \ was RATIFIED and its migrations ran: the live distribution is VERIFIED 752 / UNVERIFIED 111 and\
-    \ nothing else. VERIFIED-1, VERIFIED-2, VERIFIED-WITH-CORRECTION, UNVERIFIED-1, UNVERIFIED-CLOSED,\
-    \ SUPERSEDED and DISPUTED are retired as status values (DISPUTED survives only as a closure reason).\
-    \ B01/B02/B05/B06 now PASS. The six remaining failures are I2 (the D-0157 adjudication queue: rows\
-    \ asserting VERIFIED with no recorded attempt) plus C02/C03/C04/D05/G02, which ARE the genuine content\
-    \ backlog the note below correctly identified. In particular the closing instruction below — \"ratifying\
-    \ it is a D-SCHEMA decision for the owner, not a unilateral edit to a blocking gate\" — has been satisfied;\
-    \ do not read it as still-open guidance. CORRECTED 2026-08-01 — this entry and the register both said\
-    \ \"106 of 863 evidence_sources rows carry a verification_status outside the enum\" and called the\
-    \ whole failure a content backlog. Both halves were wrong:\n  - The count is 81, not 106. 106 is 863\
-    \ minus the 757 plain-VERIFIED rows,\n    which wrongly counts the 25 UNVERIFIED-1 rows that ARE in\
-    \ the enum.\n    Verified distribution: VERIFIED 757, VERIFIED-2 71, UNVERIFIED-1 25,\n    DISPUTED\
-    \ 7, VERIFIED-WITH-CORRECTION 2, VERIFIED-1 1.\n  - The verdict is split, not uniform. B01/B06 are\
-    \ a STALE TEST: the test's\n    list was last curated in May 2026, while DISPUTED and CLOSED-DECIDED\
-    \ were\n    created by the owner-approved DR-2026-07-20 migration, and\n    VERIFIED-WITH-CORRECTION\
-    \ is in schemas/enums.py, which the test omits.\n    VERIFIED-2 (71 rows across 19 migrations) is\
-    \ a deliberate honesty\n    distinction — verification by convergent retrieval rather than a\n   \
-    \ first-hand render — that collapsing to VERIFIED would destroy.\n    C01-C04 and G02 ARE a genuine\
-    \ content backlog (one July citation-mining\n    batch inserted with DOIs but no resolution outcome,\
-    \ no source_type and\n    premature COMPLETE labels), and B02/B05 are mixed.\nWidening the test's\
-    \ enum is NOT done here: verification_status has no CHECK constraint and four vocabularies coexist\
-    \ (test list, schemas/enums.py, architecture/schema-spec.md, live practice), so ratifying it is a\
-    \ D-SCHEMA decision for the owner, not a unilateral edit to a blocking gate. Deliberately NOT triggered\
-    \ by `tooling`: it asserts things about DB CONTENT, which a scripts-only diff cannot change. db_path_env_audit\
-    \ and pipeline_contract_audit are the checks that a tooling diff can actually break."
 - id: migration_reproducibility
   cmd:
   - python3
@@ -310,14 +256,6 @@ checks:
   basis: cross_stage/reproducibility-invariant
   cost: slow
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of core invariants compared (7 today:
-    schema_version + six table COUNT(*)s). A fixed, code-declared list — zero would mean the comparator
-    itself broke, not that the DB shrank, so min_items:1. GAP-290 enforcement — the gate that actually
-    stops direct DB writes. Was two hand-kept inline heredocs (audit.yml and preflight.sh); now one script.
-    SCOPE, recorded 2026-08-01 because the description above overstates it: this compares PRAGMA user_version
-    plus COUNT(*) on six tables. An UPDATE changes no count, so value-level edits are invisible to it,
-    as is anything in the other 55 tables. CLAUDE.md §0 rule 4 says CI "fails on any divergence", which
-    this has never done. See migration_reproducibility_deep.'
 - id: migration_reproducibility_deep
   cmd:
   - python3
@@ -331,26 +269,6 @@ checks:
   basis: cross_stage/reproducibility-invariant
   cost: slow
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of tables walked by the deep comparison
-    (67 today: every user table plus the two DR-2026-05-28 exemptions). Fixed by the schema, not the data
-    — min_items:1. Every table, every row — the comparison the core invariants cannot make. Added 2026-08-01
-    after an adversarial trace showed the blocking check above passes on a tampered DB: editing a row''s
-    tier and title, and inserting a forged `stated` row into specifications (then `evidence_cell_state`),
-    both leave all seven invariants identical. RED, and the two findings look like an incomplete exemption
-    list rather than a hand-edited DB: evidence_sources diverges on 277 rows (subtype, citation_count,
-    pages, pub_month) because scripts/resolve_dois.py writes Crossref enrichment straight into it, and
-    url_verification_runs diverges by one row because verify-urls.yml inserts its run record. Both are
-    written by the same scheduled workflows that DR-2026-05-28 already exempted evidence_source_authors
-    and pipeline_runs for — they were simply never added. ADVISORY, not blocking, and deliberately so:
-    resolving this is an owner call between widening the DR''s exemption list and requiring those jobs
-    to emit migrations. Promoting it before that decision would block every data PR on a divergence the
-    project may well consider legitimate. Timestamp-only divergence is reported separately from content
-    so the check does not cry wolf: 4 further tables differ only in created_at/updated_at. RESOLVED 2026-08-01:
-    the second rebuild is gone. A rebuild''s only input is the migration files, so it is cached on their
-    SHA; this check and the blocking one run in the same `data` battery job, so the pair now costs one
-    rebuild rather than two (45.4s -> 0.1s on the second invocation). Any migration edit changes the fingerprint
-    and forces a fresh build, verified by mutation, so the cache cannot mask what the check exists to
-    detect. Reuse is printed rather than silent.'
 - id: source_slug_links_duplicates
   cmd:
   - python3
@@ -362,19 +280,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16. Replaces a no_floor asserting "examining 0 because the corpus
-    was emptied by decision". Measured through run_checks own dispatcher, source_slug_links holds 5
-    rows and this check prints EXAMINED 5, so the assertion was false and a BLOCKING gate was
-    carrying no floor over a live subject. The floor is 1 — the boundary between examined-something
-    and examined-nothing — never today's count, which would go stale exactly as the sentence it
-    replaces did.
-  note: 'EXAMINED line added 2026-08-06: "0 duplicate sets in 1011 rows" and "0 in 0 rows" printed byte-identically,
-    and this is blocking, so the pass carried no information about whether the table was intact or gone.
-    `min_items: 1` was declared alongside it and RETIRED the same day by the clean-room reset, which emptied
-    source_slug_links by decision. The guard exists to catch a check passing on an ACCIDENTALLY empty
-    subject; an empty subject that is the declared state of the project is not that, and leaving the guard
-    would have made a blocking gate red for telling the truth. The EXAMINED line stays, so the emptiness
-    is still visible rather than inferred.'
 - id: validate_parameters
   cmd:
   - python3
@@ -387,31 +292,6 @@ checks:
   basis: base/base-parameter-vocabulary
   cost: fast
   min_items: 1
-  note: 'P5, 2026-09-10, REPLACES validate_items.py (deleted in the same commit). validate_items.py read
-    `items`, which holds 0 rows by the owner''s 2026-09-01 ruling and cannot ever hold rows again without
-    a new ruling -- so it failed EXAMINED:0 against min_items:1 permanently, by construction, not by a
-    correctable defect. A check that can never pass is not a floor, it is a fixed red light nobody can
-    act on, which teaches its reader to ignore it (CLAUDE.md §5a in miniature).
-
-    This asserts the ONE thing SQLite cannot state itself: no `terms.canonical_en` reached by a live
-    `base_parameters` row matches the value-bearing pattern (a digit, a comparator, or a min/max word)
-    -- the item-layer defect (DR-2026-08-19 §1.1: 42 of 93 item names embedded a determination) restated
-    one layer down, against the table the owner named as `items`''s replacement subject (owner ruling
-    2026-08-26, "the judgment object is the canonical parameter"). Full reasoning is in the script''s own
-    header per CLAUDE.md §8.
-
-    NOT A SECOND COPY OF A RULE (CLAUDE.md rule 5): the regex is imported from `scripts/db.py`''s
-    `_VALUE_BEARING`, which `add-term` and `add-parameter` already refuse against at write time. This
-    check is the backstop for what that refusal cannot cover -- a migration written directly against
-    dbcore, or a future writer that does not route through `db.py` -- not a first line of defense.
-
-    min_items:1, not no_floor: unlike `items`, `base_parameters` was never emptied by ruling, and
-    the floor is what makes a silently-reopened item-layer defect visible instead of silent. P2, added 2026-10-09 (tooling T1, the owner''s D3
-    answer): every term minted from a permitted catalogue (terms.catalogue) still has its
-    approving ledger entry, named by catalogue_approval_ref, occurring once in references/project-standards.md.
-    Fault-injected in test_scan_contract.py (M10, M11). Fault-injected 2026-09-10: a scratch-DB row named
-    `corridor width >=1200 mm` was rejected (EXAMINED:1, exit 1); a row named `corridor width` passed
-    (EXAMINED:1, exit 0).'
 - id: readonly_db_open_audit
   cmd:
   - python3
@@ -424,23 +304,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the read-only-consumer count (39 today). min_items:1
-    matches the check''s own vacuity guard, which already FAILS outright on zero readers found. A script
-    that only reads must open the canonical DB read-only. Sibling of db_path_env_audit — same scope filter,
-    same EXCLUDE_PARTS, so "legacy" means one thing repo-wide — but a different contract: that one asks
-    WHICH database a script opens, this one asks HOW. The cost is not the `-wal`/`-shm` sidecars, though
-    those are real enough that .gitignore already carries an entry for them. It is that a read-write handle
-    is a write the reproducibility gate CANNOT SEE: migration_reproducibility compares PRAGMA user_version
-    plus COUNT(*) on six tables, so a checkpoint or a stray mutation changes nothing it looks at. The
-    migrations-only rule (CLAUDE.md §0 rule 4) is absolute; its detection floor is not. Every unnecessary
-    rw handle is another way for the canonical DB to change without a migration. A writer is OUT OF SCOPE,
-    not an offender — write status is decided by AST, inspecting only string literals actually passed
-    to an execute call. A whole-file keyword scan reports UPDATE and DROP from prose in comments; the
-    first draft of the sweep did exactly that and produced 35 false writers including pure readers. Scratch
-    opens (lower-case `db_path`, `:memory:`, a rebuilt copy) stay allowed: only connects naming a canonical
-    constant count. Carries a vacuity guard — zero read-only consumers found means the scope filter is
-    broken, and FAILS rather than passing on an empty set. Measured 2026-08-06: 39/39 green after the
-    sweep; 16 of 43 before it. Advisory per house norm; promote once the false-positive rate is known.'
 - id: db_path_env_audit
   cmd:
   - python3
@@ -453,10 +316,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of in-scope scripts audited (55 today,
-    direct + exempt). min_items:1 — a run that finds zero in-scope scripts means the scope filter broke.
-    Triggers on `tooling` too: the contract it enforces is a property of the SCRIPTS, so a scripts-only
-    diff is exactly when it can regress.'
 - id: alias_provenance_audit
   cmd:
   - python3
@@ -482,19 +341,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'Tooling T1, 2026-10-09 (catalogue-plan-v2 section 8.2, critique F7). Is each
-    observation''s context quote in a file saved FOR its own source? db.py observe-term
-    refuses a new observation that fails this (or records an exemption); this is the
-    backstop for rows written before migration 102 and for rows arriving by another route.
-    It classifies every observation scoped / unscoped / missing / exempt through
-    retrieval_log.locate_quote (one matching rule) and FAILS when the unscoped or missing
-    count rises above its entry in governance/research-contract-baseline.json
-    (observation-quote-unscoped, observation-quote-missing), whose ratchet git witnesses
-    (research_contract_baseline_ratchet, blocking). Re-derive the counts by running it;
-    never quote them. Phrases outside their own quote are REPORTED, not counted. EXAMINED is
-    the observation count; min_items:1 because observations are populated repo content.
-    Fault-injected in scripts/tests/test_scan_contract.py (A04): an observation inserted past
-    the writer with an invented quote turns it red.'
 - id: scan_debt
   cmd:
   - python3
@@ -506,18 +352,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'Tooling T1, 2026-10-09 (catalogue-plan-v2 sections 3.8 and 8.2, critique F13).
-    Counts the (unsuperseded source x active parameter) pairs v_scan_ledger (migration 103)
-    reports NOT-READ or READ-PARTIAL -- the reading the catalogue still owes, including the
-    back-fill a newly promoted parameter creates in every source read before it. Red
-    whenever that debt is above zero; NO DEBT BASELINE, deliberately: debt rises
-    legitimately with every promotion and admission, so a ratchet would turn red on correct
-    work. EXAMINED is the number of ledger pairs; min_items:1 because zero pairs means no
-    unsuperseded source or no active parameter, a corpus clear, which should be visible.
-    Its readers: the next cohort''s worklist (the pairs it prints), the catalogue''s
-    evidence-state line, and the Release 0 acceptance test (plan section 12, Q12). Expect it
-    red once the parameters of PR #171 reach main: every source is then owed a reading
-    for each of them. Fault-injected in test_scan_contract.py (S12/S14).'
 - id: extraction_follow_up_audit
   cmd:
   - python3
@@ -532,13 +366,6 @@ checks:
     exists, so both subjects are empty; follow-ups are OWED by research under the owner's
     2026-10-09 D1 answer (a cross-slug figure is tagged for follow-up). The first run that
     examines a row contradicts this reason, which is the signal to ratchet to min_items 1.
-  note: 'Tooling T1, 2026-10-09, the reader of the owner''s D1 answer ("D1: yes figure from
-    source filed by another slug allowed. skimmed values are not publishable"). Lists every
-    open extraction follow-up (db.py raise-follow-up), and FAILS a LIVE determination
-    governed by an extraction with an open follow-up (allowed, but the reader must be told
-    and nothing renders that yet) or by a skimmed extraction (the engine refuses to produce
-    one; this is the backstop). Vacuous today and says so on every run. Fault-injected in
-    test_scan_contract.py (U06, U07).'
 - id: citation_mining_session
   cmd:
   - python3
@@ -566,52 +393,6 @@ checks:
     session -- which mattered more while it was blocking, and still misreports now it is not.
   requires_session: true
   session_pointer: LATEST-RESEARCH
-  note: 'DEMOTED blocking -> advisory 2026-09-18. It had examined ZERO subjects since batch 10 and
-    nobody could see it. Batches 11, 12, 13 and 14 admitted only T4-T6 sources, so the gate had no
-    slug-linked T1-2 anchor to mine, and test_db_integrity L04 -- the check that exists to catch
-    exactly this -- compared CALENDAR DATES and stayed green while batches 11 and 12 happened to
-    share a date with batch 10. Batch 13 crossed midnight and the condition surfaced. A gate that
-    gates nothing is CLAUDE.md rule 6 arriving as a fresh imperative -- it teaches its reader to
-    ignore it.
-    WHAT THIS DEMOTION COSTS, STATED ACCURATELY BECAUSE THE FIRST VERSION OF THIS PARAGRAPH GOT IT
-    WRONG. It was written here that run_checks still reports this under BLOCKING-and-vacuous and
-    that L04 still fires on the true condition, so nothing was hidden. BOTH WERE FALSE.
-    run_checks.py builds blocking_vacuous by filtering on level == blocking, so demoting removes
-    this check from that escalation by construction; and L04 reads this level, so it is silent
-    while this is advisory. The demotion is a real loss of signal, not a free one, and the only
-    remaining report is the plain NOTHING-IN-SCOPE line. The deeper fix -- failing the verdict on
-    blocking-and-vacuous inside run_checks, which already computes it for every check, and
-    retiring L04 -- is NOT done here and is the right next change. It would also cover the other
-    two checks on this pointer, one of which (research_dod_session) is blocking and floorless.
-    RE-PROMOTE to blocking the first time a batch admits a slug-linked Tier 1-2 source, which is
-    the moment this check has work again. Derive that, do not assume it. SELECT COUNT(DISTINCT
-    es.ref_id) FROM evidence_sources es JOIN source_slug_links ssl ON es.ref_id=ssl.ref_id WHERE
-    es.tier BETWEEN 1 AND 2 AND es.created_by_session IN (stem, stem with .md appended). NOTE THE
-    TRAP -- this entry declares kinds [data, synthesis] and test_db_integrity declares [data,
-    schema], while an edit under governance/ classifies as governance, so the re-promotion edit
-    does not itself run the check that reads this level. Run the data battery to confirm it.
-    ---
-    @SESSION@ is substituted from **sessions/LATEST-RESEARCH**, not LATEST. W4, 2026-08-06. This
-    gate previously read LATEST, which was simultaneously the continuity pointer ("where did work leave
-    off") and this gate''s subject ("whose research should be checked"). Those are different objects and
-    they had drifted six weeks apart: LATEST named a June continuity session while the newest session
-    that actually mined citations was 2026-07-26. The gate therefore scoped itself to a session that touched
-    no sources and reported `Outstanding: 0` at 4.7% coverage — a BLOCKING check passing by having nothing
-    in scope. CLAUDE.md §2(a) (pointer corrected 2026-08-22, was §10) calls both states meaningless and
-    was right: stale, it validates a closed set; advanced to the newest session, it reports zero because
-    that session did no research. LATEST-RESEARCH names the newest session with rows in citation_mining
-    / search_executions / evidence_sources, so the gate has a real subject. Pointer honesty is enforced
-    in three existing places rather than a fourth file: `run_checks.py` FAILS a blocking check whose pointer
-    does not resolve (it used to SKIP, which disarmed this gate in silence); `validate_cross_refs` checks
-    the handoff''s named record and plan; `test_db_integrity` L04 reports when this pointer drifts out
-    of the gate''s Tier 1-2 scope. The standalone `session_pointer_audit.py` was deleted on 2026-08-06
-    — it patrolled a hazard whose root cause was a five-line fix in the dispatcher it was watching. The
-    split was necessary and not sufficient. Pointing the gate at the right session still returned `Outstanding:
-    0`, because the pointer files hold a FILENAME (`….md`) while `evidence_sources.created_by_session`
-    holds the bare stem on 32 of its 33 values — so `created_by_session = :session` had been selecting
-    nothing under either pointer, for every session, since the flag was added. Both halves were fixed
-    together; the audit now normalises the name and reports an `Examined` count so an empty scope is visible
-    as `NOTHING-IN-SCOPE` rather than as a pass.'
 - id: citation_mining_backlog_t2
   cmd:
   - python3
@@ -625,13 +406,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16. Replaces a no_floor asserting "examining 0". This check is
-    repo-wide (no --session), and it examines 4 slug-linked T1-2 sources. It was invisible to the
-    runner until the same change fixed its output line, which read "Examined (slug-linked T1-2
-    sources in scope) 4" — the parenthetical sat between the word and the colon, so EXAMINED_RE
-    matched nothing and the vacuity apparatus could see neither a count nor an emptiness. Floor is
-    1, not 4; the session-scoped sibling is deliberately NOT ratcheted, because its subject varies
-    by session and zero is an honest state there.
 - id: provenance_artefact_audit
   cmd:
   - python3
@@ -646,15 +420,6 @@ checks:
   basis: evidence/discovery-provenance
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-27 (phase 2-data). Was a `vocabulary-owed` no_floor while the
-    corpus genuinely carried zero `surfaced_in` values -- registered that way in phase 2
-    (tooling) rather than pre-ratcheted on a subject this check itself measured as empty
-    (EXAMINED 0), which would have been the vacuous-block shape CLAUDE.md 5(a) exists to
-    catch. Phase 2-data's historical migration derived `surfaced_in` on a first set of
-    candidates, so the floor is live now, not predicted -- derive the current count and its
-    split by route rather than trusting any number typed here (rule 7a), with
-    `select case when surfaced_in like 'transcripts/%' then 'TRANSCRIPT' else 'PAYLOAD' end,
-    count(*) from search_candidates where surfaced_in is not null group by 1`.
 - id: provenance_attribution_audit
   cmd:
   - python3
@@ -669,21 +434,6 @@ checks:
   basis: evidence/discovery-provenance
   cost: fast
   min_items: 1
-  floor_basis: RC1 (DR-2026-09-26 section 2.2e). Unlike its sibling registration above, this
-    mode's subject is every candidate WITHOUT surfaced_in -- non-empty with no phase-2-data
-    migration needed (derive the count, never quote it, rule 7a) via
-    `select count(*) from search_candidates where surfaced_in is null and exec_id is not null`.
-    THE SUBJECT IS A DEFICIT, AND IT SHRINKS. As later batches set surfaced_in going forward
-    and phase 2-data backfills history, this count trends toward zero -- at which point an
-    EXAMINED count of zero against this floor correctly reads as NOTHING-IN-SCOPE-turned-
-    vacuous, and this registration should be revisited then (a no_floor of a kind that
-    asserts nothing about emptiness, not a de-ratchet to a lower floor). Ratcheting UP is
-    this registry's normal direction; this is the rarer case of a floor set on a population
-    moving the other way, named here so a future session does not read a red gate as a
-    regression. Advisory because its history links are derived by the section 2.1 rule,
-    which errs toward not linking (an ambiguous payload matching two searches is left
-    unlinked rather than guessed), so what it finds in history is a finding for a batch,
-    not a defect in the PR that lands the check.
 # DELETED 2026-09-10 (P7): the `validate_schema` id that ran `scripts/validate_schema.py --verbose`
 # (no `--cross-check`). ENTITY_REGISTRY = {} (scripts/validate_schema.py:63) is iterated at :101 and
 # :149 with nothing else gating the `--verbose` path, so this examined ENTITY_REGISTRY's zero entries
@@ -697,8 +447,8 @@ checks:
 #   1. `validate_schema_cross_check` below is a SEPARATE registered entry running the SAME file with
 #      `--cross-check`, a code path independent of ENTITY_REGISTRY (it reconciles
 #      research_code_leads against _archived/data/jurisdictional_values on (jurisdiction,
-#      standard_name)). It is demonstrably non-vacuous -- its own floor_basis records "examines 83
-#      leads and was proven to fire by deleting one" -- and it ALREADY claims
+#      standard_name)). It is demonstrably non-vacuous -- its floor_basis (deleted in plan step 1.8,
+#      still in git history) recorded "examines 83 leads and was proven to fire by deleting one" -- and it ALREADY claims
 #      `basis: base/base-schema-validates`, so that criterion stays claimed without any edit here.
 #   2. `skills/workplan-orchestrator_SKILL.md` step "2b — Data health check" runs
 #      `python3 scripts/validate_schema.py --quick` as a documented, unconditional-when-`data/`-exists
@@ -717,23 +467,6 @@ checks:
   basis: hygiene
   cost: fast
   min_items: 1
-  note: >-
-    WHAT REACHES THE GUIDEBOOK WITHOUT IT. skills/ holds the research protocol in 47
-    files, and the harness discovers skills only at .claude/skills/<name>/SKILL.md. A
-    skill added to skills/ and not linked is found only when an agent chooses to read
-    it -- which is the state .claude/settings.json blames for the 2026-07-24 run that
-    skipped Co-1, citation mining, clause citation and combinatorial pairing while the
-    rules for all four sat documented. Non-compliant research is what lands.
-    ADVISORY, and the reason is the level's own doctrine rather than timidity. Skills
-    that carry no `description:` cannot be linked until a human writes one -- derive the
-    list from the script; at last writing it was adversarial-research,
-    evidence-metadata-rehabilitation, integrity-protocol, reasoning-doc-citations,
-    voice-style. A blocking gate
-    would be red by construction until then, and a check that is red by construction
-    teaches its reader to ignore it (CLAUDE.md rule 6). RATCHET TO BLOCKING once they
-    carry descriptions and this reports IN SYNC on a clean tree; derive that count
-    from the script, never from this note.
-
 - id: claude_md_spine
   cmd: ['python3', 'scripts/audit/claude_md_spine.py']
   battery: governance
@@ -742,15 +475,6 @@ checks:
   basis: base/base-names-resolve
   cost: fast
   min_items: 1
-  note: >-
-    CLAUDE.md is auto-loaded into every session and its stage list is the frame rule 5
-    is applied against, so drift there is made at the cost of a duplicated fact in the
-    database rather than a red check. For thirteen days the file carried both
-    "Substrate is not a stage" and, forty lines below, the paragraph recording that the
-    machine enforces base as one. Prose could not catch that; this compares the single
-    SPINE line against governance/pipeline-contract.yaml, the declared single home of
-    the stage ids. Proven to fail on a dropped stage and on a duplicated SPINE line.
-
 - id: schema_reference_audit
   cmd:
   - python3
@@ -764,10 +488,6 @@ checks:
   basis: base/base-names-resolve
   cost: fast
   min_items: 1
-  note: 'Rule 4 made mechanical. 33 of 66 tables hold 0 rows, so a caller left pointing at a renamed
-    table renders NOTHING and every downstream byte-diff certifies it clean. Exemptions live in
-    governance/schema-reference-exemptions.yaml, carry a reason, are PRINTED as KNOWN rather than
-    hidden, and a stale one fails the check.'
 - id: validate_schema_cross_check
   cmd:
   - python3
@@ -781,18 +501,6 @@ checks:
   basis: base/base-schema-validates
   cost: fast
   min_items: 1
-  floor_basis: 'FLOOR RESTORED 2026-09-02, a day after it was retired, because the check acquired a subject
-    for the first time in its life. It was retired on the true premise that no YAML entity type was declared.
-    It has since been REPOINTED: it no longer reconciles a YAML corpus against jurisdictional_values (both
-    sides of that pairing are gone -- the table emptied by the item-layer ruling, the YAML archived) but
-    reconciles research_code_leads against the _archived/ corpus D-0185 restored it from, on the
-    (jurisdiction, standard_name) identity. It examines 83 leads and was proven to fire by deleting one.
-    A floor is honest here now; no_floor was not. It was ALSO unreachable 2026-09-01 to 2026-09-02: an
-    empty-registry `return 0` in validate_schema.py fired ahead of its dispatch.'
-  note: 'Was `continue-on-error: true` in ci.yml; advisory is the same thing, declared. DUPLICATE-KEY
-    DEFECT CORRECTED 2026-09-02: this entry carried TWO `note:` keys, so YAML kept the last and silently
-    discarded the retirement reasoning written the day before. A rule recorded in a discarded key is not
-    recorded. Merged into one key; the reasoning now lives in floor_basis above.'
 - id: validate_evidence_state
   cmd:
   - python3
@@ -809,17 +517,6 @@ checks:
   - specification/tier3-alone-threshold
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16. The note below still says specifications is "genuinely
-    unpopulated pre-Phase-E"; it holds 2 rows and this check prints EXAMINED 2. A parameter was
-    minted 2026-09-16 (base_parameters, 1 row), which is what made specifications writable, so the
-    premise of the old reason expired with that migration rather than with any edit here. BLOCKING,
-    and it was carrying no floor over a live subject. Floor is 1, never the count.
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n_cells+n_conv (specifications + convergence_assessment
-    row counts). Both are 0 today — the `specifications` table (per-item×population synthesis record,
-    CLAUDE.md §4) is genuinely unpopulated pre-Phase-E per CLAUDE.md §1/§9, not a broken sweep, so empty-by-decision
-    rather than min_items. `synthesis` added per the 2026-07-23 enforcement plan F2: a synthesis PR that
-    asserts a determination must trigger the judgment-stage check. It previously could not, because the
-    path filter never evaluated true.'
 - id: jurisdiction_db_vocabulary
   cmd:
   - python3
@@ -832,14 +529,6 @@ checks:
   basis: base/base-jurisdiction-vocabulary
   cost: fast
   min_items: 1
-  note: 'ADDED 2026-09-18. validate_jurisdiction (below) globs source YAML and the standards-registry
-    markdown and NEVER READS A TABLE, so it passed with 0 errors over 27 rows holding the rejected
-    GB code across five tables -- while jurisdiction-philosophy.md line 116 said the rule was
-    "enforced by the validator". This check reads the DATABASE. Its table list is DERIVED from the
-    live schema (any table with a jurisdiction column) and its vocabulary is PARSED from
-    jurisdiction-philosophy.md, so it holds no curated list of its own and refuses rather than
-    passing if the rule stops parsing. min_items:1 — the jurisdiction-bearing tables are schema, not
-    a corpus that legitimately empties. source_locators is exempt and the exemption states why.'
 - id: validate_jurisdiction
   cmd:
   - python3
@@ -867,20 +556,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n, the count of stated/provisional `specifications`
-    rows queried.
-
-    RATCHETED FROM no_floor TO min_items:1 ON 2026-09-17, by the guard doing its job rather than by anyone
-    noticing. The entry read `no_floor: empty-by-decision` because the specifications table was genuinely
-    unpopulated: the reason ASSERTED THE SUBJECT WAS EMPTY. Migration 086 gave the table its first live
-    determination — cell 3×MOB, the proxy branch — and the check printed EXAMINED: 1, so run_checks C9
-    refused the pair: a check cannot assert its subject is empty over a subject that is not. That is
-    CLAUDE.md rule 7a''s own enforcer catching a claim that went stale the moment the corpus filled, which
-    is exactly the ratchet CLAUDE.md asks for (`checks with a real floor: N of 73 — ratchet this up as the
-    corpus fills`; derive N from `run_checks.py --selftest`, never from this sentence).
-
-    THE FLOOR IS 1, NOT THE LIVE COUNT. 1 is the boundary between examined-something and examined-nothing
-    and does not go stale on the next determination; a floor set to today''s count would.'
 - id: audit_evidence_metadata
   cmd:
   - python3
@@ -893,10 +568,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the total slug count from the `slugs` table (106
-    today, not the empty `bpc_metadata` table). min_items:1 — `slugs` is populated repo content (CLAUDE.md
-    §1), not a corpus that legitimately empties. Rule-#10 evidence-eligibility gate. Newly wired — advisory
-    during shakedown.'
 - id: validate_pydantic_schemas
   cmd:
   - python3
@@ -910,19 +581,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(MODEL_TABLE_MAP), the count of model<->table
-    pairs checked (17 today). Code-declared, not data-derived — min_items:1: zero would mean the mapping
-    itself broke. The schemas/*.py <-> SQLite parity check CLAUDE.md §7 (pointer corrected 2026-08-22,
-    was §10) calls "a bug, not a convention" — and the only tool that checks it. De-quarantined 2026-08-01
-    on two corrections. First, --strict exists (verified: bare exits 0, --strict exits 1); its quarantine
-    reason had called it a not-really-a-gate for lacking the mode, which is precisely the error already
-    made and corrected for validate_reasoning. Second, it does NOT overlap schema_reference_drift_audit,
-    which measures something else entirely (see that entry). RED — 236 findings, so advisory, and blocking
-    would be dishonest until the backlog is triaged. Note the findings are not yet all adjudicated as
-    drift: an open owner question is whether schemas/*.py canonically mirrors the SQLite tables or the
-    YAML entity layer. Models like Population clearly mirror the latter, and every live model_validate
-    caller feeds from YAML. §10 as written says SQLite; if the owner rules otherwise, a narrower model->table
-    map is the fix and much of the 236 is not drift at all.'
 - id: audit_adversarial_use
   cmd:
   - python3
@@ -936,10 +594,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints len(catalog.vectors), the full adversarial-use
-    vector count validated by C1 (9 today, all ACTIVE). Registry-file-derived — min_items:1: zero vectors
-    would mean data/adversarial_use/catalog.yaml broke, not that misuse vectors were legitimately retired
-    to none.'
 - id: author_fidelity
   cmd:
   - python3
@@ -958,58 +612,6 @@ checks:
   basis: DR-2026-08-19 §7 adversarial pass, lens L1 (2026-08-19)
   cost: fast
   min_items: 1
-  note: 'Compares STORED author surnames against the Crossref record for every DOI-bearing source. Added
-    because the first research batch after the restart stored FABRICATED author lists on all five of its
-    admissions — 12 of 19 evidence_source_authors rows named people who did not write the cited paper
-    — and NOTHING caught it: C03, G02, R9, R10, test_db_integrity 72/72, research_protocol_audit 0 issues
-    and fully green CI all passed it.
-
-    The reason is exact and worth keeping in front of whoever reads this next: every pre-existing check
-    asks whether the author fields are POPULATED. None asked whether they are TRUE. A presence check cannot
-    detect confabulation; only a comparison against the authoritative payload can. The rows were simultaneously
-    stamped verified_by_tool=''crossref'' — the flag asserted precisely the property that failed, so nothing
-    downstream would ever revisit them.
-
-    Worst instance was doctrinal, not clerical: a Co-1 source — lived experience, co-primary with T1 under
-    CRPD Art 4.3 — had its autistic community co-authors deleted and academics substituted. The Co-1 tier
-    was claimed while the evidence of co-production was erased.
-
-    LEVEL RATIONALE, CORRECTED 2026-08-19. The original text here justified advisory on the grounds that
-    the check "needs network egress to api.crossref.org" — true of the re-fetching variant that was deleted,
-    false of the offline verifier this entry now points at, which reads persisted payloads and needs no
-    network at all. The stated promotion condition ("once a run has demonstrated reachability in CI")
-    was therefore unsatisfiable by irrelevance, and would have left the check advisory forever.
-
-    Real rationale: it is advisory only until it has demonstrated a NON-VACUOUS subject across more than
-    the one session that created the log. Promote to blocking after the second research batch. It fails
-    rather than passes when a source has no logged retrieval, so an unlogged corpus cannot read as clean.
-
-    session_pointer is LATEST-RESEARCH, not the default LATEST: LATEST moves on every session close, so
-    a governance-only session would point this check at a session that never did research and was never
-    supposed to have a log. citation_mining_session is the precedent for the same reason.
-
-    RETIRED the re-fetching variant 2026-08-19. Two verifiers of one property shipped in the same commit
-    and DISAGREED — one folded accents, one did not, so a stored "Rosas-Perez" for the actual "Rosas-Pérez"
-    passed one and failed the other. This entry now points at the offline verifier, which compares against
-    the payload the authoring session actually received: no network, no drift, and it fails rather than
-    passes when a source has no logged retrieval.
-
-    PRESENCE MODE, 2026-10-01 (I6). A session whose logged payloads include no JSON -- the HTML and PDF
-    form Co-1, DPO and standards evidence arrives in -- used to print INDETERMINATE and stop, so a
-    fabricated person-author on such a source passed every gate. It now looks for each in-scope source''s
-    stored person surnames (whole words for a Latin-script name) and the first segment of its title in the
-    decoded bytes of the artefacts tagged with its ref_id or url, and their text-extraction children, and
-    prints "PRESENT-IN-BYTES: n of m source(s); not Crossref-diffed; cannot detect an omitted author" --
-    never CLEAN. In scope: the rows the session created or its manifest tags. A row with no readable
-    artefact (none tagged, PDF bytes with no text extraction, a failed retrieval) is UNEXAMINABLE and not
-    counted in EXAMINED; an absent corporate name is REPORTED, not failed, because the project adds
-    corporate glosses. This is not the "presence check" ruled out above: that asked whether DB fields
-    were POPULATED; this asks whether the stored value occurs in the retrieved bytes, a record-versus-
-    artefact comparison. It is weaker than the JSON diff and says so: it cannot see a deleted author,
-    and a name in the bytes may be there as someone else (a cited author). A composed title (a standard
-    number prefixed to the title) is a known false FAIL; read each NOT FOUND against its artefact. The
-    JSON path and its exits are unchanged: its output was byte-identical before and after on every
-    JSON-bearing session under retrieval-log/ (2026-10-01). Fixtures: test_author_presence.'
 - id: decision_capture
   cmd:
   - python3
@@ -1054,21 +656,6 @@ checks:
   basis: base/base-retired-vocabulary-not-taught
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the count of retired- vocabulary register entries
-    checked against the live surface (21 today). min_items:1 — the register (governance/retired-vocabulary.yaml)
-    is hand-kept content, not a corpus that legitimately empties. Flags text that is READABLE AND WRONG
-    — a dropped column, a folded workflow, a database path that never existed, a banned population umbrella.
-    Register and admission test in `governance/retired-vocabulary.yaml`. `kinds: [always]` because the
-    tokens are not confined to one work kind: the same retired workflow name sits in a skill, a governance
-    memo and the deployed PI, so gating on the diff''s kind would let a governance-only diff reintroduce
-    one into `skills/`. 2.8s over the whole tree, which is within the "gating buys nothing below ~2s"
-    band this file sets, and the alternative is a check that misses the case it exists for. ADVISORY BY
-    NECESSITY, NOT ONLY BY HOUSE NORM: its largest single residue is five occurrences in `governance/project-instructions-v10_14.md`,
-    the deployed PI, which must not be edited in place (snapshot convention) and is not API-writable anyway.
-    This check is expected to stay non-zero until a v10_15 ships. Promoting it to `blocking` before then
-    would red-X every commit for a defect the committer cannot fix. Measured 2026-08-05, after the first
-    sweep: 31 occurrences, of which 26 are the two dropped columns (RV-001/RV-002) still named by live
-    skills and scripts.'
 - id: matrix_consistency
   cmd:
   - python3
@@ -1081,11 +668,6 @@ checks:
   basis: render/mode-stratum-matrix-consistency
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the outcome count checked (10 today — len(EXPECTED)+1,
-    the hardcoded doctrine table transcribed from evidence-architecture.md §3). min_items:1: this can
-    only reach 0 if the hardcoded EXPECTED table itself is emptied, which is breakage, not a legitimate
-    state. Mode-stratum matrix vs evidence-architecture.md §3. Named by the 2026-07-23 plan (WS1) and
-    green on main; wired here, advisory during shakedown.'
 - id: pipeline_contract_audit
   cmd:
   - python3
@@ -1113,32 +695,6 @@ checks:
   basis: cross_stage/definition-of-done
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints n, the docket-claim count read from the committed
-    docket file (68 today). min_items:1 — matches the note below''s own warning that an absent docket
-    currently reads as vacuous PASS; the floor now catches that instead of hiding it. Mode-2 claims docket
-    (skills/integrity-protocol_SKILL.md): every triggered claim must carry a warrant annotation. De-quarantined
-    2026-08-01 by adding the `check` subcommand the registered command was missing — the entry had recorded
-    "no default action, prints usage, exits 0", which was a fact about the bare invocation, not the tool.
-    `check` needs no diff plumbing: it validates the committed docket. Green today (68/68 annotated);
-    --selftest fires on synthetic triggers. CONDITIONALLY green: with no docket file it prints "nothing
-    to check" and exits 0. working/claims-docket.md exists and is populated, so it asserts something today;
-    if that file is ever removed this check goes vacuously green rather than failing.
-
-    CORRECTED 2026-09-27, twice in one day (RC4, DR-2026-09-26-recurring-defect-shapes-
-    remediation.md section 1.2e): this entry shares `basis: cross_stage/definition-of-done`
-    with `adversarial_pass_recorded`. That criterion has two clauses, ORed: "the
-    integrity-protocol Mode-3 mechanical battery is unrun" OR "an independent adversarial
-    pass is unrun/unapplied". `claims_docket.py` implements NEITHER clause — its own module
-    docstring calls it "Mode-2 live claims docket", a third thing this criterion does not
-    name, and it scans added prose for claim-words needing a warrant annotation
-    (`grep -n -i adversar scripts/audit/claims_docket.py` finds the word in comments only).
-    The first correction, same day, called this "the Mode-2/Mode-3 warrant-annotation
-    half" — a phrase the criterion does not contain, caught by this entry''s own
-    adversarial review. Whether an independent adversarial pass ran and was recorded is
-    `adversarial_pass_recorded`''s question; whether the Mode-3 battery ran has no
-    registered check at all. A green claims_docket has never vouched for either, and this
-    entry''s `check:` field on the criterion is a historical placeholder, not evidence
-    that either clause is covered.'
 - id: attestation_presence
   cmd:
   - python3
@@ -1155,13 +711,6 @@ checks:
   no_floor: changeset-scoped — examines the SYNTHESIS files in HEAD~1..HEAD, not the 79 attestations on
     disk, so 0 means this commit touched no synthesis path. Not an emptied corpus, and a floor would fail
     every non-synthesis commit.
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the synthesis-path file count in the HEAD~1..HEAD
-    diff (this check''s actual subject — check_0 walks _synthesis_in_changeset, not the raw changed-file
-    count printed above it). 0 today because the last commit touched no synthesis path. empty-by-decision,
-    not min_items: this check is scoped to ONE commit''s diff by design (adherence_log_audit.py --base/--head),
-    so a commit that never touches references/bpc-reasoning/, references/connection-reasoning/, decisions/,
-    or sessions/ legitimately has nothing for it to examine — that is not the sweep breaking, it is the
-    diff being out of scope.'
 - id: attestation_schema
   cmd:
   - python3
@@ -1178,10 +727,6 @@ checks:
   no_floor: changeset-scoped — examines the ATTESTATION files in HEAD~1..HEAD, not the 79 on disk, so
     0 means this commit added or changed none. Not an emptied corpus, and a floor would fail every commit
     that owes no attestation.
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the attestations/*.json file count in the HEAD~1..HEAD
-    diff (check_1''s actual subject). 0 today for the same reason as attestation_presence above — the
-    last commit touched no attestation file. empty-by-decision: diff-scoped by design, not a corpus that
-    can "break" the way a repo-wide glob can.'
 - id: attestation_evidence
   cmd:
   - python3
@@ -1233,15 +778,6 @@ checks:
   basis: hygiene
   cost: fast
   min_items: 1
-  note: 'W4.5, 2026-08-06. `governance/research-contract-baseline.json` forgives inherited research-contract
-    debt so `research_batch_dod --all` is not permanently red — a gate that is always red is a gate people
-    stop reading. The amnesty was self-administered: `--write-baseline` ratchets down only, but that discipline
-    lived in the WRITER, and the file is a text file. Editing `R13: 494` to `R13: 600` forgave 106 fresh
-    violations, left the gate green, and left no trace — a cleaner defeat of the check than deleting it,
-    since deleting it is visible. This compares the committed file against origin/main and fails on any
-    count that rose or any code that vanished. Lowering always passes; that is debt being paid. `kinds:
-    [always]` because the file can be edited from any work kind and an edit is exactly when it needs watching.
-    An unreadable base ref exits 2 rather than passing — absent is not innocent.'
 - id: research_contract_sync
   cmd:
   - python3
@@ -1255,18 +791,6 @@ checks:
   basis: hygiene
   cost: fast
   min_items: 10
-  note: 'PROMOTED advisory -> blocking 2026-08-06 (W4.6). It has been green since it landed, it carries
-    a `min_items: 10` vacuity guard so it cannot pass by examining nothing, and what it protects is a
-    contract that is INJECTED INTO EVERY SESSION at start. Drift here does not produce a wrong file, it
-    produces a wrong instruction delivered to every future session before it reads anything else — which
-    is the highest-leverage place in the repo for a silent disagreement to sit, and it had one (R1, R2
-    and R3 had drifted across the two hand-transcribed copies). The R1-R15 contract had TWO hand-transcribed
-    copies with no comparator — the SessionStart hook in .claude/settings.json and the rule table in research_batch_dod.py
-    — and they had drifted on R1, R2 and R3, two of which changed what the contract obliges. governance/research-contract.yaml
-    is now the single source; the hook is generated from it and this check fails on drift, plus cross-references
-    the rule ids against the enforcer so a rule defined in one and absent from the other is caught. Same
-    shape as a derived-artifact gate (context_map_fresh --check).
-    Advisory during shakedown per the house norm; it is green today and is a candidate for promotion.'
 - id: research_dod_selftest
   cmd:
   - python3
@@ -1279,11 +803,6 @@ checks:
   basis: unattributed
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'BLOCKING from day one and deliberately ungated. It builds a knowingly- violating corpus and asserts
-    the gate rejects it, so it has no false-positive surface. On 2026-07-24 the v1 selftest was found
-    to have silently begun CRASHING instead of testing: the guard against the gate rotting had itself
-    rotted. A gate that has stopped detecting anything manufactures false confidence, so this one fails
-    the build.'
 - id: research_dod
   cmd:
   - python3
@@ -1400,33 +919,6 @@ checks:
     each of them for correctly reporting an empty subject. Bash lines are scanned for the
     curl/wget report but are never counted under EXAMINED, so they cannot make an empty web
     ledger look examined.'
-  note: 'NEW 2026-10-01 (I5, process-gap plan WP14). The record is search_executions; the
-    artefact is the tool-call ledger written by .claude/hooks/record-command.py through a
-    second PostToolUse object whose matcher is WebSearch|WebFetch (the Bash object is
-    unchanged, so no Bash call is logged twice). FAILS a ledger WebSearch query that equals,
-    or is contained in, no query_text this session logged (both casefolded and
-    whitespace-collapsed), and a WebSearch line with no query; the remedy it prints is `db.py
-    log-search --backfill 1`, with the required --prior-expectation then written after the
-    results and so post hoc, said so. REPORTS, never fails, WebFetch URLs in neither
-    query_text nor the session manifest, bare curl/wget hosts the manifest does not name, and
-    a dead witness -- engine=web rows logged by the session while its ledger holds lines but
-    no WebSearch/WebFetch line. WITNESSED SURFACES: WebSearch and WebFetch only. MCP search
-    tools (Consensus, Semantic Scholar / Scholar Gateway, PubMed, bioRxiv) leave no ledger
-    line, so a PASS says nothing about them; the output names the session''s engines other
-    than web, and `select engine, count(*) from search_executions group by 1` gives the
-    corpus split. STATED TRADE-OFFS, so they are not misread: (a) the REPORTED lines print
-    under NOTHING-IN-SCOPE when no web line was examined, and run_checks renders that run as
-    "not evidence of anything" -- read the lines, the verdict does not clear them; (b) only
-    the query is compared, so repeated calls with one query and different allowed_domains
-    collapse onto one logged row, and containment lets a very short ledger query pass on any
-    logged query containing it. `CURRENT`, not `LATEST-RESEARCH`, for the reason
-    adversarial_pass_recorded gives. Advisory until a searching batch has run with the hook live: the payload field
-    names it reads (tool_input.query, tool_input.url) were documented, not measured, when it
-    was written. PROMOTE after the first searching batch whose ledger carries WebSearch lines
-    and whose run of this check examined them -- derive that with `python3
-    scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CURRENT)" | grep
-    EXAMINED`, never from a figure here. T4 (the two-phase search log) waits on the same
-    evidence.'
 - id: test_search_log_completeness
   cmd:
   - python3
@@ -1440,17 +932,6 @@ checks:
   no_floor: selftest — subject is its own fixtures (a temp copy of the DB written through db.py
     log-search, a temp retrieval-log root, hand-written ledgers); a floor would count the wrong
     thing
-  note: 'Pins search_log_completeness to its rules: an unlogged WebSearch FAILs, one logged
-    under another session still FAILs, a query-less line FAILs, all-logged PASSes, a ledger with
-    no web lines is NOTHING-IN-SCOPE (and run_checks reads it as such), the REPORTED rules
-    never fail, a dead witness (web rows logged, a Bash-only ledger) is REPORTED rather than
-    read as a quiet session, the FAIL remedy names --backfill 1 and a post-hoc prior, and a
-    PASS names the engines it cannot witness. E01/E02 drive the hook itself with a WebSearch payload and audit the line
-    it wrote, the one case that goes red if the writer and the reader drift apart on field
-    names. Its assertion count is its own EXAMINED line -- re-run, do not trust a figure here.
-    Fault-injected 2026-10-01: disabling the FAIL rule, dropping the session filter, passing a
-    query-less line, dropping the trailing-slash or line-continuation fold, and restoring the
-    pre-WP14 hook each turned it red; restored, green.'
 - id: research_tooling_separation
   cmd:
   - python3
@@ -1487,14 +968,6 @@ checks:
   basis: cross_stage/doctrine-currency
   cost: fast
   min_items: 1
-  floor_basis: 'RATCHETED 2026-09-27, same day as creation. Registered with a `no_floor:
-    vocabulary-owed` reason asserting the corpus was empty; run_checks.py''s own
-    floor_claim_contradiction caught it as stale within the same PR, because the two seeds
-    landed in references/project-standards.md in the same changeset that registered this
-    entry, so EXAMINED printed 2 against a reason declaring 0. EXAMINED counts SUPERSEDES
-    lines across the ledger and decisions/*.md; the floor is 1, not 2 -- the boundary
-    between examined-something and examined-nothing, never a hand-typed snapshot that goes
-    stale on the next seed (rule 7a).'
 - id: research_protocol_audit
   cmd:
   - python3
@@ -1507,21 +980,6 @@ checks:
   basis: research/adversarial-fields-complete
   cost: fast
   min_items: 1
-  floor_basis: RATCHETED 2026-09-16, and the counts it quoted went stale within two days. Floor is 1,
-    never the count — that is the whole point of a floor. DO NOT QUOTE A FIGURE FROM THIS ENTRY.
-    Derive it — `python3 scripts/audit/research_protocol_audit.py | grep EXAMINED` — which is rule 7a
-    applied to the registry entry that most recently broke it. The earlier reason asserted all four
-    source tables held 0 rows post clean-room-reset; three of the four were already non-empty when
-    that was written, and the EXAMINED figure it then quoted has since roughly quadrupled.
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED sums COUNT(*) over the four source tables checks 1-9 read
-    (gaps, evidence_sources, evidence_population_match, search_languages). The claim that those tables
-    are empty is RETIRED — it described the repository as it stood on 2026-08-06 and was still being read
-    as current six weeks later. CHECK 7 grew two further issue classes on 2026-09-18: a source with no
-    admitting search at all, and a source whose only admitting search was BACKFILLED (the prior column is
-    populated, but written after the results were known, so R8 pre-registration did not happen). Both are
-    counted in TOTAL ISSUES; the `[CHECK 7] ... : N` header line counts only the original class, so the
-    header and the total legitimately differ. Advisory, as it was in research-contract.yml. Exits 1 on
-    origin/main''s data too, so a red here is not evidence about a branch.'
 - id: metadata_integrity_audit
   cmd:
   - python3
@@ -1554,13 +1012,6 @@ checks:
   min_items: 1
   floor_basis: RATCHETED 2026-09-16. Measured, this check prints EXAMINED 11. Floor is 1, never
     the count.
-  note: 'INSTRUMENTED 2026-08-14 (A5). CORRECTED 2026-09-16, and the correction is the point: this
-    note said "EXAMINED prints COUNT(*) FROM gap_mining". It does not. `gap_mining` holds 0 rows;
-    the script prints the `gaps` count, which is 11. So an auditor who verified the old
-    no_floor claim VIA THIS NOTE reached "0 rows, therefore empty-by-decision holds" — the exact
-    opposite of the measurement, and with the note''s authority behind it. A note that misdescribes
-    its own check''s instrumentation is worse than no note, because it converts a check into a
-    second, wrong source of truth about itself.'
 - id: graph_audit
   cmd:
   - python3
@@ -1611,29 +1062,6 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'Count the assertions with `python3 scripts/tests/test_record_command_session.py |
-    grep EXAMINED`, never from a figure here. The H cases (2026-10-01, WP14) run the hook on WebSearch, WebFetch and Bash payloads and
-    pin settings.json to wiring each tool to it exactly once. Guards which session a Bash call is filed under. That one
-
-    function was wrong twice in three days and both wrong answers looked like
-
-    correct files — .claude/session (2026-08-23) and sessions/LATEST (the "fix",
-
-    same day) are BOTH moved at close-out, so each named the previous session for
-
-    the whole life of the current one; three sessions'' logs landed in one file
-
-    named after the earliest. A01/A02 pin the third failure, found by this test
-
-    before it shipped: writing your own close-out record made the newest-open
-
-    derivation fall back to a STALE open session. Mutation-tested 2026-08-25 —
-
-    disabling the anchor, dropping the session_id the anchor reads, and letting
-
-    closed sessions be written into each turn it red.
-
-    '
 - id: test_db_amend_writers
   cmd:
   - python3
@@ -1645,73 +1073,6 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'Every refusal batch 20 added to db.py''s amendment writers (link-admission,
-    unlink-admission, amend-population-match, amend-term, resolve-candidate
-    --suggested-slug/--clear-suggested-slug, add-candidate REHOME), each proven to fire
-    and its legitimate shape proven to pass, on a temp COPY of the canonical DB. Exists
-    because a 2026-09-26 review that merely RAN those writers found five defects no gate
-    had seen. Its assertion count is its own EXAMINED line -- re-run, do not trust a
-    figure here. Fault-injected 2026-09-26: removing the results_admitted raise, the
-    MERGED-slug guard, the self-reference guard, the Co1 fold, or the scope_note
-    un-nesting each turned it red; restored, green. Section D (migration 101,
-    2026-10-01) holds decline-parameter''s refusals, its dry run, its capture and its CLI
-    wiring, and add-parameter''s refusal of a declined term -- red on the pre-101 code
-    (no verb, no table). Fault-injected 2026-10-01: removing the declined-term refusal,
-    the already-a-parameter refusal, the already-declined refusal or the CLI dispatch
-    each turned exactly its own case red; restored, green. Section S (GAP-058,
-    2026-10-01) holds add-source --slug to writing nothing when the slug or its label
-    refuses, its --dry-run, and link-source-slug --local-ref-id with the held-label
-    refusal -- red on the pre-WP2 code. Fault-injected 2026-10-01: removing the
-    held-label refusal, or restoring the two-transaction write, turned S red; restored,
-    green. Its cases share fixtures, so one fault reddens the cases after it too.
-    Section X (GAP-060, 2026-10-01) holds supersede-source: every refusal, D04 going
-    quiet on a fixture DOI-less collision (A09 still holding), the live-determination
-    refusal through both junctions and its lifting after retire-specification, and
-    emit_batch_sql capturing the UPDATE -- red on the pre-WP3 code (no verb).
-    Fault-injected 2026-10-01: removing the live-determination refusal turned exactly
-    its case red; removing the no-chains refusal turned its case and the CLI case that
-    reuses its fixture red; restored, green. Review fix (2026-10-01): add-extraction,
-    observe-term and add-population-match refuse a superseded source (a payload accepted
-    while it was live is refused once it is superseded), and the live source is still
-    accepted -- red on the pre-fix code, which wrote all three rows. Section C (GAP-055, 2026-10-01) holds
-    close-adversarial-pass''s artefact parse: a tracked file plus a qualifier closes,
-    a cited path that does not resolve is returned and printed as REPORTED, an
-    artefact with no resolving path still refuses, and a ''../'' token reaching a real
-    file outside the repo refuses -- red on the pre-WP4 code. Fault-injected
-    2026-10-01: dropping the containment check turned the containment case red;
-    dropping the unresolved list turned its two cases red; restored, green. Review fix
-    (2026-10-01): --help names the 2026-09-27 ruling holding pass 1 OPEN, and a finding
-    admitted only on the database file closes but is returned and printed as REPORTED --
-    both red on the pre-fix code. Section E
-    (I1, 2026-10-01) holds amend-source --field evidence_type: the tier moves with the
-    type by the ladder only, a move to co1 needs the D-0178 warrant, a move off co1
-    ledgers and NULLs the co1_* columns, a live determination refuses through both
-    junctions, and emit_batch_sql captures the UPDATE with its NULLs -- red on the
-    pre-WP5 code (not an amendable field). Fault-injected 2026-10-01: removing the
-    live-determination refusal turned exactly its case red; removing the NULLing turned
-    its case and the capture case red; removing the Co-1 warrant refusal or the
-    disagreeing-tier refusal turned its case red and, through the shared fixture, the
-    cases after it; restored, green. Review fix (2026-10-01): a move to co1 also needs a
-    --co1-source-type from schemas.enums.Co1SourceType, written and ledgered with the
-    warrant, and the co1 -> grey -> co1 round trip re-supplies it -- red on the pre-fix
-    code, which wrote a Co-1 row with co1_source_type NULL. Section K (I8, GAP-005, 2026-10-01) holds
-    update-code-lead and add-code-lead''s near-duplicate refusal: every refusal, an
-    append-only ledgered move with no transition order, the exact-duplicate refusal
-    naming a command that works, a case/punctuation variant refused unless
-    --distinct-from with --reason, Japanese and Korean names kept apart by a
-    Unicode-aware fold, and emit_batch_sql capturing the UPDATE -- red on the pre-WP6
-    code (no verb; variants admitted). Fault-injected 2026-10-01: an ASCII fold turned
-    the non-Latin variant case red, and without the empty-key guard the non-Latin
-    collision case; removing the near-duplicate refusal, the same-status refusal or the
-    append turned their cases red; restored, green. Review fix (2026-10-01): a note that is
-    only a substring of the held notes is appended (K16) -- red on the pre-fix code, whose
-    containment test read it as already present. Section J (I7, 2026-10-01) holds the
-    declared jurisdiction vocabulary at write time: add-source refuses an undeclared code
-    and writes nothing, the ruled rejected spelling names its replacement, a case
-    variant names the declared spelling (refused, not folded), a code admitted the same
-    day is accepted, the other gated writers refuse, every value live in a gated table
-    still passes, and jurisdiction_db_vocabulary is green on the copy afterwards -- red
-    on the pre-WP7 code (writers accepted any string; FI, UG, UN undeclared).'
 - id: test_scan_contract
   cmd:
   - python3
@@ -1724,19 +1085,6 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'Tooling T1, 2026-10-09 (catalogue-plan-v2 section 4.2, owner approval D8): every
-    refusal of observe-term per sighting and its scoped verbatim check (O), record-scan and
-    v_scan_ledger (S), scripts/research/full_text.py (H), retire / merge / rename /
-    revoke-declination / annotate / add-alias (L, N, V, A, AL), mint-term-from-catalogue
-    and validate_parameters P2 (M), raise/resolve-follow-up and its audit (U), the
-    engine''s exclusion of skimmed figures (E), the observation-quote backstop (A04), the
-    batch rules R16-scan and R17 on a copy (G), capture through emit_batch_sql with a
-    replay (C), and CLI wiring (CLI). Runs on a COPY of the canonical DB with
-    GUIDEBOOK_RETRIEVAL_LOG pointed at a temp log of fixture artefacts, so it never writes
-    retrieval-log/ or data/. Red on origin/main before T1 (no verb, no table): nearly all of its
-    cases fail there; those that pass are invariants that hold before and after. H01/H02 need pymupdf (the research battery declares it); without it
-    they print NOT RUN and the full text is written by hand in the helper''s format. Its
-    assertion count is its own EXAMINED line -- re-run, do not trust a figure here.'
 - id: test_author_presence
   cmd:
   - python3
@@ -1748,19 +1096,6 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 'retrieval_log --verify-authors presence mode (I6), on a temp COPY of the canonical
-    DB and an empty temporary retrieval log: a present author passes and the verdict is
-    never CLEAN; an absent person-author or title fails, naming the source; a one-word
-    title head is not taken as evidence; a two-letter surname inside a longer word is
-    not present; a PDF is read through its
-    text-extraction child; a source with no artefact, or only a 403, is UNEXAMINABLE and
-    not counted; an absent corporate author is reported, not failed; the JSON path''s
-    exits are unchanged. Red on the pre-WP8 code (INDETERMINATE for every non-JSON
-    session), except the two JSON-path cases. Fault-injected 2026-10-01: substring
-    matching for Latin names turned the short-surname case red; reading failed retrievals
-    turned the 403 case red; asserting a one-word head turned the FAQ case red;
-    restored, green. Its assertion count is its own EXAMINED
-    line.'
 - id: test_assess_cell_pilot
   cmd:
   - python3
@@ -1799,10 +1134,6 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
-  note: 12/12 assertions; regression cover for the blocking validate_evidence_state check. Was unregistered
-    entirely — neither active nor quarantined — while its fixture, pinned to migration 024, died on 026's
-    governing_refs before asserting anything. The fixture now discovers its DDL from the migrations and
-    fails loudly if it falls behind again.
 - id: test_directness_2_2
   cmd:
   - python3
@@ -1829,22 +1160,6 @@ checks:
   basis: base/base-schema-validates
   cost: fast
   min_items: 1
-  note: 'Do the tables agree on what to call the same thing? Found because
-    tools/pipeline_walk.py matched two session-column names and the corpus spells
-    that ONE role eight ways, so it reported fifteen tables -- including
-    source_locators, the largest -- as unattributable. The drift was in the schema,
-    not the tool, and nothing named it, so each new reader rediscovers it by being
-    wrong. Three tables carry BOTH spellings of one fact (item_audit_runs,
-    connections, bpc_metadata), which is rule 5 literally. BLOCKING as of migration 085, which
-    executed the renames and emptied the deviant set -- the note that registered
-    this check advisory said to ratchet once that happened, and this is that.
-    It is not red by construction: the audit reports CLEAN on the live schema and
-    its --selftest still fires on a drifting fixture, so it passes AND can be shown
-    to fail. Two columns stay exempt by BOOTSTRAP, not preference:
-    data_migrations.applied_at and .applied_by_session are drift by this audit own
-    definition and unrenameable, because migrate_db.py writes that ledger row
-    during the very run that would rename the column. Migration 085 carries the
-    same reasoning.'
 - id: context_map_fresh
   cmd:
   - python3
@@ -1860,22 +1175,6 @@ checks:
   basis: hygiene
   cost: fast
   min_items: 1
-  note: 'Regenerates `governance/context-map.yaml` and compares it to the committed file. The map is the
-    machine-readable orientation index — directories and their authority class, every table with its row
-    count and foreign keys, which scripts write which tables, every registered check with its level and
-    vacuity floor, the session/doctrine pointers, and which directories the root `.ignore` hides from
-    ripgrep. It exists so a fresh session can answer "what is this and can I trust it?" from one query
-    instead of by grepping a tree that hides six directories from search. GENERATED, NEVER WRITTEN, and
-    that is the whole design. A hand-maintained orientation document in this repo becomes readable-and-wrong
-    within a month — the register whose five-of-twenty stated reasons failed their first audit, the source
-    comment asserting a `min_items` that had been retired hours earlier. Every volatile field is derived
-    at generation time, so the only way this file can lie is if nobody regenerates it, which is exactly
-    what this check catches. Output is deterministic: a pure function of the DB and the filesystem, carrying
-    a content-derived `db_fingerprint` and NO HEAD sha — an earlier draft recorded `git rev-parse HEAD`,
-    which would have made the check permanently red, because committing the map changes the sha it records.
-    Advisory while it earns trust; it is mechanically checkable and cheap, so it is a candidate for promotion
-    once it has survived a few regenerations. `min_items: 1` is honest here: the subject is one file that
-    always exists, so an empty subject is a real failure and not a ratified-empty state.'
 - id: judgment_handoff_shape
   cmd:
   - python3
@@ -1905,59 +1204,6 @@ checks:
   basis: judgment/figure-role-stated
   cost: fast
   min_items: 1
-  floor_basis: 'RATCHETED 2026-09-16 — BY ITS OWN INSTRUCTION, LATE. The no_floor this replaces
-    ended "RATCHET BACK TO min_items 1 when the re-run lands its first extraction". Batch 08
-    landed 8 extractions and 10 relations on 2026-09-16 and this check prints EXAMINED 18, so
-    the trigger fired and nobody pulled it. This was the best-written reason in the registry —
-    it stated its own expiry condition in capitals — and it still went stale, which is the
-    argument that the defect is structural rather than careless. Nothing evaluates a ratchet
-    trigger, so a trigger is only as good as the next person who happens to re-read the
-    sentence. BLOCKING, and it was carrying no floor over 18 live rows.'
-  note: 'NEW 2026-09-13, migration 075 (figure_role/comparator on source_value_extractions,
-    extraction_relations junction, v_derived_figure_check view). EXAMINED sums three subjects
-    it actually reads: source_value_extractions rows, extraction_relations edges, and
-    v_derived_figure_check rows.
-
-
-    THE GRANDFATHER CLAUSE IS DELETED, not merely off. It shipped as a
-    MAX(data_migrations.applied_at) boundary that floated forward and could un-fail the very
-    rows it existed to catch (demonstrated un-firing itself, then replaced by a frozen id
-    list {1..8}); the backfill graded those eight and the 2026-09-13 corpus clear deleted
-    them. extraction_id is AUTOINCREMENT and the sequence was not reset, so re-enabling the
-    clause would have excused the FIRST EIGHT ROWS OF THE NEXT CORPUS — rows it never meant.
-    A switch whose off position is correct and whose on position has become actively wrong is
-    not a switch. Every figure_role-NULL row now fails unconditionally, whenever written.
-
-
-    WRITERS, since a check with no writer is measuring nothing: `db.py relate-extraction`,
-    `amend-extraction` and `derive-extraction` all write this junction, and `add-extraction`
-    takes --figure-role as a required flag. `derive-extraction` is the one that produces
-    figure_role=''derived'' rows with the two derived_from edges v_derived_figure_check
-    recomputes against.
-
-
-    CHECK 3 CARRIES THE WRITER''S TOLERANCE AND NAMES WHAT IT CANNOT SEE (both fixed
-    2026-09-13 after an adversarial pass). It compared with SQL `<>` while `derive-extraction`
-    accepts within 1e-9, so 0.1 + 0.2 = 0.30000000000000004 turned this BLOCKING gate red over
-    a row the sanctioned writer had just accepted; it now compares with the same epsilon. And
-    `v_derived_figure_check` joins on equal units, so a unit-converted derived row — exactly
-    what `--claimed-unit --conversion-note` writes, and the kind most likely to be wrong — was
-    silently absent from the view and check 3 reported CLEAN over it (a 999 cm row against a
-    0.3 m base+delta). The view is committed in migration 075 and migrations are immutable, so
-    the fix-forward is an UNCHECKED: line naming the derived rows the view cannot cover. That
-    is CLAUDE.md 5(a) applied to this check''s own subject.
-
-
-    FAULT-INJECTED on a scratch copy, all four ways, each shown red then green again: (1) a
-    row with figure_role NULL — added, FAILED; graded, CLEAN. (2) figure_role=''derived'' with
-    no derived_from/input_role=''base'' edge — graded, FAILED; base edge added, CLEAN. (3) a
-    v_derived_figure_check disagreement — stored value set to disagree with linked base+delta,
-    FAILED (`stored=100.0, recomputed=70.0`); corrected to 70, CLEAN. (4) an orphan
-    figure_role=''condition'' row (target of nothing, source of no condition_on edge) — graded,
-    FAILED; a condition_on edge added, CLEAN. Re-confirmed 2026-09-13 during the verification
-    pass on a live derived row: tampering extraction 15''s stored value from 10 to 42 produced
-    `stored=42.0, recomputed=10.0` and exit 1. Canonical data/guidebook.db sha256 unmoved
-    throughout — every mutation above was against a scratch copy only.'
 - id: derived_not_curated_audit
   cmd:
   - python3
@@ -1970,41 +1216,6 @@ checks:
   basis: base/base-derived-not-curated
   cost: fast
   min_items: 1
-  note: 'NEW 2026-09-13 with CLAUDE.md rule 8. EXAMINED counts the SUBJECTS still hardcoded --
-    argparse choices= literals, plus (2026-09-17) row dicts checked against the columns of the
-    table their own function INSERTs -- not files read and not the derived calls, because the
-    hardcoded things are the subject. It therefore counts DOWN as the rule is applied, and
-    reaching 0 would make it vacuous rather than passing: min_items 1 is a floor on the
-    inspection. The count of live CHECK vocabularies it compares against is printed beside it
-    and is NOT restated here (rule 7a); re-derive with the check''s own output, or:
-    python3 -c "import sys,sqlite3;sys.path.insert(0,''scripts'');import dbcore;c=sqlite3.connect(''file:data/guidebook.db?mode=ro'',uri=True);print(len({frozenset(v) for (t,) in c.execute(\"select name from sqlite_master where type=''table''\") for col in c.execute(''PRAGMA table_info(\"''+t+''\")'') if (v:=dbcore.check_values(c,t,col[1]))}))"
-    (this note said "91" until 2026-09-17, when the true figure was 95 -- a hand-typed count
-    going stale inside the entry for the check against hand-typed counts).
-
-
-    SCOPE IS TWO MECHANICALLY DECIDABLE CLASSES, deliberately. Rule 8 is mostly judgement and a
-    script cannot police judgement. (1) An argparse choices= list whose values are EXACTLY a live
-    column CHECK. (2) A writer naming a column the live schema does not have -- added after
-    migration 085 renamed search_executions.session/.executed_at and left db.py log-search, the
-    FIRST command of every research batch, raising "no column named session" while the whole
-    battery stayed green, because no check WRITES a search execution. Both have a first home
-    sitting next to the second and a fix that is always the same. Class 2 reads the row variable
-    the INSERT is actually handed, never a dict that merely looks like a row; it does NOT see a
-    row assembled in one function and inserted in another, which is how add-audit-run escaped it.
-    Running the writers against a scratch DB remains the only complete caller sweep. The other
-    violations rule 8 names -- --ref-id and --tier asking for values the machine derives,
-    MODEL_TABLE_MAP, the registry''s own "N today" counts -- need a decision about what the
-    single home should be, so they are listed in the rule for a reader.
-
-
-    IT GREPS RATHER THAN IMPORTS, because importing db.py to inspect its parser would run
-    module-level code and couple this gate to the writer it polices -- what dbcore''s docstring
-    says a gate must not do.
-
-
-    FAULT-INJECTED 2026-09-13: twenty literals were derived, run CLEAN (EXAMINED 5, the survivors
-    being non-vocabulary lists such as tier 1-6 integers); re-curating one (gaps.priority) turned
-    it FAIL/exit 1 naming the file, line, owning column and the exact replacement; restored, CLEAN.'
 - id: identifier_floor_audit
   cmd:
   - python3
@@ -2018,28 +1229,6 @@ checks:
   basis: base/base-identifier-never-reissued
   cost: fast
   min_items: 1
-  note: 'NEW 2026-09-13, after an adversarial pass found that the circulation-corpus clear had
-    dropped the ref_id high-water REF-00982 -> REF-00970 with every gate green. EXAMINED counts
-    identifier floors compared (3: ref_id, base_parameters, specifications), not migration files
-    read -- the file count is printed beside it as context.
-
-
-    THE FLOOR IS DERIVED FROM THE COMMITTED MIGRATIONS, NOT FROM A TABLE, and that is the whole
-    design. A counter column or a retired_identifiers table would be a second home for a fact
-    (rule 5) and — the reason that matters here — a home the very DELETE this check guards could
-    empty. scripts/migrations/ is append-only and immutable once committed (rule 3), and every
-    identifier this project has minted passed through one, because the migration path is the only
-    sanctioned route into the canonical database. It is slower than a counter and it is the only
-    source that cannot be destroyed by the operation it polices.
-
-
-    FAULT-INJECTED AGAINST THE REAL DEFECT, not a synthetic one: run against canonical BEFORE the
-    repairs landed it reported VERDICT FAIL, exit 1, naming all three regressions (ref_id
-    REF-00970 against a historical REF-00982; base_parameters and specifications at 0 against a
-    historical 2, and both flagged for having no AUTOINCREMENT). After migration 076 and
-    data_20260913050221: VERDICT CLEAN, all three floors level. min_items 1 rather than no_floor
-    because the three floors exist whether or not any corpus does -- this check has a subject on
-    an empty database, which is exactly when it matters most.'
 - id: derivation_handshake_integrity
   cmd:
   - python3
@@ -2053,42 +1242,6 @@ checks:
   basis: specification/derivation-handshake
   cost: fast
   min_items: 1
-  floor_basis: 'RATCHETED 2026-09-16, HALF OF IT. The no_floor this replaces said: "RATCHET TO
-    level blocking WITH min_items 1 in the same change that writes the first determination".
-    Its three factual premises are now all false — `specifications` holds 2 rows, a parameter
-    WAS minted (base_parameters, 1 row, 2026-09-16), and this check prints EXAMINED 1 with
-    `determinations 1`. So the trigger fired and the floor is owed. Applied.
-
-    THE LEVEL PROMOTION IS DELIBERATELY NOT APPLIED HERE. The old reason gave a specific
-    ground for advisory — that run_checks already printed five BLOCKING-and-vacuous gates and
-    a sixth would make the battery worse — and that ground has genuinely expired, since this
-    check is no longer vacuous. But promoting a check to blocking changes what stops the
-    project''s CI, which is a different kind of decision from tightening a floor, and it is
-    not one to take silently inside a floor sweep. Owner call, flagged rather than made. The
-    fault-injection coverage the old reason describes (eight paths plus two silent controls)
-    stands and is unaffected by either half.'
-  note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a `stated` determination
-    sitting under an open, binding H4 gate — the book asserting a best-practice value while
-    an audit of equal or greater strength has already contested it, which is H4''s cap
-    failing silently; and a CULTURAL CLAIM ANCHOR THAT ANCHORS NOTHING, which is the subject
-    the schema structurally cannot reach. Migration 080''s CHECK lets a `population_only`
-    row skip its named-path rationale when `cultural_claim_anchor` is non-NULL, and it can
-    only test that the value is valid JSON — so a row naming a code document, a dead ref_id,
-    or an empty list satisfies the constraint and inherits the dignity exemption BY
-    ASSERTION. The ratified boundary criterion exists to stop exactly that ("the protection
-    is anchored, not self-declared … it gains no cultural exemption by assertion"), and
-    nothing but this check enforces it. Three further subjects: the single-path obligation
-    as a backstop for rows arriving by a route that bypassed the CHECK (the division of
-    labour `medical_lens_integrity` has with `add-medical`); `functional_basis` naming a
-    mapping `population_icf_links` does not hold, which justifies a determination by a
-    functional basis no reader can reach; and a gate whose stored `trigger_tier` has drifted
-    from its own source, which leaves the ladder-inversion guard deciding on a stale
-    strength — the same snapshot-versus-live shape as K02.
-
-    G3''s community-provenance predicate is IMPORTED from `schemas/directness.grain_for()`,
-    never retyped. That function is the one home of the rule, made so by the change that
-    closed a finding about two implementations of it disagreeing, and
-    `assess_cell.derivation_handshake()` decides the anchor with the same call.'
 - id: adjudication_integrity
   cmd:
   - python3
@@ -2101,12 +1254,6 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'PROMOTED from quarantine to blocking in plan step 1.6 (RULINGS R4). Every evidence_sources row
-    is read: a stored tier that differs from derive_tier(evidence_type, scope), an underivable pair, a NULL
-    tier or a NULL evidence_type each fail it. It prints `EXAMINED: <n>`, the rows read, and min_items 1
-    makes an empty read a failure. The quarantine reason it carried said nothing mechanical blocked
-    promotion once OD-E (ruled 2026-08-31, D-0179) was answered; the gate was green when that was written
-    and still is. Planting a NULL tier in a scratch copy of the database turns it red (exit 1).'
 - id: medical_lens_integrity
   cmd:
   - python3
@@ -2133,45 +1280,10 @@ checks:
     So 0 is now an UNWRITTEN VOCABULARY, not a measurement, and it is a floor-less state only
     because the rows are owed rather than absent. RATCHET TO min_items: 1 in the same change that
     writes the first medical row — rows are never deleted, so the floor holds once set.'
-  note: 'WHAT REACHES THE BOOK WITHOUT IT (CLAUDE.md §8''s bar): a determination whose ONLY lens
-    is a diagnosis, which renders as the medical model being the project''s frame — D-0170 adopted
-    the medical lens as a READER''S CHOICE ("we give our users the choice of what model they want
-    to use to browse the site") and its whole rationale turns on the lens being offered rather
-    than adopted; a medical row whose display_name states its answer, the item-layer defect rebuilt
-    one lens over; and a row nothing crosses to, which a reader selecting the lens cannot get from
-    to the evidence. db.py add-medical refuses all three at write time — this is the backstop for
-    rows arriving by any other route, the same division of labour validate_parameters has with
-    add-term. Unverified ICD-11 anchors are REPORTED, not failed — but NOT for the reason this
-    entry first gave. It said "no WHO credentials in the environment (id.who.int -> 401)", which
-    generalised a closed OAuth2 API into a closed building; WHO serves the MMS release file
-    unauthenticated and it is persisted under retrieval-log/, so add-medical --icd11 verifies
-    against bytes at write time. What is actually advisory is narrower: a row can arrive through a
-    route that skips the writer. FAULT-INJECTED 2026-09-11 on a scratch: a
-    crossing-less row and a value-bearing display_name both turn it red; the legitimate rows stay
-    CLEAN with the unverified anchor noted. ITS BASIS WAS AN IMPERFECT FIT AND THE FIT IS NOW
-    REAL: it borrowed base-population-vocabulary, whose text is about codes RESOLVING downstream,
-    while this check is about the lens not becoming the FRAME — and it recorded that a criterion
-    saying "the medical lens is offered, not adopted" did not exist and was owed. It exists as of
-    2026-09-11: base/base-medical-lens-offered-not-adopted carries the vocabulary half (MD- shape,
-    no value-bearing name, every row crossed) and specification/no-diagnosis-only-determination
-    carries the frame half. The basis now points at the first. Layer 1 states what Layer 2 was
-    already enforcing alone. BASIS IS SINGULAR AND THIS CHECK ENFORCES BOTH, so selftest C7 lists
-    specification/no-diagnosis-only-determination among the criteria no check claims. It is not
-    unenforced — the criterion''s own check: field names this script, and the frame test runs on
-    every invocation. Splitting the script in two to satisfy a one-to-one field would be apparatus
-    added for the apparatus''s sake, which §8 refuses.'
 quarantine:
 - id: validate_db
   cmd:
   - python3
   - _archived/scripts/validate_db.py
   status: retired
-  reason: 'RETIRED 2026-08-15 by owner approval of the Tier-1 batch. Archived to _archived/scripts/validate_db.py,
-    mirroring its origin path; the entry is kept rather than deleted so a session that finds the id knows
-    where the script went and why, instead of concluding the gate was silently dropped. It was quarantined-but-repaired,
-    not broken. The retirement is not about its health: test_db_integrity.py supersedes it (72 checks
-    vs 9), CLAUDE.md §7 already directed readers to that one, and wiring both would mean two overlapping
-    gates to keep in step. Its `scripts/db.py validate` CLI path was retired with it in the same commit,
-    so nothing invokes it. ITS ONE UNRESOLVED SUBSTANTIVE FINDING SURVIVES THE RETIREMENT: C4 found 31
-    connections with zero targets. That is a CONTENT defect, not a tooling one, and it is recorded here
-    — and only here — so archiving the script does not bury the finding with it.'
+  reason: 'RETIRED 2026-08-15 by owner approval; archived to _archived/scripts/validate_db.py. test_db_integrity.py supersedes it. Its unresolved finding (31 connections with zero targets) survives in DR-2026-08-14-tier-1-retirement-batch.md.'
