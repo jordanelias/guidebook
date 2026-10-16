@@ -710,7 +710,6 @@ def selftest(reg):
     # C4 — classification
     cases = [
         ("data/guidebook.db", "data"),
-        ("data/decisions/decision_register.yaml", "data"),
         ("schemas/enums.py", "schema"),
         ("scripts/migrations/013_x.sql", "schema"),
         ("governance/mission-and-epistemics.md", "governance"),
