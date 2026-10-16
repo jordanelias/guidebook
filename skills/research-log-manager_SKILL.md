@@ -61,7 +61,7 @@ After multilingual-research completes:
 2. **Log every search you ran — one row per query, verbatim (R8):**
    ```bash
    python3 scripts/db.py log-search \
-     --slug {slug} \
+     --slug {slug} \                   # omit for a search made for one parameter (--parameter {parameter_id}) or one source (--mined-ref-id); a search naming none is refused
      --language {lang_code} \
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
      --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry (--medical once that registry has rows)
