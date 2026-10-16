@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-16 00:15 UTC from git HEAD 9d5a57a0 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-16 00:38 UTC from git HEAD ca6d4196 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook-m15a",
  "user_version": 110,
  "stages": [
@@ -66,7 +66,7 @@
   },
   "adversarial_findings": {
    "stage": "infrastructure",
-   "rows": 88,
+   "rows": 106,
    "writers": [
     "record-adversarial-pass",
     "dispose-adversarial-finding"
@@ -92,7 +92,7 @@
   },
   "adversarial_passes": {
    "stage": "infrastructure",
-   "rows": 4,
+   "rows": 5,
    "writers": [
     "record-adversarial-pass",
     "close-adversarial-pass"
@@ -355,7 +355,7 @@
   },
   "data_migrations": {
    "stage": "infrastructure",
-   "rows": 459,
+   "rows": 460,
    "writers": [],
    "cols": [
     "migration_id",
