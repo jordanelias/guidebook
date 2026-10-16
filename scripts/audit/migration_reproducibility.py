@@ -483,6 +483,10 @@ def selftest():
         con.close()
         _, empty = compare(c, c)
         check("a database with no tables compares clean, not fatally", not empty, str(empty))
+        # a table present in one database and absent from the other is a MISMATCH, never a skip
+        rows, asym = compare(c, a)
+        check("a table present in one database and absent from the other is a mismatch",
+              bool(asym) and any(str(r[3]).startswith("MISMATCH (present in") for r in rows), str(rows))
 
         # --- deep comparison -------------------------------------------------
         # The point of --deep is the case the core invariants are blind to: an
