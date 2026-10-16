@@ -72,7 +72,6 @@ MODEL_TABLE_MAP = {
     # that added these mirrors, on the same reasoning as the two entries above.
     "source_scan.SourceScan": "source_scans",
     "extraction_follow_up.ExtractionFollowUp": "extraction_follow_ups",
-    "bpc_metadata.BPCMetadata": "bpc_metadata",
     "connection.Connection": "connections",
     "conflict.Conflict": "conflicts",
     "decision.Decision": "decisions",

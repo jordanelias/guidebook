@@ -45,13 +45,8 @@ FROM slugs WHERE slug = '{slug}'
    ```bash
    python3 scripts/db.py coverage --slug {slug}
    ```
-2. Query mining status:
-   ```sql
-   SELECT citation_mining_complete, bpc_complete, search_complete
-   FROM bpc_metadata WHERE slug = '{slug}'
-   ```
-3. GET BPC file from GitHub: `references/bpc/{topic_directory}/{slug}.md`
-4. Report to calling skill: jurisdictions searched/not searched, languages searched/not searched, evidence tier range, mining status, coverage gaps.
+2. GET BPC file from GitHub: `references/bpc/{topic_directory}/{slug}.md`
+3. Report to calling skill: jurisdictions searched/not searched, languages searched/not searched, evidence tier range, coverage gaps.
 
 **New slug:** report "No prior research. Starting fresh."
 
@@ -95,14 +90,8 @@ After multilingual-research completes:
    **"nothing found"**. That distinction is the thing the whole pipeline exists
    to preserve; a missing row erases it.
 
-   > **`upsert-coverage` and `upsert-language` are gone.** `search_coverage` and
-   > `search_languages` were hand-kept grids that drifted from the search log in
-   > both directions — 634 cells claimed SEARCHED against 15 with a matching
-   > logged search, while 31 logged searches landed on cells the grid called
-   > NOT-RUN. They are frozen as historical artifacts; coverage is now DERIVED
-   > from the log via `v_coverage_jurisdiction` / `v_coverage_language`, so it
-   > cannot claim more than was logged. Read it with
-   > `python3 scripts/db.py coverage --slug {slug}`.
+   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language`); read it with
+   > `python3 scripts/db.py coverage --slug {slug}`. The hand-kept grids and their verbs are deleted.
 
 4. **Add new evidence sources:**
    ```bash

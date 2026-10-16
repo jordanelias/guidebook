@@ -104,12 +104,6 @@ def run_checks(db_path):
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM evidence_population_match WHERE ref_id IS NOT NULL"))
 
-    record("A06", "bpc_metadata → slugs",
-        conn.execute("""SELECT COUNT(*) FROM bpc_metadata b
-            WHERE NOT EXISTS (SELECT 1 FROM slugs s WHERE s.slug=b.slug)
-        """).fetchone()[0] == 0,
-        subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
-
     # The one populated column that holds population codes and carries no foreign key
     # (validate_population discovered columns by name and never saw it; it was deleted in step 1.6).
     record("A14", "evidence_population_match.target_population → populations",
@@ -737,14 +731,6 @@ def run_checks(db_path):
                subject=len(refs_v1 | refs_v2))
     else:
         record("D02", "v1_legacy ref_id parity (table dropped, check skipped)", True, subject=0)
-
-    # Duplicate slugs in bpc_metadata
-    dup_slugs = conn.execute("""SELECT slug, COUNT(*) FROM bpc_metadata
-        GROUP BY slug HAVING COUNT(*) > 1""").fetchall()
-    record("D03", "No duplicate slugs in bpc_metadata",
-           len(dup_slugs) == 0,
-           f"duplicates: {[dict(r) for r in dup_slugs]}" if dup_slugs else "",
-           subject=subj("SELECT COUNT(*) FROM bpc_metadata"))
 
     # D04 — the DOI-less half of D01.
     #

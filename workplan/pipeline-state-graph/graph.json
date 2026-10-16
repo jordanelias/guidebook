@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-16 02:34 UTC from git HEAD 0ccf7a60 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-16 02:39 UTC from git HEAD 62804de4 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 110,
+ "user_version": 111,
  "stages": [
   "base",
   "research",
@@ -168,30 +168,6 @@
     "created_by_session",
     "icd11_anchors",
     "icd11_verified_at"
-   ]
-  },
-  "bpc_metadata": {
-   "stage": "infrastructure",
-   "rows": 0,
-   "writers": [
-    "update-bpc"
-   ],
-   "cols": [
-    "slug",
-    "population",
-    "jurisdictions_searched",
-    "co1_pass_count",
-    "evidence_state",
-    "pico_complete",
-    "search_complete",
-    "bpc_complete",
-    "citation_mining_complete",
-    "created_at",
-    "created_by_session",
-    "updated_at",
-    "updated_by_session",
-    "supersession_check_complete",
-    "closure_definition_version"
    ]
   },
   "case_studies": {
@@ -882,24 +858,6 @@
     "loc_note"
    ]
   },
-  "reference_stubs": {
-   "stage": "research",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "ref_id",
-    "authors",
-    "pub_year",
-    "title",
-    "tier_claimed",
-    "jurisdiction",
-    "used_in_bpcs",
-    "metadata_quality",
-    "status",
-    "recovered_from",
-    "notes"
-   ]
-  },
   "research_code_leads": {
    "stage": "research",
    "rows": 96,
@@ -983,24 +941,6 @@
     "updated_by_session"
    ]
   },
-  "search_coverage": {
-   "stage": "research",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "slug",
-    "jurisdiction",
-    "status",
-    "co1_attempted",
-    "tier5_attempted",
-    "tier6_attempted",
-    "notes",
-    "created_at",
-    "created_by_session",
-    "updated_at",
-    "updated_by_session"
-   ]
-  },
   "search_execution_artefacts": {
    "stage": "research",
    "rows": 110,
@@ -1052,22 +992,6 @@
     "origin",
     "mined_ref_id",
     "origin_pass_id",
-    "updated_at",
-    "updated_by_session"
-   ]
-  },
-  "search_languages": {
-   "stage": "research",
-   "rows": 0,
-   "writers": [],
-   "cols": [
-    "slug",
-    "language",
-    "status",
-    "results_count",
-    "notes",
-    "created_at",
-    "created_by_session",
     "updated_at",
     "updated_by_session"
    ]
@@ -1436,12 +1360,6 @@
    "notnull": true
   },
   {
-   "child": "bpc_metadata",
-   "col": "slug",
-   "parent": "slugs",
-   "notnull": false
-  },
-  {
    "child": "case_studies",
    "col": "slug",
    "parent": "slugs",
@@ -1640,12 +1558,6 @@
    "notnull": false
   },
   {
-   "child": "search_coverage",
-   "col": "slug",
-   "parent": "slugs",
-   "notnull": true
-  },
-  {
    "child": "search_execution_artefacts",
    "col": "exec_id",
    "parent": "search_executions",
@@ -1665,12 +1577,6 @@
   },
   {
    "child": "search_executions",
-   "col": "slug",
-   "parent": "slugs",
-   "notnull": true
-  },
-  {
-   "child": "search_languages",
    "col": "slug",
    "parent": "slugs",
    "notnull": true
@@ -2266,12 +2172,6 @@
     "superseded"
    ]
   },
-  "bpc_metadata": {
-   "closure_definition_version": [
-    "v1",
-    "v2"
-   ]
-  },
   "case_studies": {
    "cost_data_quality": [
     "VERIFIED",
@@ -2629,13 +2529,6 @@
     "CONTRADICTED"
    ]
   },
-  "reference_stubs": {
-   "status": [
-    "REFERENCE-ONLY",
-    "PROMOTED",
-    "RETIRED"
-   ]
-  },
   "research_code_leads": {
    "status": [
     "REFERENCE-ONLY",
@@ -2663,14 +2556,6 @@
     "UNVERIFIED",
     "RESOLVED",
     "DEAD"
-   ]
-  },
-  "search_coverage": {
-   "status": [
-    "SEARCHED",
-    "THIN",
-    "NO-DATA",
-    "NOT-RUN"
    ]
   },
   "search_executions": {
@@ -2712,13 +2597,6 @@
     "adversarial-pass",
     "owner-supplied",
     "lead-index"
-   ]
-  },
-  "search_languages": {
-   "status": [
-    "SEARCHED",
-    "PARTIAL",
-    "NOT-RUN"
    ]
   },
   "slugs": {
@@ -3671,16 +3549,6 @@
    "writes": {},
    "refusals": 0
   },
-  "upsert-coverage": {
-   "functions": [],
-   "writes": {},
-   "refusals": 0
-  },
-  "upsert-language": {
-   "functions": [],
-   "writes": {},
-   "refusals": 0
-  },
   "log-search": {
    "functions": [
     "log_search",
@@ -3698,19 +3566,6 @@
     ]
    },
    "refusals": 11
-  },
-  "update-bpc": {
-   "functions": [
-    "update_bpc_metadata",
-    "_emit"
-   ],
-   "writes": {
-    "bpc_metadata": [
-     "INSERT",
-     "UPDATE"
-    ]
-   },
-   "refusals": 0
   },
   "add-source": {
    "functions": [
@@ -3867,9 +3722,6 @@
      "populations"
     ],
     "columns": {
-     "bpc_metadata": [
-      "population"
-     ],
      "case_studies": [
       "population_description",
       "populations_served_note"
@@ -4750,7 +4602,7 @@
   "capability predicates": 28,
   "probes run": 34,
   "probes linted for a reachable PASS": 34,
-  "tables placed in a stage": 60
+  "tables placed in a stage": 56
  },
  "atoms_by_status": {
   "ACTIVE": 2288,

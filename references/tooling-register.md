@@ -321,7 +321,7 @@ rather than a hand-edited DB**:
 |---|---|---|
 | `evidence_sources` | 277 rows — `subtype`, `citation_count`, `pages`, `pub_month` | `scripts/resolve_dois.py` writes Crossref enrichment straight into it |
 | `url_verification_runs` | 1 row | `verify-urls.yml` inserts its run record |
-| `bpc_metadata`, `gaps`, `slugs`, `source_slug_links` | timestamps only | — |
+| `gaps`, `slugs`, `source_slug_links` | timestamps only | — |
 
 Both substantive tables are written by the same scheduled workflows that
 DR-2026-05-28 already exempted `evidence_source_authors` and `pipeline_runs` for.
