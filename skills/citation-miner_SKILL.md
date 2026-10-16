@@ -52,8 +52,8 @@ Before any mining pass, probe connector availability:
 
 ### INLINE mode (called from research skills)
 
-When multilingual-research, functional-deficit-researcher, economics-researcher, or
-literature-review-planner confirms a Tier 1–3 source:
+When multilingual-research, functional-deficit-researcher, or economics-researcher
+confirms a Tier 1–3 source:
 
 1. Calling skill passes: `(slug, local_ref_id, doi)`
 2. Citation-miner checks:

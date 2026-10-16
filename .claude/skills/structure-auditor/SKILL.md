@@ -1,1 +1,0 @@
-../../../skills/structure-auditor_SKILL.md
