@@ -35,7 +35,7 @@ whatever slug it was filed under")?
 | C1.5 | a record exists of which parameters a source has been read for | **PASS** | P-V = PASS | LED-195, LED-199 |
 | C1.6 | a value can be stated in every lens, including the medical lens | **FAIL** | P-MEDICAL = FAIL | LED-110, LED-154 |
 | C1.7 | arguments and qualitative findings can be captured as well as numbers | **PASS** | source_value_extractions.claim_type admits qualitative | SES-022, SES-023 |
-| C1.8 | a search records which slug x lens cells it covered | **FAIL** | P-M = FAIL | LED-084, RES-04 |
+| C1.8 | a search records which slug x lens cells it covered | **PASS** | P-M = PASS | LED-084, RES-04 |
 
 ## C2 Grow its own parameter base
 
@@ -88,7 +88,7 @@ database, with the rendering gated?
 
 | component | stage | C1 | C2 | C3 | C4 | what it does for the capability / what stops it |
 |---|---|---|---|---|---|---|
-| Search log (log-search, search_executions) | research | PARTIAL | -- | -- | -- | logs the query and the prior; has no lens column, so R4's slug x lens coverage cannot be shown (C1.8). |
+| Search log (log-search, search_executions) | research | PARTIAL | -- | -- | -- | logs the query, the prior and, optionally, the lens it covered; v_coverage_lens lists the cells logged, so a never-searched cell is not derivable from it. |
 | Candidate staging (add-candidate, resolve-candidate) | research | -- | -- | -- | -- | holds what a search surfaced; any disposition can follow any other (M01.t3). |
 | Source admission (add-source, supersede-source, correct-source) | evidence | PARTIAL | -- | -- | -- | admits a source to slugs; the slug link is what add-extraction later reads as its permission. |
 | Citation mining (log-mining) | evidence | PARTIAL | -- | -- | -- | discovery of further SOURCES, not values; a separate axis from extraction (pipeline-operations section 2). |

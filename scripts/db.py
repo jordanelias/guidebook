@@ -580,6 +580,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                harm_finding: int = 0, prior_expectation: str = None,
                origin: str = "planned", mined_ref_id: str = None,
                origin_pass_id: int = None, result_artefacts=None,
+               identity_code: str = None, icf_code: str = None,
+               needs_code: str = None, medical_code: str = None,
                dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
@@ -725,8 +727,17 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "prior_expectation": prior_expectation,
         "origin": origin, "mined_ref_id": mined_ref_id,
         "origin_pass_id": origin_pass_id,
+        # The lens this search covered (R18). Optional; write-once like the prior and the
+        # jurisdiction, so a wrong code costs a compensating migration.
+        "identity_code": identity_code, "icf_code": icf_code,
+        "needs_code": needs_code, "medical_code": medical_code,
     }
     with connect(dry_run) as conn:
+        # Each lens code must name a row of the registry its own foreign key points at. Read
+        # from PRAGMA foreign_key_list, so no vocabulary is restated here, and a blank value
+        # is refused rather than dropped: a blank is not an absence.
+        for col in _LENS_COLUMNS:
+            dbcore.fk_declared(conn, "search_executions", col, row[col], f"log-search {col}")
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
@@ -2215,6 +2226,13 @@ def main():
                            "Refused unless the chain resolves to a fetched, 2xx "
                            "artefact this search's own query_text or mined_ref_id "
                            "identifies.")
+    # R18: which lens this search covered. Each is optional and checked against the registry
+    # its own foreign key names, so no list of codes is restated here.
+    p_ls.add_argument("--identity", help="populations.population_code this search covered")
+    p_ls.add_argument("--icf", help="base_icf.icf_code this search covered")
+    p_ls.add_argument("--needs", help="access_needs.need_code this search covered")
+    p_ls.add_argument("--medical", help="base_taxonomy_medical.medical_code this search covered "
+                                        "(the registry holds no row until it is filled)")
     p_ls.add_argument("--dry-run", action="store_true")
 
     # add-source
@@ -2616,6 +2634,8 @@ def main():
             origin=args.origin, mined_ref_id=args.mined_ref_id,
             origin_pass_id=args.origin_pass_id,
             result_artefacts=args.result_artefacts,
+            identity_code=args.identity, icf_code=args.icf,
+            needs_code=args.needs, medical_code=args.medical,
             dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "admitted": len(args.admitted_ref_ids or []),
