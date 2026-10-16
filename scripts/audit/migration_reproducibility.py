@@ -20,10 +20,10 @@ SCOPE (DR-2026-05-28 / D-4.3-H option 3a, ratified 2026-06-11)
 The gate enforces the CORE INVARIANTS below. They cover all synthesis-bearing
 content and must reproduce from migration history.
 
-The job-owned tables `evidence_source_authors` and `pipeline_runs` are
-DELIBERATELY EXEMPT: the source-verification scheduled job (resolve-dois.yml /
-verify-urls.yml) is their authoritative writer and writes them outside the
-migration framework by design. Do NOT add them to the invariant list.
+`evidence_source_authors` is EXEMPT, and only until the divergence is reverted: the scheduled
+source-verification job that rewrote it outside the migration framework was deleted on
+2026-10-14 (plan step 1.5), and the rewritten rows differ from the chain until plan steps
+1.5b and 1.5c revert them and remove the exemption. Do NOT add it to the invariant list.
 **Adding any new exempt table requires a new DR.**
 
 Checks:
@@ -69,7 +69,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 # committed database on every table, so this cries no wolf.
 SCHEMA_VERSION_INVARIANT = ("PRAGMA user_version", "schema_version")
 
-EXEMPT_TABLES = ("evidence_source_authors", "pipeline_runs")
+EXEMPT_TABLES = ("evidence_source_authors",)
 
 # Columns whose divergence is bookkeeping rather than substance. Kept separate so
 # --deep can say "277 rows differ, all of them only in updated_at" instead of
@@ -282,7 +282,7 @@ def deep_compare(committed_path, rebuilt_path):
 
     for table in sorted(tc & tr):
         if table in EXEMPT_TABLES:
-            rows.append((table, "EXEMPT", "job-owned per DR-2026-05-28"))
+            rows.append((table, "EXEMPT", "exempt per DR-2026-05-28 until its divergence is reverted"))
             continue
         cols = [r[1] for r in committed.execute(f"PRAGMA table_info({q(table)})")]
         rcols = [r[1] for r in rebuilt.execute(f"PRAGMA table_info({q(table)})")]
@@ -418,7 +418,7 @@ def audit(rebuilt_to=None, deep=False):
             pass
 
     print()
-    print(f"  Exempt (job-owned, DR-2026-05-28): {', '.join(EXEMPT_TABLES)}")
+    print(f"  Exempt (DR-2026-05-28, until its divergence is reverted): {', '.join(EXEMPT_TABLES)}")
     print("=" * 70)
     if mismatches:
         print(f"  ERROR: {len(mismatches)} invariant(s) diverge between the committed DB")
@@ -434,7 +434,7 @@ def audit(rebuilt_to=None, deep=False):
         if deep_volatile:
             print(f"  ({len(deep_volatile)} more differ only in timestamp/session columns:")
             print(f"    {', '.join(sorted(deep_volatile))})")
-        print("  Either those writes owe a data migration, or the table is job-owned")
+        print("  Either those writes owe a data migration, or the table is exempt")
         print("  and DR-2026-05-28's exemption list needs widening. Both are owner")
         print("  calls; this check reports the divergence rather than choosing.")
         print("VERDICT: FAIL (deep)")

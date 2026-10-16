@@ -83,11 +83,10 @@ CHECKS (each maps to a documented rule and to the observed violation that motiva
   --- Added 2026-09-10, from workplan/2026-09-10-road-to-batch-06.md B3. ---
 
   R10b NO SILENTLY-NULL VERIFICATION STATUS ON A URL-BEARING ADMISSION.  R10 above examines
-      VERIFIED sources only, so it cannot see the one condition that wakes the scheduled
-      verify-urls cron: a source with a URL and verification_status left NULL. That is exactly
-      what `add-source` permits and exactly the pool verify_urls.py polls; the cron's next fire
-      writes a url_verification_runs row (not exempt from migration_reproducibility) straight to
-      main and reddens migration_reproducibility for every open DB-touching PR.
+      VERIFIED sources only, so it cannot see a source with a URL and verification_status left
+      NULL, which `add-source` permits. The scheduled verify-urls cron that polled exactly that
+      pool was deleted on 2026-10-14; the rule stays because the research contract's R10 still
+      says never to leave the status NULL on a source carrying a URL.
 
   R11 VOCABULARY PROVENANCE.  CO-0005 / DR-2026-05-09: no machine back-translation; every alias
       must carry its authoritative in-language source basis, else [UNVERIFIED-TERMS].
@@ -447,8 +446,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # WHAT THIS CANNOT TELL, stated so the PASS line is not strengthened. A DOI or a journal
     # name marks publication, not peer review: a non-English grey report or thesis carrying a
     # repository DOI, or a letter printed in a journal, matches here although grey may be
-    # right -- and the scheduled DOI resolver (scripts/resolve_dois.py) can write a DOI onto a
-    # grey row after admission. The payload settles that and this gate cannot.
+    # right -- and a DOI can be added to a grey row after admission. The payload settles that
+    # and this gate cannot.
     #
     # THE WAIVER IS IN THE DATA, NOT IN A PR (2026-10-02, T2 review). WP12 first told the
     # operator to record a waiver "in the PR"; nothing reads a PR, and research_dod_session is
@@ -816,18 +815,12 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         ok("R10", "every VERIFIED source has a locator AND a recorded resolution outcome")
 
     # --- R10b unverified-status admission carrying a URL -----------------------------------
-    # R10 above examines VERIFIED sources ONLY (its own comment, above). That is blind to the
-    # condition that actually wakes the scheduled verify-urls cron: verify_urls.py:447-470
-    # pools any source with `url<>'' AND verification_status IS NULL` and, for a non-empty
-    # candidate set, writes a url_verification_runs row — a table NOT in
-    # migration_reproducibility.EXEMPT_TABLES — then `.github/workflows/verify-urls.yml`
-    # commits data/guidebook.db straight to main on its own schedule (cron: 0 06 1,15 * *).
-    # `add-source` accepts a NULL --verification-status (db.py branches only on VERIFIED), so a
-    # batch can admit exactly this row and pass every other rule. The next 1st/15th 06:00 UTC
-    # fire then pushes a blob to main and reddens migration_reproducibility for every OPEN
-    # DB-touching PR (2026-09-07 did this to PR #128; workplan/2026-09-10-road-to-batch-06.md
-    # B3). Block the admission itself — the cron is owner decision #5 and is not this fix's to
-    # edit (same workplan, STOP CONDITIONS #1).
+    # R10 above examines VERIFIED sources ONLY (its own comment, above), so it is blind to a
+    # source with a URL and verification_status left NULL. `add-source` accepts a NULL
+    # --verification-status (db.py branches only on VERIFIED), so a batch can admit exactly this
+    # row and pass every other rule. The scheduled cron that polled this pool was deleted on
+    # 2026-10-14 (plan step 1.5); the rule is kept because the research contract's R10 still
+    # forbids the NULL, and it has no other rationale left.
     unverified_url = _rows(cx, f"SELECT COUNT(*) FROM evidence_sources WHERE "
                                f"COALESCE(url,'') <> '' AND verification_status IS NULL"
                                f"{scope}", sargs)[0][0]
@@ -838,12 +831,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                               f"{scope}", sargs)[0][0]
     if unverified_url:
         fail("R10b", f"{unverified_url} admitted source(s) carry a URL with verification_status "
-                     f"left NULL. This is exactly the pool verify_urls.py's scheduled cron "
-                     f"claims: the next 1st/15th 06:00 UTC fire will write a "
-                     f"url_verification_runs row (not exempt from migration_reproducibility) "
-                     f"and push a DB blob to main, reddening migration_reproducibility for "
-                     f"every open DB-touching PR. Set --verification-status on add-source (even "
-                     f"UNVERIFIED is a real value) before merge.", unverified_url)
+                     f"left NULL (research contract R10). Set --verification-status on "
+                     f"add-source (even UNVERIFIED is a real value) before merge.", unverified_url)
     else:
         # SUBJECT COUNT, per this file's own DESIGN RULES and the R9a/R9b hardening
         # directly above: a bare PASS on a session that admitted nothing is CLAUDE.md
@@ -1317,8 +1306,7 @@ def selftest():
                "created_by_session) VALUES ('REF-ST6',6,'code','10.9999/minted','§5.2',?)", (T,))
     cx.execute("INSERT INTO source_locators (ref_id,doi) VALUES "
                "('REF-ST6','10.9999/already-held')")
-    # R10b: a URL-bearing admission with verification_status left NULL -- exactly the pool
-    # verify_urls.py's scheduled cron polls (workplan/2026-09-10-road-to-batch-06.md B3). No doi
+    # R10b: a URL-bearing admission with verification_status left NULL. No doi
     # keeps this row out of R9/R9a/R9b; verification_status NULL (never 'VERIFIED') keeps it out
     # of R10 above, which is the whole point -- R10 cannot see this condition, R10b must.
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,url,"

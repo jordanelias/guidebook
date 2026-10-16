@@ -858,22 +858,6 @@ def run_checks(db_path):
            # denominator honest across a suite whose other subjects are row counts.
            subject=len(required_cols))
 
-    # pipeline_runs has Phase 4 columns
-    pr_cols = {r[1] for r in conn.execute("PRAGMA table_info(pipeline_runs)")}
-    p4_required = {"phase_4_enriched", "phase_4_complete", "phase_4_transient",
-                   "metadata_complete_before", "metadata_complete_after"}
-    missing_p4 = p4_required - pr_cols
-    record("E02", "pipeline_runs has Phase 4 tracking columns",
-           len(missing_p4) == 0,
-           f"missing: {missing_p4}" if missing_p4 else "",
-           subject=len(p4_required))
-
-    # url_verification_runs table exists
-    has_uvr = conn.execute("""SELECT COUNT(*) FROM sqlite_master
-        WHERE type='table' AND name='url_verification_runs'""").fetchone()[0]
-    record("E03", "url_verification_runs table exists",
-           has_uvr == 1, subject=1)
-
     # data_migrations is non-empty
     n_mig = conn.execute("SELECT COUNT(*) FROM data_migrations").fetchone()[0]
     record("E04", f"data_migrations log non-empty ({n_mig} entries)",
@@ -906,43 +890,6 @@ def run_checks(db_path):
            not fkv, f"{len(fkv)} violation(s), first: {[tuple(r) for r in fkv[:3]]}" if fkv else "",
            subject=sum(len(conn.execute(f'PRAGMA foreign_key_list("{t}")').fetchall())
                        for (t,) in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")))
-
-    # ── F: Pipeline run health ────────────────────────────────────────────────
-    print("\n[F] Pipeline run health")
-
-    # No DOI regressions across runs
-    regressions = conn.execute("""SELECT COUNT(*) FROM pipeline_runs
-        WHERE doi_after IS NOT NULL AND doi_before IS NOT NULL
-        AND doi_after < doi_before""").fetchone()[0]
-    record("F01", "No DOI regressions in pipeline_runs",
-           regressions == 0,
-           f"{regressions} runs show doi_after < doi_before" if regressions else "",
-           subject=subj("SELECT COUNT(*) FROM pipeline_runs WHERE doi_after IS NOT NULL AND doi_before IS NOT NULL"))
-
-    # All runs have completed_at set
-    incomplete = conn.execute("""SELECT COUNT(*) FROM pipeline_runs
-        WHERE completed_at IS NULL""").fetchone()[0]
-    record("F02", "All pipeline_runs have completed_at set",
-           incomplete == 0,
-           f"{incomplete} runs missing completed_at (interrupted?)" if incomplete else "",
-           subject=subj("SELECT COUNT(*) FROM pipeline_runs"))
-
-    # All URL runs have completed_at set
-    incomplete_url = conn.execute("""SELECT COUNT(*) FROM url_verification_runs
-        WHERE completed_at IS NULL""").fetchone()[0]
-    record("F03", "All url_verification_runs have completed_at set",
-           incomplete_url == 0,
-           f"{incomplete_url} url runs missing completed_at" if incomplete_url else "",
-           subject=subj("SELECT COUNT(*) FROM url_verification_runs"))
-
-    # No VERIFIED regressions (verified_after should be >= verified_before per run)
-    ver_regression = conn.execute("""SELECT COUNT(*) FROM pipeline_runs
-        WHERE verified_after IS NOT NULL AND verified_before IS NOT NULL
-        AND verified_after < verified_before""").fetchone()[0]
-    record("F04", "No VERIFIED count regressions in pipeline_runs",
-           ver_regression == 0,
-           f"{ver_regression} runs show verified_after < verified_before" if ver_regression else "",
-           subject=subj("SELECT COUNT(*) FROM pipeline_runs WHERE verified_after IS NOT NULL AND verified_before IS NOT NULL"))
 
     # ── G: Evidence chain integrity ───────────────────────────────────────────
     print("\n[G] Evidence chain integrity")

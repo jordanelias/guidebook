@@ -364,19 +364,6 @@ conflicts:
   resolver: OWNER+AGENT
   confidence: high
 
-- id: C-029
-  class: RULING-MECHANISM
-  severity: S1
-  title: "Direct writes to the committed database by scheduled workflows"
-  atoms: [CLM-012, CLM-013, LED-153, PIP-18, ENT-468, ENT-499, OPI-124]
-  sides:
-    - {atoms: [CLM-012, LED-153, ENT-468, OPI-124], says: "the database is never written directly; nothing but migrate_db.py opens it read-write (OPI-124); direct writes fail the reproducibility check."}
-    - {atoms: [PIP-18], says: "the committed DB reproduces the core invariants from migration history; job-owned tables are the only exception."}
-  probe: P-L
-  direction: "CLAUDE.md names one workflow (source-verification / resolve-dois.yml). P-L finds every workflow that `git add`s the DB blob. migration_reproducibility compares row counts only and exempts the author and run tables, so UPDATEs are invisible."
-  resolver: OWNER
-  confidence: high
-
 - id: C-030
   class: DOC-DOC
   severity: S3

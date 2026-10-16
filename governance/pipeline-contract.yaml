@@ -313,8 +313,8 @@ cross_stage:
   references: DR-2026-07-13-integrity-protocol-three-modes (A7) P2/P3; integrity-protocol_SKILL.md
   check: scripts/audit/claims_docket.py
 - id: reproducibility-invariant
-  criterion: The committed DB reproduces the 7 core invariants from migration history; job-owned tables
-    (evidence_source_authors, pipeline_runs) are the only exemptions.
+  criterion: The committed DB reproduces the 7 core invariants from migration history; `evidence_source_authors`
+    is the only exemption, a standing divergence awaiting its revert.
   references: DR-2026-05-28 migration-ledger; GAP-290; ci.yml data battery
   check: scripts/audit/migration_reproducibility.py
 - id: doctrine-recheck
