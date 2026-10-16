@@ -89,9 +89,8 @@ G-fixes (evidence-architecture.md §4, DR-2026-07-12-evidence-architecture-unifi
       not None ("not applicable"): it caps consolidation at DOWN-WEIGHTED via
       consolidate()'s existing partial-dimension path, and the source is flagged.
       schemas.directness.NOT_ASSESSED (promoted 2026-09-10; was engine-local).
-  G3  Co-1 grain follows co1_source_type (dpo_research/advocacy_position → aggregate;
-      academic_narrative → specific; others, including an unrecognised
-      co1_source_type → specific, noted).
+  G3  Co-1 grain follows co1_source_type (dpo_position_statement → aggregate; others,
+      including an unrecognised co1_source_type → specific, noted).
       schemas.directness.grain_for() (promoted 2026-09-10; was source_grain() here).
   G6  standard_eb grain follows (type × tier): T2 → aggregate; T4/T5 → code.
       schemas.directness.grain_for() (promoted 2026-09-10; was source_grain() here).
@@ -696,27 +695,24 @@ def derivation_handshake(conn, parameter_id, lens, sources):
     #
     # THE RATIFIED BOUNDARY CRITERION (evidence-architecture.md section 6.2, "the
     # protection is anchored, not self-declared"): "community-rooted" means anchored by
-    # Co-1/participatory provenance per `co1_source_type` -- `dpo_research`,
-    # `advocacy_position`, participatory peer-reviewed work -- or an equivalent
-    # documented community process.
+    # Co-1/participatory provenance per `co1_source_type` -- `dpo_position_statement`,
+    # participatory peer-reviewed work -- or an equivalent documented community process.
     #
     # THAT SET IS ALREADY IMPLEMENTED, ONCE, and it is not re-typed here. G3 grades
-    # `dpo_research` and `advocacy_position` as population-grain COMMUNITY CONSENSUS and
-    # everything else Co-1 as individual-grain, and `schemas/directness.grain_for()` is
-    # that rule's ONE home -- its own comment says so, in the change that closed a
-    # finding about two implementations of it disagreeing. Restating the tuple here
-    # would reopen exactly that (CLAUDE.md rule 5).
+    # `dpo_position_statement` as population-grain COMMUNITY CONSENSUS and everything else
+    # Co-1 as individual-grain, and `schemas/directness.grain_for()` is that rule's ONE home
+    # -- its own comment says so, in the change that closed a finding about two
+    # implementations of it disagreeing. Restating the tuple here would reopen exactly that
+    # (CLAUDE.md rule 5).
     #
     # WHERE THIS IS NARROWER THAN THE DOCTRINE, STATED RATHER THAN SMOOTHED OVER.
-    # "Participatory peer-reviewed work" anchors under the criterion, but nothing in the
-    # schema distinguishes a participatory peer-reviewed Co-1 source from any other:
-    # `co1_source_type` carries one value, `peer_reviewed_literature`, for both, and it
-    # has no CHECK to widen. So such a source does NOT anchor here and owes the standard
-    # named-path rationale instead. That is the conservative direction on purpose. The
-    # cost is a sentence on a claim that would have been exempt; the cost of erring the
-    # other way is every Co-1 claim inheriting the exemption by tier alone, which is the
-    # "route around the mechanism requirement" the criterion was written to close. When a
-    # participatory flag exists, widen HERE and record it.
+    # "Participatory peer-reviewed work" anchors under the criterion, and the live column now
+    # has a value for it, `participatory_research`; G3 grades it individual-grain, so such a
+    # source does NOT anchor here and owes the standard named-path rationale instead. That is
+    # the conservative direction on purpose: widening it would also move the source's grain,
+    # and the cost of erring the other way is every Co-1 claim inheriting the exemption by
+    # tier alone, which is the "route around the mechanism requirement" the criterion was
+    # written to close. Widening is a ruling, made in `grain_for`, and recorded there.
     anchors = sorted({r["ref_id"] for r in sources
                       if r.get("evidence_type") == "co1"
                       and grain_for("co1", r.get("tier"),

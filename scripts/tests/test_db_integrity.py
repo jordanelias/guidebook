@@ -487,23 +487,6 @@ def run_checks(db_path):
            f"{bad_complete_doi} COMPLETE rows lack doi with no acceptable explanation" if bad_complete_doi else "",
            subject=subj("SELECT COUNT(*) FROM evidence_sources WHERE metadata_quality='COMPLETE'"))
 
-    # C06 — data_capture_status must agree with the joinable evidence tables in
-    # BOTH directions. A status that can drift from the rows it summarises is
-    # worse than no status: it looks authoritative while being wrong.
-    CAPTURED = """(EXISTS (SELECT 1 FROM source_value_extractions x WHERE x.ref_id=s.ref_id)
-                OR EXISTS (SELECT 1 FROM reasoning_doc_citations r WHERE r.source_ref_id=s.ref_id)
-                OR EXISTS (SELECT 1 FROM economics_entries e       WHERE e.ref_id=s.ref_id))"""
-    claims_not_held = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s
-        WHERE s.data_capture_status='captured' AND NOT {CAPTURED}""").fetchone()[0]
-    held_not_claimed = conn.execute(f"""SELECT COUNT(*) FROM evidence_sources s
-        WHERE s.data_capture_status<>'captured' AND {CAPTURED}""").fetchone()[0]
-    record("C06", "data_capture_status='captured' ⟺ a joinable capture row exists",
-           claims_not_held == 0 and held_not_claimed == 0,
-           f"{claims_not_held} claim capture with no row; {held_not_claimed} have rows but do not claim it"
-           if (claims_not_held or held_not_claimed) else "",
-           # Biconditional: BOTH sides are the subject, so the subject is every source.
-           subject=subj("SELECT COUNT(*) FROM evidence_sources"))
-
     # C08 — citation_mining_status must agree with citation_mining in both
     # directions, resolving a row to its source the way the table's own primary
     # key does: global_ref_id when present, otherwise (slug, local_ref_id)
@@ -512,9 +495,7 @@ def run_checks(db_path):
     # This check exists because its absence cost something. The original
     # backfill joined on global_ref_id alone — NULL in 146 of 183 rows — and
     # left 80 sources reading 'pending' while holding a non-deferred mining
-    # row. C06 was written for data_capture_status and had no counterpart
-    # here, so nothing contradicted the wrong value. A status column without a
-    # biconditional is an assertion nobody checks.
+    # row. A status column without a biconditional is an assertion nobody checks.
     MINED_SRC = """SELECT COALESCE(m.global_ref_id, l.ref_id) FROM citation_mining m
                    LEFT JOIN source_slug_links l
                      ON l.slug = m.slug AND l.local_ref_id = m.local_ref_id
@@ -619,19 +600,8 @@ def run_checks(db_path):
            if placeholder else "",
            subject=c07_subject)
 
-    # C09 — the states nobody can contradict. C06 binds only 'captured' and C08
-    # only 'mined', which leaves every "we looked and decided" state freely
-    # assertable: all 852 pending rows could be flipped to 'none-extractable'
-    # and the whole suite would still pass. Those are the states most worth
-    # lying about, so they are the ones that most need a witness. Migration
-    # 040's own DDL promises a reason accompanies them; this enforces it.
-    unreasoned = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE data_capture_status IN ('deferred','none-extractable')
-          AND COALESCE(processing_blocked_reason,'') = ''""").fetchone()[0]
-    orphan_reason = conn.execute("""SELECT COUNT(*) FROM evidence_sources
-        WHERE COALESCE(processing_blocked_reason,'') <> ''
-          AND data_capture_status NOT IN ('deferred','none-extractable')
-          AND citation_mining_status <> 'deferred'""").fetchone()[0]
+    # C09 — a source whose citation mining is 'deferred' has a deferred mining row to say why.
+    # (The data_capture_status half of this check went with that column's writer, step 3 evidence.)
     bad_deferred = conn.execute("""SELECT COUNT(*) FROM evidence_sources s
         WHERE s.citation_mining_status='deferred' AND NOT EXISTS (
             SELECT 1 FROM citation_mining m
@@ -639,12 +609,9 @@ def run_checks(db_path):
               ON l.slug=m.slug AND l.local_ref_id=m.local_ref_id
             WHERE COALESCE(m.global_ref_id, l.ref_id) = s.ref_id
               AND COALESCE(m.deferred_reason,'') <> '')""").fetchone()[0]
-    record("C09", "a 'we looked and stopped' state carries its witness",
-           unreasoned == 0 and orphan_reason == 0 and bad_deferred == 0,
-           f"{unreasoned} deferred/none-extractable with no coded reason; "
-           f"{orphan_reason} reasons attached to a non-stopped state; "
-           f"{bad_deferred} claim mining-deferred with no deferred mining row"
-           if (unreasoned or orphan_reason or bad_deferred) else "",
+    record("C09", "a source marked mining-deferred has a deferred mining row",
+           bad_deferred == 0,
+           f"{bad_deferred} claim mining-deferred with no deferred mining row" if bad_deferred else "",
            subject=subj("SELECT COUNT(*) FROM evidence_sources"))
 
     # legacy/v2 row count parity — only when legacy table still exists
