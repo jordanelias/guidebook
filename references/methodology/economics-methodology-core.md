@@ -37,7 +37,7 @@ The methodology in this document exists to:
 - Direct economic research toward source families with verifiable provenance
 - Distinguish economic-question types whose conflation produces invalid claims
 - Anchor cross-jurisdictional research given construction cost variation of 3–5× across the project's scope
-- Position evidence per the seven-tier hierarchy (Tier 1 OT clinical research → Co-1 lived experience → Tier 6 statutory codes)
+- Position evidence per the evidence hierarchy (Tier 1 OT clinical research → Co-1 lived experience → Tier 6 statutory codes)
 - Provide methodology guidance ahead of the C-stage build of the `economics-researcher` Hybrid skill
 
 This document does not specify economic figures. It directs research toward sources where such figures, properly verified, can be obtained. Per Core Doctrine (RULE 2026-04-26 19:25), the Guidebook is an advocacy project, not an authority; this methodology equips researchers to ask the right economic questions, not to accept inherited answers.

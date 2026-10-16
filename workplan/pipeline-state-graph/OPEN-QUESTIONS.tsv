@@ -1,5 +1,4 @@
 id	source	subject	claim
-MIS-08	governance/mission-and-epistemics.md:190	mission status	The Status section says the file is not yet operative, contradicting its header (CANONICAL, locked).
 DRS-025	decisions/DR-2026-08-24-scaffolding-is-phase-specific.md:163	folding axes into access_needs	Whether axes is folded into access_needs is not decided by this DR.
 DRS-071	decisions/DR-2026-08-27-base-building-three-levels-items-is-not-one.md:38	one self-referential table versus three tables for base_building	Whether base_building is three separate tables or one self-referential table is open (a parent across three tables is polymorphic and SQLite cannot key it).
 DRS-076	decisions/DR-2026-08-27-base-sources-is-a-target-registry.md:42	name of base_sources	The name base_sources must be resolved (sources would do two jobs, where to look versus what we found) before the table is created.
@@ -40,9 +39,9 @@ ENT-451	governance/legal-regulatory.md:216	counsel question L-Q10	Open (minor): 
 EVI-076	governance/tier-system.md:111	Practice (Co-3) encoding	A dedicated practice (Co-3) encoding exists in the DR but its audit representation is deferred to the audit rework.
 EVI-215	governance/evidence-architecture.md:149	Participatory flag	When a participatory flag exists, the cultural-exemption predicate in assess_cell.derivation_handshake() is to be widened.
 EVI-216	governance/evidence-architecture.md:155	derivation_handshake_integrity blocking promotion	Whether derivation_handshake_integrity is promoted to blocking is an owner call, deliberately not taken.
-EVI-436	governance/evidence-methodology.md:465	epistemic-defense skill form	The epistemic-defense skill is prose-only with no Python validator.
-EVI-437	governance/evidence-methodology.md:463	Epistemic-defense response validation	Epistemic-defense responses must not overclaim, must cite specific sources, and must acknowledge gaps.
-EVI-438	governance/evidence-methodology.md:498	Multilingual-research output validator	A wrapper validator for Co-1 provenance on non-English literature review outputs is deferred.
+EVI-436	governance/evidence-methodology.md:449	epistemic-defense skill form	The epistemic-defense skill is prose-only with no Python validator.
+EVI-437	governance/evidence-methodology.md:447	Epistemic-defense response validation	Epistemic-defense responses must not overclaim, must cite specific sources, and must acknowledge gaps.
+EVI-438	governance/evidence-methodology.md:482	Multilingual-research output validator	A wrapper validator for Co-1 provenance on non-English literature review outputs is deferred.
 LED-168	references/project-standards.md:3509	lens set statement	Owner statement naming three vocabularies; not read as retiring the medical lens; unresolved.
 LED-191	references/project-standards.md:4175	OQ-5 / OQ-8	OQ-5 (retire the decisions table/YAML register) and OQ-8 (widen RC4 scope) remain open.
 LED-202	references/project-standards.md:4401	preliminary figures	Whether a preliminary-status full-read figure may set a published value is unsettled.

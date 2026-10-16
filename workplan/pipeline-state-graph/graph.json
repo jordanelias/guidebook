@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-16 02:57 UTC from git HEAD a8f602b5 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-16 03:03 UTC from git HEAD 03ca79c5 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 111,
  "stages": [
@@ -4024,8 +4024,8 @@
    "verdict": "FAIL",
    "tests": "the engine assigns every value of specifications.state",
    "atoms": [
-    "EVI-361",
-    "EVI-364"
+    "EVI-172",
+    "LED-151"
    ],
    "evidence": {
     "assigned_by_engine": {
@@ -4553,7 +4553,8 @@
      "verdict": "FAIL",
      "why": "P-ENG-STATE = FAIL",
      "atoms": [
-      "EVI-361"
+      "EVI-172",
+      "LED-151"
      ]
     },
     {
@@ -4590,11 +4591,11 @@
  },
  "capabilities_comparison": null,
  "examined": {
-  "atoms in all (structure checked)": 2636,
-  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 440,
-  "distinct quotes among all atoms": 2603,
+  "atoms in all (structure checked)": 2622,
+  "atoms whose quote was read (cited by a conflict, status correction, machine, predicate or probe)": 401,
+  "distinct quotes among all atoms": 2589,
   "status corrections owed (each atom's status re-read)": 13,
-  "conflicts (atoms, class, probe exist)": 46,
+  "conflicts (atoms, class, probe exist)": 39,
   "machine transitions": 42,
   "transition evidence needles re-read": 72,
   "state vocabularies compared with a column's own CHECK": 12,
@@ -4605,13 +4606,13 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2252,
+  "ACTIVE": 2242,
   "SUPERSEDED": 85,
-  "OPEN": 72,
-  "AMENDED": 72,
+  "OPEN": 71,
+  "AMENDED": 69,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },
- "atoms_total": 2636,
- "conflicts_total": 46
+ "atoms_total": 2622,
+ "conflicts_total": 39
 }

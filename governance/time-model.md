@@ -2,7 +2,7 @@
 **Status:** CANONICAL — A9 Session 1
 **Phase:** Stage A Phase 9 — Time model
 **Created:** 2026-04-30 01:43 UTC
-**Doctrinal basis:** Standing Rule 2 (`YYYY-MM-DD HH:MM` via `date -u`) · project-standards Core Doctrine (active version V9.0 2026-03-20) · A5 §1 (pre-launch operational reality, 2026-04-26) · A6 §1.1 (seven-tier evidence hierarchy) · A8 §3.1–3.2 (standards currency)
+**Doctrinal basis:** Standing Rule 2 (`YYYY-MM-DD HH:MM` via `date -u`) · project-standards Core Doctrine (active version V9.0 2026-03-20) · A5 §1 (pre-launch operational reality, 2026-04-26) · A6 §1.1 (evidence hierarchy) · A8 §3.1–3.2 (standards currency)
 
 ---
 

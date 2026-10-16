@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-46 entries. Severity: S1 14, S2 17, S3 15. Class: DOC-DOC 15, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 9, RULING-MECHANISM 15, RULING-RULING 3, UNRECORDED 1.
+39 entries. Severity: S1 14, S2 12, S3 13. Class: DOC-DOC 11, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 6, RULING-MECHANISM 15, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -22,11 +22,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-035 | S1 | RULING-MECHANISM | OWNER+AGENT | P-X -> FAIL | Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters |
 | C-039 | S1 | OPEN-QUESTION | OWNER | -- | Questions only the owner can answer that block engine or writer behaviour |
 | C-040 | S1 | RULING-RULING | AGENT | P-ENG-T3 -> PASS | 'Tier and evidence-type assignment' and 'anything touching specifications' are permanently manual -- but the determination is computed and the tier is derived |
-| C-001 | S2 | RULING-DOC | OWNER | -- | Does the guidebook teach professional judgment? |
-| C-002 | S2 | RULING-DOC | OWNER | -- | Two markers or three |
-| C-007 | S2 | DOC-DOC | OWNER | P-ENG-STATE -> FAIL | Cell-state transition table contradicts itself |
-| C-008 | S2 | RULING-DOC | AGENT | -- | Cell key still written (parameter x population) in the methodology |
-| C-009 | S2 | DOC-DOC | OWNER | P-TIER-DERIVE -> PASS | Source-type to tier mapping: national frameworks and standards |
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
 | C-014 | S2 | RULING-RULING | OWNER | -- | When does the crossing happen: at judgment, or is applicability a synthesis output? |
 | C-018 | S2 | RULING-MECHANISM | OWNER | P-C -> NOT-BUILT | 'We don't use the word population' -- the schema, the methodology and three DRs still do |
@@ -39,8 +34,6 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-047 | S2 | DOC-DOC | AGENT | -- | 'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record' |
 | C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
 | C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
-| C-003 | S3 | DOC-DOC | OWNER | P-ENG-T3 -> PASS | 'Anchors outright' (band) versus 'T3 alone is provisional' (state): one word, two axes |
-| C-006 | S3 | DOC-DOC | OWNER | -- | Seven tiers, or T1-T6 plus two tracks |
 | C-010 | S3 | RULING-DOC | AGENT | -- | Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage' |
 | C-011 | S3 | RULING-DOC | NONE | -- | Is `base` a stage, and is it 'substrate'? |
 | C-015 | S3 | DOC-DOC | OWNER | -- | Evidence collection: 'a cursory scan' or a stage that judges relevance |
@@ -251,73 +244,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** Rule 0 and CLAUDE.md's own worked example: the 2026-09-09 evening ruling superseded section 12.5's clause on contact, with no edit to the DR. OPI-229 is still ACTIVE in the atom set because the DR's text is unmarked; status correction owed (AMENDED, by LED-151). What section 12.5 still governs (the reasoning doc, the Opus floor, the B-before-E gate) is untouched. Tier DERIVATION from (evidence_type, scope) is machine work; evidence_type ASSIGNMENT remains a judgment (OPI-226 survives in that part).
 
-## C-001 [S2] Does the guidebook teach professional judgment?
-
-**Class** RULING-DOC  ·  **Resolver** OWNER  ·  **Confidence** high
-
-- mission-and-epistemics.md: 'The guidebook teaches professional judgment; it does not substitute for it.'  
-  _atoms:_ `MIS-02`(act)
-- ledger 2026-04-26 19:25: the guidebook 'does not teach professional judgment' and confers no competence.  
-  _atoms:_ `LED-024`(act)
-- the mission file's header says CANONICAL/locked 2026-04-26 05:29 while its Status section says 'not yet operative'.  
-  _atoms:_ `MIS-08`(ope)
-
-**Direction.** The ledger entry (a ratified RULE block recording the owner's ruling, LED-024) is later than the header lock (19:25 vs 05:29), so by rule 0 it supersedes the mission sentence on contact; the mission text is therefore stale. POS-04 records that the mission file is already owed an edit (adjudicate-vs-dictate).
-
-_Note: Mission text is doctrine; an agent may not edit it without owner sign-off (CLAUDE.md section 8)._
-
-## C-002 [S2] Two markers or three
-
-**Class** RULING-DOC  ·  **Resolver** OWNER  ·  **Confidence** high
-
-- mission file: every specification carries one of two markers, filled or empty.  
-  _atoms:_ `MIS-03`(act)
-- three markers: filled (confirmed), half (policy/standards only), empty (grey/thin); unmarked is an error.  
-  _atoms:_ `LED-015`(ame), `LED-016`(act), `LED-017`(ame), `CLM-038`(act)
-
-**Direction.** Ledger records the two-marker rule as reconciled 2026-07-13 (LED-015 AMENDED). Three markers govern; the mission file is stale.
-
-## C-007 [S2] Cell-state transition table contradicts itself
-
-**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-ENG-STATE` = **FAIL**
-
-- transition table: any -> not_applicable.  
-  _atoms:_ `EVI-361`(act)
-- the same section lists stated -> not_applicable among transitions that do not occur.  
-  _atoms:_ `EVI-364`(act)
-- methodology 2.6 cites 'section 2.2 condition (3)' for Co-2; after the G7 insertion Co-2 is condition 4 (EVI-322, EVI-323).  
-  _atoms:_ `EVI-352`(act)
-
-**Direction.** The engine recomputes state per run and stores no from-state, so the table is not enforced as a transition relation; see machine M05.
-
-## C-008 [S2] Cell key still written (parameter x population) in the methodology
-
-**Class** RULING-DOC  ·  **Resolver** AGENT  ·  **Confidence** high
-
-- evidence-architecture: a cell is parameter_id x at least one lens column.  
-  _atoms:_ `EVI-171`(act)
-- evidence-methodology 2.1, 2.5, 3.2 still say (parameter x population), with population-specific rationales.  
-  _atoms:_ `EVI-314`(act), `EVI-351`(act), `EVI-374`(act)
-- architecture reserves 'Tier N' for the evidence ladder and forbids 'Tier 1/Tier 2' as design modes.  
-  _atoms:_ `EVI-239`(act), `EVI-235`(act)
-- methodology 3.2-4.3 still use 'Tier 1 design range', 'routes to Tier 2', 'applies at Tier 1 only'.  
-  _atoms:_ `EVI-388`(act), `EVI-415`(act), `EVI-407`(act)
-
-**Direction.** Owner rulings 2026-08-26 (subject) and 2026-08-28/2026-09-01 (lens) are later than the methodology text; the methodology is stale.
-
-_Note: Pure restatement drift; correcting it changes no doctrine but the methodology is a ratified document, so list it for the owner's merge._
-
-## C-009 [S2] Source-type to tier mapping: national frameworks and standards
-
-**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-TIER-DERIVE` = **PASS**
-
-- methodology 1.5: a source's tier follows from its type; Tier 2 organizational guidelines may carry national_fw.  
-  _atoms:_ `EVI-301`(act), `EVI-302`(act)
-- section 1.1 table: national_fw is Tier 5; standard_eb spans T2/T4/T5, occasionally T3 (architecture G6).  
-  _atoms:_ `EVI-303`(act), `EVI-280`(act)
-
-**Direction.** UNSETTLED in prose. The ratified table schemas/tier_derivation.py keys tier on (evidence_type, scope); the adjudication_integrity check that would compare stored tier to it is QUARANTINED (see C-031).
-
 ## C-013 [S2] The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission
 
 **Class** RULING-MECHANISM  ·  **Resolver** AGENT  ·  **Confidence** high  ·  **Probe** `P-F` = **FAIL**
@@ -477,36 +403,6 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `ENT-338`(act)
 
 **Direction.** Later owner statements narrow rather than contradict: R6 (2026-08-18) releases the Global South requirement; LED-193 (2026-09-28) narrows research to buckets 1-2 first. Whether the owner's release equals the author's buckets 4-5 split, and whether the 9-language floor survives, are the author's derivations and are not owner-confirmed. The document is stale on contact (rule 0) but it is doctrine (jurisdiction), so the repair is the owner's, and the R6 amendment still needs its decision record (OPI-100 open). The 'all 24' figure and the '48-scope' are also two different counts (C-038).
-
-## C-003 [S3] 'Anchors outright' (band) versus 'T3 alone is provisional' (state): one word, two axes
-
-**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-ENG-T3` = **PASS**
-
-- tier-system section 8 (owner directive 2026-07-20, DR-2026-07-20 weighted-strength anchor model): T3-clinical sits in the Full band, which 'anchors a best-practice claim outright'.  
-  _atoms:_ `EVI-052`(act)
-- T3 alone is not enough for `stated`: T3-clinical alone is provisional (tier3-stated-threshold DR, 2026-07-12; methodology 2.2; contract).  
-  _atoms:_ `LED-010`(act), `PIP-03`(act), `EVI-306`(act), `EVI-325`(act), `EVI-128`(act)
-- the mission file's rule: stated = derived from >= Tier 3, Co-1 or Co-2 evidence.  
-  _atoms:_ `MIS-04`(act)
-
-**Direction.** Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 requires the documented comment and the assignment that immediately follows it; a reworded comment would turn it red without the logic having changed). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling.
-
-## C-006 [S3] Seven tiers, or T1-T6 plus two tracks
-
-**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** high
-
-- tier-system: T1-T6 plus Co-1 and Co-2 tracks; the schema column `tier` is an integer 1-6.  
-  _atoms:_ `EVI-002`(act)
-- evidence-architecture, evidence-methodology, the process rules and legal-regulatory speak of 'seven tiers'.  
-  _atoms:_ `EVI-085`(act), `EVI-269`(act), `PRC-100`(act), `ENT-392`(act)
-- tier number is a claim-type, not quality (tier-system) vs 'higher numbers = weaker evidence' (methodology 1.2).  
-  _atoms:_ `EVI-003`(act), `EVI-284`(act)
-- T2 is described as 'below international standards' though standards are T4, which rank lower.  
-  _atoms:_ `EVI-010`(act), `EVI-275`(act)
-- the practice (Co-3) encoding sits 'below Co-1/Co-2' yet a firm POE can be placed at T1, which ranks alongside Co-1.  
-  _atoms:_ `EVI-076`(ope), `EVI-069`(act), `EVI-070`(act)
-
-**Direction.** Tier definitions are doctrine; no later owner statement decides between the readings.
 
 ## C-010 [S3] Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage'
 

@@ -25,9 +25,9 @@
 
 ## 1. Evidence hierarchy — operational definition
 
-### 1.1 The seven-tier hierarchy
+### 1.1 The evidence hierarchy
 
-The guidebook draws on seven tiers of evidence, with two co-primary parallel tiers (Co-1, Co-2). The full hierarchy is defined in `governance/mission-and-epistemics.md` §Epistemic commitments §Evidence hierarchy and reproduced in `references/project-standards.md` Core Doctrine. This section operationalizes it — specifying how each tier is encoded, validated, and used in best-practice synthesis.
+The guidebook draws on tiers T1–T6 of evidence, with two co-primary parallel tracks (Co-1, Co-2). The full hierarchy is defined in `governance/tier-system.md` §1. This section operationalizes it — specifying how each tier is encoded, validated, and used in best-practice synthesis.
 
 | Position | Tier value | Evidence type | Source examples |
 |---|---|---|---|
@@ -46,7 +46,7 @@ Additional `evidence_type` values: `grey` (grey literature, organizational repor
 
 Per Stage 0.5 Decision T-03 (DECIDED, locked): the evidence hierarchy is encoded as two orthogonal dimensions on every `EvidenceSource` record:
 
-1. **`tier`** (integer, 1–6): the clinical-evidence position. Higher numbers = weaker evidence. Co-1 records carry `tier: 1` (co-primary); Co-2 records carry `tier: 2` (parallel to Tier 2).
+1. **`tier`** (integer, 1–6): the clinical-evidence position. Co-1 records carry `tier: 1` (co-primary); Co-2 records carry `tier: 2` (parallel to Tier 2).
 2. **`evidence_type`** (enum): the kind of evidence. Values: `clinical`, `co1`, `co2`, `sr_meta`, `standard_eb`, `national_fw`, `code`, `grey`, `unknown`.
 
 The two-field encoding preserves the doctrinal relationship: Co-1 is *co-primary with* Tier 1, not *identical to* Tier 1. A query for "all Tier 1 evidence" returns both clinical and Co-1 records; a query for "all Co-1 evidence" returns only Co-1 records. Neither subsumes the other.
@@ -68,7 +68,7 @@ Co-2 records carry `tier: 2, evidence_type: co2`. They do not require the Co-1-s
 
 ### 1.4 Relationship to the Design Modes — orthogonality of coverage, scale-conditioned weighting
 
-The Seven-Tier Evidence Hierarchy and the Design Modes are orthogonal **axes of coverage** (amending A5 §3.5 per decision D-D): both are always consulted, and neither determines the other. They co-locate authority for any specification:
+The Evidence Hierarchy and the Design Modes are orthogonal **axes of coverage** (amending A5 §3.5 per decision D-D): both are always consulted, and neither determines the other. They co-locate authority for any specification:
 
 - **Design Hierarchy** locates the *kind of design decision* and its *scale*: Universal Mode (universal, code-compliant); Population scale (population-informed, ranges with median); Person scale (person-specific, OT-resolved).
 - **Evidence Hierarchy** locates *what evidence supports the value*: what tier, what type, how strong.
@@ -86,7 +86,7 @@ Tier 2 has two streams (§1.1): (a) systematic reviews / meta-analyses, and (b) 
 
 A DPO may produce both: a design guideline (Tier 2 standards stream) and a lived-experience research output (Co-1). The same organization, different epistemic products. Encoding matters because best-practice synthesis treats Co-1 as co-primary with Tier 1 — a stronger epistemic claim than Tier 2 organizational guidelines carry. (The SR / meta-analysis stream of Tier 2 is synthesis evidence, a separate case; it is not what this section contrasts with Co-1.)
 
-The validator (Session 2) enforces this: a source classified as both `co1` and `standard_eb` (or `national_fw` or `code`) is an error. A source may have one `evidence_type`; its tier follows from that type. Tier 2 organizational guidelines carry `evidence_type: standard_eb` (if evidence-based) or `national_fw`, not `co1`.
+The validator (Session 2) enforces this: a source classified as both `co1` and `standard_eb` (or `national_fw` or `code`) is an error. A source may have one `evidence_type`; its tier is derived from that type and its scope (`TIER_MAP`, `schemas/tier_derivation.py`). Tier 2 organizational guidelines carry `evidence_type: standard_eb`, not `co1`.
 
 ### 1.6 Mode-asymmetry — where source-ranking does its work
 
@@ -113,14 +113,14 @@ The project **rejects a "most-specific-to-least-specific" gradient.** Specificit
 
 ### 2.1 The four states (T-04 operationalized)
 
-Per Stage 0.5 Decision T-04 (DECIDED, locked): each (parameter × population) cell in the guidebook's specification matrix holds one of four states. T-04 specifies the states; this section operationalizes the thresholds, transitions, and validator rules.
+Per Stage 0.5 Decision T-04 (DECIDED, locked): each cell in the guidebook's specification matrix (a parameter under at least one lens) holds one of four states. T-04 specifies the states; this section operationalizes the thresholds, transitions, and validator rules.
 
 | State | Display | Meaning |
 |---|---|---|
 | `stated` | Normal rendering | Best-practice claim derived from sufficient evidence. The claim is defensible at the evidence tier cited. |
 | `provisional` | Confidence flag rendered | Synthesis based on evidence that is rich enough to produce a qualified claim, but does not meet the `stated` threshold. |
 | `pending` | `[BEST-PRACTICE-PENDING]` + gap-register link | Evidence too sparse across all dimensions to synthesize. The absence is visible and traced. |
-| `not_applicable` | "Not applicable" + rationale | The parameter has no design implication for this population. Not a gap — a genuine non-intersection. |
+| `not_applicable` | "Not applicable" + rationale | The parameter has no design implication under this lens. Not a gap — a genuine non-intersection. |
 
 ### 2.2 The `stated` threshold
 
@@ -176,13 +176,13 @@ A cell is `not_applicable` when the parameter genuinely has no design implicatio
 - Grab bar diameter for DEM population in a corridor (grab bars are a MOB specification; DEM populations may need grab bars for co-occurring mobility impairment, but the parameter itself — diameter — is not DEM-specific)
 - Signing space width for VIS population (signing space is a DEAF specification; VIS populations do not use sign language, though DBL populations do — DBL is a separate code)
 
-`not_applicable` requires explicit rationale. The validator rejects `not_applicable` without a rationale string. The rationale must be population-specific — "not relevant" is insufficient; "this parameter addresses [function X] which is not impacted by [population]'s functional profile" is the minimum.
+`not_applicable` requires explicit rationale. The validator rejects `not_applicable` without a rationale string. The rationale must be specific to the cell's lens — "not relevant" is insufficient; "this parameter addresses [function X] which is not impacted by the functional profile of [lens]" is the minimum.
 
 ### 2.6 Co-2 evidence and the `stated` boundary — resolves Q4
 
 **Q4 from A6 handoff:** *Does Co-2 alone count as "rich" for `provisional` purposes? Does Co-2 + Co-1 convergence carry the same confidence as Tier 1 + Co-1?*
 
-**Resolution:** Co-2 alone satisfies the `stated` threshold per §2.2 condition (3) — the T-04 OR clause includes Co-2. A cell supported solely by one or more Co-2 CPGs (e.g., AOTA practice guidelines for home modification, RCOT specialist section housing guidance) is `stated`, not `provisional`.
+**Resolution:** Co-2 alone satisfies the `stated` threshold per §2.2 condition (4) — the T-04 OR clause includes Co-2. A cell supported solely by one or more Co-2 CPGs (e.g., AOTA practice guidelines for home modification, RCOT specialist section housing guidance) is `stated`, not `provisional`.
 
 This follows from the evidence hierarchy design: Co-2 encodes OT professional body consensus, which is a form of evidence above the standards/code tier. OT professional bodies synthesize clinical evidence, practice experience, and population knowledge into guidance documents. A CPG that addresses a design parameter directly carries sufficient epistemic weight for a `stated` claim.
 
@@ -192,23 +192,7 @@ This follows from the evidence hierarchy design: Co-2 encodes OT professional bo
 
 ### 2.7 State transitions
 
-States are not permanent. A cell may transition as evidence accumulates or is revised:
-
-| From | To | Trigger |
-|---|---|---|
-| `pending` | `provisional` | Evidence at Tier 4–6 meets the §2.3 richness threshold, or a single T3-clinical source with direct parameter relevance is found (amended per tier3-stated-threshold DR) |
-| `pending` | `stated` | Evidence at Tier 1, Tier 2, Co-1, or Co-2 is found, with direct parameter relevance (amended per tier3-stated-threshold DR: Tier 3 alone no longer qualifies) |
-| `provisional` | `stated` | Evidence at Tier 1, Tier 2, Co-1, or Co-2 is found, or existing T3-clinical evidence converges with a second axis per §2.2's convergence path (amended per tier3-stated-threshold DR) |
-| `provisional` | `pending` | Previously cited Tier 4–5 sources are invalidated (e.g., standard superseded without replacement) |
-| `stated` | `provisional` | All Tier 1–3, Co-1, and Co-2 sources are invalidated or retracted; Tier 4–6 evidence remains |
-| `stated` | `pending` | All sources invalidated; no evidence remains |
-| any | `not_applicable` | Analysis determines parameter is genuinely non-intersecting for this population |
-| `not_applicable` | `pending` | Analysis reveals the parameter IS relevant (prior `not_applicable` was in error) |
-
-**Transitions that do not occur:**
-
-- `not_applicable` → `stated` directly (must pass through `pending` first — the evidence search has to run)
-- `stated` → `not_applicable` (if evidence exists, the parameter is by definition applicable; the evidence may be wrong, but the state machine records evidence state, not parameter relevance directly)
+A cell's state is recomputed from its evidence on each run (`scripts/assess/assess_cell.py`) and no from-state is stored, so there is no transition relation to state. `not_applicable` is set by analysis, never by the engine, and never over a `stated` cell.
 
 ### 2.8 Evidence-state and verification status interaction — resolves Q8 partial
 
@@ -241,7 +225,7 @@ This section specifies how convergence is encoded, assessed, and rendered.
 
 **Q2 from A6 handoff:** *When Tier 1 OT and Co-1 sources agree on a parameter value, the converged value carries higher confidence than either alone. How is this encoded in the schema?*
 
-**Resolution:** Convergence is a property of the **synthesis**, not of individual sources. It is assessed at the (parameter × population) cell level, not at the source level. The encoding is a structured assessment attached to the cell (on the Specification entity or equivalently on the BPC best_practice_synthesis):
+**Resolution:** Convergence is a property of the **synthesis**, not of individual sources. It is assessed at the cell level, not at the source level. The encoding is a structured assessment attached to the cell (on the Specification entity or equivalently on the BPC best_practice_synthesis):
 
 **Convergence assessment fields** (forward specification for Session 2 schema):
 
@@ -282,7 +266,7 @@ Adding a fifth state (`stated_divergent`) would conflate the two questions, maki
 
 1. The cell is `stated` (evidence is sufficient from both dimensions).
 2. The convergence assessment records `divergent` with the sources and rationale.
-3. The Tier 1 design range encompasses both findings (per A5 §3.5, Pattern Co-1-D).
+3. The Population Mode design range encompasses both findings (per A5 §3.5, Pattern Co-1-D).
 4. The synthesis approach specifies which dimension governs the default and why (typically per harm-asymmetry — see project-standards harm-asymmetry rule).
 5. Voice pattern Co-1-D renders the divergence in prose.
 6. At the Person scale, OT assessment resolves the individual's own functional needs — informed by, but not bounded by, the range — and the divergence at Tier 1 becomes input to person-specific co-design.
@@ -300,7 +284,7 @@ The convergence assessment determines which voice pattern governs the specificat
 | `single_axis` (Co-1 only) | Co-1-A or Co-1-B | "[Source] documents [finding]." or "Co-1 sources document [claim]; sources: [list]." |
 | `single_axis` (clinical only) | §8.1 Tier 1 construction | "[Evidence tier] evidence supports [value]." |
 | `single_axis` (Co-2 only) | §8.1 adapted | "OT professional body guidance ([CPG]) recommends [value]." |
-| `single_axis` (Tier 4–6 only) | §8.1 Universal Mode construction | "Code requires [value] per [standard]." or "[N] jurisdictions' standards converge on [value] — best practice as currently known, at weak (○) code-derived strength only: convergence is not evidence; no anchoring (T1/Co-1/T2/Co-2) basis exists" (mandatory flag + caveat per G1b and amended invariant I3, 2026-07-21 Option A; never unflagged, never above the register map's weak-band row) |
+| `single_axis` (Tier 4–6 only) | §8.1 Universal Mode construction | "[N] jurisdictions' standards converge on [value] — best practice as currently known, at weak (○) code-derived strength only: convergence is not evidence; no anchoring (T1/Co-1/T2/Co-2) basis exists" (mandatory flag + caveat per G1b and amended invariant I3, 2026-07-21 Option A; never unflagged, never above the register map's weak-band row) |
 | `pending_assessment` | Rendered ONLY with the value-level-convergence-pending disclosure in every register (G8; the register map's `stated_multi_axis` rows carry it) | Axis co-presence is real; value-level convergence is queued, never assumed |
 
 ### 3.5 Cross-entity integration
@@ -327,7 +311,7 @@ Person-Mode OT co-design resolves this at the individual scale — the OT and th
 
 ### 4.2 Resolution: three-step values-criteria assessment
 
-When a (parameter × population) synthesis identifies a values-based conflict (as distinct from a function-based harm conflict), the following mechanism applies:
+When a cell's synthesis identifies a values-based conflict (as distinct from a function-based harm conflict), the following mechanism applies:
 
 **Step 1 — Classify the conflict type.**
 
@@ -351,7 +335,7 @@ Criteria, applied in order:
 
 3. **Supplementary provision feasibility.** If the non-default preference can be achieved through supplementary provision (personal aids, surface treatments, staff-operated adjustments) without modifying the built structure, this supports setting the other as the structural default. Example: proprioceptive feedback can be provided via an applied threshold mat or entry-zone flooring change, without requiring a raised threshold.
 
-If all three criteria point the same direction, the default is clear. If they conflict, the specification documents the assessment and routes to Tier 2 for individual resolution, with the broadest-population preference as the nominal default.
+If all three criteria point the same direction, the default is clear. If they conflict, the specification documents the assessment and routes to Person Mode for individual resolution, with the broadest-population preference as the nominal default.
 
 **Step 3 — Documentation.**
 
@@ -367,7 +351,7 @@ The specification carries:
 - **Does not override harm-asymmetry.** If one population faces genuine harm (neurological deterioration, fall risk, entrapment), that is function-based, not values-based. Harm-asymmetry governs.
 - **Does not claim one population's values are more legitimate.** Both preferences are evidence-grounded. The mechanism selects a structural default, not a correct value.
 - **Does not eliminate Person-Mode resolution.** The default is a starting point. Person-Mode OT co-design may override it for an individual whose needs are better served by the alternative.
-- **Does not apply to Universal Mode.** Universal Mode (universal design / code compliance) is set by code. Values-criteria applies at Tier 1 only.
+- **Does not apply to Universal Mode.** Universal Mode (universal design / code compliance) is set by code. Values-criteria applies at Population Mode only.
 
 ## 5. Design-pedagogy literature engagement — resolves Q6
 
@@ -383,9 +367,9 @@ Q6 asks: how do these citations operate in the evidence base? What tier are they
 
 ### 5.2 Resolution: meta-methodological citations — outside the evidence hierarchy
 
-These three sources are **meta-methodological citations**. They provide evidence for the guidebook's pedagogical approach — how the guidebook teaches — not evidence for any design parameter. The seven-tier evidence hierarchy governs evidence about built environment design. Pedagogy literature addresses a different question: *does questions-led resource design improve outcomes for the people who use the resource?*
+These three sources are **meta-methodological citations**. They provide evidence for the guidebook's pedagogical approach — how the guidebook teaches — not evidence for any design parameter. The evidence hierarchy governs evidence about built environment design. Pedagogy literature addresses a different question: *does questions-led resource design improve outcomes for the people who use the resource?*
 
-**Classification:** meta-methodological citations sit outside the seven-tier hierarchy. They are not Tier 2 (they are not systematic reviews or evidence-based standards of design evidence), not Tier 5 (they are not national beyond-code frameworks for accessible design), and not any other tier. Forcing them into the hierarchy conflates two distinct evidence questions — "what should the design parameter be?" and "how should the guidebook present design parameters?"
+**Classification:** meta-methodological citations sit outside the evidence hierarchy. They are not Tier 2 (they are not systematic reviews or evidence-based standards of design evidence), not Tier 5 (they are not national beyond-code frameworks for accessible design), and not any other tier. Forcing them into the hierarchy conflates two distinct evidence questions — "what should the design parameter be?" and "how should the guidebook present design parameters?"
 
 ### 5.3 Operational treatment
 
@@ -475,7 +459,7 @@ The skill is prose-only (no Python validator). Its quality depends on the author
 | Q3 — Fifth state for divergent evidence? | No. Cell is `stated`; divergence is synthesis metadata via convergence assessment, not a state-machine state. Four states preserved per T-04. | high — separates evidence sufficiency from evidence agreement; T-04 unchanged | §3.3 |
 | Q4 — Co-2 alone as "rich" for `stated` | Yes. Co-2 alone satisfies `stated` per T-04 OR clause. OT professional body CPGs carry sufficient epistemic weight. | high — literal application of T-04 definition | §2.6 |
 | Q5 — Values-criteria mechanism | Three-step assessment: classify conflict type (function/values/conflation) → broadest-benefit assessment (population breadth, irreversibility, supplementary feasibility) → documentation with Person-Mode handoff. Applies at Population Mode only. | high — extends existing harm-asymmetry framework to values-based conflicts without overriding it | §4 |
-| Q6 — Design-pedagogy tier classification | Meta-methodological: outside the seven-tier hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
+| Q6 — Design-pedagogy tier classification | Meta-methodological: outside the evidence hierarchy. Pedagogy literature supports the guidebook's method, not design parameters. Cited in Part 1 / mission, not in specification cells. No evidence marker. | high — clean separation of "what should the parameter be?" from "how should the guidebook present parameters?" | §5 |
 | Q7 — Epistemic-defense skill specification | Seven challenge categories with response patterns; five-step decision sequence; voice conventions; C2 skill build forward spec. Requirements only — C2 builds implementation. | high — direct application of advocacy identity + evidence hierarchy + framing standards | §6 |
 | Q8 — Verification status interaction (partial) | `UNVERIFIED`/OPEN: flag but don't downgrade. `UNVERIFIED-CLOSED`/`CLOSED-DELETED` as sole qualifying sources: downgrade to `pending`. Full implementation deferred to Session 2. | high — extends A5 §6.3 rule to state-machine level | §2.8 |
 
