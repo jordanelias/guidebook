@@ -721,7 +721,6 @@ entries:
     replacement: "UNRESOLVED, with the Person-Mode handoff named in mode_s_trigger"
     exempt_paths:
       - "scripts/db.py"                  # comment on the new set
-      - "schemas/conflict.py"            # docstring explaining the rehomed rule
     note: >-
       Retired twice over, which is why it is worth a tripwire — and the first
       retirement is the instructive one. Item V of RATIFICATION-PACKAGE-2026-07-12
@@ -748,12 +747,10 @@ entries:
     retired_by: "as RV-023"
     replacement: "UNRESOLVED"
     exempt_paths:
-      - "schemas/conflict.py"            # docstring explaining the rehomed rule
     note: >-
       The file layer's spelling of RV-023 — registered separately because the two
       layers spelled the same state differently, which is the divergence the
-      ruling closed. `schemas/conflict.py` keyed its mode_s_trigger requirement on
-      this string; that validator now keys on UNRESOLVED.
+      ruling closed.
 
   - id: RV-025
     token: Mode P

@@ -583,13 +583,13 @@ conflicts:
   class: PROVENANCE
   severity: S3
   title: "Status of DR-2026-09-26 and of the DOI-stash design in the operative instrument"
-  atoms: [RC-001, RC-011, RC-067, RC-116, RC-142, RC-225]
+  atoms: [RC-001, RC-011, RC-116, RC-142, RC-225]
   sides:
     - {atoms: [RC-001], says: "DR-2026-09-26 (v2) is ratified as of 2026-09-27 by owner nod, with PR #159 merged."}
     - {atoms: [RC-011], says: "its section 0 header still reads 'v2, PROPOSED'."}
-    - {atoms: [RC-067, RC-116], says: "it adds an entry to validate_pydantic_schemas' curated MODEL_TABLE_MAP, which CLAUDE.md rule 8 names as an outstanding derive-it violation; it proposes no CHECK on search_executions.engine, while rule 8 says vocabularies come from CHECKs."}
+    - {atoms: [RC-116], says: "it proposes no CHECK on search_executions.engine, while rule 8 says vocabularies come from CHECKs."}
     - {atoms: [RC-142, RC-225], says: "seed 3 is 'not shipped' in one place, and the recommended answer to OQ-6 refers to it in another."}
-  direction: "Treated as ratified (owner nod recorded, RC-001). The two apparatus choices (curated map, free-text engine) are knowingly retained and recorded by the DR itself."
+  direction: "Treated as ratified (owner nod recorded, RC-001). The apparatus choice (free-text engine) is knowingly retained and recorded by the DR itself; the curated map it also added went with step 1.10."
   resolver: NONE
   confidence: medium
 

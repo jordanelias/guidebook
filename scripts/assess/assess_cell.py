@@ -73,14 +73,12 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
   schemas.enums               EvidenceCellState / ConvergenceStatus /
                               VerificationStatus vocabularies
   schemas.evidence_source     (via enums + verification gates below)
-  schemas.source_value_extraction  the JUDGMENT item (D-0168) — what gather_sources
+  source_value_extractions    the JUDGMENT item (D-0168) — what gather_sources
                               now joins on. The VALUE dimension stays NOT_ASSESSED,
                               and the reason is not emptiness: no value-directness
                               grading rule exists in this repository and inventing
                               one is stop condition 4 (G2; never silently EXACT)
-  schemas.population, schemas.slug,
-  schemas.gap                 identity/attribution semantics (lens codes validated
-                              against their own live base tables)
+  (lens codes are validated against their own live base tables)
 
 G-fixes (evidence-architecture.md §4, DR-2026-07-12-evidence-architecture-unification):
   G1  T4–6-only basis ⇒ regulatory-stratum determination: design_scale='universal',

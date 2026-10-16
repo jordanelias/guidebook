@@ -662,12 +662,12 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `RC-001`(act)
 - its section 0 header still reads 'v2, PROPOSED'.  
   _atoms:_ `RC-011`(act)
-- it adds an entry to validate_pydantic_schemas' curated MODEL_TABLE_MAP, which CLAUDE.md rule 8 names as an outstanding derive-it violation; it proposes no CHECK on search_executions.engine, while rule 8 says vocabularies come from CHECKs.  
-  _atoms:_ `RC-067`(act), `RC-116`(act)
+- it proposes no CHECK on search_executions.engine, while rule 8 says vocabularies come from CHECKs.  
+  _atoms:_ `RC-116`(act)
 - seed 3 is 'not shipped' in one place, and the recommended answer to OQ-6 refers to it in another.  
   _atoms:_ `RC-142`(sup), `RC-225`(act)
 
-**Direction.** Treated as ratified (owner nod recorded, RC-001). The two apparatus choices (curated map, free-text engine) are knowingly retained and recorded by the DR itself.
+**Direction.** Treated as ratified (owner nod recorded, RC-001). The apparatus choice (free-text engine) is knowingly retained and recorded by the DR itself; the curated map it also added went with step 1.10.
 
 ## C-046 [S3] Pointers run from a later stage to an earlier one -- some foreign keys run the other way
 

@@ -178,7 +178,7 @@ argparse `choices=` lists that duplicate a column's CHECK — **count them, neve
 `grep -c 'choices=dbcore\.\(schema_choices\|check_values\)' scripts/db.py`, and
 `derived_not_curated_audit.py` reports how many of the remainder mirror a live CHECK —
 `add-source --ref-id` and `amend-source --tier` asking for values the machine can derive,
-`validate_pydantic_schemas`' curated `MODEL_TABLE_MAP`, and the hand-written "N today" counts
+and the hand-written "N today" counts
 throughout `governance/check-registry.yaml`.
 **9. Do not watch PRs. Open the PR last** (owner instruction, 2026-09-23). Do not call
 `subscribe_pr_activity` (either server's) and do not schedule `send_later` or `create_trigger`
@@ -296,8 +296,8 @@ own CHECK. Live rows are a *sample* of a vocabulary, never the vocabulary. **Nev
 by hand** — `dbcore.next_ref_id(conn)` is the rule, and the high-water mark is the UNION of every
 table holding a ref_id.
 
-**Schema change:** new `scripts/migrations/NNN_slug.sql`, bump `user_version`, mirror the Pydantic
-model. Verify with `migrate_db.py --rebuild /tmp/rebuilt.db`.
+**Schema change:** new `scripts/migrations/NNN_slug.sql`, bump `user_version`. Verify with
+`migrate_db.py --rebuild /tmp/rebuilt.db`.
 
 **A NOT NULL foreign key into an EMPTIED table makes that table unwritable.** The refusal is
 `FOREIGN KEY constraint failed` at INSERT — never at migration time — so the schema looks healthy, a
@@ -444,7 +444,6 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
 - **If you add a `SessionStart` hook, APPEND it — never insert at index 0.**
   `research_contract_hook.py` reads `SessionStart[0]["hooks"][0]["command"]` by hardcoded index; an
   insert turns the blocking `research_contract_sync` red with a diff that reads as contract drift.
-- **`schemas/*.py` ↔ SQLite drift is a bug**, not a convention.
 - **PI versioning is intentional** — highest-numbered `governance/project-instructions-v*.md` is live
   and legitimately lags doctrine. Prefer `references/project-standards.md` and recent DRs.
 - **Don't run `scripts/bootstrap.sh`** — PAT-gated, for the claude.ai surface.

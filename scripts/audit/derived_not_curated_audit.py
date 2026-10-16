@@ -25,7 +25,7 @@ judgement, which a script cannot police. ONE class of violation is mechanically 
 an argparse `choices=` literal whose values are exactly a live column's CHECK vocabulary.
 That is a second home with a first home sitting next to it, and the fix is always the same
 (`dbcore.schema_choices(table, column)`). The other known violations named in rule 8 —
-`--ref-id` and `--tier` asking for derivable values, the curated `MODEL_TABLE_MAP`, the
+`--ref-id` and `--tier` asking for derivable values, the
 registry's counts — need judgement about what the single home should BE, so they are
 listed in the rule for a reader rather than asserted here.
 

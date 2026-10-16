@@ -52,7 +52,7 @@ OUT = REPO / "governance" / "context-map.yaml"
 DIRECTORY_ROLES = {
     "governance":    ("doctrine, protocols, the check registry", "canonical"),
     "decisions":     ("decision records -- the governance changelog", "canonical"),
-    "schemas":       ("Pydantic models mirroring the SQLite layout", "canonical"),
+    "schemas":       ("Pydantic modules that code imports", "canonical"),
     "scripts":       ("tooling: migrations, audits, validators, generators", "canonical"),
     "data":          ("the SQLite database and entity YAML stores", "canonical"),
     "references":    ("working corpus: BPCs, reasoning docs, registers", "canonical"),
