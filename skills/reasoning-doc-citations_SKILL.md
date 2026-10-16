@@ -6,7 +6,7 @@ status: active
 adopted: 2026-05-13
 decision_record: decisions/DR-2026-05-13-evidence-verification-methodology.md
 governs: All citations in `references/bpc-reasoning/<slug>.md` that support jurisdiction-comparison cells (rule #9 step 3), qualitative claims, or definitional claims
-enforcement: Level 2 (audit query at scripts/audit/reasoning_doc_citations_audit.py)
+enforcement: Level 1 (text rule); the Level 2 audit query was deleted in plan step 1.6
 companion: adversarial-research (claim validation across the literature)
 ---
 
@@ -221,9 +221,7 @@ When the BPC reasoning doc is in English but cites a non-English source:
 
 ## Audit query
 
-`scripts/audit/reasoning_doc_citations_audit.py` (level 2). Flags rows that violate the rule #10 sub-rules 2 and 3 contract.
-
-Documented checks (canonical list lives in the audit script docstring; reproduced here for skill self-containment):
+The audit script that flagged rows violating the rule #10 sub-rules 2 and 3 contract was deleted in plan step 1.6 (it examined nothing on the last full run). The checks it made are the contract a reviewer applies by hand:
 - **C1.** Rows with `value_match='NOT-FOUND'` or `claim_match='NOT-FOUND'` — claim was sought but not located.
 - **C2.** Rows with `value_match='CONTRADICTED'` (schema-disallowed but defensive) or `claim_match='CONTRADICTED'` — synthesis invalid; must be addressed pre-ship.
 - **C3.** PAYWALL rows without downgrade note in `notes`.
@@ -233,13 +231,6 @@ Documented checks (canonical list lives in the audit script docstring; reproduce
 - **C7.** `claim_type` distribution sanity check.
 - **C8.** Slug-side coverage gap (rows-vs-docs cross-check; limited from DB alone).
 
-Run before session close:
-
-```bash
-python3 scripts/audit/reasoning_doc_citations_audit.py
-```
-
-Exit 0 = clean. Exit 1 = deficient rows present.
 
 ## Detection question (mandatory before declaring a citation verified)
 
@@ -280,7 +271,6 @@ Beyond the pilot:
 ## See also
 
 - `decisions/DR-2026-05-13-evidence-verification-methodology.md` — adoption record; existence-vs-claim separation rationale
-- `scripts/audit/reasoning_doc_citations_audit.py` — audit script (level 2)
 - `skills/adversarial-research_SKILL.md` — companion: validates claim across literature
 - `skills/citation-miner_SKILL.md` — upstream: source existence verification (Phase B)
 - `references/keyword-compendiums/<lang>.md` — multilingual term references (Phase A.11)

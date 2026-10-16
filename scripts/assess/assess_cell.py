@@ -70,7 +70,7 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
   schemas.evidence_state      EvidenceStateRecord / ConvergenceAssessment /
                               ProvisionalConfidenceFlag — every row validated
                               against the pydantic model BEFORE insert
-  schemas.enums               PopulationCode / EvidenceCellState / ConvergenceStatus /
+  schemas.enums               EvidenceCellState / ConvergenceStatus /
                               VerificationStatus vocabularies
   schemas.evidence_source     (via enums + verification gates below)
   schemas.source_value_extraction  the JUDGMENT item (D-0168) — what gather_sources
@@ -123,7 +123,7 @@ from schemas.directness import (  # noqa: E402
 )
 from schemas.tier_derivation import check_tier_consistency  # noqa: E402
 from schemas.enums import (  # noqa: E402
-    ConvergenceStatus, EvidenceCellState, PopulationCode,
+    ConvergenceStatus, EvidenceCellState,
     VerificationStatus,
 )
 from schemas.evidence_state import (  # noqa: E402
@@ -1634,9 +1634,6 @@ def next_gap_id(conn):
     return f"GAP-{mx + 1:03d}"
 
 
-ENUM_DRIFT = []  # populations valid in the live table but missing from PopulationCode
-
-
 class Refusal(ValueError):
     """A deliberate refusal by the engine, addressed to the operator.
 
@@ -1683,10 +1680,9 @@ def validate_lens(conn, lens):
     must be supplied (D-0182).
 
     The codes are checked against the tables, never against a list in code: the base
-    tables ARE the vocabulary (CLAUDE.md §4). schemas.enums.PopulationCode is still
-    consulted for the identity lens ONLY to record drift — the pilot found the enum's
-    25 values did not match the table's 22 codes — and a mismatch is a finding, never a
-    refusal, because the table is the truth and the enum is the copy.
+    tables ARE the vocabulary (CLAUDE.md §4). The PopulationCode enum that used to be
+    consulted here to record drift was retired (plan step 1.6, RULINGS R44): the table
+    is the truth and a copy kept beside it only disagrees.
     """
     if not lens_key(lens):
         raise Refusal(
@@ -1707,12 +1703,6 @@ def validate_lens(conn, lens):
             continue
         if not conn.execute(f"SELECT 1 FROM {table} WHERE {key}=?", (code,)).fetchone():
             raise Refusal(f"{col} {code!r} is not a live {key} in {table}")
-    identity = lens.get("identity_code")
-    if identity:
-        try:
-            PopulationCode(identity)
-        except ValueError:
-            ENUM_DRIFT.append(identity)
 
 
 def validate_cell_undetermined(conn, parameter_id, lens):
@@ -2205,10 +2195,6 @@ def main():
           f"emit_batch_sql.py captures them from there. Applying the artifact AS WELL\n"
           f"double-inserts. Re-running this cell against this DB is refused.\n"
           f"REPLAY through emit_data_migration.py -> migrate_db.py, never by hand.")
-    if ENUM_DRIFT:
-        print(f"DRIFT FINDING: populations valid in live table but missing from "
-              f"schemas.enums.PopulationCode: {sorted(set(ENUM_DRIFT))} — "
-              f"recorded for the ratification package (reconciliation item).")
 
 
 if __name__ == "__main__":

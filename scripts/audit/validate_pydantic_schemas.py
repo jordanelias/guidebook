@@ -181,7 +181,7 @@ FIELD_ALIASES = {
         "year": "pub_year",
     },
     "populations": {
-        # model comment: 'PopulationCode value, e.g. "MOB"' -- the same thing the
+        # model comment: 'a populations.population_code, e.g. "MOB"' -- the same thing the
         # column spells out in full.
         "code": "population_code",
     },

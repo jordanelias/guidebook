@@ -37,7 +37,7 @@ RATIFIED_STATUSES = frozenset({
 class ConflictParty(GuidebookEntity):
     """One side of a conflict — populations and their specification."""
 
-    codes: list[str]  # PopulationCode values
+    codes: list[str]  # populations.population_code values
     specification: str  # What this party needs, e.g. "≥30% LRV differential"
 
 

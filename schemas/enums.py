@@ -13,61 +13,6 @@ Jurisdiction codes: jurisdiction-tracker §4.7.3 (24 canonical + meta-codes).
 from enum import Enum
 
 
-class PopulationCode(str, Enum):
-    """Canonical population codes — Access-Taxonomy Axis-2 set (DR-2026-07-23).
-
-    Community-organized, flat: NO parent codes, no containment, no slash sub-codes.
-    NDV is a self-claimed umbrella you may select on; it does NOT contain AUT/ADHD.
-    DEAFBLIND is its own community, not VIS+DEAF. ID (intellectual disability) is
-    first-class — this supersedes the former DEM+NDV proxy. Life stage (SEN/CHD) is
-    an orthogonal modifier, not a population — see LifeStageModifier. `ALL` is a
-    scope-marker meaning "applies to all populations", not a community.
-
-    Supersedes the nested/slash scheme of DR-2026-07-21 / DR-2026-07-22.
-    """
-
-    # Seeing, hearing, communicating
-    BLIND = "BLIND"
-    DEAF = "DEAF"
-    DEAFBLIND = "DEAFBLIND"
-
-    # Moving and handling
-    MOB = "MOB"
-    LMB = "LMB"
-    SCI = "SCI"
-    MOVE = "MOVE"
-
-    # Neurodivergence (peer codes; NDV is a view, not a container)
-    NDV = "NDV"
-    AUT = "AUT"
-    ADHD = "ADHD"
-    ID = "ID"
-
-    # Acquired cognitive
-    DEM = "DEM"
-    BRAIN = "BRAIN"
-
-    # Energy-limiting and chronic
-    COM = "COM"
-    PAIN = "PAIN"
-
-    # Neurological
-    MS = "MS"
-    EPI = "EPI"
-    VES = "VES"
-
-    # Mental health (kept as its own population per DR-2026-07-23)
-    MH = "MH"
-
-    # Body size and stature (served by the A-SIZE access need)
-    LPA = "LPA"
-    TALL = "TALL"
-    BAR = "BAR"
-
-    # Scope marker (not a population)
-    ALL = "ALL"
-
-
 class LifeStageModifier(str, Enum):
     """Orthogonal life-stage modifiers (DR-2026-07-23).
 

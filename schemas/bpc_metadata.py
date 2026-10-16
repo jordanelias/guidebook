@@ -22,11 +22,11 @@ from schemas.base import GuidebookEntity
 class BPCMetadata(GuidebookEntity):
     """Metadata extracted from a BPC markdown file.
 
-    Required fields match validate_bpc.py mandatory keys.
+    Required fields are the BPC mandatory keys (validate_bpc.py, deleted in plan step 1.6, enforced them).
     Optional fields capture the full CO-0006 template when present.
     """
 
-    # Required (per validate_bpc.py)
+    # Required (the BPC mandatory keys)
     slug: str
     population: str  # Comma-separated or single code
     updated_at: str  # YYYY-MM-DD or YYYY-MM-DD HH:MM (was last_updated, migration 085)

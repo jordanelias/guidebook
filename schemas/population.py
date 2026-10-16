@@ -16,7 +16,6 @@ from typing import Optional
 from pydantic import field_validator, model_validator
 
 from schemas.base import GuidebookEntity
-from schemas.enums import PopulationCode
 
 
 class Population(GuidebookEntity):
@@ -29,7 +28,7 @@ class Population(GuidebookEntity):
     """
 
     # Identity
-    code: str  # PopulationCode value, e.g. "MOB", "MOB/AMB"
+    code: str  # a populations.population_code, e.g. "MOB"
     parent_code: Optional[str] = None  # NULL for top-level; e.g. "MOB" for "MOB/AMB"
     label: str  # Human-readable label, e.g. "Mobility and Strength"
     definition: str  # Functional definition
@@ -67,28 +66,6 @@ class Population(GuidebookEntity):
     specification_count: Optional[int] = None
 
     # --- Validators ---
-
-    @field_validator("code")
-    @classmethod
-    def valid_code(cls, v: str) -> str:
-        """Validate population code format."""
-        valid = {e.value for e in PopulationCode}
-        if v not in valid:
-            raise ValueError(
-                f"Unknown population code: '{v}'. "
-                f"Valid codes: {sorted(valid)}"
-            )
-        return v
-
-    @field_validator("parent_code")
-    @classmethod
-    def valid_parent(cls, v: Optional[str]) -> Optional[str]:
-        """Parent code must also be a valid PopulationCode if set."""
-        if v is not None:
-            valid = {e.value for e in PopulationCode}
-            if v not in valid:
-                raise ValueError(f"Unknown parent population code: '{v}'")
-        return v
 
     @field_validator("key_parameters")
     @classmethod
