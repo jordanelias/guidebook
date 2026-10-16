@@ -435,7 +435,7 @@ def make_probes():
         n = T.rows.get("base_taxonomy_medical", 0)
         return ("PASS" if n else "FAIL"), {"base_taxonomy_medical_rows": n, "writer_verbs": T.writers.get("base_taxonomy_medical", [])}
 
-    @probe("P-CO1-TYPE", "every live co1_source_type value is in schemas.enums.Co1SourceType", ["DRS-248", "DRS-294"])
+    @probe("P-CO1-TYPE", "every live co1_source_type value is in schemas.enums.Co1SourceType", ["DRS-248"])
     def _(T):
         try:
             tree = ast.parse(read(T.root, "schemas/enums.py"))
@@ -447,7 +447,7 @@ def make_probes():
         out = [v for v in live if v not in en]
         return ("FAIL" if out else "PASS"), {"enum": en, "live_values": live, "outside_enum": out}
 
-    @probe("P-CO1-PROV", "every Co-1 source's co1_provenance is non-empty free text and none holds only the co1-operational value 'published_corpus' (D-0178 requires it to name the co-production)", ["DRS-146", "DRS-264", "CLM-037"])
+    @probe("P-CO1-PROV", "every Co-1 source's co1_provenance is non-empty free text and none holds only the co1-operational value 'published_corpus' (D-0178 requires it to name the co-production)", ["DRS-146", "DRS-263", "CLM-037"])
     def _(T):
         rows = T.q("select ref_id, co1_provenance from evidence_sources where evidence_type='co1'")
         empty = [r[0] for r in rows if not (r[1] or "").strip()]
@@ -462,7 +462,7 @@ def make_probes():
                for f in T.fks if T.stage(f["child"]) in order and T.stage(f["parent"]) in order and order[T.stage(f["child"])] < order[T.stage(f["parent"])]]
         return "INFO", {"count": len(fwd), "with_live_rows": [x["fk"] for x in fwd if x["child_rows"]], "all": fwd}
 
-    @probe("P-VERIF-VOCAB", "evidence_sources.verification_status admits only VERIFIED / UNVERIFIED (D-0157)", ["EVI-365", "EVI-369", "LED-028"])
+    @probe("P-VERIF-VOCAB", "evidence_sources.verification_status admits only VERIFIED / UNVERIFIED (D-0157)", ["EVI-369", "LED-028"])
     def _(T):
         v = (T.vocab.get("evidence_sources") or {}).get("verification_status", [])
         return ("PASS" if sorted(v) == ["UNVERIFIED", "VERIFIED"] else "FAIL"), {"vocabulary": v}

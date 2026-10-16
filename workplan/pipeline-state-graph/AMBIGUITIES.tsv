@@ -87,15 +87,6 @@ DRS-246	ACTIVE	governance/co1-operational.md:33	definition of Co-1 evidence	DR-2
 DRS-248	ACTIVE	governance/co1-operational.md:35	types of Co-1 source	Section 6.1 and 7.1 list five co1_source_type values (adding validated_tool).
 DRS-249	ACTIVE	governance/co1-operational.md:42	schema encoding of Co-1	D-0168 says the tier verdict is a judgment output and tier on evidence_sources is to be retired; D-0178 notes evidence_sources.tier has no CHECK.
 DRS-251	ACTIVE	governance/co1-operational.md:52	Co-1 methodological grounding	Differs from D-0178, which makes co-production the entire Co-1 warrant.
-DRS-264	ACTIVE	governance/co1-operational.md:138	values of co1_provenance	DR-2026-08-31 (D-0178) requires co1_provenance to NAME the co-production, which neither of these two values does.
-DRS-265	ACTIVE	governance/co1-operational.md:143	pre-launch co1_provenance value	DR-2026-08-31 (D-0178) says published_corpus is not a co-production warrant, so every pre-launch Co-1 source would be unwarranted-pending.
-DRS-274	AMENDED	governance/co1-operational.md:219	verification status of cited Co-1 sources	The values UNVERIFIED-CLOSED and CLOSED-DELETED named here are from the retired five-value taxonomy.
-DRS-293	ACTIVE	governance/co1-operational.md:409	Co-1 ref_id format	CLAUDE.md requires ref_id from dbcore.next_ref_id and the database uses REF-NNNNN identifiers.
-DRS-294	ACTIVE	governance/co1-operational.md:413	values of co1_source_type	Section 1.1 recognises four Co-1 source types; validated_tool is a fifth.
-DRS-295	ACTIVE	governance/co1-operational.md:420	population_codes on the Co-1 evidence record	Conflicts with pointer discipline (synthesis-stage data on an evidence record) and the retirement of population_code in favour of the four lens columns.
-DRS-296	ACTIVE	governance/co1-operational.md:421	parameters_supported on the Co-1 evidence record	Synthesis-stage data on an evidence record; DR-2026-08-24 says each stage's tables hold only that stage's data.
-DRS-298	ACTIVE	governance/co1-operational.md:457	tier on EvidenceSource	D-0168 says tier is a judgment output; D-0178 says evidence_sources.tier has no CHECK constraint.
-DRS-301	AMENDED	governance/co1-operational.md:440	validator behaviour: closed sources	Names values from the retired five-value verification taxonomy.
 DRS-303	ACTIVE	decisions/DR-2026-09-01-the-lens-is-a-column-not-a-traversal.md:51	uniqueness of link rows	Uniqueness is weaker than before: an identity-only row is not structurally prevented from sitting beside a wide row already carrying that identity.
 DRS-305	ACTIVE	decisions/DR-2026-09-02-restore-research-code-leads.md:21	grain of research_code_leads	The count is a measurement; the grain (jurisdiction, standard_name) is the rule.
 ENT-030	ACTIVE	governance/conceptual-model.md:111	BPC key-source REF-ID resolution	Written as an A3 Session 2 plan item; the later pointer correction moves citation records to the reference_stubs table, so the data/sources/ target may no longer be the live home.
@@ -206,7 +197,6 @@ EVI-325	ACTIVE	governance/evidence-methodology.md:134	T3-clinical alone	tier-sys
 EVI-326	ACTIVE	governance/evidence-methodology.md:134	T3-grey alone	tier-system.md places T3-grey in the weak band that anchors a floor/convergence claim.
 EVI-327	ACTIVE	governance/evidence-methodology.md:134	T3 contribution to stated	Any anchoring axis already reaches stated alone, so which second axis qualifies is unclear.
 EVI-338	ACTIVE	governance/evidence-methodology.md:150	Thin T6 cell	tier-system.md section 8 says every tier can anchor a best-practice claim, including T6 (weak band).
-EVI-365	AMENDED	governance/evidence-methodology.md:199	Block migration of cells with only closed-unverified Co-1	UNVERIFIED-CLOSED and CLOSED-DELETED are retired enum values with no explicit successor mapping.
 EVI-367	ACTIVE	governance/evidence-methodology.md:204	Re-search before downstream synthesis	ISW and Part 4 refer to the retired item layer.
 EVI-373	ACTIVE	governance/evidence-methodology.md:220	Convergence as evidence	tier-system.md and evidence-architecture.md say convergence of T4-T6 codes is not evidence; the contrast is independent axes vs jurisdictions.
 EVI-377	ACTIVE	governance/evidence-methodology.md:239	synthesis_approach requirement	"resolved at Tier 1" uses Tier 1 in the retired design-mode sense.
