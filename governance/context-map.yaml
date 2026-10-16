@@ -68,7 +68,7 @@ directories:
     authority: canonical
     hidden_from_ripgrep: false
   schemas:
-    role: Pydantic models mirroring the SQLite layout
+    role: Pydantic modules that code imports
     authority: canonical
     hidden_from_ripgrep: false
   scripts:
@@ -1332,14 +1332,6 @@ checks:
     - schema
     min_items: 1
     cmd: python3 scripts/validate_parameters.py
-  - id: validate_pydantic_schemas
-    level: advisory
-    battery: schema
-    kinds:
-    - schema
-    - data
-    min_items: 1
-    cmd: python3 scripts/audit/validate_pydantic_schemas.py --strict
   - id: validate_schema_cross_check
     level: advisory
     battery: schema

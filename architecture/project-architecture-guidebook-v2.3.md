@@ -83,7 +83,7 @@ The SQLite database at `data/guidebook.db` is the single source of truth for pro
 
 **Reproducibility invariant.** The committed `data/guidebook.db` must be reproducible from its migration history. CI rebuilds a fresh DB by replaying all migrations and compares key invariants against the committed file. Any direct DB write that bypasses the migration framework fails this check.
 
-**Schema documentation.** Pydantic schemas in `schemas/` mirror the SQLite layout. Drift between Pydantic and SQLite is a CI-detectable bug.
+**Schema documentation.** The SQLite layout is described once, by the migrations. Pydantic modules in `schemas/` exist only where code imports them (RULINGS R5).
 
 **FK integrity.** `PRAGMA foreign_keys = ON` at session start; `PRAGMA foreign_key_check` returns empty on a healthy DB. Migrations that bulk-load may toggle FK enforcement off within their script body and back on at exit, but must leave the DB in a referentially-consistent state.
 </data_layer_pattern>
