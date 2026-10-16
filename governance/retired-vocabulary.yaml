@@ -87,7 +87,6 @@ exempt_paths:
   - "scripts/migrations/**"        # append-only, immutable once committed
   - "sessions/**"                  # append-only session records
   - "decisions/**"                 # DRs are the record OF a retirement
-  - "data/decisions/decision_register.yaml"   # the shadow store of decisions/, same class
   - "attestations/**"              # append-only adherence log; reattestation[] is forward-only
   - "references/project-standards.md"         # THE append-only operative rule ledger (CLAUDE.md §5)
   - "audits/**"                    # dated reports, frozen at their date

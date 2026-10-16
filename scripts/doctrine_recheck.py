@@ -2,11 +2,10 @@
 """
 scripts/doctrine_recheck.py — Doctrine recheck validator (per governance/doctrine-recheck.md, A13).
 
-Runs passes 2.2–2.5 mechanically:
-  2.2 Doctrine inventory: enumerate CANONICAL governance docs + RULEs + decisions
+Runs passes 2.2–2.4 mechanically:
+  2.2 Doctrine inventory: enumerate CANONICAL governance docs + RULEs
   2.3 Cross-reference consistency: every doctrinal_basis ref resolves
   2.4 Drift detection: current vs prior snapshot
-  2.5 Decision-register cross-check (post A12 S2)
 
 Pass 2.6 (contamination resampling) has no tool: contamination_sampler.py was deleted
 by the 2026-08-20 cull (quarantined since 2026-08-04 as a category error — it WROTE
@@ -14,7 +13,7 @@ files as a side effect of being run). Resampling is human review only until a
 replacement is justified by a real recheck.
 
 Usage:
-    python3 scripts/doctrine_recheck.py                          # full audit (2.2-2.5)
+    python3 scripts/doctrine_recheck.py                          # full audit (2.2-2.4)
     python3 scripts/doctrine_recheck.py --snapshot-only          # 2.2 only
     python3 scripts/doctrine_recheck.py --cross-ref              # 2.2-2.3
     python3 scripts/doctrine_recheck.py --baseline-against PATH  # custom prior baseline
@@ -30,7 +29,6 @@ import os
 import re
 import sys
 
-import yaml
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -48,7 +46,6 @@ from schemas.enums import (
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GOVERNANCE_DIR = os.path.join(REPO_ROOT, "governance")
 PROJECT_STANDARDS_PATH = os.path.join(REPO_ROOT, "references", "project-standards.md")
-DECISION_REGISTER_PATH = os.path.join(REPO_ROOT, "data", "decisions", "decision_register.yaml")
 RECHECK_DIR = os.path.join(REPO_ROOT, "data", "doctrine_recheck")
 
 
@@ -58,7 +55,6 @@ def build_snapshot() -> DoctrineSnapshot:
     """Walk governance/ and project-standards.md to assemble a doctrine snapshot."""
     governance_docs: list[str] = []
     canonical_rules: list[str] = []
-    decision_ids: list[str] = []
     bpc_count = 0
 
     # Governance docs with Status: CANONICAL
@@ -80,18 +76,6 @@ def build_snapshot() -> DoctrineSnapshot:
                 summary = rule_text.split(". ", 1)[0]
                 canonical_rules.append(summary[:120])
 
-    # ACTIVE decisions
-    if os.path.exists(DECISION_REGISTER_PATH):
-        try:
-            with open(DECISION_REGISTER_PATH, "r", encoding="utf-8") as f:
-                reg_data = yaml.safe_load(f)
-            if isinstance(reg_data, dict):
-                for d in reg_data.get("decisions", []):
-                    if isinstance(d, dict) and d.get("status") == "ACTIVE":
-                        decision_ids.append(d.get("decision_id", ""))
-        except Exception:
-            pass
-
     # BPC count
     bpc_root = os.path.join(REPO_ROOT, "references", "bpc")
     if os.path.isdir(bpc_root):
@@ -104,7 +88,6 @@ def build_snapshot() -> DoctrineSnapshot:
         snapshot_date=now,
         governance_docs=governance_docs,
         canonical_rules=canonical_rules,
-        decision_ids=decision_ids,
         bpc_count=bpc_count,
     )
 
@@ -220,26 +203,6 @@ def detect_drift(
             ),
         ))
 
-    # Decision IDs: removals are findings
-    cur_dec = set(current.decision_ids)
-    prior_dec = set(prior.decision_ids)
-    removed_dec = prior_dec - cur_dec
-    for did in sorted(removed_dec):
-        seq += 1
-        findings.append(RecheckFinding(
-            finding_id=f"RC-000-2{seq:02d}",
-            severity=RecheckFindingSeverity.WARNING,
-            pass_id="2.4",
-            description=(
-                f"Decision {did} ACTIVE in prior snapshot but no longer ACTIVE "
-                f"(may be SUPERSEDED, RETIRED, or removed)"
-            ),
-            affected_artifacts=[did],
-            recommended_action=(
-                f"Confirm {did}'s status transition is documented in the decision register."
-            ),
-        ))
-
     # Rule count mutation
     cur_rules = len(current.canonical_rules)
     prior_rules = len(prior.canonical_rules)
@@ -249,47 +212,6 @@ def detect_drift(
     return findings, summary
 
 
-# --- Pass 2.5: Decision-register cross-check ---
-
-def check_decision_register(snapshot: DoctrineSnapshot) -> list[RecheckFinding]:
-    findings: list[RecheckFinding] = []
-    if not os.path.exists(DECISION_REGISTER_PATH):
-        findings.append(RecheckFinding(
-            finding_id="RC-000-901",
-            severity=RecheckFindingSeverity.WARNING,
-            pass_id="2.5",
-            description="Decision register missing; pass 2.5 cannot run",
-            affected_artifacts=[
-                os.path.relpath(DECISION_REGISTER_PATH, REPO_ROOT)
-            ],
-            recommended_action="A12 must land before pass 2.5 is operative",
-        ))
-        return findings
-
-    if not snapshot.decision_ids:
-        findings.append(RecheckFinding(
-            finding_id="RC-000-902",
-            severity=RecheckFindingSeverity.INFO,
-            pass_id="2.5",
-            description=(
-                "Decision register is empty; A12 Session 2 seeding pending. "
-                "Pass 2.5 RULE coverage check suppressed."
-            ),
-            affected_artifacts=[
-                os.path.relpath(DECISION_REGISTER_PATH, REPO_ROOT)
-            ],
-            recommended_action="Run A12 Session 2 to seed the register from "
-                                "project-standards RULE blocks",
-        ))
-        return findings
-
-    # Post-seeding: check that each CANONICAL rule has a Decision record.
-    # Heuristic: Decision record's decision_artifacts should contain a path
-    # that appears in the rule summary (e.g., "governance/time-model.md").
-    # This pass is lenient pre-A12-S2; tightens at A12 S2.
-    return findings
-
-
 # --- Main ---
 
 def main() -> int:
@@ -297,7 +219,7 @@ def main() -> int:
     ap.add_argument("--snapshot-only", action="store_true")
     ap.add_argument("--cross-ref", action="store_true")
     ap.add_argument("--full", action="store_true",
-                    help="run passes 2.2-2.5 (default)")
+                    help="run passes 2.2-2.4 (default)")
     ap.add_argument("--baseline-against", default=None,
                     help="path to prior snapshot for drift detection")
     ap.add_argument("--report", action="store_true",
@@ -310,7 +232,6 @@ def main() -> int:
         f"Doctrine snapshot {snapshot.snapshot_date}: "
         f"{len(snapshot.governance_docs)} CANONICAL govs · "
         f"{len(snapshot.canonical_rules)} CANONICAL rules · "
-        f"{len(snapshot.decision_ids)} ACTIVE decisions · "
         f"{snapshot.bpc_count} BPC files"
     )
 
@@ -323,7 +244,7 @@ def main() -> int:
         print(f"Snapshot written: {os.path.relpath(out_path, REPO_ROOT)}")
         return 0
 
-    # Passes 2.3-2.5
+    # Passes 2.3-2.4
     all_findings: list[RecheckFinding] = []
 
     findings_23 = check_cross_references(snapshot)
@@ -333,8 +254,6 @@ def main() -> int:
         prior = find_prior_snapshot(args.baseline_against)
         findings_24, drift_summary = detect_drift(snapshot, prior)
         all_findings.extend(findings_24)
-        findings_25 = check_decision_register(snapshot)
-        all_findings.extend(findings_25)
     else:
         drift_summary = {}
 

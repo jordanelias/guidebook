@@ -600,8 +600,8 @@ _Note: Pure restatement drift; correcting it changes no doctrine but the methodo
   _atoms:_ `LED-031`(act)
 - adopting CC BY-SA 4.0 is a DG-REVIEW example in one section and licensing is always DG-NON in another.  
   _atoms:_ `ENT-272`(act), `ENT-280`(act)
-- model-version pins that the decision protocol says are stripped on touch; effort_level 'numeric only' against an example and a regex that admit 'none'.  
-  _atoms:_ `ENT-363`(act), `ENT-311`(act), `ENT-312`(act), `ENT-308`(act), `ENT-290`(act), `ENT-304`(act), `ENT-314`(act)
+- jurisdiction-philosophy pins a model version on the jurisdiction-tracker skill; the decision protocol says any version number in routing text is stripped when touched.  
+  _atoms:_ `ENT-363`(act), `ENT-307`(act)
 - standards-registry.md kept as markdown against the owner directive that citation data in .md goes into a table; a differently named tracker.  
   _atoms:_ `ENT-361`(act), `ENT-043`(act), `ENT-410`(act)
 
