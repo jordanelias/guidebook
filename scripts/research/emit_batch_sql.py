@@ -29,9 +29,12 @@ caught, and a deletion never happens unless the operator names the table.
 """
 
 import argparse
+import atexit
 import os
+import shutil
 import sqlite3
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -107,7 +110,22 @@ def where(pk, row):
     return " AND ".join('"%s" = %s' % (c, lit(row[c])) for c in pk)
 
 
-def emit(scratch_path, canonical_path, out_path, allow_delete=()):
+def replay_state():
+    """The migration chain rebuilt (cached on its fingerprint): what a migration replays against
+    under `migrate_db.py --rebuild`. It differs from the blob wherever the blob diverged."""
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "audit"))
+    import migration_reproducibility
+    tmp = tempfile.mkdtemp()
+    atexit.register(shutil.rmtree, tmp, True)
+    path = os.path.join(tmp, "replay.db")
+    ok, msg = migration_reproducibility.rebuild(path)
+    if not ok:
+        sys.exit("ERROR: the migration chain does not rebuild, so a replay-safe capture cannot be "
+                 "derived:\n" + msg)
+    return path
+
+
+def emit(scratch_path, canonical_path, out_path, allow_delete=(), replay_path=None):
     if scratch_path == canonical_path:
         sys.exit("ERROR: --scratch and --canonical are the same file. The scratch "
                  "must be a copy; the canonical DB is never written outside migrate_db.py.")
@@ -130,8 +148,8 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=()):
                      f"{'that table' if len(not_deletable) == 1 else 'those tables'} "
                      f"(dbcore.deletable_tables). A row missing there is drift, not a "
                      f"deletion to replay.")
-    lines, n_ins, n_upd, missing = [], 0, 0, []
-    deletes = {}
+    lines, n_ins, n_upd, n_rest, missing = [], 0, 0, 0, []
+    deletes, rc = {}, None
     for table in tables:
         cols = columns(ca, table)
         if not cols:
@@ -154,9 +172,25 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=()):
         else:
             missing += [(table, k) for k in gone]
 
-        inserts, updates = [], []
+        # A new key the blob lacks but the chain holds (the blob diverged): a plain INSERT would
+        # fail at --rebuild, so it is preceded by a keyed DELETE and the pair reads "the end state
+        # is this row", replaying identically on both. Every other INSERT is untouched. Primary-key
+        # collisions only: a UNIQUE collision under a different key still fails at --rebuild, which
+        # is the right outcome while the deep check reports the divergence.
+        r_rows = {}
+        if any(k not in c_rows for k in s_rows):
+            rc = rc or ro(replay_path or replay_state())
+            if columns(rc, table) != cols:
+                sys.exit(f"ERROR: column set for {table} differs between the migration chain and "
+                         "the canonical DB, so the capture cannot be made replay-safe. The blocking "
+                         "reproducibility gate reports this divergence; fix it first.")
+            r_rows = load(rc, table, cols, pk)
+        inserts, updates, restores = [], [], 0
         for key, row in s_rows.items():                     # already PK-ordered
             if key not in c_rows:
+                if key in r_rows:
+                    inserts.append('DELETE FROM "%s" WHERE %s;' % (table, where(pk, r_rows[key])))
+                    restores += 1
                 inserts.append('INSERT INTO "%s" (%s) VALUES (%s);' % (
                     table,
                     ", ".join('"%s"' % c for c in cols),
@@ -169,11 +203,12 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=()):
                     ", ".join('"%s" = %s' % (c, lit(row[c])) for c in changed),
                     where(pk, row)))
         if inserts or updates:
-            lines.append("-- %s: %d insert(s), %d update(s)" % (table, len(inserts), len(updates)))
+            lines.append("-- %s: %d insert(s), %d update(s)" % (table, len(inserts) - restores, len(updates)))
             lines += inserts + updates
             lines.append("")
-        n_ins += len(inserts)
+        n_ins += len(inserts) - restores
         n_upd += len(updates)
+        n_rest += restores
 
     if missing:
         for table, key in missing[:10]:
@@ -207,7 +242,7 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=()):
         "-- Captured:  %s" % datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "-- Scratch:   %s" % scratch_path,
         "-- Canonical: %s (schema version %d)" % (canonical_path, cv),
-        "-- Totals:    %d insert(s), %d update(s), %d delete(s)" % (n_ins, n_upd, n_del),
+        "-- Totals:    %d insert(s), %d update(s), %d delete(s), %d restore(s)" % (n_ins, n_upd, n_del, n_rest),
         "--",
         "-- No transaction wrapper: the migration runner owns the boundary (F5).",
         "-- Feed this to: python3 scripts/emit_data_migration.py --input <this file>",
@@ -258,7 +293,7 @@ def selftest():
         # caller that imports this module and runs selftest() before emit().
         _real_writable = dbcore.writable_tables
         dbcore.writable_tables = lambda _conn: ["evidence_sources", "source_slug_links"]
-        emit(scratch, canon, out)
+        emit(scratch, canon, out, replay_path=canon)
         sql = open(out).read()
         check("insert emitted", "INSERT INTO \"evidence_sources\"" in sql)
         check("update emitted, changed column only",
@@ -290,7 +325,7 @@ def selftest():
 
         # determinism: two runs byte-identical apart from the timestamp header
         out2 = os.path.join(tmp, "batch2.sql")
-        emit(scratch, canon, out2)
+        emit(scratch, canon, out2, replay_path=canon)
         strip = lambda t: "\n".join(l for l in t.splitlines() if not l.startswith("-- Captured:"))
         check("output is deterministic", strip(sql) == strip(open(out2).read()))
 
@@ -299,7 +334,7 @@ def selftest():
         con.execute("DELETE FROM evidence_sources WHERE ref_id='REF-1'"); con.commit(); con.close()
         rc = 0
         try:
-            emit(scratch, canon, os.path.join(tmp, "x.sql"))
+            emit(scratch, canon, os.path.join(tmp, "x.sql"), replay_path=canon)
         except SystemExit as e:
             rc = 1
             check("deletion refused with a reason", "additive" in str(e), str(e))
@@ -309,7 +344,7 @@ def selftest():
         _real_deletable = dbcore.deletable_tables
         dbcore.deletable_tables = lambda _conn: {"evidence_sources"}
         out3 = os.path.join(tmp, "batch3.sql")
-        emit(scratch, canon, out3, allow_delete=["evidence_sources"])
+        emit(scratch, canon, out3, allow_delete=["evidence_sources"], replay_path=canon)
         sql3 = open(out3).read()
         check("an allowed deletion is rendered as a keyed DELETE",
               """DELETE FROM "evidence_sources" WHERE "ref_id" = 'REF-1';""" in sql3, sql3)
@@ -331,13 +366,59 @@ def selftest():
         dbcore.deletable_tables = lambda _conn: set()
         rc = 0
         try:
-            emit(scratch, canon, os.path.join(tmp, "y.sql"), allow_delete=["evidence_sources"])
+            emit(scratch, canon, os.path.join(tmp, "y.sql"), allow_delete=["evidence_sources"], replay_path=canon)
         except SystemExit as e:
             rc = 1
             check("--allow-delete on a table no writer deletes from is refused",
                   "no sanctioned writer" in str(e), str(e))
         check("--allow-delete without a deleting writer refused", rc == 1)
         dbcore.deletable_tables = _real_deletable
+
+        # a key the chain holds and the blob lacks (the blob diverged): a keyed DELETE before its
+        # INSERT, so the file replays on the blob and on the chain; a key neither holds: a plain INSERT
+        db2, chain, sc2 = (os.path.join(tmp, n) for n in ("blob.db", "chain.db", "scratch2.db"))
+        con = sqlite3.connect(db2)
+        con.execute('CREATE TABLE evidence_sources (ref_id TEXT PRIMARY KEY, title TEXT, year INT)')
+        con.execute('CREATE TABLE source_slug_links (ref_id TEXT, slug TEXT, note TEXT, PRIMARY KEY (ref_id, slug))')
+        con.execute("INSERT INTO evidence_sources VALUES ('REF-1','existing',2020)")
+        con.commit(); con.close()
+        shutil.copy(db2, chain); shutil.copy(db2, sc2)
+        for path, rows in ((chain, ["('REF-3','chain row',2019)"]),
+                           (sc2, ["('REF-2','new',2021)", "('REF-3','batch row',2022)"])):
+            con = sqlite3.connect(path)
+            for r in rows:
+                con.execute("INSERT INTO evidence_sources VALUES " + r)
+            con.commit(); con.close()
+        out4 = os.path.join(tmp, "batch4.sql")
+        emit(sc2, db2, out4, replay_path=chain)
+        sql4 = open(out4).read()
+        del3 = """DELETE FROM "evidence_sources" WHERE "ref_id" = 'REF-3';"""
+        check("a key the chain holds is preceded by its keyed DELETE",
+              del3 in sql4 and sql4.index(del3) < sql4.index("""VALUES ('REF-3'"""), sql4)
+        check("a key neither holds is a plain INSERT", sql4.count("DELETE FROM") == 1)
+        code4 = "\n".join(l for l in sql4.splitlines() if not l.strip().startswith("--"))
+        want4 = sqlite3.connect(sc2).execute("SELECT * FROM evidence_sources ORDER BY ref_id").fetchall()
+        for base in (db2, chain):
+            rp = os.path.join(tmp, "replay-" + os.path.basename(base))
+            shutil.copy(base, rp)
+            con = sqlite3.connect(rp, isolation_level=None)
+            try:
+                for stmt in [x for x in code4.split(";\n") if x.strip()]:
+                    con.execute(stmt)
+                ok = con.execute("SELECT * FROM evidence_sources ORDER BY ref_id").fetchall() == want4
+            except sqlite3.Error:
+                ok = False
+            check("the restore replays to the batch's state on the %s" % os.path.basename(base), ok)
+            con.close()
+        # a chain whose columns differ from the blob's cannot be made replay-safe: refused, not skipped
+        con = sqlite3.connect(chain)
+        con.execute("ALTER TABLE evidence_sources ADD COLUMN extra TEXT"); con.commit(); con.close()
+        try:
+            emit(sc2, db2, os.path.join(tmp, "batch5.sql"), replay_path=chain)
+            refused = False
+        except SystemExit as e:
+            refused = "differs between the migration chain" in str(e)
+        check("a chain with a different column set is refused, not silently skipped", refused)
 
     dbcore.writable_tables = _real_writable
     print("\n--- emit_batch_sql selftest ---")
