@@ -96,7 +96,7 @@ pointers:
   sessions_latest_resolves: true
   sessions_latest_research: session_2026-10-01-research-batch-23.md
   sessions_latest_research_resolves: true
-  doctrine_sha: 0f2f525
+  doctrine_sha: fa023ba
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
   - 2026-10-12-simplification-workplan.md
