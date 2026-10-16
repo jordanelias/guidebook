@@ -48,8 +48,8 @@ MIGRATIONS_DIR = Path(__file__).parent / "migrations"
 RISKY_PATTERNS = [
     (re.compile(r"\bDROP\s+TABLE\b", re.I), "DROP TABLE"),
     (re.compile(r"\bTRUNCATE\b", re.I), "TRUNCATE"),
-    (re.compile(r"\bDELETE\s+FROM\s+\w+\s*;", re.I), "DELETE without WHERE clause"),
-    (re.compile(r"\bUPDATE\s+\w+\s+SET\s+[^;]+;", re.I), "UPDATE — check WHERE clause"),
+    (re.compile(r'\bDELETE\s+FROM\s+"?\w+"?\s*;', re.I), "DELETE without WHERE clause"),
+    (re.compile(r'\bUPDATE\s+"?\w+"?\s+SET\s+[^;]+;', re.I), "UPDATE — check WHERE clause"),
 ]
 
 # ENUM_GUARDS DELETED 2026-09-21. It declared doi_resolution_outcome and
