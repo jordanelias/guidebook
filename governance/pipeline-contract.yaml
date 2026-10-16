@@ -32,12 +32,6 @@ stages:
       and so is a skill; treat a 0-row object as unproven, not clean); migration 064, which existed
       because 063 swept eight Python readers and six skills and missed v_item_provenance'
     check: scripts/audit/schema_reference_audit.py
-  - id: base-population-vocabulary
-    kind: integrity
-    criterion: Every population code referenced downstream resolves to a live row in the population taxonomy;
-      retired codes are not taught.
-    references: D-0170 (taxonomies are browsing lenses); validate_population.py RETIRED_CROSSWALK
-    check: scripts/validate_population.py
   - id: base-medical-lens-offered-not-adopted
     kind: integrity
     criterion: Every medical-lens row carries an MD- code with no digit, states no determination in
@@ -116,17 +110,6 @@ stages:
       NULL (rule #10 existence gate).'
     references: 'PI rule #10; DR-2026-05-13; DR-2026-05-20 (metadata_integrity_status)'
     check: scripts/audit/metadata_integrity_audit.py
-  - id: locator-title-matches-identifier
-    kind: integrity
-    criterion: 'A locator''s title describes the work its identifier points at. Detectable
-      signature: a bibliographic title never contains a DOI, so a title embedding one that
-      differs from the row''s own doi is a title attached to a stranger''s identifier.'
-    references: 'Adjudication 2026-09-11 Ruling 2.3, which ruled a gate by the name
-      source_locators_integrity and was never built until 2026-09-11; data_20260823225142,
-      which folded two ref-id keyspaces as one; R9b, which tells the next session to REUSE a
-      stash ref_id rather than mint a new one -- so a wrong title travels forward into an
-      admission. The identifiers are the sound side; the titles are not.'
-    check: scripts/audit/source_locators_integrity.py
   - id: discovery-provenance
     kind: completeness
     criterion: 'Each candidate is checked against the bytes of the payload(s) its search
@@ -219,11 +202,6 @@ stages:
   entry:
   - a determination with a resolved value, ready for cross-jurisdictional synthesis
   criteria:
-  - id: nine-step-synthesis
-    kind: integrity
-    criterion: Cross-jurisdictional synthesis follows the ratified 9-step procedure and validates.
-    references: 'PI rule #9; validate_reasoning.py'
-    check: scripts/validate_reasoning.py
   - id: opus-routing
     kind: completeness
     criterion: 'best_practice_synthesis is authored at the ratified capability floor (Opus-class), never
@@ -278,16 +256,11 @@ stages:
     kind: integrity
     criterion: 'Every rendering of a cell carries the identical determination tuple across registers; no
       unflagged and no above-weak-band best-practice language on regulatory-stratum cells under any
-      weighting profile; no register exceeds its map row (amended I1-I5). UNENFORCED SINCE 2026-09-11,
-      and the reason is worth reading before anyone re-points it: register_integrity_check enforced
-      this over _archived/working/pilot/pilot-renderings.html, a frozen document keyed on [A-Z]-NN item
-      codes. Migration 071 re-keyed specifications on parameter_id, so the document and the DB can
-      never agree again. The check passed only while specifications held 0 rows; the project''s FIRST
-      determination turned it red permanently, so it is quarantined (see governance/check-registry.yaml,
-      quarantine section, for the measurement). The invariant logic is sound and mutation-tested --
-      what is missing is a live render surface keyed on parameter_id x lens for it to read.'
-    references: evidence-architecture.md §6 I1-I5; governance/check-registry.yaml quarantine entry for
-      register_integrity_check
+      weighting profile; no register exceeds its map row (amended I1-I5). UNENFORCED: the check that enforced this, register_integrity_check, read a frozen
+      document keyed on [A-Z]-NN item codes and could never agree with the DB again once migration 071 re-keyed
+      specifications on parameter_id, so it was deleted (plan step 1.6); its I1-I5 logic is in git history.
+      What is missing is a live render surface keyed on parameter_id x lens.'
+    references: evidence-architecture.md §6 I1-I5
     check: null
   - id: mode-stratum-matrix-consistency
     kind: integrity

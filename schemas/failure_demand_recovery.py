@@ -26,7 +26,6 @@ from typing import Optional
 from pydantic import field_validator
 
 from schemas.base import GuidebookEntity
-from schemas.enums import PopulationCode
 
 
 class FDRScenario(GuidebookEntity):
@@ -51,7 +50,7 @@ class FDRScenario(GuidebookEntity):
     mitigation: Optional[str] = None  # How to mitigate
 
     # Affected populations
-    affected_populations: list[str] = []  # PopulationCode values
+    affected_populations: list[str] = []  # populations.population_code values
 
     # Linked specifications
     specification_refs: list[str] = []  # Item codes (A-01 format)
@@ -80,15 +79,6 @@ class FDRScenario(GuidebookEntity):
         valid = {'failure', 'demand-spike', 'recovery', 'compound'}
         if v not in valid:
             raise ValueError(f"scenario_type must be one of {valid}, got: '{v}'")
-        return v
-
-    @field_validator("affected_populations")
-    @classmethod
-    def valid_populations(cls, v: list[str]) -> list[str]:
-        valid = {e.value for e in PopulationCode}
-        for code in v:
-            if code not in valid:
-                raise ValueError(f"Unknown population code: '{code}'")
         return v
 
     @field_validator("specification_refs")

@@ -721,7 +721,7 @@ def selftest(reg):
         ("sessions/LATEST", "synthesis"),
         ("parts/x/part04.md", "render"),
         ("index.html", "render"),
-        ("scripts/validate_bpc.py", "tooling"),
+        ("scripts/db.py", "tooling"),
         (".github/workflows/ci.yml", "tooling"),
         ("requirements.txt", "tooling"),
     ]

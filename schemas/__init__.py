@@ -5,6 +5,6 @@ Pydantic v2 models defining the canonical data contracts for all
 guidebook entity types. Built bottom-up: enums → base → entity models.
 
 Usage:
-    from schemas.enums import PopulationCode, EvidenceTier
+    from schemas.enums import EvidenceTier
     from schemas.specification import Specification
 """

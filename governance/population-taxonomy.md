@@ -2,7 +2,7 @@
 **Status:** SUPERSEDED (population code set) — see banner below. Structural detail retained pending full rewrite.
 **Phase:** Stage A Phase 7 — Population taxonomy
 **Created:** 2026-04-29 19:06 UTC
-**Doctrinal basis:** workplan-orchestrator §Population Codes · project-standards (L11, L38, L41, L96, L118) · `schemas/enums.py` PopulationCode
+**Doctrinal basis:** workplan-orchestrator §Population Codes · project-standards (L11, L38, L41, L96, L118)
 
 ---
 
@@ -20,8 +20,8 @@
 > `NDV` is a **peer view, not a parent** of AUT/ADHD. Life stage (SEN older adults, CHD children)
 > is an **orthogonal modifier** (`life_stage_modifiers` table), not a population. `ALL` and `MH`
 > are retained. Access needs (Axis 1) are the tagging axis — see the access-needs layer
-> (migration 031) crosswalked to ICF. The single source of truth remains `schemas/enums.py`
-> `PopulationCode`. Sections below describe the retired scheme and await a full rewrite.
+> (migration 031) crosswalked to ICF. The single source of truth is the `populations` table.
+> Sections below describe the retired scheme and await a full rewrite.
 
 ## 1. Taxonomy structure
 
@@ -148,55 +148,17 @@ Cross-population conflicts are searched by **conflict domain** (12 environmental
 
 ---
 
-## 4. Validator specification
+## 5. Where the codes live
 
-### 4.1 validate_population.py scope
-
-The validator checks population codes across the corpus:
-
-| Check | Severity | Description |
-|---|---|---|
-| Valid code | ERROR | Every population code in BPC files, specifications, search logs, and connections resolves to `PopulationCode` enum |
-| BAR containment | ERROR | BAR code appears only in files under `references/bpc/supplementary/` or paths containing `supp` |
-| CHD/LPA/EXH containment | ERROR | Supplementary codes appear only in supplementary file paths |
-| VIS/DEAF compound | ERROR | `VIS/DEAF` as a single code is rejected |
-| ALL exclusivity | ERROR | `ALL` never appears alongside specific population codes in the same specification's `populations` list |
-| One slug one population | WARNING | Each BPC slug's population field contains exactly one code |
-| IntD rejection | ERROR | `IntD` does not appear as a population code in specifications, BPC entries, or matrix columns |
-| Sub-code parent consistency | WARNING | Sub-code value ranges fall within parent code ranges (where both exist for the same parameter) |
-| Co-occurrence notation | WARNING | `+` used for intra-individual co-occurrence; `/` used for multi-population spaces; sub-code `/` distinguishable from multi-population `/` by context |
-
-### 4.2 Input sources
-
-The validator scans:
-
-1. `data/specifications/*.yaml` — `populations` field
-2. `references/bpc/**/*.md` — YAML front matter `population` field
-3. `references/search-logs/**/*.md` — `population` field
-4. `references/connections/**/*.md` — population references in connection text
-5. `schemas/enums.py` — canonical reference (not validated against; it IS the source of truth)
-
-### 4.3 Exit codes
-
-- 0 = all checks pass
-- 1 = one or more errors found
-- 2 = configuration error (missing files, unparseable YAML)
-
----
-
-## 5. Enum alignment
-
-The `PopulationCode` enum in `schemas/enums.py` is the single source of truth for valid population codes. This governance document does not add or remove codes — it documents the rules governing those codes.
+The `populations` table (`population_code`) is the single source of truth for valid population codes; the `PopulationCode` enum that mirrored it in `schemas/enums.py` was retired in plan step 1.6 (RULINGS R44), because a copy kept beside the table only disagrees with it. This governance document does not add or remove codes — it documents the rules governing those codes.
 
 If a new population code is needed (e.g., a new sub-code for an emerging evidence base), the process is:
 
 1. Proposal with evidence basis (what functional profile does this code capture that is not covered by existing codes?)
 2. Decision via project-standards RULE
-3. Addition to `PopulationCode` enum
+3. Addition of a `populations` row
 4. Update to this governance document
 5. Update to workplan-orchestrator §Population Codes
-
-Changes to the enum without governance documentation are validator errors at the next doctrine-recheck (A13).
 
 ---
 
@@ -207,8 +169,8 @@ Changes to the enum without governance documentation are validator errors at the
 | Created | 2026-04-29 19:06 UTC |
 | Phase | Stage A Phase 7 (Population taxonomy) — Session 1 |
 | Status | CANONICAL |
-| Consolidates | workplan-orchestrator §Population Codes, project-standards L11/L38/L41/L96/L118, PopulationCode enum |
-| Forward dependencies | validate_population.py (this session), A13 doctrine-recheck |
+| Consolidates | workplan-orchestrator §Population Codes, project-standards L11/L38/L41/L96/L118 |
+| Forward dependencies | A13 doctrine-recheck |
 
 ---
 

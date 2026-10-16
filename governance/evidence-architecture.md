@@ -177,7 +177,7 @@ with one language cell per register. Illustrative rows (the full map ships with 
 
 Note the third row: the policymaker register — the one most tempted by convergence — carries the *strongest* anti-laundering language, not the weakest. Emphasis re-ranking (the `weighting_profile` mechanism, `workplan/best-practices-assessment-system.md` §5) chooses **which cells and columns are foregrounded** per audience; it can never move a rendering to a different row of this map.
 
-**The five integrity invariants** `[NEW — DR-gated: integrity mechanism]` — mechanically checked by `scripts/audit/register_integrity_check.py`, which must be demonstrated firing on injected violations before its passes count (§10):
+**The five integrity invariants** `[NEW — DR-gated: integrity mechanism]` — no mechanical check enforces them since `scripts/audit/register_integrity_check.py` was deleted (plan step 1.6, RULINGS R4); a check that comes back must be demonstrated firing on injected violations before its passes count (§10):
 
 - **I1 — Tuple identity.** Every rendering of a cell, in every register, carries the identical determination tuple. Different words, same facts.
 - **I2 — Floor-anchor pairing.** Any rendering that shows a regulatory floor value alongside an evidence-anchored value must show both and label which is which; wherever an evidence-anchored value exists for the cell, the policymaker register must render the delta, never the floor alone. On a `regulatory_stratum_only` cell no anchored value (hence no delta) exists: the policymaker register renders the weak-band value under amended I3's mandatory flag and caveat, with the jurisdiction spread visible.
@@ -218,7 +218,7 @@ Three vocabularies currently name the design modes, and one of them collides cat
 **Mechanical checks (each must be shown firing on injected bad data before its pass counts):**
 1. *Matrix–code consistency:* the sweep below regenerates §3's parenthesized outcomes from `schemas/directness.py` for all grain × scale combinations; any diff fails.
 2. *Determinism:* the pilot engine run twice over the same evidence set yields byte-identical `derivation_sha` values.
-3. *Invariants I1–I5:* `scripts/audit/register_integrity_check.py` over rendered output.
+3. *Invariants I1–I5:* over rendered output; unenforced (the check was deleted, plan step 1.6).
 4. *State-machine integrity:* `scripts/validate_evidence_state.py` (governing_refs non-empty; `code_floor_only`/`regulatory_stratum_only` never `stated`; Tier-3-alone threshold).
 
 ```python
