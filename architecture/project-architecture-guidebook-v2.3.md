@@ -19,7 +19,7 @@ Three runtime layers govern Claude's behavior. Outer wins by default; layers ove
 | Project instructions (PI) | `governance/project-instructions-v*.md` | This project only |
 | Skills + hooks + CI | `skills/`, `.github/workflows/`, `scripts/audit/` | Execution mechanics |
 
-PI overrides preferences only via explicit clause naming the rule and scope. Skills override PI on mechanics; PI governs whether a skill runs and under what conditions. Code-enforced checks (hooks, CI) trump text rules for the matching invariant.
+PI overrides preferences only via explicit clause naming the rule and scope. Skills override PI on mechanics; PI governs whether a skill runs and under what conditions. Code-enforced checks (hooks, CI) trump text rules for the matching invariant, unless a live owner ruling has superseded the invariant the check encodes (CLAUDE.md rule 0); then the check is what changes.
 
 A cross-cutting **data layer** sits beneath all three: `data/guidebook.db` (canonical SQLite), schemas in `schemas/`, migrations in `scripts/migrations/`. The website and all derived artifacts read from this layer. Direct writes that bypass migrations are prohibited; CI enforces reproducibility.
 </layer_model>
@@ -107,7 +107,7 @@ When bootstrap grows past these budgets, extract the heaviest portion (typically
 | 1 | Preference says X, PI silent | Preference applies |
 | 2 | PI explicitly overrides a preference with named clause | PI applies |
 | 3 | PI rule and skill content conflict on procedure | Skill wins on mechanics; PI wins on whether the skill runs |
-| 4 | Text rule and CI workflow disagree on the same check | CI wins; record drift as `[ASSUMPTION]` in the next session record |
+| 4 | Text rule and CI workflow disagree on the same check | CI wins; record drift as `[ASSUMPTION]` in the next session record — unless an owner ruling has superseded the invariant, when the check changes (CLAUDE.md rule 0) |
 | 5 | Audit script (level 2) and CI workflow (level 4) check the same thing | CI is authoritative; the level-2 script remains for local debugging |
 | 6 | Two skills overlap on the same trigger | `[GAP]` in `skill-registry.md` — disambiguate explicitly |
 | 7 | Architecture spec and PI conflict | Architecture wins on architectural rules (layer ownership, enforcement spectrum, where things belong); PI wins on project specifics (skill assignments, terminology, identity) |

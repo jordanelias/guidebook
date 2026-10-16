@@ -3,7 +3,7 @@ description: Open a session correctly — set CURRENT before the first Bash call
 argument-hint: "[short-slug, defaults to the branch name]"
 ---
 
-Do this FIRST, before any other work. `scratchpad/CURRENT` moves at OPEN, and the
+Do this before the first Bash call of a batch (CLAUDE.md §1); `/orient` is how any session starts. `scratchpad/CURRENT` moves at OPEN, and the
 `PostToolUse` hook writes every Bash, WebSearch and WebFetch call to whatever it names
 (the web lines are the ledger `search_log_completeness` reads). Leave it stale and
 this session's commands append to a merged PR's record — measured twice in this
@@ -31,15 +31,8 @@ echo "$STEM" > scratchpad/CURRENT
 cat scratchpad/CURRENT
 ```
 
-Rename the folder with `git mv` once the PR number exists, per the trap CLAUDE.md
-section 7 names — but leave `scratchpad/CURRENT`'s content as the DB stem; do not
-rename it to match. The hook's fallback (matching a `session_`/`pr-`-prefixed folder
-by this harness's own last-logged command) covers exactly this gap, so a rename that
-keeps one of those two prefixes stays routed correctly with no direct-match window at
-all. What breaks routing is changing `CURRENT` to a value that names NEITHER the
-current folder NOR any `session_`/`pr-`-prefixed folder that exists — always know
-which of the two you are changing, and if it is `CURRENT`, create or rename the
-matching folder in the same breath.
+Never rename the folder or change `CURRENT` on its own: change both in one action
+(CLAUDE.md section 7), so the hook never meets a `CURRENT` that names no folder.
 
 **Record the session kind (RC6).** Say, in your first status update, whether this is a
 **research session** (writes rows only — evidence, judgment, synthesis) or a **tooling

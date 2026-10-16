@@ -100,7 +100,7 @@ A BPC entry is PROVISIONAL until the Co-1 pass covers ≥9 languages.
 
 `references/standards-registry.md` tracks the currency of all cited standards. Each jurisdiction-standard pair has a YAML entry with status: CURRENT, UPDATED, SUPERSEDED, WITHDRAWN.
 
-The jurisdiction-tracker skill (Sonnet 4.6, run once per edition) performs the currency check via web search of issuing bodies. The output validator (§5) ensures the entries are well-formed.
+The jurisdiction-tracker skill (run once per edition) performs the currency check via web search of issuing bodies. The output validator (§5) ensures the entries are well-formed.
 
 ### 3.2 Standard supersession handling
 

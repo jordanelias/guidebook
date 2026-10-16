@@ -11,8 +11,9 @@ python3 scripts/audit/adversarial_pass_audit.py --session "$(cat scratchpad/CURR
 python3 scripts/audit/search_log_completeness.py --session "$(cat scratchpad/CURRENT)"
 ```
 
-The second line is RC4: it FAILs if this session wrote to any of the 2026-08-19 RULE's
-research tables and no closed adversarial pass names it. Run it on `CURRENT`, not via
+The second line is RC4 (advisory): it FAILs if this session wrote to any of the 2026-08-19
+RULE's research tables and no closed adversarial pass names it. That FAIL is not a reason to
+close pass 1; LED-192 holds it open (`/adversarial` step 3). Run it on `CURRENT`, not via
 `run_checks.py --battery research` — that battery's other session-scoped checks
 (`research_dod_session`, `author_fidelity`, `citation_mining_session`) are still pointed
 at `LATEST-RESEARCH`, which names the PREVIOUS session for the whole life of this one.
@@ -26,7 +27,9 @@ is post hoc and must say so. Its REPORTED lines (unpersisted WebFetch URLs, bare
 hosts, and web rows logged with no web line on the ledger — a hook that may not have
 fired) belong in the session record; they do not fail, and a NOTHING-IN-SCOPE verdict does
 not clear them. It witnesses WebSearch and WebFetch only: a search run through an MCP tool
-(Consensus, PubMed, Scholar Gateway) leaves no line, so a PASS says nothing about those.
+(Consensus, PubMed, Scholar Gateway) leaves no line, so a PASS says nothing about those. R8 still
+owes each of them a `log-search` row, and `record_file` its result (DR-2026-09-26 §2.2b); the
+gate can check neither.
 
 **The session id is the bare stem in the DB and carries `.md` in pointer files.**
 Wrong form scopes the gate to zero rows and every rule reports PASS over an empty
@@ -45,3 +48,6 @@ python3 scripts/audit/research_batch_dod.py --all
 Then commit the scratchpad and the agent transcripts (`scripts/preserve_transcripts.py`)
 — a read-only subagent writes nothing at all, so its entire workings live in
 ephemeral container storage until they are copied out.
+
+Then gate the diff once, when the batch is ready to open a PR: `scripts/preflight.sh`
+(CLAUDE.md §1) — not `run_checks.py --all`.

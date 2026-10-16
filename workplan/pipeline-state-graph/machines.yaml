@@ -438,14 +438,14 @@ machines:
     guards: ["ensure-deps exits 0 on failure by design, so the install is checked before any red result is believed"]
     evidence:
       - {file: CLAUDE.md, needle: "exits 0 on failure by design"}
-      - {file: .claude/commands/orient.md, needle: "before doing anything else"}
+      - {file: .claude/commands/orient.md, needle: "Orient yourself here to start"}
   - id: M10.t2
     from: "ORIENTED"
     to: "SESSION-OPEN"
     via: "/session-open (creates the batch folder and sets scratchpad/CURRENT)"
     guards: ["CURRENT holds the DB session stem; the scratchpad folder is named identically"]
     evidence:
-      - {file: .claude/commands/session-open.md, needle: "Do this FIRST"}
+      - {file: .claude/commands/session-open.md, needle: "Do this before the first Bash call of a batch"}
   - id: M10.t3
     from: "SESSION-OPEN"
     to: "WORKING"

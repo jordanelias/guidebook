@@ -359,33 +359,15 @@ conflicts:
   resolver: OWNER
   confidence: medium
 
-- id: C-037
-  class: DOC-DOC
-  severity: S2
-  title: "Process contradictions inside the commands, agents and rules"
-  atoms: [PRC-169, LED-192, PRC-259, PRC-184, PRC-203, PRC-207, PRC-214, PRC-216, PRC-160, PRC-195, PRC-182, PRC-176, PRC-220]
-  sides:
-    - {atoms: [PRC-169, LED-192], says: "RC4 fails unless an adversarial pass is closed; /adversarial says passes 1 and 2 are never to be closed; the owner ruled not to chase pass 1 closed."}
-    - {atoms: [PRC-259], says: "the adversarial closing block carries a hand-written count of lenses ('eleven'); close-adversarial-pass itself defines coverage as a finding row for every lens in the column's CHECK (M08.t3), so the count is the only drift."}
-    - {atoms: [PRC-184, PRC-203], says: "/orient and /session-open each claim to be the first thing run."}
-    - {atoms: [PRC-207, PRC-214, PRC-216], says: "the scratchpad folder must be named identically to CURRENT, yet it is to be renamed after the PR number exists while CURRENT keeps the DB stem."}
-    - {atoms: [PRC-160, PRC-182], says: "/batch-done is 'the only definition of finished' but does not list the gate CLAUDE.md section 1 prescribes; a corpus-wide --all reflex is warned against elsewhere."}
-    - {atoms: [PRC-176], says: "invariant I5 leaves MCP-tool searches unwitnessed while R8 requires every search be logged."}
-  direction: "CLAUDE.md rule 0 does not decide between two process documents; these are for the owner or for the next session that touches the commands."
-  resolver: OWNER
-  confidence: medium
 
 - id: C-038
   class: DOC-DOC
   severity: S3
   title: "Hand-written counts and enumerations that disagree with each other or with the schema"
-  atoms: [ENT-338, ENT-360, ENT-418, ENT-402, ENT-039, ENT-036, LED-031, ENT-363, ENT-307, ENT-272, ENT-280, ENT-361, ENT-043, ENT-410]
+  atoms: [ENT-338, ENT-418, ENT-402, LED-031, ENT-361, ENT-043, ENT-410]
   sides:
-    - {atoms: [ENT-338, ENT-360, ENT-418, ENT-402], says: "'24 countries plus 2 meta', a 24/46/49 jurisdiction structure; the section table has 25 country rows."}
-    - {atoms: [ENT-036, ENT-039], says: "EvidenceType has 7 members in one block and 9 in the audit."}
+    - {atoms: [ENT-338, ENT-418, ENT-402], says: "'24 countries plus 2 meta', a 24/46/49 jurisdiction structure; the section table has 25 country rows."}
     - {atoms: [LED-031], says: "all 14 languages searched on every run; the research skill obliges 19; jurisdiction scope later limited to Buckets 1-2 (LED-193)."}
-    - {atoms: [ENT-272, ENT-280], says: "adopting CC BY-SA 4.0 is a DG-REVIEW example in one section and licensing is always DG-NON in another."}
-    - {atoms: [ENT-363, ENT-307], says: "jurisdiction-philosophy pins a model version on the jurisdiction-tracker skill; the decision protocol says any version number in routing text is stripped when touched."}
     - {atoms: [ENT-361, ENT-043, ENT-410], says: "standards-registry.md kept as markdown against the owner directive that citation data in .md goes into a table; a differently named tracker."}
   direction: "CLAUDE.md rule 7a: every figure is a command. These sentences are stale or internally inconsistent; none is an owner statement."
   resolver: AGENT
@@ -505,17 +487,6 @@ conflicts:
   resolver: OWNER
   confidence: medium
 
-- id: C-047
-  class: DOC-DOC
-  severity: S2
-  title: "'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record'"
-  atoms: [ENT-465, CLM-000, CLM-001, CLM-019]
-  sides:
-    - {atoms: [ENT-465], says: "architecture v2.3 (2026-04-30): code-enforced checks (hooks, CI) trump text rules for the matching invariant."}
-    - {atoms: [CLM-000, CLM-001], says: "CLAUDE.md rule 0: a live owner statement supersedes every prior ratified record it touches, on contact; record the supersession, never weigh the ruling against the paperwork."}
-  direction: "Both are agent-maintained process texts (rule 0 cites an owner ruling as its proof, not as its source), so this is recency, not rank: rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule."
-  resolver: AGENT
-  confidence: medium
 
 - id: C-048
   class: RULING-MECHANISM

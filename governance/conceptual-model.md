@@ -146,18 +146,9 @@ Time-Version (ENT-19) ──── attached_to ──── all mutable entities
 Per T-03 resolution: `tier` + `evidence_type` taxonomy.
 
 ```python
-class EvidenceType(str, Enum):
-    CLINICAL = "clinical"       # OT intervention-tested
-    CO1 = "co1"                 # Lived experience / participatory
-    CO2 = "co2"                 # OT professional body CPGs
-    SR_META = "sr_meta"         # Systematic reviews / meta-analyses
-    STANDARD_EB = "standard_eb" # International standards with evidence basis
-    NATIONAL_FW = "national_fw" # National beyond-code frameworks
-    CODE = "code"               # Statutory codes
-
 # On EvidenceSource:
 tier: int           # 1–6
-evidence_type: EvidenceType
+evidence_type: EvidenceType   # members: schemas/enums.py
 ```
 
 **Schema impact:** ~~The `EvidenceTierRange` model in schemas/base.py (built in infrastructure pour) uses `floor/ceiling/co1_present`. This needs reconciliation with T-03.~~ **RESOLVED (A3 Session 2, 2026-04-26):** EvidenceTier enum simplified to 1–6 (Co-1/Co-2 removed as tier values). EvidenceTierRange.co1_present replaced with evidence_types_present: list[str]. EvidenceType enum added to enums.py. EvidenceSource schema built with tier + evidence_type per T-03. Converter handles all observed tier formats (531/531 pass). Cross-system check: evidence type distribution aligns with tier counts (clinical+co1=91=tier1 ✓).
@@ -182,7 +173,7 @@ evidence_type: EvidenceType
 | Component | Status |
 |---|---|
 | schemas/enums.py — EvidenceTier (1–6 per T-03) | ✓ |
-| schemas/enums.py — EvidenceType (9 values per T-03) | ✓ |
+| schemas/enums.py — EvidenceType (per T-03) | ✓ |
 | schemas/enums.py — JurisdictionCode (count the members, never quote them: `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"`) | ✓ |
 | schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
 | schemas/evidence_source.py (531 records) | ✓ |

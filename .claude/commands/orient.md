@@ -2,7 +2,8 @@
 description: Orient in the repository from live state before starting work — derived, never quoted
 ---
 
-Orient yourself here before doing anything else. **Derive every figure below; do
+Orient yourself here to start (CLAUDE.md §1). If this session opens a research batch, run
+`/session-open` before the first Bash call below. **Derive every figure below; do
 not quote one from a document, this file included** (CLAUDE.md rule 7a).
 
 Run these, and read what they say rather than what you expect:
