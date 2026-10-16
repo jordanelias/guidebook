@@ -66,11 +66,13 @@ judged_on: '2026-09-17'
 # falsifier (`pipeline_walk.py --check`, since deleted) as soon as the migration was applied.
 #
 # 2026-10-09, tooling T1 (scan contract and vocabulary lifecycle, migrations 103-105):
-# `source_scans` as EVIDENCE -- a record of what was read of an admitted source, beside
-# that source's extraction rows (CLAUDE.md §3: evidence holds "what was admitted, its
-# identity, verification and extraction"); `extraction_follow_ups` as JUDGMENT -- whether
-# an extraction should be re-checked is a judgement about its soundness, the stage
-# CLAUDE.md §3 defines as "whether an extraction is sound and how it weighs".
+# `source_scans` as EVIDENCE -- a record of what was read of an admitted source; `extraction_follow_ups`
+# as JUDGMENT -- whether an extraction should be re-checked is a judgement about its soundness, a
+# judgment-stage act (CLAUDE.md §3).
+#
+# 2026-10-14 (RULINGS R32): `source_value_extractions` and `extraction_relations` moved to JUDGMENT, where
+# governance/pipeline-contract.yaml and the owner's words (LED-106, LED-108) place them; their `disputed:`
+# entries are deleted with the dispute.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -99,7 +101,7 @@ tables:
   evidence_sources: evidence
   external_root_registry: evidence
   extraction_follow_ups: judgment
-  extraction_relations: evidence
+  extraction_relations: judgment
   gap_mining: research
   gaps: synthesis
   icf_medical_map: base
@@ -121,7 +123,7 @@ tables:
   source_locators: research
   source_scans: evidence
   source_slug_links: evidence
-  source_value_extractions: evidence
+  source_value_extractions: judgment
   specification_extraction_links: specification
   specification_source_links: specification
   specifications: specification
@@ -139,10 +141,6 @@ tables:
 # contract is what gets corrected. Until then this file is the only record, which
 # is itself a reason to resolve it in a DR rather than here.
 disputed:
-  extraction_relations: >-
-    Inherits its parent exactly: both ends are FKs into source_value_extractions, so it cann
-    ot sit in a different stage from it. Disputed for the same reason and by the same docume
-    nts.
   gaps: >-
     SYNTHESIS IS THE ONE STAGE WITH NO SUPPORT, and it is where this map put it. The contrac
     t makes "an OPEN gap" the RESEARCH stage's entry; most live rows were written by researc
@@ -151,9 +149,3 @@ disputed:
     es synthesis as weighing, convergence and cross-slug findings, which a gap is none of. a
     ssess_cell also writes it at specification. The honest answer is a cross-stage register 
     with no single home.
-  source_value_extractions: >-
-    CLAUDE.md §3 puts extraction at EVIDENCE ("what was admitted, its identity, verification
-     and extraction"). governance/pipeline-contract.yaml calls the same rows JUDGMENT under 
-    its `- id: judgment` stage -- "One evidence source may provide many judgment rows" -- an
-    d assess_cell.py:78 calls it "the JUDGMENT item (D-0168)". Four contract criteria naming
-     it sit under judgment. Rendered at evidence; the dispute is real and open.
