@@ -13,7 +13,7 @@ v1 (2026-04-08, DRAFT, never lead-reviewed) placed systematic reviews/meta-analy
 
 ## 1. Purpose
 
-This document establishes the formal relationship between the project's seven-tier evidence hierarchy and three established health-evidence grading frameworks: GRADE, JBI, and SIGN. It serves three functions:
+This document establishes the formal relationship between the project's evidence hierarchy and three established health-evidence grading frameworks: GRADE, JBI, and SIGN. It serves three functions:
 
 1. **Transparency.** External reviewers can see how the project's evidence tiers correspond to — and deliberately depart from — frameworks they already know.
 2. **Justification.** The placement of lived experience (Co-1) as co-primary with primary research (Tier 1) is a deliberate, argued methodological decision (§6), not an oversight.

@@ -251,7 +251,7 @@ ward are the same tension in plan and in hardware.
 
 **Stance.** Prescribe **capability floors, not conduct** — what must be *possible*,
 never what people must do. The mission already holds the load-bearing pieces: the
-guidebook "teaches professional judgment, it does not substitute for it" (#7);
+guidebook "does not substitute for professional judgment" (#7);
 Person Mode's answer "may fall outside" the population range — "that population
 neither bounds nor defines the person" (#4); the posture DR declines to bind.
 Extended by this register: provisions that trade agency for safety are flagged as

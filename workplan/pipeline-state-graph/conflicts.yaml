@@ -22,45 +22,8 @@
 conflicts:
 
 # ---------------------------------------------------------------- A. doctrine and evidence model
-- id: C-001
-  class: RULING-DOC
-  severity: S2
-  title: "Does the guidebook teach professional judgment?"
-  atoms: [MIS-02, LED-024, MIS-08, POS-04]
-  sides:
-    - {atoms: [MIS-02], says: "mission-and-epistemics.md: 'The guidebook teaches professional judgment; it does not substitute for it.'"}
-    - {atoms: [LED-024], says: "ledger 2026-04-26 19:25: the guidebook 'does not teach professional judgment' and confers no competence."}
-    - {atoms: [MIS-08], says: "the mission file's header says CANONICAL/locked 2026-04-26 05:29 while its Status section says 'not yet operative'."}
-  direction: "The ledger entry (a ratified RULE block recording the owner's ruling, LED-024) is later than the header lock (19:25 vs 05:29), so by rule 0 it supersedes the mission sentence on contact; the mission text is therefore stale. POS-04 records that the mission file is already owed an edit (adjudicate-vs-dictate)."
-  resolver: OWNER
-  confidence: high
-  note: "Mission text is doctrine; an agent may not edit it without owner sign-off (CLAUDE.md section 8)."
 
-- id: C-002
-  class: RULING-DOC
-  severity: S2
-  title: "Two markers or three"
-  atoms: [MIS-03, LED-015, LED-016, LED-017, CLM-038]
-  sides:
-    - {atoms: [MIS-03], says: "mission file: every specification carries one of two markers, filled or empty."}
-    - {atoms: [LED-015, LED-016, LED-017, CLM-038], says: "three markers: filled (confirmed), half (policy/standards only), empty (grey/thin); unmarked is an error."}
-  direction: "Ledger records the two-marker rule as reconciled 2026-07-13 (LED-015 AMENDED). Three markers govern; the mission file is stale."
-  resolver: OWNER
-  confidence: high
 
-- id: C-003
-  class: DOC-DOC
-  severity: S3
-  title: "'Anchors outright' (band) versus 'T3 alone is provisional' (state): one word, two axes"
-  atoms: [MIS-04, LED-010, PIP-03, EVI-052, EVI-306, EVI-325, EVI-128]
-  sides:
-    - {atoms: [EVI-052], says: "tier-system section 8 (owner directive 2026-07-20, DR-2026-07-20 weighted-strength anchor model): T3-clinical sits in the Full band, which 'anchors a best-practice claim outright'."}
-    - {atoms: [LED-010, PIP-03, EVI-306, EVI-325, EVI-128], says: "T3 alone is not enough for `stated`: T3-clinical alone is provisional (tier3-stated-threshold DR, 2026-07-12; methodology 2.2; contract)."}
-    - {atoms: [MIS-04], says: "the mission file's rule: stated = derived from >= Tier 3, Co-1 or Co-2 evidence."}
-  probe: P-ENG-T3
-  direction: "Not a contradiction once band and state are separated: the 2026-07-20 directive weights the STRENGTH of a claim (the marker band), and the Option A DR (2026-07-21, line 'State machine unchanged') leaves the state machine alone, so T3-clinical alone is marked at full strength and held at `provisional`. The engine implements exactly that (P-ENG-T3 requires the documented comment and the assignment that immediately follows it; a reworded comment would turn it red without the logic having changed). 'Anchors' is overloaded across the two axes in EVI-052 and in MIS-04, which reads as if tier alone decided `stated`. A wording repair, not a ruling."
-  resolver: OWNER
-  confidence: medium
 
 - id: C-004
   class: RULING-MECHANISM
@@ -88,62 +51,9 @@ conflicts:
   resolver: OWNER
   confidence: medium
 
-- id: C-006
-  class: DOC-DOC
-  severity: S3
-  title: "Seven tiers, or T1-T6 plus two tracks"
-  atoms: [EVI-002, EVI-085, EVI-269, PRC-100, ENT-392, EVI-003, EVI-284, EVI-010, EVI-275, EVI-076, EVI-069, EVI-070]
-  sides:
-    - {atoms: [EVI-002], says: "tier-system: T1-T6 plus Co-1 and Co-2 tracks; the schema column `tier` is an integer 1-6."}
-    - {atoms: [EVI-085, EVI-269, PRC-100, ENT-392], says: "evidence-architecture, evidence-methodology, the process rules and legal-regulatory speak of 'seven tiers'."}
-    - {atoms: [EVI-003, EVI-284], says: "tier number is a claim-type, not quality (tier-system) vs 'higher numbers = weaker evidence' (methodology 1.2)."}
-    - {atoms: [EVI-010, EVI-275], says: "T2 is described as 'below international standards' though standards are T4, which rank lower."}
-    - {atoms: [EVI-076, EVI-069, EVI-070], says: "the practice (Co-3) encoding sits 'below Co-1/Co-2' yet a firm POE can be placed at T1, which ranks alongside Co-1."}
-  direction: "Tier definitions are doctrine; no later owner statement decides between the readings."
-  resolver: OWNER
-  confidence: high
 
-- id: C-007
-  class: DOC-DOC
-  severity: S2
-  title: "Cell-state transition table contradicts itself"
-  atoms: [EVI-361, EVI-364, EVI-352, EVI-322, EVI-323]
-  sides:
-    - {atoms: [EVI-361], says: "transition table: any -> not_applicable."}
-    - {atoms: [EVI-364], says: "the same section lists stated -> not_applicable among transitions that do not occur."}
-    - {atoms: [EVI-352], says: "methodology 2.6 cites 'section 2.2 condition (3)' for Co-2; after the G7 insertion Co-2 is condition 4 (EVI-322, EVI-323)."}
-  probe: P-ENG-STATE
-  direction: "The engine recomputes state per run and stores no from-state, so the table is not enforced as a transition relation; see machine M05."
-  resolver: OWNER
-  confidence: medium
 
-- id: C-008
-  class: RULING-DOC
-  severity: S2
-  title: "Cell key still written (parameter x population) in the methodology"
-  atoms: [EVI-171, EVI-314, EVI-351, EVI-374, EVI-239, EVI-235, EVI-388, EVI-415, EVI-407]
-  sides:
-    - {atoms: [EVI-171], says: "evidence-architecture: a cell is parameter_id x at least one lens column."}
-    - {atoms: [EVI-314, EVI-351, EVI-374], says: "evidence-methodology 2.1, 2.5, 3.2 still say (parameter x population), with population-specific rationales."}
-    - {atoms: [EVI-239, EVI-235], says: "architecture reserves 'Tier N' for the evidence ladder and forbids 'Tier 1/Tier 2' as design modes."}
-    - {atoms: [EVI-388, EVI-415, EVI-407], says: "methodology 3.2-4.3 still use 'Tier 1 design range', 'routes to Tier 2', 'applies at Tier 1 only'."}
-  direction: "Owner rulings 2026-08-26 (subject) and 2026-08-28/2026-09-01 (lens) are later than the methodology text; the methodology is stale."
-  resolver: AGENT
-  confidence: high
-  note: "Pure restatement drift; correcting it changes no doctrine but the methodology is a ratified document, so list it for the owner's merge."
 
-- id: C-009
-  class: DOC-DOC
-  severity: S2
-  title: "Source-type to tier mapping: national frameworks and standards"
-  atoms: [EVI-301, EVI-302, EVI-303, EVI-280]
-  sides:
-    - {atoms: [EVI-301, EVI-302], says: "methodology 1.5: a source's tier follows from its type; Tier 2 organizational guidelines may carry national_fw."}
-    - {atoms: [EVI-303, EVI-280], says: "section 1.1 table: national_fw is Tier 5; standard_eb spans T2/T4/T5, occasionally T3 (architecture G6)."}
-  probe: P-TIER-DERIVE
-  direction: "UNSETTLED in prose. The ratified table schemas/tier_derivation.py keys tier on (evidence_type, scope); the adjudication_integrity check that would compare stored tier to it is QUARANTINED (see C-031)."
-  resolver: OWNER
-  confidence: medium
 
 # ---------------------------------------------------------------- B. pipeline structure and stage assignment
 - id: C-010

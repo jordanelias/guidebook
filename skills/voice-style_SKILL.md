@@ -274,7 +274,7 @@ Use Pattern B for: dense matrix tables where per-cell location would degrade inf
 
 ### §8.3 Co-1 Voice Patterns
 
-Co-1 evidence (lived experience and participatory design research; co-primary with Tier 1 OT clinical research per the Seven-Tier Evidence Hierarchy) requires its own voice patterns within the §8.1 tier-appropriate construction framework. The four canonical patterns are specified in `governance/co1-operational.md` §5; summary below.
+Co-1 evidence (lived experience and participatory design research; co-primary with Tier 1 OT clinical research per the Evidence Hierarchy) requires its own voice patterns within the §8.1 tier-appropriate construction framework. The four canonical patterns are specified in `governance/co1-operational.md` §5; summary below.
 
 **Pattern Co-1-A — Single Co-1 source citation.** Use when one Co-1 source supports the claim.
 
@@ -531,4 +531,4 @@ Where a passage reasons about a code, standard, bylaw, or definition:
 - **Advocacy identity** — Core Doctrine 2026-04-26 19:25. The guidebook is an advocacy project, not an authority. See `references/project-standards.md`.
 - **Tier-appropriate specification language** — Core Doctrine 2026-04-26 19:25. Blanket "shall be" retired. See §8.1 above and `references/project-standards.md`.
 - **Design Modes** — Core Doctrine pre-session. Universal Mode / Population Mode / Person Mode with DAR mandatory at every mode (mandate located in this guidebook).
-- **Seven-Tier Evidence Hierarchy** — Core Doctrine 2026-03-19; elevated 2026-04-24. Tier 1 + Co-1 co-primary.
+- **Evidence Hierarchy** — Core Doctrine 2026-03-19; elevated 2026-04-24. Tier 1 + Co-1 co-primary.
