@@ -1,1 +1,0 @@
-../../../skills/markdown-formatter_SKILL.md

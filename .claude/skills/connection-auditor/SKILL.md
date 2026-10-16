@@ -1,1 +1,0 @@
-../../../skills/connection-auditor_SKILL.md
