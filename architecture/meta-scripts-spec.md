@@ -82,10 +82,6 @@ opened read-write.
    (A E F G H D B I C K T V M J S O L) across **130 files** under `references/`, `working/` and
    `index.html`. See L4.2.
 
-6. **`migration_reproducibility.EXEMPT_TABLES` holds two names, not one.** `pipeline_runs` (the one
-   CLAUDE.md §2 rule 3 names) **and `evidence_source_authors`** — the table the 2026-08-19
-   fabrication happened in. A count divergence there is invisible to the blocking gate.
-
 **Cost baseline for comparison.** `python3 scripts/run_checks.py --all` = **41.5 s**, 67 checks,
 49 green, 10 NOTHING-IN-SCOPE (6 of them blocking), 8 advisory failures.
 `run_checks.py --selftest` = **0.84 s**. Every meta-script below is budgeted under 3 s.
@@ -543,9 +539,7 @@ L3  evidence_sources                                         9 rows      2026-09
                                                     => derive_tier() cannot run
                                                     for any row in the corpus
  L3.2  audit stamps present                 OK     created_by_session 9/9
- L3.3  reproducible from migrations         N/A    EXEMPT — evidence_source_authors
-                                                    and pipeline_runs are in
-                                                    migration_reproducibility.EXEMPT_TABLES
+ L3.3  reproducible from migrations         OK     migration_reproducibility: no table exempt
  L3.4  no orphan FK                         OK     PRAGMA foreign_key_check: 0 rows
  L3.5  stage tenancy of each column         N/A    no stage map — see §8
 ────────────────────────────────────────────────────────────────────────────────────
@@ -560,7 +554,7 @@ L3  evidence_sources                                         9 rows      2026-09
 |---|---|---|---|---|
 | **L3.1** | A column with a declared vocabulary is not uniformly NULL | For every column carrying a CHECK (both forms — §2.5 P2 and L1.3b), `SELECT COUNT(*), COUNT(col) FROM t`. `COUNT(col) = 0` on a non-empty table is the shape of defect 1: Layer 1 declared a vocabulary, Layer 2 produced nothing. Report `n/m NULL` and, when the column feeds a derivation, name the derivation | **v1** | **1** |
 | **L3.2** | Every row carries its audit stamps | `created_at`, `created_by_session`, `updated_at`, `updated_by_session` non-NULL where the column exists. `dbcore.audit()` is the one home of the stamp | **v1** | provenance |
-| **L3.3** | The committed blob is reproducible from the migrations | **Invoke `scripts/audit/migration_reproducibility.py`, do not re-implement.** State its limits inline every run: it compares **row COUNTS only**, so an UPDATE is invisible; `--deep` compares every row and is **advisory**; and **`EXEMPT_TABLES` holds two names, `pipeline_runs` and `evidence_source_authors`** — the second is the table the 2026-08-19 fabrication happened in | **v1** | rule 3 |
+| **L3.3** | The committed blob is reproducible from the migrations | **Invoke `scripts/audit/migration_reproducibility.py`, do not re-implement.** State its limits inline every run: it compares **row COUNTS only**, so an UPDATE is invisible; `--deep` compares every row and is **advisory**; and no table is exempt | **v1** | rule 3 |
 | **L3.4** | No orphan foreign key | `PRAGMA foreign_key_check` (empty today) plus a dangling-target scan: an FK naming a table that does not exist in `sqlite_master`. **0 today**, and the scan is 0.02 s, so it stays in the default path | **v1** | 064-class |
 | **L3.5** | A stage's table holds only that stage's facts (rule 5) | **v2.** Requires the stage map. §8 | **v2** | 5 |
 | **L3.6** | Row counts quoted in derived documents match the DB | Parse `parts/`, `site/`, `audits/`, `tools/*.html`, `index.html` for `<n> (rows\|sources\|items\|specifications)` and compare against a live count. **Report-only** — the mapping from an English noun to a table is a guess | **v1, report-only** | failure mode (b) |

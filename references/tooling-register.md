@@ -83,8 +83,7 @@ and forgetting the fourth.
 **Two inline blobs became scripts:**
 
 - `scripts/audit/migration_reproducibility.py` — was the duplicated heredoc pair. Same 7
-  core invariants, same DR-2026-05-28 exemptions (`evidence_source_authors`, `pipeline_runs`),
-  verified to produce an identical PASS. Has a `--selftest` that builds two DBs differing by
+  core invariants (no table is exempt since plan step 1.5c), verified to produce an identical PASS. Has a `--selftest` that builds two DBs differing by
   one row and asserts the comparator fires.
 - ~~`scripts/ci_helpers/check_doctrine_token.py`~~ — **DELETED 2026-08-19 (OD-10 item 4).** Was ~45 lines of inline bash in `ci.yml`
   that could not be run or tested locally. Same four exemptions (E1 non-synthesis, E2
