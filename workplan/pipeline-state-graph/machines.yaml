@@ -202,13 +202,13 @@ machines:
     via: "db.py add-extraction"
     guards:
       - "the source is admitted and not a tombstone"
-      - "the source is admitted to the NAMED slug (source_slug_links) -- ref<->slug coherence, NOT parameter<->slug"
       - "parameter_id required, parameter exists and is ACTIVE; at least one lens column, and that lens code must exist in its registry table"
       - "a claim_text is required; claim_type 'absent' carries no value and must be figure_role 'finding'"
       - "a value from a tier >= 4 source needs a structured locator or [UNVERIFIED-QUANT]"
       - "figure_role is required; --relation is required ('none' or edges); 'derived' needs a derived_from base edge"
+      - "a root_id must be a row of external_root_registry; an in-corpus root is root_ref_id"
     evidence:
-      - {file: scripts/db.py, func: insert_extraction, needle: "is not admitted to slug"}
+      - {file: scripts/db.py, func: insert_extraction, needle: "is not in external_root_registry"}
       - {file: scripts/db.py, func: insert_extraction, needle: "--parameter-id is required"}
       - {file: scripts/db.py, func: insert_extraction, needle: "an extraction must be stated in at least one lens"}
       - {file: scripts/db.py, func: insert_extraction, needle: "--figure-role is required"}

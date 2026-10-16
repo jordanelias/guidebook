@@ -81,18 +81,6 @@ conflicts:
   resolver: NONE
   confidence: medium
 
-- id: C-012
-  class: RULING-MECHANISM
-  severity: S1
-  title: "source_value_extractions: judgment-stage table (owner) vs evidence-stage table (map and CLAUDE.md)"
-  atoms: [LED-106, LED-100, LED-108, OPS-03, PIP-10]
-  sides:
-    - {atoms: [LED-106], says: "ledger entry headed 'Owner ruling 2026-08-27, adopting item #2 of the architecture note' (the owner's words are the two quoted evidence/judgment descriptions; the table assignment is the ledger author's application, which the owner adopted)."}
-    - {atoms: [PIP-10], says: "pipeline-contract: the hand-off from evidence to judgment is source_value_extractions.ref_id NOT NULL, no UNIQUE -- the fan-out from one source to many judgment rows."}
-  probe: P-STAGE-SVE
-  direction: "governance/stage-map.yaml renders the table at EVIDENCE and records the dispute as open (disputed: block). CLAUDE.md section 3's stage table says evidence holds 'extraction'. LED-106 is the adopted ruling (OWNER_RELAYED); under rule 0 the map and CLAUDE.md are what to correct. The consequence is not cosmetic: add-extraction writes evidence_sources.data_capture_status in the same transaction, a judgment-to-evidence write that the code comment itself calls 'evidence the column is in the wrong home'."
-  resolver: OWNER
-  confidence: high
 
 - id: C-013
   class: RULING-MECHANISM

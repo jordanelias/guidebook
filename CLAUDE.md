@@ -242,8 +242,8 @@ vocabulary layer the machine gates as a stage; the id is `evidence`, and its dis
 |---|---|
 | **base** | The vocabularies and registries every other stage points into |
 | **research** | What was searched, screened and mined, plus the clue store |
-| **evidence** | What was admitted, its identity, verification and extraction |
-| **judgment** | Whether an extraction is sound and how it weighs |
+| **evidence** | What was admitted, its identity and its verification |
+| **judgment** | What each source asserts for each parameter (the extraction), whether it is sound, and how it weighs |
 | **synthesis** | What the judgments say together — weighing, convergence, cross-slug findings |
 | **specification** | The determination: *therefore 1200 mm, marked ●* |
 | **render** | Book surfaces, read from the database when rendered (owner, 2026-08-27); no committed file is one |
