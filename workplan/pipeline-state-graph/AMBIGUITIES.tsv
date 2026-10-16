@@ -92,8 +92,7 @@ DRS-305	ACTIVE	decisions/DR-2026-09-02-restore-research-code-leads.md:21	grain o
 ENT-030	ACTIVE	governance/conceptual-model.md:111	BPC key-source REF-ID resolution	Written as an A3 Session 2 plan item; the later pointer correction moves citation records to the reference_stubs table, so the data/sources/ target may no longer be the live home.
 ENT-031	ACTIVE	governance/conceptual-model.md:119	BPC metadata cross-system check	A3 Session 3 plan item; data/sources/ may no longer be the live home of citation records.
 ENT-032	ACTIVE	governance/conceptual-model.md:126	connection primary_target item_code resolution	A3 Session 4 plan item that presupposes the item index as a live reference.
-ENT-039	ACTIVE	governance/conceptual-model.md:187	EvidenceType member count	The §4 code block lists only seven members, so seven and nine are both stated for the same enum.
-ENT-045	ACTIVE	governance/conceptual-model.md:199	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
+ENT-045	ACTIVE	governance/conceptual-model.md:190	entity count	Section 1 gives two entity tables (existing stores; new definition) plus cross-cutting axes that are explicitly "Not separate entities", so "three categories" does not map cleanly onto 20 entities.
 ENT-048	ACTIVE	governance/functional-taxonomy.md:13	two-layer population architecture	"Layer 1" and "Layer 2" here name taxonomy layers, a different numbering from the project's five-layer Layer 0-4 model.
 ENT-059	ACTIVE	governance/functional-taxonomy.md:85	axis values as stored attributes	Unclear whether this bars stored mapping tables (population_axis_map, slug serves_axes) or only per-person attributes.
 ENT-067	ACTIVE	governance/functional-taxonomy.md:129	canonical codes as Layer 2 identifiers	The population-taxonomy.md banner (DR-2026-07-23) retires the canonical code set that this sentence retains.
@@ -123,12 +122,10 @@ ENT-241	AMENDED	governance/population-taxonomy.md:142	Tier 1 mode register	"Tier
 ENT-242	AMENDED	governance/population-taxonomy.md:143	Tier 2 mode register	"Tier 2" here is a specification mode, not an evidence tier.
 ENT-257	ACTIVE	governance/population-taxonomy.md:171	population-taxonomy status field	The header and banner state SUPERSEDED (population code set), contradicting the CANONICAL value in the status table.
 ENT-260	ACTIVE	governance/decision-protocol.md:31	cross-category decisions	The section 3 field list has no dedicated secondary-category field, so where the cross-reference goes is unspecified.
-ENT-272	ACTIVE	governance/decision-protocol.md:67	D-DOCT downgrade	Section 2.4 item 7 lists the licensing model as always DG-NON, yet this passage uses adopting a licence as an example of a DG-REVIEW downgrade.
 ENT-308	ACTIVE	governance/decision-protocol.md:149	synthesis-capable tiers	The example sonnet/125/synth is allowed as synthesis that is "not best-practice synthesis", so the meaning of the synth modifier differs by tier.
 ENT-338	ACTIVE	governance/jurisdiction-philosophy.md:13	canonical jurisdictions	The table in section 1.1 lists 25 country rows (AU BD BR CA CH CN DE DK EG FR ID IE IN JP KE KR NG NL NO NZ SE SG UK US ZA), not 24.
 ENT-342	ACTIVE	governance/jurisdiction-philosophy.md:39	canonical country codes	The country code ID (Indonesia) shares its spelling with the population code ID (intellectual disability) in population-taxonomy.md.
 ENT-361	ACTIVE	governance/jurisdiction-philosophy.md:101	standards registry	Citation-like records are held in a markdown file, while conceptual-model.md relays an owner directive that citation data stored in .md is to be recorded in a table.
-ENT-363	ACTIVE	governance/jurisdiction-philosophy.md:103	jurisdiction-tracker skill	The text pins a model version ("Sonnet 4.6"), which decision-protocol.md section 4.2 says is stripped on touch.
 ENT-394	ACTIVE	governance/legal-regulatory.md:53	tier-located authority	population-taxonomy.md section 3.4 defines Universal Mode as the comprehensive mapping of all considerations, not as code values; and "Tier 1/Tier 2" here are modes, not evidence tiers.
 ENT-402	ACTIVE	governance/legal-regulatory.md:59	per-specification jurisdictional differences	"24/46/49" is not defined here, and jurisdiction-philosophy.md states 24 countries plus 2 meta-jurisdictions.
 ENT-410	ACTIVE	governance/legal-regulatory.md:82	disclaimer element 4	jurisdiction-philosophy.md names references/standards-registry.md as the currency record; this document names a standards-supersession-tracker.
@@ -395,15 +392,10 @@ PRC-160	ACTIVE	.claude/commands/adversarial.md:65	Gate before claiming done	/bat
 PRC-169	ACTIVE	.claude/commands/batch-done.md:14	RC4 failure condition	Requires a closed pass, while /adversarial says passes 1 and 2 are never to be closed.
 PRC-176	ACTIVE	.claude/commands/batch-done.md:28	Coverage limit of I5	Leaves MCP-tool searches unwitnessed while R8 requires every search be logged.
 PRC-182	ACTIVE	.claude/commands/batch-done.md:39	Corpus regression check	CLAUDE.md warns against --all as an expensive default for run_checks.py; this is a different --all but the same reflex.
-PRC-184	ACTIVE	.claude/commands/orient.md:5	Orientation first	/session-open also claims to be first ('Do this FIRST, before any other work').
 PRC-195	ACTIVE	.claude/commands/orient.md:22	Orientation reading set	CLAUDE.md §9 points to further documents for other questions; this limits the orientation pass only.
 PRC-197	ACTIVE	.claude/commands/orient.md:30	Search tool for hidden paths	Lists five hidden paths; CLAUDE.md and repo-sweep.md list more (search-log, workplan/_superseded, transcripts JSONL).
-PRC-203	ACTIVE	.claude/commands/session-open.md:6	Opening a session first	/orient also says to orient before anything else, and orient reads scratchpad/CURRENT which session-open sets.
 PRC-207	ACTIVE	.claude/commands/session-open.md:17	Scratchpad folder name equals CURRENT content	Later text tells the session to git mv the folder after the PR number exists while leaving CURRENT as the DB stem.
-PRC-214	ACTIVE	.claude/commands/session-open.md:34	Renaming the folder once PR exists	Conflicts on its face with the requirement that folder name and CURRENT content be identical.
-PRC-216	ACTIVE	.claude/commands/session-open.md:37	Routing of renamed folder	CLAUDE.md §7 describes the same fallback as able to misfile the command log into an unrelated past session.
-PRC-220	ACTIVE	.claude/commands/session-open.md:45	Research session	'Rows only' sits uneasily with the attestations, session records and transcript commits a batch also produces.
-PRC-259	ACTIVE	.claude/agents/antagonist.md:53	Lens coverage in closing block	'Appear' in the closing block (which allows NOT-ATTACKED rows) versus 'covered' for close-adversarial-pass is not reconciled; 'eleven' is a hand-written count.
+PRC-220	ACTIVE	.claude/commands/session-open.md:38	Research session	'Rows only' sits uneasily with the attestations, session records and transcript commits a batch also produces.
 PRC-275	ACTIVE	.claude/agents/antagonist.md:92	Verdict vocabulary	Vocabulary listed in prose; CLAUDE.md says vocabularies come from the column's own CHECK.
 SES-001	HISTORICAL	sessions/session_2026-09-13-clear-circulation-corpus.md:3	circulation corpus clearance and re-run	One-time directive, executed as a 229-row compensating migration; the scope-is-the-slug-not-the-sessions reading is the session's and is recorded in the ledger entry.
 SES-002	HISTORICAL	sessions/session_2026-09-13-clear-circulation-corpus.md:6	clear recent research	Widened by the second statement from batches 06-07 to the whole circulation corpus.

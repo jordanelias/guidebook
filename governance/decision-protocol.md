@@ -64,7 +64,7 @@ A decision can depart from the default delegation. Departures are explicit: the 
 
 - A D-METH decision that has a doctrinal flow-through is recorded as DG-NON (delegation upgraded).
 - A D-OP decision with material consequence (e.g., changing the PAT scope) is recorded as DG-REVIEW (delegation upgraded).
-- A D-DOCT decision that merely operationalises a prior decision (e.g., adopting CC BY-SA 4.0 once the licensing-decision space was scoped) is recorded as DG-REVIEW (delegation downgraded).
+- A D-DOCT decision that merely operationalises a prior decision is recorded as DG-REVIEW (delegation downgraded).
 
 Departures are visible in the decision record's `delegation` field and `delegation_rationale` field.
 

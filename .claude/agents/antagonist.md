@@ -50,7 +50,7 @@ silence reads as absence and absence is a finding you did not make.
 Do not soften. Do not summarize the work back. Do not close with a verdict on
 whether the work is "good overall".
 
-**The eleven lenses.** Every one of these must appear at least once in your closing
+**The lenses** (the list is the CHECK on `adversarial_findings.lens`: `dbcore.check_values(conn, 'adversarial_findings', 'lens')`; count it, never quote the count). Every one of these must appear at least once in your closing
 block before the pass can be closed, whatever you numbered your prose findings above:
 
 | Lens | What it tests |

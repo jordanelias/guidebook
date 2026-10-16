@@ -2,7 +2,7 @@
 
 _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjudicated disagreement between ACTIVE atoms, or between an atom and a measured mechanism; the mechanical detector's candidate pairs are not conflicts until they are written into `conflicts.yaml`. Nothing here is a ruling._
 
-38 entries. Severity: S1 13, S2 12, S3 13. Class: DOC-DOC 10, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
+36 entries. Severity: S1 13, S2 10, S3 13. Class: DOC-DOC 8, OPEN-QUESTION 1, PROVENANCE 2, RULING-DOC 5, RULING-MECHANISM 16, RULING-RULING 3, UNRECORDED 1.
 
 ## Index
 
@@ -28,9 +28,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-023 | S2 | PROVENANCE | OWNER | -- | D-0184 (the lens is a column) is an agent decision awaiting owner review but is treated as binding |
 | C-031 | S2 | RULING-MECHANISM | AGENT | P-H -> FAIL | Retire in place requires every reader to filter status first -- some views do not |
 | C-036 | S2 | UNRECORDED | OWNER | P-LEDGER-GREP -> FAIL | Owner statements whose only home is a session record |
-| C-037 | S2 | DOC-DOC | OWNER | -- | Process contradictions inside the commands, agents and rules |
 | C-044 | S2 | DOC-DOC | OWNER | -- | Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5) |
-| C-047 | S2 | DOC-DOC | AGENT | -- | 'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record' |
 | C-048 | S2 | RULING-MECHANISM | AGENT | P-STATUS-WRITERS -> FAIL | A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names |
 | C-049 | S2 | RULING-DOC | OWNER | -- | Jurisdiction scope: R5/R6 (2026-08-18) versus 'buckets 1-2 only' (2026-09-28) versus 'all 24 jurisdictions' in the philosophy document |
 | C-010 | S3 | RULING-DOC | AGENT | -- | Stage list in the 2026-08-24 DR is five stages; 'specifications is not a stage' |
@@ -321,25 +319,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 **Direction.** Rule 0 binds on contact whether or not the ledger records the statement, so these bind. The risk is a search that cannot see them (.ignore hides sessions/): P-LEDGER-GREP asserts that the quoted phrases are absent from references/project-standards.md. Recording each is an append to the owner ledger; whether an agent may append on the owner's behalf is the owner's call.
 
-## C-037 [S2] Process contradictions inside the commands, agents and rules
-
-**Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** medium
-
-- RC4 fails unless an adversarial pass is closed; /adversarial says passes 1 and 2 are never to be closed; the owner ruled not to chase pass 1 closed.  
-  _atoms:_ `PRC-169`(act), `LED-192`(act)
-- the adversarial closing block carries a hand-written count of lenses ('eleven'); close-adversarial-pass itself defines coverage as a finding row for every lens in the column's CHECK (M08.t3), so the count is the only drift.  
-  _atoms:_ `PRC-259`(act)
-- /orient and /session-open each claim to be the first thing run.  
-  _atoms:_ `PRC-184`(act), `PRC-203`(act)
-- the scratchpad folder must be named identically to CURRENT, yet it is to be renamed after the PR number exists while CURRENT keeps the DB stem.  
-  _atoms:_ `PRC-207`(act), `PRC-214`(act), `PRC-216`(act)
-- /batch-done is 'the only definition of finished' but does not list the gate CLAUDE.md section 1 prescribes; a corpus-wide --all reflex is warned against elsewhere.  
-  _atoms:_ `PRC-160`(act), `PRC-182`(act)
-- invariant I5 leaves MCP-tool searches unwitnessed while R8 requires every search be logged.  
-  _atoms:_ `PRC-176`(act)
-
-**Direction.** CLAUDE.md rule 0 does not decide between two process documents; these are for the owner or for the next session that touches the commands.
-
 ## C-044 [S2] Order of retiring a column: readers, rebuild, writer (DR-2026-09-26) versus writer, reader, NULL forward (CLAUDE.md rule 5)
 
 **Class** DOC-DOC  ·  **Resolver** OWNER  ·  **Confidence** low
@@ -350,17 +329,6 @@ Atoms whose recorded status is behind a later statement. The atom files record e
   _atoms:_ `LED-079`(act), `CLM-015`(act)
 
 **Direction.** UNSETTLED. [CONFIDENCE: low -- the extractor did not record this pair inside RC-153; read RC-153 and LED-079 together before acting.] They agree if 'retire' means NULL-forward rather than drop, and disagree on the order of writer and readers.
-
-## C-047 [S2] 'Code-enforced checks trump text rules' versus 'a live owner statement supersedes every prior ratified record'
-
-**Class** DOC-DOC  ·  **Resolver** AGENT  ·  **Confidence** medium
-
-- architecture v2.3 (2026-04-30): code-enforced checks (hooks, CI) trump text rules for the matching invariant.  
-  _atoms:_ `ENT-465`(act)
-- CLAUDE.md rule 0: a live owner statement supersedes every prior ratified record it touches, on contact; record the supersession, never weigh the ruling against the paperwork.  
-  _atoms:_ `CLM-000`(act), `CLM-001`(act)
-
-**Direction.** Both are agent-maintained process texts (rule 0 cites an owner ruling as its proof, not as its source), so this is recency, not rank: rule 0 governs as the later, process-level statement: a check that encodes a superseded invariant is what to change, not obey. ENT-465 remains a fair description of what to do when no ruling intervenes and is stale as a precedence rule.
 
 ## C-048 [S2] A status column's values need a writer -- the probe lists data_capture_status values that none of db.py names
 
@@ -473,15 +441,9 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 **Class** DOC-DOC  ·  **Resolver** AGENT  ·  **Confidence** medium
 
 - '24 countries plus 2 meta', a 24/46/49 jurisdiction structure; the section table has 25 country rows.  
-  _atoms:_ `ENT-338`(act), `ENT-360`(act), `ENT-418`(pro), `ENT-402`(act)
-- EvidenceType has 7 members in one block and 9 in the audit.  
-  _atoms:_ `ENT-036`(act), `ENT-039`(act)
+  _atoms:_ `ENT-338`(act), `ENT-418`(pro), `ENT-402`(act)
 - all 14 languages searched on every run; the research skill obliges 19; jurisdiction scope later limited to Buckets 1-2 (LED-193).  
   _atoms:_ `LED-031`(act)
-- adopting CC BY-SA 4.0 is a DG-REVIEW example in one section and licensing is always DG-NON in another.  
-  _atoms:_ `ENT-272`(act), `ENT-280`(act)
-- jurisdiction-philosophy pins a model version on the jurisdiction-tracker skill; the decision protocol says any version number in routing text is stripped when touched.  
-  _atoms:_ `ENT-363`(act), `ENT-307`(act)
 - standards-registry.md kept as markdown against the owner directive that citation data in .md goes into a table; a differently named tracker.  
   _atoms:_ `ENT-361`(act), `ENT-043`(act), `ENT-410`(act)
 

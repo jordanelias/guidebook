@@ -410,8 +410,7 @@ open. Do not read `slug × population` as any part of the answer: `populations` 
   whole life of the current one.** Anything needing "the session running now" reads `CURRENT`. Set it
   when you create the batch folder. **It also goes stale when your PR merges mid-session** — the
   folder it names is then a merged PR's, and your command log appends to someone else's record until
-  you move it. Name the folder for the branch and `git mv` once the PR number exists; never guess a
-  number, because a guess that lands teaches nobody. **`CURRENT` holds the DB SESSION STEM**
+  you move it, with the folder, in one action. **`CURRENT` holds the DB SESSION STEM**
   (`session_YYYY-MM-DD-<slug>`), not a bare branch slug — batches 11–15 wrote branch slugs while
   their rows were stamped `session_...`, and any check reading `CURRENT` (e.g.
   `adversarial_pass_recorded`, RC4) scopes to zero rows on the mismatch and reports green.
