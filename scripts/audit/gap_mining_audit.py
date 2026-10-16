@@ -116,9 +116,6 @@ def audit():
                 f"closure_evidence_found but gap missing rule #7 fields: {missing}"
             )
 
-    # CHECK 3 (a PMP walk behind a numerical-spec closure) retired with the item layer
-    # (plan step 1.2): spec_value_probes and the pmp-strict-termination criterion are gone.
-
     # ─── CHECK 4: gap_recategorized rows where gap.mining_addressability is
     #             still ADDRESSABLE ─────────────────────────────────────────
     recat_rows = db.execute("""
