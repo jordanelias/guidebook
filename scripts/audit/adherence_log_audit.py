@@ -78,7 +78,7 @@ DOCTRINE_PATH = "governance/mission-and-epistemics.md"
 DOCTRINE_DELTAS_PATH = "governance/doctrine-deltas.json"
 
 SYNTHESIS_PATH_RE = re.compile(
-    r"^(references/bpc-reasoning|references/connection-reasoning|decisions|sessions)/.+\.md$"
+    r"^(references/connection-reasoning|decisions|sessions)/.+\.md$"
 )
 
 LEVENSHTEIN_THRESHOLD = 0.85
