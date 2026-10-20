@@ -31,7 +31,7 @@ whatever slug it was filed under")?
 | C1.1 | no UNIQUE(ref_id) on the capture table: one source may yield many rows | **PASS** | P-D = PASS | LED-100, LED-101 |
 | C1.2 | a phrase can be harvested from a source without presupposing a category | **PASS** | matched | LED-115, CLM-040 |
 | C1.3 | one source can be harvested for more than one sense of the same phrase | **PASS** | P-W = PASS | LED-197 |
-| C1.4 | an extraction can be filed under a slug other than the one the source was admitted to | **FAIL** | P-V2 = FAIL | LED-196, LED-201 |
+| C1.4 | an extraction can be filed under a slug other than the one the source was admitted to | **PASS** | P-V2 = PASS | LED-196, LED-201 |
 | C1.5 | a record exists of which parameters a source has been read for | **PASS** | P-V = PASS | LED-195, LED-199 |
 | C1.6 | a value can be stated in every lens, including the medical lens | **FAIL** | P-MEDICAL = FAIL | LED-110, LED-154 |
 | C1.7 | arguments and qualitative findings can be captured as well as numbers | **PASS** | source_value_extractions.claim_type admits qualitative | SES-022, SES-023 |

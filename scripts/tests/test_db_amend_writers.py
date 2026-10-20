@@ -610,7 +610,7 @@ try:
             con.close()
         XD = next_ref()
         add_source(XD, title=f"fixture extraction source {XD}")
-        X_PAYLOAD = {"ref_id": XD, "slug": plain, "parameter_id": PID and PID[0],
+        X_PAYLOAD = {"ref_id": XD, "parameter_id": PID and PID[0],
                      "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
                      "claim_text": "fixture: the source states nothing for this parameter",
                      "extraction_method": "skim"}
@@ -1365,7 +1365,7 @@ try:
            msg and f"write '{ES_LIKE}'" in msg
            and not q("SELECT 1 FROM research_code_leads WHERE standard_name=?",
                      "Fixture lead J06"), f"got {msg!r}")
-    msg = refusal(db.insert_extraction, {"ref_id": REF, "slug": A, "parameter_id": 1,
+    msg = refusal(db.insert_extraction, {"ref_id": REF, "parameter_id": 1,
                                          "jurisdiction": UNDECLARED}, S)
     record("J07", "add-extraction refuses an undeclared jurisdiction (by the vocabulary, "
            "before any other check)", msg and "JurisdictionCode" in msg, f"got {msg!r}")
@@ -1576,6 +1576,27 @@ try:
            and r_am_ok.returncode == 0
            and q("SELECT co1_source_type FROM evidence_sources WHERE ref_id=?", ref_live) == [("participatory_research",)],
            f"old rc={r_am_old.returncode} {(r_am_old.stdout + r_am_old.stderr)[-150:]} ok rc={r_am_ok.returncode} {r_am_ok.stderr[-150:]}")
+
+    # ── V: an extraction asks for no slug, and a root_id must be registered (step 3 judgment) ───────
+    ref_p, _ = add_o("extraction, admitted to no slug", "--evidence-type", "grey")
+    X_P = {"ref_id": ref_p, "parameter_id": PARAM, "identity_code": lens_live["--identity"],
+           "claim_type": "absent", "figure_role": "finding",
+           "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim"}
+    try:
+        got = db.insert_extraction(dict(X_P), S, relations=[], verbatim_exempt=X_EXEMPT)
+    except Exception as exc:  # noqa: BLE001 -- recorded red below
+        got = {"error": f"{exc.__class__.__name__}: {exc}"}
+    n_sve = counts("source_value_extractions")
+    msg_root = refusal(db.insert_extraction, {**X_P, "root_id": "NO-SUCH-ROOT"}, S, relations=[],
+                       verbatim_exempt=X_EXEMPT)
+    msg_slug = refusal(db.insert_extraction, {**X_P, "slug": A}, S, relations=[], verbatim_exempt=X_EXEMPT)
+    record("V01", "add-extraction accepts a source admitted to no slug, and stores the row with a NULL slug",
+           "extraction_id" in got
+           and q("SELECT slug FROM source_value_extractions WHERE extraction_id=?", got.get("extraction_id")) == [(None,)],
+           f"{got}")
+    record("V02", "an unregistered root_id is refused naming the registry, and a payload naming a slug is refused",
+           msg_root and "external_root_registry" in msg_root and msg_slug and "slug" in msg_slug
+           and counts("source_value_extractions") == n_sve, f"root={msg_root!r} slug={msg_slug!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

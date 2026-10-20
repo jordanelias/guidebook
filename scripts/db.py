@@ -1862,7 +1862,6 @@ def main():
                           help="Record what one source asserts for one parameter "
                                "(the JUDGMENT item, D-0168)")
     p_ax.add_argument("--ref-id", required=True, help="evidence_sources.ref_id — the source read")
-    p_ax.add_argument("--slug", required=True, help="the slug the reading happened under")
     p_ax.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
                       help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
     # The four lenses. At least one is required (D-0182); the CLI names them by lens
@@ -2061,7 +2060,6 @@ def main():
                           help="Write a computed (base+delta) extraction and the "
                                "derived_from edges that prove it")
     p_dx.add_argument("--ref-id", required=True)
-    p_dx.add_argument("--slug", required=True)
     p_dx.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
     p_dx.add_argument("--identity")
     p_dx.add_argument("--icf")
@@ -2932,7 +2930,7 @@ def main():
     elif args.command == "add-extraction":
         # The lens flags are named for the LENS and stored in the COLUMN; the mapping
         # is stated once, here, and mirrors db._LENS_COLUMNS' key order.
-        _ax = {"ref_id": args.ref_id, "slug": args.slug,
+        _ax = {"ref_id": args.ref_id,
                "parameter_id": args.parameter_id,
                "identity_code": args.identity, "icf_code": args.icf,
                "needs_code": args.needs, "medical_code": args.medical,
@@ -3004,7 +3002,7 @@ def main():
 
     elif args.command == "derive-extraction":
         _emit(derive_extraction(
-            ref_id=args.ref_id, slug=args.slug, parameter_id=args.parameter_id,
+            ref_id=args.ref_id, parameter_id=args.parameter_id,
             identity=args.identity, icf=args.icf, needs=args.needs,
             medical=args.medical, base=args.base, delta=args.delta,
             claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
@@ -8155,15 +8153,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       names neither the source nor the fix. An extraction is a reading OF a source;
       one that names no admitted source is a claim about nothing.
 
-    * An unknown `slug`. Same class. `slug` is NOT NULL here and is a fact of the
-      extraction — the reading happened under that topic — not a copy of
-      `source_slug_links` (`evidence_sources` has no slug column to point at).
-
-    * A slug the REF IS NOT ADMITTED TO. The column's FK points at `slugs`, so the
-      database accepts any live slug and cannot see that this source was never
-      admitted to this topic. `source_slug_links` is that record. Without this
-      refusal the vetting surface renders the row under a slug whose own
-      `linked_sources` does not contain the ref.
+    * A `root_id` the registry does not hold (`external_root_registry`; migration 114).
 
     * A MISSING OR BLANK `claim_text`. Migration 073 retired `parameter`, the last
       NOT NULL column carrying the source's own words; `claim_text`,
@@ -8242,7 +8232,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
     `_build_relation_groups` for how the CLI's repeatable flags become this list.
     """
     _COLS = frozenset({
-        "ref_id", "slug", "parameter_id",
+        "ref_id", "parameter_id",
         "identity_code", "icf_code", "needs_code", "medical_code",
         "jurisdiction", "setting",
         "claim_type", "claimed_value", "claimed_unit", "claim_text", "source_section",
@@ -8275,42 +8265,15 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         _refuse_tombstone(conn, ref, "add-extraction")
         row["ref_id"] = ref
 
-        if not dbcore.exists(conn, "slugs", "slug", row.get("slug")):
+        # A slug guides what is searched, not what is read (scan contract, LED-195): no slug is
+        # asked for here, and `source_slug_links` stays the admission record. A root_id names a
+        # row of the registry (migration 114); an in-corpus root is root_ref_id.
+        if row.get("root_id") is not None and not dbcore.exists(
+                conn, "external_root_registry", "root_id", row["root_id"]):
             raise Refusal(
-                f"slug {row.get('slug')!r} is not a live slug. The slug records where the "
-                f"reading happened, and it must be one the project holds.")
-
-        # THE REF MUST BE ADMITTED TO THE SLUG, not merely exist beside it. The
-        # column's FK points at `slugs`, so the database is satisfied by ANY live
-        # slug -- it cannot see that this source was never admitted to this topic.
-        # Without this refusal an extraction lands under a slug whose own
-        # `linked_sources` does not contain the ref, and a surface that lists a
-        # slug's sources would show a value mined under a topic the source was never
-        # admitted to, which is the one thing such a surface must make impossible to miss.
-        #
-        # THIS IS REF<->SLUG COHERENCE, NOT PARAMETER<->SLUG COHERENCE, and the two
-        # are deliberately different. test_db_integrity's retired J01 asserted that
-        # an extraction's PARAMETER belonged to its slug; that assumption is wrong
-        # (a source admitted under one slug may legitimately be read for a parameter
-        # another slug also governs) and its deletion note says so. Ref<->slug is the
-        # stronger and simpler invariant: the junction that records admission is
-        # `source_slug_links`, it is non-empty, and it is the only record of what the
-        # project decided this source was admitted FOR.
-        if not conn.execute(
-                "SELECT 1 FROM source_slug_links WHERE ref_id=? AND slug=?",
-                (ref, row.get("slug"))).fetchone():
-            held = [r[0] for r in conn.execute(
-                "SELECT slug FROM source_slug_links WHERE ref_id=? ORDER BY slug",
-                (ref,))]
-            raise Refusal(
-                f"{ref} is not admitted to slug {row.get('slug')!r}. An extraction is "
-                f"mined under a topic the source was ADMITTED to; `source_slug_links` "
-                f"is that record and it does not hold this pair.\n"
-                f"  admitted to: {held or '(no slug at all)'}\n"
-                f"Extract under one of those, or cross-file the source to this "
-                f"slug first and say why: {R9_REMEDY}. Inventing the link from "
-                f"here would make this writer the thing that decides what a "
-                f"source was admitted for, and it would record no grounds.")
+                f"root_id {row['root_id']!r} is not in external_root_registry. A root_id names an "
+                f"external root; a root held in this corpus is --root-ref-id. The registry has no "
+                f"writer yet, so until one exists a root_id cannot be written here.")
 
         # --- the subject -----------------------------------------------------
         pid = row.get("parameter_id")
@@ -8517,7 +8480,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 session=session, context="add-extraction"))
 
         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
-                "slug": row.get("slug"),
                 "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
                 "claim_type": claim_type, "claimed_value": value,
                 "figure_role": figure_role, "comparator": row.get("comparator"),
@@ -8767,7 +8729,7 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             "changed": True, "dry_run": dry_run}
 
 
-def derive_extraction(*, ref_id: str, slug: str, parameter_id: int, base: int,
+def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
                       delta: int, claim_text: str, session: str,
                       dry_run: bool = False, identity: str = None, icf: str = None,
                       needs: str = None, medical: str = None,
@@ -8849,7 +8811,7 @@ def derive_extraction(*, ref_id: str, slug: str, parameter_id: int, base: int,
                 f"= {base_row['claimed_value']!r}, delta extraction {delta} = "
                 f"{delta_row['claimed_value']!r}).")
 
-        data = {"ref_id": ref_id, "slug": slug, "parameter_id": parameter_id,
+        data = {"ref_id": ref_id, "parameter_id": parameter_id,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
                 "medical_code": medical, "claim_type": "numerical",
                 "claimed_value": claimed_value, "claimed_unit": unit,

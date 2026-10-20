@@ -4437,3 +4437,17 @@ Asked to design step 1.5a of `workplan/2026-10-12-simplification-workplan.md` an
 CONDITION: any session asking whether the plan's §4 items are still waiting for the owner, whether a row-bearing table may be dropped, whether a search may be recorded without a slug, what names the identity registry takes, whether `root_id` may name an in-corpus source, or whether the simplification plan may be executed.
 ACTION: (1) Treat the §4 items as resolved by `RULINGS.md` section (G); do not ask the owner to re-answer them. (2) Execute the plan one step per pull request, opened last, and put each owner-merge edit in the diff of its own step. (3) Do not drop a row-bearing table except in steps 1.4 and 1.5, after `--rebuild` shows the rows are reproduced or the entry's record of survival applies. (4) The nullable-slug resolution (R43) is rehearsed before it is built. (5) The owner's override of any resolution is a later statement and wins.
 DATE: 2026-10-14 — owner statements, quoted above.
+
+## Recording 2026-10-14 — the root registry: a `root_id` references the registry and nothing else
+
+**What this does.** The delegation entry of 2026-10-14 decided one supersession (RULINGS R24) and left its back-pointer to the pull request that builds the key, because `supersession_backpointer_audit` requires the target document to carry the mark in the same change. That change is migration 114: `source_value_extractions.root_id` now carries a foreign key to `external_root_registry`. This entry writes the pair and nothing else. It makes no ruling.
+
+```
+SUPERSEDES: governance/evidence-architecture.md :: "a `root_id` must resolve either to a `root_ref_id` in `evidence_sources` or to a registered external-root stub"
+  BY: references/project-standards.md :: "the rule becomes that `source_value_extractions.root_id` references `external_root_registry` and nothing else"
+```
+
+The sentence is overtaken in its first alternative only: an in-corpus root is named by `root_ref_id`, never by `root_id`, which is how the two columns already divided. The mark in the target says so.
+
+CONDITION: any session asking what a `root_id` may name, or reading the "Root registry" discipline in `governance/evidence-architecture.md`.
+DATE: 2026-10-14 — recorded under RULINGS R24; the superseding words are the delegation entry's, quoted at the ledger line the mark names.
