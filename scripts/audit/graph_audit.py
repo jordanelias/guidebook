@@ -10,9 +10,9 @@ It NEVER writes guidebook.db; the audit graph is a throwaway artifact.
 Checks (data + code + content layers):
   1. orphan.dangling_citation     (ERROR) value-layer ref with no evidence_sources row
                                   — the vetting-surface `orphan_links` invariant; must be 0
-  2. cycle.population_parent      (ERROR) populations.parent_code forms a cycle
+  2. cycle.population_parent      (ERROR) base_taxonomy_identity.parent_code forms a cycle
   3. ref.dangling_structural      (ERROR) self_ref edge to a missing node
-                                  (populations.parent_code) — corruption no other check covered
+                                  (base_taxonomy_identity.parent_code) — corruption no other check covered
   4. orphan.uncited_source        (WARN)  evidence source cited by nothing
   5. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
                                   (phantom-item vs unresolved-identifier)
@@ -306,11 +306,11 @@ def selftest():
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
         con.execute("PRAGMA foreign_keys=OFF")
-        two = con.execute("SELECT population_code FROM populations LIMIT 2").fetchall()
+        two = con.execute("SELECT identity_code FROM base_taxonomy_identity LIMIT 2").fetchall()
         if len(two) >= 2:
             a, b = two[0][0], two[1][0]
-            con.execute("UPDATE populations SET parent_code=? WHERE population_code=?", (b, a))
-            con.execute("UPDATE populations SET parent_code=? WHERE population_code=?", (a, b))
+            con.execute("UPDATE base_taxonomy_identity SET parent_code=? WHERE identity_code=?", (b, a))
+            con.execute("UPDATE base_taxonomy_identity SET parent_code=? WHERE identity_code=?", (a, b))
         con.commit()
         con.close()
         s = gbuild.build(audit_db=os.path.join(tmpd, "a4.db"), guidebook_db=copy)
@@ -385,12 +385,12 @@ def selftest():
         results.append(("code+content checks execute on real repo", has_code and has_ref))
         s.close()
 
-        # 9. a dangling structural reference (populations.parent_code, self_ref) fires.
+        # 9. a dangling structural reference (base_taxonomy_identity.parent_code, self_ref) fires.
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
         con.execute("PRAGMA foreign_keys=OFF")
-        pop = con.execute("SELECT population_code FROM populations LIMIT 1").fetchone()[0]
-        con.execute("UPDATE populations SET parent_code='ZZ-PHANTOM-POP' WHERE population_code=?", (pop,))
+        pop = con.execute("SELECT identity_code FROM base_taxonomy_identity LIMIT 1").fetchone()[0]
+        con.execute("UPDATE base_taxonomy_identity SET parent_code='ZZ-PHANTOM-POP' WHERE identity_code=?", (pop,))
         con.commit()
         con.close()
         s = gbuild.build(audit_db=os.path.join(tmpd, "a9.db"), guidebook_db=copy)

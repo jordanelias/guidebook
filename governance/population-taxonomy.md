@@ -20,7 +20,7 @@
 > `NDV` is a **peer view, not a parent** of AUT/ADHD. Life stage (SEN older adults, CHD children)
 > is an **orthogonal modifier** (`life_stage_modifiers` table), not a population. `ALL` and `MH`
 > are retained. Access needs (Axis 1) are the tagging axis — see the access-needs layer
-> (migration 031) crosswalked to ICF. The single source of truth is the `populations` table.
+> (migration 031) crosswalked to ICF. The single source of truth is the `base_taxonomy_identity` table.
 > Sections below describe the retired scheme and await a full rewrite.
 
 ## 1. Taxonomy structure
@@ -150,13 +150,13 @@ Cross-population conflicts are searched by **conflict domain** (12 environmental
 
 ## 5. Where the codes live
 
-The `populations` table (`population_code`) is the single source of truth for valid population codes; the `PopulationCode` enum that mirrored it in `schemas/enums.py` was retired in plan step 1.6 (RULINGS R44), because a copy kept beside the table only disagrees with it. This governance document does not add or remove codes — it documents the rules governing those codes.
+The `base_taxonomy_identity` table (`identity_code`) is the single source of truth for valid population codes; the `PopulationCode` enum that mirrored it in `schemas/enums.py` was retired in plan step 1.6 (RULINGS R44), because a copy kept beside the table only disagrees with it. This governance document does not add or remove codes — it documents the rules governing those codes.
 
 If a new population code is needed (e.g., a new sub-code for an emerging evidence base), the process is:
 
 1. Proposal with evidence basis (what functional profile does this code capture that is not covered by existing codes?)
 2. Decision via project-standards RULE
-3. Addition of a `populations` row
+3. Addition of a `base_taxonomy_identity` row
 4. Update to this governance document
 5. Update to workplan-orchestrator §Population Codes
 

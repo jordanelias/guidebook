@@ -205,7 +205,7 @@ findings, including when you find nothing.
 # CORRECTED 2026-08-25. This block was hand-written SQL because db.py had no writer
 # for this table -- the gap CLAUDE.md §4 names as where the 2026-08-19 fabrication
 # entered. It has one now, and the CLI refuses what raw SQL could not see:
-# a ref_id that is not an admitted source, a population code not in `populations`,
+# a ref_id that is not an admitted source, a population code not in `base_taxonomy_identity`,
 # a match_grade outside the schema's own CHECK, and MISMATCH with no reason given.
 python3 scripts/db.py add-population-match \
   --ref-id REF-NNNNN --target-population AUT \

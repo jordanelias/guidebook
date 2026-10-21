@@ -106,10 +106,10 @@ def run_checks(db_path):
 
     # The one populated column that holds population codes and carries no foreign key
     # (validate_population discovered columns by name and never saw it; it was deleted in step 1.6).
-    record("A14", "evidence_population_match.target_population → populations",
+    record("A14", "evidence_population_match.target_population → base_taxonomy_identity",
         conn.execute("""SELECT COUNT(*) FROM evidence_population_match m
             WHERE target_population IS NOT NULL
-              AND NOT EXISTS (SELECT 1 FROM populations p WHERE p.population_code = m.target_population)
+              AND NOT EXISTS (SELECT 1 FROM base_taxonomy_identity p WHERE p.identity_code = m.target_population)
         """).fetchone()[0] == 0,
         subject=subj("SELECT COUNT(*) FROM evidence_population_match WHERE target_population IS NOT NULL"))
 

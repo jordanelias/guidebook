@@ -4451,3 +4451,12 @@ The sentence is overtaken in its first alternative only: an in-corpus root is na
 
 CONDITION: any session asking what a `root_id` may name, or reading the "Root registry" discipline in `governance/evidence-architecture.md`.
 DATE: 2026-10-14 — recorded under RULINGS R24; the superseding words are the delegation entry's, quoted at the ledger line the mark names.
+
+## Recording 2026-10-20 — the identity registry and its ICF map take their lens names
+
+**What this does.** The delegation entry of 2026-10-14 listed "what names the identity registry takes" among the items the assistant resolves, and `RULINGS.md` R49(c) confirmed the names `base_taxonomy_identity`, `identity_icf_map` and the column `identity_code` for LED-127 (M4 only). Migration 115 applies them: `populations` becomes `base_taxonomy_identity`, `population_icf_links` becomes `identity_icf_map`, and `population_code` becomes `identity_code` in both. This entry makes no ruling. It records that the sentence "Confirmation pending — the rename is not applied" in the LED-127 entry (the ruling of 2026-08-28 above) is no longer true of the database, and that the confirmation is the one R49(c) records under the delegation. No `SUPERSEDES` pair is written: the sentence it would mark sits in this ledger, and `supersession_backpointer_audit` counts a target quote in the target file's raw text, where the pair itself would make a second copy (the 2026-10-09 entry, item 6, gives the same reason).
+
+**Not done, and still the owner's.** `evidence_population_match` and its `target_population` and `study_population` columns keep their names. LED-127 names them `served_group` and `study_group` and keeps them out of the lens vocabulary; `RULINGS.md` R14 as first worded would have named the table `evidence_identity_match`. The register step LED-127 orders is executed for `population_icf_links` only (`governance/retired-vocabulary.yaml` RV-027); `populations` is an English word and fails that file's admission test 4, and `population_code` is held back for the flood that file's deferred entry records.
+
+CONDITION: any session asking whether the identity registry has been renamed, what its key column is called, or whether LED-127's confirmation is still pending.
+DATE: 2026-10-20 — recorded under RULINGS R14 and R49(c); the authority is the 2026-10-14 delegation entry above.

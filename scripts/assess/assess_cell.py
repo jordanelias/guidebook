@@ -201,7 +201,7 @@ def _is_disqualified(rec) -> bool:
 # from the schema rather than restated as a vocabulary in code — the tables ARE the
 # vocabulary (CLAUDE.md §4).
 LENS_COLUMNS = {
-    "identity_code": ("populations", "population_code"),
+    "identity_code": ("base_taxonomy_identity", "identity_code"),
     # RE-POINTED 2026-09-13 (owner ruling; migration 081). Was ("axes", "axis_code"),
     # i.e. the ICF lens resolving to an AX- demand code -- the state the same day's
     # ruling bans. db._LENS_COLUMNS carries the identical pair; the extraction and the
@@ -642,7 +642,7 @@ def derivation_handshake(conn, parameter_id, lens, sources):
 
     BOTH PATHS ARE DERIVED, NOT ASKED FOR (CLAUDE.md rule 8). The population path is present
     when governing evidence exists -- that is what the rest of this engine computes. The
-    function path is present when the cell's identity lens has rows in `population_icf_links`
+    function path is present when the cell's identity lens has rows in `identity_icf_map`
     -- migration 080's promotion of the functional-deficit-auditor's mapping out of skill
     prose. So `functional_basis` is READ from that table rather than typed onto the
     determination, and `derivation_paths` follows from the pair. Nothing here is a judgment
@@ -678,10 +678,10 @@ def derivation_handshake(conn, parameter_id, lens, sources):
 
     # --- the function path: the promoted population<->ICF map -------------------
     fb_rows = []
-    if identity and _table_exists(conn, "population_icf_links"):
+    if identity and _table_exists(conn, "identity_icf_map"):
         fb_rows = conn.execute(
             "SELECT icf_code, mechanism, mapping_confidence, provenance "
-            "FROM population_icf_links WHERE population_code = ? ORDER BY icf_code",
+            "FROM identity_icf_map WHERE identity_code = ? ORDER BY icf_code",
             (identity,)).fetchall()
     functional_basis = json.dumps(
         [{"icf_code": r[0], "mechanism": r[1], "mapping_confidence": r[2],
@@ -724,7 +724,7 @@ def derivation_handshake(conn, parameter_id, lens, sources):
     elif has_population:
         paths = "population_only"
         rationale = None if cultural_anchor else (
-            "no population_icf_links row characterises %s, so no function path exists to "
+            "no identity_icf_map row characterises %s, so no function path exists to "
             "meet the population path; recorded as a single-path determination per H2. "
             "This is NOT a downgrade: the absence of a functional derivation never reduces "
             "a population-derived claim (DR-2026-07-13, the cultural-claim protection)."
@@ -1506,13 +1506,13 @@ def determine(conn, parameter_id, lens, slug, note):
 
     # THE DERIVATION HANDSHAKE (080). H2/H3/H4 of DR-2026-07-13, whose
     # `[ENGINE-LAG 2026-08-15]` marker has named this absence ever since: "`specifications`
-    # carries neither `functional_basis` nor `derivation_paths`; `population_icf_links` does
+    # carries neither `functional_basis` nor `derivation_paths`; `population_icf_links` does  [RETIRED-VOCAB-OK]
     # not exist; `assess_cell.py` implements no H4 gate." All three now exist, so the engine
     # reads them.
     #
     # BOTH PATHS ARE DERIVED, NEVER ASSERTED (CLAUDE.md rule 8). The population path is the
     # governing evidence this function has already computed; the function path is whatever
-    # `population_icf_links` records for this cell's identity lens. An author cannot get
+    # `identity_icf_map` records for this cell's identity lens. An author cannot get
     # either wrong by typing, because neither is typed.
     functional_basis, derivation_paths, derivation_rationale, cultural_claim_anchor, gates = \
         derivation_handshake(conn, parameter_id, lens, sources)
@@ -1834,7 +1834,7 @@ def main():
                     help="the topic this determination is recorded under. It does NOT "
                          "select evidence -- sources are gathered by the extractions "
                          "they hold for --parameter-id.")
-    ap.add_argument("--identity", help="populations.population_code")
+    ap.add_argument("--identity", help="base_taxonomy_identity.identity_code")
     ap.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     ap.add_argument("--needs", help="access_needs.need_code")
     ap.add_argument("--medical", help="base_taxonomy_medical.medical_code")

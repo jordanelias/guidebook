@@ -121,7 +121,7 @@ Three representations of the population layer currently coexist and have drifted
 | Representation | Where | Shape |
 |---|---|---|
 | Canonical governance taxonomy | `governance/population-taxonomy.md` (CANONICAL, A7) | 11 top-level codes + sub-codes (MOB/AMB, MOB/UPL, NDV/AUT, NDV/ADHD, NDV/SENS, NEU/PCS, OFS/ME, OFS/POTS, OFS/MCAS); supplementary CHD/LPA/EXH/BAR; IntD proxied |
-| Live database | `data/guidebook.db` `populations` | 22 flat codes (sub-codes flattened: AUT, ADHD, MS, EPI, SCI, CFS, POTS, MCAS, PCS…), archetypes absent |
+| Live database | `data/guidebook.db` `base_taxonomy_identity` | flat codes (sub-codes flattened: AUT, ADHD, MS, EPI, SCI, CFS, POTS, MCAS, PCS…), archetypes absent |
 | This proposal | this document + staged SQL | 17 axes (Layer 1) × profiles (Layer 2) |
 
 This document **amends-by-proposal** the canonical taxonomy rather than silently
