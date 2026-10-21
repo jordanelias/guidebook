@@ -47,6 +47,7 @@ from schemas.directness import ALL_SCALES
 from schemas.enums import (
     ConvergenceStatus,
     EvidenceCellState,
+    EvidenceMarker,
     VerificationStatus,
 )
 
@@ -173,6 +174,10 @@ class EvidenceStateRecord(BaseModel):
 
     # Not-applicable rationale (required when state == not_applicable)
     not_applicable_rationale: Optional[str] = None
+
+    # The band the determination rests on (tier-system section 5). The row's CHECK holds
+    # which states carry one; this model only holds the vocabulary.
+    marker: Optional[EvidenceMarker] = None
 
     # Source quality flags
     has_unverified_sources: bool = False  # Any UNVERIFIED-1 sources in basis

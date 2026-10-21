@@ -91,6 +91,16 @@ sys.path.insert(0, str(REPO / "scripts"))
 import db        # noqa: E402
 import dbcore    # noqa: E402
 from dbcore import Refusal  # noqa: E402
+sys.path.insert(0, str(REPO))
+from schemas.enums import EvidenceMarker  # noqa: E402
+
+
+def unretire(con, spec):
+    """Make a retired specification live again. A live stated or provisional row must carry a
+    marker (migration 116); the weakest band is legal on any such row."""
+    con.execute("UPDATE specifications SET retired_at=NULL, marker=CASE WHEN state IN "
+                "('stated','provisional') THEN ? END WHERE specification_id=?",
+                (EvidenceMarker.WEAK.value, spec))
 
 S = "session_test-db-amend-writers"
 results = []
@@ -703,8 +713,7 @@ try:
         else:
             SPEC, LREF, CREF = pick[0]
             con = sqlite3.connect(DB)
-            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
-                        (SPEC,))
+            unretire(con, SPEC)
             con.commit()
             con.close()
             msg_l = refusal(supersede, LREF, XB, WHY, S)
@@ -1035,8 +1044,7 @@ try:
         else:
             SPEC, LREF, CREF, R_AT, R_BY, R_WHY = pick[0]
             con = sqlite3.connect(DB)
-            con.execute("UPDATE specifications SET retired_at=NULL WHERE specification_id=?",
-                        (SPEC,))
+            unretire(con, SPEC)
             con.commit()
             con.close()
             types = {r: source_row(r)["evidence_type"] for r in (LREF, CREF)}

@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-16 19:48 UTC from git HEAD cc2b74df (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-21 03:13 UTC from git HEAD 81b67a2d (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 114,
+ "user_version": 116,
  "stages": [
   "base",
   "research",
@@ -150,6 +150,22 @@
     "updated_by_session",
     "direction_rationale",
     "accessibility_direction"
+   ]
+  },
+  "base_taxonomy_identity": {
+   "stage": "base",
+   "rows": 23,
+   "writers": [],
+   "cols": [
+    "identity_code",
+    "display_name",
+    "category",
+    "description",
+    "parent_code",
+    "is_compound",
+    "status",
+    "created_at",
+    "updated_at"
    ]
   },
   "base_taxonomy_medical": {
@@ -704,6 +720,24 @@
     "created_by_session"
    ]
   },
+  "identity_icf_map": {
+   "stage": "base",
+   "rows": 61,
+   "writers": [
+    "add-population-icf-link"
+   ],
+   "cols": [
+    "link_id",
+    "identity_code",
+    "icf_code",
+    "mechanism",
+    "mapping_confidence",
+    "provenance",
+    "notes",
+    "created_at",
+    "created_by_session"
+   ]
+  },
   "identity_medical_map": {
    "stage": "base",
    "rows": 0,
@@ -779,40 +813,6 @@
     "revoked_at",
     "revoked_by_session",
     "revocation_reason"
-   ]
-  },
-  "population_icf_links": {
-   "stage": "base",
-   "rows": 61,
-   "writers": [
-    "add-population-icf-link"
-   ],
-   "cols": [
-    "link_id",
-    "population_code",
-    "icf_code",
-    "mechanism",
-    "mapping_confidence",
-    "provenance",
-    "notes",
-    "created_at",
-    "created_by_session"
-   ]
-  },
-  "populations": {
-   "stage": "base",
-   "rows": 23,
-   "writers": [],
-   "cols": [
-    "population_code",
-    "display_name",
-    "category",
-    "description",
-    "parent_code",
-    "is_compound",
-    "status",
-    "created_at",
-    "updated_at"
    ]
   },
   "reasoning_doc_citations": {
@@ -1226,7 +1226,8 @@
     "retirement_reason",
     "superseded_by_specification_id",
     "rests_on_proxy_inference",
-    "value_notations"
+    "value_notations",
+    "marker"
    ]
   },
   "supersession_check": {
@@ -1363,6 +1364,12 @@
    "notnull": true
   },
   {
+   "child": "base_taxonomy_identity",
+   "col": "parent_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
    "child": "case_studies",
    "col": "slug",
    "parent": "slugs",
@@ -1401,7 +1408,7 @@
   {
    "child": "determination_gates",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -1471,6 +1478,18 @@
    "notnull": true
   },
   {
+   "child": "identity_icf_map",
+   "col": "icf_code",
+   "parent": "base_icf",
+   "notnull": true
+  },
+  {
+   "child": "identity_icf_map",
+   "col": "identity_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": true
+  },
+  {
    "child": "identity_medical_map",
    "col": "medical_code",
    "parent": "base_taxonomy_medical",
@@ -1479,7 +1498,7 @@
   {
    "child": "identity_medical_map",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": true
   },
   {
@@ -1492,24 +1511,6 @@
    "child": "parameter_declinations",
    "col": "term_id",
    "parent": "terms",
-   "notnull": false
-  },
-  {
-   "child": "population_icf_links",
-   "col": "icf_code",
-   "parent": "base_icf",
-   "notnull": true
-  },
-  {
-   "child": "population_icf_links",
-   "col": "population_code",
-   "parent": "populations",
-   "notnull": true
-  },
-  {
-   "child": "populations",
-   "col": "parent_code",
-   "parent": "populations",
    "notnull": false
   },
   {
@@ -1587,7 +1588,7 @@
   {
    "child": "search_executions",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -1683,7 +1684,7 @@
   {
    "child": "source_value_extractions",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -1767,7 +1768,7 @@
   {
    "child": "specifications",
    "col": "identity_code",
-   "parent": "populations",
+   "parent": "base_taxonomy_identity",
    "notnull": false
   },
   {
@@ -2218,6 +2219,22 @@
     "contested"
    ]
   },
+  "base_taxonomy_identity": {
+   "category": [
+    "mobility",
+    "sensory",
+    "cognitive",
+    "mental_health",
+    "pain_fatigue",
+    "neurological",
+    "developmental",
+    "general"
+   ],
+   "status": [
+    "active",
+    "deprecated"
+   ]
+  },
   "base_taxonomy_medical": {
    "status": [
     "active",
@@ -2517,6 +2534,13 @@
     "minimal"
    ]
   },
+  "identity_icf_map": {
+   "mapping_confidence": [
+    "high_predictive",
+    "moderate_contextual",
+    "low_indicative"
+   ]
+  },
   "identity_medical_map": {
    "relationship": [
     "names",
@@ -2534,29 +2558,6 @@
    "code": [
     "SEN",
     "CHD"
-   ]
-  },
-  "population_icf_links": {
-   "mapping_confidence": [
-    "high_predictive",
-    "moderate_contextual",
-    "low_indicative"
-   ]
-  },
-  "populations": {
-   "category": [
-    "mobility",
-    "sensory",
-    "cognitive",
-    "mental_health",
-    "pain_fatigue",
-    "neurological",
-    "developmental",
-    "general"
-   ],
-   "status": [
-    "active",
-    "deprecated"
    ]
   },
   "reasoning_doc_citations": {
@@ -2791,6 +2792,11 @@
     "universal",
     "population",
     "person"
+   ],
+   "marker": [
+    "●",
+    "◐",
+    "○"
    ]
   },
   "supersession_check": {
@@ -3392,7 +3398,7 @@
     "insert_population_icf_link"
    ],
    "writes": {
-    "population_icf_links": [
+    "identity_icf_map": [
      "INSERT"
     ]
    },
@@ -3764,9 +3770,7 @@
    ],
    "evidence": {
     "tables": [
-     "evidence_population_match",
-     "population_icf_links",
-     "populations"
+     "evidence_population_match"
     ],
     "columns": {
      "case_studies": [
@@ -3779,12 +3783,6 @@
      ],
      "external_root_registry": [
       "root_population_note"
-     ],
-     "population_icf_links": [
-      "population_code"
-     ],
-     "populations": [
-      "population_code"
      ],
      "reasoning_doc_citations": [
       "population"
@@ -3937,9 +3935,9 @@
      "access_need_icf",
      "access_needs",
      "access_stakes",
+     "base_taxonomy_identity",
      "lang_jur_map",
      "life_stage_modifiers",
-     "populations",
      "rooms",
      "slugs"
     ]
@@ -4637,10 +4635,10 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2221,
+  "ACTIVE": 2219,
   "SUPERSEDED": 85,
   "OPEN": 71,
-  "AMENDED": 66,
+  "AMENDED": 68,
   "PROPOSED": 129,
   "HISTORICAL": 26
  },

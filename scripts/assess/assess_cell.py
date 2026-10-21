@@ -118,9 +118,9 @@ from schemas.directness import (  # noqa: E402
     COND_DIRECT, COND_DOWN_WEIGHTED, COND_DISCOUNTED, COND_NON_ANCHORING,
     consolidate, grain_for, population_directness_from_match_grade, scale_directness,
 )
-from schemas.tier_derivation import check_tier_consistency  # noqa: E402
+from schemas.tier_derivation import band, check_tier_consistency, floor_mean  # noqa: E402
 from schemas.enums import (  # noqa: E402
-    ConvergenceStatus, EvidenceCellState,
+    ConvergenceStatus, EvidenceCellState, EvidenceMarker,
     VerificationStatus,
 )
 from schemas.evidence_state import (  # noqa: E402
@@ -298,10 +298,7 @@ def gather_sources(conn, parameter_id):
     # the governing set; gather_extraction_links records each skimmed row as excluded with
     # the reason. Fixture tolerance as above: a synthetic table without the column has no
     # skimmed rows to leave out.
-    has_method = _has_column(conn, "source_value_extractions", "extraction_method")
-    method_clause = (f"AND x.extraction_method NOT IN "
-                     f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})"
-                     if has_method else "")
+    method_clause, method_params = _publishable_clause(conn, "x")
     q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
                    e.verification_status, {disp_col}, e.scope, e.jurisdiction
             FROM source_value_extractions x
@@ -313,8 +310,7 @@ def gather_sources(conn, parameter_id):
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
                       "verification_status", "verification_disposition",
                       "scope", "jurisdiction"), r))
-            for r in conn.execute(q, (parameter_id,)
-                                  + (NOT_PUBLISHABLE_METHODS if has_method else ()))]
+            for r in conn.execute(q, (parameter_id,) + method_params)]
 
 
 def _has_column(conn, table, column):
@@ -324,6 +320,15 @@ def _has_column(conn, table, column):
 
 #: The ruling lives in dbcore (stdlib only) so the stdlib-only checks can read it too.
 NOT_PUBLISHABLE_METHODS = dbcore.NOT_PUBLISHABLE_METHODS
+
+
+def _publishable_clause(conn, alias):
+    """`AND <alias>.extraction_method NOT IN (...)` and its parameters, or nothing on a fixture
+    whose table has no such column (the tolerance `gather_sources` documents)."""
+    if not _has_column(conn, "source_value_extractions", "extraction_method"):
+        return "", ()
+    return (f"AND {alias}.extraction_method NOT IN "
+            f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})", NOT_PUBLISHABLE_METHODS)
 
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
@@ -1202,6 +1207,40 @@ def sha(parameter_id, lens, links):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
+def _confirmed_bands(conn, parameter_id, links, finding_anchors):
+    """R39: each governing source's band under confirmation by study.
+
+    A governing row is weak unless a `confirms` edge, whose referent is that row, comes from
+    an anchoring finding source (`finding_anchors`) through a finding row of THIS parameter
+    that the value path would also accept: not skimmed (owner 2026-10-09, "skimmed values are
+    not publishable") and not `claim_type='absent'`, which says nothing was found and so
+    confirms no value. A confirmed row takes the floor of the mean of its confirmers' bands; a
+    source takes the floor of the mean of its governing rows, so one confirmed clause does not
+    lift a sibling clause that no study confirms. A `to_label` referent names no row and
+    confirms nothing. A source with no entry here is weak."""
+    rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
+    if not rows or not _table_exists(conn, "extraction_relations"):
+        return {}
+    finding_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"]) for r in finding_anchors}
+    skim, skim_params = _publishable_clause(conn, "e")
+    confirmers = {}
+    for to_id, from_ref in conn.execute(
+            "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "
+            "JOIN source_value_extractions e ON e.extraction_id = r.from_extraction_id "
+            "WHERE r.relation = 'confirms' AND e.parameter_id = ? "
+            "AND e.figure_role IN (%s) AND e.claim_type <> 'absent' %s "
+            "AND r.to_extraction_id IN (%s)"
+            % (",".join("?" * len(DIRECTION_SUPPLYING_ROLES)), skim, ",".join("?" * len(rows))),
+            (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *rows)):
+        if from_ref in finding_bands:
+            confirmers.setdefault(to_id, {})[from_ref] = finding_bands[from_ref]
+    by_source = {}
+    for eid, ref in rows.items():
+        by_source.setdefault(ref, []).append(
+            floor_mean(confirmers[eid].values()) if eid in confirmers else EvidenceMarker.WEAK)
+    return {ref: floor_mean(bands) for ref, bands in by_source.items()}
+
+
 def determine(conn, parameter_id, lens, slug, note):
     """The pure determination function. Returns (record dicts for insert, log).
 
@@ -1566,8 +1605,30 @@ def determine(conn, parameter_id, lens, slug, note):
                   "gate caps it at `provisional` until resolved. Resolve the gate to "
                   "restore the cell, never re-run the engine to route around it.")
 
+    # THE MARKER (migration 116; RULINGS R7, R39). Only a stated or provisional cell carries
+    # one. Each governing source takes its tier-system section 5 band and the cell takes the
+    # floor of their mean (owner 2026-09-13). A value read off the regulatory stratum, as a
+    # floor claim or as the threshold of a proxy inference, is weak (Option A section 2.3;
+    # DR-2026-07-21): each of its codes is weak unless an anchoring finding confirms it, and
+    # then takes the confirming study's band. The row's CHECK pins a regulatory-stratum-only
+    # cell at weak; the proxy rule lives here alone, because a CHECK cannot read
+    # extraction_relations. THE MARKER IS A CACHE over those edges: `derivation_sha` does not
+    # hash them and no check recomputes it, so a `confirms` edge added later leaves the stored
+    # marker stale under an unchanged sha (recorded, not built).
+    marker = None
+    if state in ("stated", "provisional"):
+        by_ref = {r["ref_id"]: r for r in recs}
+        if regulatory_stratum_only or rests_on_proxy_inference:
+            confirmed = _confirmed_bands(conn, parameter_id, links, finding_anchors)
+            source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in governing]
+        else:
+            source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
+                            for g in governing]
+        marker = floor_mean(source_bands).value
+
     return {
         "links": links,
+        "marker": marker,
         # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
         # the skimmed value-supplying rows left out of what sets this cell's value.
         "excluded_not_publishable": [
@@ -1792,7 +1853,7 @@ def validate_with_models(det, gap_id):
         state=EvidenceCellState(det["state"]),
         convergence=conv_model, confidence_flag=flag,
         gap_register_id=gap_id,
-        not_applicable_rationale=None)
+        not_applicable_rationale=None, marker=det["marker"])
     return True
 
 
@@ -2051,6 +2112,8 @@ def main():
                 # regulatory_stratum_only: the value was selected under a proxy inference
                 # from findings rather than stated by a source (owner 2026-09-16).
                 det["rests_on_proxy_inference"],
+                # 116. The band the determination rests on, computed by determine().
+                det["marker"],
                 # 080. `derivation_paths` carries a CHECK that a single-path row owes
                 # either a rationale or a cultural anchor, so these four are written
                 # together or the database refuses the row -- which is the dignity line
@@ -2068,7 +2131,7 @@ def main():
                 "value_min, value_max, value_unit, value_note, value_notations, "
                 "falsification_condition, "
                 "has_unverified_sources, all_sources_disqualified, regulatory_stratum_only, "
-                "rests_on_proxy_inference, "
+                "rests_on_proxy_inference, marker, "
                 "functional_basis, derivation_paths, derivation_rationale, "
                 "cultural_claim_anchor, "
                 "created_at, created_by_session, updated_at, updated_by_session")
@@ -2121,8 +2184,8 @@ def main():
                         "value_notations", "accessibility_direction",
                         "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
-                        "regulatory_stratum_only", "rests_on_proxy_inference",
-                        "has_unverified_sources",
+                        "regulatory_stratum_only", "rests_on_proxy_inference", "marker",
+                        "excluded_not_publishable", "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "n_extractions", "non_anchoring_on_tier",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
@@ -2143,6 +2206,7 @@ def main():
     # migration carried the rows. Its own comment said it held "until migration 027
     # adds a real regulatory_stratum_only column".
     #
+    # [strength_band, below, is history: migration 116 replaced it with `marker`.]
     # That column exists. Migration 027 landed it, and migration 029 then went
     # further, under RATIFIED DR-2026-07-21-product-posture-thinking-tool-not-authority:
     # a determination whose entire evidence basis is the regulatory stratum IS a

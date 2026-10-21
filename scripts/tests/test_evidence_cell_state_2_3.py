@@ -43,6 +43,10 @@ def reject(name, fn, expect=None):
 # Part 1 — models
 # ----------------------------------------------------------------------------
 from schemas.evidence_state import EvidenceStateRecord, ConvergenceAssessment  # noqa: E402
+from schemas.enums import EvidenceMarker  # noqa: E402
+
+# The glyphs come from the enum, never typed: the row's CHECK holds the same vocabulary.
+M, WEAK = EvidenceMarker.FULL.value, EvidenceMarker.WEAK.value
 
 conv = ConvergenceAssessment(status="convergent", clinical_sources=["REF-001"],
                              co1_sources=["REF-050"], down_weighted_sources=["REF-099"],
@@ -157,27 +161,27 @@ db.execute("INSERT INTO base_icf(icf_code,component,title,title_source,created_a
 db.execute("INSERT INTO convergence_assessment(convergence_id,status,clinical_sources) "
            "VALUES (1,'convergent','[\"REF-001\"]')")
 db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,"
-           "design_scale,convergence_id) VALUES (1,1,'AUT','stated','population',1)")
+           "design_scale,convergence_id,marker) VALUES (1,1,'AUT','stated','population',1,'%s')" % M)
 db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,"
            "gap_register_id) VALUES (2,1,'MOB','pending','GAP-001')")
 check("valid stated + pending cells inserted",
       db.execute("SELECT COUNT(*) FROM specifications").fetchone()[0] == 2)
 check("D-0182 at the DB: a cell in several lenses at once is accepted",
       db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
-                 "icf_code,state) VALUES (3,1,'AUT','b230','stated')") is not None)
+                 "icf_code,state,marker) VALUES (3,1,'AUT','b230','stated','%s')" % M) is not None)
 
 reject("CHECK: a cell in NO lens (D-0182 floor)",
-       lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,state) "
-                          "VALUES (10,1,'stated')"))
+       lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,state,marker) "
+                          "VALUES (10,1,'stated','%s')" % M))
 reject("FK: non-existent parameter_id",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
-                          "state) VALUES (11,9999,'AUT','stated')"))
+                          "state,marker) VALUES (11,9999,'AUT','stated','%s')" % M))
 reject("FK: non-existent identity_code",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
-                          "state) VALUES (12,1,'NOPE','stated')"))
+                          "state,marker) VALUES (12,1,'NOPE','stated','%s')" % M))
 reject("FK: non-existent icf_code",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,icf_code,"
-                          "state) VALUES (13,1,'zzz999','stated')"))
+                          "state,marker) VALUES (13,1,'zzz999','stated','%s')" % M))
 reject("FK: non-existent gap_id",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
                           "state,gap_register_id) VALUES (14,1,'AUT','pending','GAP-99999')"))
@@ -186,15 +190,31 @@ reject("CHECK: bad state",
                           "state) VALUES (15,1,'AUT','halfbaked')"))
 reject("CHECK: bad design_scale",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
-                          "state,design_scale) VALUES (16,1,'AUT','stated','galactic')"))
+                          "state,design_scale,marker) VALUES (16,1,'AUT','stated','galactic','%s')" % M))
 reject("CHECK: bad convergence status",
        lambda: db.execute("INSERT INTO convergence_assessment(convergence_id,status) VALUES (2,'bogus')"))
 reject("CHECK: non-boolean has_unverified_sources",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
-                          "state,has_unverified_sources) VALUES (17,1,'AUT','stated',7)"))
+                          "state,has_unverified_sources,marker) VALUES (17,1,'AUT','stated',7,'%s')" % M))
 reject("UNIQUE: duplicate (parameter_id, lens tuple)",
        lambda: db.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,"
-                          "state) VALUES (18,1,'AUT','stated')"))
+                          "state,marker) VALUES (18,1,'AUT','stated','%s')" % M))
+# The marker (migration 116): which states carry one, and the regulatory-stratum ceiling. Each
+# refusal names its own CHECK, so none can pass on the lens or UNIQUE constraint instead.
+_I = "INSERT INTO specifications(parameter_id,icf_code,state,regulatory_stratum_only,marker) VALUES (1,'b230',?,?,?)"
+reject("CHECK: a live stated row with no marker", lambda: db.execute(_I, ("stated", 0, None)),
+       expect="marker IS NOT NULL")
+reject("CHECK: a live pending row with a marker", lambda: db.execute(_I, ("pending", 0, M)),
+       expect="marker IS NOT NULL")
+reject("CHECK: a glyph outside the vocabulary", lambda: db.execute(_I, ("stated", 0, "X")),
+       expect="marker IN")
+reject("CHECK: a regulatory-stratum-only row above the weakest marker",
+       lambda: db.execute(_I, ("provisional", 1, M)), expect="regulatory_stratum_only = 0")
+check("a regulatory-stratum-only row at the weakest marker is accepted",
+      db.execute(_I, ("provisional", 1, WEAK)) is not None)
+check("a RETIRED stated row needs no marker",
+      db.execute("INSERT INTO specifications(parameter_id,icf_code,state,retired_at) "
+                 "VALUES (1,'b230','stated','t')") is not None)
 check("PRAGMA foreign_key_check clean", not db.execute("PRAGMA foreign_key_check").fetchall())
 db.close()
 
