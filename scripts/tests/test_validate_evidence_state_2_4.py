@@ -22,6 +22,9 @@ fails = []
 
 sys.path.insert(0, HERE)
 from _baseline_ddl import ddl_for  # noqa: E402
+from schemas.enums import EvidenceMarker  # noqa: E402
+
+M = EvidenceMarker.FULL.value   # a live stated or provisional row must carry a marker (migration 116)
 
 
 def schema_ddl():
@@ -172,8 +175,8 @@ def clean(c):
     conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"])
     # governing_refs is required on 'stated' (anti-hallucination gate, §2.7). The
     # baseline predated that rule, so it was not clean once the fixture caught up.
-    c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id) "
-              "VALUES (1,1,'AUT','stated','population',1)")
+    c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id,marker) "
+              "VALUES (1,1,'AUT','stated','population',1,'%s')" % M)
     # Through the junction: `governing_refs` is retired and a row written today leaves it
     # NULL, so stating the ref in the JSON would no longer satisfy the gate.
     c.execute("INSERT INTO specification_source_links(specification_id,ref_id,role) "
@@ -186,8 +189,8 @@ check("clean stated+convergent → 0 errors", run(clean) == [])
 check("stated without a governing source caught (anti-hallucination gate)",
       has(run(lambda c: (
           conv(c, 1, 'convergent', clinical=["REF-1"], co1=["REF-2"]),
-          c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id) "
-                    "VALUES (1,7,'MOB','stated','population',1)"))),
+          c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,design_scale,convergence_id,marker) "
+                    "VALUES (1,7,'MOB','stated','population',1,'%s')" % M))),
           "stated", "specification_source_links"))
 
 # pending without gap
@@ -202,8 +205,8 @@ check("pending with unknown gap caught (defense-in-depth vs FK)",
 
 # provisional without confidence flag
 check("provisional without confidence flag caught",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,convergence_id) "
-                                  "VALUES (1,4,'AUT','provisional',NULL)")), "provisional", "confidence flag"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,convergence_id,marker) "
+                                  "VALUES (1,4,'AUT','provisional',NULL,'%s')" % M)), "provisional", "confidence flag"))
 
 # not_applicable without rationale
 check("not_applicable without rationale caught",
@@ -212,8 +215,8 @@ check("not_applicable without rationale caught",
 
 # stated without convergence
 check("stated without convergence caught",
-      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state) "
-                                  "VALUES (1,6,'AUT','stated')")), "stated", "convergence"))
+      has(run(lambda c: c.execute("INSERT INTO specifications(specification_id,parameter_id,identity_code,state,marker) "
+                                  "VALUES (1,6,'AUT','stated','%s')" % M)), "stated", "convergence"))
 
 # convergent with <2 axes
 check("convergent with <2 axes caught",

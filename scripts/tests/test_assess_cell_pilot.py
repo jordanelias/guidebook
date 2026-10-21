@@ -28,7 +28,11 @@ sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
 from assess_cell import determine  # noqa: E402
+from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
+
+# The glyphs come from the enum, never typed: the row's CHECK holds the same vocabulary.
+FULL, PARTIAL, WEAK = EvidenceMarker.FULL.value, EvidenceMarker.PARTIAL.value, EvidenceMarker.WEAK.value
 
 
 # The scope each evidence_type needs for its stored tier to be DERIVABLE
@@ -442,7 +446,7 @@ def main():
             probe.executescript(isql)
         base = {"parameter_id": 1, "state": "stated", "code_floor_only": 0,
                 "has_unverified_sources": 0, "all_sources_disqualified": 0,
-                "regulatory_stratum_only": 0}
+                "regulatory_stratum_only": 0, "marker": FULL}
         seq = [0]
 
         def try_row(**extra):
@@ -480,6 +484,15 @@ def main():
         expect("H2 CHECK: dual owes neither", try_row(derivation_paths="dual") is None)
         expect("H2 CHECK: cultural_claim_anchor must be valid JSON",
                try_row(derivation_paths="dual", cultural_claim_anchor="not json") is not None)
+        # Migration 116: the marker's two CHECKs, against the live DDL like the rows above.
+        expect("MARKER CHECK: a live stated row with no marker is REFUSED",
+               try_row(marker=None) is not None)
+        expect("MARKER CHECK: a pending row with a marker is REFUSED",
+               try_row(state="pending", marker=FULL) is not None)
+        expect("MARKER CHECK: a regulatory-stratum-only row above the weakest band is REFUSED",
+               try_row(state="provisional", regulatory_stratum_only=1, marker=PARTIAL) is not None)
+        expect("MARKER CHECK: a regulatory-stratum-only row at the weakest band is accepted",
+               try_row(state="provisional", regulatory_stratum_only=1, marker=WEAK) is None)
     else:
         expect("H2 CHECK: live DDL available to test against", False,
                "data/guidebook.db absent")
@@ -546,6 +559,54 @@ def main():
            "right absence instead of claiming supersession",
            d["n_finding_sources"] == 1 and d["n_sources"] == 0,
            f"findings={d['n_finding_sources']} value-suppliers={d['n_sources']}")
+
+    # ── The marker (migration 116; RULINGS R7, R39) ───────────────────────────
+    d = determine(synth_db([{"tier": 2, "evidence_type": "co2"}]), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "marker-anchored")
+    expect("MARKER: an anchored (stated) cell takes the anchors' band", d["marker"] == FULL, str(d["marker"]))
+    d = determine(synth_db([{"tier": 3, "evidence_type": "clinical", "scope": "lower_control"}]), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "marker-t3-clinical")
+    expect("MARKER: T3-clinical alone is provisional and still full (band = evidence, state = status)",
+           d["state"] == "provisional" and d["marker"] == FULL, f"{d['state']} {d['marker']}")
+    d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": j}
+                            for j in ("US", "GB", "AU")]), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "marker-floor")
+    expect("MARKER: a regulatory-stratum-only floor claim is weak", d["marker"] == WEAK, str(d["marker"]))
+    d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": "US"}
+                            for _ in range(3)]), 1, {"identity_code": "MOB"}, "syn-slug", "marker-pending")
+    expect("MARKER: a pending cell carries none", d["state"] == "pending" and d["marker"] is None,
+           f"{d['state']} {d['marker']}")
+    d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "marker-proxy")
+    expect("MARKER: a proxy determination is weak unless a study confirms its codes",
+           d["marker"] == WEAK, str(d["marker"]))
+
+    # R39: a `confirms` edge from an anchoring finding to a governing code takes the confirming
+    # study's band for that code, and the cell takes the floor-mean. A `tested_at` edge, and an
+    # edge to a label rather than a row, confirm nothing.
+    def _proxy_with_edges(relation, confirmed_refs, to_label=False):
+        c = synth_db(_t6 + _find)
+        c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
+                        "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
+                        "to_extraction_id INT, to_label TEXT)")
+        ids = dict(c.execute("SELECT ref_id, extraction_id FROM source_value_extractions"))
+        for ref in confirmed_refs:
+            c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
+                      "to_extraction_id, to_label) VALUES (?,?,?,?)",
+                      (ids["REF-FIND-1"], relation, None if to_label else ids[ref],
+                       "a code" if to_label else None))
+        return determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "marker-confirm")["marker"]
+
+    _codes = [r for r in ("REF-SYN-00", "REF-SYN-01", "REF-SYN-02")]
+    _c = sqlite3.connect(":memory:")
+    _refs = [r[0] for r in synth_db(_t6 + _find).execute(
+        "SELECT ref_id FROM evidence_sources WHERE tier = 6 ORDER BY ref_id")]
+    expect("R39: every governing code confirmed by a full-band study => the cell is full",
+           _proxy_with_edges("confirms", _refs) == FULL)
+    expect("R39: two of three codes confirmed => the floor of the mean, partial",
+           _proxy_with_edges("confirms", _refs[:2]) == PARTIAL)
+    expect("R39: a tested_at edge confirms nothing", _proxy_with_edges("tested_at", _refs) == WEAK)
+    expect("R39: a confirms edge whose referent is a label, not a row, confirms nothing",
+           _proxy_with_edges("confirms", _refs, to_label=True) == WEAK)
 
     # ── Owner ruling 2026-09-17: PRESENT BOTH, never choose ───────────────────
     # Three codes state the same quantity, two as a percentage and one as a RATIO.
