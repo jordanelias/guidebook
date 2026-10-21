@@ -7883,14 +7883,16 @@ def _verbatim_norm(text):
 
 
 def _refuse_live_confirmation(conn, context, to_extraction):
-    """A `confirms` edge aimed at a row a LIVE determination is governed by would change the
-    marker the engine writes for it, and nothing recomputes a stored marker: `derivation_sha` does
-    not hash the edges. Refused the way `amend-source` refuses to re-tier a source such a
-    determination rests on: retire it, add the edge, re-determine."""
-    live = dbcore.determinations_governed_by_extraction(conn, to_extraction)
+    """A `confirms` edge aimed at a row a LIVE PROXY determination is governed by would change the
+    marker the engine writes for it (only a proxy determination reads the edges), and nothing
+    recomputes a stored marker: `derivation_sha` does not hash them. Refused the way `amend-source`
+    refuses to re-tier a source such a determination rests on: retire it, add the edge,
+    re-determine."""
+    live = dbcore.live_determinations_linked(conn, to_extraction, governing_only=True,
+                                             proxy_only=True)
     if live:
         raise Refusal(
-            f"{context}: extraction {to_extraction} governs live determination(s) "
+            f"{context}: extraction {to_extraction} governs live proxy determination(s) "
             f"{', '.join(map(str, live))}. A confirms edge to it would change the marker "
             f"that determination should carry, and the stored marker is not recomputed. "
             f"Retire the specification first (db.py retire-specification), add the edge, "
@@ -8683,6 +8685,17 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                               "amend-extraction")
 
         old = row[field]
+        if field in ("figure_role", "extraction_method"):
+            # How a row is graded decides what it supplies (a value, direction, a confirmation)
+            # and so the marker; a live determination was written on the grading it had.
+            live = dbcore.live_determinations_linked(conn, extraction_id)
+            if live:
+                raise Refusal(
+                    f"amend-extraction: extraction {extraction_id} is in the provenance of live "
+                    f"determination(s) {', '.join(map(str, live))}; regrading {field} would "
+                    f"change what that answer rests on without re-deciding it. Retire the "
+                    f"specification first (db.py retire-specification), amend, then "
+                    f"re-determine. Nothing was written.")
         if field == "figure_role":
             if row["claim_type"] == "absent" and value != "finding":
                 raise Refusal(

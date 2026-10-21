@@ -1119,19 +1119,23 @@ def determinations_resting_on(conn, ref_id) -> list:
         (ref_id, ref_id))})
 
 
-def determinations_governed_by_extraction(conn, extraction_id) -> list:
-    """The LIVE determinations for which extraction `extraction_id` is a governing row, as
-    sorted specification ids. Empty when none is.
+def live_determinations_linked(conn, extraction_id, *, governing_only=False, proxy_only=False) -> list:
+    """The LIVE determinations that carry extraction `extraction_id` in their provenance
+    (`specification_extraction_links`), as sorted specification ids. Empty when none does.
 
-    The row-level counterpart of `determinations_resting_on`: that one answers for a source, this
-    for one figure, which is what a `confirms` edge aimed at it changes (the marker the engine
-    would write). LIVE means `retired_at IS NULL`, as there.
+    The row-level counterpart of `determinations_resting_on`, which answers for a source. Every
+    extraction of a parameter is linked, graded by the part it played, when a determination is
+    written, so "linked" means "read for this answer". `governing_only` narrows it to the rows
+    that supplied the value; `proxy_only` to determinations that rest on a proxy inference, the
+    only ones whose marker reads `confirms` edges. LIVE means `retired_at IS NULL`, as there.
     """
     return [r[0] for r in conn.execute(
         "SELECT DISTINCT l.specification_id FROM specification_extraction_links l "
         "JOIN specifications s ON s.specification_id = l.specification_id "
-        "WHERE l.extraction_id = ? AND l.role = 'governing' AND s.retired_at IS NULL "
-        "ORDER BY 1", (extraction_id,))]
+        "WHERE l.extraction_id = ? AND s.retired_at IS NULL "
+        + ("AND l.role = 'governing' " if governing_only else "")
+        + ("AND s.rests_on_proxy_inference = 1 " if proxy_only else "")
+        + "ORDER BY 1", (extraction_id,))]
 
 
 def writable_tables(conn) -> list:

@@ -258,8 +258,9 @@ class EvidenceStateRecord(BaseModel):
             # (pending_assessment is acceptable during migration)
             pass
 
-        # Migration 116's CHECK, refused here before any write: a stated or provisional cell
-        # carries its marker, and a pending or not_applicable one carries none.
+        # The state half of migration 116's CHECK, refused here before any write: a stated or
+        # provisional cell carries its marker, and a pending or not_applicable one carries none.
+        # The regulatory-stratum ceiling is the DB's alone (this model has no such field).
         live = state_val in ("stated", "provisional")
         if live != (self.marker is not None):
             raise ValueError(

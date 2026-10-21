@@ -1615,9 +1615,10 @@ try:
            msg_root and "external_root_registry" in msg_root and msg_slug and "slug" in msg_slug
            and counts("source_value_extractions") == n_sve, f"root={msg_root!r} slug={msg_slug!r}")
 
-    # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE determination
-    # is governed by is refused (dbcore.determinations_governed_by_extraction), through both
-    # writers, and stops being refused once that determination is retired.
+    # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
+    # determination is governed by is refused (dbcore.live_determinations_linked), through both
+    # writers, and so is regrading a row in a live determination's provenance; neither is refused
+    # once that determination is retired, and a determination that is not a proxy one reads no edges.
     gov = q("SELECT l.specification_id, l.extraction_id FROM specification_extraction_links l "
             "WHERE l.role='governing' ORDER BY 1, 2 LIMIT 1")
     label_edge = q("SELECT from_extraction_id FROM extraction_relations WHERE relation='confirms' "
@@ -1629,28 +1630,57 @@ try:
                f"gov={gov} label_edge={label_edge} finding={finding}")
     else:
         (SPEC_G, GOV_X), FROM_L, FROM_F = gov[0], label_edge[0][0], finding[0][0]
+        other = q("SELECT extraction_id FROM specification_extraction_links WHERE specification_id=? "
+                  "AND role <> 'governing' ORDER BY 1 LIMIT 1", SPEC_G)
+        OTHER_X = other[0][0] if other else None
         con = sqlite3.connect(DB)
         unretire(con, SPEC_G)
+        con.execute("UPDATE specifications SET rests_on_proxy_inference=1 WHERE specification_id=?",
+                    (SPEC_G,))
         con.commit()
         con.close()
+
+        def linked(x, **k):
+            c = sqlite3.connect(DB)
+            try:
+                return dbcore.live_determinations_linked(c, x, **k)
+            finally:
+                c.close()
+
         n_rel = counts("extraction_relations")
         edge = dict(to_extraction=GOV_X, stated="named", quote="fixture quote", dry_run=True)
         msg_add = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
         msg_rep = refusal(db.repoint_extraction_relation, FROM_L, "confirms", GOV_X, S, dry_run=True)
-        msg_other = refusal(db.relate_extraction, FROM_F, "tested_at", S, **edge)
-        record("G01", "relate-extraction refuses a confirms edge to a row a live determination is "
+        record("G01", "relate-extraction refuses a confirms edge to a row a live proxy determination is "
                "governed by, naming it and retire-specification, and writes nothing",
                msg_add and f"{SPEC_G}" in msg_add and "retire-specification" in msg_add
                and counts("extraction_relations") == n_rel, f"{msg_add!r}")
         record("G02", "--repoint refuses the same for a label edge",
                msg_rep and "retire-specification" in msg_rep, f"{msg_rep!r}")
-        record("G03", "the guard is the confirms relation's alone: tested_at to the same row is not "
-               "refused for that reason", not msg_other or "live determination" not in msg_other,
-               f"{msg_other!r}")
+        record("G03", "the guard reads the governing role: a row the determination only EXCLUDED is "
+               "not 'governed by' it, though it is linked",
+               OTHER_X is not None and linked(OTHER_X, governing_only=True) == []
+               and linked(OTHER_X) == [SPEC_G], f"other={OTHER_X} {linked(OTHER_X) if OTHER_X else ''}")
+        msg_amend = refusal(db.amend_extraction, GOV_X, "extraction_method", "full-read", "fixture", S,
+                            dry_run=True)
+        record("G04", "amend-extraction refuses to regrade a row in a live determination's provenance, "
+               "naming it",
+               msg_amend and f"{SPEC_G}" in msg_amend and "retire-specification" in msg_amend,
+               f"{msg_amend!r}")
+        con = sqlite3.connect(DB)
+        con.execute("UPDATE specifications SET rests_on_proxy_inference=0 WHERE specification_id=?",
+                    (SPEC_G,))
+        con.commit()
+        con.close()
+        record("G05", "a live determination that is NOT a proxy one reads no edges, so the guard does "
+               "not fire for it", linked(GOV_X, governing_only=True, proxy_only=True) == []
+               and linked(GOV_X, governing_only=True) == [SPEC_G])
         reretire(SPEC_G, "t", S, "fixture")
-        msg_after = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
-        record("G04", "once that determination is retired the guard no longer fires",
-               not msg_after or "live determination" not in msg_after, f"{msg_after!r}")
+        record("G06", "once the determination is retired no helper reports it, so neither guard fires",
+               linked(GOV_X) == [])
+        record("G07", "and the remedy works: amend-extraction no longer refuses on that ground",
+               "live determination" not in (refusal(db.amend_extraction, GOV_X, "extraction_method",
+                                                    "full-read", "fixture", S, dry_run=True) or ""))
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

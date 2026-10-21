@@ -27,7 +27,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
-from assess_cell import NOT_PUBLISHABLE_METHODS, determine  # noqa: E402
+from assess_cell import NOT_PUBLISHABLE_METHODS, determine, gap_account  # noqa: E402
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
 
@@ -619,6 +619,32 @@ def main():
     d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "no-skim")
     expect("DIRECTION: nothing is reported when no finding was skimmed",
            d["rests_on_proxy_inference"] == 1 and d["skimmed_findings"] == [])
+    c = _with_method(synth_db(_t6 + _find))
+    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-SYN-000'", (_SKIM,))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "skimmed-claim")
+    expect("DIRECTION: a skimmed CLAIM row is not reported as a skimmed finding",
+           d["skimmed_findings"] == [], str(d["skimmed_findings"]))
+    c = _with_method(synth_db(_t6 + _find))
+    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-FIND-1'", (_SKIM,))
+    c.execute("UPDATE evidence_sources SET superseded_by_ref_id='REF-NEW' WHERE ref_id='REF-FIND-1'")
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "skimmed-superseded")
+    expect("DIRECTION: a skimmed finding of a SUPERSEDED source is not reported (it owes no reading)",
+           d["skimmed_findings"] == [] and d["n_findings_left_out"] == 0,
+           f"{d['skimmed_findings']} {d['n_findings_left_out']}")
+
+    # The gap a pending cell records names the right absence (a description that names the wrong
+    # one is followed). Findings that no longer count must not read as a supersession.
+    for _label, _fnd in (("skimmed-only", None), ("absent-only", dict(_find[0], claim_type="absent")),
+                         ("counted finding", _find[0])):
+        c = _with_method(synth_db([_fnd or _find[0]]))
+        if _fnd is None:
+            c.execute("UPDATE source_value_extractions SET extraction_method=?", (_SKIM,))
+        d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-" + _label)
+        cause, _remedy = gap_account(d, 1)
+        _want = "NONE COUNTS" if _label != "counted finding" else "NONE STATES A VALUE"
+        expect(f"GAP: {_label} findings => the gap says '{_want}', never a supersession",
+               d["state"] == "pending" and _want in cause and "SUPERSEDED" not in cause,
+               f"{d['state']} | {cause}")
 
     d = determine(synth_db([{"tier": 2, "evidence_type": "sr_meta", "verification_status": "UNVERIFIED"}]),
                   1, {"identity_code": "MOB"}, "syn-slug", "unverified-sole")
@@ -628,8 +654,15 @@ def main():
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"},
                             {"tier": 2, "evidence_type": "sr_meta", "verification_status": "UNVERIFIED"}]),
                   1, {"identity_code": "MOB"}, "syn-slug", "unverified-one-of-two")
-    expect("VERIFIED: one unverified source among verified ones takes the floor of the mean (not full)",
-           d["marker"] == PARTIAL, str(d["marker"]))
+    expect("VERIFIED: an unverified source among verified ones is flagged and left out, so it "
+           "neither raises nor lowers the marker",
+           d["marker"] == FULL and d["has_unverified_sources"] == 1,
+           f"{d['marker']} {d['has_unverified_sources']}")
+    d = determine(synth_db(_t6 + [dict(_find[0], verification_status="UNVERIFIED")]), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "unverified-direction")
+    expect("VERIFIED: a proxy cell whose direction is unverified says so (has_unverified_sources)",
+           d["rests_on_proxy_inference"] == 1 and d["has_unverified_sources"] == 1,
+           f"{d['rests_on_proxy_inference']} {d['has_unverified_sources']}")
 
     # R39: a `confirms` edge from an anchoring finding to a governing row confirms it; the row takes
     # the confirming study's band and a code the floor-mean of its rows, and ONLY a code every one
@@ -637,27 +670,29 @@ def main():
     # parameter that is neither skimmed nor `absent`; a `tested_at` edge and an edge to a label
     # confirm nothing; an unverified confirmer lends only the weak band.
     def _proxy(relation="confirms", which=slice(None), codes=_t6, to_label=False, confirmer="",
-               finding=_find):
+               finding=_find, confirmers_from=("REF-FIND-1",)):
         c = _with_method(synth_db(codes + finding))
         c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
                         "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
                         "to_extraction_id INT, to_label TEXT)")
-        find_id = c.execute("SELECT MIN(extraction_id) FROM source_value_extractions "
-                            "WHERE ref_id='REF-FIND-1'").fetchone()[0]
+        from_ids = [c.execute("SELECT MIN(extraction_id) FROM source_value_extractions "
+                              "WHERE ref_id=?", (ref,)).fetchone()[0] for ref in confirmers_from]
         if confirmer:   # a SECOND finding row of the same anchoring source holds the edges
-            find_id = c.execute(
+            from_ids = [c.execute(
                 "INSERT INTO source_value_extractions (ref_id, slug, parameter_id, claim_type, "
                 "claimed_value, figure_role, extraction_method) VALUES ('REF-FIND-1','syn-slug',?,?,'x',"
                 "'finding',?)", (2 if confirmer == "other-parameter" else 1,
                                  "absent" if confirmer == "absent" else "qualitative",
-                                 _SKIM if confirmer == "skimmed" else "full")).lastrowid
+                                 _SKIM if confirmer == "skimmed" else "full")).lastrowid]
         code_rows = [r[0] for r in c.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE ref_id <> 'REF-FIND-1' "
+            "SELECT extraction_id FROM source_value_extractions WHERE ref_id NOT LIKE 'REF-FIND%' "
             "ORDER BY extraction_id")]
         for eid in code_rows[which]:
-            c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
-                      "to_extraction_id, to_label) VALUES (?,?,?,?)",
-                      (find_id, relation, None if to_label else eid, "a code" if to_label else None))
+            for find_id in from_ids:
+                c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
+                          "to_extraction_id, to_label) VALUES (?,?,?,?)",
+                          (find_id, relation, None if to_label else eid,
+                           "a code" if to_label else None))
         d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "marker-confirm")
         assert d["rests_on_proxy_inference"] == 1, "fixture lost its proxy determination"
         return d["marker"]
@@ -679,8 +714,19 @@ def main():
            _proxy(finding=[dict(_find[0], verification_status="UNVERIFIED")]) == WEAK)
     expect("R39: every clause of every code confirmed => full",
            _proxy(codes=two_rows) == FULL)
-    expect("R39: one confirmed clause of two does not confirm the code",
-           _proxy(codes=two_rows, which=slice(None, None, 2)) == WEAK)
+    expect("R39: one confirmed clause of two does not confirm the code (the floor of its rows: partial)",
+           _proxy(codes=two_rows, which=slice(None, None, 2)) == PARTIAL)
+    _find_t3 = {"tier": 3, "evidence_type": "clinical", "scope": "lower_control",
+                "ref_id": "REF-FIND-3", "figure_role": "finding", "claim_type": "qualitative",
+                "claimed_value": "x"}
+    expect("R39: a confirms edge from a source that is not at an anchoring tier confirms nothing",
+           _proxy(finding=_find + [_find_t3], confirmers_from=("REF-FIND-3",)) == WEAK)
+    expect("R39: an unverified second confirmer is left out, so more evidence never lowers the marker",
+           _proxy(finding=_find + [dict(_find[0], ref_id="REF-FIND-2", verification_status="UNVERIFIED")],
+                  confirmers_from=("REF-FIND-1", "REF-FIND-2")) == FULL)
+    expect("VERIFIED: a code that is not verified earns nothing even when a verified study confirms "
+           "it (a cell with no verified governing source is weak)",
+           _proxy(codes=[dict(c, verification_status="UNVERIFIED") for c in _t6]) == WEAK)
     expect("R39: codes are weighed per code, not per clause (5 confirmed clauses of one code beside "
            "two unconfirmed codes stay weak; weighing clauses would give partial)",
            _proxy(codes=[dict(_t6[0], extractions=5), _t6[1], _t6[2]], which=slice(5)) == WEAK)
