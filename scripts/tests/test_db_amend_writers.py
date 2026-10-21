@@ -150,6 +150,16 @@ def q(sql, *params):
         con.close()
 
 
+def w(sql, *params):
+    """`q`'s write twin: one statement, committed."""
+    con = sqlite3.connect(DB)
+    try:
+        con.execute(sql, params)
+        con.commit()
+    finally:
+        con.close()
+
+
 def exec_row(exec_id):
     return q("SELECT results_admitted, findings_note FROM search_executions "
              "WHERE exec_id=?", exec_id)[0]
@@ -1687,17 +1697,11 @@ try:
         record("G06", "recording that a value was checked and is already right is not a regrading",
                noop is None, f"{noop!r}")
         ref_x = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]
-        con = sqlite3.connect(DB)
-        con.execute("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?",
-                    (q("SELECT ref_id FROM evidence_sources WHERE ref_id<>? ORDER BY ref_id LIMIT 1",
-                       ref_x)[0][0], ref_x))
-        con.commit()
-        con.close()
+        w("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?",
+          q("SELECT ref_id FROM evidence_sources WHERE ref_id<>? ORDER BY ref_id LIMIT 1",
+            ref_x)[0][0], ref_x)
         msg_sup = amend(GOV_X)
-        con = sqlite3.connect(DB)
-        con.execute("UPDATE evidence_sources SET superseded_by_ref_id=NULL WHERE ref_id=?", (ref_x,))
-        con.commit()
-        con.close()
+        w("UPDATE evidence_sources SET superseded_by_ref_id=NULL WHERE ref_id=?", ref_x)
         record("G07", "a row of a superseded source is never gathered, so regrading it is not refused",
                not msg_sup or "live determination" not in msg_sup, f"{msg_sup!r}")
         msg_excl_edge = refusal(db.relate_extraction, FROM_F, "confirms", S,
@@ -1706,18 +1710,14 @@ try:
                "the determination only excluded is not refused for governing it",
                OTHER_X is not None and "governs live proxy" not in (msg_excl_edge or ""),
                f"{msg_excl_edge!r}")
-        con = sqlite3.connect(DB)
-        con.execute("UPDATE specifications SET rests_on_proxy_inference=0 WHERE specification_id=?",
-                    (SPEC_G,))
-        con.commit()
-        con.close()
+        w("UPDATE specifications SET rests_on_proxy_inference=0 WHERE specification_id=?", SPEC_G)
         msg_np = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
         record("G09", "...and the proxy scope at the writer: a live determination that is NOT a proxy "
                "one reads no edges, so the edge is not refused", "governs live proxy" not in (msg_np or ""),
                f"{msg_np!r}")
         record("G10", "while regrading is still refused for it (any live determination)",
                "live determination" in (amend(GOV_X) or ""))
-        reretire(SPEC_G, "t", S, "fixture")
+        db.retire_specification(SPEC_G, S, reason="fixture: the remedy the refusal names")
         record("G11", "once the determination is retired no helper reports it, so neither guard fires",
                linked(GOV_X) == [])
         record("G12", "and the remedy works: amend-extraction no longer refuses on that ground",

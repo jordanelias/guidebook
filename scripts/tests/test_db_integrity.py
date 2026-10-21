@@ -41,6 +41,11 @@ import dbcore  # noqa: E402  -- for check_expression: vocabularies come from the
 
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
+#: The rule_versions whose derivation_sha has one payload format, which K01 verifies and K02 reads
+#: the links of. pilot-4 changed the rules, not the format.
+SHA_FORMAT_VERSIONS = ("pilot-3", "pilot-4")
+SHA_FORMAT_SQL = ", ".join(map(repr, SHA_FORMAT_VERSIONS))
+
 results = []
 
 
@@ -1061,7 +1066,7 @@ def run_checks(db_path):
         # old format and must still verify, so this dispatches rather than
         # assuming one shape. A verifier that recomputed only the current format
         # would turn every historical determination stale on a rebuild.
-        if rv in ("pilot-3", "pilot-4"):   # same payload; pilot-4 changed the rules, not the format
+        if rv in SHA_FORMAT_VERSIONS:
             # The set the determination actually rested on, with each row's part
             # in it. Recomputed from specification_extraction_links, which is the
             # ONE home of that fact (pre-077 it was not stored at all, which is
@@ -1120,7 +1125,7 @@ def run_checks(db_path):
     # retire-in-place ruling, before any row was retired.
     for cid, pid in conn.execute(
             "SELECT specification_id, parameter_id FROM specifications "
-            "WHERE rule_version IN ('pilot-3', 'pilot-4') AND retired_at IS NULL"):
+            f"WHERE rule_version IN ({SHA_FORMAT_SQL}) AND retired_at IS NULL"):
         have = {r[0] for r in conn.execute(
             "SELECT extraction_id FROM specification_extraction_links "
             "WHERE specification_id = ?", (cid,))}
@@ -1169,13 +1174,14 @@ def run_checks(db_path):
                 unaccounted.append(
                     f"spec {cid}: extraction {eid} is linked 'conditioning' but its "
                     f"figure_role is now {frole!r}")
-    record("K02", "every pilot-3 or pilot-4 determination accounts for every extraction of its parameter",
+    record("K02", f"every {' or '.join(SHA_FORMAT_VERSIONS)} determination accounts for every "
+           "extraction of its parameter",
            not unaccounted,
            f"{len(unaccounted)}: {'; '.join(unaccounted)} — the junction is what "
            f"derivation_sha hashes, so an incomplete one attests a subset of the "
            f"evidence while reading as the whole of it" if unaccounted else "",
            subject=subj("SELECT COUNT(*) FROM specifications "
-                        "WHERE rule_version IN ('pilot-3', 'pilot-4') AND retired_at IS NULL"))
+                        f"WHERE rule_version IN ({SHA_FORMAT_SQL}) AND retired_at IS NULL"))
 
     # Reported, not enforced. Whether an unattested determination is acceptable
     # is an owner call — these rows were hand-migrated, not produced by an

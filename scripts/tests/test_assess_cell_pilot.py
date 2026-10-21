@@ -69,6 +69,9 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
     rows for one source must still be ONE source in the governing set. Without the
     DISTINCT in gather_sources, a code document's clauses would corroborate
     themselves.
+
+    A source may carry `extraction_method` (the column exists only when some source does, as it
+    does not in the oldest fixtures) and `superseded_by_ref_id`.
     """
     conn = sqlite3.connect(":memory:")
     conn.executescript("""
@@ -112,6 +115,10 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
                g.raised_by_session
           FROM determination_gates g WHERE g.resolved_at IS NULL;
     """)
+    has_method = any("extraction_method" in s for s in sources)
+    if has_method:
+        conn.execute("ALTER TABLE source_value_extractions ADD COLUMN extraction_method "
+                     "TEXT NOT NULL DEFAULT 'full'")
     if direction:
         conn.execute("INSERT INTO base_parameters (parameter_id, term_id, status, "
                      "accessibility_direction, direction_rationale) "
@@ -130,7 +137,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
         conn.execute("INSERT INTO evidence_sources VALUES (?,?,?,?,?,?,?,?)",
                      (ref, s["tier"], s["evidence_type"], s.get("co1_source_type"),
                       s.get("verification_status", "VERIFIED"), scope,
-                      s.get("jurisdiction"), None))
+                      s.get("jurisdiction"), s.get("superseded_by_ref_id")))
         conn.execute("INSERT INTO source_slug_links VALUES (?, 'syn-slug')", (ref,))
         for _ in range(s.get("extractions", extractions_per_source)):
             conn.execute(
@@ -146,14 +153,16 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
                 # without stating a value for it (owner 2026-09-16).
                 "INSERT INTO source_value_extractions "
                 "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value, "
-                " claimed_unit, figure_role, comparator) "
-                "VALUES (?, 'syn-slug', ?, 'MOB', ?, ?, ?, ?, ?)",
+                " claimed_unit, figure_role, comparator"
+                + (", extraction_method" if has_method else "") + ") "
+                "VALUES (?, 'syn-slug', ?, 'MOB', ?, ?, ?, ?, ?" + (", ?" if has_method else "") + ")",
                 (ref, parameter_id,
                  s.get("claim_type", "numerical"),
                  s.get("claimed_value", "1"),
                  s.get("claimed_unit"),
                  s.get("figure_role", "claim"),
-                 s.get("comparator")))
+                 s.get("comparator"),
+                 *((s.get("extraction_method", "full"),) if has_method else ())))
     return conn
 
 
@@ -430,6 +439,13 @@ def main():
     d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "resolved")
     expect("H4: a resolved gate no longer binds", d["state"] == "stated", d["state"])
 
+    # Three regulatory-stratum codes, and a source that measured the parameter without stating a
+    # value for it (owner 2026-09-16): the proxy branch's inputs, and the engine cases of 8i.
+    _t6 = [{"tier": 6, "evidence_type": "code", "jurisdiction": j} for j in ("US", "GB", "AU")]
+    _find = [{"tier": 1, "evidence_type": "clinical", "ref_id": "REF-FIND-1",
+              "figure_role": "finding", "claim_type": "qualitative",
+              "claimed_value": "discomfort rises with gradient"}]
+
     # 8i. THE DIGNITY LINE IS A DATABASE CONSTRAINT, not doctrine binding on authors.
     # The LIVE DDL is read rather than restated: a CHECK copied into this file would be a
     # second home for the rule and would keep passing after the real constraint drifted.
@@ -497,16 +513,13 @@ def main():
         for _m in EvidenceMarker:
             expect(f"MARKER vocabulary: {_m.name} inserts as a live stated row",
                    try_row(marker=_m.value) is None)
-        _eng_t6 = [{"tier": 6, "evidence_type": "code", "jurisdiction": j} for j in ("US", "GB", "AU")]
-        _eng_find = [{"tier": 1, "evidence_type": "clinical", "ref_id": "REF-FIND-1",
-                      "figure_role": "finding", "claim_type": "qualitative", "claimed_value": "x"}]
         for _label, _srcs in (("anchored", [{"tier": 2, "evidence_type": "co2"}]),
                               ("T3-clinical", [{"tier": 3, "evidence_type": "clinical",
                                                 "scope": "lower_control"}]),
-                              ("floor claim", _eng_t6), ("proxy", _eng_t6 + _eng_find),
+                              ("floor claim", _t6), ("proxy", _t6 + _find),
                               ("T4-5 floor claim", [{"tier": 5, "evidence_type": "national_fw",
                                                      "jurisdiction": j} for j in ("US", "CA")]),
-                              ("pending", [dict(_eng_t6[0]) for _ in range(3)])):
+                              ("pending", [dict(_t6[0]) for _ in range(3)])):
             _d = determine(synth_db(_srcs), 1, {"identity_code": "MOB"}, "syn-slug", _label)
             _refused = try_row(state=_d["state"], marker=_d["marker"],
                                regulatory_stratum_only=_d["regulatory_stratum_only"],
@@ -522,11 +535,6 @@ def main():
     # ACTION (2) said assess_cell "must be able to reach a determination from
     # findings plus a threshold, not only from `claim` rows". These four cases are
     # the regression cover for that, and for the three things it must NOT do.
-    _t6 = [{"tier": 6, "evidence_type": "code", "jurisdiction": j} for j in ("US", "GB", "AU")]
-    _find = [{"tier": 1, "evidence_type": "clinical", "ref_id": "REF-FIND-1",
-              "figure_role": "finding", "claim_type": "qualitative",
-              "claimed_value": "discomfort rises with gradient"}]
-
     d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "proxy")
     expect("PROXY: threshold + anchoring finding => marked rests_on_proxy_inference",
            d["rests_on_proxy_inference"] == 1, str(d["rests_on_proxy_inference"]))
@@ -600,80 +608,65 @@ def main():
     d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "marker-proxy")
     expect("MARKER: a proxy determination is weak unless a study confirms its codes",
            d["marker"] == WEAK, str(d["marker"]))
+    expect("DIRECTION: nothing is reported when no finding was skimmed", d["skimmed_findings"] == [])
 
     # Owner, 2026-10-21: a skimmed or `absent` finding supplies no direction and confirms nothing
     # (a skimmed one cues a dedicated reading); a source must be VERIFIED to earn a band above
     # weak; one confirmed clause does not confirm a code.
-    def _with_method(c):
-        c.execute("ALTER TABLE source_value_extractions ADD COLUMN extraction_method "
-                  "TEXT NOT NULL DEFAULT 'full'")
-        return c
-
     _SKIM = sorted(NOT_PUBLISHABLE_METHODS)[0]
     d = determine(synth_db(_t6 + [dict(_find[0], claim_type="absent")]), 1,
                   {"identity_code": "MOB"}, "syn-slug", "absent-finding")
     expect("DIRECTION: an `absent` finding supplies none, so the cell is a floor claim, not a proxy",
            d["rests_on_proxy_inference"] == 0 and d["regulatory_stratum_only"] == 1
            and d["marker"] == WEAK, f"{d['rests_on_proxy_inference']} {d['regulatory_stratum_only']} {d['marker']}")
-    c = _with_method(synth_db(_t6 + _find))
-    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-FIND-1'", (_SKIM,))
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "skimmed-finding")
+    d = determine(synth_db(_t6 + [dict(_find[0], extraction_method=_SKIM)]), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "skimmed-finding")
     expect("DIRECTION: a skimmed finding supplies none, and is REPORTED so a dedicated reading is cued",
            d["rests_on_proxy_inference"] == 0 and len(d["skimmed_findings"]) == 1,
            f"{d['rests_on_proxy_inference']} {d['skimmed_findings']}")
-    d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "no-skim")
-    expect("DIRECTION: nothing is reported when no finding was skimmed",
-           d["rests_on_proxy_inference"] == 1 and d["skimmed_findings"] == [])
-    c = _with_method(synth_db(_t6 + _find))
-    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-SYN-000'", (_SKIM,))
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "skimmed-claim")
+    d = determine(synth_db([dict(_t6[0], extraction_method=_SKIM)] + _t6[1:] + _find), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "skimmed-claim")
     expect("DIRECTION: a skimmed CLAIM row is not reported as a skimmed finding",
            d["skimmed_findings"] == [], str(d["skimmed_findings"]))
-    c = _with_method(synth_db(_t6 + _find))
-    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-FIND-1'", (_SKIM,))
-    c.execute("UPDATE evidence_sources SET superseded_by_ref_id='REF-NEW' WHERE ref_id='REF-FIND-1'")
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "skimmed-superseded")
+    d = determine(synth_db(_t6 + [dict(_find[0], extraction_method=_SKIM, superseded_by_ref_id="REF-NEW")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "skimmed-superseded")
     expect("DIRECTION: a skimmed finding of a SUPERSEDED source is not reported (it owes no reading)",
            d["skimmed_findings"] == [] and d["n_findings_left_out"] == 0,
            f"{d['skimmed_findings']} {d['n_findings_left_out']}")
 
     # The gap a pending cell records names the right absence (a description that names the wrong
     # one is followed). Findings that no longer count must not read as a supersession.
-    for _label, _fnd in (("skimmed-only", None), ("absent-only", dict(_find[0], claim_type="absent")),
-                         ("counted finding", _find[0])):
-        c = _with_method(synth_db([_fnd or _find[0]]))
-        if _fnd is None:
-            c.execute("UPDATE source_value_extractions SET extraction_method=?", (_SKIM,))
-        d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-" + _label)
-        cause, _remedy = gap_account(d, 1)
+    for _label, _fnd in (("skimmed-only", dict(_find[0], extraction_method=_SKIM)),
+                         ("absent-only", dict(_find[0], claim_type="absent", extraction_method="full")),
+                         ("counted finding", dict(_find[0], extraction_method="full"))):
+        d = determine(synth_db([_fnd]), 1, {"identity_code": "MOB"}, "syn-slug", "gap-" + _label)
+        cause, _remedy = gap_account(d)
         _want = "NONE COUNTS" if _label != "counted finding" else "NONE STATES A VALUE"
         expect(f"GAP: {_label} findings => the gap says '{_want}', never a supersession",
                d["state"] == "pending" and _want in cause and "SUPERSEDED" not in cause,
                f"{d['state']} | {cause}")
 
     # More ways a pending cell's gap must NOT read as a supersession (nothing was replaced).
-    c = _with_method(synth_db([{"tier": 2, "evidence_type": "co2", "figure_role": "condition"}]))
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-condition-only")
-    cause, _r = gap_account(d, 1)
+    d = determine(synth_db([{"tier": 2, "evidence_type": "co2", "figure_role": "condition",
+                             "extraction_method": "full"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "gap-condition-only")
+    cause, _r = gap_account(d)
     expect("GAP: condition-only rows => neither a supersession nor a value claim",
            d["state"] == "pending" and "SUPERSEDED" not in cause and "supplies a value or a direction" in cause,
            f"{d['state']} | {cause}")
-    c = _with_method(synth_db([{"tier": 2, "evidence_type": "co2"}]))
-    c.execute("UPDATE source_value_extractions SET extraction_method=?", (_SKIM,))
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-skimmed-claim")
-    cause, _r = gap_account(d, 1)
+    d = determine(synth_db([{"tier": 2, "evidence_type": "co2", "extraction_method": _SKIM}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "gap-skimmed-claim")
+    cause, _r = gap_account(d)
     expect("GAP: a skimmed value row => not a supersession, and the dedicated reading is named",
            d["state"] == "pending" and "SUPERSEDED" not in cause and "skimmed value" in cause,
            f"{d['state']} | {cause}")
-    c = synth_db([{"tier": 2, "evidence_type": "co2"}])
-    c.execute("UPDATE evidence_sources SET superseded_by_ref_id='REF-NEW'")
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-superseded")
+    d = determine(synth_db([{"tier": 2, "evidence_type": "co2", "superseded_by_ref_id": "REF-NEW"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "gap-superseded")
     expect("GAP: when every source behind the extractions IS superseded, it says so",
-           "SUPERSEDED" in gap_account(d, 1)[0], gap_account(d, 1)[0])
-    c = _with_method(synth_db([dict(_find[0]), dict(_find[0], ref_id="REF-FIND-2")]))
-    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-FIND-2'", (_SKIM,))
-    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-mixed")
-    cause, remedy = gap_account(d, 1)
+           "SUPERSEDED" in gap_account(d)[0], gap_account(d)[0])
+    d = determine(synth_db([dict(_find[0]), dict(_find[0], ref_id="REF-FIND-2", extraction_method=_SKIM)]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "gap-mixed")
+    cause, remedy = gap_account(d)
     expect("GAP: a counted finding beside a skimmed one => the remedy still names the dedicated reading",
            "NONE STATES A VALUE" in cause and "owe a dedicated reading" in remedy, f"{cause} | {remedy}")
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical", "verification_status": None}]),
@@ -707,7 +700,7 @@ def main():
     # confirm nothing; an unverified confirmer lends only the weak band.
     def _proxy(relation="confirms", which=slice(None), codes=_t6, to_label=False, confirmer="",
                finding=_find, confirmers_from=("REF-FIND-1",)):
-        c = _with_method(synth_db(codes + finding))
+        c = synth_db(codes + [dict(f, extraction_method="full") for f in finding])
         c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
                         "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
                         "to_extraction_id INT, to_label TEXT)")
