@@ -7882,6 +7882,21 @@ def _verbatim_norm(text):
     return _retrieval_log().normalise_quote(text)
 
 
+def _refuse_live_confirmation(conn, context, to_extraction):
+    """A `confirms` edge aimed at a row a LIVE determination is governed by would change the
+    marker the engine writes for it, and nothing recomputes a stored marker: `derivation_sha` does
+    not hash the edges. Refused the way `amend-source` refuses to re-tier a source such a
+    determination rests on: retire it, add the edge, re-determine."""
+    live = dbcore.determinations_governed_by_extraction(conn, to_extraction)
+    if live:
+        raise Refusal(
+            f"{context}: extraction {to_extraction} governs live determination(s) "
+            f"{', '.join(map(str, live))}. A confirms edge to it would change the marker "
+            f"that determination should carry, and the stored marker is not recomputed. "
+            f"Retire the specification first (db.py retire-specification), add the edge, "
+            f"then re-determine. Nothing was written.")
+
+
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                          from_figure_role, from_comparator,
                          relation: str, session: str, context: str,
@@ -7947,6 +7962,8 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"from a different document than the one asserting the figure), "
                 f"not a plain pointer. Pass --cross-source with a reason to make "
                 f"that explicit, or point at a same-source row.")
+        if relation == "confirms":
+            _refuse_live_confirmation(conn, context, to_extraction)
         if to_kind is not None:
             raise Refusal(
                 f"{context}: --to-kind is meaningless with --to-extraction -- a row "
@@ -8541,6 +8558,8 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
             raise Refusal(
                 f"--repoint: --to-extraction {to_extraction}: no such extraction. "
                 f"Admit and extract the standard before repointing onto it.")
+        if relation == "confirms":
+            _refuse_live_confirmation(conn, "--repoint", to_extraction)
         q = ("SELECT relation_id, to_label FROM extraction_relations "
              "WHERE from_extraction_id=? AND relation=? AND to_extraction_id IS NULL")
         params = [from_extraction, relation]

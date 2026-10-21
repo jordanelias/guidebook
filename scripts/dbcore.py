@@ -1119,6 +1119,21 @@ def determinations_resting_on(conn, ref_id) -> list:
         (ref_id, ref_id))})
 
 
+def determinations_governed_by_extraction(conn, extraction_id) -> list:
+    """The LIVE determinations for which extraction `extraction_id` is a governing row, as
+    sorted specification ids. Empty when none is.
+
+    The row-level counterpart of `determinations_resting_on`: that one answers for a source, this
+    for one figure, which is what a `confirms` edge aimed at it changes (the marker the engine
+    would write). LIVE means `retired_at IS NULL`, as there.
+    """
+    return [r[0] for r in conn.execute(
+        "SELECT DISTINCT l.specification_id FROM specification_extraction_links l "
+        "JOIN specifications s ON s.specification_id = l.specification_id "
+        "WHERE l.extraction_id = ? AND l.role = 'governing' AND s.retired_at IS NULL "
+        "ORDER BY 1", (extraction_id,))]
+
+
 def writable_tables(conn) -> list:
     """Tables a session may write, in an order safe to replay: parents before children.
 

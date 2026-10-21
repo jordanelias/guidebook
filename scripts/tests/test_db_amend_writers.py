@@ -1605,6 +1605,47 @@ try:
     record("V02", "an unregistered root_id is refused naming the registry, and a payload naming a slug is refused",
            msg_root and "external_root_registry" in msg_root and msg_slug and "slug" in msg_slug
            and counts("source_value_extractions") == n_sve, f"root={msg_root!r} slug={msg_slug!r}")
+
+    # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE determination
+    # is governed by is refused (dbcore.determinations_governed_by_extraction), through both
+    # writers, and stops being refused once that determination is retired.
+    gov = q("SELECT l.specification_id, l.extraction_id FROM specification_extraction_links l "
+            "WHERE l.role='governing' ORDER BY 1, 2 LIMIT 1")
+    label_edge = q("SELECT from_extraction_id FROM extraction_relations WHERE relation='confirms' "
+                   "AND to_label IS NOT NULL ORDER BY relation_id LIMIT 1")
+    finding = q("SELECT extraction_id FROM source_value_extractions WHERE figure_role='finding' "
+                "ORDER BY 1 LIMIT 1")
+    if not (gov and label_edge and finding):
+        record("G00", "a governing row, a label confirms edge and a finding to test with", False,
+               f"gov={gov} label_edge={label_edge} finding={finding}")
+    else:
+        (SPEC_G, GOV_X), FROM_L, FROM_F = gov[0], label_edge[0][0], finding[0][0]
+        con = sqlite3.connect(DB)
+        unretire(con, SPEC_G)
+        con.commit()
+        con.close()
+        n_rel = counts("extraction_relations")
+        edge = dict(to_extraction=GOV_X, stated="named", quote="fixture quote", dry_run=True)
+        msg_add = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
+        msg_rep = refusal(db.repoint_extraction_relation, FROM_L, "confirms", GOV_X, S, dry_run=True)
+        msg_other = refusal(db.relate_extraction, FROM_F, "tested_at", S, **edge)
+        record("G01", "relate-extraction refuses a confirms edge to a row a live determination is "
+               "governed by, naming it and retire-specification, and writes nothing",
+               msg_add and f"{SPEC_G}" in msg_add and "retire-specification" in msg_add
+               and counts("extraction_relations") == n_rel, f"{msg_add!r}")
+        record("G02", "--repoint refuses the same for a label edge",
+               msg_rep and "retire-specification" in msg_rep, f"{msg_rep!r}")
+        record("G03", "the guard is the confirms relation's alone: tested_at to the same row is not "
+               "refused for that reason", not msg_other or "live determination" not in msg_other,
+               f"{msg_other!r}")
+        con = sqlite3.connect(DB)
+        con.execute("UPDATE specifications SET retired_at='t', retired_by_session=?, "
+                    "retirement_reason='fixture', marker=NULL WHERE specification_id=?", (S, SPEC_G))
+        con.commit()
+        con.close()
+        msg_after = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
+        record("G04", "once that determination is retired the guard no longer fires",
+               not msg_after or "live determination" not in msg_after, f"{msg_after!r}")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 
