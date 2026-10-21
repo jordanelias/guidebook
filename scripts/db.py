@@ -8640,7 +8640,7 @@ _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                      session: str, dry_run: bool = False):
-    """Change figure_role or comparator on an EXISTING row -- and ONLY those two.
+    """Change a field of `_AMENDABLE_SVE_FIELDS` on an EXISTING row -- and ONLY those.
 
     Every other refusal here mirrors the one `insert_extraction` runs at write
     time, because grading a pre-existing row after the fact must not be able to
@@ -8685,17 +8685,6 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                               "amend-extraction")
 
         old = row[field]
-        if field in ("figure_role", "extraction_method"):
-            # How a row is graded decides what it supplies (a value, direction, a confirmation)
-            # and so the marker; a live determination was written on the grading it had.
-            live = dbcore.live_determinations_linked(conn, extraction_id)
-            if live:
-                raise Refusal(
-                    f"amend-extraction: extraction {extraction_id} is in the provenance of live "
-                    f"determination(s) {', '.join(map(str, live))}; regrading {field} would "
-                    f"change what that answer rests on without re-deciding it. Retire the "
-                    f"specification first (db.py retire-specification), amend, then "
-                    f"re-determine. Nothing was written.")
         if field == "figure_role":
             if row["claim_type"] == "absent" and value != "finding":
                 raise Refusal(
@@ -8748,6 +8737,22 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             return {"extraction_id": extraction_id, "field": field, "changed": False,
                     "reason": "already this value; the reason is recorded on notes",
                     "dry_run": dry_run}
+
+        # A CHANGE of how a row is graded decides what it supplies (a value, direction, a
+        # confirmation) and so the marker; a live determination was written on the grading it
+        # had. Recording that a value was checked and is already right (above) changes nothing,
+        # and a row of a superseded source is never gathered, so neither is refused.
+        if field in ("figure_role", "extraction_method") and conn.execute(
+                "SELECT 1 FROM evidence_sources WHERE ref_id=? AND superseded_by_ref_id IS NULL",
+                (row["ref_id"],)).fetchone():
+            live = dbcore.live_determinations_linked(conn, extraction_id)
+            if live:
+                raise Refusal(
+                    f"amend-extraction: extraction {extraction_id} is in the provenance of live "
+                    f"determination(s) {', '.join(map(str, live))}; regrading {field} would "
+                    f"change what that answer rests on without re-deciding it. Retire the "
+                    f"specification first (db.py retire-specification), amend, then "
+                    f"re-determine. Nothing was written.")
 
         stamp = dbcore.now()
         old_disp = "NULL" if old is None else old

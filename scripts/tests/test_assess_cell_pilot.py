@@ -219,6 +219,9 @@ def main():
                   1, {"identity_code": "MOB"}, "syn-slug", "t45-two-distinct")
     expect("T4-5(US, CA) => rich (two genuinely distinct jurisdictions)",
           d["state"] == "provisional", d["state"])
+    expect("T4-5(US, CA) floor claim is weak even though its sources' own band is partial "
+           "(the row's CHECK pins a regulatory-stratum-only cell at weak)",
+           d["regulatory_stratum_only"] == 1 and d["marker"] == WEAK, f"{d['marker']}")
 
     # 4. All sources disqualified -> pending + flag (§2.8)
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical",
@@ -501,6 +504,8 @@ def main():
                               ("T3-clinical", [{"tier": 3, "evidence_type": "clinical",
                                                 "scope": "lower_control"}]),
                               ("floor claim", _eng_t6), ("proxy", _eng_t6 + _eng_find),
+                              ("T4-5 floor claim", [{"tier": 5, "evidence_type": "national_fw",
+                                                     "jurisdiction": j} for j in ("US", "CA")]),
                               ("pending", [dict(_eng_t6[0]) for _ in range(3)])):
             _d = determine(synth_db(_srcs), 1, {"identity_code": "MOB"}, "syn-slug", _label)
             _refused = try_row(state=_d["state"], marker=_d["marker"],
@@ -645,6 +650,37 @@ def main():
         expect(f"GAP: {_label} findings => the gap says '{_want}', never a supersession",
                d["state"] == "pending" and _want in cause and "SUPERSEDED" not in cause,
                f"{d['state']} | {cause}")
+
+    # More ways a pending cell's gap must NOT read as a supersession (nothing was replaced).
+    c = _with_method(synth_db([{"tier": 2, "evidence_type": "co2", "figure_role": "condition"}]))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-condition-only")
+    cause, _r = gap_account(d, 1)
+    expect("GAP: condition-only rows => neither a supersession nor a value claim",
+           d["state"] == "pending" and "SUPERSEDED" not in cause and "supplies a value or a direction" in cause,
+           f"{d['state']} | {cause}")
+    c = _with_method(synth_db([{"tier": 2, "evidence_type": "co2"}]))
+    c.execute("UPDATE source_value_extractions SET extraction_method=?", (_SKIM,))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-skimmed-claim")
+    cause, _r = gap_account(d, 1)
+    expect("GAP: a skimmed value row => not a supersession, and the dedicated reading is named",
+           d["state"] == "pending" and "SUPERSEDED" not in cause and "skimmed value" in cause,
+           f"{d['state']} | {cause}")
+    c = synth_db([{"tier": 2, "evidence_type": "co2"}])
+    c.execute("UPDATE evidence_sources SET superseded_by_ref_id='REF-NEW'")
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-superseded")
+    expect("GAP: when every source behind the extractions IS superseded, it says so",
+           "SUPERSEDED" in gap_account(d, 1)[0], gap_account(d, 1)[0])
+    c = _with_method(synth_db([dict(_find[0]), dict(_find[0], ref_id="REF-FIND-2")]))
+    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-FIND-2'", (_SKIM,))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "gap-mixed")
+    cause, remedy = gap_account(d, 1)
+    expect("GAP: a counted finding beside a skimmed one => the remedy still names the dedicated reading",
+           "NONE STATES A VALUE" in cause and "owe a dedicated reading" in remedy, f"{cause} | {remedy}")
+    d = determine(synth_db([{"tier": 1, "evidence_type": "clinical", "verification_status": None}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "null-status")
+    expect("VERIFIED: a source with no recorded verification is left out of the marker AND flagged",
+           d["marker"] == WEAK and d["has_unverified_sources"] == 1,
+           f"{d['marker']} {d['has_unverified_sources']}")
 
     d = determine(synth_db([{"tier": 2, "evidence_type": "sr_meta", "verification_status": "UNVERIFIED"}]),
                   1, {"identity_code": "MOB"}, "syn-slug", "unverified-sole")

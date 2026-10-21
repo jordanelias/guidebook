@@ -1620,6 +1620,8 @@ try:
     # writers, and so is regrading a row in a live determination's provenance; neither is refused
     # once that determination is retired, and a determination that is not a proxy one reads no edges.
     gov = q("SELECT l.specification_id, l.extraction_id FROM specification_extraction_links l "
+            "JOIN source_value_extractions x ON x.extraction_id = l.extraction_id "
+            "JOIN evidence_sources e ON e.ref_id = x.ref_id AND e.superseded_by_ref_id IS NULL "
             "WHERE l.role='governing' ORDER BY 1, 2 LIMIT 1")
     label_edge = q("SELECT from_extraction_id FROM extraction_relations WHERE relation='confirms' "
                    "AND to_label IS NOT NULL ORDER BY relation_id LIMIT 1")
@@ -1661,26 +1663,65 @@ try:
                "not 'governed by' it, though it is linked",
                OTHER_X is not None and linked(OTHER_X, governing_only=True) == []
                and linked(OTHER_X) == [SPEC_G], f"other={OTHER_X} {linked(OTHER_X) if OTHER_X else ''}")
-        msg_amend = refusal(db.amend_extraction, GOV_X, "extraction_method", "full-read", "fixture", S,
-                            dry_run=True)
+        def flipped(x):
+            """A value of extraction_method that is NOT the row's current one (a real change)."""
+            cur = q("SELECT extraction_method FROM source_value_extractions WHERE extraction_id=?", x)[0][0]
+            return "skim" if cur != "skim" else "full-read"
+
+        def amend(x, value=None):
+            return refusal(db.amend_extraction, x, "extraction_method", value or flipped(x),
+                           "fixture", S, dry_run=True)
+
+        msg_amend = amend(GOV_X)
         record("G04", "amend-extraction refuses to regrade a row in a live determination's provenance, "
                "naming it",
                msg_amend and f"{SPEC_G}" in msg_amend and "retire-specification" in msg_amend,
                f"{msg_amend!r}")
+        msg_excl = amend(OTHER_X) if OTHER_X else None
+        record("G05", "...whatever part the row played: a row the determination only EXCLUDED is "
+               "refused too, because regrading could promote it",
+               msg_excl and "live determination" in msg_excl, f"{msg_excl!r}")
+        noop = refusal(db.amend_extraction, GOV_X, "extraction_method",
+                       q("SELECT extraction_method FROM source_value_extractions WHERE "
+                         "extraction_id=?", GOV_X)[0][0], "fixture: checked", S, dry_run=True)
+        record("G06", "recording that a value was checked and is already right is not a regrading",
+               noop is None, f"{noop!r}")
+        ref_x = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]
+        con = sqlite3.connect(DB)
+        con.execute("UPDATE evidence_sources SET superseded_by_ref_id=? WHERE ref_id=?",
+                    (q("SELECT ref_id FROM evidence_sources WHERE ref_id<>? ORDER BY ref_id LIMIT 1",
+                       ref_x)[0][0], ref_x))
+        con.commit()
+        con.close()
+        msg_sup = amend(GOV_X)
+        con = sqlite3.connect(DB)
+        con.execute("UPDATE evidence_sources SET superseded_by_ref_id=NULL WHERE ref_id=?", (ref_x,))
+        con.commit()
+        con.close()
+        record("G07", "a row of a superseded source is never gathered, so regrading it is not refused",
+               not msg_sup or "live determination" not in msg_sup, f"{msg_sup!r}")
+        msg_excl_edge = refusal(db.relate_extraction, FROM_F, "confirms", S,
+                                **dict(edge, to_extraction=OTHER_X)) if OTHER_X else None
+        record("G08", "the edge guard reads the governing role at the writer: a confirms edge to a row "
+               "the determination only excluded is not refused for governing it",
+               OTHER_X is not None and "governs live proxy" not in (msg_excl_edge or ""),
+               f"{msg_excl_edge!r}")
         con = sqlite3.connect(DB)
         con.execute("UPDATE specifications SET rests_on_proxy_inference=0 WHERE specification_id=?",
                     (SPEC_G,))
         con.commit()
         con.close()
-        record("G05", "a live determination that is NOT a proxy one reads no edges, so the guard does "
-               "not fire for it", linked(GOV_X, governing_only=True, proxy_only=True) == []
-               and linked(GOV_X, governing_only=True) == [SPEC_G])
+        msg_np = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
+        record("G09", "...and the proxy scope at the writer: a live determination that is NOT a proxy "
+               "one reads no edges, so the edge is not refused", "governs live proxy" not in (msg_np or ""),
+               f"{msg_np!r}")
+        record("G10", "while regrading is still refused for it (any live determination)",
+               "live determination" in (amend(GOV_X) or ""))
         reretire(SPEC_G, "t", S, "fixture")
-        record("G06", "once the determination is retired no helper reports it, so neither guard fires",
+        record("G11", "once the determination is retired no helper reports it, so neither guard fires",
                linked(GOV_X) == [])
-        record("G07", "and the remedy works: amend-extraction no longer refuses on that ground",
-               "live determination" not in (refusal(db.amend_extraction, GOV_X, "extraction_method",
-                                                    "full-read", "fixture", S, dry_run=True) or ""))
+        record("G12", "and the remedy works: amend-extraction no longer refuses on that ground",
+               "live determination" not in (amend(GOV_X) or ""))
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

@@ -404,8 +404,8 @@ def gather_findings(conn, parameter_id):
 def uncounted_findings(conn, parameter_id):
     """The `finding` rows of this parameter that `_finding_clause` leaves out, as
     (extraction_id, skimmed) pairs, for sources that are not superseded. A skimmed one cues a
-    dedicated reading (`db.py record-scan --mode targeted`, then a full-read extraction); both
-    kinds are reported, never counted."""
+    dedicated reading (`db.py record-scan --mode targeted`, then a full-read extraction). Reported,
+    never counted: the skimmed ones by id (`skimmed_findings`), both kinds as `n_findings_left_out`."""
     has_method = _has_column(conn, "source_value_extractions", "extraction_method")
     skimmed = (f"x.extraction_method IN ({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})"
                if has_method else "0")
@@ -1310,7 +1310,7 @@ def determine(conn, parameter_id, lens, slug, note):
                        + anchoring(fb["t2"]) + anchoring(fb["co2"]))
     # §2.8 verification-status machinery
     live = [r for r in recs if not _is_disqualified(r)]
-    has_unverified = any((r["verification_status"] or "") == "UNVERIFIED" for r in live)
+    has_unverified = any(not _verified(r) for r in live)   # the sources the marker leaves out
     all_disqualified = bool(recs) and not live
     anchors = anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])
     t3c = anchoring(b["t3c"])
@@ -1651,17 +1651,17 @@ def determine(conn, parameter_id, lens, slug, note):
     # RULINGS R7 as amended by R49(a), not put to the owner at this level. A value read off the
     # regulatory stratum, as a floor claim or as the threshold of a proxy inference, is weak
     # (Option A section 2.3): a floor claim is pinned there by the row's CHECK, and a proxy
-    # determination's code leaves weak only when a study confirms every one of its governing rows
+    # determination's code leaves weak only to the extent that studies confirm its governing rows
     # (`_confirmed_bands`), a rule that lives here alone because a CHECK cannot read
     # extraction_relations. THE MARKER IS A CACHE over those edges and over how rows are graded
     # and sources verified: `derivation_sha` hashes none of it. `db.py` refuses a `confirms` edge
     # to a row a live proxy determination is governed by (`_refuse_live_confirmation`) and
     # regrading a row in a live determination's provenance (`amend_extraction`); retiring the
     # determination is how it is re-determined. NOT guarded: a change of a source's
-    # verification_status, and the supersession of a finding source behind a proxy answer.
+    # verification_status, of a governing row's comparator, and a finding row added after the
+    # answer was written.
     left_out = uncounted_findings(conn, parameter_id)
-    if rests_on_proxy_inference and any(
-            (r["verification_status"] or "") == "UNVERIFIED" for r in finding_anchors):
+    if rests_on_proxy_inference and any(not _verified(r) for r in finding_anchors):
         has_unverified = True   # the direction the answer rests on is unverified too
     marker = None
     if state in ("stated", "provisional"):
@@ -1683,6 +1683,10 @@ def determine(conn, parameter_id, lens, slug, note):
         "marker": marker,
         "skimmed_findings": [x for x, skimmed in left_out if skimmed],
         "n_findings_left_out": len(left_out),
+        "n_extractions_superseded": conn.execute(
+            "SELECT COUNT(*) FROM source_value_extractions x JOIN evidence_sources e "
+            "ON e.ref_id = x.ref_id WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NOT NULL",
+            (parameter_id,)).fetchone()[0],
         # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
         # the skimmed value-supplying rows left out of what sets this cell's value.
         "excluded_not_publishable": [
@@ -1770,7 +1774,10 @@ def gap_account(det, parameter_id):
                   "reaches a PROXY determination; without one, 'best outcomes' "
                   "is degenerate -- it resolves to the gentlest value physically "
                   "possible, which for a ramp is not a ramp. Do NOT re-read the "
-                  "same sources for a value they do not state")
+                  "same sources for a value they do not state" +
+                  (f"; the skimmed finding(s) {det['skimmed_findings']} DO owe a dedicated "
+                   f"reading (`db.py record-scan --mode targeted --target-parameter-id "
+                   f"{parameter_id}`)" if det["skimmed_findings"] else ""))
     elif det_at == 0 and det["n_findings_left_out"]:
         # A parameter whose only findings are skimmed or report an absence has no
         # counted finding source either, and fell through to the supersession text
@@ -1783,13 +1790,20 @@ def gap_account(det, parameter_id):
                   f"targeted --target-parameter-id {parameter_id}`, then a full-read "
                   f"extraction); an `absent` finding states no direction, so a finding that "
                   f"measures the effect is also wanted; and retrieve the THRESHOLD half")
-    elif det_at == 0:
+    elif det_at == 0 and det["n_extractions_superseded"] == det_x:
         cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, "
                  f"but EVERY source holding one has been SUPERSEDED "
                  f"(evidence_sources.superseded_by_ref_id is set) and a "
                  f"superseded source is not gathered")
         remedy = ("the reading exists; the document behind it was replaced. "
                   "Re-extract the same parameter from the superseding source")
+    elif det_at == 0:
+        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, but none "
+                 f"supplies a value or a direction: each is a condition, an ungraded row, or "
+                 f"a skimmed value (not publishable), and no source is left to anchor")
+        remedy = ("read the parameter for a stated value: `db.py add-extraction`; a skimmed "
+                  "value row owes a dedicated reading (`db.py record-scan --mode targeted "
+                  f"--target-parameter-id {parameter_id}`)")
     else:
         cause = (f"{det_x} extraction(s) from {det_at} source(s) exist for "
                  f"parameter {parameter_id}, but none of those sources "
@@ -2086,7 +2100,7 @@ def main():
             # bridge — a sentence about a join this engine no longer makes and a
             # bridge into the emptied item layer. A gap description that names the
             # wrong absence sends the next session looking in the wrong place.
-            # THREE CAUSES, THREE SENTENCES, and the middle one exists because the
+            # THE CAUSES, ONE SENTENCE EACH (`gap_account`), and the supersession one exists because the
             # first draft of this text was FALSE. `count_extractions` counts every
             # extraction for the parameter; `gather_sources` filters
             # `superseded_by_ref_id IS NULL`. When the only source holding an
