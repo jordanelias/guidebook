@@ -18,6 +18,10 @@
 --       written before this file are all retired, and SQLite checks an added CHECK against
 --       existing rows.
 --
+-- THE MARKER IS A CACHE over extraction_relations for a proxy determination: derivation_sha does not
+-- hash the edges and no check recomputes the marker, so a confirms edge added later leaves it stale
+-- under an unchanged sha. Recorded, not built.
+--
 -- WHAT THE CHECK CANNOT HOLD: a proxy determination (rests_on_proxy_inference) is weak unless a
 -- confirming study reaches a governing extraction (R39). Confirmation lives in extraction_relations,
 -- and a CHECK cannot read another table, so that rule is the engine's alone.

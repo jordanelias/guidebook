@@ -1202,23 +1202,41 @@ def sha(parameter_id, lens, links):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def _confirmed_bands(conn, links, finding_bands):
-    """R39: for each governing source, the bands of the anchoring findings that `confirms`
-    one of its governing extraction rows (an edge whose referent is a row; a `to_label`
-    referent names no governing figure and confirms nothing). `finding_bands` maps the
-    anchoring finding sources to their band; an edge from any other source does not count."""
-    gov = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
-    if not gov or not _table_exists(conn, "extraction_relations"):
+def _confirmed_bands(conn, parameter_id, links, finding_bands):
+    """R39: each governing source's band under confirmation by study.
+
+    A governing row is weak unless a `confirms` edge, whose referent is that row, comes from
+    an anchoring finding source (`finding_bands`) through a finding row of THIS parameter
+    that the value path would also accept: not skimmed (owner 2026-10-09, "skimmed values are
+    not publishable") and not `claim_type='absent'`, which says nothing was found and so
+    confirms no value. A confirmed row takes the floor of the mean of its confirmers' bands; a
+    source takes the floor of the mean of its governing rows, so one confirmed clause does not
+    lift a sibling clause that no study confirms. A `to_label` referent names no row and
+    confirms nothing. A source with no entry here is weak."""
+    rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
+    if not rows or not _table_exists(conn, "extraction_relations"):
         return {}
-    out = {}
+    skim = ""
+    if _has_column(conn, "source_value_extractions", "extraction_method"):
+        skim = "AND COALESCE(e.extraction_method, '') NOT IN (%s) " % ",".join(
+            "?" * len(NOT_PUBLISHABLE_METHODS))
+    confirmers = {}
     for to_id, from_ref in conn.execute(
             "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "
             "JOIN source_value_extractions e ON e.extraction_id = r.from_extraction_id "
-            "WHERE r.relation = 'confirms' AND r.to_extraction_id IN (%s)"
-            % ",".join("?" * len(gov)), list(gov)):
+            "WHERE r.relation = 'confirms' AND e.parameter_id = ? "
+            "AND e.figure_role IN (%s) AND e.claim_type <> 'absent' %s"
+            "AND r.to_extraction_id IN (%s)"
+            % (",".join("?" * len(DIRECTION_SUPPLYING_ROLES)), skim, ",".join("?" * len(rows))),
+            (parameter_id, *DIRECTION_SUPPLYING_ROLES,
+             *(NOT_PUBLISHABLE_METHODS if skim else ()), *rows)):
         if from_ref in finding_bands:
-            out.setdefault(gov[to_id], {})[from_ref] = finding_bands[from_ref]
-    return {ref: list(bands.values()) for ref, bands in out.items()}
+            confirmers.setdefault(to_id, {})[from_ref] = finding_bands[from_ref]
+    by_source = {}
+    for eid, ref in rows.items():
+        by_source.setdefault(ref, []).append(
+            floor_mean(confirmers[eid].values()) if eid in confirmers else EvidenceMarker.WEAK)
+    return {ref: floor_mean(bands) for ref, bands in by_source.items()}
 
 
 def determine(conn, parameter_id, lens, slug, note):
@@ -1592,16 +1610,17 @@ def determine(conn, parameter_id, lens, slug, note):
     # DR-2026-07-21): each of its codes is weak unless an anchoring finding confirms it, and
     # then takes the confirming study's band. The row's CHECK pins a regulatory-stratum-only
     # cell at weak; the proxy rule lives here alone, because a CHECK cannot read
-    # extraction_relations.
+    # extraction_relations. THE MARKER IS A CACHE over those edges: `derivation_sha` does not
+    # hash them and no check recomputes it, so a `confirms` edge added later leaves the stored
+    # marker stale under an unchanged sha (recorded, not built).
     marker = None
     if state in ("stated", "provisional"):
         by_ref = {r["ref_id"]: r for r in recs}
         if regulatory_stratum_only or rests_on_proxy_inference:
             confirmed = _confirmed_bands(
-                conn, links, {r["ref_id"]: band(r["tier"], r["evidence_type"])
-                              for r in finding_anchors})
-            source_bands = [floor_mean(confirmed[g]) if g in confirmed
-                            else EvidenceMarker.WEAK for g in governing]
+                conn, parameter_id, links, {r["ref_id"]: band(r["tier"], r["evidence_type"])
+                                            for r in finding_anchors})
+            source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in governing]
         else:
             source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
                             for g in governing]
@@ -2191,11 +2210,11 @@ def main():
     # further, under RATIFIED DR-2026-07-21-product-posture-thinking-tool-not-authority:
     # a determination whose entire evidence basis is the regulatory stratum IS a
     # best-practice determination at the WEAK band — surfaced, flagged with
-    # strength_band, never suppressed. 029 deliberately DROPPED the two 027 guards
+    # strength_band (replaced by `marker`, migration 116), never suppressed. 029 deliberately DROPPED the two 027 guards
     # this block reproduced.
     #
     # So replaying this DDL would not have "restored a guard". It would have reverted
-    # ratified doctrine: dropping the strength_band column and re-imposing an
+    # ratified doctrine: dropping the strength_band column (since replaced by `marker`) and re-imposing an
     # exclusion the owner's own decision removed — and doing it by a fragile
     # `tier_basis LIKE '%(regulatory_stratum_only)'` string match rather than the
     # column test that now exists. Standing proof it travels:

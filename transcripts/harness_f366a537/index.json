@@ -79,7 +79,7 @@
   {
     "started": "2026-10-21T02:53:41",
     "role": "adversarial",
-    "bytes": 235273,
+    "bytes": 1150501,
     "agent_id_prefix": "ab1073a2",
     "file": "2026-10-21T02-53-41_adversarial_ab1073a2.jsonl"
   }

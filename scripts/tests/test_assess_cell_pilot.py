@@ -27,7 +27,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
-from assess_cell import determine  # noqa: E402
+from assess_cell import NOT_PUBLISHABLE_METHODS, determine  # noqa: E402
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
 
@@ -581,32 +581,51 @@ def main():
            d["marker"] == WEAK, str(d["marker"]))
 
     # R39: a `confirms` edge from an anchoring finding to a governing code takes the confirming
-    # study's band for that code, and the cell takes the floor-mean. A `tested_at` edge, and an
-    # edge to a label rather than a row, confirm nothing.
-    def _proxy_with_edges(relation, confirmed_refs, to_label=False):
-        c = synth_db(_t6 + _find)
+    # study's band for that code, and the cell takes the floor-mean. The confirming row must be
+    # one the value path would also accept (a finding of THIS parameter, not skimmed, not
+    # `absent`), a `tested_at` edge and an edge to a label rather than a row confirm nothing,
+    # and one confirmed clause does not lift an unconfirmed clause of the same source.
+    def _proxy(relation="confirms", which=lambda rows: rows, per_source=1, to_label=False,
+               finding_sets=None, from_other_parameter=False):
+        c = synth_db(_t6 + _find, extractions_per_source=per_source)
+        c.execute("ALTER TABLE source_value_extractions ADD COLUMN extraction_method TEXT NOT NULL DEFAULT 'full'")
         c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
                         "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
                         "to_extraction_id INT, to_label TEXT)")
-        ids = dict(c.execute("SELECT ref_id, extraction_id FROM source_value_extractions"))
-        for ref in confirmed_refs:
+        if finding_sets:
+            c.execute(f"UPDATE source_value_extractions SET {finding_sets} WHERE ref_id='REF-FIND-1'")
+        find_id = c.execute("SELECT MIN(extraction_id) FROM source_value_extractions "
+                            "WHERE ref_id='REF-FIND-1'").fetchone()[0]
+        if from_other_parameter:
+            find_id = c.execute(
+                "INSERT INTO source_value_extractions (ref_id, slug, parameter_id, claim_type, "
+                "claimed_value, figure_role) VALUES ('REF-FIND-1','syn-slug',2,'qualitative',"
+                "'x','finding')").lastrowid
+        code_rows = [r[0] for r in c.execute(
+            "SELECT extraction_id FROM source_value_extractions WHERE ref_id <> 'REF-FIND-1' "
+            "ORDER BY extraction_id")]
+        for eid in which(code_rows):
             c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
                       "to_extraction_id, to_label) VALUES (?,?,?,?)",
-                      (ids["REF-FIND-1"], relation, None if to_label else ids[ref],
-                       "a code" if to_label else None))
+                      (find_id, relation, None if to_label else eid, "a code" if to_label else None))
         return determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "marker-confirm")["marker"]
 
-    _codes = [r for r in ("REF-SYN-00", "REF-SYN-01", "REF-SYN-02")]
-    _c = sqlite3.connect(":memory:")
-    _refs = [r[0] for r in synth_db(_t6 + _find).execute(
-        "SELECT ref_id FROM evidence_sources WHERE tier = 6 ORDER BY ref_id")]
     expect("R39: every governing code confirmed by a full-band study => the cell is full",
-           _proxy_with_edges("confirms", _refs) == FULL)
+           _proxy() == FULL)
     expect("R39: two of three codes confirmed => the floor of the mean, partial",
-           _proxy_with_edges("confirms", _refs[:2]) == PARTIAL)
-    expect("R39: a tested_at edge confirms nothing", _proxy_with_edges("tested_at", _refs) == WEAK)
+           _proxy(which=lambda rows: rows[:2]) == PARTIAL)
+    expect("R39: a tested_at edge confirms nothing", _proxy("tested_at") == WEAK)
     expect("R39: a confirms edge whose referent is a label, not a row, confirms nothing",
-           _proxy_with_edges("confirms", _refs, to_label=True) == WEAK)
+           _proxy(to_label=True) == WEAK)
+    expect("R39: a skimmed confirming row confirms nothing (skimmed values are not publishable)",
+           _proxy(finding_sets="extraction_method='%s'" % sorted(NOT_PUBLISHABLE_METHODS)[0]) == WEAK)
+    expect("R39: a confirming row that reports an absence confirms nothing",
+           _proxy(finding_sets="claim_type='absent'") == WEAK)
+    expect("R39: a confirming row of another parameter confirms nothing",
+           _proxy(from_other_parameter=True) == WEAK)
+    expect("R39: one confirmed clause of two lifts a source only to the floor of its rows' mean, "
+           "not to the confirming band (per row, then per source)",
+           _proxy(per_source=2, which=lambda rows: rows[::2]) == PARTIAL)
 
     # ── Owner ruling 2026-09-17: PRESENT BOTH, never choose ───────────────────
     # Three codes state the same quantity, two as a percentage and one as a RATIO.
