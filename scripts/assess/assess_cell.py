@@ -298,10 +298,7 @@ def gather_sources(conn, parameter_id):
     # the governing set; gather_extraction_links records each skimmed row as excluded with
     # the reason. Fixture tolerance as above: a synthetic table without the column has no
     # skimmed rows to leave out.
-    has_method = _has_column(conn, "source_value_extractions", "extraction_method")
-    method_clause = (f"AND x.extraction_method NOT IN "
-                     f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})"
-                     if has_method else "")
+    method_clause, method_params = _publishable_clause(conn, "x")
     q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
                    e.verification_status, {disp_col}, e.scope, e.jurisdiction
             FROM source_value_extractions x
@@ -313,8 +310,7 @@ def gather_sources(conn, parameter_id):
     return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
                       "verification_status", "verification_disposition",
                       "scope", "jurisdiction"), r))
-            for r in conn.execute(q, (parameter_id,)
-                                  + (NOT_PUBLISHABLE_METHODS if has_method else ()))]
+            for r in conn.execute(q, (parameter_id,) + method_params)]
 
 
 def _has_column(conn, table, column):
@@ -324,6 +320,15 @@ def _has_column(conn, table, column):
 
 #: The ruling lives in dbcore (stdlib only) so the stdlib-only checks can read it too.
 NOT_PUBLISHABLE_METHODS = dbcore.NOT_PUBLISHABLE_METHODS
+
+
+def _publishable_clause(conn, alias):
+    """`AND <alias>.extraction_method NOT IN (...)` and its parameters, or nothing on a fixture
+    whose table has no such column (the tolerance `gather_sources` documents)."""
+    if not _has_column(conn, "source_value_extractions", "extraction_method"):
+        return "", ()
+    return (f"AND {alias}.extraction_method NOT IN "
+            f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})", NOT_PUBLISHABLE_METHODS)
 
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
@@ -1202,11 +1207,11 @@ def sha(parameter_id, lens, links):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def _confirmed_bands(conn, parameter_id, links, finding_bands):
+def _confirmed_bands(conn, parameter_id, links, finding_anchors):
     """R39: each governing source's band under confirmation by study.
 
     A governing row is weak unless a `confirms` edge, whose referent is that row, comes from
-    an anchoring finding source (`finding_bands`) through a finding row of THIS parameter
+    an anchoring finding source (`finding_anchors`) through a finding row of THIS parameter
     that the value path would also accept: not skimmed (owner 2026-10-09, "skimmed values are
     not publishable") and not `claim_type='absent'`, which says nothing was found and so
     confirms no value. A confirmed row takes the floor of the mean of its confirmers' bands; a
@@ -1216,20 +1221,17 @@ def _confirmed_bands(conn, parameter_id, links, finding_bands):
     rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
     if not rows or not _table_exists(conn, "extraction_relations"):
         return {}
-    skim = ""
-    if _has_column(conn, "source_value_extractions", "extraction_method"):
-        skim = "AND COALESCE(e.extraction_method, '') NOT IN (%s) " % ",".join(
-            "?" * len(NOT_PUBLISHABLE_METHODS))
+    finding_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"]) for r in finding_anchors}
+    skim, skim_params = _publishable_clause(conn, "e")
     confirmers = {}
     for to_id, from_ref in conn.execute(
             "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "
             "JOIN source_value_extractions e ON e.extraction_id = r.from_extraction_id "
             "WHERE r.relation = 'confirms' AND e.parameter_id = ? "
-            "AND e.figure_role IN (%s) AND e.claim_type <> 'absent' %s"
+            "AND e.figure_role IN (%s) AND e.claim_type <> 'absent' %s "
             "AND r.to_extraction_id IN (%s)"
             % (",".join("?" * len(DIRECTION_SUPPLYING_ROLES)), skim, ",".join("?" * len(rows))),
-            (parameter_id, *DIRECTION_SUPPLYING_ROLES,
-             *(NOT_PUBLISHABLE_METHODS if skim else ()), *rows)):
+            (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *rows)):
         if from_ref in finding_bands:
             confirmers.setdefault(to_id, {})[from_ref] = finding_bands[from_ref]
     by_source = {}
@@ -1617,9 +1619,7 @@ def determine(conn, parameter_id, lens, slug, note):
     if state in ("stated", "provisional"):
         by_ref = {r["ref_id"]: r for r in recs}
         if regulatory_stratum_only or rests_on_proxy_inference:
-            confirmed = _confirmed_bands(
-                conn, parameter_id, links, {r["ref_id"]: band(r["tier"], r["evidence_type"])
-                                            for r in finding_anchors})
+            confirmed = _confirmed_bands(conn, parameter_id, links, finding_anchors)
             source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in governing]
         else:
             source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
@@ -2206,15 +2206,16 @@ def main():
     # migration carried the rows. Its own comment said it held "until migration 027
     # adds a real regulatory_stratum_only column".
     #
+    # [strength_band, below, is history: migration 116 replaced it with `marker`.]
     # That column exists. Migration 027 landed it, and migration 029 then went
     # further, under RATIFIED DR-2026-07-21-product-posture-thinking-tool-not-authority:
     # a determination whose entire evidence basis is the regulatory stratum IS a
     # best-practice determination at the WEAK band — surfaced, flagged with
-    # strength_band (replaced by `marker`, migration 116), never suppressed. 029 deliberately DROPPED the two 027 guards
+    # strength_band, never suppressed. 029 deliberately DROPPED the two 027 guards
     # this block reproduced.
     #
     # So replaying this DDL would not have "restored a guard". It would have reverted
-    # ratified doctrine: dropping the strength_band column (since replaced by `marker`) and re-imposing an
+    # ratified doctrine: dropping the strength_band column and re-imposing an
     # exclusion the owner's own decision removed — and doing it by a fragile
     # `tier_basis LIKE '%(regulatory_stratum_only)'` string match rather than the
     # column test that now exists. Standing proof it travels:

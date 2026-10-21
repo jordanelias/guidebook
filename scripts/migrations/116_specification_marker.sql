@@ -1,38 +1,29 @@
 -- 116_specification_marker.sql
 -- SCHEMA migration -- a determination carries its evidence marker (plan Phase 3 specification;
--- RULINGS R7, R39; COMPARISON P18). The marker is the band of the evidence a determination rests
--- on (tier-system section 5: full, partial, weak), computed by assess_cell.determine from
--- schemas.tier_derivation.band and floor_mean and stored once, here. Before this file nothing
--- computed or stored it: EvidenceMarker had no reader, and v_best_practice offered a second,
--- two-valued band (strength_band) that no code read.
+-- RULINGS R7, R39; COMPARISON P18): the tier-system section 5 band of the evidence it rests on
+-- (full, partial, weak), computed by assess_cell.determine from schemas.tier_derivation.band and
+-- floor_mean and stored once, here.
 --
 -- ONE COLUMN, ALTER TABLE ... ADD COLUMN, NOT A REBUILD: the AUTOINCREMENT sequence, 065's lens
 -- CHECK, the inbound foreign keys, idx_spec_row_identity, trg_spec_retire_needs_reason and the views
 -- that read specifications stay untouched. Two column CHECKs, each naming sibling columns:
 --
---   (1) marker is a glyph of the vocabulary, and a determination resting only on the regulatory
---       stratum is never above weak. The glyphs are EvidenceMarker's values; dbcore.check_values
---       reads them from this CHECK.
---   (2) a live stated or provisional determination carries a marker, and a pending,
---       not_applicable or retired row does not have to. A retired row is exempt: the eight rows
---       written before this file are all retired, and SQLite checks an added CHECK against
---       existing rows.
+--   (1) marker is a glyph of the vocabulary (dbcore.check_values reads it from here), and a
+--       determination resting only on the regulatory stratum is never above weak.
+--   (2) a live stated or provisional determination carries a marker; a pending, not_applicable or
+--       retired row need not. SQLite checks an added CHECK against existing rows, and the eight
+--       written before this file are all retired.
 --
--- THE MARKER IS A CACHE over extraction_relations for a proxy determination: derivation_sha does not
--- hash the edges and no check recomputes the marker, so a confirms edge added later leaves it stale
--- under an unchanged sha. Recorded, not built.
+-- The proxy rule (weak unless a confirming study reaches a governing extraction, R39) and the
+-- cache caveat (derivation_sha does not hash extraction_relations) are the engine's alone, because
+-- a CHECK cannot read another table: see determine() in scripts/assess/assess_cell.py.
 --
--- WHAT THE CHECK CANNOT HOLD: a proxy determination (rests_on_proxy_inference) is weak unless a
--- confirming study reaches a governing extraction (R39). Confirmation lives in extraction_relations,
--- and a CHECK cannot read another table, so that rule is the engine's alone.
+-- v_best_practice is redefined without strength_band, which marker supersedes; SELECT * carries the
+-- new column. Nothing else reads the view (sqlite_master, re-derived at the time of writing).
 --
--- v_best_practice is redefined without strength_band, which marker now supersedes; SELECT * carries
--- the new column. Nothing else reads the view: re-derive with
---   python3 -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select name from sqlite_master where sql like '%v_best_practice%' and name<>'v_best_practice'\").fetchall())"
---
--- AFTER_DATA: 20261016003719 -- the latest committed data migration at the time of writing. The
--- marker is chronology, not load: 095's marker already places this file after every specifications
--- write.
+-- The marker below is chronology, not load: 095's already places this file after every
+-- specifications write. It sits alone on its line because migrate_db's pattern needs it so.
+-- AFTER_DATA: 20261016003719
 
 ALTER TABLE specifications ADD COLUMN marker TEXT
   CHECK (marker IS NULL OR (marker IN ('●', '◐', '○')

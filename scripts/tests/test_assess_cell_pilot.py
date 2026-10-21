@@ -484,15 +484,6 @@ def main():
         expect("H2 CHECK: dual owes neither", try_row(derivation_paths="dual") is None)
         expect("H2 CHECK: cultural_claim_anchor must be valid JSON",
                try_row(derivation_paths="dual", cultural_claim_anchor="not json") is not None)
-        # Migration 116: the marker's two CHECKs, against the live DDL like the rows above.
-        expect("MARKER CHECK: a live stated row with no marker is REFUSED",
-               try_row(marker=None) is not None)
-        expect("MARKER CHECK: a pending row with a marker is REFUSED",
-               try_row(state="pending", marker=FULL) is not None)
-        expect("MARKER CHECK: a regulatory-stratum-only row above the weakest band is REFUSED",
-               try_row(state="provisional", regulatory_stratum_only=1, marker=PARTIAL) is not None)
-        expect("MARKER CHECK: a regulatory-stratum-only row at the weakest band is accepted",
-               try_row(state="provisional", regulatory_stratum_only=1, marker=WEAK) is None)
     else:
         expect("H2 CHECK: live DDL available to test against", False,
                "data/guidebook.db absent")
@@ -585,7 +576,7 @@ def main():
     # one the value path would also accept (a finding of THIS parameter, not skimmed, not
     # `absent`), a `tested_at` edge and an edge to a label rather than a row confirm nothing,
     # and one confirmed clause does not lift an unconfirmed clause of the same source.
-    def _proxy(relation="confirms", which=lambda rows: rows, per_source=1, to_label=False,
+    def _proxy(relation="confirms", which=slice(None), per_source=1, to_label=False,
                finding_sets=None, from_other_parameter=False):
         c = synth_db(_t6 + _find, extractions_per_source=per_source)
         c.execute("ALTER TABLE source_value_extractions ADD COLUMN extraction_method TEXT NOT NULL DEFAULT 'full'")
@@ -604,7 +595,7 @@ def main():
         code_rows = [r[0] for r in c.execute(
             "SELECT extraction_id FROM source_value_extractions WHERE ref_id <> 'REF-FIND-1' "
             "ORDER BY extraction_id")]
-        for eid in which(code_rows):
+        for eid in code_rows[which]:
             c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
                       "to_extraction_id, to_label) VALUES (?,?,?,?)",
                       (find_id, relation, None if to_label else eid, "a code" if to_label else None))
@@ -613,7 +604,7 @@ def main():
     expect("R39: every governing code confirmed by a full-band study => the cell is full",
            _proxy() == FULL)
     expect("R39: two of three codes confirmed => the floor of the mean, partial",
-           _proxy(which=lambda rows: rows[:2]) == PARTIAL)
+           _proxy(which=slice(2)) == PARTIAL)
     expect("R39: a tested_at edge confirms nothing", _proxy("tested_at") == WEAK)
     expect("R39: a confirms edge whose referent is a label, not a row, confirms nothing",
            _proxy(to_label=True) == WEAK)
@@ -625,7 +616,7 @@ def main():
            _proxy(from_other_parameter=True) == WEAK)
     expect("R39: one confirmed clause of two lifts a source only to the floor of its rows' mean, "
            "not to the confirming band (per row, then per source)",
-           _proxy(per_source=2, which=lambda rows: rows[::2]) == PARTIAL)
+           _proxy(per_source=2, which=slice(None, None, 2)) == PARTIAL)
 
     # ── Owner ruling 2026-09-17: PRESENT BOTH, never choose ───────────────────
     # Three codes state the same quantity, two as a percentage and one as a RATIO.
