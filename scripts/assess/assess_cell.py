@@ -127,7 +127,12 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-3"  # 077: derivation_sha hashes the GRADED LINK SET, not the
+RULE_VERSION = "pilot-4"  # pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
+#   marker, and the rules for which findings count, who may confirm and what a marker needs changed
+#   (references/project-standards.md, "Owner statements 2026-10-21"). The sha payload is
+#   UNCHANGED from pilot-3, so K01 and K02 read both labels. Rows labelled pilot-3 were written
+#   without a marker.
+#   pilot-3: 077: derivation_sha hashes the GRADED LINK SET, not the
 #   governing ref list plus an unfiltered extraction count. Bumped from pilot-2 because
 #   the sha PAYLOAD FORMAT changed: `rule_version` is what tells a verifier which format
 #   to recompute, so K01 dispatches on it and pilot-2 rows replayed from migration
@@ -331,14 +336,19 @@ def _publishable_clause(conn, alias):
             f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})", NOT_PUBLISHABLE_METHODS)
 
 
-def _finding_clause(conn, alias):
-    """What a finding row must be to count at all, as `AND ...` and its parameters: not skimmed,
-    and not `claim_type='absent'`. A skimmed finding cues a dedicated reading, and an absence
-    states no direction and confirms no value (owner, 2026-10-21). ONE predicate for direction
-    (`gather_findings`) and confirmation (`_confirmed_bands`), so a row cannot be evidence for one
-    and nothing for the other."""
+def _finding_clause(conn, alias, *, confirming=False):
+    """What a finding row must be to count, as `AND ...` and its parameters. Never skimmed: a
+    skimmed finding cues a dedicated reading (owner, 2026-10-21).
+
+    To SUPPLY DIRECTION it must also not be `claim_type='absent'`: a source that looked and found
+    nothing says nothing about which end of a permitted range the evidence favours. To CONFIRM
+    (`confirming=True`) an absent row counts, because the `confirms` edge is itself the claim: a
+    study that tested the existing value and found no case to change it supports that value
+    (owner, 2026-10-21, REF-00980: "the absence of the findings is actually research support for
+    that tested code value"). The edge needs a row referent and a quote, so an absence that
+    examined nothing carries no such edge and confirms nothing."""
     skim, params = _publishable_clause(conn, alias)
-    return f"{skim} AND {alias}.claim_type <> 'absent'", params
+    return (skim, params) if confirming else (f"{skim} AND {alias}.claim_type <> 'absent'", params)
 
 
 #: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
@@ -1244,7 +1254,7 @@ def _verified(rec):
     `has_unverified_sources`, but it is left out of the marker, so it can neither raise nor lower
     it; a cell with no verified governing source is weak (evidence-methodology 2.8: unverified
     sources are flagged and do not downgrade a cell the verified ones carry)."""
-    return (rec["verification_status"] or "") in VERIFIED_OK
+    return (rec["verification_status"] or "") in VERIFIED_OK   # the doctrine's ○ for "not retrieved"
 
 
 def _confirmed_bands(conn, parameter_id, links, finding_anchors):
@@ -1254,7 +1264,7 @@ def _confirmed_bands(conn, parameter_id, links, finding_anchors):
 
     A row is confirmed by a `confirms` edge, whose referent is that row, from a VERIFIED
     anchoring finding source (`finding_anchors`) through a finding row of THIS parameter that is not
-    skimmed and not `absent` (`_finding_clause`, the predicate direction uses too). A confirmed
+    skimmed (`_finding_clause`; an `absent` row may confirm: a value tested and left unchanged). A confirmed
     row takes the floor of the mean of its confirmers' bands, a source the floor of the mean of
     its rows'. A `to_label` referent names no row and confirms nothing."""
     rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
@@ -1262,7 +1272,7 @@ def _confirmed_bands(conn, parameter_id, links, finding_anchors):
         return {}
     finding_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"])
                      for r in finding_anchors if _verified(r)}
-    clause, clause_params = _finding_clause(conn, "e")
+    clause, clause_params = _finding_clause(conn, "e", confirming=True)
     confirmers = {}
     for to_id, from_ref in conn.execute(
             "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "

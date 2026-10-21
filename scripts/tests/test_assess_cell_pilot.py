@@ -718,8 +718,8 @@ def main():
                 "INSERT INTO source_value_extractions (ref_id, slug, parameter_id, claim_type, "
                 "claimed_value, figure_role, extraction_method) VALUES ('REF-FIND-1','syn-slug',?,?,'x',"
                 "'finding',?)", (2 if confirmer == "other-parameter" else 1,
-                                 "absent" if confirmer == "absent" else "qualitative",
-                                 _SKIM if confirmer == "skimmed" else "full")).lastrowid]
+                                 "absent" if confirmer.startswith("absent") else "qualitative",
+                                 _SKIM if confirmer in ("skimmed", "absent-skimmed") else "full")).lastrowid]
         code_rows = [r[0] for r in c.execute(
             "SELECT extraction_id FROM source_value_extractions WHERE ref_id NOT LIKE 'REF-FIND%' "
             "ORDER BY extraction_id")]
@@ -742,8 +742,11 @@ def main():
     expect("R39: a confirms edge whose referent is a label, not a row, confirms nothing",
            _proxy(to_label=True) == WEAK)
     expect("R39: a skimmed confirming row confirms nothing", _proxy(confirmer="skimmed") == WEAK)
-    expect("R39: a confirming row that reports an absence confirms nothing",
-           _proxy(confirmer="absent") == WEAK)
+    expect("R39: an `absent` row CONFIRMS through its confirms edge: a study that tested the existing "
+           "value and found no case to change it supports that value (owner 2026-10-21, REF-00980)",
+           _proxy(confirmer="absent") == FULL)
+    expect("R39: ...but the REF-00980 row as stored today is absent AND skimmed, so it confirms nothing "
+           "until the paper is read in full", _proxy(confirmer="absent-skimmed") == WEAK)
     expect("R39: a confirming row of another parameter confirms nothing",
            _proxy(confirmer="other-parameter") == WEAK)
     expect("R39: an unverified confirming source lends only the weak band",

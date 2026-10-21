@@ -63,7 +63,7 @@ Worked example surfaced 2026-05-25: `accessible-circulation-geometry.md` cites D
 `skills/guidebook-auditor_SKILL.md` §4.2 inline quality markers map to the canonical ladder:
 - `●` confirmed evidence base: T1, T2 (sr_meta + standard_eb + co2), **T3 clinical** (lower-control primary clinical research — confirmed primary evidence, lower control level), Co-1, Co-2
 - `◐` policy or standards basis only, not primary evidence: T4, T5
-- `○` grey literature, expert consensus, thin base, unconfirmed: T3 grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 (code-floor)
+- `○` grey literature, expert consensus, thin base, unconfirmed: T3 grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 (code-floor), a source that could not be retrieved and so stays `UNVERIFIED` (owner, 2026-10-21: it cannot be claimed as primary evidence or at a top tier)
 
 The T3 split is deliberate: T3 holds two species (per §1) — lower-control *primary clinical* research and *grey-literature* primary research. The clinical species is confirmed primary evidence (just lower control) and maps to `●`; the grey species maps to `○`. The earlier version of this map listed only "T3 grey → ○" and left T3-clinical unplaced (R9-c).
 
@@ -91,7 +91,7 @@ Enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md` per own
 |---|---|---|
 | **● Full** | T1, Co-1, T2, Co-2, T3-clinical | Full strength (adjudicated evidence). |
 | **◐ Partial** | T4, T5 | Anchors, rendered as *current standards practice* — flagged "standards basis, not primary evidence." |
-| **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* |
+| **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base, an unretrievable (`UNVERIFIED`) source | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* |
 
 A band grades the strength of a claim; it does not set the cell's state (`governance/evidence-methodology.md` §2.2): T3-clinical alone is full band and `provisional`; T3-grey alone is weak band and `pending`.
 

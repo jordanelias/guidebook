@@ -104,7 +104,9 @@ def band(tier: int, evidence_type: str) -> EvidenceMarker:
 
     FULL: T1, T2, Co-1, Co-2 and T3 clinical. PARTIAL: T4, T5 (a policy or standards basis,
     not primary evidence). WEAK: T3 other than clinical (grey literature) and T6 (the code
-    floor). The T3 split is the one place the type matters.
+    floor). The T3 split is the one place the type matters. A source that is not VERIFIED
+    (could not be retrieved) earns no band at all here: `assess_cell` leaves it out (owner,
+    2026-10-21), and a cell with no verified source reads WEAK.
     """
     if tier in (1, 2):
         return EvidenceMarker.FULL

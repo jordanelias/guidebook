@@ -66,7 +66,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 **Class** RULING-MECHANISM  ·  **Resolver** OWNER  ·  **Confidence** medium  ·  **Probe** `P-ENG-T3` = **PASS**
 
 - DR-2026-07-20 weighted-strength anchor model (owner directive 2026-07-20: 'all evidence tiers can be used to anchor a best practice claim ... T3-grey/T6 weak'): the weak band 'anchors only a floor/convergence claim', rendered with an honesty flag.  
-  _atoms:_ `EVI-049`(act), `EVI-055`(act)
+  _atoms:_ `EVI-049`(act), `EVI-055`(ame)
 - evidence-methodology (ratified 2026-07-13): T3-grey alone and a single T6 source yield pending, i.e. no claim.  
   _atoms:_ `EVI-326`(act), `EVI-338`(act)
 

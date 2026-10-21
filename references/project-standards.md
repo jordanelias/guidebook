@@ -4509,3 +4509,38 @@ Append-only, as above. Four statements in the two entries above are corrected, a
 CONDITION: any session asking what `db.py` guards for a live determination, or what ○ means on a cell whose sources are unverified.
 ACTION: (1) Treat the three unguarded routes in item 1 as unguarded. (2) Put item 2 to the owner before a renderer shows ○ over an unverified cell. (3) Read items 3 and 4 as corrections of the wording above, not of the owner's answers.
 DATE: 2026-10-21 — recorded under the two entries above; the owner's words are quoted in the first.
+
+## Owner clarification 2026-10-21 — an absence found at the tested value confirms it
+
+Given in session https://claude.ai/code/session_019DBbAfKYEE5x5qvYnBRp3W, in reply to the question put in plain words after the second correction, "which did you mean, A or B?" (A: the sentence "changes to the technical requirements for ramp slope and length cannot be recommended at this time" means the existing requirement held up under testing, so the study backs the code's value; B: it only says the study found no grounds to change it). Recorded on contact per `CLAUDE.md` rule 0.
+
+> "Reading A... but the issue is that there ARE values, which are the existing ones that were tested. The "absence" of the findings is actually research support for that tested code value, so it's actually a supplemental document that supports those code values"
+
+**What this settles.** The 2026-09-13 ruling stands: REF-00980 is a clear case of confirmation. The owner's earlier "no" to "can an `absent` finding confirm a code's value" (entry above) is read as being about a finding that says nothing about any value; an absence found *at a tested value* is support for it. This replaces the item 1 of the first correction ("until the owner says otherwise the engine counts no `absent` row"): the owner has said otherwise.
+
+**How the engine reads it** (`_finding_clause` in `scripts/assess/assess_cell.py`). A `confirms` edge from an `absent` finding row confirms the code row it points at, because the edge is itself the claim and needs a row referent and a quote; an absence that examined nothing carries no such edge. A skimmed row still confirms nothing. An `absent` row still supplies no direction (a source that looked and found nothing does not say which end of a permitted range the evidence favours). [ASSUMPTION: the clarification speaks to confirmation; the direction rule of answer 1 is left as given.]
+
+**What remains before the REF-00980 case counts, all research data and so a separate change (`CLAUDE.md` rule 10), none done here.**
+1. The paper is held only as an abstract (extraction 48 is `skim`, `preliminary`); the dedicated reading that answer 1 calls for is owed.
+2. Its `confirms` edge (`relation_id` 29) points at a label, "the technical requirements for ramp slope and length", not at a code row; it must be repointed (`db.py repoint-extraction-relation`) at the extraction of the requirement the study tested, which the reading will identify. An edge to a label confirms nothing.
+3. Only the code rows the study tested are confirmed by it; other jurisdictions' values are not.
+
+CONDITION: any session asking whether REF-00980 or any `absent` finding may confirm a code's value.
+ACTION: (1) Let an `absent` finding confirm through an explicit `confirms` edge to a code row, once it is read in full. (2) Do not let it supply direction. (3) Do the three data steps above in a research change, not in a tooling change.
+DATE: 2026-10-21 — owner statement, quoted above.
+
+## Owner statements 2026-10-21 (third) — an unretrievable source cannot be top tier; the edition label becomes pilot-4
+
+Given in session https://claude.ai/code/session_019DBbAfKYEE5x5qvYnBRp3W, in reply to two questions put in plain words (should an answer resting on an unverified source read ○, or keep its band and be flagged; should the rule-edition label change), and recorded on contact per `CLAUDE.md` rule 0.
+
+> "if we can't retrieve a study, then we can't verify it as a primary source, which means that we can't claim it as a top tier. add unverified in this context where something can't be retrieved to the empty circle alongside grey or thin"
+
+> "pilot 4 I guess"
+
+**1. The empty circle.** ○ now stands for grey, thin **or unverified because the source could not be retrieved**. This answers the "Owner to rule" in the second correction above: such a cell reads ○; it is not left at its band and flagged. It is stated in `governance/tier-system.md` sections 5 and 8, `governance/mission-and-epistemics.md` (the citation-discipline marker line, with atom MIS-03 re-quoted), `CLAUDE.md` section 6, and the `EvidenceMarker` and `band` docstrings. The engine already did this: an unverified source is left out of the marker and a cell with no verified governing source is weak (`_verified` in `scripts/assess/assess_cell.py`). The blocking check C10 in `scripts/tests/test_db_integrity.py` already refuses a published (live stated or provisional) cell whose governing sources are not all verified, so such a cell cannot stand as an answer; ○ is how it reads, and why it is refused, before it is retired. The 2026-09-13 reading of ○ as "no research backing" is thereby widened to include "not retrieved": a hedge on the *source*, not a finding about the *evidence*.
+
+**2. `RULE_VERSION` is `pilot-4`.** This answers the "Owner to decide" in the first correction above and replaces its item 4. The label marks rows written by an engine that writes a marker and applies the rules of the entries above; rows labelled `pilot-3` were written without one. The `derivation_sha` payload is unchanged from pilot-3, so K01 and K02 read both labels (checked on a scratch database holding a fresh pilot-4 row: both examined it and passed, where on the canonical database they examine nothing because no determination is live).
+
+CONDITION: any session asking what ○ means, whether an unretrievable source may be called top tier, or what `rule_version` pilot-4 is.
+ACTION: (1) Read ○ as grey, thin or unverified-because-not-retrieved. (2) Never claim a top tier for a source that could not be retrieved. (3) Write `pilot-4` on new determinations and let K01 and K02 read pilot-3 and pilot-4.
+DATE: 2026-10-21 — owner statements, quoted above.

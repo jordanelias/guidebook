@@ -188,7 +188,7 @@ class EvidenceMarker(str, Enum):
     """
     FULL = "\u25cf"      # confirmed evidence base
     PARTIAL = "\u25d0"   # policy or standards basis only
-    WEAK = "\u25cb"      # grey literature, expert consensus, thin base
+    WEAK = "\u25cb"      # grey literature, expert consensus, thin base, or a source not retrieved
 
     @property
     def ordinal(self) -> int:

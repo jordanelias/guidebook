@@ -1061,7 +1061,7 @@ def run_checks(db_path):
         # old format and must still verify, so this dispatches rather than
         # assuming one shape. A verifier that recomputed only the current format
         # would turn every historical determination stale on a rebuild.
-        if rv == "pilot-3":
+        if rv in ("pilot-3", "pilot-4"):   # same payload; pilot-4 changed the rules, not the format
             # The set the determination actually rested on, with each row's part
             # in it. Recomputed from specification_extraction_links, which is the
             # ONE home of that fact (pre-077 it was not stored at all, which is
@@ -1120,7 +1120,7 @@ def run_checks(db_path):
     # retire-in-place ruling, before any row was retired.
     for cid, pid in conn.execute(
             "SELECT specification_id, parameter_id FROM specifications "
-            "WHERE rule_version = 'pilot-3' AND retired_at IS NULL"):
+            "WHERE rule_version IN ('pilot-3', 'pilot-4') AND retired_at IS NULL"):
         have = {r[0] for r in conn.execute(
             "SELECT extraction_id FROM specification_extraction_links "
             "WHERE specification_id = ?", (cid,))}
@@ -1169,13 +1169,13 @@ def run_checks(db_path):
                 unaccounted.append(
                     f"spec {cid}: extraction {eid} is linked 'conditioning' but its "
                     f"figure_role is now {frole!r}")
-    record("K02", "every pilot-3 determination accounts for every extraction of its parameter",
+    record("K02", "every pilot-3 or pilot-4 determination accounts for every extraction of its parameter",
            not unaccounted,
            f"{len(unaccounted)}: {'; '.join(unaccounted)} — the junction is what "
            f"derivation_sha hashes, so an incomplete one attests a subset of the "
            f"evidence while reading as the whole of it" if unaccounted else "",
            subject=subj("SELECT COUNT(*) FROM specifications "
-                        "WHERE rule_version = 'pilot-3' AND retired_at IS NULL"))
+                        "WHERE rule_version IN ('pilot-3', 'pilot-4') AND retired_at IS NULL"))
 
     # Reported, not enforced. Whether an unattested determination is acceptable
     # is an owner call — these rows were hand-migrated, not produced by an
