@@ -1506,7 +1506,7 @@ def determine(conn, parameter_id, lens, slug, note):
 
     # THE DERIVATION HANDSHAKE (080). H2/H3/H4 of DR-2026-07-13, whose
     # `[ENGINE-LAG 2026-08-15]` marker has named this absence ever since: "`specifications`
-    # carries neither `functional_basis` nor `derivation_paths`; `population_icf_links` does
+    # carries neither `functional_basis` nor `derivation_paths`; `population_icf_links` does  [RETIRED-VOCAB-OK]
     # not exist; `assess_cell.py` implements no H4 gate." All three now exist, so the engine
     # reads them.
     #

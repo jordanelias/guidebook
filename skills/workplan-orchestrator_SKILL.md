@@ -233,7 +233,7 @@ python3 -c "import sqlite3; c=sqlite3.connect('file:data/guidebook.db?mode=ro',u
   [print(f'{r[0]:<12}{r[1]}') for r in c.execute('SELECT identity_code, display_name FROM base_taxonomy_identity ORDER BY 1')]"
 ```
 
-The set is **23 flat codes**, ratified by `DR-2026-07-23` and held by the `base_taxonomy_identity`
+The set is **flat codes** (count them, never quote the count), ratified by `DR-2026-07-23` and held by the `base_taxonomy_identity`
 table. Curate *from the functional axes* — never coin
 umbrella codes (`governance/functional-taxonomy.md` §3.3, RULE 2026-07-22,
 `DR-2026-07-22-work-from-axes`).

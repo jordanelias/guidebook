@@ -12,9 +12,13 @@
 -- evidence_identity_match contradicts; the name is the owner's. Renaming the table needs an
 -- AFTER_DATA marker, because data migrations dated after 095 INSERT into it.
 --
--- NO AFTER_DATA MARKER for the two renames above: no committed data migration dated after the 095
--- cutoff names them. Re-derive (must print nothing):
+-- NO AFTER_DATA MARKER for the two renames above. Two facts together make that safe, and the second
+-- is the operative one: (1) no committed data migration dated after the 095 cutoff names the renamed
+-- objects (must print nothing; the literal is 095's cutoff, not today's):
 --   grep -lwE 'populations|population_icf_links|population_code' scripts/migrations/data_*.sql | xargs -n1 basename | cut -d_ -f2 | awk '$1>"20260920060857"'
+-- and (2) migrations 113 and 114 carry AFTER_DATA markers at the latest data_ timestamp, so
+-- migrate_db.build_plan replays 115 after every committed data migration whatever it names. If (2)
+-- ever changes, (1) is the check that must still hold.
 --
 -- SQLite rewrites every REFERENCES clause, the UNIQUE autoindex and the sqlite_sequence row itself;
 -- idx_picf_icf keeps its name (there is no RENAME INDEX) and its column list is rewritten. No view and

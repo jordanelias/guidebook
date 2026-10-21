@@ -22,7 +22,7 @@ which is about the book and not the apparatus):
      it at write time; this is the backstop for rows arriving by another route (a
      hand-written migration, a replay) — the same division of labour
      `medical_lens_integrity` has with `db.py add-medical`.
-  4. `functional_basis` disagreeing with `population_icf_links`. The column is a JSON
+  4. `functional_basis` disagreeing with `identity_icf_map`. The column is a JSON
      snapshot of rows that live in a table, which is a second home (rule 5) and is
      tolerated only because it records what the engine READ at determination time. The
      moment it names a mapping the table does not hold, the determination is justified by

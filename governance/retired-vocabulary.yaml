@@ -800,6 +800,23 @@ entries:
       and must not be flagged. Exempt the FILE, never the token — when the column
       is renamed, delete these exemptions rather than widening them.
 
+  - id: RV-027
+    token: population_icf_links
+    match: literal
+    severity: broken
+    retired_by: "migration 115_identity_names; RULINGS R14 as narrowed, R49(c); LED-127"
+    replacement: "identity_icf_map (its column population_code is now identity_code)"
+    exempt_paths:
+      - "workplan/2026-10-12-simplification-workplan.md"   # the plan that orders the rename
+      - "workplan/pipeline-state-graph/**"                 # its instrument: rulings, rehearsals, atoms
+    note: >-
+      Registered in the change that renamed the table, as LED-127 ordered ("rename first,
+      register second") and the simplification plan's Phase 3 base row limited: the two renamed
+      TABLE names only. `populations` is not registered: it is an English word, so it fails
+      admission test 4 (see the deferred entry for the code list). `population_code` is not
+      registered either, for the same flood the 2026-09-13 deferred entry records. Occurrences are
+      read from the audit's own output; this note states no count.
+
 # --- deferred: correct to retire, NOT YET SAFE TO FLAG ----------------------
 # These fail admission test 2 — the replacement has not landed — so flagging them
 # today would flag accurate descriptions of live data. Each records the precondition
@@ -884,8 +901,8 @@ deferred:
       WHAT IS ALREADY ENFORCED, so this deferral is narrower than it looks: the
       DATABASE side is checked. the check that graded every
       population-bearing column against the live taxonomy (scripts/validate_population.py)
-      was deleted in plan step 1.6; population_icf_links.population_code is held by its
-      foreign key. What is deferred is the
+      was deleted in plan step 1.6; identity_icf_map.identity_code (the column was population_icf_links.population_code
+      until migration 115) is held by its foreign key. What is deferred is the
       PROSE, not the data.
       Promotion path, if the owner scopes it: add these as entries with the
       infrastructure directories in scope and the corpus deferred — which needs a
