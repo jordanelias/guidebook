@@ -118,7 +118,7 @@ _live = [r[0] for r in _con.execute(
     # re-pointed specifications.icf_code at `base_icf`. A fixture still pulling `axes`
     # would build a parent nothing references and MISS the one the FK now needs, which is
     # how this test failed the moment 081 landed (rule 4: a test fixture is a caller).
-    "  OR name IN ('base_parameters','terms','populations','base_icf',"
+    "  OR name IN ('base_parameters','terms','base_taxonomy_identity','base_icf',"
     "              'access_needs','base_taxonomy_medical'))")]
 _con.close()
 if not _live:
@@ -145,8 +145,8 @@ db.execute("INSERT INTO terms(term_id,canonical_en,created_at,created_by_session
            (STAMP, SESS, STAMP, SESS))
 db.execute("INSERT INTO base_parameters(parameter_id,term_id,created_at,created_by_session) "
            "VALUES (1,'TERM-0001',?,?)", (STAMP, SESS))
-db.execute("INSERT INTO populations(population_code,display_name) VALUES ('AUT','Autistic people')")
-db.execute("INSERT INTO populations(population_code,display_name) VALUES ('MOB','Mobility')")
+db.execute("INSERT INTO base_taxonomy_identity(identity_code,display_name) VALUES ('AUT','Autistic people')")
+db.execute("INSERT INTO base_taxonomy_identity(identity_code,display_name) VALUES ('MOB','Mobility')")
 # The ICF lens's parent. The old fixture seeded `axes` with axis_code='b230' -- a real ICF
 # code sitting in the demand registry, which is the confusion the 2026-09-13 rulings ended.
 # It now goes where it belongs.

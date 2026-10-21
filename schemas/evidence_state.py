@@ -25,7 +25,7 @@ to a Part-4 render rollup derived FROM specifications, never keyed by them. Ever
 
 The LENS is the four browsing taxonomies (owner 2026-08-28, CHECK relaxed by
 D-0182): identity / ICF / access-need / medical. `population_code` is retired in
-favour of the four, and `populations` is ONLY the identity lens — keying a cell on
+favour of the four, and `base_taxonomy_identity` is ONLY the identity lens — keying a cell on
 it alone is the traversal D-0184 measured and rejected. NULL in a lens means the
 determination is not stated in that lens, which is legitimate; NULL in all four is
 not, and `at_least_one_lens` below is that CHECK mechanised.
@@ -151,7 +151,7 @@ class EvidenceStateRecord(BaseModel):
     # to "at least one"). Each is a code in its own base taxonomy; the codes are
     # NOT validated here, because a vocabulary belongs to the schema's CHECK and
     # its FK, never to a list in Python (CLAUDE.md §4).
-    identity_code: Optional[str] = None   # populations.population_code
+    identity_code: Optional[str] = None   # base_taxonomy_identity.identity_code
     icf_code: Optional[str] = None        # base_icf.icf_code (was axes.axis_code until migration 081)
     needs_code: Optional[str] = None      # access_needs.need_code
     medical_code: Optional[str] = None    # base_taxonomy_medical.medical_code

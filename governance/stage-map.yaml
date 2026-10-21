@@ -84,6 +84,7 @@ tables:
   adversarial_passes: infrastructure
   base_icf: base
   base_parameters: base
+  base_taxonomy_identity: base
   base_taxonomy_medical: base
   case_studies: evidence
   citation_mining: research
@@ -105,13 +106,12 @@ tables:
   gap_mining: research
   gaps: synthesis
   icf_medical_map: base
+  identity_icf_map: base
   identity_medical_map: base
   lang_jur_map: base
   life_stage_modifiers: base
   observed_terms: evidence
   parameter_declinations: base
-  population_icf_links: base
-  populations: base
   reasoning_doc_citations: synthesis
   research_code_leads: research
   rooms: base

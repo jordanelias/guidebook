@@ -83,14 +83,14 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
       -- 080. CREATED UNCONDITIONALLY, EVEN EMPTY, for the reason this docstring
       -- already gives about source_slug_links: a fixture laxer than the database it
       -- stands for is how an engine passes its tests and fails on replay. An empty
-      -- population_icf_links is also the honest default -- it is what a cell whose
+      -- identity_icf_map is also the honest default -- it is what a cell whose
       -- identity lens has no promoted functional mapping actually looks like.
-      CREATE TABLE population_icf_links (
-        link_id INTEGER PRIMARY KEY AUTOINCREMENT, population_code TEXT, icf_code TEXT,
+      CREATE TABLE identity_icf_map (
+        link_id INTEGER PRIMARY KEY AUTOINCREMENT, identity_code TEXT, icf_code TEXT,
         mechanism TEXT, mapping_confidence TEXT, provenance TEXT, notes TEXT,
         created_at TEXT, created_by_session TEXT);
       -- 086. Created here for the same reason as source_slug_links and
-      -- population_icf_links: `compose_value` reads accessibility_direction out of
+      -- identity_icf_map: `compose_value` reads accessibility_direction out of
       -- this table, and a fixture without it can only ever exercise the branch that
       -- declines for want of a direction. Left EMPTY unless a case passes one, so the
       -- no-direction branch stays testable too.
@@ -114,7 +114,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
                      "VALUES (?, 'TERM-SYN', 'active', ?, 'synthetic fixture')",
                      (parameter_id, direction))
     for L in icf_links:
-        conn.execute("INSERT INTO population_icf_links (population_code, icf_code, "
+        conn.execute("INSERT INTO identity_icf_map (identity_code, icf_code, "
                      "mechanism, mapping_confidence, provenance) VALUES (?,?,?,?,?)", L)
     for g in gates:
         conn.execute("INSERT INTO determination_gates (parameter_id, identity_code, verdict, "
@@ -345,12 +345,12 @@ def main():
     T1 = {"tier": 1, "evidence_type": "clinical"}
 
     # 8a. DUAL: the population path (governing evidence) meets the function path (a
-    # promoted population_icf_links row for this cell's identity lens).
+    # promoted identity_icf_map row for this cell's identity lens).
     d = determine(synth_db([dict(T1), dict(T1)], icf_links=MOB_LINK),
                   1, {"identity_code": "MOB"}, "syn-slug", "dual")
     expect("H2: both paths present => dual", d["derivation_paths"] == "dual",
            str(d["derivation_paths"]))
-    expect("H3: functional_basis is READ from population_icf_links, never typed",
+    expect("H3: functional_basis is READ from identity_icf_map, never typed",
            bool(d["functional_basis"]) and "d450" in d["functional_basis"])
     expect("H2: a dual determination owes no named-path rationale",
            d["derivation_rationale"] is None)

@@ -80,15 +80,15 @@ def fresh():
         os.remove(DBP)
     c = sqlite3.connect(DBP)
     # `items` stub retired 2026-09-09: migration 071 removed specifications.item_code,
-    # so nothing in this fixture references it. `populations` stays — it is the identity
-    # lens (base_taxonomy_identity) and specifications.identity_code points at it.
-    c.execute("CREATE TABLE populations(population_code TEXT PRIMARY KEY)")
+    # so nothing in this fixture references it. `base_taxonomy_identity` stays — it is the identity
+    # lens and specifications.identity_code points at it.
+    c.execute("CREATE TABLE base_taxonomy_identity(identity_code TEXT PRIMARY KEY)")
     # description/category/priority are stubbed because v_pending selects them.
     # Not needed while nothing re-parses the views, but a stub parent that matches
     # the real column set is the honest fixture either way.
     c.execute("CREATE TABLE gaps(gap_id TEXT PRIMARY KEY, category TEXT, "
               "priority TEXT, description TEXT)")
-    c.executemany("INSERT INTO populations VALUES(?)", [(x,) for x in ("AUT", "MOB", "DEAF")])
+    c.executemany("INSERT INTO base_taxonomy_identity VALUES(?)", [(x,) for x in ("AUT", "MOB", "DEAF")])
     c.execute("INSERT INTO gaps(gap_id,category,priority,description) "
               "VALUES('GAP-001','RP','P2','fixture gap')")
     for step in DDL:

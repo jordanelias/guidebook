@@ -86,9 +86,9 @@ def main(argv=None):
     gates = [dict(r) for r in con.execute(
         "SELECT * FROM determination_gates ORDER BY gate_id")] if _table(con, "determination_gates") else []
     links = set()
-    if _table(con, "population_icf_links"):
+    if _table(con, "identity_icf_map"):
         links = {(r[0], r[1]) for r in con.execute(
-            "SELECT population_code, icf_code FROM population_icf_links")}
+            "SELECT identity_code, icf_code FROM identity_icf_map")}
 
     # --- 1 + 5. THE H4 CAP, AND THE LADDER GUARD IT DEPENDS ON ----------------------
     open_by_param = {}
@@ -210,7 +210,7 @@ def main(argv=None):
                     fails.append(
                         f"specification {sid}: functional_basis names "
                         f"{', '.join(map(str, missing))} for {s['identity_code']}, which "
-                        f"population_icf_links does not hold. The determination is "
+                        f"identity_icf_map does not hold. The determination is "
                         f"justified by a functional basis a reader cannot reach.")
             if not fb and s.get("derivation_paths") in ("dual", "function_only"):
                 fails.append(

@@ -391,7 +391,7 @@ PEO/PEOP).
 | `decision-protocol.md` | Doctrine | The amendment path for this register itself |
 
 **Known divergences the register surfaces for ratification rather than resolving
-silently:** (a) `populations` DB table (22 flat codes) vs `population-taxonomy.md`
+silently:** (a) `base_taxonomy_identity` DB table (22 flat codes) vs `population-taxonomy.md`
 (11 codes + sub-codes) vs PR #52 (axes × profiles) — three representations needing
 one reconciliation, proposed in PR #52's amended §4a; (b) armature §5's 20-axis
 candidate set vs PR #52's 17 axes — reconciliation table in PR #52 §2.3, including
