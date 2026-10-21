@@ -484,6 +484,31 @@ def main():
         expect("H2 CHECK: dual owes neither", try_row(derivation_paths="dual") is None)
         expect("H2 CHECK: cultural_claim_anchor must be valid JSON",
                try_row(derivation_paths="dual", cultural_claim_anchor="not json") is not None)
+        # Migration 116: the marker column's vocabulary is its CHECK's and EvidenceMarker's, and no
+        # test inserted the middle glyph before; every branch's engine output must also satisfy
+        # the live CHECKs, or the first such row would fail at INSERT after the scratch DB is written.
+        import dbcore  # noqa: E402
+        expect("MARKER vocabulary: the column's CHECK and EvidenceMarker agree",
+               set(dbcore.check_values(live, "specifications", "marker"))
+               == {m.value for m in EvidenceMarker})
+        for _m in EvidenceMarker:
+            expect(f"MARKER vocabulary: {_m.name} inserts as a live stated row",
+                   try_row(marker=_m.value) is None)
+        _eng_t6 = [{"tier": 6, "evidence_type": "code", "jurisdiction": j} for j in ("US", "GB", "AU")]
+        _eng_find = [{"tier": 1, "evidence_type": "clinical", "ref_id": "REF-FIND-1",
+                      "figure_role": "finding", "claim_type": "qualitative", "claimed_value": "x"}]
+        for _label, _srcs in (("anchored", [{"tier": 2, "evidence_type": "co2"}]),
+                              ("T3-clinical", [{"tier": 3, "evidence_type": "clinical",
+                                                "scope": "lower_control"}]),
+                              ("floor claim", _eng_t6), ("proxy", _eng_t6 + _eng_find),
+                              ("pending", [dict(_eng_t6[0]) for _ in range(3)])):
+            _d = determine(synth_db(_srcs), 1, {"identity_code": "MOB"}, "syn-slug", _label)
+            _refused = try_row(state=_d["state"], marker=_d["marker"],
+                               regulatory_stratum_only=_d["regulatory_stratum_only"],
+                               rests_on_proxy_inference=_d["rests_on_proxy_inference"],
+                               code_floor_only=_d["code_floor_only"])
+            expect(f"MARKER engine output ({_label}: {_d['state']} {_d['marker']}) satisfies the live CHECKs",
+                   _refused is None, str(_refused))
     else:
         expect("H2 CHECK: live DDL available to test against", False,
                "data/guidebook.db absent")
@@ -571,27 +596,61 @@ def main():
     expect("MARKER: a proxy determination is weak unless a study confirms its codes",
            d["marker"] == WEAK, str(d["marker"]))
 
-    # R39: a `confirms` edge from an anchoring finding to a governing code takes the confirming
-    # study's band for that code, and the cell takes the floor-mean. The confirming row must be
-    # one the value path would also accept (a finding of THIS parameter, not skimmed, not
-    # `absent`), a `tested_at` edge and an edge to a label rather than a row confirm nothing,
-    # and one confirmed clause does not lift an unconfirmed clause of the same source.
-    def _proxy(relation="confirms", which=slice(None), per_source=1, to_label=False,
-               finding_sets=None, from_other_parameter=False):
-        c = synth_db(_t6 + _find, extractions_per_source=per_source)
-        c.execute("ALTER TABLE source_value_extractions ADD COLUMN extraction_method TEXT NOT NULL DEFAULT 'full'")
+    # Owner, 2026-10-21: a skimmed or `absent` finding supplies no direction and confirms nothing
+    # (a skimmed one cues a dedicated reading); a source must be VERIFIED to earn a band above
+    # weak; one confirmed clause does not confirm a code.
+    def _with_method(c):
+        c.execute("ALTER TABLE source_value_extractions ADD COLUMN extraction_method "
+                  "TEXT NOT NULL DEFAULT 'full'")
+        return c
+
+    _SKIM = sorted(NOT_PUBLISHABLE_METHODS)[0]
+    d = determine(synth_db(_t6 + [dict(_find[0], claim_type="absent")]), 1,
+                  {"identity_code": "MOB"}, "syn-slug", "absent-finding")
+    expect("DIRECTION: an `absent` finding supplies none, so the cell is a floor claim, not a proxy",
+           d["rests_on_proxy_inference"] == 0 and d["regulatory_stratum_only"] == 1
+           and d["marker"] == WEAK, f"{d['rests_on_proxy_inference']} {d['regulatory_stratum_only']} {d['marker']}")
+    c = _with_method(synth_db(_t6 + _find))
+    c.execute("UPDATE source_value_extractions SET extraction_method=? WHERE ref_id='REF-FIND-1'", (_SKIM,))
+    d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "skimmed-finding")
+    expect("DIRECTION: a skimmed finding supplies none, and is REPORTED so a dedicated reading is cued",
+           d["rests_on_proxy_inference"] == 0 and len(d["skimmed_findings"]) == 1,
+           f"{d['rests_on_proxy_inference']} {d['skimmed_findings']}")
+    d = determine(synth_db(_t6 + _find), 1, {"identity_code": "MOB"}, "syn-slug", "no-skim")
+    expect("DIRECTION: nothing is reported when no finding was skimmed",
+           d["rests_on_proxy_inference"] == 1 and d["skimmed_findings"] == [])
+
+    d = determine(synth_db([{"tier": 2, "evidence_type": "sr_meta", "verification_status": "UNVERIFIED"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "unverified-sole")
+    expect("VERIFIED: a stated cell resting on an unverified source is not full",
+           d["state"] == "stated" and d["marker"] == WEAK and d["has_unverified_sources"] == 1,
+           f"{d['state']} {d['marker']}")
+    d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"},
+                            {"tier": 2, "evidence_type": "sr_meta", "verification_status": "UNVERIFIED"}]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "unverified-one-of-two")
+    expect("VERIFIED: one unverified source among verified ones takes the floor of the mean (not full)",
+           d["marker"] == PARTIAL, str(d["marker"]))
+
+    # R39: a `confirms` edge from an anchoring finding to a governing row confirms it; the row takes
+    # the confirming study's band and a code the floor-mean of its rows, and ONLY a code every one
+    # of whose governing rows is confirmed leaves weak. The confirming row is a finding of THIS
+    # parameter that is neither skimmed nor `absent`; a `tested_at` edge and an edge to a label
+    # confirm nothing; an unverified confirmer lends only the weak band.
+    def _proxy(relation="confirms", which=slice(None), codes=_t6, to_label=False, confirmer="",
+               finding=_find):
+        c = _with_method(synth_db(codes + finding))
         c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
                         "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
                         "to_extraction_id INT, to_label TEXT)")
-        if finding_sets:
-            c.execute(f"UPDATE source_value_extractions SET {finding_sets} WHERE ref_id='REF-FIND-1'")
         find_id = c.execute("SELECT MIN(extraction_id) FROM source_value_extractions "
                             "WHERE ref_id='REF-FIND-1'").fetchone()[0]
-        if from_other_parameter:
+        if confirmer:   # a SECOND finding row of the same anchoring source holds the edges
             find_id = c.execute(
                 "INSERT INTO source_value_extractions (ref_id, slug, parameter_id, claim_type, "
-                "claimed_value, figure_role) VALUES ('REF-FIND-1','syn-slug',2,'qualitative',"
-                "'x','finding')").lastrowid
+                "claimed_value, figure_role, extraction_method) VALUES ('REF-FIND-1','syn-slug',?,?,'x',"
+                "'finding',?)", (2 if confirmer == "other-parameter" else 1,
+                                 "absent" if confirmer == "absent" else "qualitative",
+                                 _SKIM if confirmer == "skimmed" else "full")).lastrowid
         code_rows = [r[0] for r in c.execute(
             "SELECT extraction_id FROM source_value_extractions WHERE ref_id <> 'REF-FIND-1' "
             "ORDER BY extraction_id")]
@@ -599,8 +658,11 @@ def main():
             c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
                       "to_extraction_id, to_label) VALUES (?,?,?,?)",
                       (find_id, relation, None if to_label else eid, "a code" if to_label else None))
-        return determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "marker-confirm")["marker"]
+        d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "marker-confirm")
+        assert d["rests_on_proxy_inference"] == 1, "fixture lost its proxy determination"
+        return d["marker"]
 
+    two_rows = [dict(c, extractions=2) for c in _t6]
     expect("R39: every governing code confirmed by a full-band study => the cell is full",
            _proxy() == FULL)
     expect("R39: two of three codes confirmed => the floor of the mean, partial",
@@ -608,15 +670,20 @@ def main():
     expect("R39: a tested_at edge confirms nothing", _proxy("tested_at") == WEAK)
     expect("R39: a confirms edge whose referent is a label, not a row, confirms nothing",
            _proxy(to_label=True) == WEAK)
-    expect("R39: a skimmed confirming row confirms nothing (skimmed values are not publishable)",
-           _proxy(finding_sets="extraction_method='%s'" % sorted(NOT_PUBLISHABLE_METHODS)[0]) == WEAK)
+    expect("R39: a skimmed confirming row confirms nothing", _proxy(confirmer="skimmed") == WEAK)
     expect("R39: a confirming row that reports an absence confirms nothing",
-           _proxy(finding_sets="claim_type='absent'") == WEAK)
+           _proxy(confirmer="absent") == WEAK)
     expect("R39: a confirming row of another parameter confirms nothing",
-           _proxy(from_other_parameter=True) == WEAK)
-    expect("R39: one confirmed clause of two lifts a source only to the floor of its rows' mean, "
-           "not to the confirming band (per row, then per source)",
-           _proxy(per_source=2, which=slice(None, None, 2)) == PARTIAL)
+           _proxy(confirmer="other-parameter") == WEAK)
+    expect("R39: an unverified confirming source lends only the weak band",
+           _proxy(finding=[dict(_find[0], verification_status="UNVERIFIED")]) == WEAK)
+    expect("R39: every clause of every code confirmed => full",
+           _proxy(codes=two_rows) == FULL)
+    expect("R39: one confirmed clause of two does not confirm the code",
+           _proxy(codes=two_rows, which=slice(None, None, 2)) == WEAK)
+    expect("R39: codes are weighed per code, not per clause (5 confirmed clauses of one code beside "
+           "two unconfirmed codes stay weak; weighing clauses would give partial)",
+           _proxy(codes=[dict(_t6[0], extractions=5), _t6[1], _t6[2]], which=slice(5)) == WEAK)
 
     # ── Owner ruling 2026-09-17: PRESENT BOTH, never choose ───────────────────
     # Three codes state the same quantity, two as a percentage and one as a RATIO.

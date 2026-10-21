@@ -97,10 +97,23 @@ from schemas.enums import EvidenceMarker  # noqa: E402
 
 def unretire(con, spec):
     """Make a retired specification live again. A live stated or provisional row must carry a
-    marker (migration 116); the weakest band is legal on any such row."""
+    marker (migration 116); the weakest band is legal on any such row. `reretire` undoes it."""
     con.execute("UPDATE specifications SET retired_at=NULL, marker=CASE WHEN state IN "
                 "('stated','provisional') THEN ? END WHERE specification_id=?",
                 (EvidenceMarker.WEAK.value, spec))
+
+def reretire(spec, at=None, by=None, why=None):
+    """Put a specification back as the canonical copy held it: retired, and unmarked (a retired
+    row is exempt from the marker CHECK, and `unretire` gave it one)."""
+    con = sqlite3.connect(DB)
+    if at is None:
+        con.execute("UPDATE specifications SET marker=NULL WHERE specification_id=?", (spec,))
+    else:
+        con.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, "
+                    "retirement_reason=?, marker=NULL WHERE specification_id=?", (at, by, why, spec))
+    con.commit()
+    con.close()
+
 
 S = "session_test-db-amend-writers"
 results = []
@@ -725,6 +738,7 @@ try:
                    and superseded_by(LREF) is None and superseded_by(CREF) is None,
                    f"l={msg_l!r} c={msg_c!r}")
             db.retire_specification(SPEC, S, reason="fixture: retired to release its sources")
+            reretire(SPEC)
             # The named remedy must work: once the specification is retired, the same
             # call goes through. Written for real, so the capture path can be checked on
             # a row the canonical DB already holds -- an UPDATE, not an INSERT.
@@ -1061,12 +1075,7 @@ try:
                    and "Never move an adjudicated figure" in msg_l
                    and {r: source_row(r)["evidence_type"] for r in types} == types,
                    f"l={msg_l!r} c={msg_c!r}")
-            con = sqlite3.connect(DB)
-            con.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, "
-                        "retirement_reason=? WHERE specification_id=?",
-                        (R_AT, R_BY, R_WHY, SPEC))
-            con.commit()
-            con.close()
+            reretire(SPEC, R_AT, R_BY, R_WHY)
 
         ok = run_cli("amend-source", "--ref-id", EA, "--field", "evidence_type",
                      "--replacement", "co1", "--co1-provenance", PROV,
@@ -1638,11 +1647,7 @@ try:
         record("G03", "the guard is the confirms relation's alone: tested_at to the same row is not "
                "refused for that reason", not msg_other or "live determination" not in msg_other,
                f"{msg_other!r}")
-        con = sqlite3.connect(DB)
-        con.execute("UPDATE specifications SET retired_at='t', retired_by_session=?, "
-                    "retirement_reason='fixture', marker=NULL WHERE specification_id=?", (S, SPEC_G))
-        con.commit()
-        con.close()
+        reretire(SPEC_G, "t", S, "fixture")
         msg_after = refusal(db.relate_extraction, FROM_F, "confirms", S, **edge)
         record("G04", "once that determination is retired the guard no longer fires",
                not msg_after or "live determination" not in msg_after, f"{msg_after!r}")

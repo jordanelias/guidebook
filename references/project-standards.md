@@ -4460,3 +4460,26 @@ DATE: 2026-10-14 — recorded under RULINGS R24; the superseding words are the d
 
 CONDITION: any session asking whether the identity registry has been renamed, what its key column is called, or whether LED-127's confirmation is still pending.
 DATE: 2026-10-20 — recorded under RULINGS R14 and R49(c); the authority is the 2026-10-14 delegation entry above.
+
+## Owner statements 2026-10-21 — which findings count, who may confirm, and what a marker needs
+
+Given in session https://claude.ai/code/session_019DBbAfKYEE5x5qvYnBRp3W, in reply to four questions put with the review of the determination's marker (migration 116, PR #200), and recorded on contact per `CLAUDE.md` rule 0. Each answer is quoted verbatim beside the question it answered.
+
+1. Do skimmed or `absent` findings supply direction for a proxy determination? — "no. skimmed findings cue tools for a dedicated pass."
+2. Can an `absent` finding confirm a code's value? — "no"
+3. Does an unverified source cap the marker? — "must be verified"
+4. Is one confirmed clause enough to confirm a whole code? — "no"
+
+**How the engine reads them** (`scripts/assess/assess_cell.py`; the readings of 3 and 4 are the assistant's, marked, and stand until the owner corrects them).
+
+- **1 and 2.** One predicate (`_finding_clause`) decides whether a finding row counts, for direction (`gather_findings`) and for confirmation (`_confirmed_bands`): not skimmed and not `claim_type='absent'`. A skimmed finding is left out and *reported* (`skimmed_findings` in the report and on the summary line, naming `db.py record-scan --mode targeted`), which is the cue to a dedicated reading. This narrows the 2026-09-16 ruling that findings supply direction; it does not overturn it. [ASSUMPTION: "cue tools" means the engine's report names the tool for the owed pass; no row is written.]
+- **3.** A source that is not `VERIFIED` takes the weak band for the marker, so a full marker needs every governing source verified; an unverified source still anchors a determination (D-0157). [ASSUMPTION: the owner's words say verification is required, not whether a lone unverified source caps the whole cell. The reading applied is the floor of the mean over bands with the unverified source at weak; the alternative, capping the cell at weak, is not applied.]
+- **4.** A code takes its confirming study's band only if every one of its governing extraction rows is confirmed; otherwise it is weak. [ASSUMPTION: "no" means unconfirmed clauses keep the code unconfirmed.]
+
+**Still unruled.** The function from sources to a cell's marker: the floor of the mean is the owner's for a derived figure's inputs (2026-09-13), and its use for a determination's governing sources is `RULINGS.md` R7 as amended by R49(a), not put to the owner at this level.
+
+**Effect on the live corpus, measured on a scratch copy.** Parameter 3's proxy determination keeps its marker but its direction sources fall from 11 to 5 and its `tier_basis` loses "T1": every anchoring-tier finding that supplied direction through a skimmed or absent row is out (7 skimmed finding rows are now reported). Re-derive with `python3 scripts/assess/assess_cell.py --db <scratch copy> --parameter-id 3 --identity MOB ...`.
+
+CONDITION: any session asking whether a skimmed or `absent` finding may supply direction or confirm a value, whether an unverified source may carry a full marker, or whether one confirmed clause confirms a code.
+ACTION: (1) Count a finding only if it is neither skimmed nor `absent`; report a skimmed one as owing a dedicated reading. (2) Give a source that is not verified the weak band. (3) Confirm a code only when every one of its governing rows is confirmed. (4) Do not treat the readings marked ASSUMPTION as ruled.
+DATE: 2026-10-21 — owner statements, quoted above.

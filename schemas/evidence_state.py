@@ -175,8 +175,8 @@ class EvidenceStateRecord(BaseModel):
     # Not-applicable rationale (required when state == not_applicable)
     not_applicable_rationale: Optional[str] = None
 
-    # The band the determination rests on (tier-system section 5). The row's CHECK holds
-    # which states carry one; this model only holds the vocabulary.
+    # The band the determination rests on (tier-system section 5); which states carry one is
+    # state_field_consistency below, mirroring the column's CHECK.
     marker: Optional[EvidenceMarker] = None
 
     # Source quality flags
@@ -257,5 +257,13 @@ class EvidenceStateRecord(BaseModel):
             # stated cells should have convergence assessment
             # (pending_assessment is acceptable during migration)
             pass
+
+        # Migration 116's CHECK, refused here before any write: a stated or provisional cell
+        # carries its marker, and a pending or not_applicable one carries none.
+        live = state_val in ("stated", "provisional")
+        if live != (self.marker is not None):
+            raise ValueError(
+                f"State {state_val!r} " + ("requires marker (tier-system section 5)" if live
+                                           else "carries no marker"))
 
         return self
