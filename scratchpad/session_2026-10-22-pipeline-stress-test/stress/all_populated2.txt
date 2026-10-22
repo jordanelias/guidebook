@@ -1,0 +1,165 @@
+==============================================================================
+run_checks: --all — every active check in the registry
+  selected 72 of 72 registered checks  (1 quarantined, never selected)
+==============================================================================
+[PASS] check_utf8_md                             0.1s
+[PASS] check_json                                0.1s
+[PASS] check_yaml                                0.8s
+[PASS] validate_cross_refs                       0.1s
+[FAIL] test_db_integrity                         0.6s
+         RESULTS: 55/56 checks passed
+         FAILED:
+           [C10] no published cell rests on an unverified or disputed source
+         
+         PASSED HAVING EXAMINED NOTHING (7): B04, I3, I3b, B09, C05, D02, G03
+           Their scope is empty. They are not evidence that the thing they check is true.
+         EXAMINED: 3598 subject-inspections across 49 instrumented check(s) of 56
+         ======================================================================
+[FAIL] migration_reproducibility                 0.1s
+           EXAMINED: 57
+         
+         ======================================================================
+           ERROR: 7 invariant(s) diverge between the committed DB
+           and what the migration history produces. Someone wrote to
+           data/guidebook.db without emitting a data migration.
+           Per GAP-290, all DB writes go through scripts/emit_data_migration.py.
+         VERDICT: FAIL
+[FAIL] migration_reproducibility_deep            0.1s  (advisory)
+           EXAMINED: 56
+         
+         ======================================================================
+           ERROR: 7 invariant(s) diverge between the committed DB
+           and what the migration history produces. Someone wrote to
+           data/guidebook.db without emitting a data migration.
+           Per GAP-290, all DB writes go through scripts/emit_data_migration.py.
+         VERDICT: FAIL
+[PASS] source_slug_links_duplicates              0.0s
+[PASS] validate_parameters                       0.1s  (advisory)
+[PASS] readonly_db_open_audit                    0.6s  (advisory)
+[PASS] db_path_env_audit                         0.5s
+[PASS] alias_provenance_audit                    0.0s
+[PASS] observation_verbatim_audit                1.9s  (advisory)
+[FAIL] scan_debt                                 0.0s  (advisory)
+           parameter 6 (operating force): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+           parameter 7 (reverberation time): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+           parameter 8 (LRV contrast): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+           parameter 9 (door width): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+           parameter 10 (colour temperature): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+           parameter 11 (headroom clearance): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+           parameter 12 (ramp run length): 52 not read, 0 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00987, REF-00988, REF-00989, REF-00990, REF-00991, REF-00992, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999 ...
+         DEBT: 468 pair(s). Read each source against the whole list and record it (db.py record-scan; scripts/research/full_text.py derives a held PDF's text), or a targeted reading for one new parameter (record-scan --mode targeted).
+[PASS] extraction_follow_up_audit                0.0s  (advisory)
+[NONE] citation_mining_session                   0.0s  (advisory)
+           Nothing was checked. 'session_2026-10-01-research-batch-23.md' logged no slug-linked Tier 1-2 sources, so this run found no violation by having no subject — which is not the same as compliance. If that session did research, the scope or the pointer is wrong.
+[PASS] citation_mining_backlog_t2                0.1s  (informational)
+[PASS] provenance_artefact_audit                 1.0s
+[PASS] provenance_attribution_audit              0.1s  (advisory)
+[PASS] claude_skills_loadable                    0.0s  (advisory)
+[PASS] claude_md_spine                           0.1s
+[PASS] schema_reference_audit                    0.3s
+[FAIL] validate_schema_cross_check               0.1s  (advisory)
+           in the archive, absent from research_code_leads: GB / BS EN 81-70 Type 2
+           in the archive, absent from research_code_leads: GB / Building Regs 2021
+           in the archive, absent from research_code_leads: GB / Building Regs Part G / HTM 04-01
+           in the archive, absent from research_code_leads: GB / DfT Guidance 2021
+           in research_code_leads, absent from the archive: AU / AS 1428.1:2021 — ramp gradients, landings and handrails
+           in research_code_leads, absent from the archive: AU / Livable Housing Design Standard (NCC, 2022)
+           in research_code_leads, absent from the archive: ES / CERMI Comunidad de Madrid / Ayuntamiento de Madrid — Metodología para la evaluación e implementación de Accesibilidad Universal en espacios públicos de la ciudad de Madrid (2018)
+           ... and 17 more
+[PASS] validate_evidence_state                   0.2s
+[PASS] jurisdiction_db_vocabulary                0.0s
+[PASS] validate_jurisdiction                     0.1s
+[PASS] validate_verification_consistency         0.0s
+[PASS] audit_evidence_metadata                   0.0s  (advisory)
+[PASS] audit_adversarial_use                     0.2s
+[PASS] author_fidelity                           0.4s  (advisory)
+[PASS] doctrine_recheck                          0.2s
+[FAIL] retired_vocabulary                        9.0s  (advisory)
+                 cited by: RV-015 (UNVERIFIED-2)
+                 cited by: RV-016 (VERIFIED-WITH-CORRECTION)
+         
+         RESULTS: 88 occurrence(s) of retired vocabulary on the live surface.
+         Each is a wrong answer waiting for whoever greps next. Fix the text, or —
+         if the occurrence is a licensed mention rather than a use — add the path to
+         that entry's exempt_paths, or append [RETIRED-VOCAB-OK] to the line.
+         EXAMINED: 27 register entr(ies) + 1 dead exemption(s)
+[PASS] matrix_consistency                        0.0s  (advisory)
+[PASS] pipeline_contract_audit                   0.2s  (advisory)
+[PASS] claims_docket                             0.0s  (advisory)
+[NONE] attestation_presence                      0.1s
+         ============================================================
+[NONE] attestation_schema                        0.1s
+         ============================================================
+[PASS] attestation_evidence                      0.1s  (advisory)
+[NONE] attestation_verdict                       0.1s  (informational)
+         ============================================================
+[PASS] research_contract_baseline_ratchet        0.1s
+[PASS] research_contract_sync                    0.1s
+[PASS] research_dod_selftest                     0.1s
+[PASS] research_dod                              0.1s  (advisory)
+[PASS] research_dod_session                      0.1s
+[NONE] adversarial_pass_recorded                 0.0s  (advisory)
+         VERDICT: PASS — NOTHING-IN-SCOPE (this session wrote no rows into the RULE's subject tables; it owes no pass).
+[PASS] search_log_completeness                   0.1s  (advisory)
+[PASS] test_search_log_completeness              1.8s  (advisory)
+[PASS] research_tooling_separation               0.1s  (advisory)
+[PASS] supersession_backpointer_audit            0.1s  (advisory)
+[FAIL] research_protocol_audit                   0.0s  (advisory)
+         [CHECK 8] Verified citations lacking search_queries_used: 2
+           ⚠ REF-00987: 2010 ADA Standards for Accessible Design
+           ⚠ REF-01010: The Building Control (Accessibility Standards For Persons With Disabil
+         
+         --- TOTAL ISSUES: 18 ---
+         EXAMINED: 192
+         Reminder: protocol creates audit trails, not truth.
+         Human spot-check remains the control mechanism even on clean audits.
+[FAIL] metadata_integrity_audit                  0.0s  (advisory)
+         [3] INFO: Owner-review queue (metadata_integrity_status NOT IN ('OK','RESOLVED',NULL))
+             Total: 19 rows
+               CORRECTED                 19
+         
+         ======================================================================
+         VERDICT: FAIL
+         EXAMINED: 53
+         ======================================================================
+[PASS] gap_mining_audit                          0.0s  (advisory)
+[PASS] graph_audit                               2.1s  (advisory)
+[PASS] test_graph_audit                         23.3s  (advisory)
+[PASS] test_pipeline_contract                    0.5s  (advisory)
+[PASS] test_record_command_session               0.4s  (advisory)
+[PASS] test_db_amend_writers                    13.2s  (advisory)
+[PASS] test_scan_contract                        4.7s  (advisory)
+[PASS] test_author_presence                      2.7s  (advisory)
+[PASS] test_assess_cell_pilot                    0.3s  (advisory)
+[PASS] test_evidence_cell_state_2_3              0.2s  (advisory)
+[PASS] test_validate_evidence_state_2_4          0.4s  (advisory)
+[PASS] test_directness_2_2                       0.0s  (advisory)
+[PASS] column_vocabulary_audit                   0.0s
+[FAIL] context_map_fresh                         0.4s  (advisory)
+         STALE: governance/context-map.yaml differs from a fresh generation.
+         Run: python3 scripts/generate/context_map.py
+[PASS] judgment_handoff_shape                    0.0s
+[PASS] extraction_relations_integrity            0.0s
+[PASS] derived_not_curated_audit                 2.5s
+[PASS] identifier_floor_audit                    0.3s
+[PASS] derivation_handshake_integrity            0.2s  (advisory)
+[PASS] adjudication_integrity                    0.0s
+[NONE] medical_lens_integrity                    0.1s  (advisory)
+         VERDICT: CLEAN
+==============================================================================
+NOTHING-IN-SCOPE (6): citation_mining_session, attestation_presence, attestation_schema, attestation_verdict, adversarial_pass_recorded, medical_lens_integrity
+  These ran clean and examined nothing. They are not evidence of anything.
+  BLOCKING and vacuous (2): attestation_presence, attestation_schema — a gate that examined nothing gated nothing.
+STALE FLOOR CLAIM (1): a `no_floor` reason asserting an empty subject, over a subject that is not empty.
+  extraction_follow_up_audit declares `no_floor: vocabulary-owed` — an assertion that its subject is empty — but printed EXAMINED: 13. Both cannot be true. Ratchet it to `min_items: 1` (the boundary between examined-something and examined-nothing, never 13, which would be stale on the next batch), or correct the kind if the subject is not what the reason says it is.
+FLOORLESS WITH A LIVE SUBJECT (7): not a failure — these kinds make no claim a count can refute.
+  search_log_completeness is floorless as `session-scoped` and examined 16 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+  test_search_log_completeness is floorless as `selftest` and examined 23 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+  research_tooling_separation is floorless as `changeset-scoped` and examined 48 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+  test_record_command_session is floorless as `selftest` and examined 21 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+  test_db_amend_writers is floorless as `selftest` and examined 155 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+  test_scan_contract is floorless as `selftest` and examined 109 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+  test_author_presence is floorless as `selftest` and examined 13 item(s). That kind makes no claim a count can refute, so this is not a failure — but a floorless check with a live subject is where the last eleven stale claims came from.
+NON-BLOCKING failures (8): migration_reproducibility_deep, scan_debt, validate_schema_cross_check, retired_vocabulary, research_protocol_audit, metadata_integrity_audit, context_map_fresh, extraction_follow_up_audit
+BLOCKING failures (2): test_db_integrity, migration_reproducibility
+RESULT: FAIL
