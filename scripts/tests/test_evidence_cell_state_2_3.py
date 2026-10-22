@@ -55,13 +55,13 @@ conv = ConvergenceAssessment(status="convergent", clinical_sources=["REF-001"],
 # the four lenses are THE LENS (owner 2026-08-28, relaxed by D-0182). item_code and
 # population were the pre-071 key and are now refused outright.
 cell = EvidenceStateRecord(parameter_id=1, identity_code="AUT", design_scale="population",
-                           state="stated", convergence=conv)
+                           state="stated", convergence=conv, marker=M)
 check("stated cell with parameter_id + design_scale + directness convergence",
       cell.parameter_id == 1 and cell.design_scale == "population")
 check("convergence carries directness-conditioned source lists",
       conv.down_weighted_sources == ["REF-099"] and conv.discounted_sources == ["REF-200"])
 multi = EvidenceStateRecord(parameter_id=2, identity_code="DEAF", icf_code="b230",
-                            needs_code="AN-HEAR", medical_code="H90", state="stated")
+                            needs_code="AN-HEAR", medical_code="H90", state="stated", marker=M)
 check("D-0182: a cell may be stated in several lenses at once",
       (multi.identity_code, multi.icf_code, multi.needs_code, multi.medical_code)
       == ("DEAF", "b230", "AN-HEAR", "H90"))
@@ -95,6 +95,13 @@ reject("not_applicable without rationale",
        lambda: EvidenceStateRecord(parameter_id=1, identity_code="AUT", state="not_applicable"))
 reject("divergent convergence without rationale",
        lambda: ConvergenceAssessment(status="divergent", clinical_sources=["REF-1"]))
+reject("stated without a marker (migration 116's CHECK, mirrored by the model)",
+       lambda: EvidenceStateRecord(parameter_id=1, identity_code="AUT", state="stated"),
+       expect="requires marker")
+reject("pending with a marker",
+       lambda: EvidenceStateRecord(parameter_id=1, identity_code="AUT", state="pending",
+                                   gap_register_id="GAP-001", marker=M),
+       expect="carries no marker")
 check("pending with real gap id accepted",
       EvidenceStateRecord(parameter_id=4, identity_code="MOB", state="pending",
                           gap_register_id="GAP-001").gap_register_id == "GAP-001")

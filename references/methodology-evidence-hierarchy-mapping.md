@@ -158,7 +158,7 @@ Co-1 is co-primary for specification *direction* and *barrier identification*; i
 |---|---|---|
 | ● | Confirmed evidence base | T1, T2 (sr_meta + standard_eb + co2 streams), T3-clinical, Co-1, Co-2 |
 | ◐ | Policy/standards basis only — not primary evidence | T4, T5 |
-| ○ | Grey, expert consensus, thin base, unconfirmed | T3-grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6 |
+| ○ | Grey, expert consensus, thin base, unconfirmed, or unverified because the source could not be retrieved | T3-grey, `[EXPERT CONSENSUS]`, `[THIN BASE]`, `[UNSUPPORTED]`, T6, and any source that is `UNVERIFIED` (owner 2026-10-21) |
 
 v1's two-marker system is superseded: it allowed "Tier 4–6 only → ●" with the rationale that "code compliance is inherently evidence-based (the evidence being the code itself)." That rationale is the convergence-laundering failure mode `tier-system.md` §3 names, in its oldest recorded form. Under v2, a T4–6-only basis renders ◐/○ and — per the PROPOSED `governance/evidence-architecture.md` G1 (pending owner ratification) — would be flagged `regulatory_stratum_only` in the determination table and carry the regulatory-stratum register language in every audience rendering, never best-practice language (invariant I3).
 

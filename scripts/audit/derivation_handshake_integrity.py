@@ -33,6 +33,15 @@ which is about the book and not the apparatus):
      T1-anchored cell, or a T1 trigger can stop binding, and neither is visible from the
      gate row. The same snapshot-versus-live shape as K02 in test_db_integrity.
 
+  6. A STORED ANSWER THAT THE ENGINE NO LONGER GIVES. The marker (and the value, the state) is a
+     cache over inputs `derivation_sha` does not hash: a source's verification and tier, a row's
+     grading and comparator, a `confirms` edge. `db.py` refuses the routes it knows; a data
+     migration, the verification cron or a route nobody has thought of does not pass through it,
+     and K01 and K02 verify the stored junction, not these. The book would show a ● over a source
+     since demoted, or an interval composed from a comparator since corrected. This re-runs the
+     engine on each live determination it wrote and compares the answer
+     (`assess_cell.stale_determinations`).
+
 ADVISORY, WITH THE RATCHET NAMED. House norm: a newly-wired check starts advisory. It is
 also vacuous today — `specifications` holds 0 rows, because no parameter has been minted
 since the 2026-09-13 circulation clear — and adding a SIXTH blocking-and-vacuous gate to
@@ -220,6 +229,18 @@ def main(argv=None):
             fails.append(
                 f"specification {sid}: derivation_paths={s['derivation_paths']!r} claims a "
                 f"function path with no functional_basis recorded at all.")
+
+    # --- 6. THE STORED ANSWER AGAINST THE ENGINE -----------------------------------
+    # A second, plain connection: the engine reads rows by position and carries no row_factory.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "assess"))
+    import assess_cell
+    eng = sqlite3.connect(f"file:{args.db}?mode=ro", uri=True)
+    for sid, diff in assess_cell.stale_determinations(eng) if specs else []:
+        fails.append(f"specification {sid}: the engine now gives a different {', '.join(diff)}. "
+                     f"A source's verification or tier, a row's grading or comparator, or a "
+                     f"`confirms` edge moved after the answer was written; retire the "
+                     f"specification and re-determine.")
+    eng.close()
 
     print("=" * 70)
     print("derivation_handshake_integrity")

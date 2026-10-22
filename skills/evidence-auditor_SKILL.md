@@ -44,7 +44,7 @@ When run in marker verification mode (triggered by "marker verification" or "mar
 |---|---|---|---|
 | **●** | confirmed evidence base | STRONG or MODERATE — basis includes T1, Co-1, T2, Co-2 or T3-clinical | 🔴 if stratum is ABSENT; 🔴 if the basis is T4/T5 only (should be ◐); 🔴 if the basis is T6 / T3-grey / expert consensus only (should be ○) |
 | **◐** | policy or standards basis only, not primary evidence | EMERGING, where the basis is T4 or T5 | 🔴 if the basis reaches T1/Co-1/T2/Co-2/T3-clinical (should be ●); 🔴 if the basis is T6 / T3-grey / consensus only (should be ○) |
-| **○** | weak band — grey, expert consensus, thin base, code-floor | EMERGING on T6 / T3-grey / consensus, or ABSENT with caveat | 🟡 UPGRADEABLE if the stratum is actually MODERATE or STRONG |
+| **○** | weak band — grey, expert consensus, thin base, code-floor, or unverified because the source could not be retrieved | EMERGING on T6 / T3-grey / consensus, ABSENT with caveat, or any stratum whose source is `UNVERIFIED` | 🟡 UPGRADEABLE if the stratum is actually MODERATE or STRONG **and the source is verified** |
 
 Additional marker checks:
 - Any spec sentence carrying **no** marker → 🔴 UNMARKED (unmarked is an error, per `tier-system.md` §5)
@@ -52,6 +52,7 @@ Additional marker checks:
 - ○ with evidence in BPC but not cited in item → 🟡 EVIDENCE-AVAILABLE (may warrant upgrade)
 - ● citing only expert consensus or clinical reasoning → 🔴 MARKER-STRATUM-MISMATCH (should be ○)
 - ○ citing a T1 / Co-1 / T2 / Co-2 / T3-clinical source that directly supports the value → 🔴 MARKER-STRATUM-MISMATCH (should be ●)
+- ● or ◐ resting on a source that could not be retrieved (`UNVERIFIED`) → 🔴 MARKER-STRATUM-MISMATCH (should be ○, flagged unverified: it cannot be claimed as primary evidence or a top tier, owner 2026-10-21, `tier-system.md` §5)
 - A determination whose **entire** basis is T4–T6 rendered above the weak band → 🔴 MARKER-STRATUM-MISMATCH (should be ○, flagged code-derived: `tier-system.md` §8 Option A, DR-2026-07-21 §2.3)
 
 Output for marker verification mode:

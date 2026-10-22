@@ -175,8 +175,8 @@ class EvidenceStateRecord(BaseModel):
     # Not-applicable rationale (required when state == not_applicable)
     not_applicable_rationale: Optional[str] = None
 
-    # The band the determination rests on (tier-system section 5). The row's CHECK holds
-    # which states carry one; this model only holds the vocabulary.
+    # The band the determination rests on (tier-system section 5); which states carry one is
+    # state_field_consistency below, mirroring the column's CHECK.
     marker: Optional[EvidenceMarker] = None
 
     # Source quality flags
@@ -227,11 +227,9 @@ class EvidenceStateRecord(BaseModel):
     @model_validator(mode="after")
     def state_field_consistency(self) -> "EvidenceStateRecord":
         """Enforce state-dependent field requirements per A6 §2."""
-        state = self.state
-        if isinstance(state, str):
-            state_val = state
-        else:
-            state_val = state.value
+        # A str-Enum member IS a str, so isinstance(state, str) kept the member and its repr
+        # ("<EvidenceCellState.STATED: 'stated'>") reached the messages below.
+        state_val = getattr(self.state, "value", self.state)
 
         if state_val == "pending":
             if not self.gap_register_id:
@@ -257,5 +255,14 @@ class EvidenceStateRecord(BaseModel):
             # stated cells should have convergence assessment
             # (pending_assessment is acceptable during migration)
             pass
+
+        # The state half of migration 116's CHECK, refused here before any write: a stated or
+        # provisional cell carries its marker, and a pending or not_applicable one carries none.
+        # The regulatory-stratum ceiling is the DB's alone (this model has no such field).
+        live = state_val in ("stated", "provisional")
+        if live != (self.marker is not None):
+            raise ValueError(
+                f"State {state_val!r} " + ("requires marker (tier-system section 5)" if live
+                                           else "carries no marker"))
 
         return self

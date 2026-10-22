@@ -133,7 +133,7 @@ Where they diverge, the divergence is itself evidence about how the parameter op
 
 ### Citation discipline
 
-- Every Part-4 specification carries an evidence marker: ● (confirmed), ◐ (policy/standards only) or ○ (grey/thin), the band assigned per `governance/tier-system.md` §5/§8. Unmarked = error.
+- Every Part-4 specification carries an evidence marker: ● (confirmed), ◐ (policy/standards only) or ○ (grey, thin, or unverified because the source could not be retrieved), the band assigned per `governance/tier-system.md` §5/§8; a determination carries the band `assess_cell` computes (`specifications.marker`). Unmarked = error.
 - Quantified outcome claims require DOI + page/table reference, or failing that, direct URL to source. Unverified claims carry `[UNVERIFIED-QUANT]` flag.
 - Two failed independent searches → CLOSED-DELETED disposition for unverifiable values; do not accumulate unresolvable UNVERIFIED flags.
 - Source authenticity: confirmed real before citation. "I don't know" governs over invention.

@@ -349,7 +349,7 @@ experience / participatory design, **co-primary with T1** under CRPD Art 4.3 · 
 **Co-2** OT professional-body CPGs · **T3** grey primary · **T4–T6** the regulatory stratum, walled
 off from full-strength anchoring.
 
-Markers: **●** confirmed · **◐** policy/standards only · **○** grey/thin. Unmarked is an error.
+Markers: **●** confirmed · **◐** policy/standards only · **○** grey, thin or unverified (the source could not be retrieved). Unmarked is an error.
 Cell states: `stated` / `provisional` / `pending` / `not_applicable`.
 
 **Co-1's warrant is co-production.** The disabled people who produced the work are part of the

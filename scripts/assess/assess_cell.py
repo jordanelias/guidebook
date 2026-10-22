@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-scripts/assess/assess_cell.py — the determination engine (rule_version "pilot-2").
+scripts/assess/assess_cell.py — the determination engine (rule_version: `RULE_VERSION` below).
 
 THE STATE IS COMPUTED. Owner ruling 2026-09-09 (references/project-standards.md):
 *"you have to compute it. I can't handle this load manually."* That supersedes
@@ -39,7 +39,7 @@ say so.
 
 Implements the pure determination function of workplan/best-practices-assessment-system.md
 §3 under the doctrine of governance/evidence-architecture.md, with the G1/G2/G3/G6
-fixes active, tagged rule_version="pilot-2". G2, G3 and G6 are RATIFIED
+fixes active, tagged with `RULE_VERSION`. G2, G3 and G6 are RATIFIED
 (RATIFICATION-PACKAGE-2026-07-12, owner directive 2026-07-13).
 
 PROMOTED 2026-09-10 (register item Q4). G3 and G6 used to be implemented ONLY in
@@ -127,7 +127,12 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-3"  # 077: derivation_sha hashes the GRADED LINK SET, not the
+RULE_VERSION = "pilot-4"  # pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
+#   marker, and the rules for which findings count, who may confirm and what a marker needs changed
+#   (references/project-standards.md, "Owner statements 2026-10-21"). The sha payload is
+#   UNCHANGED from pilot-3, so K01 and K02 read both labels. Rows labelled pilot-3 were written
+#   without a marker.
+#   pilot-3: 077: derivation_sha hashes the GRADED LINK SET, not the
 #   governing ref list plus an unfiltered extraction count. Bumped from pilot-2 because
 #   the sha PAYLOAD FORMAT changed: `rule_version` is what tells a verifier which format
 #   to recompute, so K01 dispatches on it and pilot-2 rows replayed from migration
@@ -227,6 +232,26 @@ def lens_key(lens):
     return None
 
 
+def _gather(conn, join, where, params):
+    """The distinct sources, not superseded, behind the extraction rows (alias `x`) of one
+    parameter that `where` selects, as the dicts `assess_source` takes: `ref_id` and
+    `dbcore.ENGINE_SOURCE_COLUMNS`. `join` brings another table to those rows; `params` starts
+    with the parameter id.
+
+    verification_disposition arrived with migration 049 (D-0157). This script is run against
+    scratch and fixture databases as well as the canonical one -- it refuses the canonical DB by
+    design -- so a column the table lacks is selected as NULL. A pre-049 database still
+    disqualifies correctly through the legacy status values in DISQUALIFIED."""
+    cols = [f"e.{c}" if _has_column(conn, "evidence_sources", c) else "NULL"
+            for c in dbcore.ENGINE_SOURCE_COLUMNS]
+    return [dict(zip(("ref_id", *dbcore.ENGINE_SOURCE_COLUMNS), r))
+            for r in conn.execute(
+                f"SELECT DISTINCT e.ref_id, {', '.join(cols)} FROM source_value_extractions x "
+                f"JOIN evidence_sources e ON e.ref_id = x.ref_id {join} "
+                f"WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL AND {where} "
+                f"ORDER BY e.ref_id", params)]
+
+
 def gather_sources(conn, parameter_id):
     """The sources holding an EXTRACTION FOR THIS PARAMETER. Not the slug's sources.
 
@@ -285,32 +310,14 @@ def gather_sources(conn, parameter_id):
     edge that upgrades a code value, build ON this predicate and are not required by
     it.
     """
-    # verification_disposition arrived with migration 049 (D-0157). This script
-    # is run against scratch and fixture databases as well as the canonical one
-    # -- it refuses the canonical DB by design -- so the column is selected only
-    # when it exists. A pre-049 database still disqualifies correctly through
-    # the legacy status values in DISQUALIFIED.
-    has_disp = any(r[1] == "verification_disposition"
-                   for r in conn.execute("PRAGMA table_info(evidence_sources)"))
-    disp_col = "e.verification_disposition" if has_disp else "NULL"
     # NOT-PUBLISHABLE METHODS ARE NOT GATHERED (owner 2026-10-09: "skimmed values are not
     # publishable"). A source whose only value-supplying rows were skimmed does not enter
     # the governing set; gather_extraction_links records each skimmed row as excluded with
     # the reason. Fixture tolerance as above: a synthetic table without the column has no
     # skimmed rows to leave out.
-    method_clause, method_params = _publishable_clause(conn, "x")
-    q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
-                   e.verification_status, {disp_col}, e.scope, e.jurisdiction
-            FROM source_value_extractions x
-            JOIN evidence_sources e ON e.ref_id = x.ref_id
-            WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
-              AND x.figure_role IN ('claim', 'derived')
-              {method_clause}
-            ORDER BY e.ref_id"""
-    return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
-                      "verification_status", "verification_disposition",
-                      "scope", "jurisdiction"), r))
-            for r in conn.execute(q, (parameter_id,) + method_params)]
+    skim, skim_params = _publishable_clause(conn, "x")
+    return _gather(conn, "", f"x.figure_role IN ('claim', 'derived') {skim}",
+                   (parameter_id, *skim_params))
 
 
 def _has_column(conn, table, column):
@@ -372,20 +379,34 @@ def gather_findings(conn, parameter_id):
     determination is marked `rests_on_proxy_inference` so the book can tell an
     inference from a citation.
     """
-    has_disp = any(r[1] == "verification_disposition"
-                   for r in conn.execute("PRAGMA table_info(evidence_sources)"))
-    disp_col = "e.verification_disposition" if has_disp else "NULL"
-    q = f"""SELECT DISTINCT e.ref_id, e.tier, e.evidence_type, e.co1_source_type,
-                   e.verification_status, {disp_col}, e.scope, e.jurisdiction
-            FROM source_value_extractions x
-            JOIN evidence_sources e ON e.ref_id = x.ref_id
-            WHERE x.parameter_id = ? AND e.superseded_by_ref_id IS NULL
-              AND x.figure_role IN ({",".join("?" * len(DIRECTION_SUPPLYING_ROLES))})
-            ORDER BY e.ref_id"""
-    return [dict(zip(("ref_id", "tier", "evidence_type", "co1_source_type",
-                      "verification_status", "verification_disposition",
-                      "scope", "jurisdiction"), r))
-            for r in conn.execute(q, (parameter_id,) + DIRECTION_SUPPLYING_ROLES)]
+    # A finding row counts for DIRECTION only if it is not skimmed (a skimmed finding cues a
+    # dedicated reading, owner 2026-10-21) and not `claim_type='absent'`: a source that looked
+    # and found nothing says nothing about which end of a permitted range the evidence favours.
+    # Left out, never silently: `gather_extraction_links` says why on each such row.
+    skim, skim_params = _publishable_clause(conn, "x")
+    return _gather(
+        conn, "",
+        f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) "
+        f"AND x.claim_type <> 'absent' {skim}",
+        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params))
+
+
+def gather_confirmers(conn, parameter_id):
+    """The sources holding a finding row of this parameter that originates a `confirms` edge to
+    another row of it. Read apart from `gather_findings`, because confirming is not direction:
+    an `absent` row supplies none, yet the edge it carries is the claim that confirms a code (a
+    study that tested the existing value and found no case to change it, owner 2026-10-21,
+    REF-00980). A skimmed row still confirms nothing."""
+    if not _table_exists(conn, "extraction_relations"):
+        return []
+    skim, skim_params = _publishable_clause(conn, "x")
+    return _gather(
+        conn,
+        "JOIN extraction_relations r ON r.from_extraction_id = x.extraction_id "
+        "AND r.relation = 'confirms' JOIN source_value_extractions t "
+        "ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id",
+        f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim}",
+        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params))
 
 
 def gather_extraction_links(conn, parameter_id, governing_refs):
@@ -410,6 +431,11 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
                     answer" reads differently from silence, and the two were previously
                     indistinguishable to everything except a hash collision.
 
+    Two facts ride along on each dict, beside the role, for the caller to report: `superseded`
+    (the row's source has been replaced, so it is not gathered) and, on a `finding` row only,
+    `left_out`: "skimmed" or "absent" when the row supplies no direction (`gather_findings`) and
+    its source is still current. A skimmed one owes a dedicated reading.
+
     `governing_refs` is passed in rather than re-derived because the caller has already
     applied the tier/verification/supersession gates; re-deriving them here would be a
     second implementation of the anchoring rule, free to drift from the first.
@@ -417,16 +443,18 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
     # Positional, not by name: this module's connection carries no row_factory, and
     # assuming one made the first cut of this function raise `tuple indices must be
     # integers`. The column order here is the SELECT's, which is the only contract.
-    method_col = ("extraction_method"
+    method_col = ("x.extraction_method"
                   if _has_column(conn, "source_value_extractions", "extraction_method")
                   else "NULL")
     rows = conn.execute(
-        f"SELECT extraction_id, ref_id, figure_role, claim_type, {method_col} FROM "
-        "source_value_extractions WHERE parameter_id = ? ORDER BY extraction_id",
-        (parameter_id,)).fetchall()
+        f"SELECT x.extraction_id, x.ref_id, x.figure_role, x.claim_type, {method_col}, "
+        "e.superseded_by_ref_id IS NOT NULL FROM source_value_extractions x "
+        "LEFT JOIN evidence_sources e ON e.ref_id = x.ref_id "
+        "WHERE x.parameter_id = ? ORDER BY x.extraction_id", (parameter_id,)).fetchall()
     gov = set(governing_refs or ())
     out = []
-    for eid, ref, frole, ctype, method in rows:
+    for eid, ref, frole, ctype, method, superseded in rows:
+        left_out = None
         if frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
             # Checked BEFORE the governing branch: a skimmed row is left out even when its
             # source governs through another, fully read row (owner 2026-10-09).
@@ -451,10 +479,19 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
         else:
             role, why = "excluded", (
                 f"figure_role={frole!r} reports something ABOUT the parameter without "
-                f"asserting a value for it"
-                + (f" (claim_type={ctype!r})" if ctype == "absent" else ""))
+                f"asserting a value for it")
+            if frole in DIRECTION_SUPPLYING_ROLES and not superseded:
+                if method in NOT_PUBLISHABLE_METHODS:
+                    left_out = "skimmed"
+                    why += (f"; extraction_method={method!r}, so it supplies no direction and "
+                            f"owes a dedicated reading (owner 2026-10-21)")
+                elif ctype == "absent":
+                    left_out = "absent"
+                    why += ("; claim_type='absent', so it supplies no direction (it can still "
+                            "confirm through a `confirms` edge)")
         out.append({"extraction_id": eid, "ref_id": ref, "figure_role": frole,
-                    "role": role, "exclusion_reason": why})
+                    "role": role, "exclusion_reason": why, "superseded": bool(superseded),
+                    "left_out": left_out})
     return out
 
 
@@ -1074,7 +1111,7 @@ def classify(recs):
         t, ty = r["tier"], r["evidence_type"]
         if ty == "co1":
             # §2.2 cond. 2: Co-1 counts toward `stated` only when VERIFIED
-            if (r["verification_status"] or "") in VERIFIED_OK:
+            if _verified(r):
                 b["co1"].append(r)
             else:
                 b.setdefault("co1_unverified", []).append(r)
@@ -1100,6 +1137,11 @@ def classify(recs):
 def anchoring(recs):
     """A source anchors only if its conditioning permits (§1.7): never NON-ANCHORING/DISCOUNTED."""
     return [r for r in recs if r["conditioning"] not in (COND_NON_ANCHORING, COND_DISCOUNTED)]
+
+
+def _anchors_of(b):
+    """The anchoring sources of the four strata that can anchor, from `classify`'s buckets."""
+    return anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])
 
 
 def _distinct_jurisdictions(recs):
@@ -1207,33 +1249,46 @@ def sha(parameter_id, lens, links):
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-def _confirmed_bands(conn, parameter_id, links, finding_anchors):
-    """R39: each governing source's band under confirmation by study.
+def _verified(rec):
+    """Only a VERIFIED source earns a band ("must be verified", owner 2026-10-21). An unverified
+    one may still anchor a determination (D-0157: a return pass is owed) and is flagged by
+    `has_unverified_sources`, but it is left out of the marker, so it can neither raise nor lower
+    it; a cell with no verified governing source is weak (evidence-methodology 2.8: unverified
+    sources are flagged and do not downgrade a cell the verified ones carry)."""
+    return (rec["verification_status"] or "") in VERIFIED_OK
 
-    A governing row is weak unless a `confirms` edge, whose referent is that row, comes from
-    an anchoring finding source (`finding_anchors`) through a finding row of THIS parameter
-    that the value path would also accept: not skimmed (owner 2026-10-09, "skimmed values are
-    not publishable") and not `claim_type='absent'`, which says nothing was found and so
-    confirms no value. A confirmed row takes the floor of the mean of its confirmers' bands; a
-    source takes the floor of the mean of its governing rows, so one confirmed clause does not
-    lift a sibling clause that no study confirms. A `to_label` referent names no row and
-    confirms nothing. A source with no entry here is weak."""
+
+def _confirmed_bands(conn, parameter_id, links, confirmer_anchors):
+    """R39: each governing source's band under confirmation by study. One confirmed clause does
+    not confirm the code (owner 2026-10-21): an unconfirmed row is weak, and a source takes the
+    floor of the mean of its rows, so it reaches the confirming band only when every row does.
+
+    A row is confirmed by a `confirms` edge, whose referent is that row, from a VERIFIED
+    anchoring source (`confirmer_anchors`, from `gather_confirmers`: not the direction set, which
+    leaves out an `absent` row) through a finding row of THIS parameter that is
+    not skimmed (`_publishable_clause`). An `absent` row confirms, because the edge is itself the
+    claim: a study that tested the existing value and found no case to change it supports that
+    value (owner, 2026-10-21, REF-00980: "the absence of the findings is actually research support
+    for that tested code value"). The edge needs a row referent and a quote, so an absence that
+    examined nothing carries no such edge and confirms nothing. A confirmed row takes the floor of
+    the mean of its confirmers' bands, a source the floor of the mean of its rows'. A `to_label`
+    referent names no row and confirms nothing."""
     rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
     if not rows or not _table_exists(conn, "extraction_relations"):
         return {}
-    finding_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"]) for r in finding_anchors}
+    confirmer_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"])
+                       for r in confirmer_anchors if _verified(r)}
     skim, skim_params = _publishable_clause(conn, "e")
     confirmers = {}
     for to_id, from_ref in conn.execute(
             "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "
             "JOIN source_value_extractions e ON e.extraction_id = r.from_extraction_id "
             "WHERE r.relation = 'confirms' AND e.parameter_id = ? "
-            "AND e.figure_role IN (%s) AND e.claim_type <> 'absent' %s "
-            "AND r.to_extraction_id IN (%s)"
+            "AND e.figure_role IN (%s) %s AND r.to_extraction_id IN (%s)"
             % (",".join("?" * len(DIRECTION_SUPPLYING_ROLES)), skim, ",".join("?" * len(rows))),
             (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *rows)):
-        if from_ref in finding_bands:
-            confirmers.setdefault(to_id, {})[from_ref] = finding_bands[from_ref]
+        if from_ref in confirmer_bands:
+            confirmers.setdefault(to_id, {})[from_ref] = confirmer_bands[from_ref]
     by_source = {}
     for eid, ref in rows.items():
         by_source.setdefault(ref, []).append(
@@ -1267,13 +1322,17 @@ def determine(conn, parameter_id, lens, slug, note):
     finding_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
                     for s in finding_sources]
     fb = classify(finding_recs)
-    finding_anchors = (anchoring(fb["t1"]) + anchoring(fb["co1"])
-                       + anchoring(fb["t2"]) + anchoring(fb["co2"]))
+    finding_anchors = _anchors_of(fb)
+    # THE CONFIRMING SET. Which sources raise a proxy answer's marker is read on its own, not off
+    # the direction set: an `absent` finding supplies no direction and still confirms a code.
+    confirmer_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
+                      for s in gather_confirmers(conn, parameter_id)]
+    confirmer_anchors = _anchors_of(classify(confirmer_recs))
     # §2.8 verification-status machinery
     live = [r for r in recs if not _is_disqualified(r)]
-    has_unverified = any((r["verification_status"] or "") == "UNVERIFIED" for r in live)
+    has_unverified = any(not _verified(r) for r in live)   # the sources the marker leaves out
     all_disqualified = bool(recs) and not live
-    anchors = anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])
+    anchors = _anchors_of(b)
     t3c = anchoring(b["t3c"])
     regulatory = b["t45"] + b["t6"]
     down_weighted = [r["ref_id"] for r in recs if r["conditioning"] == COND_DOWN_WEIGHTED]
@@ -1605,30 +1664,52 @@ def determine(conn, parameter_id, lens, slug, note):
                   "gate caps it at `provisional` until resolved. Resolve the gate to "
                   "restore the cell, never re-run the engine to route around it.")
 
-    # THE MARKER (migration 116; RULINGS R7, R39). Only a stated or provisional cell carries
-    # one. Each governing source takes its tier-system section 5 band and the cell takes the
-    # floor of their mean (owner 2026-09-13). A value read off the regulatory stratum, as a
-    # floor claim or as the threshold of a proxy inference, is weak (Option A section 2.3;
-    # DR-2026-07-21): each of its codes is weak unless an anchoring finding confirms it, and
-    # then takes the confirming study's band. The row's CHECK pins a regulatory-stratum-only
-    # cell at weak; the proxy rule lives here alone, because a CHECK cannot read
-    # extraction_relations. THE MARKER IS A CACHE over those edges: `derivation_sha` does not
-    # hash them and no check recomputes it, so a `confirms` edge added later leaves the stored
-    # marker stale under an unchanged sha (recorded, not built).
+    # The finding and confirming sources are inputs of an answer that rests on the regulatory
+    # stratum, so an unverified one is flagged too, whether or not it anchors: an unverified Co-1
+    # finding is no anchor and supplies no direction, and that is the reason to say it exists.
+    if regulatory_stratum_only or rests_on_proxy_inference:
+        has_unverified = has_unverified or any(
+            not _verified(r) for r in finding_recs + confirmer_recs if not _is_disqualified(r))
+
+    # THE MARKER (migration 116; RULINGS R7, R39). Only a stated or provisional cell carries one.
+    # Each VERIFIED governing source takes its tier-system section 5 band and the cell the floor
+    # of their mean; unverified ones are left out, and a cell with no verified source is weak. The
+    # 2026-09-13 owner rulings give that function for a derived figure's inputs; applying it to a
+    # cell's governing sources is RULINGS R7 as amended by R49(a), not put to the owner at this
+    # level. A value read off the regulatory stratum, as a floor claim or as the threshold of a
+    # proxy inference, is weak (Option A section 2.3): a floor claim is pinned there by the row's
+    # CHECK, and a proxy determination's code leaves weak only to the extent that studies confirm
+    # its governing rows (`_confirmed_bands`), a rule that lives here alone because a CHECK cannot
+    # read extraction_relations. THE MARKER IS A CACHE over those edges and over how rows are
+    # graded and sources verified: `derivation_sha` hashes none of it. `db.py` refuses a `confirms`
+    # edge to a row a live proxy determination is governed by (`_refuse_live_confirmation`) and
+    # regrading a row in a live determination's provenance (`amend_extraction`); retiring the
+    # determination is how it is re-determined. NOT guarded: a change of a source's
+    # verification_status, of a governing row's comparator, and a finding row added after the
+    # answer was written.
     marker = None
     if state in ("stated", "provisional"):
-        by_ref = {r["ref_id"]: r for r in recs}
-        if regulatory_stratum_only or rests_on_proxy_inference:
-            confirmed = _confirmed_bands(conn, parameter_id, links, finding_anchors)
-            source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in governing]
+        if regulatory_stratum_only:
+            source_bands = []
         else:
-            source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
-                            for g in governing]
-        marker = floor_mean(source_bands).value
+            by_ref = {r["ref_id"]: r for r in recs}
+            verified = [g for g in governing if _verified(by_ref[g])]
+            if rests_on_proxy_inference:
+                confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors)
+                source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in verified]
+            else:
+                source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
+                                for g in verified]
+        marker = floor_mean(source_bands or [EvidenceMarker.WEAK]).value
 
     return {
         "links": links,
         "marker": marker,
+        # Reported, never counted (`gather_extraction_links` says why on each row):
+        "skimmed_findings": [l["extraction_id"] for l in links if l["left_out"] == "skimmed"],
+        "skimmed_finding_refs": sorted({l["ref_id"] for l in links if l["left_out"] == "skimmed"}),
+        "n_findings_left_out": sum(1 for l in links if l["left_out"]),
+        "n_extractions_superseded": sum(1 for l in links if l["superseded"]),
         # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
         # the skimmed value-supplying rows left out of what sets this cell's value.
         "excluded_not_publishable": [
@@ -1676,6 +1757,137 @@ def determine(conn, parameter_id, lens, slug, note):
                                         if not r["tier_consistent"]),
         "source_records": recs,
     }
+
+
+#: What `main` stores of a determination that `determine` can be asked for again: the answer, not
+#: the provenance. `stale_determinations` compares these.
+STORED_ANSWER = ("state", "marker", "tier_basis", "derivation_sha", "rests_on_proxy_inference",
+                 "regulatory_stratum_only", "code_floor_only", "value_min", "value_max",
+                 "has_unverified_sources", "all_sources_disqualified")
+
+
+def stale_determinations(conn):
+    """The live determinations this engine wrote (`RULE_VERSION`) whose stored answer is no longer
+    the one `determine` gives, as (specification_id, [the fields that differ]).
+
+    THE STORED MARKER IS A CACHE. It is read off the sources' verification and tier, the rows'
+    grading and comparators, and the `confirms` edges, and `derivation_sha` hashes none of them
+    (K01 verifies only the stored junction, K02 only that it is complete). `db.py` refuses the
+    routes it knows (a regrading, an edge, a source's engine-read columns); a data migration, the
+    verification cron or a route not yet thought of does not pass through it. This is what
+    notices, whichever route moved the input. The remedy is the one the refusals name: retire the
+    specification, re-determine."""
+    cols = ("specification_id", "parameter_id", *LENS_ORDER, *STORED_ANSWER)
+    out = []
+    for sid, pid, *rest in conn.execute(
+            f"SELECT {', '.join(cols)} FROM specifications WHERE retired_at IS NULL "
+            f"AND rule_version = ? ORDER BY specification_id", (RULE_VERSION,)).fetchall():
+        lens = dict(zip(LENS_ORDER, rest))
+        det = determine(conn, pid, lens, "", "recomputed")
+        diff = [f for f, was in zip(STORED_ANSWER, rest[len(LENS_ORDER):]) if det[f] != was]
+        if diff:
+            out.append((sid, diff))
+    return out
+
+
+def scan_command(parameter_id):
+    """The dedicated reading a skimmed row owes, as the command that records it, once per source.
+    The file read, its scope and sha256 and the method are the operator's."""
+    return (f"`db.py record-scan --mode targeted --target-parameter-id {parameter_id} --ref-id "
+            f"<ref_id> --text-scope <scope> --file-sha256 <sha256> --method <method> "
+            f"--session <session>`")
+
+
+def gap_account(det):
+    """(cause, remedy) for the gap a `pending` cell records: derived from the counts, because a
+    description that names the wrong absence is followed."""
+    parameter_id = det["parameter_id"]
+    det_at = det["n_sources"]
+    det_x = det["n_extractions"]
+    n_superseded = det["n_extractions_superseded"]
+    scan = scan_command(parameter_id)
+    if det_x == 0:
+        cause = (f"no source holds an extraction for parameter "
+                 f"{parameter_id}: the parameter has never been read out of "
+                 f"a document")
+        remedy = ("read a source that is already admitted and record what it "
+                  "says: `db.py add-extraction`. This is NOT corpus-level "
+                  "absence of the topic — sources may be admitted and linked "
+                  "to the slug and still have been read for no parameter at "
+                  "all, so a new search is not the first move")
+    elif det_at == 0 and det["n_finding_sources"]:
+        # THE BATCH-08 CASE, AND THE BRANCH BELOW USED TO CLAIM IT WAS A
+        # SUPERSESSION. `det_at` counts VALUE-SUPPLYING sources; a parameter
+        # read only into `finding` rows has none, so it fell through to the
+        # supersession text and told the next session that every source behind
+        # it had been replaced. Nothing had been replaced: two studies had
+        # measured the effect of the parameter and stated no value for it.
+        # This block's own comment says a gap naming the wrong cause is worse
+        # than a vague one because it is followed -- this is that, fixed.
+        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id} "
+                 f"from {det['n_finding_sources']} source(s), but NONE STATES A "
+                 f"VALUE: every one is a `finding` (an effect measured) or a "
+                 f"`condition`, and a determination needs a threshold to reason "
+                 f"against" +
+                 (f". {det['n_finding_anchors']} of those source(s) are at an "
+                  f"anchoring tier, so this is not weak evidence -- it is "
+                  f"evidence of a different KIND"
+                  if det["n_finding_anchors"] else ""))
+        remedy = ("retrieve the THRESHOLD half: a code value or an equivalent "
+                  "criterion of acceptability (owner 2026-09-16 ACTION 3). With "
+                  "one present, the findings supply direction and the cell "
+                  "reaches a PROXY determination; without one, 'best outcomes' "
+                  "is degenerate -- it resolves to the gentlest value physically "
+                  "possible, which for a ramp is not a ramp. Do NOT re-read the "
+                  "same sources for a value they do not state" +
+                  (f"; the skimmed finding(s) of {', '.join(det['skimmed_finding_refs'])} DO owe "
+                   f"a dedicated reading ({scan})" if det["skimmed_findings"] else ""))
+    elif det_at == 0 and det["n_findings_left_out"]:
+        # A parameter whose only findings are skimmed or report an absence has no
+        # counted finding source either, and fell through to the supersession text
+        # below although nothing was replaced (owner 2026-10-21: such a finding
+        # supplies no direction).
+        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, but NONE "
+                 f"COUNTS: none states a value, and every finding is skimmed (owing a "
+                 f"dedicated reading) or reports an absence, so none supplies direction")
+        remedy = (f"if a finding was skimmed ({', '.join(det['skimmed_finding_refs']) or 'none'}), "
+                  f"read it in full ({scan}, then a full-read "
+                  f"extraction); an `absent` finding states no direction, so a finding that "
+                  f"measures the effect is also wanted; and retrieve the THRESHOLD half")
+    elif det_at == 0 and n_superseded == det_x:
+        # The first draft of this text was FALSE. `count_extractions` counts every extraction for
+        # the parameter; `gather_sources` filters `superseded_by_ref_id IS NULL`. When the only
+        # source holding an extraction has been superseded the two disagree, and the text named the
+        # tier gate for a supersession, sending the next session to re-read a tier ladder when what
+        # it needs is the replacement source.
+        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, "
+                 f"but EVERY source holding one has been SUPERSEDED "
+                 f"(evidence_sources.superseded_by_ref_id is set) and a "
+                 f"superseded source is not gathered")
+        remedy = ("the reading exists; the document behind it was replaced. "
+                  "Re-extract the same parameter from the superseding source")
+    elif det_at == 0:
+        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, but none "
+                 f"supplies a value or a direction: each that is gathered is a condition, an "
+                 f"ungraded row, or a skimmed value (not publishable), and no source is left to "
+                 f"anchor")
+        remedy = ("read the parameter for a stated value: `db.py add-extraction`; a skimmed "
+                  f"value row owes a dedicated reading ({scan})")
+    else:
+        cause = (f"{det_x} extraction(s) from {det_at} source(s) exist for "
+                 f"parameter {parameter_id}, but none of those sources "
+                 f"qualified to anchor — disqualified, or tier not derivable "
+                 f"from their own (evidence_type, scope)")
+        remedy = ("the evidence has been read; what is missing is evidence "
+                  "that can ANCHOR. Another extraction from the same sources "
+                  "will not move this cell — fix the sources' derivable tier, "
+                  "or admit evidence that qualifies")
+    if det_at == 0 and 0 < n_superseded < det_x:
+        # Some, not all: the branch above says "every", and the others never mention it.
+        cause += (f". {n_superseded} of the {det_x} belong to a SUPERSEDED source, which is "
+                  f"not gathered")
+        remedy += "; re-extract those from the superseding source"
+    return cause, remedy
 
 
 def next_gap_id(conn):
@@ -1962,68 +2174,8 @@ def main():
             # bridge — a sentence about a join this engine no longer makes and a
             # bridge into the emptied item layer. A gap description that names the
             # wrong absence sends the next session looking in the wrong place.
-            det_at = det["n_sources"]
-            det_x = det["n_extractions"]
-            # THREE CAUSES, THREE SENTENCES, and the middle one exists because the
-            # first draft of this text was FALSE. `count_extractions` counts every
-            # extraction for the parameter; `gather_sources` filters
-            # `superseded_by_ref_id IS NULL`. When the only source holding an
-            # extraction has been superseded the two disagree, and the text read
-            # "N extraction(s) from 0 source(s) ... none of those sources qualified
-            # to anchor" — which names the tier gate for a supersession, and sends
-            # the next session to re-read a tier ladder when what it needs is the
-            # replacement source. A gap description that names the wrong cause is
-            # worse than a vague one: it is followed.
-            if det_x == 0:
-                cause = (f"no source holds an extraction for parameter "
-                         f"{parameter_id}: the parameter has never been read out of "
-                         f"a document")
-                remedy = ("read a source that is already admitted and record what it "
-                          "says: `db.py add-extraction`. This is NOT corpus-level "
-                          "absence of the topic — sources may be admitted and linked "
-                          "to the slug and still have been read for no parameter at "
-                          "all, so a new search is not the first move")
-            elif det_at == 0 and det["n_finding_sources"]:
-                # THE BATCH-08 CASE, AND THE BRANCH BELOW USED TO CLAIM IT WAS A
-                # SUPERSESSION. `det_at` counts VALUE-SUPPLYING sources; a parameter
-                # read only into `finding` rows has none, so it fell through to the
-                # supersession text and told the next session that every source behind
-                # it had been replaced. Nothing had been replaced: two studies had
-                # measured the effect of the parameter and stated no value for it.
-                # This block's own comment says a gap naming the wrong cause is worse
-                # than a vague one because it is followed -- this is that, fixed.
-                cause = (f"{det_x} extraction(s) exist for parameter {parameter_id} "
-                         f"from {det['n_finding_sources']} source(s), but NONE STATES A "
-                         f"VALUE: every one is a `finding` (an effect measured) or a "
-                         f"`condition`, and a determination needs a threshold to reason "
-                         f"against" +
-                         (f". {det['n_finding_anchors']} of those source(s) are at an "
-                          f"anchoring tier, so this is not weak evidence -- it is "
-                          f"evidence of a different KIND"
-                          if det["n_finding_anchors"] else ""))
-                remedy = ("retrieve the THRESHOLD half: a code value or an equivalent "
-                          "criterion of acceptability (owner 2026-09-16 ACTION 3). With "
-                          "one present, the findings supply direction and the cell "
-                          "reaches a PROXY determination; without one, 'best outcomes' "
-                          "is degenerate -- it resolves to the gentlest value physically "
-                          "possible, which for a ramp is not a ramp. Do NOT re-read the "
-                          "same sources for a value they do not state")
-            elif det_at == 0:
-                cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, "
-                         f"but EVERY source holding one has been SUPERSEDED "
-                         f"(evidence_sources.superseded_by_ref_id is set) and a "
-                         f"superseded source is not gathered")
-                remedy = ("the reading exists; the document behind it was replaced. "
-                          "Re-extract the same parameter from the superseding source")
-            else:
-                cause = (f"{det_x} extraction(s) from {det_at} source(s) exist for "
-                         f"parameter {parameter_id}, but none of those sources "
-                         f"qualified to anchor — disqualified, or tier not derivable "
-                         f"from their own (evidence_type, scope)")
-                remedy = ("the evidence has been read; what is missing is evidence "
-                          "that can ANCHOR. Another extraction from the same sources "
-                          "will not move this cell — fix the sources' derivable tier, "
-                          "or admit evidence that qualifies")
+            # The cause and remedy are derived in `gap_account`.
+            cause, remedy = gap_account(det)
             desc = (f"Evidence gap (parameter-scoped): {cause}. Cell "
                     f"{parameter_id}×{lens_key(lens)}; recorded while working slug "
                     f"'{slug}'. Remedy: {remedy}. Determination pending per §2.4.")
@@ -2185,7 +2337,9 @@ def main():
                         "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
                         "regulatory_stratum_only", "rests_on_proxy_inference", "marker",
-                        "excluded_not_publishable", "has_unverified_sources",
+                        "excluded_not_publishable", "skimmed_findings", "skimmed_finding_refs",
+                        "n_findings_left_out",
+                        "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
                         "n_extractions", "non_anchoring_on_tier",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
@@ -2200,29 +2354,9 @@ def main():
                                               "tier_consistent")}
                                             for r in det["source_records"]]})
 
-    # REMOVED 2026-08-22 (BRK-26). An interim v_best_practice amendment used to sit
-    # here: it DROPped and re-CREATEd the view mid-determination and shipped that DDL
-    # inside the emitted replayable SQL, so the redefinition travelled into whatever
-    # migration carried the rows. Its own comment said it held "until migration 027
-    # adds a real regulatory_stratum_only column".
-    #
-    # [strength_band, below, is history: migration 116 replaced it with `marker`.]
-    # That column exists. Migration 027 landed it, and migration 029 then went
-    # further, under RATIFIED DR-2026-07-21-product-posture-thinking-tool-not-authority:
-    # a determination whose entire evidence basis is the regulatory stratum IS a
-    # best-practice determination at the WEAK band — surfaced, flagged with
-    # strength_band, never suppressed. 029 deliberately DROPPED the two 027 guards
-    # this block reproduced.
-    #
-    # So replaying this DDL would not have "restored a guard". It would have reverted
-    # ratified doctrine: dropping the strength_band column and re-imposing an
-    # exclusion the owner's own decision removed — and doing it by a fragile
-    # `tier_basis LIKE '%(regulatory_stratum_only)'` string match rather than the
-    # column test that now exists. Standing proof it travels:
-    # working/pilot/data_20260712_pilot-cell-backfill.sql:23-24 still carries it.
-    #
-    # A determination engine has no business rewriting the schema it writes into.
-    # The view is defined by migration and belongs to the migration layer.
+    # No view DDL is emitted here (BRK-26): a redefinition of v_best_practice shipped inside the
+    # replayable SQL travelled into whatever migration carried the rows. A determination engine
+    # has no business rewriting the schema it writes into; the view belongs to the migration layer.
     conn.commit()
     with open(args.emit_sql, "w") as f:
         f.write("\n".join(sql_lines) + "\n")
@@ -2241,13 +2375,17 @@ def main():
               f"refs={len(r['governing_refs'])} sources={r['n_sources']} "
               f"extractions={r['n_extractions']} "
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
-              f"rso={r['regulatory_stratum_only']} "
+              f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
         if r["excluded_not_publishable"]:
             # Said on the line a reader sees, not only in the junction: a value composed
             # without figures the corpus holds must say which and why.
             print(f"    excluded, not publishable (skimmed; owner 2026-10-09): extraction(s) "
                   f"{r['excluded_not_publishable']}")
+        if r["skimmed_findings"]:
+            print(f"    skimmed finding(s) left out of direction: extraction(s) "
+                  f"{r['skimmed_findings']} of {', '.join(r['skimmed_finding_refs'])}; a dedicated "
+                  f"reading is owed, per source: {scan_command(r['parameter_id'])}")
     print(f"\n{len(report)} cell(s) determined; SQL artifact: {args.emit_sql}\n"
           f"COMMITTED into {args.db} — those rows are in that scratch DB now, and\n"
           f"emit_batch_sql.py captures them from there. Applying the artifact AS WELL\n"

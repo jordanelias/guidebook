@@ -87,11 +87,11 @@ machines:
     via: "db.py supersede-source"
     guards:
       - "both rows admitted; A != B; neither already superseded; no chains"
-      - "refused while a LIVE determination rests on A through specification_source_links or convergence_sources (NOT specification_extraction_links: step 0.3 found the hole) (retire the specification first)"
+      - "refused while a LIVE determination rests on A through specification_source_links, convergence_sources or specification_extraction_links (retire the specification first)"
       - "a blank reason is refused; NO un-supersede verb exists"
     evidence:
       - {file: scripts/db.py, func: supersede_source, needle: "itself superseded by"}
-      - {file: scripts/db.py, func: supersede_source, needle: "carries a live determination"}
+      - {file: scripts/db.py, func: supersede_source, needle: "_refuse_if_resting"}
       - {file: scripts/db.py, func: supersede_source, needle: "determinations_resting_on"}
   - id: M02.t4
     claim: "citation_mining_status: pending -> mined | deferred; an executed pass is never regressed to 'deferred' without an explicit --status"
@@ -247,7 +247,7 @@ machines:
       - "governing_refs non-empty"
     evidence:
       - {file: scripts/assess/assess_cell.py, func: determine, needle: "state = \"stated\""}
-      - {file: scripts/assess/assess_cell.py, func: determine, needle: "anchors = anchoring\\(b\\[\"t1\"\\]\\)"}
+      - {file: scripts/assess/assess_cell.py, func: determine, needle: "anchors = _anchors_of\\(b\\)"}
   - id: M05.t2
     from: "(none)"
     to: "provisional"

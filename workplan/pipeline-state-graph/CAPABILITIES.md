@@ -62,7 +62,7 @@ finding that depends on two parameters has a place to be recorded and a source t
 
 | pred | says | verdict | why | atoms |
 |---|---|---|---|---|
-| C3.1 | independent sources for one (parameter x lens) cell are combined into one state | **PASS** | matched | LED-151, PIP-08 |
+| C3.1 | independent sources for one (parameter x lens) cell are combined into one state | **FAIL** | needle not found | LED-151, PIP-08 |
 | C3.2 | divergence between sources is a recorded state | **PASS** | convergence_assessment.status admits divergent | MIS-06 |
 | C3.3 | a spread across lenses is carried with each lens's direction | **PASS** | matched | LED-176 |
 | C3.4 | findings plus a threshold can reach a determination | **PASS** | P-R = PASS | LED-174, LED-172 |

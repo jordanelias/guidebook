@@ -156,7 +156,7 @@ EVI-035	ACTIVE	governance/tier-system.md:45	Labelling converged code value best 
 EVI-038	AMENDED	governance/tier-system.md:49	T4-T6-only claim	"partial/weak" vs section 8 which assigns T4-T6-only determinations to the weak band only.
 EVI-044	ACTIVE	governance/tier-system.md:57	code_currency_status vocabulary	Vocabulary should come from the column CHECK, not this list (CLAUDE.md rule 8).
 EVI-049	ACTIVE	governance/tier-system.md:88	Weighted-strength anchor model	Methodology 2.2/2.3 withhold stated/provisional status from T3-alone and from a single T6 source (pending).
-EVI-055	ACTIVE	governance/tier-system.md:94	Weak band	Methodology 2.2 says T3-grey alone yields pending (no claim), not a weak-band claim.
+EVI-055	AMENDED	governance/tier-system.md:94	Weak band	Methodology 2.2 says T3-grey alone yields pending (no claim), not a weak-band claim.
 EVI-058	ACTIVE	governance/tier-system.md:96	Option A: T4-T6-only determination	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21; the earlier absolute form is what was repealed.
 EVI-059	ACTIVE	governance/tier-system.md:96	Option A: flag and ceiling	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
 EVI-060	ACTIVE	governance/tier-system.md:96	Option A: no suppression	The quoted text IS the amended (live) form, per the Option A amendment of 2026-07-21.
