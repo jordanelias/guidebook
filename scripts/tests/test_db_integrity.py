@@ -41,10 +41,12 @@ import dbcore  # noqa: E402  -- for check_expression: vocabularies come from the
 
 DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 
-#: The rule_versions whose derivation_sha has one payload format, which K01 verifies and K02 reads
-#: the links of. pilot-4 changed the rules, not the format.
-SHA_FORMAT_VERSIONS = ("pilot-3", "pilot-4")
-SHA_FORMAT_SQL = ", ".join(map(repr, SHA_FORMAT_VERSIONS))
+#: The rule_versions written before migration 077 re-keyed derivation_sha onto the graded link
+#: set. History, so it cannot grow: every later version (pilot-3, pilot-4, whatever follows) is
+#: hashed and linked the new way, which is why the dispatch below names the closed set and not
+#: the open one. A bump of RULE_VERSION that leaves the payload alone then needs no edit here.
+LEGACY_SHA_VERSIONS = ("pilot-2",)
+LEGACY_SHA_SQL = ", ".join(map(repr, LEGACY_SHA_VERSIONS))
 
 results = []
 
@@ -1066,7 +1068,7 @@ def run_checks(db_path):
         # old format and must still verify, so this dispatches rather than
         # assuming one shape. A verifier that recomputed only the current format
         # would turn every historical determination stale on a rebuild.
-        if rv in SHA_FORMAT_VERSIONS:
+        if rv not in LEGACY_SHA_VERSIONS:
             # The set the determination actually rested on, with each row's part
             # in it. Recomputed from specification_extraction_links, which is the
             # ONE home of that fact (pre-077 it was not stored at all, which is
@@ -1104,7 +1106,7 @@ def run_checks(db_path):
     #
     # NOT A PARITY CHECK. It does not compare two homes of one fact (H03/H04 were
     # deleted for being that shape). It asserts COMPLETENESS of the one home: for a
-    # pilot-3 determination, every extraction that exists for its parameter appears
+    # determination written since 077, every extraction that exists for its parameter appears
     # in specification_extraction_links exactly once, with a role.
     #
     # WHAT REACHES THE GUIDEBOOK WITHOUT IT. A `pending` cell whose junction is
@@ -1125,7 +1127,7 @@ def run_checks(db_path):
     # retire-in-place ruling, before any row was retired.
     for cid, pid in conn.execute(
             "SELECT specification_id, parameter_id FROM specifications "
-            f"WHERE rule_version IN ({SHA_FORMAT_SQL}) AND retired_at IS NULL"):
+            f"WHERE rule_version NOT IN ({LEGACY_SHA_SQL}) AND retired_at IS NULL"):
         have = {r[0] for r in conn.execute(
             "SELECT extraction_id FROM specification_extraction_links "
             "WHERE specification_id = ?", (cid,))}
@@ -1174,14 +1176,14 @@ def run_checks(db_path):
                 unaccounted.append(
                     f"spec {cid}: extraction {eid} is linked 'conditioning' but its "
                     f"figure_role is now {frole!r}")
-    record("K02", f"every {' or '.join(SHA_FORMAT_VERSIONS)} determination accounts for every "
+    record("K02", "every determination written since migration 077 accounts for every "
            "extraction of its parameter",
            not unaccounted,
            f"{len(unaccounted)}: {'; '.join(unaccounted)} — the junction is what "
            f"derivation_sha hashes, so an incomplete one attests a subset of the "
            f"evidence while reading as the whole of it" if unaccounted else "",
            subject=subj("SELECT COUNT(*) FROM specifications "
-                        f"WHERE rule_version IN ({SHA_FORMAT_SQL}) AND retired_at IS NULL"))
+                        f"WHERE rule_version NOT IN ({LEGACY_SHA_SQL}) AND retired_at IS NULL"))
 
     # Reported, not enforced. Whether an unattested determination is acceptable
     # is an owner call — these rows were hand-migrated, not produced by an

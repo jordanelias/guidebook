@@ -11,19 +11,15 @@
 --   (1) marker is a glyph of the vocabulary (dbcore.check_values reads it from here), and a
 --       determination resting only on the regulatory stratum is never above weak.
 --   (2) a live stated or provisional determination carries a marker; a pending, not_applicable or
---       retired row need not. SQLite checks an added CHECK against existing rows, so the ALTER
---       fails loudly if a live stated or provisional row exists (re-derive: select count(*) from
---       specifications where retired_at is null).
+--       retired row need not. SQLite checks an added CHECK against existing rows, and the eight
+--       written before this file are all retired.
 --
 -- The proxy rule (weak unless a confirming study reaches a governing extraction, R39) and the
 -- cache caveat (derivation_sha does not hash extraction_relations) are the engine's alone, because
 -- a CHECK cannot read another table: see determine() in scripts/assess/assess_cell.py.
 --
 -- v_best_practice is redefined without strength_band, which marker supersedes; SELECT * carries the
--- new column. The reader is render step 3.R (plan Phase 3), which shows the marker beside
--- has_unverified_sources; until it is built nothing reads the column but the CHECKs, and no other
--- object reads the view (sqlite_master). A determination without its marker would be an error to
--- the reader (mission: "Unmarked = error"), which is what the column exists to prevent.
+-- new column. Nothing else reads the view (sqlite_master, re-derived at the time of writing).
 --
 -- The marker below is chronology, not load: 095's already places this file after every
 -- specifications write. It sits alone on its line because migrate_db's pattern needs it so.

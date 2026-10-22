@@ -1,5 +1,5 @@
 {
- "generated": "Generated 2026-10-21 21:46 UTC from git HEAD f23947e8 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-10-22 01:26 UTC from git HEAD f28a83b9 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
  "user_version": 116,
  "stages": [
@@ -3155,7 +3155,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 6
+   "refusals": 5
   },
   "update-locator": {
    "functions": [
@@ -4495,8 +4495,8 @@
     {
      "id": "C3.1",
      "says": "independent sources for one (parameter x lens) cell are combined into one state",
-     "verdict": "PASS",
-     "why": "matched",
+     "verdict": "FAIL",
+     "why": "needle not found",
      "atoms": [
       "LED-151",
       "PIP-08"
@@ -4635,9 +4635,9 @@
   "tables placed in a stage": 56
  },
  "atoms_by_status": {
-  "ACTIVE": 2217,
+  "ACTIVE": 2214,
   "SUPERSEDED": 85,
-  "AMENDED": 70,
+  "AMENDED": 73,
   "OPEN": 71,
   "PROPOSED": 129,
   "HISTORICAL": 26

@@ -5161,6 +5161,19 @@ _AMENDABLE = (
 )
 
 
+def _refuse_if_resting(conn, ref_id, what, then):
+    """Refuse while a LIVE determination rests on source `ref_id`
+    (`dbcore.determinations_resting_on`, three junctions). `what` is the change and why it matters;
+    `then` is the verb that follows the retirement of the specification."""
+    resting = dbcore.determinations_resting_on(conn, ref_id)
+    if resting:
+        named = ", ".join(f"specification {sid} (via {junction})" for junction, sid in resting)
+        raise Refusal(
+            f"{ref_id} carries a live determination: {named}. {what} Retire the specification "
+            f"first (db.py retire-specification), then {then}, then re-determine. Never move an "
+            f"adjudicated figure. Nothing was written.")
+
+
 def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance,
                    co1_source_type=None):
     """The columns an `amend-source --field evidence_type` move writes beside the type,
@@ -5187,9 +5200,8 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
     live schema by its co1_ prefix, never listed. Left in place, a Co-1 warrant on a
     non-Co-1 row is a live claim about a tier the row no longer holds.
 
-    NEVER MOVE AN ADJUDICATED FIGURE. A live determination resting on the source
-    (dbcore.determinations_resting_on) refuses the move: re-tiering its source would
-    change a written answer's evidence without re-deciding it.
+    NEVER MOVE AN ADJUDICATED FIGURE: `amend_source` refuses the move, with this one's
+    result in hand, while a live determination rests on the source.
     """
     from schemas.tier_derivation import VALID_SCOPES_BY_TYPE, derive_tier  # noqa: E402
     valid = VALID_SCOPES_BY_TYPE.get(new_type)
@@ -5257,15 +5269,6 @@ def _retype_source(conn, ref_id: str, new_type: str, scope, tier, co1_provenance
             raise Refusal(
                 f"{ref_id}: --co1-source-type {source_type!r} is not a member of "
                 f"schemas.enums.Co1SourceType: {members}. Nothing was written.")
-    resting = dbcore.determinations_resting_on(conn, ref_id)
-    if resting:
-        named = ", ".join(f"specification {sid} (via {junction})"
-                          for junction, sid in resting)
-        raise Refusal(
-            f"{ref_id} carries a live determination: {named}. Moving its evidence_type "
-            f"re-tiers the evidence that answer was written on without re-deciding it. "
-            f"Retire the specification first (db.py retire-specification), then amend, "
-            f"then re-determine. Never move an adjudicated figure. Nothing was written.")
     sets = {"scope": scope, "tier": derived}
     moved_scope = (f"scope {cur['scope']!r} unchanged" if cur["scope"] == scope
                    else f"scope {cur['scope']!r} -> {scope!r}")
@@ -5509,6 +5512,14 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                 # statement with the reason. There is no path here that writes a row the
                 # ladder cannot produce.
                 new_tier, old_tier = _derived, cur["tier"]
+        if field in dbcore.ENGINE_SOURCE_COLUMNS:
+            # The determination engine reads this column, and a determination's stored answer
+            # (its marker, state, value) is a cache over what it read: changing it under a live
+            # one leaves the answer standing on evidence it no longer reads that way.
+            _refuse_if_resting(
+                conn, ref_id,
+                f"Amending its {field} changes what the engine reads of it, so that answer "
+                f"would stand stale without being re-decided.", "amend")
         stamp = audit(session)
         # THE LEDGER IS THE RECORD, and it is prose on purpose. Migration 094 added an
         # `amendments` table here and 095 dropped it: nothing read it, seven other amending
@@ -8738,18 +8749,19 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                     "reason": "already this value; the reason is recorded on notes",
                     "dry_run": dry_run}
 
-        # A CHANGE of how a row is graded decides what it supplies (a value, direction, a
-        # confirmation) and so the marker; a live determination was written on the grading it
-        # had. Recording that a value was checked and is already right (above) changes nothing,
+        # A CHANGE of a column the engine reads (figure_role, comparator, extraction_method here)
+        # decides what a row supplies (a value, direction, a confirmation) and what bound it
+        # composes, so the marker and the interval; a live determination was written on the
+        # grading it had. Recording that a value was checked and is already right (above) changes nothing,
         # and a row of a superseded source is never gathered, so neither is refused.
-        if field in ("figure_role", "extraction_method") and conn.execute(
+        if field in dbcore.ENGINE_EXTRACTION_COLUMNS and conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=? AND superseded_by_ref_id IS NULL",
                 (row["ref_id"],)).fetchone():
             live = dbcore.live_determinations_linked(conn, extraction_id)
             if live:
                 raise Refusal(
                     f"amend-extraction: extraction {extraction_id} is in the provenance of live "
-                    f"determination(s) {', '.join(map(str, live))}; regrading {field} would "
+                    f"determination(s) {', '.join(map(str, live))}; amending {field} would "
                     f"change what that answer rests on without re-deciding it. Retire the "
                     f"specification first (db.py retire-specification), amend, then "
                     f"re-determine. Nothing was written.")
@@ -9171,15 +9183,10 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
     extracted from the superseded row stops being gathered, so re-extract it from `by` if
     `by` does not already carry it.
 
-    KNOWN GAPS, NOT FIXED HERE.
-    (1) The refusal above consults two junctions (dbcore.determinations_resting_on:
-    specification_source_links and convergence_sources) and NOT specification_extraction_links.
-    A live determination that rests on a source only through an extraction link is not
-    refused, and v_determination_provenance still shows that source.
-    (2) Views: v_item_provenance and v_source_reach_all skip a tombstone (migration
-    106_views_filter_retired). v_convergence_sources, v_determination_provenance,
-    v_evidence_authors and v_source_admission still show one, each for a reason in that
-    migration's header. Readers that are not views still list it too. Re-derive the views:
+    KNOWN GAP, NOT FIXED HERE. Views: v_item_provenance and v_source_reach_all skip a
+    tombstone (migration 106_views_filter_retired). v_convergence_sources,
+    v_determination_provenance, v_evidence_authors and v_source_admission still show one,
+    each for a reason in that migration's header. Readers that are not views still list it too. Re-derive the views:
         select name from sqlite_master where type='view' and sql like '%evidence_sources%'
            and sql not like '%superseded_by_ref_id%';
 
@@ -9218,15 +9225,9 @@ def supersede_source(ref_id: str, by: str, reason: str, session: str,
                 f"{b} is itself superseded by {rows[b]['superseded_by_ref_id']}. No "
                 f"chains: supersede {a} by {rows[b]['superseded_by_ref_id']} instead. "
                 f"Nothing was written.")
-        resting = dbcore.determinations_resting_on(conn, a)
-        if resting:
-            named = ", ".join(f"specification {sid} (via {junction})"
-                              for junction, sid in resting)
-            raise Refusal(
-                f"{a} carries a live determination: {named}. Superseding it would "
-                f"change the evidence set of a written answer without re-deciding it. "
-                f"Retire the specification first (db.py retire-specification), then "
-                f"supersede, then re-determine. Nothing was written.")
+        _refuse_if_resting(
+            conn, a, "Superseding it would change the evidence set of a written answer without "
+                     "re-deciding it.", "supersede")
         dependents = _source_dependents(conn, a)
         stamp = now()
         notes = dbcore.append_dated_note(rows[a]["notes"], "SUPERSEDED", session,

@@ -388,6 +388,16 @@ def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
 #: engine, extraction_follow_up_audit and test_db_integrity K02 all read this one tuple.
 NOT_PUBLISHABLE_METHODS = ("skim",)
 
+#: What `assess_cell` reads of a source (`_gather` builds its SELECT from this tuple) and what
+#: of an extraction row it grades by or composes a value from. A determination's stored answer
+#: is a cache over these, so `db.py` refuses to change one of them on a source or a row a LIVE
+#: determination was written from (`amend-source`, `amend-extraction`). Here for the reason
+#: above: the writers and the stdlib-only checks read them without importing the engine.
+ENGINE_SOURCE_COLUMNS = ("tier", "evidence_type", "co1_source_type", "verification_status",
+                         "verification_disposition", "scope", "jurisdiction")
+ENGINE_EXTRACTION_COLUMNS = ("figure_role", "claim_type", "extraction_method", "claimed_value",
+                             "claimed_unit", "comparator")
+
 
 def validate_cols(data_keys, whitelist: frozenset, context: str):
     unknown = set(data_keys) - whitelist
@@ -1093,10 +1103,12 @@ def determinations_resting_on(conn, ref_id) -> list:
     """The LIVE determinations that rest on source `ref_id`, as sorted, distinct
     (junction, specification_id) pairs. Empty when none does.
 
-    A determination rests on a source through one of two junctions:
+    A determination rests on a source through one of three junctions:
     `specification_source_links` (the governing set, the one access path governing_refs
-    above reads) and `convergence_sources` (the weighing the specification's
-    `convergence_id` points at). They are named here because they ARE the pointer;
+    above reads), `convergence_sources` (the weighing the specification's
+    `convergence_id` points at) and `specification_extraction_links` (every extraction of the
+    parameter, graded by the part it played, which reaches a source that only confirmed or
+    measured). They are named here because they ARE the pointer;
     pipeline-contract.yaml has no table-to-stage map to derive them from.
 
     LIVE means `retired_at IS NULL`. A retired specification is history, not the cell's
@@ -1115,8 +1127,14 @@ def determinations_resting_on(conn, ref_id) -> list:
         "SELECT 'convergence_sources', s.specification_id "
         "FROM convergence_sources c "
         "JOIN specifications s ON s.convergence_id = c.convergence_id "
-        "WHERE c.ref_id = ? AND s.retired_at IS NULL",
-        (ref_id, ref_id))})
+        "WHERE c.ref_id = ? AND s.retired_at IS NULL "
+        "UNION "
+        "SELECT 'specification_extraction_links', l.specification_id "
+        "FROM specification_extraction_links l "
+        "JOIN source_value_extractions x ON x.extraction_id = l.extraction_id "
+        "JOIN specifications s ON s.specification_id = l.specification_id "
+        "WHERE x.ref_id = ? AND s.retired_at IS NULL",
+        (ref_id, ref_id, ref_id))})
 
 
 def live_determinations_linked(conn, extraction_id, *, governing_only=False, proxy_only=False) -> list:

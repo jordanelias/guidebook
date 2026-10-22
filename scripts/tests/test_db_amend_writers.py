@@ -1717,6 +1717,61 @@ try:
                f"{msg_np!r}")
         record("G10", "while regrading is still refused for it (any live determination)",
                "live determination" in (amend(GOV_X) or ""))
+        # Source-level and comparator guards: the other columns the engine reads. The marker and
+        # the interval are caches over them, so a change under a live determination is refused.
+        ref_gov = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]
+        only_x = q("SELECT DISTINCT x.ref_id FROM specification_extraction_links l "
+                   "JOIN source_value_extractions x ON x.extraction_id = l.extraction_id "
+                   "WHERE l.specification_id=? AND x.ref_id NOT IN (SELECT ref_id FROM "
+                   "specification_source_links WHERE specification_id=?) AND x.ref_id NOT IN "
+                   "(SELECT c.ref_id FROM convergence_sources c JOIN specifications s ON "
+                   "s.convergence_id = c.convergence_id WHERE s.specification_id=?) "
+                   "ORDER BY 1 LIMIT 1", SPEC_G, SPEC_G, SPEC_G)
+        ref_ext = only_x[0][0] if only_x else None
+
+        def source_flip(ref):
+            """A jurisdiction the source does not carry: a column the engine reads, and one whose
+            amendment meets no other refusal first (the fixture sources are CLOSED, so a
+            verification_status demotion would be refused for that instead)."""
+            cur = q("SELECT jurisdiction FROM evidence_sources WHERE ref_id=?", ref)[0][0]
+            return refusal(db.amend_source, ref, "jurisdiction", "INT" if cur != "INT" else "US",
+                           "fixture", S, dry_run=True)
+
+        msg_vs = source_flip(ref_gov)
+        record("G13", "amend-source refuses a column the engine reads (jurisdiction) on a "
+               "source a live determination rests on, naming it and the remedy",
+               msg_vs and f"specification {SPEC_G}" in msg_vs and "retire-specification" in msg_vs,
+               f"{msg_vs!r}")
+        msg_ext = source_flip(ref_ext) if ref_ext else None
+        record("G14", "...also when the source is reached only through the extraction links (a "
+               "source that measured or confirmed, never governed): the third junction",
+               ref_ext is not None and msg_ext
+               and f"specification {SPEC_G} (via specification_extraction_links)" in msg_ext,
+               f"ref={ref_ext} {msg_ext!r}")
+        msg_notes = refusal(db.amend_source, ref_gov, "notes", "fixture note", "fixture", S,
+                            dry_run=True)
+        record("G15", "...and does not refuse a column the engine never reads (notes)",
+               not msg_notes, f"{msg_notes!r}")
+        cur_cmp = q("SELECT comparator FROM source_value_extractions WHERE extraction_id=?",
+                    GOV_X)[0][0]
+        msg_cmp = refusal(db.amend_extraction, GOV_X, "comparator",
+                          ">=" if cur_cmp != ">=" else "<=", "fixture", S, dry_run=True)
+        record("G16", "amend-extraction refuses a comparator change under a live determination "
+               "(the stored bounds were composed from it)",
+               msg_cmp and "live determination" in msg_cmp and "comparator" in msg_cmp,
+               f"{msg_cmp!r}")
+        cur_st = q("SELECT extraction_status FROM source_value_extractions WHERE extraction_id=?",
+                   GOV_X)[0][0]
+        msg_st = refusal(db.amend_extraction, GOV_X, "extraction_status",
+                         "reviewed" if cur_st != "reviewed" else "verified", "fixture", S,
+                         dry_run=True)
+        record("G17", "...but not a provenance column the engine never reads (extraction_status)",
+               not msg_st, f"{msg_st!r}")
+        msg_sup = refusal(db.supersede_source, ref_ext, ref_gov, "fixture", S, dry_run=True) \
+            if ref_ext else None
+        record("G18", "supersede-source now refuses a source resting on a live determination only "
+               "through the extraction links (the gap its docstring used to record)",
+               msg_sup and "live determination" in msg_sup, f"{msg_sup!r}")
         db.retire_specification(SPEC_G, S, reason="fixture: the remedy the refusal names")
         record("G11", "once the determination is retired no helper reports it, so neither guard fires",
                linked(GOV_X) == [])

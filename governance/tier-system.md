@@ -91,7 +91,7 @@ Enshrined by `decisions/DR-2026-07-20-weighted-strength-anchor-model.md` per own
 |---|---|---|
 | **● Full** | T1, Co-1, T2, Co-2, T3-clinical | Full strength (adjudicated evidence). |
 | **◐ Partial** | T4, T5 | Anchors, rendered as *current standards practice* — flagged "standards basis, not primary evidence." |
-| **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base, an unretrievable (`UNVERIFIED`) source | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* |
+| **○ Weak** | T3-grey, T6 (code-floor), expert-consensus / thin base, an unretrievable (`UNVERIFIED`) source | Anchors only a floor/convergence claim, rendered with the flag: *"best available given current regulation/practice, NOT academically adjudicated."* An unretrievable source keeps its tier and may still anchor a determination (D-0157: a return pass is owed), but it earns no band above ○ and is flagged unverified (`has_unverified_sources`) in place of that flag. |
 
 A band grades the strength of a claim; it does not set the cell's state (`governance/evidence-methodology.md` §2.2): T3-clinical alone is full band and `provisional`; T3-grey alone is weak band and `pending`.
 

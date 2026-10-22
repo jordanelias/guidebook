@@ -227,11 +227,9 @@ class EvidenceStateRecord(BaseModel):
     @model_validator(mode="after")
     def state_field_consistency(self) -> "EvidenceStateRecord":
         """Enforce state-dependent field requirements per A6 §2."""
-        state = self.state
-        if isinstance(state, str):
-            state_val = state
-        else:
-            state_val = state.value
+        # A str-Enum member IS a str, so isinstance(state, str) kept the member and its repr
+        # ("<EvidenceCellState.STATED: 'stated'>") reached the messages below.
+        state_val = getattr(self.state, "value", self.state)
 
         if state_val == "pending":
             if not self.gap_register_id:

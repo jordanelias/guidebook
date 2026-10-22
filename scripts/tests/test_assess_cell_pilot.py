@@ -27,7 +27,9 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 sys.path.insert(0, REPO_ROOT)
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
 
-from assess_cell import NOT_PUBLISHABLE_METHODS, determine, gap_account  # noqa: E402
+from assess_cell import (  # noqa: E402
+    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, determine, gap_account,
+    scan_command, stale_determinations)
 from schemas.enums import EvidenceMarker  # noqa: E402
 from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
 
@@ -668,7 +670,8 @@ def main():
                   1, {"identity_code": "MOB"}, "syn-slug", "gap-mixed")
     cause, remedy = gap_account(d)
     expect("GAP: a counted finding beside a skimmed one => the remedy still names the dedicated reading",
-           "NONE STATES A VALUE" in cause and "owe a dedicated reading" in remedy, f"{cause} | {remedy}")
+           "NONE STATES A VALUE" in cause and "owe a dedicated reading" in remedy
+           and "REF-FIND-2" in remedy, f"{cause} | {remedy}")
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical", "verification_status": None}]),
                   1, {"identity_code": "MOB"}, "syn-slug", "null-status")
     expect("VERIFIED: a source with no recorded verification is left out of the marker AND flagged",
@@ -698,9 +701,10 @@ def main():
     # of whose governing rows is confirmed leaves weak. The confirming row is a finding of THIS
     # parameter that is neither skimmed nor `absent`; a `tested_at` edge and an edge to a label
     # confirm nothing; an unverified confirmer lends only the weak band.
-    def _proxy(relation="confirms", which=slice(None), codes=_t6, to_label=False, confirmer="",
-               finding=_find, confirmers_from=("REF-FIND-1",)):
-        c = synth_db(codes + [dict(f, extraction_method="full") for f in finding])
+    def _proxy_cell(relation="confirms", which=slice(None), codes=_t6, to_label=False, confirmer="",
+                    finding=_find, confirmers_from=("REF-FIND-1",), proxy=1, direction=None):
+        c = synth_db(codes + [dict(f, extraction_method="full") for f in finding],
+                     direction=direction)
         c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
                         "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
                         "to_extraction_id INT, to_label TEXT)")
@@ -723,8 +727,11 @@ def main():
                           (find_id, relation, None if to_label else eid,
                            "a code" if to_label else None))
         d = determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "marker-confirm")
-        assert d["rests_on_proxy_inference"] == 1, "fixture lost its proxy determination"
-        return d["marker"]
+        assert d["rests_on_proxy_inference"] == proxy, "fixture lost its determination type"
+        return c, d
+
+    def _proxy(*a, **k):
+        return _proxy_cell(*a, **k)[1]["marker"]
 
     two_rows = [dict(c, extractions=2) for c in _t6]
     expect("R39: every governing code confirmed by a full-band study => the cell is full",
@@ -762,6 +769,93 @@ def main():
     expect("R39: codes are weighed per code, not per clause (5 confirmed clauses of one code beside "
            "two unconfirmed codes stay weak; weighing clauses would give partial)",
            _proxy(codes=[dict(_t6[0], extractions=5), _t6[1], _t6[2]], which=slice(5)) == WEAK)
+
+    # A confirming source is read apart from the direction set: an `absent` row supplies no
+    # direction, so its source is not a direction anchor, yet its `confirms` edge confirms.
+    _absent_src = dict(_find[0], ref_id="REF-FIND-2", claim_type="absent")
+    expect("R39: an absent-only source confirms the codes beside a counted finding that supplies the "
+           "direction (REF-00980's shape)",
+           _proxy(finding=_find + [_absent_src], confirmers_from=("REF-FIND-2",)) == FULL)
+    expect("R39: ...but an unverified absent-only confirmer lends nothing, and is flagged",
+           _proxy(finding=_find + [dict(_absent_src, verification_status="UNVERIFIED")],
+                  confirmers_from=("REF-FIND-2",)) == WEAK
+           and _proxy_cell(finding=_find + [dict(_absent_src, verification_status="UNVERIFIED")],
+                           confirmers_from=("REF-FIND-2",))[1]["has_unverified_sources"] == 1)
+    _c, _d = _proxy_cell(finding=[_absent_src], confirmers_from=("REF-FIND-2",), proxy=0)
+    expect("R39: with NO counted finding there is no direction, so the cell is a floor claim and "
+           "stays weak (the CHECK pins it; a confirmed floor claim is the owner's to rule)",
+           _d["regulatory_stratum_only"] == 1 and _d["marker"] == WEAK and _d["skimmed_findings"] == [],
+           f"{_d['regulatory_stratum_only']} {_d['marker']}")
+
+    # An unverified Co-1 finding source is no anchor (classify holds it back), so it supplies no
+    # direction; it is still an input the answer would turn on, and is flagged.
+    _d = determine(synth_db(_t6 + [dict(_find[0], evidence_type="co1", verification_status="UNVERIFIED")]),
+                   1, {"identity_code": "MOB"}, "syn-slug", "unverified-co1-finding")
+    expect("VERIFIED: an unverified Co-1 finding supplies no direction but is flagged, not dropped silently",
+           _d["rests_on_proxy_inference"] == 0 and _d["has_unverified_sources"] == 1,
+           f"{_d['rests_on_proxy_inference']} {_d['has_unverified_sources']}")
+
+    # The junction says WHY a finding was left out, and which still owes a reading.
+    _d = determine(synth_db(_t6 + [dict(_find[0], extraction_method=_SKIM),
+                                   dict(_find[0], ref_id="REF-FIND-2", claim_type="absent"),
+                                   dict(_find[0], ref_id="REF-FIND-3"),
+                                   dict(_find[0], ref_id="REF-FIND-4", extraction_method=_SKIM,
+                                        superseded_by_ref_id="REF-NEW")]),
+                   1, {"identity_code": "MOB"}, "syn-slug", "left-out-reasons")
+    _by = {l["ref_id"]: l for l in _d["links"]}
+    expect("JUNCTION: a skimmed finding says it supplies no direction and owes a dedicated reading",
+           _by["REF-FIND-1"]["left_out"] == "skimmed"
+           and "owes a dedicated reading" in _by["REF-FIND-1"]["exclusion_reason"])
+    expect("JUNCTION: an absent finding says it supplies no direction but may confirm",
+           _by["REF-FIND-2"]["left_out"] == "absent"
+           and "confirm" in _by["REF-FIND-2"]["exclusion_reason"])
+    expect("JUNCTION: a counted finding, and a finding of a superseded source, are not left out",
+           _by["REF-FIND-3"]["left_out"] is None and _by["REF-FIND-4"]["left_out"] is None
+           and _by["REF-FIND-4"]["superseded"] is True)
+    expect("JUNCTION: the report names the source that owes the reading, in a runnable command",
+           _d["skimmed_finding_refs"] == ["REF-FIND-1"]
+           and "--file-sha256" in scan_command(1) and "--target-parameter-id 1" in scan_command(1))
+
+    # Some, not all, of the extractions belong to a superseded source: the gap says so.
+    _d = determine(synth_db([{"tier": 2, "evidence_type": "co2", "superseded_by_ref_id": "REF-NEW"},
+                             {"tier": 2, "evidence_type": "co2", "figure_role": "condition"}]),
+                   1, {"identity_code": "MOB"}, "syn-slug", "gap-mixed-superseded")
+    _cause, _remedy = gap_account(_d)
+    expect("GAP: part superseded, part condition => both are named, neither is claimed of the other",
+           _d["state"] == "pending" and "1 of the 2 belong to a SUPERSEDED source" in _cause
+           and "each that is gathered is a condition" in _cause
+           and "superseding source" in _remedy, f"{_cause} | {_remedy}")
+
+    # The stored answer is a cache; the engine is asked again (stale_determinations).
+    def _store(c, d):
+        """Write the engine's answer into a bare `specifications` table, as main() would."""
+        c.executescript("CREATE TABLE specifications (specification_id INTEGER PRIMARY KEY, "
+                        "parameter_id INT, identity_code TEXT, icf_code TEXT, needs_code TEXT, "
+                        "medical_code TEXT, retired_at TEXT, rule_version TEXT, "
+                        + ", ".join(STORED_ANSWER) + ")")
+        c.execute("INSERT INTO specifications (parameter_id, identity_code, rule_version, "
+                  + ", ".join(STORED_ANSWER) + ") VALUES (1, 'MOB', ?, " + ",".join("?" * len(STORED_ANSWER))
+                  + ")", (RULE_VERSION, *[d[f] for f in STORED_ANSWER]))
+
+    _c, _d = _proxy_cell(finding=_find + [_absent_src], confirmers_from=("REF-FIND-2",))
+    _store(_c, _d)
+    expect("STALE: a determination the engine would write again is not stale",
+           stale_determinations(_c) == [], str(stale_determinations(_c)))
+    _c.execute("UPDATE evidence_sources SET verification_status='UNVERIFIED' WHERE ref_id='REF-FIND-2'")
+    expect("STALE: a confirmer demoted after the answer was written is found, by the marker and the flag",
+           stale_determinations(_c) == [(1, ["marker", "has_unverified_sources"])],
+           str(stale_determinations(_c)))
+    _c, _d = _proxy_cell(direction="lower_is_better",
+                         codes=[dict(c, claimed_value=v, claimed_unit="%", comparator="<=")
+                                for c, v in zip(_t6, ("8.33", "6", "5"))])
+    _store(_c, _d)
+    _c.execute("UPDATE source_value_extractions SET comparator='>=' WHERE ref_id='REF-SYN-000'")
+    expect("STALE: a comparator corrected after the answer was written is found, by the bounds it composed",
+           _d["value_max"] is not None and len(stale_determinations(_c)) == 1
+           and "value_max" in stale_determinations(_c)[0][1], str(stale_determinations(_c)))
+    _c.execute("UPDATE specifications SET retired_at='2026-10-22'")
+    expect("STALE: a retired determination is history, not stale",
+           stale_determinations(_c) == [])
 
     # ── Owner ruling 2026-09-17: PRESENT BOTH, never choose ───────────────────
     # Three codes state the same quantity, two as a percentage and one as a RATIO.
