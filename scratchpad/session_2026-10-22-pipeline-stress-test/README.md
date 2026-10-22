@@ -9,11 +9,11 @@ Written after PR #200 and PR #201 (step 3 specification, the marker and its revi
 4. `slugs-and-parameters-2026-10-22.md` : the slugs, parameters and terms as the database held them, with the mint-time value screen applied.
 
 **Evidence.**
-- `stress/` : the scripts and outputs of the stress test (`conflicts.py` conflicting-value fixtures G1 to G13; `cells.sh` the engine over every parameter and four lenses; `render_attempt.py`; `listing.py`; walkability output on the canonical and a populated scratch database; the full check run on both).
+- `stress/` : the scripts and outputs of the stress test (`conflicts.py` conflicting-value fixtures G1 to G13; `cells.sh` the engine over every parameter and four lenses; `render_attempt.py`; `listing.py`; walkability output on the canonical and a populated scratch database).
 - `report-probes/` : the report writer's probes and its scripted re-run (`regress_2026-10-22.sh`, `fixtures_g1_g13.py`, `notation_probe.py`), and their outputs.
 
 **Paths inside the documents.** They were written against the session's scratchpad (`/tmp/claude-0/.../scratchpad/`, ephemeral). The same files are here: `stress/` and `report-probes/` map one to one; the four documents sit at this folder's top level.
 
-**Not committed, by design.** Scratch databases, the sparse repository clone used to run the write path, and the generated outputs of the as-printed regression run (re-create them with the scripts). `stress/all_populated.txt` was dropped because two processes wrote to it at once; `all_populated2.txt` is the clean run.
+**Not committed, by design.** Scratch databases, the sparse repository clone used to run the write path, and the generated outputs of the as-printed regression run (re-create them with the scripts). The captured outputs of `run_checks.py --all` on the canonical and the populated database were dropped: each quotes the retired-vocabulary audit's own findings and so adds hits to that audit. Re-create them with `python3 scripts/run_checks.py --all` (with `GUIDEBOOK_DB_PATH` set for the populated run).
 
 **State when written.** `data/guidebook.db` at `PRAGMA user_version` 116, sha256 prefix `4b3cfb03d41d8a98`; every figure in the documents is a result measured on 2026-10-22: re-run, do not quote (CLAUDE.md rule 7a). Nothing in the repository's code, schema or data was changed by this work.
