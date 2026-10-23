@@ -1,0 +1,7 @@
+param 7×MOB      pending      basis=-                                scale=population refs=0 sources=0 extractions=0 nonanchor=0 rso=0 marker=- cfo=0 sha=4da806a1a2a8
+
+1 cell(s) determined; SQL artifact: /tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/cells/p7_MOB.sql
+COMMITTED into /tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/cells.db — those rows are in that scratch DB now, and
+emit_batch_sql.py captures them from there. Applying the artifact AS WELL
+double-inserts. Re-running this cell against this DB is refused.
+REPLAY through emit_data_migration.py -> migrate_db.py, never by hand.

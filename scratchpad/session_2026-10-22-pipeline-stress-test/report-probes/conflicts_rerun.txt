@@ -1,0 +1,92 @@
+
+== G1 gradient across all tiers: T1 1500 / T2 1200 / T3c 1000 / T4 1100 / T5 1300 / T6 900,1000,1100  [higher_is_better]
+   state=stated marker=● basis=T1+T2 rso=0 proxy=0
+   VALUE min=1500.0 max=None mm  note=None
+   governing: [('R-T1', 1, 'clinical', '>=1500'), ('R-T2', 2, 'sr_meta', '>=1200')]
+   supporting: ['R-T3C']
+   excluded R-T3C (T3 >=1000): figure_role='claim' supplies a value, but R-T3C is not in the governing set: it was disqualified on tier, veri
+   excluded R-T4 (T4 >=1100): figure_role='claim' supplies a value, but R-T4 is not in the governing set: it was disqualified on tier, verif
+   excluded R-T5 (T5 >=1300): figure_role='claim' supplies a value, but R-T5 is not in the governing set: it was disqualified on tier, verif
+   excluded R-T6a (T6 >=900): figure_role='claim' supplies a value, but R-T6a is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6b (T6 >=1000): figure_role='claim' supplies a value, but R-T6b is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6c (T6 >=1100): figure_role='claim' supplies a value, but R-T6c is not in the governing set: it was disqualified on tier, veri
+   convergence: single_axis | single evidence axis: clinical; supporting (non-governing) T3: R-T3C
+
+== G2 evidence says LESS than the code: T1 900 vs T6 codes 1200/1200/1200  [higher_is_better]
+   state=stated marker=● basis=T1 rso=0 proxy=0
+   VALUE min=900.0 max=None mm  note=None
+   governing: [('R-T1', 1, 'clinical', '>=900')]
+   supporting: []
+   excluded R-T6a (T6 >=1200): figure_role='claim' supplies a value, but R-T6a is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6b (T6 >=1200): figure_role='claim' supplies a value, but R-T6b is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6c (T6 >=1200): figure_role='claim' supplies a value, but R-T6c is not in the governing set: it was disqualified on tier, veri
+   convergence: single_axis | single evidence axis: clinical
+
+== G3 same tier disagree: T1 900 vs T1 1500  [higher_is_better]
+   state=stated marker=● basis=T1 rso=0 proxy=0
+   VALUE min=1500.0 max=None mm  note=None
+   governing: [('R-T1a', 1, 'clinical', '>=900'), ('R-T1b', 1, 'clinical', '>=1500')]
+   supporting: []
+   convergence: single_axis | single evidence axis: clinical
+
+== G4 three anchoring strata disagree: T1 1000 / Co-1 1500 / T2 1200  [higher_is_better]
+   state=stated marker=● basis=T1+CO1+T2 rso=0 proxy=0
+   VALUE min=1500.0 max=None mm  note=None
+   governing: [('R-CO1', 1, 'co1', '>=1500'), ('R-T1', 1, 'clinical', '>=1000'), ('R-T2', 2, 'sr_meta', '>=1200')]
+   supporting: []
+   convergence: pending_assessment | 2 evidence axes present (clinical/co1). Value-level convergence not yet assessable: no rul
+
+== G5 T3-clinical alone vs codes: T3c 1500 vs T6 900,1000,1100  [higher_is_better]
+   state=provisional marker=● basis=T3-only rso=0 proxy=0
+   VALUE min=1500.0 max=None mm  note=None
+   governing: [('R-T3C', 3, 'clinical', '>=1500')]
+   supporting: []
+   excluded R-T6a (T6 >=900): figure_role='claim' supplies a value, but R-T6a is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6b (T6 >=1000): figure_role='claim' supplies a value, but R-T6b is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6c (T6 >=1100): figure_role='claim' supplies a value, but R-T6c is not in the governing set: it was disqualified on tier, veri
+   convergence: single_axis | single evidence axis: T3-clinical alone — 'rarely the sole basis' (tier-system.md §1); pro
+
+== G6 no anchors, regulatory stratum only, T4 1800 vs T5 1300 vs T6 900,1000  [higher_is_better]
+   state=provisional marker=○ basis=T4-6-only(regulatory_stratum_only) rso=1 proxy=0
+   VALUE min=1800.0 max=None mm  note=None
+   governing: [('R-T4', 4, 'standard_eb', '>=1800'), ('R-T5', 5, 'national_fw', '>=1300'), ('R-T6a', 6, 'code', '>=900'), ('R-T6b', 6, 'code', '>=1000')]
+   supporting: []
+   convergence: single_axis | regulatory stratum only (T4-6): convergence-not-evidence (tier-system.md §3). Universal-Mo
+
+== G7 units conflict across tiers: T1 mm vs T2 in  [higher_is_better]
+   state=stated marker=● basis=T1+T2 rso=0 proxy=0
+   VALUE min=None max=None None  note="governing claims are stated in different units ('in', 'mm'); composing an interval would require a conversion no source stated"
+   governing: [('R-T1', 1, 'clinical', '>=1000'), ('R-T2', 2, 'sr_meta', '>=40')]
+   supporting: []
+   convergence: single_axis | single evidence axis: clinical
+
+== G8 comparators oppose: T1 >=1200 vs T2 <=1000  [higher_is_better]
+   state=stated marker=● basis=T1+T2 rso=0 proxy=0
+   VALUE min=None max=None mm  note='INCOHERENT INTERVAL: the most-accommodating selection gives a minimum above its maximum, which describes nothing. The usual cause is a governing claim stored with NO comparator, which is read as a point value and so contributes a floor as well as a ceiling. Fix the comparator on the extraction (`db.py amend-extraction --field comparator`), do not widen the interval here'
+   governing: [('R-T1', 1, 'clinical', '>=1200'), ('R-T2', 2, 'sr_meta', '<=1000')]
+   supporting: []
+   convergence: single_axis | single evidence axis: clinical
+
+== G9 lower_is_better ramp max: T1 8% / T2 5% / T6 8.33,8.33,6  [lower_is_better]
+   state=stated marker=● basis=T1+T2 rso=0 proxy=0
+   VALUE min=None max=5.0 %  note=None
+   governing: [('R-T1', 1, 'clinical', '<=8'), ('R-T2', 2, 'sr_meta', '<=5')]
+   supporting: []
+   excluded R-T6a (T6 <=8.33): figure_role='claim' supplies a value, but R-T6a is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6b (T6 <=8.33): figure_role='claim' supplies a value, but R-T6b is not in the governing set: it was disqualified on tier, veri
+   excluded R-T6c (T6 <=6): figure_role='claim' supplies a value, but R-T6c is not in the governing set: it was disqualified on tier, veri
+   convergence: single_axis | single evidence axis: clinical
+
+== G10 contested direction with a gradient  [contested]
+   state=stated marker=● basis=T1 rso=0 proxy=0
+   VALUE min=None max=None mm  note="accessibility_direction is CONTESTED -- most-accommodating selection is inapplicable (DR-2026-07-21 section 5) and no single value is anchored; the spread is rendered with each population's direction stated"
+   governing: [('R-T1a', 1, 'clinical', '>=900'), ('R-T1b', 1, 'clinical', '>=1500')]
+   supporting: []
+   convergence: single_axis | single evidence axis: clinical
+
+== G11 SAME SOURCE contests itself (D-0168): one T1 source, rows 900 and 1500  [higher_is_better]
+   state=stated marker=● basis=T1 rso=0 proxy=0
+   VALUE min=1500.0 max=None mm  note=None
+   governing: [('R-T1', 1, 'clinical', '>=1500')]
+   supporting: []
+   convergence: single_axis | single evidence axis: clinical

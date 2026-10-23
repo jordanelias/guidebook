@@ -1,0 +1,105 @@
+canonical sha256 before: 4b3cfb03d41d8a983c8d58119f408d7054c6a6f388fb0d90c7a519f1bbf66037
+== 1. lens runs, parameter 3
+MOB rc=0
+MOB_d450 rc=0
+AUT rc=0
+BLIND rc=0
+ADHD rc=0
+d450 rc=0
+A-EFFORT rc=0
+A-EFFORT   state=provisional marker=○ gov=26 min=None max=5.0 sha=3ebcfe9e0f35
+ADHD       state=provisional marker=○ gov=26 min=None max=5.0 sha=b4014f7f08ed
+AUT        state=provisional marker=○ gov=26 min=None max=5.0 sha=4875d935ac45
+BLIND      state=provisional marker=○ gov=26 min=None max=5.0 sha=6450ca89381c
+MOB        state=provisional marker=○ gov=26 min=None max=5.0 sha=62d6fa8e88c2
+MOB_d450   state=provisional marker=○ gov=26 min=None max=5.0 sha=62d6fa8e88c2
+d450       state=provisional marker=○ gov=26 min=None max=5.0 sha=1426265cfb6e
+('MOB', None, None, 'provisional', 'dual', None)
+('MOB', 'd450', None, 'provisional', 'dual', None)
+('AUT', None, None, 'provisional', 'dual', None)
+('BLIND', None, None, 'provisional', 'dual', None)
+('ADHD', None, None, 'provisional', 'population_only', 'no identity_icf_map row characterises ADHD, so no function p')
+(None, 'd450', None, 'provisional', 'population_only', 'no identity_icf_map row characterises this lens, so no funct')
+(None, None, 'A-EFFORT', 'provisional', 'population_only', 'no identity_icf_map row characterises this lens, so no funct')
+== 2. every parameter under MOB (the populated scratch)
+p3_MOB rc=0
+p4_MOB rc=0
+p5_MOB rc=0
+p6_MOB rc=0
+p7_MOB rc=0
+p8_MOB rc=0
+p9_MOB rc=0
+p10_MOB rc=0
+p11_MOB rc=0
+p12_MOB rc=0
+p3 MOB value_note: composed from 10 of 34 governing claims: 24 state no parsable numeric bound ('12%', '1:10', '1:12', '1:15', '1:16', '1:20', '1:6', '5%', '6%', '8%', 'viisi prosenttia') and contribute to the cell's STATE but not to this interval; value presented in 2 notations of one quantity (owner ruling 2026-09-17: present both, never choose)
+== 3. fixtures G1-G13
+{"id": "G1", "state": "stated", "marker": "●", "basis": "T1+T2", "min": 1500.0, "max": null, "unit": "mm", "note": "", "conv": "single_axis", "governing": ["R-T1", "R-T2"], "excluded": ["R-T3C", "R-T4", "R-T5", "R-T6a", "R-T6b", "R-T6c"], "excl_reason_sample": "figure_role='claim' supplies a value, but R-T3C is not in th"}
+{"id": "G2", "state": "stated", "marker": "●", "basis": "T1", "min": 900.0, "max": null, "unit": "mm", "note": "", "conv": "single_axis", "governing": ["R-T1"], "excluded": ["R-T6a", "R-T6b", "R-T6c"], "excl_reason_sample": "figure_role='claim' supplies a value, but R-T6a is not in th"}
+{"id": "G3", "state": "stated", "marker": "●", "basis": "T1", "min": 1500.0, "max": null, "unit": "mm", "note": "", "conv": "single_axis", "governing": ["R-T1a", "R-T1b"], "excluded": [], "excl_reason_sample": null}
+{"id": "G4", "state": "stated", "marker": "●", "basis": "T1+CO1+T2", "min": 1500.0, "max": null, "unit": "mm", "note": "", "conv": "pending_assessment", "governing": ["R-CO1", "R-T1", "R-T2"], "excluded": [], "excl_reason_sample": null}
+{"id": "G5", "state": "provisional", "marker": "●", "basis": "T3-only", "min": 1500.0, "max": null, "unit": "mm", "note": "", "conv": "single_axis", "governing": ["R-T3C"], "excluded": ["R-T6a", "R-T6b", "R-T6c"], "excl_reason_sample": "figure_role='claim' supplies a value, but R-T6a is not in th"}
+{"id": "G6", "state": "provisional", "marker": "○", "basis": "T4-6-only(regulatory_stratum_only)", "min": 1800.0, "max": null, "unit": "mm", "note": "", "conv": "single_axis", "governing": ["R-T4", "R-T5", "R-T6a", "R-T6b"], "excluded": [], "excl_reason_sample": null}
+{"id": "G7", "state": "stated", "marker": "●", "basis": "T1+T2", "min": null, "max": null, "unit": null, "note": "governing claims are stated in different units ('in', 'mm'); composing", "conv": "single_axis", "governing": ["R-T1", "R-T2"], "excluded": [], "excl_reason_sample": null}
+{"id": "G8", "state": "stated", "marker": "●", "basis": "T1+T2", "min": null, "max": null, "unit": "mm", "note": "INCOHERENT INTERVAL: the most-accommodating selection gives a minimum ", "conv": "single_axis", "governing": ["R-T1", "R-T2"], "excluded": [], "excl_reason_sample": null}
+{"id": "G9", "state": "stated", "marker": "●", "basis": "T1+T2", "min": null, "max": 5.0, "unit": "%", "note": "", "conv": "single_axis", "governing": ["R-T1", "R-T2"], "excluded": ["R-T6a", "R-T6b", "R-T6c"], "excl_reason_sample": "figure_role='claim' supplies a value, but R-T6a is not in th"}
+{"id": "G10", "state": "stated", "marker": "●", "basis": "T1", "min": null, "max": null, "unit": "mm", "note": "accessibility_direction is CONTESTED -- most-accommodating selection i", "conv": "single_axis", "governing": ["R-T1a", "R-T1b"], "excluded": [], "excl_reason_sample": null}
+{"id": "G11", "state": "stated", "marker": "●", "basis": "T1", "min": 1500.0, "max": null, "unit": "mm", "note": "", "conv": "single_axis", "governing": ["R-T1"], "excluded": [], "excl_reason_sample": null}
+{"id": "G12", "state": "stated", "marker": "●", "basis": "T1+CO1+T2", "min": 1200.0, "max": null, "unit": "mm", "note": "", "conv": "pending_assessment", "governing": ["R-CO1", "R-T1", "R-T2"], "excluded": ["R-T3C", "R-T4", "R-T5", "R-T6a", "R-T6b", "R-T6c"], "excl_reason_sample": "figure_role='claim' supplies a value, but R-T3C is not in th"}
+{"id": "G13", "state": "stated", "marker": "●", "basis": "T1+CO1+T2", "min": 1800.0, "max": null, "unit": "mm", "note": "", "conv": "pending_assessment", "governing": ["R-CO1", "R-T1", "R-T2"], "excluded": ["R-T3C", "R-T4", "R-T5", "R-T6a", "R-T6b", "R-T6c"], "excl_reason_sample": "figure_role='claim' supplies a value, but R-T3C is not in th"}
+== 4. notation probes
+              '1:12' unit='rise:run ratio'   cmp='<='       -> (None, 8.333333333333334)
+              '8.33' unit='%'                cmp='<='       -> (None, 8.33)
+             '8.33%' unit='%'                cmp='<='       -> None
+           '1 in 12' unit='rise:run ratio'   cmp='<='       -> None
+              '12:1' unit='rise:run ratio'   cmp='<='       -> (None, 1200.0)
+              '1/12' unit='rise:run ratio'   cmp='<='       -> (None, 0.08333333333333333)
+              '1:12' unit='ratio'            cmp='<='       -> None
+                 '5' unit='gradient'         cmp='<='       -> (None, 5.0)
+  'viisi prosenttia' unit='%'                cmp='<='       -> None
+             '0-4.8' unit='%'                cmp='between'  -> None
+       '1:6 to 1:14' unit='rise:run ratio'   cmp='between'  -> (7.142857142857143, 16.666666666666668)
+                 '5' unit='degrees'          cmp='<='       -> (None, 5.0)
+                '36' unit='in'               cmp='>='       -> (36.0, None)
+               '900' unit='mm'               cmp='>='       -> (900.0, None)
+              '1200' unit='mm'               cmp=None       -> (1200.0, 1200.0)
+== 5. walkability, canonical and populated
+/tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/walk_canonical.txt:10
+/tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/walk_populated.txt:10
+== 6. render attempt on the populated scratch
+v_best_practice rows: 1 | v_pending: 9 | v_code_floor_only: 0 | v_determination_provenance: 101
+
+──────────────────────────────────────────────────────────────────────────────
+RENDER of specification 9
+  Parameter : ramp gradient
+  Lens      : MOB (disabled people with mobility needs; wheelchair us)
+  Value     : max 5 %   notations=[{"notation": "%", "min": null, "max": "5", "stated": true, "exact": true}, {"notation": "rise:run ratio", "min": null, "max": "1:20", "stated": true, "exact": true}]
+  Marker    : ○   State: provisional   scale: universal
+  Flags     : proxy=1 regulatory_stratum_only=0 unverified=1 code_floor_only=0
+  Basis     : T4-6-only-threshold+CO1+T2-direction(proxy_inference)
+  Note      : composed from 10 of 34 governing claims: 24 state no parsable numeric bound ('12%', '1:10', '1:12', '1:15', '1:16', '1:20', '1:6', '5%', '6%', '8%', 'viisi prosenttia') and contribute to the cell's STATE but not to this interval; value presented in 2 notations of one quantity (owner ruling 2026-09-17: present both, never choose)
+  Falsifier : Overturned if a source states a value for this parameter at an anchoring tier (the cell then rests on that, not on a pro
+  Functional: dual (9 ICF entries)
+  provenance view rows for it: 101; columns: ['specification_id', 'parameter_id', 'parameter_name', 'state', 'lens', 'role', 'exclusion_reason', 'extraction_id', 'figure_role', 'comparator', 'claimed_value', 'claimed_unit', 'claim_text', 'ref_id', 'tier', 'evidence_type', 'verification_status']
+  governing rows=34 conditioning rows=10 (conditions are linked, not attached to the value)
+──────────────────────────────────────────────────────────────────────────────
+PENDING cells a renderer must also show (v_pending):
+   [('specification_id', 10), ('parameter_id', 4), ('identity_code', 'MOB'), ('icf_code', None), ('needs_code', None), ('medical_code', None)]
+   [('specification_id', 11), ('parameter_id', 5), ('identity_code', 'MOB'), ('icf_code', None), ('needs_code', None), ('medical_code', None)]
+   [('specification_id', 12), ('parameter_id', 6), ('identity_code', 'MOB'), ('icf_code', None), ('needs_code', None), ('medical_code', None)]
+== 7. write path replay and rebuild in a scratch clone
+Wrote /tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/batch.sql — 182 insert(s), 0 update(s), 0 delete(s)
+      1 INSERT INTO "convergence_assessment
+     35 INSERT INTO "convergence_sources
+      9 INSERT INTO "gaps
+    101 INSERT INTO "specification_extraction_links
+     26 INSERT INTO "specification_source_links
+     10 INSERT INTO "specifications
+/tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/clone/scripts/migrations/data_20261022041111_2026-10-22-regression.sql
+    Applying data_20261022041111_2026-10-22-regression.sql...
+
+Done. Schema at version 116; 1 data migration(s) applied.
+      ('item_taxonomy_links', 469, 'base_icf', 4)
+Rebuilt /tmp/claude-0/-home-user-guidebook/f366a537-569c-50d0-a2d1-f74dc994928a/scratchpad/report-probes/regress/rebuilt.db successfully.
+EXAMINED tables: 56 | differing: []
+canonical sha256 after:  4b3cfb03d41d8a983c8d58119f408d7054c6a6f388fb0d90c7a519f1bbf66037
