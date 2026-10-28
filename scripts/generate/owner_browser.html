@@ -93,6 +93,20 @@ pre { margin: 0; padding: 10px; background: var(--chip); border-radius: 6px; ove
 .fieldpick label { display: flex; align-items: center; gap: 10px; min-height: 40px; }
 .fieldpick input { width: 22px; height: 22px; }
 .err { color: var(--bad); }
+.chip.ok { background: var(--accent); color: var(--accent-ink); }
+.ok { color: var(--accent); font-weight: 600; }
+details.prompt > summary { min-height: 56px; align-items: flex-start; }
+.prompt .sum { display: grid; gap: 4px; min-width: 0; flex: 1; font-weight: 600; }
+.prompt .sum .lab { overflow-wrap: anywhere; }
+.prompt .sum .chip { justify-self: start; font-weight: 400; }
+.prompt .tag { font: 0.76rem var(--mono); color: var(--muted); font-weight: 400; overflow-wrap: anywhere; }
+button.opt { height: auto; min-height: 44px; padding: 10px 12px; display: grid; gap: 4px; text-align: left; width: 100%; }
+button.opt[aria-pressed=true] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+button.opt .lab { font-weight: 600; }
+button.opt .fx { color: var(--muted); font-size: 0.88rem; }
+textarea { width: 100%; min-height: 96px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); font: inherit; color: inherit; }
+button:disabled { opacity: 0.5; cursor: default; }
+.ctx p { margin: 0; }
 </style>
 <div class="wrap">
   <div id="bar"><div class="in">
@@ -250,8 +264,7 @@ function noteBox(t, c) {
 // ---------- pages ----------
 function homePage() {
   const t = Object.values(SCHEMA.tables);
-  const waiting = waitingCounts();
-  const total = waiting.reduce((a, b) => a + b.n, 0);
+  const keys = promptKeys(), open = keys.filter((k) => !ANSWERS[k]).length;
   const find = h("input", { type: "search", id: "find", placeholder: "Find a table or a word", "aria-label": "Find a table or a word" });
   const sections = [];
   const order = [...META.stage_order, "unmapped"];
@@ -271,9 +284,9 @@ function homePage() {
   return [
     h("div", { class: "stack" },
       h("h1", null, "Guidebook database"),
-      h("p", { class: "gl" }, "A copy of the database, opened on this device. Tap a table to read its rows. Nothing you do here changes the database.")),
-    h("a", { class: "item", href: "#waiting" }, h("span", { class: "top" }, h("span", { class: "nm" }, "Waiting on you"), h("span", { class: "n" }, fmt(total))),
-      h("span", { class: "gl" }, waiting.filter((w) => w.n).length + " of " + waiting.length + " lists have rows")),
+      h("p", { class: "gl" }, "A copy of the database, opened on this device. Tap a table to read its rows. Nothing you do here changes the database; the answers you save are kept on this page only.")),
+    h("a", { class: "item", href: "#waiting" }, h("span", { class: "top" }, h("span", { class: "nm" }, "Waiting on you"), h("span", { class: "n" }, fmt(open))),
+      h("span", { class: "gl" }, "Questions with the context to answer them: " + META.decisions.length + " decisions on the plan and " + (keys.length - META.decisions.length) + " rows in the database. " + (keys.length - open) + " answered.")),
     find, sections,
     h("section", { class: "sec" }, h("h2", null, "Views · " + views.length),
       h("details", null, h("summary", null, "Saved queries that read the tables"), h("div", { class: "body" },
@@ -348,12 +361,8 @@ function tablePage(name) {
   return page;
 }
 
-function rowPage(name, rid) {
-  const t = SCHEMA.tables[name];
-  if (!t) return notFound(name);
-  const r = all("select * from " + q(name) + " where rowid = ?", [rid])[0];
-  if (!r) return notFound(name + " row " + rid);
-  r._rid = rid;
+// Every filled field of a row, in full, with pointers followed and field notes on tap; empty fields collapsed.
+function fieldsOf(t, r) {
   const fieldBlock = (c) => {
     const v = r[c.name], ptr = pointerOf(t, c.name);
     const { bits } = noteBox(t, c.name);
@@ -366,8 +375,17 @@ function rowPage(name, rid) {
     return h("div", { class: "kv" }, label, h("span", { class: "v" }, shown));
   };
   const empty = t.cols.filter((c) => isNil(r[c.name]));
-  const fields = [...t.cols.filter((c) => !isNil(r[c.name])).map(fieldBlock),
+  return [...t.cols.filter((c) => !isNil(r[c.name])).map(fieldBlock),
     empty.length ? h("details", null, h("summary", null, "Empty fields · " + empty.length), h("div", { class: "body" }, h("div", { class: "chips" }, empty.map((c) => h("span", { class: "chip" }, c.name))))) : null];
+}
+
+function rowPage(name, rid) {
+  const t = SCHEMA.tables[name];
+  if (!t) return notFound(name);
+  const r = all("select * from " + q(name) + " where rowid = ?", [rid])[0];
+  if (!r) return notFound(name + " row " + rid);
+  r._rid = rid;
+  const fields = fieldsOf(t, r);
   const inbound = [];
   const seen = new Set();
   for (const i of t.inbound) {
@@ -401,20 +419,108 @@ function viewPage(name) {
   ];
 }
 
-function waitingCounts() { return META.queue.map((e) => ({ e, rows: all(e.sql) })).map((x) => ({ e: x.e, rows: x.rows, n: x.rows.length })); }
+// ---------- decisions: prompts and saved answers ----------
+// An answer is saved in this page's own store (the `answers` collection). It records what the owner chose; it is
+// not a ruling until the ledger entry that quotes it is written.
+const ANSWERS = {};
+let ANSWER_DB = null;
+async function loadAnswers() {
+  try {
+    ANSWER_DB = window.claude && window.claude.use ? await window.claude.use("db") : null;
+    if (!ANSWER_DB) return;
+    for (const d of (await ANSWER_DB.collection("answers").get()).docs) ANSWERS[d.id] = d.data();
+  } catch (e) { ANSWER_DB = null; }
+}
+const queueRows = () => META.queue.map((e) => ({ e, rows: all(e.sql) }));
+function promptKeys() { return [...META.decisions.map((d) => d.id), ...queueRows().flatMap(({ e, rows }) => rows.map((r) => e.id + "-" + r.id))]; }
+function updateCounts() {
+  const keys = promptKeys(), done = keys.filter((k) => ANSWERS[k]).length;
+  const nav = document.getElementById("nav-waiting"); if (nav) nav.textContent = "Waiting on you (" + (keys.length - done) + ")";
+  const el = document.getElementById("answered"); if (el) el.textContent = done + " of " + keys.length + " answered" + (ANSWER_DB ? "." : ". Saving is not available in this view; use Copy and send your answer in chat.");
+}
+// p: {key, tag, title, question, why, body, blocks, options, source}
+function promptCard(p) {
+  const chip = h("span", { class: "chip" }), msg = h("p", { class: "gl", role: "status" }), sent = h("code", null);
+  let choice = ANSWERS[p.key] ? String(ANSWERS[p.key].choice) : null;
+  const note = h("textarea", { id: "note-" + p.key, rows: 4, placeholder: "Your words. The ledger quotes them." }, ANSWERS[p.key] ? ANSWERS[p.key].note || "" : "");
+  const buttons = p.options.map((o) => {
+    const b = h("button", { type: "button", class: "opt" }, h("span", { class: "lab" }, o.label + (o.recommended ? " · recommended" : "")), h("span", { class: "fx" }, o.effect));
+    b.addEventListener("click", () => { choice = String(o.key); refresh(); });
+    return b;
+  });
+  const picked = () => p.options.find((o) => String(o.key) === choice);
+  function refresh() {
+    buttons.forEach((b, i) => b.setAttribute("aria-pressed", String(String(p.options[i].key) === choice)));
+    const a = ANSWERS[p.key];
+    chip.className = "chip " + (a ? "ok" : "warn"); chip.textContent = a ? "Answered: " + a.label : "Open";
+    sent.textContent = picked() ? p.tag + ": " + picked().label + (note.value.trim() ? " — " + note.value.trim() : "") : "";
+  }
+  note.addEventListener("input", refresh);
+  const save = h("button", { type: "button", disabled: ANSWER_DB ? null : true }, "Save my answer");
+  save.addEventListener("click", async () => {
+    const o = picked();
+    if (!o) { msg.textContent = "Choose an option first."; return; }
+    if (/\bnote\b/i.test(o.effect) && !note.value.trim()) { msg.textContent = "This option asks for your words in the note."; return; }
+    const doc = { prompt: p.key, question: p.question, choice, label: o.label, note: note.value.trim(), at: new Date().toISOString(), database: META.stamp.sha256.slice(0, 12) };
+    try { await ANSWER_DB.doc("answers/" + p.key).set(doc); ANSWERS[p.key] = doc; msg.textContent = "Saved. Tell Claude to record your answers."; }
+    catch (e) { msg.textContent = "It could not be saved here (" + ((e && (e.code || e.message)) || e) + "). Use Copy and send it in chat."; }
+    refresh(); updateCounts();
+  });
+  const clear = h("button", { type: "button", disabled: ANSWER_DB ? null : true }, "Clear");
+  clear.addEventListener("click", async () => {
+    try { await ANSWER_DB.doc("answers/" + p.key).delete(); delete ANSWERS[p.key]; choice = null; note.value = ""; msg.textContent = "Cleared."; }
+    catch (e) { msg.textContent = "It could not be cleared here."; }
+    refresh(); updateCounts();
+  });
+  const copy = h("button", { type: "button" }, "Copy");
+  copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(sent.textContent); msg.textContent = "Copied."; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents(sent); const s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "Select and copy the line above."; }
+  });
+  refresh();
+  return h("details", { class: "prompt", id: "p-" + p.key },
+    h("summary", null, h("span", { class: "sum" }, h("span", { class: "tag" }, p.tag), h("span", { class: "lab" }, p.title), chip)),
+    h("div", { class: "body" },
+      h("p", null, h("strong", null, p.question)),
+      h("div", { class: "stack" }, h("h2", null, "Why this is yours"), h("p", { class: "gl" }, p.why)),
+      h("div", { class: "stack ctx" }, h("h2", null, "Context"), p.body),
+      p.blocks ? h("div", { class: "stack" }, h("h2", null, "What it holds up"), h("p", { class: "gl" }, p.blocks)) : null,
+      h("h2", null, "Your options"), h("div", { class: "stack" }, buttons),
+      h("label", { for: "note-" + p.key, class: "gl" }, "Your words (needed only when an option asks for them)"), note,
+      h("div", { class: "stack" }, h("p", { class: "gl" }, "To answer in chat, send:"), sent),
+      h("div", { class: "row2" }, save, clear, copy), msg,
+      p.source ? h("p", { class: "gl" }, "Source: " + p.source) : null));
+}
+// The row a queue prompt is about, in full, and the row it points at when the list names one.
+function rowContext(e, id) {
+  const t = SCHEMA.tables[e.table], rid = rowidOf(e.table, e.key, id);
+  if (!rid) return [h("p", { class: "gl" }, "The row is no longer in the table.")];
+  const r = all("select * from " + q(e.table) + " where rowid = ?", [rid])[0];
+  const out = [h("div", { class: "stack" }, fieldsOf(t, r)), h("a", { href: "#r-" + slug(e.table) + "-" + rid }, "Open the row page")];
+  const sub = e.subject && SCHEMA.tables[r[e.subject.table_col]];
+  const pk = sub && sub.cols.filter((c) => c.pk);
+  const srid = pk && pk.length === 1 ? rowidOf(sub.name, pk[0].name, r[e.subject.key_col]) : null;
+  if (srid) out.push(h("a", { href: "#r-" + slug(sub.name) + "-" + srid }, "The row it concerns: " + sub.name + " " + r[e.subject.key_col]));
+  return out;
+}
 function waitingPage() {
-  const lists = waitingCounts();
-  return [
+  const words = h("details", null, h("summary", null, "Words used in these questions"), h("div", { class: "body" }, META.words.map((w) => h("div", { class: "kv" }, h("span", { class: "k" }, w.term), h("span", { class: "v" }, w.meaning)))));
+  const dprompt = (d) => promptCard({ key: d.id, tag: d.id, title: d.title, question: d.question, why: d.why_yours, blocks: d.blocks, options: d.options, source: d.source,
+    body: d.context.split(/\n\s*\n/).map((x) => h("p", null, x)) });
+  const group = (title, note, list, n = list.length) => h("section", { class: "sec" }, h("h2", null, title + " · " + n), note ? h("p", { class: "gl" }, note) : null, h("div", { class: "stack" }, list));
+  const page = [
     h("div", { class: "stack" }, h("h1", null, "Waiting on you"),
-      h("p", { class: "gl" }, "Rows the database marks as needing a decision from you. Which lists belong here is a judgment the assistant drafted; tell it to add, drop or reword one.")),
-    lists.map(({ e, rows, n }) => h("section", { class: "sec" }, h("h2", null, e.title + " · " + fmt(n)), h("p", { class: "gl" }, e.why),
-      h("div", { class: "stack" }, n ? rows.map((r) => {
-        const rid = rowidOf(e.table, e.key, r.id);
-        return h(rid ? "a" : "div", { class: "card", href: rid ? "#r-" + slug(e.table) + "-" + rid : null },
-          h("span", { class: "top" }, h("span", { class: "ttl" }, String(r.id)), h("span", { class: "gl" }, e.table)),
-          Object.entries(r).filter(([k]) => k !== "id").map(([k, x]) => h("span", { class: "kv" }, h("span", { class: "k" }, k), h("span", { class: "v" }, value(x, 260)))));
-      }) : h("p", { class: "gl" }, "Nothing waiting.")))),
+      h("p", { class: "gl" }, "Each item is a question with the context needed to answer it. Tap one to open it, choose an option, and add your words where the option asks. An answer saved here is not a ruling until Claude writes it into the ledger in your words, so tell Claude to record your answers."),
+      h("p", { class: "ok", id: "answered" })),
+    words,
+    group("Decisions that hold up building", "The workplan names these six as the ones that gate building.", META.decisions.filter((d) => d.gates).map(dprompt)),
+    group("Other decisions on the plan", "Each has a recommended answer from the report, except where none is recorded. The plan follows the recommendation unless you answer otherwise.", META.decisions.filter((d) => !d.gates).map(dprompt)),
+    ...queueRows().map(({ e, rows }) => group(e.title, e.why, rows.length
+      ? rows.map((r) => promptCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, why: e.why_yours, options: e.options, body: rowContext(e, r.id) }))
+      : [h("p", { class: "gl" }, "Nothing waiting.")], rows.length)),
   ];
+  setTimeout(updateCounts, 0);
+  return page;
 }
 function notFound(what) { return [h("div", { class: "stack" }, h("h1", null, "Not found"), h("p", { class: "gl" }, "There is no " + what + " in this copy of the database."), h("a", { href: "#stages" }, "Back to the tables"))]; }
 
@@ -444,7 +550,8 @@ document.getElementById("back").addEventListener("click", () => { if (history.le
     const SQL = await window.initSqlJs({ wasmBinary: b64(WASM_B64) });
     db = new SQL.Database(b64(DB_B64));
     SCHEMA = loadSchema();
-    document.getElementById("nav-waiting").textContent = "Waiting on you (" + waitingCounts().reduce((a, b) => a + b.n, 0) + ")";
+    await loadAnswers();
+    updateCounts();
     window.addEventListener("hashchange", route);
     route();
     document.documentElement.setAttribute("data-ready", "1");

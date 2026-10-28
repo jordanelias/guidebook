@@ -72,7 +72,7 @@ def meta(conn, db_file):
         "stage_order": order + ["infrastructure"], "stage": stages["tables"],
         "stage_judged": {"by": stages["judged_by"], "on": stages["judged_on"]},
         "vocab": vocab, "shape": shape, "holds": holds,
-        "glossary": owner["glossary"], "queue": owner["queue"],
+        "glossary": owner["glossary"], "words": owner["words"], "decisions": owner["decisions"], "queue": owner["queue"],
         "gloss_status": {k: owner[k] for k in ("drafted_by", "drafted_on", "ratified_by", "ratified_on")},
     }
 

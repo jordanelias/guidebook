@@ -38,15 +38,26 @@ const ok = (c, m) => { c ? pass++ : fail++; console.log((c ? '  pass ' : '  FAIL
     await browser.close(); console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
   }
 
-  // 2. waiting page
-  await page.goto('file://' + page_path + '#waiting'); await page.waitForSelector('h1');
-  const qn = await page.$$eval('section.sec h2', els => els.map(e => Number(e.textContent.split('·').pop().replace(/[^0-9]/g, ''))));
-  ok(JSON.stringify(qn) === JSON.stringify(exp.queue), `queue counts equal the queries (${qn.join(',')})`);
-  const navLabel = await page.$eval('#nav-waiting', e => e.textContent);
-  ok(navLabel.includes(String(exp.queue.reduce((a, b) => a + b, 0))), 'nav label carries the total waiting count');
+  // 2. waiting page: decisions and row lists are prompts with their context
+  await page.goto('file://' + page_path + '#waiting'); await page.waitForFunction(() => document.querySelector('h1') && document.querySelector('h1').textContent === 'Waiting on you'); await page.waitForSelector('details.prompt');
+  const groups = await page.$$eval('main > section.sec > h2', els => els.map(e => Number(e.textContent.split('·').pop().replace(/[^0-9]/g, ''))));
+  ok(JSON.stringify(groups) === JSON.stringify([6, exp.decisions - 6, ...exp.queue]), `prompt groups equal the decisions file and the queries (${groups.join(',')})`);
+  const total = exp.decisions + exp.queue.reduce((a, b) => a + b, 0);
+  ok(await page.$$eval('details.prompt', e => e.length) === total, `one prompt per decision and per waiting row (${total})`);
+  ok((await page.$eval('#nav-waiting', e => e.textContent)).includes(String(total)), 'nav label carries the number of open prompts');
+  ok((await page.$eval('#answered', e => e.textContent)).includes('Saving is not available'), 'with no store the page says saving is unavailable and offers Copy');
   await noOverflow('waiting');
-  const firstCard = await page.$('a.card'); const href = await firstCard.getAttribute('href');
-  ok(/^#r-adversarial-findings-\d+$/.test(href), 'a queue row links to its row page');
+  await page.click('#p-OR-1 > summary');
+  const orText = await page.$eval('#p-OR-1', e => e.textContent);
+  ok(['Why this is yours', 'Context', 'What it holds up', 'Your options', 'recommended'].every(t => orText.includes(t)), 'a decision prompt carries why, context, what it holds up, options and a recommendation');
+  ok(await page.$eval('#p-OR-1 button:has-text("Save my answer")', b => b.disabled), 'Save is disabled when the view has no store');
+  await noOverflow('waiting, a prompt open');
+  const wf = 'details.prompt[id^="p-withheld_findings-"]';
+  await page.click(wf + ' >> nth=0 >> summary');
+  const link = await page.$eval(wf + ' >> nth=0 >> a:has-text("Open the row page")', a => a.getAttribute('href'));
+  ok(/^#r-adversarial-findings-\d+$/.test(link), 'a row prompt links to its row page');
+  const claimLen = await page.$$eval(wf + ' >> nth=0 >> .kv', els => { const k = els.find(x => x.querySelector('.k').textContent.startsWith('claim_attacked')); return k ? k.querySelector('.v').textContent.length : 0; });
+  ok(claimLen > 110 && !(await page.$eval(wf + ' >> nth=0', e => e.innerText)).includes('…'), `the row's long text is shown in full (${claimLen} characters)`);
 
   // 3. table page: cards, paging, search, sort, retired dimming
   await page.goto('file://' + page_path + '#t-source-value-extractions'); await page.waitForSelector('#rows .card');

@@ -4584,3 +4584,19 @@ The question (code budget): the page needs roughly 400 to 550 new lines under `s
 CONDITION: any session asking whether the owner has asked for an interface to review or edit the tables, whether that interface may write to the database, whether a page it generates may be committed, or whether its code needs an offset.
 ACTION: (1) Build the interface as the plan in the pointed file orders it: a read-only browser and the owner's queue first, then edits as proposals. (2) Let no page write the database; apply every change through the verbs and ship it in a data pull request apart from the tooling. (3) State in each tooling pull request "no offset, N lines added" and cite this entry. (4) Do not read the answer "Name the exception" as a ruling on any other pull request's line count.
 DATE: 2026-10-28 — owner statements, quoted above.
+
+## Owner statement 2026-10-28 (second) — decisions waiting on the owner are prompts with full context, on a phone
+
+Given in session https://claude.ai/code/session_01Ub36iQ3vbthbsh45LNks6j, in reply to the first version of the owner's browser page, and recorded on contact per `CLAUDE.md` rule 0. Both statements are quoted from the owner's messages.
+
+> "I'm on mobile tho"
+
+> "waiting on me decisions need to be prompts with full context"
+
+**What this does.** It fixes two requirements of the page recorded in "Owner statement 2026-10-28" above. First, the owner reads and answers on a phone (the stored user agent of the engine test is an Android WebView), so the page is designed for a phone screen, not adapted to one. Second, each item that waits on the owner is a prompt: a question, why it is the owner's, the full context in plain words, the options with what each one does, and a recommendation only where a source states one. The 31 decisions of the resolution report's decision sheet and the workplan's section 4 (OR-1 to OR-25 with their sub-parts, OW-1 and OW-2) are written that way in `governance/owner-browser.yaml`, each naming its source; the seven lists of database rows are shown as prompts with the whole row. An answer given on the page is saved in the page's own store; it is not a ruling until an entry in this ledger quotes it in the owner's words, as the 2026-10-28 entry above already provides.
+
+**Readings applied, marked.** [ASSUMPTION: "decisions waiting on me" means those 31 decisions and the database rows the seven lists name; the membership of the lists is the assistant's judgment and the owner is asked to confirm it.] [ASSUMPTION: the plain-language context of each prompt is the assistant's rewriting of the sources it names and may misstate one; the owner is asked to correct any prompt that does, and the sources, not the prompts, are the record.]
+
+CONDITION: any session asking how a decision waiting on the owner is to be put to the owner, whether the owner reads on a phone, or whether a saved answer on the page is a ruling.
+ACTION: (1) Put every decision to the owner as a prompt with its full context and its options, never as a bare row or a code such as OR-n. (2) Design every owner-facing surface for a phone first. (3) Treat a saved answer as a choice, and write the ledger entry that quotes the owner's words before work that depends on it. (4) Correct a prompt that misstates its source, and say so in the commit.
+DATE: 2026-10-28 — owner statements, quoted above.
