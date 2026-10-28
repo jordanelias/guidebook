@@ -105,3 +105,12 @@ Acceptance: the page's table list equals `sqlite_master`; each table's count equ
 - no-verb tables: tables in `sqlite_master` not in `dbcore.writable_tables`, minus `data_migrations` and `sqlite_sequence`.
 - closed vs shape CHECK columns: iterate `dbcore.check_values` and `dbcore.check_expression` over every column.
 - owner-gated states: every CHECK value containing `OWNER` (`dbcore.check_values`), then count rows.
+
+## Revisions after approval
+
+- **2026-10-28, mobile first.** The owner is on a phone (the spike's stored user agent is an Android WebView). Phase 2's phone-width acceptance becomes the design target: single column, list-and-detail navigation (a row is a card; tapping opens the row), no hover-only affordance (column notes and vocabularies open on tap), touch targets of at least 44 px, an in-page back control (the app's back button may close the page), no wide grid. Edits (Phase 4) use native pickers and a sticky change-set bar.
+- **2026-10-28, spike result: GO.** See `spike-result.md`.
+- **Phase 2 scope note.** Screen 1 shows the database-backed queue only. The workplan ruling sheet (OR-1 to OR-25, OW-1, OW-2) is Phase 3, because it needs somewhere to store answers.
+- **Plain-language glosses** are in Phase 2 (owner decision 3 was an assumption): `governance/owner-browser.yaml`, drafted by the assistant, shown on the page as "drafted, not yet ratified" until the owner sets `ratified_on`.
+
+- **2026-10-28, Phase 2 built.** `scripts/generate/owner_browser.html` and `owner_browser_build.py`, with `governance/owner-browser.yaml` (56 glosses, 7 queue entries; drafted, not ratified). Acceptance recorded in `phase2-verification/results.md` (23 of 23 in headless Chromium at 400 px, run three times, plus the added-table probe); screens built: queue (database rows only), table index, table, row with what points to it, view. Not built: edits (Phase 4), the workplan ruling sheet (Phase 3). The page is published privately at https://claude.ai/artifact/CwZfTyennssgh7xavU6gmx (version 2). In the owner's viewer only the spike has run; the finished page has been seen only in headless Chromium.

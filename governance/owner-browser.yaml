@@ -1,0 +1,143 @@
+# governance/owner-browser.yaml -- what the owner's browser page says about each table, and what it lists as waiting on the owner.
+#
+# READ BY scripts/generate/owner_browser_build.py and nothing else. Everything the page shows that the
+# database can say for itself (tables, columns, keys, pointers, vocabularies, counts, retired rows) is derived
+# from the database; this file holds only the two things it cannot: a plain-language sentence per table, and the
+# short list of queries that count as "waiting on the owner".
+#
+# JUDGED, NOT DERIVED, and named as such (CLAUDE.md rule 8). Both sections were drafted by the assistant on
+# 2026-10-28 for the owner's reading; the owner has not ratified them. The page labels every gloss "drafted, not
+# ratified" until `ratified_on` is set below. The owner's request that this serves is recorded in
+# references/project-standards.md, "Owner statement 2026-10-28".
+#
+# THE FALSIFIER. The build reads the live table list from sqlite_master, not from this file. A table with no gloss
+# and a gloss with no table are each printed by the build, as stage-map.yaml's consumer does for stage ids. A gloss
+# states what a row IS, never a count, a state or a date: those are read from the database when the page opens.
+#
+# THE QUEUE. Membership is a judgment. A vocabulary value naming the owner matches
+# adversarial_findings.verdict = 'WITHHELD-FOR-OWNER' (waiting), adversarial_findings.disposition = 'OWNER-RULED'
+# (decided) and search_executions.origin = 'owner-supplied' (not a wait), so no pattern over the vocabularies picks
+# the waiting rows. The entries below are the starting candidates; the owner confirms or edits them. Each `sql`
+# returns an `id` column (the key of `table`'s `key` column) and any columns worth showing on the card.
+
+version: 1
+drafted_by: session_2026-10-28-owner-review-interface-plan
+drafted_on: '2026-10-28'
+ratified_by: null
+ratified_on: null
+
+glossary:
+  access_duration: "How long a barrier affects a person: permanent, temporary or situational. A short fixed list of terms."
+  access_need_icf: "Links each access need to the ICF codes (body functions, activities, environment) it concerns, with a confidence level."
+  access_needs: "The access needs the guidebook designs for, such as being usable without sight. Each carries the design obligation it creates."
+  access_stakes: "How serious it is when a need is not met: safety-critical, exclusion or friction. A short fixed list of terms."
+  adversarial_findings: "One finding from an adversarial review: the claim that was attacked, how, and whether it survived, was sustained or was repaired."
+  adversarial_passes: "One adversarial review of a work session: which session and commit was attacked, and which models reviewed and wrote it."
+  base_icf: "The WHO ICF classification codes the project uses, with their titles."
+  base_parameters: "The design parameters a determination is made for, such as a slope or a width. Each points to a term."
+  base_taxonomy_identity: "The groups of disabled people the guidebook recognises (the identity lens), arranged as a tree."
+  base_taxonomy_medical: "The medical-condition lens: conditions with their ICD-11 anchors."
+  case_studies: "Built examples of accessible design, with building type, place, setting and the people served."
+  citation_mining: "A record that a source's reference list (backward) or the works citing it (forward) were searched for further sources."
+  conflicts: "Places where guidance for different groups of people pulls in opposite directions, and how each was resolved."
+  connection_targets: "The things a connection record points at."
+  connections: "Cross-links the project found between topics, groups or findings."
+  convergence_assessment: "One verdict on how far the sources for a parameter agree, with its reasoning."
+  convergence_sources: "Which sources took part in each convergence verdict, and the role each played."
+  data_migrations: "The ledger of every change applied to the database. Append-only; nothing here is edited."
+  decisions: "The project's recorded decisions (D-numbers): what was decided, by whom, why, and whether it still stands."
+  determination_gates: "A flag raised against a determination when new evidence may overturn it. It stays open until someone resolves it."
+  economics_entries: "Cost and funding facts, such as grants and construction costs, with the source each came from."
+  evidence_population_match: "For each source, how closely the people studied match the people the guidebook serves: exact, partial, proxy or mismatch."
+  evidence_source_authors: "The authors of each source, one row per author in order, so credit and co-production can be checked."
+  evidence_sources: "Every source the project has admitted (paper, standard or report) with its tier, whether it could be retrieved, and how it was verified."
+  external_root_registry: "Original studies that several sources merely repeat, so a repeated figure is not counted as independent."
+  extraction_follow_ups: "A note that a figure read from a source needs another pass, with the reason."
+  extraction_relations: "How one extracted figure relates to another: confirms, qualifies, derived from, and so on."
+  gap_mining: "Records of searches run specifically to close a recorded gap."
+  gaps: "Known weaknesses in the evidence: what is missing, how much it matters, and whether it is still open."
+  icf_medical_map: "Maps ICF codes to medical conditions."
+  identity_icf_map: "Maps each group of people to the ICF codes that describe their functioning, with where each mapping came from."
+  identity_medical_map: "Maps each group of people to medical conditions."
+  lang_jur_map: "Which languages are searched for which jurisdictions, and whether a language is primary there."
+  life_stage_modifiers: "Life-stage modifiers, such as older adults and children, that apply across every group and need."
+  observed_terms: "A phrase a source uses for a concept, recorded in the source's own words with where it appears. Not yet judged."
+  parameter_declinations: "Terms considered as design parameters and turned down, with the reason. A declination can be revoked."
+  reasoning_doc_citations: "Claims quoted from older reasoning documents, with the source each one cited."
+  research_code_leads: "Pointers to codes and standards worth fetching (jurisdiction, standard, clause). They say where to look, never what it says."
+  rooms: "The kinds of room and space the guidebook covers, such as a bathroom, bedroom or canteen."
+  search_admissions: "Joins each search to the sources it led to admitting."
+  search_candidates: "Candidate sources a search turned up, and what became of each."
+  search_execution_artefacts: "Pointers to the saved files behind each search, such as the retrieved pages."
+  search_executions: "One logged search: the query as typed, where it ran, how many results came back and how many were admitted. Empty searches are kept."
+  slugs: "The research topics that searches are organised under."
+  source_locators: "Where each known source can be found (DOI, URL, PMID, ISBN, standard number), including leads not yet admitted."
+  source_scans: "A record that a source was read in full against the parameter list, and how much of it was read."
+  source_slug_links: "Which sources were admitted under which research topics."
+  source_value_extractions: "A figure or finding read out of a source, with its quote, the parameter and groups it concerns, and how it was read. The raw material of every determination."
+  specification_extraction_links: "Which extracted figures a determination used, and why each unused one did not govern."
+  specification_source_links: "Which sources a determination rests on, and in what role."
+  specifications: "The determinations: for one parameter and one lens, the answer, its evidence marker and its state. Computed by the engine, never typed."
+  supersession_check: "A check that an anchor source is still the best current evidence."
+  term_adjudications: "The decision about an observed phrase: it names an existing term, names a new one, is not ours, or is deferred, with the reason."
+  term_aliases: "Alternative names for each term, by language and jurisdiction, used when searching."
+  terms: "The project's vocabulary: each concept's canonical English name and definition."
+  weighting_profile: "How evidence tiers are weighted and presented for each audience and use."
+
+queue:
+  - id: withheld_findings
+    title: Findings withheld for you
+    why: An adversarial review held these back because the call is the owner's (verdict WITHHELD-FOR-OWNER).
+    table: adversarial_findings
+    key: finding_id
+    sql: |
+      SELECT finding_id AS id, lens, subject_table, claim_attacked
+        FROM adversarial_findings WHERE verdict = 'WITHHELD-FOR-OWNER' ORDER BY finding_id
+  - id: disputed_findings
+    title: Disputed findings
+    why: A dispute left each of these provisional. Which ones need a ruling from you is for you to say.
+    table: adversarial_findings
+    key: finding_id
+    sql: |
+      SELECT finding_id AS id, lens, severity, claim_attacked
+        FROM adversarial_findings WHERE disposition = 'PROVISIONAL-DISPUTED' ORDER BY finding_id
+  - id: open_decisions
+    title: Decisions not yet standing
+    why: Decisions whose status is proposed or deferred rather than active.
+    table: decisions
+    key: decision_id
+    sql: |
+      SELECT decision_id AS id, status, summary FROM decisions WHERE status <> 'ACTIVE' ORDER BY decision_id
+  - id: open_gates
+    title: Open determination gates
+    why: A flag raised against a determination that nobody has resolved.
+    table: determination_gates
+    key: gate_id
+    sql: |
+      SELECT gate_id AS id, parameter_id, identity_code, verdict, substr(detail, 1, 240) AS detail
+        FROM v_open_determination_gates ORDER BY gate_id
+  - id: open_follow_ups
+    title: Follow-ups on extracted figures
+    why: A figure that needs another pass, with the reason it was raised.
+    table: extraction_follow_ups
+    key: follow_up_id
+    sql: |
+      SELECT follow_up_id AS id, extraction_id, reason FROM extraction_follow_ups WHERE resolved_at IS NULL ORDER BY follow_up_id
+  - id: catalogue_names
+    title: Catalogue names awaiting approval
+    why: Terms minted from the catalogue that carry no approval reference yet.
+    table: terms
+    key: term_id
+    sql: |
+      SELECT term_id AS id, canonical_en, catalogue
+        FROM terms WHERE catalogue IS NOT NULL AND catalogue_approval_ref IS NULL ORDER BY term_id
+  - id: unadjudicated_observations
+    title: Phrases observed in sources and not yet judged
+    why: A source's own wording for a concept, waiting to be matched to a term, declared new, or set aside.
+    table: observed_terms
+    key: observation_id
+    sql: |
+      SELECT o.observation_id AS id, o.surface_form, o.language, o.ref_id
+        FROM observed_terms o
+       WHERE NOT EXISTS (SELECT 1 FROM term_adjudications a WHERE a.observation_id = o.observation_id)
+       ORDER BY o.observation_id
