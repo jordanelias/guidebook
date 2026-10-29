@@ -150,6 +150,8 @@ Co-1 is not exempt from appraisal. Criteria adapted from ConQual/CERQual: credib
 
 Co-1 is co-primary for specification *direction* and *barrier identification*; it is not co-primary for dimensional *values*, which require T1/T2/T3 evidence (or regulatory citation for the code minimum). This boundary is now mechanically expressed twice: by value-directness (a Co-1 source without value-level content grades NOT-FOUND on the value dimension) and by grain (G3: population-grain Co-1 — DPO positions — anchors Population-Mode claims and never overrides an individual's assessed position at Person Mode; `governance/co1-operational.md`).
 
+> **AMENDED 2026-10-29** by an owner ruling (`references/project-standards.md`, "Owner rulings 2026-10-29"): "Co-1 figures may set a value insofar as the source is academically sound." The first sentence above holds only for a Co-1 source that is not academically sound, which sets the direction and not the number. The claim that the boundary is already "mechanically expressed" stays false until the agreement change (T-4) builds it.
+
 ## 7. Recommendation strength protocol (v2)
 
 ### 7.1 Markers — the ●/◐/○ system (canonical per `tier-system.md` §5)

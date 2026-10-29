@@ -1,0 +1,1184 @@
+# governance/owner-browser.yaml -- what the owner's browser page says about each table, and what it lists as waiting on the owner.
+#
+# READ BY scripts/generate/owner_browser_build.py and nothing else. Everything the page shows that the
+# database can say for itself (tables, columns, keys, pointers, vocabularies, counts, retired rows) is derived
+# from the database; this file holds only the two things it cannot: a plain-language sentence per table, and the
+# short list of queries that count as "waiting on the owner".
+#
+# JUDGED, NOT DERIVED, and named as such (CLAUDE.md rule 8). Both sections were drafted by the assistant on
+# 2026-10-28 for the owner's reading; the owner has not ratified them. The page labels every gloss "drafted, not
+# ratified" until `ratified_on` is set below. The owner's request that this serves is recorded in
+# references/project-standards.md, "Owner statement 2026-10-28".
+#
+# THE FALSIFIER. The build reads the live table list from sqlite_master, not from this file. A table with no gloss
+# and a gloss with no table are each printed by the build, as stage-map.yaml's consumer does for stage ids. A gloss
+# states what a row IS, never a count, a state or a date: those are read from the database when the page opens.
+#
+# THE DECISIONS AND THE QUEUE. Both are written as prompts: a question, why it is the owner's, the full context in
+# plain words, the options with what each one does, and a recommendation only where a source states one. The
+# `decisions` are the questions in the resolution report's decision sheet (scratchpad/session_2026-10-22-pipeline-
+# stress-test/resolution-report-2026-10-22.md section 2) and the workplan's section 4, rewritten for a phone reader;
+# each names its `source`, and the prompt is a draft of those texts, not a second ruling. The `queue` lists the
+# database rows that wait on the owner; each list's `sql` returns an `id` and a one-line `label`, and the page shows
+# the whole row.
+# Membership of the queue is a judgment: a vocabulary value naming the owner matches
+# adversarial_findings.verdict = 'WITHHELD-FOR-OWNER' (waiting), adversarial_findings.disposition = 'OWNER-RULED'
+# (decided) and search_executions.origin = 'owner-supplied' (not a wait), so no pattern over the vocabularies picks
+# the waiting rows. The owner confirms or edits the lists. An answer given on the page is saved in the page's own
+# store and is not a ruling until the ledger entry that quotes it is written (CLAUDE.md rule 0).
+
+version: 1
+drafted_by: session_2026-10-28-owner-review-interface-plan
+drafted_on: '2026-10-28'
+ratified_by: null
+ratified_on: null
+
+glossary:
+  access_duration: "How long a barrier affects a person: permanent, temporary or situational. A short fixed list of terms."
+  access_need_icf: "Links each access need to the ICF codes (body functions, activities, environment) it concerns, with a confidence level."
+  access_needs: "The access needs the guidebook designs for, such as being usable without sight. Each carries the design obligation it creates."
+  access_stakes: "How serious it is when a need is not met: safety-critical, exclusion or friction. A short fixed list of terms."
+  adversarial_findings: "One finding from an adversarial review: the claim that was attacked, how, and whether it survived, was sustained or was repaired."
+  adversarial_passes: "One adversarial review of a work session: which session and commit was attacked, and which models reviewed and wrote it."
+  base_icf: "The WHO ICF classification codes the project uses, with their titles."
+  base_parameters: "The design parameters a determination is made for, such as a slope or a width. Each points to a term."
+  base_taxonomy_identity: "The groups of disabled people the guidebook recognises (the identity lens), arranged as a tree."
+  base_taxonomy_medical: "The medical-condition lens: conditions with their ICD-11 anchors."
+  case_studies: "Built examples of accessible design, with building type, place, setting and the people served."
+  citation_mining: "A record that a source's reference list (backward) or the works citing it (forward) were searched for further sources."
+  conflicts: "Places where guidance for different groups of people pulls in opposite directions, and how each was resolved."
+  connection_targets: "The things a connection record points at."
+  connections: "Cross-links the project found between topics, groups or findings."
+  convergence_assessment: "One verdict on how far the sources for a parameter agree, with its reasoning."
+  convergence_sources: "Which sources took part in each convergence verdict, and the role each played."
+  data_migrations: "The ledger of every change applied to the database. Append-only; nothing here is edited."
+  decisions: "The project's recorded decisions (D-numbers): what was decided, by whom, why, and whether it still stands."
+  determination_gates: "A flag raised against a determination when new evidence may overturn it. It stays open until someone resolves it."
+  economics_entries: "Cost and funding facts, such as grants and construction costs, with the source each came from."
+  evidence_population_match: "For each source, how closely the people studied match the people the guidebook serves: exact, partial, proxy or mismatch."
+  evidence_source_authors: "The authors of each source, one row per author in order, so credit and co-production can be checked."
+  evidence_sources: "Every source the project has admitted (paper, standard or report) with its tier, whether it could be retrieved, and how it was verified."
+  external_root_registry: "Original studies that several sources merely repeat, so a repeated figure is not counted as independent."
+  extraction_follow_ups: "A note that a figure read from a source needs another pass, with the reason."
+  extraction_relations: "How one extracted figure relates to another: confirms, qualifies, derived from, and so on."
+  gap_mining: "Records of searches run specifically to close a recorded gap."
+  gaps: "Known weaknesses in the evidence: what is missing, how much it matters, and whether it is still open."
+  icf_medical_map: "Maps ICF codes to medical conditions."
+  identity_icf_map: "Maps each group of people to the ICF codes that describe their functioning, with where each mapping came from."
+  identity_medical_map: "Maps each group of people to medical conditions."
+  lang_jur_map: "Which languages are searched for which jurisdictions, and whether a language is primary there."
+  life_stage_modifiers: "Life-stage modifiers, such as older adults and children, that apply across every group and need."
+  observed_terms: "A phrase a source uses for a concept, recorded in the source's own words with where it appears. Not yet judged."
+  parameter_declinations: "Terms considered as design parameters and turned down, with the reason. A declination can be revoked."
+  reasoning_doc_citations: "Claims quoted from older reasoning documents, with the source each one cited."
+  research_code_leads: "Pointers to codes and standards worth fetching (jurisdiction, standard, clause). They say where to look, never what it says."
+  rooms: "The kinds of room and space the guidebook covers, such as a bathroom, bedroom or canteen."
+  search_admissions: "Joins each search to the sources it led to admitting."
+  search_candidates: "Candidate sources a search turned up, and what became of each."
+  search_execution_artefacts: "Pointers to the saved files behind each search, such as the retrieved pages."
+  search_executions: "One logged search: the query as typed, where it ran, how many results came back and how many were admitted. Empty searches are kept."
+  slugs: "The research topics that searches are organised under."
+  source_locators: "Where each known source can be found (DOI, URL, PMID, ISBN, standard number), including leads not yet admitted."
+  source_scans: "A record that a source was read in full against the parameter list, and how much of it was read."
+  source_slug_links: "Which sources were admitted under which research topics."
+  source_value_extractions: "A figure or finding read out of a source, with its quote, the parameter and groups it concerns, and how it was read. The raw material of every determination."
+  specification_extraction_links: "Which extracted figures a determination used, and why each unused one did not govern."
+  specification_source_links: "Which sources a determination rests on, and in what role."
+  specifications: "The determinations: for one parameter and one lens, the answer, its evidence marker and its state. Computed by the engine, never typed."
+  supersession_check: "A check that an anchor source is still the best current evidence."
+  term_adjudications: "The decision about an observed phrase: it names an existing term, names a new one, is not ours, or is deferred, with the reason."
+  term_aliases: "Alternative names for each term, by language and jurisdiction, used when searching."
+  terms: "The project's vocabulary: each concept's canonical English name and definition."
+  weighting_profile: "How evidence tiers are weighted and presented for each audience and use."
+
+words:
+  - term: parameter
+    meaning: "A design quantity the project gives an answer for, such as the running slope of a ramp or the clear width of a corridor."
+  - term: determination
+    meaning: "The project's answer for one parameter and one lens: a value or range, an evidence marker and a state. The engine computes it from the evidence; nobody types it."
+  - term: lens
+    meaning: "Who or what an answer is for: an identity group (for example wheelchair users), an ICF function code, an access need or a medical condition. A determination has at least one."
+  - term: tiers
+    meaning: "T1 is primary controlled research. Co-1 is lived-experience and participatory work, co-primary with T1. T2 is syntheses. Co-2 is occupational-therapy body guidelines. T3 is grey primary work. T4 to T6 are the regulatory stratum: standards, national frameworks and codes."
+  - term: anchoring
+    meaning: "T1, Co-1, T2 and Co-2 sources can anchor a value. The regulatory stratum (T4 to T6) is walled off from full-strength anchoring."
+  - term: marker
+    meaning: "● confirmed. ◐ policy or standards only. ○ grey, thin, or unverified because the source could not be retrieved."
+  - term: ledger
+    meaning: "references/project-standards.md, the append-only record of your rulings. An answer you give is written there in your words before work that depends on it starts."
+  - term: verb
+    meaning: "A db.py command, the only sanctioned way to change a row. Your decision on a row is carried out by a verb."
+  - term: T-1 to T-8, D-1 to D-8
+    meaning: "Pieces of work in the 2026-10-23 resolution workplan. T-n changes tooling (the engine, the writers, the renderer). D-n writes research data. A prompt says which ones it holds up."
+
+decisions:
+  - id: OR-1
+    gates: true
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 — "}
+    title: Which figures may feed a determination for a group of people?
+    question: "Should a figure reach a determination only through the lens tags written on that figure, and never through the crossing maps between identity groups, ICF codes and needs?"
+    why_yours: "Decision D-0184 says yes and is adopted with review pending, waiting for you. It is a rule about how evidence reaches people, which is doctrine."
+    context: |-
+      Every figure the project reads from a source is tagged with who it applies to: an identity group, an ICF function code, an access need, a medical condition. A determination is built for one parameter and one lens, for example 'running slope, wheelchair users'.
+
+      D-0184 says a figure counts for a lens only if that lens is written on the figure itself. The alternative walks the crossing maps (identity to ICF to need) to decide which figures apply. D-0184 measured that traversal and rejected it, because it pulls in figures that do not apply.
+
+      In practice, determinations of slope for autistic people, blind people, ADHD, an ICF movement code (d450) and an effort need have no figures written for them yet. Each would read 'pending', with a gap naming the missing lens, instead of borrowing the wheelchair-user figures.
+    blocks: "The lens-routing change (T-3) and lens tagging of existing rows (D-2)."
+    options:
+      - key: "yes"
+        label: "Yes, only the lens tags on the figure"
+        recommended: true
+        effect: "T-3 is built as written. Those five determinations read 'pending' with a gap that names the lens. Unblocks T-3 and D-2."
+      - key: "no"
+        label: "No, use the crossing maps"
+        effect: "You state the traversal rule in your own words. D-0184 is recorded as superseded. T-3 then builds the walk over the identity, ICF and need maps, which is more code and the traversal D-0184 rejected."
+    source: "Resolution report section 2 (OR-1); workplan section 4"
+
+  - id: OR-1b
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Does a figure tagged for everyone ('ALL') apply to every group?
+    question: "Should a figure tagged with the identity code ALL reach the determination of every identity group?"
+    why_yours: "It decides whether a statement about everyone counts as evidence about each group."
+    context: |-
+      Some figures carry the identity code ALL. It is a scope marker: the source speaks to everyone, not to a particular group.
+
+      If ALL figures reached every group, a determination for blind people could rest on a figure that was never about blind people. The page would then have to say the value is a statement of scope, not evidence about that group.
+    blocks: "The lens-routing change (T-3)."
+    options:
+      - key: "no"
+        label: "No, ALL reaches only an ALL determination"
+        recommended: true
+        effect: "ALL figures are used only for a determination whose lens is ALL."
+      - key: "yes"
+        label: "Yes, ALL reaches every group"
+        effect: "T-3 adds one clause so identity determinations also take ALL figures, and the gap text says the value is a scope statement, not evidence about the group."
+    source: "Resolution report section 2 (OR-1b)"
+
+  - id: OR-1c
+    gates: true
+    title: How does a figure or a determination carry several codes of one model?
+    question: "A figure holds one code for each model, yet a fact can concern several codes of one model, such as two ICF codes. How should figures and determinations carry them?"
+    why_yours: "Your answer to OR-1 requires every relevant model to be filled out, and the present columns cannot hold more than one code per model. The choice changes the schema."
+    context: |-
+      Each figure read from a source has four lens columns: identity group, ICF code, access need and medical condition. Each holds one code. A determination has the same four columns and can already fill several at once, for example identity MOB together with the ICF code d450.
+
+      Your answer to OR-1 says a determination should carry every relevant model. The crossing maps show that one identity group relates to several ICF codes: wheelchair users (MOB) map to d410, d420, d450, d455, d460, d465 and more, among them d450 Walking and d465 Moving around using equipment. A single figure about wheelchair users cannot name all of them in its one ICF column.
+
+      D-0184 met the same shape in the old item layer and let one item have several link rows, one for each distinct combination of codes (A-18 by DEAF by AX-AUD beside A-18 by DEAF by AX-SPR), because they were different mechanisms and not duplicates. No source records a preference between the options below.
+    blocks: "The lens-routing change (T-3) and lens tagging of existing rows (D-2)."
+    options:
+      - key: row-per-combination
+        label: "One row per combination of codes"
+        effect: "The figure is written again for each combination of codes it concerns. It is the simplest for the engine, but the same value and quote are stored more than once, which the 'point, do not copy' rule forbids unless you rule an exception."
+      - key: link-table
+        label: "A link table: the figure is written once"
+        effect: "The figure keeps its value and quote in one place, and a separate table lists every combination of codes it concerns. It is a schema change, shipped in a tooling pull request before any data, and it follows D-0184's move for items."
+      - key: primary-code
+        label: "One primary code per model on the figure"
+        effect: "Each figure names one code per model, the primary one. A reader browsing by another related code does not find the figure unless the crossing maps are used, which D-0184 measured and rejected."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OR-1 of 2026-10-29 (ledger); decisions D-0182 and D-0184"
+
+  - id: OR-2
+    gates: true
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 — "}
+    title: How is a conditional claim shown?
+    question: "Should a determination show conditional claims as branches beside a headline taken only from unconditioned claims, leaving the headline empty when every claim is conditioned?"
+    why_yours: "It changes what a reader sees for a parameter, and the alternatives trade strictness against readability."
+    context: |-
+      A source may state a figure only under a condition, for example 'a steeper slope is allowed if the ramp is under one metre'. Today a code's step table prints as one number, so the condition disappears.
+
+      The proposal keeps each conditional claim as its own branch, shown beside the headline. The headline comes only from claims with no condition. If every claim has a condition, the headline is empty and the branches are all that is shown.
+    blocks: "The conditions change (T-2) and the repair of parameter 3's rows (D-1)."
+    options:
+      - key: branches-empty-headline
+        label: "Branches, and an empty headline when all are conditioned"
+        recommended: true
+        effect: "T-2 is built as written."
+      - key: strictest-branch
+        label: "Branches, and the strictest branch as headline when all are conditioned"
+        effect: "T-2 composes the headline from all governing rows when none is unconditioned, and the note says so."
+      - key: no-branches
+        label: "No branches"
+        effect: "T-2 is not built. The book prints one number for a code's table, as today."
+    source: "Resolution report section 2 (OR-2)"
+
+  - id: OR-3
+    gates: true
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 — "}
+    title: May a stored figure be reformatted in place?
+    question: "May a figure's value, unit and empty setting be reformatted in place, keeping the same digits and quote and recording the old text in notes?"
+    why_yours: "It narrows decision D-0168, which says a wrong value is a second row, a recorded contest, and never an overwrite."
+    context: |-
+      Some stored figures are in awkward forms: '6%' where the value is 6 and the unit is %, '30,0' where it is 30.0, a unit written 'ratio' where it is 'rise:run ratio', or a unit that is really a condition sentence. Reformatting does not change what the source said.
+
+      D-0168 treats any change to a value as a contest: the old row stays and a new row is written. Allowing in-place reformatting only for these cases is a narrow exception to that rule.
+    blocks: "The repair of parameter 3's rows (D-1), and the widening of the amend verb (T-1 step 8)."
+    options:
+      - key: "yes"
+        label: "Yes, reformat in place"
+        recommended: true
+        effect: "The amend verb is widened to unit, value and an empty setting. D-1 repairs the affected rows."
+      - key: "no"
+        label: "No, write a new row for each"
+        effect: "D-1 writes one new row per affected figure, as batch 21 did (row 73 restating row 72 as 30.0). The old rows stay as recorded contests and are still counted as unparsed in every value note."
+    source: "Resolution report section 2 (OR-3); decisions/DR-2026-08-27-evidence-is-the-source-judgment-is-the-extraction.md"
+
+  - id: OR-4
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Which value wins among anchoring sources that disagree?
+    question: "Within T1, Co-1, T2 and Co-2, does the most accommodating value win, whichever of those tiers stated it?"
+    why_yours: "It decides whose figure sets a published value when sources of equal standing differ."
+    context: |-
+      Illustration from the stress test (made-up numbers, not findings): one T1 source says a clear width of at least 900 mm and another T1 source says at least 1500 mm. Under the current rule the more accommodating figure, 1500, wins. T-4 adds a note showing the 900 to 1500 spread.
+
+      The rule is the 2026-07-21 rule as the engine extends it. If you reject it, no replacement exists: the ledger of 2026-09-13 says 'the operands do not exist', so you would have to state one.
+    blocks: "The agreement change (T-4), step 4."
+    options:
+      - key: "yes"
+        label: "Yes, the most accommodating value wins"
+        recommended: true
+        effect: "No change to the rule."
+      - key: "no"
+        label: "No, I will state a rule"
+        effect: "You state a composition rule in your own words. T-4 waits until one exists."
+    source: "Resolution report section 2 (OR-4)"
+
+  - id: OR-5
+    gates: true
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 — "}
+    title: Do lived-experience sources set direction but not a numeric value?
+    question: "Does section 6.4 of the evidence-hierarchy mapping hold, so that Co-1 sets direction and identifies barriers but not a dimensional value, and the value comes from T1, T2 or T3 or the regulation's minimum?"
+    why_yours: "Co-1 is co-primary with T1 under CRPD Art 4.3 (CLAUDE.md section 6). Whether its figures may set a number is a doctrine question."
+    context: |-
+      Illustration from the stress test (made-up numbers): T1 says 1000 mm, Co-1 says 1500 mm, T2 says 1200 mm. Today the Co-1 figure wins and sets 1500, which the methodology document says it should not.
+
+      The same document claims a mechanism that expresses this boundary mechanically 'by value-directness'. The stress test found that mechanism does not exist.
+
+      If you say yes, Co-1 figures stay out of the numeric bound but still govern the state and are shown beside the value. In the example the value becomes 1200 and the note names the Co-1 figure.
+    blocks: "The agreement change (T-4)."
+    options:
+      - key: "yes"
+        label: "Yes, Co-1 sets direction, not the number"
+        recommended: true
+        effect: "T-4 step 3 leaves Co-1 rows out of the numeric bound. They still govern the state and are rendered beside the value. The false sentence in section 6.4 is corrected."
+      - key: "no"
+        label: "No, Co-1 figures may set a value"
+        effect: "No engine change. Section 6.4's first sentence and its mechanism claim are deleted, and the architecture document's claim-type split is restated as rendering guidance only."
+    source: "Resolution report section 2 (OR-5); references/methodology-evidence-hierarchy-mapping.md section 6.4"
+
+  - id: OR-5b
+    gates: true
+    title: How is 'academically sound' established for a Co-1 source?
+    question: "Your ruling lets a Co-1 figure set a value when its source is academically sound. How does the project establish that a source is?"
+    why_yours: "The database has no field for academic soundness, so someone has to say what counts and who says it."
+    context: |-
+      You ruled that a Co-1 figure may set a value insofar as its source is academically sound, and otherwise sets the direction only.
+
+      For each source the database records: whether it is flagged grey, its type (journal article, report, guideline and so on), the kind of Co-1 source (participatory research, DPO position statement, lived-experience publication) and whether it was verified. As of 2026-10-29 the four Co-1 sources are two participatory-research journal articles, one lived-experience publication and one DPO position statement, and none is flagged grey. Re-derive with: select ref_id, co1_source_type, source_type, grey_flag from evidence_sources where evidence_type = 'co1'.
+
+      No source states a preference between the options below.
+    blocks: "The agreement change (T-4), step 3."
+    options:
+      - key: derive
+        label: "Derive it: a published academic type that is not grey"
+        effect: "No new field. The engine reads the source's type and grey flag. Today the two participatory-research journal articles would set values and the other two would set direction only. A source that is sound by another route, such as a report with a methods section, would not count until you say so. I would list the academic types in the ledger for your approval."
+      - key: judge
+        label: "Judge each Co-1 source and record it"
+        effect: "A new field on the source, set by a verb with a reason, by you or by the assistant for your approval. Soundness is a judgment recorded once per source and not inferred from its type. It needs a schema change and a verb, in a tooling pull request before T-4 step 3."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OR-5 of 2026-10-29 (ledger)"
+
+  - id: OR-6
+    gates: true
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 — "}
+    title: What happens when anchoring claims cannot all be true?
+    question: "When anchoring claims cannot all hold, does the determination stay 'stated' with convergence 'divergent', and refuse to be written until an Opus-class session supplies the synthesis approach, as evidence-methodology section 3.3 already says?"
+    why_yours: "Section 3.3 is canonical text, so the alternative amends it."
+    context: |-
+      Illustration from the stress test (made-up numbers): a T1 source says at least 1200 mm and a T2 source says at most 1000 mm. No value satisfies both.
+
+      Section 3.3 says the determination is 'stated', is marked divergent, and carries a synthesis approach written by an Opus-class session. The engine would refuse to write it without one.
+
+      The alternative caps the determination at 'provisional' with a confidence flag naming the divergence.
+    blocks: "The agreement change (T-4)."
+    options:
+      - key: stated-divergent
+        label: "Stated and divergent, with a synthesis approach"
+        recommended: true
+        effect: "T-4 step 2 as written."
+      - key: cap-provisional
+        label: "Cap at provisional"
+        effect: "T-4 step 2 writes 'provisional' with a confidence flag and an optional synthesis approach. That amends section 3.3 ('No fifth state. The cell is stated'), so the ledger records the supersession."
+    source: "Resolution report section 2 (OR-6); governance/evidence-methodology.md section 3.3"
+
+  - id: OR-6c
+    gates: true
+    title: Does 'the T1 source states the value, the T2 dispute is noted' cover every divergence?
+    question: "Does your approach, the T1 figure stated and the T2 dispute noted in the item's discussion, apply to every divergence or only to a T1 source against a T2 source?"
+    why_yours: "Your sentence gave the approach for one pairing. Other pairings exist, and section 3.3 of the evidence methodology says something different about the design range."
+    context: |-
+      You chose 'stated and divergent, with a synthesis approach', and gave the approach for a T1 source against a T2 source: the T1 figure is the stated value, and the discussion of the item says the T2 source disputes it.
+
+      Other pairings can diverge: T1 against Co-1, Co-1 against T2, two sources of the same tier, a regulation against a study. Co-1 is co-primary with T1, so neither outranks the other by tier.
+
+      Section 3.3 also says the design range takes in both findings, and that the governing dimension is chosen 'typically per harm-asymmetry'. Until you say otherwise I treat the range as unchanged and the stated value as the T1 figure.
+    blocks: "The agreement change (T-4), step 2."
+    options:
+      - key: t1-t2-only
+        label: "Only T1 against T2"
+        effect: "Your sentence is the approach for that pairing only. Any other divergence still waits for a synthesis approach written by an Opus-class session, as section 3.3 says."
+      - key: different-tiers
+        label: "Any divergence between different tiers"
+        effect: "The higher tier states the value and the lower tier's dispute is noted. Co-1 against T1, and two sources of the same tier, still wait for an approach."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note, including whether the design range still takes in the disputing figure."
+    source: "Ruling OR-6 of 2026-10-29 (ledger); governance/evidence-methodology.md section 3.3"
+
+  - id: OR-6b
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Do floors that differ but can all be met count as divergent?
+    question: "Do anchoring floors that differ but can all be met, such as at least 900 and at least 1500, count as divergent?"
+    why_yours: "It decides how often a synthesis approach is required."
+    context: |-
+      Both floors can be satisfied at once by building to 1500, so nothing is incoherent. The question is whether the difference still counts as a divergence that needs a synthesis approach.
+    blocks: "The agreement change (T-4)."
+    options:
+      - key: "no"
+        label: "No, the spread is printed in the note"
+        recommended: true
+        effect: "Not divergent. The spread is printed in the value note."
+      - key: "yes"
+        label: "Yes, any two different anchoring bounds on one side"
+        effect: "T-4 step 2 also marks any two distinct anchoring bounds on one side as divergent, so most cells with several sources need a synthesis approach."
+    source: "Resolution report section 2 (OR-6b)"
+
+  - id: OR-7
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Does a regulation-only cell appear as a flagged weak row?
+    question: "Confirm what 'Option A' already ratifies: a determination resting only on a regulation (T6) appears in the best-practice view as a flagged weak-marker row?"
+    why_yours: "Saying no amends two ratified texts."
+    context: |-
+      Tier-system section 8 and the architecture document already say such a cell appears, flagged and marked weak. The report asks you to confirm rather than assume it.
+    blocks: "The renderer (T-5), step 2 only."
+    options:
+      - key: "yes"
+        label: "Yes, show it flagged"
+        recommended: true
+        effect: "T-5 step 2 drops the 'code floor only' filter from the view."
+      - key: "no"
+        label: "No, hide it"
+        effect: "The view stays as it is, and the architecture document (line 121) and tier-system (line 98) are amended to say 'T4/T5-only'. That changes a ratified text."
+    source: "Resolution report section 2 (OR-7)"
+
+  - id: OR-8
+    gates: true
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: What counts as having searched a topic thoroughly?
+    question: "Is exhaustion judged per parameter, per jurisdiction in buckets 1 and 2, per language, with the bucket list entered once as a table?"
+    why_yours: "It defines the stopping rule for research, which is trajectory."
+    context: |-
+      Today coverage is counted per research topic (slug), jurisdiction and language. The proposal counts it per parameter instead, over the jurisdictions in buckets 1 and 2, and keeps the bucket list in one table with an approval reference on each row.
+
+      Buckets 1 and 2 are the jurisdictions your 2026-09-28 ruling says must be exhausted before reaching further, for any topic.
+    blocks: "The coverage tooling (T-6b steps 4 and 5)."
+    options:
+      - key: "yes"
+        label: "Yes, per parameter and bucket"
+        recommended: true
+        effect: "T-6 steps 4 and 5 are built."
+      - key: "no"
+        label: "No, keep per slug"
+        effect: "Coverage stays per slug, jurisdiction and language, and T-6 builds steps 1 to 3 only."
+    source: "Resolution report section 2 (OR-8)"
+
+  - id: OR-9
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Which indices must be searched for each evidence type?
+    question: "Name the indices that must be searched for each evidence type, or answer 'none yet'."
+    why_yours: "Which databases count as 'looked everywhere' is your call."
+    context: |-
+      Today nothing records which indices (for example PubMed or a standards registry) a search must cover before a topic counts as searched. The report recommends leaving this open until the coverage tooling exists.
+    blocks: "The coverage tooling (T-6b step 6)."
+    options:
+      - key: none-yet
+        label: "None yet"
+        recommended: true
+        effect: "T-6 step 6 is not built."
+      - key: name-them
+        label: "I will name them"
+        effect: "Write the indices in the note. T-6 step 6 adds a table of search indices seeded with them."
+    source: "Resolution report section 2 (OR-9)"
+
+  - id: OR-10
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Convert exact length units?
+    question: "May the engine compose across exact length units (inches and feet to millimetres and metres), presenting both, as it already does for ratio and percent?"
+    why_yours: "It extends your 2026-09-17 ruling, whose ACTION (4) keeps units apart."
+    context: |-
+      Inches and feet convert to millimetres and metres exactly. Sources in the US and elsewhere state lengths in different units. Without conversion, a length parameter with both kinds of source cannot be composed.
+    blocks: "The reading change (T-1 step 9)."
+    options:
+      - key: "yes"
+        label: "Yes, convert and show both"
+        recommended: true
+        effect: "T-1 step 9 is built. It bumps the engine's rule version."
+      - key: "no"
+        label: "No, keep units apart"
+        effect: "Every length parameter with US and metric sources declines to compose, with the message 'different units'."
+    source: "Resolution report section 2 (OR-10)"
+
+  - id: OR-10b
+    gates: false
+    title: Which way does a rounded conversion move?
+    question: "When a converted length is rounded to the nearest quarter inch or 5 mm, should a minimum never round down and a maximum never round up?"
+    why_yours: "Rounding to the nearest can put a shown figure on the wrong side of what the source requires."
+    context: |-
+      Your ruling shows both units, the converted figure rounded to the nearest quarter inch or 5 mm.
+
+      Example: a source says at least 30 in. That is exactly 762 mm, and the nearest 5 mm is 760 mm, which is below what the source requires. A source that says at most 30 in would show the same 760 mm, which is under its limit and so safe. Rounding to the nearest is safe for a maximum when it rounds down and for a minimum when it rounds up, and the nearest can go either way.
+    blocks: "The reading change (T-1 step 9)."
+    options:
+      - key: safe-side
+        label: "Round to the safe side"
+        effect: "A minimum rounds up and a maximum rounds down, so the shown figure never undercuts what the source requires. 762 mm as a minimum shows as 765 mm."
+      - key: nearest
+        label: "Round to the nearest, as ruled"
+        effect: "The shown figure can sit below a source's minimum. It is shown beside the source's own figure and marked as rounded."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OR-10 of 2026-10-29 (ledger)"
+
+  - id: OR-11a
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Must 'verified' mean the source was read in full?
+    question: "Does an extraction marked 'verified' require a recorded full-scope reading of the source that covers the figure's parameter?"
+    why_yours: "It gives the word 'verified' a meaning the database can check."
+    context: |-
+      Today 'verified' is a word the writer sets. Nothing checks it against an actual reading.
+    blocks: "The reading change (T-1 step 10)."
+    options:
+      - key: "yes"
+        label: "Yes, require a full-scope scan"
+        recommended: true
+        effect: "T-1 step 10 is built, and the renderer prints the status for each row."
+      - key: "no"
+        label: "No, leave it as a word"
+        effect: "'Verified' stays an unread, self-declared status. Nothing reads it today."
+    source: "Resolution report section 2 (OR-11a)"
+
+  - id: OR-11b
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: May a figure read in full but not yet reviewed set a value?
+    question: "May a figure read in full but still 'preliminary' (not reviewed) set a published value?"
+    why_yours: "It has been open since 2026-10-09 and the code's own comment forbids deciding it without you."
+    context: |-
+      A figure read from the whole text can still carry the status 'preliminary' because nobody has reviewed it. The question is whether that is enough to set a published value, with a flag.
+    blocks: "The flag in the renderer (T-5)."
+    options:
+      - key: yes-flagged
+        label: "Yes, flagged"
+        recommended: true
+        effect: "No engine change. The renderer flags 'preliminary' rows."
+      - key: "no"
+        label: "No"
+        effect: "Add 'preliminary' to the rule beside the not-publishable methods. The comment there forbids doing that without this answer. It adds a line of code that no work item owns yet."
+    source: "Resolution report section 2 (OR-11b); workplan section 4"
+
+  - id: OR-12a
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Scope four languages out until buckets 1 and 2 are exhausted?
+    question: "Are Arabic, Bengali, Hindi and Swahili, which the language-to-jurisdiction map requires and which have no aliases, scoped out by the bucket table until buckets 1 and 2 are exhausted?"
+    why_yours: "It sets the language scope of the research."
+    context: |-
+      The map of languages to jurisdictions lists AR, BN, HI and SW, but the project has no search aliases for them, so they cannot be searched properly.
+    blocks: "The search-term tooling (T-6b step 3)."
+    options:
+      - key: "yes"
+        label: "Yes, scope them out for now"
+        recommended: true
+        effect: "They wait behind buckets 1 and 2."
+      - key: "no"
+        label: "No, build aliases now"
+        effect: "Alias building for those four languages becomes research debt."
+    source: "Resolution report section 2 (OR-12 a)"
+
+  - id: OR-12b
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: May a model-generated alias be used if the search is flagged?
+    question: "May an alias that a model generated be used for a search, if the search is flagged as using it?"
+    why_yours: "It concerns the provenance of search terms."
+    context: |-
+      Some search aliases were generated by a model rather than taken from a source. `python3 scripts/audit/alias_provenance_audit.py` lists them.
+    blocks: "The search-term tooling (T-6b step 3)."
+    options:
+      - key: "yes"
+        label: "Yes, flagged"
+        recommended: true
+        effect: "Searches using them are flagged."
+      - key: "no"
+        label: "No"
+        effect: "The model-generated aliases become unusable for searching at once."
+    source: "Resolution report section 2 (OR-12 b)"
+
+  - id: OR-13
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Seed the list of quantities from the codes already held, or topic by topic?
+    question: "Should the quantity list be seeded by an open-pass scan of the bucket 1 and 2 codes already held, rather than slug by slug?"
+    why_yours: "It was left open on 2026-10-09 (the unanswered 06:07 choice)."
+    context: |-
+      The list of design quantities (parameters) has to come from somewhere that does not state answers in advance. One route scans the regulations the project already holds and records the phrases they use. The other builds the list one research topic at a time from that topic's admitted sources.
+    blocks: "Quantity seeding (D-8)."
+    options:
+      - key: codes
+        label: "From the codes held"
+        recommended: true
+        effect: "D-8 as written."
+      - key: slugs
+        label: "Slug by slug"
+        effect: "D-8 runs per slug from the slug's admitted sources."
+    source: "Resolution report section 2 (OR-13)"
+
+  - id: OR-14
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Derive a page for an element, such as a ramp?
+    question: "Should a book page for an element (a ramp) be derived from a typed term pointer to its parameters' live determinations, with 'one parameter' as the degenerate case, and never be a container that rows are filed into?"
+    why_yours: "It is the largest optional item, and it answers your repeated question about assembling a ramp as a whole."
+    context: |-
+      A coherent ramp specification needs slope, run, landing, rails, surface and location together. The old item layer used to provide containers for that, and was deleted because a container named for its answer biases every finding filed into it.
+
+      The proposal is a page assembled on demand from the live determinations of the parameters a ramp points to. It holds no value and no item code of its own.
+    blocks: "The element pointer (T-7) and its data (D-6)."
+    options:
+      - key: "yes"
+        label: "Yes, derive it"
+        recommended: true
+        effect: "T-7 and D-6 are built (about 70 to 100 lines of code)."
+      - key: "no"
+        label: "No, pages are per parameter"
+        effect: "Pages are per parameter only, and the ramp-as-a-whole question stays open."
+    source: "Resolution report section 2 (OR-14)"
+
+  - id: OR-14b
+    gates: false
+    title: Does the specifications pass write the element page, or is it derived when read?
+    question: "Should the specifications pass itself write an element-level determination (a ramp as a whole), or should the page be derived at read time from the parameters' determinations?"
+    why_yours: "You said the derivation is what you expect the specifications pass to be doing: adjudicating, deriving and synthesizing across rows of related evidence. That can mean either."
+    context: |-
+      The proposal for an element page (T-7) is a view and a renderer option. It reads the live determinations of the parameters a term points to, and holds no value and no item code of its own. Nothing is stored for the element.
+
+      Your note says the specifications pass is where adjudicating, deriving and synthesizing across related rows happens. If the pass itself writes an element-level determination, the element becomes a stored, versioned engine output like a parameter's determination. That is a new kind of row and more code, and it must still never be a container that figures are filed into.
+
+      A cross-parameter synthesis table was deferred by a ruling (R17) until a second parameter holds an extraction. The decision on this question is where that deferral ends.
+    blocks: "The element pointer (T-7) and its data (D-6)."
+    options:
+      - key: derived-at-read
+        label: "Derived when read, as proposed"
+        effect: "T-7 is a view and a renderer option over the parameters' determinations. Nothing is stored for the element. The synthesis across parameters happens in the view and the page text."
+      - key: written-by-pass
+        label: "The specifications pass writes it"
+        effect: "The engine writes an element-level determination from the related parameters' determinations. It is a new stage output with a table and a rule version, built in a tooling pull request, and it ends R17's deferral for this case."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OR-14 of 2026-10-29 (ledger); resolution report section 2 (OR-14)"
+
+  - id: OR-15
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Use held batch-23 material for the inter-rater test?
+    question: "Should the test of whether two readers extract the same figures use held batch-23 material, one code with a step table and one T1 paper with findings?"
+    why_yours: "You choose the test material."
+    context: |-
+      To learn whether two independent readers record the same rows from the same source, the project needs a test set. Batch 23 already holds suitable material.
+    blocks: "Inter-rater calibration (D-5)."
+    options:
+      - key: "yes"
+        label: "Yes, use batch 23's material"
+        recommended: true
+        effect: "D-5 as written."
+      - key: "no"
+        label: "No, I will name the material"
+        effect: "Name it in the note."
+    source: "Resolution report section 2 (OR-15)"
+
+  - id: OR-16
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (second)"}
+    title: Read the sources already held before fetching more?
+    question: "Should sources already held, inside and outside buckets 1 and 2, be read before more are fetched?"
+    why_yours: "It sets the order of research work."
+    context: |-
+      The project holds sources it has not fully read. Reading them first costs nothing in retrieval and may close gaps that fetching would only widen.
+    blocks: "The scope of the scan work (D-3)."
+    options:
+      - key: "yes"
+        label: "Yes, read what we hold first"
+        recommended: true
+        effect: "D-3 covers every source that has not been superseded."
+      - key: "no"
+        label: "No, only bucket 1 and 2 jurisdictions"
+        effect: "D-3 is limited to bucket 1 and 2 jurisdictions."
+    source: "Resolution report section 2 (OR-16)"
+
+  - id: OR-17
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: May the assistant approve vocabulary in bulk?
+    question: "May the assistant approve new vocabulary in bulk under LED-154, with you reading the pull request?"
+    why_yours: "LED-154 delegates adjudication only for enumerated items. Anything beyond them is yours."
+    context: |-
+      Turning observed phrases into aliases and seeding quantity names means approving many terms. Approving each one individually would put a long table in front of you before each mint. You said on 2026-10-14 you had 'no idea what these are' and asked for them to be resolved in a logical manner, which is the delegation this question extends.
+    blocks: "The pace of alias and quantity work (D-4, D-8)."
+    options:
+      - key: "yes"
+        label: "Yes, bulk, with me reading the PR"
+        recommended: true
+        effect: "D-4 and D-8 proceed with the assistant approving and you reading the pull request."
+      - key: "no"
+        label: "No, send each table to me first"
+        effect: "Each D-4 and D-8 approval table comes to you before anything is minted."
+    source: "Resolution report section 2 (OR-17)"
+
+  - id: OR-17b
+    gates: false
+    title: What becomes of the model-generated aliases already stored?
+    question: "Your ruling says the model may not generate its own phrases, names or aliases. What should happen to the aliases the model generated before, and may a flagged search still use a term the model recalls?"
+    why_yours: "Your answers to OR-12b and OR-17 point different ways, and the stored aliases are 1,163 rows (the audit counts them) that were model-generated."
+    context: |-
+      On OR-12b you allowed a model-generated alias in a search if the search is flagged, expecting real terms in use in the jurisdiction. On OR-17 you ruled it is not acceptable for the model to generate its own phrases, names or aliases, and that each must be present in its jurisdiction and language. The later and stricter statement governs the vocabulary.
+
+      The alias table holds aliases the model generated for the non-English languages, and a larger group from before 2026-07-24 that has no recorded provenance. Run python3 scripts/audit/alias_provenance_audit.py for the counts by language and by provenance. The English aliases are mostly curated.
+
+      Nothing in the table can be deleted outright: your 2026-09-16 ruling is to retire in place and never hard-delete, and the alias table has no status column to retire into today.
+    blocks: "The alias work (D-4), and the search-term tooling (T-6b step 3)."
+    options:
+      - key: keep-flagged
+        label: "Keep them for flagged searches only, never as approved vocabulary"
+        effect: "Searches may use them, flagged, as OR-12b allowed. None is approved as vocabulary until a retrieved source of that jurisdiction and language attests it. No schema change."
+      - key: retire
+        label: "Retire them in place"
+        effect: "The model-generated aliases stop being used for any search. The alias table gains a status so a row can be retired and not deleted, in a tooling pull request first. New aliases enter only when attested."
+      - key: no-recall
+        label: "No flagged use of any model-supplied term"
+        effect: "The OR-12b allowance is withdrawn. A search uses only attested aliases, and the model's recalled terms are leads to look for in sources, never search terms."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Rulings OR-12b and OR-17 of 2026-10-29 (ledger); scripts/audit/alias_provenance_audit.py"
+
+  - id: OR-18
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: Are the saved transcripts enough to know which model and effort did the work?
+    question: "Is the preserved transcript record, with model and effort on every assistant message, enough, or must each session record state them?"
+    why_yours: "It sets what a session record must contain."
+    context: |-
+      The database stores no model or effort. The transcripts under transcripts/harness_*/ carry both on every assistant message.
+    blocks: "Reporting for the calibration work (D-5)."
+    options:
+      - key: transcripts
+        label: "Transcripts suffice"
+        recommended: true
+        effect: "D-5 derives model and effort from the transcripts."
+      - key: state-them
+        label: "Session records must state them"
+        effect: "Every session record gains 'Model:' and 'Effort:' header lines, a convention last used on 2026-07-25."
+    source: "Resolution report section 2 (OR-18)"
+
+  - id: OR-19
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: Presume a grey source repeating a code value is an echo?
+    question: "Confirm the rebuttable-presumption shape: a grey source that repeats a code's value is presumed to echo the code, and is not re-tiered?"
+    why_yours: "It affects how independent evidence is counted."
+    context: |-
+      A grey (T3) source stating the same number as a building code may simply be quoting the code. Counting it as independent would overstate agreement.
+    blocks: "The roots tooling (T-8 step 3)."
+    options:
+      - key: "yes"
+        label: "Yes, presume an echo"
+        recommended: true
+        effect: "T-8 step 3 applies the presumption. It can be rebutted."
+      - key: "no"
+        label: "No"
+        effect: "T-8 does not apply it."
+    source: "Resolution report section 2 (OR-19)"
+
+  - id: OR-20
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: Trace standards back to their original studies?
+    question: "Should T4 to T6 anchors be mined backward, for root tracing only?"
+    why_yours: "It amends the research contract's rule R2."
+    context: |-
+      Mining backward follows a standard's citations to find the study its figure came from, so that figures repeated across sources are not counted as independent. The report recommends not doing it now.
+    blocks: "Roots data (D-7)."
+    options:
+      - key: "no"
+        label: "No"
+        recommended: true
+        effect: "No change."
+      - key: "yes"
+        label: "Yes"
+        effect: "An amendment of research contract rule R2, and D-7 gains a mining pass."
+    source: "Resolution report section 2 (OR-20)"
+
+  - id: OR-21
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: Record a direction per lens when a direction is contested?
+    question: "When a direction is contested, should a direction be recorded for each lens?"
+    why_yours: "It would change what 'direction' means."
+    context: |-
+      The query that finds the case where this arises returns nothing today, so nothing is built either way.
+    blocks: "Nothing now."
+    options:
+      - key: when-it-arises
+        label: "Yes, when it first arises"
+        recommended: true
+        effect: "Nothing is built now."
+      - key: "no"
+        label: "No"
+        effect: "Nothing is built now."
+    source: "Resolution report section 2 (OR-21)"
+
+  - id: OR-22
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: What is a floor claim that a study confirms?
+    question: "What kind of determination is a floor claim that a study confirms, when every row of that study is an absence finding?"
+    why_yours: "Your 2026-09-13 ruling says a code value a study confirms is upgraded. Migration 116 holds a regulation-only floor at weak. Neither says what this cell is."
+    context: |-
+      REF-00980 is this case. It reports that it found no grounds to change a requirement, which you ruled on 2026-10-21 supports the tested value. Because all its rows are absences, no finding gives direction, so the cell is not a proxy determination. It is a regulation-only floor claim, and migration 116's rule keeps those at the weak marker, so a confirmation does not lift it.
+
+      The ledger of 2026-10-22 (Correction, item 2) records this as yours to rule. There is no recommendation on record.
+    blocks: "The REF-00980 cell in the first render (S-1). It is left out until you rule."
+    options:
+      - key: stays-weak
+        label: "It stays a regulation-only floor, shown with the study beside it"
+        effect: "No change. The confirming study is displayed but does not lift the marker."
+      - key: lifts
+        label: "A confirmed floor claim reads stronger"
+        effect: "A new kind of determination, or a change to migration 116's rule, so that a confirmation lifts it. Say in the note what marker it should read."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ledger 2026-10-22, Correction item 2; resolution report section 2 (OR-22)"
+
+  - id: OR-22b
+    gates: false
+    title: Which marker does a floor claim read when a study confirms it?
+    question: "When a study confirms a regulation's value by finding no reason to change it, which marker does the determination read?"
+    why_yours: "Your ruling makes the study's absence a confirmation. The marker is what a reader sees, and the present rule holds a regulation-only claim at the empty circle."
+    context: |-
+      You ruled that when the tested values can be found, the absence of a prescribed change confirms them, and that a study whose tested values cannot be found has no value.
+
+      A regulation-only determination reads ○ (grey, thin or unverified) and migration 116 holds it there. The engine already gives a confirmed code the band of the study that confirms it, so a T1 study that confirms a T6 value lifts it to the study's band. The unsettled part is the case you ruled on: every row of the confirming study is an absence, so no finding gives direction.
+
+      No source states a preference between the options below.
+    blocks: "The REF-00980 cell in the first render (S-1) and the engine change that follows your ruling."
+    options:
+      - key: study-band
+        label: "The confirming study's own band"
+        effect: "The cell reads what the engine already gives a confirmed code: the band of the verified, retrieved study that confirmed it. Migration 116's rule for regulation-only cells does not apply to it."
+      - key: lower
+        label: "A lower marker than the study's"
+        effect: "The cell reads below the study's band, because a confirmation by absence is weaker than a finding. Say which marker in the note."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OR-22 of 2026-10-29 (ledger); ledger 2026-10-22, Correction item 2"
+
+  - id: OR-23
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: "Confirm: an unretrievable source keeps its tier but earns nothing above weak"
+    question: "Confirm tier-system section 8: an unretrievable source keeps its tier and may still anchor, but earns no marker above the empty circle?"
+    why_yours: "The ledger marks the 'keeps its tier and may anchor' half as the assistant's reading of the engine's behaviour, not something you were asked."
+    context: |-
+      You ruled on 2026-10-21 that a source that cannot be retrieved cannot be top tier and reads as ○. What was not put to you is whether it still keeps its tier and may still anchor a determination (decision D-0157).
+    blocks: "Nothing."
+    options:
+      - key: confirm
+        label: "Confirm"
+        recommended: true
+        effect: "The text stands as written."
+      - key: other
+        label: "Not as written"
+        effect: "Say what in the note."
+    source: "Resolution report section 2 (OR-23)"
+
+  - id: OR-23b
+    gates: false
+    title: Does the academic-route condition apply to codes and standards?
+    question: "Your ruling lets an unretrievable source keep its tier and anchor only when it has a valid academic route. Does a registry citation (jurisdiction, standard number, clause) count as a valid route for a code or a standard?"
+    why_yours: "Read literally, the condition removes the tier and the anchoring of every unretrievable code and standard, because codes are not cited in academic literature."
+    context: |-
+      You confirmed that an unretrievable source keeps its tier and may still anchor, earning no band above the empty circle, but only when it is properly cited in an academic context.
+
+      A paper or a report has an academic route: a DOI, an index record or a citing bibliography. A code or a standard is cited by jurisdiction, number and clause, and it is not found in academic indices. As of 2026-10-29 six held sources are unverified: one T1 paper, one T4 standard and four T6 codes, and none of the five regulatory ones has a DOI. Re-derive with: select ref_id, tier, verification_method, doi from evidence_sources where verification_status = 'UNVERIFIED'.
+
+      No source states a preference between the options below.
+    blocks: "The engine change for the empty-circle rule."
+    options:
+      - key: registry-route
+        label: "A registry citation is a valid route for T4 to T6"
+        effect: "An unretrievable code or standard keeps its tier and may anchor below the weak band when it is cited by jurisdiction, standard number and clause. The academic route is required of the other kinds of source."
+      - key: literal
+        label: "Literally: no academic route, no tier and no anchor"
+        effect: "The four T6 codes and the T4 standard that are unverified lose their tier claim and stop anchoring until they are retrieved. Determinations that rest on them read weaker or are not written."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OR-23 of 2026-10-29 (ledger); governance/tier-system.md section 5 and 8"
+
+  - id: OR-24
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: "Confirm: 'skimmed' means the extraction method is 'skim'"
+    question: "Confirm that 'skimmed' means extraction_method = 'skim'?"
+    why_yours: "It is flagged in the ledger as an assumption."
+    context: |-
+      The ledger (2026-10-09, item 4) marks as an assumption that 'skimmed' means the extraction method 'skim', and no one has confirmed it.
+    blocks: "Nothing."
+    options:
+      - key: confirm
+        label: "Confirm"
+        recommended: true
+        effect: "The assumption stands."
+      - key: other
+        label: "Not as written"
+        effect: "Say what in the note."
+    source: "Resolution report section 2 (OR-24)"
+
+  - id: OR-25
+    gates: false
+    title: Does batch 23's extraction cap carry over to scans?
+    question: "Does batch 23's pilot extraction cap carry over to the scan contract (2026-10-09 ACTION 5)?"
+    why_yours: "The 2026-10-09 recommendation is unratified."
+    context: |-
+      Batch 23 capped how many extractions one pilot batch could write. The 2026-10-09 recommendation, which you have not ratified, is no cap, with one source as the review unit.
+    blocks: "The size of each scan batch (D-3)."
+    options:
+      - key: no-cap
+        label: "No cap. One source is the review unit"
+        recommended: true
+        effect: "D-3 batches by source."
+      - key: cap
+        label: "Yes, the cap carries over"
+        effect: "D-3 stops each batch at the cap, which is derived from batch 23's own row count and never typed."
+    source: "Resolution report section 2 (OR-25)"
+
+  - id: OW-1
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: Does a render stage made of views count as reached?
+    question: "Should the walkability check count a view mapped to the render stage as a member of that stage, so the specification-to-render paths exist?"
+    why_yours: "It changes the rule the walkability script states, and the stage map's own header describes a different shape. No ruling exists."
+    context: |-
+      The render stage has one table that nothing reads. The renderer reads views. For the check to find a path from specification to render, a view would have to count as a member of its stage. That departs from the script's rule ('a view's stages are those of the tables it reads'), and from the pointer-list shape the stage map's header describes.
+
+      The workplan proposes yes because it fits your 2026-08-27 clause that render pulls data across all stages. The report did not decide it.
+    blocks: "The renderer's walkability addition (T-5) and item 6 of the workplan's completion test."
+    options:
+      - key: "yes"
+        label: "Yes, map views to a stage"
+        recommended: true
+        effect: "The stage map gains a views key, and walkability counts a mapped view as a member of its stage, with its reads as the edges."
+      - key: "no"
+        label: "No"
+        effect: "No change to the script. The pairs ending at render stay 'NO PATH' and are named residuals, or you design a render table (none is designed)."
+    source: "Workplan section 4 (OW-1; the report's U-7)"
+
+  - id: OW-1b
+    gates: false
+    title: How is the render table's prose produced?
+    question: "Is the prose in the render table assembled by fixed templates from the specification and its sources, or written by a model?"
+    why_yours: "You expect complete prose. Complete prose is a synthesis in the book's voice, and only an Opus-class session writes best-practice synthesis."
+    context: |-
+      A specification row carries a value or range, a marker, a state, branches for conditional claims, a note on any divergence, and links to its sources. The render table has to turn that into complete sentences, with the bibliographic text drawn from the source rows, so the website can show it as it stands.
+
+      Fixed templates give the same text from the same inputs and need no review, but they read stiffly where a claim is conditional or divergent. A model writes richer text, which can drift from the evidence, costs more, must be Opus-class under the project's rule, and needs a record of the inputs it was given and a review.
+
+      Your ruling on divergence says the discussion of the item notes the dispute. A mixed approach would assemble value and bibliography by template and have a model write only that discussion. No source states a preference between the options below.
+    blocks: "The renderer and the render table (T-5)."
+    options:
+      - key: templates
+        label: "Fixed templates only"
+        effect: "The text is assembled from the specification's fields and the sources' bibliographic fields by templates in the book's voice. Nothing is written by a model, and the same inputs always give the same text."
+      - key: model-written
+        label: "A model writes each item, and you review it"
+        effect: "An Opus-class session writes the prose for each specification, stored with a hash of its inputs. It is reviewed in the pull request, and it is rewritten when the inputs change."
+      - key: mixed
+        label: "Templates, with a model-written discussion where there is a dispute or a branch"
+        effect: "Value, marker and bibliography come from templates. A model writes only the discussion of the item, where claims are conditional or divergent, with the inputs hash and your review."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OW-1 of 2026-10-29 (ledger); CLAUDE.md section 6"
+
+  - id: OW-1c
+    gates: false
+    title: Is the render table stored, or rebuilt each time?
+    question: "Is the render table stored and rewritten when a specification or its sources change, or rebuilt in full each time the site is built?"
+    why_yours: "A stored table is a second home for what the specifications and sources already say, and a rebuilt one is not a record."
+    context: |-
+      A stored render table is quick for the site to read. It goes stale when something it was built from changes, for example a source's verification status. The project's way of catching that is to record a hash of the inputs on each row and to check for drift, as it does for determinations.
+
+      A rebuilt render table is always current and has no staleness, but the build has to run the conversion each time, and the result is a build product and not a record you can point to.
+
+      Your 2026-08-27 ruling is that render surfaces are read from the database when rendered, and that no committed file is a render. No source states a preference between the options below.
+    blocks: "The renderer and the render table (T-5)."
+    options:
+      - key: stored
+        label: "Stored, with an inputs hash and a drift check"
+        effect: "The table is written by a verb, each row points at its specification and records a hash of its inputs, and a check reports any row whose inputs have changed."
+      - key: rebuilt
+        label: "Rebuilt each time the site is built"
+        effect: "The table is generated from the specifications and sources at build time and is not kept. It is always current, and there is nothing to go stale."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+    source: "Ruling OW-1 of 2026-10-29 (ledger); CLAUDE.md rule 5"
+
+  - id: OW-2
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (third)"}
+    title: Keep the walkability check past the end of the plan?
+    question: "Should walkability.py outlive the instrument and be registered as the stage-pair gate?"
+    why_yours: "It adds a registered check."
+    context: |-
+      The pipeline-state-graph instrument is scheduled to retire at the end of the simplification plan. Walkability is the only measure of whether a stage can be reached from every other.
+    blocks: "Item 7 of the workplan's completion test."
+    options:
+      - key: "yes"
+        label: "Yes, register it"
+        effect: "One registry entry runs walkability.py and fails when a stage pair has no path."
+      - key: "no"
+        label: "No, let it retire"
+        effect: "It leaves with the instrument. Walkability is a command run at the end of each phase."
+    source: "Workplan section 4 (OW-2)"
+
+  - id: OT-1
+    gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (fourth)"}
+    title: What is the new route term called, and how does it stand to circulation route?
+    question: "Under what name should the new term for the whole route through a building be added?"
+    why_yours: "A catalogue term is a definition every later stage points into, and what it covers is judgment."
+    context: |-
+      You ruled that observation 68, "barrier-free path of travel", names something new: the entire route of travel through a building, not only ramps. You ruled that observation 71, "accessible route", refers to it, and that the "access route" in observations 70 and 73, "ramped access route", is the same thing so far as it concerns navigating a building, the ramp itself being a ramp.
+
+      The catalogue already holds TERM-048, circulation route: "Continuous route through a building used for horizontal movement between spaces." Its note says it groups the route so corridor and hallway wording is caught. Three source phrases now point at the new term: "barrier-free path of travel" (REF-01013, OBC 3.8.3.4(1)), "accessible route" (REF-01016, NZS 4121:2001) and "access route" (REF-01015, REF-01018, TGD M 2022).
+
+      Nothing is added to the catalogue until you approve its definition. I draft the definition and scope note from your words and the three sources, and say there how it stands to circulation route. Both names below are phrases the sources use. I do not coin one.
+    blocks: "Adjudicating observations 68 and 71, and the definition that goes with them."
+    options:
+      - key: barrier-free
+        label: "Barrier-free path of travel"
+        recommended: true
+        effect: "The canonical name is the phrase from observation 68, which is the one your ruling used. The other two phrases are recorded as ways sources say it."
+      - key: accessible
+        label: "Accessible route"
+        effect: "The canonical name is the phrase from observation 71. The other two phrases are recorded as ways sources say it."
+      - key: other
+        label: "Something else"
+        effect: "Say in the note what it is called, or how it stands to circulation route."
+    source: "Rulings on observed_terms 68, 70, 71 and 73 of 2026-10-29 (ledger)"
+
+  - id: OT-2
+    gates: false
+    title: Approve the definition of "barrier-free path of travel"
+    question: "Is this the definition and scope note the catalogue should hold for barrier-free path of travel?"
+    why_yours: "A catalogue term is approved by you before it is added (ledger, 2026-10-09), and a staged description is a hypothesis until it is checked against the sources."
+    context: |-
+      You ruled that the term is called "barrier-free path of travel" and that it is a circulation route specific to people in wheelchairs and mobility devices (OT-1). You ruled earlier that it is the entire route through a building and not only its ramps (observation 68).
+
+      Drafted from your words only, with the relation to the held term circulation route (TERM-048) in the scope note because the terms table has no parent column.
+
+      Definition: "A circulation route through a building that a person using a wheelchair or other mobility device can travel without barriers: the whole route, not only its ramps."
+
+      Scope note: "A specialisation of TERM-048 (circulation route), limited to people who use wheelchairs or other mobility devices. TERM-089 (ramp) and TERM-001 (ramp gradient) describe parts of such a route. Source phrase: barrier-free path of travel (REF-01013). The access route in "ramped access route" (REF-01015, REF-01018) was read as this concept."
+
+      You also said that an accessible route is not the same as this term, because it must be navigable by someone who is blind. So "accessible route" is not an alias of it, and observation 71 is back on your list.
+    blocks: "Adding the term, and adjudicating observation 68."
+    options:
+      - key: approve
+        label: "Approve this wording"
+        effect: "In a data PR, db.py add-term mints the term from observation 68 with this definition and scope note, citing your answer as the approval. Observation 71 is not touched: it waits on its own prompt."
+      - key: change
+        label: "Change it"
+        effect: "Say in the note what to change. Nothing is added until you approve the wording."
+    source: "Rulings OT-1 and on observation 71 of 2026-10-29 (ledger); the ledger entry of 2026-10-09 (\"Screen, then you approve\"); CLAUDE.md rule 5"
+
+queue:
+  - id: withheld_findings
+    title: Findings withheld for you
+    why: "An adversarial review held back its verdict on each of these because the call is the owner's (WITHHELD-FOR-OWNER)."
+    table: adversarial_findings
+    key: finding_id
+    sql: |
+      SELECT finding_id AS id, lens || ' · ' || subject_table || ': ' || substr(claim_attacked, 1, 110) AS label
+        FROM adversarial_findings WHERE verdict = 'WITHHELD-FOR-OWNER' ORDER BY finding_id
+    question: "How do you rule on this finding?"
+    why_yours: "The reviewer withheld its verdict because the call is the owner's."
+    subject: {table_col: subject_table, key_col: subject_key}
+    options:
+      - key: accept
+        label: "Accept it: the finding is right"
+        effect: "I record your ruling in the ledger in your words, and the finding is set to OWNER-RULED. Whatever it says is wrong is corrected in a separate data pull request."
+      - key: reject
+        label: "Reject it: the finding does not hold"
+        effect: "I record your ruling and your reason in the ledger, and the finding is closed as OWNER-RULED. Nothing is changed in the data."
+      - key: provisional
+        label: "Leave it open and disputed"
+        effect: "The finding is set to PROVISIONAL-DISPUTED with your reason. The determination it touches stays provisional."
+      - key: other
+        label: "Something else"
+        effect: "Say what in the note."
+  - id: disputed_findings
+    title: Disputed findings
+    why: "A dispute left each of these provisional. Under the dispute rule (DR-2026-08-19 section 7) a doctrine-level dispute goes to the owner and the rest stand. Which ones need you is for you to say."
+    table: adversarial_findings
+    key: finding_id
+    sql: |
+      SELECT finding_id AS id, lens || ' · ' || coalesce(severity, 'no severity') || ': ' || substr(claim_attacked, 1, 110) AS label
+        FROM adversarial_findings WHERE disposition = 'PROVISIONAL-DISPUTED' ORDER BY finding_id
+    question: "Does this dispute need your ruling?"
+    why_yours: "A dispute caps what the finding touches at provisional. Only you can say it is doctrine-level."
+    subject: {table_col: subject_table, key_col: subject_key}
+    options:
+      - key: stands
+        label: "No, let it stand as disputed"
+        effect: "Nothing changes. The finding stays PROVISIONAL-DISPUTED."
+      - key: rule
+        label: "Yes, I will rule on it"
+        effect: "Put your ruling in the note. I record it in the ledger in your words and set the finding to OWNER-RULED."
+      - key: evidence
+        label: "It needs more evidence first"
+        effect: "It stays open. I add it to the research backlog as a named gap."
+  - id: open_decisions
+    title: Decisions not yet standing
+    why: "Decisions whose status is proposed or deferred rather than active."
+    table: decisions
+    key: decision_id
+    ruled: {"D-0139": "Owner rulings 2026-10-29 (third)", "D-0140": "Owner rulings 2026-10-29 (third)", "D-0165": "Owner rulings 2026-10-29 (third)"}
+    sql: |
+      SELECT decision_id AS id, status || ' · ' || substr(summary, 1, 120) AS label
+        FROM decisions WHERE status <> 'ACTIVE' ORDER BY decision_id
+    question: "What is the standing of this decision?"
+    why_yours: "Ratifying, rejecting or deferring a decision is the owner's call."
+    options:
+      - key: ratify
+        label: "Ratify it (active)"
+        effect: "I record your ruling in the ledger in your words. The decisions table has no verb yet, so its status row is not edited by hand: I file the coverage gap and the status is changed when a verb exists."
+      - key: reject
+        label: "Reject or retire it"
+        effect: "Same: your ruling goes in the ledger now, and the status change waits for a verb."
+      - key: keep
+        label: "Keep it as it is"
+        effect: "No change."
+  - id: open_gates
+    title: Open determination gates
+    why: "A flag raised against a determination that nobody has resolved."
+    table: determination_gates
+    key: gate_id
+    sql: |
+      SELECT gate_id AS id, 'parameter ' || parameter_id || ' · ' || coalesce(identity_code, 'every lens') || ' · ' || verdict AS label
+        FROM v_open_determination_gates ORDER BY gate_id
+    question: "Resolve this gate, or leave it open?"
+    why_yours: "A gate means a determination may rest on the wrong evidence. Its own text names a resolution path."
+    options:
+      - key: open
+        label: "Leave it open until the full text is read"
+        effect: "No change. The gate stays open and the work in its resolution path is scheduled."
+      - key: resolve
+        label: "Resolve it: the abstract overstated"
+        effect: "Put the reason in the note. I run the resolve verb with your reason as its rationale."
+      - key: redetermine
+        label: "Re-determine the cell"
+        effect: "The determination is retired and the engine is run again once the evidence is read."
+  - id: open_follow_ups
+    title: Follow-ups on extracted figures
+    why: "A figure that needs another pass, with the reason it was raised."
+    table: extraction_follow_ups
+    key: follow_up_id
+    sql: |
+      SELECT follow_up_id AS id, 'extraction ' || extraction_id || ': ' || substr(reason, 1, 120) AS label
+        FROM extraction_follow_ups WHERE resolved_at IS NULL ORDER BY follow_up_id
+    question: "Do the follow-up pass, or close this follow-up?"
+    why_yours: "Closing a follow-up without the pass accepts the figure as it stands."
+    options:
+      - key: do-it
+        label: "Do the pass"
+        effect: "It is scheduled and stays open."
+      - key: close
+        label: "Close it with a reason"
+        effect: "Put the reason in the note. I run the resolve verb with it."
+  - id: catalogue_names
+    title: Catalogue names awaiting approval
+    why: "Terms minted from the catalogue that carry no approval reference yet."
+    table: terms
+    key: term_id
+    sql: |
+      SELECT term_id AS id, canonical_en || ' · ' || catalogue AS label
+        FROM terms WHERE catalogue IS NOT NULL AND catalogue_approval_ref IS NULL ORDER BY term_id
+    question: "Approve this name?"
+    why_yours: "Whether the assistant may approve names in bulk is OR-17."
+    options:
+      - key: approve
+        label: "Approve it"
+        effect: "I record your approval in the ledger and set the term's approval reference through its verb. If no verb can set it on an existing term, I file the coverage gap."
+      - key: rename
+        label: "Rename it"
+        effect: "Put the name in the note. I run the rename verb with your ruling quoted."
+      - key: reject
+        label: "Reject it"
+        effect: "The term is declined with your reason."
+  - id: unadjudicated_observations
+    title: Phrases observed in sources and not yet judged
+    why: "A source's own wording for a concept, waiting to be matched to a term, declared new, or set aside. Whether the assistant may judge these in bulk is OR-17."
+    table: observed_terms
+    key: observation_id
+    notes:
+      "71": "You first ruled that this phrase refers to barrier-free path of travel. You then said an accessible route is not the same thing, because it must be navigable by someone who is blind (ledger, entry \"Owner rulings 2026-10-29 (fifth)\"). The first answer no longer holds, and what this phrase names is open again. The catalogue already holds \"accessible route\" as an alias of TERM-048, circulation route, written by an earlier synonym-grouping build as a retrieval aid; its own note says it is not authoritative terminology."
+    ruled: {"65": "Owner rulings 2026-10-29 (third)", "68": "Owner rulings 2026-10-29 (third)", "70": "Owner rulings 2026-10-29 (third)", "73": "Owner rulings 2026-10-29 (third)"}
+    sql: |
+      SELECT o.observation_id AS id, o.language || ' · "' || o.surface_form || '" in ' || o.ref_id AS label
+        FROM observed_terms o
+       WHERE NOT EXISTS (SELECT 1 FROM term_adjudications a WHERE a.observation_id = o.observation_id)
+       ORDER BY o.observation_id
+    question: "What does this phrase name?"
+    why_yours: "Judging a phrase against the vocabulary is judgment. It is yours unless you delegate it in OR-17."
+    options:
+      - key: names-existing
+        label: "It names a term we have"
+        effect: "Put the term in the note. I record the adjudication NAMES-EXISTING with your rationale."
+      - key: names-new
+        label: "It names something new"
+        effect: "The new term is added first, with its definition for your approval, and then the phrase is recorded as NAMES-NEW pointing to it."
+      - key: not-ours
+        label: "It is not ours"
+        effect: "I record NOT-OURS with your rationale."
+      - key: deferred
+        label: "Defer it"
+        effect: "I record DEFERRED with your rationale. It stays visible."

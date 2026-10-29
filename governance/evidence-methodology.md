@@ -173,6 +173,8 @@ A cell is `pending` when evidence is too sparse across all dimensions to produce
 
 A cell is `not_applicable` when the parameter genuinely has no design implication for the population. This is a positive assertion, not a gap. Examples:
 
+> **SUPERSEDED 2026-10-29** by an owner ruling (`references/project-standards.md`, "Owner rulings 2026-10-29"): "Do not store table rows for parameters when there is a missing lens for a disability population or access need". A cell for a lens the parameter is not relevant to is not stored, so this state is no longer written as a positive assertion. The examples below describe parameters that are not relevant to a lens, and for those no row exists.
+
 - Grab bar diameter for DEM population in a corridor (grab bars are a MOB specification; DEM populations may need grab bars for co-occurring mobility impairment, but the parameter itself — diameter — is not DEM-specific)
 - Signing space width for VIS population (signing space is a DEAF specification; VIS populations do not use sign language, though DBL populations do — DBL is a separate code)
 

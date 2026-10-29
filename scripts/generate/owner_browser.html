@@ -1,0 +1,599 @@
+<title>Guidebook Data Browser</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: phone first. One column; a list opens a card; a card opens a row. Nothing depends on hover or a wide grid. */
+:root {
+  --bg: #f2f5f4;
+  --panel: #ffffff;
+  --ink: #16201c;
+  --muted: #566861;
+  --rule: #d3dcd9;
+  --chip: #e4ecea;
+  --accent: #1b5c87;
+  --accent-ink: #ffffff;
+  --warn-bg: #fbf0d4;
+  --warn-ink: #6b4500;
+  --bad: #9c2f1d;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1614; --panel: #172120; --ink: #e2eae6; --muted: #92a49c; --rule: #2a3835;
+    --chip: #22302d; --accent: #78b9e4; --accent-ink: #0b1a22; --warn-bg: #3a2f10; --warn-ink: #f0d9a0;
+    --bad: #f2917d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1614; --panel: #172120; --ink: #e2eae6; --muted: #92a49c; --rule: #2a3835;
+  --chip: #22302d; --accent: #78b9e4; --accent-ink: #0b1a22; --warn-bg: #3a2f10; --warn-ink: #f0d9a0;
+  --bad: #f2917d; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font: 16px/1.5 var(--sans);
+  padding-block: 0 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); }
+.wrap { max-width: 720px; margin: 0 auto; }
+a { color: var(--accent); }
+h1, h2, h3 { margin: 0; text-wrap: balance; line-height: 1.25; }
+h1 { font-size: 1.35rem; }
+h2 { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h3 { font-size: 1rem; }
+p { margin: 0; }
+code, .mono { font-family: var(--mono); font-size: 0.86em; overflow-wrap: anywhere; }
+button, input, select { font: inherit; color: inherit; }
+button, .btn { min-height: 44px; padding: 0 14px; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); cursor: pointer; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+input[type=search], select { min-height: 44px; width: 100%; padding: 0 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); }
+#bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); border-bottom: 1px solid var(--rule); margin: 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px))) 16px; padding: 8px max(16px, env(safe-area-inset-left, 0px)); }
+#bar .in { max-width: 720px; margin: 0 auto; display: grid; gap: 6px; }
+#bar .top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#bar .top .ttl { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#bar nav { display: flex; gap: 8px; }
+#bar nav a { flex: 1; min-height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 6px; text-decoration: none; background: var(--chip); color: var(--ink); font-weight: 600; font-size: 0.9rem; }
+#bar nav a[aria-current=page] { background: var(--accent); color: var(--accent-ink); }
+main { display: grid; gap: 20px; }
+.stack { display: grid; gap: 8px; }
+.card, .item { display: grid; gap: 4px; padding: 12px 14px; min-height: 44px; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); color: var(--ink); text-decoration: none; min-width: 0; }
+a.card:active, a.item:active { background: var(--chip); }
+.item .top, .card .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; min-width: 0; }
+.item .nm, .card .ttl { font-family: var(--mono); font-weight: 600; font-size: 0.92rem; overflow-wrap: anywhere; }
+.item .n { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gl { color: var(--muted); font-size: 0.9rem; }
+.kv { display: grid; gap: 1px; min-width: 0; }
+.kv .k { font-size: 0.74rem; color: var(--muted); letter-spacing: 0.02em; }
+.kv .v { overflow-wrap: anywhere; white-space: pre-wrap; }
+.card .kv .v { font-size: 0.94rem; line-height: 1.4; }
+.card { gap: 6px; }
+details.fld { border: 0; background: none; }
+details.fld > summary { display: inline-flex; min-height: 30px; padding: 0; font-weight: 400; cursor: pointer; }
+details.fld > .notes { display: grid; gap: 8px; padding: 6px 0 8px 10px; border-left: 2px solid var(--rule); }
+.nil { color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 99px; background: var(--chip); font-size: 0.78rem; color: var(--ink); overflow-wrap: anywhere; }
+.chip.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.note { padding: 10px 12px; border-radius: 6px; background: var(--warn-bg); color: var(--warn-ink); font-size: 0.9rem; }
+.sec { display: grid; gap: 8px; }
+details { border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); }
+details > summary { min-height: 44px; padding: 10px 14px; cursor: pointer; font-weight: 600; display: flex; align-items: center; }
+details > .body { padding: 0 14px 14px; display: grid; gap: 10px; }
+pre { margin: 0; padding: 10px; background: var(--chip); border-radius: 6px; overflow-x: auto; font: 0.8rem/1.45 var(--mono); max-width: 100%; }
+.col { display: grid; gap: 4px; padding-top: 10px; border-top: 1px solid var(--rule); }
+.col:first-child { border-top: 0; padding-top: 0; }
+.retired { opacity: 0.6; }
+.foot { color: var(--muted); font-size: 0.8rem; display: grid; gap: 4px; }
+.row2 { display: flex; gap: 8px; }
+.row2 > * { min-width: 0; }
+.row2 select { flex: 1; }
+.fieldpick label { display: flex; align-items: center; gap: 10px; min-height: 40px; }
+.fieldpick input { width: 22px; height: 22px; }
+.err { color: var(--bad); }
+.chip.ok { background: var(--accent); color: var(--accent-ink); }
+.ok { color: var(--accent); font-weight: 600; }
+details.prompt > summary { min-height: 56px; align-items: flex-start; }
+.prompt .sum { display: grid; gap: 4px; min-width: 0; flex: 1; font-weight: 600; }
+.prompt .sum .lab { overflow-wrap: anywhere; }
+.prompt .sum .chip { justify-self: start; font-weight: 400; }
+.prompt .tag { font: 0.76rem var(--mono); color: var(--muted); font-weight: 400; overflow-wrap: anywhere; }
+button.opt { height: auto; min-height: 44px; padding: 10px 12px; display: grid; gap: 4px; text-align: left; width: 100%; }
+button.opt[aria-pressed=true] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+button.opt .lab { font-weight: 600; }
+button.opt .fx { color: var(--muted); font-size: 0.88rem; }
+textarea { width: 100%; min-height: 96px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 6px; background: var(--panel); font: inherit; color: inherit; }
+button:disabled { opacity: 0.5; cursor: default; }
+.ctx p { margin: 0; }
+</style>
+<div class="wrap">
+  <div id="bar"><div class="in">
+    <div class="top"><button id="back" type="button" aria-label="Back" hidden>←</button><div class="ttl" id="ttl">Guidebook Data Browser</div></div>
+    <nav aria-label="Sections"><a href="#stages" id="nav-stages">Tables</a><a href="#waiting" id="nav-waiting">Waiting on you</a></nav>
+  </div></div>
+  <main id="main"><p class="gl">Opening the database…</p></main>
+</div>
+<script src="__SQLJS_JS__"></script>
+<script>
+const META = __META__;
+const WASM_B64 = "__WASM_B64__";
+const DB_B64 = "__DB_B64__";
+
+let db = null, SCHEMA = null;
+const state = { limit: {}, sort: {}, search: {}, fields: {}, filter: null };
+const PAGE = 40;
+
+// ---------- small helpers ----------
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) { if (kid == null || kid === false) continue; el.append(kid.nodeType ? kid : document.createTextNode(String(kid))); }
+  return el;
+}
+function b64(s) { const bin = atob(s), out = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i); return out; }
+function all(sql, params = []) {
+  const st = db.prepare(sql);
+  try { st.bind(params); const out = []; while (st.step()) out.push(st.getAsObject()); return out; } finally { st.free(); }
+}
+const one = (sql, p) => { const r = all(sql, p)[0]; return r ? Object.values(r)[0] : null; };
+const q = (n) => '"' + String(n).replace(/"/g, '""') + '"';
+const slug = (n) => n.replace(/_/g, "-");
+const unslug = (s) => s.replace(/-/g, "_");
+const fmt = (n) => Number(n).toLocaleString("en-CA");
+const isNil = (v) => v === null || v === undefined;
+
+// ---------- the schema, read from the embedded database ----------
+function parseNotes(sql, cols) {
+  const names = new Set(cols.map((c) => c.name)), notes = {};
+  let pending = [], last = null, afterInline = false;
+  for (const raw of sql.split("\n")) {
+    const line = raw.trim(), ci = line.indexOf("--");
+    const code = (ci >= 0 ? line.slice(0, ci) : line).trim();
+    const comment = ci >= 0 ? line.slice(ci + 2).replace(/^-+\s*/, "").trim() : "";
+    if (!code) {
+      if (comment) { if (afterInline && last) notes[last] += " " + comment; else pending.push(comment); }
+      continue;
+    }
+    const m = code.match(/^"?([A-Za-z_][A-Za-z0-9_]*)"?\s/);
+    if (m && names.has(m[1])) {
+      const t = [...pending, comment].filter(Boolean).join(" ");
+      if (t) notes[m[1]] = t;
+      pending = []; last = m[1]; afterInline = !!comment;
+    } else { pending = []; afterInline = false; }
+  }
+  return notes;
+}
+function loadSchema() {
+  const tables = {}, views = {};
+  for (const r of all("select type, name, sql from sqlite_master where type in ('table','view') and name not like 'sqlite_%' order by name")) {
+    if (r.type === "view") { views[r.name] = { name: r.name, sql: r.sql, rows: one("select count(*) from " + q(r.name)) }; continue; }
+    const cols = all("PRAGMA table_info(" + q(r.name) + ")").map((c) => ({ name: c.name, type: c.type, notnull: !!c.notnull, pk: c.pk }));
+    const fks = all("PRAGMA foreign_key_list(" + q(r.name) + ")").map((f) => ({ col: f.from, table: f.table, to: f.to }));
+    tables[r.name] = { name: r.name, sql: r.sql, cols, fks, rows: one("select count(*) from " + q(r.name)), notes: parseNotes(r.sql, cols), inbound: [], implicit: [] };
+  }
+  const pkOf = (t) => { const p = t.cols.filter((c) => c.pk).sort((a, b) => a.pk - b.pk); return p.length === 1 ? p[0].name : null; };
+  for (const t of Object.values(tables)) for (const f of t.fks) {
+    const parent = tables[f.table];
+    if (!parent) continue;
+    if (!f.to) f.to = pkOf(parent);
+    parent.inbound.push({ table: t.name, col: f.col, to: f.to });
+  }
+  // A column with no foreign key whose name is, or ends in, another table's single-column key, and whose every
+  // non-null value resolves there, is shown as a pointer. Derived from names and data; the data test is the check.
+  for (const t of Object.values(tables)) for (const c of t.cols) {
+    if (t.fks.some((f) => f.col === c.name) || c.pk) continue;
+    for (const p of Object.values(tables)) {
+      const pk = pkOf(p);
+      if (!pk || p === t || !(c.name === pk || (pk !== "id" && pk !== "code" && c.name.endsWith("_" + pk)))) continue;
+      const bad = one("select count(*) from " + q(t.name) + " where " + q(c.name) + " is not null and " + q(c.name) + " not in (select " + q(pk) + " from " + q(p.name) + ")");
+      const some = one("select count(*) from " + q(t.name) + " where " + q(c.name) + " is not null");
+      if (bad === 0 && some > 0) { t.implicit.push({ col: c.name, table: p.name, to: pk }); p.inbound.push({ table: t.name, col: c.name, to: pk, implicit: true }); }
+    }
+  }
+  const names = new Set([...Object.keys(tables), ...Object.keys(views)]);
+  for (const v of Object.values(views)) v.reads = [...new Set(v.sql.match(/[A-Za-z_][A-Za-z0-9_]*/g))].filter((n) => names.has(n) && n !== v.name).sort();
+  for (const v of Object.values(views)) for (const n of v.reads) if (tables[n]) (tables[n].readBy ||= []).push(v.name);
+  return { tables, views };
+}
+const pointerOf = (t, col) => t.fks.find((f) => f.col === col) || t.implicit.find((f) => f.col === col) || null;
+const deadKeys = (t) => t.cols.filter((c) => c.notnull && t.fks.some((f) => f.col === c.name && SCHEMA.tables[f.table] && SCHEMA.tables[f.table].rows === 0));
+// Cosmetic only: marks a row as no longer in force, from column names the schema itself defines.
+function isRetired(t, r) {
+  return ["retired_at", "revoked_at", "superseded_by_ref_id", "superseded_by_specification_id", "merged_into"].some((c) => c in r && !isNil(r[c])) ||
+    ("status" in r && /^(retired|merged|superseded)/i.test(String(r.status)));
+}
+const keyOf = (t, r) => { const p = t.cols.filter((c) => c.pk).sort((a, b) => a.pk - b.pk); return p.length ? p.map((c) => r[c.name]).join(" · ") : "row " + r._rid; };
+const rowidOf = (table, col, val) => one("select rowid from " + q(table) + " where " + q(col) + " = ?", [val]);
+const AUDIT = /(^|_)(created|updated|raised|resolved)_(at|by_session)$|_session$/;
+// The fields a card shows by default, chosen from the data: the most text-like column that is mostly filled (the
+// row's label), then the next three filled columns in table order. The owner can change them per table.
+function defaultFields(t) {
+  const rows = all("select * from " + q(t.name) + " limit 100");
+  const use = t.cols.filter((c) => !c.pk && !AUDIT.test(c.name)).map((c) => {
+    const vals = rows.map((r) => r[c.name]).filter((v) => !isNil(v));
+    return { name: c.name, filled: rows.length ? vals.length / rows.length : 0, len: vals.length ? vals.reduce((a, v) => a + String(v).length, 0) / vals.length : 0 };
+  }).filter((c) => c.filled >= 0.5);
+  const label = use.filter((c) => c.len <= 300).sort((a, b) => b.len - a.len)[0];
+  return [...(label ? [label.name] : []), ...use.filter((c) => c !== label).slice(0, 3).map((c) => c.name)];
+}
+const fill = (el, kids) => el.replaceChildren(...kids.flat().filter((k) => k != null && k !== false));
+
+// ---------- pieces ----------
+// lim: true shows the whole value; a number caps it; the default is 120 characters.
+function value(v, lim = 120) {
+  if (isNil(v)) return h("span", { class: "nil" }, "—");
+  if (typeof v === "string" && /^[\[{]/.test(v.trim())) {
+    try { const j = JSON.parse(v); if (lim === true) return h("pre", null, JSON.stringify(j, null, 2)); } catch (e) { /* plain text */ }
+  }
+  const s = String(v);
+  return lim === true || s.length <= lim ? s : s.slice(0, lim).trimEnd() + "…";
+}
+function stageOf(t) { const s = META.stage[t]; return typeof s === "string" ? s : (s && s.stage) || null; }
+function chipsFor(t) {
+  const out = [];
+  if (t.rows === 0) out.push(h("span", { class: "chip" }, "empty"));
+  const dead = deadKeys(t);
+  if (dead.length) out.push(h("span", { class: "chip warn" }, "cannot take a row yet: " + dead.map((c) => c.name).join(", ") + " needs a row in an empty table"));
+  return out;
+}
+function tableItem(t) {
+  const gl = META.glossary[t.name] || "";
+  return h("a", { class: "item", href: "#t-" + slug(t.name), "data-find": (t.name + " " + gl).toLowerCase() },
+    h("span", { class: "top" }, h("span", { class: "nm" }, t.name), h("span", { class: "n" }, fmt(t.rows))),
+    gl && h("span", { class: "gl" }, gl), chipsFor(t).length ? h("span", { class: "chips" }, chipsFor(t)) : null);
+}
+function noteBox(t, c) {
+  const col = t.cols.find((x) => x.name === c);
+  const ptr = pointerOf(t, c);
+  const vocab = META.vocab[t.name] && META.vocab[t.name][c], rule = META.shape[t.name] && META.shape[t.name][c];
+  const bits = [];
+  if (ptr) bits.push(h("p", { class: "gl" }, (t.fks.includes(ptr) ? "Points to " : "Appears to point to ") + ptr.table + "." + ptr.to));
+  if (vocab) bits.push(h("div", null, h("p", { class: "gl" }, "Allowed values"), h("div", { class: "chips" }, vocab.map((x) => h("span", { class: "chip" }, x)))));
+  else if (rule) bits.push(h("div", null, h("p", { class: "gl" }, "Rule in the table definition"), h("code", null, rule)));
+  if (t.notes[c]) bits.push(h("p", { class: "gl" }, "Note in the definition: " + t.notes[c]));
+  return { col, bits };
+}
+
+// ---------- pages ----------
+function homePage() {
+  const t = Object.values(SCHEMA.tables);
+  const keys = promptKeys(), open = keys.filter((k) => !ANSWERS[k]).length;
+  const find = h("input", { type: "search", id: "find", placeholder: "Find a table or a word", "aria-label": "Find a table or a word" });
+  const sections = [];
+  const order = [...META.stage_order, "unmapped"];
+  for (const st of order) {
+    const here = t.filter((x) => (stageOf(x.name) || "unmapped") === st).sort((a, b) => a.name.localeCompare(b.name));
+    if (!here.length) continue;
+    sections.push(h("section", { class: "sec", "data-stage": st },
+      h("h2", null, st + " · " + here.length + (here.length === 1 ? " table" : " tables")), h("div", { class: "stack" }, here.map(tableItem))));
+  }
+  find.addEventListener("input", () => {
+    const needle = find.value.trim().toLowerCase();
+    for (const a of document.querySelectorAll("#main a.item[data-find]")) a.hidden = !!needle && !a.dataset.find.includes(needle);
+    for (const s of document.querySelectorAll("#main section[data-stage]")) s.hidden = ![...s.querySelectorAll("a.item")].some((a) => !a.hidden);
+  });
+  const views = Object.values(SCHEMA.views);
+  const gs = META.gloss_status;
+  return [
+    h("div", { class: "stack" },
+      h("h1", null, "Guidebook database"),
+      h("p", { class: "gl" }, "A copy of the database, opened on this device. Tap a table to read its rows. Nothing you do here changes the database; the answers you save are kept on this page only.")),
+    h("a", { class: "item", href: "#waiting" }, h("span", { class: "top" }, h("span", { class: "nm" }, "Waiting on you"), h("span", { class: "n" }, fmt(open))),
+      h("span", { class: "gl" }, "Questions with the context to answer them: " + openDecisions().length + " decisions on the plan and " + (keys.length - openDecisions().length) + " rows in the database. " + (keys.length - open) + " answered on this page, and " + (META.decisions.length - openDecisions().length + queueRows().reduce((a, x) => a + x.ruled.length, 0)) + " already ruled in the ledger.")),
+    find, sections,
+    h("section", { class: "sec" }, h("h2", null, "Views · " + views.length),
+      h("details", null, h("summary", null, "Saved queries that read the tables"), h("div", { class: "body" },
+        views.map((v) => h("a", { class: "item", href: "#v-" + slug(v.name) },
+          h("span", { class: "top" }, h("span", { class: "nm" }, v.name), h("span", { class: "n" }, fmt(v.rows))),
+          h("span", { class: "gl" }, "reads " + (v.reads.join(", ") || "nothing"))))))),
+    h("div", { class: "foot" },
+      h("span", null, "Database version " + META.stamp.user_version + " · commit " + META.stamp.commit.slice(0, 7) + " · sha256 " + META.stamp.sha256.slice(0, 12)),
+      h("span", null, "Stages from governance/stage-map.yaml, judged by " + META.stage_judged.by + " on " + META.stage_judged.on + "."),
+      h("span", null, gs.ratified_on ? "Table descriptions ratified by " + gs.ratified_by + " on " + gs.ratified_on + "." : "Table descriptions are drafted by the assistant (" + gs.drafted_on + ") and not yet ratified. Tell the assistant when one is wrong.")),
+  ];
+}
+
+function colList(t) {
+  return h("details", null, h("summary", null, "Columns · " + t.cols.length),
+    h("div", { class: "body" }, t.cols.map((c) => {
+      const { bits } = noteBox(t, c.name);
+      const tags = [c.type || "any", c.pk ? "key" : null, c.notnull ? "required" : null].filter(Boolean).join(" · ");
+      return h("div", { class: "col" }, h("div", null, h("code", null, c.name), " ", h("span", { class: "gl" }, tags)), bits);
+    })));
+}
+function usedBy(t) {
+  const items = [];
+  const seen = new Set();
+  for (const i of t.inbound) { const k = i.table + "." + i.col; if (!seen.has(k)) { seen.add(k); items.push(h("a", { class: "item", href: "#t-" + slug(i.table) }, h("span", { class: "nm" }, i.table), h("span", { class: "gl" }, "through " + i.col + (i.implicit ? " (inferred)" : "")))); } }
+  for (const v of t.readBy || []) items.push(h("a", { class: "item", href: "#v-" + slug(v) }, h("span", { class: "nm" }, v), h("span", { class: "gl" }, "view")));
+  return items.length ? h("details", null, h("summary", null, "Pointed to by · " + items.length), h("div", { class: "body" }, items)) : null;
+}
+
+function tablePage(name) {
+  const t = SCHEMA.tables[name];
+  if (!t) return notFound(name);
+  const fields = state.fields[name] || (state.fields[name] = defaultFields(t));
+  const list = h("div", { class: "stack", id: "rows" }), more = h("div", { class: "stack" }), status = h("p", { class: "gl" });
+  const search = h("input", { type: "search", placeholder: "Search this table", "aria-label": "Search this table", value: state.search[name] || "" });
+  const sort = h("select", { "aria-label": "Order by" }, h("option", { value: "" }, "Order added"), t.cols.map((c) => h("option", { value: c.name, selected: state.sort[name] && state.sort[name].col === c.name }, c.name)));
+  const dir = h("button", { type: "button", "aria-label": "Reverse order" }, state.sort[name] && state.sort[name].desc ? "↓" : "↑");
+  const filterBox = h("div", { class: "chips" });
+  function where() {
+    const parts = [], params = [];
+    const s = (state.search[name] || "").trim();
+    if (s) { parts.push("(" + t.cols.map((c) => "CAST(" + q(c.name) + " AS TEXT) LIKE ? ESCAPE '\\'").join(" OR ") + ")"); const like = "%" + s.replace(/[\\%_]/g, "\\$&") + "%"; t.cols.forEach(() => params.push(like)); }
+    if (state.filter && state.filter.table === name) { parts.push(q(state.filter.col) + " = ?"); params.push(state.filter.val); }
+    return { sql: parts.length ? " where " + parts.join(" and ") : "", params };
+  }
+  function draw() {
+    const w = where(), so = state.sort[name], lim = state.limit[name] || PAGE;
+    const total = one("select count(*) from " + q(name) + w.sql, w.params);
+    const order = so && so.col ? " order by " + q(so.col) + (so.desc ? " desc" : "") + ", rowid" : " order by rowid" + (so && so.desc ? " desc" : "");
+    const rows = all("select rowid as _rid, * from " + q(name) + w.sql + order + " limit " + lim, w.params);
+    fill(list, rows.map((r) => h("a", { class: "card" + (isRetired(t, r) ? " retired" : ""), href: "#r-" + slug(name) + "-" + r._rid },
+      h("span", { class: "top" }, h("span", { class: "ttl" }, keyOf(t, r)), isRetired(t, r) ? h("span", { class: "chip" }, "retired") : null),
+      fields.filter((f) => f in r).map((f) => h("span", { class: "kv" }, h("span", { class: "k" }, f), h("span", { class: "v" }, value(r[f])))))));
+    status.textContent = total === 0 ? "No rows." : "Showing " + fmt(rows.length) + " of " + fmt(total);
+    fill(more, [rows.length < total ? h("button", { type: "button", onclick: () => { state.limit[name] = lim + PAGE; draw(); } }, "Show " + Math.min(PAGE, total - rows.length) + " more") : null]);
+    fill(filterBox, [state.filter && state.filter.table === name ? h("button", { type: "button", onclick: () => { state.filter = null; draw(); } }, "where " + state.filter.col + " = " + String(state.filter.val).slice(0, 40) + "  ✕") : null]);
+  }
+  let timer = null;
+  search.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => { state.search[name] = search.value; state.limit[name] = PAGE; draw(); }, 250); });
+  sort.addEventListener("change", () => { state.sort[name] = { col: sort.value, desc: !!(state.sort[name] && state.sort[name].desc) }; draw(); });
+  dir.addEventListener("click", () => { const so = state.sort[name] || { col: "" }; so.desc = !so.desc; state.sort[name] = so; dir.textContent = so.desc ? "↓" : "↑"; draw(); });
+  const pick = h("details", { class: "fieldpick" }, h("summary", null, "Fields on each card"), h("div", { class: "body" }, t.cols.map((c) =>
+    h("label", null, h("input", { type: "checkbox", checked: fields.includes(c.name), onchange: (e) => { const i = fields.indexOf(c.name); if (e.target.checked && i < 0) fields.push(c.name); if (!e.target.checked && i >= 0) fields.splice(i, 1); draw(); } }), h("code", null, c.name)))));
+  const gl = META.glossary[name];
+  const page = [
+    h("div", { class: "stack" }, h("h1", { class: "mono" }, name),
+      h("div", { class: "chips" }, h("span", { class: "chip" }, stageOf(name) || "unmapped"), h("span", { class: "chip" }, fmt(t.rows) + (t.rows === 1 ? " row" : " rows")), chipsFor(t)),
+      gl && h("p", { class: "gl" }, gl)),
+    colList(t), usedBy(t), search, h("div", { class: "row2" }, sort, dir), pick, filterBox, status, list, more,
+  ];
+  setTimeout(draw, 0);
+  return page;
+}
+
+// Every filled field of a row, in full, with pointers followed and field notes on tap; empty fields collapsed.
+function fieldsOf(t, r) {
+  const fieldBlock = (c) => {
+    const v = r[c.name], ptr = pointerOf(t, c.name);
+    const { bits } = noteBox(t, c.name);
+    let shown = value(v, true);
+    if (ptr && !isNil(v)) {
+      const target = rowidOf(ptr.table, ptr.to, v);
+      shown = target ? h("a", { href: "#r-" + slug(ptr.table) + "-" + target }, String(v), " → ", ptr.table) : h("span", null, String(v), " ", h("span", { class: "chip warn" }, "no such row in " + ptr.table));
+    }
+    const label = bits.length ? h("details", { class: "fld" }, h("summary", { class: "k" }, c.name + " ⓘ"), h("div", { class: "notes" }, bits)) : h("span", { class: "k" }, c.name);
+    return h("div", { class: "kv" }, label, h("span", { class: "v" }, shown));
+  };
+  const empty = t.cols.filter((c) => isNil(r[c.name]));
+  return [...t.cols.filter((c) => !isNil(r[c.name])).map(fieldBlock),
+    empty.length ? h("details", null, h("summary", null, "Empty fields · " + empty.length), h("div", { class: "body" }, h("div", { class: "chips" }, empty.map((c) => h("span", { class: "chip" }, c.name))))) : null];
+}
+
+function rowPage(name, rid) {
+  const t = SCHEMA.tables[name];
+  if (!t) return notFound(name);
+  const r = all("select * from " + q(name) + " where rowid = ?", [rid])[0];
+  if (!r) return notFound(name + " row " + rid);
+  r._rid = rid;
+  const fields = fieldsOf(t, r);
+  const inbound = [];
+  const seen = new Set();
+  for (const i of t.inbound) {
+    const k = i.table + "." + i.col; if (seen.has(k) || isNil(r[i.to])) continue; seen.add(k);
+    const n = one("select count(*) from " + q(i.table) + " where " + q(i.col) + " = ?", [r[i.to]]);
+    if (n) inbound.push(h("a", { class: "item", href: "#t-" + slug(i.table), onclick: () => { state.filter = { table: i.table, col: i.col, val: r[i.to] }; state.limit[i.table] = PAGE; } },
+      h("span", { class: "top" }, h("span", { class: "nm" }, i.table), h("span", { class: "n" }, fmt(n))), h("span", { class: "gl" }, "through " + i.col + (i.implicit ? " (inferred)" : ""))));
+  }
+  const holds = name === "evidence_sources" ? META.holds[r.ref_id] : null;
+  return [
+    h("div", { class: "stack" }, h("a", { href: "#t-" + slug(name), class: "mono" }, name), h("h1", { class: "mono" }, keyOf(t, r)),
+      META.glossary[name] && h("p", { class: "gl" }, META.glossary[name]),
+      isRetired(t, r) ? h("p", { class: "note" }, "This row is no longer in force (retired, superseded or merged).") : null),
+    h("div", { class: "stack" }, fields),
+    holds && holds.length ? h("div", { class: "sec" }, h("h2", null, "Determinations resting on this source"), h("div", { class: "chips" }, holds.map((x) => h("span", { class: "chip" }, x.join(" #"))))) : null,
+    inbound.length ? h("div", { class: "sec" }, h("h2", null, "Pointed to by"), h("div", { class: "stack" }, inbound)) : null,
+  ];
+}
+
+function viewPage(name) {
+  const v = SCHEMA.views[name];
+  if (!v) return notFound(name);
+  const rows = all("select * from " + q(name) + " limit " + PAGE);
+  return [
+    h("div", { class: "stack" }, h("h1", { class: "mono" }, name), h("div", { class: "chips" }, h("span", { class: "chip" }, "view"), h("span", { class: "chip" }, fmt(v.rows) + " rows")),
+      h("p", { class: "gl" }, "A saved query. It is recomputed every time it is read, so it always matches the tables it reads.")),
+    h("div", { class: "sec" }, h("h2", null, "Reads"), h("div", { class: "stack" }, v.reads.map((n) => h("a", { class: "item", href: (SCHEMA.tables[n] ? "#t-" : "#v-") + slug(n) }, h("span", { class: "nm" }, n))))),
+    h("details", null, h("summary", null, "Definition"), h("div", { class: "body" }, h("pre", null, v.sql))),
+    h("div", { class: "sec" }, h("h2", null, rows.length < v.rows ? "First " + rows.length + " of " + fmt(v.rows) : fmt(rows.length) + " rows"),
+      h("div", { class: "stack" }, rows.length ? rows.map((r) => h("div", { class: "card" }, Object.entries(r).slice(0, 8).map(([k, x]) => h("span", { class: "kv" }, h("span", { class: "k" }, k), h("span", { class: "v" }, value(x)))))) : h("p", { class: "gl" }, "No rows."))),
+  ];
+}
+
+// ---------- decisions: prompts and saved answers ----------
+// An answer is saved in this page's own store (the `answers` collection). It records what the owner chose; it is
+// not a ruling until the ledger entry that quotes it is written.
+const ANSWERS = {};
+let ANSWER_DB = null;
+async function loadAnswers() {
+  try {
+    ANSWER_DB = window.claude && window.claude.use ? await window.claude.use("db") : null;
+    if (!ANSWER_DB) return;
+    for (const d of (await ANSWER_DB.collection("answers").get()).docs) ANSWERS[d.id] = d.data();
+  } catch (e) { ANSWER_DB = null; }
+}
+// A row the ledger already rules on leaves the open list and is shown with the ruling (the queue entry's `ruled` map).
+// The ruled list is read from the map, not from the query, so a card stays once the row has left the query's results.
+const queueRows = () => META.queue.map((e) => {
+  const got = all(e.sql), ruled = e.ruled || {};
+  return { e, rows: got.filter((r) => !ruled[String(r.id)]),
+    ruled: Object.keys(ruled).map((id) => ({ id, label: (got.find((r) => String(r.id) === id) || {}).label || "Row " + id })) };
+});
+const openDecisions = () => META.decisions.filter((d) => !d.answered);
+function promptKeys() { return [...openDecisions().map((d) => d.id), ...queueRows().flatMap(({ e, rows }) => rows.map((r) => e.id + "-" + r.id))]; }
+function updateCounts() {
+  const keys = promptKeys(), done = keys.filter((k) => ANSWERS[k]).length;
+  const nav = document.getElementById("nav-waiting"); if (nav) nav.textContent = "Waiting on you (" + (keys.length - done) + ")";
+  const el = document.getElementById("answered"); if (el) el.textContent = done + " of " + keys.length + " answered" + (ANSWER_DB ? "." : ". Saving is not available in this view; use Copy and send your answer in chat.");
+}
+// p: {key, tag, title, question, why, body, blocks, options, source}
+function promptCard(p) {
+  const chip = h("span", { class: "chip" }), msg = h("p", { class: "gl", role: "status" }), sent = h("code", null);
+  let choice = ANSWERS[p.key] ? String(ANSWERS[p.key].choice) : null;
+  const note = h("textarea", { id: "note-" + p.key, rows: 4, placeholder: "Your words. The ledger quotes them." }, ANSWERS[p.key] ? ANSWERS[p.key].note || "" : "");
+  const buttons = p.options.map((o) => {
+    const b = h("button", { type: "button", class: "opt" }, h("span", { class: "lab" }, o.label + (o.recommended ? " · recommended" : "")), h("span", { class: "fx" }, o.effect));
+    b.addEventListener("click", () => { choice = String(o.key); refresh(); });
+    return b;
+  });
+  const picked = () => p.options.find((o) => String(o.key) === choice);
+  function refresh() {
+    buttons.forEach((b, i) => b.setAttribute("aria-pressed", String(String(p.options[i].key) === choice)));
+    const a = ANSWERS[p.key];
+    chip.className = "chip " + (a ? "ok" : "warn"); chip.textContent = a ? "Answered: " + a.label : "Open";
+    sent.textContent = picked() ? p.tag + ": " + picked().label + (note.value.trim() ? " — " + note.value.trim() : "") : "";
+  }
+  note.addEventListener("input", refresh);
+  const save = h("button", { type: "button", disabled: ANSWER_DB ? null : true }, "Save my answer");
+  save.addEventListener("click", async () => {
+    const o = picked();
+    if (!o) { msg.textContent = "Choose an option first."; return; }
+    if (/\bnote\b/i.test(o.effect) && !note.value.trim()) { msg.textContent = "This option asks for your words in the note."; return; }
+    const doc = { prompt: p.key, question: p.question, choice, label: o.label, note: note.value.trim(), at: new Date().toISOString(), database: META.stamp.sha256.slice(0, 12) };
+    try { await ANSWER_DB.doc("answers/" + p.key).set(doc); ANSWERS[p.key] = doc; msg.textContent = "Saved. Tell Claude to record your answers."; }
+    catch (e) { msg.textContent = "It could not be saved here (" + ((e && (e.code || e.message)) || e) + "). Use Copy and send it in chat."; }
+    refresh(); updateCounts();
+  });
+  const clear = h("button", { type: "button", disabled: ANSWER_DB ? null : true }, "Clear");
+  clear.addEventListener("click", async () => {
+    try { await ANSWER_DB.doc("answers/" + p.key).delete(); delete ANSWERS[p.key]; choice = null; note.value = ""; msg.textContent = "Cleared."; }
+    catch (e) { msg.textContent = "It could not be cleared here."; }
+    refresh(); updateCounts();
+  });
+  const copy = h("button", { type: "button" }, "Copy");
+  copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(sent.textContent); msg.textContent = "Copied."; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents(sent); const s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = "Select and copy the line above."; }
+  });
+  refresh();
+  return h("details", { class: "prompt", id: "p-" + p.key },
+    h("summary", null, h("span", { class: "sum" }, h("span", { class: "tag" }, p.tag), h("span", { class: "lab" }, p.title), chip)),
+    h("div", { class: "body" },
+      h("p", null, h("strong", null, p.question)),
+      h("div", { class: "stack" }, h("h2", null, "Why this is yours"), h("p", { class: "gl" }, p.why)),
+      h("div", { class: "stack ctx" }, h("h2", null, "Context"), p.body),
+      p.blocks ? h("div", { class: "stack" }, h("h2", null, "What it holds up"), h("p", { class: "gl" }, p.blocks)) : null,
+      h("h2", null, "Your options"), h("div", { class: "stack" }, buttons),
+      h("label", { for: "note-" + p.key, class: "gl" }, "Your words (needed only when an option asks for them)"), note,
+      h("div", { class: "stack" }, h("p", { class: "gl" }, "To answer in chat, send:"), sent),
+      h("div", { class: "row2" }, save, clear, copy), msg,
+      p.source ? h("p", { class: "gl" }, "Source: " + p.source) : null));
+}
+// The row a queue prompt is about, in full, and the row it points at when the list names one.
+function rowContext(e, id) {
+  const t = SCHEMA.tables[e.table], rid = rowidOf(e.table, e.key, id);
+  if (!rid) return [h("p", { class: "gl" }, "The row is no longer in the table.")];
+  const r = all("select * from " + q(e.table) + " where rowid = ?", [rid])[0];
+  const note = (e.notes || {})[String(id)];
+  const out = [note ? h("p", { class: "note" }, note) : null, h("div", { class: "stack" }, fieldsOf(t, r)), h("a", { href: "#r-" + slug(e.table) + "-" + rid }, "Open the row page")];
+  const sub = e.subject && SCHEMA.tables[r[e.subject.table_col]];
+  const pk = sub && sub.cols.filter((c) => c.pk);
+  const srid = pk && pk.length === 1 ? rowidOf(sub.name, pk[0].name, r[e.subject.key_col]) : null;
+  if (srid) out.push(h("a", { href: "#r-" + slug(sub.name) + "-" + srid }, "The row it concerns: " + sub.name + " " + r[e.subject.key_col]));
+  return out;
+}
+// What the owner said and what it changed, taken from the ledger entry that records it (its single home).
+function rulingParts(id, text) {
+  const lines = text.split("\n"), words = [], clean = (x) => x.replace(/\*\*/g, "").replace(/`/g, "");
+  for (let i = 0; i < lines.length; i++) {
+    if (!lines[i].startsWith(id + ":")) continue;
+    const rest = lines[i].slice(id.length + 1).trim();
+    if (rest) words.push(rest.replace(/^"|"$/g, ""));
+    else for (let j = i + 1; j < lines.length && (lines[j].trim() === "" || lines[j].startsWith(">")); j++) if (lines[j].startsWith(">")) words.push(lines[j].replace(/^>\s?/, "").replace(/^"|"$/g, ""));
+    break;
+  }
+  const item = lines.find((l) => new RegExp("^\\d+\\. \\*\\*" + id + "\\.\\*\\*").test(l));
+  return { words: words.map(clean), change: item ? clean(item.replace(/^\d+\.\s*/, "")) : null };
+}
+// s: {key, tag, title, question, ledger, rid}. rid is the id the ledger entry quotes the owner's words under.
+function answeredCard(s) {
+  const text = META.rulings[s.ledger], { words, change } = text ? rulingParts(s.rid, text) : { words: [], change: null };
+  const on = (s.ledger.match(/\d{4}-\d{2}-\d{2}/) || [""])[0];
+  return h("details", { class: "prompt", id: "p-" + s.key },
+    h("summary", null, h("span", { class: "sum" }, h("span", { class: "tag" }, s.tag), h("span", { class: "lab" }, s.title), h("span", { class: "chip ok" }, "Ruled " + on))),
+    h("div", { class: "body" },
+      h("p", null, h("strong", null, s.question)),
+      h("div", { class: "stack" }, h("h2", null, "Your words"), words.length ? words.map((w) => h("p", null, w)) : h("p", { class: "gl" }, "The ledger entry could not be read here.")),
+      change ? h("div", { class: "stack" }, h("h2", null, "What it changes"), h("p", { class: "gl" }, change)) : null,
+      h("p", { class: "gl" }, "Recorded in references/project-standards.md, in the entry that begins \"" + s.ledger + "\".")));
+}
+function waitingPage() {
+  const words = h("details", null, h("summary", null, "Words used in these questions"), h("div", { class: "body" }, META.words.map((w) => h("div", { class: "kv" }, h("span", { class: "k" }, w.term), h("span", { class: "v" }, w.meaning)))));
+  const dprompt = (d) => promptCard({ key: d.id, tag: d.id, title: d.title, question: d.question, why: d.why_yours, blocks: d.blocks, options: d.options, source: d.source,
+    body: d.context.split(/\n\s*\n/).map((x) => h("p", null, x)) });
+  const group = (title, note, list, n = list.length) => h("section", { class: "sec" }, h("h2", null, title + " · " + n), note ? h("p", { class: "gl" }, note) : null, h("div", { class: "stack" }, list));
+  const page = [
+    h("div", { class: "stack" }, h("h1", null, "Waiting on you"),
+      h("p", { class: "gl" }, "Each item is a question with the context needed to answer it. Tap one to open it, choose an option, and add your words where the option asks. An answer saved here is not a ruling until Claude writes it into the ledger in your words, so tell Claude to record your answers."),
+      h("p", { class: "ok", id: "answered" })),
+    words,
+    group("Decisions that hold up building", "The workplan names six as the ones that gate building. Your rulings on them raised the questions left here.", openDecisions().filter((d) => d.gates).map(dprompt)),
+    group("Other decisions on the plan", "Each has a recommended answer from the report, except where none is recorded. The plan follows the recommendation unless you answer otherwise.", openDecisions().filter((d) => !d.gates).map(dprompt)),
+    group("Ruled and recorded in the ledger", "Your answers, in your words, with what each one changes.", [
+      ...META.decisions.filter((d) => d.answered).map((d) => answeredCard({ key: d.id, tag: d.id, title: d.title, question: d.question, ledger: d.answered.ledger, rid: d.id })),
+      ...queueRows().flatMap(({ e, ruled }) => ruled.map((r) => answeredCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, ledger: e.ruled[String(r.id)], rid: e.table + " " + r.id })))]),
+    ...queueRows().map(({ e, rows }) => group(e.title, e.why, rows.length
+      ? rows.map((r) => promptCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, why: e.why_yours, options: e.options, body: rowContext(e, r.id) }))
+      : [h("p", { class: "gl" }, "Nothing waiting.")], rows.length)),
+  ];
+  setTimeout(updateCounts, 0);
+  return page;
+}
+function notFound(what) { return [h("div", { class: "stack" }, h("h1", null, "Not found"), h("p", { class: "gl" }, "There is no " + what + " in this copy of the database."), h("a", { href: "#stages" }, "Back to the tables"))]; }
+
+// ---------- routing ----------
+function route() {
+  const hash = location.hash.slice(1) || "stages";
+  let page, title = "Guidebook Data Browser";
+  try {
+    if (hash === "stages") page = homePage();
+    else if (hash === "waiting") { page = waitingPage(); title = "Waiting on you"; }
+    else if (hash.startsWith("t-")) { title = unslug(hash.slice(2)); page = tablePage(title); }
+    else if (hash.startsWith("v-")) { title = unslug(hash.slice(2)); page = viewPage(title); }
+    else if (hash.startsWith("r-")) { const i = hash.lastIndexOf("-"); title = unslug(hash.slice(2, i)); page = rowPage(title, Number(hash.slice(i + 1))); }
+    else page = notFound(hash);
+  } catch (e) { page = [h("p", { class: "err" }, "This page failed to open: " + ((e && e.message) || e))]; }
+  document.getElementById("main").replaceChildren(...page.flat().filter(Boolean));
+  document.getElementById("ttl").textContent = title;
+  document.getElementById("back").hidden = hash === "stages";
+  document.getElementById("nav-stages").setAttribute("aria-current", hash === "waiting" ? "false" : "page");
+  document.getElementById("nav-waiting").setAttribute("aria-current", hash === "waiting" ? "page" : "false");
+  window.scrollTo(0, 0);
+}
+document.getElementById("back").addEventListener("click", () => { if (history.length > 1) history.back(); else location.hash = "stages"; });
+
+(async function boot() {
+  try {
+    const SQL = await window.initSqlJs({ wasmBinary: b64(WASM_B64) });
+    db = new SQL.Database(b64(DB_B64));
+    SCHEMA = loadSchema();
+    await loadAnswers();
+    updateCounts();
+    window.addEventListener("hashchange", route);
+    route();
+    document.documentElement.setAttribute("data-ready", "1");
+  } catch (e) {
+    document.getElementById("main").replaceChildren(h("p", { class: "err" }, "The database could not be opened here: " + ((e && e.message) || e)));
+    document.documentElement.setAttribute("data-ready", "error");
+  }
+})();
+</script>
