@@ -981,6 +981,7 @@ decisions:
 
   - id: OT-1
     gates: false
+    answered: {on: '2026-10-29', ledger: "Owner rulings 2026-10-29 (fourth)"}
     title: What is the new route term called, and how does it stand to circulation route?
     question: "Under what name should the new term for the whole route through a building be added?"
     why_yours: "A catalogue term is a definition every later stage points into, and what it covers is judgment."
@@ -1003,6 +1004,34 @@ decisions:
         label: "Something else"
         effect: "Say in the note what it is called, or how it stands to circulation route."
     source: "Rulings on observed_terms 68, 70, 71 and 73 of 2026-10-29 (ledger)"
+
+  - id: OT-2
+    gates: false
+    title: Approve the definition of "barrier-free path of travel"
+    question: "Is this the definition and scope note the catalogue should hold for barrier-free path of travel?"
+    why_yours: "A catalogue term is approved by you before it is added (ledger, 2026-10-09), and a staged description is a hypothesis until it is checked against the sources."
+    context: |-
+      You ruled that the term is called "barrier-free path of travel" and that it is a circulation route specific to people in wheelchairs and mobility devices (OT-1). You ruled earlier that it is the entire route through a building and not only its ramps (observation 68).
+
+      Drafted from your words only, with the relation to the held term circulation route (TERM-048) in the scope note because the terms table has no parent column.
+
+      Definition: "A circulation route through a building that a person using a wheelchair or other mobility device can travel without barriers: the whole route, not only its ramps."
+
+      Scope note: "A specialisation of TERM-048 (circulation route), limited to people who use wheelchairs or other mobility devices. TERM-089 (ramp) and TERM-001 (ramp gradient) describe parts of such a route. Phrases the sources use for it: barrier-free path of travel (REF-01013), accessible route (REF-01016), access route (REF-01015, REF-01018)."
+
+      One thing to check. Your ruling on observation 71 places "accessible route" under this term. I have read only the quoted line of that source, NZS 4121:2001, not its definitions clause as a whole. If that source uses "accessible route" for disabled people generally, the phrase names something wider than this term.
+    blocks: "Adding the term, and adjudicating observations 68 and 71."
+    options:
+      - key: approve
+        label: "Approve this wording"
+        effect: "In a data PR, db.py add-term mints the term from observation 68 with this definition and scope note, citing your answer as the approval. Observation 71 is then adjudicated as naming it, and the source phrases are recorded as its aliases."
+      - key: change
+        label: "Change it"
+        effect: "Say in the note what to change. Nothing is added until you approve the wording."
+      - key: widen
+        label: "Approve, but check the NZS 4121 clause first"
+        effect: "I read the clause in the stored source before observation 71 is adjudicated. If it is wider than this term, observation 71 comes back to you as its own question."
+    source: "Ruling OT-1 of 2026-10-29 (ledger); the ledger entry of 2026-10-09 (\"Screen, then you approve\"); CLAUDE.md rule 5"
 
 queue:
   - id: withheld_findings
