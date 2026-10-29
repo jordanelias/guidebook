@@ -1,0 +1,36 @@
+## slugs like ramp/slope/gradient
+('stair-ramp-threshold-biomechanics-accessibility', 'entrances-and-circulation', 'ACTIVE')
+('detectable-gradient-protocol-sensory-zones', 'wayfinding-and-signage', 'ACTIVE')
+## items
+('E-03', 'E', 'Ramp Gradient (≤1:20 — MS Fatigue and Temporal Accessibility)', 'stair-ramp-threshold-biomechanics-accessibility', 'active')
+('E-07', 'E', 'Slip Resistance (PTV ≥36 Wet Throughout All Circulation and Entry)', 'stair-ramp-threshold-biomechanics-accessibility', 'active')
+('F-01', 'F', 'Sensory Gradient (High to Low Stimulation from Entry to Occupation)', 'sensory-processing-model-design-application', 'active')
+## terms
+('TERM-001', 'ramp gradient', 'circulation')
+## term_aliases by lang (ramp/slope terms)
+('da', 3)
+('de', 3)
+('en', 3)
+('es', 2)
+('fi', 3)
+('fr', 3)
+('it', 2)
+('ja', 3)
+('ko', 2)
+('nl', 2)
+('no', 2)
+('pt', 2)
+('sv', 2)
+('zh', 2)
+## bpc_metadata
+('stair-ramp-threshold-biomechanics-accessibility', 'MULTI', 0, 0, 'RETRACTED-PRE-REHAB', 0, 1, 1, 1)
+('detectable-gradient-protocol-sensory-zones', 'MULTI', 0, 0, 'RETRACTED-PRE-REHAB', 0, 1, 1, 0)
+## gaps
+('GAP-013', 'P3', 'CLOSED-FIXED', 'E-03', 'coverage E-03: PAIN listed but no PAIN-specific evidence for ramp gradient. MS fatigue is OFS/NEU, not PAIN. ISW to add PAIN-specific ration')
+('GAP-014', 'P3', 'CLOSED-FIXED', 'E-03', 'thematic E-03: No mention of ambulant mobility users (cane/frame). Ramp spec assumes wheelchair but ambulant MOB users have different biomec')
+('GAP-017', 'P2', 'CLOSED-SYSTEMIC', 'E-03', 'FDA-Q2 E-03: SCI absent from Applicable Groups. SCI C4-C6 wheelchair users are a primary ramp population. NEU absent — MS is classified as N')
+('GAP-019', 'P3', 'OPEN', 'E-03', 'FDA-Q6/FDR E-03: 1:20 threshold derived from single study (Koontz 2012) for general wheelchair population. SCI-specific gradient threshold m')
+('GAP-020', 'P3', 'CLOSED-SYNC', 'E-03', 'EA-C2 E-03: Capital cost indicator absent. Structural ramp at 1:20 is cost-significant (groundworks, drainage). Economics-researcher to supp')
+('GAP-028', 'P3', 'CLOSED-SYNC', 'G-04', 'UNSTATED G-04: Zero threshold spec, floor slope 1:80, PTV 36 — all without stratum annotation. Multiple standards cited (BS 8300, BCA 2025, ')
+## evidence_sources title match count [(8,)]
+## spec_value_probes

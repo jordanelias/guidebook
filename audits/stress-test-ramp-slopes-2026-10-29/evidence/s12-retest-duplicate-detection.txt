@@ -1,0 +1,12 @@
+### A: duplicate (non-allowlisted) DOI, doi_resolution_outcome NULL (as CLI leaves it)
+  [✗] C02: All DOI rows have doi_resolution_outcome set (pre-pipeline backfill applied)
+  [✗] F01: No DOI regressions in pipeline_runs
+  [✗] F02: All pipeline_runs have completed_at set
+  [✗] F04: No VERIFIED count regressions in pipeline_runs
+RESULTS: 31/35 checks passed
+### B: same rows after outcome set to RESOLVED (as the resolver would)
+  [✗] D01: No unexpected duplicate DOIs (known IEC 60118-4 triple excluded)
+  [✗] F01: No DOI regressions in pipeline_runs
+  [✗] F02: All pipeline_runs have completed_at set
+  [✗] F04: No VERIFIED count regressions in pipeline_runs
+RESULTS: 31/35 checks passed

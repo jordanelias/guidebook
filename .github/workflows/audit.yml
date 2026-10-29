@@ -114,6 +114,33 @@ jobs:
           GUIDEBOOK_DB_PATH: data/guidebook.db
         run: python3 scripts/audit/citation_mining_completeness.py --tier-max 3
 
+      # Added 2026-10-29 (ramp-slope pipeline stress test). Both scripts were dead
+      # (referenced dropped columns) and nothing noticed because CI never ran them.
+      # Findings are informational for now (pre-existing backlog: connections with 0
+      # targets, rule-#7 field gaps); a CRASH (traceback) still fails the job so a
+      # script cannot silently die again.
+      - name: DB validation checks C1-C9 (findings informational; crash blocks)
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: |
+          python3 scripts/validate_db.py --verbose > /tmp/validate_db.txt 2>&1 || true
+          cat /tmp/validate_db.txt
+          if grep -q "Traceback" /tmp/validate_db.txt; then
+            echo "::error::validate_db.py crashed (schema drift in the script?)"
+            exit 1
+          fi
+
+      - name: Adversarial research protocol audit — rule #7 (findings informational; crash blocks)
+        env:
+          GUIDEBOOK_DB_PATH: data/guidebook.db
+        run: |
+          python3 scripts/audit/research_protocol_audit.py > /tmp/rp_audit.txt 2>&1 || true
+          cat /tmp/rp_audit.txt
+          if grep -q "Traceback" /tmp/rp_audit.txt; then
+            echo "::error::research_protocol_audit.py crashed (schema drift in the script?)"
+            exit 1
+          fi
+
   attestation_schema:
     runs-on: ubuntu-latest
     name: Attestation schema + presence (blocking)

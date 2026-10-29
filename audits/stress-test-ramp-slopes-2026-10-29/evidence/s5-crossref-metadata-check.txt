@@ -1,0 +1,8 @@
+== 10.1046/j.1532-5415.2002.50056.x
+['Influence of Lower Extremity Strength of Healthy Older Adults on the Outcome of an Induced Trip'] | ['Journal of the American Geriatrics Society'] | 2002 | ['Pavol', 'Owings', 'Foley', 'Grabiner']
+== 10.1016/j.apmr.2011.10.023
+['Effect of Backrest Height on Wheelchair Propulsion Biomechanics for Level and Uphill Conditions'] | ['Archives of Physical Medicine and Rehabilitation'] | 2012 | ['Yang', 'Koontz', 'Yeh', 'Chang']
+== 10.1016/j.ergon.2014.07.001
+["Effects of ramp slope, ramp height and users' pushing force on performance, muscular activity and subjective ratings during wheelchair driving on a ramp"] | ['International Journal of Industrial Ergonomics'] | 2014 | ['Kim', 'Lee', 'Kwon', 'Chung']
+== 10.1016/j.apmr.2017.04.023
+['Getting a Manual Wheelchair Over a Threshold Using the Momentum Method: A Descriptive Study of Common Errors'] | ['Archives of Physical Medicine and Rehabilitation'] | 2017 | ['Al Lawati', 'Kirby', 'Smith', 'MacKenzie']

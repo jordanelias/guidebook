@@ -1,0 +1,31 @@
+### T1 legit ingest: Sanford 1997 + slug link
+{
+  "ref_id": "REF-00741",
+  "linked_slug": "stair-ramp-threshold-biomechanics-accessibility",
+  "dry_run": false
+}
+
+### T2 NEGATIVE: re-add Kim 2014 DOI under new ref_id (should be rejected as duplicate)
+{
+  "ref_id": "REF-00742",
+  "linked_slug": null,
+  "dry_run": false
+}
+
+### T3 NEGATIVE: invalid tier 9 / bogus evidence-type
+{
+  "ref_id": "REF-00743",
+  "linked_slug": null,
+  "dry_run": false
+}
+
+### result rows
+('REF-00741', '10.1080/10400435.1997.10132293', 3, 'clinical', None, None, 1997)
+('REF-00742', '10.1016/j.ergon.2014.07.001', 3, None, None, None, 2014)
+('REF-00743', None, 9, 'bogus', None, None, 2099)
+[('REF-00741', 'stair-ramp-threshold-biomechanics-accessibility', 'SRB-16', '2026-10-29 18:06', 'stress-test-2026-10-29', '2026-10-29 18:06', 'stress-test-2026-10-29', None)]
+
+### post-ingest CI integrity
+  [✗] C02: All DOI rows have doi_resolution_outcome set (pre-pipeline backfill applied)
+RESULTS: 34/35 checks passed
+FAILED:

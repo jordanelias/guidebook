@@ -1,0 +1,7 @@
+Sanford [('REF-00026', 'Sanford, J., & Bosch, S.J.', 2013, 'An investigation of noncompliant toilet room designs for assisted toil'), ('REF-00034', 'Lee, S., Sanford, J., Calkins, M., et al.', 2018, 'Beyond ADA Accessibility Requirements'), ('REF-00035', 'Lee, S., Desai, R., Oh, K., Sanford, J., & Prilutsky, B.', 2019, 'Effects of bilateral swing-away grab bars on biomechanics of STS toile'), ('REF-00038', 'Sanford, J., Echt, K., & Malassigné, P.', 2000, 'An E for ADAAG')]
+Lenker []
+Bertrand []
+Liu incline []
+Xie pedestrian slopes []
+ramp usability []
+doi 1997 Sanford? (0,)

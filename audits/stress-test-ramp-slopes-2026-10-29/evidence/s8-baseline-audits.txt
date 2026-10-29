@@ -1,0 +1,162 @@
+##### scripts/audit/pmp_audit.py
+============================================================
+PROGRESSIVE MEASUREMENT PROBE (PMP) — COMPLIANCE AUDIT
+============================================================
+
+[CHECK 1] Items with numerical specs lacking PMP walk: 0
+
+[CHECK 2] Incomplete PMP walks (no 'final' phase reached): 0
+
+[CHECK 3] PMP walks with no passing strict step: 1
+  ⚠ walk=PMP-A08-001 | A-08 [school-environment-autism] 3 steps, 0 passing
+
+[CHECK 4] PMP passing steps citing ineligible sources (rule #10): 0
+
+[CHECK 5] Passing PMP steps without ref_id: 0
+
+[CHECK 6] direction/claim_type inconsistency: 0
+
+[CHECK 7] Skipped — items table does not carry spec_value_origin; drift detection requires reasoning-doc parsing (future work)
+
+============================================================
+ISSUES: 1
+============================================================
+##### scripts/audit/research_protocol_audit.py
+Traceback (most recent call last):
+  File "C:\Github\guidebook\scripts\audit\research_protocol_audit.py", line 192, in <module>
+    sys.exit(audit())
+             ~~~~~^^
+  File "C:\Github\guidebook\scripts\audit\research_protocol_audit.py", line 96, in audit
+    verified_no_prior = db.execute("""
+                        ~~~~~~~~~~^^^^
+        SELECT ref_id, title FROM evidence_sources
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        WHERE verification_status = 'VERIFIED'
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AND (prior_expectation IS NULL OR prior_expectation = '')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    """).fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: title
+##### scripts/audit/code_currency_audit.py
+code_currency_audit.py — run 2026-10-29
+  DB: C:\Users\Jordan\AppData\Local\Temp\claude\C--Github-guidebook\d9505991-620e-4974-95b2-b407384c5793\scratchpad\test.db
+  current year for age calc: 2026
+  tier thresholds (years): T4=7, T5=5, T6=5
+  365-day suppression cutoff: rows with code_currency_verified_at OR
+    supersession_check.checked_at >= today minus 365 days suppressed
+
+======================================================================
+
+[CHECK 1] code_currency_status enum validity: 0 invalid
+
+[CHECK 2] T4–T6 cited rows past freshness threshold, not currency-verified: 129
+
+  Tier 4 (36 rows):
+    age=25y REF-00512 JP   ?                         2001
+      title: JIS T 9251:2001 — Tactile Walking Surface Indicators
+      slugs: wayfinding-global-south
+    age=22y REF-00401 INT  ?                         2004
+      title: ISO 2631-1:1997/2004 — Mechanical Vibration and Shock — WBV 
+      slugs: floor-vibration-wheelchair-disability
+    age=21y REF-00225 INT  ?                         2005
+      title: ISO 7730:2005 — Ergonomics of the thermal environment (PMV/P
+      slugs: ms-thermal-temperature-conflict-resolution
+    age=20y REF-00617 INT  ?                         2006
+      title: VOC measurement from building products (chamber method)
+      slugs: air-quality-voc-chemical-sensitivity-built-environ
+    age=20y REF-00017 JP   JISC                      2006
+      title: MLIT BF Law + JIS T 9251:2006 — 点字ブロック
+      slugs: visual-impairment-built-environment
+    age=19y REF-00402 INT  ?                         2007
+      title: ISO 10137:2007 — Serviceability of Buildings (vibration crit
+      slugs: floor-vibration-wheelchair-disability
+    age=18y REF-00279 DE   BMWi                      2008
+      title: Ökonomische Impulse eines barrierefreien Tourismus für alle 
+      slugs: accessibility-feature-market-value-uplift-framing
+    age=18y REF-00004 INT  Castell                   2008
+      title: Building access for the intellectually disabled
+      slugs: intellectual-disability-built-environment-design
+    age=17y REF-00603 INT  ?                         2009
+      title: ISO 3382-1:2009 — Measurement of room acoustic parameters
+      slugs: acoustics-speech-intelligibility-disability
+    age=16y REF-00472 EU/UK ?                         2010
+      title: BS EN 54-23:2010 — Fire detection and alarm systems
+      slugs: visual-alerting-and-wayfinding-light,visual-fire-a
+    age=16y REF-00187 INT  World Health Organization 2010
+      title: Community-Based Rehabilitation: CBR Guidelines — accessible 
+      slugs: co1-housing-research-global-south
+    age=16y REF-00192 INT  Steinfeld                 2010
+      title: Anthropometry and Standards for Wheeled Mobility: An Interna
+      slugs: body-sizes-supplementary-populations,manoeuvring-f
+    age=16y REF-00320 US   ?                         2010
+      title: 2010 ADA Standards for Accessible Design §611 — Washing Mach
+      slugs: accessible-laundry-room-design
+    age=16y REF-00326 US   Acoustical Society of America 2010
+      title: ANSI/ASA S12.60-2010/Part 1 — Acoustical Performance Criteri
+      slugs: deaf-classroom-reverberation-time
+    age=16y REF-00335 US   Acoustical Society of America 2010
+      title: ANSI S12.60:2010 — Acoustical Performance Criteria for Schoo
+      slugs: deaf-acoustic-built-environment
+    ... and 21 more
+##### scripts/audit_evidence_metadata.py
+============================================================================
+EVIDENCE METADATA AUDIT — PI v10.8 standing rule #10
+============================================================================
+DB: C:/Users/Jordan/AppData/Local/Temp/claude/C--Github-guidebook/d9505991-620e-4974-95b2-b407384c5793/scratchpad/test.db
+
+OVERALL EVIDENCE-BASE HEALTH
+----------------------------------------------------------------------------
+  Total sources:                 640
+  Eligible for synthesis:        640 (100.0%)
+  Excluded from synthesis:       0
+  Pending rehabilitation:        0
+
+  Distribution (metadata_quality × verification_status):
+    COMPLETE-STATUTORY     × VERIFIED                324
+    COMPLETE               × VERIFIED                311
+    COMPLETE-STATUTORY     × UNVERIFIED-1              5
+
+PHASE E READINESS (thresholds: ≥3 eligible sources, ≥2 tier categories)
+----------------------------------------------------------------------------
+  Total slugs:                   82
+  READY for Phase E:             60
+  BLOCKED (have sources but insufficient eligible): 8
+  EMPTY (no linked sources):     14
+
+READY BPCs (can begin Phase E now):
+  accessibility-feature-market-value-uplift-framing        33/33  eligible · tiers [1,3,4,5,6]
+  room-acoustic-performance                                32/32  eligible · tiers [1,2,3,4,5,6]
+  threshold-door-hardware                                  32/32  eligible · tiers [1,3,4,5,6]
+  mobility-built-environment                               24/24  eligible · tiers [1,2,3,5,6]
+  cognitive-wayfinding-design                              22/22  eligible · tiers [1,2,3,5]
+  mental-health-built-environment                          22/22  eligible · tiers [1,2,3,4,5]
+  residential-entry-and-threshold                          20/20  eligible · tiers [1,2,4,5,6]
+  accessible-bathroom-and-grab-bar                         19/19  eligible · tiers [1,2,3,4,5,6]
+  school-environment-autism                                17/17  eligible · tiers [1,2,3]
+  stair-ramp-threshold-biomechanics-accessibility          15/15  eligible · tiers [3,4]
+  threshold-and-level-access                               15/15  eligible · tiers [4,5,6]
+  upper-limb-impairment-built-environment                  14/14  eligible · tiers [1,3]
+  residential-kitchen-and-task-surfaces                    13/13  eligible · tiers [1,4,5,6]
+  accessible-circulation-geometry                          12/12  eligible · tiers [1,2,3,4,5,6]
+  air-quality-voc-chemical-sensitivity-built-environment   12/12  eligible · tiers [2,3,4,5]
+  pain-ofs-built-environment-design                        12/12  eligible · tiers [1,2,3,5,6]
+  sensory-room-user-control                                12/12  eligible · tiers [2,3]
+  accessible-design-economics-cost-premium                 11/11  eligible · tiers [1,2,3,6]
+  body-sizes-supplementary-populations                     11/11  eligible · tiers [3,4,5]
+  reach-range-and-accessible-controls                      11/11  eligible · tiers [3,5,6]
+  circadian-lighting-melanopic-edi                         10/10  eligible · tiers [3,4,5]
+  construction-cost-data                                   10/10  eligible · tiers [1,2,3,6]
+  deaf-acoustic-built-environment                          10/10  eligible · tiers [1,2,4,5]
+  deaf-spatial-design                                      10/10  eligible · tiers [1,2,3,5]
+  ms-thermal-temperature-conflict-resolution               10/10  eligible · tiers [1,3,4,5]
+  sensory-relief-space-design                              10/10  eligible · tiers [1,2,3,4,6]
+  design-framework-evidence-audit                           9/9   eligible · tiers [2,3,4,5]
+  wayfinding-dementia-spatial-design                        9/9   eligible · tiers [1,3]
+  wayfinding-global-south                                   9/9   eligible · tiers [1,4,6]
+  acoustics-speech-intelligibility-disability               8/8   eligible · tiers [1,2,3,4]
+  assistive-listening-systems                               8/8   eligible · tiers [2,4,5,6]
+  deafblind-built-environment-design                        8/8   eligible · tiers [1,2,6]
+  dementia-built-environment                                8/8   eligible · tiers [1,3,5]
+  manoeuvring-footprint-vs-turning-radius-methodology       8/8   eligible · tiers [1,3,4]
+  neurological-built-environment                            8/8   eligible · tiers [1,3]

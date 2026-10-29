@@ -17,17 +17,23 @@ Flags:
 Per DR-2026-05-09 (CHECK 1-6) and Stage B.5 audit findings 2026-05-10 (CHECK 7-9).
 Run before each session close.
 """
+import os
 import sqlite3
 import sys
 import re
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent.parent
-DB = REPO / "data" / "guidebook.db"
+DB = Path(os.environ.get("GUIDEBOOK_DB_PATH", str(REPO / "data" / "guidebook.db")))
+
+# Report uses non-ASCII markers; avoid cp1252 UnicodeEncodeError on Windows consoles.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 
 def audit():
-    db = sqlite3.connect(str(DB))
+    # Read-only: this is an audit, it must never write.
+    db = sqlite3.connect(f"file:{DB.as_posix()}?mode=ro", uri=True)
     issues = []
 
     # CHECK 1: Research-closed gaps without protocol fields
@@ -94,14 +100,14 @@ def audit():
     # checks while 642/659 evidence_sources were missing this field. Closing
     # the hole.
     verified_no_prior = db.execute("""
-        SELECT ref_id, title FROM evidence_sources
+        SELECT ref_id, pub_title FROM evidence_sources
         WHERE verification_status = 'VERIFIED'
         AND (prior_expectation IS NULL OR prior_expectation = '')
     """).fetchall()
 
     # CHECK 8 (added 2026-05-10): Verified citations lacking search_queries_used.
     verified_no_queries = db.execute("""
-        SELECT ref_id, title FROM evidence_sources
+        SELECT ref_id, pub_title FROM evidence_sources
         WHERE verification_status = 'VERIFIED'
         AND (search_queries_used IS NULL OR search_queries_used = '')
     """).fetchall()

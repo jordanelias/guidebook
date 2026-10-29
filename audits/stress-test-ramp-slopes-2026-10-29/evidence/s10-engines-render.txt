@@ -1,0 +1,33 @@
+### consumers of evidence_cell_state / weighting / convergence in scripts, schemas, workflows
+scripts/generate_parts.py
+scripts/migrations/024_evidence_cell_state.sql
+scripts/tests/test_evidence_cell_state_2_3.py
+scripts/tests/test_validate_evidence_state_2_4.py
+scripts/validate_evidence_state.py
+schemas/directness.py
+schemas/evidence_state.py
+
+### what did the killed resolver change in the scratch DB? (E-03 test rows)
+('REF-00741', None, None, None, None, 0)
+('REF-00742', None, None, None, None, 0)
+('REF-00743', None, None, None, None, 0)
+
+### spec_page.py E-03
+           ~~~~~~~~~~~~^
+        "SELECT * FROM specification WHERE item_code = ?", (item_code,)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).fetchone()
+    ^
+sqlite3.OperationalError: no such table: specification
+
+### parts generator
+usage: generate_parts.py [-h] [--db DB] [--mode {stub,full}] [--out OUT]
+                         [--clean]
+
+A.12 guidebook reassembly engine (Stage 4.2)
+
+options:
+  -h, --help          show this help message and exit
+  --db DB             DB path (default $GUIDEBOOK_DB_PATH or
+                      data/guidebook.db)
+  --mode {stub,full}

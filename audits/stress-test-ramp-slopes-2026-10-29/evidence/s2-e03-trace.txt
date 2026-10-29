@@ -1,0 +1,72 @@
+
+## source_slug_links for slug: count, by link cols
+['ref_id', 'slug', 'local_ref_id', 'created_at', 'created_by_session', 'updated_at', 'updated_by_session', 'relevance_note']
+15
+
+## linked sources quality matrix
+(3, 'clinical', 'COMPLETE', 'VERIFIED', 'INT', 9)
+(3, 'clinical', 'COMPLETE', 'VERIFIED', 'UK', 2)
+(3, 'clinical', 'COMPLETE', 'VERIFIED', 'CA', 1)
+(3, 'clinical', 'COMPLETE', 'VERIFIED', 'US', 1)
+(3, 'grey', 'COMPLETE', 'VERIFIED', 'INT', 1)
+(4, 'standard_eb', 'COMPLETE', 'VERIFIED', 'INT', 1)
+
+## jurisdiction spread of linked sources
+('INT', 11)
+('UK', 2)
+('US', 1)
+('CA', 1)
+
+## year distribution
+(1980, 2)
+(1990, 3)
+(2000, 2)
+(2010, 3)
+(2020, 5)
+
+## search_coverage for slug
+('NOT-RUN', 42, 0, 0, 0)
+('SEARCHED', 5, 0, 0, 0)
+
+## search_languages for slug
+('NOT-RUN', 5, 0)
+('SEARCHED', 14, 112)
+
+## citation_mining for slug
+['slug', 'local_ref_id', 'global_ref_id', 'doi', 'backward', 'forward', 'connections_produced', 'notes', 'created_at', 'created_by_session', 'updated_at', 'updated_by_session', 'deferred_reason']
+(14,)
+
+## item_population_links E-03
+('E-03', 'MOB', '', 'applies', None, '2026-05-11T23:32:55+00:00', 'session_2026-05-11-items-population-normalization')
+('E-03', 'PAIN', '', 'applies', None, '2026-05-11T23:32:55+00:00', 'session_2026-05-11-items-population-normalization')
+('E-03', 'OFS', '', 'applies', None, '2026-05-11T23:32:55+00:00', 'session_2026-05-11-items-population-normalization')
+('E-03', 'SCI', '', 'applies', None, '2026-05-11T23:32:55+00:00', 'session_2026-05-11-items-population-normalization')
+
+## item_population_elaborations E-03
+
+## connections involving E-03
+('CON-0156', 'E-03')
+
+## term_item_links
+('TERM-001', 'E-03', None)
+('TERM-016', 'E-03', None)
+
+## item_audit_runs E-03
+['run_id', 'item_code', 'session', 'steps_complete', 'steps_started', 'status', 'spec_hash', 'brief_path', 'created_at', 'created_by_session', 'updated_at', 'updated_by_session']
+('E-03_session_2026-05-08-c3-calibration', 'E-03', 'session_2026-05-08-c3-calibration', '["functional-deficit-auditor", "economics-auditor", "content-gap-analyzer", "evidence-auditor"]', '["functional-deficit-auditor", "economics-auditor", "content-gap-analyzer", "evidence-auditor"]', 'HANDED-OFF', None, None, '2026-05-08 21:06', 'session_2026-05-08-c3-calibration', '2026-05-08 21:08', 'session_2026-05-08-c3-calibration')
+
+## supersession_check slug
+('SUPCHK-ae6100b1fd77', 'stair-ramp-threshold-biomechanics-accessibility', 'SRB-01', 'REF-00383', 4, 'standard_eb', 'current_best', None, None, None, None, '{"tool": "web_search_composite", "query": "stair geometry riser tread fall safety systematic review 2020-2025", "date_filter": "published_after:2015", "candidates_returned": 8, "candidates_reviewed": 5}', 8, 5, '2026-05-25T03:04:48Z', 'session_2026-05-23-bpc-rewrite-phase-b-closure', 'composite', 'Templer 1992 The Staircase monograph remains the foundational stair-safety design reference, cited by all 2019-2025 stair-fall biomechanics literature surveyed (Francksen 2020/2022, Harper 2025, Foster 2019). Post-Templer work adds incremental refinements on inter-step variation tolerances and contrast cues but no comprehensive replacement of the design framework. Current best for stair-design parameter-space; flagged for jurisdiction-tracker handoff because incorporation into specific codes (IBC, ADA, OSHA 1910.25) is downstream regulatory question.')
+('SUPCHK-6a3c6e6bef61', 'stair-ramp-threshold-biomechanics-accessibility', 'SRB-02', 'REF-00384', 3, 'clinical', 'refined_by', None, '["10.1007/s40520-025-02929-5"]', 'Kinematic phenotype refinement: Tanaka 2025 identifies 3 stair-descent phenotypes (N/E/R-type) in 82 community-dwelling older adults via hierarchical cluster analysis, refining the descent-kinematic-variables evidence base. Anchor Simoneau 1991 governs the visual-factors-on-fall-kinematics mechanism; new evidence adds phenotype-level pattern recognition.', None, '{"tool": "pubmed_search", "query": "stair descent fall older adults biomechanics", "date_filter": "published_after:2020", "candidates_returned": 15, "candidates_reviewed": 3}', 15, 3, '2026-05-25T03:04:49Z', 'session_2026-05-23-bpc-rewrite-phase-b-closure', 'pubmed_search', 'Tanaka et al 2025 doi 10.1007/s40520-025-02929-5 Aging Clin Exp Res phenotype clustering refines kinematic interpretation.')
+('SUPCHK-d16e75de21f0', 'stair-ramp-threshold-biomechanics-accessibility', 'SRB-03', 'REF-00385', 3, 'clinical', 'current_best', None, None, None, None, '{"tool": "pubmed_search", "query": "walking energy expenditure standard tables", "date_filter": "published_after:2020", "candidates_returned": 0, "candidates_reviewed": 0}', 0, 0, '2026-05-25T03:04:49Z', 'session_2026-05-23-bpc-rewrite-phase-b-closure', 'composite', 'Waters 1988 walking energy-speed standard tables remain foundational physiological reference. No comprehensive update or replacement table found in 2020-2025 search; the gait-energy literature has added gait-pathology-specific work but not replaced the typical-population baseline tables.')
+('SUPCHK-fabaf75bf303', 'stair-ramp-threshold-biomechanics-accessibility', 'SRB-04', 'REF-00386', 3, 'clinical', 'current_best', None, None, None, None, '{"tool": "pubmed_search", "query": "manual wheelchair ramp slope propulsion", "date_filter": "published_after:2020", "candidates_returned": 0, "candidates_reviewed": 0}', 0, 0, '2026-05-25T03:04:49Z', 'session_2026-05-23-bpc-rewrite-phase-b-closure', 'pubmed_search', 'Kim 2014 ramp-slope + height + pushing-force wheelchair performance. No newer primary work in 2020-2025 PubMed search on the same parameter triple. Anchor current best by absence of replacement.')
+('SUPCHK-6175bce0ae7e', 'stair-ramp-threshold-biomechanics-accessibility', 'SRB-05', 'REF-00387', 3, 'clinical', 'refined_by', None, '["10.1007/s40520-025-02929-5"]', 'Phenotype + strength dimension: Tanaka 2025 found stair-descent phenotypes correlate with muscle-strength factor (CB&M strength sub-score); refines the lower-extremity-strength fall-risk mechanism Pavol 2001 anchored. Anchor still governs the broader lower-extremity-fall-likelihood relationship.', None, '{"tool": "pubmed_search", "query": "stair descent fall older adults biomechanics", "date_filter": "published_after:2020", "candidates_returned": 15, "candidates_reviewed": 3}', 15, 3, '2026-05-25T03:04:49Z', 'session_2026-05-23-bpc-rewrite-phase-b-closure', 'pubmed_search', 'Same Tanaka 2025 candidate as SRB-02. Refinement applies to the muscle-strength-fall-risk mechanism dimension.')
+[(15,)]
+
+## evidence_cell_state / convergence / extraction rows for E-03
+evidence_cell_state ['cell_id', 'item_code', 'population_code', 'state', 'design_scale', 'convergence_id', 'confidence_dimensions_present', 'confidence_dimensions_absent', 'confidence_synthesis_basis', 'gap_register_id', 'not_applicable_rationale', 'has_unverified_sources']
+convergence_assessment ['convergence_id', 'status', 'clinical_sources', 'co1_sources', 'co2_sources', 'down_weighted_sources', 'discounted_sources', 'rationale', 'synthesis_approach', 'created_at', 'created_by_session', 'updated_at']
+source_value_extractions ['extraction_id', 'ref_id', 'slug', 'parameter', 'parameter_canonical', 'population_code', 'population_label', 'jurisdiction', 'claim_type', 'claimed_value', 'claimed_unit', 'claim_text']
+
+## reasoning_doc_citations / evidence_population_match for slug
+['citation_id', 'reasoning_doc_slug', 'parameter', 'jurisdiction', 'population', 'claim_type', 'claimed_value', 'claimed_unit', 'claim_text', 'source_ref_id', 'source_section', 'value_match', 'claim_match', 'verified_at', 'verified_by_session', 'paywall_purchase_candidate', 'notes', 'setting']

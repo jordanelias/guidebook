@@ -20,7 +20,16 @@ import sys
 from pathlib import Path
 
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db"))
-EXPECTED_SCHEMA_VERSION = 5
+MIGRATIONS_DIR = Path(__file__).resolve().parent / "migrations"
+
+
+def _expected_schema_version() -> int:
+    """Highest NNN_*.sql prefix in scripts/migrations (user_version tracks it)."""
+    nums = [int(p.name[:3]) for p in MIGRATIONS_DIR.glob("[0-9][0-9][0-9]_*.sql")]
+    return max(nums) if nums else 0
+
+
+EXPECTED_SCHEMA_VERSION = _expected_schema_version()
 
 
 def validate(verbose: bool = False):
@@ -78,16 +87,29 @@ def validate(verbose: bool = False):
     else:
         infos.append("C4 PASS: all connections have >=1 target")
 
-    # C5: evidence_sources without doi or doi_less_key
+    # C5: evidence_sources with no usable dedup key.
+    # doi_less_key was dropped in the v2 evidence_sources redesign; a DOI-less
+    # source is now dedup-able by a persistent identifier or by the structured
+    # (first_author_last, pub_year, pub_title) triple.
     no_dedup = conn.execute("""
         SELECT ref_id FROM evidence_sources
-        WHERE doi IS NULL AND doi_less_key IS NULL
+        WHERE COALESCE(doi, '') = ''
+          AND COALESCE(pmid, '') = ''
+          AND COALESCE(isbn, '') = ''
+          AND COALESCE(standard_number, '') = ''
+          AND NOT (COALESCE(first_author_last, '') != ''
+                   AND pub_year IS NOT NULL
+                   AND COALESCE(pub_title, '') != '')
     """).fetchall()
     if no_dedup:
         warnings.append(
-            f"C5 WARN: {len(no_dedup)} evidence source(s) with no doi or "
-            "doi_less_key (incomplete dedup data)"
+            f"C5 WARN: {len(no_dedup)} evidence source(s) with no doi/pmid/isbn/"
+            "standard_number and no (first_author_last, pub_year, pub_title) "
+            "triple (incomplete dedup data)"
         )
+        if verbose:
+            for r in no_dedup[:10]:
+                warnings.append(f"  {r[0]}")
     else:
         infos.append("C5 PASS: all evidence sources have dedup key")
 

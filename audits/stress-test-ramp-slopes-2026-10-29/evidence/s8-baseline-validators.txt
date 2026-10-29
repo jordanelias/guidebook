@@ -1,0 +1,31 @@
+### db.py validate
+Traceback (most recent call last):
+  File "C:\Github\guidebook\scripts\validate_db.py", line 183, in <module>
+    validate(verbose=verbose)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Github\guidebook\scripts\validate_db.py", line 82, in validate
+    no_dedup = conn.execute("""
+               ~~~~~~~~~~~~^^^^
+        SELECT ref_id FROM evidence_sources
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        WHERE doi IS NULL AND doi_less_key IS NULL
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    """).fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: doi_less_key
+
+### validate_db.py
+Traceback (most recent call last):
+  File "C:\Github\guidebook\scripts\validate_db.py", line 183, in <module>
+    validate(verbose=verbose)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Github\guidebook\scripts\validate_db.py", line 82, in validate
+    no_dedup = conn.execute("""
+               ~~~~~~~~~~~~^^^^
+        SELECT ref_id FROM evidence_sources
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        WHERE doi IS NULL AND doi_less_key IS NULL
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    """).fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: doi_less_key

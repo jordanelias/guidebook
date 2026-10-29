@@ -1,0 +1,51 @@
+### CI test_db_integrity (baseline)
+  [✓] D02: v1_legacy ref_id parity (table dropped, check skipped)
+  [✓] D03: No duplicate slugs in bpc_metadata
+
+[E] Schema contract
+  [✓] E01: evidence_sources has all required columns (21 checked)
+  [✓] E02: pipeline_runs has Phase 4 tracking columns
+  [✓] E03: url_verification_runs table exists
+  [✓] E04: data_migrations log non-empty (187 entries)
+  [✓] E05: Required backfill migrations recorded
+  [✓] E06: SQLite PRAGMA integrity_check = ok
+
+[F] Pipeline run health
+  [✓] F01: No DOI regressions in pipeline_runs
+  [✓] F02: All pipeline_runs have completed_at set
+  [✓] F03: All url_verification_runs have completed_at set
+  [✓] F04: No VERIFIED count regressions in pipeline_runs
+
+[G] Evidence chain integrity
+  [✓] G01: evidence_source_authors → evidence_sources (no orphan author rows)
+  [✓] G02: COMPLETE person-authored sources have ≥1 author row
+  [✓] G03: ORCID values stored as plain identifier (no URL prefix)
+
+======================================================================
+RESULTS: 35/35 checks passed
+======================================================================
+
+### db.py add-source --help
+usage: db.py add-source [-h] --ref-id REF_ID --authors AUTHORS --year YEAR
+                        --title TITLE --tier TIER [--doi DOI] [--pmid PMID]
+                        [--jurisdiction JURISDICTION]
+                        [--evidence-type EVIDENCE_TYPE] [--slug SLUG]
+                        [--local-ref-id LOCAL_REF_ID] --session SESSION
+                        [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --authors AUTHORS
+  --year YEAR
+  --title TITLE
+  --tier TIER
+  --doi DOI
+  --pmid PMID
+  --jurisdiction JURISDICTION
+  --evidence-type EVIDENCE_TYPE
+  --slug SLUG           Link to slug (requires --local-ref-id)
+  --local-ref-id LOCAL_REF_ID
+                        Local ref ID within slug
+  --session SESSION
+  --dry-run

@@ -1,0 +1,36 @@
+### reasoning docs present
+references/bpc-reasoning:
+_template.md
+room-acoustic-performance.md
+
+references/connection-reasoning:
+_template.md
+bpc md files:
+31
+
+### validate_reasoning.py exists?
+scripts/validate_reasoning.py
+validate_audit_runs.py
+validate_bpc.py
+validate_commits.py
+validate_conflict.py
+validate_conflicts.py
+validate_cross_refs.py
+validate_db.py
+validate_evidence_state.py
+validate_item.py
+validate_items.py
+validate_jurisdiction.py
+validate_population.py
+validate_reasoning.py
+validate_schema.py
+validate_temporal.py
+
+### attestation for ramp slug?
+17
+connections NULL/empty description: (177, 162)
+E-03 connection targets: [('CON-0156', 'E-03', 'The failure taxonomy documents five failure modes. CS-02 (Gallaudet rounded corners) is th', 'CONSUMED')]
+reasoning_doc_citations rows: [('room-acoustic-performance', 7)]
+bpc evidence_state distribution: [(None, 13), ('METHODOLOGY-AUTHORED', 1), ('RETRACTED-PRE-REHAB', 68)]
+items with any pmp walk: (4,) of (92,)
+jurisdictions w/ search_coverage SEARCHED (any slug): (24,) of (47,)

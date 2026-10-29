@@ -1,0 +1,32 @@
+### apply via runner
+  Pending schema migrations: 1
+    Applying 026_classification_codes.sql (→ version 26)...
+
+--- Data migrations ---
+  Pending data migrations: 1
+    Applying data_20261029183048_2026-10-29-classification-codes.sql...
+
+Done. Schema at version 26; 1 data migration(s) applied.
+
+### CI integrity test
+RESULTS: 35/35 checks passed
+
+### validate_db
+  C2 PASS: no foreign key violations
+  C3 PASS: user_version=26
+RESULT: 1 error(s), 1 warning(s)
+
+### rebuild from migrations -> compare
+Rebuilding C:\Users\Jordan\AppData\Local\Temp\claude\C--Github-guidebook\d9505991-620e-4974-95b2-b407384c5793\scratchpad\rebuilt.db from migration history...
+  Applying 15 schema migration(s)
+  Applying 163 data migration(s)
+Rebuilt C:\Users\Jordan\AppData\Local\Temp\claude\C--Github-guidebook\d9505991-620e-4974-95b2-b407384c5793\scratchpad\rebuilt.db successfully.
+PRAGMA user_version                                applied=    26 rebuilt=    26 OK
+select count(*) from evidence_sources              applied=   640 rebuilt=   640 OK
+select count(*) from source_population_tags        applied=  2540 rebuilt=  2540 OK
+select count(*) from source_icf_tags               applied=   664 rebuilt=   664 OK
+select count(*) from source_need_tags              applied=   645 rebuilt=   645 OK
+select count(*) from icf_codes                     applied=    37 rebuilt=    37 OK
+select count(*) from population_icf_map            applied=    67 rebuilt=    67 OK
+select count(*) from items                         applied=    92 rebuilt=    92 OK
+select count(*) from gaps                          applied=   296 rebuilt=   296 OK

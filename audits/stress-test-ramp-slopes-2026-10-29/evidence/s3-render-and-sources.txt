@@ -1,0 +1,33 @@
+REF-00460: [('REF-00460', 'DM 236/89 — porte accessibili (Allegato A, art. 8 — accessible doors: clear width, opening force, threshold heights)', 'Ministero dei Lavori Pubblici (now MIT), Repubblica Italiana', 1989, 6, 'code', 'IT', 'COMPLETE-STATUTORY', 'VERIFIED', 'DM 14 giugno 1989, n. 236 — Allegato A (door specifications)')]
+slug links for REF-00460: [('threshold-door-hardware',)]
+CON-0229: [('CON-0156', 'CONSUMED', None, 'The failure taxonomy documents five failure modes. CS-02 (Gallaudet rounded corners) is the only documented case of a cross-population conflict identified post-occupancy and corrected. The nine conflict resolutions in cross-population-conflict-resolutions are individually evidence-supported, but the'), ('CON-0229', 'CONSUMED', None, None)]
+%Waters% [('REF-00385', 'Waters RL, Mulroy S', 1988, 'Energy-speed relationship of walking: Standard tables', 3)]
+%Sawatzky% [('REF-00070', 'Sawatzky, B.', 2015, 'Upper extremity preservation in manual wheelchair users', 1)]
+%Koontz% [('REF-00388', 'Koontz AM + colleagues', 2012, 'Effect of Backrest Height on Wheelchair Propulsion Biomechanics for Level and Up', 3), ('REF-VERIFIED-002', 'Koontz, Cooper, & Boninger, Yang', 2005, 'A kinetic analysis of manual wheelchair propulsion during start-up on select ind', 3)]
+%Kim%ramp% []
+%Kim%wheelchair% []
+--- all 15 linked sources of the ramp slug
+('REF-00385', 'Waters RL, Mulroy S', 1988, 'Energy-speed relationship of walking: Standard tables', 3, 'INT', '10.1002/jor.1100060208')
+('REF-00389', 'Rodosky, M.', 1989, 'Influence of chair height on lower limb mechanics during rising', 3, 'INT', '10.1002/jor.1100070215')
+('REF-00384', 'Simoneau GG + colleagues', 1991, 'The Influence of Visual Factors on Fall-related Kinematic Variables During Stair Descent b', 3, 'INT', '10.1093/geronj/46.6.m188')
+('REF-00383', 'Templer J (John Templer)', 1992, 'The Staircase: Studies of Hazards, Falls, and Safer Design', 4, 'INT', None)
+('REF-00390', 'Lord, S.', 1993, 'Sit-to-stand performance depends on sensation, speed, balance, and psychological status in', 3, 'INT', '10.1016/s0004-9514(14)60454-2')
+('REF-00387', 'Pavol, M.', 2001, 'Influence of lower extremity on likelihood of falls in older persons. J Gerontol 56(8):M43', 3, 'INT', '10.1046/j.1532-5415.2002.50056.x')
+('REF-00392', 'Owsley C, McGwin G Jr, Sloane ME, Stalvey BT, Wells J', 2001, 'Timed Instrumental Activities of Daily Living (TIADL) Tasks: Relationship to Visual Functi', 3, 'INT', '10.1097/00006324-200105000-00019')
+('REF-00388', 'Koontz AM + colleagues', 2012, 'Effect of Backrest Height on Wheelchair Propulsion Biomechanics for Level and Uphill (best', 3, 'INT', '10.1016/j.apmr.2011.10.023')
+('REF-00386', 'Kim C, Lee D, Kwon S, Chung M', 2014, "Effects of ramp slope, ramp height and users' pushing force on performance, muscular activ", 3, 'INT', '10.1016/j.ergon.2014.07.001')
+('REF-00025', 'Lawati, Z., & Kirby, R.', 2017, 'Getting a Manual Wheelchair Over a Threshold Using the Momentum Method', 3, 'INT', '10.1016/j.apmr.2017.04.023')
+('REF-00393', 'Manandhar S, Lukman A, Dain SJ, Bridge CE, Relf M, Boon MY', 2022, 'Luminance contrast preferences of people with a vision impairment for elements in the buil', 3, 'INT', '10.3233/wor-210997')
+('REF-00394', "Ram M, Baltzopoulos V, Shaw A, Maganaris CN, Cullen J, O'Brien TD", 2024, 'Stair-Fall Risk Parameters in a Controlled Gait Laboratory Environment and Real (Domestic)', 3, 'UK', '10.3390/s24020526')
+('REF-00391', 'Levine I, Nirmalanathan K, Montgomery R, Novak A', 2025, 'Grab Bar Grasp Location During Bathtub Exit and Sit-to-Stand Transfers: Biomechanical Eval', 3, 'CA', '10.2196/69442')
+('REF-00395', 'Harper S, Brown C, Poulsen S, Barrett T, Dakin C', 2025, 'Interstep Variations of Stairways and Associations of High-Contrast Striping and Fall-Rela', 3, 'US', '10.2196/60622')
+('REF-00396', "Wharton E, O'Brien T, Foster RJ, Giebel C, Shenton J, Akpan A, Mills A, Roys M, Maganaris C", 2025, '"I don\'t know if it makes a difference to safety?" perception vs actuality: A mixed-method', 3, 'UK', '10.1371/journal.pone.0326850')
+--- sources anywhere with ramp/slope/gradient in title
+('REF-00030', 'Kim, C. S.; Lee, D.; Kwon, S.; Chung, M. K.', 2014, "Effects of ramp slope, ramp height and users' pushing force on performance, muscular activity and su", 3, 'INT')
+('REF-00078', 'Procap, & SIA', 2009, 'Constructions sans obstacles (ramp max 6%; admissible 12%)', 5, 'CH')
+('REF-00197', '中华人民共和国教育部 (Ministry of Education) + MOHURD + NDRC for national; provincial education + housing departments for provincial standards (DB3303/T = Zhejiang province standard)', 2025, 'DB3303/T 084-2025 — Barrier-free environment construction for special education schools (Zhejiang Pr', 5, 'ZH')
+('REF-00386', 'Kim C, Lee D, Kwon S, Chung M', 2014, "Effects of ramp slope, ramp height and users' pushing force on performance, muscular activity and su", 3, 'INT')
+('REF-00409', 'US Access Board', 2010, 'ADA Standards §§302–405 Accessible Routes, Entrances, Ramps', 6, 'US')
+('REF-00411', 'Direktoratet for byggkvalitet', 2017, 'TEK17 §12-4 Inngangsparti; §12-16 Rampe; §1-3(m) Trinnfri', 6, 'NO')
+('REF-00414', 'ABNT (Associação Brasileira de Normas Técnicas) — CB-040 Acessibilidade technical committee', 2020, 'NBR 9050:2020 §6.2 Rampas', 6, 'BR')
+('REF-00436', 'Standards Australia', 2021, 'AS 1428.1:2021 — threshold ≤35mm at 1:8 ramp (retrofit)', 6, 'AU')
