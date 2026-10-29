@@ -63,6 +63,9 @@ const ok = (c, m) => { c ? pass++ : fail++; console.log((c ? '  pass ' : '  FAIL
   const ruledText = await page.$eval('#p-' + ruledRow.key, e => e.textContent);
   ok(ruledText.includes('Your words') && ruledText.includes(ruledRow.words) && ruledText.includes('What it changes') && !ruledText.includes('Save my answer'), 'a database row the ledger rules on is listed as ruled, with the owner\'s words, and offers no options');
   ok(await page.$$eval('details.prompt[id^="p-unadjudicated_observations-"]', els => els.length) === exp.queue[6] + Object.keys(await page.evaluate(() => META.queue[6].ruled || {})).length, 'ruled rows are not also listed as waiting');
+  const noted = await page.evaluate(() => { for (const e of META.queue) for (const [id, n] of Object.entries(e.notes || {})) return { key: e.id + '-' + id, note: n.slice(0, 40), ruled: !!(e.ruled || {})[id] }; return null; });
+  await page.click('#p-' + noted.key + ' > summary');
+  ok(!noted.ruled && (await page.$eval('#p-' + noted.key, e => e.textContent)).includes(noted.note) && !!(await page.$('#p-' + noted.key + ' button.opt')), 'a waiting row can carry a note from the queue entry, shown above the row, and still offers its options');
   const wf = 'details.prompt[id^="p-withheld_findings-"]';
   await page.click(wf + ' >> nth=0 >> summary');
   const link = await page.$eval(wf + ' >> nth=0 >> a:has-text("Open the row page")', a => a.getAttribute('href'));

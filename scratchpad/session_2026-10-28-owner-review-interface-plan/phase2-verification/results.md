@@ -1,4 +1,4 @@
-# Phase 2 acceptance run, 2026-10-29 05:28 UTC (decisions as prompts; rows and decisions the ledger rules on listed as ruled)
+# Phase 2 acceptance run, 2026-10-29 05:37 UTC (decisions as prompts; rows and decisions the ledger rules on listed as ruled; a waiting row can carry a note)
 
 Page built with: python3 scripts/generate/owner_browser_build.py --out <harness scratchpad>/ob/index.html --wasm <local copy of sql-wasm.wasm; the build verifies its sha256>
 Drivers (this folder): test_browser.js and test_prompts.js (the answer flow against an in-memory stand-in for the page's store; it picks its prompts from what is open). Headless Chromium via Playwright, 400x800 touch viewport; sql-wasm.js served from a local copy at the cdnjs URL. expected.json is produced by a Python script from the same database and the YAML.
@@ -10,9 +10,9 @@ Drivers (this folder): test_browser.js and test_prompts.js (the answer flow agai
   pass view list equals sqlite_master (22 views)
   pass stamp shows user_version and sha256 of the file
   pass no horizontal overflow at 400px: home
-  pass prompt groups equal the decisions file (open gating, other open, ruled) and the queries (3,9,39,4,17,0,1,0,0,6)
+  pass prompt groups equal the decisions file (open gating, other open, ruled) and the queries (3,9,38,4,17,0,1,0,0,7)
   pass one card per decision and per row, waiting or ruled (79)
-  pass nav label carries the number of open prompts (40)
+  pass nav label carries the number of open prompts (41)
   pass with no store the page says saving is unavailable and offers Copy
   pass no horizontal overflow at 400px: waiting
   pass a decision prompt carries why, context, what it holds up, options and a recommendation
@@ -22,6 +22,7 @@ Drivers (this folder): test_browser.js and test_prompts.js (the answer flow agai
   pass an answered decision offers no options
   pass a database row the ledger rules on is listed as ruled, with the owner's words, and offers no options
   pass ruled rows are not also listed as waiting
+  pass a waiting row can carry a note from the queue entry, shown above the row, and still offers its options
   pass a row prompt links to its row page
   pass the row's long text is shown in full (153 characters)
   pass table page shows 40 cards first
@@ -37,10 +38,10 @@ Drivers (this folder): test_browser.js and test_prompts.js (the answer flow agai
   pass a view page opens
   pass no horizontal overflow at 400px: wide table (97 columns), columns open
   pass no console errors
-33 passed, 0 failed
+34 passed, 0 failed
 
 ## Answer flow (mocked store)
-  pass starts with nothing answered and saving available (40 open)
+  pass starts with nothing answered and saving available (41 open)
   pass Save is enabled when the view has a store
   pass choosing an option marks it
   pass the line to send in chat names the prompt and the choice

@@ -503,7 +503,8 @@ function rowContext(e, id) {
   const t = SCHEMA.tables[e.table], rid = rowidOf(e.table, e.key, id);
   if (!rid) return [h("p", { class: "gl" }, "The row is no longer in the table.")];
   const r = all("select * from " + q(e.table) + " where rowid = ?", [rid])[0];
-  const out = [h("div", { class: "stack" }, fieldsOf(t, r)), h("a", { href: "#r-" + slug(e.table) + "-" + rid }, "Open the row page")];
+  const note = (e.notes || {})[String(id)];
+  const out = [note ? h("p", { class: "note" }, note) : null, h("div", { class: "stack" }, fieldsOf(t, r)), h("a", { href: "#r-" + slug(e.table) + "-" + rid }, "Open the row page")];
   const sub = e.subject && SCHEMA.tables[r[e.subject.table_col]];
   const pk = sub && sub.cols.filter((c) => c.pk);
   const srid = pk && pk.length === 1 ? rowidOf(sub.name, pk[0].name, r[e.subject.key_col]) : null;
