@@ -25,6 +25,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import urllib.request
@@ -56,6 +57,17 @@ def meta(conn, db_file):
                 vocab.setdefault(t, {})[c] = sorted(v)
             elif (e := dbcore.check_expression(conn, t, c)):
                 shape.setdefault(t, {})[c] = e
+    with open(os.path.join(REPO, "references", "project-standards.md"), encoding="utf-8") as f:
+        entries = re.split(r"(?m)^## ", f.read())[1:]
+    rulings = {}
+    wants = [(d["id"], d["answered"]["ledger"]) for d in owner["decisions"] if d.get("answered")]
+    wants += [(f"{q['table']} {rid}", led) for q in owner["queue"] for rid, led in (q.get("ruled") or {}).items()]
+    for what, want in wants:
+        hits = [e for e in entries if e.startswith(want)]
+        if len(hits) != 1:
+            print(f"owner_browser_build: {what} is marked ruled in a ledger entry starting {want!r}, which matches {len(hits)} entries", file=sys.stderr)
+        else:
+            rulings[want] = hits[0].strip()
     refs = [r for (r,) in conn.execute("SELECT ref_id FROM evidence_sources ORDER BY 1")]
     holds = {r: d for r in refs if (d := dbcore.determinations_resting_on(conn, r))}
     for what, bad in (("table with no gloss", set(tables) - set(owner["glossary"])),
@@ -72,7 +84,7 @@ def meta(conn, db_file):
         "stage_order": order + ["infrastructure"], "stage": stages["tables"],
         "stage_judged": {"by": stages["judged_by"], "on": stages["judged_on"]},
         "vocab": vocab, "shape": shape, "holds": holds,
-        "glossary": owner["glossary"], "words": owner["words"], "decisions": owner["decisions"], "queue": owner["queue"],
+        "glossary": owner["glossary"], "words": owner["words"], "decisions": owner["decisions"], "rulings": rulings, "queue": owner["queue"],
         "gloss_status": {k: owner[k] for k in ("drafted_by", "drafted_on", "ratified_by", "ratified_on")},
     }
 

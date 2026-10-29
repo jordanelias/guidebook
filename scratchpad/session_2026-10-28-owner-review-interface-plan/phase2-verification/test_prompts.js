@@ -1,4 +1,6 @@
 // Answer flow with an in-memory stand-in for the page's store. Usage: node test_prompts.js <page.html>
+// It picks its prompts from what is open (a decision with a recommended option; an option that asks for words), so
+// it does not depend on which decisions the owner has answered.
 const { chromium } = require('playwright'); const fs = require('fs');
 const P = process.argv[2];
 const SQLJS = '/tmp/claude-0/-home-user-guidebook/e68b09ef-c52a-52a8-96c4-f9727206b4c9/scratchpad/sqljs-dl/sql-wasm.js';
@@ -18,23 +20,26 @@ async function open(browser, seed) {
 (async () => {
   const browser = await chromium.launch();
   let { ctx, page, errs } = await open(browser, {});
-  const total = await page.$$eval('details.prompt', e => e.length);
-  ok((await page.$eval('#answered', e => e.textContent)) === `0 of ${total} answered.`, 'starts with nothing answered and saving available');
-  await page.click('#p-OR-1 > summary');
-  ok(!(await page.$eval('#p-OR-1 button:has-text("Save my answer")', b => b.disabled)), 'Save is enabled when the view has a store');
-  await page.click('#p-OR-1 button.opt >> nth=0');
-  ok(await page.$eval('#p-OR-1 button.opt >> nth=0', b => b.getAttribute('aria-pressed')) === 'true', 'choosing an option marks it');
-  ok((await page.$eval('#p-OR-1 code', c => c.textContent)).startsWith('OR-1: Yes, only the lens tags'), 'the line to send in chat names the prompt and the choice');
-  await page.fill('#note-OR-1', 'Agreed, with the gap text naming the lens.');
-  await page.click('#p-OR-1 button:has-text("Save my answer")'); await page.waitForFunction(() => document.querySelector('#p-OR-1 [role=status]').textContent.startsWith('Saved'));
-  const doc = await page.evaluate(() => window.__store['OR-1']);
-  ok(doc && doc.choice === 'yes' && doc.note === 'Agreed, with the gap text naming the lens.' && doc.prompt === 'OR-1' && /^[0-9a-f]{12}$/.test(doc.database), 'the answer is stored with choice, note, prompt id and the database stamp');
-  ok((await page.$eval('#p-OR-1 .chip', c => c.textContent)).startsWith('Answered: Yes'), 'the chip shows the answer');
+  const total = await page.$$eval('details.prompt', els => els.filter((e) => !e.querySelector('summary .chip').textContent.startsWith('Ruled')).length);
+  const pick = await page.evaluate(() => { const d = META.decisions.find((x) => !x.answered && x.options.some((o) => o.recommended)); const i = d.options.findIndex((o) => o.recommended); return { id: d.id, i, key: String(d.options[i].key), label: d.options[i].label }; });
+  const askWords = await page.evaluate(() => { const d = META.decisions.find((x) => !x.answered && x.options.some((o) => /\bnote\b/i.test(o.effect))); return { id: d.id, i: d.options.findIndex((o) => /\bnote\b/i.test(o.effect)) }; });
+  const P1 = '#p-' + pick.id, P2 = '#p-' + askWords.id;
+  ok((await page.$eval('#answered', e => e.textContent)) === `0 of ${total} answered.`, `starts with nothing answered and saving available (${total} open)`);
+  await page.click(P1 + ' > summary');
+  ok(!(await page.$eval(P1 + ' button:has-text("Save my answer")', b => b.disabled)), 'Save is enabled when the view has a store');
+  await page.click(P1 + ` button.opt >> nth=${pick.i}`);
+  ok(await page.$eval(P1 + ` button.opt >> nth=${pick.i}`, b => b.getAttribute('aria-pressed')) === 'true', 'choosing an option marks it');
+  ok((await page.$eval(P1 + ' code', c => c.textContent)).startsWith(pick.id + ': ' + pick.label), 'the line to send in chat names the prompt and the choice');
+  await page.fill('#note-' + pick.id, 'Agreed, in my own words.');
+  await page.click(P1 + ' button:has-text("Save my answer")'); await page.waitForFunction((s) => document.querySelector(s + ' [role=status]').textContent.startsWith('Saved'), P1);
+  const doc = await page.evaluate((id) => window.__store[id], pick.id);
+  ok(doc && doc.choice === pick.key && doc.note === 'Agreed, in my own words.' && doc.prompt === pick.id && /^[0-9a-f]{12}$/.test(doc.database), 'the answer is stored with choice, note, prompt id and the database stamp');
+  ok((await page.$eval(P1 + ' .chip', c => c.textContent)).startsWith('Answered: '), 'the chip shows the answer');
   ok((await page.$eval('#answered', e => e.textContent)) === `1 of ${total} answered.`, 'the count updates');
   // an option that asks for words is refused without them
-  await page.click('#p-OR-9 > summary'); await page.click('#p-OR-9 button.opt >> nth=1');
-  await page.click('#p-OR-9 button:has-text("Save my answer")'); await page.waitForTimeout(100);
-  ok((await page.$eval('#p-OR-9 [role=status]', e => e.textContent)).includes('asks for your words') && !(await page.evaluate(() => 'OR-9' in window.__store)), 'an option that asks for words is refused without them and nothing is stored');
+  await page.click(P2 + ' > summary'); await page.click(P2 + ` button.opt >> nth=${askWords.i}`);
+  await page.click(P2 + ' button:has-text("Save my answer")'); await page.waitForTimeout(100);
+  ok((await page.$eval(P2 + ' [role=status]', e => e.textContent)).includes('asks for your words') && !(await page.evaluate((id) => id in window.__store, askWords.id)), `an option that asks for words is refused without them and nothing is stored (${askWords.id})`);
   // a row prompt saves under list-and-id
   const wf = 'details.prompt[id^="p-withheld_findings-"]';
   const wid = await page.$eval(wf + ' >> nth=0', e => e.id);
@@ -47,9 +52,9 @@ async function open(browser, seed) {
   // a later visit reads the saved answers back
   ({ ctx, page, errs } = await open(browser, store));
   ok((await page.$eval('#answered', e => e.textContent)) === `2 of ${total} answered.`, 'a later visit shows the saved answers');
-  await page.click('#p-OR-1 > summary');
-  ok(await page.$eval('#p-OR-1 button.opt >> nth=0', b => b.getAttribute('aria-pressed')) === 'true' && (await page.$eval('#note-OR-1', t => t.value)).startsWith('Agreed'), 'the saved choice and note come back');
-  await page.click('#p-OR-1 button:has-text("Clear")'); await page.waitForFunction(() => !('OR-1' in window.__store));
+  await page.click(P1 + ' > summary');
+  ok(await page.$eval(P1 + ` button.opt >> nth=${pick.i}`, b => b.getAttribute('aria-pressed')) === 'true' && (await page.$eval('#note-' + pick.id, t => t.value)).startsWith('Agreed'), 'the saved choice and note come back');
+  await page.click(P1 + ' button:has-text("Clear")'); await page.waitForFunction((id) => !(id in window.__store), pick.id);
   ok((await page.$eval('#answered', e => e.textContent)) === `1 of ${total} answered.`, 'Clear removes the answer and updates the count');
   await browser.close(); console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
 })().catch(e => { console.error('TEST ERROR', e.message); process.exit(2); });

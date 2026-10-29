@@ -286,7 +286,7 @@ function homePage() {
       h("h1", null, "Guidebook database"),
       h("p", { class: "gl" }, "A copy of the database, opened on this device. Tap a table to read its rows. Nothing you do here changes the database; the answers you save are kept on this page only.")),
     h("a", { class: "item", href: "#waiting" }, h("span", { class: "top" }, h("span", { class: "nm" }, "Waiting on you"), h("span", { class: "n" }, fmt(open))),
-      h("span", { class: "gl" }, "Questions with the context to answer them: " + META.decisions.length + " decisions on the plan and " + (keys.length - META.decisions.length) + " rows in the database. " + (keys.length - open) + " answered.")),
+      h("span", { class: "gl" }, "Questions with the context to answer them: " + openDecisions().length + " decisions on the plan and " + (keys.length - openDecisions().length) + " rows in the database. " + (keys.length - open) + " answered on this page, and " + (META.decisions.length - openDecisions().length + queueRows().reduce((a, x) => a + x.ruled.length, 0)) + " already ruled in the ledger.")),
     find, sections,
     h("section", { class: "sec" }, h("h2", null, "Views · " + views.length),
       h("details", null, h("summary", null, "Saved queries that read the tables"), h("div", { class: "body" },
@@ -431,8 +431,15 @@ async function loadAnswers() {
     for (const d of (await ANSWER_DB.collection("answers").get()).docs) ANSWERS[d.id] = d.data();
   } catch (e) { ANSWER_DB = null; }
 }
-const queueRows = () => META.queue.map((e) => ({ e, rows: all(e.sql) }));
-function promptKeys() { return [...META.decisions.map((d) => d.id), ...queueRows().flatMap(({ e, rows }) => rows.map((r) => e.id + "-" + r.id))]; }
+// A row the ledger already rules on leaves the open list and is shown with the ruling (the queue entry's `ruled` map).
+// The ruled list is read from the map, not from the query, so a card stays once the row has left the query's results.
+const queueRows = () => META.queue.map((e) => {
+  const got = all(e.sql), ruled = e.ruled || {};
+  return { e, rows: got.filter((r) => !ruled[String(r.id)]),
+    ruled: Object.keys(ruled).map((id) => ({ id, label: (got.find((r) => String(r.id) === id) || {}).label || "Row " + id })) };
+});
+const openDecisions = () => META.decisions.filter((d) => !d.answered);
+function promptKeys() { return [...openDecisions().map((d) => d.id), ...queueRows().flatMap(({ e, rows }) => rows.map((r) => e.id + "-" + r.id))]; }
 function updateCounts() {
   const keys = promptKeys(), done = keys.filter((k) => ANSWERS[k]).length;
   const nav = document.getElementById("nav-waiting"); if (nav) nav.textContent = "Waiting on you (" + (keys.length - done) + ")";
@@ -503,6 +510,31 @@ function rowContext(e, id) {
   if (srid) out.push(h("a", { href: "#r-" + slug(sub.name) + "-" + srid }, "The row it concerns: " + sub.name + " " + r[e.subject.key_col]));
   return out;
 }
+// What the owner said and what it changed, taken from the ledger entry that records it (its single home).
+function rulingParts(id, text) {
+  const lines = text.split("\n"), words = [], clean = (x) => x.replace(/\*\*/g, "").replace(/`/g, "");
+  for (let i = 0; i < lines.length; i++) {
+    if (!lines[i].startsWith(id + ":")) continue;
+    const rest = lines[i].slice(id.length + 1).trim();
+    if (rest) words.push(rest.replace(/^"|"$/g, ""));
+    else for (let j = i + 1; j < lines.length && (lines[j].trim() === "" || lines[j].startsWith(">")); j++) if (lines[j].startsWith(">")) words.push(lines[j].replace(/^>\s?/, "").replace(/^"|"$/g, ""));
+    break;
+  }
+  const item = lines.find((l) => new RegExp("^\\d+\\. \\*\\*" + id + "\\.\\*\\*").test(l));
+  return { words: words.map(clean), change: item ? clean(item.replace(/^\d+\.\s*/, "")) : null };
+}
+// s: {key, tag, title, question, ledger, rid}. rid is the id the ledger entry quotes the owner's words under.
+function answeredCard(s) {
+  const text = META.rulings[s.ledger], { words, change } = text ? rulingParts(s.rid, text) : { words: [], change: null };
+  const on = (s.ledger.match(/\d{4}-\d{2}-\d{2}/) || [""])[0];
+  return h("details", { class: "prompt", id: "p-" + s.key },
+    h("summary", null, h("span", { class: "sum" }, h("span", { class: "tag" }, s.tag), h("span", { class: "lab" }, s.title), h("span", { class: "chip ok" }, "Ruled " + on))),
+    h("div", { class: "body" },
+      h("p", null, h("strong", null, s.question)),
+      h("div", { class: "stack" }, h("h2", null, "Your words"), words.length ? words.map((w) => h("p", null, w)) : h("p", { class: "gl" }, "The ledger entry could not be read here.")),
+      change ? h("div", { class: "stack" }, h("h2", null, "What it changes"), h("p", { class: "gl" }, change)) : null,
+      h("p", { class: "gl" }, "Recorded in references/project-standards.md, in the entry that begins \"" + s.ledger + "\".")));
+}
 function waitingPage() {
   const words = h("details", null, h("summary", null, "Words used in these questions"), h("div", { class: "body" }, META.words.map((w) => h("div", { class: "kv" }, h("span", { class: "k" }, w.term), h("span", { class: "v" }, w.meaning)))));
   const dprompt = (d) => promptCard({ key: d.id, tag: d.id, title: d.title, question: d.question, why: d.why_yours, blocks: d.blocks, options: d.options, source: d.source,
@@ -513,8 +545,11 @@ function waitingPage() {
       h("p", { class: "gl" }, "Each item is a question with the context needed to answer it. Tap one to open it, choose an option, and add your words where the option asks. An answer saved here is not a ruling until Claude writes it into the ledger in your words, so tell Claude to record your answers."),
       h("p", { class: "ok", id: "answered" })),
     words,
-    group("Decisions that hold up building", "The workplan names these six as the ones that gate building.", META.decisions.filter((d) => d.gates).map(dprompt)),
-    group("Other decisions on the plan", "Each has a recommended answer from the report, except where none is recorded. The plan follows the recommendation unless you answer otherwise.", META.decisions.filter((d) => !d.gates).map(dprompt)),
+    group("Decisions that hold up building", "The workplan names six as the ones that gate building. Your rulings on them raised the questions left here.", openDecisions().filter((d) => d.gates).map(dprompt)),
+    group("Other decisions on the plan", "Each has a recommended answer from the report, except where none is recorded. The plan follows the recommendation unless you answer otherwise.", openDecisions().filter((d) => !d.gates).map(dprompt)),
+    group("Ruled and recorded in the ledger", "Your answers, in your words, with what each one changes.", [
+      ...META.decisions.filter((d) => d.answered).map((d) => answeredCard({ key: d.id, tag: d.id, title: d.title, question: d.question, ledger: d.answered.ledger, rid: d.id })),
+      ...queueRows().flatMap(({ e, ruled }) => ruled.map((r) => answeredCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, ledger: e.ruled[String(r.id)], rid: e.table + " " + r.id })))]),
     ...queueRows().map(({ e, rows }) => group(e.title, e.why, rows.length
       ? rows.map((r) => promptCard({ key: e.id + "-" + r.id, tag: e.table + " " + r.id, title: r.label, question: e.question, why: e.why_yours, options: e.options, body: rowContext(e, r.id) }))
       : [h("p", { class: "gl" }, "Nothing waiting.")], rows.length)),
