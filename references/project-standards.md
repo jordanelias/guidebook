@@ -4806,3 +4806,74 @@ observed_terms 71 (revised): "good point. accessible route is not the exact same
 CONDITION: any session asking adjudicating observation 71 or any observation of "accessible route", or defining "accessible route" or "barrier-free path of travel".
 ACTION: (1) Observation 71 is not adjudicated NAMES-EXISTING pointing at barrier-free path of travel, and "accessible route" is not recorded as an alias of it. The OT-1 action in the fourth entry is amended in those two respects. Observation 71 is adjudicated only on the owner's answer to its prompt. (2) Treat every [ASSUMPTION] mark above as unratified.
 DATE: 2026-10-29 — owner statements, quoted above.
+
+## Owner rulings 2026-10-30 — best practice, the specification page and rendering (from the ramp-slope session)
+
+Given in the owner's local session `d9505991-620e-4974-95b2-b407384c5793` (exported as `session-export-1793395272333`, titled "Research pipeline stress test: ramp slopes"), on 2026-10-29 and 2026-10-30, after the entries above, and recorded here on the owner's instruction of 2026-10-30 to implement those decisions in the repository, per `CLAUDE.md` rule 0 and workplan WR-3. The statements were found in the session transcript and are quoted verbatim; the reconciliation against `main` is `workplan/2026-10-30-ramp-spec-pages/RENDER-DECISIONS-AND-PIPELINE.md`.
+
+On best practice and the specification:
+
+- "best practice = the best way to do something according to how it benefits the intended group"
+- "best practice =/= most common or agreed upon. we have been through this a million times"
+- "remember that our guidebook doesn't take positions. it just presents what appears to be the most accommodating/gentle best practice for anything... so unless an academic article or some professional body improves upon germany's standard, that's identified as the best practice"
+- "the gentlest value is the gentlest value. the evidence is that it exists in practice. there does not need to be academic studies or anything because they are not always going to be available"
+- "i don't want us to highlight the steepest slope allowed in codes read"
+- "You do not need to find evidence for why 1:12 was the code floor--just accept the 1:12 as a baseline to work from. Lots of the code stuff we are dealing with is like this--there is not open available research behind it"
+- "We are interested in what are best practices NOW, and that means we do not need to interrogate the history of anything but rather the current state of everything"
+- "specification in book and item pages now are the same idea in that it tells you the correct way to design something"
+- "the critical methodology comes from synthesis/adjudication/specifications, not from evidence collection"
+
+On states, scope and sources:
+
+- "...covered means that the source that has been listed in the database has been read and had information extracted from it then verified"
+- "provisional means that we have to go back and review the source again to confirm information accuracy" (the owner's answer 10 reads "stage. provisional means that we have to go back and review the source again to confirm information accuracy")
+- "how on earth do we have evidence outside the library? we either have evidence or we do not have evidence. our library is just what we have recorded"
+- "Yes it is P1+P2+P3" and "do not include countries outside of the major identified countries for now"
+- "I think the issue is not the slope of the ramp, but the lack of a rest landing." and, to the question whether to make rest-landing spacing a second headline parameter, "Yes, next session"
+
+On rendering and the page:
+
+- "i want it to be coming from database directly in ideal world"
+- "There is an audience lens (the four audiences) and a disability lens (population, ICF, access needs)"
+- "Filter the page by one of three lenses: population vs ICF code vs access need, and then when you select which lens do you see the pills pop up wit the more specific case for further filtering"
+- "the filters have to precede the information"
+- "for ramp gradient, i want there to also be an easy comparison master table where you just see what each jurisdiction has for the value"
+- "we do not need to have rows for people where the value is just "Not set." that just means that it shouldn't be showing on the page"
+- "the question beneath the title is irrelevant"
+- "note: all work must comply with website accessibility standards and best practices"
+- "ensure that minimalism does not come at the expense of readability/legibility especially as it pertains to accessibility practices for website navigation"
+- "refer to swiss graphic design"
+
+**What this does.** The readings are the assistant's and are marked; the owner's words above are the ruling.
+
+1. **Best practice is the most accommodating value found, not the commonest.** The value a determination names as best practice is the gentlest or most accommodating one found in practice, in the direction recorded for the parameter (`base_parameters.accessibility_direction`; for ramp gradient, lower is better), unless a study or a professional body improves on it. It is not the modal or the agreed value, and the steepest value a code allows is not highlighted. No study is needed for a value to be named, and a T4 to T6 value is accepted as a baseline without tracing its history. [ASSUMPTION: this ruling selects which value is named; it does not change the band or the flag. Under the 2026-07-21 owner directive (Option A, `governance/tier-system.md` section 8, `governance/evidence-architecture.md` I3), a determination resting on T4 to T6 alone is already stated as weak-band (○) "best practice as currently known", flagged weak and code-derived, with the convergence-not-evidence caveat. Read together, the gentlest code value is named best practice at ○ with the flag. The ramp session's page marked such values ● and called the conflict "D-DOCT"; on this reading there is no conflict to record, the ● is not carried, and no `SUPERSEDES` line is written. If the owner means to drop the ○ band or the flag, that is a further ruling and needs a `SUPERSEDES` against `governance/tier-system.md` section 8 and `governance/mission-and-epistemics.md` section 2.]
+2. **Provisional is a stage; covered means read, extracted and verified.** A reading is provisional until its source has been read again and the information confirmed. A source counts as covered only when that has happened, so a page says "read, none yet verified" while no reading is verified, and lists the jurisdictions whose sources are not yet read as not yet read. [ASSUMPTION: this matches `specifications.state` (`pending`, `provisional`, `stated`) and `has_unverified_sources`; no new field is needed.]
+3. **An item page is the specification.** The book's specification and the item pages are the same thing, and it is rendered from the database. [ASSUMPTION: "database directly" is read together with owner ruling OW-1 of 2026-10-29 (third), under which the render table holds the specification rows as prose with bibliographic information drawn from the preceding tables, and with the 2026-08-27 ruling that no committed file is a render. A static generator emitting committed HTML is therefore not restored; the mechanism the ramp session built is not carried, and its requirements are.]
+4. **Two lenses.** A page offers an audience lens (designer, disabled person, occupational therapist, policy maker; `governance/audience-priority.md`) and a disability lens (population, ICF code, access need). Only the disability lens was built before. Lens filtering shows its more specific options only after a lens is chosen, and the controls come before the information.
+5. **Page content and form.** A master comparison table gives one row per in-scope jurisdiction, alphabetical, with the standard and its edition under the row and the detail one click from the value. Rows with no value are not shown. Evidence is listed alphabetically by first author's last name and regrouped by the chosen lens. One sans typeface, few sizes, and no decoration are the visual direction; the working requirements, with acceptance tests, are `workplan/2026-10-30-ramp-spec-pages/reports/spec-page-design-requirements-2026-10-29.md`, and the owner took the defaults for its open questions Q1 to Q7 ("Use my defaults"). [ASSUMPTION: that file is a working baseline for the renderer, not a ratified specification.]
+6. **Accessibility is a precondition.** WCAG 2.2 level AA wins over aesthetics, and navigation legibility is not traded for minimalism. Compliance is never self-certified: a page is described as having passed the tests that were run, on the date and build recorded, and no third-party scan or screen-reader pass has yet been run on any page.
+7. **Scope of a page.** The jurisdictions shown are the major identified countries, P1+P2+P3 of the jurisdiction ranking, current editions only. [ASSUMPTION: "P1+P2+P3" is the ranking recorded in `workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` section 3.]
+8. **Rest landing is the second headline parameter for ramp gradient.** The owner's hypothesis is that the rest landing, not the slope, is the problem, and the owner agreed to add landing spacing as a second headline parameter. Which value is best practice follows item 1: the shortest run between rests found. The ramp session's reading of that figure (Germany, 6 m, from a secondary source) is unverified here.
+9. **Two statements are not settled and are not applied as rulings.** (a) A row with no value is not shown, and `governance/mission-and-epistemics.md` requires a pending cell to display `[BEST-PRACTICE-PENDING]` with a gap link. [ASSUMPTION: the two are met together by showing no row and stating the gap, with its link, in the page's Gaps section; no `SUPERSEDES` line is written.] (b) The question line under the title is irrelevant, and the mission document makes questions first-class data. [ASSUMPTION: "irrelevant" refers to the single question line the ramp page carried, not to the questions-led commitment; how questions appear on a specification page is left to the owner.]
+
+**What is unblocked, and what still waits.** A renderer can be designed from items 3 to 7 once the render table of OW-1 exists; the render contract in `RENDER-DECISIONS-AND-PIPELINE.md` section 3 is the starting point. Waiting on the owner: whether the ○ band and flag stay for a gentlest-code value (item 1), the render table's storage and prose-production questions (OW-1b, OW-1c), and item 9. Waiting on a data session: the rest-landing parameter (item 8), which is research content and ships apart from tooling under `CLAUDE.md` rule 10.
+
+CONDITION: any session asking what counts as best practice for a parameter, whether a T4 to T6 value may be named best practice, which value to highlight on a page, what "provisional" or "covered" means, how a specification or item page is rendered or what it must contain, whether the page has an audience lens, what the accessibility bar for a rendered page is, which jurisdictions a page shows, or whether rest-landing spacing is a parameter.
+ACTION: (1) Name as best practice the most accommodating value found in the parameter's recorded direction, never the commonest and never by highlighting the steepest code value; keep the ○ band and the weak, code-derived flag for a determination resting on T4 to T6 alone, and do not mark such a value ●. (2) Describe a reading as provisional until a second reading of its source confirms it, and as covered only when read, extracted and verified. (3) Render a specification page from the database, not from a committed file, and take its element-to-table mapping from the render contract; do not restore a static generator. (4) Offer the audience and disability lenses, and write nothing as accessible that has not passed a recorded test. (5) Show only in-scope jurisdictions and no row without a value, stating the gap under Gaps. (6) Mint rest-landing spacing as a parameter through the sanctioned CLI in a data PR of its own, with its direction recorded from an admitted source and not hand-set. (7) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-10-30 — owner statements of 2026-10-29 and 2026-10-30, quoted above.
+
+## Owner rulings 2026-10-30 (second) — the ○ band and flag for a gentlest code value
+
+Given in this session (https://claude.ai/code/session_01Ub36iM8xPEnP9BjGKYZzbV), in reply to the open question at the end of the previous entry, and recorded on contact per `CLAUDE.md` rule 0 and workplan WR-3. The answer is quoted verbatim.
+
+"Yes, keep the ○ band and flag"
+
+**What this does.** The reading is the assistant's and is marked; the owner's words above are the ruling.
+
+1. **Item 1 of the previous entry is ratified.** A determination resting on T4 to T6 alone keeps the weak-band (○) and the weak, code-derived flag with the convergence-not-evidence caveat, under `governance/tier-system.md` section 8 and `governance/evidence-architecture.md` I3, as amended 2026-07-21. The owner's best-practice statements of 2026-10-29 and 2026-10-30 decide which value is named, and do not change the band or the flag. Nothing is superseded, so no `SUPERSEDES` line is written. [ASSUMPTION: "keep" confirms the position of the previous entry's item 1 in full, including that a value of this kind is not marked ●, which the ramp-slope session's page had done.]
+
+**What is unblocked, and what still waits.** The first of the three owner questions in the previous entry is closed. The render table's storage and prose production (OW-1b, OW-1c), and how questions appear on a specification page (item 9(b)), still wait on the owner.
+
+CONDITION: any session asking whether a gentlest code value named as best practice carries the ○ band and the flag, or whether the ramp-slope session's ● for such a value stands.
+ACTION: (1) Keep the ○ band and the weak, code-derived flag on a determination resting on T4 to T6 alone, whichever value is named; do not mark it ●. (2) The [ASSUMPTION] mark on item 1 of the previous entry is ratified by this entry; the others in that entry stay unratified.
+DATE: 2026-10-30 — owner statement, quoted above.
