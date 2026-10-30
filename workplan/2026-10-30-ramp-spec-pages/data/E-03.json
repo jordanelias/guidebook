@@ -1,0 +1,1341 @@
+{
+ "_meta": {
+  "item_code": "E-03",
+  "status": "PILOT STAGING FILE. Page-level content that has no database table yet (the `specification` / `jurisdictional_value` layer is unbuilt - audit F-14). Evidence rows, populations, ICF codes, access needs, gaps and the jurisdiction roster are read from guidebook.db at render time; this file holds only the curated prose, values and jurisdiction provisions. Load into source_value_extractions / a specification table when those exist.",
+  "prepared": "2026-10-29",
+  "prepared_by": "Claude (Sonnet 5.5) in the ramp-slope pipeline stress test; NOT reviewed by the owner",
+  "token_syntax": "{{slope=<fraction rise/run, e.g. 1/12>|<source-stated text>}} and {{len=<millimetres>|<source-stated text>}} are converted by the page's unit selector.",
+  "tagline": "How steep a ramp may be, and how far it can run before a rest. Most codes cap the slope at {{slope=1/12|1:12}}; the Guidebook position is {{slope=1/20|1:20}}.",
+  "best_practice_basis": "Best practice is what benefits the people it is for most. For ramp gradient, a gentler slope asks less effort of the people using the ramp, so the gentlest value found in practice is the best practice found.",
+  "reader_status": "Provisional. Every value on this page was read from its source once and still needs a second review to confirm it. It was prepared with AI assistance from the Guidebook's evidence records, and the population, ICF and access-need tags have not yet been reviewed by the Guidebook's author."
+ },
+ "why_it_matters": [
+  {
+   "text": "Steeper ramps take more effort. Wheelchair users pushing up a {{slope=0.05241|3°}} slope used more force, torque and cadence than on the level (36 users with spinal cord injury).",
+   "evidence": "in-library",
+   "refs": [
+    "REF-00388"
+   ]
+  },
+  {
+   "text": "The effort lands on the arms and shoulders. A 34-study review found slope effects under-studied.",
+   "evidence": "in-library",
+   "refs": [
+    "REF-00037"
+   ]
+  },
+  {
+   "text": "People with multiple sclerosis spend more energy walking, and uphill feels harder than the measured cost suggests.",
+   "evidence": "in-library",
+   "refs": [
+    "REF-00753",
+    "REF-00745"
+   ]
+  },
+  {
+   "text": "Going down matters too. At {{slope=1/12|1:12}} and {{slope=1/8|1:8}} most users coped, but power-chair users and people with vision impairment raised safety concerns on steeper descents.",
+   "evidence": "in-library",
+   "refs": [
+    "REF-00742"
+   ]
+  },
+  {
+   "text": "Climbing a short ramp is not the same as managing it all day. In a 171-person trial only a few manual wheelchair users could not climb {{slope=1/8|1:8}} over {{len=9144|30 ft}}; it tested one ramp, not sustained use.",
+   "evidence": "in-library",
+   "refs": [
+    "REF-00752"
+   ]
+  },
+  {
+   "text": "Codes set maximum slopes as gentle as {{slope=1/16.7|1:16.7}}, and several prefer {{slope=1/20|1:20}} or gentler. A legal limit is the least a code allows, not the best a design can do.",
+   "evidence": "regulatory",
+   "refs": []
+  }
+ ],
+ "values": {
+  "universal": [
+   {
+    "who": "Everyone",
+    "statement": "{{slope=1/20|1:20}} or gentler",
+    "status": "provisional",
+    "basis": "Best practice is what benefits the people it is for most. {{slope=1/20|1:20}} is the gentlest value any current standard read states, and the value existing in practice is the evidence for it.",
+    "short": "The most accommodating value found in practice (UK, Ireland, France, Norway and ISO state it).",
+    "marker": "●"
+   }
+  ],
+  "group": [
+   {
+    "who": "Manual wheelchair users",
+    "populations": [
+     "MOB"
+    ],
+    "icf": [
+     "d465",
+     "d455"
+    ],
+    "needs": [
+     "AN-02",
+     "AN-01",
+     "AN-04"
+    ],
+    "statement": "{{slope=1/20|1:20}} or gentler",
+    "status": "provisional",
+    "basis": "Studies: a 36-person study of wheelchair users with spinal cord injury on level vs a {{slope=0.05241|3°}} slope (higher force uphill), a ramp slope/height/pushing-force study (abstract not retrieved), a 34-study review, and a 171-person trial in which most could climb {{slope=1/8|1:8}} over {{len=9144|30 ft}}. None derives a threshold.",
+    "refs": [
+     "REF-00388",
+     "REF-00386",
+     "REF-00037",
+     "REF-00738",
+     "REF-00742",
+     "REF-00752"
+    ],
+    "short": "Tier 3 studies show more force and effort on slopes but set no threshold; the value is taken from the standards.",
+    "marker": "○"
+   },
+   {
+    "who": "People with spinal cord injury, especially higher lesions",
+    "populations": [
+     "SCI"
+    ],
+    "icf": [
+     "b730",
+     "d465"
+    ],
+    "needs": [
+     "AN-02"
+    ],
+    "statement": "Not set. No SCI-specific threshold has been established.",
+    "status": "no-evidence",
+    "basis": "Gap GAP-019 is open. The one SCI slope study in the library enrolled users with lesions at T8-L2 (paraplegia); it does not cover the higher lesions (cervical) whose reduced arm function is the concern.",
+    "refs": [
+     "REF-00388",
+     "REF-00739"
+    ]
+   },
+   {
+    "who": "Fatigue-limited conditions (e.g. MS)",
+    "populations": [
+     "MS",
+     "OFS"
+    ],
+    "icf": [
+     "b4552",
+     "b455"
+    ],
+    "needs": [
+     "AN-02",
+     "AN-03"
+    ],
+    "statement": "{{slope=1/20|1:20}} or gentler, with places to rest",
+    "status": "provisional",
+    "basis": "This is the mechanism named in the item's title. Studies of people with multiple sclerosis show higher energy cost of walking and higher perceived uphill effort; they do not identify a slope threshold.",
+    "refs": [
+     "REF-00745",
+     "REF-00747",
+     "REF-00753"
+    ],
+    "short": "Uphill walking costs more effort; no study sets a threshold; the value and the rest places are inferred.",
+    "marker": "○"
+   },
+   {
+    "who": "People with chronic pain",
+    "populations": [
+     "PAIN"
+    ],
+    "icf": [
+     "b280"
+    ],
+    "needs": [
+     "AN-02",
+     "AN-13"
+    ],
+    "statement": "Not set.",
+    "status": "no-evidence",
+    "basis": "The item lists chronic pain as an applicable group but the library holds no pain-specific evidence on ramp gradient (gap GAP-013 is recorded as closed).",
+    "refs": []
+   },
+   {
+    "who": "People with upper-limb impairment",
+    "populations": [
+     "UPL"
+    ],
+    "icf": [
+     "d445",
+     "b730"
+    ],
+    "needs": [
+     "AN-02",
+     "AN-05"
+    ],
+    "statement": "Not set.",
+    "status": "no-evidence",
+    "basis": "A clinical-guideline update on upper-extremity preservation in spinal cord injury is in the library but is not linked to this item.",
+    "refs": [
+     "REF-00070"
+    ]
+   },
+   {
+    "who": "Ambulant people using a cane, crutches or walker",
+    "populations": [
+     "MOB"
+    ],
+    "icf": [
+     "d450",
+     "b770"
+    ],
+    "needs": [
+     "AN-05",
+     "AN-03"
+    ],
+    "statement": "Not set.",
+    "status": "no-evidence",
+    "basis": "The item's ramp specification assumes wheelchair use (gap GAP-014, recorded as closed). Studies of gait with a cane or walker on an incline exist but give no slope limit.",
+    "refs": [
+     "REF-00746",
+     "REF-00742"
+    ]
+   }
+  ],
+  "person": [
+   {
+    "who": "One person",
+    "statement": "Set by individual assessment",
+    "status": "method",
+    "basis": "No general value. The usable slope and length depend on the person's strength, stamina, equipment and the length of the route, so they are set by individual assessment (for example with an occupational therapist) and trial on the actual route. Design at this scale is individual by definition. Evidence on how much people differ: in the 171-person trial the range of tolerated slopes was wide.",
+    "short": "An occupational therapist's assessment determines the position within the range, based on strength, stamina, equipment and route length.",
+    "marker": "○"
+   }
+  ]
+ },
+ "evidence": [
+  {
+   "ref": "REF-00388",
+   "role": "context",
+   "relevance": "Only SCI slope study in the library: 36 users, level vs {{slope=0.05241|3°}}, uphill raised force and cadence. Cannot set a threshold from one slope. The register names it as the '1:20 basis' - it is not a threshold derivation."
+  },
+  {
+   "ref": "REF-00037",
+   "role": "context",
+   "relevance": "Systematic review (34 studies) of wheelchair biomechanics on slope, cross-slope, kerb and ground type. The source the gap register itself names for re-research. Not yet linked to this item's BPC; its duplicate record is REF-VERIFIED-003."
+  },
+  {
+   "ref": "REF-00386",
+   "role": "context",
+   "relevance": "Ramp slope, ramp height and pushing force vs wheelchair-driving performance and muscle activity. Participant group not yet confirmed (abstract not retrieved). Duplicate record: REF-00030."
+  },
+  {
+   "ref": "REF-00385",
+   "role": "background",
+   "relevance": "Normative walking energy cost for 260 healthy people. Background for energy arguments; not a disability or ramp study."
+  },
+  {
+   "ref": "REF-00025",
+   "role": "background",
+   "relevance": "Threshold-crossing skill, 214 able-bodied learners in a manual wheelchair: a proxy population, and about thresholds rather than ramp slope."
+  },
+  {
+   "ref": "REF-00070",
+   "role": "context",
+   "relevance": "Clinical-guideline update on upper-extremity preservation in spinal cord injury (consensus). Relevant to why effort on slopes matters; not linked to this item."
+  },
+  {
+   "ref": "REF-00738",
+   "role": "context",
+   "relevance": "10 men with paraplegia pushing up {{slope=0.03492|2°}} to {{slope=0.2126|12°}} slopes: big changes in stroking and muscle activity between {{slope=0.06993|4°}} and {{slope=0.1763|10°}}. Describes effort, does not set a limit. Abstract-level read."
+  },
+  {
+   "ref": "REF-00739",
+   "role": "context",
+   "relevance": "5 wheelchair users with cervical cord injury at 5% to 12.5% slopes: ability to climb differed widely between people (power 0.23, 0.24, 0.26 W/kg at 5%, 6.7%, 8.3%). Too small to set a threshold. Abstract-level read."
+  },
+  {
+   "ref": "REF-00742",
+   "role": "context",
+   "relevance": "27 adults (manual and power wheelchair users, cane or service-animal users with vision impairment): {{slope=1/8|1:8}} and {{slope=1/12|1:12}} usable for most; {{slope=1/4|1:4}} unsafe; many manual users lacked the strength to climb unassisted. Small sample, no scooter or ambulation-aid users. Abstract-level read."
+  },
+  {
+   "ref": "REF-00745",
+   "role": "context",
+   "relevance": "18 ambulant people with multiple sclerosis: uphill walking was the most demanding task and rated more demanding than energy cost suggests. Abstract-level read."
+  },
+  {
+   "ref": "REF-00746",
+   "role": "context",
+   "relevance": "26 older adults using a cane or rolling walker on an incline: gait on the incline differed by device. Does not give a slope limit. Abstract-level read."
+  },
+  {
+   "ref": "REF-00747",
+   "role": "background",
+   "relevance": "208 people with multiple sclerosis: 31% show walking-related motor fatigue in a 6-minute walk, up to about 51% at EDSS 6.5. Level-ground walking test, not a slope study. Abstract-level read."
+  },
+  {
+   "ref": "REF-00740",
+   "role": "proxy",
+   "relevance": "7 able-bodied novices propelling a wheelchair at {{slope=0.06116|3.5°}}, {{slope=0.1673|9.5°}} and {{slope=0.2679|15°}}: peak pushrim force more than doubled. Healthy proxy, not wheelchair users."
+  },
+  {
+   "ref": "REF-00741",
+   "role": "proxy",
+   "relevance": "24 healthy adults: {{slope=1/12|1:12}} and {{slope=1/10|1:10}} judged suitable; blood pressure higher at {{slope=1/6|1:6}}. Healthy proxy, not wheelchair users."
+  },
+  {
+   "ref": "REF-00752",
+   "role": "context",
+   "relevance": "171 people with mobility impairments on {{slope=1/8|1:8}} to {{slope=1/20|1:20}} slopes over {{len=9144|30 ft}}: only a few manual wheelchair users could not ascend, even at {{slope=1/8|1:8}}; no change to the ADA slope or length recommended. Feasibility on one ramp, not repeated or sustained use. Counter-evidence to treating {{slope=1/20|1:20}} as a feasibility limit. Abstract-level read."
+  },
+  {
+   "ref": "REF-00753",
+   "role": "context",
+   "relevance": "Meta-analysis of 9 studies: higher oxygen cost of walking in multiple sclerosis; weak association with fatigue. Supports the energy mechanism named in the item. Abstract-level read."
+  }
+ ],
+ "excluded_evidence_note": "Of the 15 sources linked to this item's BPC, 11 do not concern ramps (6 on stairs; 5 on sit-to-stand, grab bars, luminance contrast, instrumented ADLs). REF-00387 is excluded because its stored title and DOI describe two different papers. Cross-slope studies found 2026-10-29 (REF-00743, REF-00744) are held back for the cross-slope item. REF-00748 (healthy gait on slopes) and REF-00749 (geared wheels) are in the library but not cited here.",
+ "external_evidence": [],
+ "jurisdictions": [
+  {
+   "code": "US",
+   "regime": "Statutory code",
+   "standard": "ADA Standards for Accessible Design (2010), §405 Ramps",
+   "clause": "§405.2",
+   "edition": "2010",
+   "tier": "T6",
+   "level": "primary",
+   "headline": "{{slope=1/12|1:12}}",
+   "note": "{{slope=1/10|1:10}} or {{slope=1/8|1:8}} only for short rises in limited-space alterations",
+   "provisions": [
+    [
+     "Running slope",
+     "No steeper than {{slope=1/12|1:12}}.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Limited-space exception (§405.2)",
+     "{{slope=1/10|1:10}} if the rise is {{len=152.4|6 in}} or less; {{slope=1/8|1:8}} if the rise is {{len=76.2|3 in}} or less.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Cross slope (§405.3)",
+     "No steeper than {{slope=1/48|1:48}}.",
+     [
+      "AN-05"
+     ]
+    ],
+    [
+     "Rise per run (§405.6)",
+     "{{len=762|30 in}} maximum.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Landings (§405.7)",
+     "Top and bottom landings level, at least {{len=1524|60 in}} long and as wide as the ramp; a change of direction needs a {{len=1524|60 in}} by {{len=1524|60 in}} clear landing.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Clear width (§405.5)",
+     "{{len=914.4|36 in}} minimum between handrails.",
+     [
+      "AN-04"
+     ]
+    ],
+    [
+     "Handrails (§405.8)",
+     "Both sides when the rise is more than {{len=152.4|6 in}}.",
+     [
+      "AN-05"
+     ]
+    ],
+    [
+     "State variant (Massachusetts, 521 CMR 24)",
+     "Maximum {{slope=1/12|1:12}}, run between landings no more than {{len=9144|30 ft}}, landings at least {{len=1524|60 in}} long.",
+     [
+      "AN-03"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Allows a slope 67% steeper than the best practice found ({{slope=1/20|1:20}}).",
+   "read": "U.S. Access Board guide to Chapter 4 (official) read in full for §405; Massachusetts figure from the state's published 521 CMR 24 text via search excerpt.",
+   "sources": [
+    {
+     "label": "U.S. Access Board - Chapter 4: Ramps and Curb Ramps",
+     "url": "https://www.access-board.gov/ada/guides/chapter-4-ramps-and-curb-ramps/"
+    },
+    {
+     "label": "Massachusetts 521 CMR 24 Ramps",
+     "url": "https://www.mass.gov/doc/521cmr24txt/download"
+    }
+   ],
+   "kb_refs": [
+    "REF-00409"
+   ],
+   "open": "Currency of the 2010 edition is not machine-verified in the library (code-currency audit).",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|1:12}} ({{slope=1/8|1:8}} if rise {{len=76.2|3 in}} or less)",
+    "landing_limit": "Rise {{len=762|30 in}} per run",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1524|60 in}} long",
+     "width": "{{len=914.4|36 in}} between handrails",
+     "handrails": "Both sides if rise is over {{len=152.4|6 in}}",
+     "cross": "{{slope=1/48|1:48}} at most"
+    }
+   },
+   "clause_display": "§405.2"
+  },
+  {
+   "code": "UK",
+   "regime": "Statutory guidance (England)",
+   "standard": "Approved Document M, Volume 2: Buildings other than dwellings (England)",
+   "clause": "1.19-1.26 Ramped access; Table 1; Diagram 3",
+   "edition": "2015 edition incorporating 2020 and 2024 amendments",
+   "tier": "T6",
+   "level": "primary",
+   "headline": "{{slope=1/20|1:20}} (going up to {{len=10000|10 m}}); {{slope=1/12|1:12}} at most, for goings up to {{len=2000|2 m}}",
+   "note": "A stepped route is also advised; alternative means of access when total rise is over {{len=2000|2 m}}",
+   "provisions": [
+    [
+     "Gradient by going (Table 1)",
+     "{{slope=1/20|1:20}} for a going up to {{len=10000|10 m}} (rise up to {{len=500|500 mm}}); {{slope=1/15|1:15}} up to {{len=5000|5 m}} (rise up to {{len=333|333 mm}}); {{slope=1/12|1:12}} up to {{len=2000|2 m}} (rise up to {{len=166|166 mm}}). Interpolate between: {{slope=1/14|1:14}} for a {{len=4000|4 m}} going, {{slope=1/19|1:19}} for {{len=9000|9 m}}.",
+     [
+      "AN-02",
+      "AN-03"
+     ]
+    ],
+    [
+     "Limits per flight",
+     "No flight with a going over {{len=10000|10 m}} or a rise over {{len=500|500 mm}}. A lift or other alternative for wheelchair users when the total rise is over {{len=2000|2 m}}. Stated reason: a high rise is unacceptably tiring for wheelchair users and some people with walking difficulties, even with rest landings.",
+     [
+      "AN-02",
+      "AN-03"
+     ]
+    ],
+    [
+     "Design intent",
+     "Gradients should be as shallow as practicable: steep gradients are hard for wheelchair users who lack the strength to climb or to slow down. Some ambulant disabled people find ramps harder than steps; people may need to stop frequently to regain strength or breath or ease pain.",
+     [
+      "AN-02",
+      "AN-03",
+      "AN-13"
+     ]
+    ],
+    [
+     "Width and handrails",
+     "Surface width between walls, upstands or kerbs at least {{len=1500|1.5 m}}; handrail on both sides (people with one-sided weakness need support on both).",
+     [
+      "AN-04",
+      "AN-05"
+     ]
+    ],
+    [
+     "Landings",
+     "Foot and head landing at least {{len=1200|1.2 m}} long, clear of door swings; intermediate landings at least {{len=1500|1.5 m}} long; passing places {{len=1800|1800 mm}} by {{len=1800|1800 mm}} where the far end is not visible or there are three flights or more. Landings level: no steeper than {{slope=1/60|1:60}} along their length, cross-fall no steeper than {{slope=1/40|1:40}}.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Edge protection and surface",
+     "Kerb at least {{len=100|100 mm}} high on any open side, contrasting visually. Ramp surface slip-resistant when wet and in a colour that contrasts with the landings; similar friction on ramp and landings.",
+     [
+      "AN-05",
+      "AN-07"
+     ]
+    ],
+    [
+     "Stepped route as well",
+     "Clearly sign-posted steps are provided in addition when the rise of the ramp is over {{len=300|300 mm}} (two {{len=150|150 mm}} steps).",
+     [
+      "AN-01",
+      "AN-05"
+     ]
+    ],
+    [
+     "Internal ramps",
+     "A section of an internal route with a gradient of {{slope=1/20|1:20}} or steeper is designed as a ramp to Table 1 and Diagram 3; level means no steeper than {{slope=1/60|1:60}}.",
+     [
+      "AN-02"
+     ]
+    ]
+   ],
+   "vs_guidebook": "The preferred gradient matches the best practice found ({{slope=1/20|1:20}}) but only for goings up to {{len=10000|10 m}}; {{slope=1/12|1:12}} is allowed for goings up to {{len=2000|2 m}}.",
+   "read": "Primary text of the 2024-amended online edition (gov.uk PDF) read in full for the ramp provisions by text extraction on 2026-10-29. England only; Scotland, Wales and Northern Ireland have separate documents. BS 8300 (paywalled) was not read.",
+   "sources": [
+    {
+     "label": "GOV.UK - Approved Document M Volume 2 (2024 amendments)",
+     "url": "https://assets.publishing.service.gov.uk/media/66f6c5eec71e42688b65ee11/ADM__V2_with_2024_amendments.pdf"
+    }
+   ],
+   "kb_refs": [],
+   "open": "BS 8300-2 not read (paywalled). Scotland, Wales and Northern Ireland not read.",
+   "master": {
+    "preferred": "{{slope=1/20|1:20}} (going up to {{len=10000|10 m}})",
+    "max": "{{slope=1/12|1:12}} (going up to {{len=2000|2 m}})",
+    "landing_limit": "Rise {{len=500|500 mm}}, going {{len=10000|10 m}}",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1200|1.2 m}} at the ends; {{len=1500|1.5 m}} between",
+     "width": "{{len=1500|1.5 m}} between walls",
+     "handrails": "Both sides",
+     "cross": "{{slope=1/40|1:40}} on landings"
+    }
+   },
+   "clause_display": "1.19–1.26, Table 1"
+  },
+  {
+   "code": "DE",
+   "regime": "National standard (building-law reference)",
+   "standard": "DIN 18040-1, public buildings",
+   "clause": "Ramps",
+   "edition": "2010-10 (draft revision 2023-02; EN 17210:2021 exists)",
+   "tier": "T5/T6",
+   "level": "secondary",
+   "headline": "{{slope=0.06|6 %}}",
+   "note": "Runs up to {{len=6000|6 m}}, then a landing of {{len=1500|1.5 m}}; no cross-fall",
+   "provisions": [
+    [
+     "Running slope",
+     "No steeper than {{slope=0.06|6 %}}.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Run length and landings",
+     "Run no longer than {{len=6000|6 m}}; intermediate landing at least {{len=1500|1.50 m}} long; {{len=1500|1.50 m}} by {{len=1500|1.50 m}} movement areas at start and end.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Cross-fall",
+     "None permitted on the ramp.",
+     [
+      "AN-05"
+     ]
+    ],
+    [
+     "Width",
+     "{{len=1200|1.20 m}} minimum clear width.",
+     [
+      "AN-04"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Slightly steeper than the best practice found ({{slope=1/20|1:20}}) - one percentage point - but with shorter runs than most codes.",
+   "read": "Secondary German building-planning sources (Baunetz Wissen and a planning table). The norm is paywalled and was not read. Several forum results contradicted each other and were disregarded.",
+   "sources": [
+    {
+     "label": "Baunetz Wissen - Rampen",
+     "url": "https://www.baunetzwissen.de/treppen/fachwissen/treppenformen/rampen-3375221"
+    }
+   ],
+   "kb_refs": [],
+   "open": "The 2010 edition is still legally referenced (MVV TB 2024/1) per the library's tier-system note; a 2023 draft revision exists.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=0.06|6 %}}",
+    "landing_limit": "Run {{len=6000|6 m}}, then a {{len=1500|1.5 m}} landing",
+    "sort": 0.06,
+    "params": {
+     "landing": "{{len=1500|1.5 m}} between runs",
+     "width": "{{len=1200|1.2 m}}",
+     "cross": "None permitted"
+    }
+   }
+  },
+  {
+   "code": "JP",
+   "regime": "Statutory ordinance (Barrier-Free Act)",
+   "standard": "Standards for smooth movement in buildings (建築物移動等円滑化基準)",
+   "clause": "Ramp provisions",
+   "edition": "current national standard",
+   "tier": "T6",
+   "level": "official-excerpt",
+   "headline": "{{slope=1/12|1/12}}",
+   "note": "{{slope=1/8|1/8}} allowed if the rise is {{len=160|16 cm}} or less",
+   "provisions": [
+    [
+     "Running slope",
+     "No steeper than {{slope=1/12|1/12}}; no steeper than {{slope=1/8|1/8}} where the height is {{len=160|16 cm}} or less.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Landings",
+     "A landing at least {{len=1500|150 cm}} deep at every {{len=750|75 cm}} of rise.",
+     [
+      "AN-03"
+     ]
+    ],
+    [
+     "Width",
+     "At least {{len=1200|120 cm}} where the ramp replaces stairs; {{len=900|90 cm}} where alongside stairs.",
+     [
+      "AN-04"
+     ]
+    ],
+    [
+     "Handrails and warning blocks",
+     "Handrails where the slope exceeds {{slope=1/12|1/12}} or the height exceeds {{len=160|16 cm}}; tactile warning at the top landing, except for slopes of {{slope=1/20|1/20}} or less.",
+     [
+      "AN-05"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Allows a slope 67% steeper than the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Prefectural government documents (Yamaguchi, Osaka, Gunma) restating the national ordinance. The ordinance text itself was not read. Local ordinances can add stricter rules.",
+   "sources": [
+    {
+     "label": "Yamaguchi Prefecture checklist",
+     "url": "https://www.pref.yamaguchi.lg.jp/uploaded/attachment/44114.pdf"
+    },
+    {
+     "label": "Osaka Prefecture ramp guide",
+     "url": "https://www.pref.osaka.lg.jp/documents/2475/06-5keisyaro.pdf"
+    }
+   ],
+   "kb_refs": [],
+   "open": "Absent from the earlier project extraction; the library holds 4 Japanese statutory sources on other topics.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|1/12}}; {{slope=1/8|1/8}} if rise is {{len=160|16 cm}} or less",
+    "landing_limit": "Landing for every {{len=750|75 cm}} of rise",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1500|150 cm}} deep every {{len=750|75 cm}} of rise",
+     "width": "{{len=1200|120 cm}} (where it replaces stairs)",
+     "handrails": "Where slope is over {{slope=1/12|1/12}} or rise over {{len=160|16 cm}}"
+    }
+   }
+  },
+  {
+   "code": "CA",
+   "regime": "Model code (provincially adopted)",
+   "standard": "National Building Code of Canada, 3.8.3.4 (Ontario-style text); CSA B651",
+   "clause": "3.8.3.4",
+   "edition": "varies by edition and province",
+   "tier": "T6",
+   "level": "secondary",
+   "headline": "{{slope=1/12|1 in 12}}",
+   "note": "Level areas every {{len=9000|9 m}} of run and at turns",
+   "provisions": [
+    [
+     "Running slope",
+     "No steeper than {{slope=1/12|1 in 12}} (Ontario-style text).",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Landings",
+     "Level area at least {{len=1700|1700 mm}} long, full ramp width, at intervals no more than {{len=9000|9 m}} and at turns of 90 degrees or more. A 2012 Ontario handout gives {{len=1670|1670 mm}}; CSA B651 examples use {{len=1500|1500 mm}}.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "CSA B651 example",
+     "Illustrative slope of {{slope=1/15|1/15}}.",
+     [
+      "AN-02"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Allows a slope 67% steeper than the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Secondary: municipal handouts and a code mirror. The NRC page for the cited clause is marked archived/outdated. No current NBC 2020 or CSA B651-23 text retrieved.",
+   "sources": [
+    {
+     "label": "Ontario Building Code 3.8.3.4 (mirror)",
+     "url": "https://obc-342.pages.dev/volume-1/division-b/part-3/b-3.8.3.4."
+    },
+    {
+     "label": "NRC archived page",
+     "url": "https://codes-guides.nrc.ca/IA/05NBC/nbc05ei002848.html"
+    }
+   ],
+   "kb_refs": [],
+   "open": "Landing size conflicts between sources and editions ({{len=1500|1500}} / {{len=1670|1670}} / {{len=1700|1700 mm}}). Provincial adoption varies.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|1 in 12}}",
+    "landing_limit": "Level area at least every {{len=9000|9 m}} of run",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1700|1700 mm}} long"
+    }
+   },
+   "clause_display": "3.8.3.4"
+  },
+  {
+   "code": "NZ",
+   "regime": "Building Code acceptable solution + standard",
+   "standard": "NZ Building Code D1/AS1 and NZS 4121:2001",
+   "clause": "Ramps",
+   "edition": "NZS 4121:2001",
+   "tier": "T6",
+   "level": "secondary",
+   "headline": "{{slope=1/12|1:12}}",
+   "note": "No more than {{len=750|750 mm}} of rise between landings ({{len=9000|9 m}} at {{slope=1/12|1:12}})",
+   "provisions": [
+    [
+     "Running slope",
+     "No steeper than {{slope=1/12|1:12}} for accessible ramps; a route steeper than {{slope=1/20|1:20}} is treated as a ramp.",
+     [
+      "AN-02",
+      "AN-01"
+     ]
+    ],
+    [
+     "External ramps (conflicting guidance)",
+     "Auckland Design Manual guidance citing NZS 4121 gives {{slope=1/14|1:14}} maximum with {{slope=1/20|1:20}} preferred for external ramps.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Rise and landings",
+     "Maximum rise between landings {{len=750|750 mm}}. Mid-ramp landings at least {{len=1200|1200 mm}}; beside a door {{len=1500|1500 mm}}, {{len=1200|1200 mm}} or {{len=2000|2000 mm}} depending on door swing.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Width, handrails, cross-fall",
+     "{{len=1200|1.2 m}} clear width; handrails both sides at {{len=900|900 mm}} to {{len=1000|1 m}}; cross-fall no steeper than {{slope=1/50|1:50}}.",
+     [
+      "AN-04",
+      "AN-05"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Allows a slope 67% steeper than the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Secondary: BRANZ, Build magazine and Auckland Design Manual summaries of D1/AS1 and NZS 4121. Not the documents themselves.",
+   "sources": [
+    {
+     "label": "BRANZ - Ramps and paths for accessibility",
+     "url": "https://www.branz.co.nz/design-build/articles/ramps-and-paths-for-accessibility"
+    },
+    {
+     "label": "Build magazine - Ramps and paths",
+     "url": "https://www.buildmagazine.org.nz/assets/PDF/B103-20-RampsandPaths.pdf"
+    }
+   ],
+   "kb_refs": [],
+   "open": "External-ramp slope is reported as {{slope=1/12|1:12}} by BRANZ and {{slope=1/14|1:14}} by Auckland guidance; the current D1/AS1 should be checked. The library holds 2 NZ statutory sources on other topics.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|1:12}} (accessible ramps)",
+    "landing_limit": "Rise {{len=750|750 mm}} between landings",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1200|1200 mm}} mid-ramp",
+     "width": "{{len=1200|1.2 m}}",
+     "handrails": "Both sides, {{len=900|900 mm}} to {{len=1000|1 m}} high",
+     "cross": "{{slope=1/50|1:50}} at most"
+    }
+   }
+  },
+  {
+   "code": "BR",
+   "regime": "National standard (referenced by law)",
+   "standard": "ABNT NBR 9050:2020",
+   "clause": "6.6 (library title cites §6.2 Rampas)",
+   "edition": "2020",
+   "tier": "T6",
+   "level": "secondary",
+   "headline": "{{slope=1/12|8.33 %}}",
+   "note": "For a rise up to {{len=800|0.80 m}}, with {{len=1200|1.20 m}} landings; a ramp starts at {{slope=0.05|5 %}}",
+   "provisions": [
+    [
+     "Maximum slope",
+     "{{slope=1/12|8.33 %}} for a height difference up to {{len=800|0.80 m}}, with {{len=1200|1.20 m}} landings at start and end.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Definition",
+     "A surface is a ramp from {{slope=0.05|5 %}} upward.",
+     [
+      "AN-01"
+     ]
+    ],
+    [
+     "Rest areas",
+     "Between {{slope=0.0625|6.25 %}} and {{slope=1/12|8.33 %}}, rest areas at the landings are recommended every {{len=50000|50 m}} of route.",
+     [
+      "AN-03"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Allows a slope 67% steeper than the best practice found ({{slope=1/20|1:20}}) for short rises.",
+   "read": "Secondary: a university copy of the standard's accessibility text, municipal memorials and an exam-question site. The official standard is paywalled.",
+   "sources": [
+    {
+     "label": "Unicamp - NBR 9050 accessibility text",
+     "url": "https://depi.unicamp.br/wp-content/uploads/sites/59/2022/01/acessibilidade-nbr9050.pdf"
+    }
+   ],
+   "kb_refs": [
+    "REF-00414"
+   ],
+   "open": "The allowed slope for rises above 0.80 m (the 5 % and 6.25 % bands in the standard's table) was not confirmed. The library cites §6.2; municipal documents cite 6.6.2.1 and Table 4.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|8.33 %}} (rise up to {{len=800|0.80 m}})",
+    "landing_limit": "Rise {{len=800|0.80 m}}; landings {{len=1200|1.20 m}}",
+    "sort": 0.08333333333333333
+   }
+  },
+  {
+   "code": "ES",
+   "regime": "Technical building code",
+   "standard": "CTE DB-SUA, section 9 (accessible routes)",
+   "clause": "DB-SUA 9.2",
+   "edition": "current consolidated version (not verified)",
+   "tier": "T6",
+   "level": "secondary",
+   "headline": "{{slope=0.06|6 %}} (longer runs); {{slope=0.08|8 %}} / {{slope=0.10|10 %}} for shorter",
+   "note": "{{slope=0.10|10 %}} under {{len=3000|3 m}}; {{slope=0.08|8 %}} under {{len=6000|6 m}}",
+   "provisions": [
+    [
+     "Slope by run length",
+     "{{slope=0.10|10 %}} maximum if the run is under {{len=3000|3 m}}; {{slope=0.08|8 %}} if under {{len=6000|6 m}}; {{slope=0.06|6 %}} otherwise.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Definition",
+     "A route counts as a ramp above {{slope=0.04|4 %}}.",
+     [
+      "AN-01"
+     ]
+    ],
+    [
+     "Run, landings, width",
+     "Run no longer than {{len=9000|9 m}}; level landing at least {{len=1200|1.20 m}} at start and end; {{len=1200|1.20 m}} minimum width.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Cross slope",
+     "No steeper than {{slope=0.02|2 %}}.",
+     [
+      "AN-05"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Steeper than the best practice found ({{slope=1/20|1:20}}) for runs under {{len=6000|6 m}}; slightly steeper beyond.",
+   "read": "Secondary: Spanish professional and technical sites summarising DB-SUA. The official text was not read; non-accessible ramps have different limits and must not be mixed in.",
+   "sources": [
+    {
+     "label": "Normatia - pendiente máxima de rampas DB-SUA",
+     "url": "https://normatia.com/es/blog/pendiente-maxima-rampas-db-sua/"
+    }
+   ],
+   "kb_refs": [],
+   "open": "The library holds 1 Spanish statutory source on other topics. Spain was not searched for this item before.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=0.06|6 %}}; {{slope=0.08|8 %}} under {{len=6000|6 m}}; {{slope=0.10|10 %}} under {{len=3000|3 m}}",
+    "landing_limit": "Run up to {{len=9000|9 m}}",
+    "sort": 0.06,
+    "params": {
+     "landing": "{{len=1200|1.2 m}} at the ends",
+     "width": "{{len=1200|1.2 m}}",
+     "cross": "{{slope=0.02|2 %}} at most"
+    }
+   },
+   "clause_display": "DB-SUA 9.2"
+  },
+  {
+   "code": "AU",
+   "regime": "National standard (referenced by NCC)",
+   "standard": "AS 1428.1:2021",
+   "clause": "Ramps",
+   "edition": "2021",
+   "tier": "T6",
+   "level": "secondary",
+   "headline": "{{slope=1/14|1:14}} (sources conflict)",
+   "note": "Sources disagree on short ramps and on 1:20 runs; standard paywalled",
+   "provisions": [
+    [
+     "Gradient (source A: Moddex whitepaper quoting the standard)",
+     "No steeper than {{slope=1/14|1:14}} for a ramp longer than {{len=1900|1900 mm}}; up to {{slope=1/10|1:10}} for shorter ones; landings at least every {{len=9000|9 m}}.",
+     [
+      "AN-02",
+      "AN-03"
+     ]
+    ],
+    [
+     "Gradient (source B: Queensland Health slides)",
+     "Lists {{slope=1/20|1:20}} up to {{len=15000|15 m}}, and {{slope=1/8|1:8}} for threshold ramps up to {{len=35|35 mm}} high.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Landing length (conflicting)",
+     "{{len=1200|1200 mm}} (one source) vs {{len=1500|1500 mm}} (another, attributing it to the 2021 edition).",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Not determinable until the standard is read.",
+   "read": "Secondary only; two sources disagree. The standard is paywalled.",
+   "sources": [
+    {
+     "label": "Moddex whitepaper - accessible ramps and stairways",
+     "url": "https://architectureanddesign.com.au/getmedia/dc1fa505-8337-4557-9945-6c7c66774146/Moddex-Whitepaper-Designing-Accessible-Ramps-And-Stairways.aspx?ext=.pdf"
+    },
+    {
+     "label": "Queensland Health - ramps slides",
+     "url": "https://www.health.qld.gov.au/__data/assets/pdf_file/0029/1477208/Ramps-to-the-house-and-slopes-in-the-garden-slides.pdf"
+    }
+   ],
+   "kb_refs": [
+    "REF-00436"
+   ],
+   "open": "The library's AS 1428.1:2021 record (REF-00436) concerns the 35 mm threshold ramp, not the main ramp gradient. The earlier project extraction recorded only {{slope=1/14|1:14}}.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/14|1:14}} (sources conflict)",
+    "landing_limit": "Landing at least every {{len=9000|9 m}} (one source)",
+    "sort": 0.07142857142857142,
+    "params": {
+     "landing": "{{len=1200|1200 mm}} or {{len=1500|1500 mm}} (sources conflict)"
+    }
+   }
+  },
+  {
+   "code": "CH",
+   "regime": "National standard",
+   "standard": "SIA 500 (2009), Constructions sans obstacles",
+   "clause": "Ramps",
+   "edition": "2009",
+   "tier": "T5",
+   "level": "library-title-only",
+   "headline": "{{slope=0.06|6 %}}",
+   "note": "{{slope=0.12|12 %}} admissible in limited cases",
+   "provisions": [
+    [
+     "Running slope",
+     "{{slope=0.06|6 %}} maximum; {{slope=0.12|12 %}} admissible (conditions not captured).",
+     [
+      "AN-02"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Steeper than the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Taken from the title of a library record; the standard was not read.",
+   "sources": [],
+   "kb_refs": [
+    "REF-00078"
+   ],
+   "open": "The conditions for the 12 % allowance are unknown.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=0.06|6 %}}; {{slope=0.12|12 %}} in limited cases",
+    "landing_limit": null,
+    "sort": 0.06,
+    "params": {}
+   }
+  },
+  {
+   "code": "FR",
+   "regime": "Ministerial order",
+   "standard": "Arrêté (earlier extraction cites 2017)",
+   "clause": "not captured",
+   "edition": "not verified",
+   "tier": "T6",
+   "level": "project-extraction",
+   "headline": "{{slope=0.05|5 %}} preferred; {{slope=0.08|8 %}} for short ramps",
+   "note": "Earlier project extraction - not re-verified",
+   "provisions": [
+    [
+     "Slope",
+     "{{slope=0.08|8 %}} for short ramps; {{slope=0.05|5 %}} preferred.",
+     [
+      "AN-02"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Preferred value ({{slope=0.05|5 %}}) equals the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Copied from data/jurisdictional_values/a-1_e03.yaml (the project's earlier extraction). Not re-checked against the order.",
+   "sources": [],
+   "kb_refs": [],
+   "open": "Clause, edition and the length limit for 'short' are missing.",
+   "master": {
+    "preferred": "{{slope=0.05|5 %}}",
+    "max": "{{slope=0.08|8 %}} (short ramps)",
+    "landing_limit": null,
+    "sort": 0.08,
+    "params": {}
+   }
+  },
+  {
+   "code": "NO",
+   "regime": "Building regulation",
+   "standard": "TEK17 (Byggteknisk forskrift)",
+   "clause": "§12-16 Rampe in the library; §12-18 in the earlier extraction",
+   "edition": "2017",
+   "tier": "T6",
+   "level": "project-extraction",
+   "headline": "{{slope=1/12|1:12}} indoors; {{slope=1/20|1:20}} outdoors",
+   "note": "Earlier project extraction - not re-verified; clause number inconsistent",
+   "provisions": [
+    [
+     "Slope",
+     "{{slope=1/12|1:12}} indoors; {{slope=1/20|1:20}} outdoors (the extraction labels 1:20 'preferred').",
+     [
+      "AN-02"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Outdoor value equals the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Copied from the earlier extraction; the library record REF-00411 cites a different clause number.",
+   "sources": [],
+   "kb_refs": [
+    "REF-00411"
+   ],
+   "open": "Which clause is right (§12-16 or §12-18)? Is 1:20 outdoor a requirement or a preference?",
+   "master": {
+    "preferred": "{{slope=1/20|1:20}} (outdoors)",
+    "max": "{{slope=1/12|1:12}} (indoors)",
+    "landing_limit": null,
+    "sort": 0.08333333333333333,
+    "params": {}
+   },
+   "clause_display": "§12-16 or §12-18 (sources disagree)"
+  },
+  {
+   "code": "ISO",
+   "regime": "International standard",
+   "standard": "ISO 21542:2021 Building construction - accessibility and usability",
+   "clause": "not captured",
+   "edition": "2021",
+   "tier": "T4",
+   "level": "project-extraction",
+   "headline": "{{slope=1/12|1:12}} maximum; {{slope=1/20|1:20}} preferred",
+   "note": "Earlier project extraction - standard paywalled, not re-verified",
+   "provisions": [
+    [
+     "Slope",
+     "{{slope=1/12|1:12}} maximum; {{slope=1/20|1:20}} preferred.",
+     [
+      "AN-02"
+     ]
+    ]
+   ],
+   "vs_guidebook": "Preferred value equals the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Copied from the earlier extraction. A search for the ISO text returned only national codes.",
+   "sources": [],
+   "kb_refs": [],
+   "open": "Clause and length limits not captured.",
+   "master": {
+    "preferred": "{{slope=1/20|1:20}}",
+    "max": "{{slope=1/12|1:12}}",
+    "landing_limit": null,
+    "sort": 0.08333333333333333,
+    "params": {}
+   }
+  },
+  {
+   "code": "SG",
+   "regime": "Building code of practice",
+   "standard": "BCA Code on Accessibility in the Built Environment 2025 (v1.1)",
+   "clause": "4.5 Changes in levels and kerb ramps; 4.6 Ramps; Tables 4 and 5",
+   "edition": "2025 (version 1.1, revised 1 March 2026)",
+   "tier": "T6",
+   "level": "primary",
+   "headline": "{{slope=1/12|1:12}} for a rise over {{len=175|175 mm}}; run limited to {{len=6000|6000 mm}} at that gradient",
+   "note": "Allowed run lengthens as the ramp gets gentler, up to {{len=18000|18000 mm}} at {{slope=1/24|1:24}}",
+   "provisions": [
+    [
+     "Gradient by rise (Table 4)",
+     "Not steeper than: {{slope=1/2|1:2}} for a rise of 0 to {{len=15|15 mm}}; {{slope=1/5|1:5}} for more than {{len=15|15 mm}} to {{len=50|50 mm}}; {{slope=1/10|1:10}} for more than {{len=50|50 mm}} to {{len=175|175 mm}}; {{slope=1/12|1:12}} for a rise over {{len=175|175 mm}}. The gradient must be consistent between landings.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Run between landings (Table 5)",
+     "Maximum run: {{len=6000|6000 mm}} at {{slope=1/12|1:12}}; {{len=9000|9000 mm}} at {{slope=1/14|1:14}}; {{len=12000|12000 mm}} at {{slope=1/16|1:16}}; {{len=15000|15000 mm}} at {{slope=1/20|1:20}}; {{len=18000|18000 mm}} at {{slope=1/24|1:24}}. Colour contrast, handrails and edge protection are mandatory at {{slope=1/12|1:12}} and {{slope=1/14|1:14}}; the table marks them non-mandatory for gentler ramps.",
+     [
+      "AN-02",
+      "AN-03"
+     ]
+    ],
+    [
+     "Landings",
+     "Level top and bottom landing for each run and at changes of direction, at least {{len=1500|1500 mm}} deep and as wide as the ramp.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Width",
+     "As for accessible routes (Table 3). May reduce to {{len=1200|1200 mm}} where a stepped alternative runs beside the ramp and the total rise is no more than {{len=1200|1200 mm}}.",
+     [
+      "AN-04",
+      "AN-01"
+     ]
+    ],
+    [
+     "Handrails",
+     "On both sides for a ramp run with a rise over {{len=175|175 mm}}, {{len=800|800 mm}} to {{len=900|900 mm}} high, continuous, with extensions of at least {{len=300|300 mm}} beyond top and bottom. Not required at {{slope=1/25|1:25}} or gentler.",
+     [
+      "AN-05"
+     ]
+    ],
+    [
+     "Edge protection",
+     "Kerb at least {{len=75|75 mm}} high, or a barrier or rail whose lower edge is {{len=75|75 mm}} or less above the surface, where a ramp or landing is not beside a wall.",
+     [
+      "AN-05"
+     ]
+    ],
+    [
+     "Curved ramps and cross-fall",
+     "Curved ramps {{slope=1/16|1:16}} or gentler. Cross-fall for drainage no steeper than {{slope=1/40|1:40}}.",
+     [
+      "AN-02",
+      "AN-05"
+     ]
+    ],
+    [
+     "Visibility of the change in level",
+     "For a rise of {{len=15|15 mm}} or more, a permanent contrasting colour or a band at least {{len=300|300 mm}} deep at the top and bottom. Not required at {{slope=1/25|1:25}} or gentler.",
+     [
+      "AN-07"
+     ]
+    ],
+    [
+     "Kerb ramps (rise up to 175 mm)",
+     "Not steeper than {{slope=1/10|1:10}} including flared sides; clear width at least {{len=900|900 mm}}; slip-resistant.",
+     [
+      "AN-01"
+     ]
+    ]
+   ],
+   "vs_guidebook": "The maximum gradient ({{slope=1/12|1:12}}) is steeper than the best practice found ({{slope=1/20|1:20}}); a {{slope=1/20|1:20}} ramp may run {{len=15000|15000 mm}} between landings.",
+   "read": "Primary text of the 2025 edition (BCA PDF) read for 4.1.4, 4.5 and 4.6 by text extraction on 2026-10-29. The alignment of the run values in Table 5 to the gradient rows comes from a layout-mode text extraction and should be confirmed against the page image.",
+   "sources": [
+    {
+     "label": "BCA - Code on Accessibility in the Built Environment 2025",
+     "url": "https://file.go.gov.sg/bca-coa2025.pdf"
+    }
+   ],
+   "kb_refs": [
+    "REF-00751"
+   ],
+   "open": "Confirm Table 5 alignment on the page image and the in-force date of the 2025 edition.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|1:12}} (rise over {{len=175|175 mm}})",
+    "landing_limit": "Run {{len=6000|6 m}} at {{slope=1/12|1:12}}",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1500|1500 mm}} deep",
+     "width": "Per route table ({{len=1200|1200 mm}} with a stepped alternative)",
+     "handrails": "Both sides if rise is over {{len=175|175 mm}}",
+     "cross": "{{slope=1/40|1:40}} for drainage"
+    }
+   },
+   "clause_display": "4.5, 4.6, Tables 4–5"
+  },
+  {
+   "code": "CN",
+   "regime": "National standard",
+   "standard": "GB 50763-2012 Code for accessibility design",
+   "clause": "3.1.2 kerb ramps; 4.4.2 overpass and underpass ramps (3.4 Wheelchair ramps not retrieved)",
+   "edition": "2012 (in force 1 September 2012)",
+   "tier": "T6",
+   "level": "secondary",
+   "headline": "Wheelchair-ramp clause 3.4 not retrieved; overpass and underpass ramps {{slope=1/12|1:12}}",
+   "note": "Kerb ramps {{slope=1/20|1:20}} (full-width one-way) or {{slope=1/12|1:12}}",
+   "provisions": [
+    [
+     "Kerb ramps (3.1.2)",
+     "Full-width one-way kerb ramp no steeper than {{slope=1/20|1:20}}; front and side of a three-way kerb ramp, and other kerb ramps, no steeper than {{slope=1/12|1:12}}.",
+     [
+      "AN-01",
+      "AN-02"
+     ]
+    ],
+    [
+     "Overpass and underpass ramps (4.4.2)",
+     "Clear width at least {{len=2000|2.00 m}}; gradient no steeper than {{slope=1/12|1:12}}; an intermediate platform at least {{len=2000|2.00 m}} deep for every {{len=1500|1.50 m}} of rise; curved ramps measured on the inner arc edge.",
+     [
+      "AN-02",
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Wheelchair ramp (3.4)",
+     "Main gradient and rise table not retrieved: the English translation read omits the body of 3.4.",
+     []
+    ]
+   ],
+   "vs_guidebook": "Not determinable for the main wheelchair-ramp clause. Overpass and underpass ramps allow {{slope=1/12|1:12}}, steeper than the best practice found ({{slope=1/20|1:20}}).",
+   "read": "Unofficial English translation (ChineseStandard.net, 61 pages) read by text extraction on 2026-10-29. Clause 3.4 is missing from that copy; the values above are from clauses 3.1.2 and 4.4.2 only.",
+   "sources": [
+    {
+     "label": "ChineseStandard.net - GB 50763-2012 English translation (partial)",
+     "url": "https://www.chinesestandard.net/PDF-EN/GB50763-2012EN-P26P-H21842H-267712.pdf"
+    },
+    {
+     "label": "Code of China - GB 50763-2012",
+     "url": "https://codeofchina.com/standard/GB50763-2012.html"
+    }
+   ],
+   "kb_refs": [
+    "REF-00375"
+   ],
+   "open": "Obtain clause 3.4 (wheelchair ramps) from the official text.",
+   "master": {
+    "preferred": null,
+    "max": "{{slope=1/12|1:12}} (overpass ramps)",
+    "landing_limit": "Platform {{len=2000|2.00 m}} deep per {{len=1500|1.50 m}} of rise (overpass ramps)",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "Platform {{len=2000|2.00 m}} per {{len=1500|1.50 m}} of rise (overpass ramps)",
+     "width": "{{len=2000|2.00 m}} (overpass ramps)"
+    }
+   },
+   "clause_display": "3.1.2, 4.4.2 (3.4 not retrieved)"
+  },
+  {
+   "code": "IE",
+   "regime": "Technical guidance document (deemed-to-satisfy the Building Regulations)",
+   "standard": "Building Regulations Technical Guidance Document M: Access and Use (2022)",
+   "clause": "1.1.3.4 Ramped access routes; Table 2; 2.1.3.4 existing buildings",
+   "edition": "2022",
+   "tier": "T6",
+   "level": "primary",
+   "headline": "{{slope=1/20|1:20}} preferred (up to {{len=10000|10 m}}); {{slope=1/12|1:12}} only for flights up to {{len=2000|2 m}}",
+   "note": "A stepped route must also be provided when the rise is more than {{len=300|300 mm}}",
+   "provisions": [
+    [
+     "Gradient by going (Table 2)",
+     "{{slope=1/20|1:20}} for a flight up to {{len=10000|10 m}} (rise up to {{len=500|500 mm}}); {{slope=1/15|1:15}} up to {{len=5000|5 m}} (rise up to {{len=333|333 mm}}); {{slope=1/12|1:12}} up to {{len=2000|2 m}} (rise up to {{len=166|166 mm}}). Interpolation is allowed between {{len=2000|2 m}} and {{len=10000|10 m}}.",
+     [
+      "AN-02",
+      "AN-03"
+     ]
+    ],
+    [
+     "Preferred vs maximum",
+     "Preferred maximum {{slope=1/20|1:20}}. Ramps not steeper than {{slope=1/12|1:12}} only where site constraints require it and each flight is no longer than {{len=2000|2000 mm}}. Stated reason: a person using or pushing a wheelchair may not have the strength to climb a steeper or longer flight, and there is a danger of falling forwards going down or backwards going up.",
+     [
+      "AN-02",
+      "AN-05"
+     ]
+    ],
+    [
+     "What counts as a ramp",
+     "A gradient of {{slope=1/20|1:20}} or steeper is a ramp. A gradient steeper than {{slope=1/50|1:50}} but gentler than {{slope=1/20|1:20}} is a gently sloped route; {{slope=1/20|1:20}} or gentler is preferred.",
+     [
+      "AN-02"
+     ]
+    ],
+    [
+     "Clear width and handrails",
+     "Clear width between walls, upstands or kerbs at least {{len=1500|1500 mm}}; at least {{len=1200|1200 mm}} between handrails; handrails on both sides. A wide ramp is divided by extra handrails into channels {{len=1200|1200 mm}} to {{len=2500|2500 mm}} wide.",
+     [
+      "AN-04",
+      "AN-05"
+     ]
+    ],
+    [
+     "Landings",
+     "Level landing ({{slope=1/50|1:50}} or gentler counts as level) at top and bottom, at least {{len=1800|1800 mm}} long by {{len=1800|1800 mm}} wide and clear of door swings; intermediate landings at least {{len=1500|1500 mm}} long, and {{len=1800|1800 mm}} by {{len=1800|1800 mm}} as passing places where the far end of the ramp cannot be seen or there are three flights or more.",
+     [
+      "AN-03",
+      "AN-04"
+     ]
+    ],
+    [
+     "Edge protection",
+     "Upstand at least {{len=100|100 mm}} high on any open side of a ramp or landing, contrasting visually with the surface.",
+     [
+      "AN-05"
+     ]
+    ],
+    [
+     "Stepped route as well",
+     "Where the rise is more than {{len=300|300 mm}}, a stepped route must be provided in addition to the ramp. Stated reason: some people find steps easier than a ramp, such as people with mobility difficulties who use certain walking aids, older people and people with vision impairment.",
+     [
+      "AN-01",
+      "AN-05"
+     ]
+    ],
+    [
+     "Alternative means of access",
+     "A platform lift or similar where the ramp is {{slope=1/20|1:20}} or steeper and the total rise is more than {{len=2000|2000 mm}}. Stated reason: ramps become too tiring for wheelchair users beyond that height.",
+     [
+      "AN-02",
+      "AN-03"
+     ]
+    ],
+    [
+     "Existing buildings (2.1.3.4)",
+     "Where the full figures are not practicable: {{slope=1/12|1:12}} flights up to {{len=4500|4500 mm}} (interpolating from {{slope=1/20|1:20}} at {{len=10000|10 m}}); width between handrails at least {{len=1000|1000 mm}}; top and bottom landings at least {{len=1500|1500 mm}} by {{len=1500|1500 mm}}; intermediate landings at least {{len=1000|1000 mm}} long.",
+     [
+      "AN-04"
+     ]
+    ]
+   ],
+   "vs_guidebook": "The preferred gradient matches the best practice found ({{slope=1/20|1:20}}). The {{slope=1/12|1:12}} maximum is confined to flights of {{len=2000|2 m}} or less.",
+   "read": "Primary text of the 2022 edition (gov.ie PDF) read in full for the ramp clauses by text extraction on 2026-10-29; clause numbers as printed, page numbers not captured.",
+   "sources": [
+    {
+     "label": "gov.ie - TGD M Access and Use (2022)",
+     "url": "https://assets.gov.ie/static/documents/technical-guidance-document-m-access-and-use-2022.pdf"
+    }
+   ],
+   "kb_refs": [
+    "REF-00750"
+   ],
+   "open": "Confirm the legal in-force date of the 2022 edition.",
+   "master": {
+    "preferred": "{{slope=1/20|1:20}} (going up to {{len=10000|10 m}})",
+    "max": "{{slope=1/12|1:12}} (flights up to {{len=2000|2 m}})",
+    "landing_limit": "Rise {{len=500|500 mm}}, going {{len=10000|10 m}}",
+    "sort": 0.08333333333333333,
+    "params": {
+     "landing": "{{len=1800|1800 mm}} square at the ends; {{len=1500|1500 mm}} between",
+     "width": "{{len=1500|1500 mm}} (handrails {{len=1200|1200 mm}} apart)",
+     "handrails": "Both sides"
+    }
+   },
+   "clause_display": "1.1.3.4, Table 2"
+  }
+ ],
+ "guidebook_row": {
+  "preferred": "{{slope=1/20|1:20}}",
+  "max": "{{slope=1/20|1:20}}",
+  "note": "Guidebook working position for this item; provisional"
+ }
+}
