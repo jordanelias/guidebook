@@ -1,0 +1,16 @@
+[
+  {
+    "started": "2026-10-30T20:30:31",
+    "role": "other",
+    "bytes": 185434,
+    "agent_id_prefix": "aa309e16",
+    "file": "2026-10-30T20-30-31_other_aa309e16.jsonl"
+  },
+  {
+    "started": "2026-10-30T20:50:16",
+    "role": "other",
+    "bytes": 1351097,
+    "agent_id_prefix": "ac849a1c",
+    "file": "2026-10-30T20-50-16_other_ac849a1c.jsonl"
+  }
+]
