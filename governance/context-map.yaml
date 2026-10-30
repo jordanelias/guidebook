@@ -94,7 +94,7 @@ directories:
 pointers:
   sessions_latest: session_2026-10-09-research-batch-24-parameter-pilot.md
   sessions_latest_resolves: true
-  sessions_latest_research: session_2026-10-01-research-batch-23.md
+  sessions_latest_research: session_2026-10-30-ramp-spec-pages-rebuild.md
   sessions_latest_research_resolves: true
   doctrine_sha: e647458
   doctrine_file: governance/mission-and-epistemics.md
