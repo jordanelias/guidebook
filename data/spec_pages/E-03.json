@@ -5,7 +5,8 @@
   "prepared": "2026-10-29",
   "prepared_by": "Claude (Sonnet 5.5) in the ramp-slope pipeline stress test; NOT reviewed by the owner",
   "token_syntax": "{{slope=<fraction rise/run, e.g. 1/12>|<source-stated text>}} and {{len=<millimetres>|<source-stated text>}} are converted by the page's unit selector.",
-  "tagline": "How steep a ramp may be, and how far it can run before a rest. Most codes cap the slope at {{slope=1/12|1:12}}; the Guidebook position is {{slope=1/20|1:20}}."
+  "tagline": "How steep a ramp may be, and how far it can run before a rest. Most codes cap the slope at {{slope=1/12|1:12}}; the Guidebook position is {{slope=1/20|1:20}}.",
+  "best_practice_basis": "Best practice is what benefits the people it is for most. For ramp gradient, a gentler slope asks less effort of the people using the ramp, so the gentlest value stated by a current standard is the best practice found."
  },
  "why_it_matters": [
   {
@@ -45,7 +46,7 @@
    ]
   },
   {
-   "text": "Most codes cap running slope at {{slope=1/12|1:12}}; many allow that only for short runs and prefer {{slope=1/20|1:20}} or gentler.",
+   "text": "Codes set maximum slopes as gentle as {{slope=1/16.7|1:16.7}}, and several prefer {{slope=1/20|1:20}} or gentler. A legal limit is the least a code allows, not the best a design can do.",
    "evidence": "regulatory",
    "refs": []
   }
@@ -54,15 +55,11 @@
   "universal": [
    {
     "who": "Everyone",
-    "statement": "No steeper than {{slope=1/20|1:20}} where space allows.",
+    "statement": "{{slope=1/20|1:20}} or gentler",
     "status": "provisional",
-    "basis": "The value in the Guidebook's item register (E-03). The clinical derivation is not yet supported inside the library: the study named as its basis (gap GAP-019) is a backrest-height trial at a single {{slope=0.05241|3°}} slope. Treat as a working position, not a finding."
-   },
-   {
-    "who": "Legal maximum, most codes",
-    "statement": "{{slope=1/12|1:12}}",
-    "status": "regulatory",
-    "basis": "{{slope=1/12|1:12}} is the most common legal maximum (US, UK, Japan, New Zealand, Canada, Brazil and others). See the jurisdiction comparison. A legal maximum is a regulatory floor, not a best-practice value."
+    "basis": "Best practice is what benefits the people it is for most. A gentler slope asks less effort of the people using the ramp, and {{slope=1/20|1:20}} is the gentlest value any current standard read states. No study or professional body in the library does better.",
+    "short": "Best practice based on standards in the UK, Ireland, France, Norway and ISO; no study in the library does better.",
+    "marker": "●"
    }
   ],
   "group": [
@@ -80,7 +77,7 @@
      "AN-01",
      "AN-04"
     ],
-    "statement": "No steeper than {{slope=1/20|1:20}}.",
+    "statement": "{{slope=1/20|1:20}} or gentler",
     "status": "provisional",
     "basis": "Studies: a 36-person study of wheelchair users with spinal cord injury on level vs a {{slope=0.05241|3°}} slope (higher force uphill), a ramp slope/height/pushing-force study (abstract not retrieved), a 34-study review, and a 171-person trial in which most could climb {{slope=1/8|1:8}} over {{len=9144|30 ft}}. None derives a threshold.",
     "refs": [
@@ -90,7 +87,9 @@
      "REF-00738",
      "REF-00742",
      "REF-00752"
-    ]
+    ],
+    "short": "Tier 3 studies show more force and effort on slopes but set no threshold; the value is taken from the standards.",
+    "marker": "○"
    },
    {
     "who": "People with spinal cord injury, especially higher lesions",
@@ -126,14 +125,16 @@
      "AN-02",
      "AN-03"
     ],
-    "statement": "No steeper than {{slope=1/20|1:20}}, with places to rest.",
+    "statement": "{{slope=1/20|1:20}} or gentler, with places to rest",
     "status": "provisional",
     "basis": "This is the mechanism named in the item's title. Studies of people with multiple sclerosis show higher energy cost of walking and higher perceived uphill effort; they do not identify a slope threshold.",
     "refs": [
      "REF-00745",
      "REF-00747",
      "REF-00753"
-    ]
+    ],
+    "short": "Uphill walking costs more effort; no study sets a threshold; the value and the rest places are inferred.",
+    "marker": "○"
    },
    {
     "who": "People with chronic pain",
@@ -199,7 +200,9 @@
     "who": "One person",
     "statement": "Set by individual assessment",
     "status": "method",
-    "basis": "No general value. The usable slope and length depend on the person's strength, stamina, equipment and the length of the route, so they are set by individual assessment (for example with an occupational therapist) and trial on the actual route. Design at this scale is individual by definition. Evidence on how much people differ: in the 171-person trial the range of tolerated slopes was wide."
+    "basis": "No general value. The usable slope and length depend on the person's strength, stamina, equipment and the length of the route, so they are set by individual assessment (for example with an occupational therapist) and trial on the actual route. Design at this scale is individual by definition. Evidence on how much people differ: in the 171-person trial the range of tolerated slopes was wide.",
+    "short": "An occupational therapist's assessment determines the position within the range, based on strength, stamina, equipment and route length.",
+    "marker": "○"
    }
   ]
  },
