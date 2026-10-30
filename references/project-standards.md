@@ -4861,3 +4861,19 @@ On rendering and the page:
 CONDITION: any session asking what counts as best practice for a parameter, whether a T4 to T6 value may be named best practice, which value to highlight on a page, what "provisional" or "covered" means, how a specification or item page is rendered or what it must contain, whether the page has an audience lens, what the accessibility bar for a rendered page is, which jurisdictions a page shows, or whether rest-landing spacing is a parameter.
 ACTION: (1) Name as best practice the most accommodating value found in the parameter's recorded direction, never the commonest and never by highlighting the steepest code value; keep the ○ band and the weak, code-derived flag for a determination resting on T4 to T6 alone, and do not mark such a value ●. (2) Describe a reading as provisional until a second reading of its source confirms it, and as covered only when read, extracted and verified. (3) Render a specification page from the database, not from a committed file, and take its element-to-table mapping from the render contract; do not restore a static generator. (4) Offer the audience and disability lenses, and write nothing as accessible that has not passed a recorded test. (5) Show only in-scope jurisdictions and no row without a value, stating the gap under Gaps. (6) Mint rest-landing spacing as a parameter through the sanctioned CLI in a data PR of its own, with its direction recorded from an admitted source and not hand-set. (7) Treat every [ASSUMPTION] mark above as unratified.
 DATE: 2026-10-30 — owner statements of 2026-10-29 and 2026-10-30, quoted above.
+
+## Owner rulings 2026-10-30 (second) — the ○ band and flag for a gentlest code value
+
+Given in this session (https://claude.ai/code/session_01Ub36iM8xPEnP9BjGKYZzbV), in reply to the open question at the end of the previous entry, and recorded on contact per `CLAUDE.md` rule 0 and workplan WR-3. The answer is quoted verbatim.
+
+"Yes, keep the ○ band and flag"
+
+**What this does.** The reading is the assistant's and is marked; the owner's words above are the ruling.
+
+1. **Item 1 of the previous entry is ratified.** A determination resting on T4 to T6 alone keeps the weak-band (○) and the weak, code-derived flag with the convergence-not-evidence caveat, under `governance/tier-system.md` section 8 and `governance/evidence-architecture.md` I3, as amended 2026-07-21. The owner's best-practice statements of 2026-10-29 and 2026-10-30 decide which value is named, and do not change the band or the flag. Nothing is superseded, so no `SUPERSEDES` line is written. [ASSUMPTION: "keep" confirms the position of the previous entry's item 1 in full, including that a value of this kind is not marked ●, which the ramp-slope session's page had done.]
+
+**What is unblocked, and what still waits.** The first of the three owner questions in the previous entry is closed. The render table's storage and prose production (OW-1b, OW-1c), and how questions appear on a specification page (item 9(b)), still wait on the owner.
+
+CONDITION: any session asking whether a gentlest code value named as best practice carries the ○ band and the flag, or whether the ramp-slope session's ● for such a value stands.
+ACTION: (1) Keep the ○ band and the weak, code-derived flag on a determination resting on T4 to T6 alone, whichever value is named; do not mark it ●. (2) The [ASSUMPTION] mark on item 1 of the previous entry is ratified by this entry; the others in that entry stay unratified.
+DATE: 2026-10-30 — owner statement, quoted above.
