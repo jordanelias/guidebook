@@ -10,7 +10,10 @@ R, J = 'REF-00139', 'SG'
 S = 'Code on Accessibility in the Built Environment 2025, '
 def a(key, p, val, unit, text, sect, loc, notes='Current edition (v1.1).', cmp='>=', ctype='numerical'):
     role = 'finding' if ctype == 'absent' else 'claim'
-    m.add(key, p, R, J, val, unit, text, S + sect, loc, notes, rel=('none',), cmp=cmp, ctype=ctype, role=role)
+    qty = None
+    if unit:
+        unit, _, qty = unit.partition(' ')
+    m.add(key, p, R, J, val, unit, text, S + sect, loc, notes, rel=('none',), cmp=cmp, ctype=ctype, role=role, qty=qty or None)
 
 a('W-1200', 4, '1200', 'mm minimum width of an accessible route other than a primary route', 'be at least 1200 mm for all other accessible routes', '4.2.1.1(b)', dict(section='4.2', subsection='4.2.1', clause='b'), 'Paragraph (a) sends primary routes to Table 3.')
 a('W-1500', 4, '1500', 'mm minimum width of the primary accessible route in residential, office, hotel, school, factory and similar buildings, with passing spaces (4.2.1.2)', 'Purpose-built workers’ dormitories 1500 mm* *Passing spaces in accordance with clause 4.2.1.2 must be provided.', '4.2.1.1(a), Table 3', dict(section='4.2', subsection='4.2.1', clause='a'), 'Table 3 lists the building types; the 1500 mm applies to all of them only with passing spaces of 1800 mm by 1800 mm at intervals of at most 25 m (4.2.1.2).')
