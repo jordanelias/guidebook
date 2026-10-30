@@ -48,3 +48,6 @@ Read this first in the next session. Memory files (`C:\Users\Jordan\.claude\proj
 
 ## 6. Suggested opening for the next session
 "Read `sessions/session_2026-10-30-spec-page-handoff.md` and the memory index. Start with the rest-landing headline parameter on E-03 (open item 1), then the render contract (item 2)."
+
+## 7. GitHub state (added after the push attempt)
+Local `main` is 6 commits ahead of and 2,203 behind `origin/main`. The work is pushed to branch `ramp-spec-pages-work`, not `main`. `origin/main` deleted the static render apparatus (RULINGS R1, 2026-10-14; target is dynamic rendering from the database), is at schema migration 116 and has its own `icf`/`access_needs` tables, so this branch cannot merge cleanly: `data/guidebook.db` conflicts (binary) and migration numbers 026 and the data migrations collide. Landing on `main` means re-applying the research and classification data as new migrations on top of the remote database, and not restoring `site/specs/` or the v3 generator unless the owner decides otherwise. Archive index: `sessions/2026-10-30-ramp-spec-pages-archive/README.md`.
