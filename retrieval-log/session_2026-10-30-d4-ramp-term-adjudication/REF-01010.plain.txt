@@ -1,0 +1,1610 @@
+STATUTORY INSTRUMENTS
+SUPPLEMENT No. 18
+
+26th July, 2019
+
+STATUTORY INSTRUMENTS SUPPLEMENT
+to The Uganda Gazette No. 35, Volume CXII, dated 26th July, 2019
+Printed by UPPC, Entebbe, by Order of the Government.
+
+S T A T U T O R Y
+
+I N S T R U M E N T S
+
+2019 No. 52.
+THE BUILDING CONTROL (ACCESSIBILITY STANDARDS FOR
+PERSONS WITH DISABILITIES) CODE, 2019
+ARRANGEMENT OF PARAGRAPHS
+Part I—Preliminary
+
+1.
+2.
+3.
+
+Title
+Application
+Interpretation
+
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+13.
+14.
+15.
+
+Part II—General Standards
+Signage
+Parking
+Accessible route
+Turning space
+Obstruction in path of travel
+Floor or ground surface
+Doorway and door
+Door handle
+Ramps
+Stairways
+Handrail
+Lifts
+Part III—Sanitary Facilities
+
+16.
+17.
+18.
+
+Toilet facilities
+Wheelchair-accessible toilet
+Toilet seat
+
+1753
+
+19.
+20.
+21.
+22.
+23.
+24.
+25.
+26.
+27.
+28.
+29.
+30.
+31.
+32.
+
+Backrest
+Sanitary fixture
+Flushing control
+Washbasin
+Water control taps
+Vanity slab
+Grab rail
+Hinged support arm
+Hooks
+Mirror
+Shower cubicles
+Hand dryer and liquid soap
+Pegs
+Urinals
+
+33.
+34.
+35.
+36.
+37.
+38.
+39.
+40.
+41.
+42.
+
+Pit latrine rooms
+Size of pit latrine room
+Pathway to a pit latrine room
+Space
+Pit latrine room door
+Handrails in pit latrine rooms
+Pit latrine room seat
+Signage
+Corridors
+Holes in pit latrine room
+Floor of pit latrine room
+Part IV—Miscellaneous
+
+43.
+44.
+45.
+46.
+47.
+48.
+49.
+
+Air lock
+Non waterborne means of sanitary disposal
+Auditorium, grandstand and halls
+Controls, switches and power points
+Warning signal
+Lighting
+Non-compliance
+SCHEDULES
+
+1754
+
+S T A T U T O R Y
+
+I N S T R U M E N T S
+
+2019 No. 52.
+The Building Control (Accessibility Standards For Persons With
+Disabilities) Code, 2019
+(Under section 46 of the Building Control Act, 2013)
+
+In exercise of the powers conferred upon the Minister responsible
+for building works by section 46 of the Building Control Act, 2013
+this Code is made this 2nd day of October, 2018.
+Part I—Preliminary
+1.
+Title
+This Code may be cited as the National Building (Accessibility
+Standards for Persons With Disabilities) Code, 2019.
+2.
+Application
+This Code shall apply to public buildings.
+3.
+Interpretation
+In this Code, unless the context otherwise requires—
+“Act” means the Building Control Act, 2013;
+“access” means approach, entry or exit;
+“accessible” means a characteristic of a building that can be
+reached, entered and used;
+“accessible building” means a building that complies with the
+requirements of this Code;
+“accessible route” means a walking space that complies with
+this Code;
+“building” means a public building;
+1755
+
+“circulation areas” includes a corridor, passageway, ramp or
+stairway;
+“circulation space” means an unobstructed area for a minimum
+height of two thousand one hundered millimetres above
+finished floor level, within and around a building, element,
+fixture and fitting required for movement into and within
+buildings;
+“clear opening width” means a clear open space of an open door
+through which the user of the a building passes;
+“Code” means the National Building (Accessibility Standards
+for Persons with Disabilities) Code, 2019;
+“easy–to–use” means a description of a fixture or fitting that
+is designed and fitted in such a way that a person with
+disabilities is able to use safely, comfortably, and
+convenient both in terms of the mechanism used for its
+operation and the force required to operate it;
+“emergency route” means a part of an escape route which
+provides fire protection and protection from any other
+hazard to an occupant of a building and which leads to an
+escape door;
+“escape door” means a door in an escape route which, at ground
+level leads directly to a street or public place or to any
+approved open space which leads to a street or public
+place;
+“escape route” means an entire path of travel for a person
+including a person with disability, from the furthest point
+in a storey in a building to the nearest escape door and may
+include an emergency route;
+“flush finish” means the finishing of two adjacent surfaces in
+such a way that they provide no vertical or horizontal gap,
+gradient or camber that might affect the safe, comfortable
+and convenient passage of persons with disability;
+1756
+
+“grab rail” means a rail used to transfer a person with disability
+on or off a toilet, or to assist with any other function;
+“handrail” means a rail used in circulation areas to assist
+continuous and safe movement;
+“impaired” means lower than generally accepted optimum
+performance in a human ability, which might be a
+temporary or permanent condition;
+“impairment’ means an indicator of any one impaired ability;
+“kerb cut” means a link between a road traffic surface and an
+elevated or lowered pedestrian pavement;
+“landing” means a platform between two consecutive flights of
+a stairway or ramp;
+“Light Reflectance Value (LRV)” means measurement using
+a spectrometer, of the light reflected from a surface in
+standard conditions;
+“means of access” means a means of entering a building, site of
+a building or a building complex and safe egress from a
+building site of a building or a building complex or facility;
+“obstruction” means—
+(a)
+
+anything impending or preventing passage or
+progress in relation to a building, or facility, which
+denies or removes from a person with disability,
+any supporting or enabling facility for his or her
+functioning within the building or facility; or
+
+(b)
+
+an obstacle that unfairly limits or restricts a person
+with disability from enjoying the opportunities
+provided within the building or facility on equal
+terms with a person without disability;
+1757
+
+“occupancy” means particular use or type of use to which
+a building or a portion of a building is normally put or
+intended to be put;
+“path of travel” means a circulation route or circulation space
+normally used by a person using the site, building or
+facility, including all external and internal routes and
+spaces in common usage, and the entrances and exits
+within these routes and spaces;
+“person with disability” means a person with disability as defined
+in the Person With Disabilities Act 2006;
+“public building” means a building that is accessible to the
+public;
+“ramp” means an internal or external walkway with a slope
+between 1:20 and 1:12 in the direction of travel;
+“rational assessment” means assessment by a competent person
+of the adequacy of the performance of a solution, in
+relation to requirements including as necessary, a process
+of reasoning, calculation and consideration of accepted
+analytical principles, based on a combination of deductions
+from available information, research and data, appropriate
+testing and service experience;
+“rational design” means a design by a competent person
+involving a process of reasoning and calculation and
+which may include a design based on the use of a standard
+or other suitable document;
+“sanitary fixture” means a receptacle to which water is
+permanently supplied, and from which waste water or soil
+water is discharged;
+“secondary entrance” means an entrance that is not a main
+1758
+
+entrance, that leads directly to—
+(a)
+
+a reception area or point that provides information
+about the building or services within it;
+
+(b)
+
+the primary stairway or lift or foyer;
+
+“site” means an erf, lot, plot, stand or other piece of land on
+which a building has been, is being or is to be erected;
+“space” means a definable area;
+“storey” means a part of a building which is situated between the
+top of any floor and the tops of the floor next above it or, if
+there is no floor above it, a portion between the floor and
+the ceiling above it in relation to a building;
+“tactile” means something that can be perceived by touch;
+“transfer space” means space required by a wheelchair user to
+transfer to or from a vehicle, toilet or seat;
+“turning space” means circulation space in which a wheelchair
+can turn through three hundred and sixty degrees; and
+“wheelchair-accessible toilet” means a toilet designed to include
+use by a wheelchair user.
+Part II—general standards
+4.
+
+Signage
+(1) A facility in a building used specifically by a person with
+disability shall be clearly marked with an international symbol for
+access, and the international symbol as prescribed in Figure 1 and
+Figure 9 in the Schedule and shall be exhibited—
+(a)
+
+at the main entrance of the facility, or any other accessible
+position in the building; or
+1759
+
+(b)
+
+in an accessible position to indicate to a person with
+disability the route to the exit of the facility.
+
+(2) A sign under this paragraph shall indicate the direction and
+name of the facility and shall have a height of lettering of not less than
+fifty millimetres.
+5.
+
+Parking
+(1) There shall be one parking space reserved for a person with
+disability at a work place.
+(2) Notwithstanding subparagraph (1) where provision has been
+made within a building or on the site—
+(a)
+
+at least one parking space per twenty five parking spaces
+or part thereof and at least twenty percent of the spaces at
+rehabilitation and medical facilities shall be provided for
+parking of vehicles of a person with disabilities;
+
+(b)
+
+a parking space provided for a vehicle used by a person
+with disability shall be—
+(i)
+
+of a suitable length;
+
+(ii)
+
+as prescribed in Figure 2 in the Schedule; and
+
+(iii) situated on and accessed from a surface that is not
+steeper than 1:50;
+(c)
+
+a parking space provided for a vehicle used by a person
+with disability shall be located within fifty metres of an
+accessible entrance;
+
+(d)
+
+a parking space provided for a vehicle used by a person
+with disability shall be clearly demarcated as being
+intended for the use of a person with disability only;
+1760
+
+(e)
+
+an entry or routing to a parking space designated for
+a person with disability shall be provided with a clear
+height of at least two thousand four hundred millimetres
+and shall allow for the entry of a vehicle suitable for use
+by a wheelchair user, particularly one that has a hoist to
+carry the wheelchair on top of the car;
+
+(3) A parking space designated for a vehicle used by a person
+with disability shall be identified by a vertical sign incorporating the
+international symbol and shall also be clearly painted on the road
+surface as prescribed in Figure 2 in the Schedule.
+6.
+
+Accessible route
+(1) An accessible route shall form part of an external and internal
+circulation route and shall be as prescribed in Figure 2 in the Schedule.
+(2) There shall be a means of access suitable for use by a person
+with disability from outside of a building and within the building.
+(3) There shall be at least one accessible route, which shall be
+provided within the boundary of the site from a public transportation
+stop, accessible parking space, passenger loading zone, public street
+and pavement to the accessible building entrance which it serves and
+the facility inside the building.
+(4) The clear width of the walking surface shall—
+(a)
+
+not be less than one thousand two hundred millimetres;
+and
+
+(b)
+
+not be reduced by protruding object.
+
+(5) An accessible entrance to a building shall have at least one
+doorway in accordance with the specifications in paragraph 10.
+(6) A revolving door, a revolving gate or a turnstile shall not
+form part of an accessible route.
+1761
+
+(7) A pause area, with suitable seating shall be provided adjacent
+to an accessible route at an interval that does not exceed twenty five
+metres.
+7.
+
+Turning space
+(1) A turning space allowance for a wheelchair, guide dog or a
+person on crutches shall be an unobstructed circle with a minimum of
+one thousand five hundred millimetres in diameter inclusive of toe and
+knee clearances as prescribed in Figure 3 and Figure 4 in the Schedule.
+(2) A door shall not swing into a turning space.
+8.
+
+Obstruction in path of travel
+(1) A protruding object shall not reduce the clear width required
+for an accessible route and a path of travel shall be as prescribed in
+Figure 4 and Figure 5 in the Schedule.
+(2) A hanging sign, light, awning and an object that protrudes
+into a circulation space shall have a clearance of at least two thousand
+millimetres above the trafficable surface and one thousand nine
+hundred eighty millimetres in doorways.
+(3) A window or door shall not open across a walkway, corridor
+stair or ramp.
+(4) A doorstop shall be positioned in a way that a door shall open
+to its maximum and shall not create a hazard.
+(5) A wall-mounted fire extinguisher, hose reel, telephone litter
+bin or any other wall-mounted fitting shall be—
+(a)
+
+designed to be seen easily;
+
+(b)
+
+shielded or recessed to prevent injuries; and
+
+(c)
+
+accompanied by a feature that warns of the presence of the
+potential hazard that is possible to detect by a person using
+a white cane or stick.
+1762
+
+(6) A dished channel shall not be constructed within the
+boundaries of a path.
+(7) A drainage grating that is within the boundaries of a path
+shall be—
+(a)
+
+set flush with the surface of the path;
+
+(b)
+
+placed so that its longitudinal element is placed
+perpendicular to the main walking direction and the gap
+between them shall not exceed thirteen millimetres.
+
+(8) Where an identified parking for a person with disability is
+provided, a kerb cut that has a slip-resistant finish and gradient that does
+not exceed 1:10 shall be provided immediately adjacent to the bay.
+9.
+
+Floor or ground surface
+(1) A floor or ground surface shall form an integral part of the
+accessible route throughout a site internally and externally as part of a
+continuous path of travel.
+(2) A floor or ground surface shall be stable, firm, and slipresistant under wet or dry conditions.
+(3) An abutment of a surface shall have—
+(a)
+
+a smooth transition;
+
+(b)
+
+a design of 0 millimetres; and
+
+(c)
+
+a construction transition of—
+(i)
+
+0 ± 3 millimetres vertical;
+
+(ii) 0 ± 5 millimetres,
+provided the edges have a belevelled or rounded edge to reduce
+the likelihood of slipping.
+(4) The texture of a surface shall be traversable by a wheelchair
+user, a person with an ambulant or sensory disability.
+1763
+
+(5) Where a carpet or any soft flexible material is used on the
+ground or floor surface—
+(a)
+
+the pile height or thickness shall not exceed six millimetres
+and the carper backing thickness shall not exceed four
+millimetres;
+
+(b)
+
+exposed edges or floor covering shall be securely attached
+to the floor surface and shall have trim along the entire
+length of exposed edge; and
+
+(c)
+
+at the leading edge, carpet trim and any other soft flexible
+material shall have a vertical face not higher than three
+millimetres or a rounded belevelled edge not higher than
+five millimetres or above that height a gradient of 1:8 to a
+total maximum height of ten millimetres.
+
+(6) Matting recessed within a continuous accessible path of
+travel—
+(a)
+
+where of metal and bristle type construction or similar,
+its surface shall not be more three millimetres if vertical
+or five millimetres if rounded or belevelled, or above or
+below the surrounding surface;
+
+(b)
+
+where of a mat or carpet type material, shall have the fully
+compressed surface level with or above the surrounding
+surface with the level difference of three millimetres if
+vertical or five millimetres if rounded or belevelled.
+
+(7) An opening in a floor finish or ground surface shall not—
+(a)
+
+exceed thirteen millimetres in diameter if circular;
+
+(b)
+
+where an opening is elongated, it shall not exceed thirteen
+millimetres wide with the long dimension perpendicular
+to the dominant direction of travel; and
+
+(c)
+
+where slotted openings are less than eight millimetres, the
+length of the slots may continue across the width of the
+path of travel.
+1764
+
+(8) A vertical change in level between two floor surfaces or at
+thresholds, shall have a flush finish and shall not exceed five millimetres
+in height.
+(9) Where a surface is cambered for drainage purposes, the
+camber shall not exceed 1:50.
+(10) A cobble, gravel sand or other raised or loose finish shall
+not form part of an accessible route.
+10.
+
+Doorway and door
+(1) A doorway shall allow free access for a wheelchair user.
+
+(2) A clear opening shall be at least nine hundred millimetres
+when approached along a line that is perpendicular to the opening as is
+prescribed in Figure 6, Figure 7, Figure 8 and Figure 9 in the Schedule.
+(3) Where a two-leaf door is used, the clear opening provided
+by the leading leaf shall be at least nine hundred millimetres when
+approached along a line perpendicular to the opening as prescribed the
+Schedule.
+(4) The minimum access dimensions shall enable a wheelchair
+user to make a ninety degree turn.
+(5) Where a person in a wheelchair is required to open a door
+toward the wheelchair, a nib of at least four hundred fifty millimetres
+shall be provided at the handle side of the door as prescribed in Figure
+9 in the Schedule.
+(7) A sliding door shall be installed in a place where a hinged
+door hinders circulation or maneuverability.
+(8) Where a revolving door, turnstile or other barrier is installed,
+an alternative means of access shall be installed.
+(9) A door under this paragraph shall be light and easy to open
+for elderly, children and people with weak arms.
+1765
+
+(10) The edge of the door frame shall be blunt to avoid injuring
+persons with visual impairment.
+(11) Glass doors shall be provided with a horizontal markings
+at one thousand two hundred and fifty millimetres to one thousand six
+hundred millimetres from floor surface to warn persons with visual
+impairment.
+(12) Door-to-door frame should be painted in a contrasting
+colour from the surrounding wall for easy identification by persons
+with visual impairment.
+(13) A door shall be labelled in contrasting colours, large print
+format and preferably
+engraved or brailled.
+(14) A frequently used door shall open automatically and be
+equipped with a failsafe system that enables the door to open under
+emergency conditions.
+11.
+
+Door handle
+(1) A door handle fitted to a door leaf within an accessible
+route shall be of the lever type, with a lever at least one hundred fifty
+millimetres long and shall be installed at a height that does not exceed
+one thousand millimetres above floor level as prescribed in Figure 9
+in the Schedule.
+(2) A round door knob shall not be used at a facility designated
+for use by a person with disability.
+(3) A door handle shall be horizontally aligned.
+(4) Ironmongery with a sharp protruding edge shall not be used
+for a door handle used by a person with disability.
+12.
+
+Ramps
+(1) A ramp or series of ramps shall provide a safe, comfortable
+and convenient route for a wheelchair user.
+1766
+
+(2) A ramp shall be provided where level access cannot be
+achieved and shall be accompanied by stepped access.
+(3) A ramp provided under this Code shall—
+(a)
+
+have a gradient measured along the centre line, that is
+not steeper than 1:12 as prescribed in Figure 10 in the
+Schedule;
+
+(b)
+
+have a clear, trafficable surface not less than one thousand
+one hundred millimetres wide;
+
+(c)
+
+have a surface in accordance with the specifications
+prescribed in paragraph 9;
+
+(d)
+
+have a landing at the top and bottom of each ramp of not
+less than one thousand, five hundred millimetres in length
+clear of a swing door and of a width of not less than that of
+the ramp;
+
+(e)
+
+have a handrail on both sides of the ramp or, where the width
+is greater than two thousand four hundred millimetres,
+an immediate handrail at one thousand, one hundred
+millimetres in accordance with paragraph 16 on the run;
+
+(f)
+
+comply with the requirements between landings as
+prescribed Figure 10 in the Schedule; and
+
+(g)
+
+a series of connected ramps shall not have a combined
+vertical rise of more than three thousand six hundred
+millimetres the ramps shall be staggered by the width of
+the ramp.
+
+(4) A landing of a step ramp on the accessible route shall not
+overlap a landing for another ramp.
+(5) A door leaf or window shall not open onto a ramp.
+(6) A camber or banking on a walkway or ramp shall not exceed
+one thousand five hundred millimetres.
+1767
+
+(7) The means of limiting inadvertent access to an area shall be
+indicated where the clear height of the area below a soffit is less than
+two thousand one hundred millimetres and is not enclosed.
+13.
+
+Stairways
+(1) A stairway constructed under this Code shall comply with the
+following requirements—
+(a)
+
+the width of a stairway, measured to an enclosing wall or
+balustrade shall be at least nine hundred millimetres;
+
+(b)
+
+a landing that serves two flights of stairs in the same
+straight line shall be the length of at least one thousand
+one hundred millimetres;
+
+(c)
+
+the rise of each tread step shall be of the same height and
+shall not exceed one hundred seventy millimetres;
+
+(d)
+
+the solid risers shall be provided in all accessible routes;
+
+(e)
+
+a stairway shall be provided with handrails on both sides;
+
+(f)
+
+the maximum height allowed in a flight of stairs, between
+landings shall not exceed one thousand five hundred and
+thirty millimetres;
+
+(g)
+
+the stairway shall not include any winders; and
+
+(h)
+
+a spiral stairway shall not form part of an accessible route.
+
+(2) The nosing on a stairway shall effectively contrast with its
+immediate surroundings and the minimum dimensions of each nosing
+shall be forty millimetres by forty millimetres.
+(3) Outdoor stairs and an outdoor approach to stairs shall be so
+designed that water will not accumulate on a walking surface.
+(4) A tactile marking with contrasted colours shall be placed at
+the top and bottom of the stairs to alert the blind persons or persons
+with visual impairment or low vision.
+1768
+
+(5) The space below the stairs shall be blocked out completely
+by protective rails or marked with tactile surface.
+14.
+
+Handrail or balustrade
+(1) The design and construction of a handrail or balustrade shall
+be as prescribed in Figure 10 in the Schedule and in accordance with
+the following requirements—
+(a)
+
+a handrail or a balustrade shall not encroach into required
+calculation spaces;
+
+(b)
+
+a handrail or balustrade shall have an elliptical gripping
+surface profile that is approximately fifty millimetres
+wide and forty millimetres deep, or a circular profile of a
+diameter not less than thirty millimetres and not more than
+fifty millimetres;
+
+(c)
+
+the height to the top of a handrail or balustrade from the
+nosing of the tread of stairs or from the surface of a ramp
+shall be in the range of height of one hundred seventy
+millimetres to one thousand millimetres and shall remain
+consistent along the length;
+
+(d)
+
+a handrail or balustrade shall be securely fixed and rigid;
+
+(e)
+
+a handrail or balustrade shall have no vertical sections;
+
+(f)
+
+the surface of a handrail, balustrade, wall, or any surface
+adjacent to the surface of a handrail or wall shall be free of
+any sharp or abrasive elements;
+
+(h)
+
+the clear width between a handrail and an adjacent wall
+shall be at least fifty millimetres and the clearance shall
+extend above the top of the handrail by not less than six
+hundred millimetres;
+
+(i)
+
+a handrail or balustrade shall—
+(i)
+
+extend three hundred millimetres horizontally
+beyond the top and bottom of a ramp or stairway;
+1769
+
+(ii)
+
+have its end turned through a total one hundred
+eighty degrees or to the ground, or retuned fully to
+the end post or wall face;
+
+(iii) where a stairway is wider than two thousand four
+hundred millimetres a handrail shall be provided at
+no more than two thousand four hundred millimeter
+intervals and painted in contrasting colours;
+(j)
+
+a handrail or balustrade shall be continuous between
+landings, where it does not create a hazard; and
+
+(k)
+
+a handrail or balustrade shall be supported centrally
+from below with not less than fifty millimetres
+between the underside of the handrail and the top of
+the support.
+
+(2) If a balustrade is required at a height greater than the handrail,
+both shall be provided.
+15.
+
+Lifts
+(1) A lift includes a passenger lift and a through-floor lift where—
+(a)
+
+a passenger lift that serves all the storeys of a building that
+can be accessed by the stairway; or
+
+(b)
+
+a through-floor lift may be used to serve a small building
+of an area greater than one hundred square metres as an
+alternative to a passenger lift.
+
+(2) A passenger lift shall—
+(a)
+
+have a minimum internal dimension of one thousand
+one hundred millimetres in width and one thousand four
+hundred millimetres in depth, clear of surface finishes;
+1770
+
+(b)
+
+have a doorway with an unobstructed width of not less
+than nine hundred millimetres;
+
+(c)
+
+be fitted with horizontal handrails the full length of the lift
+car sides at a height between eight hundred and seventy
+millimetres and one thousand millimetres above the floor
+level of the lift;
+
+(d)
+
+have a mirror on the top half of the rear wall equal to the
+width of the lift to enable a wheelchair user to back out
+of the lift where the lift has internal dimensions less than
+one thousand five hundred millimetres in width and two
+thousand millimetres in depth;
+
+(e)
+
+have a clear circulation space of not less than one thousand
+five hundred millimetres by one thousand five hundred
+millimetres at the entrance of the lift on each floor;
+
+(f)
+
+have audible and visible warnings in the lobby and lift to
+indicate the lift approaching, the arrival of the lift, the lift
+doors opening, the lift doors closing, the floor requested
+and at which floor the lift stops;
+
+(g)
+
+have control buttons, including emergency control that
+are in accordance with paragraph 37;
+
+(h)
+
+have illuminance on the control panel that is not less than
+one hundred fifty lux;
+
+(i)
+
+stop level with the landing on each floor that they serve;
+
+(j)
+
+have tactile identification, both raised numbers on buttons,
+in contrasting light and dark colours, and braille lettering
+adjacent to the number, which shall be provided at the
+control panel; and
+
+(k)
+
+have lift doors in accordance with paragraph 10.
+1771
+
+Part III—Sanitary Facilities
+16.
+
+Toilet facilities
+(1) A building under this Code shall have one or more toilets or
+unisex toilet suitable for use by for a person with disability, provided
+that—
+(a)
+
+the first toilet shall be a unisex toilet facility, for use by a
+person with disability;
+
+(b)
+
+in a building of occupancy where—
+(i)
+
+a bedroom is provided with a private toilet facility, at
+least one bedroom with provision for a private toilet
+facility out of every twenty five bedrooms, shall
+be fitted with a toilet, washbasin, bath or shower
+accessible to a person with disability; and
+
+(ii)
+
+a bedroom is not provided with a private toilet
+facility, at least one bathroom for every twenty
+five bedrooms shall be provided with a toilet and
+a washbasin accessible to a person with disability
+on each floor, and at least one bathroom shall be
+provided with a bath or a shower accessible to a
+person with disability, regardless of the number
+of bedrooms in the hotel, lodging house, hostel or
+hospitality accommodation;
+
+(c)
+
+a public building other than a building of occupancy shall
+have at least one toilet accessible to a person with disability
+within every group of toilets provided;
+
+(d)
+
+a person with disability shall not be required to travel
+further than a person without disability to a toilet accessible
+to a person with disability; and
+
+(e)
+
+a person with disability shall not be required to travel a
+distance of more than forty five metres on the same floor, or
+twenty five metres where horizontal and vertical distances
+1772
+
+are combined, in order to reach a toilet accessible to him
+or her, regardless of the number of toilets available to a
+person with disability.
+(2) A door into an accessible toilet shall have a clear opening of
+at least nine hundred millimetres.
+17.
+
+Wheelchair-accessible toilet
+(1) A wheelchair-accessible toilet shall be as prescribed in Figure
+11 of the Schedule and—
+(a)
+
+the door of the compartment that contains a wheelchair
+accessible toilet facility shall—
+(i)
+
+open outwards unless a one thousand five hundred
+millimetres diameter area that is clear of all fittings,
+fixtures and the line of the door swing is provided;
+
+(ii)
+
+have outward-opening doors with a mechanism that
+holds the door in a closed position without the use of
+a latch;
+
+(iii) be fitted with a grab rail on the inside and an-easy-to
+use locking; and
+(iv) have a leaf that is openable from outside by the use
+of a suitable device in case of emergency and the leaf
+shall be fitted with a suitable means of indicating
+whether the compartment is occupied.
+(2) The minimum finished wall-to-wall dimensions of the
+compartment shall be not less than one thousand nine hundred
+millimetres by two thousand three hundred millimetres.
+(3) A distance of not less than four hundred fifty millimetres and
+not more than five hundred millimetres shall be provided between the
+centre line of the toilet and the nearer side of the compartment, and a
+suitable grab rail shall be fixed to each side wall and rear wall.
+1773
+
+(4) The distance from the front edge of the toilet to the rear
+wall of the compartment shall be not less than six hundred ninety
+millimetres.
+(5) The top surface of the seat of a toilet shall not be less four
+hundred eighty millimetres and not more five hundred millimetres
+above the floor level.
+18.
+
+Toilet seat
+(1) A toilet seat of a wheelchair accessible toilet shall—
+(a)
+
+be of the full-round type, not open fronted, with minimum
+contours on the top surface;
+
+(b)
+
+be securely fixed in position;
+
+(c)
+
+be load-rated to one hundred fifty kilogrammes; and
+
+(d)
+
+have a minimum luminance contrast of thirty per cent
+with the background against which is viewed.
+
+(2) Unless the toilet is provided with a special back rest, the lid
+and seat, when raised to an upright position, shall remain in a upright
+position.
+19.
+
+Backrest
+(1) Where a special backrest is provided for a wheelchair
+accessible toilet, it shall—
+(a)
+
+be capable of withstanding a force in any direction of one
+thousand one hundred Newtons;
+
+(b)
+
+have a height, at the lower edge of backrest to the top of
+the water closet seat, of one hundred twenty millimetres to
+one hundred fifty millimetres;
+
+(c)
+
+have a vertical height of one hundred fifty millimetres to
+two hundred millimetres and a width of three hundred fifty
+millimetres to four hundred millimetres; and
+1774
+
+(d)
+
+the front edge of the centre of the backrest be positioned
+to achieve an angle of between ninety five degrees to one
+hundred degrees back from the seat hinge.
+
+20.
+
+Sanitary fixture
+(1) A sanitary fixture or fitting in a toilet for a person with
+disability shall be easy to use and easily accessible to a person in a
+wheelchair.
+(2) A hand operated metering faucet shall remain open for a
+minimum of ten seconds.
+21.
+
+Flushing control
+(1) A flushing control shall be user activated, either hand operated
+or automatic.
+(2) Where a hand operated flushing control is used, it shall be
+positioned on the outer side, on top of or behind the toilet, operable
+from the transfer space and shall be easy to use.
+(3) The position of the flushing control under this paragraph
+shall not be within the area required for any grabrail or backrest.
+(4) A flushing control shall be proud of the space and activate the
+flush before the button becomes level with the surrounding surface.
+22. Washbasin
+A washbasin within the compartment shall—
+(a)
+
+be mounted without legs or pedestal, and the height from
+the floor to the top edge of the washbasin shall not be more
+than eight hundred twenty millimetres; and
+
+(b)
+
+have a vertical clearance of six hundred fifty millimetres
+from under the basin to the floor, measured at a point not
+less than one hundred sixty millimetres from the front of
+and under the basin.
+1775
+
+(2) Exposed hot water supply pipes shall be insulated or located
+so as not to present a hazard.
+23. Water control taps
+A water control tap under this Code shall—
+(a)
+
+have lever handles, sensor plated or similar controls;
+
+(b)
+
+have lever handles of not less than fifty millimetres
+clearance from an adjacent surface;
+
+(c)
+
+where separate taps are provided for hot and cold water,
+the hot water tap shall be placed to the left of the cold
+water tap for horizontal configurations, or above the cold
+water tap for vertical configurations; and
+
+(d)
+
+where hot water us provided, the water shall be delivered
+through a mixing spout.
+
+24. Vanity slab
+Where a vanity top is provided, it shall be—
+
+25.
+
+(a)
+
+at a height of eight hundred millimetres above the floor;
+
+(b)
+
+with a minimum width of one hundred twenty milllimetres
+beside the basin;
+
+(c)
+
+with a minimum depth of three hundred millimetres from
+the front to the rear wall; and
+
+(d)
+
+with no encroachment into any knee and toe clearance space
+for a minimum width of eight hundred fifty millimetres
+centered on the basin.
+
+Grab rail
+(1) A grab rail suitable for use by a person with disability shall
+be provided at the side and back of the toilet.
+1776
+
+(2) A grab rail under this Code shall comply with the following—
+(a)
+
+the grab rail shall have an outside diameter of between
+thirty millimetres and forty millimetres;
+
+(b)
+
+exposed edges and corners of grab rails shall have a radius
+of not less than five millimetres;
+
+(c)
+
+the fastenings, materials and construction of grab rails
+shall able to withstand a force of one thousand one hundred
+Newtons applied at any position and any directions without
+deformations or loosening or rotations od the fastenings or
+fittings;
+
+(d)
+
+the clearance between a grab rail and the adjacent wall
+surface or other obstruction shall be no less than fifty
+millimetres and not more than sixty millimetres;
+
+(e)
+
+the clearance above a horizontal grab rail shall extend
+above the top of the gran rail by not less than six hundred
+millimetres;
+
+(f)
+
+the clearance below a horizontal or angled rail shall be
+minimum of fifty millimetres except at fixing points; and
+
+(g)
+
+the back and side grab rail may be an integral unit.
+
+(3) A grab rail shall be fixed so that there is no obstruction to the
+passage of the hand along the top two hundred seventy degrees arc of
+horizontal and angled grab rails.
+(4) The passage of the hand for the full length of a vertical grab
+rail shall not be obstructed.
+26. Hinged support arm
+A hinged support arm may in addition to a grab rail be provided to the
+transfer side of a toilet under this Code, at three hundred millimetres
+from the centre of the toilet.
+1777
+
+27. Hooks
+(1) A door hook shall be mounted at a height of one thousand
+one hundred millimetres and one thousand six hundred millimetres
+above finish floor.
+(2) A door hook for a person with disability who crawls shall
+be mounted at a height of seven hundred millimetres to nine hundred
+millimetres.
+(3) Where provided, a coat hook shall be installed between one
+thousand three hundred and fifty millimetres and one thousand five
+hundred millimetres.
+28.
+
+Mirror
+(1) A mirror in a sanitary facility under this Code shall be located
+either above or adjacent to the washbasin.
+(2) Where provided, a vertical mirror with a reflective surface
+of not less than three hundred fifty millimetres wide shall extend from
+a height of not more than nine hundred millimetres to a height of not
+less than one thousand eight hundred fifty millimetres above the plane
+of the finished floor.
+29.
+
+Shower cubicles
+(1) A bath or shower cubicle provided for the use of a person
+with disability shall be designed to enable a wheelchair user to roll
+into the cubicle without being obstructed by a kerb or change of level.
+(2) A floor surface to a bath or shower cubicle provided for the
+use of a person with disability shall be firm and slip resistant under wet
+or dry conditions.
+30.
+
+Bathroom
+(1) There shall be a separate bathroom for a person with
+disabilities with a minimum size of one thousand millimetres by two
+thousand millimetres to enable a wheelchair user enter with ease.
+1778
+
+(2) The bathroom shall be constructed with a seat at an
+appropriate height between four hundred fifty millimetres to five
+hundred millimetres high from the floor surface with double handrails
+mounted at different heights with the maximum at nine hundred
+millimetres.
+(3) The surface floor of the bathroom shall be of non-slip
+materials with a minimum door opening of nine hundred millimetres
+wide.
+(4) A water tap shall be mounted at an approximate maximum
+height of nine hundred millimetres high with a landing area of the
+bathroom of a minimum dimension of one thousand five hundred
+millimetres by one thousand seven hundred millimetres.
+(5) A pathway to the bathroom shall be gentle, non-slippery and
+connected with a ramp where
+necessary.
+(6) There shall be directional signs to the location of the bathroom
+in contrasting colours.
+and the signs shall be supplemented by engraved letters, or braille.
+(7) The accessible bathroom may be used by anybody else as
+long as it is kept clean.
+31. Hand dryer and liquid soap
+The hand dryer and liquid soap outlet for the low sink should be
+mounted at an approximate height of five hundred millimetres from
+floor surface, and for high sink at nine hundred millimetres.
+32. Pegs
+(1) A peg shall be mounted at a height of one thousand one
+hundred millimetres and one thousand six hundred millimetres
+respectively above finish floor.
+1779
+
+(2) For crawling person with disability, a peg shall be mounted
+at a height of seven hundred millimetres to nine hundred millimetres.
+33.
+
+Urinals
+(1) A person who constructs a urinal shall designate an area for
+use by a person with disability and wide enough for a wheelchair user.
+(2) The urinal shall be stall-type or wall-hung with an elongated
+rim to make it user-friendly to a wheelchair user.
+(3) There shall be at least three urinals mounted at different
+heights with the highest at nine hundred millimetres above the finished
+floor to cater for different disabilities.
+(4) Clear floor surface of one thousand five hundred millimetres
+by eight hundred millimetres shall be provided in front of urinals to
+allow forward approach by a wheelchair user.
+(5) Where need be, a ramp leading to the urinals should be
+constructed using non-slippery materials.
+Pit latrine rooms
+34.
+
+Size of pit latrine room
+(1) The size of the pit latrine room shall be of a minimum
+dimension of two thousand one hundred millimetres by one thousand
+eight hundred millimetres.
+(2) The size of the pit latrine room shall have a turning radius for
+a wheelchair user of one thousand five hundred millimetres free of any
+obstruction.
+35.
+
+Pathway to a pit latrine room
+(1) The pathway shall be without any changes in level to the
+latrine entrance.
+(2) If change in levels occurs, it shall be connected with a
+horizontal landing area placed at the same level as the interior floor
+level of the facility.
+1780
+
+(3) The size of the landing area shall be one thousand seven
+hundred millimetres by one thousand five hundred millimetres for
+easy maneuvering of a wheelchair.
+36.
+
+Space
+(1) Space shall be provided in a pit latrine room for a wheelchair
+user to place himself or herself outside the swing area of the door.
+(2) A change in level to the landing area under this paragraph
+shall be connected by means of a ramp.
+(3) The minimum opening space of an entrance to the pit latrine
+room when the door is fully opened shall be nine hundred millimetres.
+37.
+
+Pit latrine room door
+(1) A pit latrine room under this Code shall have a smooth
+running door, with a handle and lock that is easy to operate, smooth
+running and grasp with one hand.
+(2) The distance between the handle and vertical door surface
+shall be of a minimum of fifty millimetres and shall have a pull back
+handrail inside the door.
+(3) The door shall be outward opening to give enough space
+inside for a wheelchair user to turn with ease.
+(4) A small opening in the door should be provided to allow the
+door to be opened from outside if needed.
+38.
+
+Handrails in pit latrine rooms
+(1) A pit latrine room under this Code shall have double handrails
+for support, of diameter of fifty millimetres, fixed on each side of the
+latrine.
+(2) A handrail shall be fixed along one side of the latrine to
+support a person with disability walking from the doorside to the
+latrine and the handrail shall be attached to the outside wall for support
+while opening the door.
+1781
+
+39.
+
+Pit latrine room seat
+(1) A pit latrine room under this Code shall have two twin latrine
+seats over the latrine hole and each latrine seat shall be identical and
+have a maximum height of four hundred ten millimetres from floor
+surface.
+(2) The pit latrine room seat shall be made of cemented plastered
+bricks or concrete and the edges shall not be sharp.
+(3) The pit latrine room seat shall be painted for easy cleaning
+and the paint shall be regularly maintained.
+40. Signage
+An accessible pit latrine room shall have the universally accepted
+symbol for wheelchair access displayed outside.
+41. Corridors
+If there are corridors inside the pit latrine room, the width of the
+corridors shall be minimum one thousand five hundred millimeters.
+42. Holes in pit latrine room
+A hole shall be placed high up on the wall of a pit latrine room for
+ventilation and light.
+43. Floor of pit latrine room
+The floor surface within the pit latrine room shall be of concrete and
+non-slipery materials and shall slope towards the latrine hole, from all
+corners to make sure splashing of water, urine and refuse goes to the
+hole and does not stay on the floor.
+Part IV—Miscellaneous
+44. Air lock
+A sanitary facility under this Code shall not have an airlock.
+45.
+
+Non waterborne means of sanitary disposal
+(1) Where water-borne sewage disposal is not available other
+means of sewage disposal shall be used.
+1782
+
+(2) Where no wheelchair accessible toilets have been provided,
+wheelchair accessible means of sanitary disposal shall be provided
+along an accessible route.
+(3) The closet for the purpose of this paragraph shall be—
+(a)
+
+of minimum dimension of one thousand nine hundred
+millimetres by two thousand three hundred millimetres;
+
+(b)
+
+provided with an opening of not less than 0.2m2 which will
+give natural lighting and ventilations of the area; and
+
+(c)
+
+provided with a seat and a receptacle of such height that a
+space of not more twenty five millimetres is left between
+the underside of the seat and the top of receptacle.
+
+(4) A seat under subparagraph (3) (c) shall—
+(a)
+
+have an aperture at least twenty five millimetres less in
+every diameter than the corresponding diameter of the top
+of such receptacle and the aperture shall be fitted with a
+fly-proof lid;
+
+(b)
+
+be securely fixed in position;
+
+(c)
+
+be loaded-rated to one hundred fifty kilogrammes;
+
+(d)
+
+have a minimum luminance contrast of thirty per cent with
+the background against which is viewed; and
+be made of materials that are easy to clean.
+
+(e)
+
+(5) The closet shall have an area of a diameter of one thousand
+five hundred millimetres within, which shall be maintained clear of
+all fittings and fixtures including the line of the door swing, door, grab
+rail, opening size, floor or waste water trap
+46.
+
+Auditorium, grandstand and halls
+(1) Where a building contains one or more auditoriums or
+halls fitted with fixed seating, floor space accessible to a person in a
+wheelchair shall be set aside for the accommodation of a wheelchair
+in an auditorium or hall.
+1783
+
+(2) The space set aside under subsection (1) shall be as prescribed
+in Figure 13 in the Schedule and be—
+(a)
+
+situated adjacent, or in close proximity to an exit door and
+shall be arranged that a wheelchair will not obstruct an
+aisle or exit door; and
+
+(b)
+
+of a size sufficient to accommodate a—
+(i)
+
+minimum of one wheelchair where the number
+of fixed seats for which the auditorium or hall is
+designed is not more than fifty;
+
+(ii)
+
+minimum of two wheelchairs where the number
+of fixed seats for which the auditorium or hall is
+designed is more than fifty but not more than four
+hundred seats; and
+
+(iii) minimum of three wheelchairs or a number of
+wheelchairs equal to zero point five per cent of the
+number of fixed seats for which the auditorium or
+hall is designed, whichever is greater, where the
+number of fixed seats exceeds four hundred seats.
+(3) Wheelchair positions shall be distributed evenly throughout
+an auditorium, grandstand or hall and for each wheelchair position a
+companion seat shall be provided.
+(4) Each space available to a wheelchair shall not be less than nine
+hundred millimetres by one thousand four hundred millimetres and the
+space shall provide a line of vision of the performance comparable to
+the full range of seating that is not wheelchair accessible.
+47.
+
+Controls, switches and power points
+(1) The design and construction of the operating controls and
+devices shall be as prescribed in Figure12 in the Schedule and shall
+aim to ensure the independent and safe operation of the control and
+device by a person with disability.
+1784
+
+(2) Operating controls and control devices under subparagraph
+shall include—
+(a)
+
+door handles and locks;
+
+(b)
+
+lever and mixer taps;
+
+(c)
+
+action devices, vending machines, automatic teller
+machines and vehicle park auto-pay machines;
+
+(d)
+
+window openers and locks; and
+
+(e)
+
+electrical socket outlets and switches.
+
+(3) A security control and light switch shall be horizontally
+aligned with a door handle and any other fixture or fittings other than
+socket outlets between nine hundred millimetres and one thousand
+two hundred millimetres above the finished floor level.
+(4) Rocker action or push-pad switches that operate in a vertical
+plane shall be provided for a person with visual or dexterity impairment.
+(5) A push-button of a light switch shall project clear of the
+switch plate and have a width of at least fifteen millimetres.
+(6) A general –purpose socket outlet or power point shall be fixed
+at least 500 millimetres above the finished floor level, 1500 millimetres
+above the worktop and at least four hundred and fifty millimetres from
+the corners.
+(7) An emergency control and any other control shall show its
+effective operation so it can include a person with hearing loss.
+(8) There shall be provided a movable ramp to enable wheelchair
+users access switches, security control and power points in other
+circulation areas.
+48. Warning signal
+An emergency warning signal including one in mechanical circulation
+installations shall be visible and audible to enable access for the blind.
+1785
+
+49.
+
+Lighting
+(1) The lighting in a building under this Code shall be uniform.
+
+(2) The lighting levels shall not cause glare or shadows that
+would give rise to optical illusions.
+(3) Ceiling mounted light fittings with diffusers shall be
+positioned longitudinally at centre of an accessible route.
+(4) The lighting levels of the accessible routes and related
+accessible spaces shall allow for a person with visual impairment to
+carry out day-to-day tasks.
+(5) An alternative light source shall be provided to illuminate a
+space.
+(6) Where motion-sensor type lighting switched are used within
+a wheelchair accessible toilet, the following requirements shall be
+complied with—
+(a)
+
+a switch controller shall be equipped for fail safe operation;
+
+(b)
+
+illumination timer shall be set for a minimum of thirty
+minute duration;
+
+(c)
+
+the sensor shall be appropriately located and easily
+activated by occupant movement in the toilet.
+
+50. Non-compliance
+A person who does not comply with the provisions of this Code shall
+not be issued with an occupation permit.
+
+1786
+
+SCHEDULE
+FIGURE 1- SIGNAGE
+
+Paragraph 4
+
+FIGURE 2- PARKING AND ACCESSIBLE ROUTE
+
+paragraphs 5,6
+
+1787
+
+FIGURE 3—TURNING SPACE
+
+Paragraph 7
+
+FIGURE 4- OBSTRUCTION IN PATH OF TRAVEL
+paragraphs 7,8
+
+1788
+
+FIGURE 5- OBSTRUCTION IN PATH OF TRAVEL
+Paragraph 8
+
+FIGURE 6- DOORWAY AND DOOR
+
+1789
+
+paragraph 10
+
+FIGURE 7 – DOORWAY AND DOOR
+
+FIGURE 8- DOORWAY AND DOOR
+
+1790
+
+paragraph 10
+
+paragraph 10
+
+FIGURE 9- DOORWAY AND DOOR
+
+paragraph 10
+
+FIGURE 10- RAMPS AND HANDRAILS
+paragraphs 12 and 14
+
+1791
+
+FIGURE 11- WHEELCHAIR-ACCESSIBLE TOILET
+paragraph 17
+
+FIGURE 12- CONTROLS, SWITCHES AND POWER POINTS
+paragraph 46
+
+1792
+
+FIGURE 13- AUDITORIUM, GRANDSTAND AND HALLS
+paragraph 45
+
+1793
+
+HON. MONICA AZUBA NTEGE,
+Minister of Works and Transport.
+
+1794
+
+
