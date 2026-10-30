@@ -20,6 +20,7 @@ Scope: only the major identified jurisdictions (SCOPE) are shown; other data sta
 import json
 import re
 import sys
+import unicodedata
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
@@ -56,6 +57,29 @@ def lw(html, default="zh"):
     return _CJK.sub(f, html)
 
 
+TYPE_LABEL = {"clinical": "clinical study", "sr_meta": "systematic review", "co1": "lived-experience source",
+              "co2": "professional guideline", "standard_eb": "standard", "national_fw": "national framework", "code": "code",
+              "grey": "report"}
+
+
+def tier_label(t):
+    d = sorted(set(re.findall(r"T(\d)", t or "")))
+    names = {"4": "international standard", "5": "national framework", "6": "legal code"}
+    if len(d) == 1:
+        return f"{names.get(d[0], 'source')} (tier {d[0]})"
+    return "tiers " + " and ".join(d) if d else "tier not recorded"
+
+
+def clean_title(t):
+    """Strip internal curation notes such as '(best-fit Crossref candidate ...)' from a stored title."""
+    t = t or ""
+    i = t.find("Crossref")
+    if i > 0:
+        j = t.rfind("(", 0, i)
+        t = t[:j] if j > 0 else t
+    return t.strip()
+
+
 def first_sentence(text):
     t = text.strip()
     i = t.find(". ")
@@ -68,6 +92,11 @@ def build(d):
     short = title.split(" (")[0]
     question = load_question(code) or short
     facets = {"pop": set(), "icf": set(), "need": set()}
+
+    def src(ref):
+        s_ = dict(d["src"](ref))
+        s_["pub_title"] = clean_title(s_["pub_title"])
+        return s_
 
     def slope_tok(x):
         return "{{slope=%.6f|1:%d}}" % (x, round(1 / x))
@@ -102,7 +131,7 @@ def build(d):
 
     def cite_btn(ref):
         if ref not in cited:
-            sx = d["src"](ref)
+            sx = src(ref)
             label, html, complete = apa(sx)
             pages = [{"item": r[0], "name": r[1], "href": page_href(r[0])} for r in d["db"].execute(
                 """SELECT DISTINCT i.item_code, i.name FROM source_slug_links l JOIN items i ON i.bpc_source_slug = l.slug
@@ -110,7 +139,10 @@ def build(d):
             if code not in {p["item"] for p in pages}:
                 pages.insert(0, {"item": code, "name": title, "href": None})
             cited[ref] = {"label": label, "apa": lw(html), "complete": complete, "tier": sx["tier"], "type": sx["evidence_type"],
-                          "status": sx["verification_status"], "pages": pages}
+                          "type_label": TYPE_LABEL.get(sx["evidence_type"], sx["evidence_type"] or ""),
+                          "status": sx["verification_status"],
+                          "status_label": "metadata verified" if sx["verification_status"] == "VERIFIED" else "metadata not yet verified",
+                          "pages": pages}
         return (f'<button type="button" class="lk cite" data-ref="{escape(ref)}" aria-haspopup="dialog">'
                 f'({lw(escape(cited[ref]["label"]))})</button>')
 
@@ -148,33 +180,44 @@ def build(d):
                         f'<td role="cell" data-l="Basis">{rt(basis)}{refs}{marker_html(r)}</td></tr>')
     legend = ('<p class="muted">● evidence-based: a standard or study states the value. ○ inferred: reasoned from related evidence, '
               'with the gap recorded. Values are provisional.</p>')
-    spec_html = (legend + '<table class="plain spec" role="table"><caption class="vh">Recommended value for each group of people</caption>'
+    spec_html = ('<p class="muted fcnt" id="fc-spec"></p>' + legend + '<table class="plain spec" role="table"><caption class="vh">Recommended value for each group of people</caption>'
+                 '<colgroup><col style="width:19%"><col style="width:24%"><col style="width:57%"></colgroup>'
                  '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col">Who it applies to</th>'
                  '<th role="columnheader" scope="col">Value</th><th role="columnheader" scope="col">Basis</th></tr></thead>'
                  f'<tbody role="rowgroup">{"".join(rows)}</tbody></table>')
 
     # ---- 2. jurisdictions
     by_code = {j["code"]: j for j in page["jurisdictions"] if j["code"] in SCOPE}
-    have = [c for c in SCOPE if c in by_code]
-    none = [c for c in SCOPE if c not in by_code]
+    alpha = lambda c: JURISDICTION_NAMES.get(c, c).lower()  # noqa: E731
+    have = sorted((c for c in SCOPE if c in by_code), key=alpha)
+    none = sorted((c for c in SCOPE if c not in by_code), key=alpha)
 
     def split_q(text):
         i = text.find(" (")
         return (text, "") if i < 0 else (text[:i], text[i:])
 
-    def cell(code_, label, text):
+    def clause_text(j):
+        return j.get("clause_display") or "clause not recorded"
+
+    def gcell(label, text, cls="val"):
         if not text:
             return f'<td role="cell" class="nil" data-l="{label}"><span class="vh">None stated</span><span aria-hidden="true">&ndash;</span></td>'
         main, qual = split_q(text)
-        inner = f'<span class="mv">{rt(main)}</span>' + (f'<span class="mq">{rt(qual)}</span>' if qual else "")
-        return (f'<td role="cell" data-l="{label}"><button type="button" class="lk mval" data-code="{code_}" aria-haspopup="dialog">'
-                f'{inner}</button></td>')
+        return (f'<td role="cell" class="{cls}" data-l="{label}"><span class="mv">{rt(main)}</span>'
+                + (f'<span class="mq">{rt(qual)}</span>' if qual else "") + "</td>")
+
+    def src_link(j):
+        s0 = j["sources"][0] if j["sources"] else None
+        if not s0:
+            return "no link recorded"
+        return (f'<a href="{escape(s0["url"])}" target="_blank" rel="noopener">{escape(s0["label"])}'
+                '<span class="vh"> (opens in a new tab)</span></a>')
 
     master = ""
     if best:
         master += (f'<tbody role="rowgroup" class="mg gb"><tr role="row"><th role="rowheader" scope="row">Best practice</th>'
-                   f'<td role="cell" class="val" data-l="Preferred">{rt(slope_tok(best))}</td>'
-                   f'<td role="cell" class="val" data-l="Maximum">{rt(slope_tok(best))}</td>'
+                   f'<td role="cell" class="val" data-l="Preferred"><span class="mv">{rt(slope_tok(best))}</span></td>'
+                   f'<td role="cell" class="val" data-l="Maximum"><span class="mv">{rt(slope_tok(best))}</span></td>'
                    f'<td role="cell" class="nil" data-l="Between landings"><span class="vh">None stated</span><span aria-hidden="true">&ndash;</span></td></tr>'
                    f'<tr role="row" class="std"><td role="cell" colspan="4">Best value found for the people it serves; no study in the library improves on it.</td></tr></tbody>')
     for c in have:
@@ -182,10 +225,32 @@ def build(d):
         m = j.get("master") or {"preferred": None, "max": j["headline"], "landing_limit": None, "sort": None}
         key = "" if m.get("sort") is None else m["sort"]
         dl = "ja" if c == "JP" else "zh"
-        master += (f'<tbody role="rowgroup" class="mg" data-sort="{key}"><tr role="row"><th role="rowheader" scope="row">'
-                   f'{escape(JURISDICTION_NAMES.get(c, c))}</th>'
-                   f'{cell(c, "Preferred", m.get("preferred"))}{cell(c, "Maximum", m.get("max"))}{cell(c, "Between landings", m.get("landing_limit"))}</tr>'
-                   f'<tr role="row" class="std"><td role="cell" colspan="4"><i>{lw(escape(j["standard"]), dl)}</i>, {escape(j["edition"])}; {READ[j["level"]]}.</td></tr></tbody>')
+        cl = "" if clause_text(j) in j["standard"] else f", {escape(clause_text(j))}"
+        std = (f'<i>{lw(escape(j["standard"]), dl)}</i>{cl}, {escape(j["edition"])} &middot; {escape(tier_label(j["tier"]))} '
+               f'&middot; {READ[j["level"]]} &middot; Source: {src_link(j)}')
+        master += (f'<tbody role="rowgroup" class="mg" data-code="{c}" data-sort="{key}"><tr role="row"><th role="rowheader" scope="row">'
+                   f'<a href="#j-{c}" class="jlink">{escape(JURISDICTION_NAMES.get(c, c))}</a></th>'
+                   f'{gcell("Preferred", m.get("preferred"))}{gcell("Maximum", m.get("max"))}{gcell("Between landings", m.get("landing_limit"), "sv")}</tr>'
+                   f'<tr role="row" class="std"><td role="cell" colspan="4">{std}.</td></tr></tbody>')
+
+    PCOLS = [("landing", "Landings"), ("width", "Clear width"), ("handrails", "Handrails"), ("cross", "Cross-slope")]
+
+    def pcell(label, text):
+        if not text:
+            return f'<td role="cell" class="nil" data-l="{label}">not read</td>'
+        main, qual = split_q(text)
+        return f'<td role="cell" class="sv" data-l="{label}">{rt(main)}' + (f'<span class="mq">{rt(qual)}</span>' if qual else "") + "</td>"
+
+    prow = ""
+    for c in have:
+        pm = (by_code[c].get("master") or {}).get("params") or {}
+        nm_ = escape(JURISDICTION_NAMES.get(c, c))
+        if not any(pm.get(k) for k, _ in PCOLS):
+            prow += (f'<tbody role="rowgroup" class="mg" data-code="{c}"><tr role="row"><th role="rowheader" scope="row">{nm_}</th>'
+                     f'<td role="cell" class="nil span" colspan="4">Only the gradient has been read.</td></tr></tbody>')
+        else:
+            prow += (f'<tbody role="rowgroup" class="mg" data-code="{c}"><tr role="row"><th role="rowheader" scope="row">{nm_}</th>'
+                     + "".join(pcell(lab, pm.get(k)) for k, lab in PCOLS) + "</tr></tbody>")
 
     def jur_entry(j):
         needs = sorted({n for p in j["provisions"] for n in p[2]})
@@ -197,23 +262,33 @@ def build(d):
         return (f'<details class="jx fi" id="j-{j["code"]}" data-scope="universal" data-pop="" data-icf="" data-need="{" ".join(needs)}">'
                 f'<summary><b class="jn">{escape(JURISDICTION_NAMES.get(j["code"], j["code"]))}</b> '
                 f'<span class="muted">{lw(escape(j["standard"]), dl)}, {escape(j["edition"])}</span></summary>'
-                f'<div class="body"><dl class="provs">{prov}</dl>'
-                f'<p><b>Compared with the Guidebook position.</b> {rt(j["vs_guidebook"])}</p>'
+                f'<div class="body"><p class="muted">{escape(j["regime"])}; {escape(clause_text(j))}; {escape(tier_label(j["tier"]))}.</p>'
+                f'<dl class="provs">{prov}</dl>'
+                f'<p><b>Compared with best practice.</b> {rt(j["vs_guidebook"])}</p>'
                 f'<p><b>What was read.</b> {rt(j["read"])}</p>'
                 + (f'<p><b>Open.</b> {rt(j["open"])}</p>' if j.get("open") else "")
                 + (f'<p><b>In the library.</b></p><ul>{lib}</ul>' if lib else "")
                 + (f'<p><b>Links.</b></p><ul>{srcs}</ul>' if srcs else "")
                 + "</div></details>")
 
-    pending = (f'<p class="muted">Not yet read: {", ".join(escape(JURISDICTION_NAMES.get(c, c)) for c in none)}.</p>' if none else "")
+    pending = (f'<p><b>Not yet covered ({len(none)}):</b> {", ".join(escape(JURISDICTION_NAMES.get(c, c)) for c in none)}.</p>' if none else "")
     jur_html = (
+        '<a class="skip skipin" href="#detail-list">Skip the tables to the details by jurisdiction</a>'
+        '<p class="ordrow"><button type="button" class="lk msort" id="msort" aria-label="Change table order, currently alphabetical">Order: A–Z</button> '
+        '<span class="muted">Select a jurisdiction name to open its full entry.</span></p>'
         '<table class="plain cmp" id="master" role="table"><caption class="vh">Ramp gradient requirement by jurisdiction</caption>'
+        '<colgroup><col style="width:19%"><col style="width:18%"><col style="width:24%"><col style="width:39%"></colgroup>'
         '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col">Jurisdiction</th>'
         '<th role="columnheader" scope="col">Preferred</th>'
-        '<th role="columnheader" scope="col">Maximum <button type="button" class="lk msort" id="msort">Sort steepest first</button></th>'
+        '<th role="columnheader" scope="col" id="th-max" aria-sort="none">Maximum</th>'
         f'<th role="columnheader" scope="col">Between landings</th></tr></thead>{master}</table>'
-        '<p class="muted">Select a value to see the detail for that jurisdiction.</p>' + pending +
-        f'<details class="alljx"><summary>Details by jurisdiction ({len(have)})</summary>' + "".join(jur_entry(by_code[c]) for c in have) + "</details>")
+        '<h3>Other ramp requirements</h3>'
+        '<table class="plain cmp" id="master2" role="table"><caption class="vh">Other ramp requirements by jurisdiction</caption>'
+        '<colgroup><col style="width:19%"><col style="width:30%"><col style="width:17%"><col style="width:22%"><col style="width:12%"></colgroup>'
+        '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col">Jurisdiction</th>'
+        + "".join(f'<th role="columnheader" scope="col">{lab}</th>' for _, lab in PCOLS) + f'</tr></thead>{prow}</table>'
+        + pending +
+        f'<details class="alljx" id="detail-list"><summary>Details by jurisdiction ({len(have)})</summary>' + "".join(jur_entry(by_code[c]) for c in have) + "</details>")
 
     # ---- 3. why it matters
     why = "".join(f'<li>{rt(w["text"])}{" " + " ".join(cite_btn(r) for r in w.get("refs", []))}</li>' for w in page["why_it_matters"])
@@ -221,18 +296,27 @@ def build(d):
     # ---- 4. evidence: reference list, alphabetical by first author's last name
     ev = []
     for e in page["evidence"]:
-        s = d["src"](e["ref"])
-        ev.append((apa_authors(s)[0].lower(), s["pub_year"] or 0, e, s))
-    ev.sort(key=lambda t: (t[0], t[1]))
+        s = src(e["ref"])
+        last = unicodedata.normalize("NFKD", apa_authors(s)[0].split(",")[0]).encode("ascii", "ignore").decode().lower()
+        ev.append((re.sub(r"[^a-z0-9 ]", "", last), s["pub_year"] or 0, e, s))
+    ev.sort(key=lambda t: (t[0], t[1]))  # key built below from the last name only
     ev_items = []
     for _, _, e, s in ev:
         subj = [x["population_code"] for x in s["subject"] if x["population_code"] != "ALL"]
         tag = tagattrs(subj, s["icf"], s["needs"], "group" if subj else "universal")
         doi = (f' <a href="https://doi.org/{escape(s["doi"])}" target="_blank" rel="noopener">doi:{escape(s["doi"])} (opens in a new tab)</a>'
                if s["doi"] else "")
-        ev_items.append(f'<li class="fi evr" {tag}><details><summary><span class="apa">{lw(apa(s)[1])}</span></summary>'
+        pops_txt = ", ".join(d["pops"].get(x["population_code"], x["population_code"]) for x in s["subject"]
+                             if x["population_code"] != "ALL") or "population not recorded"
+        pops_txt = pops_txt[:1].upper() + pops_txt[1:]
+        type_lab = TYPE_LABEL.get(s["evidence_type"], s["evidence_type"] or "")
+        meta = (f'{escape(pops_txt)} &middot; Evidence tier {s["tier"]} ({escape(type_lab)}) &middot; '
+                f'{"DOI recorded" if s["doi"] else "no DOI recorded"} &middot; '
+                f'{"metadata verified" if s["verification_status"] == "VERIFIED" else "metadata not yet verified"}')
+        ev_items.append(f'<li class="fi evr" {tag}><details><summary><span class="apa">{lw(apa(s)[1])}</span>'
+                        f'<span class="evmeta">{meta}</span><span class="evmeta">{rt(first_sentence(e["relevance"]))}</span></summary>'
                         f'<div class="body"><p>{rt(e["relevance"])}</p>'
-                        f'<p class="muted">Tier {s["tier"]}, {escape(s["evidence_type"] or "")}, {escape(s["verification_status"] or "")}.{doi} {cited_on(e["ref"])}</p></div></details></li>')
+                        f'<p class="muted">{doi.strip()} {cited_on(e["ref"])}</p></div></details></li>')
 
     # ---- 5. gaps
     gaps = "".join(f'<li><b>{escape(g["gap_id"])}</b> ({escape(g["status"])}). {escape(g["description"] or "")}</li>' for g in d["gaps"])
@@ -288,8 +372,12 @@ def build(d):
     if max_by:
         bits.append("stated as the maximum in " + ", ".join(JURISDICTION_NAMES.get(c, c) for c in max_by))
     basis_txt = page["_meta"].get("best_practice_basis", "Best practice is what benefits the people it is for most.")
-    hero_note = (f'<p class="muted herotip">{escape(basis_txt)} Found {"; ".join(bits)}. '
-                 'No study or professional body in the library does better for them. This rests on standards alone, so it is provisional.</p>') if bits else ""
+    hero_note = (f'<p class="muted herotip">{escape(basis_txt)} Found {"; ".join(bits)}. This rests on standards alone, so it is provisional.</p>') if bits else ""
+    plain = ""
+    if best:
+        n_ = round(1 / best)
+        plain = ('<p class="inplain">' + rt("In plain terms: for every {{len=1000|1 m}} a ramp climbs, a " + slope_tok(best)
+                 + " slope needs {{len=%d|%d m}} of ramp. A gentler slope takes less effort to push, walk or roll up." % (n_ * 1000, n_)) + "</p>")
     scope_note = f"{len(have)} of {len(SCOPE)} major jurisdictions read; {len(ev_items)} studies in the library."
 
     # ---- figure: the run needed to climb the same rise at each gradient (real text; only the triangles scale)
@@ -321,16 +409,17 @@ def build(d):
     # ---- assemble
     sections = [("spec", "Values by group", spec_html), ("jurisdictions", "Requirements by jurisdiction", jur_html),
                 ("why", "Why it matters", f'<ul class="why">{why}</ul>'),
-                ("evidence", "Evidence", f'<div id="evlist"><ol class="refs" id="evol">{"".join(ev_items)}</ol></div>')]
+                ("evidence", "Evidence", f'<p class="muted fcnt" id="fc-ev"></p><div id="evlist"><ol class="refs" id="evol">{"".join(ev_items)}</ol></div>')]
     if gaps:
         sections.append(("gaps", "Gaps", gap_lead + f'<details class="gps"><summary>{gaps_n} gaps recorded for this item</summary><div class="body"><ul>{gaps}</ul></div></details>'))
-    prov = (f'<p>{escape(page["_meta"]["status"])}</p><p class="muted">Database schema v{d["user_version"]}; generated '
-            f'{datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}; evidence base {escape(item["bpc_source_slug"])}; '
-            f'prepared by {escape(page["_meta"]["prepared_by"])}. Population, ICF and access-need codes and tags are provisional and unreviewed.</p>')
+    prov = (f'<p>{escape(page["_meta"].get("reader_status", page["_meta"]["status"]))}</p>'
+            f'<p class="muted">Generated {datetime.now(timezone.utc).strftime("%Y-%m-%d")} from the Guidebook database. '
+            f'Evidence base: {escape(item["bpc_source_slug"])}.</p>')
     sections.append(("about", "About this page", prov))
     metas = {"jurisdictions": f"{len(have)} of {len(SCOPE)} read", "evidence": f"{len(ev_items)} sources"}
-    nav = "".join(f'<li><a href="#{sid}" data-snav="{sid}"><span class="snc-n">{i + 1}</span> {head}</a></li>'
-                  for i, (sid, head, _) in enumerate(sections))
+    nav = '<li><a href="#main" data-snav="main">Overview</a></li>' + "".join(
+        f'<li><a href="#{sid}" data-snav="{sid}"><span class="snc-n">{i + 1}</span> {head}</a></li>' for i, (sid, head, _) in enumerate(sections))
+    myj = "".join(f'<option value="{c}">{escape(JURISDICTION_NAMES.get(c, c))}</option>' for c in have)
     body = "".join(
         f'<section class="section" id="{sid}" aria-labelledby="h-{sid}"><h2 id="h-{sid}"><span class="n">{i + 1}</span><span class="t">{head}</span>'
         + (f'<span class="sec-meta">{metas[sid]}</span>' if sid in metas else "") + f'</h2><div class="sc">{html}</div></section>'
@@ -339,7 +428,7 @@ def build(d):
     out = TEMPLATE
     for k, val in {
         "__TITLE__": escape(short), "__CODE__": escape(code), "__QUESTION__": escape(question),
-        "__HERO__": hero + hero_note, "__FIG__": fig, "__NAV__": nav, "__SECTIONS__": body, "__SCOPE__": escape(scope_note),
+        "__HERO__": hero + hero_note + plain, "__FIG__": fig, "__MYJ__": myj, "__NAV__": nav, "__SECTIONS__": body, "__SCOPE__": escape(scope_note),
         "__POPF__": pop_f, "__ICFF__": icf_f, "__NEEDF__": need_f,
         "__CITES__": json.dumps(cited, ensure_ascii=False).replace("</", "<\\/"),
     }.items():
@@ -368,24 +457,24 @@ input,select,button{font-family:inherit;font-size:inherit;color:inherit}
 .vh{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
 .skip{position:absolute;left:-9999px;top:8px;background:var(--bg);color:var(--ink);padding:10px 14px;border:2px solid var(--ink);z-index:30}.skip:focus{left:8px}
-.top{font-size:var(--s5)}.top .wrap{display:flex;gap:6px 32px;align-items:baseline;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
-.top .brand{font-weight:700;text-decoration:none}.top nav{color:var(--muted)}
+.top{font-size:var(--s4)}.top .wrap{display:flex;gap:6px 32px;align-items:baseline;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.top .brand{font-weight:700;text-decoration:none}.top nav{color:var(--ink)}
 .sectnav{position:sticky;top:0;z-index:5;background:var(--bg);border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
-.sectnav ol{display:flex;list-style:none;margin:0 auto;padding:0 20px;max-width:1120px;overflow-x:auto;gap:0}
-.sectnav li{margin:0}.sectnav a{display:block;padding:12px 12px 9px;font-size:var(--s5);color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent;min-height:44px}
+.sectnav ol{display:flex;flex-wrap:wrap;list-style:none;margin:0 auto;padding:0 20px;max-width:1120px;gap:0}
+.sectnav .navd{border:0}.navd>summary{display:none;font-weight:700}.sectnav li{margin:0}.sectnav a{display:block;padding:12px 12px 9px;font-size:var(--s4);color:var(--ink);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent;min-height:44px}
 .sectnav a:hover{color:var(--ink);text-decoration:underline}
 .sectnav a[aria-current=true]{color:var(--ink);font-weight:700;border-bottom-color:var(--red)}
 .page{padding-top:56px;padding-bottom:120px}
 .kicker{margin:0 0 20px;font-size:var(--s5);color:var(--muted)}
-h1{margin:0;max-width:14em;font-size:var(--s1);line-height:1.02;font-weight:700;letter-spacing:-.025em}
+h1{margin:0;max-width:24em;font-size:var(--s2);line-height:1.2;font-weight:700}
 .q{margin:20px 0 0;max-width:34em;font-size:var(--s2);line-height:1.25}
 .hero{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:0 var(--gap);margin:36px 0 0;padding-top:12px;border-top:1px solid var(--ink)}
-.herotip{margin:12px 0 0;max-width:46em}.mk{white-space:nowrap;color:var(--muted);font-size:var(--s5)}
-.hf{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:6px}.hl{font-size:var(--s5);color:var(--muted)}.hv{margin:0;font-size:var(--s2);font-weight:700;line-height:1.15}
+.herotip{margin:12px 0 0;max-width:62ch}.inplain{margin:16px 0 0;max-width:62ch}.mk{white-space:nowrap;color:var(--muted);font-size:var(--s5)}
+.hf{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:6px}.hl{font-size:var(--s5);color:var(--muted)}.hv{margin:0;font-size:var(--s1);font-weight:700;line-height:1.05}
 .fig{margin:40px 0 0}.figrows{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--rule)}
 .frow{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:0 var(--gap);align-items:center;padding:10px 0;margin:0;border-top:1px solid var(--rule)}
 .flab{font-size:var(--s5);color:var(--muted)}.fs{color:var(--muted)}.fstrong .flab{color:var(--ink);font-weight:700}
-.ft{display:flex;align-items:center;gap:12px;min-width:0}.tri{display:block;height:20px;flex:0 0 auto;color:var(--ink)}.fv{font-size:var(--s4);white-space:nowrap}.fstrong .fv{font-weight:700}
+.ft{display:grid;grid-template-columns:minmax(0,1fr) 7.5em;gap:12px;align-items:center;min-width:0}.tri{display:block;height:20px;color:var(--ink)}.fv{font-size:var(--s4);white-space:nowrap;text-align:right}.fstrong .fv{font-weight:700}
 .fig figcaption{margin-top:12px;font-size:var(--s5);color:var(--muted);max-width:52em}
 .bar{margin:36px 0 0;border-top:1px solid var(--ink)}
 .brow{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:0 var(--gap);padding:10px 0;border-bottom:1px solid var(--rule);align-items:center}
@@ -403,32 +492,35 @@ h1{margin:0;max-width:14em;font-size:var(--s1);line-height:1.02;font-weight:700;
 .fchip:hover{text-decoration:underline}.fchip[aria-pressed=true]{font-weight:700;border-bottom-color:var(--red)}
 .fcount{font-size:var(--s5);color:var(--muted);margin-left:4px;font-weight:400}
 .applied{display:inline-flex;flex-wrap:wrap;gap:0 16px}.clr{font-size:var(--s5)}
-.section{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:0 var(--gap);margin:80px 0 0;padding-top:12px;border-top:1px solid var(--ink)}
+.section{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:0 var(--gap);margin:80px 0 0;padding-top:12px;border-top:3px solid var(--ink)}
 h2{grid-column:1;margin:0;font-size:var(--s2);line-height:1.15;font-weight:700}
-h2 .n{display:block;font-size:var(--s5);font-weight:400;color:var(--muted);margin-bottom:6px}h2 .t{display:block}
+h2 .n{display:block;font-size:var(--s2);font-weight:400;color:var(--muted);margin-bottom:6px}h2 .t{display:block}
 .sec-meta{display:block;margin-top:8px;font-size:var(--s5);font-weight:400;color:var(--muted)}
-.sc{grid-column:2;min-width:0}
+.sc{grid-column:2;min-width:0}.sc>p{max-width:68ch}
 h3{margin:36px 0 8px;font-size:var(--s4);font-weight:700}
 p{margin:0 0 12px}.muted,.note{color:var(--muted)}.muted,.std,.note{font-size:var(--s5)}
 .lk{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-.lk:hover{text-decoration-thickness:2px}.msort{color:var(--muted);font-size:var(--s5);font-weight:400;margin-left:8px;min-height:32px;padding:4px 6px}
+.lk:hover{text-decoration-thickness:2px}.cite{display:inline-block;padding:2px 0;min-height:24px}.ordrow{margin:0 0 8px;font-size:var(--s5)}.msort{color:var(--ink);font-size:var(--s5);font-weight:400;margin-left:8px;min-height:32px;padding:4px 6px}
 .mval{font-size:var(--s3);font-weight:700;line-height:1.3}
-a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--red);outline-offset:2px}
-table.plain{width:100%;border-collapse:collapse;margin:0 0 12px}
+a:focus-visible,button:focus-visible,summary:focus-visible,select:focus-visible,input:focus-visible,.pg:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+dialog h3:focus{outline:none}.jlink{font-weight:700;display:inline-block;padding:3px 0;min-height:24px}.fcnt{margin:0 0 8px}.fchip:disabled{color:var(--muted);cursor:default;text-decoration:none;opacity:.7}
+.pills .pg{max-height:45vh;overflow:auto}.skipin:focus{top:60px}
+tbody.mine>tr>*{background:var(--hit)}tbody.mine>tr:first-child>th{box-shadow:inset 4px 0 0 var(--red);padding-left:12px}
+table.plain{width:100%;table-layout:fixed;border-collapse:collapse;margin:0 0 12px}table.plain td,table.plain th{overflow-wrap:anywhere}
 table.plain th,table.plain td{padding:12px 20px 12px 0;text-align:left;vertical-align:top;border-top:1px solid var(--rule)}
-table.plain thead th{font-size:var(--s5);font-weight:400;color:var(--muted);border-top:0;border-bottom:1px solid var(--ink);padding-top:0;padding-bottom:8px}
-table.plain tbody th{font-weight:400}table.plain .nil{color:var(--muted)}
-.val{font-size:var(--s3);font-weight:700;line-height:1.3;white-space:nowrap}
+table.plain thead th{font-size:var(--s5);font-weight:400;color:var(--muted);border-top:0;border-bottom:1px solid var(--ink);padding-top:8px;padding-bottom:8px;position:sticky;top:46px;background:var(--bg);z-index:2}
+table.plain tbody th{font-weight:400}table.plain .nil{color:var(--muted);font-size:var(--s5)}.sv{font-size:var(--s4);font-weight:400;line-height:1.35}
+.val{font-size:var(--s3);font-weight:700;line-height:1.3}
 .mv{font-size:var(--s3);font-weight:700;line-height:1.3}.mq{display:block;font-size:var(--s5);font-weight:400;color:var(--muted);line-height:1.4;margin-top:2px}
 table.spec td:nth-child(3){font-size:var(--s5);color:var(--muted);line-height:1.5}table.spec td:nth-child(3) .cite{color:inherit}
-table.cmp tbody.mg>tr:first-child>*{padding-bottom:2px}table.cmp th[scope=row]{white-space:nowrap}
+table.cmp tbody.mg>tr:first-child>*{padding-bottom:2px}
 table.cmp tr.std td{padding:0 20px 12px 0;border-top:0;font-size:var(--s5);color:var(--muted)}
 table.cmp tbody.gb>tr:first-child>*{border-top:1px solid var(--ink)}table.cmp tbody.gb th{font-weight:700}table.cmp tbody.gb tr.std td{padding-bottom:14px;border-bottom:1px solid var(--ink)}
 .fi.hidden{display:none}.fi.hit,.prov.hit{background:var(--hit);box-shadow:inset 4px 0 0 var(--red)}
 details{border-top:1px solid var(--rule)}details:last-of-type{border-bottom:1px solid var(--rule)}
-details>summary{cursor:pointer;list-style:none;padding:12px 32px 12px 0;position:relative;min-height:44px}
-details>summary::-webkit-details-marker{display:none}details>summary::after{content:"+";position:absolute;right:6px;top:10px;color:var(--muted)}
-details[open]>summary::after{content:"\2013"}details>summary:hover .jn{text-decoration:underline}
+details>summary{cursor:pointer;list-style:none;padding:12px 8px 12px 28px;position:relative;min-height:44px}
+details>summary::-webkit-details-marker{display:none}details>summary::before{content:"\25B8";position:absolute;left:4px;top:11px;color:var(--ink)}
+details[open]>summary::before{content:"\25BE"}details>summary:hover .jn{text-decoration:underline}
 .jn{font-weight:700;margin-right:12px}
 .body{padding:2px 0 16px;max-width:66ch}.body p{margin:0 0 10px}.body ul{margin:0 0 10px;padding-left:20px}
 dl.provs{margin:0 0 12px}.prov{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.4fr);gap:2px var(--gap);padding:8px 0;border-top:1px solid var(--rule)}
@@ -436,17 +528,26 @@ dl.provs{margin:0 0 12px}.prov{display:grid;grid-template-columns:minmax(0,1fr) 
 ul,ol{padding-left:20px;margin:0 0 12px}li{margin:0 0 12px}
 .why{max-width:34em;list-style:none;padding-left:0}.why li{font-size:var(--s3);line-height:1.4;padding:12px 0;margin:0;border-top:1px solid var(--rule)}.why li:last-child{border-bottom:1px solid var(--rule)}
 ol.refs{padding-left:0;list-style:none}ol.refs li{padding:0;margin:0;border-top:1px solid var(--rule)}
-ol.refs details{border:0}ol.refs details>summary{padding:12px 32px 12px 2em;text-indent:-2em;min-height:44px}
-ol.refs .body{padding-left:2em}
+ol.refs details{border:0}ol.refs details>summary{padding:12px 8px 12px 28px;min-height:44px}
+ol.refs .body{padding-left:28px}.evmeta{display:block;font-size:var(--s5);color:var(--muted);padding-left:2em;margin-top:2px}
 ol.refs li.evgrp{font-weight:700;padding:24px 0 8px;border-top:1px solid var(--ink)}
-.apa{overflow-wrap:anywhere}.scope{margin:80px 0 0;padding-top:12px;border-top:1px solid var(--ink);font-size:var(--s5);color:var(--muted)}
+.apa{overflow-wrap:anywhere;display:block;padding-left:2em;text-indent:-2em}.scope{margin:80px 0 0;padding-top:12px;border-top:1px solid var(--ink);font-size:var(--s5);color:var(--muted)}
 dialog{max-width:min(680px,94vw);width:100%;border:2px solid var(--ink);border-radius:0;background:var(--bg);color:var(--ink);padding:24px 28px}
 dialog::backdrop{background:rgba(0,0,0,.55)}dialog h3{margin:0 0 14px;font-size:var(--s2);line-height:1.15}dialog .jd{max-height:60vh;overflow:auto;font-size:var(--s4)}
 dialog .apa-full{padding-left:2em;text-indent:-2em;margin:0 0 12px}
 .dact{display:flex;justify-content:flex-end;gap:24px;margin-top:16px;font-size:var(--s5)}
 .dact button{padding:8px 0;min-height:44px;background:none;border:0;border-bottom:2px solid var(--ink);cursor:pointer}.dact button:hover{text-decoration:underline}
+@media (max-width:900px){
+ .section{grid-template-columns:minmax(0,1fr);margin-top:56px}h2{margin-bottom:16px}.sc{grid-column:1}
+ h2 .n{display:inline;margin:0 10px 0 0}h2 .t{display:inline}
+ .brow{grid-template-columns:minmax(0,1fr);gap:4px}.pills .pg{grid-column:1}.frow{grid-template-columns:minmax(0,1fr);gap:6px}
+}
+@media (max-height:500px){
+ .sectnav{position:static}.page{padding-top:16px}.kicker{margin-bottom:6px}.bar{margin-top:12px;display:flex;flex-wrap:wrap;gap:0 24px}.brow{display:flex;gap:8px 12px;border:0;padding:2px 0}.brow.pills{flex:0 0 100%}.hero{margin-top:12px}table.plain thead th{top:0}
+}
+@media (pointer:coarse){.cite,.jlink,.clr,.msort{display:inline-block;padding:10px 4px}}
 @media (max-width:760px){
- .wrap{padding:0 20px}.page{padding-top:32px}h1{font-size:36px}
+ .wrap{padding:0 20px}.page{padding-top:32px}.hv{font-size:36px}.sectnav{position:static}
  .hero{grid-template-columns:1fr;gap:16px;margin-top:32px}
  .frow{grid-template-columns:minmax(0,1fr);gap:6px}
  .section{grid-template-columns:minmax(0,1fr);margin-top:56px}h2{margin-bottom:16px}.sc{grid-column:1}
@@ -455,7 +556,10 @@ dialog .apa-full{padding-left:2em;text-indent:-2em;margin:0 0 12px}
  table.cmp thead,table.spec thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
  table.cmp tbody.mg>tr:first-child{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;padding:12px 0 0;border-top:1px solid var(--rule)}
  table.cmp tbody.mg>tr:first-child>*{border:0;padding:0 0 4px}table.cmp tbody.mg>tr:first-child>th{grid-column:1/-1}
- table.cmp td.nil{display:none}
+ table.cmp td.span{grid-column:1/-1}table.cmp tbody.mg>tr:first-child{grid-template-columns:1fr 1fr}
+ table.plain{display:block;table-layout:auto}table.plain tbody{display:block}table.plain colgroup{display:none}
+ table.cmp tr.std,table.cmp tr.std td{display:block}
+ .navd>summary{display:block}.sectnav ol{display:block;padding:0 12px 8px}.sectnav li a{white-space:normal}
  table.cmp td[data-l]::before,table.spec td[data-l]::before{content:attr(data-l);display:block;font-size:var(--s5);color:var(--muted);font-weight:400}
  table.cmp tr.std td{padding:0 0 12px}
  table.spec tr{display:block;padding:12px 0;border-top:1px solid var(--rule)}table.spec th,table.spec td{display:block;padding:0;border:0}.val{white-space:normal}
@@ -463,14 +567,14 @@ dialog .apa-full{padding-left:2em;text-indent:-2em;margin:0 0 12px}
 }
 @media (forced-colors:active){.fi.hit,.prov.hit{border-left:4px solid Highlight}.seg button[aria-expanded=true],.fchip[aria-pressed=true],.sectnav a[aria-current=true]{border-bottom:3px solid Highlight}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-@media print{.bar,.sectnav,.top,.skip{display:none}details>summary::after{content:""}}
+@media print{.bar,.sectnav,.top,.skip{display:none}details>summary::before{content:""}}
 </style>
 </head>
 <body>
 <a href="#main" class="skip">Skip to main content</a>
 <header class="top"><div class="wrap"><a href="../index.html" class="brand">Guidebook</a>
  <nav aria-label="Breadcrumb"><a href="../index.html">Browse</a> / <a href="../index.html#exemplar">Specifications</a> / __CODE__</nav></div></header>
-<nav class="sectnav" aria-label="Sections of this specification"><ol>__NAV__</ol></nav>
+<nav class="sectnav" aria-label="Sections of this specification"><details class="navd" open><summary>Sections: <span id="navcur">Overview</span></summary><ol>__NAV__</ol></details></nav>
 
 <main id="main" class="wrap page">
  <p class="kicker">__CODE__ &middot; Specification &middot; Provisional</p>
@@ -480,11 +584,12 @@ dialog .apa-full{padding-left:2em;text-indent:-2em;margin:0 0 12px}
    <span class="seg" role="group" aria-labelledby="fl"><button type="button" data-lens="pop" aria-expanded="false" aria-controls="pillrow">Who it's for</button><button type="button" data-lens="icf" aria-expanded="false" aria-controls="pillrow">ICF code</button><button type="button" data-lens="need" aria-expanded="false" aria-controls="pillrow">Access need</button></span>
    <span class="applied" id="activelist"></span><button type="button" class="lk clr" id="clear" hidden>Clear all filters</button></span></div>
   <div class="brow pills" id="pillrow" hidden><span></span>
-   <div class="pg" data-lens="pop" hidden>__POPF__</div><div class="pg" data-lens="icf" hidden>__ICFF__</div><div class="pg" data-lens="need" hidden>__NEEDF__</div></div>
-  <div class="brow" id="onlyrow" hidden><span></span><label><input type="checkbox" id="onlyspec"> Hide general (everyone) rows while filtering</label></div>
+   <div class="pg" data-lens="pop" role="group" aria-label="Who it's for options" tabindex="0" hidden>__POPF__</div><div class="pg" data-lens="icf" role="group" aria-label="ICF code options" tabindex="0" hidden>__ICFF__</div><div class="pg" data-lens="need" role="group" aria-label="Access need options" tabindex="0" hidden>__NEEDF__</div></div>
+  <div class="brow" id="onlyrow" hidden><span></span><label><input type="checkbox" id="onlyspec"> Show only rows for the selected people or needs</label></div>
   <div class="brow"><span class="tl">Units</span><span class="cx">
    <label class="sel-l">Length <select class="sel" data-u="len"><option value="met">Metric</option><option value="imp">Imperial</option><option value="stated">As stated</option></select></label>
    <label class="sel-l">Slope <select class="sel" data-u="slope"><option value="ratio">Ratio 1:n</option><option value="pct">Percent</option><option value="deg">Degrees</option><option value="stated">As stated</option></select></label></span></div>
+  <div class="brow"><span class="tl">Jurisdiction</span><span class="cx"><label class="sel-l"><span class="vh">My jurisdiction</span><select class="sel" id="myj"><option value="">All, A–Z</option>__MYJ__</select></label></span></div>
  </div>
  <p class="vh" id="live" role="status" aria-live="polite"></p>
 
@@ -494,25 +599,25 @@ dialog .apa-full{padding-left:2em;text-indent:-2em;margin:0 0 12px}
  __SECTIONS__
  <p class="scope">__SCOPE__</p>
 </main>
-<dialog id="jdlg"><div id="jdlg-body"></div><div class="dact"><button type="button" class="lk" id="jdlg-full">Open full entry</button><button type="button" class="lk" id="jdlg-close">Close</button></div></dialog>
 <dialog id="cdlg"><div id="cdlg-body"></div><div class="dact"><button type="button" class="lk" id="cdlg-close">Close</button></div></dialog>
 <script type="application/json" id="cites">__CITES__</script>
 <script>
 (function(){
-var prefs={len:'met',slope:'ratio'},sel={pop:[],icf:[],need:[]},onlySpec=false,lens='';
+var prefs={len:'met',slope:'ratio'},sel={pop:[],icf:[],need:[]},onlySpec=false,lens='',myj='';
 var LBL={pop:"Who it's for",icf:'ICF code',need:'Access need'};
 function trim(n){return parseFloat(n).toString();}
+function nb(t){return String(t).replace(/ /g,'\u00a0');}
 function fmtSlope(f,m,o){
- if(m==='stated'&&o)return o;
- if(m==='pct'){var p=f*100;return trim(p.toFixed(p<1?2:1))+' %';}
+ if(m==='stated'&&o)return nb(o);
+ if(m==='pct'){var p=f*100;return nb(trim(p.toFixed(p<1?2:1))+' %');}
  if(m==='deg'){return trim((Math.atan(f)*180/Math.PI).toFixed(1))+'°';}
  var n=1/f,r=Math.round(n);return '1:'+(Math.abs(n-r)<0.06?r:trim(n.toFixed(1)));}
 function fmtLen(mm,m,o){
- if(m==='stated'&&o)return o;
+ if(m==='stated'&&o)return nb(o);
  if(m==='imp'){var inch=mm/25.4;
-  if(inch>=36){var ft=Math.floor(inch/12+1e-9),rem=Math.round((inch-ft*12)*2)/2;if(rem>=12){ft+=1;rem=0;}return ft+' ft'+(rem?' '+trim(rem)+' in':'');}
-  return trim(inch.toFixed(1))+' in';}
- if(mm>=1000)return trim((mm/1000).toFixed(2))+' m';return Math.round(mm)+' mm';}
+  if(inch>=36){var ft=Math.floor(inch/12+1e-9),rem=Math.round(inch-ft*12);if(rem>=12){ft+=1;rem=0;}return nb(ft+' ft'+(rem?' '+rem+' in':''));}
+  return nb(trim(inch.toFixed(1))+' in');}
+ if(mm>=1000)return nb(trim((mm/1000).toFixed(2))+' m');return nb(Math.round(mm)+' mm');}
 function renderUnits(){var els=document.querySelectorAll('.u');for(var i=0;i<els.length;i++){var e=els[i],k=e.getAttribute('data-k'),v=parseFloat(e.getAttribute('data-v')),o=e.getAttribute('data-o');
  e.textContent=(k==='slope')?fmtSlope(v,prefs.slope,o):fmtLen(v,prefs.len,o);}
  var b=document.querySelectorAll('select[data-u]');for(var j=0;j<b.length;j++){b[j].value=prefs[b[j].getAttribute('data-u')];}}
@@ -529,23 +634,26 @@ function applyFilter(announce){
   if(!isJ){tot[kind]++;if(show)shown[kind]++;}
   el.classList.toggle('hidden',!show);el.classList.toggle('hit',active.length>0&&hit&&show);
   if(isJ){var ps=el.querySelectorAll('.prov');for(var p=0;p<ps.length;p++){var h=sel.need.length>0&&inter(toks(ps[p],'data-need'),sel.need);ps[p].classList.toggle('hit',h);ps[p].classList.toggle('dim',sel.need.length>0&&!h);}}}
+ var fsp=document.getElementById('fc-spec'),fev=document.getElementById('fc-ev');
+ if(fsp)fsp.textContent=active.length?'Filtered: showing '+shown.v+' of '+tot.v+' rows.':'';
+ if(fev)fev.textContent=active.length?'Filtered: showing '+shown.e+' of '+tot.e+' studies.':'';
  if(announce)say(active.length?'Showing '+shown.v+' of '+tot.v+' specification rows and '+shown.e+' of '+tot.e+' studies.':'Filters cleared. Showing all rows and studies.');
  var al=document.getElementById('activelist');al.innerHTML='';var any=false;
  ['pop','icf','need'].forEach(function(f){sel[f].forEach(function(c){any=true;var bt=document.createElement('button');bt.type='button';bt.className='fchip act';bt.setAttribute('data-f',f);bt.setAttribute('data-c',c);
-   bt.setAttribute('aria-label','Remove filter '+LBL[f]+' '+c);bt.textContent=c+' ×';al.appendChild(bt);});});
+   var oc=document.querySelector('.pg .fchip[data-f="'+f+'"][data-c="'+c+'"]'),nm2=oc&&oc.firstChild?oc.firstChild.textContent.trim():c;bt.setAttribute('aria-label','Remove filter: '+nm2);bt.textContent=nm2+' ×';al.appendChild(bt);});});
  document.getElementById('clear').hidden=!any;document.getElementById('onlyrow').hidden=!any;
  var chips=document.querySelectorAll('.pg .fchip');for(var c2=0;c2<chips.length;c2++){var f2=chips[c2].getAttribute('data-f'),code=chips[c2].getAttribute('data-c');chips[c2].setAttribute('aria-pressed',sel[f2].indexOf(code)>-1);}
  regroup();}
 function addCounts(){var chips=document.querySelectorAll('.pg .fchip'),its=document.querySelectorAll('.vrow,.evr');
  for(var i=0;i<chips.length;i++){var f=chips[i].getAttribute('data-f'),c=chips[i].getAttribute('data-c'),n=0;for(var k=0;k<its.length;k++){if(toks(its[k],'data-'+f).indexOf(c)>-1)n++;}
-  var s=document.createElement('span');s.className='fcount';s.textContent=' ('+n+')';chips[i].appendChild(s);}}
+  var s=document.createElement('span');s.className='fcount';s.textContent=' ('+n+')';chips[i].appendChild(s);if(n===0){chips[i].disabled=true;chips[i].setAttribute('aria-disabled','true');}}}
 function writeHash(){var p=[];if(prefs.len!=='met')p.push('len='+prefs.len);if(prefs.slope!=='ratio')p.push('slope='+prefs.slope);
- ['pop','icf','need'].forEach(function(f){if(sel[f].length)p.push(f+'='+sel[f].join(','));});if(onlySpec)p.push('spec=1');if(lens)p.push('lens='+lens);
+ ['pop','icf','need'].forEach(function(f){if(sel[f].length)p.push(f+'='+sel[f].join(','));});if(onlySpec)p.push('spec=1');if(lens)p.push('lens='+lens);if(myj)p.push('j='+myj);
  try{history.replaceState(null,'',p.length?'#'+p.join('&'):location.pathname+location.search);}catch(e){}
  try{localStorage.setItem('gb-units',JSON.stringify(prefs));}catch(e){}}
 function readHash(){try{var s=JSON.parse(localStorage.getItem('gb-units')||'null');if(s){prefs.len=s.len||prefs.len;prefs.slope=s.slope||prefs.slope;}}catch(e){}
  var h=location.hash.replace(/^#/,'');if(!h||h.indexOf('=')<0)return;h.split('&').forEach(function(kv){var a=kv.split('='),k=a[0],v=a[1]||'';
-  if(k==='len'||k==='slope')prefs[k]=v;else if(k==='pop'||k==='icf'||k==='need')sel[k]=v?v.split(','):[];else if(k==='spec')onlySpec=v==='1';else if(k==='lens')lens=v;});}
+  if(k==='len'||k==='slope')prefs[k]=v;else if(k==='pop'||k==='icf'||k==='need')sel[k]=v?v.split(','):[];else if(k==='spec')onlySpec=v==='1';else if(k==='lens')lens=v;else if(k==='j')myj=v;});}
 var CITES=null;function cites(){if(CITES===null){try{CITES=JSON.parse(document.getElementById('cites').textContent);}catch(e){CITES={};}}return CITES;}
 function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function openDlg(id,opener){var dg=document.getElementById(id);dg._opener=opener||null;dg.setAttribute('aria-labelledby',id+'-t');if(dg.showModal)dg.showModal();else dg.setAttribute('open','');
@@ -554,12 +662,9 @@ function closeDlg(id){var dg=document.getElementById(id);dg.close();if(dg._opene
 function openCite(ref,opener){var c=cites()[ref];if(!c)return;var here=location.pathname.split('/').pop().replace('.html','').toUpperCase();
  var pg=c.pages.map(function(p){var lab=p.item===here?p.item+' (this page)':(p.href?'<a href="'+p.href+'">'+p.item+'</a>':p.item);return '<li>'+lab+' &mdash; '+esc(p.name)+'</li>';}).join('');
  document.getElementById('cdlg-body').innerHTML='<h3 id="cdlg-t">Citation</h3><p class="apa-full">'+c.apa+'</p>'
-  +'<p class="muted">Tier '+c.tier+'; '+esc(c.type||'')+'; '+esc(c.status||'')+(c.complete?'':'; author list incomplete in the library')+'.</p>'
+  +'<p class="muted">Evidence tier '+c.tier+' ('+esc(c.type_label||'')+'); '+esc(c.status_label||'')+(c.complete?'':'; other authors not recorded')+'.</p>'
   +'<p><b>Cited on these pages</b></p><ul>'+pg+'</ul>';
  openDlg('cdlg',opener);}
-function openJ(code,opener){var src=document.getElementById('j-'+code);if(!src)return;
- document.getElementById('jdlg-body').innerHTML='<h3 id="jdlg-t">'+src.querySelector('.jn').textContent+'</h3><div class="jd" role="region" aria-label="Jurisdiction detail" tabindex="0">'+src.querySelector('.body').innerHTML+'</div>';
- document.getElementById('jdlg').setAttribute('data-code',code);renderUnits();openDlg('jdlg',opener);}
 var EVROWS=null;
 function regroup(){var box=document.getElementById('evol');if(!box)return;if(EVROWS===null)EVROWS=[].slice.call(box.querySelectorAll('.evr'));
  box.innerHTML='';
@@ -571,34 +676,52 @@ function regroup(){var box=document.getElementById('evol');if(!box)return;if(EVR
   if(g===null)rest.push(r);else(groups[g]=groups[g]||[]).push(r);});
  function head(t){var h=document.createElement('li');h.className='evgrp';h.textContent=t;box.appendChild(h);}
  order.forEach(function(c){if(groups[c]){head(names[c]);groups[c].forEach(function(r){box.appendChild(r);});}});
- if(rest.length){head('Not tagged to this lens');rest.forEach(function(r){box.appendChild(r);});}}
+ if(rest.length){head('Not tagged to this lens');rest.forEach(function(r){box.appendChild(r);});}
+ [].forEach.call(box.querySelectorAll('.evgrp'),function(h){var n=h.nextElementSibling,any=false;while(n&&!n.classList.contains('evgrp')){if(!n.classList.contains('hidden'))any=true;n=n.nextElementSibling;}h.hidden=!any;});}
 function renderLens(){[].forEach.call(document.querySelectorAll('.pg'),function(g){g.hidden=(g.getAttribute('data-lens')!==lens);});
  document.getElementById('pillrow').hidden=!lens;
  [].forEach.call(document.querySelectorAll('button[data-lens]'),function(b){b.setAttribute('aria-expanded',b.getAttribute('data-lens')===lens);});regroup();}
-var dir=0;
-function sortMaster(){var t=document.getElementById('master'),gs=[].slice.call(t.querySelectorAll('tbody.mg:not(.gb)'));dir=dir===1?-1:1;
- gs.sort(function(a,b){var x=a.getAttribute('data-sort'),y=b.getAttribute('data-sort');
-  if(x===''&&y==='')return a.querySelector('th').textContent.localeCompare(b.querySelector('th').textContent);
-  if(x==='')return 1;if(y==='')return -1;var d=(parseFloat(y)-parseFloat(x))*dir;return d||a.querySelector('th').textContent.localeCompare(b.querySelector('th').textContent);});
- gs.forEach(function(g){t.appendChild(g);});say(dir===1?'Table sorted by maximum gradient, steepest first.':'Table sorted by maximum gradient, gentlest first.');}
-document.addEventListener('click',function(ev){var t=ev.target.closest('button');if(!t)return;
+var ord=0,ORD=['alphabetical','steepest first','gentlest first'],ORDL=['Order: A–Z','Order: steepest first','Order: gentlest first'];
+function nmOf(g){return g.querySelector('th').textContent;}
+function pinMine(){['master','master2'].forEach(function(id){var t=document.getElementById(id);if(!t)return;
+  [].forEach.call(t.querySelectorAll('tbody.mine'),function(b){b.classList.remove('mine');});
+  if(!myj)return;var b=t.querySelector('tbody.mg[data-code="'+myj+'"]');if(!b)return;b.classList.add('mine');
+  var gb=t.querySelector('tbody.gb');if(gb)gb.parentNode.insertBefore(b,gb.nextSibling);else t.insertBefore(b,t.querySelector('tbody'));});}
+function applyOrder(){var t=document.getElementById('master'),gs=[].slice.call(t.querySelectorAll('tbody.mg:not(.gb)'));
+ gs.sort(function(a,b){if(ord===0)return nmOf(a).localeCompare(nmOf(b));
+  var x=a.getAttribute('data-sort'),y=b.getAttribute('data-sort');
+  if(x===''&&y==='')return nmOf(a).localeCompare(nmOf(b));if(x==='')return 1;if(y==='')return -1;
+  var d=(ord===1)?(parseFloat(y)-parseFloat(x)):(parseFloat(x)-parseFloat(y));return d||nmOf(a).localeCompare(nmOf(b));});
+ gs.forEach(function(g){t.appendChild(g);});
+ var t2=document.getElementById('master2');if(t2){var g2=[].slice.call(t2.querySelectorAll('tbody.mg'));g2.sort(function(a,b){return nmOf(a).localeCompare(nmOf(b));});g2.forEach(function(g){t2.appendChild(g);});}
+ pinMine();}
+function sortMaster(){ord=(ord+1)%3;applyOrder();
+ var bt=document.getElementById('msort');bt.textContent=ORDL[ord];bt.setAttribute('aria-label','Change table order, currently '+ORD[ord]);
+ document.getElementById('th-max').setAttribute('aria-sort',ord===0?'none':(ord===1?'descending':'ascending'));
+ say('Table order: '+ORD[ord]+'.');}
+function openJurisdiction(id){var de=document.getElementById(id);if(!de)return;var par=de.closest('details.alljx');if(par)par.open=true;de.open=true;
+ de.scrollIntoView({block:'start'});var sm=de.querySelector('summary');if(sm)sm.focus();}
+document.addEventListener('click',function(ev){var ja=ev.target.closest('a.jlink');if(ja){ev.preventDefault();openJurisdiction(ja.getAttribute('href').slice(1));return;}
+ var t=ev.target.closest('button');if(!t)return;
  if(t.classList.contains('cite')){openCite(t.getAttribute('data-ref'),t);}
  else if(t.id==='cdlg-close'){closeDlg('cdlg');}
- else if(t.classList.contains('mval')){openJ(t.getAttribute('data-code'),t);}
- else if(t.id==='jdlg-close'){closeDlg('jdlg');}
- else if(t.id==='jdlg-full'){var dg=document.getElementById('jdlg'),c2=dg.getAttribute('data-code');dg.close();var de=document.getElementById('j-'+c2);if(de){var par=de.closest('details.alljx');if(par)par.open=true;de.open=true;var sm=de.querySelector('summary');de.scrollIntoView({block:'start'});if(sm)sm.focus();}}
  else if(t.id==='msort'){sortMaster();}
  else if(t.hasAttribute('data-lens')){var ln=t.getAttribute('data-lens');lens=(lens===ln)?'':ln;renderLens();writeHash();}
  else if(t.classList.contains('fchip')){var f=t.getAttribute('data-f'),c=t.getAttribute('data-c'),i=sel[f].indexOf(c);if(i>-1)sel[f].splice(i,1);else sel[f].push(c);applyFilter(true);writeHash();}
  else if(t.id==='clear'){sel={pop:[],icf:[],need:[]};applyFilter(true);writeHash();}});
 document.addEventListener('change',function(e){var t=e.target;if(t.matches&&t.matches('select[data-u]')){prefs[t.getAttribute('data-u')]=t.value;renderUnits();writeHash();}});
 document.getElementById('onlyspec').addEventListener('change',function(e){onlySpec=e.target.checked;applyFilter(true);writeHash();});
-['jdlg','cdlg'].forEach(function(id){var dg=document.getElementById(id);dg.addEventListener('click',function(e){if(e.target===this)closeDlg(id);});
+['cdlg'].forEach(function(id){var dg=document.getElementById(id);dg.addEventListener('click',function(e){if(e.target===this)closeDlg(id);});
  dg.addEventListener('close',function(){if(dg._opener&&dg._opener.focus&&document.activeElement===document.body)dg._opener.focus();});});
-if('IntersectionObserver' in window){var links={};[].forEach.call(document.querySelectorAll('[data-snav]'),function(a){links[a.getAttribute('data-snav')]=a;});
- var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){for(var k in links)links[k].removeAttribute('aria-current');if(links[e.target.id])links[e.target.id].setAttribute('aria-current','true');}});},{rootMargin:'-30% 0px -60% 0px'});
- [].forEach.call(document.querySelectorAll('.section'),function(s){io.observe(s);});}
-readHash();document.getElementById('onlyspec').checked=onlySpec;addCounts();renderUnits();applyFilter(false);renderLens();
+document.getElementById('myj').addEventListener('change',function(e){myj=e.target.value;pinMine();if(!myj)applyOrder();writeHash();say(myj?'Showing '+e.target.options[e.target.selectedIndex].text+' first in the tables.':'Tables back in order.');});
+var secs=[].slice.call(document.querySelectorAll('.section')),navl={};[].forEach.call(document.querySelectorAll('[data-snav]'),function(a){navl[a.getAttribute('data-snav')]=a;});
+function spy(){var cur='main',lim=window.innerHeight*0.35;secs.forEach(function(s2){if(s2.getBoundingClientRect().top<=lim)cur=s2.id;});
+ if(secs.length&&window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)cur=secs[secs.length-1].id;
+ for(var k in navl){if(k===cur)navl[k].setAttribute('aria-current','true');else navl[k].removeAttribute('aria-current');}
+ var nc=document.getElementById('navcur');if(nc&&navl[cur])nc.textContent=navl[cur].textContent.trim();}
+if(window.matchMedia&&window.matchMedia('(max-width:760px)').matches){var nd=document.querySelector('.navd');if(nd)nd.open=false;}
+var tick=false;window.addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(function(){spy();tick=false;});}},{passive:true});window.addEventListener('resize',spy);
+readHash();document.getElementById('onlyspec').checked=onlySpec;document.getElementById('myj').value=myj;addCounts();renderUnits();applyFilter(false);renderLens();applyOrder();spy();
 })();
 </script>
 </body>

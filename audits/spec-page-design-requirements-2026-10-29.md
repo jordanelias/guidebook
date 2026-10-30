@@ -220,3 +220,9 @@ Changes made in the page to match:
 
 
 Control order (owner, 2026-10-29): the Lens row comes first, then its pills when a lens is chosen, then the Units row; all controls sit above all information.
+
+## 11. Addendum: navigation legibility (owner, 2026-10-30)
+Owner: "ensure that minimalism does not come at the expense of readability/legibility especially as it pertains to accessibility practices for website navigation."
+- R16. Navigation (breadcrumb, section nav, skip links, disclosure and sort controls) is at least as large and as dark as body text (16 px or larger, near-black on white, or the dark-scheme equivalent); the current location is marked at page load; control state (open, closed, sorted, pressed) is visible without relying on small grey glyphs; targets are at least 44 px high on touch screens. Tenet: minimalism removes decoration, never legibility or state cues.
+- Pills are allowed if used judiciously (filter options, applied filters); decorative or status pills remain the trope to avoid.
+- Defects against these rules are listed in `audits/spec-page-design-defects-2026-10-30.md` section E.
