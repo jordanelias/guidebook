@@ -14,7 +14,7 @@ Built to audits/spec-page-design-requirements-2026-10-29.md:
 
 Reuses data loading, unit tokens and APA formatting of spec_page_v2.py.
 Inputs (read-only): data/guidebook.db + data/spec_pages/<ITEM>.json + data/question-headings.yaml
-Output: specs/<item>.html        Usage: python3 scripts/generate/spec_page_v3.py E-03
+Output: site/specs/<item>.html        Usage: python3 scripts/generate/spec_page_v3.py E-03
 Scope: only the major identified jurisdictions (SCOPE) are shown; other data stays staged.
 """
 import json
@@ -29,7 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from spec_page_v2 import (ContractError, JURISDICTION_NAMES, REPO, TOKEN, apa, apa_authors, default_text,  # noqa: E402
                           load, load_question, parse_num as parse_f, rt)
 
-OUT_DIR = REPO / "specs"
+OUT_DIR = REPO / "site" / "specs"
 
 # Major identified jurisdictions (workplan/workplan-jurisdiction-sweep.md: P1 + P2 + P3), in display order.
 SCOPE = ["US", "UK", "AU", "CA", "DE", "NO", "SE", "ISO", "EU",
@@ -125,8 +125,6 @@ def build(d):
         f = f"{c.lower()}.html"
         if (OUT_DIR / f).exists():
             return f
-        if (REPO / "site" / "specs" / f).exists():
-            return f"../site/specs/{f}"
         return None
 
     def cite_btn(ref):
@@ -179,7 +177,7 @@ def build(d):
                         f'<td role="cell" class="val" data-l="Value">{rt(r["statement"])}</td>'
                         f'<td role="cell" data-l="Basis">{rt(basis)}{refs}{marker_html(r)}</td></tr>')
     legend = ('<p class="muted">● evidence-based: a standard or study states the value. ○ inferred: reasoned from related evidence, '
-              'with the gap recorded. Values are provisional.</p>')
+              'with the gap recorded. Provisional: the source was read once and still needs a second review to confirm it.</p>')
     spec_html = ('<p class="muted fcnt" id="fc-spec"></p>' + legend + '<table class="plain spec" role="table"><caption class="vh">Recommended value for each group of people</caption>'
                  '<colgroup><col style="width:19%"><col style="width:24%"><col style="width:57%"></colgroup>'
                  '<thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col">Who it applies to</th>'
@@ -219,7 +217,7 @@ def build(d):
                    f'<td role="cell" class="val" data-l="Preferred"><span class="mv">{rt(slope_tok(best))}</span></td>'
                    f'<td role="cell" class="val" data-l="Maximum"><span class="mv">{rt(slope_tok(best))}</span></td>'
                    f'<td role="cell" class="nil" data-l="Between landings"><span class="vh">None stated</span><span aria-hidden="true">&ndash;</span></td></tr>'
-                   f'<tr role="row" class="std"><td role="cell" colspan="4">Best value found for the people it serves; no study in the library improves on it.</td></tr></tbody>')
+                   f'<tr role="row" class="std"><td role="cell" colspan="4">The most accommodating value found in practice.</td></tr></tbody>')
     for c in have:
         j = by_code[c]
         m = j.get("master") or {"preferred": None, "max": j["headline"], "landing_limit": None, "sort": None}
@@ -271,7 +269,7 @@ def build(d):
                 + (f'<p><b>Links.</b></p><ul>{srcs}</ul>' if srcs else "")
                 + "</div></details>")
 
-    pending = (f'<p><b>Not yet covered ({len(none)}):</b> {", ".join(escape(JURISDICTION_NAMES.get(c, c)) for c in none)}.</p>' if none else "")
+    pending = (f'<p><b>Not yet read ({len(none)}):</b> {", ".join(escape(JURISDICTION_NAMES.get(c, c)) for c in none)}.</p>' if none else "")
     jur_html = (
         '<a class="skip skipin" href="#detail-list">Skip the tables to the details by jurisdiction</a>'
         '<p class="ordrow"><button type="button" class="lk msort" id="msort" aria-label="Change table order, currently alphabetical">Order: A–Z</button> '
@@ -372,13 +370,13 @@ def build(d):
     if max_by:
         bits.append("stated as the maximum in " + ", ".join(JURISDICTION_NAMES.get(c, c) for c in max_by))
     basis_txt = page["_meta"].get("best_practice_basis", "Best practice is what benefits the people it is for most.")
-    hero_note = (f'<p class="muted herotip">{escape(basis_txt)} Found {"; ".join(bits)}. This rests on standards alone, so it is provisional.</p>') if bits else ""
+    hero_note = (f'<p class="muted herotip">{escape(basis_txt)} Found {"; ".join(bits)}. Provisional: the source readings still need a second review.</p>') if bits else ""
     plain = ""
     if best:
         n_ = round(1 / best)
         plain = ('<p class="inplain">' + rt("In plain terms: for every {{len=1000|1 m}} a ramp climbs, a " + slope_tok(best)
                  + " slope needs {{len=%d|%d m}} of ramp. A gentler slope takes less effort to push, walk or roll up." % (n_ * 1000, n_)) + "</p>")
-    scope_note = f"{len(have)} of {len(SCOPE)} major jurisdictions read; {len(ev_items)} studies in the library."
+    scope_note = f"{len(have)} of {len(SCOPE)} major jurisdictions read, none yet verified; {len(ev_items)} studies in the library."
 
     # ---- figure: the run needed to climb the same rise at each gradient (real text; only the triangles scale)
     rise_mm = 500
@@ -416,7 +414,7 @@ def build(d):
             f'<p class="muted">Generated {datetime.now(timezone.utc).strftime("%Y-%m-%d")} from the Guidebook database. '
             f'Evidence base: {escape(item["bpc_source_slug"])}.</p>')
     sections.append(("about", "About this page", prov))
-    metas = {"jurisdictions": f"{len(have)} of {len(SCOPE)} read", "evidence": f"{len(ev_items)} sources"}
+    metas = {"jurisdictions": f"{len(have)} of {len(SCOPE)} read, none yet verified", "evidence": f"{len(ev_items)} sources"}
     nav = '<li><a href="#main" data-snav="main">Overview</a></li>' + "".join(
         f'<li><a href="#{sid}" data-snav="{sid}"><span class="snc-n">{i + 1}</span> {head}</a></li>' for i, (sid, head, _) in enumerate(sections))
     myj = "".join(f'<option value="{c}">{escape(JURISDICTION_NAMES.get(c, c))}</option>' for c in have)
@@ -572,8 +570,8 @@ dialog .apa-full{padding-left:2em;text-indent:-2em;margin:0 0 12px}
 </head>
 <body>
 <a href="#main" class="skip">Skip to main content</a>
-<header class="top"><div class="wrap"><a href="../index.html" class="brand">Guidebook</a>
- <nav aria-label="Breadcrumb"><a href="../index.html">Browse</a> / <a href="../index.html#exemplar">Specifications</a> / __CODE__</nav></div></header>
+<header class="top"><div class="wrap"><a href="../../index.html" class="brand">Guidebook</a>
+ <nav aria-label="Breadcrumb"><a href="../../index.html">Browse</a> / <a href="../../index.html#exemplar">Specifications</a> / __CODE__</nav></div></header>
 <nav class="sectnav" aria-label="Sections of this specification"><details class="navd" open><summary>Sections: <span id="navcur">Overview</span></summary><ol>__NAV__</ol></details></nav>
 
 <main id="main" class="wrap page">

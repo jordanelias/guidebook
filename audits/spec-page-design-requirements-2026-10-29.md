@@ -226,3 +226,12 @@ Owner: "ensure that minimalism does not come at the expense of readability/legib
 - R16. Navigation (breadcrumb, section nav, skip links, disclosure and sort controls) is at least as large and as dark as body text (16 px or larger, near-black on white, or the dark-scheme equivalent); the current location is marked at page load; control state (open, closed, sorted, pressed) is visible without relying on small grey glyphs; targets are at least 44 px high on touch screens. Tenet: minimalism removes decoration, never legibility or state cues.
 - Pills are allowed if used judiciously (filter options, applied filters); decorative or status pills remain the trope to avoid.
 - Defects against these rules are listed in `audits/spec-page-design-defects-2026-10-30.md` section E.
+
+
+## 12. Owner answers to the open doctrine questions (2026-10-30)
+- Pending cells: unchanged (no "Not set" rows; gaps listed under Gaps).
+- Standards as best practice: the owner decided that the gentlest value found in practice is best practice and that no academic study is required; the mission document's tier 4 to 6 wall is therefore superseded in practice and needs a decision record (D-DOCT).
+- Provisional means the source reading needs a second review; page wording corrected accordingly.
+- "Covered" means read, extracted and verified; the page now says "read, none yet verified" and lists uncovered jurisdictions as "not yet read".
+- Two lenses exist: audience and disability. The audience lens is not yet built on the v3 page.
+- All spec pages now live in `site/specs/` (the root `specs/` folder was removed; `index.html` links and the e-08 exemplar's relative paths were updated).

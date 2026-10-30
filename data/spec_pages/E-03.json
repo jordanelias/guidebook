@@ -6,8 +6,8 @@
   "prepared_by": "Claude (Sonnet 5.5) in the ramp-slope pipeline stress test; NOT reviewed by the owner",
   "token_syntax": "{{slope=<fraction rise/run, e.g. 1/12>|<source-stated text>}} and {{len=<millimetres>|<source-stated text>}} are converted by the page's unit selector.",
   "tagline": "How steep a ramp may be, and how far it can run before a rest. Most codes cap the slope at {{slope=1/12|1:12}}; the Guidebook position is {{slope=1/20|1:20}}.",
-  "best_practice_basis": "Best practice is what benefits the people it is for most. For ramp gradient, a gentler slope asks less effort of the people using the ramp, so the gentlest value stated by a current standard is the best practice found.",
-  "reader_status": "This page is provisional. It was prepared with AI assistance from the Guidebook's evidence records. The values, the population, ICF and access-need tags, and the readings of each jurisdiction's standard have not yet been reviewed by the Guidebook's author."
+  "best_practice_basis": "Best practice is what benefits the people it is for most. For ramp gradient, a gentler slope asks less effort of the people using the ramp, so the gentlest value found in practice is the best practice found.",
+  "reader_status": "Provisional. Every value on this page was read from its source once and still needs a second review to confirm it. It was prepared with AI assistance from the Guidebook's evidence records, and the population, ICF and access-need tags have not yet been reviewed by the Guidebook's author."
  },
  "why_it_matters": [
   {
@@ -58,8 +58,8 @@
     "who": "Everyone",
     "statement": "{{slope=1/20|1:20}} or gentler",
     "status": "provisional",
-    "basis": "Best practice is what benefits the people it is for most. A gentler slope asks less effort of the people using the ramp, and {{slope=1/20|1:20}} is the gentlest value any current standard read states. No study or professional body in the library does better.",
-    "short": "Best practice based on standards in the UK, Ireland, France, Norway and ISO; no study in the library does better.",
+    "basis": "Best practice is what benefits the people it is for most. {{slope=1/20|1:20}} is the gentlest value any current standard read states, and the value existing in practice is the evidence for it.",
+    "short": "The most accommodating value found in practice (UK, Ireland, France, Norway and ISO state it).",
     "marker": "●"
    }
   ],
