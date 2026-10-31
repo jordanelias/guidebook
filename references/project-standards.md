@@ -4876,4 +4876,21 @@ Given in this session (https://claude.ai/code/session_01Ub36iM8xPEnP9BjGKYZzbV),
 
 CONDITION: any session asking whether a gentlest code value named as best practice carries the ○ band and the flag, or whether the ramp-slope session's ● for such a value stands.
 ACTION: (1) Keep the ○ band and the weak, code-derived flag on a determination resting on T4 to T6 alone, whichever value is named; do not mark it ●. (2) The [ASSUMPTION] mark on item 1 of the previous entry is ratified by this entry; the others in that entry stay unratified.
+
+## Owner statement 2026-10-30 — radical transparency; present, do not claim correctness
+
+Given in session https://claude.ai/code/session_01Ub36iMDP3HjZ4vtU4HZvDu, in reply to the five questions at the end of the first draft of the render contract for parameters 3 and 12 (`workplan/2026-10-30-ramp-spec-pages/RENDER-CONTRACT-parameters-3-and-12.md`), and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, including its lower case:
+
+"i don't know how to resolve the questions for me at this point, but please know that i want to be as radically transparent for my audience as possible while simply PRESENTING information without claiming correctness myself"
+
+The owner then said the questions "may mean that you need an opus antagonist adjudication round to resolve these things". That round was run (a read-only Opus critic against commit `ae692d99`); its findings are in `transcripts/harness_fcb93ff6/subagents/`, and what was repaired is in the contract's section 8.
+
+**What this does.** It restates, in the owner's present words, the posture already ratified in `decisions/DR-2026-07-21-product-posture-thinking-tool-not-authority.md`: every determination is rendered as a figure for thought, "radically transparent about its evidence, its derivation, its disagreements, and its strength flag" and "we never adjudicate a correct path or conclusion". The critic found that DR, and `governance/held-tensions.md` T5 and its binding that no session may resolve a held tension, after the first version of this entry had missed them.
+
+1. **Supersession.** None is claimed. The statement agrees with the ratified posture, so there is no `SUPERSEDES` pair. [ASSUMPTION: it is read as reaffirming the posture and not as retiring any of the ratified texts that use the phrase "best practice" with a marker (`governance/evidence-architecture.md` section 6, the Core Doctrine marker rule in this file, `governance/mission-and-epistemics.md`). If the owner means it to reach those, they have not said so, and that needs a decision record, not a session's reading.]
+2. **The questions.** The statement is a deferral: the owner does not know how to resolve them. It does not delegate them. The assistant's positions on them are proposals in the contract's section 8, unratified, bound to nothing. The audience lens is answered by the entry above (item 4: a page offers both lenses), which the critic's finding about held tension T5 anticipated. One of the five stays with the owner: OW-1b, whether and by whom a source's sentence may be translated or rewritten.
+3. **OW-1b and OW-1c** stay open on the owner's browser page until the owner answers them.
+
+CONDITION: any session writing or reviewing the wording of a rendered page, a render record, or a template that turns a specification or an extraction into prose; any session asking whether a page may recommend, endorse or call a value correct.
+ACTION: (1) Apply the ratified posture of DR-2026-07-21 as the owner's present words restate it: describe and attribute, show the derivation and the strength flag and the disagreements, never adjudicate a correct path. (2) Treat the contract's section 8 positions as the assistant's proposals, and every [ASSUMPTION] mark above as unratified.
 DATE: 2026-10-30 — owner statement, quoted above.

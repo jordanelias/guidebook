@@ -57,6 +57,8 @@ Spine: `base -> research -> evidence -> judgment -> synthesis -> specification -
 
 ## 3. Render contract against `main`'s schema
 
+**[Superseded for parameters 3 and 12 by `RENDER-CONTRACT-parameters-3-and-12.md`, which is probe-backed and was reviewed by a critic; this table remains the first pass for the other parameters.]**
+
 The export's closing proposal was a **render contract** mapping each page element to the data it needs (existing table / missing table / manual), before any HTML. None was written. This is a first pass from `PRAGMA table_info`, not a built or tested contract. **[ASSUMPTION: column semantics read from names and the CHECK clauses seen, not from writer code.]**
 
 | # | Page element | Supplying stage | Where it is on `main` | Status |

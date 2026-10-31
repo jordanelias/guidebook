@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-10-30-ramp-spec-pages-rebuild",
+  "artifact": "sessions/session_2026-10-30-ramp-spec-pages-rebuild.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": ["adherence-logging-and-attestation"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-10-30-ramp-spec-pages-rebuild.json",
+      "reason": "This attestation covers the session record above: a research session that rebuilt the 2026-10-29 ramp work on main through the sanctioned writers, was attacked by a read-only critic (pass 7, eleven sustained findings, all repaired by replacing the reviewed migrations), and whose DoD gate reads COMPLIANT on its own stem."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The first batch commit (1e926814) went to review red on two blocking checks the author's own preflight had already printed; the critic reported it first. The reviewed migrations were then removed and the batch rebuilt, so the pass's subject commit exists only in history, and close-adversarial-pass refuses because finding 140 names the deleted migration."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Five search rows are backfilled and say so; the scans are pre-screen readings over a full-page derived text, not end-to-end reads; forward citation mining was not done (OpenAlex HTTP 429)."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Ten early read-only commands were logged into the d4 session's command log before CURRENT was set; they were moved into this session's log."
+    }
+  ],
+  "bias_direction": "The author chose which of the old batch's studies to admit and which readings to extract, and wrote the notes the critic then read; the choice leans toward what the author could verify from persisted text, which under-records studies whose full text was not retrievable.",
+  "independent_reviewer_counterclaim": "The strongest objection is that a batch which shipped one red commit to review and recorded run caps in three conventions before the critic found it cannot be trusted on the rows the critic did not sample: the Singapore catalogue rows and the Spanish, Portuguese and French run caps were checked for quotation, not for whether each is the right quantity for parameter 12.",
+  "verdict": "DEVIATION-LOGGED"
+}

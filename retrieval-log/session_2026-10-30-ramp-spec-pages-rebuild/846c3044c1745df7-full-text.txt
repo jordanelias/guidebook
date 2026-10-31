@@ -1,0 +1,6182 @@
+[PDF page 1 of 116]
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Code on Accessibility 
+in the Built Environment 2025 
+CODE ON ACCESSIBILITY 
+IN THE BUILT ENVIRONMENT 2025 
+
+[PDF page 2 of 116]
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+History of Amendments 
+ 
+s/n 
+Description 
+Revision Date 
+1 
+Version 1.0 
+First issue 
+7 April 2025 
+2 
+Version 1.1 
+Editorial amendments 
+1 March 2026 
+ 
+a) Chapter 2 
+Corrected footnote from “CHAPTER 3” to “CHAPTER 2”. 
+ 
+ 
+b) Clause 5.1.3 
+Inserted “(d) Place of worship” due to refinement of building 
+types in Code 2025. The requirement remains unchanged from 
+Code 2019 and was already reflected in Table 1 of Code 2025. 
+ 
+ 
+c) Figure 43 
+Inserted dimension of “280 – 300” to illustrate clause 5.8.2.1(b). 
+ 
+ 
+d) Clause 5.2.2 
+Replaced “call bell” with “emergency assistance alarm system” 
+as described in clause 5.8.4. 
+ 
+ 
+e) Figure 66(b) 
+Reflected door swing. 
+ 
+ 
+f) Figure 67(a) 
+Corrected misplaced annotation “Non-structural element that 
+can be easily removed”. 
+ 
+ 
+ 
+ 
+© Building and Construction Authority, first published April 2025 
+ 
+The contents of this publication are protected by copyright and other forms of proprietary rights, and are the property 
+of BCA, or the party credited as the provider of the contents. You may download, view, print, and reproduce copies 
+of this publication without modification for your own reference, but you shall not otherwise copy, reproduce, upload, 
+distribute, publish, post, modify, create derivative works, transmit or in any way exploit the contents of this 
+publication. If you wish to use the contents of the publication for any purpose other than for your own reference, 
+please seek BCA’s prior written consent.
+
+[PDF page 3 of 116]
+ 
+ 
+3 
+CO NT E NTS 
+CONTENTS 
+ 
+Chapter 1:  Accessibility in the Built Environment 
+9 
+1.1 
+Scope 
+9 
+1.2 
+Definitions 
+9 
+1.3 
+Anthropometrics 
+11 
+Chapter 2:  Provisions for Accessibility 
+18 
+2.1 
+Accessibility in the Built Environment 
+18 
+2.2 
+Additions and Alteration Works 
+18 
+2.3 
+Temporary Obstructions During Pandemic or Crisis 
+18 
+2.4 
+Interconnectivity 
+21 
+2.5 
+Exemptions 
+22 
+Chapter 3:  Arriving at the Building 
+23 
+3.1 
+Approach and Access to Buildings 
+23 
+3.2 
+Passenger Alighting and Boarding Points, including Taxi Shelters 
+24 
+3.3 
+Accessible Vehicle Parking 
+26 
+Chapter 4:  Accessibility Around and Within the Building 
+29 
+Horizontal Circulation 
+29 
+4.1 
+Floor and Ground Surfaces 
+29 
+4.2 
+Accessible Routes, Corridors and Paths 
+30 
+4.3 
+Headroom 
+36 
+4.4 
+Doors 
+36 
+Vertical Circulation 
+43 
+4.5 
+Changes in Levels and Kerb Ramps 
+43 
+4.6 
+Ramps 
+45 
+4.7 
+Stairs 
+49 
+4.8 
+Passenger Lifts 
+52 
+4.9 
+Lifts Designated for Wheelchair Users 
+56 
+4.10 
+Platform Lifts and Wheelchair Stairlifts 
+58 
+Chapter 5:  Sanitary Provisions 
+61 
+5.1 
+General 
+61 
+5.2 
+Accessible Individual Washroom 
+63 
+5.3 
+Accessible Changing Room 
+66 
+5.4 
+Water Closet Cubicles for Persons with Ambulant Mobility Impairment 
+68 
+5.5 
+Urinals for Persons with Ambulant Mobility Impairment 
+71 
+5.6 
+Accessible Water Closet Cubicles 
+72 
+5.7 
+Accessible Shower and Bath Facilities 
+74 
+
+[PDF page 4 of 116]
+ 
+ 
+4 
+CO NT E NTS 
+5.8 
+Components in the Accessible Sanitary Facilities 
+78 
+Chapter 6:  Family-friendly Provisions 
+86 
+6.1 
+General 
+86 
+6.2 
+Family Car Parking 
+87 
+6.3 
+Diaper Changing Station 
+88 
+6.4 
+Child Protection Seat 
+88 
+6.5 
+Child-sized Wash Basin and Water Closet 
+89 
+6.6 
+Child-friendly Urinal 
+90 
+6.7 
+Individual Family Washroom 
+90 
+6.8 
+Lactation Rooms 
+92 
+Chapter 7:  Residential, Serviced Apartments, Hotels, Hostels and Dormitories 
+94 
+7.1 
+Residential Development 
+94 
+7.2 
+Entrances to Residential Units 
+95 
+7.3 
+Bathroom for Future Retrofitting in Residential Units 
+97 
+7.4 
+Switches and Socket Outlets 
+98 
+7.5 
+Accessible Rooms, Guestrooms and Serviced Apartments 
+99 
+7.6 
+Student Hostels, Halls of Residence and Dormitories 
+101 
+7.7 
+Purpose-built Workers’ Dormitories 
+101 
+Chapter 8:  Signage and Wayfinding 
+102 
+8.1 
+International Symbol of Access for Persons with Disabilities 
+102 
+8.2 
+Signs Identifying Accessible Facilities 
+102 
+8.3 
+Directional Signs 
+103 
+8.4 
+Signage 
+104 
+8.5 
+Tactile and Braille 
+104 
+8.6 
+Service and Information Counters 
+106 
+Chapter 9:  Components of a Building 
+108 
+9.1 
+Illumination 
+108 
+9.2 
+Controls and Operating Devices 
+108 
+9.3 
+Handrails 
+110 
+9.4 
+Grab Bars 
+110 
+9.5 
+Seating Spaces for Wheelchair Users 
+111 
+9.6 
+Hearing Enhancement Systems 
+114 
+9.7 
+Warning Tactile Ground Surface Indicators (TGSI) 
+115 
+Composition of the Code Review Committee 
+116 
+ 
+ 
+
+[PDF page 5 of 116]
+ 
+ 
+5 
+CO NT E NTS 
+LIST OF TABLES 
+ 
+Table 1 Provision of Key Facilities and Accessible Features 
+19 
+Table 2  Provision of Accessible Vehicle Parking Lots 
+26 
+Table 3 Accessible Route Widths 
+30 
+Table 4 Changes in Levels 
+43 
+Table 5 Gradient and Length of Ramps 
+47 
+Table 6 Provision of Lactation Rooms 
+92 
+Table 7 Minimum Clear Floor Space at Door Openings in Residential Units 
+97 
+ 
+ 
+LIST OF FIGURES 
+ 
+Figure 1 Dimensions of Stationary Wheelchair and Occupant 
+12 
+Figure 2 Minimum Clear Floor Space for Wheelchair to Turn Freely 
+13 
+Figure 3 Clear Floor Space to Accommodate a Single Manoeuvring Wheelchair and Occupant 
+13 
+Figure 4 Comfortable Access Widths 
+14 
+Figure 5 Height of Reach Ranges 
+15 
+Figure 6 Extended Reach Ranges 
+15 
+Figure 7 Positions Taken by a Wheelchair User When Negotiating a Door in a Passageway 
+16 
+Figure 8 Side/Parallel Approach 
+17 
+Figure 9 Frontal Approach 
+17 
+Figure 10 Diagonal Approach 
+17 
+Figure 11 Passenger Alighting and Boarding Point with no Level Difference 
+25 
+Figure 12 Passenger Alighting and Boarding Point with Level Difference 
+25 
+Figure 13 Accessible Vehicle Parking Lot 
+27 
+Figure 14 Parallel Accessible Vehicle Parking Lot 
+28 
+Figure 15 Gratings 
+30 
+Figure 16 Space Requirements for Accessible Corridors 
+32 
+Figure 17 Access Beside Turnstiles, Accessible Gantries and Checkout Lanes 
+33 
+Figure 18 Limits of Protruding Objects Along Accessible Routes 
+34 
+Figure 19 Freestanding Objects Mounted on Posts 
+34 
+Figure 20 Resting Areas 
+35 
+Figure 21 Overhead Hazards 
+36 
+Figure 22 Clear Opening of Doorways 
+37 
+
+[PDF page 6 of 116]
+ 
+ 
+6 
+CO NT E NTS 
+Figure 23 Markings on Glass Doors and Adjacent Glass Walls/Screens 
+38 
+Figure 24 Minimum Doorway Manoeuvring Spaces 
+40 
+Figure 25 Minimum Distance Between Leading Edge of Door Leaf and Wall Surface 
+40 
+Figure 26 Minimum Manoeuvring Spaces for Doors in a Series 
+41 
+Figure 27 Example of Door Handle for Sliding Door 
+42 
+Figure 28 Vision Panels 
+43 
+Figure 29 Contrasting Colour and Coloured Bands on Ramps 
+44 
+Figure 30 Examples of Kerb Ramps and Crossing 
+45 
+Figure 31 Minimum Ramp Width with Alternative Stepped Approach 
+46 
+Figure 32 Ramps and Landings 
+47 
+Figure 33 Handrail Extensions 
+49 
+Figure 34 Sectional View of Edge Protections 
+49 
+Figure 35 Example of Tactile and Braille Signs at a Staircase 
+51 
+Figure 36 Staircase 
+52 
+Figure 37 Tactile and Braille Markings for Lift Buttons 
+54 
+Figure 38 Arrangement of Lift Car Control Buttons 
+54 
+Figure 39 Keypad Buttons 
+55 
+Figure 40 Lift for Wheelchair Users 
+57 
+Figure 41 Example of Platform Lift 
+59 
+Figure 42 Example of Wheelchair Stairlift 
+60 
+Figure 43 Accessible Individual Washroom 
+64 
+Figure 44 Larger Accessible Individual Washroom 
+65 
+Figure 45 Accessible Changing Room 
+67 
+Figure 46 Symbol for Accessible Changing Room 
+67 
+Figure 47 Water Closet Cubicle for Persons with Ambulant Mobility Impairment 
+70 
+Figure 48 Example of an Ambulant Accessible Sign 
+70 
+Figure 49 Urinal for Persons with Ambulant Mobility Impairment 
+72 
+Figure 50 Accessible Water Closet Cubicle within a Toilet Cluster 
+73 
+Figure 51 Accessible Shower Facility for Wheelchair Users 
+75 
+Figure 52 Accessible Individual Washroom with Shower Facility 
+76 
+Figure 53 Bathtub for Wheelchair Users 
+77 
+Figure 54 Alternative Bathtub Configuration for Wheelchair Users 
+78 
+Figure 55 Washroom Accessories 
+81 
+Figure 56 Wash Basin for Persons with Disabilities 
+82 
+Figure 57 Water Closet with Built-Up Wall 
+83 
+
+[PDF page 7 of 116]
+ 
+ 
+7 
+CO NT E NTS 
+Figure 58 Signs to Toilets 
+85 
+Figure 59 Example of Symbols for Persons with Different Needs 
+87 
+Figure 60 Family Car Parking Lot 
+87 
+Figure 61 Child Protection Seat in Water Closet Cubicle 
+89 
+Figure 62 Child-friendly Sanitary Facilities 
+90 
+Figure 63 Example of Individual Family Washroom 
+91 
+Figure 64 Example of Individual Accessible Family Washroom in Existing Buildings 
+91 
+Figure 65 Lactation Room 
+93 
+Figure 66 Manoeuvring Spaces at Entrance to Residential Units 
+96 
+Figure 67 Level Difference at Entrance to Residential Units 
+96 
+Figure 68 Clear Floor Spaces Along Route to Bathroom for Future Retrofitting 
+98 
+Figure 69 Example of Accessible Rooms in Hotels 
+100 
+Figure 70 Symbol of Access for Persons with Disabilities 
+103 
+Figure 71 Examples of Directional Signs for Facilities 
+103 
+Figure 72 Example of Tactile and Braille Signs 
+105 
+Figure 73 Specifications for Braille on Signage 
+106 
+Figure 74 Service and Information Counters 
+107 
+Figure 75 Controls and Operating Mechanisms 
+109 
+Figure 76 Distance of Controls from Obstructions 
+109 
+Figure 77 Handrails 
+111 
+Figure 78 Seating Spaces 
+112 
+Figure 79 Examples of Seating Spaces at Eating Establishments 
+113 
+Figure 80 Symbol of Access for Persons who are Hard-of-hearing 
+114 
+Figure 81 Warning Tactile Ground Surface Indicators (TGSI) 
+115 
+ 
+ 
+ 
+
+[PDF page 8 of 116]
+ 
+ 
+8 
+I NT RO D UCT I O N 
+INTRODUCTION 
+ 
+The Code on Accessibility in the Built Environment (“Code”) sets out the minimum design 
+requirements for accessible and inclusive buildings. It provides technical details necessary to 
+achieve the minimum level of accessibility for deemed-to-satisfy design solutions that meet the 
+relevant objectives and performance requirements of the Building Control Regulations. The Code 
+is periodically reviewed by the Code Review Committee to ensure accessibility standards remain 
+balanced and relevant, addressing current and future demographic trends and the evolving 
+community needs. 
+ 
+2 
+The design requirements in this Code should be incorporated from the onset of any new 
+building project. This approach allows accessibility and usability considerations to be integrated 
+into the overall design, minimising the cost of providing accessibility as an afterthought and 
+resulting in a safer, more inclusive building for all users. For existing buildings undergoing 
+additions and alterations, there may be unique access opportunities and constraints. However, 
+owners and designers must make every effort to meet the accessibility outcomes to the fullest 
+extent possible. This Code does not address the maintenance of accessible features. Under the 
+Building Control Act, building owners are responsible for ensuring that as-built accessible 
+features are properly maintained in working condition.  
+ 
+3 
+The provisions in this Code do not represent the only possible solutions. In keeping pace 
+with technological advancements and changing user demand, Qualified Persons may develop 
+alternative methods to meet regulatory objectives and address the needs of a diverse user base. 
+Anthropometric data provides the measurable, physical basis for accessible design. In this 
+revised version of the Code, basic anthropometric information on reach ranges, clearances and 
+manoeuvring spaces for different user groups is presented at the beginning of the document for 
+easy reference by designers. The content has also been streamlined and reorganised to enhance 
+clarity, with additional functional intent statements introduced to describe the expected 
+performance and conditions necessary for achieving the objectives.  
+ 
+4 
+An inclusive approach to designing and constructing the built environment is crucial for 
+enabling people of all ages and abilities to live well and participate actively in the community. 
+Buildings should provide easy and safe access for persons with disabilities, the elderly, and 
+families with young children, without undue effort or segregation. Building owners and designers 
+are encouraged to adopt Universal Design principles and consider exceeding baseline standards 
+by making additional provisions where possible and practicable. Improved accessibility benefits 
+everyone. 
+ 
+Building Plan and Universal Design Department  
+Building Plan and Management Group 
+Building and Construction Authority 
+
+[PDF page 9 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 
+C H APT ER 1 
+Chapter 1:  
+Accessibility in the Built Environment 
+1.1 
+Scope 
+1.1.1 
+This Code sets out the minimum design and construction requirements for 
+accessible and inclusive buildings. It specifies which building types must be made 
+accessible and identifies specific areas within these buildings where accessibility is 
+required. 
+1.2 
+Definitions 
+1.2.1 
+For the purpose of this Code, the definitions below apply: 
+ 
+“accessible” describes a site, building, facility, pedestrian path, and interconnection 
+that complies with this Code and that can be approached, entered and used by 
+persons with disabilities acting independently or with a caregiver, the elderly and 
+other intended users as specified in this Code; 
+ 
+“accessible route” is a continuous path of travel that is free from barriers and 
+connects all accessible elements and spaces. This path must not incorporate any 
+steps, stairways, turnstiles, revolving doors, escalators, or other impediments which 
+would prevent it from being safely navigated by persons with disabilities. Interior 
+accessible routes include doorways, corridors, ramps, passenger lifts and clear floor 
+space at fixtures. Exterior accessible routes include parking access aisles, kerb 
+ramps, walkways, and ramps; 
+ 
+“building” includes part of a building; 
+ 
+“circulation path” is an exterior or interior way of passage from one place to another 
+for pedestrians including walkways, hallways, aisles, courtyards, doorways, 
+stairways and stair landings; 
+ 
+“commuter facilities” are transport nodes that cater to the needs of pedestrians and 
+commuters such as bus shelters and taxi shelters, including associated road related 
+facilities such as covered linkways, pedestrian overhead bridges and underpasses;  
+ 
+“grab bar” is a support rail used to maintain balance and to give steady, stabilising 
+assistance or support in locations such as bathrooms, toilets and lifts; 
+ 
+“guide dog” is a specially bred and extensively trained service animal that guides a 
+blind or person with visual impairment; 
+ 
+“handrail” is a rail used to give stability and support in circulation areas such as 
+corridors, passageways, ramps, and stairways to assist in continuous movement; 
+
+[PDF page 10 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 
+C H APT ER 1 
+ 
+“hearing enhancement system” enables sound signals of the activity to be 
+transmitted to a person with a hearing enhancement device without interference of 
+background noise or excessive reverberation. This allows them to participate in 
+activities such as conferences, meetings, and entertainment; 
+ 
+“kerb” is a side barrier to a road or pavement; 
+ 
+“kerb ramp” is a short ramp cutting through a kerb or built up to it; 
+ 
+“operable part” is part of a piece of equipment or appliance used to insert or 
+withdraw objects to activate, deactivate, or adjust the equipment or appliance (for 
+example, coin-slots, push buttons, handles etc); 
+ 
+“person with ambulant mobility impairment” is a person who has difficulties in 
+walking, either with or without personal assistance, and who may depend on 
+prostheses (artificial limbs), orthoses (callipers), sticks, crutches or walking aids to 
+move about; 
+ 
+“persons with disabilities” are persons whose mobility and use of a building are 
+affected by one or more of the following physical or sensory disabilities or 
+impairments: mobility impairment (including those requiring the use of mobility aids 
+such as wheelchairs), deafness or hard-of-hearing, or blindness or visual 
+impairment; 
+ 
+“place of public resort” means a building or a defined or enclosed place used as a 
+zoo, wildlife parks, theme parks, amusement centres, community club, country club, 
+cinema, theatre, public exhibition/concert/lecture/event hall, public ballroom, 
+museum, gallery, library, stadium or a public place of assembly for persons admitted 
+thereto by tickets or otherwise; 
+ 
+“place of worship” means a building, or a defined or enclosed place used either as a 
+church, chapel, mosque, temple or other place where public worship is or religious 
+ceremonies are performed; 
+ 
+“primary accessible route” is the main accessible route used to approach and 
+access a building or facility’s accessible elements and spaces. This route must be 
+the most direct and predominantly used path of travel; 
+ 
+“ramp” is an inclined way connecting one level to another; 
+ 
+“slip-resistant” refers to a pedestrian surface material with adequate frictional 
+characteristics to reduce the risk of slipping, in accordance with the 
+recommendations and test methods stipulated in SS 485 – “Specification for slip 
+resistance classification of pedestrian surface materials”; 
+ 
+“symbol” means the International Symbol of Access for persons with disabilities; 
+ 
+“tactile” describes an object that can be perceived using the sense of touch; 
+
+[PDF page 11 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 
+C H APT ER 1 
+ 
+“tactile ground surface indicator” (TGSI) consists of warning TGSI and directional 
+TGSI. It provides cues, which, when combined with other environmental information, 
+assist people who are blind or have visual impairment with their orientation. 
+Orientation is a person’s awareness of where they are, where they are going, and 
+where they have been; 
+ 
+“warning TGSI” is an indicator that is used as a warning of a hazard and the need to 
+stop, consider, investigate and wait before proceeding; 
+ 
+“water closet cubicle” is a compartment having a water closet within the male or 
+female toilet;  
+ 
+“wheelchair user” is a person who depends on a wheelchair for mobility; 
+ 
+“width” is the clear distance from one finished surface to another; and 
+ 
+“white cane” is a mobility aid to guide persons who are blind or have visual 
+impairment and to detect obstructions as they move in the environment. 
+1.2.2 
+Where “must” is used in this Code, it refers to mandatory design requirements. 
+Recommended design requirements are indicated as an “Advisory”. 
+1.2.3 
+“Note” as used in this Code, indicates situations where requirements need not apply 
+or can be varied. It also contains important considerations in relation to any 
+preceding clauses. 
+1.2.4 
+All figures and diagrams within this Code are intended to clarify certain aspects of 
+the technical requirement. The figures and diagrams are not necessarily to scale and 
+do not represent fully detailed solutions. 
+1.2.5 
+Unless otherwise specified, all dimensions shown in the figures in this Code are in 
+millimetres (mm). Clearance dimensions refer to finished surfaces, not to those of 
+structural elements. Allowance should be made for all necessary construction 
+tolerances and finishes. 
+1.2.6 
+Unless the context otherwise requires: 
+(a) 
+words importing the singular must include the plural and vice versa; and 
+(b) 
+words importing the masculine gender must include the feminine gender and 
+vice versa. 
+1.3 
+Anthropometrics 
+1.3.1 
+The requirements specified in the Code, relevant to the use of wheelchairs, are 
+based on the dimensions of commonly used wheelchair sizes and users. For larger 
+wheelchairs and other mobility aids, additional space allowances will have to be 
+considered according to the needs of the intended users. 
+1.3.2 
+Persons with severe physical disabilities may have requirements beyond the 
+standards provided in this Code. 
+
+[PDF page 12 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 2 
+C H APT ER 1 
+1.3.3 
+Clear Floor Space for Wheelchair Users 
+1.3.3.1 
+The required floor space to accommodate a single, stationary wheelchair and 
+occupant is 750 mm by 1200 mm. 
+1.3.3.2 
+The required knee and toe spaces, and the seat height are as shown in Figure 1. 
+ 
+ 
+ 
+Figure 1 
+Dimensions of Stationary Wheelchair and Occupant 
+1.3.4 
+Manoeuvring Space for Wheelchair Users 
+1.3.4.1 
+The minimum clear floor space for a wheelchair to turn freely is 1800 mm, as shown 
+in Figure 2. 
+1.3.4.2 
+The minimum clear floor space for a wheelchair to turn within a confined space is 
+1500 mm. 
+1.3.4.3 
+The minimum clear floor space to accommodate a single manoeuvring wheelchair 
+and occupant travelling in a straight path is 900 mm by 1200 mm, as shown in Figure 
+3(b). 
+1.3.4.4 
+The minimum clear floor space to accommodate a single wheelchair and occupant 
+manoeuvring into a side transfer position is 900 mm by 1500 mm, as shown in Figure 
+3(c). 
+1.3.4.5 
+The minimum clear floor space to accommodate a single wheelchair and occupant 
+manoeuvring into a confined space and interacting with control and operating 
+devices is 1200 mm by 1500 mm, as shown in Figure 3(d). 
+1.3.4.6 
+Adequate space allowance should be provided for different users passing on an 
+accessible route as shown in Figure 4. 
+ 
+Width 
+750 
+Toe 
+230 
+Seat 
+480 
+Knee/Lap 
+700 
+Length 
+1200 
+Front of seat to toe 
+480 
+Toe 
+230 
+
+[PDF page 13 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 3 
+C H APT ER 1 
+ 
+ 
+Figure 2 
+Minimum Clear Floor Space for Wheelchair to Turn Freely 
+ 
+ 
+ 
+Figure 3 
+Clear Floor Space to Accommodate a Single Manoeuvring Wheelchair and Occupant 
+1800 min 
+1800 min 
+Width 
+900 
+Width 
+900 
+Length 
+1200 
+Width 
+900 
+Length 
+1500 
+Width 
+1200 
+Length 
+1500 
+(a) Width of 
+manoeuvring 
+wheelchair 
+(b) Clear floor space for 
+manoeuvring 
+wheelchair 
+(c) Clear floor space for 
+manoeuvring into a side 
+transfer position 
+(d) Clear floor space for 
+manoeuvring into and within 
+a confined space requiring 
+control 
+
+[PDF page 14 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 4 
+C H APT ER 1 
+ 
+ 
+Figure 4 
+Comfortable Access Widths 
+(a) Wheelchair and a 
+person facing sideways 
+(b) Wheelchair and a 
+person passing 
+(c) Two wheelchairs passing 
+(d) Person with visual 
+impairment using a white cane 
+(e) Person with visual impairment 
+accompanied by a sighted guide 
+(f) Person with visual 
+impairment accompanied by 
+a guide dog 
+1200 
+1500 
+1800 
+1200 
+  
+1100 
+(g) Person using 
+crutches  
+(i) Person with  
+baby pram 
+(h) Person using  
+walking aid  
+1200 
+750 
+1200 
+Pace     900 - 1500 
+800 
+
+[PDF page 15 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 5 
+C H APT ER 1 
+1.3.5 
+Reach Ranges 
+1.3.5.1 
+The range of side reaches for a person in a wheelchair is as follows: 
+(a) 
+a maximum height of 1200 mm from the floor level; and 
+(b) 
+a minimum height of 450 mm from the floor level. 
+1.3.5.2 
+The comfortable height for a person with visual impairment to read tactile and Braille 
+signs on walls is between 900 mm and 1500 mm from the floor level. 
+1.3.5.3 
+The forward reach for a person in a wheelchair is a maximum of 400 mm from the 
+front of the wheelchair seat. 
+1.3.5.4 
+The maximum reach for a person in a wheelchair in an area with obstruction is a 
+minimum of 350 mm from an internal corner or obstruction. 
+ 
+ 
+ 
+Figure 5 
+Height of Reach Ranges 
+ 
+ 
+ 
+Figure 6 
+Extended Reach Ranges 
+(a) Side reach heights for 
+a person in wheelchair 
+450 min 
+1200 max 
+900 min 
+1500 max 
+(b) Heights for reading of tactile and Braille  
+by persons with visual impairment 
+750 – 1100 
+Comfortable range 
+250 min 
+Stretch 
+350 
+min 
+(a) Forward reach 
+Front of seat to furthest reach 
+400 
+(b) Reach from internal corner or obstruction 
+
+[PDF page 16 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 6 
+C H APT ER 1 
+1.3.6 
+Manoeuvring Space at Doorways for Wheelchair User 
+1.3.6.1 
+The positions taken by a wheelchair user when negotiating a door in a passageway 
+are illustrated in Figure 7. 
+ 
+ 
+ 
+Figure 7 
+Positions Taken by a Wheelchair User When Negotiating a Door in a Passageway 
+(a) Negotiating a door (pull-side) by wheelchair user 
+(b) Negotiating a door (push-side) by wheelchair user 
+1 
+2 
+4 
+5 
+6 
+1 
+2 
+3 
+4 
+600 min 
+1500 min 
+3 
+300 min 
+1200 min 
+(i) Takes position to 
+reach for handle 
+(ii) Reversing to pull 
+open door 
+(iii) Fully opening  
+the door 
+(iv) Going through door 
+(v) Passing through 
+doorway at an angle 
+(vi) Door closing 
+gradually behind 
+(i) Takes position to 
+reach for handle, unlatch 
+(ii) Pushes open the 
+door and move forward 
+(iii) Continue opening door 
+while moving forward 
+(iv) Passing through 
+doorway at an angle 
+
+[PDF page 17 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 7 
+C H APT ER 1 
+1.3.7 
+Wheelchair Transfer to Water Closet 
+1.3.7.1 
+The side approach for wheelchair user to transfer is as shown in Figure 8. 
+ 
+ 
+Figure 8 
+Side/Parallel Approach 
+1.3.7.2 
+The frontal approach for wheelchair user to transfer is as shown in Figure 9. 
+ 
+ 
+Figure 9 
+Frontal Approach 
+1.3.7.3 
+The diagonal approach for wheelchair user to transfer is as shown in Figure 10. 
+ 
+ 
+Figure 10 
+Diagonal Approach 
+(a) Takes transfer position, 
+sets brakes, removes 
+armrest 
+(c) Transfers onto 
+water closet seat 
+(d) Positions on 
+water closet 
+1 
+3 
+4 
+2 
+(b) Transfers from 
+wheelchair seat 
+(a) Takes transfer position, sets 
+brakes, removes footrests 
+(c) Transfers onto 
+water closet seat 
+(d) Positions on 
+water closet 
+1 
+3 
+4 
+(b) Transfers from 
+wheelchair seat 
+2 
+(a) Takes transfer 
+position and sets 
+brakes 
+(c) Moves wheelchair 
+out of the way and 
+adjusts position 
+(b) Removes 
+armrest, footrest, 
+and transfers 
+(d) Positions on water 
+closet 
+1 
+4 
+2 
+3 
+
+[PDF page 18 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 8 
+C H APT ER 2 
+Chapter 2:  
+Provisions for Accessibility 
+2.1 
+Accessibility in the Built Environment 
+Functional Intent 
+Persons with disabilities – wheelchair users, persons with ambulant mobility 
+impairment and persons with sensory impairment – and families with young 
+children must be able to easily gain access to buildings and use their facilities, both 
+as visitors and people who live or work in them.  
+2.1.1 
+All areas or levels must be made accessible for persons with disabilities and other 
+intended users, including employees, visitors and the public, in accordance with the 
+requirements of this Code. The following building types have specific accessibility 
+requirements: 
+(a) 
+For purpose-built workers’ dormitories: the designated areas leading to the 
+accessible room, communal areas and facilities must be made accessible;  
+(b) 
+For vehicle parks, including surface parking, vehicle parking buildings or 
+vehicle parking facilities within a building: all car parking areas, including the 
+interconnectivity of any car parking area to lift lobbies, entrances and to 
+adjacent buildings must be made accessible. 
+2.1.2 
+Where a site, building, facility, room, or space serves multiple purpose, each distinct 
+area must comply with the requirements applicable to its specific use.  
+Note 
+Clause 2.1 does not apply to a landed dwelling-house.  
+2.2 
+Additions and Alteration Works 
+2.2.1 
+The provisions of this Code apply to all new areas and existing areas with addition 
+and alteration works which require plan submission and approval from the 
+Commissioner of Building Control. 
+2.3 
+Temporary Obstructions During Pandemic or Crisis 
+Functional Intent 
+The accessibility provisions within a building must be maintained during pandemic 
+or crisis. 
+2.3.1 
+During periods of pandemic or crisis where any existing accessible approach, 
+entrance, route, feature or facility has to be temporarily closed, obstructed or 
+altered, an alternative in accordance with the provisions of this Code must be 
+provided. In addition, signage must be provided to direct users to this alternative. 
+ 
+ 
+
+[PDF page 19 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 9 
+C H APT ER 2 
+Table 1 
+Provision of Key Facilities and Accessible Features 
+This table serves a quick reference to the applicable requirements for key facilities and accessible features across 
+different building types. The table should be read alongside the specific clauses within this Code. 
+ 
+Building type 
+Key provisions 
+Accessible 
+sanitary 
+provisions 
+Family 
+friendly 
+provisions 
+Other 
+provisions 
+1.  Residential development  
+AWC, ASF, AMB 
+- 
+RWC, SSO 
+2.  Shophouses with commercial use on 
+first storey and residential use on upper 
+storeys 
+ 
+* Where the use on upper storeys is of non-
+residential use, refer to the respective building 
+types 
+AWC, ASF, AMB 
+- 
+HES, TBS 
+3.  Office buildings including business parks 
+  
+  
+  
+(a) GFA less than 5,000 m2 
+AWC, ASF, AMB 
+- 
+HES, TBS 
+(b) GFA 5,000 m2 or more 
+AWC, ASF, AMB 
+LR 
+HES, TBS 
+4. Shopping centres and multi-purpose 
+complexes 
+  
+  
+  
+(a) GFA less than 5,000 m2 
+AWC, ASF, AMB, 
+LWC 
+- 
+HES, TBS 
+(b) GFA 5,000 m2 to less than 10,000 m2 
+AWC, ASF, AMB, 
+LWC 
+LR 
+HES, TBS 
+(c) GFA 10,000 m2 to less than 20,000 m2 
+AWC, ASF, AMB, 
+LWC 
+FF, LR 
+HES, TBS 
+(d) GFA 20,000 m2 or more 
+ACR, AWC, ASF, 
+AMB, LWC 
+FF, LR 
+HES, TBS 
+5.  Hotels, boarding houses, chalets and 
+backpacker hotels 
+AWC, ASF, AMB 
+- 
+AR, ER, HES, 
+TBS, SSO 
+6.  Serviced apartments 
+AWC, ASF, AMB 
+- 
+AR, HES, TBS, 
+SSO 
+Legend: 
+Accessible sanitary provisions 
+ACR 
+Accessible changing room 
+AWC 
+Accessible individual washroom 
+LWC 
+Larger accessible individual  
+ 
+washroom 
+ASF 
+Accessible individual  
+ 
+shower facility 
+AMB 
+Facilities for persons with 
+ambulant mobility impairment 
+ 
+Family-friendly provisions 
+FF 
+Family-friendly  
+ 
+sanitary facilities  
+ 
+and car parking 
+LR 
+Lactation room 
+ 
+Other provisions 
+AR 
+Accessible guestroom 
+ER 
+Elder-friendly guestroom 
+RWC 
+Bathroom for future 
+ 
+retrofitting  
+HES 
+Hearing enhancement  
+ 
+system 
+SSO 
+Accessible switches and 
+ 
+socket outlets 
+TBS 
+Tactile and Braille signs 
+
+[PDF page 20 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 0 
+C H APT ER 2 
+Table 1 (continued) 
+Provision of Key Facilities and Accessible Features 
+ 
+Building type 
+Key provisions 
+Accessible 
+sanitary 
+provisions 
+Family 
+friendly 
+provisions 
+Other 
+provisions 
+7.  Sports facilities and public swimming 
+pools 
+ACR, AWC, ASF, 
+AMB, LWC 
+FF, LR 
+HES, TBS 
+8.  Places of public resort 
+ACR, AWC, ASF, 
+AMB, LWC 
+FF, LR 
+HES, TBS 
+9.  Non-residential components in mixed 
+developments with GFA 5,000 m2 or 
+more 
+Refer to  
+respective type 
+LR 
+Refer to 
+respective type 
+10.  Parks and open spaces including civic 
+plazas 
+AWC, ASF, AMB 
+- 
+- 
+11.  Place of worship 
+AWC, ASF, AMB, 
+LWC 
+- 
+HES, TBS 
+12.  Markets, hawker or food centres and 
+eating establishments 
+AWC, ASF, AMB, 
+LWC 
+- 
+TBS 
+13.  Transport terminals and stations 
+  
+  
+  
+(a)  Standalone transport terminals 
+including bus terminals and MRT 
+stations. 
+AWC, ASF, AMB, 
+LWC 
+FF, LR 
+HES, TBS 
+(b)  Major transport 
+terminals/interchanges, including 
+airport, bus and MRT 
+interchanges/railway stations, 
+cruise centres 
+ACR, AWC, ASF, 
+AMB, LWC 
+FF, LR 
+HES, TBS 
+Legend: 
+Accessible sanitary provisions 
+ACR 
+Accessible changing room 
+AWC 
+Accessible individual washroom 
+LWC 
+Larger accessible individual  
+ 
+washroom 
+ASF 
+Accessible individual  
+ 
+shower facility 
+AMB 
+Facilities for persons with 
+ambulant mobility impairment 
+ 
+Family-friendly provisions 
+FF 
+Family-friendly  
+ 
+sanitary facilities  
+ 
+and car parking 
+LR 
+Lactation room 
+ 
+ 
+Other provisions 
+AR 
+Accessible guestroom 
+ER 
+Elder-friendly guestroom 
+HES 
+Hearing enhancement  
+ 
+system 
+TBS 
+Tactile and Braille signs 
+
+[PDF page 21 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 1 
+C H APT ER 2 
+Table 1 (continued) 
+Provision of Key Facilities and Accessible Features 
+ 
+Building type 
+Key provisions 
+Accessible 
+sanitary 
+provisions 
+Family 
+friendly 
+provisions 
+Other 
+provisions 
+14.  Schools 
+  
+  
+  
+(a)  Preschools, primary and 
+secondary school  
+AWC, ASF, AMB 
+LR 
+HES 
+ 
+(b)  Colleges, universities and other 
+institutions of learning  
+AWC, ASF, AMB, 
+LWC 
+LR 
+HES, TBS 
+(c)  Hostels, halls of residence and 
+dormitories 
+AWC, ASF, AMB 
+- 
+AR, SSO, TBS 
+15.  Hospitals 
+ACR, AWC, ASF, 
+AMB, LWC 
+LR 
+HES, TBS 
+16.  Polyclinics, health-care centres and 
+specialist outpatient clinics 
+ACR, AWC, ASF, 
+AMB, LWC 
+LR 
+HES, TBS 
+17.  Nursing homes, homes for the aged 
+and welfare homes 
+AWC, ASF, AMB 
+- 
+HES, TBS 
+18.  Factories, workshops, industrial 
+buildings and office/showroom areas in 
+warehouses 
+AWC, ASF, AMB 
+- 
+- 
+19.  Purpose-built workers’ dormitories 
+AWC, ASF 
+- 
+- 
+Legend: 
+Accessible sanitary provisions 
+ACR 
+Accessible changing room 
+AWC 
+Accessible individual washroom 
+LWC 
+Larger accessible individual  
+ 
+washroom 
+ASF 
+Accessible individual  
+ 
+shower facility 
+AMB 
+Facilities for persons with 
+ambulant mobility impairment 
+ 
+Family-friendly provisions 
+FF 
+Family-friendly  
+ 
+sanitary facilities  
+ 
+and car parking 
+LR 
+Lactation room 
+ 
+ 
+ 
+Other provisions 
+AR 
+Accessible guestroom 
+ER 
+Elder-friendly guestroom 
+HES 
+Hearing enhancement  
+ 
+system 
+SSO 
+Accessible switches and 
+ 
+socket outlets 
+TBS 
+Tactile and Braille signs 
+2.4 
+Interconnectivity 
+Functional Intent 
+The planning and design of a building must provide barrier-free connectivity to 
+adjacent infrastructure and developments for seamless accessibility. 
+
+[PDF page 22 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 2 
+C H APT ER 2 
+2.4.1 
+The provisions of this Code apply to building works within the development and must 
+be read in conjunction with the Land Transport Authority’s guidelines for street works 
+and public footpaths, and the National Parks Board’s guidelines for public open 
+spaces and parks. Accessibility must extend to all building interfaces, including 
+connections between buildings and commuter facilities. 
+2.4.2 
+A plan showing the primary accessible route connecting the building or facility’s 
+accessible elements and spaces must be provided for building plan approval. This 
+plan must include the barrier-free connections to adjacent buildings and public 
+infrastructure, such as pedestrian and commuter facilities. 
+2.4.3 
+Footpaths in the road reserve abutting a development under construction must be 
+kept barrier-free, unobstructed, and free of construction activities and equipment. 
+The footpath must be adequately protected from the debris of construction work. 
+2.4.4 
+In the event that the existing accessible footpath around a development under 
+construction has to be temporarily obstructed, removed or altered, an alternative 
+accessible footpath with a minimum width of 1200 mm must be provided in addition 
+to signage to direct users. 
+2.5 
+Exemptions 
+Functional Intent 
+In areas of a building where inherent health and safety risks exist, particularly for 
+persons with disabilities, the requirements of this Code need not apply. 
+2.5.1 
+The provisions of this Code do not apply to the following areas: 
+(a) 
+Construction sites and structures which are directly associated with the 
+process of construction; 
+(b) 
+Areas which are raised primarily for purposes of security, lifesaving or fire 
+safety, including but not limited to, observation or lookout galleries, prison 
+guard towers, fire towers or lifeguard stands; 
+(c) 
+Plants, equipment rooms and machinery spaces; 
+(d) 
+Loading docks; and 
+(e) 
+The following areas in industrial buildings: 
+(i) 
+Process plants and structures that deal with the oil and gas, refinery 
+operations, chemical production, and premises that handle chemicals, 
+toxic materials and potentially explosive compounds, including ancillary 
+offices within these areas; 
+(ii) 
+Areas requiring gowning protocols, such as clean rooms or sterile 
+environments;  
+(iii) 
+Production areas containing heavy machinery; and 
+(iv) 
+Areas used for warehousing and storage. 
+ 
+ 
+ 
+
+[PDF page 23 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 3 
+C H APT ER 3 
+Chapter 3:  
+Arriving at the Building 
+3.1 
+Approach and Access to Buildings 
+Functional Intent 
+Persons with disabilities must be able to identify and approach accessible 
+entrances independently, and obtain information on the accessible routes and 
+facilities within the building. 
+3.1.1 
+The main entrance of the building must be accessible.  
+3.1.2 
+Where there are other entrances that connect to adjacent buildings, commuter 
+facilities, park connectors or covered linkways, all such entrances and connections 
+must be made accessible. 
+3.1.3 
+Directional signs bearing the Symbol of Access in accordance with clause 8.3 must 
+be displayed at all other non-accessible entrances to direct persons with disabilities 
+to the accessible entrance. 
+3.1.4 
+Where alighting and boarding points, taxi shelters, bus shelters or accessible parking 
+lots are provided, at least one accessible route leading to an accessible entrance of 
+the building must be provided. 
+3.1.5 
+Where transfers between vehicular and pedestrian surfaces are necessary, 
+driveways, pavements, and footways must be flush, ramped, or blended to a 
+common level in accordance with clauses 3.2, 4.5 and Table 4. 
+3.1.6 
+A permanent floor diagram of durable material indicating the accessible routes and 
+facilities must be displayed at an appropriate location within the building: 
+(a) 
+in every storey of a non-residential building; and 
+(b) 
+where common facilities are provided in residential buildings. 
+ 
+ 
+
+[PDF page 24 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 4 
+C H APT ER 3 
+3.2 
+Passenger Alighting and Boarding Points, including Taxi Shelters 
+Functional Intent 
+Passenger alighting and boarding points must be safe and accessible for persons 
+with disabilities. It must provide a place of rest as well as protection from weather. 
+3.2.1 
+Where passenger alighting and boarding points are provided, at least one must be:  
+(a) 
+sheltered; 
+(b) 
+accessible in accordance with clauses 3.2.3 or 3.2.4 and connected to an 
+accessible route; and 
+(c) 
+provided with seats that do not impede the movement of a wheelchair user. 
+ 
+Advisory to clause 3.2.1(c) 
+• Seating areas should include designated spaces for wheelchairs. The colour of seats should contrast with their 
+surroundings, avoid causing glare, and feature armrests and backrests to provide support for people whilst 
+resting. 
+3.2.2 
+Where bollards are used, it must be in accordance with clause 4.2.3.6. 
+3.2.3 
+Where there is no level difference, warning TGSI in accordance with clause 9.7 must 
+be provided as shown in Figure 11 and must: 
+(a) 
+extend across the full length of the passenger alighting and boarding point for 
+a depth of 600 mm; 
+(b) 
+be set back 300 mm away from the vehicular way; and 
+(c) 
+be contrasting in colour with the surrounding floor material. 
+3.2.4 
+Where there is a level difference, a passenger alighting and boarding point, as shown 
+in Figure 12 must: 
+(a) 
+provide an access aisle of at least 1200 mm wide by 4500 mm long adjacent 
+and parallel to the vehicle pull-up space; 
+(b) 
+have a permanent contrasting colour band at the kerb; and 
+(c) 
+have at least: 
+(i) 
+one kerb ramp in accordance with clause 4.5.3; or  
+(ii) 
+two kerb ramps in accordance with clause 4.5.3 where it is a taxi shelter. 
+ 
+
+[PDF page 25 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 5 
+C H APT ER 3 
+ 
+ 
+Figure 11 
+Passenger Alighting and Boarding Point with no Level Difference 
+ 
+ 
+ 
+Figure 12 
+Passenger Alighting and Boarding Point with Level Difference 
+ 
+ 
+ 
+Waiting area 
+Vehicular way 
+Warning TGSI 
+Seats 
+  
+Seats 
+Waiting area 
+Vehicular way 
+Kerb ramp with 
+warning TGSI 
+Colour contrasting 
+band 
+Access aisle 
+  
+
+[PDF page 26 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 6 
+C H APT ER 3 
+3.3 
+Accessible Vehicle Parking 
+Functional Intent 
+Designated accessible vehicle parking lots must be provided on a proportional 
+basis solely for the use by persons with disabilities. The accessible parking lot must 
+be clearly marked, easy to locate and access. The design must ensure that persons 
+with disabilities, including wheelchair users, can safely enter and exit their vehicles, 
+and must include provisions for reporting any misuse. 
+3.3.1 
+Vehicular Parking Provision 
+3.3.1.1 
+Where vehicle parks are provided, the number of accessible vehicle parking lots 
+must be in accordance with Table 2 and be over and above the Land Transport 
+Authority’s parking requirements. 
+ 
+Table 2  
+Provision of Accessible Vehicle Parking Lots 
+Number of vehicle 
+parking lots provided 
+Number of accessible  
+vehicle lots required  
+for hospitals 
+Number of accessible  
+vehicle lots required  
+for other buildings 
+1 to 10 
+1 
+1 
+11 to 50 
+2 
+1 
+51 to 100 
+4 
+2 
+Every subsequent 200 lots  
+or any part thereof 
+1 additional lot 
+1 additional lot 
+Note 
+Where 10 or fewer vehicle parking lots are provided, one lot must be designed and constructed in 
+accordance with the requirements in this Code but without displaying the Symbol of Access. This lot 
+can be converted into an accessible vehicle lot should the need arise in the future.  
+3.3.2 
+Accessible Vehicle Parking Lots 
+3.3.2.1 
+An accessible vehicle parking lot must: 
+(a) 
+have a firm, level surface without aeration slabs; 
+(b) 
+have the minimum dimensions of:  
+(i) 
+4800 mm by 3600 mm for angled parking as shown in Figure 13;  
+(ii) 
+5400 mm by 3600 mm for parallel parking as shown in Figure 14; and 
+(iii) 
+7200 mm by 3600 mm for parallel parking where vehicles cannot be 
+parked by reversing or where there are obstructions at the ends of the 
+parking spaces as shown in Figure 14. 
+(c) 
+have the Symbol of Access in accordance with clause 8.1, painted or marked 
+on the accessible parking lot that: 
+(i) 
+comprises a white stylised figure with dimensions between 1000 mm 
+and 1500 mm on a blue background; and 
+(ii) 
+be located in the centre of the lot. 
+
+[PDF page 27 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 7 
+C H APT ER 3 
+(d) 
+have the Symbol of Access in accordance with clause 8.1, on a vertical sign 
+immediately adjacent to the accessible parking lot where it would not be 
+obstructed by a vehicle parked in the lot. The vertical sign must: 
+(i) 
+have a minimum dimension of 450 mm by 450 mm; 
+(ii) 
+be installed at a height of at least 1500 mm from the floor level to the 
+centre of the sign; and 
+(iii) 
+have the telephone number of the building management, Town Council 
+or the relevant authority clearly printed on the sign for the purpose of 
+reporting unauthorised parking. 
+3.3.3 
+Location 
+3.3.3.1 
+Accessible vehicle parking lots that serve a particular building must be located close 
+to an accessible entrance and/or lift lobby. 
+3.3.3.2 
+For a vehicle park that does not serve a particular building, accessible vehicle 
+parking lots must be linked to an accessible walkway which must not be part of the 
+driveway. 
+3.3.3.3 
+An accessible route leading to the entrance of the building must be level or have kerb 
+ramps in accordance with clause 4.5.3. 
+ 
+ 
+ 
+To ensure the safety of users, the accessible path from the accessible vehicle parking lot should not cross 
+vehicular paths, including driveways and spaces where vehicles may be backing out, unless clearly 
+designated as a pedestrian crossing. 
+Figure 13 
+Accessible Vehicle Parking Lot 
+  
+  
+1500 min 
+Vertical sign 
+on post 
+450 x 450 min 
+Building 
+entrance /  
+lift lobby 
+Driveway 
+Vertical sign on wall 
+450 x 450 min 
+
+[PDF page 28 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 8 
+C H APT ER 3 
+ 
+ 
+Figure 14 
+Parallel Accessible Vehicle Parking Lot 
+3.3.4 
+Signage 
+3.3.4.1 
+Before approaching the vehicle park entrance, clear directional signs in accordance 
+with clause 8.3 must be displayed at appropriate places to direct drivers with 
+disabilities to the location of accessible vehicle parking lots. 
+3.3.4.2 
+At entrances to vehicle parks, signage bearing the Symbol of Access in accordance 
+with clause 8.2 must be displayed to indicate the provision of accessible vehicle 
+parking lots within the parking facility. 
+3.3.4.3 
+Within the vehicle park, directional signs in accordance with clause 8.3 must be 
+displayed at points where there is a change of direction to direct persons with 
+disabilities to the accessible vehicle parking lots. 
+Advisory to clause 3.3.4 
+• Information on the number and location of accessible vehicle parking lots should be provided at vehicle park 
+entrances to enable drivers with disabilities to easily locate them. 
+Driveway 
+Wall or obstruction 
+7200 min 
+5400 min 
+3600 min 
+1000 - 1500 
+1000 - 1500 
+Vertical sign on wall 
+
+[PDF page 29 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+2 9 
+C H APT ER 4 
+Chapter 4:  
+Accessibility Around and Within the Building 
+ 
+Horizontal Circulation 
+4.1 
+Floor and Ground Surfaces 
+Functional Intent 
+Floor surfaces along accessible routes must be safe and facilitate easy movement 
+for persons with disabilities. Clear warnings must be provided to alert users to 
+changes in level. 
+4.1.1 
+Floor surfaces must: 
+(a) 
+be stable, firm, level and slip-resistant; 
+(b) 
+not have any drop or unexpected variations in levels; 
+(c) 
+contrast with the walls in tone and colour, or have skirtings providing a clear 
+distinction between the floor and wall; and 
+(d) 
+where there is a change in level, have contrasting colour bands or warning TGSI 
+to alert users in accordance with clause 4.5. 
+4.1.2 
+Where carpets or carpet tiles are used along accessible routes, they must be in 
+accordance with clause 4.1.1 and be securely fixed, have a firm cushion, pad or 
+backing and have any exposed edges fastened to the floor surfaces with trims in 
+accordance with Table 4. 
+4.1.3 
+Where gratings are located on accessible routes, gratings as shown in Figure 15 
+must: 
+(a) 
+be set flush with the surrounding surface; 
+(b) 
+have spaces/gaps/openings not greater than 12 mm wide; and 
+(c) 
+be placed so that the long dimension is perpendicular to the dominant 
+direction of travel. 
+4.1.4 
+Any cross-fall gradient provided to allow drainage of surface water must not be 
+steeper than 1:40. 
+ 
+ 
+ 
+ 
+ 
+Advisory to clause 4.1.1 
+• Highly polished or reflective surfaces should be avoided as they may cause visual discomfort. 
+• High-pile carpets should be avoided as it is challenging for wheelchair users to manoeuvre. 
+
+[PDF page 30 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 0 
+C H APT ER 4 
+                  
+Figure 15 
+Gratings 
+4.2 
+Accessible Routes, Corridors and Paths 
+Functional Intent 
+Accessible routes must ensure safe and unimpeded movement for persons with 
+disabilities, and must provide sufficient widths and wheelchair manoeuvring spaces 
+along corridors, doorways, gantries and the like. Accessible routes must be 
+sheltered where applicable, and incorporate rest areas. Warning and protection 
+against obstacles and protrusions must be provided. 
+4.2.1 
+Width 
+4.2.1.1 
+The width of accessible routes, corridors and paths must: 
+(a) 
+meet the width requirements in Table 3 for the primary routes of the building 
+types; and 
+(b) 
+be at least 1200 mm for all other accessible routes. 
+ 
+Table 3 
+Accessible Route Widths 
+Building type 
+Minimum width of  
+primary accessible route 
+Residential; 
+Office buildings, including business parks; 
+Hotels, boarding houses, chalets and backpacker hotels;  
+Serviced apartments; 
+Hostels, halls of residence or dormitories; 
+Preschools, primary and secondary schools; 
+Factories, workshops, industrial buildings, warehouses; 
+Purpose-built workers’ dormitories 
+ 
+ 
+1500 mm* 
+ 
+*Passing spaces in accordance 
+with clause 4.2.1.2 must be 
+provided. 
+All other uses 
+1800 mm 
+Space/gaps/ 
+openings 12 max 
+Space/gaps/ 
+openings 12 max 
+
+[PDF page 31 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 1 
+C H APT ER 4 
+4.2.1.2 
+Where the width of accessible routes is less than 1800 mm, at least one passing 
+space must be provided as shown in Figure 16. In addition: 
+(a) 
+the passing space must have a minimum clear floor space of 1800 mm by 1800 
+mm; and 
+(b) 
+additional passing spaces must be provided at intervals of no more than 25 m. 
+4.2.1.3 
+Where there is a dead-end corridor, a turning space of at least 2000 mm in the 
+direction of travel and not less than 1500 mm wide must be provided to allow 
+wheelchair users to make a 180o turn and travel back in the opposite direction. 
+4.2.1.4 
+Manoeuvring space as described in clause 4.4.6 must be provided at doorways along 
+accessible routes. 
+4.2.2 
+Turnstiles, Gantries and Checkout Lanes  
+4.2.2.1 
+Where turnstiles or gantries are provided, at least one accessible gate or gantry with 
+a minimum width of 900 mm must be available as shown in Figure 17. 
+4.2.2.2 
+Where checkout lanes are provided, at least one accessible checkout lane with a 
+minimum width of 900 mm must be provided as shown in Figure 17. 
+4.2.2.3 
+Entry and exit controls such as keypads, card readers and biometric identifiers must 
+be in accordance with clause 9.2. 
+ 
+
+[PDF page 32 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 2 
+C H APT ER 4 
+ 
+ 
+Figure 16 
+Space Requirements for Accessible Corridors 
+ 
+  
+< 1800 
+Min 1800 x 1800 
+passing space 
+Min 1800 x 1800 
+passing space 
+Min 1500 x 2000 
+turning space at 
+dead-end corridor 
+< 1800 
+25000 max 
+Splayed or rounded 
+corners are 
+recommended 
+Outward-opening doors 
+should be recessed from 
+accessible routes 
+Projections into the clear 
+width of accessible route 
+must be avoided 
+1800 
+As short as possible 
+
+[PDF page 33 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 3 
+C H APT ER 4 
+ 
+ 
+Figure 17 
+Access Beside Turnstiles, Accessible Gantries and Checkout Lanes 
+4.2.3 
+Obstacles and Protrusions 
+4.2.3.1 
+The minimum required clear width of an accessible route in accordance with Table 3 
+must be free of any obstacles or protrusions, such as handrails, fire extinguishers, 
+plumbing and sanitary services, and freestanding objects.  
+4.2.3.2 
+Protruding objects with their leading edges at any height above 580 mm from the 
+floor level must not protrude more than 100 mm from the wall, as shown in Figure 
+18. 
+4.2.3.3 
+Protruding objects with their leading edges up to a maximum height of 580 mm from 
+the floor level, may protrude more than 100 mm from the wall, as shown in Figure 18. 
+4.2.3.4 
+Freestanding objects placed between the height of 580 mm and 2000 mm from the 
+floor level must have an overhang of 300 mm or less, as shown in Figure 19. 
+4.2.3.5 
+Freestanding objects with a space exceeding 300 mm between supports must have 
+their bottom edge no higher than 580 mm from the floor level, as shown in Figure 19. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Turnstile
+/gantry 
+Accessible 
+gantry/gate 
+Controls at  
+900 – 1200 height 
+Checkout 
+lane 
+Accessible 
+checkout lane 
+
+[PDF page 34 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 4 
+C H APT ER 4 
+ 
+ 
+Overhangs from protruding objects cannot be detected by a person with visual impairment using a white cane 
+if the protrusion is more than 100 mm from the wall and its leading edge is 580 mm or more from the floor 
+level. 
+Figure 18 
+Limits of Protruding Objects Along Accessible Routes 
+ 
+ 
+ 
+ 
+ 
+Figure 19 
+Freestanding Objects Mounted on Posts 
+100 max 
+Leading edge 
+> 580 
+Protruding 
+object 
+> 100 
+580 max 
+Protruding 
+object 
+Required clear width, 1500 / 1800 min 
+Clear from obstacles or protrusions 
+Cane hits 
+object 
+Between 580 and 2000  
+from floor level 
+300 max 
+Freestanding 
+object 
+300 max 
+If > 300 
+ Then 580 max 
+Freestanding 
+object 
+(a) Cane hits post 
+(b) Cane hits post or object 
+
+[PDF page 35 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 5 
+C H APT ER 4 
+4.2.3.6 
+Where bollards are erected at entrances to walkways or pathways, they must: 
+(a) 
+have a minimum clear distance of 900 mm between the bollards; 
+(b) 
+not be linked with a chain or rope; 
+(c) 
+have a minimum height of 800 mm; 
+(d) 
+have a colour that contrasts with the background or be provided with a 
+coloured or reflective band around the neck of the bollard to further aid 
+visibility; 
+(e) 
+not have sharp or ornamental features protruding horizontally; and 
+(f) 
+be well lit and the light fitting must be positioned in such a manner that will not 
+cause glare. 
+4.2.4 
+Resting Areas  
+4.2.4.1 
+Resting areas must be provided along long paths of travel. 
+4.2.4.2 
+At least one resting area with seats must be provided along accessible routes of  
+50 m or more.  
+4.2.4.3 
+The interval for the resting areas along accessible routes around and within buildings 
+must not exceed 50 m. 
+Note 
+Clause 4.2.4 does not apply to passageways connecting transport stations within interchanges, nor 
+to the passageways of underpasses or linkways leading from the entrance to the concourse of 
+transport stations. 
+4.2.5 
+Exterior Walkways  
+4.2.5.1 
+Where shelter is provided over exterior walkways, the accessible route must be 
+provided with shelter. 
+ 
+ 
+Where seats are provided, they should have armrests to assist the elderly or persons with disabilities to get 
+up from the seats. The height of the seats should be between 430 mm and 470 mm. 
+Figure 20 
+Resting Areas 
+  
+Wheelchair seating 
+space or space for 
+parking of pram 
+Resting area 
+
+[PDF page 36 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 6 
+C H APT ER 4 
+4.3 
+Headroom 
+4.3.1 
+The minimum clear headroom in pedestrian areas such as walkways, halls, 
+corridors, passageways or aisles must be 2000 mm. 
+4.3.2 
+Where the headroom of an area adjacent to an accessible route is less than 2000 
+mm, a detectable guardrail or other barrier must be installed. The leading edge of 
+this barrier must be positioned between 400 mm and 580 mm from the floor level. 
+ 
+ 
+ 
+Figure 21 
+Overhead Hazards 
+4.4 
+Doors 
+Functional Intent 
+Doors, doorways and entryways along an accessible route must allow independent 
+access and use by persons with disabilities. They must have sufficient wheelchair 
+manoeuvring space and incorporate appropriate door hardware and features to 
+facilitate safe and easy use. 
+4.4.1 
+General 
+4.4.1.1 
+Doorways and the required manoeuvring spaces must be level. 
+4.4.1.2 
+Where power-operated doors are provided, the doors must be in accordance with the 
+requirements of clauses 4.4 and 9.2, and: 
+2000 min 
+400 - 580 
+Detectable guardrail 
+
+[PDF page 37 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 7 
+C H APT ER 4 
+(a) 
+remain open for at least 5 seconds after the release of the activating device, or 
+longer where required to allow for safe passage; and 
+(b) 
+be able to detect the presence of a person within the door closing area. 
+4.4.1.3 
+Where revolving doors are installed, a door in accordance with clauses 4.4.2 and 
+4.4.6 must be provided adjacent to the revolving door.  
+4.4.1.4 
+The colour of the door must contrast with the door frame or the wall. 
+4.4.2 
+Clear Opening 
+4.4.2.1 
+The clear opening of doorways must be at least 850 mm measured between the face 
+of the door and the face of the doorstop with the door opened at 90o. 
+4.4.3 
+Double-leaf Doors 
+4.4.3.1 
+Where doorways have two independently operated door leaves, at least one active 
+leaf must be in accordance with clauses 4.4.2 and 4.4.6. 
+ 
+ 
+ 
+Advisory to clause 4.4.1 
+• Where feasible, automatic doors should be installed at building entrances instead of manually operated doors. 
+These doors should include failsafe mechanisms that activate during power failures or emergencies, such as 
+defaulting to an open position. 
+ 
+ 
+ 
+Figure 22 
+Clear Opening of Doorways 
+850 min 
+850 min 
+850 min 
+850 min 
+Face of 
+door 
+(a) Sliding door 
+(b) Automatic sliding doors 
+(c) Folding door 
+d) Swing door 
+
+[PDF page 38 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 8 
+C H APT ER 4 
+4.4.4 
+Sliding/Folding Doors 
+4.4.4.1 
+Operating hardware for manually operated sliding doors must be exposed and have 
+a sufficient gripping surface area from both sides when the sliding/folding doors are 
+fully open. 
+4.4.4.2 
+Accessible handles on the exposed edge of manually operated sliding doors must be 
+in accordance with clause 4.4.9.2 as shown in Figure 27. 
+4.4.5 
+Glass Doors, Walls and Screens 
+4.4.5.1 
+Unframed full-height glass doors and adjacent glass walls/screens must be 
+prominently marked or highlighted with motifs to make them visible. 
+4.4.5.2 
+The markings or motifs must consist of two horizontal bands, each at least 100 mm 
+high and of contrasting colours to assist visibility. 
+4.4.5.3 
+The upper band must be affixed at a height of between 1400 mm and 1600 mm and 
+the lower band affixed at a height of between 850 mm and 1000 mm above the floor 
+level. 
+4.4.5.4 
+Where each band zone consists of more than one band, the aggregate width of the 
+bands in each zone must be 100 mm or more, as shown in Figure 23. 
+ 
+ 
+ 
+ 
+ 
+Figure 23 
+Markings on Glass Doors and Adjacent Glass Walls/Screens 
+1400 - 1600 
+850 - 1000 
+100 min 
+100 min 
+Bands of markings 
+or motifs 
+Adjacent glass 
+walls/screens 
+
+[PDF page 39 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+3 9 
+C H APT ER 4 
+4.4.6 
+Manoeuvring Spaces at Manually Operated Doors 
+4.4.6.1 
+Where manually operated doors are provided along the accessible route, the 
+doorways must have manoeuvring spaces on both sides for wheelchair users and the 
+following clear spaces must be provided as shown in Figure 24: 
+(a) 
+on the pull side of a one-way swing door, a minimum clear space of 600 mm 
+adjacent to the leading edge of the door and a minimum clear floor space of 
+1500 mm by 1500 mm; 
+(b) 
+on the push side of a one-way swing door, a minimum clear space of 300 mm 
+adjacent to the leading edge of the door and a minimum clear floor space of 
+1200 mm by 1200 mm; and 
+(c) 
+on both sides of a two-way swing door or a sliding door, a minimum clear space 
+of 300 mm adjacent to the leading edge of the door and a minimum clear floor 
+space of 1200 mm by 1200 mm. 
+4.4.6.2 
+The leading edge of the door leaf as shown in Figure 25: 
+(a) 
+must not be set more than 250 mm away from the surface of any obstruction 
+on the push side; and 
+(b) 
+must not be set more than 150 mm away from the surface of any obstruction 
+on the pull side. 
+4.4.7 
+Two Doors in a Series 
+4.4.7.1 
+The minimum space between two swing doors in a series must be 1200 mm plus the 
+width of the door swinging into that space as shown in Figure 26. 
+4.4.8 
+Door Hardware 
+4.4.8.1 
+Operating devices such as handles, pulls, latches and locks must: 
+(a) 
+be operable by one hand; 
+(b) 
+not require fine finger control, tight grasping, pinching or twisting of the wrist 
+to operate; and 
+(c) 
+be mounted at a height of 900 mm to 1100 mm from the floor level. 
+4.4.9 
+Door Handles 
+4.4.9.1 
+Door handles must have: 
+(a) 
+push-pull mechanisms that do not require grasping; 
+(b) 
+lever handles on latched doors; 
+(c) 
+contrast with the colour of the door. 
+ 
+ 
+ 
+ 
+ 
+
+[PDF page 40 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 0 
+C H APT ER 4 
+ 
+ 
+ 
+Figure 24 
+Minimum Doorway Manoeuvring Spaces  
+ 
+ 
+ 
+Figure 25 
+Minimum Distance Between Leading Edge of Door Leaf and Wall Surface 
+300 min 
+  
+300 min 
+Push side 
+Min clear  
+floor space 
+1200 x 1200 
+Push side 
+Min clear  
+floor space 
+1200 x 1200 
+(b) Two-way swing door 
+  
+Pull side 
+Min clear  
+floor space 
+1500 x 1500 
+Push side 
+Min clear  
+floor space 
+1200 x 1200 
+300 min 
+600 min 
+Wall or 
+obstruction 
+(a) One-way swing door 
+  
+  
+  
+300 min 
+300 min 
+Min clear  
+floor space 
+1200 x 1200 
+Min clear  
+floor space 
+1200 x 1200 
+(c) Sliding door 
+Pull side 
+300 min 
+600 min 
+Push side 
+150 max 
+250 max 
+Column, thick wall 
+or obstruction 
+
+[PDF page 41 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 1 
+C H APT ER 4 
+ 
+ 
+ 
+Figure 26 
+Minimum Manoeuvring Spaces for Doors in a Series 
+4.4.9.2 
+Door handles for sliding doors as shown in Figure 27 must: 
+(a) 
+be a vertical bar handle; 
+(b) 
+have a handle length of at least 140 mm;  
+(c) 
+be installed between 60 mm and 130 mm from the door jamb or doorstop 
+when in open or closed positions. 
+ 
+ 
+  
+(a) Doors opening in opposite directions 
+(b) Doors opening in the same direction 
+(c) Doors at right angles 
+  
+Door width 
+1200 min 
+Door width 
+Pull side 
+600 min 
+Pull side 
+600 min 
+Pull side 
+Min clear floor 
+space 
+Pull side 
+Min clear floor 
+space 
+1200 min 
+Door width 
+Pull side 
+600 min 
+Pull side 
+Min clear floor 
+space 
+  
+1200 min 
+Pull side 
+Min clear floor space 
+Push side 
+300 min 
+
+[PDF page 42 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 2 
+C H APT ER 4 
+ 
+ 
+Figure 27 
+Example of Door Handle for Sliding Door 
+4.4.10 
+Door Opening Force 
+4.4.10.1 
+The force, measured at the leading edge of the door to operate swing doors must not 
+be more than: 
+(a) 
+30 N at 0o; and 
+(b) 
+20 N at 30o. 
+Note 
+Clause 4.4.10 does not apply to latch bolts or other devices that hold the door in a closed position. 
+ 
+Advisory to clause 4.4.10 
+• The maximum force required to operate sliding or folding doors should be 22 N.  
+• Where door closers are used, door closers with adjustable tension should be used so that the tension can be 
+adjusted to be in accordance with clause 4.4.10. The sweep period of the door should be adjusted so that from 
+an open position of 90o, the door will take 3 seconds or more to move into a semi-closed position of 
+approximately 12o. 
+4.4.11 
+Vision Panels 
+4.4.11.1 
+All two-way swing doors or doors across circulation routes must be provided with 
+vision panels as shown in Figure 28, giving a minimum zone of visibility: 
+(a) 
+from a height of 900 mm to 1500 mm; and 
+(b) 
+a width of 100 mm. 
+140 min 
+Sliding door 
+when fully 
+opened 
+(a) Sliding door when fully closed 
+(b) Sliding door when fully opened 
+
+[PDF page 43 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 3 
+C H APT ER 4 
+Advisory to clause 4.4.11 
+• Automatic swing doors that open towards the user should be equipped with suitable detection devices to 
+ensure that people approaching or leaving do not come into contact with the door during its opening or closing 
+phases. 
+ 
+ 
+ 
+Figure 28 
+Vision Panels 
+ 
+Vertical Circulation 
+4.5 
+Changes in Levels and Kerb Ramps 
+Functional Intent 
+Minor level changes along accessible routes must incorporate slopes or kerb ramps 
+with appropriate gradients and widths to ensure safe passage for persons with 
+disabilities. Clear warnings must be provided to alert users to changes in level. 
+4.5.1 
+For any change in the level of the floor surface, the gradient of the slope must 
+conform to the requirements in Table 4. 
+ 
+Table 4 
+Changes in Levels 
+Changes in vertical rise (mm) 
+Gradient not steeper than 
+0 to 15 
+1:2 
+More than 15 to 50 
+1:5 
+More than 50 to 175 
+1:10 
+Exceeding 175 
+1:12 
+1500 min 
+900 max 
+Vision 
+panel 
+
+[PDF page 44 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 4 
+C H APT ER 4 
+4.5.2 
+Where the change in vertical rise is 15 mm or more: 
+(a) 
+the ramp must be in permanent contrasting colour against the landings; or 
+(b) 
+a band of at least 300 mm depth in permanent contrasting colour that 
+contrasts against the surrounding flooring material must be provided at the top 
+and bottom levels of the slope across the width of the slope or ramp, as shown 
+in Figure 29. 
+Note 1 
+Clause 4.5.2 does not apply if the gradient of a ramp is equal to or gentler than 1:25. 
+Note 2 
+Clause 4.5.2 does not apply for kerb ramps in accordance with clause 4.5.3. 
+4.5.3 
+Kerb Ramps 
+4.5.3.1 
+Where the change in vertical rise is 175 mm or less, kerb ramps can be used to 
+mitigate the level difference along an accessible route. 
+4.5.3.2 
+Kerb ramps must: 
+(a) 
+not project onto a vehicular access way; 
+(b) 
+be located or protected to prevent obstruction by parked vehicles; 
+(c) 
+be free from any obstructions, such as signposts, bollards and the like;  
+(d) 
+have a clear width of at least 900 mm; 
+(e) 
+have a gradient not steeper than 1:10, including the flared sides; and 
+(f) 
+be slip-resistant. 
+4.5.3.3 
+Kerb ramps located along pedestrian crossings must be fitted with warning TGSI that: 
+(a) 
+spans the full width of the kerb ramp with a depth of 600 mm, starting 300 mm 
+from the ramp’s lower edge; and 
+(b) 
+provides colour contrast with surrounding surfaces. 
+ 
+Examples of different kerb ramp configurations are illustrated in Figure 30. 
+ 
+ 
+Figure 29 
+Contrasting Colour and Coloured Bands on Ramps 
+Colour contrast 
+against landing 
+Contrasting 
+colour bands 
+
+[PDF page 45 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 5 
+C H APT ER 4 
+ 
+ 
+Figure 30 
+Examples of Kerb Ramps and Crossing 
+4.6 
+Ramps 
+Functional Intent 
+Ramps must be designed to be safe and provided with sufficient width and the 
+lowest practicable gradient for wheelchair users and persons with ambulant 
+mobility impairment. Clear warnings must be provided to alert users to changes in 
+level. Appropriate wayfinding features must be incorporated for persons with visual 
+impairment.  
+Driveway 
+Driveway 
+Footpath 
+Footpath 
+Kerb ramp with 
+warning TGSI and 
+flared sides not 
+steeper than 1:10 
+Kerb ramp with 
+warning TGSI not 
+steeper than 1:10 
+Driveway 
+Footpath 
+Driveway 
+Footpath 
+Contrasting  
+colour bands 
+Kerb ramp with warning 
+TGSI and built-up  
+flared sides not steeper 
+than 1:10 
+Slope 
+Footpath 
+Built-up driveway at 
+pedestrian crossings 
+Driveway 
+Crossing 
+Driveway 
+Footpath 
+(a) Kerb ramp with flared sides 
+(b) Kerb ramp with returned / continuous kerbs 
+(c) Parallel kerb ramp 
+(d) Built-up kerb ramp with flared sides 
+(e) Pedestrian crossing with built-up driveway 
+Warning TGSI  
+Warning TGSI  
+Warning TGSI  
+
+[PDF page 46 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 6 
+C H APT ER 4 
+4.6.1 
+General 
+4.6.1.1 
+The top, bottom and landing of a ramp must be properly drained to prevent water 
+accumulation. 
+4.6.2 
+Gradient 
+4.6.2.1 
+The gradient of a ramp must: 
+(a) 
+be in accordance with the requirements in Table 4; and 
+(b) 
+be consistent between landings. 
+4.6.3 
+Width 
+4.6.3.1 
+Where ramps form accessible routes, corridors and paths, the minimum clear width 
+of the ramp must be in accordance with clause 4.2.1 and Table 3.  
+Note 
+The clear width of the ramp may be reduced to 1200 mm if an alternative stepped approach is 
+provided adjacent to the ramp and the total rise does not exceed 1200 mm as shown in Figure 31. 
+ 
+ 
+ 
+Figure 31 
+Minimum Ramp Width with Alternative Stepped Approach 
+4.6.4 
+Surfaces 
+4.6.4.1 
+Ramps and landing surfaces must be stable, firm and slip-resistant. 
+4.6.5 
+Landings 
+4.6.5.1 
+Ramps must have a level landing at the top and bottom of each run and also where 
+the run changes direction, as shown in Figure 32. 
+1200 max 
+Alternative 
+stepped 
+approach 
+provided 
+
+[PDF page 47 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 7 
+C H APT ER 4 
+4.6.5.2 
+Every landing must: 
+(a) 
+have a level platform with clear space of minimum 1500 mm depth and the 
+width of the ramp;  
+(b) 
+be provided at regular intervals based on the gradient provided and the run of 
+the ramp must not be more than what is shown in Table 5; and 
+(c) 
+where served by a doorway, be in accordance with clause 4.4.6. 
+ 
+Table 5 
+Gradient and Length of Ramps 
+Gradient of ramp 
+Maximum run of 
+ramp (mm) 
+Provision of colour contrast, handrails 
+and edge protection 
+1:12 
+6000 
+Mandatory 
+1:14 
+9000 
+1:16 
+12000 
+1:20 
+15000 
+1:24 
+18000 
+1:25 or gentler 
+Non-mandatory 
+ 
+ 
+ 
+Figure 32 
+Ramps and Landings 
+Level landing and 
+contrasting colour 
+bands at top of 
+ramp  
+Level landing and contrasting 
+colour bands at bottom of ramp  
+Level landing where 
+ramp changes 
+direction 
+
+[PDF page 48 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 8 
+C H APT ER 4 
+4.6.5.3 
+For ramps connecting different storeys, tactile and Braille signs complying with 
+clause 8.5 must be installed on adjacent walls or handrail extensions to indicate the 
+floor levels. 
+Note 
+Clause 4.6.5.3 does not apply to residential developments, preschools, primary and secondary 
+schools, factories, workshops, industrial buildings and purpose-built workers’ dormitories. 
+4.6.6 
+Ramp Handrails 
+4.6.6.1 
+A ramp run with rise greater than 175 mm must have handrails that are: 
+(a) 
+on both sides; 
+(b) 
+in accordance with clause 9.3; 
+(c) 
+placed at a height of between 800 mm and 900 mm above the floor level; and 
+(d) 
+continuous along the entire length of the ramp. 
+4.6.6.2 
+Handrail extensions as shown in Figure 33 must: 
+(a) 
+extend horizontally in the direction of the run for a distance of 300 mm or more 
+beyond the top and bottom of the ramp; 
+(b) 
+not project into another path of travel; and 
+(c) 
+return to the wall, floor or post. 
+Note  
+Clause 4.6.6 does not apply if the gradient of a ramp is equal to or gentler than 1:25. 
+4.6.7 
+Edge Protection 
+4.6.7.1 
+Ramps and landings not adjacent to a wall must have an edge protection such as: 
+(a) 
+a kerb with a minimum height of 75 mm; 
+(b) 
+a raised barrier with its lower edge at 75 mm or less from the ramp or landing 
+surface; or 
+(c) 
+a rail with the bottom edge at 75 mm or less from the ramp or landing surface. 
+4.6.8 
+Curved Ramps 
+4.6.8.1 
+Curved ramps must: 
+(a) 
+have width in accordance with Table 3; 
+(b) 
+have gradient equal to 1:16 or gentler; 
+(c) 
+be in accordance with clauses 4.6.5.2, 4.6.5.3, 4.6.4, 4.6.6, 4.6.7 and Table 5; 
+and 
+(d)  
+where there is cross-fall, be in accordance with clause 4.1.4 and be towards 
+the centre of curvature. 
+Note  
+Clause 4.6 does not apply to the footpath within the road reserve that is generally parallel and 
+adjacent to the road. 
+ 
+
+[PDF page 49 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+4 9 
+C H APT ER 4 
+ 
+ 
+Figure 33 
+Handrail Extensions 
+ 
+ 
+ 
+Figure 34 
+Sectional View of Edge Protections 
+4.7 
+Stairs 
+Functional Intent 
+Stairs must be designed with safety features for persons with ambulant mobility 
+impairment and persons with visual impairment, incorporating both visual and 
+tactile elements to provide warning and guidance. 
+4.7.1 
+General 
+4.7.1.1 
+Staircases must be designed with the following requirements: 
+(a) 
+step profile in accordance with clause 4.7.2; 
+(b) 
+stair handrails in accordance with clause 4.7.3; 
+  
+(a) Return to wall 
+(b) Return to post 
+(c) Return to floor 
+Handrail 
+Handrail 
+75 max 
+gap 
+Rail 
+75 max 
+gap 
+Raised 
+barrier  
+Kerb 
+75 min 
+
+[PDF page 50 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 0 
+C H APT ER 4 
+(c) 
+warning TGSI in accordance with clause 4.7.4; and 
+(d) 
+where staircases connect one storey to another, tactile and Braille signs in 
+accordance with clause 8.5 must be installed on adjacent walls or handrail 
+extensions to indicate the floor level as shown in Figure 35. 
+Note 1 
+Clause 4.7.1.1 does not apply within residential units. 
+Note 2 
+Clause 4.7.1.1(c) does not apply within purpose-built workers’ dormitories. 
+Note 3 
+Clause 4.7.1.1(d) does not apply to residential developments, preschools, primary and secondary 
+schools, factories, workshops, industrial buildings and purpose-built workers’ dormitories. 
+4.7.2 
+Step Profile 
+4.7.2.1 
+Stair nosing must not project beyond the face of the riser and the riser must be 
+vertical or have a splay backwards up to a maximum of 25 mm. 
+4.7.2.2 
+All steps must be fitted with slip-resistant nosing strips between 50 mm and 75 mm 
+in width. 
+4.7.2.3 
+Nosing strips must be of a colour that contrasts with the steps to make the drop edge 
+of each step clearly visible. 
+4.7.2.4 
+The treads and walls of the staircase must have contrasting colours to alert persons 
+with visual impairments to the presence of steps. 
+4.7.3 
+Stair Handrails 
+4.7.3.1 
+Handrails for stairs must: 
+(a) 
+be in accordance with clause 9.3; 
+(b) 
+be positioned between 800 mm and 1000 mm measured from the pitch line 
+vertically to the top of the handrails; 
+(c) 
+be continuous throughout the entire length of stairs and enclosed 
+intermediate landings where they do not lead to another path of travel; 
+(d) 
+extend not less than 300 mm in the direction of the flight of stairs beyond the 
+top and bottom steps; and 
+(e) 
+return to the wall, floor or post. 
+Note 1 
+Clause 4.7.3.1(c) does not apply to the section of the handrail that is interrupted by a staircase storey 
+shelter blast door. 
+Note 2 
+Clause 4.7.3.1(d) does not apply within purpose-built workers’ dormitories. 
+ 
+ 
+
+[PDF page 51 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 1 
+C H APT ER 4 
+ 
+ 
+Figure 35 
+Example of Tactile and Braille Signs at a Staircase 
+4.7.4 
+Warning TGSI 
+4.7.4.1 
+Warning TGSI in accordance with clause 9.7 must: 
+(a) 
+be provided at the top, bottom and intermediate landings leading to another 
+path of travel; 
+(b) 
+extend the full width of the stairs for a depth of 600 mm commencing 300 mm 
+back from the stairs; and 
+  
+  
+  
+±1500 
+Warning TGSI 
+Tactile and Braille 
+information sign on 
+adjacent wall or 
+handrail 
+Handrail extension 
+Continuous handrail 
+Cross section view of handrail 
+Plan view of handrail 
+Handrail 
+Tactile and Braille 
+information 
+Braille, raised tactile direction arrow and 
+storey number must be indicated 
+Raised tactile 
+storey 
+Braille with 
+locator 
+
+[PDF page 52 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 2 
+C H APT ER 4 
+(c) 
+be contrasting in colour with the surrounding flooring material.  
+Note  
+Where a staircase storey shelter blast door interrupts the placement of the warning TGSI, the warning 
+TGSI may be positioned slightly more than 300 mm away from the last step. 
+ 
+ 
+Figure 36 
+Staircase 
+4.8 
+Passenger Lifts 
+Functional Intent 
+All passenger lifts must be designed with accessible controls and safety features, 
+incorporating tactile, audio and visual information to ensure ease of use for persons 
+with ambulant mobility impairment or sensory impairment. 
+4.8.1 
+General 
+4.8.1.1 
+All passenger lifts provided in a building must include suitable provisions for persons 
+with ambulant mobility impairment and persons with sensory impairment as a 
+means of access from one level to another. 
+4.8.1.2 
+In addition to clause 4.8.1.1, at least one lift designated for wheelchair users must 
+be provided in accordance with clause 4.9. 
+Warning 
+TGSI 
+Handrail 
+extension to 
+return to wall, 
+floor or post 
+Slip-resistant nosing 
+strip with permanent 
+contrasting colour 
+Warning TGSI 
+Handrail 
+extension to 
+return to wall, 
+floor or post 
+
+[PDF page 53 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 3 
+C H APT ER 4 
+4.8.1.3 
+The emergency bell in the lift must be connected to a blinking light in the lift car to 
+signal to persons who are deaf or hard-of-hearing that the emergency bell has been 
+activated. 
+4.8.1.4   
+Lift lobby must have both visible, and audible signals or voice announcements to 
+alert waiting passengers of the lift car’s arrival and guide them to the correct lift car. 
+4.8.1.5 
+Lift car must have visible signals indicating its position and voice announcements of 
+the floor level reached before the lift doors open. 
+4.8.1.6 
+An audible signal must be provided to signal the closing of lift car doors.  
+4.8.2 
+Lift Landing Call Buttons and Lift Car Control Buttons 
+4.8.2.1 
+Lift landing call buttons must be mounted adjacent to the lift.  
+4.8.2.2 
+Lift landing call buttons and lift car control buttons must: 
+(a) 
+have an audible signal for each call registered; 
+(b) 
+have a colour that contrasts with the background of either the lift control panel 
+or wall finish; and 
+(c) 
+provide tactile and Braille markings in accordance with clauses 4.8.2.4 and 
+4.8.2.5. 
+4.8.2.3 
+Lift landing call buttons and lift car control buttons that are: 
+(a) 
+force/pressure-activated must have a minimum activation force of 2.5 N to    
+5.0 N and have tactile and Braille markings provided on the buttons or to the 
+left of the buttons, as shown in Figure 37;  
+(b) 
+non-force/non-pressure-activated, such as touch-sensitive or touch-less 
+buttons, must have tactile and Braille markings provided to the left of the 
+buttons, as shown in Figure 37(c). 
+4.8.2.4 
+Tactile markings must: 
+(a) 
+be in Arabic numerals or symbols; 
+(b) 
+have a dimension of between 15 mm and 40 mm high; 
+(c) 
+be raised at a minimum of 1 mm; and 
+(d) 
+be in high contrasting colour to the background. 
+4.8.2.5 
+Braille markings must be placed at a minimum distance of 3 mm from tactile 
+markings, and: 
+(a) 
+be below the tactile markings, as shown in Figure 37(a); or 
+(b) 
+to the left of the tactile markings only if it is not possible to be placed below the 
+tactile markings, as shown in Figure 37(b). 
+4.8.2.6 
+Lift car control buttons for floor selection must be arranged in accordance with the 
+following, as shown in Figure 38: 
+(a) 
+for a single horizontal row shall be from left to right; 
+
+[PDF page 54 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 4 
+C H APT ER 4 
+(b) 
+for a single vertical row shall be from the bottom to the top; 
+(c) 
+for multiple vertical rows from left to right and then from bottom to the top. 
+ 
+ 
+ 
+Figure 37 
+Tactile and Braille Markings for Lift Buttons 
+ 
+ 
+ 
+Figure 38 
+Arrangement of Lift Car Control Buttons 
+15 - 40 
+3 min 
+Tactile 
+markings 
+with colour 
+contrast 
+Braille 
+markings 
+Tactile 
+markings 
+with colour 
+contrast 
+Braille 
+markings 
+(a) 
+(b) 
+(c) 
+(b) Single vertical row 
+(a) Single horizontal row 
+(c) Multiple vertical rows 
+
+[PDF page 55 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 5 
+C H APT ER 4 
+4.8.2.7 
+Where a destination control system is provided, an accessibility button marked with 
+the Symbol of Access must be integrated into or placed next to the control device, to 
+activate visual and voice announcements for the selected floor and allocated lift. 
+4.8.2.8 
+Where keypads are used for floor selection, at least one set must be in accordance 
+with clause 9.2 and the following: 
+(a) 
+be arranged in the same way as a telephone keypad as shown in Figure 39 with 
+a maximum width of 120 mm and a maximum height of 160 mm; 
+(b) 
+have a distance of 5 mm to 15 mm between the push buttons; 
+(c) 
+have numbers on the push buttons engraved, without Braille; 
+(d) 
+have a single raised dot on the number ‘5’ key; and 
+(e) 
+have tactile “star” (main floor) and “minus” (basement/cancel) symbols. 
+4.8.3 
+Grab bars 
+4.8.3.1 
+Grab bars must be in accordance with clause 9.4 and: 
+(a) 
+be placed at a height where the top of the grab bars is between 800 mm and 
+900 mm from the floor level; 
+(b) 
+be continuous on all sides of the lift car except where the lift doors are; and 
+(c) 
+where the grab bars are not continuous at corners, the gap between grab bars 
+must not exceed 150 mm. 
+Note 
+The grab bar need not extend across a vertical control panel if doing so would obstruct panel 
+maintenance. 
+ 
+ 
+ 
+ 
+ 
+Figure 39 
+Keypad Buttons 
+160 
+max 
+120 max 
+Tactile dot 
+5 - 15 
+Tactile ‘star’ 
+Engraved,  
+non-tactile 
+numbers 
+Tactile ‘minus’ 
+
+[PDF page 56 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 6 
+C H APT ER 4 
+4.9 
+Lifts Designated for Wheelchair Users 
+Functional Intent 
+Wheelchair users must be able to approach and use a lift to access all levels 
+intended for access by wheelchair users. Clear signage and information must be 
+displayed to enable wheelchair users to locate the lift. The lift and lift lobby must be 
+provided with adequate manoeuvring space, accessible controls and safety 
+features to ensure ease of use by wheelchair users. 
+4.9.1 
+General 
+4.9.1.1 
+Where passenger lifts are provided in a building, at least one lift must be made 
+accessible for wheelchair users from the entrance level for vertical circulation. 
+4.9.1.2 
+The lift must serve all levels intended for access by wheelchair users. 
+4.9.1.3 
+Lift lobby space with lifts designated for wheelchair users must have a clear floor 
+space in front of the lift door. The minimum clear floor space must be either at least 
+1500 mm by 1500 mm or 1800 mm by 1800 mm based on the building types and the 
+required clear width as prescribed in Table 3. 
+Note 
+The clear floor space in front of the lift door, as stipulated in Clause 4.9.1.3, may overlap with the clear 
+floor space required for the lift landing call button, as specified in Clause 4.9.4.1(b), provided that the 
+overlap does not impede the use of either space. 
+4.9.2 
+Lift Car 
+4.9.2.1 
+The minimum internal lift car size must be 1200 mm wide by 1500 mm deep. 
+4.9.2.2 
+Safety glass mirror or mirror-like finish surfaces must be provided on the interior wall 
+of the lift car opposite the lift door, and: 
+(a) 
+the bottom edge of the mirror must be at a maximum height of 500 mm from 
+floor level; 
+(b) 
+the top edge of the mirror must be at least the height of the lift door; and 
+(c) 
+the mirror must be placed directly opposite and be at least the width of the lift 
+door opening. 
+Note 
+Clause 4.9.2.2 does not apply to through-car lift that serves only two landings. 
+4.9.3 
+Lift Car Door  
+4.9.3.1 
+The lift car must have a clear door opening of at least 900 mm. 
+ 
+Advisory to clause 4.9.3 
+• A door dwell time (lift door closing delay) of at least 6 seconds is recommended for lifts designated for 
+wheelchair users. 
+
+[PDF page 57 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 7 
+C H APT ER 4 
+ 
+ 
+Figure 40 
+Lift for Wheelchair Users 
+4.9.4 
+Lift Landing Call Button 
+4.9.4.1 
+The lift landing call button, including control devices for destination control system, 
+located outside the lift must be: 
+(a) 
+placed at a height of between 900 mm and 1200 mm from the floor level; 
+(b) 
+located adjacent to a minimum clear floor space of 900 mm by 1200 mm;  
+(c) 
+located at least 350 mm away from a wall or obstruction; and 
+(d) 
+dedicated to call the lift designated for wheelchair users. 
+Side lift car 
+control 
+panel 
+150 max 
+gap 
+Top of mirror ≥ lift door height 
+500  
+    max 
+Side lift car 
+control panel 
+900 min 
+1200 max 
+Minimum clear floor 
+space in front of door 
+opening 
+350 
+min 
+350 
+min 
+1200 max 
+900 min 
+Lift car door 
+Elevation of Lift Car Side Wall 
+150 
+max 
+150 
+max 
+(a) Accessible lift car 
+(b) Accessible lift lobby 
+
+[PDF page 58 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 8 
+C H APT ER 4 
+4.9.5 
+Lift Car Control Buttons 
+4.9.5.1 
+At least one set of lift car control buttons located inside the lift must: 
+(a) 
+have its control panel placed on the side wall; 
+(b) 
+be placed at a height of between 900 mm and 1200 mm from the floor level; 
+and 
+(c) 
+be located at 350 mm or more from any internal corner of the lift car. 
+Note 
+Where other forms of lift control devices such as keypads and card readers are used, Clause 4.9.4 
+and Clause 4.9.5 must be read in conjunction with the relevant parts of Clause 9.2. 
+4.9.5.2 
+Where there are two control panels inside the lift car, there must be one control panel 
+serving wheelchair users in accordance with clause 4.9.5.1, and one control panel 
+at eye level serving persons with sensory impairment. 
+4.9.6 
+Signage 
+4.9.6.1 
+The Symbol of Access must be used to identify the location of such lifts in 
+accordance with the requirements of clause 8.2. 
+4.10 
+Platform Lifts and Wheelchair Stairlifts 
+Functional Intent 
+In exceptional cases, platform lifts and wheelchair stairlifts may substitute for 
+passenger lifts and ramps. These must be provided with adequate wheelchair 
+manoeuvring space, accessible controls and safety features to ensure ease of use 
+by persons with disabilities. Clear signage and information must be displayed to 
+enable users to locate the platform lifts and stairlifts and seek assistance.  
+4.10.1 
+General 
+4.10.1.1 
+A passenger lift is the most suitable form of access for people moving from one 
+storey to another. Platform lifts and wheelchair stairlifts are not equivalent 
+alternatives. Where it is impracticable to provide a ramp or passenger lift, a platform 
+lift may be considered. Wheelchair stairlifts should only be considered for existing 
+buildings in exceptional circumstances.  
+4.10.2 
+Platform Lift 
+4.10.2.1 
+Where a ramp or passenger lift cannot be accommodated, a platform lift may be 
+considered as an alternative option. Where provided, a platform lift, as shown in 
+Figure 41, must have: 
+(a) 
+a minimum clear door opening of 900 mm; and 
+(b) 
+a minimum clear floor space of 1500 mm by 1500 mm. 
+Advisory to clause 4.9.5.1 
+• Lift car control buttons for wheelchair users are recommended to be placed at a height not exceeding 1100 
+mm from the floor level and on the right-hand wall when entering the lift. 
+
+[PDF page 59 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+5 9 
+C H APT ER 4 
+4.10.2.2 
+The minimum internal size of a platform lift must be 1100 mm wide by 1400 mm deep 
+to allow a person in a wheelchair to enter and exit without turns. 
+4.10.2.3 
+The platform lift must have an enclosure in accordance with the requirements of 
+EN81-41 – “Safety rules for the construction and installation of lifts – Special lifts for 
+the transport of persons and goods - Vertical platforms intended for use by persons 
+with impaired mobility”. 
+4.10.2.4 
+The door handle must be in accordance with clause 4.4.8. 
+4.10.2.5 
+Lift landing call buttons and lift control buttons must be in accordance with clauses 
+4.8.2, 4.9.4 and 4.9.5. 
+4.10.2.6 
+At least one grab bar in accordance with clause 9.4 must be placed on one side of 
+the lift. 
+ 
+ 
+ 
+Figure 41 
+Example of Platform Lift 
+ 
+ 
+ 
+Grab bar 
+Lift control panel 
+900 - 1200 
+800 - 900 
+Platform Lift Side Wall 
+Min clear 
+floor space
+Lift call button 
+Min clear floor space 
+Symbol of Access 
+Min platform size 
+1100  x 1400  
+
+[PDF page 60 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 0 
+C H APT ER 4 
+4.10.3 
+Wheelchair Stairlift 
+4.10.3.1 
+Where it is impracticable to provide a passenger lift, a ramp or platform lift in an 
+existing building, a wheelchair stairlift may be considered to overcome a difference 
+in level between spaces of up to one storey. 
+4.10.3.2 
+The minimum internal size of the platform must be 800 mm wide by 1250 mm deep. 
+4.10.3.3 
+A minimum clear floor space of 1200 mm by 1200 mm measured from the edge of 
+the flip-up ramp of the wheelchair stairlift platform must be provided at the top and 
+bottom landing, as shown in Figure 42. 
+4.10.3.4 
+Signage bearing the Symbol of Access must be used to identify the location of 
+platform lifts and wheelchair stairlifts and must: 
+(a) 
+be in accordance with clause 8.2; and 
+(b) 
+provide information or a means to contact the building management, Town 
+Council or the relevant authority for the purpose of requesting assistance to 
+operate the platform lift or wheelchair stairlift. 
+Note 
+When in a parked position, a wheelchair stairlift must not obstruct the required clear width of a 
+stairway, pose a hazard for persons with visual impairment using the stairway or adjoining landings, 
+or interfere with the use of handrails. 
+ 
+ 
+ 
+Figure 42 
+Example of Wheelchair Stairlift 
+Min clear  
+floor space 
+Min clear  
+floor space 
+
+[PDF page 61 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 1 
+C H APT ER 5 
+Chapter 5:  
+Sanitary Provisions 
+5.1 
+General 
+Functional Intent 
+Washrooms and shower facilities must be accessible and usable by persons with 
+disabilities. Clear signage and information must be provided to allow persons with 
+disabilities to identify and locate these facilities.  
+5.1.1 
+Where toilets are provided, at least one accessible individual washroom in 
+accordance with clause 5.2 must be provided at every toilet cluster.  
+Note  
+Clause 5.1.1 does not apply to factories, workshops, warehouses or industrial buildings. However, at 
+least one accessible individual washroom must be provided at every level where toilets are provided. 
+5.1.2 
+In addition to clause 5.1.1, where two or more clusters of toilets are provided at the 
+same level but at different locations, an accessible individual washroom may be 
+replaced with an accessible water closet cubicle in the male and female toilets in 
+accordance with clause 5.6, provided that there is at least one accessible individual 
+washroom on the same level. 
+Note  
+Clauses 5.1.1 and 5.1.2 do not apply to bathrooms within residential units; guestrooms for hotels, 
+serviced apartments, hostels and dormitories; wards in hospitals, nursing homes, homes for the 
+aged, welfare homes and living quarters of workers’ dormitories. 
+5.1.3 
+Where toilets are provided, at least one larger accessible individual washroom in 
+accordance with clause 5.2 must be provided at every level in the following buildings: 
+(a) 
+shopping centres and multi-purpose complexes; 
+(b) 
+sports facilities and public swimming pools; 
+(c) 
+places of public resort; 
+(d) 
+place of worship; 
+(e) 
+markets, hawker or food centres; 
+(f)  
+transport terminals and stations; 
+(g) 
+colleges, universities and other institutions of learning; 
+(h) 
+hospitals; and 
+(i) 
+polyclinics, health-care centres and specialist outpatient clinics. 
+5.1.4 
+For schools, including their hostels, halls of residence and dormitories, the provision 
+of accessible washroom to every cluster of toilets need not be in accordance with 
+clause 5.1.1 if the following conditions are met: 
+(a) 
+the accessible individual washroom provided serves every function area at 
+that level; 
+(b) 
+the accessible individual washroom is 50 m or less from each function area; 
+and 
+
+[PDF page 62 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 2 
+C H APT ER 5 
+(c) 
+directional signs from each function area to the accessible individual 
+washroom are provided. 
+5.1.5 
+Where water closet cubicles are provided, at least one water closet cubicle for 
+persons with ambulant mobility impairment as described in clause 5.4 must be 
+provided for every four numbers of water closet cubicles or part thereof. 
+5.1.6 
+Where urinals are provided, at least one urinal for persons with ambulant mobility 
+impairment as described in clause 5.5 must be provided. 
+Note 
+Clauses 5.1.5 and 5.1.6 do not apply to children’s toilet and purpose-built workers’ dormitories. 
+5.1.7 
+At least one accessible changing room in accordance with clause 5.3 must be 
+provided at an appropriate location within the following buildings: 
+(a) 
+shopping centres and multi-purpose complexes of 20,000 m2 or more in gross 
+floor area; 
+(b) 
+sports facilities and public swimming pools; 
+(c) 
+theme parks, amusement centres, community clubs and country clubs; 
+(d)  
+major transport terminals/interchanges; 
+(e) 
+hospitals; and 
+(f) 
+polyclinics, health-care centres and specialist outpatient clinics. 
+Note 
+An accessible changing room may be provided in-lieu of an accessible individual washroom. 
+5.1.8 
+Where shower facilities are provided, at least one accessible individual shower 
+facility in accordance with clause 5.7 must be provided at every toilet cluster with 
+shower facilities.  
+5.1.9 
+In addition to clause 5.1.8, where two or more clusters of shower facilities are 
+provided at the same level but at different locations, the accessible individual 
+shower facility may be replaced with an accessible shower cubicle within the male 
+and female shower areas, provided there is at least one accessible individual shower 
+facility on the same level. 
+Note  
+Clauses 5.1.8 and 5.1.9 do not apply to children’s toilet; hospital wards, nursing homes, homes for 
+the aged, welfare homes and living quarters of workers’ dormitories. 
+5.1.10 
+Tactile and Braille signs at accessible individual washrooms, accessible changing 
+rooms, accessible individual showers, and entrances to toilets containing 
+accessible water closet cubicles and accessible shower cubicles must be in 
+accordance with symbols as described in Chapter 8 and clause 5.8.11. 
+5.1.11 
+In addition to clause 5.1.10, tactile and Braille signs must be provided at entrances 
+to male and female toilets in accordance with clause 5.8.11. 
+Note   
+Clauses 5.1.10 and 5.1.11 do not apply to residential developments; pre-schools, primary and 
+secondary schools including their hostels, halls of residence and dormitories; nursing homes, homes 
+for the aged and welfare homes; factories, workshops, warehouses and industrial buildings; and 
+purpose-built workers’ dormitories. 
+
+[PDF page 63 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 3 
+C H APT ER 5 
+5.2 
+Accessible Individual Washroom 
+Functional Intent 
+A standalone wheelchair-accessible washroom (accessible individual washroom) 
+must be provided to accommodate independent use by a person with disability, who 
+may be accompanied by a caregiver. The washroom must be equipped with 
+appropriate accessible sanitary features and have sufficient manoeuvring space to 
+facilitate a wheelchair user to transfer onto the water closet. Alert system for 
+assistance must be provided. Clear signage and information must be displayed to 
+enable users to easily identify and locate the washroom. Sanitary features include 
+fixtures, fittings and other necessary accessories needed by persons with 
+disabilities. 
+5.2.1 
+Accessible individual washrooms and larger accessible individual washrooms must 
+have clear internal dimensions as shown in Figure 43 and Figure 44: 
+(a) 
+at least 1750 mm by 1750 mm for accessible individual washrooms; and 
+(b) 
+at least 1800 mm wide by 2100 mm deep for larger accessible individual 
+washrooms. 
+5.2.2 
+Accessible individual washrooms, larger accessible individual washrooms and 
+accessible changing rooms must: 
+(a) 
+be equipped with a door in accordance with clause 5.8.1;  
+(b) 
+have grab bars in accordance with clause 5.8.2.1; 
+(c) 
+have essential washroom accessories in accordance with clause 5.8.3; 
+(d) 
+be equipped with an emergency assistance alarm system in accordance with 
+clause 5.8.4; 
+(e) 
+have a wash basin in accordance with clause 5.8.5; 
+(f) 
+have a water closet in accordance with clause 5.8.6; 
+(g) 
+be equipped with two coat hooks mounted on a side wall at two different 
+heights of about 1500 mm and 1100 mm from the floor level. The hooks must 
+not project more than 40 mm from the wall;  
+(h) 
+be equipped with a self-closing water spray head connected by a flexible hose 
+beside the water closet; 
+(i) 
+have a toilet roll dispenser that is reachable and does not obstruct the use of 
+grab bars. The dispenser must: 
+(i) 
+be mounted below the horizontal grab bar at 300 mm or less from the 
+front edge of the seat and at a height of between 50 mm and 250 mm 
+from the top of the water closet seat; or 
+(ii) 
+where jumbo toilet roll dispenser is provided, be mounted at a height of 
+between 150 mm and 200 mm above the horizontal grab bar, 
+approximately 50 mm from the front edge of the seat to the centreline of 
+the toilet roll dispenser and be at least 150 mm away from the vertical 
+grab bar, as shown in Figure 43. 
+ 
+ 
+
+[PDF page 64 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 4 
+C H APT ER 5 
+ 
+ 
+ 
+ 
+Figure 43 
+Accessible Individual Washroom 
+ 
+ 
+ 
+  
+Coat hook ±1500 
+Coat hook ±1100 
+  
+150 - 200 
+Jumbo toilet 
+roll dispenser 
+WC seat  
+450 - 480 
+Basin rim 
+800 – 840 
+ Bottom of mirror 
+1000 max 
+No drop or slope at 
+doorway 
+  
+Emergency 
+call bell 
+  
+280   - 300 
+
+[PDF page 65 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 5 
+C H APT ER 5 
+ 
+ 
+  
+Figure 44 
+Larger Accessible Individual Washroom 
+ 
+ 
+ 
+ 
+ 
+  
+  
+Coat hook ±1500 
+Coat hook ±1100 
+ Bottom of mirror 
+1000 max 
+800 - 840 
+Min clear 
+floor space  
+900 x 1500 
+Emergency 
+push-button 
+400 - 600 
+No drop or 
+slope at 
+doorway 
+280 - 300 
+Min clear 
+floor space  
+750 x 1200 
+  
+Mirror 
+Self-
+closing 
+water 
+spray  
+WC seat  
+450 - 480 
+
+[PDF page 66 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 6 
+C H APT ER 5 
+5.3 
+Accessible Changing Room 
+Functional Intent 
+A standalone wheelchair-accessible washroom with changing bed for adults with 
+disabilities (accessible changing room) must be equipped with appropriate 
+accessible sanitary features and have sufficient manoeuvring space to facilitate 
+wheelchair transfer onto water closet and changing bed. Alert system for assistance 
+must be provided. Clear signage and information must be displayed to enable users 
+to easily identify and locate the accessible changing room.  
+5.3.1 
+Accessible changing rooms must have clear internal dimensions of at least 2600 mm 
+wide by 2300 mm deep. 
+5.3.2 
+Accessible changing rooms, as shown in Figure 45, must have: 
+(a) 
+accessible individual washroom facilities in accordance with clause 5.2.2; 
+(b) 
+a height-adjustable bench or bed of a minimum size of 1800 mm long by 750 
+mm wide that is capable of supporting a safe working load of 200 kg; and 
+(c) 
+the accompanying symbol shown in Figure 46 in accordance with clause 
+5.8.11. 
+ 
+Advisory to clause 5.3.2 
+• A hoist system should be provided in the accessible changing room for caregivers to assist persons with 
+disabilities with less physical effort.  
+
+[PDF page 67 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 7 
+C H APT ER 5 
+ 
+ 
+Figure 45 
+Accessible Changing Room 
+ 
+ 
+ 
+Figure 46 
+Symbol for Accessible Changing Room 
+ 
+ 
+  
+  
+Height-adjustable 
+bench or bed 
+Emergency  
+push-button 
+No drop or slope at 
+doorway and not to 
+be obstructed by 
+an opened bench 
+or bed 
+Min clear 
+floor space  
+900 x 1500 
+Min clear 
+floor space  
+750 x 1200 
+Self-closing 
+water spray  
+Mirror 
+Coat hooks 
+Toilet roll 
+dispenser 
+
+[PDF page 68 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 8 
+C H APT ER 5 
+5.4 
+Water Closet Cubicles for Persons with Ambulant Mobility Impairment 
+Functional Intent 
+Water closet cubicles for persons with ambulant mobility impairment must have 
+sufficient space and appropriate accessibility features to ensure safe and 
+independent use. Clear signage and information must be displayed to enable users 
+to easily identify and locate the water closet cubicles. 
+5.4.1 
+Water closet cubicles for persons with ambulant mobility impairment must: 
+(a) 
+have internal dimensions of a minimum width of 900 mm; 
+(b) 
+have grab bars in accordance with clause 9.4: 
+(i) 
+on both sides of the cubicle as shown in Figure 47; 
+(ii) 
+at a distance between 350 mm and 400 mm from the centreline of the 
+water closet and be equidistant on both sides; and 
+(iii) 
+be provided in a L-shaped configuration of at least 450 mm high and 500 
+mm long, mounted between 280 mm and 300 mm above the seat of the 
+water closet and not less than 200 mm from the front edge of the water 
+closet; or 
+(iv) 
+be provided with a flip-up grab bar in accordance with clause 5.8.2.1(e). 
+5.4.2 
+Water closet cubicles for persons with ambulant mobility impairment must be 
+equipped with a door that provides a clear opening of at least 800 mm. 
+5.4.3 
+The door must: 
+(a) 
+be designed to: 
+(i) 
+be a sliding/folding door in accordance with clause 4.4.4; or 
+(ii) 
+swing outwards with a minimum clear space of 500 mm between the 
+edge of the water closet and the closed door, and be in accordance with 
+clauses 5.8.1.1(c) and 5.8.1.2; or 
+(iii) 
+swing inwards with a minimum clear space of 500 mm diameter centred 
+and from the edge of the water closet and the door swing; and 
+(b) 
+have an ambulant accessible sign, mounted on the outside of the door to 
+indicate that the cubicle is suitable for persons requiring grab bars as shown in 
+the example Figure 48. 
+5.4.4 
+The wall structure and fixings supporting the grab bars must be capable of 
+withstanding the user loads and comply with clause 5.4.1(b). 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+[PDF page 69 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+6 9 
+C H APT ER 5 
+ 
+ 
+ 
+450 min 
+280 - 300 
+Ambulant accessible 
+sign on outside of door 
+     140  
+min  
+900 min 
+1100 max 
+Outward swinging door, 
+800 min clear opening 
+width 
+(a) Water closet cubicle for persons with ambulant mobility impairment, with outward swinging door 
+450 min 
+280 - 300 
+500 
+min  
+Ambulant accessible 
+sign on outside of door 
+Inward swinging door, 
+800 min clear opening 
+width 
+(b) Water closet cubicle for persons with ambulant mobility impairment, with inward swinging door 
+
+[PDF page 70 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 0 
+C H APT ER 5 
+ 
+(c) Larger water closet cubicle for persons with ambulant mobility impairment 
+Figure 47 
+Water Closet Cubicle for Persons with Ambulant Mobility Impairment 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 48 
+Example of an Ambulant Accessible Sign 
+Flip-up 
+grab bar 
+
+[PDF page 71 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 1 
+C H APT ER 5 
+5.5 
+Urinals for Persons with Ambulant Mobility Impairment 
+Functional Intent 
+Urinals for persons with ambulant mobility impairment must be installed at an 
+appropriate height and have sufficient space and appropriate accessibility features 
+to ensure safe and independent use. 
+5.5.1 
+Urinals for persons with ambulant mobility impairment, as shown in Figure 49 must: 
+(a) 
+be of the wall-hung type with a rim height of 500 mm or less from the floor level; 
+(b) 
+have a minimum clear floor space of 750 mm wide by 1200 mm deep from the 
+edge of the urinal and without steps in front of the urinal; 
+(c) 
+have a depth of between 350 mm and 450 mm; and 
+(d) 
+where privacy shields are provided, do not extend beyond the edge of the urinal 
+rim. 
+5.5.2 
+Vertical grab bars, in accordance with clause 9.4, must be provided on both sides of 
+the urinals. The grab bars must: 
+(a) 
+be positioned with the lower point of the grab bars no higher than 800 mm from 
+the floor level; 
+(b) 
+extend to a minimum height of 1400 mm from the floor level; 
+(c) 
+have a minimum clear space of 150 mm from internal corners or obstructions 
+such as privacy shields; 
+(d) 
+be mounted 120 mm from the wall surface; and 
+(e) 
+be mounted at the same height with 500 mm to 650 mm spacing between the 
+two grab bars. 
+5.5.3 
+Flush controls must: 
+(a) 
+be in accordance with clause 9.2; and 
+(b) 
+be located at a height between 900 mm and 1200 mm or less from the floor 
+level. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+[PDF page 72 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 2 
+C H APT ER 5 
+ 
+  
+Figure 49 
+Urinal for Persons with Ambulant Mobility Impairment 
+5.6 
+Accessible Water Closet Cubicles 
+Functional Intent 
+A wheelchair-accessible water closet cubicle must have sufficient manoeuvring 
+space to facilitate a wheelchair user to transfer onto the water closet. Alert system 
+for assistance must be provided. Clear signage and information must be displayed 
+to enable users to easily identify and locate the washroom. The toilet in which the 
+cubicle is located must be equipped with appropriate accessible sanitary features. 
+Sanitary features include fixtures, fittings and other necessary accessories needed 
+by persons with disabilities. 
+5.6.1 
+An accessible water closet cubicle must: 
+(a) 
+have clear internal dimensions of at least 1500 mm by 1750 mm;  
+(b) 
+be in accordance with clauses 5.2.2 except (c) and (e). 
+500 max 
+  
+  
+  
+1400 min 
+800 max 
+Minimum 
+clear floor 
+space 
+Privacy shield 
+
+[PDF page 73 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 3 
+C H APT ER 5 
+5.6.2 
+At least one wash basin and washroom accessories in accordance with clauses 
+5.2.2(c) and 5.2.2(e) must be provided in the toilet cluster with accessible water 
+closet cubicles.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 50 
+Accessible Water Closet Cubicle within a Toilet Cluster 
+  
+ Coat hook ±1500 
+Coat hook ±1100 
+WC seat  
+450 - 480 
+Emergency  
+push-button 
+400 - 600 
+850 
+450 min 
+280 - 300 
+No drop or slope 
+at doorway 
+Self-closing 
+water spray  
+
+[PDF page 74 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 4 
+C H APT ER 5 
+5.7 
+Accessible Shower and Bath Facilities 
+Functional Intent 
+Accessible shower and bath facilities must have sufficient space and appropriate 
+accessibility features to ensure safe access and independent use by wheelchair 
+users. Alert system for assistance must be provided. Clear signage and information 
+must be displayed to enable persons with disabilities to easily identify and locate 
+the facilities. 
+5.7.1 
+Accessible Shower Facility 
+5.7.1.1 
+An accessible shower facility must have clear internal dimensions of at least 1500 
+mm by 1500 mm, as shown in Figure 51. 
+5.7.1.2 
+Where an accessible individual washroom is designed to include an accessible 
+shower facility, the minimum internal dimensions must be 2000 mm by 1750 mm, 
+as shown in Figure 52. 
+5.7.1.3 
+The accessible shower facility must: 
+(a) 
+have a minimum clear floor space of 900 mm by 1500 mm for transfer; 
+(b) 
+have floor that is slip-resistant; 
+(c) 
+have taps and shower heads in accordance with clauses 5.8.8 and 5.8.9 
+respectively; 
+(d) 
+have grab bars in accordance with clause 5.8.2.2; 
+(e) 
+have a shower seat that: 
+(i) 
+has a rounded edge, is self-draining and is anti-slip; 
+(ii) 
+is installed on the wall nearest to the controls; 
+(iii) 
+has a minimum dimension of 500 mm wide; 
+(iv) 
+has a depth of between 400 mm and 500 mm from the wall to the front 
+edge of the shower seat;  
+(v) 
+where it is a flip-up type, has seat depth of a minimum of 350 mm; and  
+(vi) 
+has its top between 450 mm and 480 mm from the floor level;  
+(f) 
+be equipped with an emergency push-button or pull-cord in accordance with 
+clause 5.8.4 that can be reached by a person near the shower seat. 
+5.7.1.4 
+The grab bars and shower seat must be able to withstand a force of 1.3 kN, applied 
+at any position and in any direction. 
+5.7.1.5 
+Where enclosures are provided to accessible shower facilities, they must be in 
+accordance with clause 5.8.10. 
+ 
+ 
+ 
+
+[PDF page 75 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 5 
+C H APT ER 5 
+ 
+ 
+ 
+Figure 51 
+Accessible Shower Facility for Wheelchair Users 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+750 min 
+700 - 800 
+Vertical bar for shower head 
+900 - 1100 
+450 - 480 
+750 min 
+700 - 800 
+Emergency  
+push-button 
+400 - 600 
+Shower seat 
+
+[PDF page 76 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 6 
+C H APT ER 5 
+ 
+ 
+ 
+Figure 52 
+Accessible Individual Washroom with Shower Facility 
+5.7.2 
+Bathtub for Wheelchair Users 
+5.7.2.1 
+There must be a clear floor space of at least 900 mm by 1500 mm in front of the 
+bathtub. The wash basin may encroach up to a maximum of 300 mm into this space, 
+provided there is a clear knee and toe space under the wash basin. 
+  
+  
+    
+450 - 480 
+750 min 
+1000 max 
+800 - 840 
+  
+  
+700 - 800 
+  
+No drop or slope 
+at doorway 
+Shower seat 
+Flip-up  
+grab bar 
+Emergency 
+push-button 
+
+[PDF page 77 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 7 
+C H APT ER 5 
+5.7.2.2 
+The bathtub must be provided with a seat of: 
+(a) 
+at least 250 mm wide along its entire length and at a height of between 450 
+mm and 480 mm; or 
+(b) 
+at least 400 mm deep, across its width and at the opposite end of the controls. 
+5.7.2.3 
+The base of the bathtub must be anti-slip. Where this is not possible, an anti-slip 
+rubber mat must be provided. 
+5.7.2.4 
+Grab bars for bathtubs in accordance with clause 5.8.2.3 must be provided. 
+5.7.2.5 
+The bathtub must be equipped with an emergency push-button or pull-cord in 
+accordance with clause 5.8.4 that can be reached by a person in the bathtub. 
+ 
+ 
+ 
+Figure 53 
+Bathtub for Wheelchair Users 
+   
+Min clear floor space  
+900 x 1500 
+450 - 480 
+450 max 
+180 - 280 
+1200 min 
+180 - 280 
+Seat 
+Shower tap 
+Mirror 
+Emergency 
+push-button 
+
+[PDF page 78 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 8 
+C H APT ER 5 
+ 
+ 
+Figure 54 
+Alternative Bathtub Configuration for Wheelchair Users 
+5.8 
+Components in the Accessible Sanitary Facilities 
+5.8.1 
+Doors 
+5.8.1.1 
+Doors to accessible individual washrooms, accessible water closet cubicles, 
+accessible changing rooms and accessible shower and bath facilities must: 
+(a) 
+swing outwards in accordance with clause 5.8.1.2, or be designed as a 
+sliding/folding door in accordance with clause 4.4.4; 
+(b) 
+have a minimum clear opening of 850 mm when in the fully opened position in 
+accordance with clause 4.4.2; and 
+(c) 
+be capable of being locked from the inside by a device that is operable with 
+one hand and activated by a force of not more than 22 N, and which does not 
+require: 
+(i) 
+fine finger control; 
+  
+  
+Seat 
+450 - 480 
+Min clear floor space  
+900 x 1500 
+1200 min 
+750 min 
+100 
+180 - 280 
+Emergency 
+push-
+button 
+Shower  
+tap 
+
+[PDF page 79 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+7 9 
+C H APT ER 5 
+(ii) 
+tight grasping; and 
+(iii) 
+pinching or twisting of the wrist. 
+5.8.1.2 
+Where swing doors are provided, the doors must: 
+(a) 
+be provided with a horizontal pull-bar with a diameter of between 19 mm and 
+45 mm on the inside that is: 
+(i) 
+at least 600 mm long; 
+(ii) 
+located so that it is 130 mm or less from the hinged side of the door; and 
+(iii) 
+fixed at a height of between 900 mm and 1100 mm. 
+(b) 
+be provided with a vertical/horizontal pull-handle/bar with a diameter of 
+between 19 mm and 45 mm on the outside that is: 
+(i) 
+at least 140 mm long; 
+(ii) 
+located so that the pull-handle is 130 mm or less from the latch side of 
+the door; and 
+(iii) 
+placed at a height of between 900 mm and 1100 mm. 
+5.8.2 
+Grab Bars 
+5.8.2.1 
+Grab bars must be provided in accessible individual washrooms, accessible water 
+closet cubicles and accessible changing rooms as shown in Figure 43, Figure 44, 
+Figure 45 and Figure 50 and must: 
+(a) 
+be in accordance with clause 9.4; 
+(b) 
+be mounted at a height of between 280 mm and 300 mm from the top of the 
+water closet seat; 
+(c) 
+have one horizontal grab bar to be mounted on the side wall closest to the 
+water closet extending from the rear wall to at least 450 mm in front of the 
+water closet seat; 
+(d) 
+have one vertical grab bar to be mounted on the side wall closest to the water 
+closet and: 
+(i) 
+located between 350 mm and 450 mm from the front edge of the water 
+closet seat; and 
+(ii) 
+at least 450 mm in length. 
+(e) 
+have one flip-up grab bar to be mounted on the wide side of the 
+cubicle/washroom adjacent to the water closet and must be able to remain in 
+a vertical position when not in use. When lowered, it must: 
+(i) 
+be at the same height as the grab bar mounted on the side wall closest 
+to the water closet; 
+Advisory to clause 5.8.1 
+• Accessible toilet doors should be designed to allow entry if someone falls behind the door. Use locks and 
+latches that can be opened from the outside with simple devices for emergencies.  
+•  Control and operating devices for power-operated doors should feature tactile markings and Braille. Voice 
+announcements should be provided to inform users when the door is locked, closing, or opening. 
+
+[PDF page 80 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 0 
+C H APT ER 5 
+(ii)  
+extend not more than 100 mm from the front of the water closet seat; 
+and 
+(iii) 
+be between 380 mm and 400 mm to the centreline of the water closet. 
+(f) 
+have one horizontal grab bar of at least 700 mm long to be mounted on the wall 
+behind the water closet. 
+5.8.2.2 
+Grab bars must be provided in accessible shower facilities as shown in Figure 51 and 
+Figure 52 and must: 
+(a) 
+be in accordance with clause 9.4; 
+(b) 
+comprise of an L-shaped bar or two bars arranged in an L-shaped 
+configuration, and be: 
+(i) 
+at least 750 mm high by 800 mm wide;  
+(ii) 
+mounted between 700 mm and 800 mm from the shower floor; and 
+(iii) 
+mounted not more than 450 mm from the edge of shower seat. 
+(c) 
+have a vertical bar: 
+(i) 
+of at least 750 mm; and 
+(ii) 
+mounted between 100 mm and 150 mm from the shower seat. 
+5.8.2.3 
+Grab bars must be provided for bathtubs in accessible bath facilities as shown in 
+Figure 53 and Figure 54 and must: 
+(a) 
+in accordance with clause 9.4; 
+(b) 
+located horizontally along the length of the bathtub and be: 
+(i) 
+at least 1200 mm long; and 
+(ii) 
+between 180 mm and 280 mm above the bathtub rim; 
+(c) 
+located vertically at the control end of the bathtub adjacent to the clear floor 
+space and be: 
+(i) 
+at least 1200 mm long; and 
+(ii) 
+located with the lower end between 180 mm and 280 mm above the 
+bathtub rim.  
+Note 
+All dimensions in clause 5.8.2 must be taken from the centreline of the bar. 
+5.8.3 
+Washroom Accessories 
+5.8.3.1 
+Washroom accessories must comprise the following: 
+(a) 
+a mirror, with the bottom edge positioned at a height of 1000 mm or less from 
+the floor level, as shown in Figure 55; and 
+(b) 
+paper towel dispensers or hand dryers, soap dispensers, litter bins and other 
+washroom accessories must:  
+(i) 
+contrast in colour and tone with the surrounding wall surfaces; and 
+(ii) 
+be positioned such that the operable parts and controls are at a height 
+of between 900 mm and 1200 mm from the floor level. 
+
+[PDF page 81 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 1 
+C H APT ER 5 
+ 
+ 
+Accessories should be placed in close proximity to the accessible basin to avoid having a person wheeling a 
+chair with wet hands. 
+Figure 55 
+Washroom Accessories 
+5.8.4 
+Emergency Assistance Alarm System 
+5.8.4.1 
+The emergency assistance alarm system must be activated by a waterproof push-
+button or pull-cord. 
+5.8.4.2 
+The push-button or pull-cord must: 
+(a) 
+be located at a height of between 400 mm and 600 mm above the floor level;  
+(b) 
+have a colour that contrasts with the background; and 
+(c) 
+have a notice stating “Emergency Call” prominently affixed next to the push-
+button or pull-cord. 
+5.8.4.3 
+Emergency assistance alarm indicators in the form of audible and/or visible signals 
+must be provided to alert caregivers or responsible persons in a management office. 
+The indicators must be: 
+(a) 
+installed outside the accessible individual washroom, accessible changing 
+room, accessible shower and accessible rooms; and 
+(b) 
+ connected to the management office, fire command centre or caregiver’s 
+office.  
+5.8.5 
+Wash Basin 
+5.8.5.1 
+Wash basins, as shown in Figure 56, must: 
+(a) 
+not interfere with the manoeuvring space of wheelchair users while 
+transferring to the water closet; 
+(b) 
+be mounted such that the minimum distance between the centreline of the 
+fixture and the side wall is 460 mm; 
+(c) 
+be mounted such that the top edge is between 800 mm and 840 mm from the 
+floor level; 
+1200 max 
+1100 
+Preferred 
+max height 
+Hand 
+dryer 
+Recessed 
+litter bin 
+Paper 
+dispenser 
+Mirror 
+Soap 
+dispenser 
+Bottom of mirror 
+Height of operable 
+parts and controls 
+
+[PDF page 82 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 2 
+C H APT ER 5 
+(d) 
+have a knee space of at least 750 mm wide by 200 mm deep by 700 mm high 
+with an additional toe space of at least 750 mm wide by 230 mm deep by 230 
+mm high; 
+(e) 
+have a minimum clear floor space of 750 mm wide by 1200 mm deep of which 
+a maximum of 480 mm in depth may be under the wash basin; and 
+(f) 
+have a dimension of between 300 mm and 400 mm from the front edge of the 
+basin to the centre of the tap. 
+5.8.5.2 
+The hot water and drainpipes located within the knee or toe space must be properly 
+insulated. 
+5.8.5.3 
+Taps and other controls provided must have levers or be sensor-operated and be in 
+accordance with clause 9.2. 
+5.8.5.4 
+Where vanity counters are provided, all dimensions relating to height, circulation, 
+knee and toe spaces must be in accordance with clause 5.8.5.1 as specified for 
+basins. 
+ 
+ 
+ 
+Figure 56 
+Wash Basin for Persons with Disabilities 
+ 
+Advisory to clause 5.8.5.3 
+• Where wheelchair-accessible wash basins are placed together with other basins for general use, the taps 
+provided must be in accordance with the National Environment Agency’s Code of Practice for Environmental 
+Health. 
+  
+300 - 400 
+700 min 
+800 - 840 
+230 
+min 
+230 
+min 
+250 
+min 
+200  
+min 
+Knee 
+space 
+Toe 
+space 
+800 - 840 
+1000 max 
+Minimum 
+clear floor 
+space 
+(a) Isometric view 
+(b) Side view 
+
+[PDF page 83 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 3 
+C H APT ER 5 
+5.8.6 
+Water Closet 
+5.8.6.1 
+Water closets must be in accordance with the following: 
+(a) 
+be located between 460 mm and 480 mm from the centreline of the water 
+closet to the adjacent wall; 
+(b) 
+have a minimum dimension of 750 mm from the front edge of the water closet 
+to the rear wall; 
+(c) 
+have a minimum clear floor space of 900 mm by 1500 mm or more adjacent to 
+the water closet; 
+(d) 
+the top of the water closet seat must be between 450 mm and 480 mm from 
+the floor level; 
+(e) 
+have no spring-activated seats; 
+(f) 
+have flush control: 
+(i) 
+in accordance with clause 9.2; 
+(ii) 
+that is located at a height of between 800 mm and 1100 mm from the 
+floor level; and 
+(iii) 
+where it is hand-operated, must be located on the transfer side of the 
+water closet. 
+5.8.6.2 
+Where a built-up wall is provided behind the water closet to be in accordance with 
+clause 5.8.6.1(b), this built-up wall must not extend beyond the sides and top of the 
+water closet as shown in Figure 57. 
+5.8.6.3 
+The water closet must be equipped with an emergency push-button or pull-cord in 
+accordance with clause 5.8.4 and be located between 150 mm and 300 mm from 
+either the front or side edges of the water closet. 
+ 
+ 
+ 
+Figure 57 
+Water Closet with Built-Up Wall 
+Built-up wall not to 
+extend beyond the sides 
+and top of water closet 
+
+[PDF page 84 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 4 
+C H APT ER 5 
+5.8.7 
+Motion Sensor Lighting 
+5.8.7.1 
+Where motion-sensor-type lighting switches are used within the accessible facilities 
+(individual washroom, accessible water closet cubicle, accessible changing room or 
+accessible shower), they must be in accordance with the following: 
+(a) 
+switch controllers are equipped for fail-safe operation; 
+(b) 
+illumination timers are set for a minimum duration of 30 minutes; and 
+(c) 
+sensors must be appropriately located and easily activated by any occupant 
+movement in the toilet. 
+5.8.8 
+Taps and Controls for Shower and Bath Facilities 
+5.8.8.1 
+Taps and other controls must: 
+(a) 
+be in accordance with clause 9.2 for both bathtub and shower facilities; 
+(b) 
+be located at the control end of the bathtub between the centreline and the 
+outer edge; 
+(c) 
+be 450 mm or less above the bathtub rim, as shown in Figure 53;  
+(d) 
+have clearly visible colour contrast and embossed signs indicating hot and 
+cold-water supply; and 
+(e) 
+have a pressure-equalising valve or an automatic, thermostatically controlled 
+valve to control the temperature of hot water supply. 
+5.8.9 
+Shower Heads 
+5.8.9.1 
+Shower heads used in bathtubs and shower facilities must: 
+(a) 
+be of the hand-held type; 
+(b) 
+be provided with a hose of 1500 mm long or more; and 
+(c) 
+allow for use in a fixed position. 
+5.8.9.2 
+Where shower heads are mounted on a vertical bar, the bar must: 
+(a) 
+have a minimum length of 500 mm; 
+(b) 
+be installed with the lower end located between 900 mm and 1100 mm above 
+the floor level; and 
+(c) 
+be installed so as not to obstruct the use of grab bars. 
+5.8.10 
+Bath Enclosures 
+5.8.10.1 
+Enclosures for bathtubs and showers must not: 
+(a) 
+obstruct controls; 
+(b) 
+interfere with a person transferring from a wheelchair; and 
+(c) 
+have tracks mounted on the bathtub rim or edges of shower pans or the shower 
+area. 
+ 
+ 
+
+[PDF page 85 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 5 
+C H APT ER 5 
+5.8.11 
+Signs to Sanitary Facilities 
+5.8.11.1 
+Signs to sanitary facilities, as shown in Figure 58, must:  
+(a) 
+have tactile and Braille signs in accordance with clause 5.8.11.2 and 5.8.11.3; 
+(b) 
+be mounted on the wall next to the latch-side of the door at a distance between 
+50 mm and 100 mm from the door jamb to the side of the sign; 
+(c) 
+where there is no wall space to the latch-side of the door including double-leaf 
+doors, signs must be mounted on the nearest adjacent wall; and 
+(d) 
+be mounted at a height between 1200 mm and 1500 mm from the floor level 
+to the centreline of the sign. 
+5.8.11.2 
+Signs to accessible individual washroom, accessible changing room and accessible 
+shower facility, and at entrance to toilets with accessible water closet cubicles or 
+accessible shower facilities must comprise: 
+(a) 
+a tactile Symbol of Access in accordance with clause 8.2; 
+(b) 
+tactile characters in accordance with clause 8.5; and 
+(c) 
+corresponding Braille in accordance with clause 8.5. 
+5.8.11.3 
+Signs to male and female toilets must comprise: 
+(a) 
+a tactile pictogram or characters in accordance with clause 8.5; and  
+(b) 
+corresponding Braille in accordance with clause 8.5. 
+ 
+ 
+ 
+ 
+Figure 58 
+Signs to Toilets 
+ 
+1200 - 1500 
+Tactile and Braille 
+sign in accordance 
+with clause 8.5 
+1200 - 1500 
+Tactile and Braille 
+sign in accordance 
+with clause 8.5 
+Emergency assistance 
+alarm indicator  
+
+[PDF page 86 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 6 
+C H APT ER 6 
+Chapter 6:  
+Family-friendly Provisions 
+6.1 
+General 
+Functional Intent 
+Buildings that are frequently accessed by nursing mothers and families with young 
+children must be provided with appropriate facilities to serve the needs of nursing 
+women, young children and their caregivers. Clear signage and information must be 
+displayed to enable users to easily identify and locate the facilities. 
+6.1.1 
+The following buildings must provide family-friendly sanitary and car parking 
+facilities: 
+(a) 
+shopping centres and multi-purpose complexes of 10,000 m2 or more in gross 
+floor area; 
+(b) 
+sports facilities and public swimming pools;  
+(c) 
+theme parks, amusement centres and community clubs; and  
+(d) 
+transport terminals and stations. 
+6.1.2 
+Where a building is required to provide family-friendly sanitary and car parking 
+facilities in accordance with clause 6.1.1, the following must be provided for each 
+applicable use: 
+(a) 
+where vehicle parks are provided, at least one family car parking lots must be 
+provided in accordance with clause 6.2;  
+(b) 
+where toilets are provided, the following family-friendly sanitary facilities for 
+young children and their caregivers must be provided at every toilet cluster: 
+(i) 
+diaper changing stations in accordance with clause 6.3; 
+(ii) 
+child protection seats in accordance with clause 6.4; 
+(iii) 
+child-sized wash basins and water closets in accordance with clause 
+6.5; and 
+(iv) 
+where urinals are provided, child-friendly urinals in accordance with 
+clause 6.6. 
+6.1.3 
+The following buildings must provide lactation rooms in accordance with clause 6.8: 
+(a) 
+offices and business parks of 5,000 m2 or more in gross floor area;  
+(b) 
+shopping centres and multi-purpose complexes of 5,000 m2 or more in gross 
+floor area;  
+(c) 
+sports facilities and public swimming pools;  
+(d) 
+theme parks, amusement centres and community clubs;  
+(e) 
+transport terminals and stations; 
+(f) 
+schools of 5,000 m2 or more in gross floor area; 
+(g) 
+hospitals;  
+
+[PDF page 87 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 7 
+C H APT ER 6 
+(h) 
+polyclinics, health-care centres and specialist outpatient clinics; and 
+(i) 
+mixed developments where the non-residential component is 5,000 m2 or 
+more in gross floor area. Each non-residential component must be provided 
+with the required number of lactation rooms. 
+6.1.4 
+Appropriate directional and service identification signs in accordance with Chapter 
+8 must be displayed to show the location of family-friendly and lactation facilities. 
+Appropriate symbols for persons with different needs are shown in Figure 59. 
+6.2 
+Family Car Parking 
+Functional Intent 
+Designated family car parking lots must be provided for use by families with mobility 
+aids such as wheelchairs, walkers or prams. The family car parking lots must be 
+differentiated from other parking lots, easy to locate and access.  
+6.2.1 
+At least one designated family car parking lot must be provided near an accessible 
+entrance or lift lobby. 
+6.2.2 
+A family car parking lot must be at least 4800 mm long by 3600 mm wide, as shown 
+in Figure 60. 
+ 
+ 
+ 
+Figure 59 
+Example of Symbols for Persons with Different Needs 
+ 
+ 
+ 
+Figure 60 
+Family Car Parking Lot 
+(a) Facilities for family 
+with young children 
+(b) Facilities for infants 
+(c) Facilities for 
+nursing mothers 
+Building entrance or 
+lift lobby 
+
+[PDF page 88 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 8 
+C H APT ER 6 
+6.3 
+Diaper Changing Station 
+Functional Intent 
+Diaper changing facilities must be provided at appropriate locations for infants or 
+young children and their caregivers of any gender. The diaper changing station must 
+have a secure, horizontal surface to place the infant on while changing, and 
+incorporate features that reduce the risk of falling.  
+6.3.1 
+At least one diaper changing station must be located either in: 
+(a) 
+both male and female toilet clusters; or  
+(b) 
+individual family washrooms. 
+6.3.2 
+Diaper changing stations must: 
+(a) 
+have a concave changing surface with safety straps or equivalent safety 
+features to prevent risk of fall;  
+(b) 
+support a child up to a weight of 22 kg;  
+(c) 
+be mounted on a stable substrate; and 
+(d) 
+be mounted so that the highest edge or lip of the pull-down deck when opened, 
+is between 700 mm and 850 mm above the floor finish. 
+6.4 
+Child Protection Seat 
+Functional Intent 
+Child protection seats must be provided at appropriate locations for caregivers of 
+infants or young children to seat the child while they are using the water closet. The 
+child protection seat must be robust and safe for use. 
+6.4.1 
+At least one child protection seat must be located either in: 
+(a) 
+one of the adult-sized water closet cubicles in both male and female toilet 
+clusters; or  
+(b) 
+individual family washrooms. 
+6.4.2 
+Child protection seats, as shown in Figure 61, must: 
+(a) 
+be equipped with straps or equivalent safety features to prevent risk of fall;  
+(b) 
+support a seated child up to a weight of 22 kg;  
+(c) 
+be mounted on a stable substrate;  
+(d) 
+be mounted so that the bottom of the seat is at least 400 mm above the floor 
+finish; and 
+(e) 
+have a minimum clearance of 450 mm radius from any obstruction, including 
+the door swing and the edge of the water closet. 
+ 
+ 
+ 
+ 
+ 
+
+[PDF page 89 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+8 9 
+C H APT ER 6 
+ 
+ 
+ 
+Figure 61 
+Child Protection Seat in Water Closet Cubicle 
+6.5 
+Child-sized Wash Basin and Water Closet 
+Functional Intent 
+Child-sized wash basins and child-sized water closets must be provided at 
+appropriate locations for safe and independent use by young children. 
+6.5.1 
+At least one child-sized wash basin and water closet must be located either in: 
+(a) 
+both male and female toilet clusters; 
+(b) 
+individual family washrooms; or 
+(c) 
+the stand-alone children’s toilet at a toilet cluster. 
+6.5.2 
+Child-sized wash basins must: 
+(a) 
+be mounted such that the top edge does not exceed a height of 550 mm from 
+the floor level; and  
+(b) 
+have a dimension of not more than 350 mm from the front edge of the basin to 
+the centre of the tap. 
+6.5.3 
+Child-sized water closets must: 
+(a) 
+have a water closet seat with a height between 250 mm and 350 mm from the 
+floor level; and  
+(b) 
+have flush controls located at a height between 500 mm and 900 mm from the 
+floor level. 
+  
+Adult-sized 
+water closet 
+Bottom  
+of seat 
+400 min 
+
+[PDF page 90 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 0 
+C H APT ER 6 
+Note 1 
+For alteration works to existing toilets with space constraints, a child-adapter seat on a standard-sized 
+water closet may be provided in-lieu of a child-sized water closet as specified in clause 6.5.3(a). In 
+such cases, clause 6.5.3(b) need not apply. 
+Note 2 
+A stand-alone children's toilet is defined as a facility equipped with wash basins and water closets 
+designed to serve multiple children. 
+6.6 
+Child-friendly Urinal 
+Functional Intent 
+Child-friendly urinals must be provided at appropriate locations for safe and 
+independent use by young children. 
+6.6.1 
+Where urinals are provided, at least one child-friendly urinal must be located either 
+in: 
+(a) 
+the male toilet; or 
+(b) 
+the standalone children’s toilet at a toilet cluster. 
+6.6.2 
+The rim of a child-friendly urinal must be mounted no higher than 400 mm from the 
+floor level.  
+6.7 
+Individual Family Washroom 
+6.7.1 
+An individual family washroom is a public, unisex washroom serving a family, where 
+users can be accompanied by children, family members or caregivers, as shown in 
+Figure 63. 
+Note 
+To safeguard access for persons with disabilities, family-friendly facilities should not be integrated 
+with accessible individual washrooms, accessible changing rooms or accessible shower facilities.  
+6.7.2 
+For alteration works to existing toilets with exceptional circumstances, an individual 
+family washroom may be combined with an individual accessible washroom. The 
+clear internal dimensions of this combined facility must be at least 2500 mm by  
+2300 mm. 
+ 
+ 
+Figure 62 
+Child-friendly Sanitary Facilities 
+550 max 
+250 - 350 
+500 - 900 
+(a) Child-sized wash 
+(b) Child-sized water closet 
+(c) Child-friendly urinal 
+400 
+max 
+
+[PDF page 91 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 1 
+C H APT ER 6 
+ 
+ 
+Figure 63 
+Example of Individual Family Washroom 
+ 
+ 
+Figure 64 
+Example of Individual Accessible Family Washroom in Existing Buildings 
+Child 
+protection seat 
+Adult sized 
+water closet 
+Child-sized 
+water closet 
+Child-sized 
+wash basin 
+Toilet roll 
+dispenser 
+Wash basin 
+Diaper changing 
+station with safety 
+straps 
+2300 min 
+2500 min 
+Child-sized 
+water closet 
+Child-sized 
+wash basin 
+Fold-up type child 
+protection seat 
+Fold-up type diaper 
+changing station with 
+safety strap 
+Wash basin and 
+mirror 
+Water closet 
+and grab bars 
+  
+Coat hooks 
+No drop or slope 
+at doorway 
+Flip-up grab bar 
+
+[PDF page 92 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 2 
+C H APT ER 6 
+6.8 
+Lactation Rooms 
+Functional Intent 
+Lactation rooms must be provided at appropriate locations for nursing mothers to 
+breastfeed their infants or express milk. These rooms must ensure privacy and 
+comfort, and be equipped with appropriate facilities to support breastfeeding or 
+expressing milk. Clear signage and information must be displayed to enable users 
+to easily identify and locate the lactation rooms. 
+6.8.1 
+Lactation rooms are places where mothers can express milk or breastfeed their 
+infants in a private and comfortable environment. 
+6.8.2 
+Lactation rooms must be provided at appropriate locations within common areas to 
+serve intended users. 
+6.8.3 
+The minimum number of lactation rooms provided must be in accordance with  
+Table 6. 
+ 
+Table 6 
+Provision of Lactation Rooms 
+Type of Use 
+Gross floor area 
+Minimum number of 
+lactation rooms 
+required 
+Office and Business Parks;  
+Shopping centres and multi-purpose 
+complexes; 
+Other non-residential components in 
+mixed developments not listed in this 
+table. 
+From 5,000 m2  
+to 20,000 m2 
+1 
+Every subsequent  
+20,000 m2 or part thereof  
+1 additional  
+lactation room 
+Hospitals; 
+Polyclinics, health-care centres and 
+specialist outpatient clinics;  
+Transport terminals and stations;  
+Sports facilities and public swimming 
+pools; 
+Theme parks, amusement centres and 
+community clubs 
+First 20,000 m2 
+1 
+Every subsequent  
+20,000 m2 or part thereof  
+1 additional  
+lactation room 
+Schools, including preschools, primary 
+and secondary school, colleges, 
+universities and other institutions of 
+learning 
+5,000 m2 or more  
+1 
+6.8.4 
+A lactation room for a single user, as shown in Figure 65, must: 
+(a) 
+be a private space that is shielded from view and free from intrusion with a 
+lockable door; 
+
+[PDF page 93 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 3 
+C H APT ER 6 
+(b) 
+be well-illuminated and ventilated; 
+(c) 
+not be located within toilets; 
+(d) 
+have clear internal dimensions of at least 1200 mm by 1500 mm;  
+(e) 
+have an appropriate seat for breastfeeding or expressing milk;  
+(f) 
+be equipped with socket outlets located at table height;  
+(g) 
+have a table or ledge to place breast pumps and personal items; and 
+(h) 
+have a fixed mirror for adjusting attire. 
+ 
+ 
+ 
+Figure 65 
+Lactation Room 
+ 
+Advisory to clause 6.8 
+• In larger buildings, lactation rooms should be distributed to offer convenience and reduce travel time for users. 
+A larger lactation room comprising two or more stations may minimise scheduling conflicts and reduce wait 
+times.  In a large room with multiple stations, each nursing station should be equipped with privacy screens or 
+partitions to ensure visual separation between users. 
+• When lactation rooms are situated near sanitary facilities such as infant diaper changing areas, measures 
+should be taken to segregate these functions to prevent unpleasant odours from sanitary activities affecting 
+mothers using the lactation rooms.  
+• A lactation room should be provided with a waste bin, a water point for wash basin and a dispenser for hot/cold 
+water. The room should be designed with sound attenuation to minimise sound transmission into adjacent 
+spaces. 
+Mirror 
+Seating 
+Socket 
+outlets at 
+table height 
+Table or ledge 
+Lockable 
+door 
+
+[PDF page 94 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 4 
+C H APT ER 7 
+Chapter 7:  
+Residential, Serviced Apartments, Hotels, Hostels and Dormitories 
+7.1 
+Residential Development 
+Functional Intent 
+All residential buildings must allow persons with disabilities to safely and 
+independently access the site, approach and enter the building and make use of the 
+common facilities. The accessible route connecting between the alighting or 
+boarding points and the residential units must be sheltered and incorporate 
+appropriate resting areas. Residential units must be accessible and adaptable to 
+support ageing-in-place, allowing easy retrofitting without major structural 
+alterations. 
+7.1.1 
+At least one accessible and sheltered passenger alighting and boarding point must 
+be provided: 
+(a)  
+with direct sheltered access to every block of the residential development; and 
+(b) 
+with seats that do not impede the movement of the wheelchair user.  
+7.1.2 
+The minimum width for accessible routes to all common facilities must be in 
+accordance with clause 4.2.1.  
+7.1.3 
+An open scupper drain is allowed within the required clear width of accessible 
+corridors serving residential units if the scupper drain: 
+(a) 
+has a width of 150 mm or less and a depth of 50 mm or less; and 
+(b) 
+is located along one side of the corridor and adjacent to a wall. 
+7.1.4 
+Where toilets and showers are provided for common facilities, they must be in 
+accordance with clause 5.1. 
+7.1.5 
+At least one entrance in accordance with clause 7.2 must be provided for every 
+residential unit. 
+7.1.6 
+At least one bathroom for future retrofitting in accordance with clause 7.3 must be 
+provided in every residential unit so that it can be easily retrofitted for the elderly and 
+wheelchair users. 
+7.1.7 
+The clear width of the accessible route from the entrance of a residential unit to the 
+bathroom for future retrofitting must be at least 1000 mm and must be in accordance 
+with Table 7 where the route turns at doorways.  
+Advisory to clause 7.1.1(b) 
+• Seating areas should include designated spaces for wheelchairs. The colour of seats should contrast with their 
+surroundings, avoid causing glare, and feature armrests and backrests to provide support for people whilst 
+resting. 
+
+[PDF page 95 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 5 
+C H APT ER 7 
+7.1.8 
+Switches and socket outlets in accordance with clause 7.4 must be provided in every 
+residential unit. 
+7.2 
+Entrances to Residential Units 
+Functional Intent 
+Entrances to residential units must be accessible or designed to facilitate easy 
+retrofitting for future wheelchair access. The entrance door and its adjacent spaces 
+must have sufficient clearance for wheelchair users to manoeuvre and pass through 
+independently. 
+7.2.1 
+The doorway of the entrance must be at least 850 mm for a single leaf door. If the 
+doorway has two independently operated door leaves, at least one active leaf must 
+provide a minimum clear width of 850 mm.  
+7.2.2 
+The manoeuvring space at the entrance, as shown in Figure 66, must: 
+(a) 
+within the unit, have a minimum space of 450 mm adjacent to the leading edge 
+of the door and a minimum clear floor space of 1250 mm wide by 1500 mm 
+deep;  
+(b) 
+on the push side, have a minimum space of 300 mm adjacent to the leading 
+edge of the door; and 
+(c) 
+the leading edge of the door leaf must be in accordance with clause 4.4.6.2.  
+7.2.3 
+The difference in levels between the floor of the entrance to the residential unit and 
+the abutting common area must not exceed 50 mm. Where the difference in level 
+exceeds 25 mm, the raised level fronting the entrance must consist of non-structural 
+elements that can be easily removed for ramp installation when required, as shown 
+in Figure 67. 
+7.2.4 
+Where a ramp is installed at the entrance to the unit, the ramp must not extend more 
+than 250 mm from the face of the door and have a gradient in accordance with  
+Table 4. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+[PDF page 96 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 6 
+C H APT ER 7 
+ 
+(a) Double-leaf Doorway 
+(b) Single-leaf Doorway 
+Figure 66 
+Manoeuvring Spaces at Entrance to Residential Units 
+ 
+(a) Maximum level difference at entrance to unit 
+(b) Ramp at entrance to unit 
+Figure 67 
+Level Difference at Entrance to Residential Units 
+850 
+min 
+300 
+min 
+450 
+min 
+Minimum  
+clear space 
+1250 x 1500 
+Outside 
+Inside 
+Outside 
+Inside 
+850 
+min 
+300 
+min 
+Minimum  
+clear space 
+1250 x 1500 
+450 
+min 
+Ramp 
+50 max drop 
+250 
+max 
+50 max 
+Inside 
+Outside 
+Inside 
+Outside 
+Entrance 
+Door 
+Entrance 
+Door 
+Ramp 
+Non-structural element that can be 
+easily removed 
+
+[PDF page 97 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 7 
+C H APT ER 7 
+7.3 
+Bathroom for Future Retrofitting in Residential Units 
+Functional Intent 
+Bathrooms and corridors within residential units must be accessible or designed to 
+facilitate easy retrofitting for future wheelchair access without requiring extensive 
+alterations. 
+7.3.1 
+The bathroom for future retrofitting must comprise a water closet, wash basin and 
+shower facility. 
+7.3.2 
+The bathroom must be located at the same level as the entrance of the unit. 
+7.3.3 
+The doorway of the bathroom and the minimum clear floor space in front of the 
+doorway must be in accordance with the dimensions in Table 7. 
+ 
+Table 7 
+Minimum Clear Floor Space at Door Openings in Residential Units 
+Clear width of doorway (mm) 
+Minimum clear floor space outside door, 
+centred to doorway (mm) 
+900 or wider 
+1000 x 1000 
+850 
+1100 x 1100 
+800 
+1200 x 1200 
+7.3.4 
+The bathroom, as shown in Figure 68, must be in accordance with the following: 
+(a) 
+have no change in level of more than 25 mm at the doorway of the bathroom; 
+(b) 
+have an unobstructed passageway with a minimum width of 1000 mm leading 
+from the doorway to the water closet and wash basin;  
+(c) 
+have a clear floor space of at least 1000 mm by 1000 mm at the front edge of 
+and centred to the water closet; and 
+(d) 
+provide at least 450 mm clear space on one side of the water closet, measured 
+from its centre to any obstruction to accommodate future installation of grab 
+bars. 
+7.3.5 
+Provisions must be made in the bathroom walls so as to allow the installation and 
+safe use of grab bars in accordance with clause 9.4. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+[PDF page 98 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 8 
+C H APT ER 7 
+ 
+ 
+Figure 68 
+Clear Floor Spaces Along Route to Bathroom for Future Retrofitting 
+7.4 
+Switches and Socket Outlets 
+Functional Intent 
+Switches and socket outlets in residential units and accessible rooms must be 
+located at appropriate reach heights for wheelchair users. 
+7.4.1 
+The switches and socket outlets must be provided at a height of between 450 mm 
+and 1200 mm from the floor level to the centreline of the switches and socket 
+outlets. 
+Note 
+Clause 7.4 does not apply to dedicated switches and socket outlets that are not readily accessible, 
+nor to those in kitchens intended for appliances designed to remain continuously connected during 
+normal use. 
+800 
+1000 min 
+Min  
+1000 x 1000  
+clear floor space 
+450 min 
+Min 1200 x 1200  
+clear floor space  
+(where door  
+width is 800) 
+BEDROOM 1 
+BEDROOM 2 
+1000 min 
+BEDROOM 3 
+25 max drop 
+SHOWER 
+
+[PDF page 99 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+9 9 
+C H APT ER 7 
+7.5 
+Accessible Rooms, Guestrooms and Serviced Apartments 
+Functional Intent 
+Hotels, boarding houses, chalets, serviced apartments and other similar 
+accommodation facilities must be accessible to persons with disabilities. 
+Accessible rooms suitable for wheelchair users and the elderly must be provided on 
+a proportional basis. These rooms must have sufficient wheelchair manoeuvring 
+spaces and appropriate accessible features to ensure safe and independent use. 
+7.5.1 
+The minimum width for accessible routes to all rooms and facilities must be in 
+accordance with clause 4.2.1. 
+7.5.2 
+In hotels, boarding houses, chalets, backpacker hotels and serviced apartments, at 
+least one in every 100 guestrooms/serviced apartments or part thereof must be 
+accessible in accordance with clauses 7.5.4 and 7.5.5. 
+7.5.3 
+In addition, at least one in every 50 guestrooms or part thereof must be provided with 
+elder-friendly features such as grab bars adjacent to the water closet and shower or 
+bathtub.  
+Note 
+Clause 7.5.3 does not apply to serviced apartments. 
+7.5.4 
+Doorways to entrances of accessible rooms, guestrooms and serviced apartments 
+must: 
+(a) 
+be level; and 
+(b) 
+have manoeuvring spaces in accordance with clauses 7.2.1 and 7.2.2. 
+7.5.5 
+Sanitary and shower/bath facilities serving accessible rooms, guestrooms and 
+serviced apartments must be in accordance with clauses 5.2 and 5.7. 
+Note 
+Where other standard rooms provide en-suite sanitary facilities, accessible rooms, guestrooms and 
+serviced apartments must also be equipped with en-suite sanitary facilities. 
+7.5.6 
+An unobstructed clear floor space of at least 1500 mm by 1500 mm must be provided 
+for wheelchairs to manoeuvre within the accessible room, guestrooms or serviced 
+apartment. 
+7.5.7 
+Switches and socket outlets in accessible rooms must be provided in accordance 
+with clause 7.4. 
+Advisory to clauses 7.5.2 and 7.5.3 
+• Accessible rooms, guestrooms or serviced apartments should offer a choice of locations and types, provide 
+standard facilities equivalent to that of other rooms or units and be connectable to an adjoining room. 
+Advisory to clause 7.5.5 
+• Where only one accessible room, guestroom and serviced apartment with en-suite facility is provided, it 
+should include an accessible shower rather than a bath, as many persons with disabilities and the elderly can 
+only independently use a shower. 
+
+[PDF page 100 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 0 
+C H APT ER 7 
+(a) Example of accessible guestroom with en-suite bathroom with bathtub 
+ 
+ 
+(b) Example of accessible guestroom with en-suite bathroom with shower seat 
+Figure 69 
+Example of Accessible Rooms in Hotels 
+ 
+ 
+ 
+ 
+ 
+ 
+850 min 
+850 
+min 
+450  
+min 
+300  
+min 
+Min clear floor space 
+1250 x 1500 
+Min clear  
+floor space 
+1500 x 1500 
+Min clear 
+floor space 
+900 x 1500 
+300 max 
+overlap 
+Wardrobe with knee 
+recess and no plinth 
+Level entrance 
+  
+  
+  
+850 min 
+850 
+min 
+300  
+min 
+450  
+min 
+Min clear floor space 
+1250 x 1500 
+Min clear  
+floor space 
+1500 x 1500 
+Level entrance 
+Wardrobe with knee 
+recess and no plinth 
+
+[PDF page 101 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 1 
+C H APT ER 7 
+7.6 
+Student Hostels, Halls of Residence and Dormitories 
+Functional Intent 
+Student hostels, halls of residence, dormitories and other similar accommodation 
+facilities must be accessible to persons with disabilities. Accessible rooms suitable 
+for wheelchair users must be provided on a proportional basis, have sufficient 
+wheelchair manoeuvring spaces and appropriate accessible features to ensure safe 
+and independent use. 
+7.6.1 
+The minimum width for accessible routes to all rooms and facilities must be in 
+accordance with clause 4.2.1. 
+7.6.2 
+In student hostels, halls of residence and dormitories, at least one in every 100 
+guestrooms or part thereof must be accessible, and accessible sanitary and 
+shower/bath facilities must be provided in accordance with clauses 5.2 and 5.7. 
+7.6.3 
+Switches and socket outlets in accessible rooms must be provided in accordance 
+with clause 7.4. 
+7.7 
+Purpose-built Workers’ Dormitories 
+Functional Intent 
+Purpose-built workers' dormitories must include accessible facilities for residents 
+who are temporarily injured and require the use of a wheelchair. Accessible rooms 
+equipped with suitable shower or bath facilities must be provided. 
+7.7.1 
+The minimum width for accessible routes to the accessible room and common 
+facilities must be in accordance with clause 4.2.1. 
+7.7.2 
+In purpose-built workers’ dormitories, at least one room must be accessible, and 
+accessible sanitary and shower/bath facilities must be provided in accordance with 
+clauses 5.2 and 5.7. 
+7.7.3 
+Switches and socket outlets in accessible rooms must be provided in accordance 
+with clause 7.4.
+
+[PDF page 102 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 2 
+C H APT ER 8 
+Chapter 8:  
+Signage and Wayfinding 
+8.1 
+International Symbol of Access for Persons with Disabilities 
+Functional Intent 
+The universally recognised International Symbol of Access must be used to identify 
+accessible features and facilities used by persons with disabilities. 
+8.1.1 
+General 
+8.1.1.1 
+Where a building is required to be made accessible, all users must be made aware 
+of the available facilities to ensure that persons with disabilities are informed of 
+suitable provisions for them. 
+8.1.1.2 
+The International Symbol of Access must be permanently and conspicuously 
+displayed to direct or indicate the location of various accessible facilities in the 
+building. The signs provided must be of durable material.  
+8.1.2 
+Symbol of Access 
+8.1.2.1 
+The Symbol of Access must be displayed to identify accessible features and facilities 
+designed for use by persons with disabilities. 
+8.1.2.2 
+The form of the Symbol of Access must be in accordance with the following: 
+(a) 
+it must consist of two elements, namely, a white symbolised figure in a 
+wheelchair and a plain blue square background; 
+(b) 
+the proportional layout of the symbolised figure must be in accordance with  
+Figure 70 and be of a sufficient size for visibility, at least 60 mm along the 
+shorter dimension; 
+(c) 
+the symbolised figure must face to the right. 
+8.1.2.3 
+The Symbol of Access must be displayed: 
+(a) 
+outside the building to identify buildings with accessible facilities; and 
+(b) 
+at areas where facilities are provided for persons with disabilities. 
+8.2 
+Signs Identifying Accessible Facilities 
+Functional Intent 
+Signage incorporating the Symbol of Access must be displayed prominently for 
+persons with disabilities to identify the facilities intended for them.  
+8.2.1 
+The Symbol of Access, as shown in Figure 70, must be displayed at various facilities 
+and destinations for persons with disabilities such as lifts, entrances, toilets, vehicle 
+parks, service and information counters and the like. 
+
+[PDF page 103 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 3 
+C H APT ER 8 
+8.3 
+Directional Signs 
+Functional Intent 
+Directional signs incorporating the Symbol of Access and the destination facility 
+must be displayed prominently for persons with disabilities to find their way to the 
+facilities intended for them. 
+8.3.1 
+Directional signs incorporating the Symbol of Access with indication of the facility, 
+as shown in Figure 71, must be displayed at main lobbies or passageways and at 
+points where there is a change of direction in order to direct persons with disabilities 
+to the various facilities such as lifts, entrances, toilets, vehicle parks and the like. 
+8.3.2 
+Where the location of the designated facility is not obvious or is distant from the 
+approach viewpoints, directional signs incorporating the Symbol of Access, as 
+shown in Figure 71, must be placed along the route leading to the facility. 
+ 
+ 
+ 
+ 
+ 
+Figure 71 
+Examples of Directional Signs for Facilities 
+ 
+Figure 70 
+Symbol of Access for Persons with Disabilities 
+60 min 
+60 min 
+(a) To accessible facility 
+(b) To accessible ramp/route 
+(c) To accessible lift 
+(d) To accessible parking 
+(e) To accessible individual washroom 
+(f) To toilet facilities with accessible washroom 
+
+[PDF page 104 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 4 
+C H APT ER 8 
+8.4 
+Signage 
+Functional Intent 
+Signage must be clearly visible, with graphical symbols and text that are easy to read 
+and understand. 
+8.4.1 
+All characters and graphical symbols on signage must: 
+(a) 
+be glare free; and 
+(b) 
+have colours and tones that contrast with the following background: 
+(i) 
+within the signs; and 
+(ii) 
+with the surrounding or substrate. 
+8.4.2 
+The size of graphical symbols on signage must be of a sufficient size for visibility, at 
+least 60 mm along the shorter dimension. 
+8.5 
+Tactile and Braille 
+Functional Intent 
+Tactile information and Braille must be incorporated in the signage to allow persons 
+with visual impairment to easily identify accessible facilities.  
+8.5.1 
+Tactile 
+8.5.1.1 
+Tactile signs must: 
+(a) 
+have raised tactile characters, graphical symbols or pictograms that: 
+(i) 
+have a raised relief of at least 1 mm; and 
+(ii) 
+are between 16 mm and 50 mm high; and 
+(b) 
+be duplicated in Braille in accordance with clause 8.5.2. 
+ 
+ 
+ 
+ 
+Advisory to clause 8.4 
+• The content of signs should be simple, short and easy to understand through consistent use of graphical 
+symbols or pictograms and text throughout a building.  
+• Letters and numbers on signs should use sans serif font and use Arabic numbers. Multi-word text should be 
+arranged with left alignment, begin with an upper-case letter, continue with lower case letters for better 
+readability. 
+• Where arrows are part of a sign, arrows should be located on the side of the sign to which they are pointing. 
+• Consideration should also be given to the location of signs so that they are clearly visible to people who may 
+be walking, standing or seated, or in a crowded situation. 
+• Careful consideration of lighting is essential, as poor illumination can create glare and strong shadows that 
+reduce the legibility of signs. 
+• Additional guidance for design of signage can be found in SS 599 – Guide for wayfinding signage in public 
+areas. 
+
+[PDF page 105 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 5 
+C H APT ER 8 
+8.5.2 
+Braille 
+8.5.2.1 
+Where Braille forms a part of a sign, a locator (e.g. semi-circular notch or tactile 
+shape) must be located at the left-hand edge of the sign to help locate the Braille 
+message as shown in Figure 72. 
+8.5.2.2 
+Braille must: 
+(a) 
+be located directly below the text and arranged with left alignment; 
+(b) 
+where an arrow is used in the sign, provide a small arrow for Braille readers; 
+(c) 
+be raised, dome-shaped and comfortable to touch without any sharp edges; 
+and 
+(d) 
+be in accordance with the specification for Braille on signs as shown in Figure 
+73: 
+(i) 
+dot-based diameter is 1.5 mm; 
+(ii) 
+distance between dots in same cell is 2.5 mm; 
+(iii) 
+distance between corresponding dots in adjacent cells is 6.5 mm; 
+(iv) 
+distance between corresponding dots from one cell directly below is      
+10 mm; 
+(v) 
+dot height is between 0.6 mm and 0.9 mm. 
+ 
+ 
+ 
+Figure 72 
+Example of Tactile and Braille Signs 
+ 
+Advisory to clause 8.5 
+• To inform persons with visual impairment of signs with tactile and Braille information, TGSI, measuring 600 
+mm wide by 300 mm deep, commencing 300 mm away from the edge of the wall surface, should be provided 
+on the floor. 
+60 min 
+16 - 50 
+Raised tactile 
+characters 
+Braille text 
+Braille locator 
+No sharp edges 
+16 - 50 
+Raised tactile white 
+symbolised figure on 
+blue background 
+Pictogram 
+
+[PDF page 106 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 6 
+C H APT ER 8 
+ 
+ 
+Figure 73 
+Specifications for Braille on Signage 
+8.6 
+Service and Information Counters 
+Functional Intent 
+Service counters must be accessible to and usable by wheelchair users. They must 
+be equipped with appropriate assistive listening system for people who are hard-of-
+hearing. 
+8.6.1 
+Where service counters are provided, at least one counter must be catered for 
+wheelchair users and persons who are hard-of-hearing. These service counters 
+must:  
+(a) 
+have part of the counter catered for wheelchair users and: 
+(i) 
+where it serves as a writing surface, must not be more than 800 mm from 
+the floor level and be provided with the required clear knee and toe 
+space as shown in Figure 74; or 
+(ii) 
+where it does not serve as a writing surface, must not be more than 860 
+mm from the floor level; 
+(b) 
+have a hearing enhancement system provided in accordance with clause 9.6. 
+8.6.2 
+A clear floor space of at least 900 mm by 1200 mm must be provided at counters 
+catered for wheelchair users. 
+8.6.3 
+Where a forward approach is used, a clear knee space of at least 900 mm wide, 480 
+mm deep and 700 mm high must be provided which may overlap the clear floor 
+space by a maximum of 480 mm. 
+1.5 
+10 
+2.5 
+6.5 
+0.6 - 0.9 
+(a) Front view 
+(b) Side view 
+
+[PDF page 107 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 7 
+C H APT ER 8 
+ 
+ 
+Figure 74 
+Service and Information Counters 
+  
+700 min 
+800 max 
+230 
+min 
+230 
+min 
+250 
+min 
+200  
+min 
+(a) Plan of service counter with forward approach 
+480 min 
+Min 900 x 1200 
+clear floor space 
+Dotted line indicates 
+tabletop above 
+(b) Section of service counter with clear knee space 
+Standing counter 
+behind 
+
+[PDF page 108 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 8 
+C H APT ER 9 
+Chapter 9:  
+Components of a Building 
+9.1 
+Illumination 
+Functional Intent 
+Lighting must provide sufficient illumination suitable for people who are partially 
+sighted, enabling them to navigate and use the premises safely and effectively. 
+9.1.1 
+Lighting must be uniform with no extreme difference in the level of brightness. 
+9.1.2 
+Lighting must not cause reflection, glare, or strong shadows that would affect 
+wayfinding, perception of hazards, or give rise to optical illusions. 
+9.2 
+Controls and Operating Devices 
+Functional Intent 
+The design, construction and installation of controls and operating devices must 
+enable independent and safe use by persons with disabilities. 
+9.2.1 
+Controls and operating devices include but are not limited to, levers or mixer taps, 
+activation devices, window openers, locks and switches, keypads, card readers and 
+intercom buttons, etc. 
+9.2.2 
+The operable parts of controls, as shown in Figure 75, must be: 
+(a) 
+located at 350 mm or more from the internal corner of a space or any 
+obstruction;  
+(b) 
+located at a height of between 450 mm and 1200 mm from the floor level; 
+(c) 
+located adjacent to a minimum clear floor space of 900 mm by 1200 mm; 
+(d) 
+operable with a force of 22 N or less; 
+(e) 
+operable by one hand; and 
+(f) 
+of a type that does not require tight grasping, pinching or twisting of the wrist. 
+9.2.3 
+Controls for power-operated swing doors, as shown in Figure 76, must: 
+(a) 
+be in accordance with clauses 9.2.2(b) to (f); 
+(b) 
+be located at least 600 mm from the internal corner of a room or obstruction; 
+(c) 
+have a clear 1000 mm minimum distance from the swing of the arc of the door;  
+(d) 
+allow sufficient opening time for persons with mobility aids to pass through the 
+door safely before it closes; and 
+(e) 
+contrast in colour with their background. 
+Advisory to clause 9.1 
+• Controls and operating mechanisms should be illuminated to at least a level of 100 lux, while signage should 
+be illuminated to at least a level of 200 lux. 
+
+[PDF page 109 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 0 9 
+C H APT ER 9 
+ 
+ 
+ 
+Figure 75 
+Controls and Operating Mechanisms 
+ 
+ 
+ 
+Figure 76 
+Distance of Controls from Obstructions 
+ 
+ 
+ 
+ 
+Advisory to clause 9.2 
+• Operating controls and devices should be designed and installed consistently to facilitate identification and 
+use by persons with disabilities. All switches and controls should be easy to understand without requiring 
+specialist knowledge. For devices that wheelchair users need to view and interact with, such as keypads, card 
+readers, and touchscreen display, installation should be at a height between 800 mm and 1000 mm from the 
+floor level.  
+• Manual controls for power-operated doors should be distinguishable against the background and should not 
+be located such that a person, having used the control, needs to move to avoid contact with the door as it 
+opens. 
+• Controls for power-operated sliding doors should not be mounted on the sliding door. Where it is mounted on 
+the sliding door, the height should be between 800 mm and 1000 mm from the floor level. 
+1200 max 
+450 min 
+Switches, controls, intercom 
+Outlets, jack points 
+Refuse chute hopper 
+1100  
+preferred  
+max height 
+600 min 
+Power-
+operated 
+swing door 
+Control for 
+power-operated 
+swing door 
+350  
+min 
+Switches, 
+controls and 
+socket outlets   
+
+[PDF page 110 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 0 
+C H APT ER 9 
+9.3 
+Handrails 
+Functional Intent 
+Handrails must be robust and provide comfortable support and guidance for users. 
+9.3.1 
+Handrails must: 
+(a) 
+have adequate resistance to hand slippage; 
+(b) 
+be free of any sharp or abrasive elements; 
+(c) 
+be installed to resist a force of at least 1.3 kN applied at any position and in any 
+direction without deformation or loosening or rotation of the fastenings or 
+fittings; 
+(d) 
+have continuous gripping surfaces, without interruptions or obstructions that 
+can break a hand hold;  
+(e) 
+have a circular section of 32 mm to 50 mm in diameter or an equivalent 
+gripping surface as shown in Figure 77(a); and  
+(f) 
+have a clear space between the handrail and all wall surfaces as shown in 
+Figure 77(b) of: 
+(i) 
+a minimum of 40 mm; or 
+(ii) 
+a minimum of 60 mm where the wall has a rough surface. 
+9.3.2 
+A recess containing a handrail must extend at least 450 mm above the top of the 
+handrail as shown in Figure 77(b). 
+9.4 
+Grab Bars 
+Functional Intent 
+Grab bars must be robust and allow safe and comfortable use by users for support. 
+9.4.1 
+Grab bars must: 
+(a) 
+have adequate resistance to hand slippage; 
+(b) 
+be free of any sharp or abrasive elements;  
+(c) 
+be installed to resist a force of at least 1.3 kN applied at any position and in any 
+direction without deformation or loosening or rotation of the fastenings or 
+fittings; 
+(d) 
+have a diameter of between 32 mm and 45 mm or a shape that provides an 
+equivalent gripping surface; and  
+(e) 
+have a clear space between the grab bar and all wall surfaces of: 
+(i) 
+a minimum of 40 mm; or 
+(ii) 
+a minimum of 60 mm where the wall has a rough surface. 
+ 
+
+[PDF page 111 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 1 
+C H APT ER 9 
+ 
+ 
+Figure 77 
+Handrails 
+9.5 
+Seating Spaces for Wheelchair Users 
+Functional Intent 
+Adequate seating spaces for people using mobility aids, including wheelchair users, 
+must be provided on a proportional basis at appropriate locations. These spaces 
+must be easily identifiable and integrated among standard seating areas. 
+9.5.1 
+General 
+9.5.1.1 
+Where fixed seating arrangements are provided, seating spaces for wheelchair users 
+must be provided. 
+9.5.1.2 
+Seating spaces must be connected to accessible routes and access must be direct 
+and unobstructed. 
+9.5.1.3 
+Directional signs in accordance with clause 8.3 must be clearly displayed to direct 
+persons with disabilities to the seating spaces. 
+32 min 
+50 max 
+R15 min 
+270
+o min gripping surface 
+32 - 50 
+40 min for 
+smooth wall 
+surfaces 
+ 
+60 min for 
+rough wall 
+surfaces 
+40 min for 
+smooth wall 
+surfaces 
+ 
+60 min for 
+rough wall 
+surfaces 
+450  
+min 
+(a) Examples of acceptable 
+handrail cross-sectional profiles 
+(b) Handrail in recess and 
+clearances from wall 
+
+[PDF page 112 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 2 
+C H APT ER 9 
+Advisory to clause 9.5 
+• Where fixed seats are provided, empty spaces across different locations and types should be provided 
+between the seats to accommodate wheelchair users. In addition, where two or more wheelchair spaces are 
+provided, at least two wheelchair spaces should be located side by side to allow two wheelchair users to sit 
+together and alongside fixed seats. 
+• There should be good sight lines from all seating positions so that viewers are able to see the speaker, a person 
+assisting with sign language, the projection screen, and the presentation, performance, or sports event. 
+9.5.2 
+Seating Spaces 
+9.5.2.1 
+Where fixed seating arrangements are provided, including in cinemas, theatres, 
+concert halls, stadia, retractable tiered seatings and the like, at least two seating 
+spaces for wheelchair users must be provided for the first 200 seats. One additional 
+seating space for wheelchair users must be provided for every subsequent 200 seats 
+or part thereof. 
+9.5.2.2 
+Seating spaces for wheelchair users among fixed seating arrangements, as shown in 
+Figure 78, must: 
+(a)  
+be clearly identified; and 
+(b) 
+have a clear floor space of not less than 900 mm wide by 1200 mm deep. 
+ 
+ 
+ 
+ 
+ 
+Figure 78 
+Seating Spaces 
+ 
+Seating spaces  
+
+[PDF page 113 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 3 
+C H APT ER 9 
+9.5.3 
+Seating Spaces at Eating Establishments 
+9.5.3.1 
+Where fixed seating is provided in hawker centres, food courts and other eating 
+outlets and establishments, at least two tables for use by persons with disabilities 
+must be provided for the first 20 tables. One additional table must be provided for 
+every subsequent 10 tables or part thereof. 
+9.5.3.2 
+The Symbol of Access in accordance with Chapter 8 must be conspicuously 
+displayed on the tables intended for wheelchair users. 
+9.5.3.3 
+The height of the table provided for wheelchair users must not be higher than 800 
+mm with a minimum clear knee space of 700 mm high and 480 mm deep. 
+9.5.3.4 
+A minimum clear space of 750 mm along the edge of the table must be provided 
+where the seating space for wheelchair users is located. 
+9.5.3.5 
+An accessible route with a minimum clear width of 1800 mm must be provided in 
+front of the stalls. 
+9.5.3.6 
+An accessible route with a minimum clear width of 900 mm must be provided from 
+the primary accessible route to the tables intended for wheelchair users. 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 79 
+Examples of Seating Spaces at Eating Establishments 
+750 
+min 
+Seating 
+space for 
+wheelchair 
+user 
+1200 min 
+480 
+Fixed 
+seating  
+900 min 
+Fixed 
+seating  
+Seating space for 
+wheelchair user 
+750 min 
+
+[PDF page 114 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 4 
+C H APT ER 9 
+9.6 
+Hearing Enhancement Systems 
+Functional Intent 
+Suitable hearing enhancement systems for persons who are hard-of-hearing must 
+be provided at information/service counters and in rooms and spaces where 
+audible information is conveyed to a captive audience. 
+9.6.1 
+A hearing enhancement system must be provided: 
+(a) 
+in any space or room with a floor area more than 75 m2 used for conferences, 
+meetings, lectures, classes, presentations, performances or films and the like; 
+and 
+(b) 
+at the main public information/service counters, including reception desk, 
+information points and the like. 
+Note 
+Clause 9.6.1 does not apply to residential developments, parks and open spaces including civic 
+plazas; markets, hawker or food centres and eating establishments, classrooms in pre-schools, 
+primary, secondary schools and pre-university, factories, workshops, industrial buildings and 
+office/showroom areas in warehouses, and purpose-built workers’ dormitories. 
+9.6.2 
+Hearing enhancement systems that comply with clause 9.6.1(a) must: 
+(a) 
+where an induction loop is used, have an area of coverage not less than 75% 
+of the floor area of the room; or 
+(b) 
+where the system requires the use of receivers or similar devices: 
+(i) 
+have an area of coverage not less than 75% of the floor area of the room; 
+(ii) 
+provide at least two receivers for the first 100 persons; and 
+(iii) 
+provide one additional receiver for every subsequent 50 persons or any 
+part thereof. 
+9.6.3 
+Where a hearing enhancement system is provided in accordance with clause 9.6.1, 
+the International Symbol of Access for persons who are hard-of-hearing must be 
+conspicuously displayed, in accordance with clause 8.4, and as shown in Figure 80. 
+ 
+ 
+ 
+Figure 80 
+Symbol of Access for Persons who are Hard-of-hearing  
+(a) Symbol of Access for persons who 
+are hard-of-hearing 
+(b) Hearing enhancement system that 
+operates with telecoil 
+
+[PDF page 115 of 116]
+Code on Accessibility in the Built Environment 2025 
+ 
+1 1 5 
+C H APT ER 9 
+Advisory to clause 9.6 
+• Hearing enhancement systems, such as those utilising induction loop, infrared, radio frequency, Bluetooth or 
+Wi-Fi, are commonly used to provide an enhanced level of sound. Expert advice should be sought when 
+selecting an appropriate system for the specific situation and purpose. 
+• To ensure the proper installation and functionality of an induction loop system, the system should be designed 
+and installed to suit the room size and shape. The system should be tested and commissioned in accordance 
+with IEC 60118-4. 
+• Public address systems should be clearly audible and equipped with a hearing enhancement system and 
+visual information display systems to show important messages. 
+9.7 
+Warning Tactile Ground Surface Indicators (TGSI) 
+Functional Intent 
+Warning tactile ground surface indicators must be provided consistently to facilitate 
+detection of hazards for persons with visual impairment. 
+9.7.1 
+The warning TGSI must comprise of truncated domes that: 
+(a) 
+have a base diameter of 35 mm ± 1 mm; 
+(b) 
+have a top diameter of 25 mm ± 1 mm; 
+(c) 
+have a height of 5 mm ± 1 mm;  
+(d) 
+are spaced 50 mm apart, centre to centre; and 
+(e) 
+are slip-resistant.  
+ 
+Figure 81 
+Warning Tactile Ground Surface Indicators (TGSI) 
+15 
+35 
+50 
+50 
+50 
+50 
+35 ± 1 
+25 ± 1 
+5 ± 1 
+(a) Plan view 
+(b) Detail of truncated dome 
+
+[PDF page 116 of 116]
+ 
+ 
+1 1 6 
+ 
+ Composition of the Code Review Committee  
+The Code Review Committee comprised representatives from the following organisations: 
+1 
+Government Agencies 
+ 
+(a) Building and Construction Authority (Chair) 
+ 
+(b) Housing and Development Board 
+ 
+(c) Land Transport Authority 
+ 
+(d) National Parks Board 
+ 
+(e) Urban Redevelopment Authority 
+2 
+Institutions 
+ 
+(a) National University of Singapore 
+ 
+(b) Singapore Association of Occupational Therapists 
+ 
+(c) Singapore University of Technology and Design 
+3 
+Social Service Agencies 
+ 
+(a) Disabled People’s Association 
+ 
+(b) Handicaps Welfare Association 
+ 
+(c) Muscular Dystrophy Association (Singapore) 
+ 
+(d) Singapore Association of the Visually Handicapped 
+ 
+(e) SPD 
+4 
+Trade Associations and Chambers 
+ 
+(a) Real Estate Developers’ Association of Singapore 
+ 
+(b) Singapore Institute of Architects 
+ 
+ 
+The Building and Construction Authority would like to extend its appreciation to all persons with 
+disabilities, representatives from interest groups and industry associations who have contributed 
+their invaluable time, inputs and efforts towards the review and development of this Code. 
