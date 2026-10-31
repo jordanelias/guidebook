@@ -126,6 +126,10 @@ add('FR-10b', 12, 'REF-01030', 'FR', '10', 'm', FR_B, FR_SECT + ', recommandatio
     'A recommendation, stated against the regulatory threshold of 5%: the guide advises resting at the same spacing from a gentler slope than the rule requires.',
     qty='recommended spacing of rest landings once any slope above 2% is laid over a long distance', rel=('condition_on', 'FR-2', None))
 
+# PR 209 (session_2026-10-30-rest-landing-parameter) already holds these two readings on main, as extractions 116 (DE, 600 cm) and 117 (UK 1.26(c), 10 m); not repeated (rule 5)
+SKIP = {'UK-10', 'DE-6'}
+ROWS[:] = [r for r in ROWS if r['key'] not in SKIP]
+
 EXISTING = {'IE-81': 81, 'ES-100': 100, 'PT-109': 109, 'PT-110': 110, 'UK-26': 26}
 
 

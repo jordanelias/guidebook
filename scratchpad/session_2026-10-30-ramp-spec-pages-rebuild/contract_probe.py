@@ -96,7 +96,7 @@ jour = one(f"select count(*) from evidence_sources where ref_id in ({ph}) and so
 nojour = one(f"select count(*) from evidence_sources where ref_id in ({ph}) and source_type='journal_article' and journal_name is null", *refs)
 wrong = q(f"select ref_id from evidence_sources where ref_id in ({ph}) and (upper(coalesce(notes,'')) like '%ARE WRONG%' or upper(coalesce(notes,'')) like '%IS WRONG%' or upper(coalesce(notes,'')) like '%WRONG YEAR%' or upper(coalesce(verification_note,'')) like '%ARE WRONG%')", *refs)
 row('E7', 'evidence_sources, evidence_source_authors', st(noauth or noyear or nojour or wrong, len(refs)), len(refs),
-    f'no author row {noauth}; no year {noyear}; journal articles lacking journal_name {nojour} of {jour} (GAP-072); sources whose own notes say a stored field is wrong (heuristic on the note text): {[r[0] for r in wrong]}')
+    f'no author row {noauth}; no year {noyear}; journal articles lacking journal_name {nojour} of {jour} (the add-source writer gap); sources whose own notes say a stored field is wrong (heuristic on the note text): {[r[0] for r in wrong]}')
 # E8 gaps
 pend = one(f"select count(*) from specifications where parameter_id in ({PIN}) and retired_at is null and state='pending'")
 cols = [x[1] for x in c.execute('pragma table_info(gaps)')]
