@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-11-06-pipeline-batch",
+  "artifact": "sessions/session_2026-11-06-pipeline-batch.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": ["adherence-logging-and-attestation"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-11-06-pipeline-batch.json",
+      "reason": "This attestation covers the session record above: a research session that read two admitted codes against six parameters through the sanctioned writers, was attacked by a read-only critic (pass 8, thirteen sustained findings, eleven repaired by a second migration, two left provisionally disputed), and whose DoD gate reads COMPLIANT on its own stem while examining none of the extraction rows."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The first scans claimed headroom and turning absent from the UK text on a keyword search that could not have matched the figures' spellings; the critic found it, and scans 8 and 9 replace the claim."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Lenses on the first nineteen extractions are inconsistent across the two sources and cannot be corrected by any writer; the finding is PROVISIONAL-DISPUTED. Priors on searches 199 and 200 were written after the critic reported their hit counts."
+    }
+  ],
+  "bias_direction": "The author chose the two sources because their full texts were already persisted, which favours sources that were easy to reach and under-records the Co-1 and anthropometry work whose text is paywalled; the author also chose which clauses answered each parameter by keyword, and a keyword shape hides figures it does not spell.",
+  "independent_reviewer_counterclaim": "The strongest objection is that nineteen of twenty-five rows were checked by the critic for quotation and column alignment but their lens, and whether each figure is the right quantity for its parameter (a landing width read as corridor width on the level approach, a free height read as headroom), rest on the author's reading, and the gate that said COMPLIANT never looked at them.",
+  "verdict": "DEVIATION-LOGGED"
+}
