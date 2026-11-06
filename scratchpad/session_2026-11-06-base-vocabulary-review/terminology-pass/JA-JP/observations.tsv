@@ -1,0 +1,105 @@
+obs_id	concept_id	concept_label	phrase_verbatim	language	instrument	locator	context_quote_verbatim	quote_check	phrase_in_quote	text_file
+JA-001	C01	Well-illuminated (if site expected to be lit)	照明設備	ja	設計標準R7	pdf p.50 (printed 34) 1.2.3.4.4	夜間等の通行に支障のない明るさを確保できるよう、照明設備を設ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-002	C01	Well-illuminated (if site expected to be lit)	むらのない明るさ	ja	設計標準R7	pdf p.79 (printed 63) 5.2.3.4.3	通行に支障のない明るさ、むらのない明るさを確保できるよう、照明設備を設ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-003	C01	Well-illuminated (if site expected to be lit)	足元灯	ja	設計標準R7	pdf p.79 (printed 63) 5.2.3.4.3	必要に応じて、足元灯を設ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-004	C02	Surface is firm, stable and slip resistant	粗面	ja	政令379	Art.11(1)(1)	表面は、粗面とし、又は滑りにくい材料で仕上げること。	exact	True	text/6ac7f09b7e786570.txt
+JA-005	C02	Surface is firm, stable and slip resistant	滑りにくい材料	ja	政令379	Art.17(1)(1)	表面は、粗面とし、又は滑りにくい材料で仕上げること。	exact	True	text/6ac7f09b7e786570.txt
+JA-006	C02	Surface is firm, stable and slip resistant	濡れても滑りにくい材料	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.2	通路の表面は、濡れても滑りにくい材料で仕上げる。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-007	C02	Surface is firm, stable and slip resistant	ノンスリップ加工	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.2	傾斜路の表面は、ノンスリップ加工を施す等、濡れても滑りにくい材料で仕上げる。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-008	C02	Surface is firm, stable and slip resistant	床の滑り	ja	設計標準R7	pdf p.12 (contents, appendix 4)	4.床の滑り	exact	True	text/1bc5c919cb81e7bf.txt
+JA-009	C03	Seating	高齢者、障害者等の休憩の用に供する設備	ja	省令114	Art.3(1)(7)	高齢者、障害者等の休憩の用に供する設備を適切な位置に設けること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-010	C03	Seating	ベンチ	ja	設計標準R7	pdf p.75 (printed 59) 4.2.3.4.3	ベンチや休憩のためのスペースは、通行の妨げに	exact	True	text/1bc5c919cb81e7bf.txt
+JA-011	C03	Seating	休憩用設備	ja	設計標準R7	pdf p.75 (printed 59) 4.2.3.4.3	4.2.3.4.3 休憩用設備	ws-normalised	True	text/1bc5c919cb81e7bf.txt
+JA-012	C03	Seating	優先席	ja	規則110	Art.1(1)(5)	優先席（主として高齢者、障害者等の優先的な利用のために設けられる座席をいう。	exact	True	text/4bd56408a9a895dc.txt
+JA-013	C04	Handrails	手すり	ja	政令379	Art.12(1)(1)	踊場を除き、手すりを設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-014	C04	Handrails	両側に手すり	ja	省令114	Art.4(1)(4)	踊場を除き、両側に手すりを設けること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-015	C05	Clear width	幅	ja	政令379	Art.19(2)(3)(i)	幅は、百二十センチメートル以上とすること。	exact	True	text/6ac7f09b7e786570.txt
+JA-016	C05	Clear width	有効幅員	ja	設計標準R7	pdf p.76 (printed 60) 5.2.2.1	階段の有効幅員は、140cm以上とする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-017	C05	Clear width	出入口の有効幅員	ja	設計標準R7	pdf p.112 (printed 96) 9.2 note	出入口の有効幅員は、戸を開けた状態で、開き戸の場合は戸の面と枠の一番狭い部分間の幅	exact	True	text/1bc5c919cb81e7bf.txt
+JA-018	C06	Accessible path of travel	移動等円滑化経路	ja	政令379	Art.19(1)	高齢者、障害者等が円滑に利用できる経路（以下この条及び第二十六条第一項において「移動等円滑化経路」という。）	exact	True	text/6ac7f09b7e786570.txt
+JA-019	C06	Accessible path of travel	視覚障害者移動等円滑化経路	ja	政令379	Art.22(1)	視覚障害者が円滑に利用できる経路（以下この条において「視覚障害者移動等円滑化経路」という。）	exact	True	text/6ac7f09b7e786570.txt
+JA-020	C07	Drainage	排水溝	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.2 note	傾斜路には水はけのよい材料を用いることや排水溝を設けるこ	exact	True	text/1bc5c919cb81e7bf.txt
+JA-021	C07	Drainage	水はけのよい材料	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.2 note	傾斜路には水はけのよい材料を用いることや排水溝を設けるこ	exact	True	text/1bc5c919cb81e7bf.txt
+JA-022	C07	Drainage	溝蓋	ja	設計標準R7	pdf p.49 (printed 33) 1.2.3.4.2 heading	1.2.3.4.2    溝蓋	exact	True	text/1bc5c919cb81e7bf.txt
+JA-023	C08	Clear signage	標識	ja	政令379	Art.20	当該エレベーターその他の昇降機、便所又は駐車施設があることを表示する標識を設けなければならない。	exact	True	text/6ac7f09b7e786570.txt
+JA-024	C08	Clear signage	案内板	ja	政令379	Art.21(1)	配置を表示した案内板その他の設備を設けなければならない。	exact	True	text/6ac7f09b7e786570.txt
+JA-025	C08	Clear signage	日本産業規格Ｚ八二一〇	ja	省令114	Art.14(2)	当該内容が日本産業規格Ｚ八二一〇に定められているときは、これに適合するもの	exact	True	text/edd9f6fcfa13cb80.txt
+JA-026	C08	Clear signage	日本工業規格Ｚ八二一〇	ja	省令113	para 2	当該内容が日本工業規格Ｚ八二一〇に定められているときは、これに適合するもの	exact	True	text/b8eef6e624b8c1d9.txt
+JA-027	C08	Clear signage	案内表示	ja	設計標準R7	pdf p.10 (contents) chapter 2 s.7	7.案内表示	exact	True	text/1bc5c919cb81e7bf.txt
+JA-028	C09	Audio accessibility and communication enhancement technologies	音声により知らせる装置	ja	政令379	Art.19(2)(5)(ix)(1)	籠内に、籠が到着する階並びに籠及び昇降路の出入口の戸の閉鎖を音声により知らせる装置を設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-029	C09	Audio accessibility and communication enhancement technologies	聴覚障害者用集団補聴装置（ヒアリングループシステム）	ja	設計標準R7	pdf p.211 (printed 195) 17 design example caption	難聴者の補聴器に雑音の少ないクリアな音声を届けることができる聴覚障害者用集団補聴装置（ヒアリングループシステム）	exact	True	text/1bc5c919cb81e7bf.txt
+JA-030	C09	Audio accessibility and communication enhancement technologies	情報伝達設備	ja	設計標準R7	pdf p.208 (printed 192) chapter 2 s.17 heading	17.情報伝達設備	exact	True	text/1bc5c919cb81e7bf.txt
+JA-031	C09	Audio accessibility and communication enhancement technologies	光警報装置	ja	設計標準R7	pdf p.209 (printed 193) 17.2.1.2.1	便所には、聴覚障害者等に対して火災時の情報を伝達するための光警報装置を設置する。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-032	C10	Level landings with clear space	踊場	ja	政令379	Art.19(2)(4)(iii)	高さ七十五センチメートル以内ごとに踏幅が百五十センチメートル以上の踊場を設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-033	C10	Level landings with clear space	水平なスペース	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.1.2	踏幅150㎝以上の水平なスペースを設ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-034	C11	Floor surface is stable, firm, and non-slip	床の表面	ja	設計標準R7	pdf p.70 (printed 54) 4.2.1.1.1	床の表面は、粗面とし、又は滑りにくい材料で仕上げる。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-035	C12	Clear space for approach	接近	ja	設計標準R7	pdf p.124 (printed 108) 10.x [located by grep; page not read in full]	車椅子で接近できるよう、床置式便器の前面は、	exact	True	text/1bc5c919cb81e7bf.txt
+JA-036	C12	Clear space for approach	カウンター等の前面	ja	設計標準R7	pdf p.220 (printed 204) 18.3 note [located by grep; page not read in full]	カウンター等の前面には車椅子使用者が転回できるスペースを設け	exact	True	text/1bc5c919cb81e7bf.txt
+JA-037	C13	Well illuminated (if required for expected usage)	床面照度	ja	設計標準R7	pdf p.188 (printed 172) 13 [located by grep; page not read in full]	通路の階段がある部分には、適度な床面照度と視認性を確保する。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-038	C15	Shelter	上屋	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.3	融雪装置や上屋を設けることが望ましい	exact	True	text/1bc5c919cb81e7bf.txt
+JA-039	C15	Shelter	屋根、庇	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.3 heading	1.2.3.3 屋根、庇	ws-normalised	True	text/1bc5c919cb81e7bf.txt
+JA-040	C16	Riser height and tread depth	蹴上げの寸法	ja	省令114	Art.4(1)(2)	蹴上げの寸法は、十六センチメートル以下とすること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-041	C16	Riser height and tread depth	踏面の寸法	ja	省令114	Art.4(1)(3)	踏面の寸法は、三十センチメートル以上とすること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-042	C16	Riser height and tread depth	けあげの寸法	ja	設計標準R7	pdf p.76 (printed 60) 5.2.2.1	けあげの寸法は、16cm以下とする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-043	C16	Riser height and tread depth	Ｔ＋２Ｒ	ja	設計標準R7	pdf p.78 (printed 62) 5.2.3.2.2 note	550㎜≦Ｔ＋２Ｒ≦650mm （Ｔ：踏み面、Ｒ：蹴上げ）	exact	True	text/1bc5c919cb81e7bf.txt
+JA-044	C17	Nosing design	段鼻の突き出し	ja	政令379	Art.12(1)(4)	段鼻の突き出しその他のつまずきの原因となるものを設けない構造とすること。	exact	True	text/6ac7f09b7e786570.txt
+JA-045	C18	No open riser	蹴込み板	ja	設計標準R7	pdf p.78 (printed 62) 5.2.3.2.2	引っかかり防止に配慮し、蹴込み板のない構造は避ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-046	C18	No open riser	蹴込み寸法	ja	設計標準R7	pdf p.78 (printed 62) 5.2.3.2.2	蹴込み寸法は、2cm以下とする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-047	C19	Level threshold	前後に高低差がない	ja	政令379	Art.19(2)(2)(ii)	かつ、その前後に高低差がないこと。	exact	True	text/6ac7f09b7e786570.txt
+JA-048	C19	Level threshold	下枠の立ち上がり	ja	設計標準R7	pdf p.74 (printed 58) 4.2.3.2 note	引き戸の防火戸で、下枠の立ち上がりの無いものは、車椅子での通行に支障がなく有効である。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-049	C20	Height clearance (if sheltered or parkade)	天井高さ	ja	設計標準R7	pdf p.55 (printed 39) design-example caption [located by grep; page not read in full]	天井高さ2.7mが確保されたピロティ下の車椅子使用者用駐	exact	True	text/1bc5c919cb81e7bf.txt
+JA-050	C21	Edge protection	立ち上がり	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.1.2	側壁がない傾斜路側端には、5㎝以上の立ち上がりを設けることが望ましい。	line-joined	True	text/1bc5c919cb81e7bf.txt
+JA-051	C21	Edge protection	脱輪防止	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.1.2	杖等による危険の認知、車椅子のキャスター等の脱輪防止等のため	exact	True	text/1bc5c919cb81e7bf.txt
+JA-052	C21	Edge protection	車椅子当たり	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.1.2	車椅子の乗り越え防止のため立ち上がり部に高さ35cm以上の幅木状の車椅子当たりを連続して設けることが望ましい。	line-joined	True	text/1bc5c919cb81e7bf.txt
+JA-053	C22	Colour-contrasted and slip-resistant strip on nosing	色の明度、色相又は彩度の差	ja	政令379	Art.12(1)(3)	踏面の端部とその周囲の部分との色の明度、色相又は彩度の差が大きいことにより段を容易に識別できるものとすること。	exact	True	text/6ac7f09b7e786570.txt
+JA-054	C22	Colour-contrasted and slip-resistant strip on nosing	滑り止め	ja	設計標準R7	pdf p.78 (printed 62) 5.2.3.3	踏面の端部（段鼻）には、滑り止めを設ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-055	C22	Colour-contrasted and slip-resistant strip on nosing	輝度比	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.2	踏面の端部とその周囲の部分との輝度比を確保することが望ましい。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-056	C23	Tactile attention indicators (truncated domes)	点状ブロック等	ja	政令379	Art.11(1)(2)	点状ブロック等（床面に敷設されるブロックその他これに類するものであって、点状の突起が設けられており	exact	True	text/6ac7f09b7e786570.txt
+JA-057	C23	Tactile attention indicators (truncated domes)	視覚障害者誘導用ブロック等	ja	設計標準R7	pdf p.10 (contents) chapter 2 s.8	8.視覚障害者誘導用ブロック等、音声等による誘導設備	exact	True	text/1bc5c919cb81e7bf.txt
+JA-058	C24	Slope	勾配	ja	政令379	Art.19(2)(4)(ii)	勾配は、十二分の一を超えないこと。	exact	True	text/6ac7f09b7e786570.txt
+JA-059	C24	Slope	勾配	ja	政令379	Art.13(1)(1) [source carries ruby こう on 勾]	勾配が十二分の一を超え、又は高さが十六センチメートルを超える傾斜がある部分には、手すりを設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-060	C24	Slope	傾斜	ja	政令379	Art.17(1)(3)(i)	勾配が二十分の一を超える傾斜がある部分には、手すりを設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-061	C25	Sink faucet is easy to use or automatic	水栓金具	ja	設計標準R7	pdf p.140 (printed 124) 10.x [located by grep; page not read in full]	水栓金具は、レバー式、センサー式等、操作が容易なものとする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-062	C26	Outlets and switches are at accessible heights	コンセントの中心高さ	ja	設計標準R7	pdf p.226 (printed 210) 18.5.1.1	コンセントの中心高さは、床から40㎝程度とする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-063	C26	Outlets and switches are at accessible heights	スイッチ類	ja	設計標準R7	pdf p.226 (printed 210) 18.5.1.1	スイッチ類（特殊なスイッチを除く）の中心高さは、110㎝程度	exact	True	text/1bc5c919cb81e7bf.txt
+JA-064	C28	Level landings with clear space and at regular intervals	高さ七十五センチメートル以内ごと	ja	省令114	Art.6(1)(3)	高さ七十五センチメートル以内ごとに踏幅が百五十センチメートル以上の踊場を設けること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-065	C30	Accessible lockers	ロッカー	ja	設計標準R7	pdf p.175 (printed 159) 12.4 [located by grep; page not read in full]	車椅子使用者の脱衣・更衣等のスペースの近くに、車椅子使用者用の収納棚やロッカー等を設ける。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-066	C31	Accessible door hardware	取っ手	ja	設計標準R7	pdf p.74 (printed 58) 4.2.3.2 note	防火戸の取っ手は、高齢者、障害者等が容易に操作できる形式のものとする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-067	C31	Accessible door hardware	自動的に開閉する構造	ja	政令379	Art.19(2)(2)(ii)	戸を設ける場合には、自動的に開閉する構造その他の車椅子使用者が容易に開閉して通過できる構造とし	exact	True	text/6ac7f09b7e786570.txt
+JA-068	C31	Accessible door hardware	ドアクローザー	ja	設計標準R7	pdf p.112 (printed 96) 9.2 [located by grep; clause read]	ドアクローザーは、閉めはじめはゆっくり閉まる等、閉鎖作動時間が十分に確保され、かつ軽い力で操作	exact	True	text/1bc5c919cb81e7bf.txt
+JA-069	C32	Accessible controls	制御装置	ja	政令379	Art.19(2)(5)(v)	籠内及び乗降ロビーには、車椅子使用者が利用しやすい位置に制御装置を設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-070	C32	Accessible controls	点字その他国土交通大臣が定める方法	ja	政令379	Art.19(2)(5)(ix)(2)	点字その他国土交通大臣が定める方法により視覚障害者が円滑に操作することができる構造とすること。	exact	True	text/6ac7f09b7e786570.txt
+JA-071	Q-height	height	受け口の高さ	ja	政令379	Art.14(4)	受け口の高さが三十五センチメートル以下のものに限る。	exact	True	text/6ac7f09b7e786570.txt
+JA-072	Q-level	level	高低差	ja	省令114	Art.7(2)(3)	乗降ロビーは、高低差がないものとし	exact	True	text/edd9f6fcfa13cb80.txt
+JA-073	Q-level	level	水平	ja	設計標準R7	pdf p.47 (printed 31) 1.2.3.1.1	移動等円滑化経路上の通路は水平とする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-074	Q-width	width	幅	ja	省令114	Art.3(1)(1)	幅は、百八十センチメートル以上とすること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-075	Q-clearance	clearance	クリアランス	ja	設計標準R7	pdf p.112 (printed 96) 9.2 note [located by grep; clause read]	ヒンジ部分にクリアランスが生じるため	exact	True	text/1bc5c919cb81e7bf.txt
+JA-076	Q-number	number	数	ja	政令379	Art.15(1)	当該各号に定める数以上の車椅子使用者用部分	exact	True	text/6ac7f09b7e786570.txt
+JA-077	Q-depth	depth	奥行き	ja	政令379	Art.19(2)(5)(iii)	籠の奥行きは、百三十五センチメートル以上とすること。	exact	True	text/6ac7f09b7e786570.txt
+JA-078	Q-force	force	軽い力	ja	設計標準R7	pdf p.112 (printed 96) 9.2 [located by grep; clause read]	かつ軽い力で操作	exact	True	text/1bc5c919cb81e7bf.txt
+JA-079	Q-time	time	閉鎖作動時間	ja	設計標準R7	pdf p.112 (printed 96) 9.2 [located by grep; clause read]	閉鎖作動時間が十分に確保され	exact	True	text/1bc5c919cb81e7bf.txt
+JA-080	Q-size	size	寸法	ja	省令114	Art.11(1)(4)(ii)	蹴上げの寸法は、十六センチメートル以下とすること。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-081	Q-volume	volume	音量	ja	設計標準R7	pdf p.186 (printed 170) 13 [located by grep; page not read in full]	歓声や場内放送の音量	exact	True	text/1bc5c919cb81e7bf.txt
+JA-082	Q-capacity	capacity	最大定員	ja	設計標準R7	pdf p.84 (printed 68) 6.2 elevator table header [located by grep; page not read in full]	最大定員	exact	True	text/1bc5c919cb81e7bf.txt
+JA-083	Q-capacity	capacity	積載荷重	ja	設計標準R7	pdf p.216 (printed 200) 18.2 [located by grep; page not read in full]	段差解消機の積載荷重については	exact	True	text/1bc5c919cb81e7bf.txt
+JA-084	Q-distance	distance	経路の長さ	ja	政令379	Art.18(2)(2)	経路の長さができるだけ短くなる位置に設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-085	Q-lighting levels	lighting levels	照度	ja	設計標準R7	pdf p.100 (printed 84) 7 checklist [located by grep; page not read in full]	設置場所の照度を考慮したか。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-086	Q-ratio	ratio	百分の一を乗じて得た数	ja	政令379	Art.16(1)	客室の総数に百分の一を乗じて得た数	exact	True	text/6ac7f09b7e786570.txt
+JA-087	P03	ramp gradient	勾配	ja	省令114	Art.11(1)(6)(ii)	勾配は、十五分の一を超えないこと。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-088	P03	ramp gradient	勾配	ja	省令114	Art.6(1)(2) [source carries ruby こう on 勾]	勾配は、十二分の一を超えないこと。	exact	True	text/edd9f6fcfa13cb80.txt
+JA-089	P04	corridor width	廊下等	ja	政令379	Art.6(1)(2)	廊下その他これに類するもの（以下「廊下等」という。）	exact	True	text/6ac7f09b7e786570.txt
+JA-090	P04	corridor width	屋内の通路	ja	設計標準R7	pdf p.70 (printed 54) 4	4.屋内の通路	exact	True	text/1bc5c919cb81e7bf.txt
+JA-091	P04	corridor width	車椅子のすれ違い	ja	省令114	Art.3(1)(1)	五十メートル以内ごとに車椅子のすれ違いに支障がない場所を設ける場合にあっては	exact	True	text/edd9f6fcfa13cb80.txt
+JA-092	P05	turning circle	車椅子の転回に支障がない場所	ja	政令379	Art.19(2)(3)(ii)	五十メートル以内ごとに車椅子の転回に支障がない場所を設けること。	exact	True	text/6ac7f09b7e786570.txt
+JA-093	P05	turning circle	140㎝角	ja	設計標準R7	pdf p.47 (printed 31) 1.2.3.1.1	場所は、原則として140㎝角以上とする。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-094	P05	turning circle	直径150㎝以上の円が内接できるスペース	ja	設計標準R7	pdf p.121 (printed 105) 10.2 [located by grep; clause read]	車椅子使用者が360°回転できるよう、直径150㎝以上の円が内接できるスペース	exact	True	text/1bc5c919cb81e7bf.txt
+JA-095	P05	turning circle	回転スペース又は転回（方向転換）スペース	ja	設計標準R7	pdf p.161 (printed 145) 11 [located by grep; clause read]	室内の回転スペース又は転回（方向転換）スペース	exact	True	text/1bc5c919cb81e7bf.txt
+JA-096	P06	operating force	軽い力	ja	設計標準R7	pdf p.120 (printed 104) 10.2 [located by grep; clause read]	戸は軽い力で操作できる引き戸と	exact	True	text/1bc5c919cb81e7bf.txt
+JA-097	P07	reverberation time	響きの抑制	ja	設計標準R7	pdf p.27 (printed 13) 2.2 [located by grep; clause read]	騒音の低減と響きの抑制に必要な遮音・吸音を行	exact	True	text/1bc5c919cb81e7bf.txt
+JA-098	P08	LRV contrast	明度差及び輝度比	ja	設計標準R7	pdf p.137 (printed 121) 10.x [located by grep; clause read]	明度差及び輝度比にも留意する。	exact	True	text/1bc5c919cb81e7bf.txt
+JA-099	P08	LRV contrast	輝度コントラスト	ja	設計標準R7	pdf p.137 (printed 121) 10.x [located by grep; clause read]	色光の年代別輝度コントラストの求め方	exact	True	text/1bc5c919cb81e7bf.txt
+JA-100	P09	door width	出入口	ja	政令379	Art.19(2)(2)(i)	当該移動等円滑化経路を構成する出入口は、次に掲げるものであること。	exact	True	text/6ac7f09b7e786570.txt
+JA-101	P09	door width	出入口の有効幅員	ja	設計標準R7	pdf p.120 (printed 104) 10.2 [located by grep; clause read]	出入口の有効幅員は、90㎝以上とすることが望ま	exact	True	text/1bc5c919cb81e7bf.txt
+JA-102	P11	headroom clearance	十分な高さのない空間	ja	設計標準R7	pdf p.77 (printed 61) 5.2.3.2.1	やむを得ず十分な高さのない空間を設ける場合は、高さ110cm以上の衝突防止柵の設置や進入防止措置を	exact	True	text/1bc5c919cb81e7bf.txt
+JA-103	P11	headroom clearance	突出物	ja	設計標準R7	pdf p.72 (printed 56) 4.2.3.1.1	床から高さ65㎝以上の部分に突出物を設ける場合は、視覚障害者の白杖の位置に配慮し、突き出し部分を	exact	True	text/1bc5c919cb81e7bf.txt
+JA-104	P12	ramp run length	傾斜路の距離	ja	設計標準R7	pdf p.48 (printed 32) 1.2.3.1.2	長くゆるやかに続く傾斜路の場合は、傾斜路の距離・勾配を、傾斜路の上端・下端に表示することが望ま	exact	True	text/1bc5c919cb81e7bf.txt
