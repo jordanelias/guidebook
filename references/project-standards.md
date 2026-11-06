@@ -4894,3 +4894,17 @@ The owner then said the questions "may mean that you need an opus antagonist adj
 CONDITION: any session writing or reviewing the wording of a rendered page, a render record, or a template that turns a specification or an extraction into prose; any session asking whether a page may recommend, endorse or call a value correct.
 ACTION: (1) Apply the ratified posture of DR-2026-07-21 as the owner's present words restate it: describe and attribute, show the derivation and the strength flag and the disagreements, never adjudicate a correct path. (2) Treat the contract's section 8 positions as the assistant's proposals, and every [ASSUMPTION] mark above as unratified.
 DATE: 2026-10-30 — owner statement, quoted above.
+
+## Owner instruction 2026-11-06 — retire workplan-orchestrator; /run-pipeline replaces it
+
+Given in session https://claude.ai/code/session_01Ub36iN9Wtnk3RfPq2ogN3U and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+"please retire workplan orchestrator. please create a new skill in its place called /run-pipeline (which includes a variant for processing evidence and beyond without research)"
+
+SUPERSEDES: the RULE above headed "Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator …)" and the RULE "Do not re-read workplan-orchestrator_SKILL.md mid-session". The skill they name no longer exists; `/session-open` and `/orient` open a session.
+
+**What this does.** `skills/workplan-orchestrator_SKILL.md` is deleted. Its risk-escalation rule (two or more escalation signals append a REVIEW gap) is not carried into `skills/run-pipeline_SKILL.md` and has no live home; that is the owner's call. Its population-code table is replaced by `base_taxonomy_identity`. Frozen records that name it (`governance/project-instructions-v10_14.md`, `governance/population-taxonomy.md`, the armature documents, `architecture/sqlite-data-layer.md`) are left unedited.
+
+CONDITION: any session asking which skill orchestrates a multi-stage run, or what runs at session start.
+ACTION: Use `/run-pipeline` (variant `from-evidence`) for a multi-stage run and `/session-open` then `/orient` to start a session; do not look for `workplan-orchestrator`.
+DATE: 2026-11-06 — owner instruction, quoted above.
