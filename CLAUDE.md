@@ -482,9 +482,12 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   not exist.** If the answer is about the apparatus rather than the book, do not add it.
 - **Nothing is added without naming what reads it.** An unread field, an uncalled script and an
   unregistered check are the same defect.
-- **Net-negative** (owner, 2026-10-12: as little code as possible). A PR touching `scripts/`,
-  `schemas/`, `.github/` or `skills/` does not raise their physical-line total unless its
-  description names the exception and the code it replaces (it may replace none, and then says so).
+- **Minimise code** (owner, 2026-10-12: as little code as possible; 2026-11-06: the bare essentials, written
+  as efficiently as possible, to stay agile and lean). There is no net-negative requirement — its extreme is no
+  code. A PR touching `scripts/`, `schemas/`, `.github/` or `skills/` names what the added code reads, what
+  wrong thing reaches the guidebook without it, and any existing code it replaces or makes deletable; it need
+  not shrink the total. Try, in order: do nothing and say why; change a rule or convention; reuse what exists;
+  delete the cause; only then add the smallest code that closes the defect.
   Measure (one line): `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`.
   Enforced by review, not by a check.
 - **A specific, ratified authorisation beats a blanket caution.** Blanket removal-friction winning

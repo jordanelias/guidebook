@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "session": "session_2026-11-06-pipeline-batch-2",
+  "artifact": "sessions/session_2026-11-06-pipeline-batch-2.md",
+  "doctrine_sha": "0f2f525",
+  "rules_in_scope": ["adherence-logging-and-attestation"],
+  "per_rule_status": {
+    "adherence-logging-and-attestation": {
+      "status": "FIRED",
+      "evidence_path": "attestations/sessions_session_2026-11-06-pipeline-batch-2.json",
+      "reason": "This attestation covers the session record above: a research session that admitted one primary measurement report through the sanctioned writers, read three held codes in Spanish, Korean and Portuguese, was attacked by a read-only critic (pass 9, eighteen sustained findings, thirteen repaired by a second migration, five left provisionally disputed), and whose DoD gate reads COMPLIANT on its own stem while examining none of the extraction rows."
+    }
+  },
+  "deviations": [
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "The first scans asserted absences that the critic disproved from the same payloads (door width and operating force in the report; a 22 N control force on a held Portuguese page), on keyword searches that missed the figures' spellings; scans 15 to 18 replace the claims."
+    },
+    {
+      "rule": "adherence-logging-and-attestation",
+      "reason": "Lenses on rows 207 to 210 are inconsistent with the item headings and with prior rows and cannot be corrected by any writer; the tier of the admitted report and the parameter of its 180-degree turn figure are disputed for the owner. A locator (extraction 211) and a setting (193) remain wrong on the row, corrected in notes only."
+    }
+  ],
+  "bias_direction": "The author chose the sources because their text was reachable and persisted, and chose each parameter's clauses by keyword; both favour sources and spellings that are easy to find and under-record figures stated in other forms. The author also set the grade, tier and lens of its own admission before any reviewer saw them.",
+  "independent_reviewer_counterclaim": "The strongest objection is that the critic reached the batch's rows by the same keyword and page sweeps, so figures in the 150 report pages and 20 Korean pages neither side read in full may still be missing, and that the population grade, the tier and the parameter assignment of the report's turning figures rest on judgments that two disputed findings leave open.",
+  "verdict": "DEVIATION-LOGGED"
+}
