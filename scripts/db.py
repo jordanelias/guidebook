@@ -859,6 +859,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # is refused rather than dropped: a blank is not an absence.
         for col in (*_LENS_COLUMNS, "parameter_id", "slug"):
             dbcore.fk_declared(conn, "search_executions", col, row[col], f"log-search {col}")
+        if slug:
+            _check_slug_filable(conn, slug)       # a MERGED slug is a folded topic (R3-14)
         if parameter_id is not None:
             _pst = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
                                 (parameter_id,)).fetchone()[0]
@@ -1047,6 +1049,7 @@ def get_coverage_completeness(slug: str) -> dict:
         if not dbcore.exists(conn, "slugs", "slug", slug):
             # Zeros for a slug that does not exist read as "nothing searched" (2026-11-06).
             raise Refusal(f"coverage: {slug!r} is not in slugs. Nothing to report.")
+        _slug = conn.execute("SELECT status, merged_into FROM slugs WHERE slug=?", [slug]).fetchone()
         jur = conn.execute(
             "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
             "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
@@ -1102,7 +1105,12 @@ def get_coverage_completeness(slug: str) -> dict:
         "searches_deferred_with_reason": deferred,
         "jurisdictions_unreachable": unreachable,
         **({"unreachable_note": "owed by lang_jur_map, refused by schemas.enums.JurisdictionCode: "
-            "owner question 5 of the 2026-11-06 round-2 adjudication"} if unreachable else {}),
+            "owner question 5 of the 2026-11-06 round-3 adjudication"} if unreachable else {}),
+        # A slug outside ACTIVE/STUB owes nothing (R3-17): the survivor owes it. Without these
+        # keys a MERGED slug read "70 pairs required, 0 searched" -- debt no search can pay.
+        "slug_status": _slug["status"],
+        "merged_into": _slug["merged_into"],
+        **({"owes_searches": False} if _slug["status"] not in ("ACTIVE", "STUB") else {}),
         "complete": bool(required) and not unsearched and searched == len(required),
     }
 
@@ -1129,6 +1137,24 @@ def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
     # and refuses only what no order can fix: a population against itself (the CHECK's bare
     # `pop_a < pop_b` reached the operator as a traceback on 2026-11-06).
     a, b = data.get("pop_a"), data.get("pop_b")
+    # EACH POPULATION IS CHECKED UNDER THE FLAG THE OPERATOR TYPED, BEFORE THE PAIR IS SORTED:
+    # sorting first made an unknown --pop-a surface as "pop_b" (R3-14). `ALL` is a row of the
+    # identity registry and still not a population -- JUDGEMENT, named: its own display_name
+    # calls it a scope marker, and a conflict between "everyone" and someone is no conflict.
+    if not (data.get("domain") or "").strip():
+        raise Refusal("--domain is blank: name the parameter's domain in the skill's own words "
+                      "(prose label; the key is --parameter-id). Nothing was written.")
+    with connect(readonly=True) as _c:
+        for flag, col, code in (("--pop-a", "pop_a", a), ("--pop-b", "pop_b", b)):
+            if code == "ALL":
+                _dn = _c.execute("SELECT display_name FROM base_taxonomy_identity "
+                                 "WHERE identity_code='ALL'").fetchone()
+                raise Refusal(f"{flag} ALL is a scope marker, not a population"
+                              + (f" (base_taxonomy_identity says: {_dn[0]!r})" if _dn else "")
+                              + ": a conflict is between two populations. Name one. Nothing was written.")
+            if code:
+                dbcore.fk_declared(_c, "conflicts", col, code, f"add-conflict {flag}",
+                                   remedy="SELECT identity_code, display_name FROM base_taxonomy_identity")
     if a and b:
         if a == b:
             raise Refusal(f"--pop-a and --pop-b are both {a}: a conflict is between two "
@@ -1152,9 +1178,9 @@ def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
         # column a value-set match finds first).
         dbcore.check_declared(conn, "conflicts", "status", data.get("status"),
                               "insert_conflict")
-        # pop_a, pop_b and gap_id are foreign keys (migration 121): a code the identity lens does not
-        # hold is refused by name, not left to SQLite's bare constraint failure.
-        for col in ("pop_a", "pop_b", "gap_id", "parameter_id"):
+        # gap_id and parameter_id are foreign keys (migration 121): refused by name, not left
+        # to SQLite's bare constraint failure. pop_a/pop_b were checked above, before the sort.
+        for col in ("gap_id", "parameter_id"):
             dbcore.fk_declared(conn, "conflicts", col, data.get(col), f"add-conflict {col}")
         _held = conn.execute(
             "SELECT conflict_id FROM conflicts WHERE parameter_id=? AND pop_a=? AND pop_b=?",
@@ -1229,12 +1255,13 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
 # --- CLI ---
 
 
-def _relation_help() -> str:
-    """The relation vocabulary for --help, read from the column's own CHECK. `--relation`
-    cannot take `choices=` because it also admits the literal 'none'; None-safe, because an
-    unreadable database must not make `--help` fail (dbcore.schema_choices returns None)."""
-    vals = dbcore.schema_choices("extraction_relations", "relation")
-    return "{" + ", ".join(vals) + "}" if vals else "the extraction_relations.relation CHECK values"
+def _vocab_help(column: str) -> str:
+    """An extraction_relations vocabulary for --help, read from the column's own CHECK.
+    `add-extraction`'s aligned flags cannot take `choices=` because each also admits the
+    placeholder '-' (or 'none'); None-safe, because an unreadable database must not make
+    `--help` fail (dbcore.schema_choices returns None)."""
+    vals = dbcore.schema_choices("extraction_relations", column)
+    return "{" + ", ".join(vals) + "}" if vals else f"the extraction_relations.{column} CHECK values"
 
 
 def main():
@@ -1741,7 +1768,9 @@ def main():
     p_obs.add_argument("--verbatim-exempt", dest="verbatim_exempt",
                        help="Reason no artefact of this source can carry the quote (a page "
                             "read from an image, say). LEDGERED onto the row's notes, and "
-                            "REFUSED if the quote does verify for this source")
+                            "REFUSED where a decodable body is held for the source (a "
+                            "text page, a derived text, or a PDF with a text layer) "
+                            "unless a page render of it is persisted (page_image.py)")
     p_obs.add_argument("--notes")
     p_obs.add_argument("--session", required=True)
     p_obs.add_argument("--dry-run", action="store_true")
@@ -1833,7 +1862,8 @@ def main():
     p_rsc.add_argument("--text-scope", dest="text_scope", required=True,
                        choices=dbcore.schema_choices("source_scans", "text_scope"),
                        help="how much of the document the file read holds; 'full' is "
-                            "refused over a PDF and over a text missing pages")
+                            "refused over a fetched file and over a text missing pages; "
+                            "over a text with no page markers the result says `uncounted`")
     p_rsc.add_argument("--file-sha256", dest="file_sha256", required=True,
                        help="the manifest sha256 of the saved file read; it must be a "
                             "file the retrieval-log holds for this source")
@@ -2183,7 +2213,7 @@ def main():
                            "ABSOLUTELY. Silence is not the same claim: five of five "
                            "corridor-width sources in the live corpus state theirs "
                            "against a reference they name or invoke. Otherwise one of "
-                           + _relation_help() + " or the literal 'none' (live "
+                           + _vocab_help("relation") + " or the literal 'none' (live "
                            "vocabulary, read from extraction_relations.relation's own "
                            "CHECK).")
     p_ax.add_argument("--to-extraction", action="append", dest="to_extractions",
@@ -2197,12 +2227,13 @@ def main():
                            "instead.")
     p_ax.add_argument("--to-kind", action="append", dest="to_kinds", default=[],
                       help="Repeatable, aligned by position with --relation. "
-                           "Required alongside --to-label. Live vocabulary from the "
-                           "column's own CHECK ('standard'/'own_sample'/"
-                           "'prior_source'/'unnamed').")
+                           "Required alongside --to-label. One of "
+                           + _vocab_help("to_kind") + " or '-' (live vocabulary, read "
+                           "from the column's own CHECK).")
     p_ax.add_argument("--stated", action="append", dest="stateds", default=[],
-                      help="Repeatable, aligned by position with --relation. Live "
-                           "vocabulary ('named'/'unnamed'/'inferred').")
+                      help="Repeatable, aligned by position with --relation. One of "
+                           + _vocab_help("stated") + " or '-' (live vocabulary, read "
+                           "from the column's own CHECK).")
     p_ax.add_argument("--quote", action="append", dest="quotes", default=[],
                       help="Repeatable, aligned by position with --relation. The "
                            "source's own words for the comparison -- must occur "
@@ -2210,8 +2241,9 @@ def main():
                            "(CLAUDE.md 5(c)); a quote from memory is refused.")
     p_ax.add_argument("--input-role", action="append", dest="input_roles", default=[],
                       help="Repeatable, aligned by position with --relation. "
-                           "Required iff the paired --relation is derived_from "
-                           "('base'/'delta'/'factor').")
+                           "Required iff the paired --relation is derived_from. One of "
+                           + _vocab_help("input_role") + " or '-' (live vocabulary, read "
+                           "from the column's own CHECK).")
     p_ax.add_argument("--cross-source", action="append", dest="cross_sources",
                       default=[], help="Repeatable, aligned by position with "
                            "--relation. A REASON, required when a condition_on/"
@@ -2238,14 +2270,20 @@ def main():
                       help="Prose naming a referent this project has not captured "
                            "as a row")
     p_rx.add_argument("--to-kind", dest="to_kind",
-                      help="Required alongside --to-label")
-    p_rx.add_argument("--stated", help="'named'/'unnamed'/'inferred'. Required "
-                      "unless --repoint")
+                      choices=dbcore.schema_choices("extraction_relations", "to_kind"),
+                      help="Required alongside --to-label. Live vocabulary, read from "
+                           "the column's own CHECK")
+    p_rx.add_argument("--stated",
+                      choices=dbcore.schema_choices("extraction_relations", "stated"),
+                      help="Required unless --repoint. Live vocabulary, read from the "
+                           "column's own CHECK")
     p_rx.add_argument("--quote", help="The source's own words, verbatim -- must "
                       "occur byte-for-byte in a persisted retrieval artefact. "
                       "Required unless --repoint")
     p_rx.add_argument("--input-role", dest="input_role",
-                      help="Required iff --relation is derived_from")
+                      choices=dbcore.schema_choices("extraction_relations", "input_role"),
+                      help="Required iff --relation is derived_from. Live vocabulary, "
+                           "read from the column's own CHECK")
     p_rx.add_argument("--cross-source", dest="cross_source_reason",
                       help="A reason, required when --relation is condition_on/"
                            "derived_from and --to-extraction was extracted from a "
@@ -2320,7 +2358,9 @@ def main():
                        choices=dbcore.schema_choices("term_adjudications", "outcome"),
                        help="Live vocabulary, read from the column's own CHECK")
     p_adj.add_argument("--term-id",
-                       help="Required for NAMES-EXISTING and NAMES-NEW; refused otherwise")
+                       help="Required for NAMES-EXISTING; refused otherwise. NAMES-NEW is "
+                            "written only by `add-term --from-observation`, and this verb "
+                            "refuses --outcome NAMES-NEW")
     p_adj.add_argument("--rationale", required=True,
                        help="Why. An adjudication that cannot be contested is not one.")
     p_adj.add_argument("--session", required=True)
@@ -2358,7 +2398,9 @@ def main():
 
     # add-gap
     p_ag = sub.add_parser("add-gap", help="Insert a new gap record")
-    p_ag.add_argument("--category", required=True)
+    p_ag.add_argument("--category", required=True,
+                      choices=dbcore.schema_choices("gaps", "category"),
+                      help="Live vocabulary, read from the column's own CHECK")
     p_ag.add_argument("--priority", required=True, choices=dbcore.schema_choices("gaps", "priority"))
     p_ag.add_argument("--description", required=True)
     p_ag.add_argument("--session", required=True)
@@ -2505,9 +2547,10 @@ def main():
 
     # add-source
     p_as = sub.add_parser("add-source", help="Insert an evidence source")
-    p_as.add_argument("--ref-id", help="omit it: computed by dbcore.next_ref_id "
-                      "(CLAUDE.md section 4). Given, it must equal the computed id or the "
-                      "id its own locator staged")
+    p_as.add_argument("--ref-id", help="omit it: computed -- the next id, or the id of the "
+                      "staged locator this source matches (same DOI, pmid, pmcid, isbn, "
+                      "standard number or URL; else the same title). Given, it must be one "
+                      "of those two")
     # AUTHORS ARE ROWS, NOT A STRING (migration 063). evidence_sources.author_display is
     # writer-retired; who wrote a source has one home, evidence_source_authors, and
     # v_evidence_authors renders it. Until 2026-08-24 this CLI could write the display
@@ -2565,9 +2608,10 @@ def main():
                            "the column's own CHECK. An unretrievable source is admitted "
                            "UNVERIFIED with this set; v_scan_ledger then shows it BLOCKED, "
                            "not as reading debt. Refused as copies of a typed fact: "
-                           + ", ".join(_BLOCK_REASON_COPIES) + ". A reading clears it "
-                           "(record-scan); `amend-source --field processing_blocked_reason` "
-                           "sets it later")
+                           + ", ".join(_BLOCK_REASON_COPIES) + ". Nothing clears it: a full "
+                           "reading outranks it in v_scan_ledger; the column stays as the "
+                           "retrieval record. `amend-source --field processing_blocked_reason` "
+                           "re-describes it later")
     p_as.add_argument("--grey-flag", type=int, choices=(0, 1),
                       help="1 for grey literature. evidence_type='grey' with grey_flag=0 "
                            "is the same fact disagreeing with itself across two columns")
@@ -2792,6 +2836,11 @@ def main():
     if not args.command:
         parser.print_help()
         sys.exit(1)
+
+    # Bare stem in the DB (CLAUDE.md section 7): log-mining and log-search's junction rows
+    # write `--session` themselves, past dbcore.audit, so the stem is taken here once (R3-15).
+    if getattr(args, "session", None):
+        args.session = dbcore.session_stem(args.session)
 
     if args.command == "migrate":
         import subprocess
@@ -3773,6 +3822,43 @@ def _refuse_copied_block_reason(conn, value, context):
                       f"{_BLOCK_REASON_COPIES[value]}. Nothing was written.")
 
 
+#: The typed identifiers a staged lead (source_locators) and a new source can both carry.
+_LOCATOR_IDS = ("doi", "pmid", "pmcid", "isbn", "standard_number", "url")
+
+
+def _fold_locator_id(kind: str, value) -> str:
+    """One identifier in the form two homes of it compare equal in; "" when absent."""
+    v = str(value or "").strip()
+    if kind == "doi":
+        return dbcore.norm_doi(v) or ""
+    return v.lower().rstrip("/") if kind == "url" else v
+
+
+def _staged_locators_matching(conn, data: dict) -> list:
+    """(ref_id, title) of every staged lead this source IS, derived from its identity.
+
+    A lead matches when a typed identifier both carry is equal after folding (_LOCATOR_IDS),
+    or, when they share no identifier TYPE with differing values, when the normalised titles
+    (`retrieval_log._norm_title`) are equal and not empty. RETIRED leads are tombstones and a
+    lead whose id already names an admitted source is not staged; neither matches. The id of
+    a promotion is the id `add-locator` minted, so it is derived from this, never typed."""
+    norm_title = _retrieval_log()._norm_title
+    mine = {k: f for k in _LOCATOR_IDS if (f := _fold_locator_id(k, data.get(k)))}
+    title = norm_title(data.get("pub_title"))
+    out = []
+    for r in conn.execute(
+            f"SELECT ref_id, title, {', '.join(_LOCATOR_IDS)} FROM source_locators "
+            "WHERE COALESCE(status,'') <> 'RETIRED' "
+            "AND ref_id NOT IN (SELECT ref_id FROM evidence_sources)"):
+        theirs = {k: f for k in _LOCATOR_IDS if (f := _fold_locator_id(k, r[k]))}
+        shared = [k for k in mine if k in theirs]
+        if any(mine[k] == theirs[k] for k in shared) or (
+                title and title == norm_title(r["title"])
+                and all(mine[k] == theirs[k] for k in shared)):
+            out.append((r["ref_id"], r["title"]))
+    return out
+
+
 def insert_evidence_source(data: dict, session: str,
                            dry_run: bool = False,
                            authors: list[dict] | None = None,
@@ -3951,8 +4037,19 @@ def insert_evidence_source(data: dict, session: str,
     with _txn(conn, dry_run) as conn:
         _refuse_copied_block_reason(conn, data.get("processing_blocked_reason"),
                                     "add-source --processing-blocked-reason")
+        # THE ID IS DERIVED FROM THE DOCUMENT'S IDENTITY, never from the flag: the id of the
+        # staged lead this source matches (a promotion keeps it), else the next id.
+        _nxt = dbcore.next_ref_id(conn)
+        _matches = _staged_locators_matching(conn, data)
         if _derive_ref:
-            data["ref_id"] = row["ref_id"] = dbcore.next_ref_id(conn)
+            if len(_matches) > 1:
+                raise Refusal(
+                    f"add-source: this source matches {len(_matches)} staged leads in "
+                    f"source_locators ({'; '.join(f'{r} {t!r}' for r, t in _matches)}), so its "
+                    f"id cannot be derived. Retire the duplicate lead (db.py update-locator "
+                    f"--status RETIRED) or give --ref-id the id of the lead this is. "
+                    f"Nothing was written.")
+            data["ref_id"] = row["ref_id"] = _matches[0][0] if _matches else _nxt
         # NOT `INSERT OR IGNORE`. That silently no-opped on a colliding ref_id
         # and still returned the ref_id as though the write had happened — so a
         # session could file a source, be told it succeeded, and have written
@@ -3965,18 +4062,34 @@ def insert_evidence_source(data: dict, session: str,
             raise Refusal(
                 f"{data['ref_id']} already exists. R9: cross-file the existing "
                 f"ref_id rather than duplicating. To amend it, ship a migration.")
-        # THE ID IS THE NEXT ONE, OR THE ONE ITS LOCATOR STAGED (a promotion keeps the id
-        # add-locator minted). Anything else is a hand-typed id: a walk-through on 2026-11-06
-        # landed REF-01100 above the mark (derive the mark: `db.py next-id ref`), leaving
-        # every id between unissued and one row the floor audit cannot explain.
-        _nxt = dbcore.next_ref_id(conn)
-        if data["ref_id"] != _nxt and not dbcore.exists(conn, "source_locators", "ref_id",
-                                                        data["ref_id"]):
+        # THE ID IS THE NEXT ONE, OR THE ONE OF THE STAGED LEAD THIS SOURCE MATCHES. Anything
+        # else is a hand-typed id: a walk-through on 2026-11-06 landed REF-01100 above the mark
+        # (derive the mark: `db.py next-id ref`), and a given id equal to ANY staged id filed
+        # one document under another lead's identity (two identities for one document).
+        if data["ref_id"] != _nxt and data["ref_id"] not in {r for r, _t in _matches}:
+            lead = conn.execute("SELECT title FROM source_locators WHERE ref_id = ?",
+                                (data["ref_id"],)).fetchone()
             raise Refusal(
                 f"--ref-id {data['ref_id']} is neither the next reference id ({_nxt}, from "
-                f"`db.py next-id ref`) nor an id staged in source_locators. A reference id is "
-                f"never computed by hand (CLAUDE.md section 4): omit --ref-id. Nothing was "
-                f"written.")
+                f"`db.py next-id ref`) nor the id of a staged lead this source matches. "
+                + (f"{data['ref_id']} is staged for {lead[0]!r} (source_locators), not for "
+                   f"this source; a promotion keeps its own lead's id and nothing else does. "
+                   if lead else "")
+                + "A reference id is never computed by hand (CLAUDE.md section 4): omit "
+                  "--ref-id. Nothing was written.")
+        # And when exactly one staged lead IS this source, the next id is no longer an option
+        # either: it would admit the document under a second identity and leave the lead
+        # REFERENCE-ONLY beside it (the A3a follow-up).
+        if len(_matches) == 1 and data["ref_id"] != _matches[0][0]:
+            _other = conn.execute("SELECT title FROM source_locators WHERE ref_id = ?",
+                                  (data["ref_id"],)).fetchone()
+            raise Refusal(
+                f"--ref-id {data['ref_id']} is not the id of the staged lead this source "
+                f"matches: {_matches[0][0]} is staged for {_matches[0][1]!r} (source_locators), "
+                f"and a promotion keeps its own lead's id, so one document is never given two "
+                + (f"identities ({data['ref_id']} is staged for {_other[0]!r}, a different lead). "
+                   if _other else "identities. ")
+                + f"Omit --ref-id and it lands on {_matches[0][0]}. Nothing was written.")
         if data.get("doi"):
             # THE DUPLICATE-IDENTITY REFUSAL, case-folded and cross-filed against BOTH
             # ref_id homes. Measured 2026-09-13 (REF-00784's DOI): this compared
@@ -5540,8 +5653,9 @@ _AMENDABLE = (
     # "the text could not be read, and why" -- which no payload settles, and no verb set it after
     # admission, so a source admitted before its obstacle was known (or whose obstacle changed) could
     # not be corrected. The vocabulary is gated by the generic check_declared below; the two values
-    # that restate a typed fact are refused by pointer (_refuse_copied_block_reason). It is cleared
-    # by `record-scan`, never here: a reading of held bytes is the proof the block lifted.
+    # that restate a typed fact are refused by pointer (_refuse_copied_block_reason). Nothing
+    # clears it: it is the retrieval record, and v_scan_ledger (migration 124) decides whether a
+    # later reading outranks it.
     "processing_blocked_reason",
 )
 
@@ -6200,7 +6314,7 @@ def _require_scoped_verbatim(text, ref_id, field, context, exempt_reason=None):
             if kind == "unscoped" else ""
         # The same refusal add-extraction applies: a held decodable body means the quote was
         # typed from memory or read off pages never persisted (R10), not undecodable (R2-6).
-        _refuse_exempt_with_body(ref_id, field, context)
+        tail += _refuse_exempt_with_body(ref_id, field, context)
         return retrieval_log.exempt_marker(exempt_reason, tail)
     if kind == "scoped":
         return None
@@ -7594,16 +7708,17 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
     The scan contract (catalogue-plan-v2 section 3; owner 2026-10-09: "Slugs guide our
     searches, but they do not guide what we derive and mine from sources!"): every
     admitted source is read against the whole catalogue, and each reading leaves this
-    record, from which v_scan_ledger derives, for every (source, active parameter), in
-    this precedence: EXTRACTED, STATED-ABSENT, READ-NOTHING-FOUND, READ-PARTIAL, BLOCKED
-    (no reading, and a processing_blocked_reason saying the text could not be obtained or
-    read), NOT-READ. A recorded reading always outranks a block.
+    record, from which v_scan_ledger derives, for every (source, active parameter), in this
+    precedence (migration 124): EXTRACTED, STATED-ABSENT, READ-NOTHING-FOUND, BLOCKED,
+    READ-PARTIAL, NOT-READ.
 
-    A BLOCK THIS READING PROVES LIFTED IS CLEARED. If the source's pairs read BLOCKED in
-    the ledger before this row lands, processing_blocked_reason is set NULL in the same
-    transaction and the result says `block_cleared: <old value>`: a reading of held bytes
-    is the proof the obstacle is gone, and leaving the reason would be a false statement
-    on the row.
+    THIS VERB WRITES source_scans AND NOTHING ELSE. Nothing clears
+    `evidence_sources.processing_blocked_reason`: it is the retrieval record (why the full
+    text could not be had), written at admission or by `amend-source`, and a reading is a
+    different fact about a different thing. The ledger decides which still holds: a FULL
+    reading proves the obstacle gone and outranks the block; a partial, fragment or abstract
+    reading does not, so the pair reads BLOCKED with this reading's scan beside it ("abstract
+    read, full text paywalled"). A judgment-stage verb never updates an evidence-stage row.
 
     COMPUTED, NEVER TYPED (CLAUDE.md rule 8): `catalogue_version` is the highest
     parameter_id at call time (ids are never reissued, so it says exactly which parameters
@@ -7615,17 +7730,11 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
     never read again); a mode, scope or method outside the column's CHECK; a targeted
     reading with no target, or a target that is not active; a catalogue reading when no
     parameter exists; a --file-sha256 that is not a file the retrieval-log manifests hold
-    for this source, or whose bytes on disk no longer hash to it; `full` over a PDF (what
-    was read of a PDF is not knowable from the file: derive its text with
-    scripts/research/full_text.py and read that), `full` over a text with fewer pages
-    than the document it was derived from, and `full` over a text with NO page markers
-    when the source's own logged bibliographic payload states a page range.
-
-    A `full` CLAIM IS CHECKED AGAINST WHAT THE DOCUMENT IS, and the deposit is the only
-    derivable statement of that (`retrieval_log.payload_page_range`): a landing page is a
-    record about the document, not the document, and nothing here curates what one looks
-    like. A source no deposit describes as paged (a code section's single page) keeps `full`
-    over its single page.
+    for this source, or whose bytes on disk no longer hash to it; `full` over a fetched file
+    (what was read of a PDF or a landing page is not knowable from the bytes: derive its text
+    with scripts/research/full_text.py and read that) and `full` over a text with fewer pages
+    than the document it was derived from. A `full` over a text with no page markers lands as
+    the operator's claim and the result says `uncounted`: nothing here counted it.
     """
     if data.get("catalogue_version") is not None:
         raise Refusal(
@@ -7714,24 +7823,6 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
                     f"{pages_read} of {pages_total} pages. Record it as partial, or derive "
                     f"every page (scripts/research/full_text.py) and read that. Nothing "
                     f"was written.")
-            _range = retrieval_log.payload_page_range(ref) if pages_read is None else None
-            if _range:
-                raise Refusal(
-                    f"record-scan: --text-scope full over {h['artefact']}, which carries no "
-                    f"page markers, but the source's logged bibliographic payload states pages "
-                    f"{_range}: the document is paged and this text is not it (a landing page "
-                    f"is a record about the document, not the document). Retrieve the document "
-                    f"(R10; try the Internet Archive on a block, CLAUDE.md section 7), derive "
-                    f"it with scripts/research/full_text.py, and record the reading of that; or "
-                    f"record this reading as `abstract`/`partial`. Nothing was written.")
-        # A reading of held bytes proves a block lifted. Read the ledger, never the class
-        # list: v_scan_ledger is the one home of "the text could not be obtained or read".
-        _blocked = conn.execute(
-            "SELECT 1 FROM v_scan_ledger WHERE ref_id = ? AND status = 'BLOCKED' LIMIT 1",
-            (ref,)).fetchone()
-        _old_block = conn.execute(
-            "SELECT processing_blocked_reason FROM evidence_sources WHERE ref_id = ?",
-            (ref,)).fetchone()[0] if _blocked else None
         row = {"ref_id": ref, "mode": mode, "catalogue_version": top,
                "target_parameter_id": target, "text_scope": scope,
                "pages_read": pages_read, "pages_total": pages_total,
@@ -7744,12 +7835,8 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         out = {"scan_id": cur.lastrowid, "ref_id": ref, "catalogue_version": top,
                "file": f"{h['session']}/{h['artefact']}", "pages_read": pages_read,
                "pages_total": pages_total, "text_scope": scope, "dry_run": dry_run}
-        if _old_block:
-            _st = audit(session)
-            conn.execute("UPDATE evidence_sources SET processing_blocked_reason = NULL, "
-                         "updated_at = ?, updated_by_session = ? WHERE ref_id = ?",
-                         (_st["created_at"], _st["created_by_session"], ref))
-            out["block_cleared"] = _old_block
+        if scope == "full" and pages_read is None:
+            out["uncounted"] = True
         return out
 
 
@@ -8269,18 +8356,39 @@ def _require_full_scan_for_verified(conn, ref_id: str, parameter_id: int, contex
             f"was written.")
 
 
-def _refuse_exempt_with_body(ref_id: str, field: str, context: str):
-    """`--verbatim-exempt` is for a source NO decodable body is held for (a scanned PDF, a
-    .doc). When a derived text or a fetched HTML/text page is held for the source, a quote
-    that is not in it was typed from memory or read from pages never persisted (R10) --
-    either way the exemption is refused, naming the bytes it should have come from."""
-    bodies = _retrieval_log().decodable_body_artefacts(ref_id)
-    if bodies:
-        raise Refusal(
-            f"{context}: --verbatim-exempt refused -- {len(bodies)} decodable body artefact(s) "
-            f"are held for {ref_id} ({'; '.join(bodies[:3])}), so {field} must be read off "
-            f"those bytes, or the pages it comes from persisted first (R10). The exemption is "
-            f"for a source whose only artefacts cannot be decoded. Nothing was written.")
+def _refuse_exempt_with_body(ref_id: str, field: str, context: str) -> str:
+    """`--verbatim-exempt` is for a quote read off a PERSISTED PAGE IMAGE, or for a source with
+    nothing decodable held. Returns the marker tail to append: the page renders it rests on
+    (`" (page renders held: a; b)"`), or "" when the source holds no decodable body.
+
+    A decodable body is a fetched text page, a derived text, or a PDF with a text layer
+    (`retrieval_log.decodable_body_artefacts`, the test `full_text.py` reports by). With one
+    held and no page render (`retrieval_log.page_render_artefacts`: manifest derivation_kind
+    PAGE_RENDER_KIND, written by scripts/research/page_image.py), a quote that is not in it
+    was typed from memory or read from pages never persisted (R10, CLAUDE.md 5(c)); the
+    exemption is refused. A PDF this container cannot open is refused too: a gate that cannot
+    examine does not pass. One home of the rule; observe-term, add-extraction and
+    relate-extraction --quote all call it."""
+    rl = _retrieval_log()
+    renders = rl.page_render_artefacts(ref_id)
+    if renders:
+        return f" (page renders held: {'; '.join(renders[:3])})"
+    bodies = rl.decodable_body_artefacts(ref_id)
+    if not bodies:
+        return ""
+    unexamined = any(b.endswith(rl.UNEXAMINABLE_PDF) for b in bodies)
+    why = ("this container cannot examine the PDF's text layer: run "
+           ".claude/hooks/ensure-deps.sh" if unexamined else
+           f"{field} must be read off those bytes")
+    raise Refusal(
+        f"{context}: --verbatim-exempt refused (R10) -- {len(bodies)} decodable body "
+        f"artefact(s) are held for {ref_id} ({'; '.join(bodies[:3])}) and no page render, so "
+        f"{why}, or the pages it comes from persisted as images first: python3 "
+        f"scripts/research/page_image.py --artefact <sha16>.pdf --pages <n> --session "
+        f"<session> --ref-id {ref_id} (manifest derivation_kind {rl.PAGE_RENDER_KIND!r}; "
+        f"an older render recorded under another kind does not count and is re-rendered "
+        f"with that verb). The exemption is for a quote no held text can carry. Nothing "
+        f"was written.")
 
 
 def _fmt_num(x: float) -> str:
@@ -8376,8 +8484,8 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
                 f"{context}: --verbatim-exempt was given, but {field} DOES occur in a "
                 f"persisted artefact ({where}). Drop the exemption -- it is for text no "
                 f"retrieval artefact can carry, not for text that verifies.")
-        _refuse_exempt_with_body(ref_id, field, context)
-        return _retrieval_log().exempt_marker(exempt_reason)
+        return _retrieval_log().exempt_marker(
+            exempt_reason, _refuse_exempt_with_body(ref_id, field, context))
 
     found, where = _verbatim(text, ref_id)
     if not found:
@@ -8560,8 +8668,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
         if not to_kind:
             raise Refusal(
                 f"{context}: --to-label requires --to-kind -- what sort of thing "
-                f"the label names ('standard'/'own_sample'/'prior_source'/"
-                f"'unnamed').")
+                f"the label names, one of {_vocab_help('to_kind')}.")
         dbcore.check_declared(conn, "extraction_relations", "to_kind", to_kind, context)
         if stated == "named" and to_label not in quote:
             raise Refusal(
@@ -8571,8 +8678,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"names it, or this referent is --stated unnamed/inferred instead.")
 
     if not stated:
-        raise Refusal(f"{context}: --stated is required ('named'/'unnamed'/"
-                      f"'inferred').")
+        raise Refusal(f"{context}: --stated is required, one of {_vocab_help('stated')}.")
     dbcore.check_declared(conn, "extraction_relations", "stated", stated, context)
     if stated == "unnamed" and has_row:
         raise Refusal(
@@ -8587,8 +8693,8 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
     is_derivation = relation == "derived_from"
     if is_derivation and not input_role:
         raise Refusal(
-            f"{context}: relation=derived_from requires --input-role "
-            f"('base'/'delta'/'factor').")
+            f"{context}: relation=derived_from requires --input-role, one of "
+            f"{_vocab_help('input_role')}.")
     if not is_derivation and input_role:
         raise Refusal(
             f"{context}: --input-role is meaningful only with relation=derived_from "
@@ -8640,9 +8746,9 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"its bytes cannot be decoded -- a scanned PDF's text layer, say -- pass "
                 f"--verbatim-exempt with the reason, which is ledgered on the row. "
                 f"Nothing was written.")
-        _refuse_exempt_with_body(from_ref_id, "--quote", context)
+        _tail = _refuse_exempt_with_body(from_ref_id, "--quote", context)
         notes = ((notes + " || ") if notes else "") + (
-            "VERBATIM-EXEMPT: " + verbatim_exempt.strip())
+            "VERBATIM-EXEMPT: " + verbatim_exempt.strip() + _tail)
 
     dup = conn.execute(
         "SELECT relation_id FROM extraction_relations WHERE from_extraction_id=? "

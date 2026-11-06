@@ -214,8 +214,9 @@ stages:
     kind: integrity
     criterion: 'An extraction marked verified rests on a recorded FULL-scope source_scans reading
       that covers its parameter (catalogue mode at a catalogue_version >= the parameter, or
-      targeted at it), and no extraction exists for a source that is not VERIFIED or for a
-      (source, parameter) no reading covers. Held at write time by db.py add-extraction and
+      targeted at it), and no extraction on an active parameter exists for a source that is not
+      VERIFIED or for a (source, parameter) no reading covers (rows on a retired parameter are
+      history, as the ledger says). Held at write time by db.py add-extraction and
       amend-extraction; the corpus-wide reader is the check below, red while rows written
       before the writer refused the state stand (derive: run it).'
     references: 'references/project-standards.md, "Owner rulings 2026-10-29 (second)" OR-11a
@@ -240,8 +241,11 @@ stages:
   criteria:
   - id: governing-refs-nonempty
     kind: integrity
-    criterion: No `stated` or `provisional` determination without non-empty governing_refs (anti-hallucination).
-    references: evidence-architecture.md §5; DR-2026-07-12 A2 item 10
+    criterion: No `stated` or `provisional` determination without at least one `specification_source_links`
+      row with role `governing` (anti-hallucination); `specifications.governing_refs` is frozen history
+      the writer no longer sets (writer-retired 2026-09-21), so the check reads the junction.
+    references: evidence-architecture.md §5; DR-2026-07-12 A2 item 10; the comment on the governing-source
+      gate in scripts/validate_evidence_state.py (dbcore.governing_refs)
     check: scripts/validate_evidence_state.py
   - id: no-regulatory-stratum-stated
     kind: integrity

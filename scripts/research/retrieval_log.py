@@ -954,7 +954,7 @@ def artefacts_for_source(ref_id, url=None):
     """Every manifest line that holds bytes FOR this source, with how it was matched.
 
     Returns a list of dicts: session, artefact, path, exists, sha256, derived,
-    derived_from, url, ref_id, via. `via` is one of:
+    derived_from, url, ref_id, content_type, derivation_kind, via. `via` is one of:
 
       ref_id        the manifest line carries this ref_id (the strong match);
       url           a fetched (non-derived) artefact at the source's own address --
@@ -977,7 +977,9 @@ def artefacts_for_source(ref_id, url=None):
                     "exists": path.exists(), "sha256": rec.get("sha256"),
                     "derived": bool(rec.get("derived")),
                     "derived_from": rec.get("derived_from"), "url": rec.get("url"),
-                    "ref_id": rec.get("ref_id"), "via": via}
+                    "ref_id": rec.get("ref_id"), "via": via,
+                    "content_type": rec.get("content_type"),
+                    "derivation_kind": rec.get("derivation_kind")}
 
     recs = [(m.parent, r) for m in sorted(LOG_ROOT.glob("*/manifest.jsonl"))
             for r in _manifest_records(m.parent.name)]
@@ -1016,6 +1018,30 @@ def pdf_page_count(path):
             return doc.page_count
     except Exception:                                    # noqa: BLE001
         return None
+
+
+def pdf_text_pages(path):
+    """(page texts, 1-based numbers of the pages with no text layer), or None without pymupdf.
+
+    The one-page test is `normalise_quote(page.get_text())`, the test `full_text.pdf_text`
+    reports its `empty` pages by. A PDF pymupdf cannot open yields ([], []): it holds no text
+    this module can read. None means the READER is missing, which is not the same fact.
+    """
+    try:
+        import pymupdf
+    except Exception:                                    # noqa: BLE001
+        return None
+    texts, empty = [], []
+    try:
+        with pymupdf.open(str(path)) as doc:
+            for i, page in enumerate(doc, start=1):
+                t = page.get_text()
+                if not normalise_quote(t):
+                    empty.append(i)
+                texts.append(t)
+    except Exception:                                    # noqa: BLE001
+        return [], []
+    return texts, empty
 
 
 def page_coverage(path):
@@ -1453,44 +1479,73 @@ def repeated_author_name(authors):
     return None
 
 
+#: The manifest `derivation_kind` `scripts/research/page_image.py` records for a page picture
+#: (its `retrieval_log.record_file(..., kind="page-render")`); one value, read here by name.
+PAGE_RENDER_KIND = "page-render"
+
+#: Appended to a held PDF by `decodable_body_artefacts` when pymupdf cannot be imported: the
+#: text layer was not examined, so the caller refuses naming the dependency, never passes.
+UNEXAMINABLE_PDF = " (unexaminable: pymupdf missing)"
+
+
+def _source_url(ref_id):
+    """The source's own address in evidence_sources, or None: a held PDF is often matched by it."""
+    try:
+        cx = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+        try:
+            row = cx.execute("SELECT url FROM evidence_sources WHERE ref_id=?", (ref_id,)).fetchone()
+        finally:
+            cx.close()
+    except sqlite3.Error:
+        return None
+    return row[0] if row else None
+
+
 def decodable_body_artefacts(ref_id):
-    """'session/artefact' for each held artefact of `ref_id` that carries a decodable BODY: a
-    derived text (the manifest's `derived` flag, with no declared content type -- a derived
-    image or JSON declares its own), or a fetched text/HTML page. A metadata record (JSON,
-    XML) is not a body, and bytes that do not decode are not either. Read by db.py's
-    `--verbatim-exempt` refusal: the exemption is for a source that holds no such body."""
+    """'session/artefact' for each held artefact of `ref_id` that carries a decodable BODY.
+
+    A body is: a fetched `text/*` page; a derived text (the manifest's `derived` flag, no
+    declared content type) whose text, PAGE_MARKER lines removed, is not empty -- a scan-only
+    PDF's derivation is markers alone and is not a body; or a held `.pdf` on which at least
+    one page yields text under `pdf_text_pages`, the test `full_text.py` reports "no text
+    layer" by. Without pymupdf a `.pdf` is returned with UNEXAMINABLE_PDF appended. A metadata
+    record (JSON, XML), an image and bytes that do not decode are not bodies. "Held" is
+    `artefacts_for_source`: the manifest's ref_id, else the source's own address.
+
+    Read by db.py's `--verbatim-exempt` refusal. The exemption is for a quote read off a
+    persisted page image (`page_render_artefacts`) or from a source holding nothing decodable;
+    nothing here curates a list of files or sources.
+    """
     out = []
-    for a in _artefact_index():
-        if a.ref_id != ref_id:
+    for h in artefacts_for_source(ref_id, _source_url(ref_id)):
+        if not h["exists"]:
             continue
-        ct = (a.content_type or "").lower()
-        if not (ct.startswith("text/") or (a.derived and not ct)):
+        ct = (h["content_type"] or "").lower()
+        name = "%s/%s" % (h["session"], h["artefact"])
+        if not h["derived"] and h["artefact"].lower().endswith(".pdf"):
+            pages = pdf_text_pages(h["path"])
+            if pages is None:
+                out.append(name + UNEXAMINABLE_PDF)
+            elif len(pages[0]) > len(pages[1]):
+                out.append(name)
             continue
-        body, _enc = a.body()
-        if body:
-            out.append("%s/%s" % (a.dname, a.artefact))
+        if not (ct.startswith("text/") or (h["derived"] and not ct)):
+            continue
+        text, _enc = decode_artefact(h["path"].read_bytes(), h["content_type"])
+        if text is not None and h["derived"]:
+            text = PAGE_MARKER.sub("", text)
+        if text is not None and normalise_quote(text):
+            out.append(name)
     return out
 
 
-def payload_page_range(ref_id):
-    """The `page` string of a held Crossref-shaped payload for `ref_id`, or None.
-
-    Reads the manifest lines carrying this ref_id and parses each as `--verify-authors`
-    does (a work under `message` with a DOI). The deposit is the only machine-knowable
-    statement that the document is paged; nothing here curates what a landing page looks
-    like. Read by db.py `record-scan`: a text with no page markers cannot be a full reading
-    of a document its own deposit gives a page range.
-    """
-    for a in _artefact_index():
-        if a.ref_id != ref_id or a.derived:
-            continue
-        try:
-            msg = json.loads(a.path.read_text(encoding="utf-8")).get("message")
-        except Exception:                                # noqa: BLE001 -- not JSON: not a payload
-            continue
-        if isinstance(msg, dict) and msg.get("DOI") and str(msg.get("page") or "").strip():
-            return str(msg["page"]).strip()
-    return None
+def page_render_artefacts(ref_id):
+    """'session/artefact' for each held derived artefact of `ref_id` whose manifest
+    `derivation_kind` is PAGE_RENDER_KIND: the persisted page pictures R10 requires before a
+    transcription is trusted over a damaged text layer. Held as `decodable_body_artefacts`."""
+    return ["%s/%s" % (h["session"], h["artefact"])
+            for h in artefacts_for_source(ref_id, _source_url(ref_id))
+            if h["exists"] and h["derived"] and h["derivation_kind"] == PAGE_RENDER_KIND]
 
 
 def _biblio_divergences(msg, row):
@@ -1913,7 +1968,14 @@ def verify_authors(session):
             # a person under `family`/`given` and an affiliation under `name` alone) are
             # still a byline, and a stored row that disagrees with them is a cross.
             malformed.append((ref_id, repeated))
-            real = [(a["family"], (a.get("given") or "")) for a in authors if a.get("family")]
+            # De-duplicated in order: an author the deposit filed twice is one author of the
+            # byline, so a correct stored byline does not cross over the deposit's repeat.
+            seen, real = set(), []
+            for a in authors:
+                key = _norm(a.get("family")) + "|" + _norm(a.get("given"))
+                if a.get("family") and key not in seen:
+                    seen.add(key)
+                    real.append((a["family"], (a.get("given") or "")))
         if (real or not repeated) and _author_conflict(real, stored):
             bad.append((ref_id, [_disp(*a) for a in real], [_disp(*a) for a in stored]))
         mm, gp = _biblio_divergences(msg, row)
@@ -1976,8 +2038,8 @@ def verify_authors(session):
         print(f"  ✗ {ref_id}\n      logged: {'; '.join(real)}\n      stored: {'; '.join(stored)}")
     if malformed:
         print(f"\n  MALFORMED-PAYLOAD — {len(malformed)} source(s) whose payload repeats an "
-              f"author name; a byline never does, so the deposit filed affiliations as")
-        print("  authors. The stored rows are still compared with the payload's family-named "
+              f"author name; a byline never does, so the deposit filed an affiliation as an")
+        print("  author, or an author twice. The stored rows are still compared with the payload's family-named "
               "authors (a disagreement shows above as a cross); correct-source refuses to "
               "write authors from this payload. The malformed deposit itself is reported, "
               "not failed.")

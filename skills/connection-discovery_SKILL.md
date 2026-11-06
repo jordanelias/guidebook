@@ -119,7 +119,10 @@ verb sets it; do not claim a review that no row records.
 
 ## Rules
 1. Never type a connection id: the writer computes it.
-2. HIGH confidence connections feed the determination run (`scripts/assess/assess_cell.py` stage).
+2. No code reads `connections` or `connection_targets`: the reader of a connection is the operator at the adversarial
+   pass, and the determination run (`scripts/assess/assess_cell.py`) does not take it as input. Whether the engine
+   should is open owner question 12 of the 2026-11-06 round-3 adjudication
+   (`workplan/2026-11-06-run-pipeline-round-3-adjudication.md`).
 3. A relationship with no direct evidence is a CR gap, never a connection.
 4. No `[A-Z]-NN` target and no prefixed free-text target: use the typed flags.
 5. Use the CLI only; the archived registers (`gap_register.md`, `connection-register-active.md`, per-topic

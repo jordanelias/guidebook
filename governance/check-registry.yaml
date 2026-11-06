@@ -645,12 +645,17 @@ checks:
     correct"). Every backticked token a skill, command or agent names, if shaped like a
     value or an identifier, must resolve to a CHECK value, a schema name, a db.py verb or
     flag, a check id, a contract stage or criterion id, an R-rule label, a skill, command or
-    agent stem, a tracked path, a registry id, or a token the file defines in its own
-    table. Homes are derived from the schema and the inventories only; strings the gate
-    scripts, the writers or CLAUDE.md quote are not homes (they once made item_code,
-    E-08, population_code and axis_code resolve). Prints the unresolved tokens per file;
-    red while prior-version skills name retired or non-existent homes (derive: run it).
-    Prose is a caller (rule 4): the remedy is a sentence edit, not an allow-list.'
+    agent stem, a tracked path, a registry id, an environment variable the code reads
+    (derived from the reads), or a token THAT FILE defines in its own table (per file,
+    never across the path set). Homes are derived from the schema and the inventories
+    only; strings the gate scripts, the writers or CLAUDE.md quote are not homes (they
+    once made item_code, E-08, population_code and axis_code resolve). --paths takes files
+    or directories and exits 2 when an entry names nothing, so a pass cannot examine
+    nothing. Not examined, by decision: fenced blocks, plain-text tokens, harness tool
+    names, db.py result keys; the gate markers are reported (see the script docstring).
+    Prints the unresolved tokens per file; red while prior-version skills name retired or
+    non-existent homes (derive: run it). Prose is a caller (rule 4): the remedy is a
+    sentence edit, not an allow-list.'
 - id: retired_vocabulary
   cmd:
   - python3
@@ -1091,7 +1096,7 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: 'selftest — subject is its own fixtures (a temp copy of the DB written through db.py''s
-    writers, one scratch retrieval-log root); a floor would count the wrong thing. NEW 2026-11-06:
+    writers, scratch retrieval-log roots: symlinks to the tracked sessions plus fixtures); a floor would count the wrong thing. NEW 2026-11-06:
     the refusals two operator walk-throughs of skills/run-pipeline_SKILL.md found stated and not
     held (verified needs a full-scope reading, an extraction needs a VERIFIED source and a recorded
     reading, a direction names its source, ids are computed, a connection has the arity its type

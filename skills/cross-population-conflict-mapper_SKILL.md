@@ -18,7 +18,7 @@ description: >
 
 **Model:** Sonnet-class (retrieval/collation) · Opus-class or above (resolution synthesis + best-practice determination)
 **Input:** Environmental parameter(s) (`base_parameters`), a determination under review, or a room type
-**Keyed on the parameter.** `conflicts.parameter_id` (migration 122) is the key and `add-conflict --parameter-id` is required; the domain label in the matrix below is prose that describes the parameter, not the key. The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` **refuses** a `--pop-a` or `--pop-b` the table lacks (foreign keys, migration 121); the pair is unordered and the writer orders it. **The matrix below is prior-version content:** its population descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`, `POTS`, `MCAS`, "fibro") are not identity codes, and most of its domains are not yet `base_parameters` rows. Derive the live codes (`select identity_code, display_name from base_taxonomy_identity`); choose the code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17). Which descriptors become codes, and whether the matrix stays as a seed list, is open owner question 1 of the 2026-11-06 round-2 adjudication.
+**Keyed on the parameter.** `conflicts.parameter_id` (migration 122) is the key and `add-conflict --parameter-id` is required; the domain label in the matrix below is prose that describes the parameter, not the key. The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` **refuses** a `--pop-a` or `--pop-b` the table lacks, naming the flag you typed (foreign keys, migration 121), `ALL` (a scope marker, not a population) and a blank `--domain`; the pair is unordered and the writer orders it. **The matrix below is prior-version content:** its population descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`, `POTS`, `MCAS`, "fibro") are not identity codes, and most of its domains are not yet `base_parameters` rows. Derive the live codes (`select identity_code, display_name from base_taxonomy_identity`); choose the code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17). Which descriptors become codes, and whether the matrix stays as a seed list, is open owner question 1 of the 2026-11-06 round-3 adjudication (`workplan/2026-11-06-run-pipeline-round-3-adjudication.md`).
 **Output:** Conflict domain matrix + resolution evidence register + unresolved gap flags
 **Chunk ceiling:** ≤3 conflict domains per run
 
@@ -117,7 +117,7 @@ python3 scripts/db.py add-conflict \
   --status [conflicts.status, from the CHECK: python3 scripts/db.py add-conflict --help] \
   --resolution "[mechanism if resolved]" \
   --evidence "[source citation if resolved]" \
-  --session [session-name]
+  --session [session stem]
 ```
 One conflict per (parameter, pair): a second is refused, naming the first (`update-conflict` changes it).
 `update-conflict --gap-id` and `--status` are checked the same way; an unknown gap or conflict is refused by
@@ -133,13 +133,13 @@ python3 scripts/db.py add-gap \
   --description "[domain]: [pop_a] vs [pop_b] — [why unresolved, what research is needed]" \
   --skill cross-population-conflict-mapper \
   --section "parameter [parameter_id]" \
-  --session [session-name]
+  --session [session stem]
 
 # Then update the conflict with gap_id (use GAP-NNN returned above)
 python3 scripts/db.py update-conflict \
   --conflict-id CONF-XXXX \
   --gap-id GAP-NNN \
-  --session [session-name]
+  --session [session stem]
 ```
 
 **For RESOLVED conflicts:** no gap needed. The `conflicts` table record is the full output.
@@ -216,8 +216,11 @@ Known resolution archetypes (apply where evidence supports):
 - `multilingual-research` / `functional-deficit-researcher` (population-specific evidence)
 
 **Feeds INTO:**
-- the determination run (`assess_cell.py`): a `contested` direction and the conflict matrix decide how a spread is shown
-- SQLite `conflicts` table (all conflicts via `db.py add-conflict`)
+- the determination run (`scripts/assess/assess_cell.py`), by one typed input only: a parameter's `contested` direction
+  (`set-parameter-direction`)
+- SQLite `conflicts` table (all conflicts via `db.py add-conflict`). No code reads it: its reader is the operator at the
+  adversarial pass, and whether the engine should consume it is open owner question 12 of the 2026-11-06 round-3
+  adjudication (`workplan/2026-11-06-run-pipeline-round-3-adjudication.md`)
 - SQLite `gaps` table (UNRESOLVED only via `db.py add-gap --category CONF`)
 
 **Do NOT write to:**
@@ -226,7 +229,7 @@ Known resolution archetypes (apply where evidence supports):
 - `references/connection-register-active.md` (archived)
 
 **Preceded by:** population-specific extractions for the parameter
-**Followed by:** the determination. Where the conflict is irreducible, `set-parameter-direction --direction contested` records it, but the writer requires `--ref-id`, one admitted source holding an extraction for the parameter; whether a contested direction takes one source or one per side is open owner question 7 of the 2026-11-06 round-2 adjudication
+**Followed by:** the determination. Where the conflict is irreducible, `set-parameter-direction --direction contested` records it, but the writer requires `--ref-id`, one admitted source holding an extraction for the parameter; whether a contested direction takes one source or one per side is open owner question 7 of the 2026-11-06 round-3 adjudication
 
 ---
 

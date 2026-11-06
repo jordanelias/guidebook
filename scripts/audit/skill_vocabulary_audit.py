@@ -18,19 +18,24 @@ CHECK vocabulary value (dbcore.check_values over every column) or a view's CASE 
 `db.py` verb (from `--help`) or flag (from the parser source); a registered check id; a
 pipeline-contract stage or criterion id; an R-rule label (governance/research-contract.yaml); a
 skill, command or agent stem; a tracked path or basename; an identity, ICF, access-need, slug,
-term or gap id live in its registry; `sqlite_master` / `sqlite_sequence`; a placeholder (a token
-carrying NNN/XXX/YYYY/<>); or a token the file defines in its own table. Everything else is
-UNRESOLVED and printed with its file. Bare ALL-CAPS words in prose are not examined: only a
-backticked token is a value the skill tells the operator to type.
+term or gap id live in its registry; an environment variable the code reads (`os.environ` /
+`os.getenv` over scripts/ and .claude/hooks/); `sqlite_master` / `sqlite_sequence`; a placeholder
+(a token carrying NNN/XXX/YYYY/<>); or a token THAT FILE defines in its own table (per file: one
+skill's table row does not launder a retired key for another). Everything else is UNRESOLVED and
+printed with its file.
 
-WHAT IS DELIBERATELY NOT A HOME. Strings the audit scripts, the writers or CLAUDE.md happen to
-quote (their markers, dictionary keys, module-level names, environment variables), and the
-registry's own keys. Harvesting them made `item_code`, `E-08`, `population_code` and `axis_code`
-resolve, so the check could not go red on the retired item layer it exists to catch. The markers
-the gates read out of note cells (`[UNVERIFIED-QUANT]`, `CO1-NOT-APPLICABLE`,
-`NOTHING-IN-SCOPE`) are therefore reported wherever a skill backticks them. That is correct:
-they are conventions the 2026-11-06 ruling on joined cells queues for typed columns, not
-vocabulary.
+WHAT IS NOT EXAMINED, by decision. Fenced blocks (commands shown, not named); plain-text tokens
+(only a backticked token is a value the skill tells the operator to type); harness tool names
+(`unsubscribe_pr_activity`) and `db.py` result keys, which the operator does not type and the
+skills write in plain text; and the gate markers (`[UNVERIFIED-QUANT]`, `CO1-NOT-APPLICABLE`,
+`NOTHING-IN-SCOPE`), which are REPORTED wherever a skill backticks them (round 2): they are
+conventions the 2026-11-06 ruling on joined cells queues for typed columns, not vocabulary.
+
+WHAT IS DELIBERATELY NOT A HOME. Other strings the audit scripts, the writers or CLAUDE.md happen
+to quote (dictionary keys, module-level names) and the registry's own keys. Harvesting them made
+`item_code`, `E-08`, `population_code` and `axis_code` resolve, so the check could not go red on
+the retired item layer it exists to catch. Environment variables are homes only because the code
+reads them (derived, not listed) and none of them is shaped like a retired container.
 
 WHAT WRONG THING REACHES THE GUIDEBOOK WITHOUT IT. An operator following a skill that names a
 retired container or a column that does not exist writes the fact into a note cell, which no
@@ -41,9 +46,10 @@ the registries; nothing is curated here.
 ADVISORY, with a per-file report: skills written before the vocabulary moved carry prior-
 version tokens, and the remedy is a prose edit under rule 4, not an allow-list here. EXAMINED
 is the number of tokens tested. Exit 0 when every token resolves, 1 otherwise, 2 when it
-cannot run.
+cannot run, including when a --paths entry names nothing (a pass that examined nothing is the
+defect this project names).
 
-Usage: python3 scripts/audit/skill_vocabulary_audit.py [--paths skills .claude/commands ...]
+Usage: python3 scripts/audit/skill_vocabulary_audit.py [--paths FILE_OR_DIR ...]
 """
 import argparse
 import os
@@ -112,6 +118,7 @@ def homes(conn):
         if p.startswith((".claude/commands/", ".claude/agents/")) and p.endswith(".md"):
             out.add(p.rsplit("/", 1)[-1][:-3])
     out |= {"sqlite_master", "sqlite_sequence"}
+    out |= env_vars()
     # Per-slug labels and staged ids are homes too.
     for sql in ("SELECT local_ref_id FROM source_slug_links", "SELECT ref_id FROM source_locators",
                 "SELECT local_ref_id FROM citation_mining"):
@@ -120,6 +127,19 @@ def homes(conn):
         except sqlite3.Error:
             pass
     return {x for x in out if x}
+
+
+ENV_READ = re.compile(r"""(?:os\.getenv|environ(?:\.get)?)\s*[\[(]\s*["']([A-Z][A-Z0-9_]*)["']""")
+
+
+def env_vars():
+    """Environment variables the code reads, derived from the reads themselves."""
+    out = set()
+    sources = list((REPO / "scripts").rglob("*.py")) + [
+        f for f in (REPO / ".claude/hooks").glob("*") if f.is_file()]
+    for f in sources:
+        out |= set(ENV_READ.findall(f.read_text(encoding="utf-8", errors="replace")))
+    return out
 
 
 def defined_in(text):
@@ -131,7 +151,8 @@ def defined_in(text):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--paths", nargs="*", default=list(DEFAULT_PATHS))
+    ap.add_argument("--paths", nargs="*", default=list(DEFAULT_PATHS),
+                    help="markdown files or directories of them (default: skills, commands, agents)")
     args = ap.parse_args()
     if not DB_PATH.exists():
         print(f"skill_vocabulary_audit: no database at {DB_PATH}", file=sys.stderr)
@@ -143,15 +164,22 @@ def main():
         conn.close()
     files = []
     for p in args.paths:
-        root = REPO / p
-        files += sorted(f for f in root.rglob("*.md") if f.is_file() and not f.is_symlink())
+        root = REPO / p                                          # an absolute p stays absolute
+        found = ([root] if root.is_file() else
+                 sorted(f for f in root.rglob("*.md") if f.is_file() and not f.is_symlink())
+                 if root.is_dir() else [])
+        if not found:
+            print(f"skill_vocabulary_audit: --paths entry {p!r} names no markdown file or "
+                  f"directory holding one; refusing to pass having examined nothing.",
+                  file=sys.stderr)
+            return 2
+        files += found
     examined, unresolved = 0, {}
     texts = {f: re.sub(r"```.*?```", "", f.read_text(encoding="utf-8", errors="replace"), flags=re.S)
              for f in files}                                     # fenced commands are shown, not named
-    # A vocabulary one skill defines in its own table (a mode, a status) is nameable by another.
-    own = set().union(*(defined_in(t) for t in texts.values())) if texts else set()
     for f in files:
         text = texts[f]
+        own = defined_in(text)                       # a table this file defines is this file's own
         toks = set()
         for t in TOKEN.findall(text):
             t = t.strip()

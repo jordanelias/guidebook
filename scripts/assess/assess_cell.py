@@ -2155,7 +2155,17 @@ def main():
     args = ap.parse_args()
     if os.path.abspath(args.db) == os.path.abspath(os.path.join(REPO_ROOT, "data", "guidebook.db")):
         sys.exit("REFUSING: this engine never writes the canonical DB (owner-gated).")
-    SESSION, STAMP = args.session, args.stamp
+    # The DB holds the bare session stem; the pointer form carries `.md` (CLAUDE.md section 7), and
+    # a wrong form scopes a gate to nothing. A stamp is stored verbatim, so it is refused unless it
+    # has the shape every live created_at has: dbcore.now() is 'YYYY-MM-DD HH:MM', and the engine's
+    # own examples add seconds. Both refusals precede every write.
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?", args.stamp):
+        print(f"REFUSING: --stamp {args.stamp!r} is not 'YYYY-MM-DD HH:MM' or 'YYYY-MM-DD "
+              f"HH:MM:SS' (the shape dbcore.now() writes; no 'T', no zone). It is stored as "
+              f"created_at, so a foreign shape would sit beside every other row's. Nothing was "
+              f"written.", file=sys.stderr)
+        sys.exit(2)
+    SESSION, STAMP = re.sub(r"\.md$", "", args.session), args.stamp
 
     lens = {"identity_code": args.identity, "icf_code": args.icf,
             "needs_code": args.needs, "medical_code": args.medical}

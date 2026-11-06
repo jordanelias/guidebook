@@ -641,7 +641,10 @@ try:
             con.close()
         record("S14", "a non-finding extraction cannot carry harm_finding (CHECK)", bad, "no IntegrityError")
         # S15: a conflict names two populations the identity lens holds; an unknown code is refused by name.
-        two = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code LIMIT 2")]
+        # `ALL` is a registry row but a scope marker, not a population: add-conflict refuses it (R3-14,
+        # db.insert_conflict compares the code to 'ALL'), so the two populations exclude that one row.
+        two = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
+                               "ORDER BY identity_code LIMIT 2")]
         ok = run_cli("add-conflict", "--parameter-id", str(pid), "--domain", "FIXTURE", "--pop-a", two[0],
                      "--pop-b", two[1], "--status", "PROPOSED", "--session", S)
         bad_ = run_cli("add-conflict", "--parameter-id", str(pid), "--domain", "FIXTURE2", "--pop-a",
@@ -1549,7 +1552,9 @@ try:
     # J13: conflicts.pop_a / pop_b are foreign keys into the identity lens (migration 121; the item_code
     # column this once guarded is gone). A code the lens lacks is refused by name; the control is the same
     # row with two live codes, because a refusal that also refused that would prove nothing.
-    live2 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code LIMIT 2")]
+    # (`ALL` is the scope marker add-conflict refuses as a population, R3-14; the pair excludes that row.)
+    live2 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
+                             "ORDER BY identity_code LIMIT 2")]
     base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": live2[0], "pop_b": live2[1],
             "status": "PROPOSED",
             # The second active parameter: S15 above already filed this pair on the first, and
