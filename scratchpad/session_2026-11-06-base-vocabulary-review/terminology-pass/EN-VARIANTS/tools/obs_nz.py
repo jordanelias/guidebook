@@ -29,13 +29,13 @@ OBS = [
  ("lighting levels", "lux at tread level", "NZ", "Table 8 notes", "150 lux at tread level for accessible and common stairways", "Table 8 itself states luminaire watts/m2"),
  ("maneuvering", "manoeuvring", "NZ", "1.3.2 (comment)", "it requires complex manoeuvring to get over the change in level while opening the door", ""),
  ("Seating", "Spaces for wheelchairs", "NZ", "8.1", "8.1 Spaces for wheelchairs", "assembly seating only"),
- ("elevator", "Lifts", "NZ", "12.0", "12.0.1 For the purposes of determining whether a lift must be provided for people with disabilities", ""),
+ ("elevator", "a lift must be provided", "NZ", "12.0", "12.0.1 For the purposes of determining whether a lift must be provided for people with disabilities", ""),
  ("Protruding objects (B651 4.5.2)", "minor projection", "NZ", "1.5.1", "A minor projection is permitted within the required clear width of an access route", "projections graded minor / major / dangerous"),
  ("Edge protection", "Barriers", "NZ", "1.7.1", "Barriers to prevent falling from the access route shall comply with NZBC F4.", "barrier vs kerb vs handrail are separate objects"),
 ]
 REV = [
  ("Acceptable Solution", "compliance route", "NZ", "Status", "A person who complies with a Verification Method or Acceptable Solution will be treated as having complied with the provisions of the Building Code", "deemed-to-comply; alternative solutions possible"),
- ("Verification Method", "compliance route", "NZ", "D1/VM1", "No specific test methods have been adopted for verifying compliance with the Performance of NZBC D1.", ""),
+ ("Verification Method", "compliance route", "NZ", "D1/VM1", "Verification Method D1/VM1 No specific test methods have been adopted for verifying compliance with the Performance of NZBC D1.", ""),
  ("Person with a disability", "defined term", "NZ", "Definitions", "Person with a disability means a person who has an impairment or a combination of impairments", "includes 'a mental illness'"),
  ("Common ramp", "defined category", "NZ", "Definitions", "Common ramp A ramp which is used, or intended to be used by the public whether as of right or not, and is not a service ramp or accessible ramp.", ""),
  ("Service ramp", "defined category", "NZ", "Definitions", "Service ramp means a ramp that is used, or intended to be used, infrequently by service personnel", ""),

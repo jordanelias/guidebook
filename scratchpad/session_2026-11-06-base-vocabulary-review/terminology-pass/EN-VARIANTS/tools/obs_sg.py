@@ -50,7 +50,7 @@ OBS = [
  ("Audio accessibility and communication enhancement technologies", "hearing enhancement system", "SG", "1.2.1 (definition)", "“hearing enhancement system” enables sound signals of the activity to be transmitted to a person with a hearing enhancement device without interference of background noise or excessive reverberation.", ""),
  ("Reverberation time (parameter 7)", "excessive reverberation", "SG", "1.2.1 (hearing enhancement system)", "without interference of background noise or excessive reverberation", "BROADER: no reverberation quantity"),
  ("Clear signage", "Tactile and Braille", "SG", "8.5", "8.5 Tactile and Braille Functional Intent Tactile information and Braille must be incorporated in the signage", ""),
- ("Well-illuminated (if site expected to be lit)|lighting levels", "sufficient illumination", "SG", "9.1 (Functional Intent)", "Lighting must provide sufficient illumination suitable for people who are partially sighted", "levels only as Advisory (100 / 200 lux)"),
+ ("Well-illuminated (if site expected to be lit)|Well illuminated (if required for expected usage)|lighting levels", "sufficient illumination", "SG", "9.1 (Functional Intent)", "Lighting must provide sufficient illumination suitable for people who are partially sighted", "levels only as Advisory (100 / 200 lux)"),
  ("Enclosures (B651 6.5.3)", "Bath Enclosures", "SG", "5.8.10", "5.8.10 Bath Enclosures 5.8.10.1 Enclosures for bathtubs and showers must not:", ""),
  ("Seating", "Seating Spaces for Wheelchair Users", "SG", "9.5", "9.5 Seating Spaces for Wheelchair Users", ""),
  ("ratio", "on a proportional basis", "SG", "7.5 (Functional Intent)", "Accessible rooms suitable for wheelchair users and the elderly must be provided on a proportional basis.", "room ratio, closest to the register's sense"),
@@ -58,7 +58,7 @@ OBS = [
 REV = [
  ("Functional Intent", "drafting structure", "SG", "2.1 (and each clause)", "2.1 Accessibility in the Built Environment Functional Intent", "aim statement before each prescription"),
  ("Advisory", "drafting structure", "SG", "1.2.2", "Recommended design requirements are indicated as an “Advisory”.", "mandatory 'must' vs 'Advisory'"),
- ("deemed-to-satisfy design solutions", "compliance route", "SG", "Introduction", "technical details necessary to achieve the minimum level of accessibility for deemed-to-satisfy", ""),
+ ("deemed-to-satisfy", "compliance route", "SG", "Introduction", "technical details necessary to achieve the minimum level of accessibility for deemed-to-satisfy", ""),
  ("Anthropometrics", "reference body", "SG", "1.3", "1.3 Anthropometrics", "the body data opens the code"),
  ("Comfortable Access Widths", "reference body", "SG", "Figure 4", "Figure 4 Comfortable Access Widths", "white cane, sighted guide, guide dog, crutches, pram"),
  ("Side/Parallel Approach", "technique", "SG", "Figure 8", "Figure 8 Side/Parallel Approach", "transfer approaches"),
@@ -87,5 +87,5 @@ REV = [
  ("Motion Sensor Lighting", "element", "SG", "5.8.7", "5.8.7 Motion Sensor Lighting", ""),
  ("Seating Spaces at Eating Establishments", "provision rule", "SG", "9.5.3", "9.5.3 Seating Spaces at Eating Establishments", "hawker centres"),
  ("Service and Information Counters", "element", "SG", "8.6", "8.6 Service and Information Counters", ""),
- ("Braille locator", "technique", "SG", "8.5.2.1", "a locator (e.g. semi-circular notch or tactile shape) must be located at the left-hand edge of the sign", ""),
+ ("locator", "technique", "SG", "8.5.2.1", "a locator (e.g. semi-circular notch or tactile shape) must be located at the left-hand edge of the sign", ""),
 ]

@@ -41,7 +41,7 @@ REV = [
  ("unjustifiable hardship", "legal defence", "AU", "4.1", "It is not unlawful for a person to fail to comply with a requirement of these Standards if, and to the extent that, compliance would impose unjustifiable hardship on the person.", ""),
  ("Performance Requirements", "drafting structure", "AU", "Sch 1 Part D", "Access and egress—Performance Requirements", "performance requirement, met by Deemed-to-Satisfy or Performance Solution"),
  ("deemed-to-satisfy provisions", "compliance route", "AU", "3.2 note", "The provisions mentioned in paragraphs (a) and (b) are described as deemed-to-satisfy provisions.", ""),
- ("affected part", "legal category", "AU", "2.1 (5)", "the principal pedestrian entrance of an existing building that contains a new part", "existing-building trigger"),
+ ("affected part", "legal category", "AU", "2.1 (5)", "An affected part is: (a) the principal pedestrian entrance of an existing building that contains a new part", "existing-building trigger"),
  ("principal pedestrian entrance", "element", "AU", "Sch 1 D3.2 (2)", "an accessway must be provided through the principal pedestrian entrance", ""),
  ("sole-occupancy unit", "defined term", "AU", "Sch 1 A1.1", "sole-occupancy unit (SOU) means a room or other part of a building for occupation by one or joint owner", ""),
  ("Class 9b", "building classification", "AU", "Sch 1 A4.1", "Class 9b — an assembly building", "NCC class system governs every rule"),

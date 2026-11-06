@@ -46,7 +46,7 @@ OBS = [
  ("Handrails", "both sides of stairs and ramps", "US", "505.2", "Handrails shall be provided on both sides of stairs and ramps.", ""),
  ("Tactile attention indicators (truncated domes)", "Detectable Warnings", "US", "705.1", "Detectable warnings shall consist of a surface of truncated domes and shall comply with 705.", "'detectable warning'; scoped mainly to platform edges"),
  ("Audio accessibility and communication enhancement technologies", "Assistive Listening System (ALS)", "US", "106.5", "Assistive Listening System (ALS). An amplification system utilizing transmitters, receivers, and coupling devices", ""),
- ("volume", "Volume Control Telephones", "US", "704.3", "Public telephones required to have volume controls shall be equipped with a receive volume control", ""),
+ ("volume", "receive volume control", "US", "704.3", "Public telephones required to have volume controls shall be equipped with a receive volume control", ""),
  ("ratio", "Signal-to-Noise Ratio", "US", "706.5", "706.5 Signal-to-Noise Ratio. The signal-to-noise ratio for internally generated noise in assistive listening systems shall be 18 dB minimum.", "DIFFERENT SENSE"),
  ("lighting levels", "level of illumination", "US", "407.4.5", "The level of illumination at the car controls, platform, car threshold and car landing sill shall be 5 foot candles (54 lux) minimum.", "only inside elevator cars"),
  ("Clear signage", "Raised Characters", "US", "703.2", "703.2 Raised Characters. Raised characters shall comply with 703.2 and shall be duplicated in braille", ""),
@@ -56,7 +56,7 @@ OBS = [
  ("capacity", "capacity, load, speed, travel", "US", "Advisory 105.2.2", "must meet requirements for capacity, load, speed, travel, operating devices, and control equipment", "lift capacity, deferred to ASME A18.1"),
 ]
 REV = [
- ("Equivalent Facilitation", "compliance route", "US", "103", "Nothing in these requirements prevents the use of designs, products, or technologies as alternatives to those prescribed", ""),
+ ("Equivalent Facilitation", "compliance route", "US", "103", "103 Equivalent Facilitation Nothing in these requirements prevents the use of designs, products, or technologies as alternatives to those prescribed", ""),
  ("Advisory", "drafting structure", "US", "101.1 (and passim)", "Advisory 101.1 General.", "non-mandatory advisory notes interleaved with requirements"),
  ("Technically Infeasible", "defined term", "US", "106.5", "Technically Infeasible. With respect to an alteration of a building or a facility, something that has little likelihood of being accomplished", ""),
  ("primary function", "legal category", "US", "28 CFR 35.151(b)(4)", "An alteration that affects or could affect the usability of or access to an area of a facility that contains a primary function", ""),
