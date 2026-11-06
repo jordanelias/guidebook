@@ -363,8 +363,15 @@ try:
                     "context_quote": f"a fixture sentence using {phrase} once",
                     "verbatim_exempt": "fixture text: no retrieval artefact carries it"}
 
+        # The exemption is refused where a decodable body is held (observe-term shares
+        # add-extraction's refusal, R2-6), and the first source by id holds one, so the
+        # sighting is made on the first source that holds none (derived, never named).
+        BODYLESS = next(r for (r,) in q("SELECT ref_id FROM evidence_sources WHERE "
+                                        "superseded_by_ref_id IS NULL ORDER BY ref_id")
+                        if not db._retrieval_log().decodable_body_artefacts(r))
+
         def fixture_term(name):
-            obs = db.observe_term(sighting(REF, f"fixture phrase: {name}"), S)
+            obs = db.observe_term(sighting(BODYLESS, f"fixture phrase: {name}"), S)
             return db.insert_term(obs["observation_id"], name, "fixture rationale",
                                   S)["term_id"]
 

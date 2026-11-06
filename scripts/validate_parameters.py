@@ -32,7 +32,7 @@ SQLite's own DDL "forbids" because "a declared constraint is not an observed one
 
 ONE PATTERN, NOT TWO (CLAUDE.md rule 5 -- "never write the same fact into a second
 table. Point, do not copy."). The exact regex already lives at `scripts/db.py`'s
-`_VALUE_BEARING` and is imported from there, not retyped: two regexes asserting one
+`_VALUE_BEARING_NAME` and is imported from there, not retyped: two regexes asserting one
 rule is the dual-home rule 5 forbids one level down from a table, and the risk is
 concrete -- `db.py` refuses new value-bearing terms already, so retyping this
 pattern here would recreate the identical fork alias-provenance and V5 (population
@@ -63,7 +63,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from db import _VALUE_BEARING  # noqa: E402  (single source of truth; see header)
+from db import _VALUE_BEARING_NAME  # noqa: E402  (single source of truth; see header)
 
 import sqlite3  # noqa: E402
 import dbcore  # noqa: E402  (the ledger-quote normalisation has one home)
@@ -100,7 +100,7 @@ def validate():
 
     errors = []
     for r in rows:
-        if _VALUE_BEARING.search(r["canonical_en"] or ""):
+        if _VALUE_BEARING_NAME.search(r["canonical_en"] or ""):
             errors.append(
                 f"P1 FAIL parameter_id={r['parameter_id']} (term {r['term_id']}): "
                 f"canonical_en {r['canonical_en']!r} carries a number, a comparator, "

@@ -158,7 +158,8 @@ def next_con_id() -> str:
 
 #: How many targets of which kind each connection_type needs: the skill's own test for the
 #: type ("does evidence for parameter X constrain parameter Y" needs two parameters). One
-#: home; a type the CHECK gains later needs a row here or add-connection refuses it by name.
+#: home, and it is JUDGEMENT (what a type means), not a restatement of the CHECK; a type the
+#: CHECK gains later needs a row here or add-connection refuses it by name.
 _CONNECTION_ARITY = {
     "CROSS-PARAMETER": ("parameter_id", 2),
     "COMPOUND-INTERACTION": ("parameter_id", 2),
@@ -212,7 +213,11 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
                     raise Refusal(f"--parameter {value} is {st}, not active: a connection joins "
                                   f"parameters that still stand. Nothing was written.")
         ctype = row.get("connection_type")
-        need_kind, need_n = _CONNECTION_ARITY.get(ctype, (None, 0))
+        if ctype not in _CONNECTION_ARITY:
+            raise Refusal(f"{ctype!r} is in the connection_type CHECK but add-connection holds no "
+                          f"arity rule for it (_CONNECTION_ARITY); a type is added with its rule "
+                          f"(what it must join), never silently. Nothing was written.")
+        need_kind, need_n = _CONNECTION_ARITY[ctype]
         have = sum(1 for k, _ in targets if k == need_kind)
         if need_kind and have < need_n:
             flag = {"parameter_id": "--parameter", "identity_code": "--identity",
@@ -1224,6 +1229,14 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
 # --- CLI ---
 
 
+def _relation_help() -> str:
+    """The relation vocabulary for --help, read from the column's own CHECK. `--relation`
+    cannot take `choices=` because it also admits the literal 'none'; None-safe, because an
+    unreadable database must not make `--help` fail (dbcore.schema_choices returns None)."""
+    vals = dbcore.schema_choices("extraction_relations", "relation")
+    return "{" + ", ".join(vals) + "}" if vals else "the extraction_relations.relation CHECK values"
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Guidebook SQLite data layer CLI"
@@ -1297,6 +1310,7 @@ def main():
                         help="required unless --exec-id names a search that has no slug")
     p_cand.add_argument("--suggested-slug")
     p_cand.add_argument("--disposition", required=True,
+                        choices=dbcore.schema_choices("search_candidates", "disposition"),
                         help="Live vocabulary, derived from the table; not a list in this file")
     p_cand.add_argument("--title", required=True)
     p_cand.add_argument("--locator")
@@ -1324,7 +1338,9 @@ def main():
     p_epm.add_argument("--target-population", required=True)
     p_epm.add_argument("--study-population")
     p_epm.add_argument("--sample-size", type=int)
-    p_epm.add_argument("--match-grade", required=True)
+    p_epm.add_argument("--match-grade", required=True,
+                       choices=dbcore.schema_choices("evidence_population_match", "match_grade"),
+                       help="Live vocabulary, read from the column's own CHECK")
     p_epm.add_argument("--mismatch-note")
     p_epm.add_argument("--gap-id")
     p_epm.add_argument("--session", required=True)
@@ -1372,6 +1388,7 @@ def main():
                             "punctuation (see --distinct-from).")
     p_rcl.add_argument("--clause", help="R3's locator: clause/section/page, once retrieved")
     p_rcl.add_argument("--status", default="REFERENCE-ONLY",
+                       choices=dbcore.schema_choices("research_code_leads", "status"),
                        help="Live vocabulary, derived from the table; not a list in this file")
     p_rcl.add_argument("--recovered-from")
     p_rcl.add_argument("--notes")
@@ -1551,6 +1568,7 @@ def main():
                           help="Close a staged candidate, re-describing it from the source (R15)")
     p_rc.add_argument("--candidate-id", required=True, type=int)
     p_rc.add_argument("--disposition", required=True,
+                      choices=dbcore.schema_choices("search_candidates", "disposition"),
                       help="Live vocabulary, read from the column's own CHECK")
     p_rc.add_argument("--redescription", required=True,
                       help="What the SOURCE says, now that it has been read. Appended "
@@ -1597,6 +1615,7 @@ def main():
                                 "a dissent is a second add-population-match row)")
     p_apm.add_argument("--match-id", required=True)
     p_apm.add_argument("--match-grade", required=True,
+                       choices=dbcore.schema_choices("evidence_population_match", "match_grade"),
                        help="Live vocabulary, read from the column's own CHECK")
     p_apm.add_argument("--reason", required=True,
                        help="Appended to mismatch_note with the grade it replaces")
@@ -1677,6 +1696,7 @@ def main():
     p_ul = sub.add_parser("update-locator", help="Move a lead's status in the clue store")
     p_ul.add_argument("--ref-id", required=True)
     p_ul.add_argument("--status", required=True,
+                      choices=dbcore.schema_choices("source_locators", "status"),
                       help="Live vocabulary, read from the column's own CHECK")
     p_ul.add_argument("--reason",
                       help="REQUIRED for SCREENED-OUT: why this lead was worked and "
@@ -2070,6 +2090,7 @@ def main():
     p_ax.add_argument("--needs", help="access_needs.need_code")
     p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
     p_ax.add_argument("--claim-type", dest="claim_type", required=True,
+                      choices=dbcore.schema_choices("source_value_extractions", "claim_type"),
                       help="Live vocabulary, read from the column's own CHECK. "
                            "'absent' records that the source asserts NO value — which is "
                            "evidence, and takes no --claimed-value.")
@@ -2100,20 +2121,25 @@ def main():
     p_ax.add_argument("--jurisdiction")
     p_ax.add_argument("--setting")
     p_ax.add_argument("--extraction-method", dest="extraction_method", required=True,
+                      choices=dbcore.schema_choices("source_value_extractions", "extraction_method"),
                       help="Live vocabulary, read from the column's own CHECK")
     p_ax.add_argument("--extraction-status", dest="extraction_status",
+                      choices=dbcore.schema_choices("source_value_extractions", "extraction_status"),
                       help="Live vocabulary, read from the column's own CHECK "
                            "(the column's own DEFAULT applies when omitted)")
     # Value genealogy (DR-2026-07-13 H1) — what v_value_independence counts over.
     p_ax.add_argument("--root-id", dest="root_id")
     p_ax.add_argument("--root-type", dest="root_type",
+                      choices=dbcore.schema_choices("source_value_extractions", "root_type"),
                       help="Live vocabulary, read from the column's own CHECK")
     p_ax.add_argument("--root-ref-id", dest="root_ref_id",
                       help="evidence_sources.ref_id of the root the value traces to")
     p_ax.add_argument("--echo-of", dest="echo_of")
     p_ax.add_argument("--measurement-paradigm", dest="measurement_paradigm",
+                      choices=dbcore.schema_choices("source_value_extractions", "measurement_paradigm"),
                       help="Live vocabulary, read from the column's own CHECK")
     p_ax.add_argument("--device-class", dest="device_class",
+                      choices=dbcore.schema_choices("source_value_extractions", "device_class"),
                       help="Live vocabulary, read from the column's own CHECK")
     p_ax.add_argument("--root-population-note", dest="root_population_note")
     p_ax.add_argument("--root-classification-basis", dest="root_classification_basis")
@@ -2156,9 +2182,10 @@ def main():
                            "relation flag -- to say the source states its figure "
                            "ABSOLUTELY. Silence is not the same claim: five of five "
                            "corridor-width sources in the live corpus state theirs "
-                           "against a reference they name or invoke. Otherwise live "
+                           "against a reference they name or invoke. Otherwise one of "
+                           + _relation_help() + " or the literal 'none' (live "
                            "vocabulary, read from extraction_relations.relation's own "
-                           "CHECK.")
+                           "CHECK).")
     p_ax.add_argument("--to-extraction", action="append", dest="to_extractions",
                       default=[], help="Repeatable, aligned by position with "
                            "--relation. A row this project already holds. Pass '-' "
@@ -2202,6 +2229,7 @@ def main():
                       help="source_value_extractions.extraction_id -- the figure "
                            "this edge qualifies")
     p_rx.add_argument("--relation", required=True,
+                      choices=dbcore.schema_choices("extraction_relations", "relation"),
                       help="Live vocabulary, read from extraction_relations."
                            "relation's own CHECK")
     p_rx.add_argument("--to-extraction", dest="to_extraction", type=int,
@@ -2289,6 +2317,7 @@ def main():
                                 "(judgment stage, D-0173)")
     p_adj.add_argument("--observation-id", required=True, type=int)
     p_adj.add_argument("--outcome", required=True,
+                       choices=dbcore.schema_choices("term_adjudications", "outcome"),
                        help="Live vocabulary, read from the column's own CHECK")
     p_adj.add_argument("--term-id",
                        help="Required for NAMES-EXISTING and NAMES-NEW; refused otherwise")
@@ -2312,7 +2341,9 @@ def main():
     # carry. Found 2026-09-02 parking six retracted identities, three of them Co-1.
     p_loc.add_argument("--tier-claimed")
     p_loc.add_argument("--recovered-from", required=True)
-    p_loc.add_argument("--status", required=True)
+    p_loc.add_argument("--status", required=True,
+                       choices=dbcore.schema_choices("source_locators", "status"),
+                       help="Live vocabulary, read from the column's own CHECK")
     p_loc.add_argument("--session", required=True)
     p_loc.add_argument("--dry-run", action="store_true")
 
@@ -6256,6 +6287,12 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
 # into it, because the container announced the determination before the evidence did.
 # Measured 2026-09-09: no live terms.canonical_en contains any of these.
 _VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
+# Comparator WORDS are screened in NAMES only. A definition or description is ordinary
+# English ("rather than reflection"), so it keeps `_VALUE_BEARING` (digits, symbols, min/max)
+# and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
+_VALUE_BEARING_NAME = re.compile(
+    _VALUE_BEARING.pattern + r"|\bthan\b|\bat (least|most)\b|\bno (more|less|fewer|greater)\b"
+    r"|\bnot exceeding\b|\bexceed(s|ing)?\b", re.I)
 
 
 def _name_tokens(name: str) -> frozenset:
@@ -6313,10 +6350,11 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
         raise Refusal(
             "--rationale is required. Minting a term is an adjudication, and an "
             "adjudication that does not say why cannot be contested.")
-    if _VALUE_BEARING.search(canonical_en):
+    vb = _VALUE_BEARING_NAME.search(canonical_en)
+    if vb:
         raise Refusal(
             f"--canonical-en {canonical_en!r} REFUSED: it carries a number, a comparator "
-            f"or a min/max word, so it states a determination in its own name.\n"
+            f"or a min/max word ({vb.group(0)!r}), so it states a determination in its own name.\n"
             f"That is the defect the item layer was deleted for -- a container that "
             f"announces its answer predisposes every finding filed into it "
             f"(DR-2026-08-19 §1.1: 42 of 93 item names embedded a determination).\n"
@@ -6457,11 +6495,13 @@ def insert_medical(code: str, display_name: str, icd11: str, session: str,
             f"version item-code shape [A-Z]-NN that CLAUDE.md §7 warns every grep still "
             f"meets. That surface is what the owner deleted the item layer to escape; this "
             f"namespace does not rejoin it.")
-    for field, val in (("--display-name", display_name), ("--description", description)):
-        if val and _VALUE_BEARING.search(val):
+    for field, val, rx in (("--display-name", display_name, _VALUE_BEARING_NAME),
+                           ("--description", description, _VALUE_BEARING)):
+        vb = rx.search(val) if val else None
+        if vb:
             raise Refusal(
                 f"{field} {val!r} REFUSED: it carries a number, a comparator or a min/max "
-                f"word, so it states a determination in its own name.\nA diagnosis names "
+                f"word ({vb.group(0)!r}), so it states a determination in its own name.\nA diagnosis names "
                 f"the SUBJECT. The value belongs in the determination, which the engine "
                 f"computes (owner 2026-09-09).")
     if not (icd11 or "").strip():
@@ -6665,10 +6705,11 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
                 f"(governance/decision-protocol.md), not a promotion: "
                 f"db.py revoke-declination --term-id {term_id} --reason ... "
                 f"--decision-ref ... first. Nothing was written.")
-        if _VALUE_BEARING.search(term["canonical_en"]):
+        vb = _VALUE_BEARING_NAME.search(term["canonical_en"])
+        if vb:
             raise Refusal(
                 f"{term_id} is named {term['canonical_en']!r}, which carries a number, a "
-                f"comparator or a min/max word — it states a determination in its own "
+                f"comparator or a min/max word ({vb.group(0)!r}) — it states a determination in its own "
                 f"name.\nA parameter is what is under determination, never the answer. "
                 f"Correct the term's canonical_en first; promoting it would make the "
                 f"answer the subject.")
@@ -7175,9 +7216,11 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
             "(a phrase an admitted source uses) or --ruling-quote '<the owner's words>' "
             "(found once in references/project-standards.md). A name with no warrant is a "
             "name typed by hand, which the 2026-09-09 rule forbids.")
-    if _VALUE_BEARING.search(new):
+    vb = _VALUE_BEARING_NAME.search(new)
+    if vb:
         raise Refusal(
-            f"rename-term: {new!r} carries a number, a comparator or a min/max word, so it "
+            f"rename-term: {new!r} carries a number, a comparator or a min/max word "
+            f"({vb.group(0)!r}), so it "
             f"states a determination in its own name -- the item-layer defect "
             f"(DR-2026-08-19 section 1.1). Name the quantity, never its value.")
     if ruling_quote:
@@ -7502,11 +7545,13 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
             f"item code ([A-Z]-NN). The old Part 4 item names are not a permitted catalogue "
             f"(owner 2026-10-09), and the item layer was deleted because a container named "
             f"for its answer biases every finding filed into it (2026-09-01).")
-    for flag, val in (("--canonical-en", canonical_en), ("--definition", definition)):
-        if _VALUE_BEARING.search(val):
+    for flag, val, rx in (("--canonical-en", canonical_en, _VALUE_BEARING_NAME),
+                          ("--definition", definition, _VALUE_BEARING)):
+        vb = rx.search(val)
+        if vb:
             raise Refusal(
                 f"mint-term-from-catalogue: {flag} {val!r} carries a number, a comparator "
-                f"or a min/max word. The owner asked for 'cleaned parameters without "
+                f"or a min/max word ({vb.group(0)!r}). The owner asked for 'cleaned parameters without "
                 f"values': name and define the quantity, never its value.")
     if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
         raise Refusal(f"mint-term-from-catalogue: --approval-ref {approval_ref!r} carries no "

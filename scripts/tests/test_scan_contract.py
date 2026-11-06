@@ -280,7 +280,10 @@ try:
     expect_refusal("O07", "a quote in no saved file is refused",
                    "does not occur in any",
                    observe, obs("door leaf", "p9", "the door leaf typed from memory"), S)
-    o8 = attempt(observe, obs("door leaf", "p9", "the door leaf typed from memory",
+    # REF_A holds a derived text (above), so the exemption is refused for it (R2-6, the
+    # shared _refuse_exempt_with_body); the route is for a source that holds no decodable
+    # body, which REF_B is (an HTML file with no declared text type is not one).
+    o8 = attempt(observe, obs("door leaf", "p9", "the door leaf typed from memory", ref=REF_B,
                               verbatim_exempt="fixture: read from a page image"), S)
     note8 = q("SELECT notes FROM observed_terms WHERE observation_id=?",
               o8.get("observation_id", -1))
