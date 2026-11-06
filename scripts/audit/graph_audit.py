@@ -14,8 +14,7 @@ Checks (data + code + content layers):
   3. ref.dangling_structural      (ERROR) self_ref edge to a missing node
                                   (base_taxonomy_identity.parent_code) — corruption no other check covered
   4. orphan.uncited_source        (WARN)  evidence source cited by nothing
-  5. ref.unresolved_conn_target   (WARN)  connection_target not resolving to item/slug
-                                  (phantom-item vs unresolved-identifier)
+  5. ref.unresolved_conn_target   (WARN)  connection_target slug not resolving to a slug
   6. code.phantom_table           (WARN)  script SQL references a table absent from
                                   guidebook.db (dormant/stale/legacy query)
   7. ref.phantom_identifier       (WARN)  prose references an item/source/... identifier
@@ -271,7 +270,7 @@ def selftest():
                         _count_check(s, "orphan.dangling_citation", "ERROR") > 0))
         s.close()
 
-        # 3. phantom connection target WARN fires
+        # 3. unresolved connection target WARN fires
         shutil.copy(canonical, copy)
         con = sqlite3.connect(copy)
         row = con.execute("SELECT con_id FROM connections LIMIT 1").fetchone()
@@ -280,8 +279,9 @@ def selftest():
             # fetchone()[0] here would TypeError on None and make this sub-test meaningless.
             # Synthesize a ghost connection so the phantom-target check still has a subject.
             cid = "SELFTEST-CON-GHOST"
+            con.execute("PRAGMA foreign_keys=OFF")   # the ghost's filed_in names no slug
             _insert_row(con, "connections", {
-                "con_id": cid, "status": "PENDING", "confidence": "SPECULATIVE",
+                "con_id": cid, "status": "PENDING", "confidence": "MODERATE",
                 "filed_in": "selftest", "created_at": "selftest",
                 "created_by_session": "selftest", "updated_at": "selftest",
                 "updated_by_session": "selftest",
@@ -290,16 +290,15 @@ def selftest():
                   f"{cid!r} so this sub-test has a subject)")
         else:
             cid = row[0]
-        # A-99 is in category [A-K] so it exercises the phantom-ITEM branch (Z-99 would
-        # only ever hit the unresolved-identifier branch).
-        _insert_row(con, "connection_targets", {"con_id": cid, "target": "item:A-99"})
+        con.execute("PRAGMA foreign_keys=OFF")   # a slug no slugs row holds: the corruption this finds
+        _insert_row(con, "connection_targets", {"con_id": cid, "slug": "zzz-selftest-not-a-slug"})
         con.commit()
         con.close()
         s = gbuild.build(audit_db=os.path.join(tmpd, "a3.db"), guidebook_db=copy)
-        phantom_item = s.conn.execute(
+        unresolved_slug = s.conn.execute(
             "SELECT COUNT(*) FROM findings WHERE check_id='ref.unresolved_conn_target' "
-            "AND message LIKE '%phantom item%' AND known_debt IS NULL").fetchone()[0]
-        results.append(("phantom-item connection target fires", phantom_item > 0))
+            "AND message LIKE '%does not resolve to a slug%' AND known_debt IS NULL").fetchone()[0]
+        results.append(("unresolved connection target fires", unresolved_slug > 0))
         s.close()
 
         # 4. self-ref cycle ERROR fires on an injected population parent loop
@@ -433,9 +432,9 @@ def selftest():
         mcon = sqlite3.connect(mini)
         mcon.executescript(
             "CREATE TABLE connections(con_id TEXT PRIMARY KEY, status TEXT, description TEXT);"
-            "CREATE TABLE connection_targets(con_id TEXT, target TEXT);"
+            "CREATE TABLE connection_targets(con_id TEXT, slug TEXT);"
             "INSERT INTO connections VALUES('CON-0001','active','x');"
-            "INSERT INTO connection_targets VALUES('CON-0001','section:foo');")
+            "INSERT INTO connection_targets VALUES('CON-0001','foo');")
         mcon.commit()
         mcon.close()
         no_crash = True

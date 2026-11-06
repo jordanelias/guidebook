@@ -371,20 +371,32 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R2", f"only {mined_rows} citation_mining rows for {admitted} anchors — mining is "
                    f"token rather than systematic (expect >= {max(1, admitted // R2_MINING_PER_ANCHORS)}).")
     else:
-        ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors")
+        ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors" if admitted else
+           "EXAMINED: 0 tier-1..3 anchors admitted, so this asserts nothing")
 
     # --- R3 clause citation on quantified regulatory values -----------------------------
-    uncited = _rows(cx, f"SELECT ref_id FROM evidence_sources WHERE tier >= 4 AND "
-                        f"(article_number IS NULL OR article_number='') AND "
-                        f"(pages IS NULL OR pages='') AND "
-                        f"COALESCE(notes,'') NOT LIKE '%UNVERIFIED-QUANT%'"
-                        f"{scope}", sargs)
+    # ROW-LEVEL since 2026-11-06. This read evidence_sources alone (tier >= 4 with no
+    # article_number/pages), so a code admitted and not yet read -- holding no value at all
+    # -- was reported as an uncited value (REF-01100 in a walk-through), while the values
+    # themselves, which live on source_value_extractions with migration 053's loc_* columns,
+    # were never examined. The subject is now the quantified row: a numerical or range
+    # extraction from a tier >= 4 source with no pinpoint locator and no [UNVERIFIED-QUANT]
+    # (the same predicate db.py add-extraction refuses at write time, held here for rows
+    # written by any other path or before the refusal). Scoped by the ROW's session.
+    _loc_cols = [c[1] for c in cx.execute('PRAGMA table_info("source_value_extractions")')
+                 if c[1].startswith("loc_") and not c[1].endswith("_end") and c[1] != "loc_note"]
+    _pinpoint = " OR ".join(f"COALESCE(x.{c},'') <> ''" for c in _loc_cols) or "0"
+    uncited = _rows(cx, f"SELECT DISTINCT x.ref_id FROM source_value_extractions x "
+                        f"JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= 4 AND "
+                        f"x.claim_type IN ('numerical','range') AND NOT ({_pinpoint}) AND "
+                        f"COALESCE(x.notes,'') NOT LIKE '%UNVERIFIED-QUANT%'"
+                        f"{scope.replace('created_by_session', 'x.created_by_session')}", sargs)
     if uncited:
-        fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry values with no clause/"
-                   f"section/page AND no [UNVERIFIED-QUANT] flag: "
+        fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry quantified rows with no "
+                   f"pinpoint locator (loc_*) AND no [UNVERIFIED-QUANT] flag: "
                    f"{', '.join(r[0] for r in uncited[:5])}", len(uncited))
     else:
-        ok("R3", "all regulatory sources clause-cited or flagged [UNVERIFIED-QUANT]")
+        ok("R3", "every quantified regulatory row carries a pinpoint locator or [UNVERIFIED-QUANT]")
 
     # --- R4 combinatorial dimension ------------------------------------------------------
     # HARDENED: the original counted a query containing the substring "disabilit" as
@@ -878,9 +890,33 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # and batch 05 admitted nine sources and harvested nothing. Nobody noticed until
     # someone counted the rows by hand a day later. Without this line the harvest is
     # a rule with no reader, which §1 calls the same defect as an unread field.
+    # BLOCKED is read from v_scan_ledger, never from processing_blocked_reason: the view is the
+    # one home of which reasons are obstacles to the text (migration 124), so a reason that
+    # says nothing was unobtainable (`out-of-scope`) still owes its observation.
+    #
+    # R11-harvest excuses an admission only when NOTHING OF IT WAS READ: BLOCKED and every one of
+    # its ledger rows has scan_id IS NULL. A blocked source read at abstract (or partial,
+    # fragment) scope has text in hand and still owes its observations (migration 124: a block
+    # no longer implies an empty reading, and nothing clears the column when one is recorded).
+    blocked_sql = ("EXISTS (SELECT 1 FROM v_scan_ledger l WHERE l.ref_id = e.ref_id "
+                   "AND l.status = 'BLOCKED')"
+                   if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='v_scan_ledger'")[0][0]
+                   else "0")
+    unread_blocked_sql = ("(" + blocked_sql + " AND NOT EXISTS (SELECT 1 FROM v_scan_ledger l "
+                          "WHERE l.ref_id = e.ref_id AND l.scan_id IS NOT NULL))"
+                          if blocked_sql != "0" else "0")
     unharvested = _rows(cx,
         "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS ("
-        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id)" + escope, sargs)
+        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id) AND NOT " + unread_blocked_sql
+        + escope, sargs)
+    blocked_unharvested = [r[0] for r in _rows(cx,
+        "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS ("
+        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id) AND " + unread_blocked_sql
+        + escope + " ORDER BY e.ref_id", sargs)]
+    blocked_txt = ("; REPORTED, not asserted: %d BLOCKED admission(s) owe no observation: "
+                   "blocked and nothing of them was read (no ledger row names a reading): %s"
+                   % (len(blocked_unharvested), ", ".join(blocked_unharvested[:8]))
+                   if blocked_unharvested else "")
     harvested = _rows(cx,
         "SELECT COUNT(*) FROM observed_terms o WHERE EXISTS ("
         "SELECT 1 FROM evidence_sources e WHERE e.ref_id = o.ref_id" + escope + ")",
@@ -889,15 +925,17 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R11-harvest",
              "%d admitted source(s) with no observed_terms row: %s. D-0173 harvests the "
              "concept vocabulary AT EVIDENCE, in the source's own words: "
-             "db.py observe-term --ref-id ... --surface-form ..." % (
-                 len(unharvested), ", ".join(r[0] for r in unharvested[:8])),
+             "db.py observe-term --ref-id ... --surface-form ...%s" % (
+                 len(unharvested), ", ".join(r[0] for r in unharvested[:8]), blocked_txt),
              len(unharvested))
     else:
         ok("R11-harvest",
-           "%d concept observation(s) across this batch's admissions; every admitted "
-           "source carries at least one. Whether they are the RIGHT phrases is NOT "
-           "tested here — judgment adjudicates them" % harvested if harvested else
-           "EXAMINED: 0 sources. This batch admitted none, so this asserts nothing")
+           ("%d concept observation(s) across this batch's admissions; every admitted "
+            "source that can be read carries at least one. Whether they are the RIGHT phrases "
+            "is NOT tested here -- judgment adjudicates them%s" % (harvested, blocked_txt))
+           if harvested else
+           "EXAMINED: 0 sources. This batch admitted none, so this asserts nothing%s"
+           % blocked_txt)
 
     # --- R16 / R16-adjudicate: every concept a source states a figure for is disposed of ---
     # Added 2026-10-02 for GAP-061 (plan: scratchpad/session_2026-10-01-research-batch-23/
@@ -1025,7 +1063,19 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='source_scans'")[0][0]:
         cat_read = ("EXISTS (SELECT 1 FROM source_scans s WHERE s.ref_id = e.ref_id "
                     "AND s.mode = 'catalogue')")
-        live_adm = " AND e.superseded_by_ref_id IS NULL"
+        # A BLOCKED admission (v_scan_ledger status: no full reading covers it and its
+        # processing_blocked_reason says the text could not be obtained or read) owes no reading
+        # while the obstacle stands, and this gate reports it rather than failing it. Read from the
+        # view, never the column: the view is the one home of which reasons are obstacles
+        # (migration 124), so a source carrying `out-of-scope` still owes its reading. The effect
+        # is unchanged by migration 124 for a blocked source that WAS read at abstract scope: it
+        # has a catalogue reading and passes on that reading; it is merely also reported here.
+        # (R11-harvest is the gate that treats a read-but-blocked source differently.)
+        blocked = [r[0] for r in _rows(
+            cx, "SELECT e.ref_id FROM evidence_sources e WHERE " + blocked_sql
+                + " AND e.superseded_by_ref_id IS NULL" + escope + " ORDER BY e.ref_id",
+            sargs)]
+        live_adm = " AND e.superseded_by_ref_id IS NULL AND NOT " + blocked_sql
         if allmode:
             owed_rows = _rows(cx, "SELECT e.ref_id, " + cat_read + " FROM evidence_sources e "
                               "WHERE 1=1" + live_adm + escope + " ORDER BY e.ref_id", sargs)
@@ -1044,6 +1094,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                   "phase owes them" % (len(grandfathered), R16_SCAN_FROM,
                                        ", ".join(grandfathered[:8]))
                   if grandfathered else "")
+        gf_txt += ("; REPORTED, not asserted: %d admission(s) are BLOCKED (a reason the "
+                   "ledger classes as an obstacle) and owe no reading while the obstacle stands: %s"
+                   % (len(blocked), ", ".join(blocked[:8])) if blocked else "")
         if missing_reads:
             fail("R16-scan",
                  "%d of %d admission(s) carry no catalogue-mode reading: %s. Read each "
@@ -1141,15 +1194,21 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # query shape", not "no evidence exists" — PubMed AND-chains every term, so descriptive
     # multi-concept phrasings return nothing. Recording the empty without that distinction
     # silently converts a method failure into a finding of absence.
+    # THE CLASS IS A COLUMN (migration 119, `absence_class`), and this read only the prose
+    # findings_note until 2026-11-06, so a zero-yield search classed through the typed column
+    # still failed R14. The column satisfies the rule; a findings_note still does for rows
+    # written before the column existed, so past sessions do not go red.
     bare_empty = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE results_found = 0 AND "
-                           f"deferred_reason IS NULL AND COALESCE(findings_note,'') = ''{scope}",
+                           f"deferred_reason IS NULL AND absence_class IS NULL AND "
+                           f"COALESCE(findings_note,'') = ''{scope}",
                        sargs)[0][0]
     if bare_empty:
-        fail("R14", f"{bare_empty} zero-yield search(es) carry no findings_note. Keep the empty "
-                    f"(R8) but say WHICH it is: query-shape failure, wrong index, or genuine "
-                    f"absence. Only the last is evidence.", bare_empty)
+        fail("R14", f"{bare_empty} zero-yield search(es) carry neither an absence_class nor a "
+                    f"findings_note. Keep the empty (R8) but say WHICH it is: --absence-class "
+                    f"query_shape_failure / wrong_index / genuine_absence (amend-search "
+                    f"--set-absence-class once judged). Only the last is evidence.", bare_empty)
     else:
-        ok("R14", "every zero-yield search records why it was empty")
+        ok("R14", "every zero-yield search records why it was empty (absence_class or a note)")
 
     # --- R15 A RESOLVED CANDIDATE MUST BE RE-DESCRIBED FROM THE SOURCE ------------------------
     # LESSON: a staged candidate's description is a HYPOTHESIS, not a finding. This session staged
@@ -1228,8 +1287,11 @@ def selftest():
         print("SELFTEST: SKIP — no live DB to clone schema from")
         return 0
     live = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    # Tables first, then views: the gate reads v_scan_ledger for BLOCKED (migration 124), and a
+    # view created over tables that exist resolves; SQLite does not check at CREATE time.
     ddl = [r[0] for r in live.execute(
-        "SELECT sql FROM sqlite_master WHERE type='table' AND sql IS NOT NULL")]
+        "SELECT sql FROM sqlite_master WHERE type IN ('table', 'view') AND sql IS NOT NULL "
+        "ORDER BY type = 'view'")]
     live.close()
 
     fd = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
@@ -1256,6 +1318,19 @@ def selftest():
                "0,0,0,0,?,'t')", (T,))   # exec_id 2 absent => append-only violation for R8
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,verification_status,"
                "notes,created_by_session) VALUES ('REF-ST1',6,'code','VERIFIED','250 lbf',?)", (T,))
+    # R3 is row-level since 2026-11-06: the uncited VALUE is an extraction of REF-ST1 with no
+    # loc_* pinpoint and no [UNVERIFIED-QUANT]. REF-ST1 alone (a code holding no row) must
+    # NOT fire -- that was the false positive the rewrite closed.
+    cx.execute("INSERT INTO source_value_extractions (ref_id,parameter_id,identity_code,claim_type,"
+               "claimed_value,claim_text,extraction_method,figure_role,created_at,"
+               "created_by_session,updated_at) VALUES ('REF-ST1',1,'MOB','numerical','250',"
+               "'250 lbf','full-read','claim','t',?,'t')", (T,))
+    # R14 NEGATIVE CASE: a zero-yield search classed through the typed column and carrying no
+    # findings_note must not fire; only exec 3 (neither) does, so R14's count is asserted at 1.
+    cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
+               "depth_method,mining_direction,results_found,results_screened,results_admitted,"
+               "backfill,absence_class,created_by_session,created_at) VALUES (8,'s','en','q',"
+               "'web','scoping','none',0,0,0,0,'genuine_absence',?,'t')", (T,))
     # A tier-1..3 anchor, so that "zero citation_mining rows" is actually an R2
     # VIOLATION. Added 2026-08-04: the corpus previously seeded only the tier-6
     # row above, so R2's `admitted > 0` precondition was never met and the rule
@@ -1460,12 +1535,33 @@ def selftest():
         cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,article_number,"
                    "superseded_by_ref_id,created_at,created_by_session) "
                    "VALUES (?,6,'code','§1',?,?,?)", (ref, sup, created, T))
-    for ref, mode, target in (("REF-ST2", "catalogue", None), ("REF-ST3", "targeted", 1),
-                              ("REF-ST4", "catalogue", None)):
+    # R11-harvest and R16-scan read BLOCKED from v_scan_ledger (2026-11-06, R2-3). Two more
+    # admissions, each with an edge (so R17 is unmoved), no reading and no observation:
+    #   REF-ST20  processing_blocked_reason 'paywalled': an obstacle, so the ledger says BLOCKED
+    #             and both gates REPORT it and count it for nothing
+    #   REF-ST21  'out-of-scope': not an obstacle, so the ledger says NOT-READ and both gates
+    #             still COUNT it (the 16 and 18 asserted below)
+    # The ledger crosses sources with ACTIVE parameters; TERM-ST-P, below, is one.
+    #   REF-ST22  'paywalled' AND a catalogue reading at abstract scope (migration 124: the ledger
+    #             reads BLOCKED with scan_id set): R11-harvest COUNTS it (text is in hand, no
+    #             observation), R16-scan reports it as BLOCKED and counts it for nothing (it has a
+    #             catalogue reading anyway). Dropping the "nothing was read" clause takes the
+    #             R11-harvest count back to the number without it.
+    for ref, reason in (("REF-ST20", "paywalled"), ("REF-ST21", "out-of-scope"),
+                        ("REF-ST22", "paywalled")):
+        cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,article_number,"
+                   "processing_blocked_reason,created_at,created_by_session) "
+                   "VALUES (?,6,'code','§1',?,NULL,?)", (ref, reason, T))
+        cx.execute("INSERT INTO search_admissions (exec_id,ref_id,created_at,"
+                   "created_by_session) VALUES (3,?,'t',?)", (ref, T))
+    for ref, mode, target, scope_ in (("REF-ST2", "catalogue", None, "full"),
+                                      ("REF-ST3", "targeted", 1, "full"),
+                                      ("REF-ST4", "catalogue", None, "full"),
+                                      ("REF-ST22", "catalogue", None, "abstract")):
         cx.execute("INSERT INTO source_scans (ref_id,mode,catalogue_version,"
                    "target_parameter_id,text_scope,file_sha256,method,created_at,"
-                   "created_by_session) VALUES (?,?,1,?,'full',?,'full-read','t',?)",
-                   (ref, mode, target, "0" * 64, T))
+                   "created_by_session) VALUES (?,?,1,?,?,?,'full-read','t',?)",
+                   (ref, mode, target, scope_, "0" * 64, T))
     for ref in ("REF-ST1", "REF-ST19"):
         cx.execute("INSERT INTO search_admissions (exec_id,ref_id,created_at,"
                    "created_by_session) VALUES (3,?,'t',?)", (ref, T))
@@ -1491,6 +1587,10 @@ def selftest():
     try:
         with contextlib.redirect_stdout(report):
             rc = audit(session=T, capture=caught)
+        zero = io.StringIO()
+        with contextlib.redirect_stdout(zero):
+            audit(session="SELFTEST-NO-ADMISSIONS", capture={})
+        zero_report = zero.getvalue()
     finally:
         DB_PATH = real
         os.unlink(fd.name)
@@ -1530,12 +1630,39 @@ def selftest():
     # other than 1 means in each predicate.
     # R16 became 2 on 2026-10-09 with the revoked-declination fixture (TERM-ST-V).
     count_bad = False
-    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 15), ("R17", 16)):
+    # R3 (row-level) and R14 (column-aware) counts added 2026-11-06 with their negative
+    # fixtures: R3's unread code REF-ST1 holding no row, R14's classed exec 5.
+    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 16), ("R11-harvest", 19), ("R17", 16),
+                       ("R3", 1), ("R14", 1)):
         n = caught.get(rule, 0)
         if n != want:
             count_bad = True
             print(f"  **{rule} COUNT {n}, EXPECTED {want}** — a clause of the predicate has "
                   f"been dropped or narrowed; see the {rule} fixture comment in selftest().")
+    # BLOCKED fixtures (R2-3): both gates report the paywalled admission as BLOCKED, apart from
+    # what they count (the counts above are where the out-of-scope one is asserted).
+    for rule in ("R11-harvest", "R16-scan"):
+        line = "".join(l for l in report.getvalue().splitlines(True) if f"{rule}:" in l)
+        if "REF-ST20" not in line.partition("BLOCKED")[2]:
+            count_bad = True
+            print(f"  **{rule} BLOCKED FIXTURE WRONG** -- REF-ST20 (paywalled) must be "
+                  f"reported as BLOCKED; see the BLOCKED fixture comment in selftest().")
+    # Migration 124: a blocked source READ at abstract scope (REF-ST22) is never in R11-harvest's
+    # REPORTED "nothing was read" list (it is counted: the 19 above is 18 plus it, and the
+    # printed list holds only the first eight ids), and R16-scan reports it as BLOCKED.
+    harvest_line = "".join(l for l in report.getvalue().splitlines(True) if "R11-harvest:" in l)
+    scan_line = "".join(l for l in report.getvalue().splitlines(True) if "R16-scan:" in l)
+    if ("REF-ST22" in harvest_line.partition("REPORTED, not asserted:")[2]
+            or "REF-ST22" not in scan_line.partition("BLOCKED")[2]):
+        count_bad = True
+        print("  **R11-harvest / R16-scan BLOCKED-AND-READ FIXTURE WRONG** -- REF-ST22 (paywalled, "
+              "abstract reading) must be counted by R11-harvest (it owes its observations) and "
+              "reported by R16-scan as BLOCKED; see the BLOCKED fixture comment in selftest().")
+    # R2's zero-anchor pass must say it asserts nothing (R2-13): a session with no admissions.
+    if "EXAMINED: 0 tier-1..3 anchors admitted, so this asserts nothing" not in zero_report:
+        count_bad = True
+        print("  **R2 ZERO-ANCHOR PASS WRONG** -- a session with no tier 1..3 anchor must print "
+              "that it asserts nothing, not 'rows for 0 anchors'.")
     # R16-scan's grandfathered admission is REPORTED, never failed; the tombstone is neither.
     scan_text = "".join(l for l in report.getvalue().splitlines(True) if "R16-scan:" in l)
     scan_failed_part, _s, scan_reported_part = scan_text.partition("REPORTED, not asserted:")

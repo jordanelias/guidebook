@@ -7,8 +7,7 @@ suppression and the pass/fail decision live in scripts/audit/graph_audit.py.
 Checks (data layer, increment 1):
   orphan.uncited_source        source with no inbound citation edge (WARN)
   orphan.dangling_citation     value-layer ref with no evidence_sources row (ERROR)
-  ref.unresolved_conn_target   connection_target not resolving to item/slug (WARN),
-                               split into phantom-item vs unresolved-identifier
+  ref.unresolved_conn_target   connection_target slug resolving to no slug (WARN)
   ref.dangling_structural      self_ref edge pointing at a missing node (ERROR) —
                                referential corruption in base_taxonomy_identity.parent_code that
                                no other check covered
@@ -91,22 +90,13 @@ def unresolved_connection_targets(store):
         "SELECT src, dst FROM edges WHERE etype='junction' AND resolved=0 "
         "AND src LIKE 'connection:%' ORDER BY src, dst"
     ).fetchall()
-    phantom_items, unresolved = 0, 0
     for src, dst in rows:
-        if dst.startswith("item:"):
-            phantom_items += 1
-            store.add_finding("ref.unresolved_conn_target", "WARN",
-                              f"{src.split(':',1)[-1]} targets phantom item {dst.split(':',1)[-1]}.",
-                              node_id=src)
-        else:
-            unresolved += 1
-            store.add_finding("ref.unresolved_conn_target", "WARN",
-                              f"{src.split(':',1)[-1]} target {dst.split(':',1)[-1]} does not resolve to an item or slug.",
-                              node_id=src)
+        store.add_finding("ref.unresolved_conn_target", "WARN",
+                          f"{src.split(':',1)[-1]} target slug {dst.split(':',1)[-1]} does not resolve to a slug.",
+                          node_id=src)
     store.add_finding("ref.unresolved_conn_target", "INFO",
-                      f"{len(rows)} unresolved connection target(s): "
-                      f"{phantom_items} phantom-item, {unresolved} unresolved.",
-                      attrs={"total": len(rows), "phantom_items": phantom_items, "unresolved": unresolved})
+                      f"{len(rows)} unresolved connection target(s).",
+                      attrs={"total": len(rows)})
 
 
 def dangling_structural_refs(store):

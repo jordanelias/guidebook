@@ -280,7 +280,10 @@ try:
     expect_refusal("O07", "a quote in no saved file is refused",
                    "does not occur in any",
                    observe, obs("door leaf", "p9", "the door leaf typed from memory"), S)
-    o8 = attempt(observe, obs("door leaf", "p9", "the door leaf typed from memory",
+    # REF_A holds a derived text (above), so the exemption is refused for it (R2-6, the
+    # shared _refuse_exempt_with_body); the route is for a source that holds no decodable
+    # body, which REF_B is (an HTML file with no declared text type is not one).
+    o8 = attempt(observe, obs("door leaf", "p9", "the door leaf typed from memory", ref=REF_B,
                               verbatim_exempt="fixture: read from a page image"), S)
     note8 = q("SELECT notes FROM observed_terms WHERE observation_id=?",
               o8.get("observation_id", -1))
@@ -685,7 +688,8 @@ try:
                    "(no model-coined gloss, OR-17)", "not inside the observed phrase", ins,
                    o_n.get("observation_id"), "fixture invented gloss", "fixture", S,
                    dry_run=True)
-    t202 = attempt(ins, o_n.get("observation_id"), "turnwise clearance", "fixture", S, dry_run=True)
+    t202 = attempt(ins, o_n.get("observation_id"), "turnwise clearance", "fixture: a distinct fixture concept", S,
+                   dry_run=True, distinct_from=[TR])
     record("T202", "add-term takes a contiguous part of the observed phrase", bool(t202.get("term_id")),
            t202)
     # N10: a name may come from a phrase in another language (owner E1); rename-term no longer
@@ -824,20 +828,41 @@ try:
     PE = P["D"]
     REF_S = REF_B     # a second source, holding ONLY a skimmed claim
 
-    def claim(ref, value, method):
+    def claim(ref, value, method, quote=None):
+        """A claim row. REF_A holds a derived text (section F), so its claims must quote it
+        -- the page marker carries the digits -- and the exemption is kept only for REF_S,
+        for which no decodable body is indexed."""
         out = attempt(db.insert_extraction,
                       {"ref_id": ref, "parameter_id": PE,
                        "identity_code": POP, "claim_type": "numerical",
                        "claimed_value": value, "claimed_unit": "mm", "comparator": "<=",
                        "figure_role": "claim", "extraction_method": method,
-                       "claim_text": f"fixture: shall not exceed {value} mm",
-                       "loc_section": "fixture 1"},
-                      S, relations=[], verbatim_exempt="fixture: no artefact")
+                       "claim_text": quote or f"fixture: shall not exceed {value} mm",
+                       "loc_section": f"fixture {method}"},
+                      S, relations=[],
+                      verbatim_exempt=None if quote else "fixture: no artefact")
         return out.get("extraction_id")
 
     attempt(db.link_source_slug, REF_S, SLUG_A, "fixture: the engine case", S)
-    E_FULL, E_SKIM, E_ONLY_SKIM = (claim(REF_A, "8", "full-read"), claim(REF_A, "5", "skim"),
-                                   claim(REF_S, "3", "skim"))
+    # Since 2026-11-06 add-extraction refuses a source that is not VERIFIED and a pair no
+    # reading covers (R16, OR-11a). The fixture sources are given both states by SQL: the
+    # standing, which the copy may not carry for them, and a catalogue reading at the live
+    # catalogue version (record-scan would need a manifest artefact for each).
+    con = sqlite3.connect(DB)
+    try:
+        for ref in (REF_A, REF_S):
+            con.execute("UPDATE evidence_sources SET verification_status='VERIFIED' WHERE "
+                        "ref_id=? AND COALESCE(verification_status,'')<>'VERIFIED'", (ref,))
+            con.execute("INSERT INTO source_scans (ref_id, mode, catalogue_version, text_scope, "
+                        "file_sha256, method, created_at, created_by_session) SELECT ?, "
+                        "'catalogue', MAX(parameter_id), 'partial', ?, 'full-read', 't', ? "
+                        "FROM base_parameters", (ref, "f" * 64, S))
+        con.commit()
+    finally:
+        con.close()
+    E_FULL, E_SKIM, E_ONLY_SKIM = (claim(REF_A, "3", "full-read", "[PDF page 2 of 3]"),
+                                   claim(REF_A, "2", "skim", "[PDF page 2 of 3]"),
+                                   claim(REF_S, "1", "skim"))
     con = sqlite3.connect(DB)
     try:
         refs = [s["ref_id"] for s in ac.gather_sources(con, PE)]
@@ -860,9 +885,9 @@ try:
            and by_id.get(E_FULL, {}).get("role") == "governing",
            {k: (v["role"], v["exclusion_reason"]) for k, v in by_id.items()
             if k in (E_FULL, E_SKIM, E_ONLY_SKIM)})
-    record("E03", "the value is composed from the full-read claim ONLY (8, not the skimmed "
-           "5 or 3, which most-accommodating selection would otherwise pick)",
-           vmax == 8.0 and unit == "mm", (vmin, vmax, unit, note))
+    record("E03", "the value is composed from the full-read claim ONLY (3, not the skimmed "
+           "2 or 1, which most-accommodating selection would otherwise pick)",
+           vmax == 3.0 and unit == "mm", (vmin, vmax, unit, note))
     record("E04", "the engine's output STATES the exclusion",
            sorted(det.get("excluded_not_publishable") or []) == sorted([E_SKIM, E_ONLY_SKIM]),
            det.get("excluded_not_publishable"))

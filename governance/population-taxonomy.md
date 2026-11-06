@@ -2,7 +2,7 @@
 **Status:** SUPERSEDED (population code set) — see banner below. Structural detail retained pending full rewrite.
 **Phase:** Stage A Phase 7 — Population taxonomy
 **Created:** 2026-04-29 19:06 UTC
-**Doctrinal basis:** workplan-orchestrator §Population Codes · project-standards (L11, L38, L41, L96, L118)
+**Doctrinal basis:** workplan-orchestrator §Population Codes (skill retired 2026-11-06; the live code table is `base_taxonomy_identity`) · project-standards (L11, L38, L41, L96, L118)
 
 ---
 
@@ -158,7 +158,6 @@ If a new population code is needed (e.g., a new sub-code for an emerging evidenc
 2. Decision via project-standards RULE
 3. Addition of a `base_taxonomy_identity` row
 4. Update to this governance document
-5. Update to workplan-orchestrator §Population Codes
 
 ---
 
@@ -169,7 +168,7 @@ If a new population code is needed (e.g., a new sub-code for an emerging evidenc
 | Created | 2026-04-29 19:06 UTC |
 | Phase | Stage A Phase 7 (Population taxonomy) — Session 1 |
 | Status | CANONICAL |
-| Consolidates | workplan-orchestrator §Population Codes, project-standards L11/L38/L41/L96/L118 |
+| Consolidates | workplan-orchestrator §Population Codes (skill retired 2026-11-06), project-standards L11/L38/L41/L96/L118 |
 | Forward dependencies | A13 doctrine-recheck |
 
 ---

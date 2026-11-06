@@ -6,9 +6,9 @@ description: >
   CONFLICT DOMAIN (environmental parameter) rather than population pair. Retrieves
   resolution evidence from fragmented single-population literatures that do not
   cross-reference each other. Outputs a conflict matrix with resolution status
-  and evidence quality. ALWAYS use this skill when: writing Universal Mode or Tier 1
-  specifications for shared spaces; item-specification-writer encounters a space
-  serving multiple populations; any
+  and evidence quality. ALWAYS use this skill when: determining a parameter for a shared
+  space (Universal Mode or Tier 1); a determination run meets a parameter that more
+  than one population's evidence pulls in opposite directions; any
   specification mentions "adjustable", "zoned", or "user-controlled" without documenting
   which populations conflict. Trigger on: "cross-population conflict", "competing
   access needs", "accommodation conflict", "which populations conflict here",
@@ -17,7 +17,8 @@ description: >
 ---
 
 **Model:** Sonnet-class (retrieval/collation) · Opus-class or above (resolution synthesis + best-practice determination)
-**Input:** Environmental parameter(s) OR item specification draft OR room type
+**Input:** Environmental parameter(s) (`base_parameters`), a determination under review, or a room type
+**Keyed on the parameter.** `conflicts.parameter_id` (migration 122) is the key and `add-conflict --parameter-id` is required; the domain label in the matrix below is prose that describes the parameter, not the key. The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` **refuses** a `--pop-a` or `--pop-b` the table lacks, naming the flag you typed (foreign keys, migration 121), `ALL` (a scope marker, not a population) and a blank `--domain`; the pair is unordered and the writer orders it. **The matrix below is prior-version content:** its population descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`, `POTS`, `MCAS`, "fibro") are not identity codes, and most of its domains are not yet `base_parameters` rows. Derive the live codes (`select identity_code, display_name from base_taxonomy_identity`); choose the code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17). Which descriptors become codes, and whether the matrix stays as a seed list, is open owner question 1 of the 2026-11-06 round-3 adjudication (`workplan/2026-11-06-run-pipeline-round-3-adjudication.md`).
 **Output:** Conflict domain matrix + resolution evidence register + unresolved gap flags
 **Chunk ceiling:** ≤3 conflict domains per run
 
@@ -49,7 +50,7 @@ Search by domain — not by population pair.
 
 ### Step 1: Identify active domains
 
-From the input (item spec, room type, or explicit domain list):
+From the input (determination, room type, or explicit domain list):
 - List all population codes the space must serve
 - For each domain in §1, check if ≥2 populations with opposing needs are present
 - Active domains = those with ≥1 opposition
@@ -59,7 +60,7 @@ From the input (item spec, room type, or explicit domain list):
 For each active domain, search in this order:
 
 **Priority 1 — Existing project evidence:**
-- `references/bpc/` per-slug files for relevant populations
+- the parameter's extractions and live determination (`source_value_extractions`, `specifications`), read per lens column
 - SQLite `connections` table for PENDING connections: `python3 scripts/db.py connections --status PENDING`
 
 **Priority 2 — Aged care / dementia facility POEs:**
@@ -90,7 +91,7 @@ For each active conflict:
 | RESOLVED-EVIDENCE | Published resolution with outcome data (e.g., truncated dome sizing) |
 | RESOLVED-CONSENSUS | Expert/standards consensus without outcome data (e.g., zoned lighting) |
 | PROPOSED | Resolution exists in guidelines but untested (e.g., adjustable everything) |
-| UNRESOLVED | No resolution found at population scale. Covers both "no resolution yet" and "irreconcilable here — requires individual co-design". Where it is the latter, name the Person-Mode handoff in `mode_s_trigger`; the status says the conflict does not resolve at this scale, the handoff field says what the OT assessment turns on |
+| UNRESOLVED | No resolution found at population scale. Covers both "no resolution yet" and "irreconcilable here — requires individual co-design". Where it is the latter, say so in the CONF gap's description (what the OT assessment turns on); no column of `conflicts` holds the Person-Mode handoff |
 | CLOSED | Finished without an evidence resolution — the question was withdrawn, or infrastructure settled it |
 | DEFERRED | Deliberately not addressed this pass. Distinct from UNRESOLVED: nobody worked it |
 | ACTIVE | Live, in hand, not yet closed or resolved |
@@ -108,17 +109,19 @@ All output goes to the tracking DB via db.py CLI.
 # Get next CONF-ID
 python3 scripts/db.py next-id conflicts
 
-# Log conflict (ensure pop_a < pop_b alphabetically)
+# Log conflict. The writer orders the pair; the id is computed when --conflict-id is omitted.
 python3 scripts/db.py add-conflict \
-  --item-code [item_code] \
-  --domain [LIGHT-INT|ACOUSTIC-LVL|...] \
-  --pop-a [alphabetically first population] \
-  --pop-b [alphabetically second population] \
-  --status [ACTIVE|PROPOSED|DEFERRED|RESOLVED-EVIDENCE|RESOLVED-CONSENSUS|UNRESOLVED|CLOSED|RETIRED|SUPERSEDED] \
+  --parameter-id [base_parameters.parameter_id, active] \
+  --domain [the domain label, prose] \
+  --pop-a [identity_code] --pop-b [identity_code] \
+  --status [conflicts.status, from the CHECK: python3 scripts/db.py add-conflict --help] \
   --resolution "[mechanism if resolved]" \
   --evidence "[source citation if resolved]" \
-  --session [session-name]
+  --session [session stem]
 ```
+One conflict per (parameter, pair): a second is refused, naming the first (`update-conflict` changes it).
+`update-conflict --gap-id` and `--status` are checked the same way; an unknown gap or conflict is refused by
+name. `python3 scripts/db.py conflicts --parameter-id N` reads the key back.
 
 **For UNRESOLVED conflicts only:** also log a gap, then link:
 
@@ -129,14 +132,14 @@ python3 scripts/db.py add-gap \
   --priority P1 \
   --description "[domain]: [pop_a] vs [pop_b] — [why unresolved, what research is needed]" \
   --skill cross-population-conflict-mapper \
-  --section [item_code] \
-  --session [session-name]
+  --section "parameter [parameter_id]" \
+  --session [session stem]
 
 # Then update the conflict with gap_id (use GAP-NNN returned above)
 python3 scripts/db.py update-conflict \
   --conflict-id CONF-XXXX \
   --gap-id GAP-NNN \
-  --session [session-name]
+  --session [session stem]
 ```
 
 **For RESOLVED conflicts:** no gap needed. The `conflicts` table record is the full output.
@@ -145,7 +148,7 @@ python3 scripts/db.py update-conflict \
 with already-resolved domains as context to skip. Query before each run:
 
 ```bash
-python3 scripts/db.py conflicts --item [item_code] --summary
+python3 scripts/db.py conflicts --domain [domain] --summary
 ```
 
 ### Step 5: Output conflict matrix (inline)
@@ -153,7 +156,7 @@ python3 scripts/db.py conflicts --item [item_code] --summary
 ```markdown
 ## Cross-Population Conflict Matrix — [scope]
 **Date:** YYYY-MM-DD HH:MM
-**Space/Item:** [identifier]
+**Space / parameter:** [identifier, parameter_id]
 **Populations served:** [codes]
 
 ### Active Conflicts
@@ -207,24 +210,26 @@ Known resolution archetypes (apply where evidence supports):
 ## 4. Interdependencies
 
 **Feeds FROM:**
-- `item-specification-writer` (item specs requiring conflict check)
+- the determination run (a parameter whose evidence is population-contested)
 - `connection-discovery` (cross-population tensions discovered — replaces connection-scout)
 - `content-gap-analyzer` (population coverage revealing conflict)
 - `multilingual-research` / `functional-deficit-researcher` (population-specific evidence)
 
 **Feeds INTO:**
-- `item-specification-writer` (conflict matrix informs spec ranges and DAR)
-- SQLite `conflicts` table (all conflicts via `db.py add-conflict`)
+- the determination run (`scripts/assess/assess_cell.py`), by one typed input only: a parameter's `contested` direction
+  (`set-parameter-direction`)
+- SQLite `conflicts` table (all conflicts via `db.py add-conflict`). No code reads it: its reader is the operator at the
+  adversarial pass, and whether the engine should consume it is open owner question 12 of the 2026-11-06 round-3
+  adjudication (`workplan/2026-11-06-run-pipeline-round-3-adjudication.md`)
 - SQLite `gaps` table (UNRESOLVED only via `db.py add-gap --category CONF`)
-- Part 8 §8.4 (conflict resolution guidance)
 
 **Do NOT write to:**
 - `gap_register.md` (archived — use `db.py add-gap`)
 - `connection-register.md` (archived — use `db.py add-conflict`)
 - `references/connection-register-active.md` (archived)
 
-**Preceded by:** Population-specific BPC research for relevant populations
-**Followed by:** Item specification writing with conflict-aware ranges
+**Preceded by:** population-specific extractions for the parameter
+**Followed by:** the determination. Where the conflict is irreducible, `set-parameter-direction --direction contested` records it, but the writer requires `--ref-id`, one admitted source holding an extraction for the parameter; whether a contested direction takes one source or one per side is open owner question 7 of the 2026-11-06 round-3 adjudication
 
 ---
 

@@ -142,7 +142,7 @@ batch_commit(
 batch_commit(
     additions=[{"path": f"skills/{s}_SKILL.md", "content": updated[s]} for s in skills],
     deletions=[],
-    message="workplan-orchestrator: batch model assignment update [2026-03-29 03:00]",
+    message="github-io: batch model assignment update [2026-03-29 03:00]",
     pat=PAT
 )
 ```

@@ -88,6 +88,19 @@ stages:
     criterion: No retired base token survives in live prose, skills or code outside the exempt paths.
     references: governance/retired-vocabulary.yaml; DR-2026-08-24 §R8 rename-then-register
     check: scripts/audit/retired_vocabulary_audit.py
+  - id: base-direction-from-source
+    kind: integrity
+    criterion: 'A parameter''s accessibility direction is recorded from an admitted source that
+      holds an extraction for the parameter (base_parameters.direction_ref_id, migration 122),
+      never hand-set. Held by the writer (db.py set-parameter-direction refuses a direction with
+      no source, or a source with no row for the parameter) and read by the determination engine
+      into its report; rows written before the column carry NULL and are history (derive: SELECT
+      parameter_id FROM base_parameters WHERE accessibility_direction IS NOT NULL AND
+      direction_ref_id IS NULL).'
+    references: 'references/project-standards.md, "Owner rulings 2026-10-30" ACTION (6) ("with its
+      direction recorded from an admitted source and not hand-set"); scripts/tests/
+      test_run_pipeline_refusals.py section A6'
+    check: null
 - id: research
   anchor: 'PI rule #7 (adversarial-research); rule #8 (PMP); workplan phase B'
   entry:
@@ -197,6 +210,18 @@ stages:
       CLAUDE.md section 5(c) (a fabricated/unstated relative figure passes green gates when
       every field is populated and none is individually false)
     check: scripts/audit/extraction_relations_integrity.py
+  - id: verified-reading
+    kind: integrity
+    criterion: 'An extraction marked verified rests on a recorded FULL-scope source_scans reading
+      that covers its parameter (catalogue mode at a catalogue_version >= the parameter, or
+      targeted at it), and no extraction on an active parameter exists for a source that is not
+      VERIFIED or for a (source, parameter) no reading covers (rows on a retired parameter are
+      history, as the ledger says). Held at write time by db.py add-extraction and
+      amend-extraction; the corpus-wide reader is the check below, red while rows written
+      before the writer refused the state stand (derive: run it).'
+    references: 'references/project-standards.md, "Owner rulings 2026-10-29 (second)" OR-11a
+      ("Yes, require a full-scope scan"); the scan contract (migration 103, v_scan_ledger)'
+    check: scripts/audit/verified_scan_integrity.py
 - id: synthesis
   anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'
   entry:
@@ -216,8 +241,11 @@ stages:
   criteria:
   - id: governing-refs-nonempty
     kind: integrity
-    criterion: No `stated` or `provisional` determination without non-empty governing_refs (anti-hallucination).
-    references: evidence-architecture.md §5; DR-2026-07-12 A2 item 10
+    criterion: No `stated` or `provisional` determination without at least one `specification_source_links`
+      row with role `governing` (anti-hallucination); `specifications.governing_refs` is frozen history
+      the writer no longer sets (writer-retired 2026-09-21), so the check reads the junction.
+    references: evidence-architecture.md §5; DR-2026-07-12 A2 item 10; the comment on the governing-source
+      gate in scripts/validate_evidence_state.py (dbcore.governing_refs)
     check: scripts/validate_evidence_state.py
   - id: no-regulatory-stratum-stated
     kind: integrity

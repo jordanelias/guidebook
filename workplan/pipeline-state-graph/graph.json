@@ -1,7 +1,7 @@
 {
- "generated": "Generated 2026-10-22 01:26 UTC from git HEAD f28a83b9 (working tree, uncommitted changes included)",
+ "generated": "Generated 2026-11-06 12:36 UTC from git HEAD c474bd6 (working tree, uncommitted changes included)",
  "tree": "/home/user/guidebook",
- "user_version": 116,
+ "user_version": 123,
  "stages": [
   "base",
   "research",
@@ -66,7 +66,7 @@
   },
   "adversarial_findings": {
    "stage": "infrastructure",
-   "rows": 106,
+   "rows": 193,
    "writers": [
     "record-adversarial-pass",
     "dispose-adversarial-finding"
@@ -92,7 +92,7 @@
   },
   "adversarial_passes": {
    "stage": "infrastructure",
-   "rows": 5,
+   "rows": 9,
    "writers": [
     "record-adversarial-pass",
     "close-adversarial-pass"
@@ -149,7 +149,8 @@
     "updated_at",
     "updated_by_session",
     "direction_rationale",
-    "accessibility_direction"
+    "accessibility_direction",
+    "direction_ref_id"
    ]
   },
   "base_taxonomy_identity": {
@@ -234,7 +235,7 @@
   },
   "citation_mining": {
    "stage": "research",
-   "rows": 33,
+   "rows": 38,
    "writers": [
     "log-mining"
    ],
@@ -263,7 +264,6 @@
    ],
    "cols": [
     "conflict_id",
-    "item_code",
     "domain",
     "pop_a",
     "pop_b",
@@ -275,7 +275,8 @@
     "created_at",
     "created_by_session",
     "updated_at",
-    "updated_by_session"
+    "updated_by_session",
+    "parameter_id"
    ]
   },
   "connection_targets": {
@@ -286,8 +287,13 @@
     "delete-connection"
    ],
    "cols": [
+    "target_id",
     "con_id",
-    "target"
+    "parameter_id",
+    "slug",
+    "identity_code",
+    "extraction_id",
+    "methodology"
    ]
   },
   "connections": {
@@ -347,7 +353,7 @@
   },
   "data_migrations": {
    "stage": "infrastructure",
-   "rows": 460,
+   "rows": 476,
    "writers": [],
    "cols": [
     "migration_id",
@@ -445,7 +451,7 @@
   },
   "evidence_population_match": {
    "stage": "judgment",
-   "rows": 54,
+   "rows": 61,
    "writers": [
     "add-population-match",
     "amend-population-match"
@@ -466,7 +472,7 @@
   },
   "evidence_source_authors": {
    "stage": "evidence",
-   "rows": 116,
+   "rows": 142,
    "writers": [
     "correct-source",
     "add-source"
@@ -490,12 +496,13 @@
   },
   "evidence_sources": {
    "stage": "evidence",
-   "rows": 53,
+   "rows": 59,
    "writers": [
     "log-mining",
     "correct-source",
     "amend-source",
     "supersede-source",
+    "record-scan",
     "add-source"
    ],
    "cols": [
@@ -634,7 +641,7 @@
   },
   "extraction_relations": {
    "stage": "judgment",
-   "rows": 36,
+   "rows": 57,
    "writers": [
     "add-extraction",
     "relate-extraction",
@@ -678,7 +685,7 @@
   },
   "gaps": {
    "stage": "synthesis",
-   "rows": 76,
+   "rows": 110,
    "writers": [
     "amend-gap",
     "add-gap",
@@ -763,7 +770,8 @@
     "role",
     "notes",
     "created_at",
-    "created_by_session"
+    "created_by_session",
+    "scope_status"
    ]
   },
   "life_stage_modifiers": {
@@ -780,7 +788,7 @@
   },
   "observed_terms": {
    "stage": "evidence",
-   "rows": 88,
+   "rows": 96,
    "writers": [
     "observe-term"
    ],
@@ -896,7 +904,7 @@
   },
   "search_admissions": {
    "stage": "research",
-   "rows": 55,
+   "rows": 61,
    "writers": [
     "link-admission",
     "unlink-admission",
@@ -911,7 +919,7 @@
   },
   "search_candidates": {
    "stage": "research",
-   "rows": 147,
+   "rows": 155,
    "writers": [
     "add-candidate",
     "reattribute-candidate",
@@ -941,7 +949,7 @@
   },
   "search_execution_artefacts": {
    "stage": "research",
-   "rows": 110,
+   "rows": 117,
    "writers": [
     "amend-search",
     "log-search"
@@ -955,7 +963,7 @@
   },
   "search_executions": {
    "stage": "research",
-   "rows": 191,
+   "rows": 203,
    "writers": [
     "amend-search",
     "link-admission",
@@ -996,7 +1004,8 @@
     "identity_code",
     "icf_code",
     "needs_code",
-    "medical_code"
+    "medical_code",
+    "absence_class"
    ]
   },
   "slugs": {
@@ -1051,7 +1060,7 @@
   },
   "source_scans": {
    "stage": "evidence",
-   "rows": 0,
+   "rows": 18,
    "writers": [
     "record-scan"
    ],
@@ -1076,7 +1085,7 @@
   },
   "source_slug_links": {
    "stage": "evidence",
-   "rows": 65,
+   "rows": 71,
    "writers": [
     "link-source-slug",
     "add-source"
@@ -1094,7 +1103,7 @@
   },
   "source_value_extractions": {
    "stage": "judgment",
-   "rows": 101,
+   "rows": 214,
    "writers": [
     "add-extraction",
     "amend-extraction",
@@ -1151,7 +1160,8 @@
     "updated_at",
     "updated_by_session",
     "figure_role",
-    "comparator"
+    "comparator",
+    "harm_finding"
    ]
   },
   "specification_extraction_links": {
@@ -1259,7 +1269,7 @@
   },
   "term_adjudications": {
    "stage": "judgment",
-   "rows": 78,
+   "rows": 90,
    "writers": [
     "add-term",
     "adjudicate-term"
@@ -1353,6 +1363,12 @@
   },
   {
    "child": "base_parameters",
+   "col": "direction_ref_id",
+   "parent": "evidence_sources",
+   "notnull": false
+  },
+  {
+   "child": "base_parameters",
    "col": "merged_into",
    "parent": "base_parameters",
    "notnull": false
@@ -1382,9 +1398,63 @@
    "notnull": true
   },
   {
+   "child": "conflicts",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": false
+  },
+  {
+   "child": "conflicts",
+   "col": "gap_id",
+   "parent": "gaps",
+   "notnull": false
+  },
+  {
+   "child": "conflicts",
+   "col": "pop_b",
+   "parent": "base_taxonomy_identity",
+   "notnull": true
+  },
+  {
+   "child": "conflicts",
+   "col": "pop_a",
+   "parent": "base_taxonomy_identity",
+   "notnull": true
+  },
+  {
+   "child": "connection_targets",
+   "col": "extraction_id",
+   "parent": "source_value_extractions",
+   "notnull": false
+  },
+  {
+   "child": "connection_targets",
+   "col": "identity_code",
+   "parent": "base_taxonomy_identity",
+   "notnull": false
+  },
+  {
+   "child": "connection_targets",
+   "col": "slug",
+   "parent": "slugs",
+   "notnull": false
+  },
+  {
+   "child": "connection_targets",
+   "col": "parameter_id",
+   "parent": "base_parameters",
+   "notnull": false
+  },
+  {
    "child": "connection_targets",
    "col": "con_id",
    "parent": "connections",
+   "notnull": true
+  },
+  {
+   "child": "connections",
+   "col": "filed_in",
+   "parent": "slugs",
    "notnull": true
   },
   {
@@ -1893,7 +1963,7 @@
     "research"
    ],
    "crosses": false,
-   "rows": 84
+   "rows": 89
   },
   "v_coverage_jurisdiction": {
    "reads": [
@@ -1903,7 +1973,7 @@
     "research"
    ],
    "crosses": false,
-   "rows": 27
+   "rows": 28
   },
   "v_coverage_language": {
    "reads": [
@@ -1913,7 +1983,7 @@
     "research"
    ],
    "crosses": false,
-   "rows": 20
+   "rows": 21
   },
   "v_coverage_lens": {
    "reads": [
@@ -1923,11 +1993,10 @@
     "research"
    ],
    "crosses": false,
-   "rows": 39
+   "rows": 41
   },
   "v_coverage_priority": {
    "reads": [
-    "lang_jur_map",
     "search_executions",
     "slugs"
    ],
@@ -1936,7 +2005,7 @@
     "research"
    ],
    "crosses": true,
-   "rows": 7190
+   "rows": 7189
   },
   "v_derived_figure_check": {
    "reads": [
@@ -1988,7 +2057,7 @@
     "evidence"
    ],
    "crosses": false,
-   "rows": 53
+   "rows": 59
   },
   "v_item_provenance": {
    "reads": [
@@ -2039,6 +2108,16 @@
    "crosses": false,
    "rows": 0
   },
+  "v_research_scope": {
+   "reads": [
+    "lang_jur_map"
+   ],
+   "stages": [
+    "base"
+   ],
+   "crosses": false,
+   "rows": 70
+  },
   "v_root_id_conflicts": {
    "reads": [
     "source_value_extractions"
@@ -2062,7 +2141,7 @@
     "judgment"
    ],
    "crosses": true,
-   "rows": 520
+   "rows": 580
   },
   "v_source_admission": {
    "reads": [
@@ -2075,7 +2154,7 @@
     "research"
    ],
    "crosses": true,
-   "rows": 55
+   "rows": 61
   },
   "v_source_reach_all": {
    "reads": [
@@ -2092,7 +2171,7 @@
     "specification"
    ],
    "crosses": true,
-   "rows": 82
+   "rows": 88
   },
   "v_unregistered_roots": {
    "reads": [
@@ -2178,7 +2257,8 @@
     "L8-query-shape",
     "S1-harm-reached-row",
     "S2-mismatch-note-vs-payload",
-    "S3-containment"
+    "S3-containment",
+    "S4-sequence"
    ],
    "verdict": [
     "SUSTAINED",
@@ -2271,12 +2351,11 @@
    ],
    "confidence": [
     "HIGH",
-    "MODERATE",
-    "SPECULATIVE"
+    "MODERATE"
    ],
    "connection_type": [
     "CROSS-POPULATION",
-    "CROSS-ITEM",
+    "CROSS-PARAMETER",
     "COMPOUND-INTERACTION",
     "METHODOLOGY"
    ]
@@ -2552,6 +2631,10 @@
    "role": [
     "PRIMARY",
     "SECONDARY"
+   ],
+   "scope_status": [
+    "in-scope",
+    "scoped-out"
    ]
   },
   "life_stage_modifiers": {
@@ -2651,6 +2734,11 @@
     "adversarial-pass",
     "owner-supplied",
     "lead-index"
+   ],
+   "absence_class": [
+    "query_shape_failure",
+    "wrong_index",
+    "genuine_absence"
    ]
   },
   "slugs": {
@@ -2974,7 +3062,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 5
+   "refusals": 6
   },
   "amend-search": {
    "functions": [
@@ -2989,7 +3077,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 14
+   "refusals": 16
   },
   "amend-gap": {
    "functions": [
@@ -3206,7 +3294,7 @@
      "INSERT"
     ]
    },
-   "refusals": 5
+   "refusals": 6
   },
   "set-parameter-direction": {
    "functions": [
@@ -3218,7 +3306,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 3
+   "refusals": 6
   },
   "add-parameter": {
    "functions": [
@@ -3250,11 +3338,14 @@
     "record_scan"
    ],
    "writes": {
+    "evidence_sources": [
+     "UPDATE"
+    ],
     "source_scans": [
      "INSERT"
     ]
    },
-   "refusals": 12
+   "refusals": 13
   },
   "retire-parameter": {
    "functions": [
@@ -3459,7 +3550,7 @@
      "INSERT"
     ]
    },
-   "refusals": 21
+   "refusals": 27
   },
   "relate-extraction": {
    "functions": [
@@ -3512,7 +3603,7 @@
      "INSERT"
     ]
    },
-   "refusals": 5
+   "refusals": 6
   },
   "add-locator": {
    "functions": [
@@ -3524,7 +3615,7 @@
      "INSERT"
     ]
    },
-   "refusals": 3
+   "refusals": 4
   },
   "next-id": {
    "functions": [
@@ -3539,7 +3630,7 @@
     "get_coverage_completeness"
    ],
    "writes": {},
-   "refusals": 0
+   "refusals": 1
   },
   "add-gap": {
    "functions": [
@@ -3579,7 +3670,7 @@
      "INSERT"
     ]
    },
-   "refusals": 0
+   "refusals": 7
   },
   "update-connection": {
    "functions": [
@@ -3591,7 +3682,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 0
+   "refusals": 1
   },
   "unmined": {
    "functions": [
@@ -3605,7 +3696,8 @@
   "log-search": {
    "functions": [
     "log_search",
-    "_emit"
+    "_emit",
+    "_in_research_scope"
    ],
    "writes": {
     "search_admissions": [
@@ -3618,7 +3710,7 @@
      "INSERT"
     ]
    },
-   "refusals": 12
+   "refusals": 15
   },
   "add-source": {
    "functions": [
@@ -3641,7 +3733,7 @@
      "INSERT"
     ]
    },
-   "refusals": 16
+   "refusals": 17
   },
   "add-conflict": {
    "functions": [
@@ -3654,7 +3746,7 @@
      "INSERT"
     ]
    },
-   "refusals": 2
+   "refusals": 4
   },
   "update-conflict": {
    "functions": [
@@ -3666,7 +3758,7 @@
      "UPDATE"
     ]
    },
-   "refusals": 0
+   "refusals": 1
   },
   "conflicts": {
    "functions": [
@@ -3713,7 +3805,7 @@
      "INSERT"
     ]
    },
-   "refusals": 0
+   "refusals": 1
   },
   "update-gap-addressability": {
    "functions": [
@@ -3756,6 +3848,9 @@
     "CLM-042"
    ],
    "evidence": {
+    "connection_targets": [
+     "identity_code"
+    ],
     "determination_gates": [
      "identity_code"
     ]
@@ -3994,7 +4089,7 @@
    }
   },
   "P-X": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "tests": "some synthesis-stage structure can relate more than one parameter",
    "atoms": [
     "LED-097",
@@ -4012,18 +4107,26 @@
      "reasoning_doc_citations",
      "supersession_check"
     ],
-    "with_parameter_id": [],
-    "extraction_relations_edges_between_different_parameters_live": 0,
-    "distinct_parameter_ids_among_extractions": 1,
+    "with_parameter_id": [
+     "conflicts",
+     "connection_targets"
+    ],
+    "extraction_relations_edges_between_different_parameters_live": 17,
+    "distinct_parameter_ids_among_extractions": 8,
     "extraction_relations_stage": "judgment",
     "connection_targets_columns": [
+     "target_id",
      "con_id",
-     "target"
+     "parameter_id",
+     "slug",
+     "identity_code",
+     "extraction_id",
+     "methodology"
     ],
     "conflicts_key_columns": [
-     "item_code",
      "pop_a",
-     "pop_b"
+     "pop_b",
+     "parameter_id"
     ]
    }
   },
@@ -4186,8 +4289,9 @@
     "CLM-029"
    ],
    "evidence": {
-    "count": 6,
+    "count": 7,
     "with_live_rows": [
+     "base_parameters.direction_ref_id -> evidence_sources",
      "evidence_population_match.gap_id -> gaps",
      "search_admissions.ref_id -> evidence_sources",
      "search_candidates.resolved_ref_id -> evidence_sources",
@@ -4196,10 +4300,16 @@
     ],
     "all": [
      {
+      "fk": "base_parameters.direction_ref_id -> evidence_sources",
+      "from_stage": "base",
+      "to_stage": "evidence",
+      "child_rows": 10
+     },
+     {
       "fk": "evidence_population_match.gap_id -> gaps",
       "from_stage": "judgment",
       "to_stage": "synthesis",
-      "child_rows": 54
+      "child_rows": 61
      },
      {
       "fk": "gap_mining.gap_id -> gaps",
@@ -4211,25 +4321,25 @@
       "fk": "search_admissions.ref_id -> evidence_sources",
       "from_stage": "research",
       "to_stage": "evidence",
-      "child_rows": 55
+      "child_rows": 61
      },
      {
       "fk": "search_candidates.resolved_ref_id -> evidence_sources",
       "from_stage": "research",
       "to_stage": "evidence",
-      "child_rows": 147
+      "child_rows": 155
      },
      {
       "fk": "search_executions.mined_ref_id -> evidence_sources",
       "from_stage": "research",
       "to_stage": "evidence",
-      "child_rows": 191
+      "child_rows": 203
      },
      {
       "fk": "source_value_extractions.promoted_to_rdc_id -> reasoning_doc_citations",
       "from_stage": "judgment",
       "to_stage": "synthesis",
-      "child_rows": 101
+      "child_rows": 214
      }
     ]
    }
@@ -4533,8 +4643,8 @@
     {
      "id": "C3.5",
      "says": "a synthesis-stage structure can relate two or more parameters",
-     "verdict": "FAIL",
-     "why": "P-X = FAIL",
+     "verdict": "PASS",
+     "why": "P-X = PASS",
      "atoms": [
       "LED-097",
       "LED-098"

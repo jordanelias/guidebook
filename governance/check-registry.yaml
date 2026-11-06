@@ -351,6 +351,26 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
+- id: verified_scan_integrity
+  cmd:
+  - python3
+  - scripts/audit/verified_scan_integrity.py
+  battery: db_integrity
+  kinds:
+  - data
+  - schema
+  level: advisory
+  basis: judgment/verified-reading
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-11-06 (OR-11a, owner 2026-10-29). EXAMINED prints the live extraction
+    count; FAILS on a verified row no full-scope source_scans reading covers, on a row whose
+    source is not VERIFIED, and on a row no reading at any scope covers (the three clauses
+    of contract criterion verified-reading), each class printed with its sources and its
+    remedy. Red on main while the rows written before the writers refused those states stand
+    (derive: run it; never quote the count). Its reader is the re-reading worklist (plan
+    section 7, P3) and the adversarial pass. Advisory until those rows are re-graded in a
+    data PR, then blocking.'
 - id: extraction_follow_up_audit
   cmd:
   - python3
@@ -449,13 +469,6 @@ checks:
 #      standard_name)). It is demonstrably non-vacuous -- its floor_basis (deleted in plan step 1.8,
 #      still in git history) recorded "examines 83 leads and was proven to fire by deleting one" -- and it ALREADY claims
 #      `basis: base/base-schema-validates`, so that criterion stays claimed without any edit here.
-#   2. `skills/workplan-orchestrator_SKILL.md` step "2b — Data health check" runs
-#      `python3 scripts/validate_schema.py --quick` as a documented, unconditional-when-`data/`-exists
-#      session-start step (`data/` exists in this repo). Deleting the file breaks that live, active
-#      skill's command. skills/ is out of this batch's edit scope, so that caller cannot be swept here
-#      (CLAUDE.md rule 4: "a rename or removal is not done until the callers are swept... so is a
-#      skill"). Per this batch's own caller-sweep instruction, a live active-skill caller is a STOP,
-#      not a delete.
 # Net effect: only the genuinely-vacuous blocking entry is gone. The file, `validate_schema_cross_check`,
 # and the `base-schema-validates` criterion (governance/pipeline-contract.yaml) are all untouched.
 - id: claude_skills_loadable
@@ -616,6 +629,33 @@ checks:
     a governance document does not turn this gate red; `--baseline-against <snapshot>` does, and is not
     registered because it reports ERRORs for documents whose Status is no longer CANONICAL. Left
     uninstrumented on 2026-08-14 (A5) rather than invent a combined figure.
+- id: skill_vocabulary_audit
+  cmd:
+  - python3
+  - scripts/audit/skill_vocabulary_audit.py
+  battery: governance
+  kinds:
+  - governance
+  - docs
+  level: advisory
+  basis: base/base-derived-not-curated
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-11-06 (rule 8; owner: "ensure all terminologies and vocabularies are
+    correct"). Every backticked token a skill, command or agent names, if shaped like a
+    value or an identifier, must resolve to a CHECK value, a schema name, a db.py verb or
+    flag, a check id, a contract stage or criterion id, an R-rule label, a skill, command or
+    agent stem, a tracked path, a registry id, an environment variable the code reads
+    (derived from the reads), or a token THAT FILE defines in its own table (per file,
+    never across the path set). Homes are derived from the schema and the inventories
+    only; strings the gate scripts, the writers or CLAUDE.md quote are not homes (they
+    once made item_code, E-08, population_code and axis_code resolve). --paths takes files
+    or directories and exits 2 when an entry names nothing, so a pass cannot examine
+    nothing. Not examined, by decision: fenced blocks, plain-text tokens, harness tool
+    names, db.py result keys; the gate markers are reported (see the script docstring).
+    Prints the unresolved tokens per file; red while prior-version skills name retired or
+    non-existent homes (derive: run it). Prose is a caller (rule 4): the remedy is a
+    sentence edit, not an allow-list.'
 - id: retired_vocabulary
   cmd:
   - python3
@@ -1044,6 +1084,23 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: test_run_pipeline_refusals
+  cmd:
+  - python3
+  - scripts/tests/test_run_pipeline_refusals.py
+  battery: tests
+  kinds:
+  - tooling
+  - schema
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: 'selftest — subject is its own fixtures (a temp copy of the DB written through db.py''s
+    writers, scratch retrieval-log roots: symlinks to the tracked sessions plus fixtures); a floor would count the wrong thing. NEW 2026-11-06:
+    the refusals two operator walk-throughs of skills/run-pipeline_SKILL.md found stated and not
+    held (verified needs a full-scope reading, an extraction needs a VERIFIED source and a recorded
+    reading, a direction names its source, ids are computed, a connection has the arity its type
+    names, a conflict is keyed on a parameter).'
 - id: test_scan_contract
   cmd:
   - python3

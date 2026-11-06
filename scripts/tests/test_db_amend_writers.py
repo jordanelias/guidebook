@@ -74,6 +74,7 @@ writer can make are set by SQL on the copy, and each says why at the point it is
 Nothing depends on a hard-coded live id: the slugs, source, population and term used are
 read from the copy.
 """
+import json
 import os
 import pathlib
 import shutil
@@ -362,8 +363,15 @@ try:
                     "context_quote": f"a fixture sentence using {phrase} once",
                     "verbatim_exempt": "fixture text: no retrieval artefact carries it"}
 
+        # The exemption is refused where a decodable body is held (observe-term shares
+        # add-extraction's refusal, R2-6), and the first source by id holds one, so the
+        # sighting is made on the first source that holds none (derived, never named).
+        BODYLESS = next(r for (r,) in q("SELECT ref_id FROM evidence_sources WHERE "
+                                        "superseded_by_ref_id IS NULL ORDER BY ref_id")
+                        if not db._retrieval_log().decodable_body_artefacts(r))
+
         def fixture_term(name):
-            obs = db.observe_term(sighting(REF, f"fixture phrase: {name}"), S)
+            obs = db.observe_term(sighting(BODYLESS, f"fixture phrase: {name}"), S)
             return db.insert_term(obs["observation_id"], name, "fixture rationale",
                                   S)["term_id"]
 
@@ -463,6 +471,23 @@ try:
                        "--tier", GREY_TIER, "--evidence-type", "grey", "--session", S,
                        *extra)
 
+    def readable(ref_id):
+        """Give a fixture source the two states add-extraction has demanded since
+        2026-11-06 -- VERIFIED standing and a catalogue reading at the live catalogue
+        version (R16, OR-11a) -- by SQL on the copy: record-scan would need a manifest
+        artefact for each fixture, and the standing is not what these cases test."""
+        c = sqlite3.connect(DB)
+        try:
+            c.execute("UPDATE evidence_sources SET verification_status='VERIFIED', "
+                      "verification_method='direct-render' WHERE ref_id=?", (ref_id,))
+            c.execute("INSERT INTO source_scans (ref_id, mode, catalogue_version, text_scope, "
+                      "file_sha256, method, created_at, created_by_session) SELECT ?, "
+                      "'catalogue', MAX(parameter_id), 'partial', ?, 'full-read', 't', ? "
+                      "FROM base_parameters", (ref_id, "f" * 64, S))
+            c.commit()
+        finally:
+            c.close()
+
     def unused_label(slug, stem="FIXTURE-"):
         n = 1
         while q("SELECT 1 FROM source_slug_links WHERE slug=? AND local_ref_id=?",
@@ -547,6 +572,87 @@ try:
                out.get("action") == "backfilled" and q(
                    "SELECT relevance_note FROM source_slug_links WHERE ref_id=? AND slug=?",
                    R1, mixed)[0][0] == "fixture grounds", f"out={out}")
+
+        # S10: --standard-number (the one citation column with no payload route) lands on the row.
+        R_CITE = next_ref()
+        r = add_source(R_CITE, "--standard-number", "FIX 1:2020")
+        record("S10", "add-source writes standard_number",
+               r.returncode == 0 and q("SELECT standard_number FROM evidence_sources WHERE ref_id=?",
+                                       R_CITE) == [("FIX 1:2020",)],
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+
+        # S11-S14: typed columns (migrations 119, 120). A flag that parses and never reaches its column,
+        # or a refusal that does not fire, would report a write that did not happen.
+        pid = q("SELECT parameter_id FROM base_parameters WHERE status='active' LIMIT 1")[0][0]
+        a_slug = q("SELECT slug FROM slugs LIMIT 1")[0][0]
+        # The id is computed since 2026-11-06 (a typed one must equal it), so the fixture reads
+        # the id the writer minted; CROSS-PARAMETER now needs two parameters.
+        pid2 = q("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? "
+                 "LIMIT 1", pid)[0][0]
+        r = run_cli("add-connection", "--confidence", "MODERATE",
+                    "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
+                    "--description", "fixture", "--source-skill", "fixture", "--parameter", str(pid),
+                    "--parameter", str(pid2), "--methodology", "fixture method", "--session", S)
+        minted = json.loads(r.stdout).get("con_id") if r.returncode == 0 else None
+        record("S11", "add-connection writes one typed target row per target, one kind per column",
+               r.returncode == 0 and sorted(q(
+                   "SELECT parameter_id IS NOT NULL, methodology IS NOT NULL, slug, identity_code, "
+                   "extraction_id FROM connection_targets WHERE con_id=?", minted))
+               == [(0, 1, None, None, None), (1, 0, None, None, None), (1, 0, None, None, None)],
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+        r = run_cli("add-connection", "--con-id", "CON-9991", "--confidence", "MODERATE",
+                    "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
+                    "--description", "fixture", "--source-skill", "fixture", "--parameter", "999999",
+                    "--session", S)
+        r2 = run_cli("add-connection", "--con-id", "CON-9992", "--confidence", "MODERATE",
+                     "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
+                     "--description", "fixture", "--source-skill", "fixture", "--session", S)
+        record("S12", "add-connection refuses a parameter that does not exist and a connection with "
+               "no target, and writes nothing",
+               r.returncode == 1 and r2.returncode == 1 and not q(
+                   "SELECT 1 FROM connections WHERE con_id IN ('CON-9991','CON-9992')"),
+               f"rc={r.returncode},{r2.returncode} {r.stderr[-200:]!r}")
+        r = run_cli("log-search", "--slug", plain, "--language", "EN", "--query-text", "fixture zero-yield",
+                    "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "none",
+                    "--results-found", "0", "--absence-class", "genuine_absence", "--session", S)
+        r2 = run_cli("log-search", "--slug", plain, "--language", "EN", "--query-text", "fixture found",
+                     "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "some",
+                     "--results-found", "3", "--absence-class", "genuine_absence", "--session", S)
+        record("S13", "log-search --absence-class lands on a zero-yield search and is refused on one that "
+               "found something",
+               r.returncode == 0 and r2.returncode == 1 and q(
+                   "SELECT COUNT(*) FROM search_executions WHERE query_text='fixture zero-yield' "
+                   "AND absence_class='genuine_absence'")[0][0] == 1,
+               f"rc={r.returncode},{r2.returncode} {r.stderr[-200:]!r} {r2.stderr[-200:]!r}")
+        # S14: only a `finding` extraction can carry the harm flag (the CHECK and the writer agree).
+        con = sqlite3.connect(DB)
+        try:
+            con.execute("PRAGMA foreign_keys=ON")
+            bad = False
+            try:
+                con.execute("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+                            "claim_type, figure_role, harm_finding, created_by_session, created_at, "
+                            "extraction_method, extraction_status) SELECT ref_id, slug, parameter_id, "
+                            "claim_type, 'claim', 1, 'fixture', 'now', extraction_method, "
+                            "extraction_status FROM source_value_extractions LIMIT 1")
+            except sqlite3.IntegrityError:
+                bad = True
+        finally:
+            con.close()
+        record("S14", "a non-finding extraction cannot carry harm_finding (CHECK)", bad, "no IntegrityError")
+        # S15: a conflict names two populations the identity lens holds; an unknown code is refused by name.
+        # `ALL` is a registry row but a scope marker, not a population: add-conflict refuses it (R3-14,
+        # db.insert_conflict compares the code to 'ALL'), so the two populations exclude that one row.
+        two = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
+                               "ORDER BY identity_code LIMIT 2")]
+        ok = run_cli("add-conflict", "--parameter-id", str(pid), "--domain", "FIXTURE", "--pop-a", two[0],
+                     "--pop-b", two[1], "--status", "PROPOSED", "--session", S)
+        bad_ = run_cli("add-conflict", "--parameter-id", str(pid), "--domain", "FIXTURE2", "--pop-a",
+                       "NOT-A-CODE", "--pop-b", two[1], "--status", "PROPOSED", "--session", S)
+        record("S15", "add-conflict accepts identity-lens codes and refuses one the lens lacks",
+               ok.returncode == 0 and bad_.returncode == 1 and not q(
+                   "SELECT 1 FROM conflicts WHERE domain='FIXTURE2'"),
+               f"rc={ok.returncode},{bad_.returncode} {bad_.stderr[-200:]!r}")
 
     # ── X: supersede-source ───────────────────────────────────────────────────
     # GAP-060. Two DOI-less fixture sources with one author, year and title are the
@@ -643,6 +749,7 @@ try:
             con.close()
         XD = next_ref()
         add_source(XD, title=f"fixture extraction source {XD}")
+        readable(XD)
         X_PAYLOAD = {"ref_id": XD, "parameter_id": PID and PID[0],
                      "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
                      "claim_text": "fixture: the source states nothing for this parameter",
@@ -1442,19 +1549,27 @@ try:
     record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
            r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
 
-    # J13: migration `drop_item_layer_cluster` removed the foreign key that refused an item
-    # code on conflicts.item_code, so the writer refuses it (CLAUDE.md section 7). The control
-    # is the same row without the code: a refusal that also refused that would prove nothing.
-    base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": "AAA", "pop_b": "BBB",
-            "status": "PROPOSED"}
-    msg = refusal(db.insert_conflict, {**base, "item_code": "E-08"}, S, dry_run=True)
+    # J13: conflicts.pop_a / pop_b are foreign keys into the identity lens (migration 121; the item_code
+    # column this once guarded is gone). A code the lens lacks is refused by name; the control is the same
+    # row with two live codes, because a refusal that also refused that would prove nothing.
+    # (`ALL` is the scope marker add-conflict refuses as a population, R3-14; the pair excludes that row.)
+    live2 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
+                             "ORDER BY identity_code LIMIT 2")]
+    base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": live2[0], "pop_b": live2[1],
+            "status": "PROPOSED",
+            # The second active parameter: S15 above already filed this pair on the first, and
+            # one conflict per (parameter, pair) is the writer's rule (migration 122).
+            "parameter_id": q("SELECT parameter_id FROM base_parameters WHERE status='active' "
+                              "ORDER BY parameter_id LIMIT 1 OFFSET 1")[0][0]}
+    msg = refusal(db.insert_conflict, {**base, "pop_a": "AAA"}, S, dry_run=True)
     ok_id = None
     try:
         ok_id = db.insert_conflict(base, S, dry_run=True)
     except Exception as exc:  # noqa: BLE001 -- the control failing is a defect to see
         print(f"      CONTROL defect: {exc.__class__.__name__}: {exc}")
-    record("J13", "insert_conflict refuses an item code and still writes the same row without one",
-           msg is not None and "item layer" in msg and ok_id == "CONF-9999", f"refusal={msg!r} control={ok_id!r}")
+    record("J13", "insert_conflict refuses a population the identity lens lacks and still writes the same row with live codes",
+           msg is not None and "base_taxonomy_identity" in msg and ok_id == "CONF-9999",
+           f"refusal={msg!r} control={ok_id!r}")
 
     # ── M: log-search records the lens a search covered (R18) ───────────────────────────
     # Four optional columns on search_executions, each checked against the registry its own foreign
@@ -1494,7 +1609,9 @@ try:
         captured = f"emit refused: {exc}"
     hit = [ln for ln in captured.splitlines() if ln.startswith('INSERT INTO "search_executions"')
            and "fixture M: live codes" in ln
-           and ln.rstrip().endswith("'%s', '%s', '%s', NULL);" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"]))]
+           # the four lens values, in column order; columns added after medical_code (absence_class,
+           # migration 119) follow them, so this does not pin where the statement ends
+           and ("'%s', '%s', '%s', NULL" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"])) in ln]
     record("M03", "emit_batch_sql captures the lens columns of a logged search (the write can be shipped)",
            len(hit) == 1, captured[-400:])
 
@@ -1606,6 +1723,7 @@ try:
 
     # ── V: an extraction asks for no slug, and a root_id must be registered (step 3 judgment) ───────
     ref_p, _ = add_o("extraction, admitted to no slug", "--evidence-type", "grey")
+    readable(ref_p)
     X_P = {"ref_id": ref_p, "parameter_id": PARAM, "identity_code": lens_live["--identity"],
            "claim_type": "absent", "figure_role": "finding",
            "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim"}

@@ -74,7 +74,7 @@ def evaluate(message, author, parent_count):
     return 1, ("FAIL: commit message does not match required format\n"
                f"  Got:      {message!r}\n"
                "  Expected: {skill-name}: {action} [YYYY-MM-DD HH:MM]\n"
-               "  Example:  workplan-orchestrator: update gap register [2026-04-18 14:30]")
+               "  Example:  governance: update gap register [2026-04-18 14:30]")
 
 
 CASES = [

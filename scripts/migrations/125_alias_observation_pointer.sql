@@ -1,4 +1,4 @@
--- 117_alias_observation_pointer.sql
+-- 125_alias_observation_pointer.sql
 -- SCHEMA migration -- a source-attested alias POINTS at the observation it came from.
 --
 -- Until now an alias's provenance was a substring of `notes` ("source-attested"), which
@@ -15,8 +15,8 @@
 -- the pointer. Nothing is backfilled: no existing row is attested by an observation.
 -- Readers of term_aliases (re-derive with grep and sqlite_master): db.py, the audit above,
 -- generate/search-query code that selects named columns. No view names the table.
--- AFTER_DATA: 20261106030918
+-- AFTER_DATA: 20261106053823
 
 ALTER TABLE term_aliases ADD COLUMN observation_id INTEGER REFERENCES observed_terms(observation_id);
 
-PRAGMA user_version = 117;
+PRAGMA user_version = 125;

@@ -56,7 +56,7 @@ PROVENANCE_MARKERS = ("model-generated", "curated", "repo shorthand",
 
 
 def classify(notes, observation_id=None):
-    """Attestation is the pointer to an observation (migration 117), not a substring of the
+    """Attestation is the pointer to an observation (migration 125), not a substring of the
     notes: a row whose free text merely says "source-attested" is not attested."""
     n = notes or ""
     for m in VERIFIED_MARKERS:

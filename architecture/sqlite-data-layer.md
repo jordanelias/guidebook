@@ -137,10 +137,10 @@ CREATE TABLE connections (
                             'PENDING','CONSUMED','CONSUMED-DEFERRED','CLOSED'
                         )),
     confidence          TEXT NOT NULL
-                        CHECK(confidence IN ('HIGH','MODERATE','SPECULATIVE')),
+                        CHECK(confidence IN ('HIGH','MODERATE')),   -- SPECULATIVE dropped by migration 122: a relationship with no direct evidence is a gap, never a connection
     connection_type     TEXT
                         CHECK(connection_type IN (
-                            'CROSS-POPULATION','CROSS-ITEM',
+                            'CROSS-POPULATION','CROSS-PARAMETER',
                             'COMPOUND-INTERACTION','METHODOLOGY'
                         )),
     filed_in            TEXT NOT NULL,
@@ -536,11 +536,10 @@ CLI usage:
     python3 scripts/db.py connections [--status PENDING] [--confidence HIGH] [--summary]
     python3 scripts/db.py is-mined --slug SLUG --ref REF-ID
     python3 scripts/db.py log-mining --slug S --ref R --direction backward
-                          --connections '["CON-0241"]' --session SESSION
+                          --notes "found N items, staged on exec X" --session SESSION
                           [--dry-run]
-    python3 scripts/db.py next-id connections|gaps|terms
+    python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
-    python3 scripts/db.py synonyms --item A-16 [--language JA]
     python3 scripts/db.py validate             # runs validate_db checks inline
     python3 scripts/db.py --help               # full command reference
 """
@@ -1033,7 +1032,7 @@ No rollback migrations. If a migration produces bad data: revert the `.db` file 
 2a. python3 scripts/db.py gaps --priority P1
     → JSON array of OPEN P1 gaps (instant SQL query, no file parsing)
 2b. python3 scripts/db.py connections --status PENDING --summary
-    → { "total": 55, "HIGH": 20, "MODERATE": 30, "SPECULATIVE": 5 }
+    → { "total": N, "HIGH": n1, "MODERATE": n2 }   (derive the figures; the CHECK admits these two values since migration 122)
     (summary count only at session open — full list on demand)
 ```
 
