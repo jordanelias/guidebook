@@ -65,3 +65,14 @@ Every query and fetch verbatim. Each "Prior" line was appended to this file by t
 - R27 fetch `https://tampereentilapalvelut.fi/wp-content/materiaalit/suunnitteluohjeet/Rakennussuunnitteluohje_2018_Esteettomyysohje.pdf` (tier 4, city-owned property company). Prior: 200 PDF; "invapaikka" or "esteetön autopaikka"; perhaps "henkilönostin".
 - R28 fetch `https://www.hel.fi/static/hki4all/ohjeet/2022/suraku-kortti-3.pdf` (tier 4, City of Helsinki SuRaKu card). Prior: 200 PDF on routes or parking.
 - R29 fetch `https://www.fintraffic.fi/sites/default/files/2026-03/Esteett%C3%B6myys%20ja%20varusteet.pdf` (tier 4, state-owned traffic company). Prior: 200 PDF, station lifts and ramps.
+  Results: R27 200, 05df15e144daa991.pdf (Tampere Tilapalvelut Oy, 1.11.2018): "Liikkumisesteisen autopaikka" (p. 2), "ISA-tunnuksella" (p. 2), "Pystyhissi ja porrashissi" (p. 3), "henkilöhissin, 8 hengen standardihissin" (p. 3). R28 200, d76b160627aaca85.pdf (SuRaKu card 3, "Esteetön ympäristö", 30.6.2022): no parking or lift form at the stems tried; EMPTY. R29 200, 84a55101f15aaf22.pdf (Fintraffic): "sopii pyörätuolille", "Pyörätuolilla saavutettavuus tuntematon", "Portaattomuus" / "Portaaton" (pp. 8, 10).
+
+## Not obtained or not attempted
+- HSL park-and-ride guide: 403 direct, Wayback reset twice (R11-R14).
+- Kankaanpää grant guide (R23): URL now serves HTML; the "Porrashissi (tuolihissi, lavahissi)" heading is known only from the search engine's summary, so "tuolihissi" and "lavahissi" are NOT attested here ("tuolihissi" kept as a seed).
+- RT card 98-11235 Pysäköintialueet and RT signage cards: subscription; quoted second-hand only (IL20).
+- Näkövammaisten liitto, Kuuloliitto, Kynnys ry guides: not attempted (budget). Helsinki parking-permit and accessibility pages: no hel.fi hit in Q4; not attempted further.
+- Retailer product pages naming "inva" fixtures (Q5): not used; no tier admits retail.
+
+## Verification
+- `python3 -I scratchpad/session_2026-11-06-base-vocabulary-review/terminology-pass/FI-FI/build_equivalents.py` from the repository root: every quote verbatim in its saved extraction after whitespace collapse, every form inside its quote, every quote at most 25 words; exits 1 on failure. At writing: 0 failures.
