@@ -27,7 +27,9 @@ Query SQLite first:
 python3 scripts/db.py coverage --slug {slug}
 ```
 
-Returns: jurisdiction/language coverage counts, completeness flag.
+Returns: the (language, jurisdiction) pairs owed (pairs_required, from `v_research_scope`) and the ones still
+unsearched (pairs_unsearched), the searched counts, searches_outside_scope, the owed jurisdictions the declared
+vocabulary refuses (jurisdictions_unreachable), and `complete`, which is false while anything owed is unsearched.
 
 For slug → topic_directory lookup:
 ```sql
@@ -97,7 +99,6 @@ After multilingual-research completes:
 4. **Add new evidence sources:**
    ```bash
    python3 scripts/db.py add-source \
-     --ref-id {global_ref_id} \     # REF-NNNNN, NOT the per-slug label
      --author "{last}|{given}" \    # repeatable, byline order; 'corp|{name}' for a body
      # authors are ROWS since migration 063 — evidence_sources.author_display is a
      # tombstone that reads NULL. --authors "{authors}" still works and is parsed.
@@ -118,13 +119,11 @@ After multilingual-research completes:
      --session {session_filename}
    ```
 
-   **`--ref-id` is the global `REF-NNNNN`; `--local-ref-id` is the per-slug label.** This
-   block read `--ref-id {local_ref_id}` until 2026-08-24, which files a source under a
-   label meaningful only inside one slug. `evidence_sources.ref_id` has no CHECK, so it
-   inserted silently; `add-source` now refuses it. Take the global id from
-   `dbcore.next_ref_id(conn)`: there is no allocator, and the high-water mark is the UNION of
-   every table holding a ref_id, not `source_locators` alone (CLAUDE.md §4). Corrected
-   2026-09-03 — the union rule landed 2026-08-25 and this caller was missed for nine days.
+   **Omit `--ref-id`.** `add-source` computes the global `REF-NNNNN` (`dbcore.next_ref_id(conn)`; `python3
+   scripts/db.py next-id ref` prints it; the high-water mark is the UNION of every table holding a ref_id, not
+   `source_locators` alone, CLAUDE.md §4). A given `--ref-id` must equal the computed id or the id its own locator staged,
+   and a per-slug label is refused there. `--local-ref-id` is the per-slug label, meaningful only inside one slug, and
+   is derived from the slug's own scheme when omitted.
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 

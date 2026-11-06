@@ -266,7 +266,6 @@ crashed with "table evidence_sources has no column named authors".
 ### Adding new sources
 ```bash
 python3 scripts/db.py add-source \
-  --ref-id {global_ref_id} \        # REF-NNNNN, from dbcore.next_ref_id(conn) -- the high-water mark is the UNION of every table holding a ref_id, NOT source_locators alone (CLAUDE.md §4)
   --author "{last}|{given}" \      # repeatable, byline order; 'corp|{name}' for a body
   # or, from a display string: --authors "{authors}"   (parsed into rows; refuses ambiguity)
   --year {year} \
@@ -288,22 +287,15 @@ python3 scripts/db.py add-source \
   --session {session}
 ```
 
-**`--ref-id` and `--local-ref-id` are not the same value, and this block said they were
-until 2026-08-24.** It read `--ref-id {local_ref_id}`, which files the source under its
-per-slug label: `evidence_sources.ref_id='RAP-04'`. There is no CHECK on that column, so
-it inserts silently — and the row is then invisible to the `source_locators` high-water
-mark, collides with the next slug that mints an `RAP-04`, and renders a citation keyed to
-a label that means nothing outside one slug. `db.py add-source` now refuses a ref_id that
-is not a global reference id, and names this confusion when it does.
+**Omit `--ref-id`.** `add-source` computes the global reference id, `REF-NNNNN`
+(`dbcore.next_ref_id(conn)`: the high-water mark is the UNION of every table holding a ref_id, NOT
+`source_locators` alone, CLAUDE.md §4; `python3 scripts/db.py next-id ref` prints it). A given `--ref-id`
+must equal the computed id or the id its own locator staged, and a per-slug label such as `RAP-04` is refused
+there: filed under a label, the row would be invisible to the high-water mark and collide with the next slug that
+mints the same label.
 
-- `--ref-id` is the **global** reference id, `REF-NNNNN`, unique across the repository.
-  There is no allocator: `dbcore.next_ref_id(conn)` IS the rule — the high-water mark is the
-  UNION of every table holding a ref_id, NOT `source_locators` alone (CLAUDE.md §4). Corrected
-  2026-09-03: line 191 of this same file was swept on 2026-09-02 and this line, 24 lines below
-  it, was not — so the file taught the superseded rule while citing the section that calls it
-  wrong. Measured: `source_locators` tops out at REF-00970 and `evidence_sources` at REF-00978,
-  so the old rule mints REF-00971, a live evidence row.
-- `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`.
+- `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`; the writer derives it from the
+  slug's own scheme when it is omitted.
 
 This is the same copy-versus-pointer confusion that put `RAP-F61/F69/F70` in
 `citation_mining` while `source_slug_links` held `RAP-06/09/10` for the same three

@@ -99,7 +99,7 @@ pointers:
   doctrine_sha: e647458
   doctrine_file: governance/mission-and-epistemics.md
   newest_workplan:
-  - 2026-10-23-pipeline-resolution-workplan.md
+  - 2026-11-06-run-pipeline-round-2-adjudication.md
   live_project_instructions:
   - project-instructions-v10_9.md
 database:
@@ -419,7 +419,6 @@ database:
   - access_needs
   - access_stakes
   - decisions
-  - lang_jur_map
   - life_stage_modifiers
   - rooms
   tables_written_directly_by_code:
@@ -449,6 +448,7 @@ database:
   - icf_medical_map
   - identity_icf_map
   - identity_medical_map
+  - lang_jur_map
   - observed_terms
   - parameter_declinations
   - research_code_leads
@@ -484,6 +484,7 @@ writers:
     - convergence_assessment
     - convergence_sources
     - gaps
+    - slugs
     - specification_extraction_links
     - specification_source_links
     - specifications
@@ -590,6 +591,9 @@ writers:
     - specifications
     - terms
     scripts/tests/test_run_pipeline_refusals.py:
+    - evidence_source_authors
+    - evidence_sources
+    - lang_jur_map
     - source_scans
     scripts/tests/test_scan_contract.py:
     - base_parameters

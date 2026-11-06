@@ -1977,8 +1977,10 @@ def verify_authors(session):
     if malformed:
         print(f"\n  MALFORMED-PAYLOAD — {len(malformed)} source(s) whose payload repeats an "
               f"author name; a byline never does, so the deposit filed affiliations as")
-        print("  authors. Not a cross against the stored rows, which stand; correct-source "
-              "refuses to write authors from it. Reported, not failed.")
+        print("  authors. The stored rows are still compared with the payload's family-named "
+              "authors (a disagreement shows above as a cross); correct-source refuses to "
+              "write authors from this payload. The malformed deposit itself is reported, "
+              "not failed.")
         for ref_id, name in malformed:
             print(f"      {ref_id}  repeats {name!r}")
 

@@ -18,7 +18,7 @@ description: >
 
 **Model:** Sonnet-class (retrieval/collation) · Opus-class or above (resolution synthesis + best-practice determination)
 **Input:** Environmental parameter(s) (`base_parameters`), a determination under review, or a room type
-**Keyed on the parameter.** `conflicts.parameter_id` (migration 122) is the key and `add-conflict --parameter-id` is required; the domain label in the matrix below is prose that describes the parameter, not the key. The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` **refuses** a `--pop-a` or `--pop-b` the table lacks (foreign keys, migration 121); the pair is unordered and the writer orders it. **The matrix below is prior-version content:** its population descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`, `POTS`, `MCAS`, "fibro") are not identity codes, and most of its domains are not yet `base_parameters` rows. Derive the live codes (`select identity_code, display_name from base_taxonomy_identity`); choose the code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17). Which descriptors become codes, and whether the matrix stays as a seed list, is an open owner question (adjudication 2026-11-06).
+**Keyed on the parameter.** `conflicts.parameter_id` (migration 122) is the key and `add-conflict --parameter-id` is required; the domain label in the matrix below is prose that describes the parameter, not the key. The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` **refuses** a `--pop-a` or `--pop-b` the table lacks (foreign keys, migration 121); the pair is unordered and the writer orders it. **The matrix below is prior-version content:** its population descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`, `POTS`, `MCAS`, "fibro") are not identity codes, and most of its domains are not yet `base_parameters` rows. Derive the live codes (`select identity_code, display_name from base_taxonomy_identity`); choose the code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17). Which descriptors become codes, and whether the matrix stays as a seed list, is open owner question 1 of the 2026-11-06 round-2 adjudication.
 **Output:** Conflict domain matrix + resolution evidence register + unresolved gap flags
 **Chunk ceiling:** ≤3 conflict domains per run
 
@@ -226,7 +226,7 @@ Known resolution archetypes (apply where evidence supports):
 - `references/connection-register-active.md` (archived)
 
 **Preceded by:** population-specific extractions for the parameter
-**Followed by:** the determination, with `set-parameter-direction contested` where the conflict is irreducible
+**Followed by:** the determination. Where the conflict is irreducible, `set-parameter-direction --direction contested` records it, but the writer requires `--ref-id`, one admitted source holding an extraction for the parameter; whether a contested direction takes one source or one per side is open owner question 7 of the 2026-11-06 round-2 adjudication
 
 ---
 

@@ -140,7 +140,7 @@ CREATE TABLE connections (
                         CHECK(confidence IN ('HIGH','MODERATE')),   -- SPECULATIVE dropped by migration 122: a relationship with no direct evidence is a gap, never a connection
     connection_type     TEXT
                         CHECK(connection_type IN (
-                            'CROSS-POPULATION','CROSS-ITEM',
+                            'CROSS-POPULATION','CROSS-PARAMETER',
                             'COMPOUND-INTERACTION','METHODOLOGY'
                         )),
     filed_in            TEXT NOT NULL,
@@ -536,11 +536,10 @@ CLI usage:
     python3 scripts/db.py connections [--status PENDING] [--confidence HIGH] [--summary]
     python3 scripts/db.py is-mined --slug SLUG --ref REF-ID
     python3 scripts/db.py log-mining --slug S --ref R --direction backward
-                          --connections '["CON-0241"]' --session SESSION
+                          --notes "found N items, staged on exec X" --session SESSION
                           [--dry-run]
-    python3 scripts/db.py next-id connections|gaps|terms
+    python3 scripts/db.py next-id connections|gaps|terms|conflicts|ref
     python3 scripts/db.py coverage --slug SLUG
-    python3 scripts/db.py synonyms --item A-16 [--language JA]
     python3 scripts/db.py validate             # runs validate_db checks inline
     python3 scripts/db.py --help               # full command reference
 """

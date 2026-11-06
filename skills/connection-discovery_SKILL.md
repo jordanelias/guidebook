@@ -101,7 +101,8 @@ The id is computed by the writer (omit `--con-id`; a typed one must equal `next-
 is a topic slug (`slugs.slug`, a foreign key). Targets are flags, each repeatable and each validated against
 its table: `--parameter`, `--target-slug`, `--identity`, `--extraction`, `--methodology`. The type sets the
 arity the writer holds: `CROSS-PARAMETER` and `COMPOUND-INTERACTION` need two or more `--parameter` targets,
-`CROSS-POPULATION` two or more `--identity` targets, `METHODOLOGY` one `--methodology`; a parameter target
+`CROSS-POPULATION` two or more `--identity` targets, `METHODOLOGY` one `--methodology`; a type the CHECK
+admits for which the writer holds no arity rule is refused by name, never filed unchecked; a parameter target
 must be `active` (a merged or retired one is refused). Description bar: usable by the determination run
 without further lookup.
 Bad: "turning space and chair length are related". Good: "REF-xxxxx Table 2 gives a 1.35 m swept path for a
@@ -120,7 +121,7 @@ verb sets it; do not claim a review that no row records.
 1. Never type a connection id: the writer computes it.
 2. HIGH confidence connections feed the determination run (`scripts/assess/assess_cell.py` stage).
 3. A relationship with no direct evidence is a CR gap, never a connection.
-4. No `[A-Z]-NN` target, no `--item-code`, no prefixed free-text target: use the typed flags.
+4. No `[A-Z]-NN` target and no prefixed free-text target: use the typed flags.
 5. Use the CLI only; the archived registers (`gap_register.md`, `connection-register-active.md`, per-topic
    `connections.md`) are not read or written.
 6. Feeds `cross-population-conflict-mapper`.
