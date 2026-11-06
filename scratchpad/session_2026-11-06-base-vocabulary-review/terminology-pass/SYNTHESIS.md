@@ -90,7 +90,7 @@ Every phrase below is copied from the named pair's `observations.tsv` or `revers
 | accessible vehicle parking lots | EN-SG 3.3.1.1 | code term |
 | van accessible | EN-US 502.6 | code term (narrower class) |
 | parkeringsplasser for forflytningshemmede | NO § 8-8 (1) | code term |
-| parkeringsplatser för rörelsehindrade med särskilt tillstånd | SV HIN 12 § (allmänt råd) | advice-tier term; keyed to a permit |
+| parkeringsplatser för rörelsehindrade med särskilt tillstånd | SV HIN 17 § (binding sentence) | keyed to a permit. [CORRECTION 2026-11-06: this row first read "HIN 12 § (allmänt råd) … advice-tier term"; the Swedish equivalents pass found the form in the binding sentence of 17 §, not in advice text] |
 | et passende antal parkeringspladser; handicapegnede køretøjer | DA § 401 stk. 1 | code term; keyed to the vehicle |
 | Plazas de aparcamiento reservadas para personas con movilidad reducida; una plaza accesible por cada 33 plazas | ES TMA anexo art. 35; SUA 9 1.2.3.2 b) | code terms (two orders, two forms) |
 | lugares especialmente destinados a pessoas em cadeiras de rodas; número de lugares reservados | PT Anexo 3.6.1; 2.8.1 | code terms |
