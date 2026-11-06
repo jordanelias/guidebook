@@ -1,0 +1,11 @@
+register_concept	seed_nl (MODEL-GENERATED, not a finding)	jurisdiction_meant	flag
+Tactile attention indicators (truncated domes)	attentiemarkering (noppentegels)	NL	MODEL-GENERATED; for NEN 9120 / CROW guidance, not the Bbl
+Floor surface is stable, firm, and non-slip	slipweerstand van de vloer	NL	MODEL-GENERATED
+Accessible controls	bedieningshoogte / reikhoogte	NL	MODEL-GENERATED; likely NEN 9120 territory
+Outlets and switches are at accessible heights	hoogte van schakelaars en wandcontactdozen	NL	MODEL-GENERATED
+Colour temperature (parameter 10)	kleurtemperatuur	NL	MODEL-GENERATED (= held alias; 0 hits in Bbl)
+Audio accessibility and communication enhancement technologies	solospoel / ringleiding	NL	MODEL-GENERATED (ringleiding = held alias; 0 hits in Bbl)
+Level landings with clear space and at regular intervals	tussenbordes	NL	MODEL-GENERATED; 0 hits in Bbl; Flemish source phrase basis of TERM-092 is out of scope
+Drainage	afwatering van het looppad	NL	MODEL-GENERATED
+Bollards	afzetpaal / paaltje	NL	MODEL-GENERATED; public-realm (CROW), outside the Bbl
+Gratings	rooster in looproute	NL	MODEL-GENERATED
