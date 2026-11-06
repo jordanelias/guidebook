@@ -6733,8 +6733,10 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
     text says "turning space" and not "turning circle"). This is that vocabulary
     decision, with its warrant required:
 
-      --from-observation N  the new name comes from a phrase a source USES: an English
-                            observation, adjudicated to THIS term, whose surface form
+      --from-observation N  the new name comes from a phrase a source USES, in the
+                            source's own language (owner E1, 2026-11-06: a concept first
+                            met outside English is named by that phrase), adjudicated to
+                            THIS term, whose surface form
                             contains the new name (the 2026-09-09 rule, kept by the owner
                             on 2026-10-09: names come from observed phrases);
       --ruling-quote "..."  or from the owner's own words, quoted verbatim and found
@@ -6748,9 +6750,9 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
     split keeps working. No other term may hold the new name, as a name or an alias.
 
     REFUSES: neither or both warrants; a value-bearing name (_VALUE_BEARING, as add-term);
-    a quote not exactly once in the ledger or not containing the name; an observation that
-    is not English, not adjudicated to this term, or does not contain the name; a name
-    another term holds.
+    a quote not exactly once in the ledger or not containing the name; an observation
+    not adjudicated to this term, or that does not contain the name; a name another term
+    holds.
     """
     new = (canonical_en or "").strip()
     if not new:
@@ -6797,11 +6799,6 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
             if obs is None:
                 raise Refusal(f"rename-term: observation {from_observation}: no such "
                               f"observed term.")
-            if (obs["language"] or "").upper() != "EN":
-                raise Refusal(
-                    f"rename-term: observation {from_observation} is in "
-                    f"{obs['language']!r}. canonical_en is the English name; a phrase in "
-                    f"another language is an alias (db.py add-alias), not a canonical name.")
             if not _names_term(conn, from_observation, term_id):
                 raise Refusal(
                     f"rename-term: no adjudication of observation {from_observation} names "
@@ -7020,7 +7017,7 @@ def revoke_declination(term_id: str, reason: str, decision_ref: str, session: st
                 "decision": ref, "dry_run": dry_run}
 
 
-_ITEM_ASIDE = re.compile(r"\s*[(\[].*?[)\]]")
+_ITEM_ASIDE = re.compile(r"\s*[(\[].*?(?:[)\]]|$)")   # an unclosed aside is stripped to the end
 
 
 def _item_subject(db_path, rowid: int):
@@ -7051,7 +7048,7 @@ def screen_item_catalogue():
     finally:
         old.close()
     rows = []
-    with connect(True) as conn:
+    with connect(readonly=True) as conn:
         for rowid, name in items:
             subject = _ITEM_ASIDE.sub("", name).strip()
             held = _name_holder(conn, subject)

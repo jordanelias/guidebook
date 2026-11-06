@@ -688,6 +688,15 @@ try:
     t202 = attempt(ins, o_n.get("observation_id"), "turnwise clearance", "fixture", S, dry_run=True)
     record("T202", "add-term takes a contiguous part of the observed phrase", bool(t202.get("term_id")),
            t202)
+    # N10: a name may come from a phrase in another language (owner E1); rename-term no longer
+    # demands an English observation
+    o_nl = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / nl",
+                                "the turnwise clearance zone of a wheelchair", language="NL"), S)
+    attempt(adj, o_nl.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=FREE[16])
+    n10 = attempt(rename, FREE[16], "turnwise clearance", "fixture: native name", S,
+                  from_observation=o_nl.get("observation_id"), dry_run=True)
+    record("N10b", "rename-term accepts a non-English observation as the warrant for a native name",
+           n10.get("changed") is not False and "error" not in n10, n10)
     # T4: an ICF title is replaced only by one verified from bytes, next to its code
     sit = fn("set_icf_title")
     icf = q("SELECT icf_code FROM base_icf WHERE title IS NOT NULL ORDER BY icf_code LIMIT 1")[0][0]
