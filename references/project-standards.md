@@ -5037,3 +5037,15 @@ and, replying to the session's reading of those statements (that a translation i
 CONDITION: any session asking whether the English register may be translated into other languages, what a translation of it is, whether it may be stored as aliases, how a concept English does not name enters the register, or how technique categories relate to building typologies and rooms.
 ACTION: (1) Generate both category views, and the research coverage, from the base register and the tagged table; keep no second list. (2) Treat every translated term as a flagged model-generated search seed, never as vocabulary. (3) Promote a seed only by reading an instrument in its language and finding the phrase there. (4) Feed concepts found in native-language readings back into the register by the instrument's own phrase. (5) Treat every [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statement 2026-11-06 (fourth) — the project may hold retrieved standards in the repository
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, after the session had kept the CSA/ASC B651:23 PDF out of git because its legal notice says users may not "make an electronic copy", and recorded on contact per `CLAUDE.md` rule 0. The whole message:
+
+> "oh fuck off with the "no electronic copy". we are doing a not for profit volunteer advocacy project. this is fine"
+
+**What this decides.** The project may persist retrieved copies of standards and codes in `retrieval-log/` under research rule R10, a publisher's "no electronic copy" notice notwithstanding. The session's earlier exclusion of the B651 PDF is withdrawn and the file is committed with the other retrieval artefacts. [ASSUMPTION: this is read as a ruling on holding retrieved copies for the project's own verification, as R10 requires; it is not read as a ruling on republishing or rendering any standard's text in the book, which stays a separate question for licensing (`CLAUDE.md` section 8: licensing is the owner's).]
+
+CONDITION: any session asking whether a retrieved standard whose legal notice restricts copying may be persisted in the repository.
+ACTION: (1) Persist it in the retrieval log like any other source. (2) Do not treat a publisher's copying notice as a reason to withhold a source from verification. (3) Raise republication or rendering of such text as a separate question. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statement, quoted above.
