@@ -4999,3 +4999,41 @@ and, in a message that arrived while the first was being worked on:
 CONDITION: any session asking how a concept first met in a non-English instrument is named, whether the unattested aliases are vocabulary or may be deleted, whether item subjects are pointed at by code or by row, whether WHO titles in other languages may be stored verbatim, whether identity labels in other languages may be recorded, whether Norwegian is split, whether rooms are populated, whether the P1+P2+P3 language-and-jurisdiction pairs are approved bucket members, or whether the axis and method terms are parameters.
 ACTION: (1) Name a concept first met outside English by the instrument's own phrase and language; never type an English gloss. (2) Treat the unattested aliases as flagged search aids and delete none. (3) Point at item subjects by `items:<rowid>`. (4) Store a pointer to a persisted payload, not a verbatim non-English WHO title, until the licence is read. (5) Record a community's own identity designation only when attested in its own Co-1 source; change no code. (6) Leave rooms alone. (7) Treat the P1+P2+P3 pairs as the bucket members. (8) Decline the axis and method terms as parameters with reasons, in a research change after the tooling merges. (9) Write no row from the item subjects, the stakes proposal or the renames until the owner approves the table in a dated entry. (10) Treat every [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statement, quoted above.
+
+## Owner statements 2026-11-06 (third) — the register is written in English first, then translated to search each language; it must not be English-biased
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9 while the RHFAC Rating Survey v4.0 and the CSA/ASC B651 listing were being catalogued, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim; times in session order.
+
+> "we have categories according to the kind of technique (acoustic, circulation, etc) as well as categories according to building typology and room"
+
+> "and these cross-pollinate each other"
+
+> "what appears in a category specification for type (eg circulation, acoustics) will appear in building typologies and rooms and vice versa"
+
+> "you don't need French edition here"
+
+> "what I mean is that you will build out a comprehensive register of concepts/items/terms/techniques but you have to ensure that you research them across all of our chosen jurisdictions and languages without an English bias"
+
+> "so we are doing prep work to get this all written out in English and then we have to translate it all properly into other languages to search them too"
+
+and, replying to the session's reading of those statements (that a translation is a flagged search seed, and the register also takes concepts from native-language readings):
+
+> "yes"
+
+> "we set up the base and in turn we set up the research coverage"
+
+[ASSUMPTION: "yes" answers the session's reading in point 3 and 4 below; "we set up the base and in turn we set up the research coverage" is read as: the base register is the list the research coverage is derived from, concept by language-and-jurisdiction pair, and coverage is never kept as a second list.]
+
+**What this establishes**
+
+1. **Two category axes that derive from one set of rows.** A technique category (acoustic, circulation …) and a building typology or room are two views of the same criteria. Whatever sits in a technique category appears under the typologies and rooms that use it, and the reverse. Neither view is maintained beside the other (`CLAUDE.md` rules 5 and 8): both are generated from one table of tagged criteria.
+2. **English first, as preparation.** The English register is the search plan, not the vocabulary. It is not definitive: the RHFAC survey is a Canadian rating instrument that scores criteria by points and states no values, and the B651 text was not obtained.
+3. **Translation is for searching.** A translation of the English register is a search seed, produced to be in use in the jurisdiction and not word for word ("properly"), and recorded as model-generated and flagged, which is what OR-12b permits. It is not a term, not an alias and not evidence. It becomes vocabulary only when an instrument of that language is read and the phrase is found there (E4; OR-17; R11).
+4. **The register must not end where English ends.** A concept English does not carve out cannot be reached by translating English. The register therefore also takes concepts from native-language open passes over each P1+P2+P3 instrument (OR-13; plan C.3), named by the instrument's own phrase (E1), and records, per concept and per language-and-jurisdiction pair, whether it was searched and what was found, including absence.
+5. **The French RHFAC edition is not used here.** It was retrieved before this statement and is persisted in the retrieval log; nothing is drawn from it.
+
+[ASSUMPTION: "translate it all properly" is read as OR-12b's generation of in-use, jurisdiction-specific terms for flagged searches, and not as licence to store translations as vocabulary; the owner's earlier OR-17 ("It is not acceptable for the model to generate its own phrases/names/aliases") and E4 are not read as withdrawn.]
+
+CONDITION: any session asking whether the English register may be translated into other languages, what a translation of it is, whether it may be stored as aliases, how a concept English does not name enters the register, or how technique categories relate to building typologies and rooms.
+ACTION: (1) Generate both category views, and the research coverage, from the base register and the tagged table; keep no second list. (2) Treat every translated term as a flagged model-generated search seed, never as vocabulary. (3) Promote a seed only by reading an instrument in its language and finding the phrase there. (4) Feed concepts found in native-language readings back into the register by the instrument's own phrase. (5) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
