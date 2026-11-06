@@ -4908,3 +4908,21 @@ SUPERSEDES: the RULE above headed "Session start protocol (GraphQL batch read: L
 CONDITION: any session asking which skill orchestrates a multi-stage run, or what runs at session start.
 ACTION: Use `/run-pipeline` (variant `from-evidence`) for a multi-stage run and `/session-open` then `/orient` to start a session; do not look for `workplan-orchestrator`.
 DATE: 2026-11-06 — owner instruction, quoted above.
+
+## Owner statements 2026-11-06 — lean means correct and centralised, not fewer lines; one value per cell; more columns
+
+Given in session https://claude.ai/code/session_01Ub36iN9Wtnk3RfPq2ogN3U and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+"you can add columns. another session has pointed out that there is an erroneous "net negative" rule which taken to extreme means we have no code. what I mean is for there to be the minimum code possible to perform the action correctly such that we are lean, agile and centralize data which in turn means we minimize errors and breaks and detritus"
+
+"tables and columns must be as clearly organized as possible. we do NOT want to have data joined in cells that will cause issues further down the pipeline or have data stored in the wrong cell"
+
+"more columns = more specificity = more flexibility imo"
+
+SUPERSEDES: the literal, line-counting reading of the 2026-10-12 "as little code as possible" instruction as `CLAUDE.md` §8 stated it (a PR must not raise the physical-line total of `scripts/`, `schemas/`, `.github/` or `skills/`) and as W3 of `workplan/2026-10-12-simplification-workplan.md` stated it. The instruction stands in the owner's clarified sense.
+
+**What this does.** `CLAUDE.md` §8's bullet now reads "Lean", and §4 gains the schema-shape rule. The census that shows what the rule finds on the live schema is a command, not a list: `python3 scripts/audit/joined_cells_census.py` (text columns whose values parse as JSON, or as short delimiter-joined tokens, or carry an appended `|| CORRECTED` correction; a report that exits 0 and prints `EXAMINED`). [ASSUMPTION: the owner's "another session" is the session that raised the same objection; no ruling of that session is relied on.] Migrations 119 and 120 apply the rule to what this change touched: `source_value_extractions.harm_finding` and `search_executions.absence_class` (states that were prose), and `connection_targets` with one typed foreign-key column per kind (it was one cell whose meaning depended on a prefix). The classes the census found that this change does not touch, and which want their own tooling PR and adversarial pass because the determination engine reads them: JSON lists that are the second home of a junction table (`convergence_assessment.*_sources`, `specifications.governing_refs`), JSON and delimited lists elsewhere (`search_executions.terms_used`, `citation_mining.connections_produced`, `adversarial_passes.reviewer_models` and `author_models`, `access_needs.absorbs`, `source_locators.authors` and `used_in_bpcs`, `research_code_leads.clause`), and corrections appended inside a note (`search_executions.findings_note`, `gaps.description`, the notes the amend verbs append to).
+
+CONDITION: any session adding or changing a table or column, or asking whether a PR may add code or columns.
+ACTION: (1) Judge code by whether it is the minimum that performs the action correctly, not by line count; add a column where a convention would otherwise carry a fact. (2) Put one value in each cell and each fact in the cell that names it: a foreign key where a table exists, a row per repeated value, never a list, an array or a prefixed string. (3) Before shipping a schema change, run `scripts/audit/joined_cells_census.py` and do not add a cell it would flag.
+DATE: 2026-11-06 — owner statements, quoted above.

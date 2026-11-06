@@ -17,7 +17,7 @@ CLI usage:
     python3 scripts/db.py coverage --slug SLUG
     python3 scripts/db.py add-gap --category RES --priority P2 --description "..." --session SESSION
     python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --session SESSION
-    python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-scout --targets '["sensory-environment"]' --session SESSION
+    python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-discovery --target-slug sensory-environment --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
@@ -156,21 +156,39 @@ def next_con_id() -> str:
     return f"CON-{int(row['con_id'].split('-')[1]) + 1:04d}"
 
 
-def insert_connection(data: dict, targets: list[str],
+#: The kinds of thing a connection can point at, one column each (migration 120). Four are foreign
+#: keys, so a dangling target is refused here by name and by SQLite; `methodology` is the one kind
+#: with no table of its own. The set is the table's own columns, never restated elsewhere.
+_CONNECTION_TARGET_KINDS = ("parameter_id", "slug", "identity_code", "extraction_id", "methodology")
+
+
+def insert_connection(data: dict, targets: list[tuple[str, object]],
                       session: str, dry_run: bool = False) -> str:
+    """Insert a connection and its targets. `targets` is a list of (kind, value), kind one of
+    _CONNECTION_TARGET_KINDS. At least one is required: a connection that connects nothing is noise."""
+    targets = list(dict.fromkeys(targets))
+    if not targets:
+        raise Refusal("a connection needs at least one target: --parameter, --target-slug, "
+                      "--identity, --extraction or --methodology. Nothing was written.")
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        dbcore.check_declared(conn, "connections", "connection_type", row.get("connection_type"),
+                              "add-connection --connection-type")
+        dbcore.fk_declared(conn, "connections", "filed_in", row.get("filed_in"),
+                           "add-connection --filed-in")
+        for kind, value in targets:
+            if kind not in _CONNECTION_TARGET_KINDS:
+                raise Refusal(f"unknown connection target kind {kind!r}.")
+            dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
             f"INSERT INTO connections ({cols}) VALUES ({ph})",
             list(row.values())
         )
-        conn.executemany(
-            "INSERT OR IGNORE INTO connection_targets "
-            "(con_id, target) VALUES (?,?)",
-            [(data["con_id"], t) for t in targets]
-        )
+        for kind, value in targets:
+            conn.execute(f"INSERT INTO connection_targets (con_id, {kind}) VALUES (?, ?)",
+                         [data["con_id"], value])
     return data["con_id"]
 
 
@@ -179,9 +197,8 @@ def update_connection_status(con_id: str, status: str,
     u = _upd(session)
     with connect(dry_run) as conn:
         conn.execute(
-            "UPDATE connections SET status=?, created_by_session=?, "
-            "updated_at=?, updated_by_session=? WHERE con_id=?",
-            [status, session, u["updated_at"], u["updated_by_session"], con_id]
+            "UPDATE connections SET status=?, updated_at=?, updated_by_session=? WHERE con_id=?",
+            [status, u["updated_at"], u["updated_by_session"], con_id]
         )
 
 
@@ -582,7 +599,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                origin_pass_id: int = None, result_artefacts=None,
                identity_code: str = None, icf_code: str = None,
                needs_code: str = None, medical_code: str = None,
-               parameter_id: int = None, dry_run: bool = False) -> int:
+               parameter_id: int = None, absence_class: str = None,
+               dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
     A search names what it looked for: a `slug`, a `parameter_id` (a catalogue
@@ -741,9 +759,15 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # jurisdiction, so a wrong code costs a compensating migration.
         "identity_code": identity_code, "icf_code": icf_code,
         "needs_code": needs_code, "medical_code": medical_code,
-        "parameter_id": parameter_id,
+        "parameter_id": parameter_id, "absence_class": absence_class,
     }
+    if absence_class is not None and results_found != 0:
+        raise Refusal(f"--absence-class {absence_class!r} with --results-found {results_found}: only a "
+                      "search that found nothing can be classed as an absence (R14). Nothing was written.")
     with connect(dry_run) as conn:
+        if absence_class is not None:
+            dbcore.check_declared(conn, "search_executions", "absence_class", absence_class,
+                                  "log-search --absence-class")
         # Each lens code must name a row of the registry its own foreign key points at. Read
         # from PRAGMA foreign_key_list, so no vocabulary is restated here, and a blank value
         # is refused rather than dropped: a blank is not an absence.
@@ -849,7 +873,10 @@ def get_connections(status: str = None, confidence: str = None,
         return result
 
     q = """
-        SELECT c.*, GROUP_CONCAT(ct.target, ', ') AS targets
+        SELECT c.*, GROUP_CONCAT(COALESCE('parameter ' || ct.parameter_id, 'slug ' || ct.slug,
+                                          'identity ' || ct.identity_code,
+                                          'extraction ' || ct.extraction_id,
+                                          'methodology ' || ct.methodology), ', ') AS targets
         FROM connections c
         LEFT JOIN connection_targets ct USING (con_id)
         WHERE 1=1
@@ -1253,6 +1280,10 @@ def main():
                       help="Correct a MISCLASSIFIED target_evidence_type. The replaced "
                            "value is appended to findings_note, so the correction is "
                            "itself logged rather than silent.")
+    p_am.add_argument("--set-absence-class",
+                      choices=dbcore.schema_choices("search_executions", "absence_class"),
+                      help="R14: classify a zero-yield search (query-shape failure / wrong index / "
+                           "genuine absence). Write-once; refused when the search found anything.")
     p_am.add_argument("--set-harm-finding", action="store_true",
                       help="Raise harm_finding 0 -> 1. R7 makes harm first-class, so a "
                            "search logged with the flag down that did surface harm has an "
@@ -1942,6 +1973,9 @@ def main():
                            "no role reads as a claim, and a tested slope read as a "
                            "claim is how '1:20, 1:16, 1:12, 1:8' became a range no "
                            "source ever asserted (extraction_id 1).")
+    p_ax.add_argument("--harm-finding", dest="harm_finding", action="store_true",
+                      help="R7: this finding reports failure, harm or inadequacy (e.g. code-compliant "
+                           "design that caused incidents). Only with --figure-role finding.")
     p_ax.add_argument("--comparator",
                       help="Live vocabulary, read from the column's own CHECK "
                            "('='/'<'/'<='/'>'/'>='/'between'/'approx'). Omit when "
@@ -2146,12 +2180,24 @@ def main():
     p_ac.add_argument("--status", default="PENDING")
     p_ac.add_argument("--confidence", required=True,
                       choices=dbcore.schema_choices("connections", "confidence"))
-    p_ac.add_argument("--connection-type", required=True)
-    p_ac.add_argument("--filed-in", required=True)
+    p_ac.add_argument("--connection-type", required=True,
+                      choices=dbcore.schema_choices("connections", "connection_type"))
+    p_ac.add_argument("--filed-in", required=True, help="a topic slug (slugs.slug)")
     p_ac.add_argument("--description", required=True)
     p_ac.add_argument("--source-skill", required=True)
-    p_ac.add_argument("--targets", required=True,
-                      help="JSON array of target strings e.g. [\"sensory-environment\"]")
+    # One flag per kind of target, each repeatable, each a real foreign key (migration 120). At
+    # least one in total. There is no free-text target: a spelling that names a parameter, a slug
+    # or an identity code is exactly the data-in-the-wrong-cell this replaces.
+    p_ac.add_argument("--parameter", dest="t_parameters", type=int, action="append", default=[],
+                      help="base_parameters.parameter_id this connection joins")
+    p_ac.add_argument("--target-slug", dest="t_slugs", action="append", default=[],
+                      help="slugs.slug this connection joins")
+    p_ac.add_argument("--identity", dest="t_identities", action="append", default=[],
+                      help="base_taxonomy_identity.identity_code (the identity lens)")
+    p_ac.add_argument("--extraction", dest="t_extractions", type=int, action="append", default=[],
+                      help="source_value_extractions.extraction_id")
+    p_ac.add_argument("--methodology", dest="t_methodologies", action="append", default=[],
+                      help="a methodological principle by name; the one target kind with no table")
     p_ac.add_argument("--session", required=True)
     p_ac.add_argument("--dry-run", action="store_true")
 
@@ -2219,6 +2265,11 @@ def main():
     p_ls.add_argument("--findings-note")
     p_ls.add_argument("--harm-finding", type=int, default=0,
                       help="R7: failure/harm/inadequacy is first-class evidence")
+    p_ls.add_argument("--absence-class",
+                      choices=dbcore.schema_choices("search_executions", "absence_class"),
+                      help="R14, for a search that found nothing: was the query malformed, the index "
+                           "wrong, or is the evidence genuinely absent. Omit until judged; set later "
+                           "with amend-search --set-absence-class.")
     p_ls.add_argument("--deferred-reason",
                       help="a search DELIBERATELY not run. This is what makes "
                            "'not looked for' different from 'nothing found'.")
@@ -2613,7 +2664,11 @@ def main():
         _emit({"closed": args.gap_id, "status": args.status})
 
     elif args.command == "add-connection":
-        targets = json.loads(args.targets)
+        targets = ([("parameter_id", v) for v in args.t_parameters]
+                   + [("slug", v) for v in args.t_slugs]
+                   + [("identity_code", v) for v in args.t_identities]
+                   + [("extraction_id", v) for v in args.t_extractions]
+                   + [("methodology", v) for v in args.t_methodologies])
         data = {
             "con_id": args.con_id,
             "status": args.status,
@@ -2662,7 +2717,8 @@ def main():
             result_artefacts=args.result_artefacts,
             identity_code=args.identity, icf_code=args.icf,
             needs_code=args.needs, medical_code=args.medical,
-            parameter_id=args.parameter, dry_run=args.dry_run)
+            parameter_id=args.parameter, absence_class=args.absence_class,
+            dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "admitted": len(args.admitted_ref_ids or []),
                "linked_artefacts": len(args.result_artefacts or []),
@@ -2737,7 +2793,8 @@ def main():
                            set_mined_ref_id=args.set_mined_ref_id,
                            set_origin_pass_id=args.set_origin_pass_id,
                            add_result_artefacts=args.add_result_artefacts,
-                           clear_target=args.clear_target))
+                           clear_target=args.clear_target,
+                           set_absence_class=args.set_absence_class))
 
     elif args.command == "amend-gap":
         # _emit, not a bare assignment: until 2026-09-25 both of these assigned the
@@ -2960,7 +3017,8 @@ def main():
                "contested": args.contested, "file_anchor": args.file_anchor,
                "locator_scheme": args.locator_scheme, "loc_note": args.loc_note,
                "notes": args.notes,
-               "figure_role": args.figure_role, "comparator": args.comparator}
+               "figure_role": args.figure_role, "comparator": args.comparator,
+               "harm_finding": 1 if args.harm_finding else None}
         for _lvl in ("division", "part", "section", "subsection", "paragraph",
                      "clause", "subclause"):
             _ax[f"loc_{_lvl}"] = getattr(args, f"loc_{_lvl}")
@@ -3843,7 +3901,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                  set_target_evidence_type: str = None,
                  set_origin: str = None, set_mined_ref_id: str = None,
                  set_origin_pass_id: int = None, add_result_artefacts=None,
-                 clear_target: bool = False):
+                 clear_target: bool = False, set_absence_class: str = None):
     """APPEND a correction to a logged search's findings_note. Never rewrite it.
 
     --clear-target (2026-09-27, exec 77 / DR-2026-09-26 5.2d). --set-origin's own
@@ -3881,7 +3939,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         row = conn.execute("SELECT exec_id, findings_note, harm_finding, "
                            "target_evidence_type, mining_direction, origin, "
                            "mined_ref_id, origin_pass_id, query_text, "
-                           "target_tier, target_scope "
+                           "target_tier, target_scope, results_found, absence_class "
                            "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
         if row is None:
             raise Refusal(f"exec {exec_id}: no such search execution.")
@@ -3889,7 +3947,7 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
         marker = f" || CORRECTED {stamp['created_at'][:10]}: "
         any_setter = (set_harm_finding or set_target_evidence_type or set_origin
                      or set_mined_ref_id or set_origin_pass_id is not None
-                     or add_result_artefacts or clear_target)
+                     or add_result_artefacts or clear_target or set_absence_class)
         duplicate = note in (row["findings_note"] or "")
         if duplicate and not any_setter:
             return {"exec_id": exec_id, "appended": False,
@@ -4054,6 +4112,23 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                          [(merged or "").rstrip() + trail, exec_id])
             merged = (merged or "").rstrip() + trail
 
+        absence_set = None
+        if set_absence_class:
+            # WRITE-ONCE, and only for a search that found nothing (R14; the column's CHECK says the
+            # second half too). The class is a judgment made after the results exist, so it cannot be
+            # a log-time prior; correcting a wrong one costs a compensating migration, as with a lens.
+            dbcore.check_declared(conn, "search_executions", "absence_class", set_absence_class,
+                                  "amend-search --set-absence-class")
+            if row["results_found"] != 0:
+                raise Refusal(f"exec {exec_id}: results_found={row['results_found']}; only a search "
+                              f"that found nothing can be classed as an absence.")
+            if row["absence_class"]:
+                raise Refusal(f"exec {exec_id}: absence_class is already {row['absence_class']!r}. "
+                              f"It is write-once.")
+            conn.execute("UPDATE search_executions SET absence_class=? WHERE exec_id=?",
+                         [set_absence_class, exec_id])
+            absence_set = set_absence_class
+
         raised = False
         if set_harm_finding:
             # MONOTONIC, 0 -> 1 ONLY. R7 makes failure, harm and inadequacy first-class
@@ -4080,7 +4155,8 @@ def amend_search(exec_id: int, note: str, session: str, dry_run: bool = False,
                 "harm_finding_raised": raised, "target_evidence_type": retyped,
                 "origin": origin_set, "mined_ref_id": mined_ref_set,
                 "origin_pass_id": origin_pass_set, "cleared_target": cleared,
-                "result_artefacts_added": len(add_result_artefacts or [])}
+                "result_artefacts_added": len(add_result_artefacts or []),
+                "absence_class": absence_set}
 
 
 def amend_gap(gap_id: str, note: str, session: str, dry_run: bool = False):
@@ -8292,7 +8368,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end",
         "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note",
         "extraction_method", "extraction_status", "notes",
-        "figure_role", "comparator",
+        "figure_role", "comparator", "harm_finding",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
     dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
@@ -8458,6 +8534,11 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "and a tested slope read as a claim is how '1:20, 1:16, 1:12, 1:8' "
                 "became a range no source ever asserted (extraction_id 1, the "
                 "worked example migration 075 itself cites).")
+        if row.get("harm_finding") and figure_role != "finding":
+            raise Refusal(
+                f"--harm-finding with figure_role={figure_role!r} is refused: harm, failure and "
+                f"inadequacy (R7) are what a source FOUND, so only a `finding` row carries the flag "
+                f"(the column's own CHECK says the same). Use --figure-role finding.")
         if claim_type == "absent" and figure_role != "finding":
             raise Refusal(
                 f"claim_type='absent' with figure_role={figure_role!r} is refused: "

@@ -19,16 +19,18 @@ between extractions via `relate-extraction` / `derive-extraction`.
 
 **Keyed on the parameter, not on a container.** The subject of a determination is a `base_parameters` row
 (owner 2026-08-26); the item layer is deleted (CLAUDE.md §7). Treat any `[A-Z]-NN` code you meet as prior-version
-content, never as a target. A connection names parameters (`<parameter_id> <canonical_en>`), slugs,
-identity-lens codes (`base_taxonomy_identity`, codes AND names), extractions, or a methodology.
+content, never as a target. A connection points at parameters, slugs, identity-lens codes
+(`base_taxonomy_identity`), extractions, or a methodology, **one kind per column, each a real foreign key**
+(migration 120); there is no free-text target.
 
 ## Two homes, and which holds what
 - **A typed edge between two extractions** is the strongest link: `extraction_relations` (`condition_on`,
   `derived_from`, `delta_over`, `insufficient`, …) points from one figure to another row and can cross
   parameters. When one parameter's figure is computed from or conditioned on another's, file the edge
   (`derive-extraction`, `relate-extraction`); a `connections` row alone cannot be joined.
-- **A `connections` row** is the narrative index of a relationship. `connection_targets.target` is free text with
-  no foreign key, so a link filed only here is as reliable as its wording. Name every target exactly as above.
+- **A `connections` row** is the narrative index of a relationship. Its targets are typed rows in
+  `connection_targets` (`parameter_id`, `slug`, `identity_code`, `extraction_id`, `methodology`; exactly one set per
+  row), so a renamed or merged parameter cannot orphan a link and every target joins.
 
 ## Modes
 | Mode | Trigger | Reads |
@@ -49,7 +51,7 @@ cluster boundary. Only `GENUINE_CONFLICT` goes to `cross-population-conflict-map
 
 ## Step 0 — Scope and dedup
 `scope_type: parameter | slug | cluster`, `scope_id`, `mode`. Load existing connections for the scope
-(`python3 scripts/db.py connections --status PENDING`, then join `connection_targets` on the parameter id or slug in
+(`python3 scripts/db.py connections --status PENDING`, then join `connection_targets` on `parameter_id` or `slug` in
 a read-only query). A new connection with the same targets and `connection_type` as an existing one is a duplicate:
 skip it.
 
@@ -65,7 +67,7 @@ principles not already recorded?
 
 | Type (stored value) | Test |
 |---|---|
-| `CROSS-ITEM` (read it as **cross-parameter**; the stored value is kept by the column's CHECK) | does evidence for parameter X constrain parameter Y? |
+| `CROSS-PARAMETER` | does evidence for parameter X constrain parameter Y? |
 | `CROSS-POPULATION` | does a finding for population A conflict with or reinforce one for B on the same parameter? |
 | `COMPOUND-INTERACTION` | would applying specifications X and Y to one person together give a non-additive result? |
 | `METHODOLOGY` | does it affect the guidebook's method? |
@@ -82,13 +84,14 @@ connection); an evidence or scope gap is a gap (`RP`, `AUDT` or `CONF`); a popul
 ```bash
 python3 scripts/db.py next-id connections      # never increment by hand
 GUIDEBOOK_DB_PATH="$SCRATCH/guidebook.db" python3 scripts/db.py add-connection \
-  --con-id CON-XXXX --confidence HIGH --connection-type CROSS-ITEM \
+  --con-id CON-XXXX --confidence HIGH --connection-type CROSS-PARAMETER \
   --filed-in <slug> --source-skill connection-discovery \
   --description "<one sentence: the relationship, its mechanism, why it matters to a determination>" \
-  --targets '["3 ramp gradient", "12 ramp run length"]' --session <session>
+  --parameter 3 --parameter 12 --session <session>
 ```
-`--filed-in` is a topic slug (`slugs.slug`), not a curated list. `--targets` is a JSON array of free text; name
-parameters `<parameter_id> <canonical_en>`. Description bar: usable by the determination run without further lookup.
+`--filed-in` is a topic slug (`slugs.slug`, a foreign key). Targets are flags, each repeatable and each validated
+against its table: `--parameter`, `--target-slug`, `--identity`, `--extraction`, `--methodology`; at least one is
+required. Description bar: usable by the determination run without further lookup.
 Bad: "turning space and chair length are related". Good: "REF-xxxxx Table 2 gives a 1.35 m swept path for a
 powered chair; that exceeds the 1.2 m the turning-space figure assumes, so the turning figure needs its own row for
 that chair class."
@@ -103,7 +106,7 @@ connection that reveals a conflict goes to `cross-population-conflict-mapper`; d
 1. `next-id connections` for every CON-ID.
 2. HIGH confidence connections feed the determination run (`scripts/assess/assess_cell.py` stage).
 3. SPECULATIVE is a CR gap, never a connection.
-4. No `[A-Z]-NN` target, no `--item-code`, no `item:` prefix.
+4. No `[A-Z]-NN` target, no `--item-code`, no prefixed free-text target: use the typed flags.
 5. Use the CLI only; the archived registers (`gap_register.md`, `connection-register-active.md`, per-topic
    `connections.md`) are not read or written.
 6. Feeds `cross-population-conflict-mapper`.

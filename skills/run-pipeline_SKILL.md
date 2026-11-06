@@ -48,7 +48,8 @@ no bare axis codes or population umbrellas.
   `functional-deficit-researcher`, `research-log-manager`.
 - **Log every query before screening:** `log-search --prior-expectation … --result-artefact <payload>` (R8). Without
   `--result-artefact` the query→payload link is missing. Keep empties. R14's class (query-shape / wrong index / genuine
-  absence) has no column: put it in `findings_note`. `coverage` and the `v_coverage_*` views show what is unsearched.
+  absence) is a column: `--absence-class` (or `amend-search --set-absence-class` once judged; write-once, zero-yield
+  searches only). `coverage` and the `v_coverage_*` views show what is unsearched.
 - **Citation mining** of every confirmed T1–T3 anchor, backward and forward, to the depth R2 requires: `citation-miner`,
   yields via `scripts/research/mining_screen.py`; open gaps via `gap-driven-mining`.
 - Candidates: `add-candidate`, `resolve-candidate`; leads: `add-locator`, `add-code-lead`.
@@ -86,8 +87,9 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
   and access-need attribution live on the extraction's lens columns.
 - Failure, harm and inadequacy (R7) are first-class rows: a `figure_role='finding'` extraction with the verbatim
-  claim, and an `insufficient` edge (`--relation insufficient`, to the figure the source says is not enough, e.g. a
-  code value) so the inadequacy is typed and joinable. Harm that reaches a search is also `log-search`'s `harm_finding`.
+  claim and `--harm-finding` (a typed flag; only a finding can carry it), plus an `insufficient` edge
+  (`--relation insufficient`, to the figure the source says is not enough, e.g. a code value) so the inadequacy is
+  joinable. Harm a search surfaced is also `log-search`'s `harm_finding`.
 - Output must be usable without re-reading the source: render and determination read the typed row and its locator.
 - Checks: `judgment_handoff_shape.py`, `extraction_relations_integrity.py`, `adjudication_integrity.py`.
 
@@ -96,8 +98,8 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross
   parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`), and as a `connections` row
-  (`connection-discovery`) for the narrative: its `--targets` is free text, so name each parameter
-  `<parameter_id> <canonical_en>`. `add-conflict` where populations pull opposite ways (`cross-population-conflict-mapper`).
+  (`connection-discovery`) for the narrative: its targets are typed flags (`--parameter`, `--target-slug`,
+  `--identity`, `--extraction`, `--methodology`), each a foreign key. `add-conflict` where populations pull opposite ways (`cross-population-conflict-mapper`).
   `connection-discovery --mode cluster-crosstest` enumerates every pair in a cluster so none is skipped.
 - **Independence.** Sources sharing a root are one source. `v_value_independence` and `external_root_registry` hold few
   rows; where empty, trace shared roots from the citations by hand. `supersession-audit` → `add-supersession-check`.

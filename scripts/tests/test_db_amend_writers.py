@@ -561,6 +561,61 @@ try:
                == [("Fixture Journal", "2nd", "FIX 1:2020", "978-0-00-000000-2", "0000-0000")],
                f"rc={r.returncode} {r.stderr[-300:]!r}")
 
+        # S11-S14: typed columns (migrations 119, 120). A flag that parses and never reaches its column,
+        # or a refusal that does not fire, would report a write that did not happen.
+        pid = q("SELECT parameter_id FROM base_parameters WHERE status='active' LIMIT 1")[0][0]
+        a_slug = q("SELECT slug FROM slugs LIMIT 1")[0][0]
+        r = run_cli("add-connection", "--con-id", "CON-9990", "--confidence", "MODERATE",
+                    "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
+                    "--description", "fixture", "--source-skill", "fixture", "--parameter", str(pid),
+                    "--methodology", "fixture method", "--session", S)
+        record("S11", "add-connection writes one typed target row per target, one kind per column",
+               r.returncode == 0 and sorted(q(
+                   "SELECT parameter_id IS NOT NULL, methodology IS NOT NULL, slug, identity_code, "
+                   "extraction_id FROM connection_targets WHERE con_id='CON-9990'"))
+               == [(0, 1, None, None, None), (1, 0, None, None, None)],
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+        r = run_cli("add-connection", "--con-id", "CON-9991", "--confidence", "MODERATE",
+                    "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
+                    "--description", "fixture", "--source-skill", "fixture", "--parameter", "999999",
+                    "--session", S)
+        r2 = run_cli("add-connection", "--con-id", "CON-9992", "--confidence", "MODERATE",
+                     "--connection-type", "CROSS-PARAMETER", "--filed-in", a_slug,
+                     "--description", "fixture", "--source-skill", "fixture", "--session", S)
+        record("S12", "add-connection refuses a parameter that does not exist and a connection with "
+               "no target, and writes nothing",
+               r.returncode == 1 and r2.returncode == 1 and not q(
+                   "SELECT 1 FROM connections WHERE con_id IN ('CON-9991','CON-9992')"),
+               f"rc={r.returncode},{r2.returncode} {r.stderr[-200:]!r}")
+        r = run_cli("log-search", "--slug", plain, "--language", "en", "--query-text", "fixture zero-yield",
+                    "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "none",
+                    "--results-found", "0", "--absence-class", "genuine_absence", "--session", S)
+        r2 = run_cli("log-search", "--slug", plain, "--language", "en", "--query-text", "fixture found",
+                     "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "some",
+                     "--results-found", "3", "--absence-class", "genuine_absence", "--session", S)
+        record("S13", "log-search --absence-class lands on a zero-yield search and is refused on one that "
+               "found something",
+               r.returncode == 0 and r2.returncode == 1 and q(
+                   "SELECT COUNT(*) FROM search_executions WHERE query_text='fixture zero-yield' "
+                   "AND absence_class='genuine_absence'")[0][0] == 1,
+               f"rc={r.returncode},{r2.returncode} {r.stderr[-200:]!r} {r2.stderr[-200:]!r}")
+        # S14: only a `finding` extraction can carry the harm flag (the CHECK and the writer agree).
+        con = sqlite3.connect(DB)
+        try:
+            con.execute("PRAGMA foreign_keys=ON")
+            bad = False
+            try:
+                con.execute("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+                            "claim_type, figure_role, harm_finding, created_by_session, created_at, "
+                            "extraction_method, extraction_status) SELECT ref_id, slug, parameter_id, "
+                            "claim_type, 'claim', 1, 'fixture', 'now', extraction_method, "
+                            "extraction_status FROM source_value_extractions LIMIT 1")
+            except sqlite3.IntegrityError:
+                bad = True
+        finally:
+            con.close()
+        record("S14", "a non-finding extraction cannot carry harm_finding (CHECK)", bad, "no IntegrityError")
+
     # ── X: supersede-source ───────────────────────────────────────────────────
     # GAP-060. Two DOI-less fixture sources with one author, year and title are the
     # collision test_db_integrity D04 exists to catch; the verb is what makes it go quiet
@@ -1507,7 +1562,9 @@ try:
         captured = f"emit refused: {exc}"
     hit = [ln for ln in captured.splitlines() if ln.startswith('INSERT INTO "search_executions"')
            and "fixture M: live codes" in ln
-           and ln.rstrip().endswith("'%s', '%s', '%s', NULL);" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"]))]
+           # the four lens values, in column order; columns added after medical_code (absence_class,
+           # migration 119) follow them, so this does not pin where the statement ends
+           and ("'%s', '%s', '%s', NULL" % (lens_live["--identity"], lens_live["--icf"], lens_live["--needs"])) in ln]
     record("M03", "emit_batch_sql captures the lens columns of a logged search (the write can be shipped)",
            len(hit) == 1, captured[-400:])
 

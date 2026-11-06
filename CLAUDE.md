@@ -291,6 +291,12 @@ grade lands as a second row and divergent grades read as a contest — and `inse
 — **the refusal is there, not in `add-source`, and through argparse it is unreachable at all**
 (`grep -n 'def insert_economics_entry' scripts/db.py`; locate by symbol, never by line number).
 
+**Schema shape (owner, 2026-11-06): one value per cell, and each fact in the cell that names it.** A list,
+a JSON array, a delimited string, a prefix that says what the rest of the cell means, or a correction appended
+to a note is data joined in a cell or in the wrong one; give each kind its own column (a foreign key where a
+table exists) and each repeated value its own row. More columns mean more specificity, and specificity is
+what keeps later stages from parsing prose. Run `python3 scripts/audit/joined_cells_census.py` before and after a schema change; it reports the cells that hold two things.
+
 **Vocabularies come from the schema, not a list in code.** `dbcore.check_values()` reads the column's
 own CHECK. Live rows are a *sample* of a vocabulary, never the vocabulary. **Never compute a ref_id
 by hand** — `dbcore.next_ref_id(conn)` is the rule, and the high-water mark is the UNION of every
@@ -482,11 +488,10 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   not exist.** If the answer is about the apparatus rather than the book, do not add it.
 - **Nothing is added without naming what reads it.** An unread field, an uncalled script and an
   unregistered check are the same defect.
-- **Net-negative** (owner, 2026-10-12: as little code as possible). A PR touching `scripts/`,
-  `schemas/`, `.github/` or `skills/` does not raise their physical-line total unless its
-  description names the exception and the code it replaces (it may replace none, and then says so).
-  Measure (one line): `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`.
-  Enforced by review, not by a check.
+- **Lean** (owner, 2026-10-12: as little code as possible; clarified 2026-11-06): the **minimum code that
+  performs the action correctly**, with data centralised so errors, breaks and detritus are minimised. It is
+  not a ratchet on physical lines: a writer that refuses what it should, a typed column in place of a
+  convention, and a test that can go red are not waste. Delete what nothing reads; add what a named reader needs.
 - **A specific, ratified authorisation beats a blanket caution.** Blanket removal-friction winning
   ties against specific removal-permission is how this file became a ratchet.
 

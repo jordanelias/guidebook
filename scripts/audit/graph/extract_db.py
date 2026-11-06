@@ -7,8 +7,8 @@ Reads data/guidebook.db READ-ONLY and materialises it into the audit graph:
     columns captured as attrs, for the state-machine layer),
   - citation edges (every FK into evidence_sources.ref_id) so uncited/orphan sources
     are countable,
-  - connection_targets edges (resolved against item/slug nodes) so unresolved and
-    phantom targets surface as dangling edges,
+  - connection_targets slug edges (resolved against slug nodes) so a slug target that
+    resolves to no slug surfaces as a dangling edge,
   - a handful of primary structural FK edges (item->slug, item<->population).
 
 Column truth is read from the live DB (sqlite_master / PRAGMA), never from the
@@ -38,9 +38,6 @@ STATE_COLS = {
     "convergence_assessment": ["status"],
     "conflicts": ["status"],
 }
-
-ITEM_CODE_RE = re.compile(r"^[A-K]-\d{2}[a-z]?$")
-AUDIT_COLS = {"created_at", "created_by_session", "updated_at", "updated_by_session"}
 
 
 def _columns(cur, table):
@@ -110,25 +107,19 @@ def extract(gdb, store):
                     store.add_edge(node_id("db_table", t), node_id("source", str(ref)),
                                    "citation", attrs={"via": f"{t}.{from_col}"})
 
-    # 4. connection_targets -> resolved item/slug (dangling => phantom/unresolved)
-    if "connection_targets" in tables:
-        ct_cols = _columns(cur, "connection_targets")
-        tgt_col = "target" if "target" in ct_cols else next(
-            (c for c in ct_cols if c not in ("con_id",) and c not in AUDIT_COLS), None)
-        if tgt_col:
-            for con_id, raw in cur.execute(
-                    f"SELECT con_id, {tgt_col} FROM connection_targets").fetchall():
-                if raw is None:
-                    continue
-                token = str(raw).split(":", 1)[-1].strip()  # strip "item:"/"section:" prefix
-                if ITEM_CODE_RE.match(token):
-                    dst = node_id("item", token)
-                elif "slugs" in tables and token in _slug_cache(cur):
-                    dst = node_id("slug", token)   # guarded: a DB without a slugs table
-                else:                              # must not crash the whole build
-                    dst = node_id("identifier", token)   # unresolved target
-                store.add_edge(node_id("connection", str(con_id)), dst, "junction",
-                               attrs={"raw": str(raw)})
+    # 4. connection_targets -> slug node. A target names ONE kind per column (migration 120); the
+    # parameter, identity and extraction kinds are foreign keys and cannot dangle, so the slug is the
+    # one kind a graph node is built for. A slug the slugs table lacks (a write with foreign keys off)
+    # becomes an unresolved identifier edge. Guarded: a DB without a slugs table must not crash the build.
+    if "connection_targets" in tables and "slug" in _columns(cur, "connection_targets"):
+        for con_id, slug in cur.execute(
+                "SELECT con_id, slug FROM connection_targets WHERE slug IS NOT NULL").fetchall():
+            if "slugs" in tables and slug in _slug_cache(cur):
+                dst = node_id("slug", slug)
+            else:
+                dst = node_id("identifier", slug)   # unresolved target
+            store.add_edge(node_id("connection", str(con_id)), dst, "junction",
+                           attrs={"raw": str(slug)})
 
     # 5. a primary structural FK edge (population self-reference)
     if "base_taxonomy_identity" in tables and "parent_code" in _columns(cur, "base_taxonomy_identity"):
