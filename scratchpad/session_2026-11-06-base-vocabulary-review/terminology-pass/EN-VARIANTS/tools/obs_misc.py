@@ -8,4 +8,5 @@ OBS = [
  ("distance", "minimum clear distance of 900 mm between the bollards", "SG", "4.2.3.6 (a)", "have a minimum clear distance of 900 mm between the bollards", "DIFFERENT SENSE: spacing, not the register's trail distance markers"),
  ("depth", "Treads shall be 11 inches (280 mm) deep minimum", "US", "504.2", "Treads shall be 11 inches (280 mm) deep minimum.", ""),
 ]
+OBS += [("Scaffolding (B651 8.8.2)", "scaffolding", "US", "203.2", "Structures and sites directly associated with the actual processes of construction, including but not limited to, scaffolding, bridging, materials hoists, materials storage, and construction trailers shall not be required to comply", "DIFFERENT SENSE: an exemption from compliance, not a pedestrian hazard rule as in B651")]
 REV = []

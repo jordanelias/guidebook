@@ -8,7 +8,7 @@
 - D1 시행령 [별표 1], 4 pp.: read in full. R2 시행규칙 [별표 2], 1 p.: text read. [SKIPPED: the 작도법 drawing.]
 - ACT (in force 2025-12-21): arts 1–9 and 14–17 read. DEC (2026-01-02): arts 1–5의2, 7 and 7의2 read. RUL (2026-07-02): arts 1–8 read. The rest is skipped (administration, penalties, 부칙): see instruments.tsv.
 - Not read: the 장애물 없는 생활환경 인증 criteria (named in Act art 10의2; not attempted, budget), the Decree's 별표 2의2–2의4 and the Rule's 별표 3, KS standards (no KS number occurs in the seven texts), and 교통약자의 이동편의 증진법 (roads and transport).
-- Route: the `법령/<name>` path returns an iframe shell. Its `lsInfoP.do` target is a JS skeleton. The AJAX endpoint `lsInfoR.do` answers a plain GET with the full body, and that body lists `flDownload.do?flSeq=` PDF links for every annex. Wayback was not needed. Four of 13 requests failed once with curl exit 35 (TLS) and succeeded on retry.
+- Route: the `법령/<name>` path returns an iframe shell. Its `lsInfoP.do` target is a JS skeleton. The AJAX endpoint `lsInfoR.do` answers a plain GET with the full body, and that body lists `flDownload.do?flSeq=` PDF links for every annex. Wayback was not needed. Three of the 13 law.go.kr requests failed once with curl exit 35 (TLS) and succeeded on retry; count with `grep '"exit": 35' retrieval-log/session_2026-11-06-base-vocabulary-review/manifest.jsonl | grep -c law.go.kr`.
 
 ## Counts (re-run, do not trust; from the repo root, D=scratchpad/session_2026-11-06-base-vocabulary-review/terminology-pass/KO-KR)
 - Rebuild and verify: `python3 -I $D/build.py`. It exits 1 on any unverified quote, unknown concept, missing absence note or artefact-hash mismatch. At writing it gave 69 observations, 106 reverse-harvest rows, 10 seeds and 0 failures.
@@ -39,7 +39,7 @@
 - D7. Spacing varies inside one instrument: "수평면으로된" / "수평면으로 된", and "높이차이" / "높이 차이". Exact-string attestation would split them unless spacing variants are folded.
 
 ## Self-attack: the five likeliest ways this record is wrong
-1. **Figures unread.** R1 refers to about 15 drawings ("아래의 그림과 같이"), and R2 has a drawing. A term or a turning-circle diagram that lives only in an image is missed, so "never a circle" holds for the text only.
+1. **Figures unread.** R1 refers to drawings 14 times (whitespace-stripped count of 아래의그림 in text/b71c64f1a9b3125f.txt; re-count), and R2 has a drawing. A term or a turning-circle diagram that lives only in an image is missed, so "never a circle" holds for the text only.
 2. **Concept mapping is my judgment.** For example: 활동공간 → clear space for approach, 수납공간 → lockers, 보행장애물 → B651 4.5, 손잡이 → handrails. Some FOUND rows may be wider or narrower than marked.
 3. **Currency rests on today's portal state.** The in-force dates come from the bytes' own headers. An amendment that is promulgated but not yet in force (ancYnChk=1) was not checked.
 4. **Locators were assigned by hand.** Item, 목 and (n) numbers come from my reading. Only the PDF page is computed. A 목 letter could be off where the PDF layout breaks a heading from its clause.

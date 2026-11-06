@@ -60,17 +60,17 @@ PARTIAL = {  # concept -> why the match is not the register concept (ours)
  "Drainage": "MIXED: AU defines 'drainage' as a plumbing system (different sense); SG/US/IE surface water is the register sense",
  "Colour-contrasted and slip-resistant strip on nosing": "US advisory only; UK contrast without slip; SG and NZ carry both",
  "Seating": "MIXED: rest seating (SG resting areas, US benches) vs audience wheelchair spaces (UK, AU, NZ)",
+ "Scaffolding (B651 8.8.2)": "DIFFERENT SENSE: US 203.2 exempts construction sites incl. scaffolding; B651 regulates it as a hazard",
  "capacity": "PARTIAL: lift capacity (AU pool lift, US via ASME); no paging or room capacity",
 }
 del PARTIAL["Microwave mounting height accessible and safe"]
 ABSENT = {
  "Microwave mounting height accessible and safe": "'microwave' 0 hits in all six texts (US grep across all chapters incl. unread ch8 kitchens)",
  "Speed bumps (B651 8.3.8)": "'speed bump' / 'speed hump' 0 hits in all six texts",
- "Landscaping elements (B651 8.7)": "'landscap' 0 hits in the read parts; exterior realm is out of scope of these building instruments",
+ "Landscaping elements (B651 8.7)": "'landscap' hits only in other senses (US Advisory 242.2 pool walls; IE existing-building approach re-alignment); no landscaping-element rule",
  "Flower or shrub planters (B651 8.7.1)": "'planter' 0 hits",
- "Vegetation (B651 8.7.3)": "'vegetation' 0 hits",
+ "Vegetation (B651 8.7.3)": "'vegetation' 1 hit, US Advisory 1005 fishing piers (other sense)",
  "Guy wires (B651 8.7.4)": "'guy wire' 0 hits",
- "Scaffolding (B651 8.8.2)": "'scaffold' 0 hits; SG 2.3/2.4 temporary obstructions and construction-site footpaths are the nearest (reverse harvest)",
  "Gradation limits (B651 D.6.1)": "trail surface gradation not treated; US ch10 recreation (trails) NOT READ, so absence is scoped to read parts",
 }
 
