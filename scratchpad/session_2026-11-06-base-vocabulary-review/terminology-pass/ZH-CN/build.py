@@ -91,7 +91,7 @@ OBS = [
  ("Q-time", "闭门时间", "G", "2.5.8 (p.4)", "从闭门器最大受控角度到完全关闭前10°的闭门时间不应小于3s", ""),
  ("Q-time", "完全开启时间", "G", "2.6.3(3) (p.5)", "完全开启时间应保持不小于3s。", "lift-door dwell time"),
  ("Q-size", "尺寸", "G", "3.2.2(1) (p.11)", "应方便乘轮椅者到达和进出，尺寸不应小于1.80m×1.50m", "size of an accessible toilet cubicle"),
- ("Q-size", "轿厢规格", "G", "2.6.2 (p.5)", "无障碍电梯的轿厢的规格应依据建筑类型和使用要求选用。", "lift-car 'specification' (size class)"),
+ ("Q-size", "轿厢的规格", "G", "2.6.2 (p.5)", "无障碍电梯的轿厢的规格应依据建筑类型和使用要求选用。", "lift-car 'specification' (size class)"),
  ("Q-capacity", "容纳担架", "G", "2.6.2 (p.5)", "同时满足乘轮椅者使用和容纳担架的轿厢", "PARTIAL: lift capacity expressed as accommodating a stretcher, not a load or person count"),
  ("Q-distance", "距离", "G", "2.6.1(2) (p.5)", "且距内转角处侧墙距离不应小于400mm", "DIFFERENT SENSE: a setback distance, not RHFAC's distance markers"),
  ("Q-ratio", "1：1的陪护席位", "G", "3.5.4(3) (p.13)", "在轮椅席位旁或邻近的座席处应设置1：1的陪护席位", "PARTIAL: companion-seat ratio; RHFAC's ratio is a room-type mix"),

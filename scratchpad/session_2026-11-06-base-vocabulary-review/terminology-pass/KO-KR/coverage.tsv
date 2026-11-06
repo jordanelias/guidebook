@@ -35,7 +35,7 @@ height	catalogue 2.2	FOUND	2	높이 / 조작반
 level	catalogue 2.2	FOUND	3	높이차이 / 단차 / 층수	
 width	catalogue 2.2	FOUND	1	깊이	
 clearance	catalogue 2.2	FOUND	3	무릎 및 휠체어의 발판이 들어갈 수 있도록 / 유효높이 / 틈	
-number	catalogue 2.2	FOUND	2	1퍼센트 이상 / 36개의 돌출점	
+number	catalogue 2.2	FOUND	2	1퍼센트 / 36개의 돌출점	
 slope	catalogue 2.2	FOUND	1	기울기	
 depth	catalogue 2.2	FOUND	1	깊이	
 riser	catalogue 2.2	FOUND	2	디딤판의 너비 / 챌면을 반드시 설치	
@@ -48,7 +48,7 @@ volume	catalogue 2.2	FOUND-PARTIAL	1	음량증폭전화기	PARTIAL: telephone am
 capacity	catalogue 2.2	SEARCHED-ABSENT	0		용량, 정원 0; the lift car is set by 유효바닥면적, not rated load or persons
 distance	catalogue 2.2	FOUND-PARTIAL	1	앞 좌석과의 거리	DIFFERENT SENSE: seat spacing
 lighting levels	catalogue 2.2	FOUND	1	조도	
-ratio	catalogue 2.2	FOUND-PARTIAL	2	1퍼센트 이상 / 설치비율	PARTIAL: parking ratio by reference, room percentage
+ratio	catalogue 2.2	FOUND-PARTIAL	2	1퍼센트 / 설치비율	PARTIAL: parking ratio by reference, room percentage
 ramp gradient (parameter 3)	base_parameters	FOUND	1	경사로의 기울기	
 corridor width (parameter 4)	base_parameters	FOUND	1	복도의 유효폭	
 turning circle (parameter 5)	base_parameters	FOUND-PARTIAL	3	180도 회전 / 휠체어가 회전할 수 있는 공간 / 휠체어가 회전할 수 있도록	CARVE: square space or unquantified, never a circle
@@ -57,7 +57,7 @@ reverberation time (parameter 7)	base_parameters	SEARCHED-ABSENT	0		잔향, 반�
 LRV contrast (parameter 8)	base_parameters	FOUND-PARTIAL	2	계단코의 색상 / 바닥재의 색상	BROADER: colour difference, never quantified
 door width (parameter 9)	base_parameters	FOUND	1	통과유효폭	
 colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		색온도, 켈빈 0; lighting only as 조도 at lifts
-headroom clearance (parameter 11)	base_parameters	SEARCHED-ABSENT	0		NO NOTE
+headroom clearance (parameter 11)	base_parameters	FOUND	1	유효높이	
 ramp run length (parameter 12)	base_parameters	FOUND-PARTIAL	1	경사로의 길이	PARTIAL: length only as handrail trigger; landings by rise
 B651 4.4.4 Gratings	b651-headings (RHFAC-does-not-name)	FOUND	1	격자구멍	
 B651 4.5 Headroom and protruding objects	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	보행장애물	MERGED under 보행장애물

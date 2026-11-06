@@ -23,12 +23,12 @@ Edge protection	catalogue 2.1	FOUND	2	afscheiding / geleiderand	fall barrier; ra
 Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND-PARTIAL	2	hoog contrast / markering van ten minste 50 mm met een hoog contrast	NARROWER: contrast marking, no slip resistance; contrast unquantified; no slip resistance; no nosing profile; same phrase as Bbl art. 4.26a
 Tactile attention indicators (truncated domes)	catalogue 2.1	SEARCHED-ABSENT	0		'tactiel' 0, 'noppen' 0, 'ribbel' 0; held aliases 'geleidestrook' and 'noppen- en ribbeltegels' not in text
 Slope	catalogue 2.1	FOUND	2	helling / hellingbaan	'hellingbaan' is not defined in Bijlage I; graded by rise
-Sink faucet is easy to use or automatic	catalogue 2.1	SEARCHED-ABSENT	0		'kraan' occurs only as a noise source (art. 4.105); 'wastafel' 0
+Sink faucet is easy to use or automatic	catalogue 2.1	SEARCHED-ABSENT	0		'kraan' occurs only as a noise source (art. 4.107 and 4.108); 'wastafel' 0
 Outlets and switches are at accessible heights	catalogue 2.1	SEARCHED-ABSENT	0		'wandcontactdoos' only in road-tunnel hulpposten; 'schakelaar' 0
 Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		'magnetron' 0; nearest is 'opstelplaats voor een kooktoestel' (reverse harvest)
 Level landings with clear space and at regular intervals	catalogue 2.1	FOUND-PARTIAL	1	een hoogte van niet meer dan 1 m	NARROWER: top landing only; no intermediate landing; a ramp is capped by its rise; no intermediate landing and no run length are named
 Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND-PARTIAL	1	markering van ten minste 50 mm met een hoog contrast	NARROWER: contrast marking, no slip resistance; contrast unquantified; no slip resistance; no nosing profile
-Accessible lockers	catalogue 2.1	SEARCHED-ABSENT	0		'kluis' only as 'sleutelkluis' for the fire service (art. 6.10 list)
+Accessible lockers	catalogue 2.1	SEARCHED-ABSENT	0		'kluis' only as 'sleutelkluis' in the gebruiksmelding data list (art. 6.8)
 Accessible door hardware	catalogue 2.1	FOUND-PARTIAL	3	lichte druk tegen de deur / ontsluitingsmechanisme / panieksluiting	DIFFERENT SENSE: escape-route opening hardware; escape hardware; escape-route doors; force is qualitative, no newtons
 Accessible controls	catalogue 2.1	SEARCHED-ABSENT	0		no reach or operability rule; 'bediend' only for intercom location (art. 4.239)
 height	catalogue 2.2	FOUND	1	hoogte	

@@ -182,7 +182,7 @@ ABSENT = {  # concept -> (note, regexes counted over ALL saved texts, case-insen
 
 # Reverse harvest: (phrase verbatim, kind OURS, instrument, locator, quote verbatim, gloss OURS — not an equivalence)
 REV = [
- ("Adgangsforhold", "domain name (chapter title)", "BR", "kap. 2 (heading)", "Adgangsforhold (§ 48 - § 62)", "the accessibility chapter is named 'access conditions'; 'tilgængelighed' is not used in the BR18 text read except inside the EN 81-70 title (§ 246)"),
+ ("Adgangsforhold", "domain name (chapter title)", "BR", "kap. 2 (heading)", "Adgangsforhold (§ 48 - § 62)", "the accessibility chapter is named 'access conditions'; 'tilgængelighed' is not used in the BR18 text read except in § 246 (the EN 81-70 title and the clause after it)"),
  ("ved egen hjælp", "performance standard", "BR", "kap. 2, § 48, stk. 1", "skal have adgangsforhold, der sikrer, at brugerne ved egen hjælp kan komme frem til dem, ind i dem samt frem til deres funktioner", "independent use, repeated as the aim of kap. 2, 6, 9, 10 and 20"),
  ("komme frem til dem, ind i dem samt frem til deres funktioner", "functional chain", "BR", "kap. 2, § 48, stk. 1", "kan komme frem til dem, ind i dem samt frem til deres funktioner", "reach, enter, reach the functions: the three section groups of kap. 2"),
  ("Adgangsforhold frem til bygningen", "section heading (stage of chain)", "BR", "kap. 2, §§ 49-50 (heading)", "Adgangsforhold frem til bygningen", ""),
