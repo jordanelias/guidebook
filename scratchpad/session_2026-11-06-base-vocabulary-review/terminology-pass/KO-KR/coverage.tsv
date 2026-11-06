@@ -1,0 +1,76 @@
+register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+Well-illuminated (if site expected to be lit)	catalogue 2.1	FOUND-PARTIAL	1	조도	NARROWER: lift illuminance only; no site or route lighting
+Surface is firm, stable and slip resistant	catalogue 2.1	FOUND	2	잘 미끄러지지 아니하는 재질 / 평탄하게 마감	
+Seating	catalogue 2.1	FOUND-PARTIAL	2	샤워용 접이식의자 / 좌석	DIFFERENT SENSE / NARROWER: auditorium seats and shower seat; no rest seating
+Handrails	catalogue 2.1	FOUND	2	손잡이 / 손잡이를 연속하여 설치	
+Clear width	catalogue 2.1	FOUND	1	유효폭	
+Accessible path of travel	catalogue 2.1	FOUND	2	장애인등의 통행이 가능한 접근로 / 접근로	
+Drainage	catalogue 2.1	SEARCHED-ABSENT	0		배수 0 in all seven texts; shower floor 기울기 30분의 1 implies fall but names no drainage; 덮개 covers hazards, not drains
+Clear signage	catalogue 2.1	FOUND	2	안내표지 / 점자표지판	
+Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND	2	음량증폭전화기 / 집단보청장치	
+Level landings with clear space	catalogue 2.1	FOUND	2	수평면으로된 참 / 활동공간	
+Floor surface is stable, firm, and non-slip	catalogue 2.1	FOUND	1	미끄러지지 아니하는 재질	
+Clear space for approach	catalogue 2.1	FOUND	1	휠체어를 탄 채 접근이 가능한 활동공간	
+Well illuminated (if required for expected usage)	catalogue 2.1	FOUND-PARTIAL	1	조도	NARROWER: lift illuminance only
+Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND	2	잘 미끄러지지 아니하는 재질 / 평탄하게 마감	
+Shelter	catalogue 2.1	FOUND-PARTIAL	1	지붕과 차양	NARROWER: roof and canopy over exterior ramps, recommended
+Riser height and tread depth	catalogue 2.1	FOUND	1	디딤판의 너비	
+Nosing design	catalogue 2.1	FOUND	2	계단코 / 챌면의 기울기	
+No open riser	catalogue 2.1	FOUND	1	챌면을 반드시 설치	
+Level threshold	catalogue 2.1	FOUND	2	문턱 / 턱낮추기	
+Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND-PARTIAL	1	유효높이	NARROWER: route headroom only; no parking headroom
+Edge protection	catalogue 2.1	FOUND	2	추락방지설비 / 추락방지턱	
+Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND	2	계단코의 색상 / 미끄럼방지재	
+Tactile attention indicators (truncated domes)	catalogue 2.1	FOUND	2	감지용점형블록 / 원뿔절단형	
+Slope	catalogue 2.1	FOUND	1	기울기	
+Sink faucet is easy to use or automatic	catalogue 2.1	FOUND	1	수도꼭지	
+Outlets and switches are at accessible heights	catalogue 2.1	FOUND-PARTIAL	1	콘센트·스위치	NARROWER: guest rooms only
+Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		전자레인지 0; no kitchen-appliance rule
+Level landings with clear space and at regular intervals	catalogue 2.1	FOUND	2	수평면으로 된 참 / 수평면으로된 참	
+Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND	2	계단코의 색상 / 미끄럼방지재	
+Accessible lockers	catalogue 2.1	FOUND-PARTIAL	1	수납공간	NARROWER: changing-room storage space
+Accessible door hardware	catalogue 2.1	FOUND	1	레버형	
+Accessible controls	catalogue 2.1	FOUND	2	이용자 조작설비 / 조작반	
+height	catalogue 2.2	FOUND	2	높이 / 조작반	
+level	catalogue 2.2	FOUND	3	높이차이 / 단차 / 층수	
+width	catalogue 2.2	FOUND	1	깊이	
+clearance	catalogue 2.2	FOUND	3	무릎 및 휠체어의 발판이 들어갈 수 있도록 / 유효높이 / 틈	
+number	catalogue 2.2	FOUND	2	1퍼센트 / 36개의 돌출점	
+slope	catalogue 2.2	FOUND	1	기울기	
+depth	catalogue 2.2	FOUND	1	깊이	
+riser	catalogue 2.2	FOUND	2	디딤판의 너비 / 챌면을 반드시 설치	
+tread	catalogue 2.2	FOUND	1	디딤판의 너비	
+force	catalogue 2.2	SEARCHED-ABSENT	0		힘 occurs only inside 닫힘 (a UI label); 조작력, 뉴턴 0; nearest is '미닫이문은 가벼운 재질로' (light material), no force
+time	catalogue 2.2	FOUND	2	개방시간 / 닫히는 시간	
+gradient	catalogue 2.2	FOUND	1	기울기	
+size	catalogue 2.2	FOUND	1	크기	
+volume	catalogue 2.2	FOUND-PARTIAL	1	음량증폭전화기	PARTIAL: telephone amplification only
+capacity	catalogue 2.2	SEARCHED-ABSENT	0		용량, 정원 0; the lift car is set by 유효바닥면적, not rated load or persons
+distance	catalogue 2.2	FOUND-PARTIAL	1	앞 좌석과의 거리	DIFFERENT SENSE: seat spacing
+lighting levels	catalogue 2.2	FOUND	1	조도	
+ratio	catalogue 2.2	FOUND-PARTIAL	2	1퍼센트 / 설치비율	PARTIAL: parking ratio by reference, room percentage
+ramp gradient (parameter 3)	base_parameters	FOUND	1	경사로의 기울기	
+corridor width (parameter 4)	base_parameters	FOUND	1	복도의 유효폭	
+turning circle (parameter 5)	base_parameters	FOUND-PARTIAL	3	180도 회전 / 휠체어가 회전할 수 있는 공간 / 휠체어가 회전할 수 있도록	CARVE: square space or unquantified, never a circle
+operating force (parameter 6)	base_parameters	SEARCHED-ABSENT	0		no force quantity anywhere; door closer by closing time (3초) instead
+reverberation time (parameter 7)	base_parameters	SEARCHED-ABSENT	0		잔향, 반향, 흡음 0; the only acoustic quantity is ambient noise 주변소음도 75데시벨 for telephones
+LRV contrast (parameter 8)	base_parameters	FOUND-PARTIAL	2	계단코의 색상 / 바닥재의 색상	BROADER: colour difference, never quantified
+door width (parameter 9)	base_parameters	FOUND	1	통과유효폭	
+colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		색온도, 켈빈 0; lighting only as 조도 at lifts
+headroom clearance (parameter 11)	base_parameters	FOUND	1	유효높이	
+ramp run length (parameter 12)	base_parameters	FOUND-PARTIAL	1	경사로의 길이	PARTIAL: length only as handrail trigger; landings by rise
+B651 4.4.4 Gratings	b651-headings (RHFAC-does-not-name)	FOUND	1	격자구멍	
+B651 4.5 Headroom and protruding objects	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	보행장애물	MERGED under 보행장애물
+B651 4.5.1 Headroom	b651-headings (RHFAC-does-not-name)	FOUND	1	유효높이	
+B651 4.5.2 Protruding objects	b651-headings (RHFAC-does-not-name)	FOUND	1	돌출폭	
+B651 6.1.2 Spouts	b651-headings (RHFAC-does-not-name)	FOUND	1	분출구	
+B651 6.2.3 Lavatories	b651-headings (RHFAC-does-not-name)	FOUND	1	휠체어사용자용 세면대	
+B651 6.5.3 Enclosures	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	샤워부스	PARTIAL: shower booth as part of the shower room
+B651 8.3.8 Speed bumps	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		과속방지턱 0
+B651 8.3.9 Bollards	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		볼라드 0; nearest is 연석·울타리 separating route from roadway (제1호 다목)
+B651 8.7 Landscaping elements	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no landscaping heading; 가로수 pruning only (counted under 8.7.3)
+B651 8.7.1 Flower or shrub planters	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		화분, 식재 0
+B651 8.7.3 Vegetation	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	가로수	NARROWER: street trees only
+B651 8.7.4 Guy wires	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		지선 0; nearest is 가로등·전주·간판 as obstacles (제1호 마목 (1))
+B651 8.8.2 Scaffolding	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		비계 occurs only inside 정비계획 (Act); no temporary-works rule
+B651 D.6.1 Gradation limits	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no trail or aggregate rule

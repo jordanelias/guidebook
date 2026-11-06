@@ -641,6 +641,12 @@ else:
     near = near[0]
     words = near["canonical_en"].split()
     subset_name = " ".join(words[:-1]) + "s"          # token subset, plural: 'ramp runs' shape
+    # add-term now requires the name to lie inside the observed phrase (owner E1, 2026-11-06), so
+    # the probe observes the phrase it then tries to mint.
+    obs = db.observe_term({"ref_id": scalar("SELECT ref_id FROM observed_terms WHERE observation_id=?", obs),
+                           "surface_form": subset_name, "language": "EN", "locator": "fixture",
+                           "context_quote": f"a fixture sentence using {subset_name} once",
+                           "verbatim_exempt": "fixture text: no retrieval artefact carries it"}, S)["observation_id"]
     r = refusal(db.insert_term, obs, subset_name, "probe", session=S, dry_run=True)
     record("T01", f"add-term refuses {subset_name!r} beside {near['term_id']} {near['canonical_en']!r}",
            r and near["term_id"] in r, r)

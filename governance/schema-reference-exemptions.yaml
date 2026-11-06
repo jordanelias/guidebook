@@ -21,3 +21,11 @@ evidence_sources_v1_legacy: >-
   Guarded reference. scripts/tests/test_db_integrity.py reads it only after
   SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_sources_v1_legacy'
   returns non-zero -- the parity check runs only while the legacy table exists.
+
+items: >-
+  Deliberate reference to the PRE-RESET corpus, not the live schema. scripts/db.py
+  (_item_subject) opens
+  _archived/data/corpus-pre-reset-2026-08-06.db read-only and immutable and reads its
+  `items.name`, the 93 item subjects the owner admitted as a basis on 2026-11-06 (ledger:
+  "Owner statements 2026-11-06"). The live database has no `items` table (migration
+  drop_item_layer_cluster) and a rebuild does not restore one.

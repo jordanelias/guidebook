@@ -1,0 +1,61 @@
+register_concept	status	n_observations	note
+2.1 Well-illuminated (if site expected to be lit)	FOUND	2	ASR treats lighting only as display/text legibility in canteens (Ausleuchtung, Beleuchtung); no level. Lighting is ASR A3.4, not read.
+2.1 Surface is firm, stable and slip resistant	FOUND	4	"ASR frames it as Rutschgefahr for Rollator/Rollstuhl/Gehhilfe plus Rollwiderstand; ""firm/stable"" has no single German phrase in ASR."
+2.1 Seating	FOUND	3	Sitzgelegenheiten (ASR); Feste Bestuhlung (DIN heading); BayTB Besucherplätze.
+2.1 Handrails	FOUND	1	Handläufe (ASR A1.8).
+2.1 Clear width	FOUND	2	lichte Durchgangsbreite (doors), lichte Breite (escape routes).
+2.1 Accessible path of travel	FOUND	4	"German splits Erschließung (DIN headings) from Verkehrsweg (ASR, includes vehicle routes); BayBO ""barrierefrei erreichbar""."
+2.1 Drainage	FOUND	1	Ablaufrinnen (ASR A1.5) only; no site drainage.
+2.1 Clear signage	FOUND	3	ASR: Sicherheits- und Gesundheitsschutzkennzeichnung, Informations- und Leitsystem; DIN heading Warnen/Orientieren/Informieren/Leiten.
+2.1 Audio accessibility and communication enhancement technologies	FOUND	3	Headings only (DIN Kommunikationsanlagen, Informations- und Kommunikationshilfen). ASR names no assistive listening system (no Induktion/Höranlage) — that half is SEARCHED-ABSENT in ASR.
+2.1 Level landings with clear space	FOUND	1	Podeste (ASR A1.8 ramps).
+2.1 Floor surface is stable, firm, and non-slip	FOUND	4	"Same observations as ""Surface is firm, stable and slip resistant"": a near-duplicate register statement."
+2.1 Clear space for approach	FOUND	2	Bewegungsfläche + seitliche/frontale Anfahrbarkeit: German carves area and approach direction separately.
+2.1 Well illuminated (if required for expected usage)	FOUND	2	"Shares the observations of ""Well-illuminated (if site expected to be lit)""."
+2.1 Surface is stable, firm, and slip resistant	FOUND	4	Near-duplicate; shares observations.
+2.1 Shelter	SEARCHED-ABSENT	0	ASR, BayBO Art. 48, BayTB A 4 read in full: no weather shelter. Only Witterungseinflüsse for keeping markings clear. DIN 18040 body NOT-OBTAINABLE (paid); headings only.
+2.1 Riser height and tread depth	FOUND	3	Phrases Auftritt, Setzstufe present; neither as a stated quantity in ASR. Stair geometry sits in DIN 18065 (BayTB A 4.2.1), not retrieved.
+2.1 Nosing design	FOUND	2	Stufenvorderkante; Unterschneidung.
+2.1 No open riser	FOUND	1	geschlossene Stufen.
+2.1 Level threshold	FOUND	2	schwellenlos; Schwellen.
+2.1 Height clearance (if sheltered or parkade)	FOUND	1	lichte Höhe appears, but as protection against walking under stairs/escalators (unterlaufen), not vehicle headroom. Parkade headroom SEARCHED-ABSENT.
+2.1 Edge protection	FOUND	2	seitliche Begrenzung (Radabweiser) on ramps; Absturzsicherungen.
+2.1 Colour-contrasted and slip-resistant strip on nosing	FOUND	1	Contrast half only (Stufenvorderkante visuell kontrastierend); slip-resistant strip SEARCHED-ABSENT.
+2.1 Tactile attention indicators (truncated domes)	FOUND	2	Bodenindikatoren, Rippen- oder Noppenplatten; taktil erfassbare Bodenstrukturen. No warning/guidance split in ASR.
+2.1 Slope	FOUND	2	Längsneigung and Querneigung named separately.
+2.1 Sink faucet is easy to use or automatic	FOUND	2	Weak: Zapfstelle as a Bedienelement (ASR A4.2); Waschplätze (DIN heading). ASR has no sanitary-room annex at all.
+2.1 Outlets and switches are at accessible heights	FOUND	2	Schalter yes; outlets (Steckdose) SEARCHED-ABSENT in ASR. German class is Bedienelemente.
+2.1 Microwave mounting height accessible and safe	FOUND	1	Mikrowelle named, but within a reach area on a work surface, not a mounting height.
+2.1 Level landings with clear space and at regular intervals	FOUND	1	Shares Podeste observation; interval stated as a length threshold (P12 row).
+2.1 Colour-contrasted and slip-resistant strip	FOUND	1	Shares the nosing-strip observation; contrast half only.
+2.1 Accessible lockers	SEARCHED-ABSENT	0	ASR read in full: no Schließfach/Spind/Garderobe. DIN heading Umkleidebereiche is nearest; body NOT-OBTAINABLE.
+2.1 Accessible door hardware	FOUND	3	Türgriffe, Beschläge, Drücker; BayTB Greifhöhe für Türdrücker.
+2.1 Accessible controls	FOUND	2	Bedienelemente is the general German class (any operable element).
+2.2 height	FOUND	2	Höhe, Greifhöhe, Augenhöhe.
+2.2 level	FOUND	1	Ambiguous in English (flat / storey / lighting level). Sighted only as niveaugleich (flush).
+2.2 width	FOUND	2	Breite, Mindestbreite, Verkehrswegbreite.
+2.2 clearance	FOUND	2	Ambiguous in English: Unterfahrbarkeit (knee), lichte Weite (crush gap), lichte Höhe (headroom) are three German phrases.
+2.2 number	FOUND	3	"Anzahl (BayBO, ASR); BayTB ""1 v. H., mindestens jedoch einer""."
+2.2 slope	FOUND	3	Shares P3 observations (Neigung).
+2.2 depth	FOUND	1	Greiftiefe.
+2.2 riser	FOUND	1	Setzstufe.
+2.2 tread	FOUND	2	Auftritt; An- bzw. Austrittsfläche.
+2.2 force	FOUND	2	Kraftaufwand; aufzuwendende Kraft. Torque (Drehmoment) is separate — see reverse harvest.
+2.2 time	FOUND	2	Minuten erreichbar (distance as walking time); Schließverzögerung.
+2.2 gradient	FOUND	3	Shares P3; English slope/gradient are one German word (Neigung).
+2.2 size	FOUND	2	Mindestgröße der Bewegungsfläche; Schriftgröße.
+2.2 volume	SEARCHED-ABSENT	0	ASR read in full: no sound volume or room volume. Lärm (noise) appears without a quantity.
+2.2 capacity	FOUND	1	BayTB only: Nennlast of a platform lift.
+2.2 distance	FOUND	2	Sehabstand; Entfernung.
+2.2 lighting levels	SEARCHED-ABSENT	0	ASR V3a.2 read in full: no illuminance. Belongs to ASR A3.4, not retrieved.
+2.2 ratio	SEARCHED-ABSENT	0	ASR read in full: contrast stated qualitatively only (visuell kontrastierend, kontrastreich); no ratio.
+P3 ramp gradient	FOUND	3	ASR separates Schrägrampe (geneigter Verkehrsweg, in its scope) from Rampe gemäß DIN 18040-1 Nr. 4.3.8 (out of its scope).
+P4 corridor width	FOUND	3	DIN headings Flure und sonstige Verkehrsflächen; Flure innerhalb von Wohnungen; ASR Gänge/Verkehrswege.
+P5 turning circle	FOUND	2	Wendemöglichkeit, Wendevorgang; the area is a square Bewegungsfläche, no circle is named.
+P6 operating force	FOUND	1	Kraftaufwand für das Öffnen; plus Moment/Drehmoment.
+P7 reverberation time	SEARCHED-ABSENT	0	"ASR read in full: only ""raumakustische Maßnahmen"", no reverberation time. DIN 18041 (lead) NOT-READ."
+P8 LRV contrast	FOUND	2	Contrast found as concept; no LRV or luminance metric. DIN 32975 (lead) NOT-READ.
+P9 door width	FOUND	2	lichte Durchgangsbreite; DIN heading Türen.
+P10 colour temperature	SEARCHED-ABSENT	0	ASR, BayBO, BayTB A 4 read in full: not treated.
+P11 headroom clearance	FOUND	1	lichte Höhe, in the under-running sense.
+P12 ramp run length	FOUND	1	Länge (as the trigger for Podeste).

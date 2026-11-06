@@ -1,0 +1,641 @@
+code	chapter	kind	section	section_title	criterion_text (Canadian English, as the survey words it)	max_points	technique_tags (rule-assigned lead; see catalogue section 3)
+1.1.1	Vehicular Access	site element	1.1	Parking Points	Number of designated accessible spaces	5	provision_and_quantity
+1.1.2	Vehicular Access	site element	1.1	Parking Points	Location of designated accessible spaces	3	provision_and_quantity
+1.1.3	Vehicular Access	site element	1.1	Parking Points	Dimensions of designated accessible spaces	5	provision_and_quantity
+1.1.4	Vehicular Access	site element	1.1	Parking Points	Surface is stable, firm, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+1.1.5	Vehicular Access	site element	1.1	Parking Points	Clear signage	3	wayfinding_and_signage
+1.1.6	Vehicular Access	site element	1.1	Parking Points	Safe pedestrian pathways within parking lots	5	circulation_geometry;outdoor_and_site
+1.1.7	Vehicular Access	site element	1.1	Parking Points	Curb ramps (if level change en route to exteriorpathway)	4	circulation_geometry;vertical_transitions;outdoor_and_site
+1.1.8	Vehicular Access	site element	1.1	Parking Points	Pedestrian crossings within parking areas	3	outdoor_and_site
+1.1.9	Vehicular Access	site element	1.1	Parking Points	Height clearance (if sheltered or parkade)	4	reach_and_heights;tactile_and_detectable;outdoor_and_site
+1.1.10	Vehicular Access	site element	1.1	Parking Points	Well-illuminated (if site expected to be lit)	3	lighting_and_glare
+1.1.11	Vehicular Access	site element	1.1	Parking Points	Shelter for designated accessible spaces	2	provision_and_quantity;outdoor_and_site
+1.1.12	Vehicular Access	site element	1.1	Parking Points	Payment systems are convenient and accessible (if paid parking)	3	operation_and_technology;outdoor_and_site
+1.2.1	Vehicular Access	site element	1.2	General Vehicular Access	Passenger drop-off and pick-up zones (if required for expected usage)	10	provision_and_quantity;outdoor_and_site
+1.2.2	Vehicular Access	site element	1.2	General Vehicular Access	Public transit, including pedestrian crossings at intersections (if area is serviced)	10	outdoor_and_site
+1.2.3	Vehicular Access	site element	1.2	General Vehicular Access	Electric vehicle charging stations (if provided)	10	outdoor_and_site
+2.1.1	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Clear width	5	circulation_geometry
+2.1.2	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Surface is firm, stable and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+2.1.3	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Clear signage (if required for expected usage)	3	wayfinding_and_signage;provision_and_quantity
+2.1.4	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Path is level or low-gradient slope (when not accommodated by ramp)	3	vertical_transitions
+2.1.5	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Passing/rest areas with clear space	3	circulation_geometry
+2.1.6	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Curb ramps (if level change en route to entrance)	4	circulation_geometry;vertical_transitions;doors_and_entries;outdoor_and_site
+2.1.7	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Edge protection	4	tactile_and_detectable
+2.1.8	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	No obstacles on path and overhead, or obstacles are cane detectable and high contrast	5	reach_and_heights;colour_and_contrast;tactile_and_detectable;seating_and_furniture
+2.1.9	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Convenient and understandable pathway to facilities	5	circulation_geometry
+2.1.10	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Clearly marked pedestrian crossings within site boundaries	3	outdoor_and_site
+2.1.11	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Drainage	2	surfaces_and_slip
+2.1.12	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Well-illuminated (if site expected to be lit)	3	lighting_and_glare
+2.1.13	Exterior Approach and Entrance	site element	2.1	Exterior Pathways to Facilities on Site	Seating	3	seating_and_furniture
+2.2.1	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Slope	5	vertical_transitions
+2.2.2	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Clear width	3	circulation_geometry
+2.2.3	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Surface is firm, stable and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+2.2.4	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Level landings with clear space	4	circulation_geometry;vertical_transitions
+2.2.5	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Colour-contrasted and slip-resistant strip	4	surfaces_and_slip;colour_and_contrast
+2.2.6	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Handrails	5	
+2.2.7	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Edge protection	3	tactile_and_detectable
+2.2.8	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Well illuminated (if required for expected usage)	3	lighting_and_glare;provision_and_quantity
+2.2.9	Exterior Approach and Entrance	site element	2.2	Exterior Ramps	Convenient location	3	
+2.3.1	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Clear width	2	circulation_geometry
+2.3.2	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Surface is firm, stable and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+2.3.3	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Level landings with clear space and at regular intervals	3	circulation_geometry;vertical_transitions
+2.3.4	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Handrails	5	
+2.3.5	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Tactile attention indicators (truncated domes)	5	tactile_and_detectable
+2.3.6	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Colour-contrasted and slip-resistant strip on nosing	4	vertical_transitions;surfaces_and_slip;colour_and_contrast
+2.3.7	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Riser height and tread depth	4	vertical_transitions;reach_and_heights
+2.3.8	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	No open riser	3	vertical_transitions
+2.3.9	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Nosing design	2	vertical_transitions
+2.3.10	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Drainage	2	surfaces_and_slip
+2.3.11	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Height clearance	3	reach_and_heights;tactile_and_detectable
+2.3.12	Exterior Approach and Entrance	site element	2.3	Exterior Stairs	Well illuminated (if required for expected usage)	3	lighting_and_glare;provision_and_quantity
+2.4.1	Exterior Approach and Entrance	site element	2.4	Building Entrances	Entrance(s) required to be accessible	5	doors_and_entries
+2.4.2	Exterior Approach and Entrance	site element	2.4	Building Entrances	Entrance is easily identified	5	doors_and_entries;wayfinding_and_signage
+2.4.3	Exterior Approach and Entrance	site element	2.4	Building Entrances	Power-operated door or easy-to-open door	5	doors_and_entries
+2.4.4	Exterior Approach and Entrance	site element	2.4	Building Entrances	Sufficient opening, hold-open, and closing time for power-operated doors	4	doors_and_entries
+2.4.5	Exterior Approach and Entrance	site element	2.4	Building Entrances	Controls for power-operated doors	4	doors_and_entries;reach_and_heights;operation_and_technology
+2.4.6	Exterior Approach and Entrance	site element	2.4	Building Entrances	Emergency power or fail-safe systems for power operated doors	2	doors_and_entries;emergency_and_life_safety
+2.4.7	Exterior Approach and Entrance	site element	2.4	Building Entrances	Door security and entry system is accessible and easy to use	5	doors_and_entries;operation_and_technology
+2.4.8	Exterior Approach and Entrance	site element	2.4	Building Entrances	Door security and entry system is easily identified and conveniently located	4	doors_and_entries;wayfinding_and_signage;operation_and_technology
+2.4.9	Exterior Approach and Entrance	site element	2.4	Building Entrances	Clear opening width of entrance doors	5	circulation_geometry;doors_and_entries
+2.4.10	Exterior Approach and Entrance	site element	2.4	Building Entrances	Level landing at entrance	5	vertical_transitions;doors_and_entries
+2.4.11	Exterior Approach and Entrance	site element	2.4	Building Entrances	Level threshold	5	vertical_transitions;doors_and_entries
+2.4.12	Exterior Approach and Entrance	site element	2.4	Building Entrances	Clear space on exterior and interior of door	4	circulation_geometry;doors_and_entries
+2.4.13	Exterior Approach and Entrance	site element	2.4	Building Entrances	Outward-opening doors	3	doors_and_entries
+2.4.14	Exterior Approach and Entrance	site element	2.4	Building Entrances	Glazed doors have colour-contrasted strips or markings	3	doors_and_entries;colour_and_contrast
+2.4.15	Exterior Approach and Entrance	site element	2.4	Building Entrances	Vision panels (if provided)	2	doors_and_entries
+2.4.16	Exterior Approach and Entrance	site element	2.4	Building Entrances	Well-illuminated (if site expected to be lit)	3	lighting_and_glare
+2.4.17	Exterior Approach and Entrance	site element	2.4	Building Entrances	Seating at entrances	3	doors_and_entries;seating_and_furniture
+2.4.18	Exterior Approach and Entrance	site element	2.4	Building Entrances	Shelter	3	outdoor_and_site
+2.4.19	Exterior Approach and Entrance	site element	2.4	Building Entrances	Service dog relief area	3	outdoor_and_site
+3.1.1	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Power-operated doors or open entries	5	doors_and_entries
+3.1.2	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Sufficient opening, hold-open, and closing time for power-operated doors	4	doors_and_entries
+3.1.3	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Controls for manually activated doors	4	doors_and_entries;reach_and_heights
+3.1.4	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Emergency power or fail-safe systems for power- operated doors (if on an emergency exit route)	2	circulation_geometry;doors_and_entries;emergency_and_life_safety
+3.1.5	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Door security and entry system is accessible and easy to use	5	doors_and_entries;operation_and_technology
+3.1.6	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Door security and entry system is easily identified and conveniently located	4	doors_and_entries;wayfinding_and_signage;operation_and_technology
+3.1.7	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Minimum force required to open doors with sufficient opening time	5	doors_and_entries
+3.1.8	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Clear opening width of doors and doorways	5	circulation_geometry;doors_and_entries
+3.1.9	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Level threshold	5	vertical_transitions;doors_and_entries
+3.1.10	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Clear space on outside and inside of door	4	circulation_geometry;doors_and_entries
+3.1.11	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Outward-opening doors	3	doors_and_entries
+3.1.12	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Door handles are U-shaped lever style or equivalent	4	doors_and_entries
+3.1.13	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Doors are colour contrasted with adjacent surfaces	3	surfaces_and_slip;doors_and_entries;colour_and_contrast
+3.1.14	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Glazed doors have colour-contrasted strips or markings Washrooms) Points	3	doors_and_entries;colour_and_contrast;sanitary_and_fixtures
+3.1.15	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Vision panels (if provided)	2	doors_and_entries
+3.1.16	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Kick plates on doors	2	doors_and_entries
+3.1.17	Interior Circulation	building element	3.1	Interior Doors and Doorways (not including Washrooms)	Accessible gate (if any turnstile)	3	doors_and_entries
+3.2.1	Interior Circulation	building element	3.2	Path of Travel	No abrupt level changes within a storey or single floor	5	vertical_transitions
+3.2.2	Interior Circulation	building element	3.2	Path of Travel	Access to all facilities expected to be used	5	
+3.2.3	Interior Circulation	building element	3.2	Path of Travel	Layout is logical and direct	3	circulation_geometry
+3.2.4	Interior Circulation	building element	3.2	Path of Travel	Open-plan areas are well defined and include tactile direction indicators	5	circulation_geometry;tactile_and_detectable
+3.2.5	Interior Circulation	building element	3.2	Path of Travel	Line-up/queuing guides (if provided)	4	circulation_geometry
+3.3.1	Interior Circulation	building element	3.3	Corridors and Hallways	Clear width	5	circulation_geometry
+3.3.2	Interior Circulation	building element	3.3	Corridors and Hallways	Surface is stable, firm, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+3.3.3	Interior Circulation	building element	3.3	Corridors and Hallways	No obstacles on path and overhead, or obstructions are cane detectable and high contrast	5	reach_and_heights;colour_and_contrast;tactile_and_detectable;seating_and_furniture
+3.3.4	Interior Circulation	building element	3.3	Corridors and Hallways	Flooring and/or carpet with no busy patterns	2	surfaces_and_slip;colour_and_contrast
+3.3.5	Interior Circulation	building element	3.3	Corridors and Hallways	Colour contrast between wall and floor, with no glare	3	lighting_and_glare;colour_and_contrast
+3.3.6	Interior Circulation	building element	3.3	Corridors and Hallways	Glazed walls have colour-contrasted strips or markings	2	colour_and_contrast
+3.3.7	Interior Circulation	building element	3.3	Corridors and Hallways	Handrails (if long hallway)	3	
+3.3.8	Interior Circulation	building element	3.3	Corridors and Hallways	Seating (if long hallway)	3	seating_and_furniture
+3.3.9	Interior Circulation	building element	3.3	Corridors and Hallways	Well-illuminated	3	lighting_and_glare
+3.4.1	Interior Circulation	building element	3.4	Interior Ramps	Slope	5	vertical_transitions
+3.4.2	Interior Circulation	building element	3.4	Interior Ramps	Clear width	3	circulation_geometry
+3.4.3	Interior Circulation	building element	3.4	Interior Ramps	Surface is stable, firm and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+3.4.4	Interior Circulation	building element	3.4	Interior Ramps	Level landings with clear space	4	circulation_geometry;vertical_transitions
+3.4.5	Interior Circulation	building element	3.4	Interior Ramps	Colour-contrasted and slip-resistant strip	4	surfaces_and_slip;colour_and_contrast
+3.4.6	Interior Circulation	building element	3.4	Interior Ramps	Handrails	5	
+3.4.7	Interior Circulation	building element	3.4	Interior Ramps	Edge protection	3	tactile_and_detectable
+3.4.8	Interior Circulation	building element	3.4	Interior Ramps	Well-illuminated	3	lighting_and_glare
+3.4.9	Interior Circulation	building element	3.4	Interior Ramps	Convenient location	3	
+3.5.1	Interior Circulation	building element	3.5	Elevators	Easy to find	3	
+3.5.2	Interior Circulation	building element	3.5	Elevators	Easy to use	5	
+3.5.3	Interior Circulation	building element	3.5	Elevators	Clear space in front of hall call buttons in elevator lobbies	3	circulation_geometry;vertical_transitions
+3.5.4	Interior Circulation	building element	3.5	Elevators	Hall call buttons are accessible and at accessible height	5	reach_and_heights
+3.5.5	Interior Circulation	building element	3.5	Elevators	Clear opening width of door	5	circulation_geometry;doors_and_entries
+3.5.6	Interior Circulation	building element	3.5	Elevators	Sufficient opening, hold-open, and closing time	4	doors_and_entries
+3.5.7	Interior Circulation	building element	3.5	Elevators	Door reopening device	2	doors_and_entries
+3.5.8	Interior Circulation	building element	3.5	Elevators	Self-levelling and level threshold	3	vertical_transitions;doors_and_entries
+3.5.9	Interior Circulation	building element	3.5	Elevators	Interior dimensions and floor surfaces	5	surfaces_and_slip
+3.5.10	Interior Circulation	building element	3.5	Elevators	Controls inside elevator cab at accessible height and location	4	vertical_transitions;reach_and_heights
+3.5.11	Interior Circulation	building element	3.5	Elevators	Cab controls include Braille and tactile characters, and are easy to use	4	reach_and_heights;tactile_and_detectable
+3.5.12	Interior Circulation	building element	3.5	Elevators	Emergency communication systems	5	communication_and_information;emergency_and_life_safety
+3.5.13	Interior Circulation	building element	3.5	Elevators	Audible elevator components	4	vertical_transitions;acoustic_and_audio
+3.5.14	Interior Circulation	building element	3.5	Elevators	Visual elevator components	4	vertical_transitions
+3.5.15	Interior Circulation	building element	3.5	Elevators	Handrails	4	
+3.5.16	Interior Circulation	building element	3.5	Elevators	Colour contrast between interior cab floor and wall, with no glare	3	lighting_and_glare;colour_and_contrast
+3.5.17	Interior Circulation	building element	3.5	Elevators	Doors are colour contrasted with surroundings	2	doors_and_entries;colour_and_contrast
+3.5.18	Interior Circulation	building element	3.5	Elevators	Mirror in rear of elevator cab (if not flow-through type)	3	vertical_transitions
+3.5.19	Interior Circulation	building element	3.5	Elevators	Well-illuminated cab interior and elevator lobbies	3	vertical_transitions;lighting_and_glare
+3.6.1	Interior Circulation	building element	3.6	Interior Stairs	Clear width	2	circulation_geometry
+3.6.2	Interior Circulation	building element	3.6	Interior Stairs	Surface is stable, firm, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+3.6.3	Interior Circulation	building element	3.6	Interior Stairs	Level landings with clear space and at regular intervals	3	circulation_geometry;vertical_transitions
+3.6.4	Interior Circulation	building element	3.6	Interior Stairs	Handrails	5	
+3.6.5	Interior Circulation	building element	3.6	Interior Stairs	Tactile attention indicators (truncated domes)	5	tactile_and_detectable
+3.6.6	Interior Circulation	building element	3.6	Interior Stairs	Colour-contrasted and slip-resistant strip on nosing	4	vertical_transitions;surfaces_and_slip;colour_and_contrast
+3.6.7	Interior Circulation	building element	3.6	Interior Stairs	Riser height and tread depth	4	vertical_transitions;reach_and_heights
+3.6.8	Interior Circulation	building element	3.6	Interior Stairs	No open riser	3	vertical_transitions
+3.6.9	Interior Circulation	building element	3.6	Interior Stairs	Nosing design	2	vertical_transitions
+3.6.10	Interior Circulation	building element	3.6	Interior Stairs	Flooring with no busy patterns	2	surfaces_and_slip;colour_and_contrast
+3.6.11	Interior Circulation	building element	3.6	Interior Stairs	Height clearance	3	reach_and_heights;tactile_and_detectable
+3.6.12	Interior Circulation	building element	3.6	Interior Stairs	Well illuminated	3	lighting_and_glare
+3.7.1	Interior Circulation	building element	3.7	Escalators and Moving Walkways	Alternative is available	3	
+3.7.2	Interior Circulation	building element	3.7	Escalators and Moving Walkways	Colour-contrasted detectable feature at the top	3	reach_and_heights;colour_and_contrast;tactile_and_detectable;seating_and_furniture
+3.7.3	Interior Circulation	building element	3.7	Escalators and Moving Walkways	Colour-contrasted nosings and side edges	4	vertical_transitions;colour_and_contrast
+3.7.4	Interior Circulation	building element	3.7	Escalators and Moving Walkways	Visual and audible notifications at start and end	3	acoustic_and_audio;communication_and_information
+3.7.5	Interior Circulation	building element	3.7	Escalators and Moving Walkways	Accessible stop button	3	
+3.7.6	Interior Circulation	building element	3.7	Escalators and Moving Walkways	Well-illuminated	3	lighting_and_glare
+3.8.1	Interior Circulation	building element	3.8	Platform Lifts	Installed in existing site where elevator is not feasible	5	vertical_transitions
+3.8.2	Interior Circulation	building element	3.8	Platform Lifts	Independently operated	5	
+3.8.3	Interior Circulation	building element	3.8	Platform Lifts	Door/gate clear opening width and threshold	5	circulation_geometry;vertical_transitions;doors_and_entries
+3.8.4	Interior Circulation	building element	3.8	Platform Lifts	Barriers and guards	3	emergency_and_life_safety
+3.8.5	Interior Circulation	building element	3.8	Platform Lifts	Size and capacity appropriate for expected usage	3	provision_and_quantity
+3.8.6	Interior Circulation	building element	3.8	Platform Lifts	Light pressure and control buttons	3	reach_and_heights;lighting_and_glare
+3.8.7	Interior Circulation	building element	3.8	Platform Lifts	Emergency communication button	3	communication_and_information;emergency_and_life_safety
+3.8.8	Interior Circulation	building element	3.8	Platform Lifts	Well-illuminated	3	lighting_and_glare
+4.1.1	Interior Services and Environment	room / space	4.1	Lobby and Reception Areas	Logical arrangement of circulation routes and facilities	3	circulation_geometry
+4.1.2	Interior Services and Environment	room / space	4.1	Lobby and Reception Areas	Location of key facilities easily identified	3	wayfinding_and_signage
+4.1.3	Interior Services and Environment	room / space	4.1	Lobby and Reception Areas	Washroom facilities adjacent to lobby and reception area	3	sanitary_and_fixtures
+4.1.4	Interior Services and Environment	room / space	4.1	Lobby and Reception Areas	Floor finishes and firm and slip resistant, with no glare or busy patterns	3	surfaces_and_slip;lighting_and_glare;colour_and_contrast
+4.1.5	Interior Services and Environment	room / space	4.1	Lobby and Reception Areas	Seating where expected to wait	3	seating_and_furniture
+4.1.6	Interior Services and Environment	room / space	4.1	Lobby and Reception Areas	Well-illuminated	3	lighting_and_glare
+4.2.1	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Desk/counters accessible height or variety of heights	5	reach_and_heights;seating_and_furniture;provision_and_quantity
+4.2.2	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Space for knee clearance at transaction points for public and staff	5	reach_and_heights;operation_and_technology
+4.2.3	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Clear space for approach for public and staff	3	circulation_geometry;operation_and_technology
+4.2.4	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Clearly visible from entrance doors with direct route Service Transaction Kiosks Points	3	circulation_geometry;doors_and_entries;communication_and_information
+4.2.5	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Clear signage	3	wayfinding_and_signage
+4.2.6	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Desk/counter is colour contrasted with surroundings	2	reach_and_heights;colour_and_contrast;seating_and_furniture
+4.2.7	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Audio accessibility and communication enhancement technologies	5	acoustic_and_audio;communication_and_information
+4.2.8	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Accessible interactive self-service transaction kiosks	5	communication_and_information;operation_and_technology
+4.2.9	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Audio information and instructions (if self-service transaction kiosks)	3	acoustic_and_audio;communication_and_information;operation_and_technology
+4.2.10	Interior Services and Environment	room / space	4.2	Reception Desks, Service Counters, and Self-Service Transaction Kiosks	Well-illuminated	3	lighting_and_glare
+4.3.1	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Variety of seating types	5	seating_and_furniture;provision_and_quantity
+4.3.2	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Arrangement of seating with clear space	3	circulation_geometry;seating_and_furniture
+4.3.3	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Upholstery is matte, non-slip without bold pattern, and contrasts with environment	2	surfaces_and_slip;colour_and_contrast;seating_and_furniture
+4.3.4	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Tables are stable with rounded corners	2	surfaces_and_slip;reach_and_heights;seating_and_furniture
+4.3.5	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Tables at accessible height with knee clearance	5	reach_and_heights;seating_and_furniture
+4.3.6	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Audio accessibility and communication enhancement technologies	5	acoustic_and_audio;communication_and_information
+4.3.7	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Other communication systems (both visual and audible) Rooms, and Lounges Points	3	acoustic_and_audio;communication_and_information
+4.3.8	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Floor finishes are firm and slip resistant, with no glare or busy patterns	3	surfaces_and_slip;lighting_and_glare;colour_and_contrast
+4.3.9	Interior Services and Environment	room / space	4.3	Waiting Areas, General Seating, Meeting Rooms, and Lounges	Well-illuminated	3	lighting_and_glare
+4.4.1	Interior Services and Environment	room / space	4.4	Kitchens	Approach to kitchen is accessible	5	circulation_geometry
+4.4.2	Interior Services and Environment	room / space	4.4	Kitchens	Clear space for manoeuvring	5	circulation_geometry
+4.4.3	Interior Services and Environment	room / space	4.4	Kitchens	Sink at accessible height and location	4	reach_and_heights;sanitary_and_fixtures
+4.4.4	Interior Services and Environment	room / space	4.4	Kitchens	Knee clearance under sink	4	reach_and_heights;sanitary_and_fixtures
+4.4.5	Interior Services and Environment	room / space	4.4	Kitchens	Sink faucet is easy to use or automatic	3	reach_and_heights;sanitary_and_fixtures
+4.4.6	Interior Services and Environment	room / space	4.4	Kitchens	Counter surfaces at accessible height	5	surfaces_and_slip;reach_and_heights
+4.4.7	Interior Services and Environment	room / space	4.4	Kitchens	Microwave mounting height accessible and safe	4	reach_and_heights
+4.4.8	Interior Services and Environment	room / space	4.4	Kitchens	Refrigerator is easy to open	2	
+4.4.9	Interior Services and Environment	room / space	4.4	Kitchens	Accessible storage options	3	provision_and_quantity
+4.4.10	Interior Services and Environment	room / space	4.4	Kitchens	Variety of seating and table options	5	reach_and_heights;seating_and_furniture;provision_and_quantity
+4.4.11	Interior Services and Environment	room / space	4.4	Kitchens	Well-illuminated	3	lighting_and_glare
+4.5.1	Interior Services and Environment	room / space	4.5	Acoustic Considerations	Sound damping and background noise	5	acoustic_and_audio
+4.5.2	Interior Services and Environment	room / space	4.5	Acoustic Considerations	Volume of speakers and voice paging systems adjustable per area	3	surfaces_and_slip;reach_and_heights;acoustic_and_audio;seating_and_furniture
+4.5.3	Interior Services and Environment	room / space	4.5	Acoustic Considerations	Double-glazed windows are installed	2	lighting_and_glare
+4.6.1	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Flooring, walkway, ramp and stairway surfaces are well illuminated	4	vertical_transitions;surfaces_and_slip;lighting_and_glare;thermal_and_air
+4.6.2	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Lighting levels are consistent throughout site	4	lighting_and_glare
+4.6.3	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Lighting individually controlled in task areas (if required for expected usage)	4	reach_and_heights;lighting_and_glare;provision_and_quantity
+4.6.4	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Interaction between lighting and surfaces minimizes glare	3	surfaces_and_slip;lighting_and_glare
+4.6.5	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	No abrupt changes between outdoor and indoor spaces	3	outdoor_and_site
+4.6.6	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Building controls are at accessible heights	4	reach_and_heights
+4.6.7	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Window are glazed or fitted with material to reduce glare and noise	3	lighting_and_glare;acoustic_and_audio
+4.6.8	Interior Services and Environment	room / space	4.6	Illumination and Building Systems	Drinking fountains are accessible	3	sanitary_and_fixtures
+5.1.1	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Number of accessible washrooms adequate for expected use	5	sanitary_and_fixtures;provision_and_quantity
+5.1.2	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Washroom identification signage	3	wayfinding_and_signage;sanitary_and_fixtures
+5.1.3	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Power-operated door or screen wall entry	5	doors_and_entries
+5.1.4	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Minimum force required to open entry door	3	doors_and_entries
+5.1.5	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Clear opening width of entry and toilet stall doors	3	circulation_geometry;doors_and_entries;sanitary_and_fixtures
+5.1.6	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Entry door and toilet stall door have accessible hardware	3	doors_and_entries;sanitary_and_fixtures
+5.1.7	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Entry door and toilet stall door are colour contrasted with adjacent surfaces	3	surfaces_and_slip;doors_and_entries;colour_and_contrast;sanitary_and_fixtures
+5.1.8	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Clear space for manoeuvring and transfer	5	circulation_geometry
+5.1.9	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Grab bars at appropriate height and locations at toilets	5	reach_and_heights;sanitary_and_fixtures
+5.1.10	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Toilets at appropriate height and have back supports	5	reach_and_heights;sanitary_and_fixtures
+5.1.11	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Toilet flushing mechanisms are within easy reach	4	reach_and_heights;sanitary_and_fixtures
+5.1.12	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Toilet paper dispensers at appropriate height and locations	5	reach_and_heights;sanitary_and_fixtures
+5.1.13	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Power outlet near toilet	2	reach_and_heights;sanitary_and_fixtures
+5.1.14	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Accessible urinals with clear space	5	circulation_geometry;sanitary_and_fixtures
+5.1.15	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Urinals are colour contrasted with adjacent surface	2	surfaces_and_slip;colour_and_contrast;sanitary_and_fixtures
+5.1.16	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Sink and counter at recommended height with knee clearance	5	reach_and_heights;sanitary_and_fixtures
+5.1.17	Sanitary Facilities	room / space	5.1	Accessible Washrooms	All washroom accessories at accessible heights and locations	4	reach_and_heights;sanitary_and_fixtures
+5.1.18	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Automated or easy-to-operate plumbing fixtures and accessories	4	sanitary_and_fixtures;operation_and_technology
+5.1.19	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Floor surface is stable, firm, and non-slip	4	surfaces_and_slip;reach_and_heights;seating_and_furniture
+5.1.20	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Colour contrast between floor and wall, and fixtures	2	colour_and_contrast;sanitary_and_fixtures
+5.1.21	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Emergency call button	3	emergency_and_life_safety
+5.1.22	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Child change table at accessible height	2	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+5.1.23	Sanitary Facilities	room / space	5.1	Accessible Washrooms	Well-illuminated	3	lighting_and_glare
+5.2.1	Sanitary Facilities	room / space	5.2	Showers	Number of accessible showers adequate for expected use	5	sanitary_and_fixtures;provision_and_quantity
+5.2.2	Sanitary Facilities	room / space	5.2	Showers	Roll-in shower	5	sanitary_and_fixtures
+5.2.3	Sanitary Facilities	room / space	5.2	Showers	Grab bars at appropriate heights and locations	5	reach_and_heights;sanitary_and_fixtures
+5.2.4	Sanitary Facilities	room / space	5.2	Showers	Floor surface is stable, firm, and non-slip	4	surfaces_and_slip;reach_and_heights;seating_and_furniture
+5.2.5	Sanitary Facilities	room / space	5.2	Showers	Colour contrast between shower tile floor and wall	2	colour_and_contrast;sanitary_and_fixtures
+5.2.6	Sanitary Facilities	room / space	5.2	Showers	Water control mounted on wall at accessible height	4	reach_and_heights
+5.2.7	Sanitary Facilities	room / space	5.2	Showers	Hand-held adjustable showerhead within easy reach	3	surfaces_and_slip;reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+5.2.8	Sanitary Facilities	room / space	5.2	Showers	Shower accessories at accessible height and within reach	3	reach_and_heights;sanitary_and_fixtures
+5.2.9	Sanitary Facilities	room / space	5.2	Showers	Fold-down shower seat	3	sanitary_and_fixtures;seating_and_furniture
+5.2.10	Sanitary Facilities	room / space	5.2	Showers	Adult change table	5	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+5.2.11	Sanitary Facilities	room / space	5.2	Showers	Well illuminated	3	lighting_and_glare
+5.3.1	Sanitary Facilities	room / space	5.3	Universal Washrooms	Number of universal washrooms	5	sanitary_and_fixtures;provision_and_quantity
+5.3.2	Sanitary Facilities	room / space	5.3	Universal Washrooms	Washroom identification signage	3	wayfinding_and_signage;sanitary_and_fixtures
+5.3.3	Sanitary Facilities	room / space	5.3	Universal Washrooms	Clear opening width of entry	3	circulation_geometry;doors_and_entries
+5.3.4	Sanitary Facilities	room / space	5.3	Universal Washrooms	Power-operated door	5	doors_and_entries
+5.3.5	Sanitary Facilities	room / space	5.3	Universal Washrooms	Minimum force required to open a free-swing door, or a door that has a self closer	4	doors_and_entries
+5.3.6	Sanitary Facilities	room / space	5.3	Universal Washrooms	Entry door has accessible hardware	4	doors_and_entries
+5.3.7	Sanitary Facilities	room / space	5.3	Universal Washrooms	Entry door is colour contrasted with adjacent surfaces	3	surfaces_and_slip;doors_and_entries;colour_and_contrast
+5.3.8	Sanitary Facilities	room / space	5.3	Universal Washrooms	Clear space for manoeuvring and transfer	5	circulation_geometry
+5.3.9	Sanitary Facilities	room / space	5.3	Universal Washrooms	Grab bars at appropriate height and locations at toilets	5	reach_and_heights;sanitary_and_fixtures
+5.3.10	Sanitary Facilities	room / space	5.3	Universal Washrooms	Toilets at appropriate height and have back supports	5	reach_and_heights;sanitary_and_fixtures
+5.3.11	Sanitary Facilities	room / space	5.3	Universal Washrooms	Toilet flushing mechanisms are within easy reach	4	reach_and_heights;sanitary_and_fixtures
+5.3.12	Sanitary Facilities	room / space	5.3	Universal Washrooms	Toilet paper dispensers at appropriate height and locations	5	reach_and_heights;sanitary_and_fixtures
+5.3.13	Sanitary Facilities	room / space	5.3	Universal Washrooms	Power-outlet near toilet	2	reach_and_heights;sanitary_and_fixtures
+5.3.14	Sanitary Facilities	room / space	5.3	Universal Washrooms	Sink and counter at accessible height with knee clearance	5	reach_and_heights;sanitary_and_fixtures
+5.3.15	Sanitary Facilities	room / space	5.3	Universal Washrooms	All washroom accessories at accessible heights and locations	4	reach_and_heights;sanitary_and_fixtures
+5.3.16	Sanitary Facilities	room / space	5.3	Universal Washrooms	Automated or easy-to-operate plumbing fixtures and accessories	4	sanitary_and_fixtures;operation_and_technology
+5.3.17	Sanitary Facilities	room / space	5.3	Universal Washrooms	Floor surface is stable, firm, and non-slip	4	surfaces_and_slip;reach_and_heights;seating_and_furniture
+5.3.18	Sanitary Facilities	room / space	5.3	Universal Washrooms	Colour contrast between floor and wall, and fixtures	2	colour_and_contrast;sanitary_and_fixtures
+5.3.19	Sanitary Facilities	room / space	5.3	Universal Washrooms	Emergency call button/emergency notifications	3	communication_and_information;emergency_and_life_safety
+5.3.20	Sanitary Facilities	room / space	5.3	Universal Washrooms	Child change table at accessible height	2	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+5.3.21	Sanitary Facilities	room / space	5.3	Universal Washrooms	Adult change table	5	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+5.3.22	Sanitary Facilities	room / space	5.3	Universal Washrooms	Well-illuminated	3	lighting_and_glare
+6.1.1	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Interior directional signage is comprehensive and clearly visible	5	circulation_geometry;wayfinding_and_signage
+6.1.2	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Blade signage is used to supplement overhead signage where useful	4	tactile_and_detectable;wayfinding_and_signage
+6.1.3	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Wayfinding includes a variety of techniques	5	wayfinding_and_signage;provision_and_quantity
+6.1.4	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Signage uses Arabic numerals and/or sans-serif lettering	4	wayfinding_and_signage
+6.1.5	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Lettering, numerals, and symbols are clearly visible	5	wayfinding_and_signage
+6.1.6	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Signs have glare-free surface	4	surfaces_and_slip;lighting_and_glare;wayfinding_and_signage
+6.1.7	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	High-contrast characters/symbols on single-coloured backgrounds	4	colour_and_contrast;wayfinding_and_signage
+6.1.8	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Signs with text are efficiently worded	4	wayfinding_and_signage
+6.1.9	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Use of international symbols/pictograms on signage where useful	4	wayfinding_and_signage
+6.1.10	Wayfinding and Signage	system	6.1	General Wayfinding and Signage	Signs are well illuminated	3	lighting_and_glare;wayfinding_and_signage
+6.2.1	Wayfinding and Signage	system	6.2	Room Identification Signage	Room identification signage is used to identify spaces where useful	4	wayfinding_and_signage
+6.2.2	Wayfinding and Signage	system	6.2	Room Identification Signage	Sign includes Braille and characters/symbols that are raised	4	tactile_and_detectable;wayfinding_and_signage
+6.2.3	Wayfinding and Signage	system	6.2	Room Identification Signage	Sign at recommended height	4	reach_and_heights;wayfinding_and_signage
+6.2.4	Wayfinding and Signage	system	6.2	Room Identification Signage	Tactile sign at recommended location	3	tactile_and_detectable;wayfinding_and_signage
+6.2.5	Wayfinding and Signage	system	6.2	Room Identification Signage	Logical numbering	3	circulation_geometry;wayfinding_and_signage
+6.3.1	Wayfinding and Signage	system	6.3	Directory Boards and Information Kiosks	Comprehensive relevant information	5	communication_and_information
+6.3.2	Wayfinding and Signage	system	6.3	Directory Boards and Information Kiosks	Location of amenities where provided	3	
+6.3.3	Wayfinding and Signage	system	6.3	Directory Boards and Information Kiosks	Raised characters and symbols, and Braille where appropriate	4	tactile_and_detectable;wayfinding_and_signage
+6.3.4	Wayfinding and Signage	system	6.3	Directory Boards and Information Kiosks	Accessible height and approach	4	circulation_geometry;reach_and_heights
+6.3.5	Wayfinding and Signage	system	6.3	Directory Boards and Information Kiosks	Accessible interactive information kiosks	5	communication_and_information
+6.3.6	Wayfinding and Signage	system	6.3	Directory Boards and Information Kiosks	Audio information and instructions (if interactive information kiosks)	3	acoustic_and_audio;communication_and_information
+7.1.1	Emergency Systems	system	7.1	Emergency Exits and Areas of Refuge	Designated area of refuge in multi-level building	5	emergency_and_life_safety;provision_and_quantity
+7.1.2	Emergency Systems	system	7.1	Emergency Exits and Areas of Refuge	Area of refuge has adequate clear space for expected usage	5	circulation_geometry;emergency_and_life_safety;provision_and_quantity
+7.1.3	Emergency Systems	system	7.1	Emergency Exits and Areas of Refuge	Clear signage for emergency exit and area of refuge	5	wayfinding_and_signage;emergency_and_life_safety
+7.1.4	Emergency Systems	system	7.1	Emergency Exits and Areas of Refuge	Emergency exit and door to area of refuge are colour contrasted with surrounding	3	doors_and_entries;colour_and_contrast;emergency_and_life_safety
+7.1.5	Emergency Systems	system	7.1	Emergency Exits and Areas of Refuge	Evacuation chair or similar equipment available and easily understood	5	seating_and_furniture;emergency_and_life_safety;thermal_and_air
+7.1.6	Emergency Systems	system	7.1	Emergency Exits and Areas of Refuge	Ground-level emergency exit is accessible	5	emergency_and_life_safety
+7.2.1	Emergency Systems	system	7.2	Fire Alarm Systems and Equipment	Visual fire alarms generally visible throughout facility and where people might expect to be alone	5	emergency_and_life_safety
+7.2.2	Emergency Systems	system	7.2	Fire Alarm Systems and Equipment	Audible fire alarms thoroughout facility	2	acoustic_and_audio;emergency_and_life_safety
+7.2.3	Emergency Systems	system	7.2	Fire Alarm Systems and Equipment	Fire alarm pulls at accessible height and location	5	reach_and_heights;emergency_and_life_safety
+7.2.4	Emergency Systems	system	7.2	Fire Alarm Systems and Equipment	Fire-fighting and first aid equipment at accessible height and location	5	reach_and_heights;emergency_and_life_safety
+7.2.5	Emergency Systems	system	7.2	Fire Alarm Systems and Equipment	Emergency notification systems	5	communication_and_information;emergency_and_life_safety
+7.3.1	Emergency Systems	system	7.3	Evacuation Instructions	Evacuation instructions on non-reflective surface	5	surfaces_and_slip;lighting_and_glare;emergency_and_life_safety
+7.3.2	Emergency Systems	system	7.3	Evacuation Instructions	Evacuation instructions in large print and high contrast	5	colour_and_contrast;emergency_and_life_safety
+7.3.3	Emergency Systems	system	7.3	Evacuation Instructions	Evacuation instructions include a floor plan diagram and alternate formats	5	emergency_and_life_safety
+7.3.4	Emergency Systems	system	7.3	Evacuation Instructions	Evacuation instructions at accessible height and location	5	reach_and_heights;emergency_and_life_safety
+8.1.1	Additional Use of Spaces	building typology / room	8.1	Office Spaces	Accessible path of travel and manoeuvring space	5	circulation_geometry
+8.1.2	Additional Use of Spaces	building typology / room	8.1	Office Spaces	Chairs are adjustable	3	surfaces_and_slip;reach_and_heights;seating_and_furniture;thermal_and_air
+8.1.3	Additional Use of Spaces	building typology / room	8.1	Office Spaces	Desk height is adjustable	3	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.1.4	Additional Use of Spaces	building typology / room	8.1	Office Spaces	All workstations are appropriate size for expected usage	3	seating_and_furniture;provision_and_quantity
+8.1.5	Additional Use of Spaces	building typology / room	8.1	Office Spaces	Outlets and switches are at accessible heights	4	reach_and_heights
+8.1.6	Additional Use of Spaces	building typology / room	8.1	Office Spaces	Well-illuminated and task lighting is available	3	lighting_and_glare
+8.2.1	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Accessible path of travel to accessible seating spaces	5	circulation_geometry;seating_and_furniture
+8.2.2	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Number and location of accessible seating spaces	5	seating_and_furniture
+8.2.3	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Accessible seating space has adequate clear space	3	circulation_geometry;seating_and_furniture
+8.2.4	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Accessible seating space with line of sight	3	seating_and_furniture
+8.2.5	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Adjacent seating for companions and clear space for service dogs	4	circulation_geometry;seating_and_furniture
+8.2.6	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Stairs and steps	4	vertical_transitions;thermal_and_air
+8.2.7	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Audio accessibility and communication enhancement technologies	5	acoustic_and_audio;communication_and_information
+8.2.8	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Access to stage by performers/speakers and audience	5	acoustic_and_audio
+8.2.9	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Access to all backstage facilities	5	
+8.2.10	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Ticket counters/concessions are accessible	5	reach_and_heights
+8.2.11	Additional Use of Spaces	building typology / room	8.2	Assembly Areas and Lecture Theatres	Well-illuminated	3	lighting_and_glare
+8.3.1	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Accessible path of travel	5	circulation_geometry
+8.3.2	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Seating	3	seating_and_furniture
+8.3.3	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Accessible sight lines for all displays	4	
+8.3.4	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Accessible interactive devices	3	communication_and_information
+8.3.5	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Accessible operable controls	3	reach_and_heights
+8.3.6	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Alternative media for all audio/video presentations	3	acoustic_and_audio;communication_and_information
+8.3.7	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Alternative media for all descriptive information	3	communication_and_information
+8.3.8	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Information in alternative languages for major exhibits	2	communication_and_information
+8.3.9	Additional Use of Spaces	building typology / room	8.3	Exhibit Spaces	Well-illuminated	3	lighting_and_glare
+8.4.1	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Adequate number of rooms accessible	4	provision_and_quantity
+8.4.2	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Additional rooms adaptable	3	reach_and_heights;seating_and_furniture;provision_and_quantity
+8.4.3	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Clear signage	3	wayfinding_and_signage
+8.4.4	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Entrance door is easy to open or power operated	5	doors_and_entries
+8.4.5	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Accessible door hardware	3	doors_and_entries
+8.4.6	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Door viewer at accessible height (if available)	2	doors_and_entries;reach_and_heights
+8.4.7	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Accessible options for bed heights and no platform	4	reach_and_heights;seating_and_furniture;provision_and_quantity
+8.4.8	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	All controls and outlets are within reach	4	reach_and_heights
+8.4.9	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Adequate ratio mix of rooms with roll-in showers and bathtubs	3	sanitary_and_fixtures;provision_and_quantity
+8.4.10	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Design of toilets, showers, and bathrooms	5	sanitary_and_fixtures
+8.4.11	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Furniture and amenities are accessible	4	seating_and_furniture
+8.4.12	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Emergency alarm systems have both audible and visual signals	5	acoustic_and_audio;emergency_and_life_safety
+8.4.13	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Visual notification system	3	communication_and_information
+8.4.14	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Audio accessibility and communication enhancement technologies	3	acoustic_and_audio;communication_and_information
+8.4.15	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Storage space with clear floor space, closets with shelves at variety of heights	3	reach_and_heights;provision_and_quantity
+8.4.16	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Windows with accessible hardware	2	doors_and_entries;lighting_and_glare
+8.4.17	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	Well-illuminated	3	lighting_and_glare
+8.4.18	Additional Use of Spaces	building typology / room	8.4	Lodging and Temporary Accommodation	External spaces and patios are accessible	3	outdoor_and_site
+8.5.1	Additional Use of Spaces	building typology / room	8.5	Outdoor Recreation Areas	Accessible pathways to all facilities and amenities	5	circulation_geometry
+8.5.2	Additional Use of Spaces	building typology / room	8.5	Outdoor Recreation Areas	Seating	4	seating_and_furniture
+8.5.3	Additional Use of Spaces	building typology / room	8.5	Outdoor Recreation Areas	Shelter	4	outdoor_and_site
+8.5.4	Additional Use of Spaces	building typology / room	8.5	Outdoor Recreation Areas	Well-illuminated (if site expected to be lit)	3	lighting_and_glare
+8.6.1	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Access to all facilities and amenities	5	
+8.6.2	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Accessible path of travel	5	circulation_geometry
+8.6.3	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Counter, table, and bar at accessible height, or variety of options	5	reach_and_heights;seating_and_furniture;provision_and_quantity
+8.6.4	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Variety of seating available	3	seating_and_furniture;provision_and_quantity
+8.6.5	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Continuous tray rail in cafeterias, and condiments and cutlery within reach	3	reach_and_heights
+8.6.6	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Menu display boards are easy to read	3	communication_and_information
+8.6.7	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Goods are within reach, vertically stacked where possible	4	reach_and_heights
+8.6.8	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Accessible refrigerators and freezers	4	
+8.6.9	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Vending and dispensing machines are accessible	5	operation_and_technology
+8.6.10	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Check-out counters or point of sale (POS) location is accessible	5	reach_and_heights
+8.6.11	Additional Use of Spaces	building typology / room	8.6	Cafeterias, Restaurants, and Bars	Well-illuminated	3	lighting_and_glare
+8.7.1	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Access to all facilities and display areas	5	
+8.7.2	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Accessible path of travel	5	circulation_geometry
+8.7.3	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Display units are solid, stable, and have rounded edges	3	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.7.4	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Clothes racks within accessible reach	4	reach_and_heights
+8.7.5	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Goods are clearly visible and within reach	4	reach_and_heights
+8.7.6	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Accessible refrigerators and freezers	4	
+8.7.7	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Prices are clearly displayed	3	communication_and_information
+8.7.8	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Check-out counters or point of sale (POS) location is accessible	5	reach_and_heights
+8.7.9	Additional Use of Spaces	building typology / room	8.7	Retail Outlets	Well-illuminated	3	lighting_and_glare
+8.8.1	Additional Use of Spaces	building typology / room	8.8	Playgrounds	Adequate space for all children and their caregivers	5	
+8.8.2	Additional Use of Spaces	building typology / room	8.8	Playgrounds	Surfaces along routes leading to and in play space	5	circulation_geometry;surfaces_and_slip
+8.8.3	Additional Use of Spaces	building typology / room	8.8	Playgrounds	Accessible play space components	5	
+8.8.4	Additional Use of Spaces	building typology / room	8.8	Playgrounds	Seating and shelter	5	seating_and_furniture;outdoor_and_site
+8.9.1	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Accessible path of travel	5	circulation_geometry
+8.9.2	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Number/variety of accessible fitness equipment	5	provision_and_quantity
+8.9.3	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Raised stretching mat	5	tactile_and_detectable
+8.9.4	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Accessible lockers	4	reach_and_heights
+8.9.5	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Service counter is accessible	4	reach_and_heights
+8.9.6	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Drinking fountain is accessible	3	sanitary_and_fixtures
+8.9.7	Additional Use of Spaces	building typology / room	8.9	Fitness and Sports Facilities	Well-illuminated	3	lighting_and_glare
+8.10.1	Additional Use of Spaces	building typology / room	8.10	Pools	Access to pool and all facilities	5	
+8.10.2	Additional Use of Spaces	building typology / room	8.10	Pools	Accessible path of travel	5	circulation_geometry
+8.10.3	Additional Use of Spaces	building typology / room	8.10	Pools	Deck surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.10.4	Additional Use of Spaces	building typology / room	8.10	Pools	Colour-contrasted edges around pool	5	colour_and_contrast
+8.10.5	Additional Use of Spaces	building typology / room	8.10	Pools	Marked pathway from change room to pool	4	circulation_geometry
+8.10.6	Additional Use of Spaces	building typology / room	8.10	Pools	Ramp/sloped entrance or pool lift to access pool	5	vertical_transitions;doors_and_entries
+8.10.7	Additional Use of Spaces	building typology / room	8.10	Pools	Stairs into pool	4	vertical_transitions;thermal_and_air
+8.10.8	Additional Use of Spaces	building typology / room	8.10	Pools	Handrails	4	
+8.10.9	Additional Use of Spaces	building typology / room	8.10	Pools	General safety equipment at accessible height and location	3	reach_and_heights;emergency_and_life_safety
+8.10.10	Additional Use of Spaces	building typology / room	8.10	Pools	Pool wheelchair	3	seating_and_furniture;thermal_and_air
+8.10.11	Additional Use of Spaces	building typology / room	8.10	Pools	Accessible lockers	4	reach_and_heights
+8.10.12	Additional Use of Spaces	building typology / room	8.10	Pools	Well-illuminated	3	lighting_and_glare
+8.11.1	Additional Use of Spaces	building typology / room	8.11	Change Rooms	Accessible path of travel	5	circulation_geometry
+8.11.2	Additional Use of Spaces	building typology / room	8.11	Change Rooms	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.11.3	Additional Use of Spaces	building typology / room	8.11	Change Rooms	Adult change table with privacy	5	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+8.11.4	Additional Use of Spaces	building typology / room	8.11	Change Rooms	Accessible lockers	4	reach_and_heights
+8.11.5	Additional Use of Spaces	building typology / room	8.11	Change Rooms	Seating	3	seating_and_furniture
+8.11.6	Additional Use of Spaces	building typology / room	8.11	Change Rooms	Well-illuminated	3	lighting_and_glare
+8.12.1	Additional Use of Spaces	building typology / room	8.12	Mail Areas	Clear space for approach	5	circulation_geometry
+8.12.2	Additional Use of Spaces	building typology / room	8.12	Mail Areas	Mailboxes at accessible heights	3	reach_and_heights
+8.12.3	Additional Use of Spaces	building typology / room	8.12	Mail Areas	Clear signage for mailboxes	3	reach_and_heights;wayfinding_and_signage
+8.12.4	Additional Use of Spaces	building typology / room	8.12	Mail Areas	Service counters and work surfaces are accessible (if provided)	3	surfaces_and_slip;reach_and_heights
+8.12.5	Additional Use of Spaces	building typology / room	8.12	Mail Areas	Well-illuminated	3	lighting_and_glare
+8.13.1	Additional Use of Spaces	building typology / room	8.13	Shared Laundry Rooms	Clear space for approach	5	circulation_geometry
+8.13.2	Additional Use of Spaces	building typology / room	8.13	Shared Laundry Rooms	Accessible controls and payment options	5	reach_and_heights;provision_and_quantity;operation_and_technology
+8.13.3	Additional Use of Spaces	building typology / room	8.13	Shared Laundry Rooms	Front-loading machines	3	
+8.13.4	Additional Use of Spaces	building typology / room	8.13	Shared Laundry Rooms	Clear signage for washers and dryers	3	wayfinding_and_signage
+8.13.5	Additional Use of Spaces	building typology / room	8.13	Shared Laundry Rooms	Counters, laundry sinks, and seating	3	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+8.13.6	Additional Use of Spaces	building typology / room	8.13	Shared Laundry Rooms	Well-illuminated	3	lighting_and_glare
+8.14.1	Additional Use of Spaces	building typology / room	8.14	Storage Facilities and Lockers	Clear space for approach	5	circulation_geometry
+8.14.2	Additional Use of Spaces	building typology / room	8.14	Storage Facilities and Lockers	Clear signage for lockers	3	reach_and_heights;wayfinding_and_signage
+8.14.3	Additional Use of Spaces	building typology / room	8.14	Storage Facilities and Lockers	Low threshold entry to storage unit	5	vertical_transitions;doors_and_entries
+8.14.4	Additional Use of Spaces	building typology / room	8.14	Storage Facilities and Lockers	Accessible controls	5	reach_and_heights
+8.14.5	Additional Use of Spaces	building typology / room	8.14	Storage Facilities and Lockers	Well-illuminated	3	lighting_and_glare
+8.15.1	Additional Use of Spaces	building typology / room	8.15	Garbage Rooms	Clear space for approach	5	circulation_geometry
+8.15.2	Additional Use of Spaces	building typology / room	8.15	Garbage Rooms	Accessible controls	5	reach_and_heights
+8.15.3	Additional Use of Spaces	building typology / room	8.15	Garbage Rooms	Well-illuminated	3	lighting_and_glare
+8.16.1	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Accessible path of travel to viewpoints	5	circulation_geometry;outdoor_and_site
+8.16.2	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Handrails/guardrails	5	emergency_and_life_safety
+8.16.3	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.16.4	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Level landings and clear space	5	circulation_geometry;vertical_transitions
+8.16.5	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Drainage	2	surfaces_and_slip
+8.16.6	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Viewing amenities are accessible	3	
+8.16.7	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Interpretive signage is accessible	3	wayfinding_and_signage
+8.16.8	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Seating	3	seating_and_furniture
+8.16.9	Additional Use of Spaces	building typology / room	8.16	Viewpoints	Shelter	3	outdoor_and_site
+8.17.1	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Accessible path of travel	5	circulation_geometry
+8.17.2	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Accessible entrance to facility	5	doors_and_entries
+8.17.3	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Clear signage	3	wayfinding_and_signage
+8.17.4	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Service counter is accessible	4	reach_and_heights
+8.17.5	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Printed information and sale items within accessible reach	4	reach_and_heights;communication_and_information
+8.17.6	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Information available in a variety of formats	3	communication_and_information;provision_and_quantity
+8.17.7	Additional Use of Spaces	building typology / room	8.17	Visitor Centre and Kiosk	Seating and shelter	5	seating_and_furniture;outdoor_and_site
+8.18.1	Additional Use of Spaces	building typology / room	8.18	Outdoor Eating Areas	Accessible path of travel	5	circulation_geometry
+8.18.2	Additional Use of Spaces	building typology / room	8.18	Outdoor Eating Areas	Appropriate number of accessible picnic tables with seating	5	reach_and_heights;seating_and_furniture;provision_and_quantity;outdoor_and_site
+8.18.3	Additional Use of Spaces	building typology / room	8.18	Outdoor Eating Areas	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.18.4	Additional Use of Spaces	building typology / room	8.18	Outdoor Eating Areas	Clear space around picnic table, fire pit, and in front of barbecue grill	4	circulation_geometry;reach_and_heights;seating_and_furniture;emergency_and_life_safety;outdoor_and_site
+8.18.5	Additional Use of Spaces	building typology / room	8.18	Outdoor Eating Areas	Shelter option available	4	outdoor_and_site
+8.18.6	Additional Use of Spaces	building typology / room	8.18	Outdoor Eating Areas	Well-illuminated (if site expected to be lit)	3	lighting_and_glare
+8.19.1	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Accessible path of travel and entrance	5	circulation_geometry;doors_and_entries
+8.19.2	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.19.3	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Child change table and counter	5	reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+8.19.4	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Sink and adjacent counter at accessible height	4	reach_and_heights;sanitary_and_fixtures
+8.19.5	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Microwave mounting height accessible and safe	3	reach_and_heights
+8.19.6	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Outlets and switches are at accessible heights	2	reach_and_heights
+8.19.7	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	All accessories at accessible heights and locations	4	reach_and_heights
+8.19.8	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Seating	3	seating_and_furniture
+8.19.9	Additional Use of Spaces	building typology / room	8.19	Family and Nursing Rooms	Well-illuminated	3	lighting_and_glare
+8.20.1	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Accessible entrance	5	doors_and_entries
+8.20.2	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Accessible path of travel and clear space to maneuver	5	circulation_geometry
+8.20.3	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Accessible seating and clear space	3	circulation_geometry;seating_and_furniture
+8.20.4	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Chairs are adjustable	3	surfaces_and_slip;reach_and_heights;seating_and_furniture;thermal_and_air
+8.20.5	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Desk height is adjustable	3	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.20.6	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Fume hoods	4	sanitary_and_fixtures
+8.20.7	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Eyewash stations and emergency showers	3	sanitary_and_fixtures;emergency_and_life_safety
+8.20.8	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Sink at accessible height	4	reach_and_heights;sanitary_and_fixtures
+8.20.9	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Sink faucet is easy to use or automatic	3	reach_and_heights;sanitary_and_fixtures
+8.20.10	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Counter surfaces at accessible height	2	surfaces_and_slip;reach_and_heights
+8.20.11	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Adjacent seating for companion and clear space for service dogs	4	circulation_geometry;seating_and_furniture
+8.20.12	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Audio accessibility and communication enhancement technologies	5	acoustic_and_audio;communication_and_information
+8.20.13	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Access to all storage areas, supplies and equipment	5	
+8.20.14	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Emergency systems	5	emergency_and_life_safety
+8.20.15	Additional Use of Spaces	building typology / room	8.20	Specialized Learning Spaces	Well-iluminated	3	
+8.21.1	Additional Use of Spaces	building typology / room	8.21	Libraries	Accessible path of travel	5	circulation_geometry
+8.21.2	Additional Use of Spaces	building typology / room	8.21	Libraries	Desks/service counters at accessible height or variety of heights	5	reach_and_heights;seating_and_furniture;provision_and_quantity
+8.21.3	Additional Use of Spaces	building typology / room	8.21	Libraries	Book stacks and shelving	3	
+8.21.4	Additional Use of Spaces	building typology / room	8.21	Libraries	Audio accessibility and communication enhancement technologies	5	acoustic_and_audio;communication_and_information
+8.21.5	Additional Use of Spaces	building typology / room	8.21	Libraries	Seating	3	seating_and_furniture
+8.21.6	Additional Use of Spaces	building typology / room	8.21	Libraries	Reading carrels and workstations	4	seating_and_furniture
+8.21.7	Additional Use of Spaces	building typology / room	8.21	Libraries	Accessible interactive self-service transaction kiosks	5	communication_and_information;operation_and_technology
+8.21.8	Additional Use of Spaces	building typology / room	8.21	Libraries	Alternative media for all audio/video presentations	3	acoustic_and_audio;communication_and_information
+8.21.9	Additional Use of Spaces	building typology / room	8.21	Libraries	Book drop slots and backroom facilities	5	
+8.21.10	Additional Use of Spaces	building typology / room	8.21	Libraries	Well-illuminated	3	lighting_and_glare
+8.22.1	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Accessible path of travel and entrance	5	circulation_geometry;doors_and_entries
+8.22.2	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+8.22.3	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Roll-in access for ablution station	5	sanitary_and_fixtures
+8.22.4	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Hand-held adjustable showerhead within easy reach	3	surfaces_and_slip;reach_and_heights;sanitary_and_fixtures;seating_and_furniture
+8.22.5	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Outlets and switches are at accessible heights	4	reach_and_heights
+8.22.6	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	All accessories at accessible heights and locations	4	reach_and_heights
+8.22.7	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Seating	3	seating_and_furniture
+8.22.8	Additional Use of Spaces	building typology / room	8.22	Ablution Stations	Well-illuminated	3	lighting_and_glare
+8.23.1	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Designated or dedicated sensory room	5	sensory_and_cognitive;provision_and_quantity
+8.23.2	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Location and identification	5	wayfinding_and_signage
+8.23.3	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Accessible path of travel and maneuvering space	5	circulation_geometry
+8.23.4	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Seating and surfaces	3	surfaces_and_slip;seating_and_furniture
+8.23.5	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Comfort, activity and calming features	5	sensory_and_cognitive
+8.23.6	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	All operable controls are at accessible heights	4	reach_and_heights
+8.23.7	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Acoustics	3	acoustic_and_audio
+8.23.8	Additional Use of Spaces	building typology / room	8.23	Respite and Sensory Rooms	Illumination	3	lighting_and_glare
+9.1.1	Residential Units	dwelling room / element	9.1	Unit Security and Entry Systems	Convenient location and easy identification	4	wayfinding_and_signage
+9.1.2	Residential Units	dwelling room / element	9.1	Unit Security and Entry Systems	Accessible and easy-to-use controls	4	reach_and_heights
+9.1.3	Residential Units	dwelling room / element	9.1	Unit Security and Entry Systems	Communication system	4	communication_and_information
+9.2.1	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Unit entrance is accessible	5	doors_and_entries
+9.2.2	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Unit entrance is easy to identify	3	doors_and_entries;wayfinding_and_signage
+9.2.3	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Clear signage	3	wayfinding_and_signage
+9.2.4	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Clear opening width of entrance	5	circulation_geometry;doors_and_entries
+9.2.5	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Level landing at entrance	5	vertical_transitions;doors_and_entries
+9.2.6	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Unit door is easy to open or power operated	5	doors_and_entries
+9.2.7	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Level threshold	5	vertical_transitions;doors_and_entries
+9.2.8	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Clear space on interior and exterior of door	4	circulation_geometry;doors_and_entries
+9.2.9	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Accessible door hardware	4	doors_and_entries
+9.2.10	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Door viewer at accessible height (if available)  nit Entrance and Entrance to Outdoor Maximum Spaces Points	2	doors_and_entries;reach_and_heights;outdoor_and_site
+9.2.11	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Well-illuminated	3	lighting_and_glare
+9.2.12	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Shelter (if outdoor entry)	2	doors_and_entries;outdoor_and_site
+9.2.13	Residential Units	dwelling room / element	9.2	Unit Entrance and Entrance to Outdoor Spaces	Entrance to outdoor balcony, patio, and other outdoor spaces is accessible	5	doors_and_entries;outdoor_and_site
+9.3.1	Residential Units	dwelling room / element	9.3	Unit Interior Doors	Clear opening width	5	circulation_geometry
+9.3.2	Residential Units	dwelling room / element	9.3	Unit Interior Doors	Level threshold	5	vertical_transitions;doors_and_entries
+9.3.3	Residential Units	dwelling room / element	9.3	Unit Interior Doors	Clear space on outside and inside of door or doorway	4	circulation_geometry;doors_and_entries
+9.3.4	Residential Units	dwelling room / element	9.3	Unit Interior Doors	Accessible door hardware (if standard for all units)	4	doors_and_entries
+9.4.1	Residential Units	dwelling room / element	9.4	Unit Kitchens	Clear space for manoeuvring	5	circulation_geometry
+9.4.2	Residential Units	dwelling room / element	9.4	Unit Kitchens	Accessible height sink	4	reach_and_heights;sanitary_and_fixtures
+9.4.3	Residential Units	dwelling room / element	9.4	Unit Kitchens	Knee clearance underneath sink or easily modified	4	reach_and_heights;sanitary_and_fixtures
+9.4.4	Residential Units	dwelling room / element	9.4	Unit Kitchens	Sink faucet is easy to use or automatic	3	reach_and_heights;sanitary_and_fixtures
+9.4.5	Residential Units	dwelling room / element	9.4	Unit Kitchens	Counter at accessible height or variety of heights	3	reach_and_heights;provision_and_quantity
+9.4.6	Residential Units	dwelling room / element	9.4	Unit Kitchens	Clear counter space adjacent to sink and appliances	3	reach_and_heights;sanitary_and_fixtures
+9.4.7	Residential Units	dwelling room / element	9.4	Unit Kitchens	Rounded corners on counters and cabinetry	3	reach_and_heights
+9.4.8	Residential Units	dwelling room / element	9.4	Unit Kitchens	Counter has electrical outlets within accessible reach	2	reach_and_heights
+9.4.9	Residential Units	dwelling room / element	9.4	Unit Kitchens	Accessible storage options	3	provision_and_quantity
+9.4.10	Residential Units	dwelling room / element	9.4	Unit Kitchens	Cabinet hardware is accessible (if standard for all units)	3	doors_and_entries
+9.4.11	Residential Units	dwelling room / element	9.4	Unit Kitchens	Accessible cooktop or range	5	
+9.4.12	Residential Units	dwelling room / element	9.4	Unit Kitchens	Knee clearance underneath cooktop, or easily modified	3	reach_and_heights
+9.4.13	Residential Units	dwelling room / element	9.4	Unit Kitchens	Microwave mounting height accessible and safe	4	reach_and_heights
+9.4.14	Residential Units	dwelling room / element	9.4	Unit Kitchens	Refrigerator is easy to open	2	
+9.4.15	Residential Units	dwelling room / element	9.4	Unit Kitchens	Raised dishwasher	2	tactile_and_detectable
+9.4.16	Residential Units	dwelling room / element	9.4	Unit Kitchens	Well-illuminated and task lighting available	3	lighting_and_glare
+9.5.1	Residential Units	dwelling room / element	9.5	Unit Hallways	Clear width	5	circulation_geometry
+9.5.2	Residential Units	dwelling room / element	9.5	Unit Hallways	Colour contrast between wall and floor, with no glare (if colours are standard for all units)	3	lighting_and_glare;colour_and_contrast
+9.5.3	Residential Units	dwelling room / element	9.5	Unit Hallways	No level changes requiring steps	3	vertical_transitions
+9.5.4	Residential Units	dwelling room / element	9.5	Unit Hallways	Well-illuminated	3	lighting_and_glare
+9.6.1	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Clear width	2	circulation_geometry
+9.6.2	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+9.6.3	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Level landings with clear space	3	circulation_geometry;vertical_transitions
+9.6.4	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Handrails	5	
+9.6.5	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Colour-contrasted and slip-resistant strip on nosing (if standard in all units)	4	vertical_transitions;surfaces_and_slip;colour_and_contrast
+9.6.6	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Riser height and tread depth	4	vertical_transitions;reach_and_heights
+9.6.7	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	No open riser	3	vertical_transitions
+9.6.8	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Nosing design	2	vertical_transitions
+9.6.9	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Flooring with no busy patterns (if standard in all units)	2	surfaces_and_slip;colour_and_contrast
+9.6.10	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Height clearance	3	reach_and_heights;tactile_and_detectable
+9.6.11	Residential Units	dwelling room / element	9.6	Unit Interior Stairs	Well-illuminated	3	lighting_and_glare
+9.7.1	Residential Units	dwelling room / element	9.7	Unit Bedrooms and Closets	Clear space in front of closet door or clear width in walk- in closet	3	circulation_geometry;doors_and_entries
+9.7.2	Residential Units	dwelling room / element	9.7	Unit Bedrooms and Closets	Low mounted or adjustable hanger rods, and accessible shelving	2	surfaces_and_slip;reach_and_heights;seating_and_furniture
+9.7.3	Residential Units	dwelling room / element	9.7	Unit Bedrooms and Closets	Clear space on at least two sides of bed	4	circulation_geometry;seating_and_furniture
+9.7.4	Residential Units	dwelling room / element	9.7	Unit Bedrooms and Closets	Power outlet within accessible reach	2	reach_and_heights
+9.7.5	Residential Units	dwelling room / element	9.7	Unit Bedrooms and Closets	Reinforced ceiling for lift	5	vertical_transitions;doors_and_entries
+9.8.1	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Accessible toilet room on the entry level	5	doors_and_entries;sanitary_and_fixtures
+9.8.2	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Floor surface is stable, firm, and non-slip	4	surfaces_and_slip;reach_and_heights;seating_and_furniture
+9.8.3	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Clear opening width of entry door	5	circulation_geometry;doors_and_entries
+9.8.4	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Entry door swings out or slides	3	doors_and_entries
+9.8.5	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Accessible entry door hardware (if door hardware is standard for all units)	4	doors_and_entries
+9.8.6	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Clear space to manoeuvre and transfer	5	circulation_geometry
+9.8.7	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Clear width of route to toilet	5	circulation_geometry;sanitary_and_fixtures
+9.8.8	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Reinforced walls for installation of grab bars	5	doors_and_entries;sanitary_and_fixtures
+9.8.9	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Toilet at appropriate height and has back support	5	reach_and_heights;sanitary_and_fixtures
+9.8.10	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Toilet flushing mechanism within easy reach	4	reach_and_heights;sanitary_and_fixtures
+9.8.11	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Power outlet near toilet	2	reach_and_heights;sanitary_and_fixtures
+9.8.12	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Sink and counter are accessible	5	reach_and_heights;sanitary_and_fixtures
+9.8.13	Residential Units	dwelling room / element	9.8	Unit Toilet Rooms	Accessible storage	4	
+9.9.1	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Floor surface is stable, firm, and non-slip	4	surfaces_and_slip;reach_and_heights;seating_and_furniture
+9.9.2	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Reinforced walls for installation of grab bars	5	doors_and_entries;sanitary_and_fixtures
+9.9.3	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Roll-in shower	5	sanitary_and_fixtures
+9.9.4	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Accessible bathtub (if tub available)	5	sanitary_and_fixtures
+9.9.5	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Accessible water faucet and shower wand (if standard for all units)	5	sanitary_and_fixtures
+9.9.6	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Recessed soap holders or shelves within easy reach	4	reach_and_heights
+9.9.7	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Colour contrast between shower/tub tile floor or base and front wall (if standard in all units)	2	colour_and_contrast;sanitary_and_fixtures
+9.9.8	Residential Units	dwelling room / element	9.9	Unit Showers and Bathtubs	Drainage	3	surfaces_and_slip
+9.10.1	Residential Units	dwelling room / element	9.10	Unit Laundry	Clear space for approach	5	circulation_geometry
+9.10.2	Residential Units	dwelling room / element	9.10	Unit Laundry	Front-loading machines (if appliances are provided for all units)	5	
+9.10.3	Residential Units	dwelling room / element	9.10	Unit Laundry	Accessible controls	5	reach_and_heights
+9.10.4	Residential Units	dwelling room / element	9.10	Unit Laundry	Well-illuminated	3	lighting_and_glare
+9.11.1	Residential Units	dwelling room / element	9.11	Unit General Requirements	Adequate number of accessible and adaptable units	5	reach_and_heights;seating_and_furniture;provision_and_quantity
+9.11.2	Residential Units	dwelling room / element	9.11	Unit General Requirements	Unit has both audible and visual fire/smoke alarm	5	acoustic_and_audio;emergency_and_life_safety
+9.11.3	Residential Units	dwelling room / element	9.11	Unit General Requirements	All controls and outlets are within accessible reach	5	reach_and_heights
+9.11.4	Residential Units	dwelling room / element	9.11	Unit General Requirements	Space/framing is provided for future residential lift (if multiple level)	5	vertical_transitions
+9.11.5	Residential Units	dwelling room / element	9.11	Unit General Requirements	Windows with accessible hardware	4	doors_and_entries;lighting_and_glare
+10.1.1	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Designated trailheads	5	wayfinding_and_signage;provision_and_quantity;outdoor_and_site
+10.1.2	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Trail/pathway entrances are accessible	5	circulation_geometry;doors_and_entries;outdoor_and_site
+10.1.3	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Clear width and passing spaces at regular intervals	5	circulation_geometry
+10.1.4	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+10.1.5	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Path is level or low-gradient slope (when not accommodated by ramp)	5	vertical_transitions
+10.1.6	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	No obstacles on path and overhead, or obstacles are cane detectable and high contrast	5	reach_and_heights;colour_and_contrast;tactile_and_detectable;seating_and_furniture
+10.1.7	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Edge protection	4	tactile_and_detectable
+10.1.8	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Clearly marked pedestrian crossings (if in path of traffic)	3	outdoor_and_site
+10.1.9	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Seating	3	seating_and_furniture
+10.1.10	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Drainage	2	surfaces_and_slip
+10.1.11	Trails and Pathways	outdoor typology	10.1	Trail and Pathway Features	Well-illuminated (if required for expected usage)	3	lighting_and_glare;provision_and_quantity
+10.2.1	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Slope	5	vertical_transitions
+10.2.2	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Clear width	3	circulation_geometry
+10.2.3	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+10.2.4	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Level landings with clear space	4	circulation_geometry;vertical_transitions
+10.2.5	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Colour-contrasted and slip-resistant strip	4	surfaces_and_slip;colour_and_contrast
+10.2.6	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Handrails	5	
+10.2.7	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Edge protection and colour contrast	3	colour_and_contrast;tactile_and_detectable
+10.2.8	Trails and Pathways	outdoor typology	10.2	Trail and Pathway Ramps	Well-illuminated (if required for expected usage)	3	lighting_and_glare;provision_and_quantity
+10.3.1	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Clear width	2	circulation_geometry
+10.3.2	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Surface is firm, stable, and slip resistant	5	surfaces_and_slip;reach_and_heights;seating_and_furniture
+10.3.3	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Level landings with clear space and at regular intervals	3	circulation_geometry;vertical_transitions
+10.3.4	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Handrails	5	
+10.3.5	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Tactile attention indicators (truncated domes)	5	tactile_and_detectable
+10.3.6	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Colour-contrasted and slip-resistant strip on nosing	4	vertical_transitions;surfaces_and_slip;colour_and_contrast
+10.3.7	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Riser height and tread depth	4	vertical_transitions;reach_and_heights
+10.3.8	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	No open riser	3	vertical_transitions
+10.3.9	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Nosing design	2	vertical_transitions
+10.3.10	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Drainage	2	surfaces_and_slip
+10.3.11	Trails and Pathways	outdoor typology	10.3	Trail and Pathway Stairs	Well-illuminated (if required for expected usage	3	lighting_and_glare;provision_and_quantity
+10.4.1	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Trail/pathway information signage at trailhead	5	circulation_geometry;wayfinding_and_signage;communication_and_information;outdoor_and_site
+10.4.2	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Distance markers along route	3	circulation_geometry;wayfinding_and_signage
+10.4.3	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Amenities and/or point of interest signage (if available)	3	wayfinding_and_signage
+10.4.4	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Accessible interpretive signage (if available)	3	wayfinding_and_signage
+10.4.5	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Signage uses Arabic numerals and/or sans-serif lettering	4	wayfinding_and_signage
+10.4.6	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Lettering, numerals and symbols are clearly visible	5	wayfinding_and_signage
+10.4.7	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Signs have glare-free surface	4	surfaces_and_slip;lighting_and_glare;wayfinding_and_signage
+10.4.8	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	High-contrast characters/symbols on single-coloured backgrounds	4	colour_and_contrast;wayfinding_and_signage
+10.4.9	Trails and Pathways	outdoor typology	10.4	Trail and Pathway Wayfinding and Signage	Use of international symbols/pictograms on signage where useful	4	wayfinding_and_signage
+11.1.1	Mind-Friendly Environments	cross-cutting	11.1	Space	The Site provides designated areas intended to reduce or minimize sensory stimulation.	2	sensory_and_cognitive;provision_and_quantity
+11.1.2	Mind-Friendly Environments	cross-cutting	11.1	Space	The Site has a dedicated Respite or Sensory Room.	2	sensory_and_cognitive;provision_and_quantity
+11.1.3	Mind-Friendly Environments	cross-cutting	11.1	Space	Landmarks along circulation routes improve site orientation and memory recall.	2	circulation_geometry;wayfinding_and_signage;sensory_and_cognitive
+11.1.4	Mind-Friendly Environments	cross-cutting	11.1	Space	The Site's sanitary facilities provide alternatives to loud and/or automated accessories (e.g., automated toilets and hand dryers).	2	sanitary_and_fixtures;operation_and_technology
+11.2.1	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	The Site has a coordinated and integrated colour palette with appropriate contrasts, minimal reflection, backgrounds and patterning.	2	surfaces_and_slip;lighting_and_glare;colour_and_contrast
+11.2.2	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	Lighting intensities are graduated between environments.	2	lighting_and_glare
+11.2.3	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	No strobing, flickering, or noise-producing lighting is identified. (Emergency systems are excluded.)	2	reach_and_heights;lighting_and_glare;wayfinding_and_signage;acoustic_and_audio;emergency_and_life_safety;sensory_and_cognitive
+11.2.4	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	Structural and task lighting is independently adjustable and customizable to user preferences.	2	surfaces_and_slip;reach_and_heights;lighting_and_glare;seating_and_furniture
+11.2.5	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	Sounds are contained within and between functional spaces, with minimal ambient noise, regardless of traffic volume or activity.	2	acoustic_and_audio
+11.2.6	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	Temperatures are consistent and comfortable throughout the Site.	2	reach_and_heights;seating_and_furniture;sensory_and_cognitive;thermal_and_air
+11.2.7	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	The Site is free of discernable scents unrelated to its purposes.	2	sensory_and_cognitive;thermal_and_air
+11.2.8	Mind-Friendly Environments	cross-cutting	11.2	Sensory Experience	Scents related to the Site's purposes are contained within the designated area (e.g., food preparation/ consumption and garbage/recycling).	2	sensory_and_cognitive;thermal_and_air;provision_and_quantity
+11.3.1	Mind-Friendly Environments	cross-cutting	11.3	Restoration	The Site provides access to daylight and outdoor views in most functional spaces.	2	lighting_and_glare;outdoor_and_site
+11.3.2	Mind-Friendly Environments	cross-cutting	11.3	Restoration	Biophilic features throughout the Site (interior and exterior) are presented in a way that impacts a combination of sensory needs.	2	sensory_and_cognitive
+11.3.3	Mind-Friendly Environments	cross-cutting	11.3	Restoration	The Site offers sensory-friendly toys, tools and other resources.	2	sensory_and_cognitive
+12.1A.1	Technology & Innovation	cross-cutting	12.1A	?	Environmental Controls	Yes/No	reach_and_heights
+12.1A.2	Technology & Innovation	cross-cutting	12.1A	?	Communication	Yes/No	communication_and_information
+12.1A.3	Technology & Innovation	cross-cutting	12.1A	?	Navigation, Security and Emergency Egress	Yes/No	emergency_and_life_safety
+12.1A.4	Technology & Innovation	cross-cutting	12.1A	?	Mind-Friendly	Yes/No	sensory_and_cognitive
+12.1A.5	Technology & Innovation	cross-cutting	12.1A	?	Website Information its other accessibility features must be available online. 12.1B Users	Yes/No	communication_and_information
+12.1B.1	Technology & Innovation	cross-cutting	12.1B	?	Mobility	Yes/No	
+12.1B.2	Technology & Innovation	cross-cutting	12.1B	?	Deaf and Hard of Hearing	Yes/No	acoustic_and_audio
+12.1B.3	Technology & Innovation	cross-cutting	12.1B	?	Blind and Low Vision	Yes/No	
+12.1B.4	Technology & Innovation	cross-cutting	12.1B	?	Neurodiversity	Yes/No	reach_and_heights
+12.1B.5	Technology & Innovation	cross-cutting	12.1B	?	Other Experiences of Disability Scoring Chart A. Technology Types: Fewer than two types identified 0 B. Users: Fewer than two user groups identified A. Technology Types: Two or more types identified 5 B. Users: Two or more user groups identified A. Technology Types: Four or more types identified 10 B. Users: Four or more user groups identified	Yes/No	wayfinding_and_signage;operation_and_technology
+12.2.1	Technology & Innovation	cross-cutting	12.2	Website Information	General information about accessibility of the site (e.g., elevators)	2	vertical_transitions;communication_and_information
+12.2.2	Technology & Innovation	cross-cutting	12.2	Website Information	Contact information for accessibility support	2	communication_and_information
+12.2.3	Technology & Innovation	cross-cutting	12.2	Website Information	Getting to the site (e.g., transit, parking and entrance)	2	doors_and_entries;outdoor_and_site
+12.2.4	Technology & Innovation	cross-cutting	12.2	Website Information	Accessible amenities (e.g., provision of universal washrooms)	2	sanitary_and_fixtures
+12.2.5	Technology & Innovation	cross-cutting	12.2	Website Information	Communication supports identified	2	wayfinding_and_signage;communication_and_information
+12.2.6	Technology & Innovation	cross-cutting	12.2	Website Information	Other aids (e.g., sensory kits or mobility devices)	2	sensory_and_cognitive
+12.3.1	Technology & Innovation	cross-cutting	12.3	Innovation	Staff responsible for Site operation are taking or have completed an RHFAC Training Course	2	provision_and_quantity;operation_and_technology
+12.3.2	Technology & Innovation	cross-cutting	12.3	Innovation	Site has maintenance policies in place that specifically address accessibility provisions (e.g., technology maintenance requirements or snow removal)	2	operation_and_technology
+12.3.3	Technology & Innovation	cross-cutting	12.3	Innovation	Site provides dedicated WiFi access to enable access to digital technologies, products, services and support.	2	reach_and_heights;provision_and_quantity;operation_and_technology
+12.3.4	Technology & Innovation	cross-cutting	12.3	Innovation	Insert innovation features (Up to 10 different ones, each worth 2 points) Rick Hansen Foundation 300–3820 Cessna Drive, Richmond, BC Canada V7B OA2 The Standards Program Trustmark is a 1-800-213-2131 | @RickHansenFdn mark of Imagine Canada used under licence Charitable Registration Number: 10765 9427 RR 0001 by the Rick Hansen Foundation.	2	reach_and_heights;seating_and_furniture;provision_and_quantity;operation_and_technology

@@ -1,0 +1,96 @@
+phrase_verbatim (instrument own phrase)	kind (ours)	language (written form)	instrument	locator	context_quote_verbatim	text_file	quote_verified_in_text	gloss_OURS_not_an_equivalence
+无障碍通行设施	defined category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.3(4); ch. 2	保障无障碍通行设施、无障碍服务设施和无障碍信息交流设施的安全、功能和性能	ee78b16e1dec13b8.txt	yes	ours: passage facilities; the code divides all provision into three facility classes
+无障碍服务设施	defined category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.3(4); ch. 3	保障无障碍通行设施、无障碍服务设施和无障碍信息交流设施的安全、功能和性能	ee78b16e1dec13b8.txt	yes	ours: service facilities (toilets, baths, rooms, seating, counters)
+无障碍信息交流设施	defined category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.3(4); ch. 4	保障无障碍通行设施、无障碍服务设施和无障碍信息交流设施的安全、功能和性能	ee78b16e1dec13b8.txt	yes	ours: information and communication facilities, a chapter of their own
+残疾人、老年人等有需求的人	user category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.3(1)	满足残疾人、老年人等有需求的人使用	ee78b16e1dec13b8.txt	yes	ours: disabled people, older people and others with a need
+行动障碍者	user category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.2	均不应妨碍行动障碍者的独立通行	ee78b16e1dec13b8.txt	yes	ours: people with mobility impairment
+视觉障碍者	user category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1	视觉障碍者主要使用的楼梯和台阶应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: people with visual impairment; rules scoped to stairs 'mainly used' by them
+听觉障碍者、视觉障碍者和言语障碍者	user category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4.8	应同时满足听觉障碍者、视觉障碍者和言语障碍者使用	ee78b16e1dec13b8.txt	yes	ours: hearing, visual and speech impairment
+乘轮椅者	user category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.2	应方便乘轮椅者进入和使用	ee78b16e1dec13b8.txt	yes	ours: wheelchair rider
+独立通行	performance aim	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.2	均不应妨碍行动障碍者的独立通行	ee78b16e1dec13b8.txt	yes	ours: independent passage
+系统性	performance aim	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.3(3)	保证系统性及无障碍设施之间有效衔接	ee78b16e1dec13b8.txt	yes	ours: systemic continuity between facilities; also checked at handover (5.0.1)
+安全警示线	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.3	必要时应同时设置安全警示线	ee78b16e1dec13b8.txt	yes	ours: safety warning line near hazardous terrain
+地形险要地段	site condition	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.3	无障碍通行流线在临近地形险要地段处应设置安全防护设施	ee78b16e1dec13b8.txt	yes	ours: dangerous terrain
+检票口、结算口	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.3	各类检票口、结算口等应设轮椅通道	ee78b16e1dec13b8.txt	yes	ours: ticket gates and checkouts
+轮椅通道	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.3	各类检票口、结算口等应设轮椅通道	ee78b16e1dec13b8.txt	yes	ours: wheelchair lane (also beside parking, 2.9.2)
+人员密集的公共场所	context class	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.2	人员密集的公共场所的通行净宽不应小于1.80m	ee78b16e1dec13b8.txt	yes	ours: crowded public places, which raise the route width
+安全阻挡措施	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.5	应在净高不大于2.00m处采取安全阻挡措施	ee78b16e1dec13b8.txt	yes	ours: safety stopping measure; one phrase for barring low spaces and ramp drop edges
+坡段起止点的高差	quantity	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1(1)	当条件受限且坡段起止点的高差不大于150mm时	ee78b16e1dec13b8.txt	yes	ours: rise between start and end of a ramp run, which unlocks a steeper slope
+条件受限	compliance route	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1(1)	当条件受限且坡段起止点的高差不大于150mm时	ee78b16e1dec13b8.txt	yes	ours: 'where conditions are constrained', a relaxation trigger
+升降平台	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.4.1(3); 2.6.5	同时设置台阶和升降平台的出入口	ee78b16e1dec13b8.txt	yes	ours: platform lift as one of three accessible-entrance types
+出入口闸机	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.4.3	设置出入口闸机时	ee78b16e1dec13b8.txt	yes	ours: entrance turnstile or gate
+旋转门	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.2	在无障碍通道上不应使用旋转门。	ee78b16e1dec13b8.txt	yes	ours: revolving door, banned on accessible routes
+挡块	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.3	满足无障碍要求的门不应设挡块和门槛	ee78b16e1dec13b8.txt	yes	ours: door stop or sill block
+斜面过渡	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.3	并应以斜面过渡	ee78b16e1dec13b8.txt	yes	ours: bevelled transition of a small level change
+全玻璃门	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.6	全玻璃门应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: all-glass door
+防撞提示	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.6(3)	防撞提示应横跨玻璃门或隔断	ee78b16e1dec13b8.txt	yes	ours: anti-collision marking on glazing
+净间距	quantity	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.7	两道门之间的距离除去门扇摆动的空间后的净间距不应小于1.50m	ee78b16e1dec13b8.txt	yes	ours: clear distance between doors in series
+观察窗	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.9	满足无障碍要求的双向开启的门应在可视高度部分安装观察窗	ee78b16e1dec13b8.txt	yes	ours: vision panel in a double-acting door
+候梯厅	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.1	无障碍电梯的候梯厅应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: lift lobby
+盲文标志	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.1(2)	按钮应设置盲文标志	ee78b16e1dec13b8.txt	yes	ours: braille marking
+抵达音响	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.1(4)	应设置电梯运行显示装置和抵达音响	ee78b16e1dec13b8.txt	yes	ours: arrival chime
+宽轿厢	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.2	如采用宽轿厢	ee78b16e1dec13b8.txt	yes	ours: wide car; paired with 深轿厢 (deep car)
+深轿厢	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.2	如采用深轿厢	ee78b16e1dec13b8.txt	yes	ours: deep car
+水平滑动式门	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.3(1)	应为水平滑动式门	ee78b16e1dec13b8.txt	yes	ours: horizontal sliding door
+安全挡板	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.5(1)	应设扶手、安全挡板和呼叫控制按钮	ee78b16e1dec13b8.txt	yes	ours: safety guard plate of a platform lift
+防止误入	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.5(2)	应采用防止误入的安全防护措施	ee78b16e1dec13b8.txt	yes	ours: preventing mistaken entry
+水平延伸	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.8.3	扶手起点和终点处应水平延伸	ee78b16e1dec13b8.txt	yes	ours: horizontal extension of a handrail
+截面的内侧边缘与墙面的净距离	quantity	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.8.4	截面的内侧边缘与墙面的净距离不应小于40mm	ee78b16e1dec13b8.txt	yes	ours: handrail clearance from wall
+上/落客区	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.9 heading	无障碍机动车停车位和上/落客区	ee78b16e1dec13b8.txt	yes	ours: passenger loading zone
+轮椅通道线	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.9.4	应设置停车线、轮椅通道线和无障碍标志	ee78b16e1dec13b8.txt	yes	ours: wheelchair-aisle marking
+缘石坡道	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.1	有高差时应设置缘石坡道	ee78b16e1dec13b8.txt	yes	ours: kerb ramp, a separate object from the wheelchair ramp
+全宽式单面坡缘石坡道	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.4(1)	全宽式单面坡缘石坡道的坡度不应大于1：20	ee78b16e1dec13b8.txt	yes	ours: full-width single-slope kerb ramp
+三面坡缘石坡道	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.5(2)	三面坡缘石坡道的正面坡道宽度不应小于1.20m	ee78b16e1dec13b8.txt	yes	ours: three-sided kerb ramp
+坡口	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.2	缘石坡道的坡口与车行道之间应无高差。	ee78b16e1dec13b8.txt	yes	ours: the mouth of a kerb ramp at the carriageway
+过渡空间	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.6	缘石坡道顶端处应留有过渡空间	ee78b16e1dec13b8.txt	yes	ours: transition space at the top of a kerb ramp
+行进盲道	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.11.3	行进盲道的起点、终点、转弯处，应设置提示盲道	ee78b16e1dec13b8.txt	yes	ours: guidance tactile paving; 盲道 is the parent term
+救助呼叫装置	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.4	应设置易于识别和使用的救助呼叫装置	ee78b16e1dec13b8.txt	yes	ours: emergency assistance call device; must be usable by a person fallen to the floor (3.1.8(6))
+跌倒在地面的人	user situation	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.8(6)	并应满足坐在坐便器上和跌倒在地面的人均能够使用	ee78b16e1dec13b8.txt	yes	ours: a person who has fallen to the floor
+安全抓杆	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.7(2)	安全抓杆直径应为30mm～40mm	ee78b16e1dec13b8.txt	yes	ours: grab bar; distinct from 扶手
+L形安全抓杆	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.8(3)	无障碍坐便器另一侧设置的L形安全抓杆	ee78b16e1dec13b8.txt	yes	ours: L-shaped grab bar
+低位挂衣钩、低位毛巾架、低位搁物架	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.7(3)	低位挂衣钩、低位毛巾架、低位搁物架距地面高度不应大于1.20m	ee78b16e1dec13b8.txt	yes	ours: low-level hook, towel rail, shelf; 低位 'low-position' is a productive prefix
+坐便器水箱控制装置	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.8(4)	坐便器水箱控制装置应位于易于触及的位置，应可自动操作或单手操作	ee78b16e1dec13b8.txt	yes	ours: flush control
+取纸器	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.8(5)	取纸器应设在坐便器的侧前方	ee78b16e1dec13b8.txt	yes	ours: toilet-paper dispenser
+支撑安全抓杆	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.9(2)	应在小便器上部设置支撑安全抓杆	ee78b16e1dec13b8.txt	yes	ours: supporting grab bar above a urinal
+镜子反光面	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.10(2)	镜子反光面的底端距地面的高度不应大于1.00m	ee78b16e1dec13b8.txt	yes	ours: mirror reflecting surface
+手持的喷头	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.11(5)	应设置一个手持的喷头	ee78b16e1dec13b8.txt	yes	ours: hand-held shower head
+无障碍盆浴间	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.12	无障碍盆浴间应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: accessible bath room
+无障碍厨房	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.13	无障碍厨房应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: accessible kitchen
+无障碍厕位	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.2.2	无障碍厕位应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: accessible cubicle inside a public toilet; distinct from 无障碍厕所 (a separate room)
+无障碍厕所	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.2.3	无障碍厕所应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: stand-alone accessible toilet room
+多功能台	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.2.3(2)	内部应设置无障碍坐便器、无障碍洗手盆、多功能台	ee78b16e1dec13b8.txt	yes	ours: multi-purpose table (e.g. changing shelf)
+门外可紧急开启的门闩	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.2.2(2)	并应采用门外可紧急开启的门闩	ee78b16e1dec13b8.txt	yes	ours: latch openable from outside in an emergency
+无障碍客房	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4	无障碍客房和无障碍住房、居室	ee78b16e1dec13b8.txt	yes	ours: accessible guest room
+无障碍住房、居室	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4	无障碍客房和无障碍住房、居室	ee78b16e1dec13b8.txt	yes	ours: accessible dwelling and living room (residential)
+床侧通道	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4.6	乘轮椅者上下床用的床侧通道宽度不应小于1.20m。	ee78b16e1dec13b8.txt	yes	ours: bedside transfer aisle
+门禁	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4.8	无障碍住房的门禁和无障碍客房的门铃应同时满足听觉障碍者、视觉障碍者和言语障碍者使用。	ee78b16e1dec13b8.txt	yes	ours: door-entry system, usable by hearing, visual and speech impairment
+轮椅席位	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.5	轮椅席位的观看视线不应受到遮挡	ee78b16e1dec13b8.txt	yes	ours: wheelchair space in seating
+陪护席位	space	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.5.4(3)	应设置1：1的陪护席位	ee78b16e1dec13b8.txt	yes	ours: companion seat
+观看视线	quantity	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.5.1	轮椅席位的观看视线不应受到遮挡，并不应遮挡他人视线。	ee78b16e1dec13b8.txt	yes	ours: sightline
+低位服务设施	defined category	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.6.1	为公众提供服务的各类服务台均应设置低位服务设施	ee78b16e1dec13b8.txt	yes	ours: low-level service facility
+低位电话	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.7(2)	应至少设1部低位电话	ee78b16e1dec13b8.txt	yes	ours: low-level telephone
+听筒线	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.7(2)	听筒线长度不应小于600mm	ee78b16e1dec13b8.txt	yes	ours: handset cord
+个人自助终端	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.7(3)	应至少设1部低位个人自助终端	ee78b16e1dec13b8.txt	yes	ours: self-service kiosk
+读屏软件	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.7(4)	应至少提供1台具备读屏软件和支持屏幕放大功能的计算机	ee78b16e1dec13b8.txt	yes	ours: screen reader
+可替换键盘	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.7(4)	支持可替换键盘的计算机不应少于20%	ee78b16e1dec13b8.txt	yes	ours: replaceable keyboard
+过街音响提示装置	element	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.8	过街音响提示装置应符合下列规定	ee78b16e1dec13b8.txt	yes	ours: audible pedestrian signal
+视觉标识和听觉标识	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.4	应同时提供包括视觉标识和听觉标识的警示标识	ee78b16e1dec13b8.txt	yes	ours: two-sense warning
+维护责任人	role	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	5.0.3	对竣工验收交付使用的无障碍设施应明确维护责任人。	ee78b16e1dec13b8.txt	yes	ours: person responsible for maintenance; maintenance is part of the code
+应急维护措施	technique	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	5.0.6	维护责任人应采取应急维护措施	ee78b16e1dec13b8.txt	yes	ours: emergency maintenance, e.g. slip resistance lost to rain or snow
+既有建筑改造或改建	compliance route	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.4(1)	既有建筑改造或改建的门开启后的通行净宽不应小于800mm	ee78b16e1dec13b8.txt	yes	ours: existing-building alteration carries its own lower value
+创新性的技术方法和措施	compliance route	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.4	创新性的技术方法和措施，应进行论证并符合本规范中有关性能的要求。	ee78b16e1dec13b8.txt	yes	ours: innovative methods allowed if demonstrated against performance requirements
+各级文物保护单位	context class	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	1.0.3(6)	各级文物保护单位根据需要在不破坏文物的前提下进行无障碍设施建设。	ee78b16e1dec13b8.txt	yes	ours: protected heritage sites
+全文强制性工程建设规范	drafting form	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	前言 (p.4)	逐步用全文强制性工程建设规范取代现行标准中分散的强制性条文	ee78b16e1dec13b8.txt	yes	ours: fully mandatory construction code replacing scattered mandatory clauses
+适老化改造	technique	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 4	无障碍环境建设应当与适老化改造相结合	575638778aada9c1.txt	yes	ours: age-friendly retrofit, joined to barrier-free construction by statute
+同步规划、同步设计、同步施工、同步验收、同步交付使用	process rule	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 12	无障碍设施应当与主体工程同步规划、同步设计、同步施工、同步验收、同步交付使用	575638778aada9c1.txt	yes	ours: the 'five synchronies' with the main works
+替代性措施	compliance route	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 18	不具备无障碍设施改造条件的，责任人应当采取必要的替代性措施。	575638778aada9c1.txt	yes	ours: alternative measure where retrofit is not feasible
+家庭无障碍设施改造	technique	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 19	县级以上人民政府应当支持、指导家庭无障碍设施改造。	575638778aada9c1.txt	yes	ours: home adaptation, subsidised
+加装电梯	technique	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 22	国家支持城镇老旧小区既有多层住宅加装电梯或者其他无障碍设施	575638778aada9c1.txt	yes	ours: adding lifts to existing multi-storey housing
+人行天桥和人行地下通道	element	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 23	大型居住区的人行天桥和人行地下通道	575638778aada9c1.txt	yes	ours: footbridges and pedestrian underpasses
+体验试用	process rule	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 17	参加意见征询和体验试用等活动	575638778aada9c1.txt	yes	ours: trial use by disabled and older people's representatives during design and handover
+临时无障碍设施	element	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 27	因特殊情况设置的临时无障碍设施，应当符合无障碍设施工程建设标准。	575638778aada9c1.txt	yes	ours: temporary accessible facility
+服务犬	user situation	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 46	应当为残疾人携带导盲犬、导听犬、辅助犬等服务犬提供便利	575638778aada9c1.txt	yes	ours: service dogs, named by three kinds
+无障碍服务窗口	element	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 40	应当设置低位服务台或者无障碍服务窗口	575638778aada9c1.txt	yes	ours: accessible service window
+语音、大字、闪光等提示装置	element	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 47	视情况设置语音、大字、闪光等提示装置	575638778aada9c1.txt	yes	ours: voice, large-print and flashing alerts in emergency shelters
+通用设计理念	doctrine	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 51	国家推广通用设计理念	575638778aada9c1.txt	yes	ours: the universal-design idea, promoted by statute
+认证	compliance route	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 53	国家建立健全无障碍设计、设施、产品、服务的认证和无障碍信息的评测制度	575638778aada9c1.txt	yes	ours: certification of design, facilities, products, services

@@ -1,0 +1,61 @@
+concept_id	concept_label	source_of_concept	status	n_observations	note
+C01	Well-illuminated (if site expected to be lit)	RHFAC recurring statement (catalogue 2.1)	FOUND	3	law (Order 379, Ord. 114) sets no lighting duty; design standard treats it as 照明設備 / 明るさ / 足元灯
+C02	Surface is firm, stable and slip resistant	RHFAC recurring statement (catalogue 2.1)	FOUND	5	JA carve is 粗面 or 滑りにくい材料 (rough or slip-resistant); "firm" and "stable" have no counterpart in the law text read
+C03	Seating	RHFAC recurring statement (catalogue 2.1)	FOUND	4	law: 休憩の用に供する設備 (guidance tier only, corridors); 優先席 is the transport/priority-seat sense
+C04	Handrails	RHFAC recurring statement (catalogue 2.1)	FOUND	2	手すり; JA distinguishes one side vs 両側 by tier
+C05	Clear width	RHFAC recurring statement (catalogue 2.1)	FOUND	3	law writes bare 幅; design standard writes 有効幅員 and defines its measurement for doors
+C06	Accessible path of travel	RHFAC recurring statement (catalogue 2.1)	FOUND	2	statutory route types: 移動等円滑化経路, 視覚障害者移動等円滑化経路, 車椅子使用者用経路
+C07	Drainage	RHFAC recurring statement (catalogue 2.1)	FOUND	3	design standard only (排水溝, 溝蓋, 水はけ); not in the law text
+C08	Clear signage	RHFAC recurring statement (catalogue 2.1)	FOUND	5	law: 標識 (signs at facilities) and 案内板/案内設備 (layout boards); JIS Z 8210 pictograms by reference (not obtained)
+C09	Audio accessibility and communication enhancement technologies	RHFAC recurring statement (catalogue 2.1)	FOUND	4	law: lift voice announcements only; design standard: 集団補聴装置（ヒアリングループシステム）, 光警報装置, 情報伝達設備
+C10	Level landings with clear space	RHFAC recurring statement (catalogue 2.1)	FOUND	2	landing defined by rise interval and 踏幅, not by clear space
+C11	Floor surface is stable, firm, and non-slip	RHFAC recurring statement (catalogue 2.1)	FOUND	1	JA carve is 粗面 or 滑りにくい材料 (rough or slip-resistant); "firm" and "stable" have no counterpart in the law text read
+C12	Clear space for approach	RHFAC recurring statement (catalogue 2.1)	FOUND (grep-located; page not read in full)	2	located by grep only; approach space expressed as 接近 / 前面のスペース
+C13	Well illuminated (if required for expected usage)	RHFAC recurring statement (catalogue 2.1)	FOUND (grep-located; page not read in full)	1	law (Order 379, Ord. 114) sets no lighting duty; design standard treats it as 照明設備 / 明るさ / 足元灯
+C14	Surface is stable, firm, and slip resistant	RHFAC recurring statement (catalogue 2.1)	FOUND (shared with C02)	5	JA carve is 粗面 or 滑りにくい材料 (rough or slip-resistant); "firm" and "stable" have no counterpart in the law text read
+C15	Shelter	RHFAC recurring statement (catalogue 2.1)	FOUND	2	design standard: 上屋, 屋根、庇 (snow/rain); not in law
+C16	Riser height and tread depth	RHFAC recurring statement (catalogue 2.1)	FOUND	4	Ord. 114 sets both; design standard spells けあげ in kana and gives the T+2R relation
+C17	Nosing design	RHFAC recurring statement (catalogue 2.1)	FOUND	1	段鼻の突き出し
+C18	No open riser	RHFAC recurring statement (catalogue 2.1)	FOUND	2	design standard: 蹴込み板 / 蹴込み寸法
+C19	Level threshold	RHFAC recurring statement (catalogue 2.1)	FOUND	2	no threshold noun: the clause is 戸の前後に高低差がない; design standard adds 下枠の立ち上がり
+C20	Height clearance (if sheltered or parkade)	RHFAC recurring statement (catalogue 2.1)	FOUND (grep-located; page not read in full)	1	only in a design-example caption (parking under pilotis); no clearance rule found in the parts read
+C21	Edge protection	RHFAC recurring statement (catalogue 2.1)	FOUND	3	立ち上がり / 脱輪防止 / 車椅子当たり (design standard)
+C22	Colour-contrasted and slip-resistant strip on nosing	RHFAC recurring statement (catalogue 2.1)	FOUND	3	contrast carved as 色の明度、色相又は彩度の差 (law) and 輝度比 (design standard); strip = 滑り止め
+C23	Tactile attention indicators (truncated domes)	RHFAC recurring statement (catalogue 2.1)	FOUND	2	点状ブロック等 defined in Order Art.11; JIS T 9251 not obtained
+C24	Slope	RHFAC recurring statement (catalogue 2.1)	FOUND	3	勾配 (gradient) and 傾斜 (incline) both used; source text carries ruby on 勾 in two clauses
+C25	Sink faucet is easy to use or automatic	RHFAC recurring statement (catalogue 2.1)	FOUND (grep-located; page not read in full)	1	located by grep only (水栓金具 レバー式/センサー式)
+C26	Outlets and switches are at accessible heights	RHFAC recurring statement (catalogue 2.1)	FOUND	2	design standard 18.5 sets centre heights
+C27	Microwave mounting height accessible and safe	RHFAC recurring statement (catalogue 2.1)	SEARCHED-ABSENT	0	電子レンジ: 0 hits in design-standard text; not treated by the law texts read in full
+C28	Level landings with clear space and at regular intervals	RHFAC recurring statement (catalogue 2.1)	FOUND	1	landing defined by rise interval and 踏幅, not by clear space
+C29	Colour-contrasted and slip-resistant strip	RHFAC recurring statement (catalogue 2.1)	FOUND (shared with C22)	3	contrast carved as 色の明度、色相又は彩度の差 (law) and 輝度比 (design standard); strip = 滑り止め
+C30	Accessible lockers	RHFAC recurring statement (catalogue 2.1)	FOUND (grep-located; page not read in full)	1	located by grep only (changing rooms)
+C31	Accessible door hardware	RHFAC recurring statement (catalogue 2.1)	FOUND	3	door operation carved as a structure (自動的に開閉する構造…) not as hardware; hardware = 取っ手 / ドアクローザー in design standard
+C32	Accessible controls	RHFAC recurring statement (catalogue 2.1)	FOUND	2	law: 制御装置 for lifts only
+Q-height	height	quantity-bearing word (catalogue 2.2)	FOUND	1	高さ throughout; example 受け口の高さ (urinal rim)
+Q-level	level	quantity-bearing word (catalogue 2.2)	FOUND	2	高低差 / 水平
+Q-width	width	quantity-bearing word (catalogue 2.2)	FOUND	1	幅
+Q-clearance	clearance	quantity-bearing word (catalogue 2.2)	FOUND	1	only クリアランス (hinge gap) found — a different sense; no general clearance word
+Q-number	number	quantity-bearing word (catalogue 2.2)	FOUND	1	数, mostly as count rules by proportion
+Q-slope	slope	quantity-bearing word (catalogue 2.2)	FOUND (shared with C24)	3	勾配 (gradient) and 傾斜 (incline) both used; source text carries ruby on 勾 in two clauses
+Q-depth	depth	quantity-bearing word (catalogue 2.2)	FOUND	1	奥行き (lift car, lobby)
+Q-riser	riser	quantity-bearing word (catalogue 2.2)	FOUND (shared with C16)	4	Ord. 114 sets both; design standard spells けあげ in kana and gives the T+2R relation
+Q-tread	tread	quantity-bearing word (catalogue 2.2)	FOUND (shared with C16)	4	Ord. 114 sets both; design standard spells けあげ in kana and gives the T+2R relation
+Q-force	force	quantity-bearing word (catalogue 2.2)	FOUND	1	only qualitative 軽い力; no force quantity in law or in parts read
+Q-time	time	quantity-bearing word (catalogue 2.2)	FOUND	1	閉鎖作動時間 (door closer)
+Q-gradient	gradient	quantity-bearing word (catalogue 2.2)	FOUND (shared with C24)	3	勾配 (gradient) and 傾斜 (incline) both used; source text carries ruby on 勾 in two clauses
+Q-size	size	quantity-bearing word (catalogue 2.2)	FOUND	1	寸法
+Q-volume	volume	quantity-bearing word (catalogue 2.2)	FOUND (grep-located; page not read in full)	1	located by grep only (音量, in an auditorium context)
+Q-capacity	capacity	quantity-bearing word (catalogue 2.2)	FOUND (grep-located; page not read in full)	2	定員 / 積載荷重 (lifts, platform lifts), grep only
+Q-distance	distance	quantity-bearing word (catalogue 2.2)	FOUND	1	経路の長さ; also 五十メートル以内ごと interval
+Q-lighting levels	lighting levels	quantity-bearing word (catalogue 2.2)	FOUND (grep-located; page not read in full)	1	照度, grep only; no lux value found in parts read
+Q-ratio	ratio	quantity-bearing word (catalogue 2.2)	FOUND	1	proportional count rules (百分の一を乗じて得た数); 輝度比 is under C22
+P03	ramp gradient	active base parameter	FOUND	2	勾配 of 傾斜路, with separate indoor/outdoor and tier values
+P04	corridor width	active base parameter	FOUND	3	廊下等 (defined) / 屋内の通路; width with a passing-place alternative (すれ違い)
+P05	turning circle	active base parameter	FOUND	4	carved by function: 車椅子の転回に支障がない場所, 140㎝角, 直径150㎝以上の円; 回転 vs 転回（方向転換）
+P06	operating force	active base parameter	FOUND	1	only qualitative 軽い力; no force quantity in law or in parts read
+P07	reverberation time	active base parameter	FOUND	1	no 残響 in any text; carved as 響きの抑制 (suppressing reverberance) without a time quantity
+P08	LRV contrast	active base parameter	FOUND	2	no LRV; 明度差, 輝度比, 輝度コントラスト
+P09	door width	active base parameter	FOUND	2	出入口 幅 (law) / 出入口の有効幅員 (design standard)
+P10	colour temperature	active base parameter	SEARCHED-ABSENT	0	色温度: 0 hits in design standard; not in law texts read in full
+P11	headroom clearance	active base parameter	FOUND	2	no headroom minimum found; treated as collision hazard (十分な高さのない空間, 突出物)
+P12	ramp run length	active base parameter	FOUND	1	law carves landings by rise (高さ七十五センチメートル以内ごと), not run length; design standard mentions 傾斜路の距離 only for signage

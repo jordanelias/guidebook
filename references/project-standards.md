@@ -5001,3 +5001,174 @@ renders: must be able to process specifications to be readable for a webpage, mu
 CONDITION: any session asking what the pipeline-orchestration skill must do, how each stage is to be run, or whether the adversarial pass covers sequence.
 ACTION: Follow `skills/run-pipeline_SKILL.md`; change it by ledger entry, not by session preference.
 DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statements 2026-11-06 — the old item subjects are admitted as a basis for the base vocabulary; the base must serve every P1+P2+P3 language; Opus plans the population
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9 after a read-only review of the base tables (`scratchpad/session_2026-11-06-base-vocabulary-review/base-review.md`, PR #213), and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim; the first two arrived mid-turn.
+
+On language and jurisdiction scope:
+
+> "these base tables, as per our aliases and native terms and translations and multilingual and multijurisdictional requirements etc, must work across all languages that we have defined for this current edition of project (the p1+2+3, I think it's called, for the initial countries to focus on)"
+
+On prior work:
+
+> "we should have some work already done based upon previous editions of this project and those listed specification items"
+
+On the question the review put (whether the 93 item subjects, value-stripped, may be admitted as a catalogue for prepopulating parameter names, overriding the 2026-10-09 exclusion):
+
+> "great work. yes, use the 93 items with stripped values as a basis. with your criticisms in mind, have Opus plan out a strategy with which to populate the base tables and address all listed issues such that we have a truly comprehensive international project without English bias"
+
+**What this establishes**
+
+1. **The 93 item subjects are admitted as a basis.** This reverses, for the pre-reset `items` names only, the 2026-10-09 clause that the old Part 4 item names "are not a permitted source" (the entry "Owner statements 2026-10-09 — every source is scanned for every parameter…", item 3). The mark of that supersession is this item: the back-pointer grammar cannot mark a clause that sits in this ledger.
+2. **What "basis" does not do.** It does not mint anything. The guard the owner chose on 2026-10-09 stands: "Screen, then you approve". Each candidate is screened (no digit, comparator or min/max word, no old item code, not already held) and listed in one table with the item it came from, and the owner approves that table in a further dated entry before any term is minted. [ASSUMPTION: "use … as a basis" means a source of candidate names under that guard, not an approval of the names, and not a licence to file findings into the old item containers. The deletion of the item layer (2026-09-01) stands; an item subject is a lead for a quantity, never a container.]
+3. **A route is owed.** `terms.catalogue`'s CHECK already admits the pre-reset corpus file, but `_resolve_catalogue_entry` resolves it for `terms:<TERM-ID>` only. Admitting the item subjects needs a resolver and no schema change, and it ships as a tooling-only pull request before any name is minted (`CLAUDE.md` rule 10).
+4. **The language scope is P1+P2+P3.** The base tables, aliases, native terms and translations must work across every language those jurisdictions require. [ASSUMPTION: the set is the one recorded in `workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` section 3 (US UK AU CA DE NO SE ISO EU; FR CH NL DK FI BE IE ES IT PT; JP SG NZ KR CN), which the owner confirmed on 2026-10-30 ("Yes it is P1+P2+P3"), giving the 14 languages `lang_jur_map` pairs with them. The 2026-10-29 OR-12a scoping-out of Arabic, Bengali, Hindi and Swahili is not touched by this statement.]
+5. **Opus plans.** An Opus-class planner writes a strategy to populate the base tables and to address the review's listed issues (the parameter list at ten rows, the unverified and English-biased alias layer, the English-only ICF, identity, need and room tables, the empty medical lens, the missing topics). The plan is a proposal: it approves nothing and writes no rows.
+
+CONDITION: any session asking whether the 93 old item names may seed parameters, whether item subjects are still excluded as a source, whether the base vocabulary must cover the P1+P2+P3 languages, or who plans the population of the base tables.
+ACTION: (1) Treat the pre-reset item subjects, value-stripped and with their codes removed, as a permitted source of candidate names, never as containers. (2) Mint no name from them before a tooling pull request adds the catalogue route and the owner approves the screened table in a dated entry. (3) Build base vocabulary, aliases and native terms for every P1+P2+P3 language, with in-language provenance (R11); never treat an English term translated word for word as a native term. (4) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statement 2026-11-06 (second) — every recommendation of the base-population plan is applied
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, in reply to the plan `scratchpad/session_2026-11-06-base-vocabulary-review/base-population-plan.md` and its section E of twelve owner decisions, and recorded on contact per `CLAUDE.md` rule 0. The whole message:
+
+> "apply all recommendations, carefully infer and apply all solutions from my rulings and context required for pipeline to operate, etc"
+
+and, in a message that arrived while the first was being worked on:
+
+> "e1 e3 e4; Appy yes"
+
+[ASSUMPTION: "Appy" is "Apply". The second message names the three items that block the first tooling pull request, E1, E3 and E4, and says yes to each; it is read as confirming their recommended options specifically, so those three do not rest on the blanket reading below.]
+
+**What this decides.** Each decision of the plan's section E is answered by the option the plan marked as recommended, as the plan words it. [ASSUMPTION: a blanket "apply all recommendations" is read as choosing the recommended option of every E-item other than E1, E3 and E4 (which the second message names), including the three of those the plan marks DG-NON (E5 licensing, E6 population taxonomy, E7 jurisdiction), because the owner is the one who decides those and has now decided. It is not read as approving the screened table of item subjects, the mints, the declinations or the stakes table themselves: each of those is a table the owner has not yet seen, and the 2026-10-09 guard ("Screen, then you approve") and the plan's E9 still require the owner's approval of the table before any row is written.]
+
+| Item | Answer applied |
+|---|---|
+| E1 (DG-NON) | A concept first met outside English is named by the instrument's own phrase, in its own language, until an English-language instrument of a P1+P2+P3 jurisdiction is observed naming the same concept. No English gloss is typed (OR-17). |
+| E2 | The four terms that carry a name no source used (TERM-090, TERM-092 and the two others the plan's D9 finds) are renamed to the observed phrase, in a research pull request, after the tooling merges. TERM-091 (parameter 12) is among the four the plan names; its rename needs the owner's quote on that parameter and is not applied here. |
+| E3 | The 93 item subjects are pointed at by row number in the pre-reset database (`items:<rowid>`); no old item code appears in a live row. |
+| E4 (OR-17b) | The model-generated and unrecorded aliases stay as flagged search aids, never vocabulary, and are not deleted; each becomes vocabulary only when an instrument in its language is read and the phrase is found there. |
+| E5 (DG-NON, licensing) | WHO titles in other languages: store the pointer to the persisted payload only, until the licence is read from WHO's own terms. |
+| E6 (DG-NON, population taxonomy) | The base may record each language community's own designation for an identity code, attested in its own Co-1 sources, beside the English name. No identity code changes; a gap stays visible. |
+| E7 (DG-NON, jurisdiction) | Norwegian is split into Bokmål and Nynorsk only where an instrument is published in both; other official languages of in-scope countries stay out of scope for now. |
+| E8 | Rooms are frozen until a page reads them. |
+| E9 | The model proposes a `typical_stakes` for each need that lacks one, with its warrant, in one table; the owner approves that table before any row is written. |
+| E10 | This edition relies on attestation from codes alone; no named native-speaker reviewer is required. |
+| E11 | The language-and-jurisdiction pairs that `lang_jur_map` holds for P1+P2+P3 are approved as the bucket members of OR-8. The count is derived, not quoted. |
+| E12 | The functional-axis terms and the method terms are declined as parameters, each with a reason, and kept as terms. No taxonomy change. |
+
+**What it asks of the pipeline.** "Apply … context required for pipeline to operate" is read as: build the tooling the plan names (its T1 to T4) in a tooling-only change before any row is written (`CLAUDE.md` rule 10), keep the ledger and the instrument consistent with the answers above, and stage the research that follows. It authorises no row.
+
+CONDITION: any session asking how a concept first met in a non-English instrument is named, whether the unattested aliases are vocabulary or may be deleted, whether item subjects are pointed at by code or by row, whether WHO titles in other languages may be stored verbatim, whether identity labels in other languages may be recorded, whether Norwegian is split, whether rooms are populated, whether the P1+P2+P3 language-and-jurisdiction pairs are approved bucket members, or whether the axis and method terms are parameters.
+ACTION: (1) Name a concept first met outside English by the instrument's own phrase and language; never type an English gloss. (2) Treat the unattested aliases as flagged search aids and delete none. (3) Point at item subjects by `items:<rowid>`. (4) Store a pointer to a persisted payload, not a verbatim non-English WHO title, until the licence is read. (5) Record a community's own identity designation only when attested in its own Co-1 source; change no code. (6) Leave rooms alone. (7) Treat the P1+P2+P3 pairs as the bucket members. (8) Decline the axis and method terms as parameters with reasons, in a research change after the tooling merges. (9) Write no row from the item subjects, the stakes proposal or the renames until the owner approves the table in a dated entry. (10) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statement, quoted above.
+
+## Owner statements 2026-11-06 (third) — the register is written in English first, then translated to search each language; it must not be English-biased
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9 while the RHFAC Rating Survey v4.0 and the CSA/ASC B651 listing were being catalogued, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim; times in session order.
+
+> "we have categories according to the kind of technique (acoustic, circulation, etc) as well as categories according to building typology and room"
+
+> "and these cross-pollinate each other"
+
+> "what appears in a category specification for type (eg circulation, acoustics) will appear in building typologies and rooms and vice versa"
+
+> "you don't need French edition here"
+
+> "what I mean is that you will build out a comprehensive register of concepts/items/terms/techniques but you have to ensure that you research them across all of our chosen jurisdictions and languages without an English bias"
+
+> "so we are doing prep work to get this all written out in English and then we have to translate it all properly into other languages to search them too"
+
+and, replying to the session's reading of those statements (that a translation is a flagged search seed, and the register also takes concepts from native-language readings):
+
+> "yes"
+
+> "we set up the base and in turn we set up the research coverage"
+
+[ASSUMPTION: "yes" answers the session's reading in point 3 and 4 below; "we set up the base and in turn we set up the research coverage" is read as: the base register is the list the research coverage is derived from, concept by language-and-jurisdiction pair, and coverage is never kept as a second list.]
+
+**What this establishes**
+
+1. **Two category axes that derive from one set of rows.** A technique category (acoustic, circulation …) and a building typology or room are two views of the same criteria. Whatever sits in a technique category appears under the typologies and rooms that use it, and the reverse. Neither view is maintained beside the other (`CLAUDE.md` rules 5 and 8): both are generated from one table of tagged criteria.
+2. **English first, as preparation.** The English register is the search plan, not the vocabulary. It is not definitive: the RHFAC survey is a Canadian rating instrument that scores criteria by points and states no values, and the B651 text was not obtained.
+3. **Translation is for searching.** A translation of the English register is a search seed, produced to be in use in the jurisdiction and not word for word ("properly"), and recorded as model-generated and flagged, which is what OR-12b permits. It is not a term, not an alias and not evidence. It becomes vocabulary only when an instrument of that language is read and the phrase is found there (E4; OR-17; R11).
+4. **The register must not end where English ends.** A concept English does not carve out cannot be reached by translating English. The register therefore also takes concepts from native-language open passes over each P1+P2+P3 instrument (OR-13; plan C.3), named by the instrument's own phrase (E1), and records, per concept and per language-and-jurisdiction pair, whether it was searched and what was found, including absence.
+5. **The French RHFAC edition is not used here.** It was retrieved before this statement and is persisted in the retrieval log; nothing is drawn from it.
+
+[ASSUMPTION: "translate it all properly" is read as OR-12b's generation of in-use, jurisdiction-specific terms for flagged searches, and not as licence to store translations as vocabulary; the owner's earlier OR-17 ("It is not acceptable for the model to generate its own phrases/names/aliases") and E4 are not read as withdrawn.]
+
+CONDITION: any session asking whether the English register may be translated into other languages, what a translation of it is, whether it may be stored as aliases, how a concept English does not name enters the register, or how technique categories relate to building typologies and rooms.
+ACTION: (1) Generate both category views, and the research coverage, from the base register and the tagged table; keep no second list. (2) Treat every translated term as a flagged model-generated search seed, never as vocabulary. (3) Promote a seed only by reading an instrument in its language and finding the phrase there. (4) Feed concepts found in native-language readings back into the register by the instrument's own phrase. (5) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statement 2026-11-06 (fourth) — the project may hold retrieved standards in the repository
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, after the session had kept the CSA/ASC B651:23 PDF out of git because its legal notice says users may not "make an electronic copy", and recorded on contact per `CLAUDE.md` rule 0. The whole message:
+
+> "oh fuck off with the "no electronic copy". we are doing a not for profit volunteer advocacy project. this is fine"
+
+**What this decides.** The project may persist retrieved copies of standards and codes in `retrieval-log/` under research rule R10, a publisher's "no electronic copy" notice notwithstanding. The session's earlier exclusion of the B651 PDF is withdrawn and the file is committed with the other retrieval artefacts. [ASSUMPTION: this is read as a ruling on holding retrieved copies for the project's own verification, as R10 requires; it is not read as a ruling on republishing or rendering any standard's text in the book, which stays a separate question for licensing (`CLAUDE.md` section 8: licensing is the owner's).]
+
+CONDITION: any session asking whether a retrieved standard whose legal notice restricts copying may be persisted in the repository.
+ACTION: (1) Persist it in the retrieval log like any other source. (2) Do not treat a publisher's copying notice as a reason to withhold a source from verification. (3) Raise republication or rendering of such text as a separate question. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statement, quoted above.
+
+## Owner statement 2026-11-06 (fifth) — log where a large source was retrieved from; do not commit the file
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on seeing that the pull request had grown to over a hundred thousand lines because the retrieved files were committed, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim; the first two messages preceded the third.
+
+> "110k is...high?"
+
+> "ohhh it's from retrieving"
+
+> "well, we don't need to actually commit these large PDFs etc. we just need to log where we retrieved from ie the url"
+
+and, in two further messages:
+
+> "we don't need to be saving these PDFs in repo just tracking where they can be found for reference which is our version of persistence"
+
+> "otherwise you're going to blow the context tokens etc. just record page number and line if need be too"
+
+**What this decides.** For a retrieved PDF, web page or full-text extraction, the record kept in the repository is the manifest line (URL, retrieval time, status, byte count, sha256), not the file. This narrows the fourth entry of the same day, which let the project hold a standard in the repository: the project may, but need not, and for large files does not. [ASSUMPTION: "large PDFs etc." is read as PDFs, HTML pages and the text extracted from them (the `text/` folders of the terminology passes); a small structured payload such as an API response keeps the existing convention and stays committed. A source whose admission is logged against a search (`log-search --artefact`) is checked by `retrieval_log.check_artefact_link`, which looks for the artefact; where that check applies, the artefact stays committed and this entry does not reach it.] The files stay on the machine that fetched them until it is reclaimed; the URL and sha256 let any reader fetch and compare them. Persistence, in the owner's words, is tracking where a source can be found; a locator is the page number and, where needed, the line.
+
+CONDITION: any session asking whether a retrieved PDF, page or extracted text is committed, or what the repository keeps of a retrieval.
+ACTION: (1) Keep the `retrieval-log/` manifest line; do not commit large retrieved files or text extracted from them. (2) Commit an artefact that a search-execution or admission gate must find. (3) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statements 2026-11-06 (sixth) — a concept is an equivalence class of forms, for every term researched
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on reading the English-variants pass's report that a held alias ("handicapped parking") did not occur in its jurisdiction's code, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in order:
+
+> "handicapped parking is still accessible parking stall etc"
+
+> "*also"
+
+> "there are lots of equivalencies"
+
+> "barrier free parking"
+
+> "accessibility parking, disabled parking,"
+
+> "this kind of equivalency finding is applicable for all terms researched"
+
+> "inclusive, universal"
+
+> "wheelchair friendly etc"
+
+> "an elevator is a lift"
+
+> "there is a lot of conflation in literature"
+
+**What this decides.**
+1. **The unit of the register is an equivalence class.** A concept has many surface forms per language and jurisdiction. "Accessible parking stall", "handicapped parking", "barrier free parking", "accessibility parking" and "disabled parking" name one concept, and the held instruments add "designated accessible spaces" (RHFAC 1.1) and "designated accessible parking" (CSA/ASC B651:23, clause 9.4).
+2. **Non-occurrence in an instrument does not invalidate a form.** Attestation in a code establishes that form as that code's term; it does not decide which other forms are valid equivalents. A form the code does not use is "not attested by these texts", and the sources that could attest it are statutes, road-sign and signage manuals, municipal and advocacy guidance, and ordinary public usage.
+3. **Every term researched gets equivalence-class discovery**, not only the first form found. Each form carries its usage type (code term, colloquial, regional variant, outdated or disfavoured, product name) and its attestation (instrument phrase with locator, another source, an owner-supplied form, or an unattested seed). A disfavoured form is recorded with a usage note and not deleted, because people still search with it.
+4. **The umbrella adjective is itself a class.** "Accessible", "barrier-free", "inclusive", "universal" and "wheelchair friendly" are offered as interchangeable qualifiers of the same noun ("… parking", "… washroom", "… entrance"). [ASSUMPTION: they are equivalent as usage and unequal in scope. "Wheelchair friendly" addresses wheelchair users only, and "universal" and "inclusive" have a general-population sense outside this project, where they always mean inclusion of persons with disabilities (`CLAUDE.md` section 9). The register records each with a scope note instead of collapsing them, and a code's own umbrella word (for example Norwegian "universell utforming", German "barrierefrei", Finnish "esteetön") is the instrument's term.]
+5. **Conflation is recorded, not resolved.** The literature uses one form for several concepts and several forms as though they were one (the qualifiers above; "lift" for an elevator and for a platform lift; "ramp" for a slope threshold and for a device). Equivalence is therefore judged per occurrence, by the sense the source gives the form, never by the form alone (the pilots' rule: a text match is not a sense match). Where a source conflates, the register records a conflation note with its locator and does not settle it by fiat.
+6. **This does not widen what may become vocabulary.** OR-17 and E4 stand: a form enters the base as an attested alias only when a source in its language is read and the phrase is found there. An owner-supplied form is a seed marked as owner-supplied until a source attests it. [ASSUMPTION: the owner's examples are supplied in English; forms for the other languages are found by the passes, not translated from these.]
+
+CONDITION: any session asking whether an alias that no code uses is wrong, whether one form or several names a concept, how a disfavoured or colloquial form is handled, or whether equivalence-finding applies beyond the first example.
+ACTION: (1) Research every term as an equivalence class, with usage type and attestation per form. (2) Do not treat "not found in the instrument read" as a defect of a form. (3) Keep disfavoured forms with a usage note. (4) Promote a form to an attested alias only on a source's own use of it. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.

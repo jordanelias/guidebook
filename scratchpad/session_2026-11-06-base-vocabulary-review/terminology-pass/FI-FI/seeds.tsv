@@ -1,0 +1,13 @@
+register_concept	seed_FI	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Drainage	kuivatus / pintavesien poisto	MODEL-GENERATED	FI	ordinary Finnish construction terms for site drainage; to search in RT cards and InfraRYL, not the decrees
+Nosing design	askelman etureuna / askelman reunan merkintä	MODEL-GENERATED	FI	believed used for step edge and its marking in stair guidance; K17 10 § uses only 'askelmat ... tummuuserojen tai huomiomerkintöjen avulla'
+Sink faucet is easy to use or automatic	vipuhana / kosketusvapaa hana	MODEL-GENERATED	FI	common product and specification terms for lever and touch-free taps
+Lavatories	pesuallas / käsienpesuallas	MODEL-GENERATED	FI	ordinary terms for a wash basin; absent from all three texts read
+Microwave mounting height accessible and safe	mikroaaltouunin sijoituskorkeus	MODEL-GENERATED	FI	compositional; low confidence that any instrument uses it
+Accessible lockers	säilytyslokero / pukukaappi	MODEL-GENERATED	FI	believed used for lockers in changing rooms (pukuhuone), which K17 and E17 treat without lockers
+Reverberation time (parameter 7)	jälkikaiunta-aika	MODEL-GENERATED	FI	held alias; expected in decree 796/2017 (rakennuksen ääniympäristöstä), NOT READ
+Colour temperature (parameter 10)	värilämpötila	MODEL-GENERATED	FI	held alias; standard lighting-engineering term; no instrument read uses it
+volume	äänenvoimakkuus	MODEL-GENERATED	FI	ordinary term for loudness; no instrument read uses it
+Speed bumps	hidaste / töyssy	MODEL-GENERATED	FI	ordinary traffic terms; expected in street-design guidance, not building decrees
+Bollards	pollari / liikennepollari	MODEL-GENERATED	FI	ordinary term; expected in street-design guidance
+Gratings	ritilä / kaivon kansi	MODEL-GENERATED	FI	'ritilä' occurs in OH18 only as timber decking (different sense)

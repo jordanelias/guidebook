@@ -1,0 +1,76 @@
+concept_id	register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+C01	Well-illuminated (if site expected to be lit)	catalogue 2.1	SEARCHED-ABSENT	0		no illuminance or lighting requirement; 照明 occurs only as a thing whose switch is placed (3.1.6), 地灯 only as an obstacle (2.1.2)
+C02	Surface is firm, stable and slip resistant	catalogue 2.1	FOUND	2	坚固、平整、防滑、不积水 / 防滑性能	one four-quality phrase for every accessible route surface; 'stable' has no separate word; slip resistance is checked at handover (验收), not specified as a value
+C03	Seating	catalogue 2.1	FOUND-PARTIAL	3	优先坐席 / 坐台 / 座椅	NARROWER: changing-room seat, shower seat, transport priority seat; no rest seating on routes; NARROWER: seat in an accessible changing room only; 座椅 in 2.1.2 is listed as an obstacle; priority seats in transport; a service duty, not a design rule; shower seat
+C04	Handrails	catalogue 2.1	FOUND	2	双层扶手 / 扶手	two-tier handrail is a named configuration
+C05	Clear width	catalogue 2.1	FOUND	1	通行净宽	the code's one width word: clear passage width, used for routes, ramps, doors, gates, lifts
+C06	Accessible path of travel	catalogue 2.1	FOUND	2	无障碍通行流线 / 无障碍通道	the route element; interior and exterior alike; the route is a continuous 'flow line' across open space, site and building
+C07	Drainage	catalogue 2.1	FOUND	2	不积水 / 雨水箅子	drain grating; glyph 箅 read visually; drainage expressed as an outcome (no ponding)
+C08	Clear signage	catalogue 2.1	FOUND	4	引导标识 / 引导标识系统 / 无障碍标志 / 无障碍标识	guidance signage at accessible parking; 标志 (symbol) and 标识 (sign/signage) are both used
+C09	Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND-PARTIAL	2	文字信息的辅助服务 / 音量放大和助听耦合	NARROWER: telephone amplification and hearing-aid coupling, text support; no room systems; PARTIAL: telephone volume amplification and hearing-aid coupling only; no room assistive-listening system; text support where information is spoken
+C10	Level landings with clear space	catalogue 2.1	FOUND	2	休息平台 / 平台的净深度	landing before an entrance door, measured with the door fully open; ramp landings: start, end and rest platform
+C11	Floor surface is stable, firm, and non-slip	catalogue 2.1	FOUND	2	坚固、平整、防滑、不积水 / 防滑性能	same phrase repeated for service-facility floors; slip resistance is checked at handover (验收), not specified as a value
+C12	Clear space for approach	catalogue 2.1	FOUND	3	净空间 / 容膝容脚空间	clear floor space in front of a fixture; knee and toe space under a basin, counter or service desk
+C13	Well illuminated (if required for expected usage)	catalogue 2.1	SEARCHED-ABSENT	0		as C01
+C14	Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND	1	坚固、平整、防滑、不积水	one four-quality phrase for every accessible route surface; 'stable' has no separate word
+C15	Shelter	catalogue 2.1	FOUND-PARTIAL	1	雨篷	NARROWER: entrance canopy only; NARROWER: canopy over an accessible entrance only
+C16	Riser height and tread depth	catalogue 2.1	FOUND-PARTIAL	2	踏面 / 踢面	PARTIAL: riser and tread named as elements; no riser height or tread depth; PARTIAL: riser named as an element; no riser height or tread depth set; tread surface named; no tread depth set
+C17	Nosing design	catalogue 2.1	FOUND	1	直角形突缘	nosing is 突缘; the rule bans the square (right-angle) nosing
+C18	No open riser	catalogue 2.1	FOUND	1	无踢面	open riser = 'step without a riser face', for steps used mainly by 视觉障碍者
+C19	Level threshold	catalogue 2.1	FOUND	1	门槛	no noun for a level threshold: thresholds (门槛) and stops (挡块) are banned and any 高差 is bevelled (斜面过渡)
+C20	Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND	1	净高	headroom appears as the height below which an enterable low space must be barred
+C21	Edge protection	catalogue 2.1	FOUND	2	临空侧 / 安全防护设施	edge protection is a 'safety stopping measure' on the open (drop) side; near dangerous terrain
+C22	Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND-PARTIAL	2	踏步防滑条、警示条 / 颜色或材质	PARTIAL: strips named; contrast attaches to the first step, not the strip; PARTIAL: slip-resistant and warning strips are named but no contrast is required of them; contrast is required of the first step (2.7.1(2)); contrast by colour OR material of the first step, not a nosing strip
+C23	Tactile attention indicators (truncated domes)	catalogue 2.1	FOUND	1	提示盲道	warning tactile paving; paired with 行进盲道 (guidance)
+C24	Slope	catalogue 2.1	FOUND	2	横向坡度 / 纵向坡度	running slope; cross slope is 横向坡度
+C25	Sink faucet is easy to use or automatic	catalogue 2.1	FOUND	1	杠杆式水龙头或感应式自动出水方式	lever tap or sensor-operated automatic flow
+C26	Outlets and switches are at accessible heights	catalogue 2.1	FOUND-PARTIAL	1	开关和调控面板	PARTIAL: switches and control panels; outlets not named; PARTIAL for C26: switches and control panels; outlets (sockets) are not named
+C27	Microwave mounting height accessible and safe	catalogue 2.1	FOUND-PARTIAL	1	电器	BROADER: kitchen appliances in general; no microwave, no mounting height; BROADER: kitchen appliances in general; no microwave and no mounting height
+C28	Level landings with clear space and at regular intervals	catalogue 2.1	FOUND	1	每段坡道的提升高度	the interval between rest landings is fixed by rise per ramp run, not by run length
+C29	Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND-PARTIAL	2	踏步防滑条、警示条 / 颜色或材质	PARTIAL: as C22; PARTIAL: slip-resistant and warning strips are named but no contrast is required of them; contrast is required of the first step (2.7.1(2)); contrast by colour OR material of the first step, not a nosing strip
+C30	Accessible lockers	catalogue 2.1	FOUND	1	储物柜	locker, in an accessible changing room
+C31	Accessible door hardware	catalogue 2.1	FOUND	3	单手握拳操作 / 执手 / 闭门器	door closer; door hardware: the door handle is also called 扶手 here, operable with one closed fist; window handle (执手) is distinct from the door 扶手
+C32	Accessible controls	catalogue 2.1	FOUND	3	呼叫按钮 / 开关和调控面板 / 手动启闭装置	PARTIAL for C26: switches and control panels; outlets (sockets) are not named; lift call button; manual activation device of an automatic door
+Q-height	height	catalogue 2.2	FOUND	2	提升高度 / 距地面高度	every mounting height is 'height above floor/ground'; rise of a ramp run
+Q-level	level	catalogue 2.2	FOUND	2	地面高差 / 平坡出入口	level (gently sloped) entrance, defined by a slope bound; level change = 高差 (height difference)
+Q-width	width	catalogue 2.2	FOUND	1	通行净宽	the code's one width word: clear passage width, used for routes, ramps, doors, gates, lifts
+Q-clearance	clearance	catalogue 2.2	FOUND	2	容膝容脚空间 / 通行净宽	knee and toe space under a basin, counter or service desk; the code's one width word: clear passage width, used for routes, ramps, doors, gates, lifts
+Q-number	number	catalogue 2.2	FOUND	1	总停车数	counts set against a total
+Q-slope	slope	catalogue 2.2	FOUND	2	横向坡度 / 纵向坡度	running slope; cross slope is 横向坡度
+Q-depth	depth	catalogue 2.2	FOUND	2	深度 / 进深	depth of the knee space; lift-car depth
+Q-riser	riser	catalogue 2.2	FOUND	1	踢面	PARTIAL: riser named as an element; no riser height or tread depth set
+Q-tread	tread	catalogue 2.2	FOUND	1	踏面	tread surface named; no tread depth set
+Q-force	force	catalogue 2.2	FOUND	3	受力性能 / 操作所需的力度 / 门开启所需的力度	force word is 力度; load-bearing performance of rails, checked at handover; window operating force
+Q-time	time	catalogue 2.2	FOUND	2	完全开启时间 / 闭门时间	lift-door dwell time
+Q-gradient	gradient	catalogue 2.2	FOUND	1	纵向坡度	running slope; cross slope is 横向坡度
+Q-size	size	catalogue 2.2	FOUND	2	尺寸 / 轿厢的规格	lift-car 'specification' (size class); size of an accessible toilet cubicle
+Q-volume	volume	catalogue 2.2	FOUND-PARTIAL	1	音量放大和助听耦合	PARTIAL: telephone volume amplification, not PA volume; PARTIAL: telephone volume amplification and hearing-aid coupling only; no room assistive-listening system
+Q-capacity	capacity	catalogue 2.2	FOUND-PARTIAL	1	容纳担架	PARTIAL: lift car accommodating a stretcher; PARTIAL: lift capacity expressed as accommodating a stretcher, not a load or person count
+Q-distance	distance	catalogue 2.2	FOUND-PARTIAL	1	距离	DIFFERENT SENSE: setback distances; no distance markers; DIFFERENT SENSE: a setback distance, not RHFAC's distance markers
+Q-lighting levels	lighting levels	catalogue 2.2	SEARCHED-ABSENT	0		as C01; 照度 0 in both texts
+Q-ratio	ratio	catalogue 2.2	FOUND-PARTIAL	2	1：1的陪护席位 / 不少于总停车数1%	PARTIAL: companion-seat and parking proportions; no room-type mix; PARTIAL: companion-seat ratio; RHFAC's ratio is a room-type mix; proportional parking count
+P03	ramp gradient	base_parameters	FOUND	2	纵向坡度 / 轮椅坡道	running slope; cross slope is 横向坡度; the ramp is a 'wheelchair ramp'; the kerb ramp is a separate object (缘石坡道)
+P04	corridor width	base_parameters	FOUND	1	无障碍通道的通行净宽	no 走廊 (corridor) in the code: interior and exterior routes are one object, with a crowd-density variant
+P05	turning circle	base_parameters	FOUND	1	轮椅回转空间	turning space defined by a circle diameter
+P06	operating force	base_parameters	FOUND	2	操作所需的力度 / 门开启所需的力度	force word is 力度; window operating force
+P07	reverberation time	base_parameters	SEARCHED-ABSENT	0		混响 0, 吸声 0 in both texts; the only acoustic word is 噪声污染 for crossing signals (4.0.8(4))
+P08	LRV contrast	base_parameters	FOUND-PARTIAL	1	颜色或亮度对比	BROADER: colour or brightness contrast, never quantified; BROADER: colour or brightness contrast, never quantified; no LRV
+P09	door width	base_parameters	FOUND	1	门开启后的通行净宽	door width is the clear width when open, split by new vs existing building
+P10	colour temperature	base_parameters	SEARCHED-ABSENT	0		色温 0 in both texts
+P11	headroom clearance	base_parameters	FOUND	1	净高	headroom appears as the height below which an enterable low space must be barred
+P12	ramp run length	base_parameters	FOUND-PARTIAL	1	坡段提升高度	DIFFERENT AXIS: run bounded by rise; DIFFERENT AXIS: a ramp run is bounded by its rise, not by a run length
+B-4.4.4	Gratings	B651 heading RHFAC does not name	FOUND	2	箅子 / 雨水箅子	drain grating; glyph 箅 read visually; gratings and manhole covers; glyph 箅 read visually
+B-4.5	Headroom and protruding objects	B651 heading RHFAC does not name	FOUND	2	净高 / 突出部分	headroom appears as the height below which an enterable low space must be barred; protruding objects on walls or columns
+B-4.5.1	Headroom	B651 heading RHFAC does not name	FOUND	1	净高	headroom appears as the height below which an enterable low space must be barred
+B-4.5.2	Protruding objects	B651 heading RHFAC does not name	FOUND	1	突出部分	protruding objects on walls or columns
+B-6.1.2	Spouts	B651 heading RHFAC does not name	FOUND-PARTIAL	1	饮水机	PARTIAL: low-level drinking-water machine; no spout; PARTIAL: drinking-water machine must have a low-level unit; no spout rule
+B-6.2.3	Lavatories	B651 heading RHFAC does not name	FOUND	1	无障碍洗手盆	lavatory (wash basin)
+B-6.5.3	Enclosures	B651 heading RHFAC does not name	FOUND-PARTIAL	1	活动门帘	PARTIAL: shower entrance curtain; PARTIAL: shower enclosure entrance uses a movable curtain
+B-8.3.8	Speed bumps	B651 heading RHFAC does not name	SEARCHED-ABSENT	0		减速带 0; speed bumps not treated
+B-8.3.9	Bollards	B651 heading RHFAC does not name	FOUND	1	阻车桩	bollards at kerb ramps
+B-8.7	Landscaping elements	B651 heading RHFAC does not name	SEARCHED-ABSENT	0		no landscaping clause; the obstacle list of 2.1.2 names signs, bins, seats, lamp posts, bollard-like 隔离墩, ground lights and cable trays, not planting
+B-8.7.1	Flower or shrub planters	B651 heading RHFAC does not name	SEARCHED-ABSENT	0		花坛/种植 0
+B-8.7.3	Vegetation	B651 heading RHFAC does not name	SEARCHED-ABSENT	0		植物/绿化 0 (公共绿地 occurs only as a parking location, 2.9.5)
+B-8.7.4	Guy wires	B651 heading RHFAC does not name	SEARCHED-ABSENT	0		拉线 0
+B-8.8.2	Scaffolding	B651 heading RHFAC does not name	FOUND-PARTIAL	1	临时占用	PARTIAL: temporary occupation (law); scaffolding not named; PARTIAL: temporary occupation of facilities, with barriers and warnings; scaffolding not named
+B-D.6.1	Gradation limits	B651 heading RHFAC does not name	SEARCHED-ABSENT	0		no trail or beach clauses; 级配 0

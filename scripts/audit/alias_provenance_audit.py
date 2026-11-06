@@ -55,12 +55,14 @@ PROVENANCE_MARKERS = ("model-generated", "curated", "repo shorthand",
                       "source-attested") + VERIFIED_MARKERS
 
 
-def classify(notes):
+def classify(notes, observation_id=None):
+    """Attestation is the pointer to an observation (migration 125), not a substring of the
+    notes: a row whose free text merely says "source-attested" is not attested."""
     n = notes or ""
     for m in VERIFIED_MARKERS:
         if m in n:
             return m
-    if "source-attested" in n:
+    if observation_id is not None:
         return "SOURCE-ATTESTED"
     if "model-generated" in n:
         return "MODEL-GENERATED"
@@ -86,13 +88,13 @@ def main():
     con.row_factory = sqlite3.Row
 
     rows = con.execute(
-        "SELECT term_id, alias, language, notes, created_by_session FROM term_aliases"
+        "SELECT term_id, alias, language, notes, created_by_session, observation_id FROM term_aliases"
     ).fetchall()
 
     by_lang = {}
     offenders = []
     for r in rows:
-        cls = classify(r["notes"])
+        cls = classify(r["notes"], r["observation_id"])
         d = by_lang.setdefault(r["language"], {})
         d[cls] = d.get(cls, 0) + 1
         if cls == "UNKNOWN" and session_date(r["created_by_session"]) >= CUTOFF_SESSION_DATE:

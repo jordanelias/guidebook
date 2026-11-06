@@ -6483,6 +6483,14 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
                 f"FROM an observed phrase (db.py observe-term), never from nothing -- that "
                 f"is what makes the vocabulary an output of the work rather than a "
                 f"presupposition.")
+        if canonical_en.casefold() not in obs["surface_form"].casefold():
+            raise Refusal(
+                f"--canonical-en {canonical_en!r} is not inside the observed phrase "
+                f"{obs['surface_form']!r}. A name is a phrase an admitted source uses, in its "
+                f"own language (owner OR-17: the model may not coin names; ruling 2026-11-06, "
+                f"E1). Use the phrase as written, or a contiguous part of it. A concept first "
+                f"met outside English is named by that phrase until an English-language "
+                f"instrument is observed naming it.")
         clash = _name_holder(conn, canonical_en, aliases=False)
         if clash:
             raise Refusal(
@@ -7301,8 +7309,10 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
     text says "turning space" and not "turning circle"). This is that vocabulary
     decision, with its warrant required:
 
-      --from-observation N  the new name comes from a phrase a source USES: an English
-                            observation, adjudicated to THIS term, whose surface form
+      --from-observation N  the new name comes from a phrase a source USES, in the
+                            source's own language (owner E1, 2026-11-06: a concept first
+                            met outside English is named by that phrase), adjudicated to
+                            THIS term, whose surface form
                             contains the new name (the 2026-09-09 rule, kept by the owner
                             on 2026-10-09: names come from observed phrases);
       --ruling-quote "..."  or from the owner's own words, quoted verbatim and found
@@ -7316,9 +7326,9 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
     split keeps working. No other term may hold the new name, as a name or an alias.
 
     REFUSES: neither or both warrants; a value-bearing name (_VALUE_BEARING, as add-term);
-    a quote not exactly once in the ledger or not containing the name; an observation that
-    is not English, not adjudicated to this term, or does not contain the name; a name
-    another term holds.
+    a quote not exactly once in the ledger or not containing the name; an observation
+    not adjudicated to this term, or that does not contain the name; a name another term
+    holds.
     """
     new = (canonical_en or "").strip()
     if not new:
@@ -7367,11 +7377,6 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
             if obs is None:
                 raise Refusal(f"rename-term: observation {from_observation}: no such "
                               f"observed term.")
-            if (obs["language"] or "").upper() != "EN":
-                raise Refusal(
-                    f"rename-term: observation {from_observation} is in "
-                    f"{obs['language']!r}. canonical_en is the English name; a phrase in "
-                    f"another language is an alias (db.py add-alias), not a canonical name.")
             if not _names_term(conn, from_observation, term_id):
                 raise Refusal(
                     f"rename-term: no adjudication of observation {from_observation} names "
@@ -7433,13 +7438,17 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
     NOTHING IS TYPED THAT THE MACHINE CAN READ (CLAUDE.md rule 8): the alias IS the
     observation's surface form, its language is the observation's (in term_aliases' own
     letter case, measured by _alias_language), and its jurisdiction is the source's. The
-    operator chooses only the alias type, from the column's CHECK.
+    operator chooses only the alias type, from the column's CHECK. The row POINTS at the
+    observation (term_aliases.observation_id, migration 125): attestation is that pointer,
+    not a substring of the notes. An alias the term already holds without a pointer is
+    promoted in place; one that already carries a pointer is refused.
 
     REFUSES: an alias type outside the CHECK, or DEPRECATED (rename-term's record); an
     unknown term or observation; an observation no adjudication names this term with; an
     observation whose phrase is not inside its quote, or whose quote is not in a file saved
-    for its source (unless the observation carries a recorded VERBATIM-EXEMPT); an alias
-    the term already holds in that language. The notes carry `source-attested`, the
+    for its source (unless the observation carries a recorded VERBATIM-EXEMPT); TRANSLATION
+    (a source's own phrase is not a rendering of the English one); an alias the term already
+    holds in that language WITH a pointer. The notes carry `source-attested`, the
     provenance marker alias_provenance_audit reads, with the observation and source.
     """
     with connect(dry_run) as conn:
@@ -7448,6 +7457,11 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         if alias_type == "DEPRECATED":
             raise Refusal("add-alias: DEPRECATED marks a former canonical name, which only "
                           "rename-term records. A phrase a source uses is a live alias.")
+        if alias_type == "TRANSLATION":
+            raise Refusal("add-alias: TRANSLATION frames a phrase as a rendering of the "
+                          "English one. A phrase a source uses is its own jurisdiction's term "
+                          "(R11, no back-translation): record it as SYNONYM, NARROWER or "
+                          "BROADER.")
         if not dbcore.exists(conn, "terms", "term_id", term_id):
             raise Refusal(f"add-alias: {term_id!r}: no such term.")
         obs = conn.execute(
@@ -7480,12 +7494,13 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 f"from it, or record why no artefact can carry it (observe-term "
                 f"--verbatim-exempt). Nothing was written.")
         lang = _alias_language(conn, obs["language"] or "EN")
-        held = conn.execute("SELECT alias_type FROM term_aliases WHERE term_id = ? "
-                            "AND alias = ? AND language = ?",
+        held = conn.execute("SELECT alias_type, observation_id FROM term_aliases "
+                            "WHERE term_id = ? AND alias = ? AND language = ?",
                             (term_id, obs["surface_form"], lang)).fetchone()
-        if held:
+        if held and held[1] is not None:
             raise Refusal(f"add-alias: {term_id} already holds {obs['surface_form']!r} "
-                          f"({lang}) as {held[0]}. Nothing was written.")
+                          f"({lang}) as {held[0]}, attested by observation {held[1]}. "
+                          f"Nothing was written.")
         others = [r[0] for r in conn.execute(
             "SELECT DISTINCT term_id FROM term_aliases WHERE alias = ? AND language = ? "
             "AND term_id <> ?", (obs["surface_form"], lang, term_id))]
@@ -7493,9 +7508,23 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 f"{obs['locator']!r}; " + (f"quote verified in {where.split(',')[0]}"
                                           if kind == "scoped" else
                                           "the observation's quote is VERBATIM-EXEMPT"))
+        if held:
+            # A model-generated or unrecorded alias whose text a source uses is PROMOTED in
+            # place: the pointer is attached, the held row's type and its history stay, and
+            # the jurisdiction is the source's where the row had none. No second row.
+            conn.execute("UPDATE term_aliases SET observation_id = ?, "
+                         "jurisdiction = COALESCE(jurisdiction, ?), "
+                         "notes = COALESCE(notes || '; ', '') || ?, "
+                         "updated_at = ?, updated_by_session = ? "
+                         "WHERE term_id = ? AND alias = ? AND language = ?",
+                         (observation_id, obs["jurisdiction"], note, dbcore.now(), session,
+                          term_id, obs["surface_form"], lang))
+            return {"term_id": term_id, "alias": obs["surface_form"], "language": lang,
+                    "promoted": True, "alias_type_kept": held[0],
+                    "also_an_alias_of": others, "dry_run": dry_run}
         row = {"term_id": term_id, "alias": obs["surface_form"], "language": lang,
                "alias_type": alias_type, "jurisdiction": obs["jurisdiction"],
-               "notes": note}
+               "observation_id": observation_id, "notes": note}
         row.update(dbcore.stamp_for(conn, "term_aliases", session))
         conn.execute(f"INSERT INTO term_aliases ({','.join(row)}) "
                      f"VALUES ({','.join('?' * len(row))})", list(row.values()))
@@ -7566,6 +7595,21 @@ def revoke_declination(term_id: str, reason: str, decision_ref: str, session: st
                 "decision": ref, "dry_run": dry_run}
 
 
+_ITEM_ASIDE = re.compile(r"\s*[(\[].*?(?:[)\]]|$)")   # an unclosed aside is stripped to the end
+
+
+def _item_subject(db_path, rowid: int):
+    """An old item's name with its parenthetical and bracketed text removed (its values and
+    its merge notes), or None. Owner 2026-11-06: the 93 item subjects are admitted
+    "with stripped values" and with their codes removed; the pointer is the row number."""
+    con = sqlite3.connect(f"file:{db_path}?mode=ro&immutable=1", uri=True)
+    try:
+        row = con.execute("SELECT name FROM items WHERE rowid = ?", (rowid,)).fetchone()
+    finally:
+        con.close()
+    return _ITEM_ASIDE.sub("", row[0]).strip() if row else None
+
+
 def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
     """Prove `entry_ref` names an entry in the catalogue file; return how it resolved.
 
@@ -7594,12 +7638,20 @@ def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
         return f"{catalogue} ref_id {entry_ref}"
     if path.suffix == ".db":
         m = re.fullmatch(r"terms:(TERM-\d+)", entry_ref)
-        if not m:
+        mi = re.fullmatch(r"items:(\d+)", entry_ref)
+        if not (m or mi):
             raise Refusal(
                 f"--entry-ref {entry_ref!r}: the pre-reset corpus is a permitted catalogue "
-                f"for its TERMS only, written terms:<TERM-ID>. The owner selected 'Old "
-                f"corpus terms' on 2026-10-09; the old Part 4 item names were offered and "
-                f"not selected, and the item layer stays deleted (2026-09-01).")
+                f"for its TERMS (terms:<TERM-ID>) and, since the owner's 2026-11-06 ruling, "
+                f"its item subjects by row number (items:<rowid>). An item CODE is not an "
+                f"entry reference: no old item code may reach a live row, and the item layer "
+                f"stays deleted (2026-09-01). The old Part 4 item names were not selected "
+                f"on 2026-10-09 and are admitted only as that ruling states.")
+        if mi:
+            subject = _item_subject(path, int(mi.group(1)))
+            if subject is None:
+                raise Refusal(f"--entry-ref {entry_ref!r}: no such item subject.")
+            return f"{catalogue} {entry_ref} ({subject!r})"
         con = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
         try:
             hit = con.execute("SELECT canonical_en FROM terms WHERE term_id = ?",
@@ -7681,6 +7733,12 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
         dbcore.check_declared(conn, "terms", "catalogue", catalogue,
                               "mint-term-from-catalogue --catalogue")
         resolved = _resolve_catalogue_entry(catalogue, entry_ref)
+        if entry_ref.startswith("items:"):
+            subject = _item_subject(dbcore.REPO_ROOT / catalogue, int(entry_ref[6:]))
+            if canonical_en.casefold() not in subject.casefold():
+                raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is not inside the "
+                              f"item subject {subject!r}. A name taken from a catalogue is "
+                              f"the catalogue's own words, never a model's rewording (OR-17).")
         clash = _name_holder(conn, canonical_en)
         if clash and clash["kind"] == "term":
             raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is already "

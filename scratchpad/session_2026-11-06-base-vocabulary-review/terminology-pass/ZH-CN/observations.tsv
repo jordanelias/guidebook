@@ -1,0 +1,80 @@
+concept_ids (| = counts for each; labels in coverage.tsv)	phrase_verbatim	language (written form)	instrument	locator	context_quote_verbatim	text_file	quote_verified_in_text	note (ours)
+C02|C14	坚固、平整、防滑、不积水	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.4 (p.2)	无障碍通行设施的地面应坚固、平整、防滑、不积水。	ee78b16e1dec13b8.txt	yes	one four-quality phrase for every accessible route surface; 'stable' has no separate word
+C11	坚固、平整、防滑、不积水	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.5 (p.9)	无障碍服务设施的地面应坚固、平整、防滑、不积水。	ee78b16e1dec13b8.txt	yes	same phrase repeated for service-facility floors
+C02|C11	防滑性能	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	5.0.2 (p.17)	应对无障碍设施的地面防滑性能、扶手和安全抓杆的受力性能进行验收	ee78b16e1dec13b8.txt	yes	slip resistance is checked at handover (验收), not specified as a value
+C03	座椅	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.3.2(2) (p.12)	乘轮椅者使用的座椅的高度应为400mm～450mm	ee78b16e1dec13b8.txt	yes	NARROWER: seat in an accessible changing room only; 座椅 in 2.1.2 is listed as an obstacle
+C03	坐台	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.11(3) (p.10)	淋浴间坐台应安装牢固	ee78b16e1dec13b8.txt	yes	shower seat
+C03	优先坐席	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 42	设置无障碍服务窗口、专用等候区域、绿色通道和优先坐席	575638778aada9c1.txt	yes	priority seats in transport; a service duty, not a design rule
+C04	扶手	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.8.1 (p.6)	满足无障碍要求的单层扶手的高度应为850mm～900mm	ee78b16e1dec13b8.txt	yes	
+C04	双层扶手	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.8.1 (p.6)	设置双层扶手时，上层扶手高度应为850mm～900mm	ee78b16e1dec13b8.txt	yes	two-tier handrail is a named configuration
+C05|Q-width|Q-clearance	通行净宽	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.2 (p.2)	无障碍通道的通行净宽不应小于1.20m	ee78b16e1dec13b8.txt	yes	the code's one width word: clear passage width, used for routes, ramps, doors, gates, lifts
+C06	无障碍通行流线	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.1 (p.2)	城市开敞空间、建筑场地、建筑内部及其之间应提供连贯的无障碍通行流线。	ee78b16e1dec13b8.txt	yes	the route is a continuous 'flow line' across open space, site and building
+C06	无障碍通道	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.2 (p.2)	无障碍通道的通行净宽不应小于1.20m	ee78b16e1dec13b8.txt	yes	the route element; interior and exterior alike
+C07	不积水	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.4 (p.2)	无障碍通行设施的地面应坚固、平整、防滑、不积水。	ee78b16e1dec13b8.txt	yes	drainage expressed as an outcome (no ponding)
+C07|B-4.4.4	雨水箅子	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.7 (p.7)	缘石坡道上下坡处不应设置雨水箅子。	ee78b16e1dec13b8.txt	yes	drain grating; glyph 箅 read visually
+C08	无障碍标识	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.1 (p.15)	无障碍标识应纳入室内外环境的标识系统，应连续并清楚地指明无障碍设施的位置和方向。	ee78b16e1dec13b8.txt	yes	
+C08	引导标识	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.9.4 (p.7)	并应设置引导标识。	ee78b16e1dec13b8.txt	yes	guidance signage at accessible parking
+C08	无障碍标志	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.2 (p.15)	无障碍标志的安装位置和高度应保证从站立和座位的视觉角度都能够看见	ee78b16e1dec13b8.txt	yes	标志 (symbol) and 标识 (sign/signage) are both used
+C08	引导标识系统	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 12	并纳入周边环境或者建筑物内部的引导标识系统	575638778aada9c1.txt	yes	
+C09|Q-volume	音量放大和助听耦合	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.7(2) (p.15)	应至少设1部电话具备免提对话、音量放大和助听耦合的功能	ee78b16e1dec13b8.txt	yes	PARTIAL: telephone volume amplification and hearing-aid coupling only; no room assistive-listening system
+C09	文字信息的辅助服务	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	4.0.5 (p.15)	以声音为主要传播手段的公共服务应提供文字信息的辅助服务	ee78b16e1dec13b8.txt	yes	text support where information is spoken
+C10	休息平台	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.3 (p.3)	轮椅坡道的起点、终点和休息平台的通行净宽不应小于坡道的通行净宽	ee78b16e1dec13b8.txt	yes	ramp landings: start, end and rest platform
+C10	平台的净深度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.4.2 (p.3)	平台的净深度不应小于1.50m	ee78b16e1dec13b8.txt	yes	landing before an entrance door, measured with the door fully open
+C28	每段坡道的提升高度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1(2) (p.3)	每段坡道的提升高度不应大于750mm	ee78b16e1dec13b8.txt	yes	the interval between rest landings is fixed by rise per ramp run, not by run length
+C12	净空间	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.11(2) (p.10)	淋浴间前应设便于乘轮椅者通行和转动的净空间	ee78b16e1dec13b8.txt	yes	clear floor space in front of a fixture
+C12	净空间	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.12(1) (p.11)	浴盆侧面应设不小于1500mm×800mm的净空间	ee78b16e1dec13b8.txt	yes	
+C12|Q-clearance	容膝容脚空间	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.10(1) (p.10)	250mm的容膝容脚空间	ee78b16e1dec13b8.txt	yes	knee and toe space under a basin, counter or service desk
+C15	雨篷	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.4.2 (p.3)	无障碍出入口的上方应设置雨篷。	ee78b16e1dec13b8.txt	yes	NARROWER: canopy over an accessible entrance only
+C16|Q-riser	踢面	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1(3) (p.6)	不应采用无踢面和直角形突缘的踏步	ee78b16e1dec13b8.txt	yes	PARTIAL: riser named as an element; no riser height or tread depth set
+C16|Q-tread	踏面	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1(4) (p.6)	踏步防滑条、警示条等附着物均不应突出踏面。	ee78b16e1dec13b8.txt	yes	tread surface named; no tread depth set
+C17	直角形突缘	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1(3) (p.6)	不应采用无踢面和直角形突缘的踏步	ee78b16e1dec13b8.txt	yes	nosing is 突缘; the rule bans the square (right-angle) nosing
+C18	无踢面	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1(3) (p.6)	不应采用无踢面和直角形突缘的踏步	ee78b16e1dec13b8.txt	yes	open riser = 'step without a riser face', for steps used mainly by 视觉障碍者
+C19	门槛	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.3 (p.4)	满足无障碍要求的门不应设挡块和门槛，门口有高差时，高度不应大于15mm，并应以斜面过渡	ee78b16e1dec13b8.txt	yes	no noun for a level threshold: thresholds (门槛) and stops (挡块) are banned and any 高差 is bevelled (斜面过渡)
+C20|P11|B-4.5|B-4.5.1	净高	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.5 (p.2)	自动扶梯、楼梯的下部和其他室内外低矮空间可以进入时，应在净高不大于2.00m处采取安全阻挡措施。	ee78b16e1dec13b8.txt	yes	headroom appears as the height below which an enterable low space must be barred
+C21	临空侧	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.5 (p.3)	设置扶手的轮椅坡道的临空侧应采取安全阻挡措施。	ee78b16e1dec13b8.txt	yes	edge protection is a 'safety stopping measure' on the open (drop) side
+C21	安全防护设施	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.3 (p.2)	无障碍通行流线在临近地形险要地段处应设置安全防护设施，必要时应同时设置安全警示线。	ee78b16e1dec13b8.txt	yes	near dangerous terrain
+C22|C29	踏步防滑条、警示条	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1(4) (p.6)	踏步防滑条、警示条等附着物均不应突出踏面。	ee78b16e1dec13b8.txt	yes	PARTIAL: slip-resistant and warning strips are named but no contrast is required of them; contrast is required of the first step (2.7.1(2))
+C22|C29	颜色或材质	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.7.1(2) (p.6)	上行和下行的第一阶踏步应在颜色或材质上与平台有明显区别	ee78b16e1dec13b8.txt	yes	contrast by colour OR material of the first step, not a nosing strip
+C23	提示盲道	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.11.3 (p.8)	需要安全警示和提示处应设置提示盲道	ee78b16e1dec13b8.txt	yes	warning tactile paving; paired with 行进盲道 (guidance)
+C24|Q-slope|Q-gradient|P03	纵向坡度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1(1) (p.3)	横向坡度不应大于1：50，纵向坡度不应大于1：12	ee78b16e1dec13b8.txt	yes	running slope; cross slope is 横向坡度
+C24|Q-slope	横向坡度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1(1) (p.3)	横向坡度不应大于1：50	ee78b16e1dec13b8.txt	yes	
+P03	轮椅坡道	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1 (p.3)	轮椅坡道的坡度和坡段提升高度应符合下列规定	ee78b16e1dec13b8.txt	yes	the ramp is a 'wheelchair ramp'; the kerb ramp is a separate object (缘石坡道)
+C25	杠杆式水龙头或感应式自动出水方式	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.10(3) (p.10)	出水龙头应采用杠杆式水龙头或感应式自动出水方式。	ee78b16e1dec13b8.txt	yes	lever tap or sensor-operated automatic flow
+C26|C32	开关和调控面板	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.6 (p.9)	无障碍服务设施内供使用者操控的照明、设备、设施的开关和调控面板应易于识别，距地面高度应为0.85m～1.10m。	ee78b16e1dec13b8.txt	yes	PARTIAL for C26: switches and control panels; outlets (sockets) are not named
+C27	电器	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.13(1) (p.11)	厨房设施和电器应方便乘轮椅者靠近和使用	ee78b16e1dec13b8.txt	yes	BROADER: kitchen appliances in general; no microwave and no mounting height
+C30	储物柜	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.3.2(1) (p.12)	乘轮椅者使用的储物柜前应设直径不小于1.50m的轮椅回转空间	ee78b16e1dec13b8.txt	yes	locker, in an accessible changing room
+C31	单手握拳操作	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.4(2) (p.4)	平开门的门扇外侧和里侧均应设置扶手，扶手应保证单手握拳操作	ee78b16e1dec13b8.txt	yes	door hardware: the door handle is also called 扶手 here, operable with one closed fist
+C31	闭门器	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.8 (p.4)	满足无障碍要求的安装有闭门器的门，从闭门器最大受控角度到完全关闭前10°的闭门时间不应小于3s。	ee78b16e1dec13b8.txt	yes	door closer
+C31	执手	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4.7 (p.13)	窗户可开启扇的执手或启闭开关距地面高度应为0.85m～1.00m	ee78b16e1dec13b8.txt	yes	window handle (执手) is distinct from the door 扶手
+C32	呼叫按钮	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.1(2) (p.5)	呼叫按钮的中心距地面高度应为0.85m～1.10m	ee78b16e1dec13b8.txt	yes	lift call button
+C32	手动启闭装置	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.5(2) (p.4)	当设置手动启闭装置时，可操作部件的中心距地面高度应为0.85m～1.00m。	ee78b16e1dec13b8.txt	yes	manual activation device of an automatic door
+Q-height	距地面高度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.6 (p.9)	距地面高度应为0.85m～1.10m	ee78b16e1dec13b8.txt	yes	every mounting height is 'height above floor/ground'
+Q-height	提升高度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1(2) (p.3)	每段坡道的提升高度不应大于750mm	ee78b16e1dec13b8.txt	yes	rise of a ramp run
+Q-level	地面高差	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.1 (p.2)	无障碍通道上有地面高差时，应设置轮椅坡道或缘石坡道。	ee78b16e1dec13b8.txt	yes	level change = 高差 (height difference)
+Q-level	平坡出入口	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.4.1(1) (p.3)	地面坡度不大于1：20的平坡出入口	ee78b16e1dec13b8.txt	yes	level (gently sloped) entrance, defined by a slope bound
+Q-number	总停车数	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.9.5 (p.7)	总停车数在100辆以下时应至少设置1个无障碍机动车停车位	ee78b16e1dec13b8.txt	yes	counts set against a total
+Q-depth	深度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.2 (p.5)	满足乘轮椅者使用的最小轿厢规格，深度不应小于1.40m	ee78b16e1dec13b8.txt	yes	lift-car depth
+Q-depth	进深	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.10(1) (p.10)	范围内进深不小于450mm	ee78b16e1dec13b8.txt	yes	depth of the knee space
+Q-force|P06	门开启所需的力度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.4(3) (p.4)	除防火门外，门开启所需的力度不应大于25N。	ee78b16e1dec13b8.txt	yes	force word is 力度
+Q-force|P06	操作所需的力度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.4.7 (p.13)	手动开关窗户操作所需的力度不应大于25N。	ee78b16e1dec13b8.txt	yes	window operating force
+Q-force	受力性能	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	5.0.2 (p.17)	扶手和安全抓杆的受力性能进行验收	ee78b16e1dec13b8.txt	yes	load-bearing performance of rails, checked at handover
+Q-time	闭门时间	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.8 (p.4)	从闭门器最大受控角度到完全关闭前10°的闭门时间不应小于3s	ee78b16e1dec13b8.txt	yes	
+Q-time	完全开启时间	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.3(3) (p.5)	完全开启时间应保持不小于3s。	ee78b16e1dec13b8.txt	yes	lift-door dwell time
+Q-size	尺寸	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.2.2(1) (p.11)	应方便乘轮椅者到达和进出，尺寸不应小于1.80m×1.50m	ee78b16e1dec13b8.txt	yes	size of an accessible toilet cubicle
+Q-size	轿厢的规格	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.2 (p.5)	无障碍电梯的轿厢的规格应依据建筑类型和使用要求选用。	ee78b16e1dec13b8.txt	yes	lift-car 'specification' (size class)
+Q-capacity	容纳担架	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.2 (p.5)	同时满足乘轮椅者使用和容纳担架的轿厢	ee78b16e1dec13b8.txt	yes	PARTIAL: lift capacity expressed as accommodating a stretcher, not a load or person count
+Q-distance	距离	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.1(2) (p.5)	且距内转角处侧墙距离不应小于400mm	ee78b16e1dec13b8.txt	yes	DIFFERENT SENSE: a setback distance, not RHFAC's distance markers
+Q-ratio	1：1的陪护席位	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.5.4(3) (p.13)	在轮椅席位旁或邻近的座席处应设置1：1的陪护席位	ee78b16e1dec13b8.txt	yes	PARTIAL: companion-seat ratio; RHFAC's ratio is a room-type mix
+Q-ratio	不少于总停车数1%	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.9.5 (p.7)	100辆以上时应设置不少于总停车数1%的无障碍机动车停车位	ee78b16e1dec13b8.txt	yes	proportional parking count
+P04	无障碍通道的通行净宽	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.2 (p.2)	无障碍通道的通行净宽不应小于1.20m，人员密集的公共场所的通行净宽不应小于1.80m。	ee78b16e1dec13b8.txt	yes	no 走廊 (corridor) in the code: interior and exterior routes are one object, with a crowd-density variant
+P05	轮椅回转空间	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.6.1(1) (p.5)	电梯门前应设直径不小于1.50m的轮椅回转空间	ee78b16e1dec13b8.txt	yes	turning space defined by a circle diameter
+P08	颜色或亮度对比	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.8.5 (p.6)	扶手应与背景有明显的颜色或亮度对比。	ee78b16e1dec13b8.txt	yes	BROADER: colour or brightness contrast, never quantified; no LRV
+P09	门开启后的通行净宽	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.5.4(1) (p.4)	新建和扩建建筑的门开启后的通行净宽不应小于900mm，既有建筑改造或改建的门开启后的通行净宽不应小于800mm	ee78b16e1dec13b8.txt	yes	door width is the clear width when open, split by new vs existing building
+P12	坡段提升高度	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.3.1 (p.3)	轮椅坡道的坡度和坡段提升高度应符合下列规定	ee78b16e1dec13b8.txt	yes	DIFFERENT AXIS: a ramp run is bounded by its rise, not by a run length
+B-4.5|B-4.5.2	突出部分	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.1.2 (p.2)	固定在无障碍通道、轮椅坡道、楼梯的墙或柱面上的物体，突出部分大于100mm且底面距地面高度小于2.00m时	ee78b16e1dec13b8.txt	yes	protruding objects on walls or columns
+B-4.4.4	箅子	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.2.4 (p.2)	无障碍通道上有井盖、箅子时，井盖、箅子孔洞的宽度或直径不应大于13mm，条状孔洞应垂直于通行方向。	ee78b16e1dec13b8.txt	yes	gratings and manhole covers; glyph 箅 read visually
+B-6.1.2	饮水机	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.6.2 (p.14)	当设置饮水机、自动取款机、自动售票机、自动贩卖机等时，每个区域的不同类型设施应至少有1台为低位服务设施。	ee78b16e1dec13b8.txt	yes	PARTIAL: drinking-water machine must have a low-level unit; no spout rule
+B-6.2.3	无障碍洗手盆	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.1.10 (p.10)	无障碍洗手盆应符合下列规定	ee78b16e1dec13b8.txt	yes	lavatory (wash basin)
+B-6.5.3	活动门帘	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	3.3.1(3) (p.12)	淋浴间入口应采用活动门帘。	ee78b16e1dec13b8.txt	yes	PARTIAL: shower enclosure entrance uses a movable curtain
+B-8.3.9	阻车桩	zh (Simplified, zh-Hans)	GB 55019-2021《建筑与市政工程无障碍通用规范》	2.10.7 (p.7)	设置阻车桩时，阻车桩的净间距不应小于900mm。	ee78b16e1dec13b8.txt	yes	bollards at kerb ramps
+B-8.8.2	临时占用	zh (Simplified, zh-Hans)	《中华人民共和国无障碍环境建设法》(2023)	art. 28	因特殊情况临时占用无障碍设施的，应当公告并设置护栏、警示标志或者信号设施，同时采取必要的替代性措施。	575638778aada9c1.txt	yes	PARTIAL: temporary occupation of facilities, with barriers and warnings; scaffolding not named

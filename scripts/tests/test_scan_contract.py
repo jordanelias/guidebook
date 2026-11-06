@@ -652,6 +652,55 @@ try:
     expect_refusal("AL05", "add-alias refuses an alias the term already holds",
                    "already holds", add_alias, TA, OCW, "SYNONYM", S)
 
+    expect_refusal("AL06", "add-alias refuses TRANSLATION: a source's own phrase is not a rendering "
+                   "of the English one (R11)", "TRANSLATION", add_alias, TA, OCW, "TRANSLATION", S)
+    # AL07: an alias held WITHOUT a pointer is promoted in place by attesting it; no second row.
+    TB = FREE[15]
+    x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, "
+      "created_by_session, updated_at, updated_by_session) VALUES (?, 'corridor route', "
+      "'en', 'SYNONYM', 'model-generated', '2026-01-01 00:00', 'fixture', '2026-01-01 00:00', "
+      "'fixture')", TB)
+    o_h = attempt(observe, obs("corridor route", "PDF page 2 / corridor route",
+                               "the clear width of a corridor route is measured here"), S)
+    attempt(adj, o_h.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=TB)
+    n_before = q("SELECT count(*) FROM term_aliases WHERE term_id=?", TB)[0][0]
+    a7 = attempt(add_alias, TB, o_h.get("observation_id"), "SYNONYM", S)
+    row7 = q("SELECT observation_id, alias_type FROM term_aliases WHERE term_id=? AND "
+             "alias='corridor route'", TB)
+    record("AL07", "add-alias promotes a held alias in place: the pointer is attached, its type "
+           "and row count are kept", a7.get("promoted") is True and row7 == [(o_h["observation_id"],
+           "SYNONYM")] and q("SELECT count(*) FROM term_aliases WHERE term_id=?", TB)[0][0]
+           == n_before, f"{a7} {row7}")
+    expect_refusal("AL08", "and a second attestation of an attested alias is refused",
+                   "attested by observation", add_alias, TB, o_h.get("observation_id"),
+                   "SYNONYM", S)
+    import importlib.util as _iu
+    _sp = _iu.spec_from_file_location("alias_audit", REPO / "scripts/audit/alias_provenance_audit.py")
+    _am = _iu.module_from_spec(_sp); _sp.loader.exec_module(_am)
+    record("AL09", "alias_provenance_audit classifies from the pointer, not the notes text",
+           _am.classify("source-attested: forged", None) != "SOURCE-ATTESTED"
+           and _am.classify("model-generated", 1) == "SOURCE-ATTESTED")
+    # T2: a name is a phrase the source used
+    ins = fn("insert_term")
+    o_n = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / zone",
+                               "the turnwise clearance zone of a wheelchair"), S)
+    expect_refusal("T201", "add-term refuses a name that is not inside the observed phrase "
+                   "(no model-coined gloss, OR-17)", "not inside the observed phrase", ins,
+                   o_n.get("observation_id"), "fixture invented gloss", "fixture", S,
+                   dry_run=True)
+    t202 = attempt(ins, o_n.get("observation_id"), "turnwise clearance", "fixture: a distinct fixture concept", S,
+                   dry_run=True, distinct_from=[TR])
+    record("T202", "add-term takes a contiguous part of the observed phrase", bool(t202.get("term_id")),
+           t202)
+    # N10: a name may come from a phrase in another language (owner E1); rename-term no longer
+    # demands an English observation
+    o_nl = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / nl",
+                                "the turnwise clearance zone of a wheelchair", language="NL"), S)
+    attempt(adj, o_nl.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=FREE[16])
+    n10 = attempt(rename, FREE[16], "turnwise clearance", "fixture: native name", S,
+                  from_observation=o_nl.get("observation_id"), dry_run=True)
+    record("N10b", "rename-term accepts a non-English observation as the warrant for a native name",
+           n10.get("changed") is not False and "error" not in n10, n10)
     # ── M: mint-term-from-catalogue ──────────────────────────────────────────────────
     mint = fn("mint_term_from_catalogue")
     APPROVAL = next((h[3:].strip() for h in ledger_text.splitlines()
@@ -720,6 +769,19 @@ try:
                              canonical_en="fixture corpus term name"))
     record("M09", "mint resolves a pre-reset corpus TERM (the permitted half of that "
            "catalogue)", mt9.get("term_id") and mt9.get("term_id") > oldterm, mt9)
+    # M13-M15: the item subjects, by row number, with the guard unchanged
+    ITEMS = REPO / "_archived/data/corpus-pre-reset-2026-08-06.db"
+    free_item = {"entry_ref": "items:3", "subject": db._item_subject(ITEMS, 3)}
+    record("M13", "an item subject resolves by row number, stripped of its aside and showing no old code",
+           bool(free_item["subject"]) and not db._ITEM_CODE.search(free_item["subject"]), free_item)
+    m14 = attempt(mint, **mt(catalogue=corpus, entry_ref=free_item["entry_ref"],
+                             canonical_en="Acoustic Door"), dry_run=True)
+    record("M14", "mint resolves an item subject by row number, its name the subject's own",
+           bool(m14.get("term_id")), m14)
+    expect_refusal("M15", "mint refuses a name that is not inside the item subject (no rewording)",
+                   "not inside the item subject", mint, **mt(
+                       catalogue=corpus, entry_ref=free_item["entry_ref"],
+                       canonical_en="fixture reworded name"))
     vp = run(script="validate_parameters.py")
     record("M10", "validate_parameters P2 passes with the approval entry in the ledger",
            vp.returncode == 0 and "P2: 2 catalogue-minted" in vp.stdout, vp.stdout[-300:])

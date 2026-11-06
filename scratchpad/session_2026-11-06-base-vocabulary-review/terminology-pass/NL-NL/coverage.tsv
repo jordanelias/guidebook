@@ -1,0 +1,76 @@
+register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+Well-illuminated (if site expected to be lit)	catalogue 2.1	FOUND	2	verlichtingsinstallatie / verlichtingssterkte	aim is safe use and escape, not visual access; illuminance measured on floor, tread or ramp
+Surface is firm, stable and slip resistant	catalogue 2.1	FOUND-PARTIAL	1	verhard pad	NARROWER: 'verhard pad' (paved) only; no firm/stable/slip term; paved path only; no firmness or slip-resistance term
+Seating	catalogue 2.1	FOUND-PARTIAL	1	zitplaatsen	DIFFERENT SENSE: assembly seating for crowd safety; assembly seating for crowd and fire safety, not rest seating
+Handrails	catalogue 2.1	FOUND	2	horizontaal doorloopt / leuning	handrail extension; stairs only; ramps carry a geleiderand, not a leuning
+Clear width	catalogue 2.1	FOUND	2	doorgang / vrije breedte	defined term; measured between construction parts at a doorgang; the regulated object is the doorgang (opening), not the deur
+Accessible path of travel	catalogue 2.1	FOUND	3	gemeenschappelijke verkeersruimte / route naar de openbare weg / verkeersroute	corridor is a shared circulation space; 'gang' does not occur; defined term; exterior route from public road
+Drainage	catalogue 2.1	SEARCHED-ABSENT	0		'afwatering' 0; 'hemelwater' only as drainage plumbing (art. 4.204 ff.), not walking-surface drainage
+Clear signage	catalogue 2.1	FOUND-PARTIAL	2	objecten voor bewegwijzering / vluchtrouteaanduiding	NARROWER: escape-route signs; wayfinding objects named only in a fire rule; escape-route signs only; wayfinding objects named only as exempt from a fire-load rule
+Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND-PARTIAL	1	spreekinstallatie	DIFFERENT SENSE: entry intercom only; entry intercom, in a crime-prevention paragraph; no assistive listening
+Level landings with clear space	catalogue 2.1	FOUND	2	hellingbaanbordes / trapbordes	top landing only
+Floor surface is stable, firm, and non-slip	catalogue 2.1	SEARCHED-ABSENT	0		'stroef' 0, 'slip' 0; no indoor floor-surface rule
+Clear space for approach	catalogue 2.1	FOUND-PARTIAL	2	integraal toegankelijke toiletruimte / vloeroppervlakte van ten minste 1,5 m x 1,5 m	PARTIAL: floor areas of rooms and lift lobbies; no approach-side space; room size, no transfer or approach space named; space stated as a floor area in front of the lift
+Well illuminated (if required for expected usage)	catalogue 2.1	FOUND	2	verlichtingsinstallatie / verlichtingssterkte	aim is safe use and escape, not visual access; illuminance measured on floor, tread or ramp
+Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND-PARTIAL	1	verhard pad	NARROWER: 'verhard pad' (paved) only; no firm/stable/slip term; paved path only; no firmness or slip-resistance term
+Shelter	catalogue 2.1	FOUND-PARTIAL	1	regenwerend	NARROWER: rain-proofing of a stair in shared circulation; rain-proof stair in shared circulation; no canopy at entrances
+Riser height and tread depth	catalogue 2.1	FOUND	3	aantrede / optrede / tredevlak	going measured on the klimlijn; tread surface is a 'breedte', like French 'largeur du giron'
+Nosing design	catalogue 2.1	FOUND-PARTIAL	1	markering van ten minste 50 mm met een hoog contrast	NARROWER: edge marking only; contrast unquantified; no slip resistance; no nosing profile
+No open riser	catalogue 2.1	SEARCHED-ABSENT	0		'stootbord' 0, 'open trede' 0
+Level threshold	catalogue 2.1	FOUND	3	afgewerkte vloer / drempel / hoogteverschil groter dan 0,02 m	the Bbl replaced this with 'vloer met aankleding'; the ministry's plain-language word for what the Bbl calls a hoogteverschil; guidance, not instrument; the threshold is a hoogteverschil; 'drempel' occurs 0 times in the Bbl
+Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND	1	vrije hoogte	defined by pointer to NEN 2580
+Edge protection	catalogue 2.1	FOUND	2	afscheiding / geleiderand	fall barrier; ramp edge kerb; also in Bouwbesluit 2012 art. 2.45
+Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND-PARTIAL	2	hoog contrast / markering van ten minste 50 mm met een hoog contrast	NARROWER: contrast marking, no slip resistance; contrast unquantified; no slip resistance; no nosing profile; same phrase as Bbl art. 4.26a
+Tactile attention indicators (truncated domes)	catalogue 2.1	SEARCHED-ABSENT	0		'tactiel' 0, 'noppen' 0, 'ribbel' 0; held aliases 'geleidestrook' and 'noppen- en ribbeltegels' not in text
+Slope	catalogue 2.1	FOUND	2	helling / hellingbaan	'hellingbaan' is not defined in Bijlage I; graded by rise
+Sink faucet is easy to use or automatic	catalogue 2.1	SEARCHED-ABSENT	0		'kraan' occurs only as a noise source (art. 4.107 and 4.108); 'wastafel' 0
+Outlets and switches are at accessible heights	catalogue 2.1	SEARCHED-ABSENT	0		'wandcontactdoos' only in road-tunnel hulpposten; 'schakelaar' 0
+Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		'magnetron' 0; nearest is 'opstelplaats voor een kooktoestel' (reverse harvest)
+Level landings with clear space and at regular intervals	catalogue 2.1	FOUND-PARTIAL	1	een hoogte van niet meer dan 1 m	NARROWER: top landing only; no intermediate landing; a ramp is capped by its rise; no intermediate landing and no run length are named
+Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND-PARTIAL	1	markering van ten minste 50 mm met een hoog contrast	NARROWER: contrast marking, no slip resistance; contrast unquantified; no slip resistance; no nosing profile
+Accessible lockers	catalogue 2.1	SEARCHED-ABSENT	0		'kluis' only as 'sleutelkluis' in the gebruiksmelding data list (art. 6.8)
+Accessible door hardware	catalogue 2.1	FOUND-PARTIAL	3	lichte druk tegen de deur / ontsluitingsmechanisme / panieksluiting	DIFFERENT SENSE: escape-route opening hardware; escape hardware; escape-route doors; force is qualitative, no newtons
+Accessible controls	catalogue 2.1	SEARCHED-ABSENT	0		no reach or operability rule; 'bediend' only for intercom location (art. 4.239)
+height	catalogue 2.2	FOUND	1	hoogte	
+level	catalogue 2.2	FOUND	3	afgewerkte vloer / hoogteverschil groter dan 0,02 m / meetniveau	datum level; 'niveau' otherwise means quality level ('rechtens verkregen niveau'); the Bbl replaced this with 'vloer met aankleding'; the threshold is a hoogteverschil; 'drempel' occurs 0 times in the Bbl
+width	catalogue 2.2	FOUND	1	vrije breedte	defined term; measured between construction parts at a doorgang
+clearance	catalogue 2.2	FOUND	2	vrije doorgang / vrije hoogte	clearance is a free passage; defined by pointer to NEN 2580
+number	catalogue 2.2	FOUND	1	aantal integraal toegankelijke badruimten	count as proportion
+slope	catalogue 2.2	FOUND	2	helling / hellingbaan	'hellingbaan' is not defined in Bijlage I; graded by rise
+depth	catalogue 2.2	FOUND-PARTIAL	1	aantrede	PARTIAL: only as 'aantrede'; the word 'diepte' carries no design quantity; going measured on the klimlijn
+riser	catalogue 2.2	FOUND	1	optrede	
+tread	catalogue 2.2	FOUND	2	aantrede / tredevlak	going measured on the klimlijn; tread surface is a 'breedte', like French 'largeur du giron'
+force	catalogue 2.2	FOUND-PARTIAL	1	lichte druk tegen de deur	PARTIAL: qualitative 'lichte druk', no newtons; escape-route doors; force is qualitative, no newtons
+time	catalogue 2.2	FOUND-PARTIAL	1	binnen 15 seconden	DIFFERENT SENSE: emergency-lighting response time; emergency lighting response time
+gradient	catalogue 2.2	FOUND	1	helling	graded by rise
+size	catalogue 2.2	FOUND	1	afmetingen	
+volume	catalogue 2.2	FOUND-PARTIAL	1	inhoud	DIFFERENT SENSE: spatial volume; spatial volume, not audio volume
+capacity	catalogue 2.2	FOUND-PARTIAL	1	capaciteit	DIFFERENT SENSE: escape-route capacity; escape-route capacity in persons, not lift capacity
+distance	catalogue 2.2	FOUND-PARTIAL	1	loopafstand	DIFFERENT SENSE: walking distance to a lift; walking distance to a lift; defined in Bijlage I
+lighting levels	catalogue 2.2	FOUND	1	verlichtingssterkte	illuminance measured on floor, tread or ramp
+ratio	catalogue 2.2	FOUND-PARTIAL	2	aantal integraal toegankelijke badruimten / percentage van de vloeroppervlakte	PARTIAL: share of floor area and of bathrooms; count as proportion; share of floor area that must be accessible
+Ramp gradient (parameter 3)	base_parameters	FOUND	2	helling / hellingbaan	'hellingbaan' is not defined in Bijlage I; graded by rise
+Corridor width (parameter 4)	base_parameters	FOUND	2	gemeenschappelijke verkeersruimte / vrije breedte	corridor is a shared circulation space; 'gang' does not occur; defined term; measured between construction parts at a doorgang
+Turning circle (parameter 5)	base_parameters	FOUND-PARTIAL	2	vloeroppervlakte van ten minste 1,5 m x 1,5 m / zonder te keren	DIFFERENT CARVE: square floor area plus 'zonder te keren'; space stated as a floor area in front of the lift; turning named as an act of the wheelchair user, not as a circle
+Operating force (parameter 6)	base_parameters	FOUND-PARTIAL	1	lichte druk tegen de deur	PARTIAL: qualitative, escape doors only; escape-route doors; force is qualitative, no newtons
+Reverberation time (parameter 7)	base_parameters	FOUND-PARTIAL	2	galm / totale geluidsabsorptie	DIFFERENT QUANTITY: absorption area, not reverberation time; aim stated as nuisance from reverberation; quantity is absorption area per room volume, not reverberation time
+LRV contrast (parameter 8)	base_parameters	FOUND-PARTIAL	2	hoog contrast / markering van ten minste 50 mm met een hoog contrast	BROADER: 'hoog contrast' never quantified; contrast unquantified; no slip resistance; no nosing profile; same phrase as Bbl art. 4.26a
+Door width (parameter 9)	base_parameters	FOUND	2	doorgang / vrije breedte	defined term; measured between construction parts at a doorgang; the regulated object is the doorgang (opening), not the deur
+Colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		'kleurtemperatuur' 0; 'kleur' only for tunnel doors (RAL 6024) and building appearance
+Headroom clearance (parameter 11)	base_parameters	FOUND	2	Minimum vrije hoogte boven de trap / vrije hoogte	defined by pointer to NEN 2580
+Ramp run length (parameter 12)	base_parameters	FOUND-PARTIAL	1	een hoogte van niet meer dan 1 m	DIFFERENT CARVE: ramp capped by rise (1 m), not by length; a ramp is capped by its rise; no intermediate landing and no run length are named
+Gratings	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		'rooster' 0
+Headroom and protruding objects	b651 heading RHFAC-does-not-name	FOUND-PARTIAL	2	beweegbaar constructieonderdeel / vrije hoogte	headroom FOUND; protruding objects only for moving parts; defined by pointer to NEN 2580; only moving parts over a public way
+Headroom	b651 heading RHFAC-does-not-name	FOUND	2	Minimum vrije hoogte boven de trap / vrije hoogte	defined by pointer to NEN 2580
+Protruding objects	b651 heading RHFAC-does-not-name	FOUND-PARTIAL	1	beweegbaar constructieonderdeel	NARROWER: moving parts above a public way; only moving parts over a public way
+Spouts	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		no fittings rule
+Lavatories	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		'wastafel' 0; 'toiletruimte' is the room, not the basin
+Enclosures	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		no enclosure term; 'badruimte' is the room
+Speed bumps	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		'verkeersdrempel' 0
+Bollards	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		'paal' as a word 0; 'palen' only as 'seinpalen' in permit lists
+Landscaping elements	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		no landscaping term
+Flower or shrub planters	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		no planter term
+Vegetation	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		'beplanting' 0
+Guy wires	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		no term
+Scaffolding	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		'steiger' occurs in permit lists (construction scaffold) and as a jetty for floating buildings (art. 4.192), never as an obstacle on a pedestrian route
+Gradation limits	b651 heading RHFAC-does-not-name	SEARCHED-ABSENT	0		no term

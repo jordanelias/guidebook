@@ -1,0 +1,9 @@
+register_concept	seed_PT	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Reverberation time (parameter 7)	tempo de reverberação	MODEL-GENERATED	PT	held alias; believed used in the Regulamento dos Requisitos Acústicos dos Edifícios (not read)
+Lighting levels / Well-illuminated	iluminância / nível de iluminação	MODEL-GENERATED	PT	ordinary PT lighting vocabulary; to search in workplace and school-building rules, not DL 163/2006
+Audio accessibility	anel de indução magnética	MODEL-GENERATED	PT	PT-PT form believed in use (held seed 'anel de indução' is tagged BR)
+Speed bumps (B651 8.3.8)	lomba redutora de velocidade	MODEL-GENERATED	PT	road-signage vocabulary; to search in road codes
+Bollards (B651 8.3.9)	pilarete	MODEL-GENERATED	PT	street-furniture vocabulary; to search in municipal public-space regulations
+Spouts (B651 6.1.2)	bebedouro	MODEL-GENERATED	PT	ordinary word; no PT instrument seen to use it
+Microwave mounting height	micro-ondas (altura de instalação)	MODEL-GENERATED	PT	no instrument seen; low priority
+Colour temperature (parameter 10)	temperatura de cor	MODEL-GENERATED	PT	held alias family; no instrument seen

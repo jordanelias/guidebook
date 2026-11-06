@@ -1,0 +1,76 @@
+register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+Well-illuminated (if site expected to be lit)	catalogue 2.1	FOUND	3	Valoisuus ja valaistus / häikäisemättömällä valaistuksella / valaistu	'valoisuus' (brightness/luminance of surfaces) paired with 'valaistus' (lighting); a performance duty (lit so as to allow safe use and maintenance); no illuminance quantity; guidance: strong but glare-free lighting improves perceivability of the route
+Surface is firm, stable and slip resistant	catalogue 2.1	FOUND	2	liukas märkänä / pinnaltaan tasainen, kova ja luistamaton	even, hard and non-slip; adds 'helposti havaittava' (easily perceivable) to the surface triple; wet-slip condition, guidance
+Seating	catalogue 2.1	FOUND-PARTIAL	2	Kokoontumistilan istuimet / kiinteät istuimet	DIFFERENT SENSE: assembly seating only; no rest seating on routes ('penkki' only as tiered benches, 'levähd*' 0/0/0); assembly seating (fixing and coupling of chairs), not rest seating; fixed seats in assembly spaces
+Handrails	catalogue 2.1	FOUND	2	kaksi käsijohdetta päällekkäin / käsijohde	a second, lower handrail for children and wheelchair users; both sides, full length of the flight ('syöksy')
+Clear width	catalogue 2.1	FOUND	2	Oven vapaalla leveydellä / vapaan leveyden	'vapaa leveys' inflected; the clear width of the opening; defined as the actual width of the opening at the opened leaf
+Accessible path of travel	catalogue 2.1	FOUND	2	Rakennukseen johtava kulkuväylä / esteettömän kulkuväylän	'kulkuväylä' is the route object for outdoor approach, interior circulation and ramp alike; the approach route, from the plot boundary and from spaces serving the building
+Drainage	catalogue 2.1	SEARCHED-ABSENT	0		no drainage rule; 'kuivat*', 'sadeve*', 'kaivo' 0/0/0; 'vede*' in OH18 only as waterproofing and water-pressure lift
+Clear signage	catalogue 2.1	FOUND-PARTIAL	2	Selkeä ja loogisesti etenevä opastus / liikkumisesteisen henkilön tunnuksella	PARTIAL in the decrees (wheelchair symbol only); FOUND in guidance ('opastus'); guidance only; the decree requires only the wheelchair symbol; the only signage the decree mandates (parking, WC, hygiene spaces)
+Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND	2	induktiosilmukka tai muu vastaava äänensiirtojärjestelmä / palvelupistesilmukka	counter loop; triggered by the presence of a sound-reinforcement system
+Level landings with clear space	catalogue 2.1	FOUND	3	Ulko-oven edessä olevan tasanteen / tasanteen / vaakasuora tasanne	
+Floor surface is stable, firm, and non-slip	catalogue 2.1	FOUND	2	kompastumis- ja liukastumisriski on pieni / pinnaltaan tasainen ja luistamaton	interior route drops 'kova' (hard); stated as low trip and slip risk, not as a surface property
+Clear space for approach	catalogue 2.1	FOUND	2	avautumispuolen etäisyys seinän sisänurkasta / vapaa tila	'vapaa tila' = clear floor space, given as a circle diameter; latch-side clearance from an inside corner
+Well illuminated (if required for expected usage)	catalogue 2.1	FOUND	3	Valoisuus ja valaistus / häikäisemättömällä valaistuksella / valaistu	'valoisuus' (brightness/luminance of surfaces) paired with 'valaistus' (lighting); a performance duty (lit so as to allow safe use and maintenance); no illuminance quantity; guidance: strong but glare-free lighting improves perceivability of the route
+Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND	2	liukas märkänä / pinnaltaan tasainen, kova ja luistamaton	even, hard and non-slip; adds 'helposti havaittava' (easily perceivable) to the surface triple; wet-slip condition, guidance
+Shelter	catalogue 2.1	FOUND	2	lumelta ja jäältä lumiestein / suojattu kinostumiselta katoksella	entrance canopy against snow drift; a safety-decree rule, not in the accessibility decree; snow guards over entrances and routes
+Riser height and tread depth	catalogue 2.1	FOUND	2	askelman nousun ja etenemän / ulkoportaiden etenemän	'nousu' = rise (quantity), 'etenemä' = going; the rule is their ratio, then tabulated per building use; outdoor stairs differ by covered/heated vs not
+Nosing design	catalogue 2.1	SEARCHED-ABSENT	0		'nokka' 0/0/0; K17 10 § marks steps by contrast but does not treat the nosing
+No open riser	catalogue 2.1	FOUND-PARTIAL	1	Porrasaskelmien välistä	NARROWER: a 100 mm test-cube gap limit between steps, not a closed-riser rule; a gap limit by test cube, not a closed-riser rule
+Level threshold	catalogue 2.1	FOUND	2	Kynnyksettömissä ovissa / ei saa olla tasoeroa tai kynnystä	default is no threshold; an exception route for acoustic and moisture reasons
+Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND-PARTIAL	2	alareunan vapaa korkeus / kulkuväylän vähimmäiskorkeus	NARROWER: general headroom and overhead projections; no parking-garage clearance; headroom of a route; no parkade rule; overhead projections: 'vapaa korkeus' unless protected against collision
+Edge protection	catalogue 2.1	FOUND	3	korotuksella, joka estää luistamisen reunan yli / suojareuna / suojareunan tarkoitus	purpose stated: stop wheels running off the edge; ramp edge upstand; stair and landing side-edge upstand
+Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND-PARTIAL	1	tummuuserojen tai huomiomerkintöjen avulla	BROADER: steps marked by luminance difference or attention marking; no strip, no nosing, no slip property; steps, ramps, thresholds and level changes marked by lighting, luminance difference or attention markings; no strip and no slip property
+Tactile attention indicators (truncated domes)	catalogue 2.1	FOUND-PARTIAL	2	tuntokontrastein / valkoisen kepin avulla tuntuvaa ohjaavaa tai varottavaa merkintää	BROADER: guidance names guiding or warning cane-detectable marking; no domes, nothing in either decree; 'tuntokontrasti' (tactile contrast) paired with 'tummuuskontrasti'; guiding OR warning marking felt with the white cane; no dome geometry
+Slope	catalogue 2.1	FOUND	2	Luiskan kaltevuus / kulkuväylän kaltevuus	a second, steeper limit applies when total rise is limited; route slope; same word as ramp slope
+Sink faucet is easy to use or automatic	catalogue 2.1	SEARCHED-ABSENT	0		'hana', 'pesuallas' 0/0/0
+Outlets and switches are at accessible heights	catalogue 2.1	FOUND-PARTIAL	1	Painikkeet, kytkimet ja säätimet	NARROWER: switches and controls at 'sopivalla korkeudella' in guidance; no socket-outlets; switches and controls only; socket-outlets ('pistorasia') 0/0/0
+Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		'mikro*' 0/0/0; kitchen treated only as a turning space
+Level landings with clear space and at regular intervals	catalogue 2.1	FOUND	2	vähintään 15 metrin välein kääntymistila / välitasanne	intermediate landing triggered by rise per run, not by run length; turning spaces at intervals on narrow interior routes
+Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND-PARTIAL	1	tummuuserojen tai huomiomerkintöjen avulla	BROADER: as above; steps, ramps, thresholds and level changes marked by lighting, luminance difference or attention markings; no strip and no slip property
+Accessible lockers	catalogue 2.1	SEARCHED-ABSENT	0		'lokero', 'kaappi' 0/0/0; storage appears only as 'säilytystila' (rooms serving the building)
+Accessible door hardware	catalogue 2.1	FOUND-PARTIAL	3	oven avaamiseen tarvittavan voiman suuruuden / ovenkahvaan / voi sen helposti avata	PARTIAL: the decree states only ease of opening; handle named in guidance as reach target; door handle as a reach target; the decree states only 'helposti avata'; opening force named but not quantified; performance wording
+Accessible controls	catalogue 2.1	FOUND	2	Hissin hallintalaitteisto / Painikkeet, kytkimet ja säätimet	switches and controls only; socket-outlets ('pistorasia') 0/0/0
+height	catalogue 2.2	FOUND	1	askelman nousun ja etenemän	'nousu' = rise (quantity), 'etenemä' = going; the rule is their ratio, then tabulated per building use
+level	catalogue 2.2	FOUND	2	Yhteys tasojen välillä / tasoero	'taso' = level; also 'kerrostaso', 'sisäänkäyntitaso'; level difference, compared with the storey height to choose ramp/lift
+width	catalogue 2.2	FOUND	1	vapaan leveyden	'vapaa leveys' inflected; the clear width of the opening
+clearance	catalogue 2.2	FOUND	3	avautumispuolen etäisyys seinän sisänurkasta / esteistä vapaata tilaa lattiatasosta 2000 mm korkeuteen saakka / vapaa tila	'vapaa tila' = clear floor space, given as a circle diameter; clear space is a volume to a stated height; latch-side clearance from an inside corner
+number	catalogue 2.2	FOUND	2	riittävä määrä pyörätuolipaikkoja / vähintään viisi prosenttia majoitustiloista	an unquantified 'sufficient number'; proportional count with a floor of one
+slope	catalogue 2.2	FOUND	2	Luiskan kaltevuus / kulkuväylän kaltevuus	a second, steeper limit applies when total rise is limited; route slope; same word as ramp slope
+depth	catalogue 2.2	FOUND	2	1 400 millimetriä syvä / askelman nousun ja etenemän	'nousu' = rise (quantity), 'etenemä' = going; the rule is their ratio, then tabulated per building use; lift car depth
+riser	catalogue 2.2	FOUND	2	askelman nousun ja etenemän / ulkoportaiden etenemän	'nousu' = rise (quantity), 'etenemä' = going; the rule is their ratio, then tabulated per building use; outdoor stairs differ by covered/heated vs not
+tread	catalogue 2.2	FOUND	2	askelman nousun ja etenemän / ulkoportaiden etenemän	'nousu' = rise (quantity), 'etenemä' = going; the rule is their ratio, then tabulated per building use; outdoor stairs differ by covered/heated vs not
+force	catalogue 2.2	FOUND-PARTIAL	1	oven avaamiseen tarvittavan voiman suuruuden	PARTIAL: as parameter 6; opening force named but not quantified
+time	catalogue 2.2	SEARCHED-ABSENT	0		no timing quantity in any of the three texts
+gradient	catalogue 2.2	FOUND	2	Luiskan kaltevuus / kulkuväylän kaltevuus	a second, steeper limit applies when total rise is limited; route slope; same word as ramp slope
+size	catalogue 2.2	FOUND	1	korin suositeltu vähimmäiskoko	lift car size, guidance
+volume	catalogue 2.2	SEARCHED-ABSENT	0		'äänenvoim*' 0/0/0
+capacity	catalogue 2.2	FOUND-PARTIAL	1	Kokoontumistilan henkilömäärä	DIFFERENT SENSE: assembly occupant number, not lift capacity; occupant number of an assembly space, not lift capacity
+distance	catalogue 2.2	FOUND	1	etäisyydelle takaseinästä	WC-pan distance from back wall
+lighting levels	catalogue 2.2	FOUND-PARTIAL	2	Valoisuus ja valaistus / valoisuuserot	PARTIAL: no illuminance quantity; only 'valoisuuserot' (luminance differences); 'valoisuus' (brightness/luminance of surfaces) paired with 'valaistus' (lighting); luminance differences of surfaces and lighting needed for perception; unquantified
+ratio	catalogue 2.2	FOUND-PARTIAL	2	nousun ja etenemän suhteen / vähintään viisi prosenttia majoitustiloista	PARTIAL: rise-to-going ratio and a 5 % room share; no room-type mix; proportional count with a floor of one; rise-to-going ratio
+Ramp gradient (parameter 3)	base_parameters	FOUND	1	Luiskan kaltevuus	a second, steeper limit applies when total rise is limited
+Corridor width (parameter 4)	base_parameters	FOUND	2	kulkuväylä on leveydeltään alle 1 500 millimetriä / pitkällä kapealla käytävällä	'käytävä' in the corridor sense appears in the guide only; no minimum interior route width; width below a threshold triggers turning spaces
+Turning circle (parameter 5)	base_parameters	FOUND	2	kääntymistila, jonka halkaisija / vähintään 15 metrin välein kääntymistila	turning space given by diameter; two sizes by dwelling type; turning spaces at intervals on narrow interior routes
+Operating force (parameter 6)	base_parameters	FOUND-PARTIAL	1	oven avaamiseen tarvittavan voiman suuruuden	PARTIAL: opening force named in guidance, never quantified; opening force named but not quantified
+Reverberation time (parameter 7)	base_parameters	SEARCHED-ABSENT	0		'kaiunta' 0/0/0; OH18 2.6.1 and 2.12.2 defer room acoustics ('huoneakustiikasta') to decree 796/2017, NOT READ
+LRV contrast (parameter 8)	base_parameters	FOUND-PARTIAL	2	tummuuskontrasti / valoisuuserot	BROADER: 'tummuuskontrasti'/'valoisuuserot' never quantified; no LRV or luminance-contrast term; darkness contrast; never quantified, no LRV/luminance term; luminance differences of surfaces and lighting needed for perception; unquantified
+Door width (parameter 9)	base_parameters	FOUND	2	Oven vapaalla leveydellä / vapaan leveyden	'vapaa leveys' inflected; the clear width of the opening; defined as the actual width of the opening at the opened leaf
+Colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		'värilämpö*', 'kelvin' 0/0/0
+Headroom clearance (parameter 11)	base_parameters	FOUND	2	alareunan vapaa korkeus / kulkuväylän vähimmäiskorkeus	headroom of a route; no parkade rule; overhead projections: 'vapaa korkeus' unless protected against collision
+Ramp run length (parameter 12)	base_parameters	FOUND-PARTIAL	1	yhtäjaksoisen luiskan korkeusero	CARVED DIFFERENTLY: limited by rise of a continuous ramp (500 mm), not by its length; run limited by rise per continuous ramp, not by length
+Gratings	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'ritil*' only as 'puuritilällä' (timber decking to raise a balcony floor, OH18 2.4.4): different sense
+Headroom and protruding objects	b651-headings (RHFAC-does-not-name)	FOUND	1	alareunan vapaa korkeus	overhead projections: 'vapaa korkeus' unless protected against collision
+Headroom	b651-headings (RHFAC-does-not-name)	FOUND	1	kulkuväylän vähimmäiskorkeus	headroom of a route; no parkade rule
+Protruding objects	b651-headings (RHFAC-does-not-name)	FOUND	1	alareunan vapaa korkeus	overhead projections: 'vapaa korkeus' unless protected against collision
+Spouts	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		0/0/0 (no drinking fountain)
+Lavatories	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no wash-basin rule; 'pesuallas' 0/0/0 ('wc- ja pesutila' is a room, not a basin)
+Enclosures	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	kiinteää suihkuseinää	NARROWER: only a fixed shower screen, named as something not to place in the transfer space; fixed shower screen, mentioned only as absent from the transfer space
+Speed bumps	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'hidast*', 'töyssy' 0/0/0
+Bollards	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'pollari' 0/0/0; K17 13 § 'puomi' is a barrier arm (different element)
+Landscaping elements	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	sopivin istutuksin	DIFFERENT PURPOSE: plantings as fall protection near play areas, not as route obstacles; plantings as edge protection near play areas
+Flower or shrub planters	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no planter element; only 'istutuksin' (see Landscaping elements)
+Vegetation	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	sopivin istutuksin	DIFFERENT PURPOSE: as above; plantings as edge protection near play areas
+Guy wires	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		0/0/0
+Scaffolding	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		only 'riipputelineiden kiinnitysrakenteet' (K17 25 §, facade maintenance fixings): different sense
+Gradation limits	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		0/0/0

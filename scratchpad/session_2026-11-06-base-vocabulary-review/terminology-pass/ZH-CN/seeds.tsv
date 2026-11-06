@@ -1,0 +1,11 @@
+register_concept	seed (MODEL-GENERATED, not found in any text read)	flag	jurisdiction_meant_in_use	where it might be met (ours)
+Well-illuminated (C01, C13, Q-lighting levels)	照度 / 地面照度 / 照明设计	MODEL-GENERATED	CN	believed used in lighting codes (e.g. a building-lighting design standard); not in GB 55019 or the 2023 law
+Reverberation time (P07)	混响时间	MODEL-GENERATED (already held as a TRANSLATION alias)	CN	believed used in room-acoustics codes; 0 in both texts
+Colour temperature (P10)	色温 / 相关色温	MODEL-GENERATED (色温 already held)	CN	believed used in lighting standards; 0 in both texts
+Riser height and tread depth (C16)	踏步高度 / 踏步宽度	MODEL-GENERATED	CN	believed the usual Chinese stair-dimension pair (tread as a WIDTH); GB 55019 sets no stair dimension, so GB 50763 or a general building code would be the place to test it
+Outlets (C26)	插座	MODEL-GENERATED	CN	0 in GB 55019; test in GB 50763
+Seating, rest (C03)	休息座椅 / 休息区	MODEL-GENERATED (already held)	CN	not in the texts read
+Speed bumps (B-8.3.8)	减速带	MODEL-GENERATED	CN	road-design texts, not read
+Landscaping, planters (B-8.7, B-8.7.1)	树池 / 花池	MODEL-GENERATED	CN	believed used for tree pits and planters in street design; not read
+LRV contrast (P08)	光反射比 / 亮度对比度	MODEL-GENERATED	CN	GB 55019 says only 颜色或亮度对比 (2.8.5); test in GB 50763 or a standard on tactile and colour marking
+Ramp run length (P12)	坡道水平长度	MODEL-GENERATED	CN	GB 55019 bounds a run by 提升高度; 水平长度 occurs only for landings (2.3.3); GB 50763 may tabulate horizontal length

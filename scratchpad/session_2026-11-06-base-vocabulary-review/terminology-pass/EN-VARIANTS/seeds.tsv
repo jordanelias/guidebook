@@ -1,0 +1,8 @@
+register_concept	seed_en	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Microwave mounting height accessible and safe	appliance controls / kitchen appliances (reach range)	MODEL-GENERATED	US	US ch.8 '804 Kitchens and Kitchenettes' located but NOT READ; seed points there
+Speed bumps (B651 8.3.8)	speed hump / road hump	MODEL-GENERATED	UK, IE	believed UK/IE highway term; would sit in street guidance (Inclusive Mobility; IE streetscapes guidelines), not these building documents
+Landscaping elements (B651 8.7)	street furniture / planting	MODEL-GENERATED	UK	Inclusive Mobility (DfT) referenced by ADM 1.5 note; not retrieved
+Guy wires (B651 8.7.4)	stay wire	MODEL-GENERATED	UK, AU	believed term for a guy wire in UK/AU electrical and street practice
+Gradation limits (B651 D.6.1)	firm and stable trail surface / surface gradation	MODEL-GENERATED	US	US ch.10 1017 trails (Architectural Barriers Act outdoor guidelines) NOT READ
+Colour temperature (parameter 10)	correlated colour temperature (CCT)	MODEL-GENERATED	UK, AU	lighting-design term; BS 8300 / AS 1428.2 lighting clauses believed to hold it; neither read
+Reverberation time (parameter 7)	reverberation time	MODEL-GENERATED	UK	ADM 3.13 defers acoustics; BB93 and BS 8300 believed to hold the quantity; not read

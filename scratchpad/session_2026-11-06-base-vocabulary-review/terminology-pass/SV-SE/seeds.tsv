@@ -1,0 +1,12 @@
+register_concept	seed_sv	flag	meant_in_use_in	why_seeded (ours)
+Shelter	väderskydd vid entré	MODEL-GENERATED	SE	not treated in the four texts read; try BBR history and municipal technical guidance
+Accessible lockers	förvaringsskåp	MODEL-GENERATED	SE	not treated; try workplace rules (Arbetsmiljöverket)
+Microwave mounting height accessible and safe	placering av mikrovågsugn	MODEL-GENERATED	SE	kitchen appliances not named in BFS 2024:12
+Colour temperature (parameter 10)	färgtemperatur	MODEL-GENERATED	SE	held alias; 0 in all four texts
+Reverberation time (parameter 7)	efterklangstid	MODEL-GENERATED	SE	held alias; 0 in all four texts; try BFS 2024:10 (buller)
+Ramp run length (parameter 12)	ramplängd	MODEL-GENERATED	SE	no run-length rule found
+Operating force (parameter 6)	öppningskraft	MODEL-GENERATED	SE	held alias; the texts say only "tunga dörrar"
+time	öppethållandetid	MODEL-GENERATED	SE	no duration quantity found
+Lavatories	tvättställ	MODEL-GENERATED	SE	0 in all four texts
+Speed bumps	farthinder	MODEL-GENERATED	SE	0; probably a road-authority term outside Boverket
+Spouts	dricksfontän	MODEL-GENERATED	SE	no drinking fountain treated

@@ -1,0 +1,135 @@
+[
+  {
+    "started": "2026-11-06T05:08:18",
+    "role": "planner",
+    "bytes": 1286878,
+    "agent_id_prefix": "ad002a29",
+    "file": "2026-11-06T05-08-18_planner_ad002a29.jsonl"
+  },
+  {
+    "started": "2026-11-06T05:33:31",
+    "role": "other",
+    "bytes": 1009807,
+    "agent_id_prefix": "a1610462",
+    "file": "2026-11-06T05-33-31_other_a1610462.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:17:11",
+    "role": "other",
+    "bytes": 1205406,
+    "agent_id_prefix": "a7980afb",
+    "file": "2026-11-06T09-17-11_other_a7980afb.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:17:11",
+    "role": "other",
+    "bytes": 1145431,
+    "agent_id_prefix": "a806f401",
+    "file": "2026-11-06T09-17-11_other_a806f401.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:17:11",
+    "role": "other",
+    "bytes": 1404702,
+    "agent_id_prefix": "af827e4c",
+    "file": "2026-11-06T09-17-11_other_af827e4c.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:29",
+    "role": "other",
+    "bytes": 1380707,
+    "agent_id_prefix": "a24839fd",
+    "file": "2026-11-06T09-30-29_other_a24839fd.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:29",
+    "role": "other",
+    "bytes": 1412989,
+    "agent_id_prefix": "a6ce170e",
+    "file": "2026-11-06T09-30-29_other_a6ce170e.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:29",
+    "role": "other",
+    "bytes": 1204446,
+    "agent_id_prefix": "a7b664cb",
+    "file": "2026-11-06T09-30-29_other_a7b664cb.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:29",
+    "role": "other",
+    "bytes": 1324897,
+    "agent_id_prefix": "ab04941d",
+    "file": "2026-11-06T09-30-29_other_ab04941d.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:29",
+    "role": "other",
+    "bytes": 1305828,
+    "agent_id_prefix": "ac1c1abb",
+    "file": "2026-11-06T09-30-29_other_ac1c1abb.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:29",
+    "role": "other",
+    "bytes": 1166285,
+    "agent_id_prefix": "ad4df1d7",
+    "file": "2026-11-06T09-30-29_other_ad4df1d7.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:30",
+    "role": "other",
+    "bytes": 1138796,
+    "agent_id_prefix": "a07c0495",
+    "file": "2026-11-06T09-30-30_other_a07c0495.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:30",
+    "role": "other",
+    "bytes": 7924263,
+    "agent_id_prefix": "a509e427",
+    "file": "2026-11-06T09-30-30_other_a509e427.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:30",
+    "role": "other",
+    "bytes": 1418908,
+    "agent_id_prefix": "a722c364",
+    "file": "2026-11-06T09-30-30_other_a722c364.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:30",
+    "role": "other",
+    "bytes": 1203122,
+    "agent_id_prefix": "a79e9eaf",
+    "file": "2026-11-06T09-30-30_other_a79e9eaf.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:30:30",
+    "role": "other",
+    "bytes": 2114937,
+    "agent_id_prefix": "a9974ce8",
+    "file": "2026-11-06T09-30-30_other_a9974ce8.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:51:03",
+    "role": "other",
+    "bytes": 780123,
+    "agent_id_prefix": "a6ba8642",
+    "file": "2026-11-06T09-51-03_other_a6ba8642.jsonl"
+  },
+  {
+    "started": "2026-11-06T09:51:03",
+    "role": "other",
+    "bytes": 1180501,
+    "agent_id_prefix": "ae26e754",
+    "file": "2026-11-06T09-51-03_other_ae26e754.jsonl"
+  },
+  {
+    "started": "2026-11-06T19:27:15",
+    "role": "other",
+    "bytes": 493783,
+    "agent_id_prefix": "a2544c71",
+    "file": "2026-11-06T19-27-15_other_a2544c71.jsonl"
+  }
+]
