@@ -103,3 +103,41 @@ Second pass (EQUIV-BRIEF.md). Each entry: fetch or query verbatim, PRIOR (append
 ## E24 — LBauO Rheinland-Pfalz § 51 Abs. 1 (Land Rheinland-Pfalz; copy on nullbarriere.de, a private mirror)
 - Fetch: `https://nullbarriere.de/files/pdf/gesetze/paragraf-51-abs1-lbauo-rlp.pdf`
 - PRIOR: § 51 Abs. 1 says Wohnungen must be 'barrierefrei' and one 'uneingeschränkt mit dem Rollstuhl nutzbar'; the word 'rollstuhlgerecht' is absent from the statute.
+
+---
+## Results for E1–E24 (written after the fetches; each PRIOR above was appended by the same command before `fetch()` ran)
+Text extracts are in `text/<sha16>.txt` (not committed); manifest lines are in `retrieval-log/session_2026-11-06-base-vocabulary-review/manifest.jsonl`.
+
+- **E1 StVO § 45** — 200. RESULT: as expected. Abs. 1b Satz 1 Nr. 2 "Parkmöglichkeiten für schwerbehinderte Menschen mit außergewöhnlicher Gehbehinderung … sowie für blinde Menschen". No noun for the bay. SHAPE: direct statute URL, known pattern.
+- **E2 StVO § 46** — 200. RESULT: only "Bewohnerparkausweise" and "Parkausweise" in general; no disability-parking noun. Empty for the class.
+- **E3 StVO Anlage 3** — 200. RESULT: lfd. Nr. 7 Zeichen 314 and lfd. Nr. 10 Zeichen 315: "Zusatzzeichen mit Rollstuhlfahrersinnbild"; the restricted group again includes blind people. Sign images not read.
+- **E4 VwV-StVO** — 200, ISO-8859-1 (first extraction as UTF-8 was garbled; re-decoded from the same bytes). RESULT: richer than expected: "Parkplätzen für schwerbehinderte Menschen" (zu § 45, X., Rn. 20), the personal bay "Parkplätze für bestimmte schwerbehinderte Menschen" (Rn. 23), "Rollstuhlfahrersymbol" (Rn. 21, 22, 28), "EU-einheitliche(n) Parkausweis (für behinderte Menschen)" (zu § 46), and, unexpected, "behindertengerecht" (zu § 26, Rn. 14). No "Behindertenparkplatz".
+- **E5 BayBO Art. 37** — 200. RESULT: as expected, plus Fahrkorb/Fahrschacht, "Aufzug für Rollstühle und Krankentragen", "stufenlos erreichbar", "Bewegungsfläche", "lichte Durchgangsbreite".
+- **E6 BayGaStellV** — 404 (URL guessed). EMPTY; not retried (budget). The Land garage regulation remains NOT-READ.
+- **E7 StVO § 39** — 200. RESULT: the Abs. 7 Sinnbild captions carry no wheelchair symbol. EMPTY for the class.
+- **WebSearch W1** `service.berlin.de Parkausweis Menschen mit Behinderungen Behindertenparkplatz beantragen` — PRIOR: Berlin service page plus other cities. RESULT: Berlin portal pages (navigation only), LAGeSo flyer, München, Stuttgart, Heidelberg URLs. Search summary not used as attestation.
+- **WebSearch W2** `Leitfaden Barrierefreies Bauen Bundesministerium PDF barrierefreie Stellplätze Aufzug` — PRIOR: BBSR/BMWSB guide. RESULT: Leitfaden 2.0 (ULB Bonn copy) and Land/municipal guides.
+- **WebSearch W3** `leidmedien.de Begriffe behindertengerecht barrierefrei Behindertenparkplatz` — PRIOR: Leidmedien term list. RESULT: no direct page; secondary sources only (not used).
+- **E8 München (Leichte Sprache)** — 200. RESULT: "Behinderten-Park-Plätzen", "eigenen Park-Platz"; no "blauer Parkausweis" on this page. Soft hyphens (U+00AD) inside some words.
+- **E9 LAGeSo Berlin flyer** — 404. EMPTY (the search result URL was dead). Not retried via Wayback (budget).
+- **E10 Stuttgart** — 200. RESULT: "Parkplätzen (Behindertenparkplätze)", "blauer Parkausweis", "Schwerbehindertenparkausweise". No orange card on this page.
+- **E11 Leidmedien.de /begriffe/** — 200. RESULT: a person-language list (Ableismus, beeinträchtigt, "Der Rollstuhl"); no built-environment qualifier, no parking or lift form. EMPTY for the three classes. SHAPE: guessed path; the page exists but treats people-words only.
+- **E12 Wheelmap.org** — 403 (Cloudflare JS challenge). **E13** Wayback `if_` of news.wheelmap.org/faq/ (snapshot 20260510112724 from the availability API) — no HTTP response (status null, 0 bytes). **E14** plain Wayback form — same. Per CLAUDE.md s.7, both forms tried once each; Wheelmap categories stay unattested (seed row).
+- **E15 BBSR Leitfaden Barrierefreies Bauen 2.0** — 200, 2.4 MB PDF. RESULT: "barrierefreie(r) Stellplatz/Stellplätze", "Stellplätzen für Menschen mit Behinderungen", "inklusiv", "Design für alle", "Konzeption für alle Nutzer", "universellen Designs", "Zugänglichkeit", "Aufzugskabine". No "behindertengerecht". Read: grep-located passages only [SKIPPED: the rest of the 69 pages].
+- **WebSearch W4** `BVG barrierefrei Aufzug U-Bahnhof stufenlos Rampe Hublift Seite` — PRIOR: BVG accessibility pages. RESULT: BVG FAQ and an Abgeordnetenhaus Schriftliche Anfrage.
+- **E16 BVG FAQ** — 200. RESULT: "Aufzug/Aufzüge/Aufzugsstörungen", "voll barrierefrei" (app filter), "brokenlifts.org", "mobile Rampe" and bare "Rampe" for both station ramps and the vehicle device. No "Fahrstuhl".
+- **E17 Berlin Drucksache 19/26 488** — 200. RESULT: "Aufzugsanlagen", "stufenlos erreichbar, jedoch nicht vollständig barrierefrei", "Rampen mit einer Steigung von 10 %". Exceeded the prior: the source ranks step-free below barrierefrei.
+- **WebSearch W5** `BSK Bundesverband Selbsthilfe Körperbehinderter Behindertenparkplatz Parkausweis rollstuhlgerecht` — PRIOR: a BSK page. RESULT: no BSK page; municipal leaflets (Hameln) and Verkehrsblatt. Commercial law and news sites ignored per brief.
+- **E18 Hameln leaflet** — 200. RESULT: OCR text layer of a scan; "Behindertenparkplätze", "Behinderten-Parkplätzen", "Rollstuhlsymbol", "blauen Parkausweis". Undated.
+- **E19 Verkehrsblatt Prospekt** — 200. RESULT: "Behinderten-/parkplätzen" (line-broken), "Piktogramm eines Roll-/stuhlfahrers", the orange "Ausweis zur Ausnahmegenehmigung" (a product) which "gilt nicht für Parkplätze mit Zusatzzeichen (Rollstuhlfahrersymbol)".
+- **WebSearch W6** `rollstuhlgerecht barrierefrei Unterschied Aufzug Parkplatz`, allowed_domains bsk-ev.org, isl-ev.de, dbsv.org, vdk.de, abid-ev.de, sozialhelden.de, wheelmap.org, rollstuhlfahrer.de, behindertenbeauftragter.de, bundesfachstelle-barrierefreiheit.de — PRIOR: a DPO glossary. RESULT: BSK ABC page and the Bundesfachstelle checklist.
+- **E20 BSK ABC barrierefreies Bauen** — 200. RESULT: "PKW-Stellplätze", "Aufzug", "Vertikale Erschließung", "2-Kanal-Prinzip" (two routes) beside "Zwei-Sinne-Prinzip" (senses); no "rollstuhlgerecht", no "behindertengerecht". Prior partly wrong: the glossary rejects no form.
+- **E21 Bundesfachstelle checklist (§ 8 BGG)** — 200, 4 MB. RESULT: "PKW-Stellplatz" module, "für Menschen mit Behinderung ausgewiesenen Parkplät-ze", "Aufzug/Aufzugsanlage"; no "Behindertenparkplatz", no "rollstuhlgerecht". Read: the parking module only [SKIPPED: rest].
+- **WebSearch W7** `dinmedia.de DIN EN 81-40 Treppenschrägaufzüge Plattformaufzüge mit geneigter Fahrbahn …` — PRIOR: the product page and a free TOC. RESULT: TOC URL on din.de.
+- **E22 DIN EN 81-40:2020-12 TOC** — 200. RESULT: title "Treppenschrägaufzüge und Plattformaufzüge mit geneigter Fahrbahn für Personen mit Behinderungen", Anhang C "Treppenlifts", D.2 "Stuhl-Treppenschrägaufzugs". The title says "Personen mit Behinderungen"; the prior's "eingeschränkter Mobilität" came from the search summary's English rendering and was wrong.
+- **WebSearch W8** `"Fahrstuhl" barrierefrei Leichte Sprache Rathaus Stadt Aufzug` — PRIOR: a municipal use of Fahrstuhl. RESULT: Eberswalde press release; news sites ignored.
+- **E23 Eberswalde press release 89/2026** — 200. RESULT: "Fahrstuhlanlage", "Aufzug", "Fahrstuhl" for one installation in one text.
+- **WebSearch W9** `Landesbauordnung "uneingeschränkt mit dem Rollstuhl nutzbar" Wohnungen Paragraph Text` — PRIOR: a Land code. RESULT: an RLP extract on nullbarriere.de (private mirror) and NRW parliament papers.
+- **E24 RLP Rundschreiben extract (§ 51 Abs. 1 LBauO)** — 200. RESULT: not the statute but the ministry's implementing circular (29.10.2015); it glosses "barrierefrei und uneingeschränkt mit dem Rollstuhl nutzbar" as "rollstuhlgerechten Wohnungen" and contrasts it with "barrierefrei nutzbar". Mirror host noted; currency after the 2015 amendment not checked.
+
+SHAPE notes overall: direct statute URLs worked; guessed URLs (E6, E9) failed; DPO sites were reachable only through a domain-restricted search; Wheelmap blocked at the proxy level and through Wayback. No Austrian or Swiss source was fetched; ÖNORM and SN results shown by search (W7) were ignored.
