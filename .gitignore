@@ -46,3 +46,10 @@ data/audit_graph.db-journal
 #     hand-typed historical claim, wrong when written, in a governance file --
 #     CLAUDE.md rule 7a, which is the rule this file was being edited to honour.
 scratchpad/**/*.db*
+
+# Owner 2026-11-06 (fifth ruling, references/project-standards.md): log the URL, do not commit large
+# retrieved files. The manifest line stays tracked; bytes and the text extracted from them do not.
+# Scoped to the base-vocabulary session; a source an admission gate must find keeps its artefact.
+retrieval-log/session_2026-11-06-base-vocabulary-review/*
+!retrieval-log/session_2026-11-06-base-vocabulary-review/manifest.jsonl
+scratchpad/session_2026-11-06-base-vocabulary-review/terminology-pass/*/text/

@@ -1,0 +1,76 @@
+register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+Well-illuminated (if site expected to be lit)	catalogue 2.1	FOUND-PARTIAL	1	iluminação nocturna	NARROWER: night lighting of works barriers only; only lighting of barriers around works on accessible routes; no route lighting, no illuminance
+Surface is firm, stable and slip resistant	catalogue 2.1	FOUND	6	Estável / Firme / boa aderência / pisos e os seus revestimentos / revestimento antiderrapante / superfície firme, segura e confortável	each property is defined in the text; pool surrounds; secondary transcription; slip resistance stated as grip in wet conditions, for unenclosed and wet spaces only; the regulated object is floor + finish together
+Seating	catalogue 2.1	FOUND-PARTIAL	2	assento da base de duche / banco	NARROWER: changing-room bench and shower seat; no rest seating on routes; changing-room bench only; shower seat
+Handrails	catalogue 2.1	FOUND	4	corrimãos / duplo corrimão central / elemento preensível / elemento preênsil	a central double rail on wide public-way ramps and stairs; second spelling of the same member in the same text (2.4.9 vs 2.5.9); the graspable member is named apart from the rail
+Clear width	catalogue 2.1	FOUND	2	canal de circulação / largura livre	clear width is defined as a continuous unobstructed channel measured at pavement level
+Accessible path of travel	catalogue 2.1	FOUND	2	Percurso acessível / rede de percursos pedonais acessíveis	a whole chapter; also the heading of 1.1 and 2.1; in the public way the object is a network, not a route
+Drainage	catalogue 2.1	FOUND	3	drenagem das águas pluviais / drenagem superficial / sumidouros	gully placement upstream of crossings
+Clear signage	catalogue 2.1	FOUND	3	Sinalização e orientação / legibilidade / superfície anti-reflexo	
+Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND-PARTIAL	2	alerta luminoso e sonoro / sinal sonoro	NARROWER: audible crossing signal and toilet alarm only; audible crossing signal only; toilet alarm; no listening system, loop or amplification anywhere
+Level landings with clear space	catalogue 2.1	FOUND	3	Patamares superiores e inferiores / Patins intermédios / plataformas horizontais de descanso	intermediate landing = patim; end landing = patamar; the ramp landing is a 'rest platform'
+Floor surface is stable, firm, and non-slip	catalogue 2.1	FOUND	6	Estável / Firme / boa aderência / pisos e os seus revestimentos / revestimento antiderrapante / superfície firme, segura e confortável	each property is defined in the text; pool surrounds; secondary transcription; slip resistance stated as grip in wet conditions, for unenclosed and wet spaces only; the regulated object is floor + finish together
+Clear space for approach	catalogue 2.1	FOUND	3	Zonas de permanência / aproximação frontal ou lateral / zona livre	defined for access AND for remaining (permanência); section heading
+Well illuminated (if required for expected usage)	catalogue 2.1	FOUND-PARTIAL	1	iluminação nocturna	NARROWER: night lighting of works barriers only; only lighting of barriers around works on accessible routes; no route lighting, no illuminance
+Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND	6	Estável / Firme / boa aderência / pisos e os seus revestimentos / revestimento antiderrapante / superfície firme, segura e confortável	each property is defined in the text; pool surrounds; secondary transcription; slip resistance stated as grip in wet conditions, for unenclosed and wet spaces only; the regulated object is floor + finish together
+Shelter	catalogue 2.1	FOUND-PARTIAL	1	cobertas	NARROWER: covered passages between school buildings only; school and training buildings only
+Riser height and tread depth	catalogue 2.1	FOUND	3	Comprimento (cobertor) / altura (espelho) / profundidade (cobertor)	in the public-way stair table the tread is a LENGTH, not a depth; riser element = espelho; tread is a depth, the element is the cobertor
+Nosing design	catalogue 2.1	FOUND	1	aresta do focinho boleada	nosing = focinho
+No open riser	catalogue 2.1	SEARCHED-ABSENT	0		no open-riser rule; 'espelho aberto' 0; 2.4.6 forbids projecting elements between riser and tread, a different rule
+Level threshold	catalogue 2.1	FOUND	2	ressaltos de soleira / soleiras	a capped upstand, not a 'level' threshold
+Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND-PARTIAL	1	altura livre	DIFFERENT OBJECT: pedestrian headroom; no vehicle/parkade clearance; pedestrian headroom, two values by enclosed/unenclosed space; no vehicle or parkade clearance
+Edge protection	catalogue 2.1	FOUND	2	anteparos / elementos de protecção	a menu of five alternatives (rebordos, paredes/muretes, guardas, extensão lateral do pavimento, outras barreiras); platform-lift edges
+Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND	1	Faixas antiderrapantes e de sinalização visual	contrast is expressed as 'visual signalling', not colour
+Tactile attention indicators (truncated domes)	catalogue 2.1	FOUND-PARTIAL	2	faixa de aproximação / sinalização táctil	BROADER: 'sinalização táctil' and texture bands; no dome profile; no profile (domes, bars) specified; warning band at stair heads defined by 'different texture'
+Slope	catalogue 2.1	FOUND	4	devem ser considerados rampas / inclinação / inclinação nominal / na direcção transversal ao percurso	'/prct.' is the PGDL page's rendering of %; a ramp is DEFINED by a slope threshold; cross slope by direction phrase, no noun; one word for slope and gradient; a least-slope aim precedes the limits
+Sink faucet is easy to use or automatic	catalogue 2.1	FOUND	1	monocomando	lever single-control; no automatic tap
+Outlets and switches are at accessible heights	catalogue 2.1	FOUND-PARTIAL	1	comutadores de luz	NARROWER: switches only; outlets 0; switches yes; socket outlets ('tomada') 0 occurrences
+Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		'micro' 0 in all three texts; kitchens are treated only by turning zone and counter spacing (3.3.3)
+Level landings with clear space and at regular intervals	catalogue 2.1	FOUND	3	Patins intermédios / patins / plataformas horizontais de descanso	intermediate landing = patim; end landing = patamar; interval stated as a maximum horizontal projection between landings; the ramp landing is a 'rest platform'
+Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND	2	Faixas antiderrapantes e de sinalização visual / faixas com diferenciação de textura e cor contrastante	contrast is expressed as 'visual signalling', not colour; texture + colour, not slip resistance
+Accessible lockers	catalogue 2.1	FOUND	1	cacifos	sports changing rooms
+Accessible door hardware	catalogue 2.1	FOUND	2	dispositivos de operação das portas / puxadores em forma de maçaneta	PT 'maçaneta' is the prohibited knob form; contrast the held BR seed 'maçaneta tipo alavanca'
+Accessible controls	catalogue 2.1	FOUND	2	Comandos e controlos / dispositivos de comando	lift controls
+height	catalogue 2.2	FOUND	3	altura (espelho) / altura do piso / altura livre	heights are 'floor to edge' with a stated tolerance; pedestrian headroom, two values by enclosed/unenclosed space; no vehicle or parkade clearance; riser element = espelho
+level	catalogue 2.2	FOUND	3	desnível / diferença de cotas / mudanças de nível	level difference as a difference of elevations; the rise a ramp 'overcomes' (vencer)
+width	catalogue 2.2	FOUND	2	largura livre / largura útil	entrance doors have their own width
+clearance	catalogue 2.2	FOUND	2	altura livre / canal de circulação	clear width is defined as a continuous unobstructed channel measured at pavement level; pedestrian headroom, two values by enclosed/unenclosed space; no vehicle or parkade clearance
+number	catalogue 2.2	FOUND	1	número de lugares reservados	
+slope	catalogue 2.2	FOUND	3	inclinação / inclinação nominal / na direcção transversal ao percurso	'/prct.' is the PGDL page's rendering of %; cross slope by direction phrase, no noun; one word for slope and gradient; a least-slope aim precedes the limits
+depth	catalogue 2.2	FOUND	1	profundidade (cobertor)	tread is a depth, the element is the cobertor
+riser	catalogue 2.2	FOUND	1	altura (espelho)	riser element = espelho
+tread	catalogue 2.2	FOUND	2	Comprimento (cobertor) / profundidade (cobertor)	in the public-way stair table the tread is a LENGTH, not a depth; tread is a depth, the element is the cobertor
+force	catalogue 2.2	FOUND	2	força / força necessária para operar	controls; interior doors; fire doors excepted
+time	catalogue 2.2	FOUND	1	tempo suficiente	time derived from a design walking speed
+gradient	catalogue 2.2	FOUND	3	inclinação / inclinação nominal / na direcção transversal ao percurso	'/prct.' is the PGDL page's rendering of %; cross slope by direction phrase, no noun; one word for slope and gradient; a least-slope aim precedes the limits
+size	catalogue 2.2	FOUND	1	dimensões interiores	
+volume	catalogue 2.2	SEARCHED-ABSENT	0		only 'grande volume de tráfego' (1.6.4 3)), traffic volume, a different sense; no speaker volume
+capacity	catalogue 2.2	FOUND-PARTIAL	2	capacidade / lotação	DIFFERENT SENSE: car-park and hall capacity, no lift capacity; car-park capacity; seating capacity of halls
+distance	catalogue 2.2	FOUND-PARTIAL	1	distâncias de percurso	DIFFERENT SENSE: route length vs direct route; no distance markers; route length relative to the most direct route
+lighting levels	catalogue 2.2	SEARCHED-ABSENT	0		'lux' occurs only inside 'fluxo'; no illuminance anywhere
+ratio	catalogue 2.2	FOUND-PARTIAL	2	número total de cada aparelho instalado / relação	DIFFERENT SENSE: stair relation and fixture proportion; no room-type mix; proportion of accessible fixtures; the stair 2R+G relation
+Ramp gradient (parameter 3)	base_parameters	FOUND	3	devem ser considerados rampas / inclinação / inclinação nominal	'/prct.' is the PGDL page's rendering of %; a ramp is DEFINED by a slope threshold; one word for slope and gradient; a least-slope aim precedes the limits
+Corridor width (parameter 4)	base_parameters	FOUND	2	corredores / espaços de circulação horizontal	corridors grouped with landings and galleries; dwellings
+Turning circle (parameter 5)	base_parameters	FOUND	4	Rotação de 360° / diâmetro das zonas de manobra / mudança de direcção de 180º em T / zona de manobra para rotação de 360º	a zone one must be able to 'inscribe', graded by rotation angle; figure label; also 'Rotação de 90°' and 'Rotação de 180°'; secondary transcription; here the zone is a diameter
+Operating force (parameter 6)	base_parameters	FOUND	2	força / força necessária para operar	controls; interior doors; fire doors excepted
+Reverberation time (parameter 7)	base_parameters	SEARCHED-ABSENT	0		'reverbera' 0; 'acústica' once, as 'acústica pelo menos equivalentes' for wheelchair seating (3.6.2 3))
+LRV contrast (parameter 8)	base_parameters	FOUND-PARTIAL	2	cores que contrastem com o fundo / reflectância média	PARTIAL: floor reflectance band (recommended) and unquantified contrast; no contrast quantity; contrast unquantified; floor reflectance band, recommended; not a contrast quantity
+Door width (parameter 9)	base_parameters	FOUND	3	largura útil / vãos de porta	entrance doors have their own width; secondary transcription; the measured object is the opening (vão), not the door
+Colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		'temperatura de cor' 0
+Headroom clearance (parameter 11)	base_parameters	FOUND	2	altura livre / altura útil de passagem	door headroom is a separate quantity; pedestrian headroom, two values by enclosed/unenclosed space; no vehicle or parkade clearance
+Ramp run length (parameter 12)	base_parameters	FOUND	1	projecção horizontal	run = horizontal projection, tied to slope and rise in one triple
+Gratings (B651 4.4.4)	b651-headings (RHFAC-does-not-name)	FOUND	1	grelhas, buracos ou frestas	opening limit tested by a rigid sphere
+Headroom and protruding objects (B651 4.5)	b651-headings (RHFAC-does-not-name)	FOUND	2	Objectos salientes / altura livre	pedestrian headroom, two values by enclosed/unenclosed space; no vehicle or parkade clearance
+Headroom (B651 4.5.1)	b651-headings (RHFAC-does-not-name)	FOUND	1	altura livre	pedestrian headroom, two values by enclosed/unenclosed space; no vehicle or parkade clearance
+Protruding objects (B651 4.5.2)	b651-headings (RHFAC-does-not-name)	FOUND	1	Objectos salientes	
+Spouts (B651 6.1.2)	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'bebedouro' 0; no drinking fountains
+Lavatories (B651 6.2.3)	b651-headings (RHFAC-does-not-name)	FOUND	1	lavatórios acessíveis	lavatório = washbasin, same sense as B651
+Enclosures (B651 6.5.3)	b651-headings (RHFAC-does-not-name)	FOUND	1	protecções de banheira	bath/shower screens
+Speed bumps (B651 8.3.8)	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'lomba' 0
+Bollards (B651 8.3.9)	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'pilarete' 0, 'baliza' 0
+Landscaping elements (B651 8.7)	b651-headings (RHFAC-does-not-name)	FOUND	1	Elementos vegetais	landscaping is plants only
+Flower or shrub planters (B651 8.7.1)	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'floreira' 0; nearest is 'caldeiras das árvores' (tree pits, 4.13.1), a different object (see reverse harvest)
+Vegetation (B651 8.7.3)	b651-headings (RHFAC-does-not-name)	FOUND	1	elementos da vegetação	
+Guy wires (B651 8.7.4)	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		'espia'/'estai'/'tirante' not found ('estai' 0)
+Scaffolding (B651 8.8.2)	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	obras nos percursos acessíveis	BROADER: works on routes, scaffolding not named; works on routes in general; scaffolding not named
+Gradation limits (B651 D.6.1)	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no aggregate or surface gradation clause

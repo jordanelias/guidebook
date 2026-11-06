@@ -1714,10 +1714,6 @@ def main():
     p_mtc.add_argument("--session", required=True)
     p_mtc.add_argument("--dry-run", action="store_true")
 
-    sub.add_parser("screen-item-catalogue",
-                   help="Read-only: the pre-reset item subjects, stripped, with their "
-                        "items:<rowid> pointers, for the owner's approval table")
-
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
@@ -1768,11 +1764,7 @@ def main():
     p_sit.add_argument("--title", required=True)
     p_sit.add_argument("--title-source", dest="title_source")
     p_sit.add_argument("--title-payload", dest="title_payload",
-                       help="path under retrieval-log/ whose BYTES contain --title, next to "
-                            "--icf-code")
-    p_sit.add_argument("--replace-reason", dest="replace_reason",
-                       help="replace a title that did not come from a payload; needs "
-                            "--title-payload. The old title and source are kept in notes")
+                       help="path under retrieval-log/ whose BYTES contain --title")
     p_sit.add_argument("--session", required=True)
     p_sit.add_argument("--dry-run", action="store_true")
 
@@ -2887,9 +2879,6 @@ def main():
             args.approval_ref, session=args.session,
             domain=args.domain, scope_note=args.scope_note, dry_run=args.dry_run))
 
-    elif args.command == "screen-item-catalogue":
-        _emit(screen_item_catalogue())
-
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
                               session=args.session, dry_run=args.dry_run))
@@ -2907,8 +2896,7 @@ def main():
     elif args.command == "set-icf-title":
         _emit(set_icf_title(
             icf_code=args.icf_code, title=args.title, title_source=args.title_source,
-            title_payload=args.title_payload, replace_reason=args.replace_reason,
-            session=args.session, dry_run=args.dry_run))
+            title_payload=args.title_payload, session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-population-icf-link":
         _emit(insert_population_icf_link(
@@ -7032,33 +7020,6 @@ def _item_subject(db_path, rowid: int):
     return _ITEM_ASIDE.sub("", row[0]).strip() if row else None
 
 
-def screen_item_catalogue():
-    """The "Screen" half of "Screen, then you approve" for the item subjects: read-only.
-
-    One row per pre-reset item: its `items:<rowid>` pointer (the old code is never shown),
-    the stripped subject, whether it still states a value or carries an item code after
-    stripping, and the term that already holds it by name or alias. The judgment columns
-    (kind, implied quantity, recommendation) are the reviewer's, written in the table the
-    owner approves; nothing here is a verdict, and nothing is written.
-    """
-    path = dbcore.REPO_ROOT / "_archived/data/corpus-pre-reset-2026-08-06.db"
-    old = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
-    try:
-        items = old.execute("SELECT rowid, name FROM items ORDER BY rowid").fetchall()
-    finally:
-        old.close()
-    rows = []
-    with connect(readonly=True) as conn:
-        for rowid, name in items:
-            subject = _ITEM_ASIDE.sub("", name).strip()
-            held = _name_holder(conn, subject)
-            rows.append({"entry_ref": f"items:{rowid}", "subject": subject,
-                         "still_value_bearing": bool(_VALUE_BEARING.search(subject)),
-                         "carries_item_code": bool(_ITEM_CODE.search(subject)),
-                         "held_as": held and f"{held['term_id']} ({held['kind']})"})
-    return {"examined": len(rows), "rows": rows}
-
-
 def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
     """Prove `entry_ref` names an entry in the catalogue file; return how it resolved.
 
@@ -7574,20 +7535,8 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
                 "title_verified": bool(title and title_payload), "dry_run": dry_run}
 
 
-def _anchored(title: str, code: str, body: str, window: int = 200) -> bool:
-    """`title` occurs within `window` characters after an occurrence of `code` in `body`.
-    A bare `title in body` is satisfied by a neighbouring code's title (CLAUDE.md 5(c))."""
-    i = body.find(code)
-    while i != -1:
-        if title in body[i:i + len(code) + window]:
-            return True
-        i = body.find(code, i + 1)
-    return False
-
-
 def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
-                  title_payload: str = None, replace_reason: str = None,
-                  session: str, dry_run: bool = False):
+                  title_payload: str = None, session: str, dry_run: bool = False):
     """Give a seeded ICF code the name CLAUDE.md section 6 requires it to be used with.
 
     GAP-ICF-TITLES is the subject: 43 of the 72 codes migration 081 seeded carry no title,
@@ -7599,59 +7548,40 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
     a field to keep tidy; replacing one silently would erase whoever established it and the
     payload they established it from. A correction is a different act and owes its own
     reason.
-
-    THE CORRECTION ROUTE (migration-free): `replace_reason` replaces a title, and only with a
-    payload-verified one. 17 of the first 29 titles cite a skill file since deleted and 12
-    cite repository prose; none came from the classification's own bytes. The old title and
-    source are kept in `notes`, with the reason. Every payload check, new or replacing,
-    anchors the title to its code.
     """
     icf_code = (icf_code or "").strip()
     title = (title or "").strip()
     if not title:
         raise Refusal("--title is required and may not be blank.")
-    if replace_reason is not None and not (replace_reason.strip() and title_payload):
-        raise Refusal("--replace-reason needs a reason and --title-payload: a title is "
-                      "replaced only by one verified from the classification's bytes.")
     if not (title_source or title_payload):
         raise Refusal(
             "--title-source or --title-payload is required. A title with no source is a "
             "title from memory; the schema refuses the pair too.")
     with connect(dry_run) as conn:
         row = conn.execute(
-            "SELECT icf_code, title, title_source, notes FROM base_icf WHERE icf_code=?",
+            "SELECT icf_code, title, title_source FROM base_icf WHERE icf_code=?",
             [icf_code]).fetchone()
         if row is None:
             raise Refusal(
                 f"{icf_code!r} is not in base_icf. Mint it first:\n"
                 f"  db.py add-icf-code --icf-code {icf_code} --session ...")
-        if row["title"] and not replace_reason:
+        if row["title"]:
             raise Refusal(
                 f"{icf_code} is already titled {row['title']!r} (source "
                 f"{row['title_source']!r}). Overwriting would erase whoever established it "
-                f"and the payload they established it from. A correction owes its own "
-                f"reason: --replace-reason, with --title-payload.")
-        if row["title_source"] and row["title_source"].startswith("payload:") and row["title"]:
-            raise Refusal(f"{icf_code}'s title is already verified from "
-                          f"{row['title_source']!r}; it is not replaced.")
+                f"and the payload they established it from. A correction is a different "
+                f"act and owes its own reason.")
         if title_payload:
             bodies = _payload_bodies(title_payload, "--title-payload",
                                      "a title is verified from BYTES or it records a "
                                      "document instead")
-            if not any(_anchored(title, icf_code, b) for b in bodies):
+            if not any(title in b for b in bodies):
                 raise Refusal(
-                    f"--title {title!r} does not appear next to {icf_code} in "
-                    f"{title_payload}. If the classification words it differently, use its "
-                    f"wording; a title that appears only elsewhere in the file is another "
-                    f"code's.")
+                    f"--title {title!r} does not appear in {title_payload}. If the "
+                    f"classification words it differently, use its wording.")
             title_source = f"payload:{title_payload}"
-        note = None
-        if row["title"]:
-            note = ((row["notes"] or "") + f" | TITLE REPLACED by {session}: was "
-                    f"{row['title']!r} (source {row['title_source']!r}); "
-                    f"{replace_reason.strip()}").strip(" |")
-        conn.execute("UPDATE base_icf SET title=?, title_source=?, notes=COALESCE(?, notes) "
-                     "WHERE icf_code=?", [title, title_source, note, icf_code])
+        conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?",
+                     [title, title_source, icf_code])
         return {"icf_code": icf_code, "title": title, "title_source": title_source,
                 "title_verified": bool(title_payload), "dry_run": dry_run}
 

@@ -19,3 +19,11 @@ t=''.join(p.o).replace('\xa0',' ')
 t=re.sub(r'[ \t]+',' ',t); t=re.sub(r' *\n *','\n',t); t=re.sub(r'\n{3,}','\n\n',t)
 open(sys.argv[2],'w',encoding='utf-8').write(t)
 print(hashlib.sha256(t.encode()).hexdigest(), len(t))
+# --trim: DiBK pages only. Keep the span from 'Skriv ut hele forskriften med veiledning' to 'Til toppen'
+# (drops the site navigation and the repeated table of contents, which would otherwise create false hits).
+if len(sys.argv) > 3 and sys.argv[3] == '--trim':
+    a = t.find('Skriv ut hele forskriften med veiledning'); b = t.rfind('Til toppen')
+    assert a > 0 and b > a, 'trim markers missing'
+    t = t[a:b]
+    open(sys.argv[2],'w',encoding='utf-8').write(t)
+    print('trimmed', hashlib.sha256(t.encode()).hexdigest(), len(t))

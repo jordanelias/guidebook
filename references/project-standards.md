@@ -5049,3 +5049,25 @@ Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, after 
 CONDITION: any session asking whether a retrieved standard whose legal notice restricts copying may be persisted in the repository.
 ACTION: (1) Persist it in the retrieval log like any other source. (2) Do not treat a publisher's copying notice as a reason to withhold a source from verification. (3) Raise republication or rendering of such text as a separate question. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statement, quoted above.
+
+## Owner statement 2026-11-06 (fifth) — log where a large source was retrieved from; do not commit the file
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on seeing that the pull request had grown to over a hundred thousand lines because the retrieved files were committed, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim; the first two messages preceded the third.
+
+> "110k is...high?"
+
+> "ohhh it's from retrieving"
+
+> "well, we don't need to actually commit these large PDFs etc. we just need to log where we retrieved from ie the url"
+
+and, in two further messages:
+
+> "we don't need to be saving these PDFs in repo just tracking where they can be found for reference which is our version of persistence"
+
+> "otherwise you're going to blow the context tokens etc. just record page number and line if need be too"
+
+**What this decides.** For a retrieved PDF, web page or full-text extraction, the record kept in the repository is the manifest line (URL, retrieval time, status, byte count, sha256), not the file. This narrows the fourth entry of the same day, which let the project hold a standard in the repository: the project may, but need not, and for large files does not. [ASSUMPTION: "large PDFs etc." is read as PDFs, HTML pages and the text extracted from them (the `text/` folders of the terminology passes); a small structured payload such as an API response keeps the existing convention and stays committed. A source whose admission is logged against a search (`log-search --artefact`) is checked by `retrieval_log.check_artefact_link`, which looks for the artefact; where that check applies, the artefact stays committed and this entry does not reach it.] The files stay on the machine that fetched them until it is reclaimed; the URL and sha256 let any reader fetch and compare them. Persistence, in the owner's words, is tracking where a source can be found; a locator is the page number and, where needed, the line.
+
+CONDITION: any session asking whether a retrieved PDF, page or extracted text is committed, or what the repository keeps of a retrieval.
+ACTION: (1) Keep the `retrieval-log/` manifest line; do not commit large retrieved files or text extracted from them. (2) Commit an artefact that a search-execution or admission gate must find. (3) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.

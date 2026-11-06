@@ -697,30 +697,6 @@ try:
                   from_observation=o_nl.get("observation_id"), dry_run=True)
     record("N10b", "rename-term accepts a non-English observation as the warrant for a native name",
            n10.get("changed") is not False and "error" not in n10, n10)
-    # T4: an ICF title is replaced only by one verified from bytes, next to its code
-    sit = fn("set_icf_title")
-    icf = q("SELECT icf_code FROM base_icf WHERE title IS NOT NULL ORDER BY icf_code LIMIT 1")[0][0]
-    pdir = pathlib.Path(TMP) / "retrieval-log"
-    pdir.mkdir(exist_ok=True)
-    (pdir / "icf.txt").write_text(f"{icf} Fixture anchored title\n" + "x" * 500 +
-                                  "\nb999 Fixture far title\n", encoding="utf-8")
-    expect_refusal("T401", "set-icf-title still refuses to overwrite without a reason",
-                   "--replace-reason", sit, icf_code=icf, title="Fixture anchored title",
-                   title_payload=str(pdir / "icf.txt"), session=S)
-    expect_refusal("T402", "a title found only far from its code is refused (a neighbour's title)",
-                   "does not appear next to", sit, icf_code=icf, title="Fixture far title",
-                   title_payload=str(pdir / "icf.txt"), replace_reason="fixture", session=S)
-    t403 = attempt(sit, icf_code=icf, title="Fixture anchored title",
-                   title_payload=str(pdir / "icf.txt"), replace_reason="fixture: from memory",
-                   session=S)
-    r403 = q("SELECT title, title_source, notes FROM base_icf WHERE icf_code=?", icf)[0]
-    record("T403", "replacement keeps the old title and source in notes, with the reason",
-           t403.get("title_verified") and r403[1].startswith("payload:") and "TITLE REPLACED" in
-           (r403[2] or "") and "fixture: from memory" in r403[2], f"{t403} {r403}")
-    expect_refusal("T404", "a payload-verified title is not replaced again", "already verified",
-                   sit, icf_code=icf, title="Fixture anchored title",
-                   title_payload=str(pdir / "icf.txt"), replace_reason="fixture", session=S)
-
     # ── M: mint-term-from-catalogue ──────────────────────────────────────────────────
     mint = fn("mint_term_from_catalogue")
     APPROVAL = next((h[3:].strip() for h in ledger_text.splitlines()
@@ -790,15 +766,12 @@ try:
     record("M09", "mint resolves a pre-reset corpus TERM (the permitted half of that "
            "catalogue)", mt9.get("term_id") and mt9.get("term_id") > oldterm, mt9)
     # M13-M15: the item subjects, by row number, with the guard unchanged
-    scr = db.screen_item_catalogue()
-    free_item = next(r for r in scr["rows"] if not r["held_as"] and not r["still_value_bearing"]
-                     and not r["carries_item_code"])
-    record("M13", "screen-item-catalogue lists every item by items:<rowid>, shows no old code, and "
-           "reads only", scr["examined"] > 0 and all(r["entry_ref"].startswith("items:")
-           for r in scr["rows"]) and not any(db._ITEM_CODE.search(r["subject"]) for r in scr["rows"]),
-           str(scr["rows"][:2]))
+    ITEMS = REPO / "_archived/data/corpus-pre-reset-2026-08-06.db"
+    free_item = {"entry_ref": "items:3", "subject": db._item_subject(ITEMS, 3)}
+    record("M13", "an item subject resolves by row number, stripped of its aside and showing no old code",
+           bool(free_item["subject"]) and not db._ITEM_CODE.search(free_item["subject"]), free_item)
     m14 = attempt(mint, **mt(catalogue=corpus, entry_ref=free_item["entry_ref"],
-                             canonical_en=free_item["subject"]), dry_run=True)
+                             canonical_en="Acoustic Door"), dry_run=True)
     record("M14", "mint resolves an item subject by row number, its name the subject's own",
            bool(m14.get("term_id")), m14)
     expect_refusal("M15", "mint refuses a name that is not inside the item subject (no rewording)",
