@@ -1,0 +1,561 @@
+concept_id	kind	origin	conservative_parent	moderate_parent	justifying_link	confidence	parent_evidence	stays_distinct_because	descriptive_label_ours
+R2-001	quantity	Canadian-English source (EN-CA)	R2-001	R2-001				examined, no link	
+R2-002	quantity	Canadian-English source (EN-CA)	R2-002	R2-002				examined, no link	
+R2-003	quantity	Canadian-English source (EN-CA)	R2-003	R2-003				related only	
+R2-004	quantity	Canadian-English source (EN-CA)	R2-004	R2-004				genus or species of another row	
+R2-005	quantity	Canadian-English source (EN-CA)	R2-005	R2-005				different sense of a shared word	
+R2-006	quantity	Canadian-English source (EN-CA)	R2-006	R2-006				related only	
+R2-007	quantity	Canadian-English source (EN-CA)	R2-007	R2-007				a source conflates it with another row; different object	
+R2-008	quantity	Canadian-English source (EN-CA)	R2-008	R2-008				related only	
+R2-009	quantity	Canadian-English source (EN-CA)	R2-009	R2-009				quantity of another row	
+R2-010	quantity	Canadian-English source (EN-CA)	R2-010	R2-010				quantity of another row	
+R2-011	technique	Canadian-English source (EN-CA)	R2-011	R2-011				related only	
+R2-012	quantity	Canadian-English source (EN-CA)	R2-012	R2-012				different limit, measure or means for one aim	
+R2-013	quantity	Canadian-English source (EN-CA)	R2-013	R2-013				a source conflates it with another row; different object	
+R2-014	quantity	Canadian-English source (EN-CA)	R2-014	R2-014				relation not judged on the evidence held (candidate for a later fold)	
+R2-015	quantity	Canadian-English source (EN-CA)	R2-015	R2-015				examined, no link	
+R2-016	quantity	Canadian-English source (EN-CA)	R2-016	R2-016				genus or species of another row	
+R2-017	quantity	Canadian-English source (EN-CA)	R2-017	R2-017				genus or species of another row	
+R2-018	quantity	Canadian-English source (EN-CA)	R2-018	R2-018				genus or species of another row	
+R2-019	quantity	Canadian-English source (EN-CA)	R2-019	R2-019				examined, no link	
+R2-020	quantity	Canadian-English source (EN-CA)	R2-020	R2-020				genus or species of another row	
+R2-021	quantity	Canadian-English source (EN-CA)	R2-021	R2-021				same object family, carve or scope differs	
+R2-022	quantity	Canadian-English source (EN-CA)	R2-022	R2-022				same object family, carve or scope differs	
+R2-023	quantity	Canadian-English source (EN-CA)	R2-023	R2-023				genus or species of another row	
+R2-024	quantity	Canadian-English source (EN-CA)	R2-024	R2-024				quantity of another row	
+R2-025	quantity	Canadian-English source (EN-CA)	R2-025	R2-025				quantity of another row	
+R2-026	quantity	Canadian-English source (EN-CA)	R2-026	R2-026				quantity of another row	
+R2-027	quantity	Canadian-English source (EN-CA)	R2-027	R2-027				quantity of another row	
+R2-028	quantity	Canadian-English source (EN-CA)	R2-028	R2-028				quantity of another row	
+R2-029	quantity	Canadian-English source (EN-CA)	R2-029	R2-029				quantity of another row	
+R2-030	quantity	Canadian-English source (EN-CA)	R2-030	R2-030				examined, no link	
+R2-031	quantity	Canadian-English source (EN-CA)	R2-031	R2-031				genus or species of another row	
+R2-032	quantity	Canadian-English source (EN-CA)	R2-032	R2-032				quantity of another row	
+R2-033	quantity	Canadian-English source (EN-CA)	R2-033	R2-033				examined, no link	
+R2-034	quantity	Canadian-English source (EN-CA)	R2-034	R2-034				quantity of another row	
+R2-035	quantity	Canadian-English source (EN-CA)	R2-035	R2-035				different limit, measure or means for one aim	
+R2-036	quantity	Canadian-English source (EN-CA)	R2-036	R2-036				same object family, carve or scope differs	
+R2-037	quantity	Canadian-English source (EN-CA)	R2-037	R2-037				related only	
+R2-038	technique	Canadian-English source (EN-CA)	R2-038	R2-038				related only	
+R2-039	quantity	Canadian-English source (EN-CA)	R2-039	R2-039				relation not judged on the evidence held (candidate for a later fold)	
+R2-040	quantity	Canadian-English source (EN-CA)	R2-040	R2-040				examined, no link	
+R2-041	quantity	Canadian-English source (EN-CA)	R2-041	R2-041				examined, no link	
+R2-042	quantity	Canadian-English source (EN-CA)	R2-042	R2-042				same object family, carve or scope differs	
+R2-043	quantity	Canadian-English source (EN-CA)	R2-043	R2-043				examined, no link	
+R2-044	quantity	Canadian-English source (EN-CA)	R2-044	R2-044				examined, no link	
+R2-045	quantity	Canadian-English source (EN-CA)	R2-045	R2-045				related only	
+R2-046	quantity	Canadian-English source (EN-CA)	R2-046	R2-046				same object family, carve or scope differs	
+R2-047	quantity	Canadian-English source (EN-CA)	R2-047	R2-047				different sense of a shared word	
+R2-048	quantity	Canadian-English source (EN-CA)	R2-048	R2-048				different sense of a shared word	
+R2-049	technique	Canadian-English source (EN-CA)	R2-049	R2-049				different sense of a shared word	
+R2-050	element	Canadian-English source (EN-CA)	R2-050	R2-050				different sense of a shared word	
+R2-051	element	Canadian-English source (EN-CA)	R2-051	R2-051				different sense of a shared word	
+R2-052	element	Canadian-English source (EN-CA)	R2-052	R2-052				same object family, carve or scope differs	
+R2-053	element	Canadian-English source (EN-CA)	R2-053	R2-053				component of another row	
+R2-054	element	Canadian-English source (EN-CA)	R2-054	R2-054				examined, no link	
+R2-055	element	Canadian-English source (EN-CA)	R2-055	R2-055				related only	
+R2-056	element	Canadian-English source (EN-CA)	R2-056	R2-056				same object family, carve or scope differs	
+R2-057	element	Canadian-English source (EN-CA)	R2-057	R2-057				relation not judged on the evidence held (candidate for a later fold)	
+R2-058	element	Canadian-English source (EN-CA)	R2-058	R2-058				relation not judged on the evidence held (candidate for a later fold)	
+R2-059	element	Canadian-English source (EN-CA)	R2-059	R2-059				different sense of a shared word	
+R2-060	element	Canadian-English source (EN-CA)	R2-060	R2-060				different sense of a shared word	
+R2-061	element	Canadian-English source (EN-CA)	R2-061	R2-061				genus or species of another row	
+R2-062	element	Canadian-English source (EN-CA)	R2-062	R2-062				genus or species of another row	
+R2-063	element	Canadian-English source (EN-CA)	R2-063	R2-063				genus or species of another row	
+R2-064	element	Canadian-English source (EN-CA)	R2-064	R2-064				component of another row	
+R2-065	element	Canadian-English source (EN-CA)	R2-065	R2-065				component of another row	
+R2-066	element	Canadian-English source (EN-CA)	R2-066	R2-066				component of another row	
+R2-067	element	Canadian-English source (EN-CA)	R2-067	R2-067				examined, no link	
+R2-068	element	Canadian-English source (EN-CA)	R2-068	R2-068				examined, no link	
+R2-069	element	Canadian-English source (EN-CA)	R2-069	R2-069				examined, no link	
+R2-070	element	Canadian-English source (EN-CA)	R2-070	R2-070				quantity of another row	
+R2-071	element	Canadian-English source (EN-CA)	R2-071	R2-071				different sense of a shared word	
+R2-072	element	Canadian-English source (EN-CA)	R2-072	R2-072				a source conflates it with another row; different object	
+R2-073	technique	Canadian-English source (EN-CA)	R2-073	R2-073				component of another row	
+R2-074	element	Canadian-English source (EN-CA)	R2-074	R2-074				same object family, carve or scope differs	
+R2-075	element	Canadian-English source (EN-CA)	R2-075	R2-075				same object family, carve or scope differs	
+R2-076	element	Canadian-English source (EN-CA)	R2-076	R2-076				same object family, carve or scope differs	
+R2-077	element	Canadian-English source (EN-CA)	R2-077	R2-077				same object family, carve or scope differs	
+R2-078	element	Canadian-English source (EN-CA)	R2-078	R2-078				different sense of a shared word	
+R2-079	element	Canadian-English source (EN-CA)	R2-079	R2-079				related only	
+R2-080	element	Canadian-English source (EN-CA)	R2-080	R2-080				component of another row	
+R2-081	element	Canadian-English source (EN-CA)	R2-081	R2-081				related only	
+R2-082	element	Canadian-English source (EN-CA)	R2-082	R2-082				examined, no link	
+R2-083	element	Canadian-English source (EN-CA)	R2-083	R2-083				different limit, measure or means for one aim	
+R2-084	element	Canadian-English source (EN-CA)	R2-084	R2-084				component of another row	
+R2-085	element	Canadian-English source (EN-CA)	R2-085	R2-085				genus or species of another row	
+R2-086	element	Canadian-English source (EN-CA)	R2-086	R2-086				component of another row	
+R2-087	element	Canadian-English source (EN-CA)	R2-087	R2-087				component of another row	
+R2-088	element	Canadian-English source (EN-CA)	R2-088	R2-088				component of another row	
+R2-089	element	Canadian-English source (EN-CA)	R2-089	R2-089				a source conflates it with another row; different object	
+R2-090	quantity	Canadian-English source (EN-CA)	R2-090	R2-090				quantity of another row	
+R2-091	element	Canadian-English source (EN-CA)	R2-091	R2-091				related only	
+R2-092	element	Canadian-English source (EN-CA)	R2-092	R2-092				a source conflates it with another row; different object	
+R2-093	element	Canadian-English source (EN-CA)	R2-093	R2-093				genus or species of another row	
+R2-094	element	Canadian-English source (EN-CA)	R2-094	R2-094				same object family, carve or scope differs	
+R2-095	element	Canadian-English source (EN-CA)	R2-095	R2-095				a source conflates it with another row; different object	
+R2-096	technique	Canadian-English source (EN-CA)	R2-096	R2-096				related only	
+R2-097	element	Canadian-English source (EN-CA)	R2-097	R2-097				related only	
+R2-098	element	Canadian-English source (EN-CA)	R2-098	R2-098				component of another row	
+R2-099	element	Canadian-English source (EN-CA)	R2-099	R2-099				genus or species of another row	
+R2-100	element	Canadian-English source (EN-CA)	R2-100	R2-100				genus or species of another row	
+R2-101	quantity	Canadian-English source (EN-CA)	R2-101	R2-101				quantity of another row	
+R2-102	quantity	Canadian-English source (EN-CA)	R2-102	R2-102				quantity of another row	
+R2-103	quantity	Canadian-English source (EN-CA)	R2-103	R2-103				quantity of another row	
+R2-104	quantity	Canadian-English source (EN-CA)	R2-104	R2-104				related only	
+R2-105	element	Canadian-English source (EN-CA)	R2-105	R2-105				related only	
+R2-106	technique	Canadian-English source (EN-CA)	R2-106	R2-106				examined, no link	
+R2-107	element	Canadian-English source (EN-CA)	R2-107	R2-107				examined, no link	
+R2-108	element	Canadian-English source (EN-CA)	R2-108	R2-108				relation not judged on the evidence held (candidate for a later fold)	
+R2-109	element	Canadian-English source (EN-CA)	R2-109	R2-109				genus or species of another row	
+R2-110	element	Canadian-English source (EN-CA)	R2-110	R2-110				genus or species of another row	
+R2-111	element	Canadian-English source (EN-CA)	R2-111	R2-111				component of another row	
+R2-112	element	Canadian-English source (EN-CA)	R2-112	R2-112				related only	
+R2-113	element	Canadian-English source (EN-CA)	R2-113	R2-113				genus or species of another row	
+R2-114	element	Canadian-English source (EN-CA)	R2-114	R2-114				component of another row	
+R2-115	element	Canadian-English source (EN-CA)	R2-115	R2-115				component of another row	
+R2-116	element	Canadian-English source (EN-CA)	R2-116	R2-116				component of another row	
+R2-117	element	Canadian-English source (EN-CA)	R2-117	R2-117				relation not judged on the evidence held (candidate for a later fold)	
+R2-118	element	Canadian-English source (EN-CA)	R2-118	R2-118				component of another row	
+R2-119	element	Canadian-English source (EN-CA)	R2-119	R2-119				different sense of a shared word	
+R2-120	element	Canadian-English source (EN-CA)	R2-120	R2-120				different sense of a shared word	
+R2-121	element	Canadian-English source (EN-CA)	R2-121	R2-121				component of another row	
+R2-122	element	Canadian-English source (EN-CA)	R2-122	R2-122				related only	
+R2-123	element	Canadian-English source (EN-CA)	R2-123	R2-123				related only	
+R2-124	element	Canadian-English source (EN-CA)	R2-124	R2-124				different limit, measure or means for one aim	
+R2-125	element	Canadian-English source (EN-CA)	R2-125	R2-125				examined, no link	
+R2-126	element	Canadian-English source (EN-CA)	R2-126	R2-126				examined, no link	
+R2-127	element	Canadian-English source (EN-CA)	R2-127	R2-127				genus or species of another row	
+R2-128	element	Canadian-English source (EN-CA)	R2-128	R2-128				related only	
+R2-129	element	Canadian-English source (EN-CA)	R2-129	R2-129				genus or species of another row	
+R2-130	element	Canadian-English source (EN-CA)	R2-130	R2-130				genus or species of another row	
+R2-131	element	Canadian-English source (EN-CA)	R2-131	R2-131				different limit, measure or means for one aim	
+R2-132	element	Canadian-English source (EN-CA)	R2-132	R2-132				different limit, measure or means for one aim	
+R2-133	technique	Canadian-English source (EN-CA)	R2-133	R2-133				same object family, carve or scope differs	
+R2-134	element	Canadian-English source (EN-CA)	R2-134	R2-134				genus or species of another row	
+R2-135	element	Canadian-English source (EN-CA)	R2-135	R2-135				genus or species of another row	
+R2-136	element	Canadian-English source (EN-CA)	R2-136	R2-136				genus or species of another row	
+R2-137	element	Canadian-English source (EN-CA)	R2-137	R2-137				related only	
+R2-138	element	Canadian-English source (EN-CA)	R2-138	R2-138				related only	
+R2-139	element	Canadian-English source (EN-CA)	R2-139	R2-139				component of another row	
+R2-140	element	Canadian-English source (EN-CA)	R2-140	R2-140				related only	
+R2-141	technique	Canadian-English source (EN-CA)	R2-141	R2-141				quantity of another row	
+R2-142	element	Canadian-English source (EN-CA)	R2-142	R2-142				examined, no link	
+R2-143	element	Canadian-English source (EN-CA)	R2-143	R2-143				different sense of a shared word	
+R2-144	element	Canadian-English source (EN-CA)	R2-144	R2-144				different sense of a shared word	
+R2-145	element	Canadian-English source (EN-CA)	R2-145	R2-145				different limit, measure or means for one aim	
+R2-146	element	Canadian-English source (EN-CA)	R2-146	R2-146				different limit, measure or means for one aim	
+R2-147	element	Canadian-English source (EN-CA)	R2-147	R2-147				relation not judged on the evidence held (candidate for a later fold)	
+R2-148	element	Canadian-English source (EN-CA)	R2-148	R2-148				a source conflates it with another row; different object	
+R2-149	element	Canadian-English source (EN-CA)	R2-149	R2-149				genus or species of another row	
+R2-150	technique	Canadian-English source (EN-CA)	R2-150	R2-150				quantity of another row	
+R2-151	element	Canadian-English source (EN-CA)	R2-151	R2-151				genus or species of another row	
+R2-152	element	Canadian-English source (EN-CA)	R2-152	R2-152				related only	
+R2-153	element	Canadian-English source (EN-CA)	R2-153	R2-153				genus or species of another row	
+R2-154	element	Canadian-English source (EN-CA)	R2-154	R2-154				related only	
+R2-155	element	Canadian-English source (EN-CA)	R2-155	R2-155				component of another row	
+R2-156	element	Canadian-English source (EN-CA)	R2-156	R2-156				component of another row	
+R2-157	element	Canadian-English source (EN-CA)	R2-157	R2-157				component of another row	
+R2-158	element	Canadian-English source (EN-CA)	R2-158	R2-158				component of another row	
+R2-159	element	Canadian-English source (EN-CA)	R2-159	R2-159				component of another row	
+R2-160	element	Canadian-English source (EN-CA)	R2-160	R2-160				component of another row	
+R2-161	element	Canadian-English source (EN-CA)	R2-161	R2-161				component of another row	
+R2-162	element	Canadian-English source (EN-CA)	R2-162	R2-162				component of another row	
+R2-163	element	Canadian-English source (EN-CA)	R2-163	R2-163				a source conflates it with another row; different object	
+R2-164	element	Canadian-English source (EN-CA)	R2-164	R2-164				genus or species of another row	
+R2-165	element	Canadian-English source (EN-CA)	R2-165	R2-165				component of another row	
+R2-166	element	Canadian-English source (EN-CA)	R2-166	R2-166				genus or species of another row	
+R2-167	element	Canadian-English source (EN-CA)	R2-167	R2-167				component of another row	
+R2-168	element	Canadian-English source (EN-CA)	R2-168	R2-168				different sense of a shared word	
+R2-169	element	Canadian-English source (EN-CA)	R2-169	R2-169				a source conflates it with another row; different object	
+R2-170	element	Canadian-English source (EN-CA)	R2-170	R2-170				a source conflates it with another row; different object	
+R2-171	element	Canadian-English source (EN-CA)	R2-171	R2-171				different sense of a shared word	
+R2-172	element	Canadian-English source (EN-CA)	R2-172	R2-172				different limit, measure or means for one aim	
+R2-173	element	Canadian-English source (EN-CA)	R2-173	R2-173				different sense of a shared word	
+R2-174	element	Canadian-English source (EN-CA)	R2-174	R2-174				a source conflates it with another row; different object	
+R2-175	element	Canadian-English source (EN-CA)	R2-175	R2-175				a source conflates it with another row; different object	
+R2-176	element	Canadian-English source (EN-CA)	R2-176	R2-176				a source conflates it with another row; different object	
+R2-177	element	Canadian-English source (EN-CA)	R2-177	R2-177				same object family, carve or scope differs	
+R2-178	element	Canadian-English source (EN-CA)	R2-178	R2-178				a source conflates it with another row; different object	
+R2-179	element	Canadian-English source (EN-CA)	R2-179	R2-179				same object family, carve or scope differs	
+R2-180	element	Canadian-English source (EN-CA)	R2-180	R2-180				component of another row	
+R2-181	element	Canadian-English source (EN-CA)	R2-181	R2-181				component of another row	
+R2-182	element	Canadian-English source (EN-CA)	R2-182	R2-182				component of another row	
+R2-183	element	Canadian-English source (EN-CA)	R2-183	R2-183				component of another row	
+R2-184	element	Canadian-English source (EN-CA)	R2-184	R2-184				quantity of another row	
+R2-185	element	Canadian-English source (EN-CA)	R2-185	R2-185				component of another row	
+R2-186	element	Canadian-English source (EN-CA)	R2-186	R2-186				a source conflates it with another row; different object	
+R2-187	element	Canadian-English source (EN-CA)	R2-187	R2-187				a source conflates it with another row; different object	
+R2-188	element	Canadian-English source (EN-CA)	R2-188	R2-188				a source conflates it with another row; different object	
+R2-189	element	Canadian-English source (EN-CA)	R2-189	R2-189				component of another row	
+R2-190	technique	Canadian-English source (EN-CA)	R2-190	R2-190				quantity of another row	
+R2-191	element	Canadian-English source (EN-CA)	R2-191	R2-191				genus or species of another row	
+R2-192	element	Canadian-English source (EN-CA)	R2-192	R2-192				genus or species of another row	
+R2-193	element	Canadian-English source (EN-CA)	R2-193	R2-193				component of another row	
+R2-194	element	Canadian-English source (EN-CA)	R2-194	R2-194				component of another row	
+R2-195	element	Canadian-English source (EN-CA)	R2-195	R2-195				examined, no link	
+R2-196	element	Canadian-English source (EN-CA)	R2-196	R2-196				component of another row	
+R2-197	element	Canadian-English source (EN-CA)	R2-197	R2-197				component of another row	
+R2-198	element	Canadian-English source (EN-CA)	R2-198	R2-198				relation not judged on the evidence held (candidate for a later fold)	
+R2-199	element	Canadian-English source (EN-CA)	R2-199	R2-199				relation not judged on the evidence held (candidate for a later fold)	
+R2-200	element	Canadian-English source (EN-CA)	R2-200	R2-200				examined, no link	
+R2-201	element	Canadian-English source (EN-CA)	R2-201	R2-201				genus or species of another row	
+R2-202	element	Canadian-English source (EN-CA)	R2-202	R2-202				genus or species of another row	
+R2-203	element	Canadian-English source (EN-CA)	R2-203	R2-203				genus or species of another row	
+R2-204	element	Canadian-English source (EN-CA)	R2-204	R2-204				genus or species of another row	
+R2-205	element	Canadian-English source (EN-CA)	R2-205	R2-205				genus or species of another row	
+R2-206	element	Canadian-English source (EN-CA)	R2-206	R2-206				genus or species of another row	
+R2-207	element	Canadian-English source (EN-CA)	R2-207	R2-207				genus or species of another row	
+R2-208	element	Canadian-English source (EN-CA)	R2-208	R2-208				genus or species of another row	
+R2-209	element	Canadian-English source (EN-CA)	R2-209	R2-209				genus or species of another row	
+R2-210	element	Canadian-English source (EN-CA)	R2-210	R2-210				different limit, measure or means for one aim	
+R2-211	element	Canadian-English source (EN-CA)	R2-211	R2-211				different limit, measure or means for one aim	
+R2-212	technique	Canadian-English source (EN-CA)	R2-212	R2-212				relation not judged on the evidence held (candidate for a later fold)	
+R2-213	technique	Canadian-English source (EN-CA)	R2-213	R2-213				examined, no link	
+R2-214	element	Canadian-English source (EN-CA)	R2-214	R2-214				component of another row	
+R2-215	technique	Canadian-English source (EN-CA)	R2-215	R2-215				related only	
+R2-216	technique	Canadian-English source (EN-CA)	R2-216	R2-216				same object family, carve or scope differs	
+R2-217	technique	Canadian-English source (EN-CA)	R2-217	R2-217				genus or species of another row	
+R2-218	technique	Canadian-English source (EN-CA)	R2-218	R2-218				genus or species of another row	
+R2-219	technique	Canadian-English source (EN-CA)	R2-219	R2-219				examined, no link	
+R2-220	technique	Canadian-English source (EN-CA)	R2-220	R2-220				genus or species of another row	
+R2-221	element	Canadian-English source (EN-CA)	R2-221	R2-221				component of another row	
+R2-222	element	Canadian-English source (EN-CA)	R2-222	R2-222				examined, no link	
+R2-223	element	Canadian-English source (EN-CA)	R2-223	R2-223				examined, no link	
+R2-224	technique	Canadian-English source (EN-CA)	R2-224	R2-224				relation not judged on the evidence held (candidate for a later fold)	
+R2-225	technique	Canadian-English source (EN-CA)	R2-225	R2-225				related only	
+R2-226	element	Canadian-English source (EN-CA)	R2-226	R2-226				component of another row	
+R2-227	element	Canadian-English source (EN-CA)	R2-227	R2-227				component of another row	
+R2-228	element	Canadian-English source (EN-CA)	R2-228	R2-228				component of another row	
+R2-229	element	Canadian-English source (EN-CA)	R2-229	R2-229				component of another row	
+R2-230	element	Canadian-English source (EN-CA)	R2-230	R2-230				component of another row	
+R2-231	element	Canadian-English source (EN-CA)	R2-231	R2-231				component of another row	
+R2-232	element	Canadian-English source (EN-CA)	R2-232	R2-232				related only	
+R2-233	element	Canadian-English source (EN-CA)	R2-233	R2-233				component of another row	
+R2-234	element	Canadian-English source (EN-CA)	R2-234	R2-234				component of another row	
+R2-235	element	Canadian-English source (EN-CA)	R2-235	R2-235				genus or species of another row	
+R2-236	element	Canadian-English source (EN-CA)	R2-236	R2-236				genus or species of another row	
+R2-237	element	Canadian-English source (EN-CA)	R2-237	R2-237				genus or species of another row	
+R2-238	element	Canadian-English source (EN-CA)	R2-238	R2-238				component of another row	
+R2-239	element	Canadian-English source (EN-CA)	R2-239	R2-239				examined, no link	
+R2-240	element	Canadian-English source (EN-CA)	R2-240	R2-240				component of another row	
+R2-241	element	Canadian-English source (EN-CA)	R2-241	R2-241				genus or species of another row	
+R2-242	element	Canadian-English source (EN-CA)	R2-242	R2-242				component of another row	
+R2-243	element	Canadian-English source (EN-CA)	R2-243	R2-243				component of another row	
+R2-244	element	Canadian-English source (EN-CA)	R2-244	R2-244				component of another row	
+R2-245	element	Canadian-English source (EN-CA)	R2-245	R2-245				examined, no link	
+R2-246	element	Canadian-English source (EN-CA)	R2-246	R2-246				genus or species of another row	
+R2-247	element	Canadian-English source (EN-CA)	R2-247	R2-247				genus or species of another row	
+R2-248	element	Canadian-English source (EN-CA)	R2-248	R2-248				genus or species of another row	
+R2-249	element	Canadian-English source (EN-CA)	R2-249	R2-249				examined, no link	
+R2-250	element	Canadian-English source (EN-CA)	R2-250	R2-250				component of another row	
+R2-251	element	Canadian-English source (EN-CA)	R2-251	R2-251				examined, no link	
+R2-252	quantity	Canadian-English source (EN-CA)	R2-252	R2-252				related only	
+R2-253	element	Canadian-English source (EN-CA)	R2-253	R2-253				same object family, carve or scope differs	
+R2-254	element	Canadian-English source (EN-CA)	R2-254	R2-254				related only	
+R2-255	technique	Canadian-English source (EN-CA)	R2-255	R2-255				examined, no link	
+R2-256	technique	Canadian-English source (EN-CA)	R2-256	R2-256				same object family, carve or scope differs	
+R2-257	element	Canadian-English source (EN-CA)	R2-257	R2-257				related only	
+R2-258	technique	Canadian-English source (EN-CA)	R2-258	R2-258				genus or species of another row	
+R2-259	technique	Canadian-English source (EN-CA)	R2-259	R2-259				genus or species of another row	
+R2-260	technique	Canadian-English source (EN-CA)	R2-260	R2-260				genus or species of another row	
+R2-261	technique	Canadian-English source (EN-CA)	R2-261	R2-261				examined, no link	
+R2-262	technique	Canadian-English source (EN-CA)	R2-262	R2-262				examined, no link	
+R2-263	element	Canadian-English source (EN-CA)	R2-263	R2-263				component of another row	
+R2-264	element	Canadian-English source (EN-CA)	R2-264	R2-264				genus or species of another row	
+R2-265	element	Canadian-English source (EN-CA)	R2-265	R2-265				examined, no link	
+R2-266	element	Canadian-English source (EN-CA)	R2-266	R2-266				genus or species of another row	
+R2-267	element	Canadian-English source (EN-CA)	R2-267	R2-267				genus or species of another row	
+R2-268	element	Canadian-English source (EN-CA)	R2-268	R2-268				genus or species of another row	
+R2-269	element	Canadian-English source (EN-CA)	R2-269	R2-269				genus or species of another row	
+R2-270	element	Canadian-English source (EN-CA)	R2-270	R2-270				genus or species of another row	
+R2-271	element	Canadian-English source (EN-CA)	R2-271	R2-271				genus or species of another row	
+R2-272	element	Canadian-English source (EN-CA)	R2-272	R2-272				genus or species of another row	
+R2-273	element	Canadian-English source (EN-CA)	R2-273	R2-273				genus or species of another row	
+R2-274	element	Canadian-English source (EN-CA)	R2-274	R2-274				genus or species of another row	
+R2-275	element	Canadian-English source (EN-CA)	R2-275	R2-275				component of another row	
+R2-276	element	Canadian-English source (EN-CA)	R2-276	R2-276				component of another row	
+R2-277	element	Canadian-English source (EN-CA)	R2-277	R2-277				component of another row	
+R2-278	technique	Canadian-English source (EN-CA)	R2-278	R2-278				related only	
+R2-279	technique	Canadian-English source (EN-CA)	R2-279	R2-279				related only	
+R2-280	technique	Canadian-English source (EN-CA)	R2-280	R2-280				same object family, carve or scope differs	
+R2-281	setting	Canadian-English source (EN-CA)	R2-281	R2-281				component of another row	
+R2-282	setting	Canadian-English source (EN-CA)	R2-282	R2-282				related only	
+R2-283	setting	Canadian-English source (EN-CA)	R2-283	R2-283				related only	
+R2-284	setting	Canadian-English source (EN-CA)	R2-284	R2-284				examined, no link	
+R2-285	setting	Canadian-English source (EN-CA)	R2-285	R2-285				genus or species of another row	
+R2-286	setting	Canadian-English source (EN-CA)	R2-286	R2-286				related only	
+R2-287	setting	Canadian-English source (EN-CA)	R2-287	R2-287				related only	
+R2-288	setting	Canadian-English source (EN-CA)	R2-288	R2-288				examined, no link	
+R2-289	setting	Canadian-English source (EN-CA)	R2-289	R2-289				examined, no link	
+R2-290	setting	Canadian-English source (EN-CA)	R2-290	R2-290				component of another row	
+R2-291	setting	Canadian-English source (EN-CA)	R2-291	R2-291				component of another row	
+R2-292	setting	Canadian-English source (EN-CA)	R2-292	R2-292				genus or species of another row	
+R2-293	setting	Canadian-English source (EN-CA)	R2-293	R2-293				genus or species of another row	
+R2-294	setting	Canadian-English source (EN-CA)	R2-294	R2-294				examined, no link	
+R2-295	setting	Canadian-English source (EN-CA)	R2-295	R2-295				relation not judged on the evidence held (candidate for a later fold)	
+R2-296	setting	Canadian-English source (EN-CA)	R2-296	R2-296				relation not judged on the evidence held (candidate for a later fold)	
+R2-297	setting	Canadian-English source (EN-CA)	R2-297	R2-297				examined, no link	
+R2-298	setting	Canadian-English source (EN-CA)	R2-298	R2-298				examined, no link	
+R2-299	setting	Canadian-English source (EN-CA)	R2-299	R2-299				examined, no link	
+R2-300	setting	Canadian-English source (EN-CA)	R2-300	R2-300				examined, no link	
+R2-301	setting	Canadian-English source (EN-CA)	R2-301	R2-301				examined, no link	
+R2-302	setting	Canadian-English source (EN-CA)	R2-302	R2-302				component of another row	
+R2-303	setting	Canadian-English source (EN-CA)	R2-303	R2-303				component of another row	
+R2-304	setting	Canadian-English source (EN-CA)	R2-304	R2-304				component of another row	
+R2-305	setting	Canadian-English source (EN-CA)	R2-305	R2-305				component of another row	
+R2-306	setting	Canadian-English source (EN-CA)	R2-306	R2-306				component of another row	
+R2-307	setting	Canadian-English source (EN-CA)	R2-307	R2-307				component of another row	
+R2-308	setting	Canadian-English source (EN-CA)	R2-308	R2-308				component of another row	
+R2-309	setting	Canadian-English source (EN-CA)	R2-309	R2-309				component of another row	
+R2-310	setting	Canadian-English source (EN-CA)	R2-310	R2-310				examined, no link	
+R2-311	setting	Canadian-English source (EN-CA)	R2-311	R2-311				examined, no link	
+R2-312	setting	Canadian-English source (EN-CA)	R2-312	R2-312				examined, no link	
+R2-313	setting	Canadian-English source (EN-CA)	R2-313	R2-313				component of another row	
+R2-314	setting	Canadian-English source (EN-CA)	R2-314	R2-314				relation not judged on the evidence held (candidate for a later fold)	
+R2-315	setting	Canadian-English source (EN-CA)	R2-315	R2-315				component of another row	
+R2-316	setting	Canadian-English source (EN-CA)	R2-316	R2-316				component of another row	
+R2-317	setting	Canadian-English source (EN-CA)	R2-317	R2-317				examined, no link	
+R2-318	setting	Canadian-English source (EN-CA)	R2-318	R2-318				component of another row	
+R2-319	setting	Canadian-English source (EN-CA)	R2-319	R2-319				component of another row	
+R2-320	setting	Canadian-English source (EN-CA)	R2-320	R2-320				component of another row	
+R2-321	setting	Canadian-English source (EN-CA)	R2-321	R2-321				component of another row	
+R2-322	setting	Canadian-English source (EN-CA)	R2-322	R2-322				component of another row	
+R2-323	setting	Canadian-English source (EN-CA)	R2-323	R2-323				examined, no link	
+R2-324	setting	Canadian-English source (EN-CA)	R2-324	R2-324				genus or species of another row	
+R2-325	setting	Canadian-English source (EN-CA)	R2-325	R2-325				genus or species of another row	
+R2-326	setting	Canadian-English source (EN-CA)	R2-326	R2-326				related only	
+R2-327	setting	Canadian-English source (EN-CA)	R2-327	R2-327				related only	
+R2-328	setting	Canadian-English source (EN-CA)	R2-328	R2-328				component of another row	
+R2-329	setting	Canadian-English source (EN-CA)	R2-329	R2-329				genus or species of another row	
+R2-330	setting	Canadian-English source (EN-CA)	R2-330	R2-330				genus or species of another row	
+R2-331	setting	Canadian-English source (EN-CA)	R2-331	R2-331				genus or species of another row	
+R2-332	setting	Canadian-English source (EN-CA)	R2-332	R2-332				component of another row	
+R2-333	outcome level	Canadian-English source (EN-CA)	R2-333	R2-333				different grade or level	
+R2-334	outcome level	Canadian-English source (EN-CA)	R2-334	R2-334				same object family, carve or scope differs	
+R2-335	outcome level	Canadian-English source (EN-CA)	R2-335	R2-335				relation not judged on the evidence held (candidate for a later fold)	
+R2-336	trigger rule	Canadian-English source (EN-CA)	R2-336	R2-336				same object family, carve or scope differs	
+R2-337	trigger rule	Canadian-English source (EN-CA)	R2-337	R2-337				examined, no link	
+R2-338	trigger rule	Canadian-English source (EN-CA)	R2-338	R2-338				examined, no link	
+R2-339	trigger rule	Canadian-English source (EN-CA)	R2-339	R2-339				related only	
+R2-340	trigger rule	Canadian-English source (EN-CA)	R2-340	R2-340				genus or species of another row	
+R2-341	trigger rule	Canadian-English source (EN-CA)	R2-341	R2-341				related only	
+R2-342	trigger rule	Canadian-English source (EN-CA)	R2-342	R2-342				related only	
+R2-343	trigger rule	Canadian-English source (EN-CA)	R2-343	R2-343				same object family, carve or scope differs	
+R2-344	trigger rule	Canadian-English source (EN-CA)	R2-344	R2-344				different sense of a shared word	
+R2-345	trigger rule	Canadian-English source (EN-CA)	R2-345	R2-345				related only	
+R2-346	performance criterion	Canadian-English source (EN-CA)	R2-346	R2-346				same object family, carve or scope differs	
+R2-347	performance criterion	Canadian-English source (EN-CA)	R2-347	R2-347				same object family, carve or scope differs	
+R2-348	performance criterion	Canadian-English source (EN-CA)	R2-348	R2-348				relation not judged on the evidence held (candidate for a later fold)	
+R2-349	performance criterion	Canadian-English source (EN-CA)	R2-349	R2-349				same object family, carve or scope differs	
+R2-350	performance criterion	Canadian-English source (EN-CA)	R2-350	R2-350				same object family, carve or scope differs	
+R2-351	performance criterion	Canadian-English source (EN-CA)	R2-351	R2-351				same object family, carve or scope differs	
+R2-352	performance criterion	Canadian-English source (EN-CA)	R2-352	R2-352				examined, no link	
+R2-353	drafting layer	Canadian-English source (EN-CA)	R2-353	R2-353				related only	
+R2-354	drafting layer	Canadian-English source (EN-CA)	R2-354	R2-354				same object family, carve or scope differs	
+R2-355	drafting layer	Canadian-English source (EN-CA)	R2-355	R2-355				related only	
+R2-356	drafting layer	Canadian-English source (EN-CA)	R2-356	R2-356				examined, no link	
+R2-357	element	non-English origin (JA-JP)	R2-357	R2-357				genus or species of another row	
+R2-358	element	non-English origin (PT-PT)	R2-358	R2-358				different sense of a shared word	
+R2-359	outcome level	non-English origin (IT-IT)	R2-359	R2-359				different grade or level	
+R2-360	outcome level	non-English origin (IT-IT)	R2-360	R2-360				different grade or level	
+R2-361	outcome level	non-English origin (IT-IT)	R2-361	R2-361				different grade or level	
+R2-362	outcome level	non-English origin (IT-IT)	R2-362	R2-362				same object family, carve or scope differs	
+R2-363	outcome level	non-English origin (IT-IT)	R2-363	R2-363				genus or species of another row	
+R2-364	performance criterion	non-English origin (ES-ES)	R2-364	R2-364				examined, no link	
+R2-365	performance criterion	non-English origin (ES-ES)	R2-365	R2-365				examined, no link	
+R2-366	performance criterion	non-English origin (ES-ES)	R2-366	R2-366				examined, no link	
+R2-367	performance criterion	non-English origin (ES-ES)	R2-367	R2-367				examined, no link	
+R2-368	performance criterion	non-English origin (ES-ES)	R2-368	R2-368				same object family, carve or scope differs	
+R2-369	performance criterion	non-English origin (ES-ES)	R2-369	R2-369				examined, no link	
+R2-370	performance criterion	non-English origin (ES-ES)	R2-370	R2-370				examined, no link	
+R2-371	technique	non-English origin (ES-ES)	R2-371	R2-371				different grade or level	
+R2-372	technique	non-English origin (ES-ES)	R2-372	R2-372				different grade or level	
+R2-373	technique	non-English origin (ES-ES)	R2-373	R2-373				different grade or level	
+R2-374	drafting layer	non-English origin (ES-ES)	R2-374	R2-374				examined, no link	
+R2-375	quantity	non-English origin (ES-ES)	R2-375	R2-375				related only	
+R2-376	technique	non-English origin (FI-FI)	R2-376	R2-376				different limit, measure or means for one aim	
+R2-377	technique	non-English origin (FI-FI)	R2-377	R2-377				different limit, measure or means for one aim	
+R2-378	technique	non-English origin (FI-FI)	R2-378	R2-378				related only	
+R2-379	element	non-English origin (NO-NO)	R2-379	R2-379				same object family, carve or scope differs	
+R2-380	element	non-English origin (NO-NO)	R2-380	R2-380				same object family, carve or scope differs	
+R2-381	quantity	non-English origin (FI-FI)	R2-381	R2-381				different sense of a shared word	
+R2-382	quantity	non-English origin (FI-FI)	R2-382	R2-382				different limit, measure or means for one aim	
+R2-383	quantity	non-English origin (FI-FI)	R2-383	R2-383				quantity of another row	
+R2-384	element	non-English origin (ZH-CN)	R2-384	R2-384				genus or species of another row	
+R2-385	technique	non-English origin (ZH-CN)	R2-385	R2-385				relation not judged on the evidence held (candidate for a later fold)	
+R2-386	performance criterion	non-English origin (ZH-CN)	R2-386	R2-386				relation not judged on the evidence held (candidate for a later fold)	
+R2-387	performance criterion	non-English origin (PT-PT)	R2-387	R2-387				relation not judged on the evidence held (candidate for a later fold)	
+R2-388	technique	non-English origin (JA-JP)	R2-388	R2-388				related only	
+R2-389	drafting layer	non-English origin (KO-KR)	R2-389	R2-389				related only	
+R2-390	drafting layer	non-English origin (JA-JP)	R2-390	R2-390				different limit, measure or means for one aim	
+R2-391	setting	non-English origin (KO-KR)	R2-391	R2-391				relation not judged on the evidence held (candidate for a later fold)	
+R2-392	element	non-English origin (KO-KR)	R2-392	R2-392				relation not judged on the evidence held (candidate for a later fold)	
+R2-393	performance criterion	non-English origin (DE-DE)	R2-393	R2-393				same object family, carve or scope differs	
+R2-394	performance criterion	non-English origin (DE-DE)	R2-394	R2-394				same object family, carve or scope differs	
+R2-395	performance criterion	non-English origin (DE-DE)	R2-395	R2-395				same object family, carve or scope differs	
+R2-396	performance criterion	non-English origin (DE-DE)	R2-396	R2-396				same object family, carve or scope differs	
+R2-397	performance criterion	non-English origin (DE-DE)	R2-397	R2-397				relation not judged on the evidence held (candidate for a later fold)	
+R2-398	performance criterion	non-English origin (DE-DE)	R2-398	R2-398				related only	
+R2-399	performance criterion	non-English origin (DE-DE)	R2-399	R2-399				same object family, carve or scope differs	
+R2-400	performance criterion	non-English origin (DE-DE)	R2-400	R2-400				same object family, carve or scope differs	
+R2-401	performance criterion	non-English origin (DE-DE)	R2-401	R2-401				same object family, carve or scope differs	
+R2-402	performance criterion	non-English origin (SV-SE)	R2-402	R2-333	R2-402>R2-333 NEAR-EQUIVALENT	medium	R2-333 holds 221 filed forms of the qualifier class across 14 passes; the SV pass names R2-402 a register duplicate of a form already filed there	folds (moderate): carve differs in wording only	accessible and usable (descriptive label, ours)
+R2-403	performance criterion	non-English origin (SV-SE)	R2-403	R2-403				same object family, carve or scope differs	
+R2-404	performance criterion	non-English origin (SV-SE)	R2-404	R2-404				same object family, carve or scope differs	
+R2-405	performance criterion	non-English origin (SV-SE)	R2-405	R2-405				same object family, carve or scope differs	
+R2-406	performance criterion	non-English origin (SV-SE)	R2-406	R2-406				same object family, carve or scope differs	
+R2-407	performance criterion	non-English origin (SV-SE)	R2-407	R2-407				related only	
+R2-408	performance criterion	non-English origin (FR-FR)	R2-408	R2-408				same object family, carve or scope differs	
+R2-409	performance criterion	non-English origin (NL-NL)	R2-409	R2-409				same object family, carve or scope differs	
+R2-410	performance criterion	non-English origin (NL-NL)	R2-410	R2-410				related only	
+R2-411	performance criterion	non-English origin (NL-NL)	R2-411	R2-411				same object family, carve or scope differs	
+R2-412	performance criterion	non-English origin (NL-NL)	R2-412	R2-412				related only	
+R2-413	performance criterion	non-English origin (DA-DK)	R2-413	R2-413				same object family, carve or scope differs	
+R2-414	performance criterion	non-English origin (DA-DK)	R2-414	R2-414				related only	
+R2-415	performance criterion	non-English origin (FI-FI)	R2-415	R2-415				same object family, carve or scope differs	
+R2-416	performance criterion	non-English origin (FI-FI)	R2-416	R2-416				same object family, carve or scope differs	
+R2-417	performance criterion	non-English origin (ZH-CN)	R2-417	R2-417				same object family, carve or scope differs	
+R2-418	performance criterion	non-English origin (ZH-CN)	R2-418	R2-418				same object family, carve or scope differs	
+R2-419	performance criterion	non-English origin (IT-IT)	R2-419	R2-419				related only	
+R2-420	performance criterion	non-English origin (IT-IT)	R2-420	R2-420				same object family, carve or scope differs	
+R2-421	performance criterion	non-English origin (IT-IT)	R2-421	R2-421				same object family, carve or scope differs	
+R2-422	performance criterion	non-English origin (KO-KR)	R2-422	R2-422				same object family, carve or scope differs	
+R2-423	performance criterion	non-English origin (PT-PT)	R2-423	R2-423				related only	
+R2-424	performance criterion	non-English origin (JA-JP)	R2-424	R2-424				same object family, carve or scope differs	
+R2-425	trigger rule	non-English origin (NL-NL)	R2-425	R2-425				same object family, carve or scope differs	
+R2-426	trigger rule	non-English origin (NL-NL)	R2-426	R2-426				examined, no link	
+R2-427	trigger rule	non-English origin (NL-NL)	R2-427	R2-427				same object family, carve or scope differs	
+R2-428	trigger rule	non-English origin (NL-NL)	R2-428	R2-428				same object family, carve or scope differs	
+R2-429	trigger rule	non-English origin (JA-JP)	R2-429	R2-429				related only	
+R2-430	trigger rule	non-English origin (JA-JP)	R2-430	R2-430				different limit, measure or means for one aim	
+R2-431	trigger rule	non-English origin (JA-JP)	R2-431	R2-431				same object family, carve or scope differs	
+R2-432	trigger rule	non-English origin (JA-JP)	R2-432	R2-432				related only	
+R2-433	trigger rule	non-English origin (KO-KR)	R2-433	R2-433				different limit, measure or means for one aim	
+R2-434	trigger rule	non-English origin (KO-KR)	R2-434	R2-434				related only	
+R2-435	trigger rule	non-English origin (KO-KR)	R2-435	R2-435				same object family, carve or scope differs	
+R2-436	trigger rule	non-English origin (ES-ES)	R2-436	R2-436				related only	
+R2-437	trigger rule	non-English origin (ES-ES)	R2-437	R2-437				related only	
+R2-438	trigger rule	non-English origin (ES-ES)	R2-438	R2-438				examined, no link	
+R2-439	trigger rule	non-English origin (FR-FR)	R2-439	R2-439				same object family, carve or scope differs	
+R2-440	trigger rule	non-English origin (FR-FR)	R2-440	R2-440				different limit, measure or means for one aim	
+R2-441	trigger rule	non-English origin (FR-FR)	R2-441	R2-441				related only	
+R2-442	trigger rule	non-English origin (FR-FR)	R2-442	R2-442				related only	
+R2-443	trigger rule	non-English origin (DA-DK)	R2-443	R2-443				examined, no link	
+R2-444	trigger rule	non-English origin (DA-DK)	R2-444	R2-444				same object family, carve or scope differs	
+R2-445	trigger rule	non-English origin (DA-DK)	R2-445	R2-445				same object family, carve or scope differs	
+R2-446	trigger rule	non-English origin (FI-FI)	R2-446	R2-446				same object family, carve or scope differs	
+R2-447	trigger rule	non-English origin (FI-FI)	R2-447	R2-447				same object family, carve or scope differs	
+R2-448	trigger rule	non-English origin (SV-SE)	R2-448	R2-448				examined, no link	
+R2-449	trigger rule	non-English origin (SV-SE)	R2-449	R2-449				same object family, carve or scope differs	
+R2-450	trigger rule	non-English origin (SV-SE)	R2-450	R2-450				same object family, carve or scope differs	
+R2-451	trigger rule	non-English origin (SV-SE)	R2-451	R2-451				related only	
+R2-452	trigger rule	English-variant (EN-VARIANTS)	R2-452	R2-452				examined, no link	
+R2-453	trigger rule	English-variant (EN-VARIANTS)	R2-453	R2-453				same object family, carve or scope differs	
+R2-454	trigger rule	English-variant (EN-VARIANTS)	R2-454	R2-454				same object family, carve or scope differs	
+R2-455	trigger rule	non-English origin (DE-DE)	R2-455	R2-455				same object family, carve or scope differs	
+R2-456	trigger rule	non-English origin (ZH-CN)	R2-456	R2-456				related only	
+R2-457	trigger rule	non-English origin (ZH-CN)	R2-457	R2-457				examined, no link	
+R2-458	trigger rule	non-English origin (ZH-CN)	R2-458	R2-458				same object family, carve or scope differs	
+R2-459	trigger rule	non-English origin (PT-PT)	R2-459	R2-459				examined, no link	
+R2-460	trigger rule	non-English origin (PT-PT)	R2-460	R2-460				same object family, carve or scope differs	
+R2-461	trigger rule	non-English origin (NO-NO)	R2-461	R2-461				examined, no link	
+R2-462	trigger rule	non-English origin (NO-NO)	R2-462	R2-462				different limit, measure or means for one aim	
+R2-463	outcome level	non-English origin (NO-NO)	R2-463	R2-463				different grade or level	
+R2-464	outcome level	non-English origin (NO-NO)	R2-464	R2-464				different grade or level	
+R2-465	outcome level	non-English origin (FI-FI)	R2-465	R2-465				same object family, carve or scope differs	
+R2-466	outcome level	non-English origin (JA-JP)	R2-466	R2-466				different grade or level	
+R2-467	outcome level	non-English origin (JA-JP)	R2-467	R2-467				different grade or level	
+R2-468	outcome level	non-English origin (FR-FR)	R2-468	R2-468				same object family, carve or scope differs	
+R2-469	outcome level	non-English origin (FR-FR)	R2-469	R2-469				same object family, carve or scope differs	
+R2-470	outcome level	non-English origin (FR-FR)	R2-470	R2-470				related only	
+R2-471	outcome level	non-English origin (DE-DE)	R2-471	R2-471				different grade or level	
+R2-472	outcome level	non-English origin (DE-DE)	R2-472	R2-472				examined, no link	
+R2-473	drafting layer	non-English origin (FR-FR)	R2-473	R2-473				same object family, carve or scope differs	
+R2-474	drafting layer	non-English origin (FR-FR)	R2-474	R2-474				same object family, carve or scope differs	
+R2-475	drafting layer	non-English origin (FR-FR)	R2-475	R2-475				same object family, carve or scope differs	
+R2-476	drafting layer	non-English origin (IT-IT)	R2-476	R2-476				same object family, carve or scope differs	
+R2-477	drafting layer	non-English origin (IT-IT)	R2-477	R2-477				same object family, carve or scope differs	
+R2-478	drafting layer	non-English origin (IT-IT)	R2-478	R2-478				same object family, carve or scope differs	
+R2-479	drafting layer	non-English origin (IT-IT)	R2-479	R2-479				component of another row	
+R2-480	drafting layer	non-English origin (IT-IT)	R2-480	R2-480				different limit, measure or means for one aim	
+R2-481	drafting layer	non-English origin (IT-IT)	R2-481	R2-481				same object family, carve or scope differs	
+R2-482	drafting layer	non-English origin (IT-IT)	R2-482	R2-482				component of another row	
+R2-483	drafting layer	non-English origin (NO-NO)	R2-483	R2-483				same object family, carve or scope differs	
+R2-484	drafting layer	non-English origin (NO-NO)	R2-484	R2-484				same object family, carve or scope differs	
+R2-485	drafting layer	non-English origin (NO-NO)	R2-485	R2-485				related only	
+R2-486	drafting layer	non-English origin (DA-DK)	R2-486	R2-486				same object family, carve or scope differs	
+R2-487	drafting layer	non-English origin (DA-DK)	R2-487	R2-487				same object family, carve or scope differs	
+R2-488	drafting layer	non-English origin (DA-DK)	R2-488	R2-488				same object family, carve or scope differs	
+R2-489	drafting layer	non-English origin (DA-DK)	R2-489	R2-489				same object family, carve or scope differs	
+R2-490	drafting layer	non-English origin (NL-NL)	R2-490	R2-490				same object family, carve or scope differs	
+R2-491	drafting layer	non-English origin (NL-NL)	R2-491	R2-491				same object family, carve or scope differs	
+R2-492	drafting layer	non-English origin (NL-NL)	R2-492	R2-492				examined, no link	
+R2-493	drafting layer	non-English origin (NL-NL)	R2-493	R2-493				same object family, carve or scope differs	
+R2-494	drafting layer	non-English origin (NL-NL)	R2-494	R2-494				examined, no link	
+R2-495	drafting layer	non-English origin (ES-ES)	R2-495	R2-495				different limit, measure or means for one aim	
+R2-496	drafting layer	non-English origin (ES-ES)	R2-496	R2-496				same object family, carve or scope differs	
+R2-497	drafting layer	non-English origin (ES-ES)	R2-497	R2-497				related only	
+R2-498	drafting layer	non-English origin (KO-KR)	R2-498	R2-498				same object family, carve or scope differs	
+R2-499	drafting layer	non-English origin (KO-KR)	R2-499	R2-499				same object family, carve or scope differs	
+R2-500	drafting layer	non-English origin (KO-KR)	R2-500	R2-500				same object family, carve or scope differs	
+R2-501	drafting layer	non-English origin (KO-KR)	R2-501	R2-501				related only	
+R2-502	drafting layer	non-English origin (KO-KR)	R2-502	R2-502				related only	
+R2-503	drafting layer	non-English origin (ZH-CN)	R2-503	R2-503				related only	
+R2-504	drafting layer	non-English origin (ZH-CN)	R2-504	R2-504				same object family, carve or scope differs	
+R2-505	drafting layer	non-English origin (ZH-CN)	R2-505	R2-505				same object family, carve or scope differs	
+R2-506	drafting layer	non-English origin (ZH-CN)	R2-506	R2-506				examined, no link	
+R2-507	drafting layer	English-variant (EN-VARIANTS)	R2-507	R2-507				same object family, carve or scope differs	
+R2-508	drafting layer	English-variant (EN-VARIANTS)	R2-508	R2-508				same object family, carve or scope differs	
+R2-509	drafting layer	English-variant (EN-VARIANTS)	R2-509	R2-509				same object family, carve or scope differs	
+R2-510	drafting layer	English-variant (EN-VARIANTS)	R2-510	R2-510				related only	
+R2-511	drafting layer	English-variant (EN-VARIANTS)	R2-511	R2-511				same object family, carve or scope differs	
+R2-512	drafting layer	English-variant (EN-VARIANTS)	R2-512	R2-512				same object family, carve or scope differs	
+R2-513	drafting layer	English-variant (EN-VARIANTS)	R2-513	R2-513				same object family, carve or scope differs	
+R2-514	drafting layer	English-variant (EN-VARIANTS)	R2-514	R2-514				same object family, carve or scope differs	
+R2-515	drafting layer	English-variant (EN-VARIANTS)	R2-515	R2-515				same object family, carve or scope differs	
+R2-516	drafting layer	English-variant (EN-VARIANTS)	R2-516	R2-516				different limit, measure or means for one aim	
+R2-517	drafting layer	English-variant (EN-VARIANTS)	R2-517	R2-517				different limit, measure or means for one aim	
+R2-518	drafting layer	English-variant (EN-VARIANTS)	R2-518	R2-518				same object family, carve or scope differs	
+R2-519	drafting layer	non-English origin (SV-SE)	R2-519	R2-519				same object family, carve or scope differs	
+R2-520	drafting layer	non-English origin (SV-SE)	R2-520	R2-520				related only	
+R2-521	drafting layer	non-English origin (SV-SE)	R2-521	R2-521				same object family, carve or scope differs	
+R2-522	drafting layer	non-English origin (SV-SE)	R2-522	R2-522				same object family, carve or scope differs	
+R2-523	drafting layer	non-English origin (SV-SE)	R2-523	R2-523				examined, no link	
+R2-524	drafting layer	non-English origin (FI-FI)	R2-524	R2-524				related only	
+R2-525	drafting layer	non-English origin (FI-FI)	R2-525	R2-525				same object family, carve or scope differs	
+R2-526	drafting layer	non-English origin (PT-PT)	R2-526	R2-526				examined, no link	
+R2-527	drafting layer	non-English origin (PT-PT)	R2-527	R2-527				related only	
+R2-528	drafting layer	non-English origin (PT-PT)	R2-528	R2-354	R2-528>R2-354 NEAR-EQUIVALENT	medium	tie at 0 filed forms; R2-354 kept because its source (B651 1.6) states the requirement/recommendation/option split the PT form instantiates; otherwise arbitrary	folds (moderate): carve differs in wording only	it is recommended (descriptive label, ours)
+R2-529	drafting layer	non-English origin (PT-PT)	R2-529	R2-529				different limit, measure or means for one aim	
+R2-530	drafting layer	non-English origin (DE-DE)	R2-530	R2-530				examined, no link	
+R2-531	drafting layer	non-English origin (DE-DE)	R2-531	R2-531				same object family, carve or scope differs	
+R2-532	drafting layer	non-English origin (JA-JP)	R2-532	R2-532				same object family, carve or scope differs	
+R2-533	element	non-English origin (FR-FR)	R2-533	R2-083	R2-533>R2-083 NEAR-EQUIVALENT	high	R2-083 holds 22 filed forms (equivalents.tsv + forms.tsv), R2-533 holds 0; the FR pass itself files plan incliné under R2-083	folds (moderate): carve differs in wording only	fixed ramp (descriptive label, ours)
+R2-534	element	non-English origin (FR-FR)	R2-534	R2-534				different sense of a shared word	
+R2-535	element	non-English origin (DE-DE)	R2-535	R2-535				same object family, carve or scope differs	
+R2-536	element	non-English origin (IT-IT)	R2-536	R2-536				a source conflates it with another row; different object	
+R2-537	quantity	non-English origin (FI-FI)	R2-537	R2-537				different limit, measure or means for one aim	
+R2-538	quantity	non-English origin (FR-FR)	R2-538	R2-538				different sense of a shared word	
+R2-539	quantity	non-English origin (KO-KR)	R2-539	R2-539				same object family, carve or scope differs	
+R2-540	quantity	non-English origin (DE-DE)	R2-540	R2-540				same object family, carve or scope differs	
+R2-541	quantity	non-English origin (IT-IT)	R2-541	R2-021	R2-541>R2-021 NEAR-EQUIVALENT	medium	R2-021 holds 3 filed forms, R2-541 holds 0; neither instrument is the standard for the other	folds (moderate): carve differs in wording only	manoeuvre spaces (descriptive label, ours)
+R2-542	quantity	non-English origin (PT-PT)	R2-542	R2-542				same object family, carve or scope differs	
+R2-543	quantity	non-English origin (PT-PT)	R2-543	R2-543				different sense of a shared word	
+R2-544	quantity	non-English origin (JA-JP)	R2-544	R2-544				different limit, measure or means for one aim	
+R2-545	element	non-English origin (FR-FR)	R2-545	R2-545				same object family, carve or scope differs	
+R2-546	element	non-English origin (NL-NL)	R2-546	R2-546				same object family, carve or scope differs	
+R2-547	element	non-English origin (FI-FI)	R2-547	R2-547				same object family, carve or scope differs	
+R2-548	element	non-English origin (SV-SE)	R2-548	R2-548				same object family, carve or scope differs	
+R2-549	element	non-English origin (NO-NO)	R2-549	R2-549				same object family, carve or scope differs	
+R2-550	element	non-English origin (NO-NO)	R2-550	R2-550				same object family, carve or scope differs	
+R2-551	quantity	non-English origin (NO-NO)	R2-551	R2-551				same object family, carve or scope differs	
+R2-552	element	English-variant (EN-VARIANTS)	R2-552	R2-552				same object family, carve or scope differs	
+R2-553	quantity	English-variant (EN-VARIANTS)	R2-553	R2-553				relation not judged on the evidence held (candidate for a later fold)	
+R2-554	element	English-variant (EN-VARIANTS)	R2-554	R2-554				genus or species of another row	
+R2-555	quantity	base pointer	R2-555	R2-555				genus or species of another row	
+R2-556	quantity	base pointer	R2-556	R2-556				genus or species of another row	
+R2-557	quantity	base pointer	R2-557	R2-557				same object family, carve or scope differs	
+R2-558	quantity	base pointer	R2-558	R2-558				genus or species of another row	
+R2-559	quantity	base pointer	R2-559	R2-559				different limit, measure or means for one aim	
+R2-560	quantity	base pointer	R2-560	R2-560				related only	
