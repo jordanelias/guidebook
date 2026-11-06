@@ -1,0 +1,11 @@
+register_concept	seed (MODEL-GENERATED, not a finding)	jurisdiction meant	flag and note
+Drainage	배수구 / 배수 기울기	KR	MODEL-GENERATED; not in the texts read; probably in 건축물의 설비기준 등에 관한 규칙 or BF certification guidance (not read)
+Microwave mounting height accessible and safe	전자레인지 설치높이	KR	MODEL-GENERATED; kitchens are not regulated by the Act's annexes; possibly 장애인 주거 개조 guides
+force	조작력 / 개폐력	KR	MODEL-GENERATED; held aliases 조작력, 개폐력 occur in no text read; possibly KS or BF certification evaluation items
+operating force (parameter 6)	문 개폐력 (N)	KR	MODEL-GENERATED
+reverberation time (parameter 7)	잔향시간	KR	MODEL-GENERATED; held alias 잔향 시간 occurs in no text read; school or acoustic standards (not read)
+colour temperature (parameter 10)	색온도 (K)	KR	MODEL-GENERATED; held alias 색온도 occurs in no text read; KS C lighting standards (not read)
+capacity	적재하중 / 정원(인승)	KR	MODEL-GENERATED; lift capacity is in lift safety rules, not here
+B651 8.3.8 Speed bumps	과속방지턱	KR	MODEL-GENERATED; road-side rules (교통약자의 이동편의 증진법, not read)
+B651 8.3.9 Bollards	볼라드 / 차량진입억제용 말뚝	KR	MODEL-GENERATED; 교통약자의 이동편의 증진법 시행규칙 (not read)
+B651 8.7.1 Flower or shrub planters	화단 / 식재	KR	MODEL-GENERATED
