@@ -1,0 +1,347 @@
+<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0" xmlns:finlex="http://data.finlex.fi/schema/finlex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <act contains="multipleVersions" name="main">
+        <meta>
+            <identification source="#organization_fi.finlex">
+                <FRBRWork>
+                    <FRBRthis value="/akn/fi/act/statute-consolidated/2017/241/!main"/>
+                    <FRBRuri value="/akn/fi/act/statute-consolidated/2017/241"/>
+                    <FRBRalias name="eli" value="http://data.finlex.fi/eli/sd/2017/241/ajantasa"/>
+                    <FRBRdate date="2017-05-04" name="dateIssued"/>
+                    <FRBRdate date="2017-05-05" name="datePublished"/>
+                    <FRBRauthor as="#role_author" href="#organization_fi.finlex"/>
+                    <FRBRcountry value="fi"/>
+                    <FRBRsubtype value="statute-consolidated"/>
+                    <FRBRnumber value="241"/>
+                    <FRBRprescriptive value="false"/>
+                    <FRBRauthoritative value="false"/>
+                </FRBRWork>
+                <FRBRExpression>
+                    <FRBRthis value="/akn/fi/act/statute-consolidated/2017/241/fin@/!main"/>
+                    <FRBRuri value="/akn/fi/act/statute-consolidated/2017/241/fin@"/>
+                    <FRBRalias name="eli" value="http://data.finlex.fi/eli/sd/2017/241/ajantasa/2017-05-04/fin"/>
+                    <FRBRdate date="2017-05-04" name="dateIssued"/>
+                    <FRBRdate date="2024-11-28" name="dateConsolidated"/>
+                    <FRBRauthor as="#role_author" href="#organization_fi.finlex"/>
+                    <FRBRversionNumber value="20170241"/>
+                    <FRBRlanguage language="fin"/>
+                </FRBRExpression>
+                <FRBRManifestation>
+                    <FRBRthis value="/akn/fi/act/statute-consolidated/2017/241/fin@/!main.xml"/>
+                    <FRBRuri value="/akn/fi/act/statute-consolidated/2017/241/fin@.akn"/>
+                    <FRBRalias name="eli" value="http://data.finlex.fi/eli/sd/2017/241/ajantasa/2017-05-04/fin/xml"/>
+                    <FRBRdate date="2026-10-17" name="dateProduced"/>
+                    <FRBRdate date="2017-05-05" name="datePublished"/>
+                    <FRBRauthor as="#role_editor" href="#organization_fi.finlex"/>
+                    <FRBRformat value="xml"/>
+                </FRBRManifestation>
+            </identification>
+            <classification source="#organization_fi.finlex">
+                <keyword dictionary="/akn/ontology/concept/statute-keyword" showAs="Liikuntavammainen" value="/akn/ontology/concept/statute-keyword.2440"/>
+                <keyword dictionary="/akn/ontology/concept/statute-keyword" showAs="Rakennus" value="/akn/ontology/concept/statute-keyword.3296"/>
+            </classification>
+            <references source="#organization_fi.finlex">
+                <TLCOrganization eId="organization_fi.finlex" href="/akn/ontology/organization/fi.finlex" showAs="Finlex"/>
+                <TLCRole eId="role_author" href="/akn/ontology/role/author" showAs="Tekijä"/>
+                <TLCRole eId="role_editor" href="/akn/ontology/role/editor" showAs="Toimittaja"/>
+                <TLCOrganization eId="fi.ministry-of-the-environment" href="/akn/ontology/organization/fi.ministry-of-the-environment" showAs="Ympäristöministeriö"/>
+                <TLCConcept eId="decree" href="/akn/ontology/concept/statute/type-statute.decree" showAs="Asetus"/>
+            </references>
+            <proprietary source="#organization_fi.finlex">
+                <finlex:documentYear>2017</finlex:documentYear>
+                <finlex:administrativeBranch refersTo="#fi.ministry-of-the-environment"/>
+                <finlex:typeStatute refersTo="#decree"/>
+                <finlex:isInForce value="true"/>
+                <finlex:inForce>
+                    <finlex:dateEntryIntoForce date="2018-01-01"/>
+                </finlex:inForce>
+                <finlex:noteEditorial>jätetty voimaan, ks. L 752/2023 voimaantulosäännös</finlex:noteEditorial>
+                <finlex:commonName>Esteettömyysasetus</finlex:commonName>
+                <finlex:issuedUnderActs>
+                    <finlex:statuteReference>
+                        <finlex:ref href="/akn/fi/act/statute-consolidated/1999/132">132/1999</finlex:ref>
+                    </finlex:statuteReference>
+                </finlex:issuedUnderActs>
+                <finlex:amendedBy>
+                    <finlex:statuteReference>
+                        <finlex:ref href="/akn/fi/act/statute/2024/683">683/2024</finlex:ref>
+                        <finlex:inForce>
+                            <finlex:dateEntryIntoForce date="2025-01-01">1.1.2025</finlex:dateEntryIntoForce>
+                        </finlex:inForce>
+                        <finlex:noteEditorial>muutt. 1 §</finlex:noteEditorial>
+                    </finlex:statuteReference>
+                </finlex:amendedBy>
+            </proprietary>
+        </meta>
+        <preface>
+            <p>
+                <docNumber>241/2017</docNumber>
+                <docTitle>Valtioneuvoston asetus rakennuksen esteettömyydestä</docTitle>
+            </p>
+        </preface>
+        <preamble>
+            <formula eId="enactingClause" name="enactingClause">
+                <p>
+                    Valtioneuvoston päätöksen mukaisesti säädetään maankäyttö- ja rakennuslain 
+                    <ref href="/akn/fi/act/statute/1999/132">(132/1999) 117 e §:n</ref>
+                     2 momentin nojalla, sellaisena kuin se on laissa 958/2012:
+                </p>
+            </formula>
+        </preamble>
+        <body>
+            <hcontainer finlex:outline="Säädöksen teksti" name="statuteProvisionsWrapper">
+                <section eId="sec_1">
+                    <num>1 §</num>
+                    <heading eId="sec_1__heading">Soveltamisala</heading>
+                    <subsection eId="sec_1__subsec_1">
+                        <content>
+                            <p>
+                                Tätä asetusta sovelletaan maankäyttö- ja rakennuslain 
+                                <ref href="/akn/fi/act/statute/1999/132">(132/1999) 125 §:n</ref>
+                                 mukaan luvanvaraiseen uuden hallinto-, palvelu-, toimisto-, liike-, varasto-, tuotanto- ja asuinrakennuksen rakentamiseen. Pientalon rakentamiseen sovelletaan kuitenkin ainoastaan 2–4 §:ää ja varasto- ja tuotantorakennuksen rakentamiseen ainoastaan 2–5, 8, 10 ja 11 §:ää.
+                            </p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_1__subsec_2">
+                        <content>
+                            <p>Tätä asetusta sovelletaan myös maankäyttö- ja rakennuslain 125 §:n mukaan luvanvaraiseen hallinto-, palvelu-, toimisto- liike-, varasto- ja tuotantorakennuksen sekä asuinkerrostalon yleisten tilojen korjaus- ja muutostyöhön, laajentamiseen, kerrosalaan laskettavan tilan lisäämiseen ja rakennuksen käyttötarkoituksen muutokseen hallinto-, palvelu-, toimisto-, liike- tai asuinkäyttöön siltä osin kuin esteettömyyden parantaminen on rakennuksen ominaisuudet sekä toimenpiteen laatu ja laajuus huomioon ottaen tarkoituksenmukaista. Varasto- ja tuotantorakennuksessa tehtäviin edellä tarkoitettuihin toimenpiteisiin sovelletaan kuitenkin ainoastaan 2–5, 8, 10 ja 11 §:ää.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_1__subsec_3">
+                        <content>
+                            <p>Mitä tässä asetuksessa säädetään tiettyyn käyttöön tarkoitetusta rakennuksesta, koskee myös vastaavaan käyttöön tarkoitettua muussa rakennuksessa olevaa tilaa.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_2">
+                    <num>2 §</num>
+                    <heading eId="sec_2__heading">Rakennukseen johtava kulkuväylä</heading>
+                    <subsection eId="sec_2__subsec_1">
+                        <content>
+                            <p>Rakennukseen on oltava vähintään 1 200 millimetriä leveä, helposti havaittava, pinnaltaan tasainen, kova ja luistamaton kulkuväylä tontin tai rakennuspaikan rajalta sekä tilasta ja alueelta, joka palvelee rakennuksen käyttöä. Ulkotilassa sijaitsevan kulkuväylän kaltevuus saa olla enintään viisi prosenttia. Jos kulkuväylällä on porras, sen yhteydessä on oltava luiska tai kiinteästi asennettu pyörätuolin ja pyörillä varustetun kävelytelineen käyttäjälle soveltuva henkilöiden nostoon tarkoitettu laite. Tässä momentissa säädetty ei koske omakotitaloa, paritaloa eikä kaupunkipientaloa, jos esteettömän kulkuväylän toteuttaminen olisi rakennuspaikka ja korkeuserot huomioon ottaen mahdotonta.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_2__subsec_2">
+                        <content>
+                            <p>Edellä 1 momentissa tarkoitetun luiskan on oltava helposti havaittava, suora, pinnaltaan tasainen, kova ja luistamaton, leveydeltään vähintään 900 millimetriä ja sen reunassa on oltava vähintään 50 millimetriä korkea suojareuna, jos luiska ei rajaudu kiinteään rakenteeseen. Luiskan ala- ja yläpäässä on oltava vähintään 1 500 millimetriä pitkä vaakasuora tasanne. Luiskan kaltevuus saa olla enintään viisi prosenttia. Jos korkeusero on enintään 1 000 millimetriä, luiskan kaltevuus saa kuitenkin olla enintään kahdeksan prosenttia. Tällöin yhtäjaksoisen luiskan korkeusero saa olla enintään 500 millimetriä, jonka jälkeen kulkuväylällä on oltava vaakasuora vähintään 2 000 millimetriä pitkä välitasanne. Ulkotilassa luiska saa kuitenkin olla kaltevuudeltaan yli viisi prosenttia vain, jos se voidaan pitää sisätilassa olevaan luiskaan verrattavassa kunnossa. Kaiteesta, käsijohteesta ja muusta putoamisen ja harhaan astumisen estämisestä säädetään maankäyttö- ja rakennuslain 117 d §:n 2 momentin nojalla annetussa asetuksessa.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_2__subsec_3">
+                        <content>
+                            <p>Jos rakennusta varten on autopaikkoja, niistä riittävän määrän, kuitenkin vähintään yhden, on oltava tarkoitettu liikkumis- ja toimimisesteisen henkilön käyttöön. Tällaisen autopaikan on oltava vähintään 3 600 millimetriä leveä ja vähintään 5 000 millimetriä pitkä ja se on merkittävä liikkumisesteisen henkilön tunnuksella. Tässä momentissa säädetty ei koske omakotitaloa, paritaloa eikä kaupunkipientaloa.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_3">
+                    <num>3 §</num>
+                    <heading eId="sec_3__heading">Rakennuksen sisäänkäynti</heading>
+                    <subsection eId="sec_3__subsec_1">
+                        <content>
+                            <p>Rakennuksen ulko-oven avautumispuolen etäisyys seinän sisänurkasta tai muusta kiinteästä esteestä on oven ulkopuolella oltava vähintään 400 millimetriä.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_3__subsec_2">
+                        <content>
+                            <p>Ulko-oven edessä olevan tasanteen on oltava vähintään 1 500 millimetriä leveä ja vähintään 1500 millimetriä pitkä.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_4">
+                    <num>4 §</num>
+                    <heading eId="sec_4__heading">Ovet</heading>
+                    <subsection eId="sec_4__subsec_1">
+                        <content>
+                            <p>Rakennuksen sisäisellä kulkuväylällä olevan oven ja aukon, porraskäytävästä asuntoon johtavan oven sekä 9 §:n 2 momentissa ja 10 §:ssä tarkoitetun tilan oven vapaan leveyden on oltava vähintään 850 millimetriä. Rakennuksen ulko-oven ja muun uloskäytävän oven mitoituksesta säädetään maankäyttö- ja rakennuslain 117 b §:n 3 momentin nojalla annetussa asetuksessa.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_4__subsec_2">
+                        <content>
+                            <p>Muun rakennuksen kuin asuinrakennuksen huonetiloihin sekä asuinrakennuksen asuinhuoneisiin, asumista palveleviin välttämättömiin tiloihin ja rakennuksen käyttöä palveleviin tiloihin johtavan oven ja kulkuaukon vapaan leveyden on oltava vähintään 800 millimetriä.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_4__subsec_3">
+                        <content>
+                            <p>Oven yhteydessä ei saa olla tasoeroa tai kynnystä, ellei se ole ääni-, kosteus- tai muiden vastaavien olosuhteiden vuoksi välttämätöntä. Tällöin kynnys tai tasoero saa olla enintään 20 millimetriä korkea, ja kynnys on muotoiltava siten, että sen voi helposti ylittää pyörätuolilla ja pyörillä varustetulla kävelytelineellä. Tasoero asuntokohtaisen ulkotilan oven yhteydessä oven ulkopuolella saa olla yli 20 millimetriä, jos tasoero on kohtuudella poistettavissa ulkotilan varustelulla. Edellä 2 ja 3 momentissa säädetty koskee pientalossa vain sisääntulokerrosta.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_4__subsec_4">
+                        <content>
+                            <p>Rakennuksen ulko-oven ja asuinrakennuksen käyttöä palvelevan tilan oven on toimittava siten, että liikkumis- tai toimimisesteinen henkilö voi sen helposti avata.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_5">
+                    <num>5 §</num>
+                    <heading eId="sec_5__heading">Rakennuksen sisäinen kulkuväylä</heading>
+                    <subsection eId="sec_5__subsec_1">
+                        <content>
+                            <p>Muun rakennuksen kuin asuinrakennuksen sisäisen kulkuväylän ja asuinrakennuksen yleisten tilojen sisäisen kulkuväylän on oltava helposti havaittava, pinnaltaan tasainen ja luistamaton.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_5__subsec_2">
+                        <content>
+                            <p>Jos 1 momentissa tarkoitettu kulkuväylä on leveydeltään alle 1 500 millimetriä, kulkuväylällä on oltava vähintään 15 metrin välein kääntymistila, jonka halkaisija on vähintään 1 500 millimetriä.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_6">
+                    <num>6 §</num>
+                    <heading eId="sec_6__heading">Rakennuksen muut tilat</heading>
+                    <subsection eId="sec_6__subsec_1">
+                        <content>
+                            <p>Muun rakennuksen kuin asuinrakennuksen tilojen ja asuinrakennuksen yleisten tilojen sekä niiden kiinteän kalustuksen ja varustuksen on sovelluttava liikkumis- ja toimimisesteiselle henkilölle.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_6__subsec_2">
+                        <content>
+                            <p>Asuinrakennuksessa, jossa on 7 §:n mukaan oltava portaiden lisäksi hissi, on asunnon eteisessä ja keittiössä oltava kääntymistila, jonka halkaisija on vähintään 1 300 millimetriä.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_6__subsec_3">
+                        <content>
+                            <p>Asunnossa, joka on tarkoitettu palveluasumiseen tai liikkumis- tai toimimisesteisen henkilön tuettuun asumiseen, on rakennuksen kerrosluvusta riippumatta oltava eteisessä ja keittiössä kääntymistila, jonka halkaisija on vähintään 1 500 millimetriä. Tällaisen asunnon on mitoitukseltaan muutoinkin oltava sellainen, että apuvälineiden käyttö ja avustaminen on mahdollista.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_7">
+                    <num>7 §</num>
+                    <heading eId="sec_7__heading">Yhteys tasojen välillä asuinrakennuksessa</heading>
+                    <subsection eId="sec_7__subsec_1">
+                        <content>
+                            <p>Asuinrakennuksessa on oltava portaiden lisäksi hissi, jos käynti rakennuksessa sijaitsevaan asuntoon on sisääntulon kerrostaso mukaan lukien kolmannessa tai sitä ylemmässä kerroksessa. Jos käynti rakennukseen on kerrostasojen välissä, sisääntulon kerrostasona pidetään näistä alempaa.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_7__subsec_2">
+                        <content>
+                            <p>Hissiyhteyden on ulotuttava sisäänkäyntitasoon ja jokaiseen tasoon, josta on käynti asuntoon tai rakennuksen käyttöä palvelevaan tilaan. </p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_7__subsec_3">
+                        <content>
+                            <p>Edellä 1 momentissa tarkoitetun hissin korin on oltava vähintään 1 100 millimetriä leveä ovisivultaan ja vähintään 1 400 millimetriä syvä. Olemassa olevaan asuinrakennukseen jälkiasennettavan hissin korin mitoitus voi poiketa tässä momentissa säädetystä, jos se on välttämätöntä rakennuksen merkittävien ominaisuuksien säilyttämiseksi.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_8">
+                    <num>8 §</num>
+                    <heading eId="sec_8__heading">Yhteys tasojen välillä muussa kuin asuinrakennuksessa</heading>
+                    <subsection eId="sec_8__subsec_1">
+                        <content>
+                            <p>Jos muussa rakennuksessa kuin asuinrakennuksessa oleva tasoero on pienempi kuin rakennuksen kerroskorkeus, tasojen välillä on oltava portaiden lisäksi yhteys joko 2 §:n 2 momentissa säädetyn mukaisella luiskalla taikka 7 §:n 3 momentissa säädetyn mukaisella hissillä tai muulla kiinteästi asennetulla pyörätuolin ja pyörillä varustetun kävelytelineen käyttäjälle soveltuvalla henkilöiden nostoon tarkoitetulla laitteella. Jos tasoero on yhtä suuri kuin kerroskorkeus tai sitä suurempi, yhteys tasojen välillä on järjestettävä 7 §:n 3 momentissa säädetyn mukaisella hissillä.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_9">
+                    <num>9 §</num>
+                    <heading eId="sec_9__heading">Wc- ja pesutila asuinrakennuksessa</heading>
+                    <subsection eId="sec_9__subsec_1">
+                        <content>
+                            <p>Asuinrakennuksessa, jossa on 7 §:n mukaan oltava portaiden lisäksi hissi, on kussakin asunnossa oltava vähintään yksi wc- ja pesutila, jossa on halkaisijaltaan vähintään 1 300 millimetriä vapaa tila. Kiinteät kalusteet on sijoitettava vapaaseen tilaan nähden siten, että liikkumisesteinen henkilö voi käyttää niitä. Tällaisen wc- ja pesutilan on oltava varustettavissa liikkumisesteiselle henkilölle sopivaksi.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_9__subsec_2">
+                        <content>
+                            <p>Asunnossa, joka on tarkoitettu palveluasumiseen tai liikkumis- tai toimimisesteisen henkilön tuettuun asumiseen, on oltava vähintään yksi wc- ja pesutila, jossa on halkaisijaltaan vähintään 1 500 millimetriä vapaa tila. Kiinteät kalusteet on sijoitettava vapaaseen tilaan nähden siten, että liikkumisesteinen henkilö voi käyttää niitä. Lisäksi wc-istuimen toisella puolella on oltava vapaata tilaa vähintään 800 millimetriä. Tällaisen wc- ja pesutilan on oltava varustettavissa liikkumisesteiselle henkilölle sopivaksi.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_9__subsec_3">
+                        <content>
+                            <p>
+                                Edellä 1 momentissa säädetty ei koske rakennusta, jossa on ainoastaan opintotukilain 
+                                <ref href="/akn/fi/act/statute/1994/65">(65/1994)</ref>
+                                 mukaiseen opintotukeen oikeuttavaan koulutukseen osallistuville henkilöille tai ainoastaan 18–29-vuotiaille henkilöille tarkoitettuja asuntoja. Tällaisessa rakennuksessa vähintään viidessä prosentissa asunnoista, kuitenkin vähintään yhdessä asunnossa, on oltava yksi 2 momentissa säädetyn mukainen wc- ja pesutila. Lisäksi tällaisen rakennuksen yleisissä tiloissa on oltava 10 §:n mukainen wc-tila, johon on pääsy rakennuksen sisäiseltä kulkuväylältä.
+                            </p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_9__subsec_4">
+                        <content>
+                            <p>Asuinrakennuksessa asukkaiden yhteisen sauna-, pesu- ja pukuhuonetilan on sovelluttava liikkumis- ja toimimisesteisille henkilöille. Tilan yhteydessä olevan wc- ja pesutilan on oltava 2 momentissa säädetyn mukainen.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_10">
+                    <num>10 §</num>
+                    <heading eId="sec_10__heading">Wc-tila muussa kuin asuinrakennuksessa</heading>
+                    <subsection eId="sec_10__subsec_1">
+                        <content>
+                            <p>Muussa rakennuksessa kuin asuinrakennuksessa on oltava sen käyttötarkoitus, toiminnalliset kokonaisuudet ja kulkuyhteyksien pituus huomioon ottaen tarpeellinen määrä tarkoituksenmukaisesti sijoitettuja wc-tiloja, jotka soveltuvat pyörätuolin ja pyörillä varustetun kävelytelineen käyttäjille. Edellä tarkoitettujen wc-tilojen on sijaittava siten, ettei käyttäjän ja avustajan sukupuoli vaikuta mahdollisuuteen käyttää niitä, ja ne on merkittävä liikkumisesteisen tunnuksella.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_10__subsec_2">
+                        <content>
+                            <p>Edellä 1 momentissa tarkoitetussa wc-tilassa on oltava halkaisijaltaan vähintään 1 500 millimetriä vapaa tila. Kiinteät kalusteet on sijoitettava vapaaseen tilaan nähden siten, että liikkumisesteinen henkilö voi käyttää niitä. Lisäksi wc-istuimen kummallakin puolella on oltava vapaata tilaa vähintään 800 millimetriä. Vaihtoehtoisesti voidaan sijoittaa lähekkäin kaksi wc-tilaa, joissa toisessa on wc-istuimen vasemmalla ja toisessa oikealla puolella vapaata tilaa vähintään 800 millimetriä. Wc-istuin on sijoitettava 200–300 millimetrin etäisyydelle takaseinästä.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_10__subsec_3">
+                        <content>
+                            <p>Wc-tila on varustettava liikkumisesteiselle henkilölle sopivaksi. Jos rakennuksessa on valvontajärjestelmä, wc-tilasta on oltava turvahälytysyhteys valvontaan.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_11">
+                    <num>11 §</num>
+                    <heading eId="sec_11__heading">Muu hygieniatila muussa kuin asuinrakennuksessa</heading>
+                    <subsection eId="sec_11__subsec_1">
+                        <content>
+                            <p>Muussa rakennuksessa kuin asuinrakennuksessa olevista pukuhuone-, pesu-, sauna- ja uima-allastiloista osan on sovelluttava liikkumis- ja toimimisesteiselle henkilölle. Liikkumis- ja toimimisesteisille henkilöille soveltuvat tilat on varustettava liikkumisesteisen tunnuksella. Jos rakennuksessa on valvontajärjestelmä, liikkumis- ja toimimisesteisille henkilöille soveltuvista tiloista on oltava turvahälytysyhteys valvontaan.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_11__subsec_2">
+                        <content>
+                            <p>Sen lisäksi mitä 1 momentissa säädetään uimahalli-, kylpylä-, palvelukeskus-, oppilaitos- ja muussa vastaavassa rakennuksessa vähintään yhtä puku- ja pesutilakokonaisuutta on voitava käyttää liikkumis- tai toimimisesteisen henkilön ja hänen avustajansa sukupuolesta riippumatta.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_11__subsec_3">
+                        <content>
+                            <p>Liikkumisesteisen henkilön pääsy uima-altaaseen 2 momentissa tarkoitetussa rakennuksessa on järjestettävä henkilöiden nostoon tarkoitetulla, itsenäisesti käytettävissä olevalla laitteella.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_12">
+                    <num>12 §</num>
+                    <heading eId="sec_12__heading">Kokoontumistilat</heading>
+                    <subsection eId="sec_12__subsec_1">
+                        <content>
+                            <p>Jos katsomossa, auditoriossa, juhla-, kokous- tai ravintolasalissa, opetustilassa tai muussa vastaavassa kokoontumistilassa tai yleisön palvelutilassa on äänentoistojärjestelmä, siinä on oltava induktiosilmukka tai muu vastaava äänensiirtojärjestelmä.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_12__subsec_2">
+                        <content>
+                            <p>Jos 1 momentissa tarkoitetussa tilassa on kiinteät istuimet, esteettömien sisääntuloväylien on johdettava useammalle kuin yhdelle istuinriville, ja niille on sijoitettava riittävä määrä pyörätuolipaikkoja.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_13">
+                    <num>13 §</num>
+                    <heading eId="sec_13__heading">Majoitustilat</heading>
+                    <subsection eId="sec_13__subsec_1">
+                        <content>
+                            <p>Hotellirakennuksessa ja muussa vastaavassa majoitusrakennuksessa on vähintään viisi prosenttia majoitustiloista, kuitenkin vähintään yhden majoitustilan, sovelluttava liikkumis- ja toimimisesteiselle henkilölle sekä hänen avustajalleen. Tällaisessa majoitustilassa on oltava 9 §:n 2 momentissa säädetyn mukainen wc- ja pesutila. Vähintään puolet näistä wc- ja pesutiloista, kuitenkin vähintään yksi, on varustettava liikkumisesteisille henkilöille sopiviksi ja muiden on oltava tarvittaessa varustettavissa tällaisiksi.</p>
+                        </content>
+                    </subsection>
+                </section>
+                <section eId="sec_14" finlex:entryIntoForce="true" finlex:vsId="241/2017">
+                    <num>14 §</num>
+                    <heading eId="sec_14__heading">Voimaantulo</heading>
+                    <subsection eId="sec_14__subsec_1">
+                        <content>
+                            <p>Tämä asetus tulee voimaan 1 päivänä tammikuuta 2018.</p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_14__subsec_2">
+                        <content>
+                            <p>
+                                Tällä asetuksella kumotaan maankäyttö- ja rakennusasetuksen 
+                                <ref href="/akn/fi/act/statute/1999/895">(895/1999) 53 §</ref>.
+                            </p>
+                        </content>
+                    </subsection>
+                    <subsection eId="sec_14__subsec_3">
+                        <content>
+                            <p>Tämän asetuksen voimaan tullessa vireillä olevaan rakennuslupahakemukseen sovelletaan tämän asetuksen voimaan tullessa voimassa olleita säännöksiä.</p>
+                        </content>
+                    </subsection>
+                </section>
+            </hcontainer>
+        </body>
+    </act>
+</akomaNtoso>

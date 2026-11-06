@@ -1,0 +1,3284 @@
+Building Regulations
+Technical Guidance Document M
+2022
+Access and Use
+
+Prepared by the Department of Housing, Local Government and Heritage
+gov.ie/housing
+
+© Government of Ireland 2022
+
+Contents
+Introduction .............................................................................................................. 1
+Transitional Arrangements .................................................................................. 1
+The Guidance ...................................................................................................... 2
+Existing Buildings ................................................................................................ 2
+Technical Specifications ...................................................................................... 3
+Materials and Workmanship ................................................................................ 3
+Interpretation ....................................................................................................... 4
+Part M - The Requirement ........................................................................................ 5
+General...................................................................................................... 6
+0.2
+
+The Requirements ..................................................................................... 7
+
+0.3
+
+Buildings Other than Dwellings .................................................................. 7
+
+0.4
+
+Dwellings ................................................................................................... 8
+
+0.5
+
+Use of the Guidance .................................................................................. 8
+
+0.6
+
+Application of Part M ................................................................................. 9
+
+0.7
+
+Determination of Practicability ................................................................. 19
+
+0.8
+
+Existing Buildings .................................................................................... 20
+
+0.9
+
+Fire Safety ............................................................................................... 21
+
+0.10
+
+Diagrams .............................................................................................. 22
+
+0.11
+
+Disability Act 2005 ................................................................................ 22
+
+0.12
+
+Management......................................................................................... 22
+........................ 24
+
+1.1
+
+Approach to Buildings Other than Dwellings ........................................... 25
+1.1.1 Objective ...................................................................................... 25
+1.1.2 Introduction .................................................................................. 25
+1.1.3 Access Routes ............................................................................. 27
+1.1.4 Pedestrian Crossings ................................................................... 43
+1.1.5 On–Site Car Parking .................................................................... 43
+1.1.6 On–Site Setting Down Areas........................................................ 46
+
+1.2
+
+Access to Buildings Other than Dwellings ............................................... 48
+1.2.1 Objective ...................................................................................... 48
+i
+
+1.2.2 Introduction .................................................................................. 48
+1.2.3 Accessible Entrances ................................................................... 48
+1.2.4 Accessible Entrance Doors .......................................................... 50
+1.2.5 Entrance Lobbies ......................................................................... 57
+1.3
+
+Circulation within Buildings Other than Dwellings .................................... 60
+1.3.1 Objective ...................................................................................... 60
+1.3.2 Introduction .................................................................................. 60
+1.3.3 Horizontal Features ...................................................................... 61
+1.3.4 Vertical Features .......................................................................... 69
+
+1.4
+
+Sanitary Facilities for Buildings Other than Dwellings ............................. 78
+1.4.1 Objective ...................................................................................... 78
+1.4.2 Introduction .................................................................................. 78
+1.4.3 General Provisions ....................................................................... 78
+1.4.4 Sanitary Facilities – General ........................................................ 83
+1.4.5 Wheelchair accessible unisex WC ............................................... 86
+1.4.6 Cubicles ....................................................................................... 92
+1.4.7 Accessible Urinals ........................................................................ 96
+1.4.8 Accessible Bathrooms/Shower Rooms ........................................ 98
+1.4.9 Changing and/or Showering Facilities ........................................ 102
+1.4.10 Changing Places Toilets .......................................................... 105
+
+1.5
+
+Other Facilities in Buildings Other than Dwellings ................................. 114
+1.5.1 Objective .................................................................................... 114
+1.5.2 Introduction ................................................................................ 114
+1.5.3 Audience and spectator facilities with fixed seating ................... 116
+1.5.4 Audience and Spectator Facilities without Fixed Seating ........... 118
+1.5.5 Refreshment Facilities ................................................................ 120
+1.5.6 Accessible Sleeping Accommodation ........................................ 121
+1.5.7 Switches, Outlets and Controls .................................................. 123
+
+1.6
+
+Aids to Communication ......................................................................... 126
+1.6.1 Objective .................................................................................... 126
+1.6.2 Introduction ................................................................................ 126
+1.6.3 Signage ...................................................................................... 127
+1.6.4 Visual contrast............................................................................ 128
+ii
+
+1.6.5 Lighting ...................................................................................... 129
+1.6.6 Audible aids................................................................................ 129
+Access and Use of Existing Buildings Other than Dwellings ....... 130
+2.0
+
+Introduction............................................................................................ 131
+
+2.1
+
+Approach to Existing Buildings Other than Dwellings ............................ 133
+2.1.1 Objective .................................................................................... 133
+2.1.2 Introduction ................................................................................ 133
+2.1.3 Access Routes ........................................................................... 133
+2.1.4 Pedestrian Crossings ................................................................. 136
+2.1.5 On–site Car Parking ................................................................... 137
+2.1.6 On–site Setting Down Areas ...................................................... 137
+
+2.2
+
+Access to Existing Buildings Other than Dwellings ................................ 138
+2.2.1 Objective .................................................................................... 138
+2.2.2 Introduction ................................................................................ 138
+2.2.3 Accessible Entrances ................................................................. 138
+2.2.4 Accessible Entrance Doors ........................................................ 138
+2.2.5 Entrance Lobbies ....................................................................... 139
+
+2.3
+
+Circulation within Existing Buildings Other than Dwellings .................... 140
+2.3.1 Objective .................................................................................... 140
+2.3.2 Introduction ................................................................................ 140
+2.3.3 Horizontal Features .................................................................... 140
+2.3.4 Vertical Features ........................................................................ 141
+
+2.4
+
+Sanitary Facilities in Existing Buildings Other than Dwellings ............... 144
+2.4.1 Objective .................................................................................... 144
+2.4.2 Introduction ................................................................................ 144
+2.4.3 General Provisions ..................................................................... 144
+
+2.5
+
+Other Facilities in Existing Buildings Other than Dwellings.................... 146
+2.5.1 Objective .................................................................................... 146
+2.5.2 Introduction ................................................................................ 146
+2.5.3 Audience and Spectator Facilities with Fixed Seating ................ 146
+2.5.4 Audience and Spectator Facilities without Fixed Seating ........... 146
+2.5.5 Refreshment Facilities ................................................................ 146
+2.5.6 Accessible Sleeping Accommodation ........................................ 147
+iii
+
+2.5.7 Switches, Outlets and Controls .................................................. 147
+2.6
+
+Aids to Communication ......................................................................... 148
+2.6.1 Objective .................................................................................... 148
+2.6.2 Introduction ................................................................................ 148
+2.6.3 Signage ...................................................................................... 148
+2.6.4 Visual Contrast ........................................................................... 148
+2.6.5 Audible Aids ............................................................................... 148
+Access and Use of Dwellings .......................................................... 149
+
+3.1
+
+Approach to Dwellings ........................................................................... 150
+3.1.1 Objective .................................................................................... 150
+3.1.2 Access Route to a Dwelling ....................................................... 150
+
+3.2
+
+Access to Dwellings .............................................................................. 154
+3.2.1 Objective .................................................................................... 154
+3.2.2 Accessible Entrance ................................................................... 154
+
+3.3
+
+Circulation within Dwellings ................................................................... 156
+3.3.1 Objective .................................................................................... 156
+3.3.2 Circulation within a Dwelling ...................................................... 156
+
+3.4
+
+Sanitary Facilities for Dwellings ............................................................. 160
+3.4.1 Objective .................................................................................... 160
+3.4.2 Accessible WC ........................................................................... 160
+3.4.3 WC in Smaller Dwellings ............................................................ 162
+
+3.5
+
+Switches and Sockets in Dwellings ....................................................... 163
+3.5.1 Objective .................................................................................... 163
+3.5.2 Switches and Sockets ................................................................ 163
+
+Standards and Publications ................................................................................ 164
+Standards Referred To: ................................................................................... 164
+Publications Referred To: ................................................................................ 166
+Other Standards and Publications...................................................................... 167
+Legislation ....................................................................................................... 167
+General Accessibility ....................................................................................... 167
+Approach and Access...................................................................................... 168
+Circulation ....................................................................................................... 168
+Sanitary Facilities ............................................................................................ 170
+iv
+
+Facilities .......................................................................................................... 170
+Communication Aids........................................................................................ 170
+Dwellings ......................................................................................................... 171
+Historic Buildings ............................................................................................. 172
+Existing Buildings ............................................................................................ 172
+Management ................................................................................................... 172
+
+v
+
+Introduction
+This document has been published by the Minister for Housing, Local
+Government and Heritage under article 7 of the Building Regulations 1997. It
+provides guidance in relation to Part M of the Second Schedule to the
+Regulations as amended by the Building Regulations (Part M Amendment)
+Regulations 2022 (S.I. No. 608 of 2022). The document should be read in
+conjunction with the Building Regulations 1997 – 2022 and other documents
+published under these Regulations.
+In general, Building Regulations apply to the construction of new buildings and to
+extensions and material alterations to buildings. In addition, certain parts of the
+Regulations apply to existing buildings where a material change of use takes
+place. Otherwise, Building Regulations do not apply to buildings constructed
+prior to 1 June, 1992.
+
+Transitional Arrangements
+In general, this document applies to works, or to a building in which a material
+change of use takes place, where the works commence or change of use take
+place on or after 1 January 2024.
+Technical Guidance Document M – Access and Use, dated 2010, also ceases to
+have effect from that date.
+
+(i) a planning application made on or before 31 December 2023 for
+planning permission or approval under the Planning and Development
+Act 2000 (No. 30 of 2000),
+(ii) a notice of a proposed development under Part 8 of the Planning and
+Development Regulations 2001 (S.I. No. 600 of 2001) has been given by
+a local authority under article 81 of those Regulations on or before 31
+December 2023, or
+1
+
+and where the structure of the external walls of the building has been erected by
+31 December 2025.
+
+The Guidance
+The materials, methods of construction, standards and other specifications
+(including technical specifications) which are referred to in this document are
+those which are likely to be suitable for the purposes of the Regulations.
+Where works are carried out in accordance with the guidance in this document,
+this will, prima facie, indicate compliance with Part M of the Second Schedule to
+the Building Regulations (as amended). However, the adoption of an approach
+other than that outlined in the guidance is not precluded provided that the
+relevant requirements of the Regulations are complied with.
+Those involved in the design and construction of a building may be required by
+the relevant building control authority to provide such evidence as is necessary
+to establish that the requirements of the Building Regulations are being complied
+with.
+
+Existing Buildings
+In the case of material alterations or change of use of existing buildings, the
+adoption without modification of the guidance in this document may not, in all
+circumstances, be appropriate.
+In particular, the adherence to guidance, including codes, standards or technical
+specifications, intended for application to new work may be unduly restrictive or
+impracticable. Buildings of architectural or historical interest are especially likely
+to give rise to such circumstances.
+In these situations, alternative approaches based on the principles contained in
+the document may be more relevant and should be considered.
+
+2
+
+Technical Specifications
+Building Regulations are made for specific purposes, e.g. to provide, in relation
+to buildings, for the health, safety and welfare of persons, the conservation of
+energy and access for people with disabilities.
+Technical specifications (including harmonised European Standards, European
+Technical Assessments, National Standards and Agrément Certificates) are
+relevant to the extent that they relate to these considerations.
+Any reference to a technical specification is a reference to so much of the
+specification as is relevant in the context in which it arises.
+Technical specifications may also address other aspects not covered by the
+Regulations.
+A reference to a technical specification is to the latest edition (including any
+amendments, supplements or addenda) current at the date of publication of this
+Technical Guidance Document.
+However, if this version of the technical specification is subsequently revised or
+updated by the issuing body, the new version may be used as a source of
+guidance provided that it continues to address the relevant requirements of the
+Regulations.
+A list of other standards and publications that deal with matters relating to this
+Part of the Building Regulations is included at the end of this document. These
+standards and publications may be used as a source of further information but
+do not form part of the guidance.
+
+Materials and Workmanship
+Under Part D of the Second Schedule to the Building Regulations, building work
+to which the Regulations apply must be carried out with proper materials and in a
+workmanlike manner. Guidance in relation to compliance with Part D is contained
+in Technical Guidance Document D.
+
+3
+
+Interpretation
+In this document, a reference to a section, sub-section, part, paragraph or
+diagram is, unless otherwise stated, a reference to a section, sub-section, part,
+paragraph or diagram, as the case may be, of this document.
+A reference to another Technical Guidance Document is a reference to the latest
+edition of a document published by the Department of Housing, Local
+Government and Heritage under Article 7 of the Building Regulations
+(as amended).
+Diagrams are used in this document to illustrate particular aspects of
+construction - they may not show all the details of construction
+
+4
+
+Part M - The Requirement
+Part M of the Second Schedule to the Building Regulations, (as amended),
+provides as follows:
+Access and Use
+
+M1
+
+Adequate provision shall be made for people to
+access and use a building, its facilities and its
+environs.
+
+M2
+
+Adequate provision shall be made for people to
+approach and access an extension to a building.
+
+Sanitary Facilities
+
+M3
+
+If sanitary facilities are provided in a building that
+is to be extended, adequate sanitary facilities
+shall be provided for people within the extension.
+
+Changing Places
+Toilet
+
+M4
+
+Where sanitary facilities are provided in a
+building, or in a building that is to be extended,
+adequate provision shall be made for people to
+access and use a changing places toilet, having
+regard to the use and size of the building.
+
+Non-Application
+of Part M
+
+M5
+
+Part M does not apply to works in connection
+with extensions to and material alterations of
+existing dwellings, provided that such works do
+not create a new dwelling.
+
+5
+
+0.1
+
+General
+
+Part M aims to foster an inclusive approach to the design and construction of the
+built environment. The requirements of Part M (M1 – M5) aim to ensure that
+regardless of age, size or disability:
+
+In doing so, the Requirements, underpin the principle of Universal Design.
+Universal design is defined in the Disability Act 2005 as “the design and
+composition of an environment so that it may be accessed, understood and used
+to the greatest practicable extent, in the most independent and natural manner
+possible, in the widest possible range of situations and without the need for
+adaptation, modification, assistive devices or specialised solutions, by persons of
+any age or size or having any particular physical, sensory, mental health or
+intellectual ability or disability.”
+Buildings should be designed so that they are easy for people to use and to
+reflect the fact that all people experience changes in their abilities as they
+progress through the different stages of life. It is important for designers to take
+all of the users of buildings into account throughout the design process in order
+to avoid the creation of a built environment that excludes certain groups from
+participating in normal everyday activities.
+Experience has shown that meeting the needs of people with disabilities or
+elderly people frequently generates design solutions which benefit a wider range
+of user groups, including people with young children in buggies, people with
+temporary injuries or carrying heavy luggage.
+This document, Technical Guidance Document M (TGD M), sets out guidance on
+the minimum level of provision to meet requirements M1 - M5.
+6
+
+However, those involved in the design and construction of buildings should also
+have regard to the design philosophy of Universal Design and consider making
+additional provisions where practicable and appropriate. For this purpose, a list
+of useful references, advocating greater accessibility, is given at the end of this
+document. Further advice and guidance can be found at the Centre for
+Excellence in Universal Design, www.universaldesign.ie and in the publication
+‘Building for Everyone: A Universal Design Approach (2010 edition).
+
+0.2
+
+The Requirements
+
+In order to satisfy the requirements of Part M, all buildings should be designed
+and constructed so that:
+
+0.3
+
+Buildings Other than Dwellings
+
+In the case of buildings other than dwellings, the building should also be
+designed and constructed so that:
+
+1 A ‘changing places toilet’ means an accessible sanitary facility with a toilet, hoist,
+
+basin, adult-sized changing bench and optional shower, with adequate space for
+use by persons with a range of abilities who may require assistance.
+
+7
+
+0.4
+
+Dwellings
+
+Dwellings should be designed and constructed so that:
+
+0.5
+
+Use of the Guidance
+
+Technical Guidance Document M 2022 is divided into 3 sections. Each section
+deals with different types of works.
+Section 1: The guidance in Section 1 sets out the minimum level of provision for
+the following buildings to meet the requirements of M1 to M4:
+
+Section 1 applies to both new and existing buildings.
+
+8
+
+Section 2: The guidance in Section 2 should be read in conjunction with Section
+1 and is intended to provide additional guidance for:
+
+Section 2 provides additional guidance on the minimum provisions for certain
+elements and features of existing buildings where it is not practicable (refer to
+0.7) to achieve the provisions set out in Section 1.
+Where works (e.g. extensions, material alterations and certain material changes
+of use, etc.) to existing buildings are carried out in accordance with Section 1
+and, where necessary Section 2, this will prima facie indicate compliance with
+Requirement M1.
+Reference should be made to 0.6 and 0.8 for the application of Part M to existing
+buildings and 0.7 for considerations that should be made when determining
+‘practicability’.
+Section 3: The guidance in Section 3 applies to dwellings and their environs.
+This includes individual dwelling houses and individual apartments. It does not
+apply to the common areas of apartment blocks. The guidance in Section 3 also
+applies to the common areas of duplex buildings.
+
+0.6
+
+Application of Part M
+
+The Requirements of Part M apply to:
+
+S.I. No. 608 of 2022 amends Part M of the Second Schedule to the Building
+Regulations.
+Under M4, where sanitary facilities are provided in a building, or part of a
+building, adequate provision shall be made for people to access and use a
+changing places toilet, having regard to the use and size of the building
+(refer to 0.6(g)).
+
+9
+
+(i) Under M2, adequate provision must be made to approach and access an
+extension. This may be provided by an adequate independent approach2
+and entrance to the extension, or where this is not practicable, the
+existing approach and entrance modified where necessary and where
+practicable, must provide adequate approach and access to the
+extension, and
+(ii) Under M3, where sanitary facilities are provided in a building, adequate
+accessible sanitary facilities must be provided for the people within the
+extension i.e. people using the extension. These may be provided by
+accessible sanitary facilities in the extension or alternatively, those
+facilities in the existing building, modified where necessary, must be
+adequate and accessible from the extension.
+(iii) Under M4, where sanitary facilities are provided in a building, or part of a
+building, that is to be extended, adequate provision shall be made for
+people to access and use a changing places toilet, having regard to the
+use and size of the building (refer to 0.6(g)).
+
+The Building Regulations apply to any alterations subject to the requirements
+of Part A, B or M.
+This means that alterations to features relevant to compliance with Part M
+e.g. entrances, circulation, etc., must comply with M1.
+The building as a whole, including the approach from the site boundary and
+from on-site car parking where provided, must be no less compliant with M1
+following a material alteration of a building.
+However, this does not mean it is necessary to upgrade the existing access
+to the building entrance unless the entrance itself is subject to a material
+alteration;
+2 Independent approach means a route of access that does not require the user to pass through
+
+any other part of the building.
+
+10
+
+S.I. No. 608 of 2022 amends Article 13 of the Building Regulations dealing
+with material changes of use to require Part M to apply to certain material
+changes of use. Where such material change of use applies to the whole
+building (including approach and access, where practicable), the building
+must comply with M1 to M4.
+Under M4, where sanitary facilities are provided in a building, or part of a
+building, that undergoes a material change of use, adequate provision shall
+be made for people to access and use a changing places toilet, having
+regard to the use and size of the building (refer to 0.6(g)).
+3 Day centre means a building used for the provision of treatment or care to persons where such
+
+persons do not stay overnight and includes a day care centre, crèche, pre-school and a day
+nursery.
+4 Guest building means a building (other than a hotel or hostel) providing overnight
+
+accommodation for reward, and includes a guest house.
+
+5 Institutional building includes a hospital, nursing home, home for older people or for children,
+
+school, or other similar establishment used as living accommodation, or for the treatment, care or
+support of people with illness, mental health difficulties, or disabilities, where such people sleep
+on the premises.
+6 Place of assembly includes:
+
+a)
+
+theatre, public library, hall or other building of public resort used for social or
+recreational purposes;
+
+b)
+
+a non-residential school or other educational establishment;
+
+c)
+
+a place of public worship;
+
+d)
+
+a public house, restaurant or similar premises used for the sale to members of the
+public of food or drink for consumption on the premises,
+
+but no building shall be treated as a place of assembly solely because it is a building to which
+members of the public are occasionally admitted.
+7 Shop includes a building used for retail or wholesale trade or business (including retail sales by
+
+auction, self-selection and over-the-counter wholesale trading, the business of lending books or
+periodicals for gain and the business of a barber or hairdresser) and premises to which the public
+is invited to deliver or to collect goods in connection with their hire, repair or other treatment, or
+where they themselves may carry out such repairs or other treatments.
+8 Shopping centre includes a building which comprises a number of individually occupied
+
+premises to which common access is provided principally for the benefit of shoppers.
+
+11
+
+Where such material change of use only applies to part of the building, that
+part must comply with M1 and M4. The approach and access to that part
+(through independent access or through another part of the building) where
+practicable (refer to 0.7) must comply with M1 and any sanitary facility
+provided in or in connection with it must comply with M1 and M4;
+
+However, an extension or a material alteration of a dwelling must not make
+the building, as a whole, less satisfactory in relation to Part M than it was
+before.
+This means an extension or a material alteration of a dwelling need not itself
+comply with Part M, but it must not result in the dwelling being less compliant
+than it previously was;
+
+The relevant building use can apply to a building, or where a building has a
+number of different uses, to different parts of the same building.
+In some buildings there may be a number of relevant building uses that
+exceed the size criteria in Table 1. Where a changing places toilet is
+provided in such a building, it should be suitably located having regard to the
+operation and use patterns of all the relevant building uses.
+Table 1 sets out the relevant building uses and the size criteria relating to the
+provision of a changing places toilet.
+
+12
+
+Table 1
+
+Provision of A Changing Places Toilet in New Buildings
+
+Item
+No.
+
+Relevant Building use
+
+Size Criteria
+
+Note: the relevant building use
+refers to the building or part of the
+building in which a changing
+places toilet may be required.
+
+Applies where sanitary facilities
+are being provided for use by
+people other than staff. See
+0.6(a)
+
+1.
+
+Hospital
+
+All new Hospital buildings, with a
+relevant floor area1 greater than
+500 m2
+The changing places toilet should
+be in a suitable accessible
+location, preferably close to the
+main reception or waiting area
+
+2.
+
+Day centre, other than a crèche, a
+pre-school or a day nursery, used
+for the provision of treatment or
+care to persons where such
+persons do not stay overnight and
+includes a day care centre
+
+Relevant floor area1 greater than
+500 m2
+
+3.
+
+Places of assembly used for social
+or recreational purposes such as:
+
+(i)
+
+
+
+an amusement arcade, concert
+hall, theatre, public library, hall,
+cinema, gallery, museum,
+conference centre, leisure or
+sports centre, place of public
+worship, crematorium
+
+
+
+public house, restaurant, or
+similar premises used for the
+sale to members of the public
+
+Relevant floor area1 greater
+than 1,000 m2, or
+
+(ii) includes leisure facilities with
+a relevant floor area1 of more
+than 500 m2 that include a
+swimming pool of greater
+than 10 m in length
+
+13
+
+of food or drink for consumption
+on the premises
+
+
+or other building of public
+resort.
+
+4.
+
+Sports pavilion, stadium,
+grandstand buildings
+
+Relevant floor area1 greater than
+5,000 m2
+
+5.
+
+Roadside service facility that
+provides food hall / dining and
+sanitary facilities
+
+Relevant floor area1 greater than
+800 m2 of which the relevant floor
+area1 of the food hall / dining area
+is greater than 200 m2
+
+6.
+
+School (primary, secondary or
+special schools)
+
+All new school buildings with a
+relevant floor area1 greater than
+1,000 m2
+
+7.
+
+Third level college, University, or
+other building for the provision of
+education
+
+All new buildings with a relevant
+floor area1 greater than 1,000 m2
+
+8.
+
+Terminus, station or other facility
+for air, rail, road or sea travel
+
+Relevant floor area1 greater than
+800 m2
+
+9.
+
+Office
+
+(i) Gross floor area greater than
+20,000 m2, and where sanitary
+facilities, for use by people
+other than staff, i.e. visitors to
+the building, are provided to
+serve the main entrance
+reception area, or
+(ii) Relevant floor area1 greater
+than 250 m2 where the office
+is occupied, managed or
+controlled by a public body to
+which members of the public
+generally have access and
+14
+
+where sanitary facilities are
+provided for use by the public
+10.
+
+Shop
+
+Relevant floor area1 greater than
+2,500 m2
+
+11.
+
+Shopping centre or retail park
+
+Relevant floor area1 greater than
+5,000 m2
+
+12.
+
+Hotel
+
+(i) Gross floor area of greater
+than 8,000 m2, or
+(ii) includes leisure facilities with
+a relevant floor area1 of more
+than 500 m2 that include a
+swimming pool of greater
+than 10 m in length, or
+(iii) includes conference or
+function facilities for more
+than 3502 people (other than
+staff)
+
+13.
+
+A public sanitary facilities building
+managed or controlled by a public
+body e.g. public toilets in public
+parks, urban areas, cemeteries,
+heritage sites or adjacent to a
+beach etc.
+
+All buildings (or part thereof)
+providing two or more WCs
+
+14.
+
+Building that provides sanitary
+facilities as part of a collection of
+smaller buildings associated with
+an outdoor amenity primarily used
+for assembly, recreation or
+entertainment such as zoos,
+amusement parks and theme
+parks
+
+A building (or part thereof)
+providing sanitary facilities where
+the capacity of the outdoor
+amenity is more than 2,000
+people (excluding staff) unless
+there is another building
+containing a changing places
+toilet within 250 metres
+
+15
+
+(1) Relevant floor area means the space bounded by the inner finished surfaces
+
+of the enclosing walls, or on any side where there is no enclosing wall by the
+outermost edge of the floor on that side, of the parts of the building to which
+people other than staff generally have access.
+The calculation of relevant floor area shall:
+a) Include the space occupied by any walls, shafts, ducts or structure
+within the space being measured.
+b) Exclude staff-only areas or rooms to which people other than staff
+generally do not have access e.g. staff offices, storage rooms, food
+preparation areas, filing rooms, cleaner’s closets etc.
+
+(2) Refer to the methodology in Technical Guidance Document B – Fire Safety
+
+for calculation of the occupant capacity of a building or part of a building.
+Extensions to existing buildings (See 0.6(b)(iii)):
+
+Subject to Part M4, at least one changing places toilet should be provided
+when:
+a) an existing building, or part of a building, with a relevant building use is
+extended by more than 25% of the floor area of a new building with the
+same relevant building use as described in Items 1 to 12 of the table
+above, and
+The combined floor area of the existing building, or part of a building,
+with a relevant building use and the extension is greater than the floor
+area of a new building with the same relevant building use as described
+in Items 1 to 12 of the table above.
+b) In the case of Item 13 - the floor area of the sanitary facilities are
+extended by more than 25% of its existing floor area, or when two or
+more WCs are being added.
+c) In the case of Item 14 - the capacity of the outdoor amenity is more
+than 2,000 people (excluding staff) and the relevant floor area of a
+building (or part thereof) providing sanitary facilities for use by people
+other than staff, is being extended by the lesser of 25% of its existing
+
+16
+
+floor area or 250 m2, unless there is another building containing a
+changing places toilet within 250 metres.
+Examples:
+A. A shop (where sanitary facilities are provided for use by people other than
+staff) having a relevant floor area of 2,000 m2 is extended by 700 m2. The
+floor area of the extension is greater than 25% of the new building floor
+area criteria and the combined floor area of the extended building is greater
+than 2,500 m2. With reference to Item 10, at least one changing places
+toilet should be provided.
+B. A shop (where sanitary facilities are provided for use by people other than
+staff) having a relevant floor area of 1,000 m2 is extended by 1,200 m2. The
+relevant floor area of the extension is greater than 25% of the new building
+floor area criteria and the combined floor area of the extended building is
+2,200 m2. With reference to Item 10, as the combined relevant floor area of
+the extended building is less than 2,500 m2, the provision of a changing
+places toilet is not required.
+Material Change of Use (See 0.6(d)):
+Subject to Part M4, at least one changing places toilet should be provided
+when:
+a) An existing building (or part of an existing building) undergoes a
+material change of use, and the floor area (either relevant or gross as
+may be applicable) is greater than the area of a new building with the
+same proposed use, as described in Items 1, 2, 3, 4, 5, 6, 7, 8, 10, 11
+and 12 and sanitary facilities for use by people other than staff will be
+provided in the building (or part thereof).
+b) In the case of Item 14 - the capacity of the outdoor amenity is more
+than 2,000 people (excluding staff) and sanitary facilities for use by
+people other than staff will be provided in the building (or part thereof)
+unless there is another building containing a changing places toilet
+within 250 metres.
+
+17
+
+Examples:
+C. A building (gross floor area 9,000 m2) changes use to become a hotel. With
+reference to Item 12, at least one changing places toilet should be provided.
+D. A building (gross floor area 3,000 m2) changes use to become a hotel and
+incorporates conference facilities for more than 350 people. With reference
+to Item 12, at least one changing places toilet should be provided.
+
+18
+
+0.7
+
+Determination of Practicability
+
+In the determination of ‘practicability’ with respect to works to an existing
+building, its facilities or its environs the following non-exhaustive list of
+circumstances should be considered.
+
+9 These buildings have been identified as having particular cultural significance and heritage
+
+value and are included by each Planning Authority on a Record of Protected Structures.
+
+19
+
+0.8
+
+Existing Buildings
+
+Building Regulations do not apply to buildings subject to the National Monuments
+Acts 1930 to 2004.
+0.6 sets out the application of Part M to buildings, new and existing.
+The term ‘practicability’ is used in connection with works (e.g. material alterations
+and certain material changes of use) to existing buildings which identifies
+instances where achieving standards of accessibility associated with new
+buildings is not feasible because of particular circumstances. Refer to 0.7 for
+guidance on determining practicability.
+Where works to existing buildings are carried out in accordance with the
+guidance in Section 1 of this document, this will, prima facie, indicate compliance
+with Part M. Where it is not practicable to apply the guidance in Section 1 and
+works are carried out to Section 2, this will also prima facie indicate compliance
+with Part M.
+Works to existing buildings, such as extensions, material alterations and certain
+material changes of use, can present many design challenges because of the
+individual character, appearance and environs of existing buildings. The adoption
+without modification of the guidance in this document may not in all
+circumstances be appropriate. While each existing building and site will present
+its own unique access opportunities and constraints, which may result in different
+ways of addressing accessibility, the fundamental priorities of accessibility should
+be as set out in M1, i.e. accessing and using a building, its facilities and
+environs.
+The application of this Part may pose particular challenges for buildings which
+are of architectural or historical interest. When considering works to an historic
+building, it is important to establish what is important or significant about the
+building. Historic buildings can be significant in many different ways, for example,
+in its physical fabric, in its historical associations or in its archaeological potential.
+The better the understanding of what is important, the easier it will be to design
+appropriate accessible solutions. Information about the significance of a building
+may be obtained from a conservation plan or statement, where these exist, or
+from the architectural conservation officer from the relevant local authority.
+
+20
+
+Historic buildings include Protected Structures, which are included by each
+Planning Authority on a Record of Protected Structures. These buildings have
+been identified as having particular cultural significance and heritage value.
+As previously stated, the adoption without modification of the guidance in this
+document may not, in all circumstances, be appropriate for historic buildings.
+Liaison with the local Building Control Authority on alternative approaches based
+on the principles contained in this document may be more relevant and should
+be considered. In specific cases, a dispensation or relaxation (or partial
+dispensation or relaxation) of the Requirements may be granted by the local
+Building Control Authority.
+Whilst the provisions of the Building Regulations do not relate to management,
+the role it can play in improving the accessibility of existing buildings is
+acknowledged. Designers/owners should be mindful of this and consider
+enhancing the accessibility of existing buildings through appropriate
+management solutions or compensating for existing buildings that have to apply
+for a (partial) dispensation or relaxation from Part M. For guidance on
+management refer to 0.12.
+For more guidance on historic buildings, refer to:
+
+
+Architectural Heritage Protection - Guidelines for Planning Authorities
+Planning Guidelines No. 9 published by the Department of the Environment,
+Heritage and Local Government;
+
+
+
+Advice Series: Access – improving the accessibility of historic buildings and
+places published by the Department of the Environment, Heritage and Local
+Government.
+
+0.9
+
+Fire Safety
+
+Access provision must be linked to provision for emergency egress in the case of
+a fire. The scope of Part M is limited to matters of access to and use of a
+building. For guidance on means of escape or evacuation, reference should be
+made to Technical Guidance Document B (Fire Safety) and the NDA publication
+‘Safe Evacuation for All, A Planning and Management Guide, 2011’.
+
+21
+
+0.10
+
+Diagrams
+
+Diagrams included in this document are intended to clarify certain aspects of the
+guidance. They are not necessarily to scale and do not represent fully detailed
+solutions. Where dimensions are stated, they refer to minimum or a range of
+finished dimensions. Allowance should be made for all necessary tolerances and
+finishes and on-site deviation. Reference should be made to Technical Guidance
+Document D (Materials and Workmanship) for guidance in relation to
+manufacturing and other tolerances applicable to building components generally.
+
+0.11
+
+Disability Act 2005
+
+The Disability Act 2005 aims to advance the participation of people with
+disabilities in everyday life by, for example, improving access to buildings,
+services and information.
+Attention is drawn to the obligation on Public bodies (such as Government
+Departments, Local Authorities, Health Service Executive, Semi-state Bodies,
+etc.) to make their public buildings comply with Part M 2000, by 2015 and Part M
+2010, by 2022.
+It also requires that these public buildings be brought into compliance with
+amendments to Part M not later than 10 years after the commencement of the
+amendment.
+For the purposes of this part of the Disability Act “public building” means a
+building, or that part of a building, to which members of the public generally have
+access and which is occupied, managed or controlled by a public body.
+For the purposes of giving guidance to public bodies on the matter, the National
+Disability Authority has recently initiated the development of a Code of Practice
+for Accessible Public Buildings under Section 25 of the Disability Act.
+
+0.12
+
+Management
+
+Whilst the provisions of the Building Regulations do not relate to management or
+maintenance and compliance with the Regulations is not dependent on these, it
+is acknowledged that they are important functions and contribute to the ongoing
+accessibility of the building.
+
+22
+
+Key issues which are generally the responsibility of the management and or
+maintenance teams include:
+
+
+arranging furniture appropriately;
+
+
+
+keeping circulation routes clear, facilities clean, equipment (lifts,
+communication aids, etc.) functioning;
+
+
+
+carrying out maintenance audits on a regular basis;
+
+
+
+conducting staff training and awareness campaigns on peoples specific
+needs and the use of assistive equipment in buildings e.g. maintenance of
+induction loops, hoists and other assistive devices;
+
+
+
+putting a detailed emergency action plan in place to ensure safe egress for
+all in the event of an emergency;
+
+
+
+procurement of accessible goods and services (office furniture, security
+services, etc.);
+
+
+
+providing pre-visit information regarding access to the building on the
+organisation’s website;
+
+
+
+providing information on the accessibility features of the building to
+occupants, in order to allow for effective management procedures to be put
+in place.
+
+For guidance on managing buildings refer to Building for Everyone: A Universal
+Design Approach (2010 edition), BS 8300:2009, the NDA publication ‘Access
+Handbook Template - A Tool to Help Manage the Accessibility of the Built
+Environment’ and www.nda.ie.
+
+23
+
+The guidance in Section 1 applies to buildings other than dwellings and their
+environs.
+The guidance in Section 1 also applies to the common areas of apartment
+blocks and their environs.
+Additional guidance on certain elements and features of existing buildings of
+the above mentioned types is given in Section 2.
+Guidance for dwellings and the common areas of duplex buildings10 is given in
+Section 3.
+
+10 Refer to Section 1.3.4.1.1(c) for passenger lift provisions relevant to duplex buildings
+
+24
+
+1.1
+
+Approach to Buildings Other than Dwellings
+
+The objective is to provide independently accessible means of approach to
+the accessible entrance(s) of a building and means of circulation around a
+building.
+
+The approach route(s) to the accessible entrance(s) of a building are the routes
+from:
+
+The circulation routes around a building are the routes:
+
+The building should be designed within the overall constraints of space, so that
+the difference in level between the entrance storey and the site entry point, any
+designated car-parking spaces, any setting down areas, other subsidiary
+entrances/buildings, any associated facilities or assembly points is minimised.
+The approach and circulation routes as defined in 1.1.1 should be designed and
+constructed as access routes in accordance with 1.1.3.
+Level access routes accommodate the widest range of abilities and should be
+provided. For the purpose of this guidance, a gradient of 1:50 or less steep is
+considered to be level. Changes in level are difficult for many people to negotiate
+(e.g. wheelchair users, people using walking aids, pushing buggies, people with
+vision impairment) and should be avoided.
+Where it is not possible to provide a level access route, a gently sloped access
+route should be provided.
+25
+
+The gradient of a gently sloped approach should be as shallow as possible.
+For the purpose of this guidance a gradient steeper than 1:50 (but less steep
+than 1:20) is considered to be gently sloped. Access routes of 1:20 or less steep
+are preferred.
+Where it is not possible to provide a gently sloped access route, a ramped
+access route should be provided. For the purpose of this guidance a gradient of
+1:20 or steeper is considered to be a ramp.
+Where the ramp has a rise greater than 300 mm (equivalent to 2 x 150 mm
+steps), a stepped access route should be provided in addition to a ramped
+access route. Some people find it easier to use a flight of steps rather than to
+travel on a ramp e.g. people with mobility difficulties who use certain walking
+aids; older people, people with vision impairment.
+Alternatively, a platform lift may be provided where site specific constraints
+require it (in addition to a ramped or stepped access route) conforming to BS
+6440:199911
+It is important to restrict the number of barriers, restrictions or other hazards that
+people encounter on an access route. Guidance on hazard protection is given in
+1.1.3.
+Where pedestrian crossings are provided along access routes they should be
+designed and constructed in accordance with the guidance given in 1.1.4.
+Where car-parking is provided on site, designated car-parking spaces
+(exclusively for the use of holders of a disabled person’s parking permit) should
+be provided on a proportional basis. The level of provision, design and
+construction of designated car-parking spaces should be in accordance with the
+guidance given in 1.1.5.
+Where there is a road on site leading to the building, there should be a setting
+down area provided at or adjacent to at least one accessible entrance. This
+facilitates a person arriving at a building as a passenger in a vehicle, to alight
+from the vehicle and enter the building safely and conveniently. Where setting
+down areas are provided, they should be designed and constructed in
+accordance with the guidance given in 1.1.6.
+11 Platform lifts should comply with the Machinery Directive 2006/42/EC. BS 6400:1999 is
+
+partially superseded by EN 81-40. The remainder will eventually be superseded by EN 81-41.
+
+26
+
+The following guidance applies to all access routes, whether level, gently sloped,
+ramped or stepped. Additional specific guidance on the above four types of
+access route is given in 1.1.3.2 to 1.1.3.5.
+Where an access route is provided:
+
+27
+
+Diagram 1
+
+Avoiding Hazards on Access Routes
+
+28
+
+Diagram 2
+
+Hazard Protection on Access Routes
+
+29
+
+The following guidance applies to all level access routes in addition to the
+general guidance in 1.1.3.1.
+For the purpose of this guidance, a gradient of 1:50 or less steep is considered
+to be level. Where the gradient of the access route is 1:50 or less steep, it is
+acceptable for a cross-fall gradient of not steeper than 1:40 to be provided to
+ensure effective surface drainage.
+Where a level access route is provided:
+
+The following guidance applies to gently sloped access routes in addition to the
+general guidance in 1.1.3.1 above.
+For the purpose of this guidance, a gradient steeper than 1:50 (but less steep
+than 1:20) is considered to be gently sloped.
+Where a gently sloped access route is provided:
+
+30
+
+The following guidance applies to ramped access routes in addition to the
+general guidance in 1.1.3.1 above.
+For the purpose of this guidance, a gradient of 1:20 or steeper is considered to
+be a ramp. Ramped access routes should be designed to have the shallowest
+gradient practical. The preferred maximum gradient is 1:20 but where site
+specific constraints require it, ramps not steeper than 1:12 may be provided if
+individual flights are not longer than 2000 mm.
+If the gradient is too steep or an individual flight too long, a person using or
+pushing a wheelchair may not have sufficient strength to travel up the ramp.
+There is also the danger of falling forwards going downhill or backwards when
+going uphill if the gradient is too steep. To ensure adequate control and braking
+power, the ramp gradients are limited to those in Table 2 and Diagram 3.
+Where a ramped access route is provided:
+
+31
+
+32
+
+12 Platform lifts should comply with the Machinery Directive 2006/42/EC. BS 6400:1999 is
+
+partially superseded by EN 81-40:2008. The remainder will eventually be superseded by EN 8141.
+
+33
+
+Table 2
+
+Limits for Ramp Gradients and Lengths
+
+Maximum Going of a Flight
+
+Maximum Gradient
+
+Maximum Rise
+
+Not exceeding 10 m
+
+1:20
+
+500 mm
+
+Not exceeding 5 m
+
+1:15
+
+333 mm
+
+Not exceeding 2 m
+
+1:12
+
+166 mm
+
+NOTE: For goings between 2 m and 10 m, it is acceptable to interpolate
+between the maximum gradients (refer to Diagram 3).
+
+Diagram 3
+
+Relationship Between Ramp Gradient and the Maximum
+Gradient of a Flight
+
+34
+
+Functional requirements and guidance on compliance, for stairs are given in
+various Parts of the Building Regulations namely Part B for escape, Part K for
+stairs in general and Part M for stairs suitable for ambulant disabled people.
+Designers should be aware of the function of the stairs they are designing and
+refer to the appropriate Part and accompanying TGD. The following guidance
+applies to all stepped access routes in addition to the general guidance in
+1.1.3.1.
+Where a stepped access route is provided:
+
+35
+
+36
+
+Diagram 4a Stepped Access – Key Dimensions and Use of Hazard
+Warning Surface
+
+37
+
+Diagram 4b Corduroy Profile (for use with Stepped Access Only)
+
+38
+
+Diagram 5
+
+Examples of Step Profiles and Key Dimensions for
+Stepped Access Routes
+
+39
+
+Diagram 6
+
+External Steps and Stairs – Key Dimensions
+
+General guidance on handrails and guarding is given in TGD K, but the guidance
+that follows applies to handrails on accessible access routes.
+Where handrails are provided on a ramped or stepped access route:
+
+40
+
+41
+
+Diagram 7 Handrail Design
+
+42
+
+Where pedestrian crossings are provided, tactile paving and dropped kerbs
+should be provided at controlled and uncontrolled pedestrian crossings in
+accordance with ‘Good Practice Guidelines on Accessibility of Streetscapes’.
+
+For the purposes of this section, designated car parking spaces are those
+spaces exclusively provided for the holders of a disabled person’s parking
+permit.
+Where on-site car parking is provided, whether for residents, employees, visitors
+or others, a number of designated car parking spaces should be provided, on a
+proportional basis.
+In the absence of a specific number of designated spaces being required by a
+Local Authority through Development Plans or as a condition of planning, the
+following guidance applies.
+For buildings (including apartment buildings), at least 5% of the total number of
+spaces should be designated car parking spaces, with a minimum provision of at
+least one such space.
+Further guidance on the provision of designated car parking spaces is given in
+BS 8300:2009 and Sustainable Urban Housing: Design Standards for New
+Apartments - Guidelines for Planning Authorities.
+Where designated parking is provided either outside or within a building:
+
+43
+
+13 For the purpose of this guidance, a gradient of 1:50 or less steep is considered to be level.
+
+Where the gradient is 1:50 or less steep, it is acceptable for a cross-fall gradient of not steeper
+than 1:40 to be provided to ensure effective surface drainage.
+
+44
+
+Diagram 8 Access Around Designated On-Site Perpendicular
+Parking Bay
+
+45
+
+Diagram 9 Example of a Designated On-Site Parallel Parking Bay
+
+Where there is a road on site leading to the building, there should be a setting
+down area provided at, or adjacent to, at least one accessible entrance. This
+facilitates a person arriving at a building as a passenger in a vehicle, to alight
+from the vehicle and enter the building safely and conveniently.
+Where a setting down area is provided:
+
+46
+
+14 For the purpose of this guidance, a gradient of 1:50 or less steep is considered to be level.
+
+Where the gradient is 1:50 or less steep, it is acceptable for a cross-fall gradient of not steeper
+than 1:40 to be provided to ensure effective surface drainage.
+
+47
+
+1.2
+
+Access to Buildings Other than Dwellings
+
+The objective is to provide entrances to buildings that are independently
+accessible and to avoid segregation based on a person’s level of ability.
+
+All of the following entrances should be accessible:
+
+Subsidiary external entrances that should also be accessible include:
+
+Where main entrances are accessible to all they promote a spirit of inclusion that
+segregated accessible entrances do not. In certain exceptional situations it may
+not be practicable for each of the entrance(s) above to be accessible, due to
+steeply sloped or restricted sites or planning requirements. Therefore, in such
+circumstances only, an alternative accessible entrance or entrances may be
+provided.
+
+Accessible entrances should facilitate the widest possible range of abilities.
+Approaches to accessible entrances should comply with Section 1.1.
+The route from an alternative accessible entrance should lead directly, via an
+accessible internal route conforming to Section 1.3, to the spaces served by the
+corresponding main entrances.
+48
+
+Likewise, entrances close to the designated parking area and setting down area,
+(b) and (c) above, should connect to the main entrance reception area (or
+equivalent), via an accessible internal route conforming to Section 1.3.
+Main entrances and subsidiary entrances should be clearly identifiable. Signage
+should be provided where necessary (refer to 1.6.3).
+Where an accessible entrance is provided:
+
+Rationale: Level thresholds do not create a trip hazard or barrier to people
+using wheelchairs or other mobility aids;
+
+49
+
+Rationale: This will prevent wheels from sinking into the surface which
+causes difficulty for a person using a wheelchair or mobility aid to
+manoeuvre.
+
+Manually operated external doors, with a self-closing device, can pose difficulties
+for people with a wide range of abilities, including children. It is extremely difficult
+for people with limited upper body strength, with assistance dogs, walking aids or
+wheelchairs, to open and manoeuvre through this type of door as it requires an
+opening force greater than the resistance force of the self-closing device itself
+plus any extra resistance exerted by weather seals and/or wind pressure. This
+may result in people being unable to continue their journey independently.
+If the force required for opening doors is too great or its speed of closing is too
+fast, people with disabilities risk being pushed off balance. Any self-closing
+hinged (single swing) or pivoted (single or double swing) entrance doors should
+have controlled closing devices and allow independent use by people with
+disabilities. Guidance is given in 1.2.4.2 on accessible manual doors.
+Where it is not possible for a controlled closing device to close an entrance door
+and keep it closed against external conditions without exceeding the opening
+force set out in 1.2.4.2 (a), one of the following should be used:
+(i) a power-operated door – sliding, folding, balanced or swing (refer to
+1.2.4.3);
+(ii) a low energy swing door (refer to 1.2.4.4);
+(iii) a lobby or air lock system of inner and outer doors (refer to 1.2.5).
+Powered door opening and closing systems are accessible to a very wide range
+of people as they require little, if any, strength to open. Powered sliding doors,
+either manually controlled or automatically operated by sensors, are the
+preferred type of accessible entrance door.
+In general, revolving doors are not considered accessible and present particular
+difficulties and risk injury for people with vision impairment, assistance dogs,
+mobility difficulties, elderly people and for parents with small children or buggies.
+Where a revolving door is used, a complementary accessible door should be
+provided immediately adjacent to the revolving door and be available for use at
+
+50
+
+all times. The accessible door may be a swing, sliding or folding door, and be
+automatic, manual or power-operated and should be clearly identifiable.
+Doors that provide high levels of accessibility may not always be suitable as
+escape doors. Where an accessible entrance door also forms part of an escape
+route reference should be made to the guidance in TGD B (refer to section
+dealing with General Provisions for Means of Escape), on doors across escape
+routes, including automatic doors, to ensure compliance with Part B.
+Where an accessible entrance door is provided:
+
+51
+
+Table 3
+
+Minimum Effective Clear Widths of Doors
+
+Direction and Width of Approach
+
+Minimum
+Effective Clear
+Width(a)
+
+Straight on (without a turn or oblique approach)
+
+800 mm
+
+At right angles to an access route at least 1500 mm wide
+
+800 mm
+
+At right angles to an access route at least 1200 mm wide
+
+825 mm
+
+External doors and internal lobby doors at the entrance of
+buildings used by the general public (b)
+
+1,000 mm
+
+Entrance door to a changing places toilet
+
+1,000 mm
+
+NOTES:
+(a) The effective clear width should be measured in accordance with Diagram
+
+10.
+
+(b) Buildings used by the general public include day centres, hotels, institutional
+
+buildings, places of assembly, shops, shopping centres and office buildings
+with a nett floor area(c) per floor greater than 200 m2. (Refer to Section 0.6(d)
+for definitions)
+(c) When calculating the nett floor area of any storey, the area provided for
+
+vertical circulation, common sanitary facilities and maintenance areas in the
+storey should not be included.
+
+52
+
+Diagram 10 Effective Clear Width and Visibility Requirements of Doors
+
+53
+
+Where the external door leaves (including lobby doors) consist of a frameless
+glass door or a fully glazed framed door with a narrow stile the following
+guidance applies in addition to the general guidance in 1.2.4 above.
+Where accessible glass doors are provided:
+
+Rationale: This ensures that people with vision impairment can clearly
+identify the location of the door;
+
+54
+
+The following guidance applies to accessible manual doors in addition to the
+general guidance in 1.2.4 above.
+Where accessible manual doors are provided:
+
+Rationale: This enables a person in a wheelchair to reach and grip the door
+handle, then open the door without releasing hold on the handle and without
+the footrest colliding with the return wall (refer to Diagram 10);
+
+Rationale: This facilitates people with limited manual dexterity;
+
+15 The accuracy of force measuring instruments available on the market varies. There are also
+
+inherent difficulties in measuring forces on site. It is recognised, therefore, that any
+measurements will be subject to a degree of imprecision which could give rise to variations of
+between 2 and 3 N.
+
+55
+
+The provision of power-operated doors should be in accordance with BS 70361:1996. The following guidance applies to accessible power-operated doors in
+addition to the general guidance in 1.2.4 above.
+Accessible power-operated doors may have a sliding, swinging or folding action
+controlled by one of the following two types:
+(i) Manually by a push pad, coded entry or remote control, or
+(ii) Automatically by a motion sensor or other proximity sensor, e.g. a
+contact mat or hands-free proximity sensor.
+Where an accessible power-operated door is provided:
+
+56
+
+A low energy power-operated door operator may be used on swing doors with
+relatively low levels of pedestrian usage as these doors can either work in
+manual mode or be set to provide powered opening assistance to users when
+required, either in push-and-go or power-assisted mode. The push-and-go power
+assist should activate when the door is pushed beyond 25 mm. If low energy
+swing doors are used, safety provisions for the doors should conform to BS
+7036-4:1996.
+
+Entrance lobbies serve a number of functions including air infiltration and draught
+reduction. The presence of an entrance lobby may allow the external door to
+have a lower powered self-closing device. Where they are provided they should
+be designed and constructed to ensure that there is sufficient space to enable a
+person using a wheelchair and an assistant to move clear of one door before
+opening the other door.
+Where an accessible entrance lobby is provided:
+
+57
+
+Rationale: This reduces the potential for slipping within the building e.g. by
+using cleaning mats;
+
+Rationale: This will prevent wheels from sinking into the surface which
+causes difficulty for a person using a wheelchair or mobility aid to
+manoeuvre.
+
+58
+
+Diagram 11 Key Dimensions for Lobbies with Single Leaf Doors
+
+59
+
+1.3
+
+Circulation within Buildings Other than Dwellings
+
+The objective is for people to travel horizontally and vertically within a
+building conveniently and without discomfort in order to make use of all
+relevant facilities.
+
+An entrance hall and reception area is the first point of contact and a source of
+information for many when arriving at a building and should be accessible to all.
+Corridors, passageways and internal lobbies should facilitate a free flow of
+people around a building. Doors along internal circulation routes can create
+barriers for people, particularly for those with limited upper body strength, and
+should only be provided where necessary. However, where they are necessary,
+for the purposes of compliance with Part B – Fire Safety, they should be easy to
+use and/or held open on electronic hold-open devices.
+Appropriate directional signage indicating the location of the various facilities
+within the building should be provided where necessary (refer to 1.6.3).
+Each storey of a building should be so designed and constructed as to allow for
+independent circulation by people with a wide range of abilities and independent
+access to the range of accessible services and facilities provided on that storey.
+Where a change of level within a storey of a building is necessary because of
+site constraints or design considerations, a suitable means of access should be
+provided between the levels by a gently sloped access route, a ramp and steps
+or a platform lift.
+A passenger lift is a convenient means for many people including those pushing
+buggies, using wheelchairs and carrying luggage, to travel from one floor to
+another in order to access all relevant facilities. Passenger lifts should be
+provided in all multi-storey buildings (some exceptions are provided in 1.3.4.1.1).
+At least one stairs suitable for ambulant disabled people should also be provided
+to all floors above and below the entrance level to provide a choice for users.
+Guidance is given in this section on the features and characteristics of internal
+circulation areas, required to make them accessible to people with a wide range
+of abilities.
+60
+
+Section 1.3.3 deals with internal horizontal circulation features such as; entrance
+hall and reception areas; internal doors; corridors and passageways and internal
+lobbies.
+Section 1.3.4 deals with internal vertical circulation features such as; passenger
+lifts; internal stairs suitable for ambulant disabled people; internal ramps and
+handrails.
+
+As the entrance hall is the first point of contact with a buildings activities and
+resources, the reception area should not only be accessible but also convenient
+to use. Where a reception area is provided in an entrance hall:
+
+(i) 1200 mm deep x 1800 mm wide, if there is a knee recess of at least 500
+mm deep, or
+(ii) 1400 mm deep by 2200 mm wide if there is no knee recess;
+
+(i) between 950 mm and 1100 mm high to facilitate people who are
+standing.
+(ii) 760 mm maximum height to facilitate wheelchair users and people of
+short stature;
+
+61
+
+Rationale: A low level counter, 1800 mm long will facilitate two wheelchairs
+alongside each other or facing each other across the counter diagonally;
+
+Rationale: These surfaces can compromise the ability of a person to lip read
+or follow sign language.
+
+Doors can create barriers for people, particularly for those with limited upper
+body strength, and therefore should only be provided where necessary.
+Self-closing devices create particular difficulties for some people (refer to Section
+1.2) and their use on internal doors should be minimised. While these devices
+are generally required on fire doors, TGD B gives guidance on acceptable
+methods of holding them open, where a self–closing device is considered a
+hindrance to the normal use of a building. Refer to TGD B, Annex B, Fire Doors,
+Self-closing devices, B3 for guidance.
+
+62
+
+Fire doors should be held open in accordance with this guidance, where
+possible, in areas of the building frequently used by the public.
+Where internal doors are provided to wheelchair accessible areas:
+
+In the case of a changing places toilet the unobstructed space should be at
+least 600 mm on the pull side of the door between the leading edge of the
+door (when it opens towards you) and a return wall, unless the door is
+opened by remote automatic control.
+Rationale: To provide additional space for the changing places toilet user
+and their assistant to be able to move clear of the door when it is being
+opened.
+
+16
+
+The accuracy of force measuring instruments available on the market varies. There are also
+inherent difficulties in measuring forces on site. It is recognised, therefore, that any
+measurements will be subject to a degree of imprecision which could give rise to variations of
+between 2 and 3 N.
+
+63
+
+Rationale: This ensures that people with vision impairment can still identify
+the door opening within the wall;
+
+Rationale: This allows a person to see another person approaching in the
+other direction in time to avoid a collision. The extent of the visibility zone
+facilitates people of all heights or those using a wheelchair;
+
+64
+
+A corridor or passageway should be wide enough to allow people to pass each
+other, taking into account common activities and mobility aids such as people
+pushing buggies, using a wheelchair or walking frame, carrying luggage or using
+crutches. A corridor that is 1500 mm wide will allow a wheelchair user and an
+ambulant person to pass one another. A corridor that is 1800 mm wide will allow
+two wheelchair users to pass one another. Wheelchair users or people pushing
+buggies should have adequate space available to turn into adjoining spaces or to
+turn through 180 degrees.
+Where corridors and passageways are provided:
+
+(i) at reasonable intervals, not more than 20 m apart;
+(ii) at junctions; and
+(iii) at ends of corridors
+(iv) opposite a sliding door, or inward opening door, to a changing places
+toilet
+Rationale: This will allow wheelchair users to turn in the opposite direction
+and to pass each other (refer to Diagram 12);
+
+65
+
+Rationale: This is to avoid collisions with passers-by;
+
+Rationale: To allow a person using a wheelchair to manoeuvre out the door
+into the corridor;
+
+66
+
+Internal lobbies to wheelchair accessible areas should be in accordance with
+entrance lobbies in 1.2.5.
+
+67
+
+Diagram 12
+
+Dimensions and Space Allowances for Corridors in
+Buildings Other than Dwellings
+
+68
+
+A passenger lift is the most accessible means of vertical circulation and allows
+people with a wide range of abilities to travel conveniently and without discomfort
+from floor to floor in order to make use of all relevant facilities.
+
+Passenger lifts should be provided in all multi-storey buildings to serve all storeys
+above and below entry level e.g. basements used for car parking, etc., except in
+the following situations:
+
+Buildings in cases (b) and (c) above are generally apartment or duplex buildings
+containing dwellings only, however they may incorporate mixed use elements at
+the entrance storeys e.g. retail units, etc.
+In calculating the nett floor area for non-residential and mixed use buildings the
+areas of all parts of a storey (including any apartments) should be added
+together, whether they are in more than one part of the same storey or used for
+different purposes. The area of any vertical circulation, common sanitary facility
+and maintenance areas in the storey should not be included.
+Consideration should be given to other lifting devices, such as lifting platforms
+that facilitate vertical travel to facilities, especially in buildings to which the
+exceptions (a) to (c) above apply. Lifting platforms should comply with 2.3.4.1.1.
+For further information on these devices refer to ‘Building for Everyone: A
+Universal Design Approach (2010 edition)’.
+
+69
+
+Reference should be made to Part B and TGD B for guidance on fire related
+issues associated with lifts e.g. lifts to underground car parks, etc. Refer to TGD
+B – General Provisions for means of escape.
+Where no lift or lifting device is provided, the same range of services/facilities
+that are available on the other levels should be made available on the entry or
+accessible level.
+
+In addition to the provision of a passenger lift, at least one internal stairs suitable
+for ambulant disabled people should also be provided as an alternative means of
+vertical access. Refer to 1.3.4.3 for details.
+
+In the case of places of work, designers should have regard to the Safety, Health
+and Welfare at Work (General Application) Regulations 2007 (S.I. No. 299 of
+2007) which requires testing, examination, certification and regular inspection of
+lifts. Passenger lifts should comply with the Lift Directive 95/16/EC.
+Where an accessible passenger lift is provided:
+
+70
+
+Rationale: To allow adequate time for people and any assistance dogs to
+enter and leave;
+
+Rationale: This size accommodates manual and electrically powered
+wheelchairs and one accompanying person;
+
+Rationale: The larger lift car will facilitate most types of wheelchairs; scooters
+and buggies, along with several other passengers;
+
+Rationale: This will facilitate a person in a wheelchair reaching the buttons;
+
+71
+
+Rationale: This can create the illusion, for people with vision impairment, of
+stepping into an open lift shaft);
+
+Rationale: This avoids confusion for people with vision impairment and to
+provide a wheelchair user with a rear view to safely reverse out from the lift
+car;
+
+Rationale: So that people using hearing aids can make use of them;
+
+Rationale: Areas of glazing should be identifiable by people with vision
+impairment.
+
+72
+
+Diagram 13
+
+Key Dimensions Associated With Passenger Lifts
+
+At least one set of stairs suitable for ambulant disabled people should be
+provided to access all floors above or below entrance level in a building.
+Stairs serve many different functions in a building e.g. a means of escape, a
+means of access for ambulant disabled people or an effective, efficient and
+simple means of vertical circulation, or sometimes a combination of these.
+Functional requirements and guidance on compliance for stairs are given in
+various Parts of the Building Regulations namely Part B for escape, Part K for
+stairs in general and Part M for stairs suitable for ambulant disabled people.
+73
+
+Designers should refer to the relevant Part and accompanying TGD when
+designing stairs.
+Particular reference should be made to Part B/TGD B for the provision of refuges
+for people with disabilities.
+Where internal stairs suitable for ambulant disabled people are provided:
+
+Rationale: This will help people with vision impairment to appreciate the
+extent of the stair and identify the individual treads;
+
+Rationale: Nosings can cause people to trip or catch their feet. Refer to
+Diagram 5 for acceptable tread and riser profiles;
+
+Rationale: A larger going helps avoid accidents on a stair particularly on
+descent, as it allows a person to place more of their foot on the step;
+
+74
+
+Rationale: This provides for a person with less strength on one side to be
+within easy reach of support;
+
+Rationale: Due to the potential risk that people will not recognise the stairs in
+time;
+
+Rationale: To reduce the risk to people especially those with vision
+impairments colliding with the edge of the stairs soffit.
+
+75
+
+Diagram 14
+
+Key Dimensions Associated with Internal Stairs Suitable
+for Ambulant Disabled People
+
+If a change in level is unavoidable within a storey a gentle slope should be
+provided (refer to 1.3.3.3 (d)). Where this is not possible and the change in level
+is 300 mm or more, two or more clearly defined steps (in accordance with
+1.3.4.2) identifiable by means of visual contrast (refer to 1.6.4) should be
+provided in addition to a ramp.
+A ramp is defined as a gradient of 1:20 or steeper. Limits for ramp gradient and
+flight length are defined in Table 2.
+Where the change in level is not greater than 300 mm, a ramp alone is sufficient.
+Where an internal ramp is provided:
+
+76
+
+A suitable continuous handrail should be provided on each side of flights and
+landings of internal stairs suitable for ambulant disabled people and ramps.
+Refer to TGD K for guidance on the provision of guarding. Handrails should
+comply with guidance given for external handrails in 1.1.3.6.
+
+77
+
+1.4
+
+Sanitary Facilities for Buildings Other than Dwellings
+
+The objective is to provide independently accessible sanitary facilities that
+meet the needs of people with a wide range of abilities.
+
+For the purposes of this part, specific guidance on the provision of sanitary
+facilities is given in 1.4.3. Detailed guidance on the design of the sanitary
+facilities is given in 1.4.4 to 1.4.10.
+
+The number and location of sanitary facilities required in a building will be
+dictated by the nature of the building, the size of the building, the number of
+people who will use the building, gender ratio, patterns of use and the ease of
+access. Refer to Part G/TGD G for the scale of provisions for sanitary facilities. In
+the case of places of work, designers should also have regard to the Safety,
+Health and Welfare at Work (General Application) Regulations, 2007 (S.I. No.
+299 of 2007).
+Section 1.4.3 requires the provision of accessible sanitary facilities where
+sanitary facilities are provided in a building, whether this is for customers,
+visitors, or staff working in the building. It does not create a requirement for the
+provision of sanitary facilities in a building or for different user groups e.g. for
+people other than staff where provision has only been made for staff.
+However, in the case of buildings where sanitary facilities are being provided for
+use by people other than staff, at least one changing places toilet should be
+provided in the buildings listed in Table 1 having regard to the use and size of
+the building.
+The following guidance represents the minimum provisions to ensure that
+sanitary facilities where provided for a particular user group, are accessible to all
+in that group e.g. customers and/or staff.
+The guidance is based on providing a minimum clear turning space of 1800 mm
+x 1800 mm for a wheelchair. This space provision will be adequate for many
+wheelchairs, however some powered wheelchairs and scooters may require
+larger turning spaces.
+78
+
+A wheelchair accessible unisex WC is designed to meet the needs of
+independent wheelchair users, but it is also equipped to suit ambulant disabled
+people. In addition it may be used by people who require additional space, the
+support of grab rails or integral hand washing facilities. A unisex facility enables
+assistants of either sex to assist a person with a disability.
+A changing places toilet is an accessible sanitary facility with a toilet, hoist, basin,
+adult-sized changing bench and optional shower designed to meet the needs of
+people with a range of abilities who may require assistance.
+In addition to the above, 1.4.3.1 to 1.4.3.6 outline the provisions required in
+relation to specific types of sanitary facilities.
+In primary school buildings where WCs are provided within the classroom
+provision should be made for ambulant disabled people. In addition, a minimum
+provision of one wheelchair accessible unisex WC should be made, either as
+part of the classroom environment or in the common areas of the building. The
+travel distance to this WC should be minimised where it is not located within the
+classroom. For further requirements on sanitary facilities in primary schools, refer
+to the Department of Education Technical Guidance Documents / School Design
+Guidance available on www.education.ie.
+Sanitary facilities used solely for individual use within offices are not covered in
+the following sections however; consideration should be given to meeting the
+needs of the user.
+
+The provisions for wheelchair accessible unisex WCs are as follows:
+
+79
+
+Rationale: This provision will facilitate the needs of a wider range of users;
+
+Rationale: This facilitates both left and right handed transfer techniques onto
+the WC. For further information on transfer techniques refer to ‘Building for
+Everyone: A Universal Design Approach (2010 edition)’;
+
+The provisions for WC cubicles are as follows:
+
+Rationale: Enlarged cubicles are not a substitute for cubicles suitable for
+ambulant disabled people but rather an alternative arrangement to meet the
+needs of people with another range of abilities;
+80
+
+Rationale: This facilitates people who are stronger on one side;
+
+The provisions for urinals are as follows:
+
+The provisions for accessible bathrooms/shower rooms are as follows:
+
+Rationale: Many people with disabilities and elderly people may find it easier
+to use a shower;
+
+81
+
+The provisions for changing and/or showering facilities are as follows:
+
+The provisions for changing places toilets are as follows:
+
+(i) It should be suitably located having regard to the use and operation of
+the building17
+
+17 For further information see ‘Universal Design Guidelines for Changing Places Toilets’ (When
+
+published by the National Disability Authority),
+
+82
+
+(ii) It should be in addition to, and not instead of, the provision of standard
+and unisex accessible WCs, accessible bathrooms/shower rooms and
+other changing and/or showering facilities;
+(iii) It should meet the minimum requirements set out in 1.4.10.
+
+The space provided for manoeuvring and the relative positioning of WCs, wash
+basins and other accessories is critical to enable wheelchair users or people with
+mobility impairment to adopt various transfer techniques that allow independent
+or assisted use of sanitary facilities. The guidance given in the following sections
+provides acceptable sample sizes and layouts for the situations called up in 1.4.3
+above.
+For further information on accessible sanitary facilities refer to BS 8300:2009,
+Building for Everyone: A Universal Design Approach (2010 edition) and I.S. E.N.
+17210:2021.
+Where accessible sanitary facilities are provided:
+
+Rationale: People with difficulty communicating may prefer not to ask
+directions and should therefore be able to rely on signage (refer to 1.6.3);
+
+83
+
+Rationale: So that the doors are capable of being opened outwards from
+outside the room, in case of emergency, in the case where someone has
+fallen against the door and is unable to get up;
+
+Rationale: To warn occupants with vision or hearing impairment;
+
+(i) A pull cord reachable from a wheelchair and the WC, the shower or bath,
+or from the floor if someone has fallen, in some cases two pull cords may
+be required (refer to 1.5.7(e));
+(ii) Visual and audible indicators to confirm that an emergency call has been
+activated;
+(iii) A reset control reachable from a wheelchair and the WC, in case a false
+alarm is raised;
+(iv) A warning signal that is distinguishable visually and audibly from the fire
+alarm;
+84
+
+(v) A visual and audible indicator should be provided outside the room
+where it can be easily seen and heard by people able to give assistance
+and also at a central control point;
+
+Rationale: This avoids a person having to place belongings on the floor;
+
+Rationale: This will facilitate people who find it difficult to use the standard
+seat height;
+
+85
+
+In addition to the general guidance in 1.4.4 where a wheelchair accessible
+unisex WC is provided:
+
+Rationale: This provision will facilitate the needs of a wider range of users;
+86
+
+Rationale: This allows the wheelchair seat to be parallel with the toilet seat,
+so that the wheelchair can be reversed against the wall and the person using
+the toilet does not have to manoeuvre both sideways and also backwards to
+transfer to and from the WC pan;
+
+Rationale: The user should be able to, from a sitting position on the WC,
+lean forward, wash hands in the finger rinse basin and insert or take out the
+basins waste plug before transferring back to the wheelchair;
+
+87
+
+Diagram 15a Wheelchair Accessible Unisex WC
+(1800 mm X 1800 mm Turning Space)
+
+88
+
+Diagram 15b Wheelchair Accessible Unisex WC
+(1500 mm X 1500 mm Turning Space)
+
+89
+
+Diagram 16
+
+Heights of Various Fittings on Wall A of A Wheelchair
+Accessible Unisex WC (Refer to Diagram 15a or 15b)
+
+90
+
+Diagram 17
+
+Location of Independent Mirrors, Accessories and
+Washbasin
+
+91
+
+Diagram 18
+
+Standard WC Cubicle
+
+In addition to the general guidance in 1.4.4 further guidance is given below for
+cubicles.
+
+Where standard cubicles have inward opening doors there should be a minimum
+450 mm diameter manoeuvring space provided between the swing of the door,
+the WC pan and the side wall of the compartment (refer to Diagram 18).
+
+For people using crutches or with other mobility impairment cubicles with a larger
+than standard clear activity or manoeuvring space and grab rails will be more
+accessible.
+Where cubicles for ambulant disabled people are provided:
+
+92
+
+Cubicles with extra space will be more accessible for a range of people including
+parents with children, people carrying luggage, ambulant disabled people and
+people with assistance dogs.
+Where enlarged cubicles are provided:
+
+93
+
+94
+
+Diagram 19 WC Cubicle for Ambulant Disabled People and Enlarged
+Cubicle
+
+95
+
+In addition to the general guidance in 1.4.4 where accessible urinals are
+provided:
+
+96
+
+Diagram 20 Accessible Urinals
+
+97
+
+In addition to the general guidance in 1.4.4 where wheelchair accessible
+ensuite bathrooms or shower rooms are provided:
+
+Rationale: So as not to project into the transfer space in front of the WC;
+
+Rationale: The larger washbasin enables people to have a full body-wash or
+to wash personal care equipment;
+
+Rationale: This enables the basin to be filled prior to using the WC, as the
+taps may be out of reach for some from the WC;
+
+Rationale: This allows a wheelchair to pull up close to the basin;
+
+98
+
+Diagram 21 An Example of a Shower Room Incorporating a Corner
+WC for Independent Use
+
+99
+
+Diagram 22 An Example of a Bathroom for Independent Use
+Incorporating a Corner WC Layout
+
+100
+
+Diagram 23 Grab Rails and Fittings Associated with a Bath
+(Refer to Diagram 22)
+
+101
+
+In addition to the general guidance in 1.4.4 where changing facilities are
+provided:
+
+In addition to the general guidance in 1.4.4 where showering facilities are
+provided:
+
+102
+
+Diagram 24
+
+An Example of a Self-Contained Changing Room for
+Independent Use
+
+103
+
+Diagram 25
+
+An Example of a Self-Contained Accessible Shower and/
+or Changing Room for Independent Use
+
+104
+
+In addition to the general guidance in 1.4.4 where a changing places toilet is
+provided:
+
+Rationale: This allows for assistance to be provided from both sides of the
+WC.
+(i) A distance of 750 mm should be provided from the back wall to the front
+of the WC pan.
+Rationale: This allows the wheelchair seat to be parallel with the toilet
+seat, so that the wheelchair can be reversed against the wall and the
+person using the toilet does not have to manoeuvre both sideways and
+also backwards to transfer to and from the WC pan;
+(ii) Wall mounted drop down support rails and vertical grab rails should be
+provided on both sides of the WC pan in accordance with Diagram 27(a).
+At least one of the drop-down support rails should incorporate a toilet roll
+dispenser;
+Vertical grab rails should be a minimum of 600 mm in length.
+18 A changing places toilet is not suitable for Bariatric use where the turning space and load-
+
+bearing capabilities are required to be considerably more onerous. It is necessary to obtain
+specialist advice for such use.
+
+105
+
+(i) The height-adjustment mechanism should include a pressure sensitive
+safety override that will prevent the washbasin from lowering if there is
+any obstruction underneath.
+(ii) The washbasin should be approximately 500 mm wide x 450 mm deep
+with a minimum range of height adjustment of 600 mm to 850 mm above
+floor level.
+Rationale: The larger washbasin enables people to have a full body wash
+or to wash personal care equipment.
+(iii) The knee space under the basin should be free of obstructions.
+Rationale: This allows a wheelchair user to pull up close to the basin.
+(iv) Vertical grab rails should be provided on both sides of the wash-hand
+basin. The top fixings for both handrails should be 1400 mm above floor
+level in accordance with Diagram 27(b).
+
+(i) The height adjustment mechanism for wall mounted benches should be
+mains powered and include a pressure sensitive safety override that will
+prevent the changing bench from lowering if there is any obstruction
+underneath.
+(ii) It should have a changing surface that is at least 1800 mm long by 800
+mm wide that is easy to clean and dry with a minimum range of height
+adjustment from 450 mm to 900 mm above floor level.
+
+19 The height adjustable basin and bench must be CE marked in compliance with relevant EU
+
+Directives and standards e.g. Directive 2006/42/EC of the European Parliament and of the
+Council of 17 May 2006 on machinery, and amending Directive 95/16/EC (recast) and should be
+installed in accordance with the manufacturer’s instructions and positioned to avoid entrapment
+or injury.
+
+106
+
+(iii) It should be certified to operate at a safe working load of not less than
+200 kg.
+(iv) It should have retractable side safety rails along the long edge(s) that can
+be folded up or down.
+(v) Where a shower facility is being provided, a suitable changing bench
+should be provided with provision for waste water disposal;
+(vi) A vertical grab rail should be provided 150 mm from the front edge of the
+changing bench at the available wall side in accordance with Diagram
+27(c).
+
+(i) The hoist spreader bar should be capable of extending from the hoist
+down to no more than 300 mm from the floor level to facilitate a person
+being lifted from ground level if required in an emergency.
+(ii) There should be not less than 2100 mm headroom provided between the
+hoist track/rails and the finished floor level.
+(iii) The room structure and the hoist system should be capable of supporting
+a safe working load of not less than 200 kg and not less than that of the
+changing bench and height adjustable basin.
+
+107
+
+(i) The shower controls should be easy to use and capable of being
+operated with a closed fist e.g. with a lever handle operation.
+(ii) The markings on the shower control should be logical and clear.
+(iii) The showerhead should be detachable and mounted on a flexible hose.
+108
+
+(iv) The hose should be at least 2 m long to allow for use on the changing
+bench.
+(v) The floor should be self-draining.
+
+109
+
+Diagram 26
+
+Changing Places Toilet General Arrangement Layout
+
+110
+
+Diagram 27(a)
+
+Layout, Circulation Areas, Fixtures and Fittings for the
+Peninsular WC
+
+111
+
+Diagram 27(b) Layout, Circulation Areas, Fixtures and Fittings for the
+Height Adjustable Wash Hand Basin
+
+112
+
+Diagram 27(c)
+
+Layout, Circulation Areas, Fixtures and Fittings for the
+Height Adjustable Changing Bench
+
+113
+
+1.5
+
+Other Facilities in Buildings Other than Dwellings
+
+The objective is to ensure that all facilities within a building are accessible
+and useable and that they are designed and constructed to facilitate active
+participation where appropriate.
+
+Provisions should be made to ensure facilities within a building are accessible for
+people (both visitors and staff) with a wide range of abilities, e.g. people with
+vision or hearing impairment, people with intellectual disabilities, people with
+mental impairment, ambulant disabled people, wheelchair users and people with
+small children (in buggies).
+Guidance is given in this section on the features and characteristics of the
+following facilities to make them accessible to and useable for people with a wide
+range of abilities:
+(i) Audience and spectator facilities with fixed seating;
+(ii) Audience and spectator facilities without fixed seating;
+(iii) Refreshment facilities;
+(iv) Accessible sleeping accommodation;
+(v) Switches, outlets and controls
+Audience and spectator facilities with fixed seating may be provided in several
+different types of buildings such as lecture/conference facilities in hotels or
+offices, educational buildings, entertainment facilities in theatres, cinemas, sports
+facilities in stadia and sports centres.
+Often, it is a functional characteristic of these types of buildings that audience or
+spectator facilities with fixed seating is provided at several levels and frequently
+this necessitates the use of tiered or raking floors. While ambulant disabled
+people should have access to all such levels, people using wheelchairs,
+notwithstanding the requirements for lifts, in Section 1.3, should have
+independent access to sufficient wheelchair spaces in areas which afford good
+viewing conditions.
+114
+
+Wheelchair seating should be designed so that the spectators in wheelchairs can
+still see the event when other spectators are standing.
+Facilities that are available to other users of the premises, such as bars, WCs,
+etc., should also be accessible from these areas.
+The minimum number of permanent and removable spaces should be in
+accordance with Table 4. Where a building contains several auditoria, e.g. a
+multi-screen cinema or a block of lecture theatres the minimum requirement in
+Table 4 applies to each auditorium.
+Audience and spectator facilities without fixed seating may be provided in
+buildings such as lecture/conference facilities in hotels or offices, educational
+buildings, entertainment facilities in theatres, cinemas, sports facilities in stadia
+and sports centres. These facilities should be accessible in accordance with
+1.5.4.
+Refreshment facilities e.g. restaurants, bars and shared self-service canteens
+should be so designed and constructed that they can be accessed and used by
+all (visitors and staff) independently or with companions.
+Where sleeping accommodation is provided adequate provision should be made
+for people with a wide range of abilities. One guest bedroom out of every twenty,
+or a minimum of one guest bedroom if less than twenty guest bedrooms are
+provided should be suitable in terms of size, layout and facilities for independent
+use by people with a wide range of abilities in accordance with 1.5.6. The same
+proportion of such bedrooms should have ensuite sanitary facilities as provided
+in other bedrooms. For guidance on sanitary facilities refer to Section 1.4.
+Switches, outlets and controls for all facilities should be made easy to see;
+access and use by all (refer to 1.5.7).
+
+115
+
+Table 4
+
+Provision of wheelchair spaces in audience seating
+
+Seating capacity
+(persons)
+
+Minimum provision of spaces for wheelchair
+users
+Permanent seating
+
+Removable seating
+
+Up to 600
+
+1% of total seating
+capacity(i)
+
+Remainder to make a total
+of 6(i)
+
+More than 600
+but less than10,000(ii)
+
+1% of total seating
+capacity(i)
+
+Additional provision,
+if desired
+
+NOTE:
+(i) Percentages need to be rounded up to determine the recommended number
+
+of spaces.
+
+(ii) For seating capacities greater than 10,000 refer to guidelines given in
+
+‘Accessible stadia: a good practice guide to the design of facilities to meet
+the needs of disabled spectators and other users’.
+
+Where audience and spectator facilities with fixed seating are provided:
+
+116
+
+Rationale: This will help accommodate those with difficulty hearing or seeing
+on one side and those who need to be near lip readers or sign interpreters;
+
+Rationale: Where steps lead to seating, a handrail is needed only on the wall
+side, so as not to obstruct access to the seating;
+
+Further guidance on audience and spectator facilities is given in BS 8300:2009.
+
+117
+
+Where audience and spectator facilities without fixed seating are provided:
+
+Diagram 28
+
+An Example of Wheelchair Spaces in in Audience and
+Spectator Facility With Fixed Seating
+
+118
+
+Diagram 29
+
+An Example of Wheelchair Space Provision in an Audience
+and Spectator Facility with Fixed Seating
+
+119
+
+Where refreshment facilities are provided:
+
+120
+
+Diagram 30
+
+Provision for a Wheelchair User in a Typical Shared Self
+Service Canteen
+
+Where accessible sleeping accommodation is provided:
+
+121
+
+122
+
+Diagram 31
+
+Example of an Accessible Bedroom
+
+Where switches, outlets and controls are provided:
+
+123
+
+124
+
+Diagram 32
+
+Heights to the Centre of Socket-Outlets, Switches and
+Controls
+
+125
+
+1.6
+
+Aids to Communication
+
+The objective is to provide adequate aids to communication to ensure
+people can independently access and use a building and its facilities.
+
+Signage, visual contrast, lighting and audible aids assist people, especially those
+people with vision or hearing impairment or people with intellectual disabilities, in
+accessing a building and fully utilising the relevant facilities in and around a
+building.
+People will benefit most if there is an integrated approach to the design of way
+finding, public address and hearing enhancements within a building.
+In relation to way finding, people use various different strategies and tools to
+navigate a building. Therefore, to effectively communicate information, directions
+or instructions to people with a wide range of abilities may require the use of
+various media. This may result in visual signs, tactile signs and audible aids
+delivering the same message.
+Visual contrast between certain elements also assists in providing spatial
+information to people with vision impairment and thus facilitates way finding
+(refer to 1.6.4). Visual contrast sensitivity is the ability to perceive differences
+between an object and its background e.g. a handle from the door or the nosing
+from the rest of the step.
+The amount of light a surface reflects is known as the Light Reflectance Value
+(LRV). The range of LRV is 0 (black) to 100 (white). The larger the difference
+between the LRV of each surface the greater the visual contrast is and the easier
+it is for someone with a low visual contrast sensitivity to perceive the difference.
+BS8300:2009 Annex B provides several methods for measuring LRV and
+provides guidance on acceptable LRV differences between adjoining surfaces.
+BS 8493:2008 provides LRV measurements for certain colours (as specified in
+BS 4800:1989).
+Lighting is an important feature of a building and directly affects the buildings
+accessibility and the use of its facilities. Well designed and installed lighting may
+be used to support way finding, to identify hazards and to improve
+communication such as lip reading or signing (refer to 1.6.5).
+126
+
+There are several types of audible aids, including:
+
+Throughout this Technical Guidance Document, guidance is given on the
+provision of signage, visual contrast and hearing enhancement systems as well
+as the level of lighting required in certain locations. In all these cases the
+provisions should be based on the following guidance 1.6.3 to 1.6.6.
+For additional information and guidance on the provision, design and use of
+signage, visual contrast, lighting and hearing enhancement systems, refer to
+Building for Everyone: A Universal Design Approach (2010 edition), BS
+8300:2009, Sign Design Guide, See it right Signage and The Accessible Office.
+Also, BS 4800:1989 and BS 5252:1976 provide colour specifications and coordination schemes for use in buildings (Refer to Other standards and
+publications).
+
+Where signage is provided in accordance with the provisions in TGD M:
+
+Rationale: When a combination of capital and lower case letters is used,
+word shape is easier to recognize, making text easier for many people to
+read;
+
+127
+
+Where visual contrast is provided:
+
+128
+
+Where artificial lighting is provided, it should give good colour rendering of all
+surfaces, and should not create glare or pools of bright light and strong shadows,
+which poorly located up-lighters may create.
+
+Where audible aids are provided:
+
+129
+
+Access and Use of Existing Buildings Other
+than Dwellings
+The guidance in Section 2 applies to certain elements and features of existing
+buildings other than dwellings and their environs.
+The guidance in Section 2 also applies to the common areas of existing
+apartment blocks and their environs.
+This Section should be read in conjunction with Section 1 and is intended to
+provide additional guidance on certain elements and features for existing
+buildings types as mentioned above.
+
+130
+
+2.0
+
+Introduction
+
+Section 1 sets out the minimum level of provision for the following buildings to
+meet the requirements of M1:
+
+Section 1 applies to new and existing buildings. This section provides additional
+guidance on the minimum provisions for certain elements and features of existing
+buildings where it is not practicable to achieve the provisions set out in Section 1.
+Where works (e.g. material alterations and certain changes of use, etc.) to
+existing buildings are carried out in accordance with Section 1 and 2, this will
+prima facie indicate compliance with Requirement M1.
+Reference should be made to 0.6 and 0.8 for the application of Part M to existing
+buildings and 0.7 for considerations that should be made when determining
+‘practicability’.
+This section (Section 2) mirrors the structure of Section 1. The provisions in
+Section 1 apply to existing buildings unless additional guidance on minimum
+levels is provided in this section.
+Works to existing buildings can present many design challenges because of the
+individual character, appearance and environs of existing buildings. Each
+existing building and site will present its own unique access opportunities and
+constraints, which are likely to result in different ways of addressing accessibility.
+However, the fundamental priorities of accessibility should be the same as those
+set out in M1, i.e. accessing and using a building, its facilities and environs.
+Whilst the provisions of the Building Regulations do not relate to management or
+maintenance and compliance with the Regulations is not dependent on these, it
+is acknowledged that they are important functions and contribute to the ongoing
+accessibility of the building. Key issues such as arranging furniture appropriately,
+keeping circulation routes clear, facilities clean, equipment (lifts, communication
+aids, etc.) functioning, along with staff training and awareness campaigns are
+generally the responsibility of the management and or maintenance teams.
+
+131
+
+For guidance on managing buildings refer to Building for Everyone: A Universal
+Design Approach (2010 edition), BS 8300: 2009, the NDA publication ‘Access
+Handbook Template - A Tool to Help Manage the Accessibility of the Built
+Environment’ and www.nda.ie.
+When considering works to an historic building, it is important to establish what is
+important or significant about the building. Historic buildings can be significant in
+many different ways, for example, in its physical fabric, in its historical
+associations or in its archaeological potential. The better the understanding of
+what is important, the easier it will be to design appropriate accessible solutions.
+Information about the significance of a building may be obtained from a
+conservation plan or statement, where these exist, or from the architectural
+conservation officer from the relevant local authority.
+Historic buildings include Protected Structures, which are included by each
+Planning Authority on a Record of Protected Structures. These buildings have
+been identified as having particular cultural significance and heritage value.
+The adoption without modification of the guidance in this document may not, in
+all circumstances, be appropriate for historic buildings. Liaison with the local
+Building Control Authority on alternative approaches based on the principles
+contained in this document may be more relevant and should be considered.
+For further guidance on access to historic buildings refer to ‘Advice Series:
+Access – improving the accessibility of historic buildings and places’ by the
+Department of the Environment, Heritage and Local Government.
+
+132
+
+2.1
+
+Approach to Existing Buildings Other than Dwellings
+
+The objective is to provide independently accessible means of approach to
+the accessible entrance(s) of an existing building and means of circulation
+around an existing building.
+
+The guidance in 1.1.2 should be followed except:
+
+The guidance in 1.1.3.1 should be followed, where practicable.
+
+The guidance in 1.1.3.2 should be followed except:
+
+133
+
+The guidance in 1.1.3.3 should be followed except:
+
+The guidance in 1.1.3.4 should be followed except:
+
+134
+
+The guidance in 1.1.3.5 should be followed except:
+
+135
+
+(i) landscape or re-align the approach to provide a level, gently sloped or
+ramped access route and new steps where necessary; or
+(ii) retain the existing steps and install an external platform lift in accordance
+with BS 644020; or
+(iii) revise the internal planning of the building to change the main approach
+to one that can be made accessible in accordance with 1.1.3 (and 2.1.3
+where necessary).
+
+The guidance in 1.1.3.6 should be followed, except:
+
+The guidance in 1.1.4 should be followed.
+
+20 Platform lifts should comply with the Machinery Directive 2006/42/EC. BS 6400:1999 is
+
+partially superseded by EN 81-40:2008. The remainder will eventually be superseded by EN 8141.
+
+136
+
+The guidance in 1.1.5 should be followed, where practicable. Where on-site car
+parking is provided and it is not practicable to provide the number of designated
+car parking spaces in 1.1.5, as many as possible should be provided but at least
+one. Alternatively a setting down area should be provided.
+
+The guidance in 1.1.6 should be followed.
+
+137
+
+2.2
+
+Access to Existing Buildings Other than Dwellings
+
+The objective is to provide entrances to existing buildings that are
+independently accessible and to avoid segregation based on a person’s
+level of ability.
+
+The guidance in 1.2.2 should be followed. Where it is not practicable for each of
+the applicable entrance(s) set out in 1.2.2 to be accessible, alternative
+accessible entrance(s) should be provided or the internal planning of the building
+revised to change the applicable entrance(s) to one(s) that can be made
+accessible in accordance with 1.2 and 2.2 where necessary. At least one
+entrance should be made accessible.
+
+The guidance in 1.2.3 should be followed. Where it is not practicable to provide
+the dimensions of the landing in front of every accessible entrance in 1.2.3, the
+dimensions should be as large as possible but not less than 1500 mm wide x
+1500 mm deep.
+
+The guidance in 1.2.4 should be followed except:
+
+The guidance in 1.2.4.1 should be followed, where practicable.
+
+138
+
+The guidance in 1.2.4.2 should be followed, where practicable.
+
+The guidance in 1.2.4.3 should be followed.
+
+The guidance in 1.2.4.4 should be followed.
+
+The guidance in 1.2.5 should be followed, where practicable. Where in an
+existing building, an entrance lobby is provided with automatic doors, the width of
+the lobby should be at least equal to the effective clear width of the door + 300
+mm and the length sufficient to accommodate a wheelchair.
+
+139
+
+2.3
+
+Circulation within Existing Buildings Other than
+Dwellings
+
+The objective is for people to travel horizontally and vertically within an
+existing building conveniently and without discomfort in order to make use
+of relevant facilities.
+
+The guidance in 1.3.1 and 1.3.2 should be followed.
+
+The guidance in 1.3.3.1 should be followed, where practicable.
+
+The guidance in 1.3.3.2 should be followed except where it is not practicable to
+provide a door with an effective clear width in accordance with 1.3.3.2, the
+effective clear width should be as wide as possible but not less than 750 mm.
+
+The guidance in 1.3.3.3 should be followed except:
+
+140
+
+The guidance in 1.3.3.4 should be followed where practicable. Where in an
+existing building, a lobby is provided with automatic doors, the width of the lobby
+should be at least equal to the effective clear width of the door + 300 mm and the
+length sufficient to accommodate a wheelchair.
+
+The guidance in 1.3.4.1 should be followed except where it is not practicable to
+provide a passenger lift in an existing building, an enclosed vertical lifting
+platform should be provided in accordance with 2.3.4.1.1. Alternatively, the same
+range of services/facilities that are available on the other levels should be made
+available on the entry or accessible level(s).
+
+The guidance in 1.3.4.1 should be followed except where the provisions of
+2.3.4.1 apply.
+Where a vertical lifting platform is provided in an existing building:
+
+21 Platform lifts should comply with the Machinery Directive 2006/42/EC. BS 6400:1999 is
+
+partially superseded by EN 81-40:2008. The remainder will eventually be superseded by EN 8141.
+
+141
+
+Refer to 2.3.4.3.
+
+The guidance in 1.3.4.2 should be followed except:
+
+Where a lifting device is provided in accordance with 1.3.4 and where necessary
+2.3.4 to all floors in an existing building, an internal stairs suitable for ambulant
+disabled people is not necessary.
+Where internal stairs suitable for ambulant disabled people are provided in
+existing buildings the guidance in 1.3.4.3 should be followed except:
+
+142
+
+The guidance in 1.3.4.4 should be followed except:
+
+The guidance in 1.3.4.5 should be followed where practicable.
+
+143
+
+2.4
+
+Sanitary Facilities in Existing Buildings Other than
+Dwellings
+
+The objective is to provide independently accessible sanitary facilities that meet
+the needs of people with a wide range of abilities.
+
+Specific guidance on the provision of sanitary facilities is given in 1.4.3 and
+where necessary 2.4.3. Detailed guidance on the design of the sanitary facilities
+is given in 1.4.4 to 1.4.10
+
+Guidance on the provision of accessible sanitary facilities in 1.4.3 should be
+followed except:
+
+144
+
+Diagram 33 WC Cubicle for Ambulant Disabled People in an Existing
+Building
+
+145
+
+2.5
+
+Other Facilities in Existing Buildings Other than
+Dwellings
+
+The objective is to ensure that facilities within an existing building are
+accessible to and useable and that they are designed and constructed to
+facilitate active participation where appropriate.
+
+The guidance in 1.5.2 should be followed, where practicable.
+
+The guidance in 1.5.3 should be followed, where practicable.
+
+The guidance in 1.5.4 should be followed, where practicable.
+
+The guidance in 1.5.5 should be followed except:
+
+146
+
+The guidance in 1.5.6 should be followed except where it is not practicable to
+provide doors to accessible sleeping accommodation with a clear effective width
+in accordance with 1.3.3.2; the doors should be as wide as possible but not less
+than 750 mm.
+
+The guidance in 1.5.7 should be followed, where practicable.
+
+147
+
+2.6
+
+Aids to Communication
+
+The objective is to provide adequate aids to communication to ensure
+people can independently access and use an existing building and its
+facilities.
+
+The guidance in 1.6 should be followed where practicable.
+
+The guidance in 1.6.3 should be followed, where practicable.
+
+The guidance in 1.6.4 should be followed, where practicable.
+
+The guidance in 1.6.6 should be followed, where practicable.
+
+148
+
+Access and Use of Dwellings
+The guidance in Section 3 applies to dwellings and their environs. This
+includes individual dwelling houses and individual apartments. It does not apply
+to the common areas of apartment blocks. Guidance on these areas is
+provided in Section 1.
+The guidance in Section 3 also applies to the common areas of duplex
+buildings22 .
+
+22 Refer to Section 1.3.4.1.1(c) for passenger lift provisions relevant to duplex buildings
+
+149
+
+3.1
+
+Approach to Dwellings
+
+The objective is to provide an adequate means of approach to the main entrance
+of a dwelling to facilitate visitors from a point of access.
+
+The point of access is:
+
+(i) the distance between the point of access along the boundary and the
+main entrance, is greater than 30 m, or
+(ii) the site gradient is such that the relative finished levels at the dwelling
+entrance and the point of access along the boundary do not allow for the
+provision of the appropriate level gently sloped or ramped approach.
+At least one approach route from a point of access to the main entrance should
+be an access route in accordance with to 3.1.2.5. Guidance on the approach to
+apartment blocks is given in Section 1.1.
+
+The following guidance applies to all access routes, whether level, gently sloped,
+ramped or stepped. Additional specific guidance on the above four types of
+access route is given in 3.1.2.2 to 3.1.2.5.
+Where an access route is provided:
+
+23 The dwelling plot can be taken to mean the private lands associated with the dwelling.
+
+150
+
+The dwelling should be designed, within the overall constraints of space, so that
+the difference in level between the entrance to the dwelling and the dwelling
+plots point of access is minimised. A level approach route accommodates the
+widest range of abilities. For the purpose of this guidance document a gradient of
+1:50 or less steep is considered to be level. For background information on
+approaches refer to Section 1.1.
+
+Where site gradients do not allow a level access route, the flattest gradient
+achievable should be used. Access routes of 1:20 or less steep are preferred.
+For the purpose of this guidance document a gradient steeper than 1:50 (but less
+steep than 1:20) is considered to be gently sloped.
+
+Where a ramped access route is necessary due to site constraints it should be
+designed to have the shallowest gradient practicable. For the purpose of this
+guidance document a gradient of 1:20 or steeper (but not exceeding 1:12) is
+considered to be a ramp.
+In addition to the general guidance given in 3.1.2.1 where a ramped access
+route is provided:
+
+151
+
+Where it is not practicable to provide the required level, gently sloped or ramped
+approach to the dwelling entrance from the point of access, a stepped approach
+may be used. This may arise:
+(i) Where the gradient between the point of access and the main entrance
+of the dwelling is steeper than 1:15 and it is not practicable to locate the
+dwelling entrance in a location to achieve a level, gently sloped or
+ramped access;
+(ii) Where there is insufficient space between the point of access and the
+main entrance of the dwelling to provide for ramps and landings because
+of the need to conform to the existing building line and levels;
+(iii) Where planning requirements exist e.g. in relation to flood plains; or
+(iv) Where the dwelling entrance is at other than the ground floor level of the
+building, e.g. duplex buildings. Note: The ground floor level of a duplex
+building should not use a stepped approach.
+Where a stepped approach is used, it should be suitable for use by ambulant
+disabled people and in addition to the general guidance given in 3.1.2.1
+should comply with the following:
+
+152
+
+Refer to TGD K for guidance on the provision of guarding.
+Diagram 34 Examples of External Step Profiles
+
+153
+
+3.2
+
+Access to Dwellings
+
+The objective is to provide a main entrance to a dwelling that is accessible
+to visitors.
+
+The main entrance is the entrance, which a visitor not familiar with the dwelling
+would normally expect to approach.
+Where it is not practicable for the main entrance to a dwelling to be accessible,
+an alternative entrance should be accessible. The alternative accessible
+entrance should be approached via an access route, conforming to Section 3.1,
+and be within the public realm of the dwelling plot e.g. the external area
+accessible to a visitor, unfamiliar with the dwelling. The accessible entrance
+should be suitable for use by wheelchair users.
+External steps should comply with the guidance given in Section 3.1.
+Internal steps should comply with the guidance in Section 3.3.
+Where an accessible entrance is provided:
+
+154
+
+155
+
+3.3
+
+Circulation within Dwellings
+
+The objective is to facilitate circulation of visitors within the entrance
+storey, or where there is no habitable room at this level, in the storey
+containing the main living room.
+
+Corridors, passageways and doors to habitable rooms in the entrance storey or,
+where there is no habitable room at this level, in the storey containing the main
+living room, should be sufficiently wide and free of stepped changes of level so
+as to allow convenient circulation.
+Table 5 Doors to Accessible Habitable Rooms
+Minimum Effective Clear Width
+
+Minimum Unobstructed Corridor Width
+
+775 mm
+
+1,050 mm (900 mm if approached head on)
+
+800 mm
+
+900 mm
+
+Corridors and passageways should have a minimum unobstructed width of not
+less than 900 mm to facilitate circulation of people using wheelchairs. Localised
+permanent obstructions, such as radiators, may be allowed, provided that the
+unobstructed width in those areas is at least 800 mm and the obstruction does
+not occur opposite a door.
+Doors to accessible habitable rooms should be designed and constructed so that
+the minimum effective clear width, in relation to the adjacent unobstructed
+corridor width, complies with Table 5.
+The length of unobstructed corridor complying with the minimum width
+requirement specified should be at least 1200 mm approaching any door (refer to
+Diagram 35).
+Saddle boards, where provided, should be bevelled, with a maximum upstand of
+10 mm.
+156
+
+Doors to rooms (other than cloak rooms, hot presses, etc.), which can only be
+accessed by the use of steps or stairs, may have a minimum effective clear width
+of 750 mm.
+Diagram 35 illustrates the guidance on internal doors, corridors and
+passageways for convenient wheelchair use in the entrance storey or, where
+there is no habitable room at this level, in the storey containing the main living
+room.
+Door handles should be located at a height of between 800 mm and 1200 mm
+(900 mm preferred) above floor level.
+Where a stepped change of level is provided within the storey, e.g. because of
+the slope of the site, it should be located so that at least one habitable room and
+a room containing a WC can be accessed from the accessible entrance without
+the need to negotiate the step(s).
+
+157
+
+Diagram 35
+
+Corridors, Passageways and Internal Doors to Dwellings
+(Showing Measurement of Effective Clear Width)
+
+158
+
+Where there is no habitable room at the entry level, the stairway providing
+access to the storey containing the main living room should comply with the
+following:
+
+159
+
+3.4
+
+Sanitary Facilities for Dwellings
+
+The objective is to provide a WC that is accessible to visitors.
+
+A WC should be provided at entry level or, where there is no habitable room at
+this level, in the storey containing the main living room. At entry level, the WC
+should be so located that it can be accessed from the accessible entrance and
+from at least one habitable room without the need to negotiate steps. The
+approach route to the WC should be in accordance with Section 3.3.
+The WC should be located in a bathroom or separate WC compartment, the
+layout of which should be designed to facilitate access to, and use of, the WC by
+persons with a range of abilities. A clear space of 750 mm by 1200 mm,
+accessible by people using wheelchairs, should be available adjacent to the WC
+so as to facilitate sideways transfer from the wheelchair to the WC.
+The size and layout of the bathroom or WC compartment, and the positioning of
+the door, should be such that a wheelchair can be fully contained within the
+compartment and the door closed with the wheelchair inside. Diagram 36 shows
+two examples of alternative layouts for WC compartments, which illustrate the
+level of provision which is generally considered acceptable.
+The general headroom available in the WC compartment should be 2100 mm
+minimum. Local areas with head height less than 2100 mm are acceptable
+subject to the limits set out in Diagram 36.
+
+160
+
+Diagram 36 Examples of WC Cubicles for Visitable Housing
+
+161
+
+In the case of certain smaller dwellings, WC compartments in accordance with
+Diagram 37 are acceptable. This level of provision should only be considered
+where the area of the storey where the WC is located is less than 45 m 2.
+Diagram 37 shows an example of a possible layout for such a compartment.
+The minimum effective clear width of a WC door should be in accordance with
+Table 5. However, the use of a door opening wider than the minimum, an
+outward opening door, a folding door or a sliding door will generally assist in
+facilitating wheelchair access. The choice of door type and location should be
+such as not to pose undue hazard on a circulation route or be otherwise
+dangerous in use.
+The minimum headroom available in the WC compartment should be 2100 mm
+measured from the front of the pan.
+Diagram 37 Example of WC compartment for small dwellings
+
+162
+
+3.5
+
+Switches and Sockets in Dwellings
+
+The objective is that switches and socket outlets should be located at
+accessible heights and are easy to operate in the accessible areas of a
+dwelling.
+
+Electric light switches in accessible areas should be located at a height between
+900 mm to 1200 mm above floor level.
+Equipment adjacent to the entry intended to assist in gaining entry, e.g.
+doorbells, entry phones, intercoms, should be located at a height between 900
+mm and 1200 mm above floor level.
+Switches and socket outlets for lighting and other equipment in accessible areas
+should be located at appropriate heights between 400 mm and 1200 mm from
+finished floor level.
+These requirements are restricted to convenience socket-outlets used for
+general purposes and do not apply to dedicated socket outlets not readily
+accessible and used for appliances that are intended to be continuously
+connected in normal use.
+The height requirements apply for all control devices in accessible areas except
+where the manufacturer’s instructions specify otherwise.
+
+163
+
+Standards and Publications
+Standards Referred To:
+I.S. EN 1991-1-1:2002
+Eurocode 1: Actions on structures Part 1-1: General actions – densities, self
+weight, imposed loads for buildings (including Irish National Annex: 2005)
+I.S. EN 81-1: 1999
+Safety rules for the construction and installation of lifts - electric lifts (Amd 1)
+(+A3:2009)
+I.S. EN 81-2:1999
+Safety rules for the construction and installation of lifts - hydraulic lifts (Amd 1)
+(+A3:2009)
+I.S. EN 81-70:2003
+Safety rules for the construction and installation of lifts - Particular applications
+for passenger and good passenger lifts. Accessibility to lifts for persons including
+persons with disability (Amd A1:2005)
+I.S. EN 997:2003 (+A1:2006)
+WC pans and WC suites with integral trap (AMD Corrigendum 14805) (AMD
+16965)
+BS 4800:1989
+Paint colours for building purposes (whilst the colours in this standard cannot be
+seen on CD-ROM or online the text can still be used)
+BS 6262:1982
+Code of practice for glazing for buildings AMD 4063; AMD 4582; AMD 8279
+(Partially superseded but remains current)
+BS 6262-1:2005
+Glazing for buildings Part 1 to Part 7
+BS 6440:1999
+Powered lifting platforms for use by disabled persons – Code of practice (partially
+superseded by BS EN 81-40:2008. The remainder of BS 6440:1999 will
+eventually be superseded by EN 81-41: 2009 Safety rules for the construction
+and installation of lifts – Special lifts for the transport of persons and goods - Part
+41: Vertical lifting platforms intended for use by persons with impaired mobility)
+164
+
+BS 6571 - 4:1989
+Vehicle parking control equipment- Part 4: Specification for barrier type parking
+control equipment
+BS 7036-1:1996
+Code of practice for Safety at powered doors for pedestrian use – Part 1.
+General
+BS 7036-4:1996
+Code of practice for Safety at powered doors for pedestrian use – Part 4. Low
+energy swing doors
+BS 8300:2009
+Design of buildings and their approaches to meet the needs of disabled people –
+Code of practice
+BS 8493:2008 (+A1:2010)
+Light reflectance value (LRV) of a surface - Method of test
+BS 8501:2002
+Graphic symbols and signs – Public information symbols (AMD 16897)
+IEC 60118-4:2006
+Electroacoustics. Hearing aids Induction loop systems for hearing aid purposes.
+Magnetic field strength (ISBN 978 0 580 50047 3)
+
+165
+
+Publications Referred To:
+Accessible Stadia – Sports Ground and Stadia Guide No.1 - A good practice
+guide to the design of facilities to meet the needs of disabled spectators and
+other users. www.nads.org.uk
+Accessible thresholds in new housing, Guidance for house builders and
+designers (1999) Department of the Environment, Transport and the Regions.
+The Stationery Office, The Publications Centre, PO Box 276, London SW8 5DT
+Architectural Heritage Protection – guidelines for planning authorities – Planning
+Guidelines No.9, Department of the Environment, Heritage and Local
+Government
+Building for Everyone – A Universal Design approach (2010 edition), National
+Disability Authority, 25 Clyde Road, Ballsbridge, Dublin 4. www.nda.ie
+Good Practice Guidelines on Accessibility of Streetscapes, Local Government
+Management Services Board (LGMSB), Local Government House, 35 – 39
+Ushers Quay Dublin 8
+Guidelines for Public Access Terminals, National Disability Authority, 25 Clyde
+Road, Ballsbridge, Dublin 4, www.nda.ie
+Sustainable Urban Housing: Design Standards for New Apartments - Guidelines
+for Planning Authorities, Department of the Environment, Heritage and Local
+Government
+Traffic Signs Manual – Department of the Environment 1996 (New edition due to
+be published in 2010 by the Department of Transport)
+
+166
+
+Other Standards and Publications
+Legislation
+Disability Act 2005
+Equal Status Act 2000 - 2008
+Employment Equality Acts 1998 and 2004 Building Control Act 2007
+Building Regulations 1997-2022
+Safety, Health and Welfare at Work (General Application) Regulations 2007 (S.I.
+No. 299 of 2007)
+Lift Directive 95/16/EC
+Machinery Directive 2006/42/EC
+
+General Accessibility
+BS 8300:2009 Design of buildings and their approaches to meet the needs of
+disabled people – Code of practice
+Centre for Excellence in Universal Design www.universaldesign.ie
+Building for Everyone – A Universal Design approach (2010 edition), National
+Disability Authority, 25 Clyde Road, Ballsbridge, Dublin 4 www.nda.ie (currently
+under review)
+Best Practice Access Guidelines, Designing Accessible Environments, Irish
+Wheelchair Association, Áras Chúchulainn, Blackheath Drive, Clontarf, Dublin 3.
+www.iwa.ie
+Designing for Accessibility, Andrew Lacey 2004, Centre of Accessible
+Environments and RIBA Publishing, Centre for Accessible Environments and the
+Access Lab, 70 South Lambeth Road, London SW8 1RL, www.cae.org.uk (ISBN
+1 85946 143 3)
+Designing for people with sensory impairments, Stephen Thorpe Access
+Committee for England, 1986 (ISBN 090397617X)
+The Accessible Office. JUM Access Partnership, Royal National Institute of Blind
+People, 105 Judd Street, London, WC1H 9NE, www.rnib.org.uk
+167
+
+I.S. EN 17210:2021
+Accessibility and usability of the built environment – Functional requirements
+S.R. CEN/TR 17621:2021
+Accessibility and usability of the built environment – Technical performance
+criteria and specifications
+
+Approach and Access
+Accessible thresholds in new housing, Guidance for house builders and
+designers (1999) Department of Environment, Transport and the Regions. The
+Stationery Office, The Publications Centre, PO Box 276, London SW8 5DT
+DD CEN/TS 15209:2008
+Tactile paving surface indicators produced from concrete, clay and stone (This
+document is a draft for development and replaces BS 7997:2003)
+
+Circulation
+I.S. EN 81-1: 1999
+Safety rules for the construction and installation of lifts - electric lifts (Amd 1)
+(+A3:2009)
+I.S. EN 81-2:1999
+Safety rules for the construction and installation of lifts - hydraulic lifts (Amd 1)
+(+A3:2009)
+I.S. EN 81-70:2003
+Safety rules for the construction and installation of lifts - Particular applications
+for passenger and good passenger lifts. Accessibility to lifts for persons including
+persons with disability (Amd A1:2005)
+I.S. EN 10535: 2006
+Hoists for the transfer of Disabled Persons
+BS 6440:1999
+Powered lifting platforms for use by disabled persons – Code of practice (partially
+superseded by BS EN 81-40:2008. The remainder of BS 6440:1999 will
+eventually be superseded by EN 81-41: 2009 Safety rules for the construction
+and installation of lifts – Special lifts for the transport of persons and goods - Part
+41: Vertical lifting platforms intended for use by persons with impaired mobility)
+
+168
+
+Automatic Door Systems, Alison Grant 2005, Centre for Accessible
+Environments and the Access Lab, 70 South Lambeth Road, London SW8 1RL,
+www.cae.org.uk (ISBN 1 85946 171 9)
+
+169
+
+Sanitary Facilities
+Good Loo Design Guide, Andrew Lacey 2004, Centre of Accessible
+Environments and RIBA Publishing, Centre for Accessible Environments and the
+Access Lab, 70 South Lambeth Road, London SW8 1RL www.cae.org.uk, (ISBN
+1 85946 144 1)
+Building for Everyone – A Universal Design approach (2010 edition), National
+Disability Authority, 25 Clyde Road, Ballsbridge, Dublin 4. www.nda.ie
+Universal Design Guidelines for Changing Places Toilets (To be published),
+National Disability Authority, 25 Clyde Road, Ballsbridge, Dublin 4. www.nda.ie
+by the NDA
+
+Facilities
+Accessible Stadia – Sports Ground and Stadia Guide No.1 - A good practice
+guide to the design of facilities to meet the needs of disabled spectators and
+other users. www.nads.org.uk
+Accessible Sports Facilities formerly known as Access for Disabled People,
+Updated Guidance 2010, Sport England Publications, PO Box 255, Wetherby,
+LS 237LZ, www.sportengland.org
+ET101:2008
+National Rules for Electrical Installations, Electro Technical Council of Ireland
+
+Communication Aids
+BS 4800:1989
+Paint colours for building purposes (whilst the colours in this standard cannot be
+seen on CD-ROM or online the text can still be used)
+BS 7594:1993
+Code of Practice for audio-frequency induction loop systems (AFILS)
+BS 5252:1976
+Framework for colour co-ordination for building purposes
+IEC 60118-4:2006
+Electroacoustics. Hearing aids. Induction loop systems for hearing aid purposes.
+Magnetic field strength (ISBN 978 0 580 50047 3)
+170
+
+Guidelines for Public Access Terminals, National Disability Authority, 25 Clyde
+Road, Ballsbridge, Dublin 4, www.nda.ie
+Access to ATMs: UK design guidelines Robert Feeney, 2002, Centre for
+Accessible Environments and the Access Lab, 70 South Lambeth Road, London
+SW8 1RL, www.cae.org.uk (ISBN 0 903976 33 1)
+Building Sight, Peter Barker, Jon Barrick and Rod Wilson, HMSO in association
+with the Royal National Institute for the Blind, 1995 http://onlineshop.rnib.org.uk
+(ISBN 1 85878 0748)
+Sign Design Guide – a guide to inclusive signage, 2000, Peter Barker and June
+Fraser, JMU and the Sign Design Society, www.jmuaccess.org.uk (ISBN 185878
+412 3)
+See it right - Signage, 2007, Royal National Institute of Blind People, 105 Judd
+Street, London WC1H 9NE, www.rnib.org.uk
+Good Signs – Improving signs for people with a learning disability, Disability
+Rights Commission, 2004, www.drc.gov.uk
+Code for Interior Lighting, Chartered Institute of Building Service Engineers,
+CIBSE, 1997, www.cibse.org
+Project Rainbow, the Research Group for Inclusive Environments, 1995-1996,
+University of Reading, www.rdg.ac.uk
+Colour Contrast and Perception (2004) 2nd Edition, Keith Bright et al, The
+Research Group for inclusive Environments, The University of Reading, UK.
+www.keithbrightconsultants.com
+
+Dwellings
+Housing Design Guidelines for Occupational Therapists (2007) Association of
+Occupational Therapists of Ireland, www.aoti.ie, (ISBN 978-0-9555053-1-7)
+
+Egress
+Promoting Safe Egress and Evacuation of People with Disabilities, National
+Disability Authority, 25 Clyde Road, Dublin 4, www.nda.ie
+
+171
+
+BS 5588-8:1999
+Fire precautions in the design, construction and use of buildings. Code of
+practice for means of escape for disabled people
+
+Historic Buildings
+Advice Series: Access – improving the accessibility of historic buildings and
+places, Department of the Environment, Heritage and Local Government
+(publication pending)
+Architectural Heritage Protection – guidelines for planning authorities – Planning
+Guidelines No.9, Department of the Environment, Heritage and Local
+Government
+Access to the Historic Environment - Meeting the Needs of Disabled People, Usa
+Foster, Donhead Publishing Ltd., Lower Coombe, Donhead St. Mary,
+Shafresbury, Dorset, SP7 9LY, England (1997)
+Easy Access to Historic Buildings, by English Heritage, second edition 2005,
+www.english- heritage.org.uk
+Code of Practice on Accessible Heritage Sites, National Disability Authority, 25
+Clyde Road, Dublin 4, www.nda.ie (publication pending)
+
+Existing Buildings
+Buildings for All to Use 2- improving the accessibility of public buildings and
+environments (CIRIA C610), Construction Industry Research and Information
+Association, Classic House, 174 - 180 Old Street, London EC1V 9BP, UK
+www.ciria.org (ISBN 0 86017 610X)
+
+Management
+Access Handbook Template- A Tool to Help Manage the Accessibility of the Built
+Environment, National Disability Authority, 25 Clyde Road, Ballsbridge, Dublin 4.
+www.nda.ie
+The Access Manual -auditing and managing inclusive built environments,
+Second Edition, Ann Sawyer and Keith Bright, Blackwell Publishing,
+www.blackwellpublishing.com, (ISBN 9781405146265)
+
+172
+
+gov.ie/housing
+
+Department of Housing, Local Government and Heritage
+
+
