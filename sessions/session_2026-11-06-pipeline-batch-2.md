@@ -45,3 +45,35 @@ Left disputed, with reasons on the findings:
 4. Tooling gaps, none patched: the gate does not read extractions or scans; no writer amends `contested`, a lens, a title, a setting or a `source_section`; `amend-search --add-result-artefact` cannot link a payload whose host is not in the query text.
 5. The IDeA review paper (candidate 151, PMID 20402047) may belong under stash REF-00044, whose title matches and whose DOI differs from PubMed's; unverified.
 6. A targeted search for disabled-persons-organisation guidance (Disability Rights UK, Scope, Centre for Accessible Environments) is not done and stays open.
+
+## 5. Every issue, and where it is recorded
+
+Filed as `gaps` rows on 2026-11-06 at the owner's instruction ("explicitly record all issues so that they can be resolved later"). Each row names its evidence, the command that re-derives it, and what resolves it. List them with `select gap_id, category, priority, substr(description, 1, 90) from gaps where gap_id between 'GAP-074' and 'GAP-096'`.
+
+| Gap | Issue |
+|---|---|
+| GAP-074 | Term and parameter for a width at a turn (observations 97, 98; the 180-degree figures on parameter 4 beside the 360-degree figures on parameter 5) |
+| GAP-075 | Tier of REF-00468: `tier-system.md` line 15 against the derivation (`grey` to T3 only) |
+| GAP-076 | Lens convention (MOB or ALL) and the rows already filed inconsistently |
+| GAP-077 | England-only instrument below `UK` |
+| GAP-078 | Parameters 7 and 10 hold no row; parameter 8 rests on one numeric source |
+| GAP-079 | No Co-1 source retrieved for door, corridor or turning dimensions |
+| GAP-080 | Six staged candidates with no reachable full text; the REF-00044 DOI question |
+| GAP-081 | Citation mining of REF-00468 deferred both ways; bibliography page |
+| GAP-082 | Stated figures left unfiled; concepts the report names with no observation |
+| GAP-083 | The Portuguese decree held as 5 of 20 pages; its turning dimension absent |
+| GAP-084 | UK 1500 by 1500 mm spaces not settled as turning spaces; BS 8300 not held |
+| GAP-085 | Every scan is `pre-screen`; absence sentences in scan notes are unverified |
+| GAP-086 | The DoD gate reads neither scans nor extractions |
+| GAP-087 | No writer corrects a lens, locator, setting, `contested`, a candidate's harm flag or title, or a scan note (extraction 211's locator and 193's setting stay wrong on the row) |
+| GAP-088 | A result payload links only if the query text names its host; WebSearch leaves no payload (search 201's result count was mis-stated) |
+| GAP-089 | `pages_read` counts pages held, not pages read |
+| GAP-090 | The verbatim check cannot quote a Korean sentence across a line break |
+| GAP-091 | A search prompted by a critic cannot be labelled `adversarial-pass` at write time |
+| GAP-092 | Keyword screens missed stated figures in both batches; no figure inventory |
+| GAP-093 | `update-locator` rewrites `created_by_session` and `created_at` |
+| GAP-094 | Metre, centimetre, millimetre and newton rows with no unit family (extends GAP-072) |
+| GAP-095 | Undiagnosed advisory preflight failures; `test_scan_contract` G01 and G02 red on `main` |
+| GAP-096 | Adversarial pass 7 still open (carried from the previous session) |
+
+Four older gaps are cross-referenced by appended notes: GAP-034, GAP-056, GAP-061, GAP-072. Not given a gap because it is already a standing rule or recorded where it binds: the stop hook's commit-per-turn loop (CLAUDE.md section 7), and that `log-search` writes a prior with the results (the DoD gate's R8 line says so).
