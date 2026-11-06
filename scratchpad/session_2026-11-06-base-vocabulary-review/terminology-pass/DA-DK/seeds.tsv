@@ -1,0 +1,22 @@
+register_concept	seed_DA	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Seating	hvilebænk / bænk med ryg- og armlæn	MODEL-GENERATED	DK	ordinary Danish for rest seating; to search in DS Håndbog 186 or municipal outdoor guides, not BR18
+Shelter	overdækning ved indgangen / læskur	MODEL-GENERATED	DK	usual words for an entrance canopy and a bus shelter
+Drainage	afvanding / afvandingsrende	MODEL-GENERATED	DK	terrain drainage words; kap. 4 Afløb not read
+Floor surface is stable, firm, and non-slip	skridsikker gulvbelægning / skridhæmmende	MODEL-GENERATED	DK	"skrid hæmmende" occurs in VT (outdoor paths) only; kap. 14 not read
+No open riser	lukkede trin / stødtrin	MODEL-GENERATED	DK	believed stair-trade words for closed risers
+Sink faucet is easy to use or automatic	etgrebsarmatur / berøringsfri armatur	MODEL-GENERATED	DK	believed sanitary-trade words
+Outlets and switches are at accessible heights	stikkontakter og afbrydere i betjeningshøjde	MODEL-GENERATED	DK	"betjene" is the BR18 verb for operating (kap. 6)
+Microwave mounting height accessible and safe	mikrobølgeovn i arbejdshøjde	MODEL-GENERATED	DK	BR18 does not regulate appliances
+Accessible lockers	garderobeskabe / opbevaringsbokse	MODEL-GENERATED	DK	believed usual words
+Accessible door hardware	dørgreb / dørhåndtag	MODEL-GENERATED	DK	held alias "dørgreb" (base) occurs in no text read
+Operating force (parameter 6)	åbningskraft	MODEL-GENERATED	DK	held alias; occurs in no text read
+Colour temperature (parameter 10)	farvetemperatur	MODEL-GENERATED	DK	held alias; occurs in no text read
+Protruding objects	udragende bygningsdele / fremspringende genstande	MODEL-GENERATED	DK	believed usual words
+Bollards	pullerter	MODEL-GENERATED	DK	usual Danish for bollards; street design texts (vejregler) not read
+Speed bumps	bump / vejbump	MODEL-GENERATED	DK	same
+Gratings	riste / dæksler	MODEL-GENERATED	DK	same
+Spouts	drikkefontæne / drikkevandspost	MODEL-GENERATED	DK	same
+Enclosures	bruseniche / bruseområde	MODEL-GENERATED	DK	same
+Landscaping elements|Flower or shrub planters|Vegetation	beplantning / plantekasser	MODEL-GENERATED	DK	same
+Scaffolding	stillads / gangpassage forbi byggeplads	MODEL-GENERATED	DK	kap. 7 read; nothing on routes past works
+Gradation limits	kornkurve	MODEL-GENERATED	DK	believed aggregate-grading term

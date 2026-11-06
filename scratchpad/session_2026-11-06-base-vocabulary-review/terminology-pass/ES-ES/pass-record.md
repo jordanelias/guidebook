@@ -1,0 +1,47 @@
+# Pass record — terminology pass ES/ES, session_2026-11-06-base-vocabulary-review
+
+**Verdict.** Three national Spanish instruments were retrieved from official sources (codigotecnico.org, BOE) and read in full in Spanish, apart from their figures: the clean DB-SUA articulado, RD 505/2007 and Orden TMA/851/2021 (consolidated to 3 September 2026). A fourth, RD 707/2026 on cognitive accessibility, surfaced from inside the TMA text and was read in part. It is not in force until 2 January 2027. Of 75 register concepts, 56 are FOUND, 12 FOUND-PARTIAL and 7 SEARCHED-ABSENT. The reverse harvest has 90 phrases. Every quote verifies in the saved text, and the 78 DB-SUA quotes also verify in the held commented edition. The pass is not complete for ES. The 17 autonomous-community accessibility codes, the other CTE documents (acoustics included) and the UNE standards were not read. Nothing was written to the database.
+
+## Retrieved and read
+- DB-SUA, articulado "14 junio 2022", `3cfb5bbb135e8f02.pdf`. Read: introducción, SUA 1–9, anejos A–C. [SKIPPED: every figure, which are images.] The held "con comentarios" edition (`1bc0a3fe0bdf78f2.pdf`, REF-01027) counts as held. Its articulado was read through the clean copy. [SKIPPED: the Ministry's comments, which the text calls non-regulatory.] Batch 23 had read only pages 1–2 and 27–28 of it.
+- RD 505/2007, consolidated to 11 March 2010, `28c05a6de0c17ba7.pdf`: read in full. The consolidated disposición final quinta begins mid-provision. The missing text was not sought.
+- Orden TMA/851/2021, consolidated to 3 September 2026, `6c3b1865d0b18bd1.pdf`: read in full. [SKIPPED: figures 1–2.]
+- RD 707/2026, `320a3d263fa4b99d.pdf`. Read: artículo único, DA 1–3, DF 4–8 and Reglamento arts 1–7. [SKIPPED: the preámbulo, DA 4–5, DF 1–3 and arts 8–21, which are outside the built environment.]
+- Not read: the autonomous-community codes, which are where Spanish housing and much building accessibility detail actually sits. Also not read: the other CTE Documentos Básicos and RD 1544/2007 (transport). UNE 41500:2020 and the eight cited UNE/UNE-EN standards were NOT ATTEMPTED, so none is marked NOT-OBTAINABLE. Currency: a CTE amendment entered public hearing on 2025-11-07, and whether it was approved is UNVERIFIED (search-log W2–W3).
+
+## Counts (re-run, do not trust; from the repository root, `D=scratchpad/session_2026-11-06-base-vocabulary-review/terminology-pass/ES-ES`)
+- Rebuild and verify: `python3 -I $D/build.py` (exits 1 on any unverified quote). At writing: 126 observations, 90 reverse-harvest rows, 0 failures, and 78/78 DB-SUA quotes also present in the commented edition.
+- Coverage: `cut -f3 $D/coverage.tsv | sort | uniq -c` gave 56 FOUND, 12 FOUND-PARTIAL, 7 SEARCHED-ABSENT. The register is 32 + 18 + 10 + 15. The last 15 are the B651 headings marked RHFAC-does-not-name, which the French pilot did not use.
+- Distinct phrases observed: `awk -F'\t' 'NR>1{print $2}' $D/observations.tsv | sort -u | wc -l` gave 125.
+- Rows per instrument: `awk -F'\t' 'NR>1{print $4}' $D/observations.tsv | sort | uniq -c` gave DB-SUA 78, TMA 36, RD505 11, RD707 1. For reverse-harvest.tsv it gave TMA 37, DB-SUA 29, RD707 15, RD505 9.
+- Held ES aliases occurring as substrings: 30 of 169 distinct (search-log G2 gives the query and method). Several hits are in other senses.
+- The raw-byte `locate_quote` check was NOT run. The artefacts are compressed PDFs, so verification is against the pdftotext extraction only.
+
+## Where Spanish carves the field differently (instrument-derived; glosses ours)
+1. **A ramp is defined by a slope threshold, and the two orders set it differently.** DB-SUA: "Los itinerarios cuya pendiente exceda del 4% se consideran rampa". TMA: ramps are "planos inclinados con pendiente superior al 6%". A kerb ramp ("vado peatonal") is not a "rampa" at all. A single "ramp gradient" parameter conflates three objects.
+2. **The accessible route is a defined bundle, split by setting.** "itinerario accesible" (building; anejo A lists levels, turning, corridors, doors, floor and slope as rows) differs from "itinerario peatonal accesible" (public space, art. 5). RD 505 adds "a nivel" and "entre diferentes niveles". Corridor width is a row of the route definition. "Estrechamientos puntuales" (permitted pinch points) are a sub-quantity the register lacks.
+3. **Landing is two words for one object.** DB-SUA uses "meseta" and TMA uses "rellano". The ends of a ramp are a "superficie horizontal" or "espacio", not a landing.
+4. **Riser is two words for two things.** The riser height is the "contrahuella" and the riser element is the "tabica". Open risers ("escalones sin tabica") are permitted on restricted-use stairs and prohibited outdoors. The nosing is not designed but forbidden: "No se admite bocel".
+5. **Tactile surfaces have two types, and the warning type is not the stair warning.** TMA has "direccional" (grooves) and "de advertencia" (truncated domes). The strip before stairs and ramps is the *direccional* one. Inside buildings, DB-SUA's stair strip is grooved too ("acanaladuras").
+6. **Contrast is never quantified for access.** "contraste cromático" and "color contrastado" occur without values. The only luminance ratio is for emergency safety signs (SUA 4, 2.4). This is BROADER than parameter 8.
+7. **Accessibility sits inside a safety code.** Headroom (SUA 2), lighting (SUA 4) and slip (SUA 1) are fall and impact *safety* exigencias. SUA 9 holds only provision and signage, and most access geometry is in the anejo A definitions.
+8. **The rules are organised by use class and by definitions.** Nine named "Uso" classes, plus "uso restringido", "uso público" and "zonas de ocupación nula", switch rules on and off. Dwellings are typed by user: "Vivienda accesible para usuarios de silla de ruedas" and "… para personas con discapacidad auditiva".
+9. **Cognitive accessibility has its own national regulation, built on a native frame.** RD 707/2026 art. 7.2 names "Deambulación, Aprehensión, Localización, Comunicación" (DALCO), "Control de los estímulos sensoriales" and three graded text registers: "Lectura fácil", "Lenguaje claro" and "Lenguaje sencillo". It requires "Validación" with "personas con dificultades cognitivas". The English register has no row for any of these.
+10. **Door width is two quantities, as in French.** One is measured "en el marco", the other at maximum opening "reducida por el grosor de la hoja".
+11. **Duties for existing buildings are framed as "ajustes razonables"** (RD 505) and "soluciones alternativas" with "mayor adecuación posible" (DB-SUA III). These are compliance routes the register has no axis for.
+
+## Defects found in the METHOD
+- **D1.** I added the 15 B651 "RHFAC-does-not-name" headings to the register, as the brief's concept list requires. The FR pass used 60 concepts, so ES and FR counts are not comparable without that adjustment.
+- **D2.** The quantity words (catalogue 2.2) again match by string in other senses: "capacidad" (car park), "fuerza" (structural load) and "relación" (luminance). The FOUND-PARTIAL calls in `PARTIAL` are my judgments.
+- **D3.** Held-alias substring hits over-attest, as in French. "marcha", held as gait, occurs only as "sentido/dirección de la marcha". Word-for-word aliases ("pendiente de rampa", "ancho de puerta", "área de giro", "contraste de luminancia", "pavimento podotáctil") occur in no text.
+- **D4.** pdftotext layout splits table cells and hyphenates words at line ends. build.py joins lower-case hyphen breaks in the DB-SUA texts only, which is a transform applied before verification. A quote could pass verification in the joined text while the raw extraction differs.
+- **D5.** The instrument list is not derivable from the base. `research_code_leads` holds only ramp leads (91, 93). RD 505/2007 came from the brief, and RD 707/2026 from a note inside the TMA text (search-log W4). The base has no autonomous-community leads at all.
+- **D6.** The search-log priors for W and F entries were written into the file after the calls returned. They came from working notes made before the calls, but the file cannot prove that.
+- **D7.** RD 707/2026 is not yet in force. Its 15 reverse-harvest phrases are attested in an enacted BOE text, but they bind only from 2027-01-02.
+
+## Self-attack: the five likeliest ways this record is wrong
+1. **Scope.** Spain's building accessibility is largely regulated by its autonomous communities. Reading only national texts makes SEARCHED-ABSENT mean "absent nationally". Lockers, shelters and kitchen appliances may well be treated in Catalan, Andalusian or Madrid codes, some in Catalan, Basque or Galician, which this pass also does not reach.
+2. **Currency.** The clean DB-SUA omits the 2023 correction that the commented edition lists. The 2025 CTE amendment may since have been approved. Either would make some locators or phrases stale without anything here showing it.
+3. **Concept matching is my reading.** Mapping "mesetas" to landings "at regular intervals" (through a maximum "tramo" length), "zona de aproximación" to clear approach space, or the "marquesinas" to Shelter is my equation, not the instrument's.
+4. **Locators were assigned by hand** from the reading. Anejo A rows are table cells without numbers, so "anejo A, Itinerario accesible, Puertas" locates a cell, not a paragraph.
+5. **Figures were unread.** DB-SUA's figures (stair geometry, door sweep, guarding) and TMA's figure 2 (franja-guía layout) may carry labelled terms that never reach the text layer.
