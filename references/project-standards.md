@@ -4894,3 +4894,23 @@ The owner then said the questions "may mean that you need an opus antagonist adj
 CONDITION: any session writing or reviewing the wording of a rendered page, a render record, or a template that turns a specification or an extraction into prose; any session asking whether a page may recommend, endorse or call a value correct.
 ACTION: (1) Apply the ratified posture of DR-2026-07-21 as the owner's present words restate it: describe and attribute, show the derivation and the strength flag and the disagreements, never adjudicate a correct path. (2) Treat the contract's section 8 positions as the assistant's proposals, and every [ASSUMPTION] mark above as unratified.
 DATE: 2026-10-30 — owner statement, quoted above.
+
+## Owner rulings 2026-11-06 — minimise code; no net-negative requirement
+
+Given in this session (https://claude.ai/code/session_01Ub36iMkXnQsEwzR9oaTqn1), in three messages after the gap register for the two pipeline batches was filed and handed to an analyst, and recorded on contact per `CLAUDE.md` rule 0. Each is quoted verbatim, including its lower case:
+
+- (question) "net negative rule? that is supposed to be reserved for minimizing code infrastructure?"
+- "we want to MINIMIZE code wherever possible. we don't require a net negative because the extreme of that means we end up with no code"
+- "we want the bare essentials in the most code efficient manner possible so that we are agile and lean"
+
+**What this does.** The readings are the assistant's and are marked; the owner's words above are the ruling.
+
+1. **The standing constraint is minimal code, not a shrinking total.** The 2026-10-12 direction (as little code as possible) stands and is sharpened to the bare essentials written as efficiently as possible. The net-negative requirement that operationalised it (a PR touching `scripts/`, `schemas/`, `.github/` or `skills/` may not raise their line total without naming the exception) is not required. [ASSUMPTION: the net-negative bullet is read as a rule about code infrastructure only, as the owner's question puts it, so it never applied to research rows, owner decisions, doctrine or prose.]
+2. **What stays.** The tests of `CLAUDE.md` section 8 that need no count: before adding a check, script or table, state what wrong thing reaches the guidebook without it; nothing is added without naming what reads it. [ASSUMPTION: "wherever possible" is a standing preference weighed case by case, not a gate, so a defect that reaches the guidebook is still fixed with the smallest code that closes it.]
+3. **Supersession.** The net-negative bullet of `CLAUDE.md` section 8 is rewritten in place, as that file's own rule directs (fix the sentence, put the account in the commit message). No `SUPERSEDES` pair is written for it: the audit anchors on a target quote that must still occur once, and the sentence it would quote no longer exists. The simplification plan's W3 (`workplan/2026-10-12-simplification-workplan.md`) and the "net-negative" item of the standing constraints and W1-W10 list in `workplan/2026-10-23-pipeline-resolution-workplan.md` restate the old bullet; they are plans, left as written, and this ruling governs where they differ.
+
+**What is unblocked, and what still waits.** Nothing waits on the owner. The Opus resolution analysis of GAP-074 to GAP-096 was told of the ruling and is to classify each tooling recommendation as close-as-accepted, rule or prose, reuse, delete or new code.
+
+CONDITION: any session writing or reviewing a PR that touches `scripts/`, `schemas/`, `.github/` or `skills/`, or asked whether a change must reduce the line total.
+ACTION: (1) Do not require or claim a net-negative total. Name what the added code reads and what wrong thing reaches the guidebook without it, and name any code it replaces or makes deletable. (2) Try, in order: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect. (3) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
