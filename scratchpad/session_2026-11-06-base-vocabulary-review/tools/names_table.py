@@ -40,6 +40,22 @@ for p in pairs:
         sh=sd[0]; sc=col(sh,'concept_label','register_concept','concept'); st=col(sh,'seed')
         for r in sd[1:]:
             if sc is not None and st is not None and len(r)>max(sc,st): seeds.setdefault(key(r[sc]),r[st])
+    if p=='EN-VARIANTS':
+        # English is one language in several jurisdictions: split into one column per jurisdiction
+        ji=col(oh,'jurisdiction'); phj=collections.defaultdict(lambda: collections.defaultdict(list))
+        for r in ob[1:]:
+            if oc is None or pc is None or ji is None or len(r)<=max(oc,pc,ji) or 'REVERSE' in r[oc].upper(): continue
+            for lab in re.split(r'\|',r[oc]):
+                if r[pc] and r[pc] not in phj[r[ji]][key(lab)]: phj[r[ji]][key(lab)].append(r[pc])
+        stj=collections.defaultdict(dict)
+        for r in cov[1:]:
+            if len(r)<=max(ci,si): continue
+            for i,x in enumerate(h):
+                m=re.match(r'^([A-Z]{2}) \(',x)
+                if m and i<len(r): stj[m.group(1)][key(r[ci])]=r[i].strip()
+        for j in sorted(phj):
+            data[f'EN-{j}']=(stj[j],phj[j],{})
+        continue
     data[p]=(status,phr,seeds)
 def cell(p,k):
     status,phr,seeds=data[p]; s=status.get(k,'')
@@ -49,6 +65,7 @@ def cell(p,k):
     if s: return '— '+s.lower()
     return ''
 hdr=['concept (English register, Canadian wording)']+pairs
+pairs=sorted(data)
 rows=[[label_of[k]]+[cell(p,k) for p in pairs] for k in order]
 with open(f'{ROOT}/concept-names-table.tsv','w',encoding='utf-8') as f:
     f.write('\t'.join(hdr)+'\n')
