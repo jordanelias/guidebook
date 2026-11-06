@@ -240,8 +240,8 @@ def user_tables(conn):
 def schema_objects(conn):
     """Views, triggers and indexes, by name -> DDL.
 
-    Rows are not the whole database. `v_best_practice` (migration 027/029) carries
-    the convergence-laundering exclusion in its WHERE clause, so editing that view
+    Rows are not the whole database. `v_best_practice` (migrations 027/029, redefined by
+    116 and 117) carries the state and retirement guard in its WHERE clause, so editing that view
     in the committed DB changes what the project treats as a best-practice claim
     while leaving every row identical. A row-only comparison calls that PASS.
     """

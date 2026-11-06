@@ -1411,7 +1411,9 @@ def determine(conn, parameter_id, lens, slug, note):
         falsification = ("Overturned if T1/Co-1/T2/Co-2 evidence emerges (cell upgrades to stated "
                          "per §2.7) or the T3 sources are retracted (cell downgrades to pending).")
     elif regulatory:
-        # G1: the determination is a Universal-Mode regulatory claim, never best practice.
+        # G1: a regulatory-stratum determination. It may be NAMED best practice (owner
+        # 2026-10-30, ratified in the second entry of that date; tier-system section 8, Option A),
+        # at the weak band and with the code-derived flag: never `stated`, never marked full.
         #
         # ── OPEN DOCTRINAL QUESTION, RECORDED 2026-09-10, DELIBERATELY NOT DECIDED ──
         # The B5a tier gate above conditions a source to NON-ANCHORING when its stored

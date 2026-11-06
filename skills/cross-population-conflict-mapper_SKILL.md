@@ -6,9 +6,9 @@ description: >
   CONFLICT DOMAIN (environmental parameter) rather than population pair. Retrieves
   resolution evidence from fragmented single-population literatures that do not
   cross-reference each other. Outputs a conflict matrix with resolution status
-  and evidence quality. ALWAYS use this skill when: writing Universal Mode or Tier 1
-  specifications for shared spaces; item-specification-writer encounters a space
-  serving multiple populations; any
+  and evidence quality. ALWAYS use this skill when: determining a parameter for a shared
+  space (Universal Mode or Tier 1); a determination run meets a parameter that more
+  than one population's evidence pulls in opposite directions; any
   specification mentions "adjustable", "zoned", or "user-controlled" without documenting
   which populations conflict. Trigger on: "cross-population conflict", "competing
   access needs", "accommodation conflict", "which populations conflict here",
@@ -17,7 +17,8 @@ description: >
 ---
 
 **Model:** Sonnet-class (retrieval/collation) · Opus-class or above (resolution synthesis + best-practice determination)
-**Input:** Environmental parameter(s) OR item specification draft OR room type
+**Input:** Environmental parameter(s) (`base_parameters`), a determination under review, or a room type
+**Keyed on the parameter.** The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` now **refuses** a `--pop-a` or `--pop-b` the table lacks (foreign keys, migration 121). The matrix below predates the table and uses descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`) that are not all codes: choose the identity code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17).
 **Output:** Conflict domain matrix + resolution evidence register + unresolved gap flags
 **Chunk ceiling:** ≤3 conflict domains per run
 
@@ -49,7 +50,7 @@ Search by domain — not by population pair.
 
 ### Step 1: Identify active domains
 
-From the input (item spec, room type, or explicit domain list):
+From the input (determination, room type, or explicit domain list):
 - List all population codes the space must serve
 - For each domain in §1, check if ≥2 populations with opposing needs are present
 - Active domains = those with ≥1 opposition
@@ -59,7 +60,7 @@ From the input (item spec, room type, or explicit domain list):
 For each active domain, search in this order:
 
 **Priority 1 — Existing project evidence:**
-- `references/bpc/` per-slug files for relevant populations
+- the parameter's extractions and live determination (`source_value_extractions`, `specifications`), read per lens column
 - SQLite `connections` table for PENDING connections: `python3 scripts/db.py connections --status PENDING`
 
 **Priority 2 — Aged care / dementia facility POEs:**
@@ -110,7 +111,6 @@ python3 scripts/db.py next-id conflicts
 
 # Log conflict (ensure pop_a < pop_b alphabetically)
 python3 scripts/db.py add-conflict \
-  --item-code [item_code] \
   --domain [LIGHT-INT|ACOUSTIC-LVL|...] \
   --pop-a [alphabetically first population] \
   --pop-b [alphabetically second population] \
@@ -129,7 +129,7 @@ python3 scripts/db.py add-gap \
   --priority P1 \
   --description "[domain]: [pop_a] vs [pop_b] — [why unresolved, what research is needed]" \
   --skill cross-population-conflict-mapper \
-  --section [item_code] \
+  --section "parameter [parameter_id]" \
   --session [session-name]
 
 # Then update the conflict with gap_id (use GAP-NNN returned above)
@@ -145,7 +145,7 @@ python3 scripts/db.py update-conflict \
 with already-resolved domains as context to skip. Query before each run:
 
 ```bash
-python3 scripts/db.py conflicts --item [item_code] --summary
+python3 scripts/db.py conflicts --domain [domain] --summary
 ```
 
 ### Step 5: Output conflict matrix (inline)
@@ -153,7 +153,7 @@ python3 scripts/db.py conflicts --item [item_code] --summary
 ```markdown
 ## Cross-Population Conflict Matrix — [scope]
 **Date:** YYYY-MM-DD HH:MM
-**Space/Item:** [identifier]
+**Space / parameter:** [identifier, parameter_id]
 **Populations served:** [codes]
 
 ### Active Conflicts
@@ -207,24 +207,23 @@ Known resolution archetypes (apply where evidence supports):
 ## 4. Interdependencies
 
 **Feeds FROM:**
-- `item-specification-writer` (item specs requiring conflict check)
+- the determination run (a parameter whose evidence is population-contested)
 - `connection-discovery` (cross-population tensions discovered — replaces connection-scout)
 - `content-gap-analyzer` (population coverage revealing conflict)
 - `multilingual-research` / `functional-deficit-researcher` (population-specific evidence)
 
 **Feeds INTO:**
-- `item-specification-writer` (conflict matrix informs spec ranges and DAR)
+- the determination run (`assess_cell.py`): a `contested` direction and the conflict matrix decide how a spread is shown
 - SQLite `conflicts` table (all conflicts via `db.py add-conflict`)
 - SQLite `gaps` table (UNRESOLVED only via `db.py add-gap --category CONF`)
-- Part 8 §8.4 (conflict resolution guidance)
 
 **Do NOT write to:**
 - `gap_register.md` (archived — use `db.py add-gap`)
 - `connection-register.md` (archived — use `db.py add-conflict`)
 - `references/connection-register-active.md` (archived)
 
-**Preceded by:** Population-specific BPC research for relevant populations
-**Followed by:** Item specification writing with conflict-aware ranges
+**Preceded by:** population-specific extractions for the parameter
+**Followed by:** the determination, with `set-parameter-direction contested` where the conflict is irreducible
 
 ---
 

@@ -449,13 +449,6 @@ checks:
 #      standard_name)). It is demonstrably non-vacuous -- its floor_basis (deleted in plan step 1.8,
 #      still in git history) recorded "examines 83 leads and was proven to fire by deleting one" -- and it ALREADY claims
 #      `basis: base/base-schema-validates`, so that criterion stays claimed without any edit here.
-#   2. `skills/workplan-orchestrator_SKILL.md` step "2b — Data health check" runs
-#      `python3 scripts/validate_schema.py --quick` as a documented, unconditional-when-`data/`-exists
-#      session-start step (`data/` exists in this repo). Deleting the file breaks that live, active
-#      skill's command. skills/ is out of this batch's edit scope, so that caller cannot be swept here
-#      (CLAUDE.md rule 4: "a rename or removal is not done until the callers are swept... so is a
-#      skill"). Per this batch's own caller-sweep instruction, a live active-skill caller is a STOP,
-#      not a delete.
 # Net effect: only the genuinely-vacuous blocking entry is gone. The file, `validate_schema_cross_check`,
 # and the `base-schema-validates` criterion (governance/pipeline-contract.yaml) are all untouched.
 - id: claude_skills_loadable

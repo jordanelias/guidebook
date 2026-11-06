@@ -5,7 +5,7 @@ These enums encode doctrinal decisions from project-standards.md.
 Changes here require a Change Order (CO) because they affect validation
 across all entity types.
 
-Population codes: workplan-orchestrator §Population Codes (canonical).
+Identity (population) codes: the `base_taxonomy_identity` table.
 Evidence tiers: `governance/tier-system.md` §1.
 Jurisdiction codes: jurisdiction-tracker §4.7.3 (24 canonical + meta-codes).
 """

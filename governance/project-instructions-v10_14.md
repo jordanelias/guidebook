@@ -57,7 +57,7 @@ Active reference files:
 <skills_assigned>
 Skill assignments are governed by `references/skill-registry.md`. Skills that PI itself invokes by name:
 
-- `workplan-orchestrator` — runs at session start; selects workflow
+- `run-pipeline` — runs a multi-stage pipeline (variant `from-evidence`); a session opens with `/session-open` then `/orient` (replaces `workplan-orchestrator`, retired 2026-11-06)
 - `session-consolidator` — runs at session close per `<session_close>` below
 - `research-log-manager` — per standing rule #4 (`CHECK` before research, `LOG` after)
 - `toc-editor` — per standing rule #3 for structural changes

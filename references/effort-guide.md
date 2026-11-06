@@ -56,7 +56,7 @@ Per-skill effort overrides for the `/effort` parameter. `/effort` sets Claude's 
 | citation-miner | Forward/backward citation network traversal; tier classification |
 | citation-verifier | Tool-dependent lookup and classify; tier-1 sources require judgment |
 | gap-driven-mining | Gap-keyed search-matrix execution with outcome judgment; depth-1 constraint; rule #7/#8/#10 interlocks (DR-2026-05-26) |
-| workplan-orchestrator | Multi-skill workflow coordination; risk escalation decisions |
+| run-pipeline | Multi-stage orchestration; synthesis authorship is Opus-class; adversarial pass |
 | connection-discovery | Identify candidate cross-BPC connections |
 | cross-reference-resolver | Audit and classify broken refs; mechanical repair handoff |
 | doctrine-recheck | A13 doctrine snapshot + cross-reference recheck |
