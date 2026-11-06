@@ -1,0 +1,11 @@
+register_concept	seed_NO	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Microwave mounting height accessible and safe	plassering av mikrobølgeovn / betjeningshøyde for kjøkkenutstyr	MODEL-GENERATED	NO	TEK17 does not regulate appliances; believed to appear only in housing-adaptation guidance (Husbanken, SINTEF), not read
+time	åpningstid og holdetid for automatisk dør	MODEL-GENERATED	NO	believed to be NS 11001-1 or door-automation standard vocabulary; not in TEK17 or its guidance
+volume	lydnivå / lydstyrke på høyttaleranlegg	MODEL-GENERATED	NO	sound level of public-address systems; NS 8175 not read
+Colour temperature (parameter 10)	fargetemperatur (K)	MODEL-GENERATED	NO	believed in NS-EN 12464-1 lighting vocabulary (cited by § 13-7 guidance, not read)
+Spouts	drikkefontene / vannpost	MODEL-GENERATED	NO	drinking fountains are not regulated by TEK17; Statens vegvesen V129 not read
+Speed bumps	fartsdump / fartshump	MODEL-GENERATED	NO	road vocabulary; Statens vegvesen handbook V129 (cited by § 8-8 guidance) is the instrument to read
+Guy wires	barduner	MODEL-GENERATED	NO	ordinary technical word for guy wires; no accessibility instrument read uses it
+Scaffolding	stillas / byggeplass	MODEL-GENERATED	NO	worksite rules sit in byggherreforskriften, not TEK17
+Gradation limits	kornfordeling / gradering av grus	MODEL-GENERATED	NO	trail-surface aggregate grading; believed in Statens vegvesen and friluftsliv guidance, not read
+Seating (FOUND-PARTIAL)	hvilebenk / sittemulighet langs gangvei	MODEL-GENERATED	NO	rest seating along routes; believed in V129 and municipal guidance
