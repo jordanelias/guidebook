@@ -4894,3 +4894,31 @@ The owner then said the questions "may mean that you need an opus antagonist adj
 CONDITION: any session writing or reviewing the wording of a rendered page, a render record, or a template that turns a specification or an extraction into prose; any session asking whether a page may recommend, endorse or call a value correct.
 ACTION: (1) Apply the ratified posture of DR-2026-07-21 as the owner's present words restate it: describe and attribute, show the derivation and the strength flag and the disagreements, never adjudicate a correct path. (2) Treat the contract's section 8 positions as the assistant's proposals, and every [ASSUMPTION] mark above as unratified.
 DATE: 2026-10-30 — owner statement, quoted above.
+
+## Owner statements 2026-11-06 — the old item subjects are admitted as a basis for the base vocabulary; the base must serve every P1+P2+P3 language; Opus plans the population
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9 after a read-only review of the base tables (`scratchpad/session_2026-11-06-base-vocabulary-review/base-review.md`, PR #213), and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim; the first two arrived mid-turn.
+
+On language and jurisdiction scope:
+
+> "these base tables, as per our aliases and native terms and translations and multilingual and multijurisdictional requirements etc, must work across all languages that we have defined for this current edition of project (the p1+2+3, I think it's called, for the initial countries to focus on)"
+
+On prior work:
+
+> "we should have some work already done based upon previous editions of this project and those listed specification items"
+
+On the question the review put (whether the 93 item subjects, value-stripped, may be admitted as a catalogue for prepopulating parameter names, overriding the 2026-10-09 exclusion):
+
+> "great work. yes, use the 93 items with stripped values as a basis. with your criticisms in mind, have Opus plan out a strategy with which to populate the base tables and address all listed issues such that we have a truly comprehensive international project without English bias"
+
+**What this establishes**
+
+1. **The 93 item subjects are admitted as a basis.** This reverses, for the pre-reset `items` names only, the 2026-10-09 clause that the old Part 4 item names "are not a permitted source" (the entry "Owner statements 2026-10-09 — every source is scanned for every parameter…", item 3). The mark of that supersession is this item: the back-pointer grammar cannot mark a clause that sits in this ledger.
+2. **What "basis" does not do.** It does not mint anything. The guard the owner chose on 2026-10-09 stands: "Screen, then you approve". Each candidate is screened (no digit, comparator or min/max word, no old item code, not already held) and listed in one table with the item it came from, and the owner approves that table in a further dated entry before any term is minted. [ASSUMPTION: "use … as a basis" means a source of candidate names under that guard, not an approval of the names, and not a licence to file findings into the old item containers. The deletion of the item layer (2026-09-01) stands; an item subject is a lead for a quantity, never a container.]
+3. **A route is owed.** `terms.catalogue` admits only the five files its CHECK names, and `_resolve_catalogue_entry` resolves the pre-reset corpus for `terms:<TERM-ID>` only. Admitting the item subjects is a schema change plus a resolver, which ships as a tooling-only pull request before any name is minted (`CLAUDE.md` rule 10).
+4. **The language scope is P1+P2+P3.** The base tables, aliases, native terms and translations must work across every language those jurisdictions require. [ASSUMPTION: the set is the one recorded in `workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` section 3 (US UK AU CA DE NO SE ISO EU; FR CH NL DK FI BE IE ES IT PT; JP SG NZ KR CN), which the owner confirmed on 2026-10-30 ("Yes it is P1+P2+P3"), giving the 14 languages `lang_jur_map` pairs with them. The 2026-10-29 OR-12a scoping-out of Arabic, Bengali, Hindi and Swahili is not touched by this statement.]
+5. **Opus plans.** An Opus-class planner writes a strategy to populate the base tables and to address the review's listed issues (the parameter list at ten rows, the unverified and English-biased alias layer, the English-only ICF, identity, need and room tables, the empty medical lens, the missing topics). The plan is a proposal: it approves nothing and writes no rows.
+
+CONDITION: any session asking whether the 93 old item names may seed parameters, whether item subjects are still excluded as a source, whether the base vocabulary must cover the P1+P2+P3 languages, or who plans the population of the base tables.
+ACTION: (1) Treat the pre-reset item subjects, value-stripped and with their codes removed, as a permitted source of candidate names, never as containers. (2) Mint no name from them before a tooling pull request adds the catalogue route and the owner approves the screened table in a dated entry. (3) Build base vocabulary, aliases and native terms for every P1+P2+P3 language, with in-language provenance (R11); never treat an English term translated word for word as a native term. (4) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
