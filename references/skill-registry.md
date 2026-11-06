@@ -75,7 +75,7 @@ bibliography-compiler             doctrine-recheck                  github-io   
 citation-miner                    economics-researcher              integrity-protocol                supersession-audit
 citation-verifier                 evidence-auditor                  jurisdiction-tracker              toc-editor
 connection-discovery              evidence-metadata-rehabilitation  multilingual-research             voice-style
-content-gap-analyzer              find-and-replace                  prose-style-checker               workplan-orchestrator
+content-gap-analyzer              find-and-replace                  prose-style-checker               run-pipeline
 cross-population-conflict-mapper  functional-deficit-researcher
 ```
 

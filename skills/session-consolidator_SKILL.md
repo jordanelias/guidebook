@@ -6,7 +6,7 @@ description: >
   patterns, writes YAML session-close block to GitHub sessions/ directory, and appends learned
   rules to references/project-standards.md. ALWAYS use this skill at session end. Trigger on:
   "end of session", "wrap up", "consolidate findings", "update project knowledge", "write
-  session close", "save progress", or when workplan-orchestrator session-end protocol runs.
+  session close", "save progress".
 ---
 > **C2 overhaul 2026-05-05:** Register queries now use SQLite instead of markdown/YAML.
 > **Phase 1-C verified 2026-05-04:** Steps 1b (gaps, connections) confirmed SQLite-native. No remaining markdown register dependencies.
