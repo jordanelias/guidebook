@@ -39,10 +39,12 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 DEBT = ("NOT-READ", "READ-PARTIAL")
-# BLOCKED (migration 122): the source carries a processing_blocked_reason (no full text,
-# paywalled, ...), so nothing of it can be read and the pair is not debt until the block
-# clears. Printed apart so it is visible, never silently paid down: until 2026-11-06 such
-# sources sat under NOT-READ and the debt could not reach zero by any amount of reading.
+# BLOCKED (migrations 122, 123): the source carries a processing_blocked_reason that the
+# ledger classes as an obstacle to the text (no full text, paywalled, ...), so nothing of it
+# can be read and the pair is not debt until the block clears. A reason the ledger does not
+# class as an obstacle leaves the pair NOT-READ. Printed apart so it is visible, never
+# silently paid down: until 2026-11-06 such sources sat under NOT-READ and the debt could not
+# reach zero by any amount of reading.
 
 
 def main():
@@ -82,7 +84,8 @@ def main():
         print(f"  {s:<19} {status.get(s, 0)}")
     if status.get("BLOCKED"):
         print(f"  ({status['BLOCKED']} BLOCKED pair(s) are not debt: their source carries a "
-              f"processing_blocked_reason and cannot be read until it clears)")
+              f"processing_blocked_reason the ledger classes as an obstacle, so it cannot be "
+              f"read until the block clears)")
     if not debt:
         print("PASS: every pair is extracted, stated absent, blocked, or read in full")
         return 0

@@ -371,7 +371,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R2", f"only {mined_rows} citation_mining rows for {admitted} anchors — mining is "
                    f"token rather than systematic (expect >= {max(1, admitted // R2_MINING_PER_ANCHORS)}).")
     else:
-        ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors")
+        ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors" if admitted else
+           "EXAMINED: 0 tier-1..3 anchors admitted, so this asserts nothing")
 
     # --- R3 clause citation on quantified regulatory values -----------------------------
     # ROW-LEVEL since 2026-11-06. This read evidence_sources alone (tier >= 4 with no
@@ -889,9 +890,25 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # and batch 05 admitted nine sources and harvested nothing. Nobody noticed until
     # someone counted the rows by hand a day later. Without this line the harvest is
     # a rule with no reader, which §1 calls the same defect as an unread field.
+    # BLOCKED is read from v_scan_ledger, never from processing_blocked_reason: the view is the
+    # one home of which reasons are obstacles to the text (migration 123), so a reason that
+    # says nothing was unobtainable (`out-of-scope`) still owes its observation.
+    blocked_sql = ("EXISTS (SELECT 1 FROM v_scan_ledger l WHERE l.ref_id = e.ref_id "
+                   "AND l.status = 'BLOCKED')"
+                   if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='v_scan_ledger'")[0][0]
+                   else "0")
     unharvested = _rows(cx,
         "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS ("
-        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id)" + escope, sargs)
+        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id) AND NOT " + blocked_sql
+        + escope, sargs)
+    blocked_unharvested = [r[0] for r in _rows(cx,
+        "SELECT e.ref_id FROM evidence_sources e WHERE NOT EXISTS ("
+        "SELECT 1 FROM observed_terms o WHERE o.ref_id = e.ref_id) AND " + blocked_sql
+        + escope + " ORDER BY e.ref_id", sargs)]
+    blocked_txt = ("; REPORTED, not asserted: %d BLOCKED admission(s) owe no observation until "
+                   "the block clears: nothing of them can be read: %s"
+                   % (len(blocked_unharvested), ", ".join(blocked_unharvested[:8]))
+                   if blocked_unharvested else "")
     harvested = _rows(cx,
         "SELECT COUNT(*) FROM observed_terms o WHERE EXISTS ("
         "SELECT 1 FROM evidence_sources e WHERE e.ref_id = o.ref_id" + escope + ")",
@@ -900,15 +917,17 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         fail("R11-harvest",
              "%d admitted source(s) with no observed_terms row: %s. D-0173 harvests the "
              "concept vocabulary AT EVIDENCE, in the source's own words: "
-             "db.py observe-term --ref-id ... --surface-form ..." % (
-                 len(unharvested), ", ".join(r[0] for r in unharvested[:8])),
+             "db.py observe-term --ref-id ... --surface-form ...%s" % (
+                 len(unharvested), ", ".join(r[0] for r in unharvested[:8]), blocked_txt),
              len(unharvested))
     else:
         ok("R11-harvest",
-           "%d concept observation(s) across this batch's admissions; every admitted "
-           "source carries at least one. Whether they are the RIGHT phrases is NOT "
-           "tested here — judgment adjudicates them" % harvested if harvested else
-           "EXAMINED: 0 sources. This batch admitted none, so this asserts nothing")
+           ("%d concept observation(s) across this batch's admissions; every admitted "
+            "source that can be read carries at least one. Whether they are the RIGHT phrases "
+            "is NOT tested here -- judgment adjudicates them%s" % (harvested, blocked_txt))
+           if harvested else
+           "EXAMINED: 0 sources. This batch admitted none, so this asserts nothing%s"
+           % blocked_txt)
 
     # --- R16 / R16-adjudicate: every concept a source states a figure for is disposed of ---
     # Added 2026-10-02 for GAP-061 (plan: scratchpad/session_2026-10-01-research-batch-23/
@@ -1036,14 +1055,16 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='source_scans'")[0][0]:
         cat_read = ("EXISTS (SELECT 1 FROM source_scans s WHERE s.ref_id = e.ref_id "
                     "AND s.mode = 'catalogue')")
-        # A BLOCKED admission (processing_blocked_reason set: no full text, paywalled, ...)
-        # cannot be read, so it owes no reading until the block clears; v_scan_ledger shows
-        # it BLOCKED (migration 122) and this gate reports it rather than failing it.
+        # A BLOCKED admission (v_scan_ledger status: its processing_blocked_reason says the
+        # text could not be obtained or read) owes no reading until the block clears, and this
+        # gate reports it rather than failing it. Read from the view, never the column: the
+        # view is the one home of which reasons are obstacles (migration 123), so a source
+        # carrying `out-of-scope` still owes its reading.
         blocked = [r[0] for r in _rows(
-            cx, "SELECT e.ref_id FROM evidence_sources e WHERE e.processing_blocked_reason IS "
-                "NOT NULL AND e.superseded_by_ref_id IS NULL" + escope + " ORDER BY e.ref_id",
+            cx, "SELECT e.ref_id FROM evidence_sources e WHERE " + blocked_sql
+                + " AND e.superseded_by_ref_id IS NULL" + escope + " ORDER BY e.ref_id",
             sargs)]
-        live_adm = " AND e.superseded_by_ref_id IS NULL AND e.processing_blocked_reason IS NULL"
+        live_adm = " AND e.superseded_by_ref_id IS NULL AND NOT " + blocked_sql
         if allmode:
             owed_rows = _rows(cx, "SELECT e.ref_id, " + cat_read + " FROM evidence_sources e "
                               "WHERE 1=1" + live_adm + escope + " ORDER BY e.ref_id", sargs)
@@ -1062,8 +1083,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                   "phase owes them" % (len(grandfathered), R16_SCAN_FROM,
                                        ", ".join(grandfathered[:8]))
                   if grandfathered else "")
-        gf_txt += ("; REPORTED, not asserted: %d admission(s) are BLOCKED (processing_blocked_"
-                   "reason set) and owe no reading until the block clears: %s"
+        gf_txt += ("; REPORTED, not asserted: %d admission(s) are BLOCKED (a reason the "
+                   "ledger classes as an obstacle) and owe no reading until the block clears: %s"
                    % (len(blocked), ", ".join(blocked[:8])) if blocked else "")
         if missing_reads:
             fail("R16-scan",
@@ -1255,8 +1276,11 @@ def selftest():
         print("SELFTEST: SKIP — no live DB to clone schema from")
         return 0
     live = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    # Tables first, then views: the gate reads v_scan_ledger for BLOCKED (migration 123), and a
+    # view created over tables that exist resolves; SQLite does not check at CREATE time.
     ddl = [r[0] for r in live.execute(
-        "SELECT sql FROM sqlite_master WHERE type='table' AND sql IS NOT NULL")]
+        "SELECT sql FROM sqlite_master WHERE type IN ('table', 'view') AND sql IS NOT NULL "
+        "ORDER BY type = 'view'")]
     live.close()
 
     fd = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
@@ -1500,6 +1524,19 @@ def selftest():
         cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,article_number,"
                    "superseded_by_ref_id,created_at,created_by_session) "
                    "VALUES (?,6,'code','§1',?,?,?)", (ref, sup, created, T))
+    # R11-harvest and R16-scan read BLOCKED from v_scan_ledger (2026-11-06, R2-3). Two more
+    # admissions, each with an edge (so R17 is unmoved), no reading and no observation:
+    #   REF-ST20  processing_blocked_reason 'paywalled': an obstacle, so the ledger says BLOCKED
+    #             and both gates REPORT it and count it for nothing
+    #   REF-ST21  'out-of-scope': not an obstacle, so the ledger says NOT-READ and both gates
+    #             still COUNT it (the 16 and 18 asserted below)
+    # The ledger crosses sources with ACTIVE parameters; TERM-ST-P, below, is one.
+    for ref, reason in (("REF-ST20", "paywalled"), ("REF-ST21", "out-of-scope")):
+        cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,article_number,"
+                   "processing_blocked_reason,created_at,created_by_session) "
+                   "VALUES (?,6,'code','§1',?,NULL,?)", (ref, reason, T))
+        cx.execute("INSERT INTO search_admissions (exec_id,ref_id,created_at,"
+                   "created_by_session) VALUES (3,?,'t',?)", (ref, T))
     for ref, mode, target in (("REF-ST2", "catalogue", None), ("REF-ST3", "targeted", 1),
                               ("REF-ST4", "catalogue", None)):
         cx.execute("INSERT INTO source_scans (ref_id,mode,catalogue_version,"
@@ -1531,6 +1568,10 @@ def selftest():
     try:
         with contextlib.redirect_stdout(report):
             rc = audit(session=T, capture=caught)
+        zero = io.StringIO()
+        with contextlib.redirect_stdout(zero):
+            audit(session="SELFTEST-NO-ADMISSIONS", capture={})
+        zero_report = zero.getvalue()
     finally:
         DB_PATH = real
         os.unlink(fd.name)
@@ -1572,13 +1613,26 @@ def selftest():
     count_bad = False
     # R3 (row-level) and R14 (column-aware) counts added 2026-11-06 with their negative
     # fixtures: R3's unread code REF-ST1 holding no row, R14's classed exec 5.
-    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 15), ("R17", 16),
+    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 16), ("R11-harvest", 18), ("R17", 16),
                        ("R3", 1), ("R14", 1)):
         n = caught.get(rule, 0)
         if n != want:
             count_bad = True
             print(f"  **{rule} COUNT {n}, EXPECTED {want}** — a clause of the predicate has "
                   f"been dropped or narrowed; see the {rule} fixture comment in selftest().")
+    # BLOCKED fixtures (R2-3): both gates report the paywalled admission as BLOCKED, apart from
+    # what they count (the counts above are where the out-of-scope one is asserted).
+    for rule in ("R11-harvest", "R16-scan"):
+        line = "".join(l for l in report.getvalue().splitlines(True) if f"{rule}:" in l)
+        if "REF-ST20" not in line.partition("BLOCKED")[2]:
+            count_bad = True
+            print(f"  **{rule} BLOCKED FIXTURE WRONG** -- REF-ST20 (paywalled) must be "
+                  f"reported as BLOCKED; see the BLOCKED fixture comment in selftest().")
+    # R2's zero-anchor pass must say it asserts nothing (R2-13): a session with no admissions.
+    if "EXAMINED: 0 tier-1..3 anchors admitted, so this asserts nothing" not in zero_report:
+        count_bad = True
+        print("  **R2 ZERO-ANCHOR PASS WRONG** -- a session with no tier 1..3 anchor must print "
+              "that it asserts nothing, not 'rows for 0 anchors'.")
     # R16-scan's grandfathered admission is REPORTED, never failed; the tombstone is neither.
     scan_text = "".join(l for l in report.getvalue().splitlines(True) if "R16-scan:" in l)
     scan_failed_part, _s, scan_reported_part = scan_text.partition("REPORTED, not asserted:")

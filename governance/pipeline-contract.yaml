@@ -219,8 +219,7 @@ stages:
       amend-extraction; the corpus-wide reader is the check below, red while rows written
       before the writer refused the state stand (derive: run it).'
     references: 'references/project-standards.md, "Owner rulings 2026-10-29 (second)" OR-11a
-      ("Yes, require a full-scope scan"); the scan contract (migration 103, v_scan_ledger);
-      the render contract C5'
+      ("Yes, require a full-scope scan"); the scan contract (migration 103, v_scan_ledger)'
     check: scripts/audit/verified_scan_integrity.py
 - id: synthesis
   anchor: 'best_practice_synthesis / ISW; PI rule #9 (9-step); Opus-only (rule #2)'

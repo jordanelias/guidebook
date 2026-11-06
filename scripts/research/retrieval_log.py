@@ -768,12 +768,12 @@ _ARTEFACT_INDEX = {}
 
 class _Artefact:
     """One manifest line's saved file; `body()` reads, decodes and normalises it once."""
-    __slots__ = ("dname", "artefact", "ref_id", "path", "content_type", "_done", "_body",
-                 "_enc")
+    __slots__ = ("dname", "artefact", "ref_id", "path", "content_type", "derived", "_done",
+                 "_body", "_enc")
 
-    def __init__(self, dname, artefact, ref_id, path, content_type):
+    def __init__(self, dname, artefact, ref_id, path, content_type, derived=False):
         self.dname, self.artefact, self.ref_id = dname, artefact, ref_id
-        self.path, self.content_type = path, content_type
+        self.path, self.content_type, self.derived = path, content_type, derived
         self._done, self._body, self._enc = False, None, None
 
     def body(self):
@@ -813,7 +813,8 @@ def _artefact_index(session=None):
             art = d / rec.get("artefact", "")
             if art.is_file():
                 entries.append(_Artefact(d.name, rec.get("artefact", ""), rec.get("ref_id"),
-                                         art, rec.get("content_type")))
+                                         art, rec.get("content_type"),
+                                         bool(rec.get("derived"))))
     _ARTEFACT_INDEX[key] = (sig, entries)
     return entries
 
@@ -1454,21 +1455,42 @@ def repeated_author_name(authors):
 
 def decodable_body_artefacts(ref_id):
     """'session/artefact' for each held artefact of `ref_id` that carries a decodable BODY: a
-    text derived by full_text.py, or a fetched text/HTML page. A metadata record (JSON, XML)
-    is not a body, and bytes that do not decode are not either. Read by db.py's
+    derived text (the manifest's `derived` flag, with no declared content type -- a derived
+    image or JSON declares its own), or a fetched text/HTML page. A metadata record (JSON,
+    XML) is not a body, and bytes that do not decode are not either. Read by db.py's
     `--verbatim-exempt` refusal: the exemption is for a source that holds no such body."""
     out = []
     for a in _artefact_index():
         if a.ref_id != ref_id:
             continue
         ct = (a.content_type or "").lower()
-        derived = a.artefact.endswith("-full-text.txt")
-        if not derived and not ct.startswith("text/"):
+        if not (ct.startswith("text/") or (a.derived and not ct)):
             continue
         body, _enc = a.body()
         if body:
             out.append("%s/%s" % (a.dname, a.artefact))
     return out
+
+
+def payload_page_range(ref_id):
+    """The `page` string of a held Crossref-shaped payload for `ref_id`, or None.
+
+    Reads the manifest lines carrying this ref_id and parses each as `--verify-authors`
+    does (a work under `message` with a DOI). The deposit is the only machine-knowable
+    statement that the document is paged; nothing here curates what a landing page looks
+    like. Read by db.py `record-scan`: a text with no page markers cannot be a full reading
+    of a document its own deposit gives a page range.
+    """
+    for a in _artefact_index():
+        if a.ref_id != ref_id or a.derived:
+            continue
+        try:
+            msg = json.loads(a.path.read_text(encoding="utf-8")).get("message")
+        except Exception:                                # noqa: BLE001 -- not JSON: not a payload
+            continue
+        if isinstance(msg, dict) and msg.get("DOI") and str(msg.get("page") or "").strip():
+            return str(msg["page"]).strip()
+    return None
 
 
 def _biblio_divergences(msg, row):
@@ -1878,18 +1900,21 @@ def verify_authors(session):
             unlogged.append((ref_id, doi))
             continue
         examined += 1
+        authors = msg.get("author", [])
         real = [((a.get("family") or a.get("name") or ""), (a.get("given") or ""))
-                for a in msg.get("author", [])]
+                for a in authors]
         stored = [tuple(r) for r in cx.execute(
             "SELECT last_name, COALESCE(first_name,'') FROM evidence_source_authors "
             "WHERE ref_id=? ORDER BY position", (ref_id,))]
-        repeated = repeated_author_name(msg.get("author", []))
+        repeated = repeated_author_name(authors)
         if repeated:
-            # The payload, not the row, is the thing that cannot be true (see
-            # repeated_author_name). Reported under its own word; a cross here would send
-            # an operator to correct-source, which refuses the same payload.
+            # The payload is malformed (see repeated_author_name), reported under its own
+            # word. It is not a licence to stop comparing: the human authors (Crossref files
+            # a person under `family`/`given` and an affiliation under `name` alone) are
+            # still a byline, and a stored row that disagrees with them is a cross.
             malformed.append((ref_id, repeated))
-        elif _author_conflict(real, stored):
+            real = [(a["family"], (a.get("given") or "")) for a in authors if a.get("family")]
+        if (real or not repeated) and _author_conflict(real, stored):
             bad.append((ref_id, [_disp(*a) for a in real], [_disp(*a) for a in stored]))
         mm, gp = _biblio_divergences(msg, row)
         if mm:

@@ -11,19 +11,37 @@ verdicts (`SUBSUMES`, `CONFLATED_VARIABLE`) with no typed home. An operator who 
 such a sentence writes prose into a free-text cell, or is refused by a writer the skill
 said would accept the value -- either way the page downstream cannot join what was typed.
 
-WHAT IT CHECKS. Every backticked token and every ALL-CAPS hyphenated token in a skill,
-command or agent file that is SHAPED like a vocabulary value or an identifier (contains
-`_` or `-`, or is all capitals) must resolve to one of the homes the repository holds:
-a CHECK vocabulary value (dbcore.check_values over every column), a table, view or column
-name, a `db.py` verb or flag, a registered check id, a pipeline-contract criterion id, a
-file the tree holds, an R-rule label (R1..R99, from governance/research-contract.yaml), an
-identity, ICF, access-need, slug or term id live in its registry, or a placeholder (a token
-carrying NNN/XXX/YYYY/MM/DD). Everything else is UNRESOLVED and printed with its file.
+WHAT IT CHECKS. Every BACKTICKED token in a skill, command or agent file that is SHAPED like a
+vocabulary value or an identifier (contains `_` or `-`, or is all capitals) must resolve to one
+of the homes the repository holds, and to nothing else: a table, view, column, `table.column` or
+CHECK vocabulary value (dbcore.check_values over every column) or a view's CASE literal; a
+`db.py` verb (from `--help`) or flag (from the parser source); a registered check id; a
+pipeline-contract stage or criterion id; an R-rule label (governance/research-contract.yaml); a
+skill, command or agent stem; a tracked path or basename; an identity, ICF, access-need, slug,
+term or gap id live in its registry; `sqlite_master` / `sqlite_sequence`; a placeholder (a token
+carrying NNN/XXX/YYYY/<>); or a token the file defines in its own table. Everything else is
+UNRESOLVED and printed with its file. Bare ALL-CAPS words in prose are not examined: only a
+backticked token is a value the skill tells the operator to type.
+
+WHAT IS DELIBERATELY NOT A HOME. Strings the audit scripts, the writers or CLAUDE.md happen to
+quote (their markers, dictionary keys, module-level names, environment variables), and the
+registry's own keys. Harvesting them made `item_code`, `E-08`, `population_code` and `axis_code`
+resolve, so the check could not go red on the retired item layer it exists to catch. The markers
+the gates read out of note cells (`[UNVERIFIED-QUANT]`, `CO1-NOT-APPLICABLE`,
+`NOTHING-IN-SCOPE`) are therefore reported wherever a skill backticks them. That is correct:
+they are conventions the 2026-11-06 ruling on joined cells queues for typed columns, not
+vocabulary.
+
+WHAT WRONG THING REACHES THE GUIDEBOOK WITHOUT IT. An operator following a skill that names a
+retired container or a column that does not exist writes the fact into a note cell, which no
+later stage can join (the 2026-11-06 ruling on joined cells), or is refused by a writer the
+skill said would accept the value. It reads the schema, `db.py --help`, the parser source and
+the registries; nothing is curated here.
 
 ADVISORY, with a per-file report: skills written before the vocabulary moved carry prior-
-version tokens, and the remedy is a prose edit under rule 4, not a curated allow-list here.
-EXAMINED is the number of tokens tested. Exit 0 when every token resolves, 1 otherwise,
-2 when it cannot run.
+version tokens, and the remedy is a prose edit under rule 4, not an allow-list here. EXAMINED
+is the number of tokens tested. Exit 0 when every token resolves, 1 otherwise, 2 when it
+cannot run.
 
 Usage: python3 scripts/audit/skill_vocabulary_audit.py [--paths skills .claude/commands ...]
 """
@@ -42,7 +60,7 @@ import dbcore  # noqa: E402
 
 DEFAULT_PATHS = ("skills", ".claude/commands", ".claude/agents")
 PLACEHOLDER = re.compile(r"NNN|XXX|YYYY|<|>|\.\.\.|-ID$")
-TOKEN = re.compile(r"`([^`\n]+)`|\b([A-Z][A-Z0-9]{2,}(?:[-_][A-Z0-9]+)+)\b")
+TOKEN = re.compile(r"`([^`\n]+)`")
 SHAPED = re.compile(r"^[A-Za-z][A-Za-z0-9_.-]*$")
 
 
@@ -67,16 +85,14 @@ def homes(conn):
             out |= {r[col] for r in conn.execute(sql)}
         except sqlite3.Error:
             pass
+    # Verbs: the subcommand list argparse prints. Flags: db.main() builds its parser inside the
+    # function, so they are read from the source rather than by importing the module.
     helptext = subprocess.run([sys.executable, str(REPO / "scripts/db.py"), "--help"],
                               capture_output=True, text=True, cwd=REPO).stdout
-    out |= set(re.findall(r"\b([a-z]+(?:-[a-z]+)+)\b", helptext))
-    # Every flag of every verb: db.main() builds its parser inside the function, so the flags
-    # are harvested from the source rather than by importing the module.
-    try:
-        src = (REPO / "scripts/db.py").read_text(encoding="utf-8")
-        out |= {m for m in re.findall(r'add_argument\("(--[a-z0-9-]+)"', src)}
-    except OSError:
-        pass
+    verbs = re.search(r"\{([^}\n]+)\}", helptext)
+    out |= set(verbs.group(1).split(",")) if verbs else set()
+    out |= set(re.findall(r'add_argument\("(--[a-z0-9-]+)"',
+                          (REPO / "scripts/db.py").read_text(encoding="utf-8")))
     import yaml  # noqa: E402
     reg = yaml.safe_load((REPO / "governance/check-registry.yaml").read_text(encoding="utf-8"))
     out |= {c["id"] for c in reg.get("checks", []) if isinstance(c, dict) and "id" in c}
@@ -95,37 +111,7 @@ def homes(conn):
             out.add(p.rsplit("/", 1)[-1][:-len("_SKILL.md")])
         if p.startswith((".claude/commands/", ".claude/agents/")) and p.endswith(".md"):
             out.add(p.rsplit("/", 1)[-1][:-3])
-    # The markers the gates and writers READ out of note cells and output lines
-    # (`CO1-NOT-APPLICABLE`, `[UNVERIFIED-QUANT]`, `NOTHING-IN-SCOPE`): derived from the code
-    # that reads them, never listed here, so a marker the code stops reading stops resolving.
-    for p in tracked:
-        if p.startswith(("scripts/audit/", "scripts/research/", "scripts/assess/")) and p.endswith(".py") \
-                or p in ("scripts/db.py", "scripts/dbcore.py", "scripts/run_checks.py"):
-            try:
-                src = (REPO / p).read_text(encoding="utf-8")
-            except OSError:
-                continue
-            # ALL-CAPS markers anywhere in the gate's source (printed states, note markers),
-            # the snake_case keys and flags it quotes, and its module-level names as
-            # `<module>.NAME` (a skill may point at `retrieval_log.PAYLOAD_FIELDS`).
-            out |= set(re.findall(r"\b([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+)\b", src))
-            out |= set(re.findall(r"['\"]([a-z][a-z0-9_]+)['\"]", src))
-            stem = p.rsplit("/", 1)[-1][:-3]
-            for name in re.findall(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=", src, re.M):
-                out.add(name)
-                out.add(f"{stem}.{name}")
-            out |= set(re.findall(r"environ(?:\.get)?\(\s*['\"]([A-Z_]+)['\"]", src))
-    # Registry entry keys (`min_items`, `no_floor`) and SQLite's own schema tables.
-    for c in reg.get("checks", []):
-        if isinstance(c, dict):
-            out |= set(c)
     out |= {"sqlite_master", "sqlite_sequence"}
-    # CLAUDE.md is Layer 0: a token it names in backticks (a harness tool, a reserved object
-    # name such as best_practice_synthesis) is sanctioned vocabulary for every skill.
-    try:
-        out |= {t.strip() for t in re.findall(r"`([^`\n]+)`", (REPO / "CLAUDE.md").read_text(encoding="utf-8"))}
-    except OSError:
-        pass
     # Per-slug labels and staged ids are homes too.
     for sql in ("SELECT local_ref_id FROM source_slug_links", "SELECT ref_id FROM source_locators",
                 "SELECT local_ref_id FROM citation_mining"):
@@ -167,8 +153,8 @@ def main():
     for f in files:
         text = texts[f]
         toks = set()
-        for a, b in TOKEN.findall(text):
-            t = (a or b).strip()
+        for t in TOKEN.findall(text):
+            t = t.strip()
             if not SHAPED.match(t) or len(t) < 3 or PLACEHOLDER.search(t):
                 continue
             if t.startswith("--") or "/" in t:
@@ -178,9 +164,9 @@ def main():
             toks.add(t)
         for t in sorted(toks):
             examined += 1
-            if t in known or t.rstrip("s") in known or t in own:
+            if t in known or t in own:
                 continue
-            unresolved.setdefault(str(f.relative_to(REPO)), []).append(t)
+            unresolved.setdefault(str(f.relative_to(REPO) if f.is_relative_to(REPO) else f), []).append(t)
     print("skill_vocabulary_audit — every value a skill, command or agent names resolves to a home")
     print(f"EXAMINED: {examined} token(s) across {len(files)} file(s)")
     if not unresolved:

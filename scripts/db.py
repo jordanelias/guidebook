@@ -17,13 +17,13 @@ CLI usage:
     python3 scripts/db.py coverage --slug SLUG
     python3 scripts/db.py add-gap --category RES --priority P2 --description "..." --session SESSION
     python3 scripts/db.py close-gap --gap-id GAP-001 --status CLOSED-FIXED --session SESSION
-    python3 scripts/db.py add-connection --con-id CON-0001 --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-discovery --target-slug sensory-environment --session SESSION
+    python3 scripts/db.py add-connection --confidence HIGH --connection-type CROSS-POPULATION --filed-in sensory-environment --description "..." --source-skill connection-discovery --target-slug sensory-environment --session SESSION
     python3 scripts/db.py update-connection --con-id CON-0001 --status CONSUMED --session SESSION
     python3 scripts/db.py unmined [--slug SLUG] [--tier-max 3]
     python3 scripts/db.py log-search --slug SLUG --language EN --query-text '...' --engine pubmed \
         --depth-method scoping --session SESSION
-    python3 scripts/db.py add-source --ref-id REF-00971 --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --evidence-type clinical --scope high_control --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
-        (--ref-id is the GLOBAL REF-NNNNN; --local-ref-id is the per-slug label. Different values.)
+    python3 scripts/db.py add-source --author "Smith|Jane" --author "corp|WHO" --year 2022 --title "..." --evidence-type clinical --scope high_control --session SESSION [--slug SLUG [--local-ref-id RAP-07]]
+        (the GLOBAL REF-NNNNN is computed; --local-ref-id is the per-slug label. Different values.)
         (--authors "Smith J; Jones K" still works and is parsed into author rows; --author is preferred because it keeps the given name)
     python3 scripts/db.py validate
     python3 scripts/db.py record-adversarial-pass --subject-session S --subject-commit SHA \
@@ -653,6 +653,16 @@ def _link_result_artefacts(conn, exec_id, artefacts, *, mined_ref_id, query_text
             [exec_id, artefact, session, ts])
 
 
+def _in_research_scope(language: str, jurisdiction: str = None) -> bool:
+    """Does this (language, jurisdiction) pair count toward what the research scope owes?
+    Reads v_research_scope, the one home of "owed"; a search with no jurisdiction names no
+    pair, so it counts toward none."""
+    with connect(readonly=True) as conn:
+        return bool(jurisdiction) and conn.execute(
+            "SELECT 1 FROM v_research_scope WHERE language=? AND jurisdiction=?",
+            [(language or "").strip().upper(), jurisdiction]).fetchone() is not None
+
+
 def log_search(slug: str, language: str, query_text: str, engine: str,
                depth_method: str, session: str,
                jurisdiction: str = None, target_tier: int = None,
@@ -761,6 +771,9 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             f"--origin-pass-id {origin_pass_id} with --origin {origin!r}. The CHECK "
             f"permits a pass id only with origin=adversarial-pass.")
 
+    # THE LANGUAGE IS FOLDED, THEN STORED FOLDED: the map holds `EN` and the log held `en`,
+    # `fr`, `nl` beside it, so every coverage reader had to fold at read time (R2-2).
+    language = (language or "").strip().upper()
     ids = list(admitted_ref_ids or [])
     if len(set(ids)) != len(ids):
         dupes = sorted({r for r in ids if ids.count(r) > 1})
@@ -847,27 +860,19 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
             if _pst != "active":
                 raise Refusal(f"--parameter {parameter_id} is {_pst}, not active. A search is "
                               f"for a parameter that still stands; name the surviving one.")
-        # THE BUCKET MEMBER (OR-8, OR-12a): a search is logged in a language the map holds,
-        # and, when scoped to a jurisdiction, in a language the map pairs with it. The
-        # language was free text until 2026-11-06 (a walk-through logged `ZZ`), so coverage
-        # views grouped on spellings nothing could reconcile.
+        # A search is logged in a language the map holds (the 19-language doctrine; a new
+        # language is a doctrine change, owner question 5). The language was free text until
+        # 2026-11-06 (a walk-through logged `ZZ`). The (language, jurisdiction) PAIR is NOT
+        # checked: whether a search counts toward the owed scope is `in_research_scope`,
+        # reported by `_in_research_scope`, and a real search outside it is logged and
+        # visible, never refused (R8; the pair refusal made ISO, INT and UN searches
+        # unloggable, R2-2).
         _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
         if _langs and language not in _langs:
             raise Refusal(
                 f"--language {language!r} is not a language lang_jur_map holds "
                 f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
                 f"languages (rule 8); a language is added there, not at the search.")
-        if jurisdiction and _langs and not conn.execute(
-                "SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?",
-                (language, jurisdiction)).fetchone():
-            _paired = [r[0] for r in conn.execute(
-                "SELECT language FROM lang_jur_map WHERE jurisdiction=? ORDER BY 1",
-                (jurisdiction,))]
-            raise Refusal(
-                f"--language {language} with --jurisdiction {jurisdiction}: lang_jur_map pairs "
-                f"{jurisdiction} with {', '.join(_paired) or 'no language at all'}. A bucket "
-                f"member is a jurisdiction WITH its language (OR-8); log the search in one "
-                f"of those, or omit --jurisdiction for a search not scoped to one.")
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
@@ -1041,43 +1046,59 @@ def get_coverage_completeness(slug: str) -> dict:
             "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
             "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
             [slug]).fetchone()["n"]
-        lang = conn.execute(
-            "SELECT COUNT(DISTINCT language) AS n FROM search_executions "
-            "WHERE slug=? AND deferred_reason IS NULL", [slug]).fetchone()["n"]
         deferred = conn.execute(
             "SELECT COUNT(*) AS n FROM search_executions "
             "WHERE slug=? AND deferred_reason IS NOT NULL", [slug]).fetchone()["n"]
-        # Required scope comes from lang_jur_map, the bridge that declares it —
-        # not from a literal. These were hardcoded 24 and 14 while
-        # a dashboard computed against 48, so "how much coverage is owed" had two
-        # answers differing 2x, shipped the same day.
+        # WHAT IS OWED has ONE home, the view v_research_scope (every lang_jur_map row not
+        # recorded `scoped-out`; a NULL scope_status is owed). v_coverage_priority reads the
+        # same view, so "required", "unsearched" and "searched" are three readings of one
+        # set and cannot disagree. Until 2026-11-06 this function read the column itself and
+        # treated NULL as "not recorded", so marking four languages `scoped-out` emptied the
+        # requirement and the slug read required 0/0, complete true (R2-1). Derive today's
+        # figure, never quote it: SELECT COUNT(*) FROM v_research_scope.
         #
-        # TWO QUALIFICATIONS, BOTH DERIVED (2026-11-06). A map row whose jurisdiction the
-        # declared vocabulary (schemas.enums.JurisdictionCode, I7) refuses can never be
-        # logged, so it is not required -- it is named, so the two homes' disagreement is
-        # visible, not hidden. And once any row carries `scope_status` (migration 122) the
-        # requirement is the in-scope rows; until then every admissible row counts and
-        # `scope_recorded` says so.
-        rows = conn.execute("SELECT language, jurisdiction, scope_status FROM lang_jur_map"
-                            ).fetchall()
-        admissible = [r for r in rows if dbcore.jurisdiction_declared(r["jurisdiction"])]
-        unreachable = sorted({r["jurisdiction"] for r in rows
-                              if not dbcore.jurisdiction_declared(r["jurisdiction"])})
-        scope_recorded = any(r["scope_status"] for r in rows)
-        required = ([r for r in admissible if r["scope_status"] == "in-scope"]
-                    if scope_recorded else admissible)
-        req_jur = len({r["jurisdiction"] for r in required})
-        req_lang = len({r["language"] for r in required})
+        # A map jurisdiction the declared vocabulary (schemas.enums.JurisdictionCode, I7)
+        # refuses can never be logged, so it stays owed -- hence unsearched, hence `complete`
+        # stays false -- and is NAMED so the two homes' disagreement is visible (owner question 5).
+        # `complete` also needs a non-empty requirement: an empty one examined nothing.
+        required = [(r["language"], r["jurisdiction"]) for r in conn.execute(
+            "SELECT language, jurisdiction FROM v_research_scope ORDER BY 1, 2")]
+        unsearched = [[r["language"], r["jurisdiction"]] for r in conn.execute(
+            "SELECT language, jurisdiction FROM v_coverage_priority WHERE slug=? ORDER BY 1, 2",
+            [slug])]
+        # SEARCHED IS READ FROM THE LOG, not taken as required-minus-unsearched: the view lists
+        # unsearched pairs only for the slugs it covers, so for any other slug that subtraction
+        # reads every pair searched and `complete` true over a slug nothing was logged for.
+        # Same anti-join as the view (a logged row, deferred or not, names the pair).
+        searched = conn.execute(
+            "SELECT COUNT(*) AS n FROM v_research_scope v WHERE EXISTS (SELECT 1 FROM "
+            "search_executions se WHERE se.slug=? AND se.jurisdiction = v.jurisdiction "
+            "AND UPPER(se.language) = v.language)", [slug]).fetchone()["n"]
+        # A search is a search whatever its spelling: the log holds `en` beside `EN`.
+        outside = conn.execute(
+            "SELECT COUNT(*) AS n FROM search_executions se WHERE se.slug=? "
+            "AND se.deferred_reason IS NULL AND NOT EXISTS (SELECT 1 FROM v_research_scope v "
+            "WHERE v.jurisdiction = se.jurisdiction AND v.language = UPPER(se.language))",
+            [slug]).fetchone()["n"]
+        lang = conn.execute(
+            "SELECT COUNT(DISTINCT UPPER(language)) AS n FROM search_executions "
+            "WHERE slug=? AND deferred_reason IS NULL", [slug]).fetchone()["n"]
+    unreachable = sorted({j for _, j in required if not dbcore.jurisdiction_declared(j)})
     return {
         "slug": slug,
+        "pairs_required": len(required),
+        "pairs_searched": searched,
+        "pairs_unsearched": unsearched,
+        "jurisdictions_required": len({j for _, j in required}),
+        "languages_required": len({l for l, _ in required}),
         "jurisdictions_searched": jur,
-        "jurisdictions_required": req_jur,
         "languages_searched": lang,
-        "languages_required": req_lang,
+        "searches_outside_scope": outside,
         "searches_deferred_with_reason": deferred,
-        "scope_recorded": scope_recorded,
         "jurisdictions_unreachable": unreachable,
-        "complete": jur >= req_jur and lang >= req_lang,
+        **({"unreachable_note": "owed by lang_jur_map, refused by schemas.enums.JurisdictionCode: "
+            "owner question 5 of the 2026-11-06 round-2 adjudication"} if unreachable else {}),
+        "complete": bool(required) and not unsearched and searched == len(required),
     }
 
 
@@ -2277,7 +2298,8 @@ def main():
     p_adj.add_argument("--dry-run", action="store_true")
 
     p_loc = sub.add_parser("add-locator", help="Write a lead into the clue store")
-    p_loc.add_argument("--ref-id", required=True)
+    p_loc.add_argument("--ref-id", help="omit it: computed by dbcore.next_ref_id "
+                       "(CLAUDE.md section 4). Given, it must equal the computed id")
     for f in ("doi", "pmid", "pmcid", "isbn", "issn", "url", "standard-number",
               "title", "authors", "notes", "used-in-bpcs"):
         p_loc.add_argument("--" + f)
@@ -2452,7 +2474,9 @@ def main():
 
     # add-source
     p_as = sub.add_parser("add-source", help="Insert an evidence source")
-    p_as.add_argument("--ref-id", required=True)
+    p_as.add_argument("--ref-id", help="omit it: computed by dbcore.next_ref_id "
+                      "(CLAUDE.md section 4). Given, it must equal the computed id or the "
+                      "id its own locator staged")
     # AUTHORS ARE ROWS, NOT A STRING (migration 063). evidence_sources.author_display is
     # writer-retired; who wrote a source has one home, evidence_source_authors, and
     # v_evidence_authors renders it. Until 2026-08-24 this CLI could write the display
@@ -2509,7 +2533,10 @@ def main():
                       help="why the source cannot be read (no full text, paywalled, ...), from "
                            "the column's own CHECK. An unretrievable source is admitted "
                            "UNVERIFIED with this set; v_scan_ledger then shows it BLOCKED, "
-                           "not as reading debt")
+                           "not as reading debt. Refused as copies of a typed fact: "
+                           + ", ".join(_BLOCK_REASON_COPIES) + ". A reading clears it "
+                           "(record-scan); `amend-source --field processing_blocked_reason` "
+                           "sets it later")
     p_as.add_argument("--grey-flag", type=int, choices=(0, 1),
                       help="1 for grey literature. evidence_type='grey' with grey_flag=0 "
                            "is the same fact disagreeing with itself across two columns")
@@ -2880,6 +2907,7 @@ def main():
             parameter_id=args.parameter, absence_class=args.absence_class,
             dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
+               "in_research_scope": _in_research_scope(args.language, args.jurisdiction),
                "admitted": len(args.admitted_ref_ids or []),
                "linked_artefacts": len(args.result_artefacts or []),
                "dry_run": args.dry_run})
@@ -3438,8 +3466,10 @@ def main():
         if args.slug:
             with connect(readonly=True) as _c:
                 _check_slug_filable(_c, args.slug)
+                # `or ""`: a source with no id yet holds no label, so any holder refuses
+                # (`ref_id<>NULL` would match nothing and never refuse).
                 label = _check_link_label(_c, args.slug, args.local_ref_id,
-                                          args.ref_id)
+                                          args.ref_id or "")
         authors = (parse_author_flags(args.author) if args.author
                    else parse_author_display(args.authors))
         local_ref_id = None
@@ -3688,6 +3718,30 @@ def parse_author_display(display: str) -> list[dict]:
     return rows
 
 
+# processing_blocked_reason values the CHECK admits that are COPIES of a typed fact, so a writer
+# refuses them by pointer (CLAUDE.md rule 5). Judgement, named as such: which value duplicates which
+# fact is what the CHECK comment (migration 091) says, not something the schema computes. Whether a
+# value is still admitted IS computed (dbcore.check_values), so this cannot fire on a retired value.
+_BLOCK_REASON_COPIES = {
+    "no-quantified-claims": (
+        "a reading is recorded with `db.py record-scan --text-scope full`; the ledger derives "
+        "READ-NOTHING-FOUND from the reading and the absence of a row, so the reason would be "
+        "a copy (CLAUDE.md rule 5)"),
+    "superseded": (
+        "the typed home is `evidence_sources.superseded_by_ref_id`, written by "
+        "`db.py supersede-source --ref-id A --by B` (`supersede_source`), so the reason would "
+        "be a copy (CLAUDE.md rule 5)"),
+}
+
+
+def _refuse_copied_block_reason(conn, value, context):
+    """Refuse a processing_blocked_reason that restates a typed fact, naming the typed home."""
+    if value in _BLOCK_REASON_COPIES and value in dbcore.check_values(
+            conn, "evidence_sources", "processing_blocked_reason"):
+        raise Refusal(f"{context}: processing_blocked_reason {value!r} is refused: "
+                      f"{_BLOCK_REASON_COPIES[value]}. Nothing was written.")
+
+
 def insert_evidence_source(data: dict, session: str,
                            dry_run: bool = False,
                            authors: list[dict] | None = None,
@@ -3803,8 +3857,11 @@ def insert_evidence_source(data: dict, session: str,
     #
     # Shapes accepted: REF-NNNNN (924 live), REF-VERIFIED-NNN (11 live, human-verified
     # standards predating the DOI pipeline), Co1-NN/NNN (schemas/evidence_source.py).
-    rid = str(data.get("ref_id", ""))
-    if not re.fullmatch(r"REF-\d{5}|REF-VERIFIED-\d{3}|Co1-\d{2,3}", rid):
+    # OMITTED, THE ID IS COMPUTED inside the transaction (dbcore.next_ref_id); GIVEN, it is
+    # checked for shape here and for being the next id or its locator's id below.
+    _derive_ref = not data.get("ref_id")
+    rid = str(data.get("ref_id") or "")
+    if not _derive_ref and not re.fullmatch(r"REF-\d{5}|REF-VERIFIED-\d{3}|Co1-\d{2,3}", rid):
         hint = ""
         if re.fullmatch(r"[A-Z]{2,6}-[A-Z]?\d{1,4}", rid):
             hint = (f" {rid!r} looks like a per-slug LOCAL label, which belongs in "
@@ -3813,10 +3870,9 @@ def insert_evidence_source(data: dict, session: str,
                     f"meaningful only inside one slug.")
         raise Refusal(
             f"--ref-id {rid!r} is not a global reference id.{hint} Expected REF-NNNNN "
-            f"(or REF-VERIFIED-NNN / Co1-NN). Get the next one from "
-            f"`db.py next-id ref` (added 2026-09-10 — this message named the Python "
-            f"function for months while no command existed), which computes the high-water mark as the "
-            f"UNION of every table holding a ref_id. Nothing was written.")
+            f"(or REF-VERIFIED-NNN / Co1-NN). Omit --ref-id to have it computed: "
+            f"`db.py next-id ref` shows the value, the high-water mark across the UNION of "
+            f"every table holding a ref_id. Nothing was written.")
 
     # THE DECLARED JURISDICTION VOCABULARY (I7, 2026-10-01). Before this the column took
     # any string, and the blocking jurisdiction_db_vocabulary audit found it afterwards.
@@ -3862,6 +3918,10 @@ def insert_evidence_source(data: dict, session: str,
 
     row = {**data, **audit(session)}
     with _txn(conn, dry_run) as conn:
+        _refuse_copied_block_reason(conn, data.get("processing_blocked_reason"),
+                                    "add-source --processing-blocked-reason")
+        if _derive_ref:
+            data["ref_id"] = row["ref_id"] = dbcore.next_ref_id(conn)
         # NOT `INSERT OR IGNORE`. That silently no-opped on a colliding ref_id
         # and still returned the ref_id as though the write had happened — so a
         # session could file a source, be told it succeeded, and have written
@@ -3884,7 +3944,8 @@ def insert_evidence_source(data: dict, session: str,
             raise Refusal(
                 f"--ref-id {data['ref_id']} is neither the next reference id ({_nxt}, from "
                 f"`db.py next-id ref`) nor an id staged in source_locators. A reference id is "
-                f"never computed by hand (CLAUDE.md section 4). Nothing was written.")
+                f"never computed by hand (CLAUDE.md section 4): omit --ref-id. Nothing was "
+                f"written.")
         if data.get("doi"):
             # THE DUPLICATE-IDENTITY REFUSAL, case-folded and cross-filed against BOTH
             # ref_id homes. Measured 2026-09-13 (REF-00784's DOI): this compared
@@ -5444,6 +5505,13 @@ _AMENDABLE = (
     # violator: GAP-013 item (1), deriving the amendable set from the live columns,
     # remains the fix.
     "evidence_type",
+    # processing_blocked_reason, added 2026-11-06 (R2-3). It is a JUDGEMENT about the retrieval --
+    # "the text could not be read, and why" -- which no payload settles, and no verb set it after
+    # admission, so a source admitted before its obstacle was known (or whose obstacle changed) could
+    # not be corrected. The vocabulary is gated by the generic check_declared below; the two values
+    # that restate a typed fact are refused by pointer (_refuse_copied_block_reason). It is cleared
+    # by `record-scan`, never here: a reading of held bytes is the proof the block lifted.
+    "processing_blocked_reason",
 )
 
 
@@ -5698,6 +5766,9 @@ def amend_source(ref_id: str, field: str, replacement: str, reason: str,
                            f"amend-source --field {field}")
         dbcore.check_declared(conn, "evidence_sources", field, replacement,
                               f"amend-source --field {field}")
+        if field == "processing_blocked_reason":
+            _refuse_copied_block_reason(conn, replacement,
+                                        f"{ref_id}: amend-source --field {field}")
         if field == "co1_source_type":
             # The column declares no CHECK, so the enum is its vocabulary (RULINGS R11) and the
             # generic path above gates nothing. add-source and the evidence_type move gate it.
@@ -6096,6 +6167,9 @@ def _require_scoped_verbatim(text, ref_id, field, context, exempt_reason=None):
                 f"artefact of this source can carry, not for text that verifies.")
         tail = f" (the words occur only UNSCOPED: {where.split(' -- ')[0]})" \
             if kind == "unscoped" else ""
+        # The same refusal add-extraction applies: a held decodable body means the quote was
+        # typed from memory or read off pages never persisted (R10), not undecodable (R2-6).
+        _refuse_exempt_with_body(ref_id, field, context)
         return retrieval_log.exempt_marker(exempt_reason, tail)
     if kind == "scoped":
         return None
@@ -7475,8 +7549,16 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
     The scan contract (catalogue-plan-v2 section 3; owner 2026-10-09: "Slugs guide our
     searches, but they do not guide what we derive and mine from sources!"): every
     admitted source is read against the whole catalogue, and each reading leaves this
-    record, from which v_scan_ledger derives, for every (source, active parameter):
-    EXTRACTED, STATED-ABSENT, READ-NOTHING-FOUND, READ-PARTIAL or NOT-READ.
+    record, from which v_scan_ledger derives, for every (source, active parameter), in
+    this precedence: EXTRACTED, STATED-ABSENT, READ-NOTHING-FOUND, READ-PARTIAL, BLOCKED
+    (no reading, and a processing_blocked_reason saying the text could not be obtained or
+    read), NOT-READ. A recorded reading always outranks a block.
+
+    A BLOCK THIS READING PROVES LIFTED IS CLEARED. If the source's pairs read BLOCKED in
+    the ledger before this row lands, processing_blocked_reason is set NULL in the same
+    transaction and the result says `block_cleared: <old value>`: a reading of held bytes
+    is the proof the obstacle is gone, and leaving the reason would be a false statement
+    on the row.
 
     COMPUTED, NEVER TYPED (CLAUDE.md rule 8): `catalogue_version` is the highest
     parameter_id at call time (ids are never reissued, so it says exactly which parameters
@@ -7490,8 +7572,15 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
     parameter exists; a --file-sha256 that is not a file the retrieval-log manifests hold
     for this source, or whose bytes on disk no longer hash to it; `full` over a PDF (what
     was read of a PDF is not knowable from the file: derive its text with
-    scripts/research/full_text.py and read that) and `full` over a text with fewer pages
-    than the document it was derived from.
+    scripts/research/full_text.py and read that), `full` over a text with fewer pages
+    than the document it was derived from, and `full` over a text with NO page markers
+    when the source's own logged bibliographic payload states a page range.
+
+    A `full` CLAIM IS CHECKED AGAINST WHAT THE DOCUMENT IS, and the deposit is the only
+    derivable statement of that (`retrieval_log.payload_page_range`): a landing page is a
+    record about the document, not the document, and nothing here curates what one looks
+    like. A source no deposit describes as paged (a code section's single page) keeps `full`
+    over its single page.
     """
     if data.get("catalogue_version") is not None:
         raise Refusal(
@@ -7580,6 +7669,24 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
                     f"{pages_read} of {pages_total} pages. Record it as partial, or derive "
                     f"every page (scripts/research/full_text.py) and read that. Nothing "
                     f"was written.")
+            _range = retrieval_log.payload_page_range(ref) if pages_read is None else None
+            if _range:
+                raise Refusal(
+                    f"record-scan: --text-scope full over {h['artefact']}, which carries no "
+                    f"page markers, but the source's logged bibliographic payload states pages "
+                    f"{_range}: the document is paged and this text is not it (a landing page "
+                    f"is a record about the document, not the document). Retrieve the document "
+                    f"(R10; try the Internet Archive on a block, CLAUDE.md section 7), derive "
+                    f"it with scripts/research/full_text.py, and record the reading of that; or "
+                    f"record this reading as `abstract`/`partial`. Nothing was written.")
+        # A reading of held bytes proves a block lifted. Read the ledger, never the class
+        # list: v_scan_ledger is the one home of "the text could not be obtained or read".
+        _blocked = conn.execute(
+            "SELECT 1 FROM v_scan_ledger WHERE ref_id = ? AND status = 'BLOCKED' LIMIT 1",
+            (ref,)).fetchone()
+        _old_block = conn.execute(
+            "SELECT processing_blocked_reason FROM evidence_sources WHERE ref_id = ?",
+            (ref,)).fetchone()[0] if _blocked else None
         row = {"ref_id": ref, "mode": mode, "catalogue_version": top,
                "target_parameter_id": target, "text_scope": scope,
                "pages_read": pages_read, "pages_total": pages_total,
@@ -7589,9 +7696,16 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
         row.update(dbcore.stamp_for(conn, "source_scans", session))
         cur = conn.execute(f"INSERT INTO source_scans ({','.join(row)}) "
                            f"VALUES ({','.join('?' * len(row))})", list(row.values()))
-        return {"scan_id": cur.lastrowid, "ref_id": ref, "catalogue_version": top,
-                "file": f"{h['session']}/{h['artefact']}", "pages_read": pages_read,
-                "pages_total": pages_total, "text_scope": scope, "dry_run": dry_run}
+        out = {"scan_id": cur.lastrowid, "ref_id": ref, "catalogue_version": top,
+               "file": f"{h['session']}/{h['artefact']}", "pages_read": pages_read,
+               "pages_total": pages_total, "text_scope": scope, "dry_run": dry_run}
+        if _old_block:
+            _st = audit(session)
+            conn.execute("UPDATE evidence_sources SET processing_blocked_reason = NULL, "
+                         "updated_at = ?, updated_by_session = ? WHERE ref_id = ?",
+                         (_st["created_at"], _st["created_by_session"], ref))
+            out["block_cleared"] = _old_block
+        return out
 
 
 def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
@@ -10433,21 +10547,26 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
         "used_in_bpcs", "notes",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_locator")
-    ref = dbcore.fold_ref(data.get("ref_id"))
-    if not ref or not dbcore.REF_ID_SHAPE.fullmatch(ref):
+    # OMITTED, THE ID IS COMPUTED (dbcore.next_ref_id); GIVEN, IT MUST EQUAL IT. A flag whose
+    # only right answer is the computed value is a field that can only be right or wrong
+    # (CLAUDE.md rule 8), so it is optional, as `add-connection --con-id` is.
+    ref = dbcore.fold_ref(data["ref_id"]) if data.get("ref_id") else None
+    if ref is not None and not dbcore.REF_ID_SHAPE.fullmatch(ref):
         raise Refusal(
             f"--ref-id {data.get('ref_id')!r} is not a global reference id. Expected "
-            f"REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Mint with `db.py next-id ref`.")
+            f"REF-NNNNN (or REF-VERIFIED-NNN / Co1-NN). Omit --ref-id to have it computed.")
     with dbcore.connect(dry_run) as conn:
-        if dbcore.exists(conn, "source_locators", "ref_id", ref):
+        if ref and dbcore.exists(conn, "source_locators", "ref_id", ref):
             raise Refusal(f"{ref} already exists in source_locators. Use update-locator.")
         # NEVER COMPUTED BY HAND (CLAUDE.md section 4). A typed id above the high-water
         # mark moves the mark: REF-99999 landed on 2026-11-06 and the next id became
         # REF-100000, which the shape regex then refuses -- the allocator jammed by one row.
         _nxt = dbcore.next_ref_id(conn)
+        ref = ref or _nxt
         if ref != _nxt:
             raise Refusal(f"--ref-id {ref} is not the next reference id, which is {_nxt} "
-                          f"(db.py next-id ref). Nothing was written.")
+                          f"(db.py next-id ref); omit --ref-id to have it computed. "
+                          f"Nothing was written.")
         dbcore.check_vocab(conn, "source_locators", "status", data.get("status"),
                            "insert_locator")
         doi = dbcore.norm_doi(data.get("doi"))

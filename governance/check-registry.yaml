@@ -363,12 +363,14 @@ checks:
   basis: judgment/verified-reading
   cost: fast
   min_items: 1
-  note: 'NEW 2026-11-06 (OR-11a, owner 2026-10-29). EXAMINED prints the live verified
-    extraction count; FAILS on a verified row no full-scope source_scans reading covers.
-    Red on main while the rows written before the writer refused the state stand
-    (derive: run it; never quote the count). Its reader is the render contract (C5),
-    which prints the rows it names. Advisory until those rows are re-graded in a data PR,
-    then blocking.'
+  note: 'NEW 2026-11-06 (OR-11a, owner 2026-10-29). EXAMINED prints the live extraction
+    count; FAILS on a verified row no full-scope source_scans reading covers, on a row whose
+    source is not VERIFIED, and on a row no reading at any scope covers (the three clauses
+    of contract criterion verified-reading), each class printed with its sources and its
+    remedy. Red on main while the rows written before the writers refused those states stand
+    (derive: run it; never quote the count). Its reader is the re-reading worklist (plan
+    section 7, P3) and the adversarial pass. Advisory until those rows are re-graded in a
+    data PR, then blocking.'
 - id: extraction_follow_up_audit
   cmd:
   - python3
@@ -640,13 +642,15 @@ checks:
   cost: fast
   min_items: 1
   note: 'NEW 2026-11-06 (rule 8; owner: "ensure all terminologies and vocabularies are
-    correct"). Every backticked or ALL-CAPS-hyphenated token a skill, command or agent names
-    must resolve to a CHECK value, a schema name, a db.py verb or flag, a check id, a contract
-    criterion, an R-rule label, a registry row, a file, a marker the gate code reads, a token
-    CLAUDE.md names, or a token the file defines in its own table. Prints the unresolved
-    tokens per file; red while prior-version skills carry them (derive: run it). The three
-    skills /run-pipeline delegates to are the ones this change cleaned; the rest are named,
-    not patched (rule 4: prose is a caller).'
+    correct"). Every backticked token a skill, command or agent names, if shaped like a
+    value or an identifier, must resolve to a CHECK value, a schema name, a db.py verb or
+    flag, a check id, a contract stage or criterion id, an R-rule label, a skill, command or
+    agent stem, a tracked path, a registry id, or a token the file defines in its own
+    table. Homes are derived from the schema and the inventories only; strings the gate
+    scripts, the writers or CLAUDE.md quote are not homes (they once made item_code,
+    E-08, population_code and axis_code resolve). Prints the unresolved tokens per file;
+    red while prior-version skills name retired or non-existent homes (derive: run it).
+    Prose is a caller (rule 4): the remedy is a sentence edit, not an allow-list.'
 - id: retired_vocabulary
   cmd:
   - python3

@@ -1960,6 +1960,23 @@ def validate_parameter(conn, parameter_id):
             f"Key the determination on the surviving parameter.")
 
 
+def validate_slug(conn, slug):
+    """The SLUG is the topic the determination is recorded under, and must exist (R2-7).
+
+    It selects no evidence (B4c gathers by parameter_id), but it lands in the report and in
+    the gap description, and a row naming a topic that is not in `slugs` points at nothing.
+    Existence only: a MERGED slug still names the topic its work was done under.
+    """
+    if not conn.execute("SELECT 1 FROM slugs WHERE slug=?", (slug,)).fetchone():
+        raise Refusal(
+            f"slug {slug!r}: no such slug. The slug is the topic this determination is "
+            f"recorded under (--slug); it does not select evidence. Name an existing one "
+            f"(SELECT slug, status FROM slugs); db.py has no slug writer (derive: "
+            f"grep -n 'INSERT INTO slugs' scripts/db.py is empty), so a new slug is a "
+            f"migration (see how the last one landed: grep -ln 'INSERT INTO slugs' "
+            f"scripts/migrations/*.sql | tail -1). Nothing was written.")
+
+
 def validate_lens(conn, lens):
     """Every supplied lens code must be live in its OWN base table, and at least one
     must be supplied (D-0182).
@@ -2178,6 +2195,7 @@ def main():
     specification_id = base
     for (parameter_id, lens, slug, note) in [(args.parameter_id, lens, args.slug, args.note)]:
         validate_parameter(conn, parameter_id)
+        validate_slug(conn, slug)
         validate_lens(conn, lens)
         # AFTER validate_lens, which normalises blanks to None — the row-identity check
         # restates the index's COALESCE and needs the same lens dict the INSERT will use.
