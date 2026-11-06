@@ -1,0 +1,233 @@
+clause	heading (as the TOC words it)	page	clause family	technique tags (rule-assigned lead)	rhfac_overlap (crude word-stem test)
+4	General requirements	35	general requirements (technique clauses)		
+4.1	Area allowances	35	general requirements (technique clauses)		
+4.2	Luminance (colour) contrast	37	general requirements (technique clauses)	colour_and_contrast	
+4.3	Operating controls	41	general requirements (technique clauses)	reach_and_heights	
+4.3.1	Scope	41	general requirements (technique clauses)		
+4.3.2	Floor area	41	general requirements (technique clauses)		
+4.3.3	Height	42	general requirements (technique clauses)	reach_and_heights	
+4.3.4	Operation	43	general requirements (technique clauses)	provision_and_quantity	
+4.3.5	Control devices	43	general requirements (technique clauses)	reach_and_heights	
+4.3.6	Visual displays	43	general requirements (technique clauses)		
+4.3.7	Illumination	44	general requirements (technique clauses)	lighting_and_glare	
+4.3.8	Luminance (colour) contrast	44	general requirements (technique clauses)	colour_and_contrast	
+4.4	Floor or ground surfaces	44	general requirements (technique clauses)	surfaces_and_slip	
+4.4.1	General	44	general requirements (technique clauses)		
+4.4.2	Changes in level	45	general requirements (technique clauses)		
+4.4.3	Carpets	47	general requirements (technique clauses)	surfaces_and_slip	
+4.4.4	Gratings	47	general requirements (technique clauses)		RHFAC-does-not-name
+4.4.5	Tactile walking indicator surfaces	47	general requirements (technique clauses)	surfaces_and_slip;tactile_and_detectable	
+4.5	Headroom and protruding objects	61	general requirements (technique clauses)	tactile_and_detectable	RHFAC-does-not-name
+4.5.1	Headroom	61	general requirements (technique clauses)		RHFAC-does-not-name
+4.5.2	Protruding objects	62	general requirements (technique clauses)	tactile_and_detectable	RHFAC-does-not-name
+4.6	Signage	66	general requirements (technique clauses)	wayfinding_and_signage	
+4.6.1	Location	66	general requirements (technique clauses)		
+4.6.2	Configuration of signs	67	general requirements (technique clauses)	wayfinding_and_signage;provision_and_quantity	
+4.6.3	Characters	67	general requirements (technique clauses)		
+4.6.4	Pictograms and symbols	70	general requirements (technique clauses)	wayfinding_and_signage	
+4.6.5	Illumination	70	general requirements (technique clauses)	lighting_and_glare	
+4.6.6	Tactile signs	70	general requirements (technique clauses)	tactile_and_detectable;wayfinding_and_signage	
+4.6.7	Pictogram of accessibility	73	general requirements (technique clauses)	wayfinding_and_signage	
+4.7	Additional considerations	75	general requirements (technique clauses)	provision_and_quantity	
+4.7.1	Functional and cognitive barriers	75	general requirements (technique clauses)	emergency_and_life_safety	
+4.7.2	Environmental intolerances	76	general requirements (technique clauses)		
+4.7.3	Acoustics	76	general requirements (technique clauses)	acoustic_and_audio	
+5	Interior circulation	77	interior circulation		
+5.1	Accessible routes	77	interior circulation	circulation_geometry	
+5.1.1	Width	77	interior circulation		
+5.1.2	Accessible route termination	77	interior circulation	circulation_geometry	
+5.1.3	Slope	82	interior circulation	vertical_transitions	
+5.1.4	Lineup guides	83	interior circulation		
+5.1.5	Safety	84	interior circulation	emergency_and_life_safety	
+5.2	Doors and doorways	85	interior circulation	doors_and_entries	
+5.2.1	Opening width	85	interior circulation		
+5.2.2	Manoeuvring area at doors	87	interior circulation	circulation_geometry;doors_and_entries	
+5.2.3	Multiple-leaf doorways	93	interior circulation	doors_and_entries	
+5.2.4	Revolving doors	93	interior circulation	doors_and_entries	
+5.2.5	Two doors in series	94	interior circulation	doors_and_entries	
+5.2.6	Thresholds	95	interior circulation	vertical_transitions;doors_and_entries	
+5.2.7	Door hardware	95	interior circulation	doors_and_entries	
+5.2.8	Door-opening force	97	interior circulation	doors_and_entries	
+5.2.9	Power-assisted doors	97	interior circulation	doors_and_entries	
+5.2.10	Glazed panels	101	interior circulation		
+5.2.11	Doors in primary horizontal circulation routes	101	interior circulation	circulation_geometry;doors_and_entries	
+5.2.12	Turnstiles and access gates	102	interior circulation	doors_and_entries	
+5.3	Handrails	102	interior circulation		
+5.3.1	Handrail grip	102	interior circulation		
+5.3.2	Recessed handrail	104	interior circulation		
+5.4	Stairs	106	interior circulation	vertical_transitions;thermal_and_air	
+5.4.1	Treads and risers	106	interior circulation	vertical_transitions	
+5.4.2	Nosing	107	interior circulation	vertical_transitions	
+5.4.3	Tactile attention indicator surfaces at stairs	107	interior circulation	vertical_transitions;surfaces_and_slip;tactile_and_detectable;thermal_and_air	
+5.4.4	Stair handrails	110	interior circulation	vertical_transitions;thermal_and_air	
+5.5	Ramps	115	interior circulation	vertical_transitions	
+5.5.1	Running slope and length	115	interior circulation	vertical_transitions	
+5.5.2	Cross slope	116	interior circulation	vertical_transitions	
+5.5.3	Width	116	interior circulation		
+5.5.4	Landings	116	interior circulation	vertical_transitions	
+5.5.5	Surfaces	120	interior circulation	surfaces_and_slip	
+5.5.6	Illumination	120	interior circulation	lighting_and_glare	
+5.5.7	Edge protection	121	interior circulation	tactile_and_detectable	
+5.5.8	Ramp handrails	122	interior circulation	vertical_transitions	
+5.6	Elevating devices	125	interior circulation		
+5.6.1	Elevators	125	interior circulation	vertical_transitions	
+5.6.2	Platform lifts	126	interior circulation		
+5.6.3	Escalators	126	interior circulation	vertical_transitions	
+5.6.4	Moving walkways	127	interior circulation	vertical_transitions	
+5.7	Emergency provisions	128	interior circulation	emergency_and_life_safety	
+5.7.1	Visible alarms	128	interior circulation	emergency_and_life_safety	
+5.7.2	Areas of refuge	129	interior circulation	emergency_and_life_safety	
+5.7.3	Evacuation plans	132	interior circulation	emergency_and_life_safety	
+5.7.4	Access to secure areas	132	interior circulation		
+6	Interior facilities	135	interior facilities		
+6.1	Drinking fountains	135	interior facilities	sanitary_and_fixtures	
+6.1.1	General	135	interior facilities		
+6.1.2	Spouts	135	interior facilities		RHFAC-does-not-name
+6.1.3	Controls	135	interior facilities	reach_and_heights	
+6.1.4	Floor area	136	interior facilities		
+6.1.5	Luminance (colour) contrast	136	interior facilities	colour_and_contrast	
+6.1.6	Cantilevered fountains	136	interior facilities		
+6.2	Washroom facilities	138	interior facilities	sanitary_and_fixtures	
+6.2.1	Identification	139	interior facilities	wayfinding_and_signage	
+6.2.2	Floor area	139	interior facilities		
+6.2.3	Lavatories	142	interior facilities		RHFAC-does-not-name
+6.2.4	Washroom accessories	146	interior facilities	sanitary_and_fixtures	
+6.2.5	Grab bars	147	interior facilities	sanitary_and_fixtures	
+6.2.6	Toilets	148	interior facilities	sanitary_and_fixtures	
+6.2.7	Toilet stalls	151	interior facilities	sanitary_and_fixtures	
+6.2.8	Urinals	155	interior facilities	sanitary_and_fixtures	
+6.3	Universal washrooms	158	interior facilities	sanitary_and_fixtures	
+6.3.1	General	158	interior facilities		
+6.3.2	Washroom door	164	interior facilities	doors_and_entries;sanitary_and_fixtures	
+6.3.3	Washroom accessories	164	interior facilities	sanitary_and_fixtures	
+6.3.4	Adult change table	164	interior facilities	reach_and_heights;sanitary_and_fixtures;seating_and_furniture	
+6.4	Change benches	166	interior facilities	seating_and_furniture	
+6.4.1	General	166	interior facilities		
+6.4.2	Transfer space	167	interior facilities		
+6.5	Bathing facilities	168	interior facilities		
+6.5.1	Water temperature	168	interior facilities	sensory_and_cognitive;thermal_and_air	
+6.5.2	Showerheads	169	interior facilities	sanitary_and_fixtures	
+6.5.3	Enclosures	169	interior facilities		RHFAC-does-not-name
+6.5.4	Shower floors	169	interior facilities	sanitary_and_fixtures	
+6.5.5	Roll-in shower stalls	169	interior facilities	sanitary_and_fixtures	
+6.5.6	Bathtubs	172	interior facilities	sanitary_and_fixtures	
+6.6	Communications	175	interior facilities	communication_and_information	
+6.6.1	Assistive listening systems	175	interior facilities		
+6.6.2	Public telephones	176	interior facilities		
+6.7	Seating	181	interior facilities	seating_and_furniture	
+6.7.1	Spaces at tables and counters	181	interior facilities	reach_and_heights;seating_and_furniture	
+6.7.2	Rest area seating	183	interior facilities	circulation_geometry;seating_and_furniture	
+6.7.3	Viewing spaces in assembly areas	184	interior facilities		
+6.8	Dressing rooms, fitting rooms, and locker rooms	189	interior facilities	reach_and_heights	
+6.8.1	General	189	interior facilities		
+6.8.2	Individual rooms	189	interior facilities		
+6.8.3	Change benches	189	interior facilities	seating_and_furniture	
+7	Residential accommodations — Permanent and short- term	190	residential accommodation		
+7.1	General	190	residential accommodation		
+7.2	Common use spaces	190	residential accommodation		
+8	Exterior circulation, spaces, and amenities	190	exterior circulation, spaces and amenities		
+8.1	Scope	190	exterior circulation, spaces and amenities		
+8.2	Accessible routes	190	exterior circulation, spaces and amenities	circulation_geometry	
+8.2.1	General	190	exterior circulation, spaces and amenities		
+8.2.2	Width	191	exterior circulation, spaces and amenities		
+8.2.3	Slope	192	exterior circulation, spaces and amenities	vertical_transitions	
+8.2.4	Drainage	192	exterior circulation, spaces and amenities	surfaces_and_slip	
+8.2.5	Edge protection	192	exterior circulation, spaces and amenities	tactile_and_detectable	
+8.2.6	Shared-use routes	193	exterior circulation, spaces and amenities	circulation_geometry	
+8.2.7	Exterior ramps	193	exterior circulation, spaces and amenities	vertical_transitions	
+8.2.8	Exterior stairs	195	exterior circulation, spaces and amenities	vertical_transitions;thermal_and_air	
+8.2.9	Illumination for pedestrian routes	195	exterior circulation, spaces and amenities	circulation_geometry;lighting_and_glare	
+8.3	Pedestrian crossings	195	exterior circulation, spaces and amenities	outdoor_and_site	
+8.3.1	General	195	exterior circulation, spaces and amenities		
+8.3.2	Pedestrian crossing variations	196	exterior circulation, spaces and amenities	outdoor_and_site	
+8.3.3	Curb ramps and blended transitions	196	exterior circulation, spaces and amenities	vertical_transitions;outdoor_and_site	
+8.3.4	Crosswalks	202	exterior circulation, spaces and amenities		
+8.3.5	Alignment of pedestrian crossing components	203	exterior circulation, spaces and amenities	outdoor_and_site	
+8.3.6	Medians and pedestrian refuge areas	205	exterior circulation, spaces and amenities	emergency_and_life_safety	
+8.3.7	Pedestrian crossing signals	207	exterior circulation, spaces and amenities	outdoor_and_site	
+8.3.8	Speed bumps	208	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.3.9	Bollards	208	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.3.10	Overpasses and underpasses	208	exterior circulation, spaces and amenities		
+8.4	Intersection design	209	exterior circulation, spaces and amenities		
+8.4.1	General	209	exterior circulation, spaces and amenities		
+8.4.2	Types of intersections	210	exterior circulation, spaces and amenities		
+8.4.3	Intersection design features	214	exterior circulation, spaces and amenities		
+8.5	Transit stops	215	exterior circulation, spaces and amenities	outdoor_and_site	
+8.5.1	General	215	exterior circulation, spaces and amenities		
+8.5.2	Identification	215	exterior circulation, spaces and amenities	wayfinding_and_signage	
+8.5.3	Boarding or alighting areas	216	exterior circulation, spaces and amenities	lighting_and_glare	
+8.5.4	Transit shelters	217	exterior circulation, spaces and amenities	outdoor_and_site	
+8.6	Urban furniture and equipment	218	exterior circulation, spaces and amenities	seating_and_furniture	
+8.6.1	General	218	exterior circulation, spaces and amenities		
+8.6.2	Amenity zone	218	exterior circulation, spaces and amenities		
+8.6.3	Rest areas	219	exterior circulation, spaces and amenities	circulation_geometry	
+8.6.4	Public telephones	220	exterior circulation, spaces and amenities		
+8.6.5	Drinking fountains	220	exterior circulation, spaces and amenities	sanitary_and_fixtures	
+8.6.6	Permanent washrooms	221	exterior circulation, spaces and amenities	sanitary_and_fixtures	
+8.6.7	Information kiosks	221	exterior circulation, spaces and amenities	communication_and_information	
+8.6.8	Exterior signage	221	exterior circulation, spaces and amenities	wayfinding_and_signage	
+8.6.9	Bicycle parking	222	exterior circulation, spaces and amenities	outdoor_and_site	
+8.6.10	Parking meters, newspaper dispensers, and mail or courier boxes	222	exterior circulation, spaces and amenities	outdoor_and_site	
+8.6.11	Waste receptacles, recycling bins, and ashtrays	222	exterior circulation, spaces and amenities		
+8.6.12	Reflecting pools	223	exterior circulation, spaces and amenities	lighting_and_glare	
+8.6.13	Miscellaneous items	223	exterior circulation, spaces and amenities		
+8.7	Landscaping elements	223	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.7.1	Flower or shrub planters	223	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.7.2	Planting bed edges	224	exterior circulation, spaces and amenities	seating_and_furniture	
+8.7.3	Vegetation	224	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.7.4	Guy wires	225	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.7.5	Grates around trees	225	exterior circulation, spaces and amenities		
+8.7.6	Tree guards	225	exterior circulation, spaces and amenities	emergency_and_life_safety	
+8.8	Temporary facilities	225	exterior circulation, spaces and amenities		
+8.8.1	Construction along an accessible route	225	exterior circulation, spaces and amenities	circulation_geometry	
+8.8.2	Scaffolding	226	exterior circulation, spaces and amenities		RHFAC-does-not-name
+8.8.3	Temporary outdoor toilets	226	exterior circulation, spaces and amenities	sanitary_and_fixtures;outdoor_and_site	
+9	Vehicular access	227	vehicular access		
+9.1	General	227	vehicular access		
+9.2	Pedestrian routes	227	vehicular access	circulation_geometry	
+9.3	Passenger pick-up areas	227	vehicular access		
+9.3.1	Access aisle	227	vehicular access		
+9.3.2	Height clearance	228	vehicular access	reach_and_heights;tactile_and_detectable	
+9.4	Designated accessible parking	230	vehicular access	provision_and_quantity;outdoor_and_site	
+9.4.1	Area allowances	230	vehicular access		
+9.4.2	Height allowances	233	vehicular access	reach_and_heights	
+9.4.3	Surface	233	vehicular access	surfaces_and_slip	
+9.4.4	Signage for designated accessible parking	234	vehicular access	wayfinding_and_signage;provision_and_quantity;outdoor_and_site	
+9.5	Designated accessible parking spaces for limited mobility users	236	vehicular access	provision_and_quantity;outdoor_and_site	
+9.6	Ticketing dispensers or payment machines	237	vehicular access	operation_and_technology	
+Annex A	(informative) — Anthropometrics of mobility aid users	238	annex A anthropometrics		
+Annex B	(informative) — Potential for slip of floor and tread finishes	257	annex B slip potential	vertical_transitions;surfaces_and_slip	
+Annex C	(informative) — References for residential accommodation	263	annex C residential references		
+Annex D	(informative) — Trails and beach access routes	264	annex D trails and beach access	circulation_geometry;outdoor_and_site	
+Annex E	(informative) — References for accessible outdoor recreational environments	270	annex E outdoor recreation references	outdoor_and_site	
+Annex F	(informative) — Additional national and international resources	273	annex F other resources		
+A.1	Scope	0	annex A anthropometrics		
+A.2	Reach ranges for a person in a wheeled mobility	0	annex A anthropometrics	reach_and_heights	
+A.2.1	Forward reach without obstruction	0	annex A anthropometrics	reach_and_heights	
+A.2.2	Forward reach over obstruction	0	annex A anthropometrics	reach_and_heights	
+A.2.3	Side reach without obstruction	0	annex A anthropometrics	reach_and_heights	
+A.2.4	Side reach over obstruction	0	annex A anthropometrics	reach_and_heights	
+A.3	Walkway widths for people using crutches	0	annex A anthropometrics		
+A.4	Detection space for people using a long white	0	annex A anthropometrics		
+A.5	Walkway width for a person with a service	0	annex A anthropometrics		
+A.6	Dimensions for walkers	0	annex A anthropometrics		
+A.7	Dimensions of wheeled manual mobility devices	0	annex A anthropometrics		
+A.8	Dimensions of wheeled power mobility devices	0	annex A anthropometrics		
+A.9	Turning areas	0	annex A anthropometrics	circulation_geometry	
+D.1	General	0	annex D trails and beach access		
+D.2	Ground surfaces	0	annex D trails and beach access	surfaces_and_slip	
+D.3	Edge protection	0	annex D trails and beach access	tactile_and_detectable	
+D.4	Designated trailhead	0	annex D trails and beach access	wayfinding_and_signage;provision_and_quantity;outdoor_and_site	
+D.5	Trail clear width and height	0	annex D trails and beach access	circulation_geometry;reach_and_heights;outdoor_and_site	
+D.6	Trail running slope	0	annex D trails and beach access	vertical_transitions;outdoor_and_site	
+D.6.1	Gradation limits	0	annex D trails and beach access		RHFAC-does-not-name
+D.6.2	Gradient selection	0	annex D trails and beach access	vertical_transitions	
+D.7	Trail cross slope	0	annex D trails and beach access	vertical_transitions;outdoor_and_site	
+D.8	Trail ramps	0	annex D trails and beach access	vertical_transitions;outdoor_and_site	
+D.9	Trail signage	0	annex D trails and beach access	wayfinding_and_signage;outdoor_and_site	
+D.10	Beach access routes	0	annex D trails and beach access	circulation_geometry	
+D.11	Boardwalks	0	annex D trails and beach access		
+D.12	Understanding the Universal Trail Assessment	0	annex D trails and beach access	outdoor_and_site	
+E.1	Standards	0	annex E outdoor recreation references		
+E.2	Online resources	0	annex E outdoor recreation references		
+E.3	Publications	0	annex E outdoor recreation references		

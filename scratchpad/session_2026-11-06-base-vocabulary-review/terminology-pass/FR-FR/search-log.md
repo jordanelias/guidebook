@@ -18,3 +18,22 @@ Every query or retrieval verbatim. "Prior" is written before the result. Shape n
 - W2 WebSearch `"Arrêté du 24 décembre 2015 relatif à l'accessibilité aux personnes handicapées des bâtiments d'habitation collectifs et des maisons individuelles neufs"` restricted to legifrance.gouv.fr. Prior: the loda page with its JORFTEXT id.
   Result W2: 10 Légifrance links; the text is JORFTEXT000031692481, official title "… des bâtiments d'habitation collectifs et des maisons individuelles lors de leur construction" (my quoted title, ending "neufs", was wrong: "neufs" belongs to the companion décret n° 2015-1770, JORFTEXT000031692453). Shape: an exact-phrase query with a mistaken title still hit through the domain restriction. The search engine's summary is not a source; nothing is taken from it.
 - R5 `wayback/available?url=www.legifrance.gouv.fr/loda/id/JORFTEXT000031692481`. Prior: a snapshot exists.
+  Result R5: snapshot 20250208093733.
+- R6 fetch `https://web.archive.org/web/20250208093733if_/https://www.legifrance.gouv.fr/loda/id/JORFTEXT000031692481`. Prior: 200 with full consolidated text. Result: 200, 229163 bytes, artefact 014af9f59dafdd0b.html; "Version en vigueur au 08 février 2025", "Dernière mise à jour des données de ce texte : 18 septembre 2020", articles 1 to 21 and annexes 1 to 7, with amendment markers (arrêtés of 23 March 2016, 11 October 2019, 11 September 2020; Conseil d'État decision 397360-397361 annulling the sas d'isolement dimensions of annexe 2). Annexes 4 and 5 images not fetched [SKIPPED: diagrams]. No direct Légifrance attempt was made for this text: R1 already showed the 403 for the same host and route.
+
+## Absence checks inside the read texts (grep, case-insensitive, on the extracted text; counts are A17/A15)
+Each is a check of a concept I expected might be named under a word other than the seed; prior written before running.
+- G1 `couloir` — Prior: absent (the arrêtés say "circulation"). Result 0/0.
+- G2 `abri`, `couvert` — Prior: no shelter rule. Result abri 0/0; couvert 0/2, both "locaux … couverts" in A15 art. 10 (lighting), not shelter.
+- G3 `casier`, `consigne` — Prior: absent. Result 0/0, 0/0.
+- G4 `micro-ondes` — Prior: absent (no kitchen-equipment rule in ERP). Result 0/0.
+- G5 `température de couleur`, `kelvin` — Prior: absent. Result 0/0, 0/0.
+- G6 `luminance`, `réflexion lumineuse` — Prior: absent; contrast is qualitative. Result 0/0, 0/0.
+- G7 `banc`, `assise` — Prior: no rest seating on routes. Result banc 0/0; assise 1/1, both "surface d'assise de la cuvette" (WC seat), not seating.
+- G8 `rampe` — Prior: absent in A17 (which uses "plan incliné"), present in A15. Result 0/4.
+- G9 `ratio`, `rapport` — Prior: no ratio noun. Result: the counts (7/9 and 24/19) are substring and "par rapport à" hits; badly formed (substring) query; the reading itself is what supports "no ratio noun".
+- G10 the 169 distinct French aliases held in `term_aliases` (lower(language)='fr'), checked as case-insensitive substrings of both texts — Prior: a handful occur, most do not. Result: 17 occur. A substring hit is not attestation: "inclinaison" occurs only as the inclination of a lift's control support (A17 art. 7-2), not ramp slope; "orientation" occurs only in "relatifs à l'orientation" (signage). Command in pass-record.md.
+
+## Not attempted (logged, not hidden)
+- Arrêté du 8 décembre 2014 (ERP existants), arrêté du 15 janvier 2007 and décret n° 2006-1658 (voirie et espaces publics), arrêté du 14 mars 2014 (logements à occupation temporaire ou saisonnière), and the CCH articles themselves: not retrieved, by the budget (depth on two principal instruments).
+- The AFNOR standards the arrêtés deem to satisfy their requirements (NF P 98-351:2010, NF P 98-352:2015, NF EN 81-70:2003, NF EN 60118-4, NF S 32-002:2004): not attempted; they are sold by AFNOR. NOT-OBTAINABLE is not claimed, because no attempt was made.

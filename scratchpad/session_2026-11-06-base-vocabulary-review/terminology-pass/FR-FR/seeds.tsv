@@ -1,0 +1,7 @@
+register_concept	seed_FR	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Shelter	auvent / marquise (au-dessus de l'entrée)	MODEL-GENERATED	FR	ordinary French building vocabulary for an entrance canopy; to search in guides and DTU texts, not the arrêtés
+Shelter	abri voyageurs	MODEL-GENERATED	FR	term believed used for bus shelters in voirie and transport texts (arrêté 15 janvier 2007 not read)
+Accessible lockers	casiers / consignes	MODEL-GENERATED	FR	believed usual words for lockers and left-luggage; absent from both arrêtés
+Microwave mounting height accessible and safe	hauteur d'installation du four à micro-ondes	MODEL-GENERATED	FR	ERP and housing arrêtés do not regulate appliances; likely only in adapted-housing guides
+Colour temperature (parameter 10)	température de couleur (K) / température de couleur proximale	MODEL-GENERATED	FR	believed used in French lighting standards (none read), not in accessibility law
+Seating (rest seating along a route; FOUND-PARTIAL)	banc / assis-debout / appui ischiatique	MODEL-GENERATED	FR	believed used in voirie guidance for rest points; the arrêté du 15 janvier 2007 is the instrument to read next

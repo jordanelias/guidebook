@@ -143,16 +143,140 @@ REGISTER = [  # catalogue 2.1 (32), 2.2 (18), base parameters (10), in that orde
  "Reverberation time (parameter 7)", "LRV contrast (parameter 8)", "Door width (parameter 9)", "Colour temperature (parameter 10)",
  "Headroom clearance (parameter 11)", "Ramp run length (parameter 12)",
 ]
-ALIAS = {"slope": "Slope"}  # the 2.2 word 'slope' counts the 2.1 concept's observations
+ALIAS = {"slope": "Slope"}
+PARTIAL = {  # concept -> why the French match is not the English concept (ours)
+ "Seating": "NARROWER: shower/cabin seat only",
+ "No open riser": "NARROWER: riser required on first and last step only",
+ "volume": "PARTIAL: signal sound level, not paging volume",
+ "ratio": "PARTIAL: proportional count, no shower/bath mix",
+ "distance": "DIFFERENT SENSE: no distance markers",
+ "LRV contrast (parameter 8)": "BROADER: contrast never quantified",
+}  # the 2.2 word 'slope' counts the 2.1 concept's observations
 ABSENT = {
  "Shelter": "no canopy or shelter requirement; grep 'abri' 0/0; 'couvert' in A15 only as 'locaux collectifs couverts' for lighting",
- "Microwave mounting height accessible and safe": "no kitchen-appliance mounting rule; 'micro-ondes' 0/0; A15 treats kitchen only as a 1.50 m passage between appliances",
+ "Microwave mounting height accessible and safe": "no kitchen-appliance mounting rule; 'micro-ondes' 0/0; A15 treats the kitchen only as a passage between appliances",
  "Accessible lockers": "'casier' 0/0, 'consigne' 0/0; nearest are 'patères' (coat hooks) and A15 'boîtes aux lettres'",
  "Colour temperature (parameter 10)": "'température de couleur' 0/0, 'kelvin' 0/0; lighting is regulated only by illuminance, glare and timing",
 }
 
+# Reverse harvest: (phrase verbatim, kind, instrument, locator, quote verbatim, gloss — OURS, not the instrument's)
+REV = [
+ ("établissements recevant du public", "legal category (building class)", "A17", "title / art. 1", "relatif à l'accessibilité aux personnes handicapées des établissements recevant du public lors de leur construction", "the regulated building class; the regime differs from housing"),
+ ("installations ouvertes au public", "legal category", "A17", "title", "et des installations ouvertes au public lors de leur aménagement", "open-air or non-building installations open to the public"),
+ ("de 1re à 4e catégorie", "legal category (ERP size class)", "A17", "art. 5, II", "établissements recevant du public de 1re à 4e catégorie sont équipés obligatoirement", "a fire-safety size class reused as an accessibility trigger"),
+ ("bâtiments d'habitation collectifs", "legal category", "A15", "title", "des bâtiments d'habitation collectifs et des maisons individuelles lors de leur construction", ""),
+ ("maisons individuelles", "legal category", "A15", "title", "des bâtiments d'habitation collectifs et des maisons individuelles lors de leur construction", ""),
+ ("logements destinés à une occupation temporaire ou saisonnière", "legal category", "A15", "art. 1", "ne s'appliquent pas aux logements destinés à une occupation temporaire ou saisonnière", ""),
+ ("Usages attendus", "drafting structure", "A17", "art. 2, I (and every article)", "I.-Usages attendus :", "each article states expected uses (performance aim) then 'Caractéristiques minimales'; an aim/prescription split the register does not carry"),
+ ("Caractéristiques minimales", "drafting structure", "A17", "art. 2, II", "II.-Caractéristiques minimales :", ""),
+ ("solutions d'effet équivalent", "compliance route", "A17", "art. 1", "Des solutions d'effet équivalent peuvent être mises en œuvre dès lors que celles-ci satisfont aux mêmes objectifs", "equivalent-performance route with prefect approval"),
+ ("repéré, détecté, atteint et utilisé", "functional chain", "A17", "art. 5, I", "doit pouvoir être repéré, détecté, atteint et utilisé par une personne handicapée", "the four verbs organise the sub-headings Repérage / Atteinte et usage / Sécurité d'usage"),
+ ("Repérage et guidage", "sub-heading category", "A17", "art. 2, II, 1°", "1° Repérage et guidage :", ""),
+ ("Sécurité d'usage", "sub-heading category", "A17", "art. 2, II, 3°", "3° Sécurité d'usage :", ""),
+ ("Atteinte et usage", "sub-heading category", "A17", "art. 3, II, 5°", "5° Atteinte et usage :", ""),
+ ("chaîne du déplacement", "concept", "A17", "art. 2, I", "ils facilitent la continuité de la chaîne du déplacement avec l'extérieur du terrain", "continuity of the travel chain beyond the site"),
+ ("cheminement usuel", "concept", "A17", "art. 2, I", "Le cheminement accessible est le cheminement usuel, ou l'un des cheminements usuels.", "the accessible route must be the ordinary one"),
+ ("Profil en travers", "dimensional category", "A17", "art. 2, II, 2° b)", "b) Profil en travers :", "cross-section (paired with 'Profil en long')"),
+ ("ressaut", "element", "A17", "art. 2, II, 2° a)", "un ressaut à bord arrondi ou muni d'un chanfrein", "a small permitted upstand; English register has only 'level threshold'"),
+ ("pas d'âne", "element (prohibited)", "A17", "art. 2, II, 2° a)", "Les pentes comportant plusieurs ressauts successifs, dits \" pas d'âne \", sont interdites.", "stepped ramp"),
+ ("Espace de manœuvre de porte", "space type", "A17", "annexe 2, 3.", "3. Espace de manœuvre de porte", "door manoeuvring space, length differs push vs pull"),
+ ("GABARIT D'ENCOMBREMENT DU FAUTEUIL ROULANT", "reference body", "A17", "annexe 1", "GABARIT D'ENCOMBREMENT DU FAUTEUIL ROULANT", "the reference occupied-wheelchair envelope"),
+ ("BESOINS D'ESPACES LIBRES DE TOUT OBSTACLE", "space typology", "A17", "annexe 2", "BESOINS D'ESPACES LIBRES DE TOUT OBSTACLE", "three reasons: se reposer, effectuer une manœuvre, utiliser un équipement"),
+ ("chevauchement", "technique (permitted overlap)", "A17", "annexe 2, 2.", "Un seul chevauchement peut être effectué sur un espace de manoeuvre avec possibilité de demi-tour.", ""),
+ ("angle rentrant de parois", "geometric reference", "A17", "art. 4, II, 3°", "à plus de 0,40 m d'un angle rentrant de parois", "distance of a control from an inside corner"),
+ ("en position \" debout \" comme en position \" assis \"", "use condition", "A17", "art. 4, II, 3°", "Le système d'ouverture des portes est utilisable en position \" debout \" comme en position \" assis \".", "standing-and-seated usability as a stated test"),
+ ("rupture de niveau", "hazard", "A17", "art. 2, II, 3°", "par une rupture de niveau vers le bas", "drop-off beside a route"),
+ ("dispositif de détection", "element", "A17", "art. 2, II, 3°", "un dispositif de détection permettant de prévenir du danger de choc est prévu", "cane-detectable warning under a protruding object"),
+ ("zone de balayage d'une canne blanche", "reference zone", "A17", "art. 2, II, 3°", "Ce dispositif de détection est situé dans la zone de balayage d'une canne blanche", "the white-cane sweep zone"),
+ ("en saillie latérale ou en porte-à-faux", "hazard type", "A17", "annexe 4 (heading)", "DÉTECTION DES OBSTACLES EN SAILLIE LATÉRALE OU EN PORTE-À-FAUX", ""),
+ ("DÉTECTION DES MOBILIERS, BORNES ET POTEAUX", "element", "A17", "annexe 5", "DÉTECTION DES MOBILIERS, BORNES ET POTEAUX", "bollard and post detectability geometry"),
+ ("parois vitrées", "element", "A17", "art. 2, II, 3°", "Les parois vitrées situées sur les cheminements ou en bordure immédiate de ceux-ci sont repérables par des personnes de toutes tailles", ""),
+ ("covisibilité", "concept", "A17", "art. 2, II, 3°", "la covisibilité entre les conducteurs des véhicules et les piétons est garantie", "mutual visibility at a vehicle crossing"),
+ ("BANDES DE GUIDAGE TACTILE AU SOL", "element", "A17", "annexe 6", "BANDES DE GUIDAGE TACTILE AU SOL", "tactile guidance strip; the register has attention indicators only"),
+ ("repère continu", "element", "A17", "art. 2, II, 1°", "un repère continu, tactile pour le guidage à l'aide d'une canne blanche", ""),
+ ("DISPOSITIFS RÉPÉTITEURS DE FEUX DE CIRCULATION", "element", "A17", "annexe 8", "DISPOSITIFS RÉPÉTITEURS DE FEUX DE CIRCULATION À L'USAGE DES PERSONNES AVEUGLES OU MALVOYANTES", "accessible pedestrian signals; 'boîtier vibrant' or 'cône tournant'"),
+ ("niveau décalé considéré comme un étage", "rule of classification", "A17", "art. 7", "détermine un niveau décalé considéré comme un étage", ""),
+ ("Appareils élévateurs verticaux", "element", "A17", "art. 7-2, II, 3°", "3° Appareils élévateurs verticaux :", "platform lift; three types by 'hauteur de course'"),
+ ("hauteur de course", "quantity", "A17", "art. 7-2, II, 3° b)", "Le choix du type de matériel se fait en fonction de la hauteur de course", "lift travel height"),
+ ("commandes à pression maintenue", "element", "A17", "art. 7-2, II, 3° c)", "les commandes à pression maintenue respectent les conditions suivantes", "hold-to-run controls"),
+ ("Tapis roulants, escaliers et plans inclinés mécaniques", "element", "A17", "art. 8 (heading)", "Dispositions relatives aux tapis roulants, escaliers et plans inclinés mécaniques.", ""),
+ ("aire d'absorption équivalente", "quantity", "A17", "art. 9, II", "L'aire d'absorption équivalente A d'un revêtement absorbant est donnée par la formule", "absorption area as % of floor area; register has reverberation time only"),
+ ("sas d'isolement", "element", "A17", "annexe 2, 3.", "Cas particulier des sas d'isolement", "fire lobby; its A15 dimensions were annulled by the Conseil d'État (A15 annexe 2)"),
+ ("portes à tambour, tourniquets ou sas cylindriques", "element", "A17", "art. 10, I", "notamment dans le cas de portes à tambour, tourniquets ou sas cylindriques, une porte adaptée est installée à proximité", ""),
+ ("portiques de sécurité", "element", "A17", "art. 10, II, 1°", "Les portiques de sécurité ont une largeur de passage utile minimale", ""),
+ ("animaux d'assistance", "user", "A17", "art. 10, II, 2°", "Le système est conçu pour pouvoir détecter des personnes de toutes tailles ainsi que les animaux d'assistance.", ""),
+ ("cabinet d'aisances adapté", "room", "A17", "art. 12, I", "comporte au moins un cabinet d'aisances adapté pour les personnes handicapées circulant en fauteuil roulant", ""),
+ ("sens de transfert", "concept", "A17", "art. 12, II, 1°", "Le sens de transfert est indiqué sur la porte de chaque cabinet d'aisances adapté par un pictogramme adapté.", "left/right transfer, equitably distributed"),
+ ("aide au relevage", "function", "A17", "art. 12, II, 2°", "permettant le transfert d'une personne en fauteuil roulant et apportant une aide au relevage", "grab bar's sit-to-stand role"),
+ ("barre d'appui latérale", "element", "A17", "art. 12, II, 2°", "une barre d'appui latérale est prévue à côté de la cuvette", ""),
+ ("lave-mains", "element", "A17", "art. 12, II, 2°", "il comporte un lave-mains dont le plan supérieur est situé à une hauteur maximale", ""),
+ ("disposés en batterie", "arrangement", "A17", "art. 12, II, 2°", "Lorsque des urinoirs ou des sèche-mains sont disposés en batterie, ils sont positionnés à des hauteurs différentes.", ""),
+ ("Sorties", "element", "A17", "art. 13 (heading)", "Dispositions relatives aux sorties.", "ordinary exits, kept distinct from 'issues de secours'"),
+ ("issues de secours", "element (distinguished)", "A17", "art. 13, II", "la signalisation indiquant la sortie ne présente aucun risque de confusion avec le repérage des issues de secours", ""),
+ ("extinction est progressive", "technique", "A17", "art. 14, II", "l'extinction est progressive", "timed lighting fades out"),
+ ("deux zones de détection successives se chevauchent", "technique", "A17", "art. 14, II", "deux zones de détection successives se chevauchent obligatoirement", "presence-detector overlap"),
+ ("effet d'éblouissement", "hazard", "A17", "art. 14, II", "La mise en œuvre des points lumineux évite tout effet d'éblouissement direct", "glare; the register has no glare row"),
+ ("établissements recevant du public assis", "building typology", "A17", "art. 16 (heading)", "Dispositions spécifiques relatives aux établissements recevant du public assis.", ""),
+ ("emplacements accessibles", "space", "A17", "art. 16, II, 1°", "Le nombre d'emplacements accessibles est d'au moins 2 jusqu'à 50 places", "wheelchair spaces in seated venues"),
+ ("Répartition", "provision rule", "A17", "art. 16, II, 2°", "2° Répartition :", "distribution across seat categories"),
+ ("emmarchements des gradins", "element", "A17", "art. 16, II, 3°", "Les emmarchements des gradins et les gradins ne sont pas considérés comme des circulations intérieures", ""),
+ ("chambres ou locaux à sommeil", "room", "A17", "art. 17, I", "comporte des chambres ou locaux à sommeil accessibles", ""),
+ ("plan de couchage", "element", "A17", "art. 17, II, 2° b)", "le plan de couchage est situé à une hauteur comprise entre", "bed height"),
+ ("cabines et aux espaces à usage individuel", "room", "A17", "art. 18 (heading)", "Dispositions spécifiques relatives aux cabines et aux espaces à usage individuel.", "changing, care and shower cubicles"),
+ ("caisses de paiement", "element", "A17", "art. 19 (heading)", "Dispositions spécifiques relatives aux caisses de paiement", ""),
+ ("prioritairement ouvert", "operational rule", "A17", "art. 19, I", "l'un d'entre eux est prioritairement ouvert", "the adapted unit is the one opened first"),
+ ("carte \" mobilité inclusion \"", "legal instrument (person)", "A17", "art. 3, I", "titulaires de la carte \" mobilité inclusion \"", ""),
+ ("surlongueur", "quantity", "A17", "art. 3, II, 4°", "une surlongueur de 1,20 m est matérialisée sur la voie de circulation", "rear-transfer extension of a parking bay"),
+ ("appareils d'interphonie", "element", "A17", "art. 3, II, 5°", "les appareils d'interphonie sont munis d'un système permettant au personnel de l'établissement de visualiser le conducteur", ""),
+ ("points d'affichage instantané", "element", "A17", "art. 11, II, 2°", "Lorsqu'il existe un ou plusieurs points d'affichage instantané, toute information sonore est doublée par une information visuelle", ""),
+ ("ambiance visuelle et sonore adaptée", "concept", "A17", "art. 5, I", "le dispositif d'accueil bénéficie d'une ambiance visuelle et sonore adaptée", ""),
+ ("contre-jour", "hazard", "A17", "art. 5, II", "en évitant l'effet d'éblouissement ou de contre-jour dû à l'éclairage naturel ou artificiel", "backlighting at reception, for lip-reading"),
+ ("lettres bâton", "technique", "A17", "annexe 3, Compréhension", "Les informations écrites recourent autant que possible aux lettres bâton.", "sans-serif lettering"),
+ ("hauteur des caractères d'écriture", "quantity", "A17", "annexe 3, Lisibilité", "la hauteur des caractères d'écriture est proportionnée aux circonstances", ""),
+ ("pictogrammes normalisés", "technique", "A17", "annexe 3, Compréhension", "Lorsqu'ils existent, le recours aux pictogrammes normalisés s'impose.", ""),
+ ("faciles à lire et à comprendre", "technique", "A17", "annexe 3, Compréhension", "Ces informations sont concises, faciles à lire et à comprendre.", ""),
+ ("signalétique en relief", "technique", "A17", "art. 7", "par une signalétique en relief visuellement contrastée", "raised floor numbering at lift landings"),
+ ("bobine d'induction captrice", "element", "A17", "annexe 9", "fonctionnant avec une bobine d'induction captrice", "hearing-aid telecoil"),
+ ("niveau de bruit de fond magnétique", "quantity", "A17", "annexe 9", "le niveau de bruit de fond magnétique est tel qu'il n'altère pas la qualité d'écoute", ""),
+ ("unité de vie", "defined term (dwelling)", "A15", "art. 13, I", "L'unité de vie des logements est définie de la façon suivante", "kitchen, living room, one bedroom, WC and shower room on the entry level"),
+ ("caractéristiques de base des logements", "defined category", "A15", "art. 11 (heading)", "Dispositions relatives aux caractéristiques de base des logements.", ""),
+ ("caractéristiques d'accessibilité et d'adaptabilité", "defined category", "A15", "art. 13", "doivent présenter les caractéristiques d'accessibilité et d'adaptabilité suivantes", "accessible now vs adaptable later"),
+ ("logements évolutifs", "defined term", "A15", "art. 16 (heading)", "Dispositions relatives aux logements évolutifs.", ""),
+ ("travaux simples", "defined term", "A15", "art. 16, I", "permettre la redistribution des volumes par des travaux simples", "five conditions (no structure, no shared risers, etc.)"),
+ ("travaux modificatifs de l'acquéreur", "legal mechanism", "A15", "art. 17 (heading)", "Dispositions relatives aux travaux modificatifs de l'acquéreur.", ""),
+ ("réversibilité", "concept", "A15", "art. 17", "la nature des interventions nécessaires pour permettre la réversibilité du logement", ""),
+ ("zone de douche accessible", "space", "A15", "art. 15, I", "est équipée d'une zone de douche accessible dont l'accès se fait sans ressaut ou d'une baignoire", "a volume, may be deferred if a bath is fitted"),
+ ("réservation dans le gros œuvre", "technique", "A15", "art. 13, I", "une réservation dans le gros œuvre permettant l'installation ultérieure d'un appareil élévateur vertical", ""),
+ ("Balcons, terrasses et loggias", "element", "A15", "art. 14 (heading)", "Dispositions relatives aux balcons, terrasses et loggias.", ""),
+ ("rejingot", "element", "A15", "art. 14, II, 2°", "la hauteur du rejingot doit être égale à la hauteur minimale admise par les règles de l'art", "upstand of the window-door sill"),
+ ("dispositif de mise à niveau du plancher", "technique", "A15", "art. 14, II, 4°", "un dispositif de mise à niveau du plancher, tel qu'un caillebotis, des dalles sur plots", ""),
+ ("chape flottante associée à une isolation", "construction condition", "A15", "art. 14, II, 3° a)", "lorsque le logement est muni d'une chape flottante associée à une isolation", ""),
+ ("systèmes d'occultation extérieurs", "element", "A15", "art. 11, II, 2°", "des systèmes d'occultation extérieurs commandés de l'intérieur", "shutters and blinds controls"),
+ ("dispositifs de manœuvre des fenêtres", "element", "A15", "art. 11, II, 2°", "les dispositifs de manœuvre des fenêtres et portes-fenêtres", ""),
+ ("boîtes aux lettres", "element", "A15", "art. 9, II, 2°", "s'agissant des ensembles de boîtes aux lettres normalisées, cette obligation ne concerne que 30 % d'entre elles", ""),
+ ("portier d'immeuble", "element", "A15", "art. 4, II, 1°", "notamment le portier d'immeuble et le bouton de déverrouillage de la porte", ""),
+ ("appel direct par un code", "technique", "A15", "art. 4, II, 2°", "Les appareils à menu déroulant doivent permettre l'appel direct par un code.", ""),
+ ("acheminement de l'image jusqu'au logement", "technique", "A15", "art. 4, II, 2°", "un système d'acheminement de l'image jusqu'au logement de nature à permettre à un occupant de visualiser ses visiteurs", "video entry"),
+ ("détecteur crépusculaire", "element", "A15", "art. 10, II", "tel qu'un détecteur crépusculaire", ""),
+ ("caves et celliers", "room", "A15", "art. 5, I", "Les occupants handicapés doivent pouvoir accéder à l'ensemble des locaux collectifs, caves et celliers", ""),
+ ("physiques, sensorielles, cognitives, mentales ou psychiques", "population carve", "A15", "art. 1", "notamment physiques, sensorielles, cognitives, mentales ou psychiques", "five-way impairment list in housing; A17 names déficience visuelle/auditive/motrice/mentale case by case"),
+ ("difficultés de repérage dans l'espace", "population carve", "A17", "annexe 6", "Elle peut également être une aide pour les personnes ayant des difficultés de repérage dans l'espace et pour les personnes présentant une déficience mentale ou cognitive.", ""),
+]
+
+def write_rev():
+    bad = 0
+    with open(D + '/reverse-harvest.tsv', 'w', newline='') as f:
+        w = csv.writer(f, delimiter='\t', lineterminator='\n')
+        w.writerow(['phrase_verbatim (instrument own phrase)', 'kind (ours)', 'language', 'instrument', 'locator', 'context_quote_verbatim', 'text_file', 'quote_verified_in_text', 'gloss_OURS_not_an_equivalence'])
+        for ph, kind, ins, loc, q, g in REV:
+            ok = norm(q) in TXT[ins] and norm(ph).lower() in norm(q).lower()
+            if not ok: bad += 1; print('REV FAIL', ins, loc, ph, file=sys.stderr)
+            w.writerow([ph, kind, 'FR', INST[ins][0], loc, q, INST[ins][1].split('/')[-1], 'yes' if ok else 'NO', g])
+    print('reverse-harvest', len(REV), 'verified', len(REV) - bad)
+    return bad
+
 def main():
-    bad = 0; rows = []
+    bad = write_rev(); rows = []
     for c, ph, ins, loc, q, note in OBS:
         ok_q = norm(q) in TXT[ins]
         ok_p = norm(ph).lower() in norm(q).lower()
@@ -171,10 +295,11 @@ def main():
             if hit:
                 ph = sorted({r[1] for r in hit})
                 notes = '; '.join(sorted({r[8] for r in hit if r[8]}))
-                w.writerow([c, src, 'FOUND', len(hit), ' / '.join(ph), notes])
+                st = 'FOUND-PARTIAL' if c in PARTIAL else 'FOUND'
+                w.writerow([c, src, st, len(hit), ' / '.join(ph), (PARTIAL.get(c, '') + '; ' if c in PARTIAL else '') + notes])
             else:
                 w.writerow([c, src, 'SEARCHED-ABSENT', 0, '', ABSENT.get(c, 'NO NOTE: check')])
-    print('observations', len(rows), 'verified', len(rows) - bad)
+    print('observations', len(rows), 'failures (obs+rev)', bad)
     sys.exit(1 if bad else 0)
 
 if __name__ == '__main__':
