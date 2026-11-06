@@ -253,6 +253,34 @@ REV = [
  ("Tilgængelighedskrav i BR18 holdt op mod DS/ISO 21542", "compliance pointer", "VA", "page body", "DS Håndbog 186: Tilgængelighedskrav i BR18 holdt op mod DS/ISO 21542.", "the official guidance for kap. 2 is a pointer to a paid DS handbook"),
 ]
 
+def regen_check():
+    """Each saved text must be a deterministic function of the raw persisted artefact: re-extract it
+    (tools/h2t.py's transform for HTML/XML, `pdftotext -layout` for PDF) and compare. Returns failures."""
+    import subprocess, html as H
+    R = 'retrieval-log/session_2026-11-06-base-vocabulary-review/'
+    bad = n = 0
+    for f in sorted({x for v in INST.values() for x in v[1]}):
+        raw = [g for g in glob.glob(R + f + '.*')]
+        if len(raw) != 1: bad += 1; print('REGEN: no unique artefact for', f, file=sys.stderr); continue
+        raw = raw[0]
+        if raw.endswith('.pdf'):
+            out = subprocess.run(['pdftotext', '-layout', raw, '-'], capture_output=True, text=True).stdout
+        else:
+            t = open(raw, encoding='utf-8').read()
+            t = re.sub(r'(?is)<(script|style|noscript|svg|header|footer|nav)\b.*?</\1>', ' ', t)
+            t = re.sub(r'(?i)<br\s*/?>', '\n', t)
+            t = re.sub(r'(?i)</?(p|div|h[1-6]|li|tr|table|section|article|ul|ol|dt|dd)\b[^>]*>', '\n', t)
+            t = re.sub(r'(?i)</t[dh]>', ' | ', t)
+            t = re.sub(r'<[^>]+>', ' ', t)
+            t = H.unescape(t).replace('\xa0', ' ')
+            t = '\n'.join(re.sub(r'[ \t]+', ' ', l).strip() for l in t.split('\n'))
+            out = re.sub(r'\n{3,}', '\n\n', t).strip() + '\n'
+        n += 1
+        if out != open(T + f + '.txt', encoding='utf-8').read():
+            bad += 1; print('REGEN MISMATCH', f, file=sys.stderr)
+    print('text files re-derived from raw artefacts', n, 'mismatches', bad)
+    return bad
+
 def alias_report():
     try:
         con = sqlite3.connect('file:data/guidebook.db?mode=ro', uri=True)
@@ -297,6 +325,7 @@ def main():
                 note, pats = ABSENT.get(c, ('NO NOTE: check', []))
                 counts = ', '.join(f"/{p}/i={len(re.findall(p, ALL, re.I))}" for p in pats)
                 w.writerow([c, src, 'SEARCHED-ABSENT', 0, '', note + (' [counts over all saved texts: ' + counts + ']' if counts else '')])
+    bad += regen_check()
     print('observations', len(rows), 'reverse-harvest', len(rrows), 'failures', bad)
     alias_report()
     sys.exit(1 if bad else 0)

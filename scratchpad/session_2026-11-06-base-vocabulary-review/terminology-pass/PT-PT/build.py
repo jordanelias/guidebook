@@ -29,7 +29,7 @@ OBS = [
  (SURF, "Firme", "L", "Anexo 4.7.1 3)", "3) Firme - não é deformável quando sujeito às acções mecânicas decorrentes do uso normal;", ""),
  (SURF, "boa aderência", "L", "Anexo 4.7.7 1)", "1) Garantir boa aderência mesmo na presença de humidade ou água;", "slip resistance stated as grip in wet conditions, for unenclosed and wet spaces only"),
  (SURF, "revestimento antiderrapante", "L", "Anexo 3.4.4", "As zonas pavimentadas adjacentes ao tanque da piscina, bem como as escadas e rampas de acesso, devem ter revestimento antiderrapante.", "pool surrounds"),
- (SURF, "superfície firme, segura e confortável", "P", "Anexo, Quadro 3, ação 13", "13. Alteração da estabilidade, conforto, segurança e/ou durabilidade dos revestimentos de pavimentos do percurso acessível.\nAdoção de materiais que apresentem uma superfície firme, segura e confortável.", "secondary transcription"),
+ (SURF, "superfície firme, segura e confortável", "P", "Anexo, Quadro 3, ação 13", "Adoção de materiais que apresentem uma superfície firme, segura e confortável.", "secondary transcription; the compensation measure for actions 1, 4, 5 and 13"),
  ("Seating", "banco", "L", "Anexo 2.10.4", "No interior dos vestiários e cabinas de prova deve existir um banco que satisfaça as seguintes condições:", "changing-room bench only"),
  ("Seating", "assento da base de duche", "L", "Anexo 2.9.11", "O assento da base de duche acessível deve satisfazer as seguintes condições:", "shower seat"),
  ("Handrails", "corrimãos", "L", "Anexo 2.4.8", "As escadas que vencerem desníveis superiores a 0,4 m devem possuir corrimãos de ambos os lados.", ""),
@@ -258,7 +258,8 @@ REV = [
 def main():
     bad = 0; rows = []
     for c, ph, ins, loc, q, note in OBS:
-        ok = norm(q) in TXT[ins] and norm(ph).lower() in norm(q).lower()
+        if '\n' in q: bad += 1; print('MULTILINE QUOTE', loc, file=sys.stderr)
+        ok =norm(q) in TXT[ins] and norm(ph).lower() in norm(q).lower()
         if not ok: bad += 1; print('FAIL', ins, loc, ph, norm(q) in TXT[ins], file=sys.stderr)
         for x in c.split('|'):
             if x not in REGISTER: bad += 1; print('UNKNOWN CONCEPT', x, file=sys.stderr)
