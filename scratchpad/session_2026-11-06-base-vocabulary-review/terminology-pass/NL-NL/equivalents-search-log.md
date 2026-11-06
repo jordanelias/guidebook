@@ -43,3 +43,16 @@ Defect, stated: the priors for Q1 to Q4 were formed before running but written i
 - W7 WebSearch `Oogvereniging geleidelijnen ribbeltegels noppentegels attentieveld` (standard). Prior: the Oogvereniging (DPO) or CROW uses "geleidelijn", "ribbeltegel", "noppentegel", "attentieveld"; tests the tactile concepts the Bbl lacks.
   Result: no Oogvereniging page; ProRail brochure "routegeleiding op stations" (rail infrastructure manager, public body), Gemeenteblad external annexes (exb-2022-44106 etc., unknown content), manufacturer and BE (ebema.be) product sheets (not used).
 - F11 fetch ProRail `https://www.prorail.nl/siteassets/homepage/reizen/documenten/brochure-routegeleiding-op-stations-zonder-afbeeldingen.pdf`. Prior: "geleidelijn", "ribbels", "noppen", "attentieveld", "blindengeleidelijn"; mentions the Oogvereniging and maybe "lift" and "hellingbaan" on platforms.
+  Result: 200, 903028 bytes (dfda9a6aaa2a4396.pdf), pdftotext -layout. geleidelijn(en), ribbels, noppentegel(s), noppenvlak, waarschuwingsmarkering (also hyphenated waarschuwings-markering), attentievlak = a FLAT square with no ribbels at a branch (p. 6), lift(en), Oogvereniging named as party to the agreement (p. 4). Prior wrong on "attentieveld" (0; the brochure says attentievlak) and on its meaning: it is not a warning field.
+
+## Not obtained or not tried
+- Rijksoverheid parking-card topic page: guessed URL 404 (F6); not retried.
+- BZK/VWS "infoblad Trapliften op bestaande trappen": URL not found (W4).
+- Haarlemmermeer stair-lift tender: 404 (F8).
+- CROW publications (ASVV, publicatie 337 on tactile paving): paid; not attempted.
+- NEN 9120:2025: NOT-OBTAINABLE (first pass, geo-block and DRM); its forms are absent from this record.
+- Oogvereniging's own guidance page: not surfaced (W7); its usage enters only through ProRail's brochure.
+- Flemish (BE) instruments: out of scope; one BE language-advice page fetched as a labelled contrast only.
+
+## Build
+- `python3 -I build_equiv.py` regenerates equivalents.tsv, checks every quote verbatim (whitespace-normalised) in the saved text, every form inside its quote, quotes at most 25 words and every concept_id in register-v2; PDF pages are derived from form feeds. Last run: 0 failures.

@@ -67,7 +67,7 @@ ROWS = [
   'een aanvraag heeft ingediend om in aanmerking te komen voor een gereserveerde gehandicaptenparkeerplaats op kenteken', ''),
  ('R2-050', 'algemene gehandicaptenparkeerplaats', C, 'NARROWER: the general bay open to every card holder, opposed to "op kenteken"; municipal policy term', 'ZUID', '',
   'Een algemene gehandicaptenparkeerplaats is bestemd voor het', ''),
- ('R2-050', 'individuele gehandicaptenparkeerplaatsen', R, 'the 2008 policy name for the vehicle-bound bay, repealed by this policy; superseded municipal wording', 'ZUID', '',
+ ('R2-050', 'individuele gehandicaptenparkeerplaatsen', OD, 'the 2008 policy name for the vehicle-bound bay, repealed by this policy; superseded municipal wording', 'ZUID', '',
   'de inhoud van ‘Beleid inzake individuele gehandicaptenparkeerplaatsen (Nieuwerkerk aan den IJssel,', ''),
  ('R2-050', 'parkeercapaciteit aan mindervaliden', OD, '"mindervaliden" is judged outdated and pejorative in the BE language advice (row below); here in a 2020 municipal title', 'ZUID', 'subtitle',
   'Kaders voor het toekennen van parkeercapaciteit aan mindervaliden', ''),
