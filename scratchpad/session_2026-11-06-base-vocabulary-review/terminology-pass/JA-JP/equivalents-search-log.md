@@ -119,3 +119,10 @@ Every query and fetch in order. The prior line is written by the same command be
 - purpose: tier 4 Mie Prefecture ordinance-amendment document (多機能便房 renamed)
 - prior (written before fetch): expect 多機能便房 as the old ordinance term mapped to 車椅子使用者用便房
 - result: status 200, 143185 bytes, sha256 01d1e7758bdc65a97162522db95fcf17a96f2b3a30ddc3899b78e083a7835993, artefact 01d1e7758bdc65a9.pdf, text 01d1e7758bdc65a9.txt (9305 bytes)
+
+## Tier 1 again: orthographic pairs and other element classes (local texts)
+- Query: regex 浮彫|浮き彫り|踏み面|けあげの寸法 over the design standard; 蹴上げ|けあげ over 省令114, 政令379, 規則110; 点字ブロック|視覚障害者誘導用ブロック|点状ブロック等|線状ブロック等; スロープ/傾斜路 pairings. Prior: the first pass's pairs recur; 点字ブロック (the everyday word) absent from the code texts. Result: pairs confirmed with page locators (浮彫 heading and 浮き彫り body on pdf p.46; けあげ p.46 and 蹴上げ in 省令114 Art.4); 点字ブロック 0 hits in the design standard; 傾斜路 said to include 据え置き型スロープ (p.164).
+- Quote check for equivalents.tsv: every quote searched in the retrieved text (page-restricted for PDFs), exact or after removing whitespace; 0 missing at build. The builder script is in the session scratchpad and not kept.
+
+## Not obtained
+- 大阪府 tebiki_1.pdf and two Osaka/Sakai pages: 408 direct; Wayback snapshot exists but both if_ and plain forms returned nothing (exit, 0 bytes). Aichi 577638.pdf: 302 with no body. Iwate 08_5pp.pdf: 404. MLIT 000027744.pdf and DPI 2017-12 PDF: retrieved, but pdftotext could not map their CJK fonts (no text). No Co-1 (tier 5) form attested.
