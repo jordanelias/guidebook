@@ -2295,6 +2295,17 @@ def main():
     p_as.add_argument("--publisher")
     p_as.add_argument("--publisher-location")
     p_as.add_argument("--book-title")
+    # ADDED 2026-11-06. The five citation columns the sanctioned writer could not reach, found by
+    # the run-pipeline adversarial pass: a journal article could not name its journal, a book its
+    # ISBN, a standard its number or edition, so a bibliography compiled from the row printed
+    # "not recorded". Same failure class as the 2026-09-18 venue set above, and the same owner rule:
+    # when the CLI cannot reach a column, add the verb. Write them from the payload in hand
+    # (CLAUDE.md section 5c), never from memory.
+    p_as.add_argument("--journal-name", help="the journal, as the payload prints it")
+    p_as.add_argument("--edition", help="e.g. '2nd' or '2022'; the edition the cited text is from")
+    p_as.add_argument("--standard-number", help="the instrument's own number, e.g. 'ISO 21542:2021'")
+    p_as.add_argument("--isbn")
+    p_as.add_argument("--issn")
     p_as.add_argument("--grey-flag", type=int, choices=(0, 1),
                       help="1 for grey literature. evidence_type='grey' with grey_flag=0 "
                            "is the same fact disagreeing with itself across two columns")
@@ -3088,6 +3099,11 @@ def main():
                             ("book_title", "book_title"),
                             ("grey_flag", "grey_flag"),
                             ("grey_reason", "grey_reason"),
+                            ("journal_name", "journal_name"),
+                            ("edition", "edition"),
+                            ("standard_number", "standard_number"),
+                            ("isbn", "isbn"),
+                            ("issn", "issn"),
                             ):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
@@ -3543,6 +3559,8 @@ def insert_evidence_source(data: dict, session: str,
         "source_type", "publisher", "publisher_location", "book_title",
         "series", "series_number", "report_number", "institution",
         "grey_flag", "grey_reason",
+        # ADDED 2026-11-06: see the --journal-name note at the argparse block.
+        "journal_name", "edition", "standard_number", "isbn", "issn",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
 

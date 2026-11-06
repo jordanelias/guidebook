@@ -59,11 +59,11 @@ no bare axis codes or population umbrellas.
   with `scripts/research/retrieval_log.py`. **Unretrievable:** admit with `verification_status` UNVERIFIED and marker ○,
   no scan row, and never describe it as read. Log the admission as a search (R17): `log-search --origin owner-supplied`
   or `lead-index`.
-- **Bibliographic data.** `add-source` takes authors, year, title, institution, report and series number, publisher,
-  book title, pages, DOI/PMID, URL, tier, evidence type, Co-1 provenance and verification; `correct-source` sets
-  volume, issue, article number, pages, title, year and authors **from the payload**. **Journal name, ISBN, ISSN,
-  standard number and edition have no writer**: file a GAP per source and show "not recorded" on the page. Every
-  author is kept; Co-1 co-authors are the warrant.
+- **Bibliographic data.** `add-source` takes authors, year, title, journal name, edition, standard number, ISBN, ISSN,
+  institution, report and series number, publisher, book title, pages, DOI/PMID, URL, tier, evidence type, Co-1
+  provenance and verification; `correct-source` sets volume, issue, article number, pages, title, year and authors
+  **from the payload**. Take each field from the payload in hand, never from memory. A field the source does not
+  carry stays empty and prints "not recorded". Every author is kept; Co-1 co-authors are the warrant.
 - **`--verify-authors` checks only against a JSON payload.** On a `.doc` or other undecodable payload it reports NOT
   SEARCHED; compare the bytes by hand and record that limit in the source's notes. It is not verification there.
 - **The slug guides the search, not the reading.** Derive full text (`scripts/research/full_text.py`: PDF and HTML only),
@@ -85,19 +85,20 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - `relate-extraction` for comparators, `derive-extraction` for computed figures, `raise-follow-up` for doubtful rows.
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
   and access-need attribution live on the extraction's lens columns.
-- Failure and harm (R7): no typed harm column exists at judgment; record as `figure_role='finding'` with the verbatim
-  claim, and file a GAP if a typed field is needed.
+- Failure, harm and inadequacy (R7) are first-class rows: a `figure_role='finding'` extraction with the verbatim
+  claim, and an `insufficient` edge (`--relation insufficient`, to the figure the source says is not enough, e.g. a
+  code value) so the inadequacy is typed and joinable. Harm that reaches a search is also `log-search`'s `harm_finding`.
 - Output must be usable without re-reading the source: render and determination read the typed row and its locator.
 - Checks: `judgment_handoff_shape.py`, `extraction_relations_integrity.py`, `adjudication_integrity.py`.
 
 ## 5. synthesis — read rows against each other
 - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
-  different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency:
-  `add-connection` (`--targets` is a JSON array of **free text**: name each parameter as `<parameter_id> <canonical_en>`,
-  state the mechanism in `--description`; no foreign key exists, so a typed edge is a GAP), `derive-extraction` where one
-  figure is computed from another, `add-conflict` where populations pull opposite ways.
-- `connection-discovery` and `cross-population-conflict-mapper` presuppose the deleted item layer (`--item-code`,
-  `item:` targets, `[A-Z]-NN` codes): use their search method only, and ignore those fields.
+  different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
+  **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross
+  parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`), and as a `connections` row
+  (`connection-discovery`) for the narrative: its `--targets` is free text, so name each parameter
+  `<parameter_id> <canonical_en>`. `add-conflict` where populations pull opposite ways (`cross-population-conflict-mapper`).
+  `connection-discovery --mode cluster-crosstest` enumerates every pair in a cluster so none is skipped.
 - **Independence.** Sources sharing a root are one source. `v_value_independence` and `external_root_registry` hold few
   rows; where empty, trace shared roots from the citations by hand. `supersession-audit` → `add-supersession-check`.
 - CLAUDE.md §6 reserves `best_practice_synthesis` to Opus-class models; no object of that name exists, so apply the
@@ -114,7 +115,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
      determination resting on T4–T6 alone may be named, at the weak band **○**, with the code-derived flag and the
      convergence-not-evidence caveat, and is **never ●**. Evidence that improves on it (academic research, clinical
      guidelines, advocacy and lived-experience work) replaces it and earns the stronger band. If the engine labels a
-     code-only cell otherwise (its G1 branch comment says "never best practice"), that is an engine defect: tooling PR.
+     code-only cell otherwise, that is an engine defect: tooling PR.
   3. The recorded rationale is the derivation (which sources, what they state, the rule version), not an endorsement.
 - `raise-determination-gate` caps a cell at provisional.
 - Checks: `validate_evidence_state.py`, `derivation_handshake_integrity.py`, `medical_lens_integrity.py`.
@@ -144,9 +145,9 @@ are proposals. Apply, as ruled:
   list, from `evidence_sources` and `evidence_source_authors` (`bibliography-compiler`). A field with no writer
   (stage 3) prints "not recorded". Provenance footer: schema version and database sha256.
 - **Accessibility:** WCAG 2.2 AA is a precondition and wins over aesthetics; never self-certify, state only the tests run.
-- **Sources of rows:** `specifications` (live: `retired_at IS NULL`) and `v_determination_provenance`. `v_best_practice`
-  still filters `code_floor_only = 0`, which OR-7 says to drop; do not render from it until it does. A view with 0 rows
-  proves nothing; when no live specification exists the page can show only evidence and Gaps (contract section 7).
+- **Sources of rows:** `v_best_practice` (live, flagged determinations; it shows a code-only one at ○ since migration
+  117, per OR-7) and `v_determination_provenance`. A view with 0 rows proves nothing; when no live specification exists
+  the page can show only evidence and Gaps (contract section 7).
 - **No check examines rendered output** (`register-invariants` has `check: null`): walk contract invariants I1–I6 by hand.
 
 ## 8. adversarial audit — a separate critic, then repair
@@ -157,8 +158,7 @@ assign each to a question and omit none:
 - **Logic:** shared roots, tier, population fit, contrary evidence, frequency or code standing in for evidence,
   posture. L3–L7, L8 (was a zero-yield search well-formed), S1, S3.
 - **Sequence:** every pointer resolves to an earlier stage's row; no extraction on an unadmitted or unverified source;
-  no determination without direction and extractions; no stage verified after its consumer ran. **No lens covers
-  sequence**: record it as method, and file a GAP if it should become a lens.
+  no determination without direction and extractions; no stage verified after its consumer ran. `S4-sequence`.
 Then `/batch-done`. **`from-evidence` still faces its blocking gates:** R17 (a logged search per admission), R1 (a
 Co-1/Co-2 search or source, or a reasoned `CO1-NOT-APPLICABLE` in a search's `findings_note`) and R2 (`citation_mining`
 rows for admitted T1–T3 anchors). Mine the anchors; R10 fetches leave WebFetch ledger lines that

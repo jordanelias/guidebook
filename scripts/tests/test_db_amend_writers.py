@@ -548,6 +548,19 @@ try:
                    "SELECT relevance_note FROM source_slug_links WHERE ref_id=? AND slug=?",
                    R1, mixed)[0][0] == "fixture grounds", f"out={out}")
 
+        # S10: the five citation columns add-source could not reach now land on the row (a flag
+        # that parses and never reaches the column reports a write that did not happen).
+        R_CITE = next_ref()
+        r = add_source(R_CITE, "--journal-name", "Fixture Journal", "--edition", "2nd",
+                       "--standard-number", "FIX 1:2020", "--isbn", "978-0-00-000000-2",
+                       "--issn", "0000-0000")
+        record("S10", "add-source writes journal_name, edition, standard_number, isbn and issn",
+               r.returncode == 0 and q(
+                   "SELECT journal_name, edition, standard_number, isbn, issn "
+                   "FROM evidence_sources WHERE ref_id=?", R_CITE)
+               == [("Fixture Journal", "2nd", "FIX 1:2020", "978-0-00-000000-2", "0000-0000")],
+               f"rc={r.returncode} {r.stderr[-300:]!r}")
+
     # ── X: supersede-source ───────────────────────────────────────────────────
     # GAP-060. Two DOI-less fixture sources with one author, year and title are the
     # collision test_db_integrity D04 exists to catch; the verb is what makes it go quiet

@@ -66,6 +66,7 @@ block before the pass can be closed, whatever you numbered your prose findings a
 | `S1-harm-reached-row` | A flagged harm/failure finding actually reached the row it should. |
 | `S2-mismatch-note-vs-payload` | A recorded `mismatch_note` is true against the actual payload. |
 | `S3-containment` | The fix stayed inside its stated blast radius — nothing else moved. |
+| `S4-sequence` | Stage and write order: every pointer resolves to a row of an earlier stage; nothing consumed a row before it was admitted, read or verified; no determination before its direction and extractions. |
 
 `L2-fidelity` on a research batch also carries standing subject 4 of `skills/adversarial-research_SKILL.md`: figures the payload states that no extraction carries, and concepts it names that no observation records, sampled once per admitted source.
 
