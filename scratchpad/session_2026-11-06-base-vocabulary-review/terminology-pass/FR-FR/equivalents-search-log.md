@@ -171,3 +171,7 @@ Every web query and fetch, in order. The prior line is written before the call (
 ### FETCH https://www.loisin.fr/wp-content/uploads/2021/12/ARRETE-PLACE-HANDICAPE-ECOLE-2014-08.pdf
 - Prior (written before the call): body 'place de stationnement réservée aux personnes handicapées' or GIG-GIC (2014); title 'place handicapé' only in file name
 - Result: status 200, 252285 bytes, sha256 2a9d7da5a277538f80adf21581f4101a5532b3f5f27deec51a759b3745e47919, artefact 2a9d7da5a277538f.pdf, text 2a9d7da5a277.txt (2808 chars)
+- Result: Loisin (Haute-Savoie) 2014 order: "emplacement réservé aux personnes handicapées ou à mobilité réduite", "macaron grand invalide de guerre (GIG) ou grand invalide civil (GIC)", "carte de stationnement de modèle communautaire pour personnes handicapées". Prior: the file name "PLACE-HANDICAPE" is not in the text; confirmed.
+
+## Stopped (budget)
+Not retrieved: Code de la route R417-11 and CGCT L2213-2 (Légifrance 403; no article id in hand for Wayback), arrêté du 15 janvier 2007 and décret 2006-1658 (Wayback snapshot exists, two connection resets), arrêté du 8 décembre 2014 (no snapshot), RATP and IDFM pages (403, no snapshot), MDPH Isère (980-byte stub), Melun orders (404 and an anti-scraper shell), DMA 2023 voirie leaflet (404). Out of jurisdiction and excluded on sight: CMHC/SCHL (Canada), ITM (Luxembourg), Ville de Gatineau (Québec). No Belgian or Swiss source used.

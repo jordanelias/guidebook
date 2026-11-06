@@ -142,3 +142,41 @@ Method: each fetch's prior is appended to this file by `tools/get.py` in the sam
 - Fetch: `https://carris.pt/descubra/frota/ascensores/`
 - Prior (written before the call): Link found on the English page. Expect the section named 'Ascensores' covering the funiculars (Glória, Bica, Lavra), with Santa Justa called 'Elevador'; a JS app may leave little text.
 - Retrieval: status 200, 100634 bytes, artefact a53002e801807374.html, sha256 a53002e801807374b045d5aae4dcd06fd6c895e40a5e54e9eadfc856d0c4d88c, text 1746 chars -> text/a53002e80180.txt
+
+## Web searches (discovery only; nothing below is attestation)
+Priors for these were written in working notes before each result; declared, not proven.
+- Q1 `Decreto-Lei 307/2003 cartão de estacionamento pessoas com deficiência condicionadas na sua mobilidade pgdlisboa`. Prior: DR or PGDL copy. Result: imt.madeira.gov.pt PDFs of DL 307/2003 and DL 128/2017, Lisbon service page, Associação Salvador PDF, Provedor PDFs. Shape: statutory title words worked.
+- Q2 `Regulamento de Sinalização do Trânsito Decreto Regulamentar 22-A/98 painel adicional deficientes estacionamento pgdlisboa`. Prior: annex with the panel. Result: madeira.gov.pt PDF of the 1998 original; BR results mixed in (CONTRAN), discarded as another jurisdiction.
+- Q3 `pgdlisboa Código da Estrada "estacionamento" "pessoas com deficiência" artigo 50.º lei_mostra_articulado`. Prior: PGDL nid. Result: no PGDL URL; news and aggregator pages, not used. The nid=349 used in E5 is from memory and was confirmed by the page title.
+- Q4 `Regulamento de Sinalização do Trânsito "Modelo 11d" OR "deficientes" ...`. Result: driving-school pages (not used) naming panel 11d; BR results discarded.
+- Q5 `Decreto-Lei 320/2002 manutenção inspecção ascensores ...`. Result: vlex (aggregator, not used), municipal regulations; Marinha Grande chosen.
+- Q6 `Metro de Lisboa acessibilidade estações elevadores ...`. Result: metrolisboa.pt press releases (403 on fetch), news (not used).
+- Q7 `Plano Nacional de Promoção da Acessibilidade ... "desenho universal"`. Result: arquivo.pt and DR links; mostly BR pages, discarded. The search summary's "desenho para todos" is NOT recorded: the RCM 9/2007 bytes were never obtained.
+- Q8 `Estratégia Nacional para a Inclusão ... 119/2021 ...`. Result: portugal2030.pt PDF.
+- Q9 `Regulamento Geral de Estacionamento e Paragem na Via Pública Lisboa ...`. Result: EMEL PDFs, Odivelas regulation; the Lisbon RGEPVP text (Aviso 3856/2021) was not located.
+- Q10 `"pessoa com deficiência" e não "deficiente" guia linguagem ...`. Prior: an APD or ACAPO guide. Result: mostly BR (discarded); one PT guide by Acesso Cultura (escs.ipl.pt host). No APD, ACAPO or CNOD guide found.
+- Q11 `carris.pt Elevador de Santa Justa ...`. Result: carris.pt English fleet page; the Santa Justa = "Elevador" identification rests on search snippets only and is NOT recorded as attested.
+
+## Result notes per fetch (the lines above each were written by tools/get.py)
+- E2 DL 307/2003: text layer present; two-column layout breaks words at line ends, so quotes were cut short to avoid hyphen breaks. Forms: cartão de estacionamento de modelo comunitário; locais reservados para o efeito (art. 10.º); dístico de identificação de deficiente motor (preamble, revoked Portaria 878/81).
+- E3 DL 128/2017: forms as expected; no 'dístico' in the text.
+- E4 Lisbon page: 403 Cloudflare challenge ("Just a moment..."). Wayback snapshot exists (W1) but every Wayback fetch reset (E15, E16, E16b; control example.com 200): session-level block, as in CLAUDE.md section 7's CSA case. NOT OBTAINED.
+- E5/E6 Código da Estrada: PGDL page is ISO-8859-1; re-extracted with tools/h2t.py. Page 1 ends at art. 97.º, page 2 runs to art. 189.º. Forms at arts 1.º q), 70.º n.º 4, 145.º q), 164.º n.º 2 g).
+- E7 RST 1998 original: 29 MB PDF with a text layer; panel 11d "dístico de deficiente" at art. 46.º. Later amendments (DR 41/2002 ... DR 6/2019) not read, so the wording in force is UNVERIFIED.
+- E8 Marinha Grande: scope list excludes 'funiculares' and 'elevadores de maquinaria de teatro'; 'plataforma' 0.
+- E9 Salvador: one page; no rejected forms named.
+- E10 Provedor: uses 'dístico de estacionamento' (2015) for the card.
+- E11 arquivo.pt 403; E14 Wayback reset; E18 umic.pt 404. RCM 9/2007 NOT OBTAINED.
+- E12, E23 metrolisboa.pt 403. NOT OBTAINED.
+- E13 draft revision of DL 163/2006 (cm-vfxira host, not in force): 'elevador' 0, 'universal' 0, adds 'Ascensores incluídos em percursos acessíveis' and 'zonas de rotação'. Not used as attestation (a draft).
+- E17 the inr.pt URL served the home page of the Instituto para os Direitos das Pessoas com Deficiência, I.P. (IDiPD); news items only; 'acesso universal à literatura' is not a built-environment use. Not used.
+- E19 ENIPD: 'design universal' 2, 'desenho universal' 0, 'sem barreiras' 1; 'vagas' 6, all care-home or course places, none parking.
+- E20 EMEL park regulation: 740-byte HTML stub, no PDF. NOT OBTAINED.
+- E21 Odivelas: definitions at art. 4.º; request form in the annex.
+- E22 Acesso Cultura: the Usar / Não usar table (pdf p. 39) is two columns; pdftotext -raw flattens it and misplaces "Casa de banho adaptada" into the wrong column; column membership was read from the -layout text.
+- E24 carris.pt guessed path 404; E25 English page gave the link; E26 Portuguese page: menu 'Funiculares / Ascensores / Elevador', items 'Ascensor da Glória', 'Ascensor do Lavra'.
+
+## L1. Local grep for held BR-tagged aliases in the PT texts read
+- Query: counts of 'vaga', 'banheiro', 'elevador', 'desenho universal', 'design universal' over the 13 saved texts (read-only DB query for pt aliases on parking, lift, qualifier and sanitary stems gave 'banheiro acessível' BR, 'sanitário adaptado' BR, 'elevador acessível' BR, 'desenho universal' BR, 'vaga acessível' untagged).
+- Prior: none of 'vaga', 'banheiro', 'desenho universal' in PT texts.
+- Result: 'banheiro' 0 and 'desenho universal' 0 everywhere; 'vaga' 6, all in ENIPD and none in the parking sense; 'elevador' 3 (MG stage machinery 1, Carris 2), 0 in DL 163/2006. Shape: substring counts, used only to say "not attested by these texts".

@@ -120,7 +120,7 @@ R = [
 ('R2-083', 'rampas', 'code term', 'defined by slope threshold (4.7.6, pass 1)', 'DL', DLL+'2.4.11', 'complementadas por rampas, ascensores ou plataformas elevatórias', ''),
 ('R2-358', 'escadarias em rampa', 'code term', 'lower-case listing form of the register origin phrase', 'DL', DLL+'1.1.3 2)', 'As escadarias, escadarias em rampa e rampas', ''),
 ('R2-057', 'passagens de peões', 'code term', 'pedestrian crossing; section 1.6 (not "passadeira", which the annex uses for a floor runner, 4.7.3)', 'DL', DLL+'1.6.1', 'A altura do lancil em toda a largura das passagens de peões', 'CONFLATION (word): in PT usage "passadeira" can name a zebra crossing; this text uses it only for a carpet runner (4.7.3)'),
-('R2-092', 'lancil', 'code term', 'the kerb edge at crossings', 'DL', DLL+'1.6.1', 'A altura do lancil', ''),
+('R2-092', 'lancil', 'code term', 'street kerb at crossings; R2-092 is the register row carrying the curb sense split, and no plain kerb row exists; not judged equal to edge protection', 'DL', DLL+'1.6.1', 'A altura do lancil', ''),
 ('R2-005', 'vãos de porta', 'code term', 'the measured object is the opening', 'DL', DLL+'4.9.1', 'Os vãos de porta devem possuir uma largura útil', ''),
 ('R2-004', 'largura livre', 'code term', 'route and pavement width', 'DL', DLL+'1.2.1', 'devem ter uma largura livre não inferior a 1,5 m', ''),
 ('R2-021', 'zonas de manobra', 'code term', 'manoeuvring zones graded by rotation', 'DL', DLL+'4.4.1', 'as zonas de manobra devem ter dimensões', ''),
