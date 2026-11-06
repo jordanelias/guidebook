@@ -52,3 +52,6 @@ Each entry: query verbatim; PRIOR (written before the query ran); RESULT; SHAPE 
 - Q9 query: context-line scan for 軽い力 操作に要する力 響き 照度 ロッカー 自動水栓 レバー式 電子レンジ 色温度 シェルター 上屋 車寄せ 有効幅員 戸の有効幅 前面 アプローチ 直径150 150㎝以上の円 エスコートゾーン
 - PRIOR: 軽い力 for door operation; 直径150㎝ for turning space; 上屋 for shelter.
 - RESULT: as expected for those three; 操作に要する力, 自動水栓, シェルター, 色温度, 電子レンジ zero; 戸の有効幅 zero (the standard writes 出入口の有効幅員).
+
+## CORRECTION to Q3 SHAPE note (appended, not overwritten)
+- The Q3 note said e-Gov renders 「勾こう配」. That was WRONG and was my converter's error: the JSON carries ruby markup `{"tag":"Ruby","children":["勾",{"tag":"Rt","children":["こう"]}]}` (reading こう over 勾), and the first converter inlined the Rt reading. The instrument writes 勾配 with furigana. Converter fixed to drop Rt; texts regenerated; observations corrected. Consequence that stands: `retrieval_log.quote_in_artefacts` searches the raw JSON string, so a quote containing 勾配 from Order 379 Art. 13(1)(1) or Ordinance 114 Art. 6(1)(2) does not match the artefact (the characters are split by markup) — measured: returned False for the clause.
