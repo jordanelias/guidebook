@@ -146,14 +146,25 @@ def next_ref() -> str:
         return dbcore.next_ref_id(conn)
 
 
+def _next_con_id(conn) -> str:
+    row = conn.execute("SELECT con_id FROM connections ORDER BY con_id DESC LIMIT 1").fetchone()
+    return "CON-0001" if not row else f"CON-{int(row['con_id'].split('-')[1]) + 1:04d}"
+
+
 def next_con_id() -> str:
     with connect(readonly=True) as conn:
-        row = conn.execute(
-            "SELECT con_id FROM connections ORDER BY con_id DESC LIMIT 1"
-        ).fetchone()
-    if not row:
-        return "CON-0001"
-    return f"CON-{int(row['con_id'].split('-')[1]) + 1:04d}"
+        return _next_con_id(conn)
+
+
+#: How many targets of which kind each connection_type needs: the skill's own test for the
+#: type ("does evidence for parameter X constrain parameter Y" needs two parameters). One
+#: home; a type the CHECK gains later needs a row here or add-connection refuses it by name.
+_CONNECTION_ARITY = {
+    "CROSS-PARAMETER": ("parameter_id", 2),
+    "COMPOUND-INTERACTION": ("parameter_id", 2),
+    "CROSS-POPULATION": ("identity_code", 2),
+    "METHODOLOGY": ("methodology", 1),
+}
 
 
 #: The kinds of thing a connection can point at, one column each (migration 120). Four are foreign
@@ -172,14 +183,55 @@ def insert_connection(data: dict, targets: list[tuple[str, object]],
                       "--identity, --extraction or --methodology. Nothing was written.")
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        # THE ID IS COMPUTED, NEVER TYPED (rule 8). `--con-id` was required and unchecked:
+        # a walk-through filed `X1`, and a repeat of a real id died on the UNIQUE constraint
+        # (2026-11-06). Given, it must be the next id; omitted, it is.
+        nxt = _next_con_id(conn)
+        if row.get("con_id") in (None, ""):
+            row["con_id"] = data["con_id"] = nxt
+        elif row["con_id"] != nxt:
+            raise Refusal(f"--con-id {row['con_id']!r} is not the next connection id, which is "
+                          f"{nxt} (db.py next-id connections). Omit the flag and it is computed. "
+                          f"Nothing was written.")
         dbcore.check_declared(conn, "connections", "connection_type", row.get("connection_type"),
                               "add-connection --connection-type")
+        dbcore.check_declared(conn, "connections", "confidence", row.get("confidence"),
+                              "add-connection --confidence")
+        dbcore.check_declared(conn, "connections", "status", row.get("status"),
+                              "add-connection --status")
         dbcore.fk_declared(conn, "connections", "filed_in", row.get("filed_in"),
                            "add-connection --filed-in")
         for kind, value in targets:
             if kind not in _CONNECTION_TARGET_KINDS:
                 raise Refusal(f"unknown connection target kind {kind!r}.")
             dbcore.fk_declared(conn, "connection_targets", kind, value, f"add-connection {kind}")
+            if kind == "parameter_id":
+                st = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
+                                  (value,)).fetchone()[0]
+                if st != "active":
+                    raise Refusal(f"--parameter {value} is {st}, not active: a connection joins "
+                                  f"parameters that still stand. Nothing was written.")
+        ctype = row.get("connection_type")
+        need_kind, need_n = _CONNECTION_ARITY.get(ctype, (None, 0))
+        have = sum(1 for k, _ in targets if k == need_kind)
+        if need_kind and have < need_n:
+            flag = {"parameter_id": "--parameter", "identity_code": "--identity",
+                    "methodology": "--methodology"}[need_kind]
+            raise Refusal(f"{ctype} needs at least {'two' if need_n == 2 else 'one'} {flag} "
+                          f"target(s); {have} given. A {ctype} connection that names fewer "
+                          f"joins nothing of that kind. Nothing was written.")
+        # THE SKILL SAYS "skip duplicates"; the writer holds it: the same type over the same
+        # target set is one relationship, already recorded.
+        want = sorted((k, str(v)) for k, v in targets)
+        for (cid,) in conn.execute("SELECT con_id FROM connections WHERE connection_type IS ?",
+                                   (ctype,)):
+            got = sorted((k, str(r[0])) for k in _CONNECTION_TARGET_KINDS for r in conn.execute(
+                f"SELECT {k} FROM connection_targets WHERE con_id=? AND {k} IS NOT NULL", (cid,)))
+            if got == want:
+                raise Refusal(f"{cid} already records a {ctype} connection over exactly these "
+                              f"targets -- a duplicate, not a second relationship. Update it "
+                              f"(db.py update-connection) or describe a different one. "
+                              f"Nothing was written.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
@@ -196,6 +248,9 @@ def update_connection_status(con_id: str, status: str,
                              session: str, dry_run: bool = False):
     u = _upd(session)
     with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "connections", "con_id", con_id):
+            raise Refusal(f"update-connection: {con_id} is not a connection. Nothing was written.")
+        dbcore.check_declared(conn, "connections", "status", status, "update-connection --status")
         conn.execute(
             "UPDATE connections SET status=?, updated_at=?, updated_by_session=? WHERE con_id=?",
             [status, u["updated_at"], u["updated_by_session"], con_id]
@@ -255,7 +310,19 @@ def update_gap_priority(gap_id: str, priority: str,
 _VALID_DIRECTIONS = frozenset({"backward", "forward"})
 
 
+def _require_ref_id(value: str, flag: str) -> str:
+    """A mining verb speaks in global reference ids. `unmined` printed only the per-slug
+    label until 2026-11-06, and `is-mined --ref 11` answered `row_exists: false` for a value
+    that was never an id at all."""
+    ref = dbcore.fold_ref(value)
+    if not ref or not dbcore.REF_ID_SHAPE.fullmatch(ref):
+        raise Refusal(f"{flag} {value!r} is not a reference id (REF-NNNNN). `db.py unmined` "
+                      f"prints each source's ref_id; use that, not its per-slug label.")
+    return ref
+
+
 def is_mined(slug: str, ref_id: str) -> dict | None:
+    ref_id = _require_ref_id(ref_id, "--ref")
     # Keyed on the REFERENCE ID. Callers pass a global ref_id; this matched it
     # against local_ref_id, the per-slug label, which only worked while the two
     # happened to agree. They stopped agreeing on 2026-08-23.
@@ -342,6 +409,7 @@ def log_mining(slug: str, ref_id: str, direction: str,
     every other discovery step already follows. Two ways to prove a call did
     something now, not three: `deferred_reason` (not run) or `notes` (ran).
     """
+    ref_id = _require_ref_id(ref_id, "--ref")
     if direction not in _VALID_DIRECTIONS:
         raise Refusal(
             f"direction must be 'backward' or 'forward', got '{direction}'"
@@ -771,8 +839,35 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # Each lens code must name a row of the registry its own foreign key points at. Read
         # from PRAGMA foreign_key_list, so no vocabulary is restated here, and a blank value
         # is refused rather than dropped: a blank is not an absence.
-        for col in (*_LENS_COLUMNS, "parameter_id"):
+        for col in (*_LENS_COLUMNS, "parameter_id", "slug"):
             dbcore.fk_declared(conn, "search_executions", col, row[col], f"log-search {col}")
+        if parameter_id is not None:
+            _pst = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
+                                (parameter_id,)).fetchone()[0]
+            if _pst != "active":
+                raise Refusal(f"--parameter {parameter_id} is {_pst}, not active. A search is "
+                              f"for a parameter that still stands; name the surviving one.")
+        # THE BUCKET MEMBER (OR-8, OR-12a): a search is logged in a language the map holds,
+        # and, when scoped to a jurisdiction, in a language the map pairs with it. The
+        # language was free text until 2026-11-06 (a walk-through logged `ZZ`), so coverage
+        # views grouped on spellings nothing could reconcile.
+        _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
+        if _langs and language not in _langs:
+            raise Refusal(
+                f"--language {language!r} is not a language lang_jur_map holds "
+                f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
+                f"languages (rule 8); a language is added there, not at the search.")
+        if jurisdiction and _langs and not conn.execute(
+                "SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?",
+                (language, jurisdiction)).fetchone():
+            _paired = [r[0] for r in conn.execute(
+                "SELECT language FROM lang_jur_map WHERE jurisdiction=? ORDER BY 1",
+                (jurisdiction,))]
+            raise Refusal(
+                f"--language {language} with --jurisdiction {jurisdiction}: lang_jur_map pairs "
+                f"{jurisdiction} with {', '.join(_paired) or 'no language at all'}. A bucket "
+                f"member is a jurisdiction WITH its language (OR-8); log the search in one "
+                f"of those, or omit --jurisdiction for a search not scoped to one.")
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
@@ -896,7 +991,7 @@ def get_connections(status: str = None, confidence: str = None,
 def get_unmined_sources(slug: str) -> list[dict]:
     with connect(readonly=True) as conn:
         rows = conn.execute("""
-            SELECT ssl.local_ref_id,
+            SELECT es.ref_id, ssl.local_ref_id,
                    es.doi, es.pub_title,
                    -- THE RULING'S COLUMN IS THE ANSWER; the flags are reported beside
                    -- it so a reader can see the disagreement rather than inherit it.
@@ -939,6 +1034,9 @@ def get_coverage_completeness(slug: str) -> dict:
 
     """
     with connect(readonly=True) as conn:
+        if not dbcore.exists(conn, "slugs", "slug", slug):
+            # Zeros for a slug that does not exist read as "nothing searched" (2026-11-06).
+            raise Refusal(f"coverage: {slug!r} is not in slugs. Nothing to report.")
         jur = conn.execute(
             "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
             "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
@@ -953,10 +1051,23 @@ def get_coverage_completeness(slug: str) -> dict:
         # not from a literal. These were hardcoded 24 and 14 while
         # a dashboard computed against 48, so "how much coverage is owed" had two
         # answers differing 2x, shipped the same day.
-        req_jur = conn.execute(
-            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM lang_jur_map").fetchone()["n"]
-        req_lang = conn.execute(
-            "SELECT COUNT(DISTINCT language) AS n FROM lang_jur_map").fetchone()["n"]
+        #
+        # TWO QUALIFICATIONS, BOTH DERIVED (2026-11-06). A map row whose jurisdiction the
+        # declared vocabulary (schemas.enums.JurisdictionCode, I7) refuses can never be
+        # logged, so it is not required -- it is named, so the two homes' disagreement is
+        # visible, not hidden. And once any row carries `scope_status` (migration 122) the
+        # requirement is the in-scope rows; until then every admissible row counts and
+        # `scope_recorded` says so.
+        rows = conn.execute("SELECT language, jurisdiction, scope_status FROM lang_jur_map"
+                            ).fetchall()
+        admissible = [r for r in rows if dbcore.jurisdiction_declared(r["jurisdiction"])]
+        unreachable = sorted({r["jurisdiction"] for r in rows
+                              if not dbcore.jurisdiction_declared(r["jurisdiction"])})
+        scope_recorded = any(r["scope_status"] for r in rows)
+        required = ([r for r in admissible if r["scope_status"] == "in-scope"]
+                    if scope_recorded else admissible)
+        req_jur = len({r["jurisdiction"] for r in required})
+        req_lang = len({r["language"] for r in required})
     return {
         "slug": slug,
         "jurisdictions_searched": jur,
@@ -964,6 +1075,8 @@ def get_coverage_completeness(slug: str) -> dict:
         "languages_searched": lang,
         "languages_required": req_lang,
         "searches_deferred_with_reason": deferred,
+        "scope_recorded": scope_recorded,
+        "jurisdictions_unreachable": unreachable,
         "complete": jur >= req_jur and lang >= req_lang,
     }
 
@@ -986,15 +1099,27 @@ def next_conf_id() -> str:
 
 
 def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
-    if data.get("pop_a") and data.get("pop_b"):
-        if data["pop_a"] > data["pop_b"]:
-            raise Refusal(
-                f"pop_a must be < pop_b lexicographically. "
-                f"Got pop_a={data['pop_a']} pop_b={data['pop_b']}. "
-                f"Swap them before inserting."
-            )
+    # THE PAIR IS UNORDERED, so the writer orders it (rule 8: derive what the machine can)
+    # and refuses only what no order can fix: a population against itself (the CHECK's bare
+    # `pop_a < pop_b` reached the operator as a traceback on 2026-11-06).
+    a, b = data.get("pop_a"), data.get("pop_b")
+    if a and b:
+        if a == b:
+            raise Refusal(f"--pop-a and --pop-b are both {a}: a conflict is between two "
+                          f"populations, not one and itself. Nothing was written.")
+        data["pop_a"], data["pop_b"] = sorted((a, b))
+    if data.get("parameter_id") is None:
+        raise Refusal("--parameter-id is required: a conflict is keyed on the parameter the two "
+                      "populations pull in opposite directions on (base_parameters.parameter_id; "
+                      "migration 122). The domain label describes it; the key joins it.")
     row = {**data, **audit(session)}
     with connect(dry_run) as conn:
+        _pst = conn.execute("SELECT status FROM base_parameters WHERE parameter_id=?",
+                            (data["parameter_id"],)).fetchone()
+        if _pst is None or _pst[0] != "active":
+            raise Refusal(f"--parameter-id {data['parameter_id']} is "
+                          f"{'not a parameter' if _pst is None else _pst[0]}; a conflict is "
+                          f"keyed on an active parameter. Nothing was written.")
         # conflicts.status happens to share its vocabulary with decisions.status; this
         # writer INSERTs into conflicts, so that is the CHECK it validates against
         # (rule 8: derive from the column the writer actually writes, not whichever
@@ -1003,8 +1128,17 @@ def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
                               "insert_conflict")
         # pop_a, pop_b and gap_id are foreign keys (migration 121): a code the identity lens does not
         # hold is refused by name, not left to SQLite's bare constraint failure.
-        for col in ("pop_a", "pop_b", "gap_id"):
+        for col in ("pop_a", "pop_b", "gap_id", "parameter_id"):
             dbcore.fk_declared(conn, "conflicts", col, data.get(col), f"add-conflict {col}")
+        _held = conn.execute(
+            "SELECT conflict_id FROM conflicts WHERE parameter_id=? AND pop_a=? AND pop_b=?",
+            (data["parameter_id"], data["pop_a"], data["pop_b"])).fetchone()
+        if _held:
+            # idx_conflicts_dedup (migration 122) says the same in SQLite's words.
+            raise Refusal(f"{_held[0]} already records the conflict between {data['pop_a']} and "
+                          f"{data['pop_b']} on parameter {data['parameter_id']}. Update it "
+                          f"(db.py update-conflict); one conflict per parameter and pair. "
+                          f"Nothing was written.")
         cols = ", ".join(row)
         ph   = ", ".join(["?"] * len(row))
         conn.execute(f"INSERT INTO conflicts ({cols}) VALUES ({ph})", list(row.values()))
@@ -1028,21 +1162,28 @@ def update_conflict(conflict_id: str, session: str,
         sets.append("gap_id=?");     vals.append(gap_id)
     vals.append(conflict_id)
     with connect(dry_run) as conn:
+        if not dbcore.exists(conn, "conflicts", "conflict_id", conflict_id):
+            raise Refusal(f"update-conflict: {conflict_id} is not a conflict. Nothing was written.")
         if status is not None:
             dbcore.check_declared(conn, "conflicts", "status", status, "update_conflict")
+        # Named, not the bare FOREIGN KEY constraint failed a walk-through met on GAP-99999.
+        dbcore.fk_declared(conn, "conflicts", "gap_id", gap_id, "update-conflict --gap-id")
         conn.execute(
             f"UPDATE conflicts SET {', '.join(sets)} WHERE conflict_id=?", vals
         )
 
 
 def get_conflicts(domain: str = None,
-                  status: str = None, summary: bool = False) -> list | dict:
+                  status: str = None, summary: bool = False,
+                  parameter_id: int = None) -> list | dict:
     q     = "SELECT * FROM conflicts WHERE 1=1"
     params = []
     if domain:
         q += " AND domain=?";    params.append(domain)
     if status:
         q += " AND status=?";    params.append(status)
+    if parameter_id is not None:
+        q += " AND parameter_id=?"; params.append(parameter_id)
     q += " ORDER BY conflict_id"
     with connect(readonly=True) as conn:
         rows = [dict(r) for r in conn.execute(q, params).fetchall()]
@@ -1241,9 +1382,10 @@ def main():
                           help="Rewrite bibliographic fields FROM THE LOGGED PAYLOAD")
     p_cs.add_argument("--ref-id", required=True)
     p_cs.add_argument("--field", action="append", required=True, dest="fields",
-                      help="Repeatable. One of: authors, " +
-                           "pub_title, volume, issue, article_number, pages, pub_year. "
-                           "There is NO flag for the VALUE — it comes from the payload.")
+                      # DERIVED from _CORRECTABLE (rule 8). The list here was typed, and
+                      # named seven fields while the writer accepted ten (2026-11-06).
+                      help="Repeatable. One of: authors, " + ", ".join(sorted(_CORRECTABLE))
+                           + ". There is NO flag for the VALUE — it comes from the payload.")
     p_cs.add_argument("--log-session", required=True,
                       help="retrieval-log session holding the payload to read")
     p_cs.add_argument("--session", required=True)
@@ -1576,6 +1718,10 @@ def main():
     p_at.add_argument("--definition")
     p_at.add_argument("--domain")
     p_at.add_argument("--scope-note", dest="scope_note")
+    p_at.add_argument("--distinct-from", dest="distinct_from", action="append", default=[],
+                      help="repeatable: a TERM-ID the writer reports as a near match "
+                           "(shared tokens) that this concept is NOT; the --rationale "
+                           "says why. Without it a near match is refused")
     p_at.add_argument("--session", required=True)
     p_at.add_argument("--dry-run", action="store_true")
 
@@ -1595,6 +1741,11 @@ def main():
                             "single value is anchored, DR-2026-07-21 section 5)")
     p_spd.add_argument("--rationale", required=True,
                        help="WHY, for a disabled person. Required by the schema too.")
+    p_spd.add_argument("--ref-id", dest="ref_id", required=True,
+                       help="the admitted source the direction was READ FROM (ledger "
+                            "2026-10-30 ACTION 6: never hand-set); it must hold an "
+                            "extraction for this parameter. Stored in "
+                            "base_parameters.direction_ref_id")
     p_spd.add_argument("--session", required=True)
     p_spd.add_argument("--dry-run", action="store_true")
 
@@ -2172,8 +2323,10 @@ def main():
 
     # add-connection
     p_ac = sub.add_parser("add-connection", help="Insert a new connection record")
-    p_ac.add_argument("--con-id", required=True)
-    p_ac.add_argument("--status", default="PENDING")
+    p_ac.add_argument("--con-id", help="COMPUTED when omitted (db.py next-id connections); a "
+                                       "given value must equal it")
+    p_ac.add_argument("--status", default="PENDING",
+                      choices=dbcore.schema_choices("connections", "status"))
     p_ac.add_argument("--confidence", required=True,
                       choices=dbcore.schema_choices("connections", "confidence"))
     p_ac.add_argument("--connection-type", required=True,
@@ -2200,7 +2353,9 @@ def main():
     # update-connection
     p_uc = sub.add_parser("update-connection", help="Update connection status")
     p_uc.add_argument("--con-id", required=True)
-    p_uc.add_argument("--status", required=True)
+    p_uc.add_argument("--status", required=True,
+                      choices=dbcore.schema_choices("connections", "status"),
+                      help="Live vocabulary, read from the column's own CHECK")
     p_uc.add_argument("--session", required=True)
     p_uc.add_argument("--dry-run", action="store_true")
 
@@ -2349,6 +2504,12 @@ def main():
     # `_BIBLIO_FIELDS`), which is the 2026-08-19 lesson: a bibliographic field is never typed from memory
     # when a payload is in hand.
     p_as.add_argument("--standard-number", help="the instrument's own number, e.g. 'ISO 21542:2021'")
+    p_as.add_argument("--processing-blocked-reason", dest="processing_blocked_reason",
+                      choices=dbcore.schema_choices("evidence_sources", "processing_blocked_reason"),
+                      help="why the source cannot be read (no full text, paywalled, ...), from "
+                           "the column's own CHECK. An unretrievable source is admitted "
+                           "UNVERIFIED with this set; v_scan_ledger then shows it BLOCKED, "
+                           "not as reading debt")
     p_as.add_argument("--grey-flag", type=int, choices=(0, 1),
                       help="1 for grey literature. evidence_type='grey' with grey_flag=0 "
                            "is the same fact disagreeing with itself across two columns")
@@ -2395,12 +2556,10 @@ def main():
                       help="How --lang-detected was determined, e.g. 'native_title_verified', "
                            "'journal_family_inference', 'citing_document_language'")
     p_as.add_argument("--metadata-quality",
-                      # COMPLETE-STATUTORY was missing and it is 333 of 863 rows
-                      # (39% of the corpus) — the whole T4-T6 regulatory stratum.
-                      # A session filing a standard or code via the documented
-                      # path had to either mislabel it COMPLETE or omit the field.
-                      choices=["COMPLETE", "COMPLETE-STATUTORY", "PMID-ONLY",
-                               "GREY", "AUTHOR-TITLE-ONLY"],
+                      # READ FROM THE COLUMN'S OWN CHECK (rule 8), 2026-11-06. The list here
+                      # was typed, and it had drifted: the CHECK also admits 'NULL', and the
+                      # 2026-09 note above it recorded one earlier omission (COMPLETE-STATUTORY).
+                      choices=dbcore.schema_choices("evidence_sources", "metadata_quality"),
                       help="REQUIRED in practice, not just schema — see adversarial-research skill. "
                            "COMPLETE if DOI/full metadata confirmed via CrossRef/PubMed/Semantic Scholar; "
                            "AUTHOR-TITLE-ONLY if only single-source (citing-document) attestation.")
@@ -2448,9 +2607,16 @@ def main():
     # add-conflict
     p_aconf = sub.add_parser("add-conflict", help="Insert a conflict record")
     p_aconf.add_argument("--conflict-id", help="CONF-NNNN (auto-generated if omitted)")
-    p_aconf.add_argument("--domain", required=True)
-    p_aconf.add_argument("--pop-a", required=True, help="Population A (wrapper must ensure pop_a < pop_b)")
-    p_aconf.add_argument("--pop-b", required=True, help="Population B")
+    p_aconf.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
+                         help="base_parameters.parameter_id the two populations pull in "
+                              "opposite directions on (the key, migration 122)")
+    p_aconf.add_argument("--domain", required=True,
+                         help="the skill's domain label for the parameter (prose; the key "
+                              "is --parameter-id)")
+    p_aconf.add_argument("--pop-a", required=True,
+                         help="base_taxonomy_identity.identity_code; the pair is ordered by "
+                              "the writer, in either order")
+    p_aconf.add_argument("--pop-b", required=True, help="the other identity_code")
     p_aconf.add_argument("--status", required=True,
                          choices=dbcore.schema_choices("conflicts", "status"))
     p_aconf.add_argument("--resolution")
@@ -2473,7 +2639,9 @@ def main():
     # conflicts
     p_confs = sub.add_parser("conflicts", help="Query conflict records")
     p_confs.add_argument("--domain")
-    p_confs.add_argument("--status")
+    p_confs.add_argument("--status", choices=dbcore.schema_choices("conflicts", "status"))
+    p_confs.add_argument("--parameter-id", dest="parameter_id", type=int,
+                         help="conflicts keyed on this base_parameters.parameter_id")
     p_confs.add_argument("--summary", action="store_true")
 
     # delete-connection
@@ -2490,7 +2658,8 @@ def main():
     p_asc.add_argument("--slug", required=True)
     p_asc.add_argument("--local-ref", required=True, help="Local ref id, e.g. RAP-23")
     p_asc.add_argument("--ref", required=True, help="Global ref_id, e.g. REF-00064")
-    p_asc.add_argument("--tier", required=True, type=int, choices=[1,2,3,4,5,6])
+    p_asc.add_argument("--tier", required=True, type=int,
+                       choices=dbcore.schema_range("supersession_check", "anchor_tier"))
     # THE LADDER IS THE AUTHORITY HERE, not another table's CHECK. This flag writes
     # `supersession_check.anchor_evidence_type`, which declares NO CHECK -- so the
     # mechanical sweep that derived the other nineteen choices lists had nothing local to
@@ -2672,7 +2841,7 @@ def main():
         }
         insert_connection(data, targets,
                           session=args.session, dry_run=args.dry_run)
-        _emit({"con_id": args.con_id, "dry_run": args.dry_run})
+        _emit({"con_id": data["con_id"], "dry_run": args.dry_run})
 
     elif args.command == "update-connection":
         update_connection_status(args.con_id, args.status,
@@ -2875,12 +3044,14 @@ def main():
             scope_note=args.scope_note,
             session=args.session,
             dry_run=args.dry_run,
+            distinct_from=args.distinct_from,
         ))
 
     elif args.command == "set-parameter-direction":
         _emit(set_parameter_direction(
             parameter_id=args.parameter_id, direction=args.direction,
-            rationale=args.rationale, session=args.session, dry_run=args.dry_run))
+            rationale=args.rationale, ref_id=args.ref_id, session=args.session,
+            dry_run=args.dry_run))
 
     elif args.command == "add-parameter":
         _emit(insert_parameter(
@@ -3149,6 +3320,7 @@ def main():
                             ("grey_flag", "grey_flag"),
                             ("grey_reason", "grey_reason"),
                             ("standard_number", "standard_number"),
+                            ("processing_blocked_reason", "processing_blocked_reason"),
                             ):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
@@ -3293,6 +3465,7 @@ def main():
         conf_id = args.conflict_id if args.conflict_id else next_conf_id()
         data = {
             "conflict_id": conf_id,
+            "parameter_id": args.parameter_id,
             "domain":      args.domain,
             "pop_a":       args.pop_a,
             "pop_b":       args.pop_b,
@@ -3318,6 +3491,7 @@ def main():
         result = get_conflicts(
             domain=args.domain,
             status=args.status, summary=args.summary,
+            parameter_id=args.parameter_id,
         )
         _emit(result)
 
@@ -3606,6 +3780,11 @@ def insert_evidence_source(data: dict, session: str,
         "grey_flag", "grey_reason",
         # ADDED 2026-11-06: see the --standard-number note at the argparse block.
         "standard_number",
+        # ADDED 2026-11-06 (run-pipeline repair): WHY a source cannot be processed, in the
+        # column's own CHECK vocabulary. The skill said "unretrievable: admit UNVERIFIED",
+        # conflating standing (D-0157) with a block; v_scan_ledger reads this column to
+        # show such a source as BLOCKED rather than as reading debt (migration 122).
+        "processing_blocked_reason",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
 
@@ -3695,6 +3874,17 @@ def insert_evidence_source(data: dict, session: str,
             raise Refusal(
                 f"{data['ref_id']} already exists. R9: cross-file the existing "
                 f"ref_id rather than duplicating. To amend it, ship a migration.")
+        # THE ID IS THE NEXT ONE, OR THE ONE ITS LOCATOR STAGED (a promotion keeps the id
+        # add-locator minted). Anything else is a hand-typed id: a walk-through on 2026-11-06
+        # landed REF-01100 above the mark (derive the mark: `db.py next-id ref`), leaving
+        # every id between unissued and one row the floor audit cannot explain.
+        _nxt = dbcore.next_ref_id(conn)
+        if data["ref_id"] != _nxt and not dbcore.exists(conn, "source_locators", "ref_id",
+                                                        data["ref_id"]):
+            raise Refusal(
+                f"--ref-id {data['ref_id']} is neither the next reference id ({_nxt}, from "
+                f"`db.py next-id ref`) nor an id staged in source_locators. A reference id is "
+                f"never computed by hand (CLAUDE.md section 4). Nothing was written.")
         if data.get("doi"):
             # THE DUPLICATE-IDENTITY REFUSAL, case-folded and cross-filed against BOTH
             # ref_id homes. Measured 2026-09-13 (REF-00784's DOI): this compared
@@ -3856,6 +4046,21 @@ def correct_source(ref_id: str, fields: list, session: str, log_session: str,
                 raise Refusal(
                     f"{ref_id}: the payload names no authors. Refusing to empty the "
                     f"byline on the strength of a payload that simply does not say.")
+            repeated = _retrieval_log().repeated_author_name(real)
+            if repeated:
+                # A BYLINE NEVER REPEATS AN AUTHOR. Crossref's record for REF-01034
+                # (2026-11-06) carries the same institution repeatedly as `name`-only
+                # author entries -- the depositor's affiliations filed as authors (derive:
+                # the `author` array of its logged payload) -- and this writer would have
+                # stored each of them as a corporate co-author. The
+                # payload is the authority for what it STATES; a payload that states an
+                # impossibility is malformed, and nothing is written from it.
+                raise Refusal(
+                    f"{ref_id}: the payload's author array repeats {repeated!r}, which a "
+                    f"byline never does -- the deposit lists affiliations as authors. "
+                    f"Refusing to write authors from a malformed payload; the stored rows "
+                    f"stand (--verify-authors reports this source as MALFORMED-PAYLOAD). "
+                    f"Record the defect on the source's notes (db.py amend-source).")
             was = [f"{r['last_name']}, {r['first_name'] or ''}".strip(", ") for r in
                    conn.execute("SELECT last_name, first_name FROM evidence_source_authors "
                                 "WHERE ref_id=? ORDER BY position", [ref_id])]
@@ -5932,6 +6137,15 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
         if obs is None:
             raise Refusal(f"observation {observation_id}: no such observed term.")
         dbcore.check_vocab(conn, "term_adjudications", "outcome", outcome, "--outcome")
+        if outcome == "NAMES-NEW":
+            # NAMES-NEW lands with its term, through add-term, or it names a term that
+            # already exists -- which is NAMES-EXISTING by definition. Accepted here until
+            # 2026-11-06, it wrote "new" against TERM-091.
+            raise Refusal(
+                "--outcome NAMES-NEW is written only by `db.py add-term --from-observation "
+                f"{observation_id} --canonical-en ...`, which mints the term and this "
+                "adjudication together. A phrase naming a term that already exists is "
+                "NAMES-EXISTING. Nothing was written.")
         names = outcome in ("NAMES-EXISTING", "NAMES-NEW")
         if names and not term_id:
             raise Refusal(
@@ -5970,9 +6184,41 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
 _VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
 
 
+def _name_tokens(name: str) -> frozenset:
+    """The content tokens of a name, lower-cased, a trailing plural 's' dropped -- the
+    one normalisation `_near_terms` compares on. 'Ramp runs' -> {ramp, run}."""
+    toks = re.findall(r"[a-z0-9]+", (name or "").lower())
+    return frozenset(t[:-1] if len(t) > 3 and t.endswith("s") else t for t in toks)
+
+
+def _near_terms(conn, name: str) -> list:
+    """Terms whose canonical name or English alias shares a token set with `name` one way
+    or the other (subset or superset): 'ramp runs' beside 'ramp run length', 'reverberations'
+    beside 'reverberation time'. The equivalence search the skill tells an operator to do
+    before minting, done by the writer and refused unless each is named --distinct-from.
+    Exact matches are _name_holder's; this is the near miss nothing checked (2026-11-06)."""
+    want = _name_tokens(name)
+    if not want:
+        return []
+    out, seen = [], set()
+    for term_id, held in conn.execute(
+            "SELECT term_id, canonical_en FROM terms UNION ALL "
+            "SELECT term_id, alias FROM term_aliases WHERE upper(language)='EN'"):
+        have = _name_tokens(held)
+        # Near: the new name's tokens sit inside an existing name's ('ramp runs' in 'ramp run
+        # length'), or an existing name of TWO OR MORE tokens sits inside the new one. A
+        # one-token term ('ramp') inside every compound that mentions it is not a near match,
+        # or no compound could ever be minted (measured on the replay, 2026-11-06).
+        near = have and have != want and (want <= have or (have <= want and len(have) >= 2))
+        if near and term_id not in seen:
+            seen.add(term_id)
+            out.append((term_id, held))
+    return out
+
+
 def insert_term(from_observation: int, canonical_en: str, rationale: str, session: str,
                 definition: str = None, domain: str = None, scope_note: str = None,
-                dry_run: bool = False):
+                dry_run: bool = False, distinct_from: list = None):
     """Mint a term for a concept new to the vocabulary, AND adjudicate it in one act.
 
     The missing half of D-0173. `adjudicate-term --outcome NAMES-NEW` refuses unless the
@@ -6018,6 +6264,17 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
                 f"({clash['detail']!r}). That makes this NAMES-EXISTING, not "
                 f"NAMES-NEW:\n  db.py adjudicate-term --observation-id {from_observation} "
                 f"--outcome NAMES-EXISTING --term-id {clash['term_id']} --rationale ...")
+        near = [(t, h) for t, h in _near_terms(conn, canonical_en)
+                if t not in set(distinct_from or [])]
+        if near:
+            raise Refusal(
+                f"{canonical_en!r} is a near match of " +
+                "; ".join(f"{t} {h!r}" for t, h in near[:5]) +
+                ". Equivalence before minting: if it names one of these, adjudicate "
+                "NAMES-EXISTING (a narrower or broader phrase is an alias: add-alias "
+                "--alias-type NARROWER/BROADER); if it is a distinct concept, say so with "
+                "--distinct-from " + " --distinct-from ".join(t for t, _ in near[:5]) +
+                " and the --rationale must say why. Nothing was written.")
         term_id = _mint_term_id(conn)
         row = {"term_id": term_id, "canonical_en": canonical_en,
                "definition": definition, "domain": domain, "scope_note": scope_note}
@@ -6459,7 +6716,7 @@ def decline_parameter(term_id: str, reason: str, session: str, dry_run: bool = F
 
 
 def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str,
-                           session: str, dry_run: bool = False):
+                           session: str, ref_id: str = None, dry_run: bool = False):
     """Record which way is BETTER FOR A DISABLED PERSON on this parameter.
 
     THE JUDGMENT THE ENGINE CANNOT MAKE, and the one it has been blocked on since
@@ -6493,6 +6750,17 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
             "--rationale is required: a direction is a claim about what serves disabled "
             "people on this parameter, and one with no stated reason cannot be reviewed, "
             "disputed or superseded. The schema refuses the pair too (migration 078).")
+    # FROM AN ADMITTED SOURCE, NEVER HAND-SET (ledger 2026-10-30, ACTION 6). The source
+    # the direction was read from is a column (base_parameters.direction_ref_id, migration
+    # 122), and it must hold an extraction for this parameter: a direction is read out of
+    # what a document says about the quantity, not recalled. A walk-through on 2026-11-06
+    # recorded a direction whose rationale was "no admitted source read".
+    ref_id = dbcore.fold_ref(ref_id) if ref_id else None
+    if not ref_id:
+        raise Refusal(
+            "--ref-id is required: the direction is recorded FROM an admitted source "
+            "(ledger 2026-10-30, ACTION 6), never hand-set. Name the evidence_sources.ref_id "
+            "whose extraction for this parameter states which way is better.")
     with dbcore.connect(dry_run) as conn:
         row = conn.execute(
             "SELECT p.parameter_id, t.canonical_en, p.accessibility_direction, "
@@ -6502,6 +6770,16 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
             raise Refusal(
                 f"parameter_id {parameter_id}: no such parameter. Mint one from a term "
                 f"first: db.py add-parameter --term-id TERM-NNN --session ...")
+        if not dbcore.exists(conn, "evidence_sources", "ref_id", ref_id):
+            raise Refusal(f"--ref-id {ref_id} is not an admitted source. The direction is "
+                          f"read from a document this project holds; admit it first.")
+        if not conn.execute("SELECT 1 FROM source_value_extractions WHERE ref_id=? AND "
+                            "parameter_id=?", (ref_id, parameter_id)).fetchone():
+            raise Refusal(
+                f"--ref-id {ref_id} holds no extraction for parameter {parameter_id}, so "
+                f"nothing it states about this quantity is on record. Extract the finding "
+                f"that gives the direction (db.py add-extraction --figure-role finding ...) "
+                f"first; then the direction points at it.")
         if row["accessibility_direction"]:
             raise Refusal(
                 f"parameter {parameter_id} ({row['canonical_en']!r}) already carries "
@@ -6513,8 +6791,8 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
         dbcore.check_declared(conn, "base_parameters", "accessibility_direction",
                               direction, "set-parameter-direction")
         stamp = dbcore.stamp_for(conn, "base_parameters", session)
-        sets = ["accessibility_direction = ?", "direction_rationale = ?"]
-        vals = [direction, rationale.strip()]
+        sets = ["accessibility_direction = ?", "direction_rationale = ?", "direction_ref_id = ?"]
+        vals = [direction, rationale.strip(), ref_id]
         for k, v in stamp.items():
             if k.startswith("updated"):
                 sets.append(f"{k} = ?")
@@ -6523,7 +6801,7 @@ def set_parameter_direction(*, parameter_id: int, direction: str, rationale: str
                      + " WHERE parameter_id = ?", vals + [parameter_id])
         return {"parameter_id": parameter_id, "canonical_en": row["canonical_en"],
                 "accessibility_direction": direction, "direction_rationale": rationale.strip(),
-                "dry_run": dry_run}
+                "direction_ref_id": ref_id, "dry_run": dry_run}
 
 
 # --- Tooling T1: the vocabulary lifecycle, the reading record, follow-ups -------------
@@ -7284,13 +7562,18 @@ def record_scan(data: dict, session: str, dry_run: bool = False):
                     pages_total = max(pages_total or 0, held_pages)
         scope = data.get("text_scope")
         if scope == "full":
-            if h["path"].suffix.lower() == ".pdf":
+            if not h["derived"]:
+                # NOT ONLY A PDF. A fetched HTML page is a publisher's landing page as
+                # often as it is the document (a repository record was recorded `full`
+                # on 2026-11-06); what the whole document holds is knowable only from
+                # the text full_text.py derives from it, whatever the fetched bytes were.
                 raise Refusal(
-                    f"record-scan: --text-scope full over a PDF ({h['artefact']}, "
-                    f"{pages_total or '?'} pages): what was read of a PDF is not knowable "
-                    f"from the file. Derive its text first -- python3 "
-                    f"scripts/research/full_text.py --ref-id {ref} --session {session} -- "
-                    f"and record the reading of that. Nothing was written.")
+                    f"record-scan: --text-scope full over a fetched file ({h['artefact']}"
+                    f"{', %s pages' % pages_total if pages_total else ''}): what the whole "
+                    f"document holds is not knowable from fetched bytes. Derive its text "
+                    f"first -- python3 scripts/research/full_text.py --ref-id {ref} "
+                    f"--session {session} -- and record the reading of that. Nothing was "
+                    f"written.")
             if pages_read is not None and pages_total and pages_read < pages_total:
                 raise Refusal(
                     f"record-scan: --text-scope full, but {h['artefact']} carries "
@@ -7797,6 +8080,50 @@ _SVE_VOCAB_COLUMNS = (
 _ROW_ONLY_RELATIONS = ("condition_on", "derived_from")
 
 
+def _covering_scan(conn, ref_id: str, parameter_id: int):
+    """The strongest source_scans row that COVERS (ref_id, parameter_id), or None.
+
+    One rule, the one v_scan_ledger (migration 103) states: a catalogue reading covers every
+    parameter up to its catalogue_version; a targeted reading covers its target. Read here
+    so add-extraction and amend-extraction refuse what the ledger would show as unread.
+    """
+    return conn.execute(
+        "SELECT scan_id, text_scope, method FROM source_scans WHERE ref_id=? AND "
+        "((mode='catalogue' AND catalogue_version>=?) OR (mode='targeted' AND "
+        "target_parameter_id=?)) ORDER BY (text_scope='full') DESC, (method='full-read') "
+        "DESC, scan_id DESC LIMIT 1", (ref_id, parameter_id, parameter_id)).fetchone()
+
+
+def _require_full_scan_for_verified(conn, ref_id: str, parameter_id: int, context: str):
+    """OR-11a (owner 2026-10-29): `verified` requires a recorded FULL-scope reading that covers
+    the row's parameter. Before this, `verified` was a self-declared word nothing read."""
+    scan = _covering_scan(conn, ref_id, parameter_id)
+    if scan is None or scan["text_scope"] != "full":
+        have = "no reading covers it" if scan is None else (
+            f"the strongest covering reading is scan {scan['scan_id']} at "
+            f"text_scope={scan['text_scope']!r}")
+        raise Refusal(
+            f"{context}: extraction_status='verified' requires a full-scope reading of "
+            f"{ref_id} that covers parameter {parameter_id} (OR-11a, owner 2026-10-29); "
+            f"{have}. Derive the whole text (scripts/research/full_text.py), record it "
+            f"(db.py record-scan --text-scope full), then mark the row verified. Nothing "
+            f"was written.")
+
+
+def _refuse_exempt_with_body(ref_id: str, field: str, context: str):
+    """`--verbatim-exempt` is for a source NO decodable body is held for (a scanned PDF, a
+    .doc). When a derived text or a fetched HTML/text page is held for the source, a quote
+    that is not in it was typed from memory or read from pages never persisted (R10) --
+    either way the exemption is refused, naming the bytes it should have come from."""
+    bodies = _retrieval_log().decodable_body_artefacts(ref_id)
+    if bodies:
+        raise Refusal(
+            f"{context}: --verbatim-exempt refused -- {len(bodies)} decodable body artefact(s) "
+            f"are held for {ref_id} ({'; '.join(bodies[:3])}), so {field} must be read off "
+            f"those bytes, or the pages it comes from persisted first (R10). The exemption is "
+            f"for a source whose only artefacts cannot be decoded. Nothing was written.")
+
+
 def _fmt_num(x: float) -> str:
     """Render a float back to a plain value string, without a forced decimal tail."""
     return str(int(x)) if x == int(x) else repr(x)
@@ -7890,6 +8217,7 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
                 f"{context}: --verbatim-exempt was given, but {field} DOES occur in a "
                 f"persisted artefact ({where}). Drop the exemption -- it is for text no "
                 f"retrieval artefact can carry, not for text that verifies.")
+        _refuse_exempt_with_body(ref_id, field, context)
         return _retrieval_log().exempt_marker(exempt_reason)
 
     found, where = _verbatim(text, ref_id)
@@ -8153,6 +8481,7 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"its bytes cannot be decoded -- a scanned PDF's text layer, say -- pass "
                 f"--verbatim-exempt with the reason, which is ledgered on the row. "
                 f"Nothing was written.")
+        _refuse_exempt_with_body(from_ref_id, "--quote", context)
         notes = ((notes + " || ") if notes else "") + (
             "VERBATIM-EXEMPT: " + verbatim_exempt.strip())
 
@@ -8375,6 +8704,22 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"  db.py add-source ...")
         _refuse_tombstone(conn, ref, "add-extraction")
         row["ref_id"] = ref
+        # AN EXTRACTION IS A READING. A source whose existence is not established
+        # (verification_status UNVERIFIED or NULL, D-0157) was never obtained, and the
+        # skill says never to describe it as read; a value attributed to it is a claim
+        # about a document nobody held. Live rows already sit on such sources (derive:
+        # SELECT COUNT(*) FROM source_value_extractions x JOIN evidence_sources e USING
+        # (ref_id) WHERE COALESCE(e.verification_status,'') <> 'VERIFIED'); they are
+        # history, and this refusal stops the next one.
+        _vs = conn.execute("SELECT verification_status FROM evidence_sources WHERE ref_id=?",
+                           (ref,)).fetchone()[0]
+        if _vs != "VERIFIED":
+            raise Refusal(
+                f"add-extraction: {ref} is {_vs or 'NULL'}, not VERIFIED. An extraction is a "
+                f"reading of a document this project obtained; a source whose standing is "
+                f"not established cannot have been read. Retrieve and verify it first "
+                f"(R10; db.py amend-source), or admit it UNVERIFIED and leave it unread. "
+                f"Nothing was written.")
 
         # A slug guides what is searched, not what is read (scan contract, LED-195): no slug is
         # asked for here, and `source_slug_links` stays the admission record. A root_id names a
@@ -8413,6 +8758,22 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"parameter_id {pid} is {prow['status']}{target}, not active. Key the "
                 f"extraction on the surviving parameter — a value filed under a folded "
                 f"parameter is unreachable from the determination that replaced it.")
+
+        # --- the reading record (R16, OR-11a) --------------------------------
+        # The reading comes first and leaves a source_scans row; what it found is this
+        # row. An extraction with no covering reading is consumed before it was read
+        # (adversarial lens S4-sequence). `verified` additionally needs the reading to
+        # be full-scope (OR-11a, owner 2026-10-29). Both were stated by the skill and
+        # held by nothing; the live rows that lack a covering reading are history (derive
+        # the verified ones: python3 scripts/audit/verified_scan_integrity.py).
+        if _covering_scan(conn, ref, pid) is None:
+            raise Refusal(
+                f"add-extraction: no source_scans row covers {ref} for parameter {pid}. "
+                f"Record the reading first -- db.py record-scan --ref-id {ref} --mode "
+                f"catalogue (or --mode targeted --target-parameter-id {pid}) -- then "
+                f"write what it found. Nothing was written.")
+        if row.get("extraction_status") == "verified":
+            _require_full_scan_for_verified(conn, ref, pid, "add-extraction")
 
         # --- the lenses ------------------------------------------------------
         if not any(row.get(c) for c in _LENS_COLUMNS):
@@ -8484,13 +8845,24 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         if value is not None and claim_type != "absent":
             _tier = conn.execute(
                 "SELECT tier FROM evidence_sources WHERE ref_id=?", (ref,)).fetchone()
+            _levels = [c[1] for c in conn.execute(
+                'PRAGMA table_info("source_value_extractions")')
+                if c[1].startswith("loc_") and not c[1].endswith("_end")
+                and c[1] != "loc_note"]
+            _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
+            _pinpoint = any(str(row.get(c) or "").strip() for c in _levels)
+            # EVERY TIER NEEDS A LOCATOR (R3). Below the regulatory stratum the prose
+            # `--source-section` is the honest locator for a paper; above it the pinpoint
+            # hierarchy is demanded below. A quantified row with neither, and no
+            # [UNVERIFIED-QUANT], is a number nobody can find again (2026-11-06).
+            if not _esc and not _pinpoint and not str(row.get("source_section") or "").strip():
+                raise Refusal(
+                    f"R3: this row states a value with no locator -- no --source-section, "
+                    f"none of {', '.join('--' + c.replace('_', '-') for c in _levels)}. A "
+                    f"quantified claim names where it was read, or carries "
+                    f"[UNVERIFIED-QUANT] in --notes to say it cannot. Nothing written.")
             if _tier and _tier[0] is not None and int(_tier[0]) >= 4:
-                _levels = [c[1] for c in conn.execute(
-                    'PRAGMA table_info("source_value_extractions")')
-                    if c[1].startswith("loc_") and not c[1].endswith("_end")
-                    and c[1] != "loc_note"]
-                _esc = "[UNVERIFIED-QUANT]" in (row.get("notes") or "")
-                if not _esc and not any(str(row.get(c) or "").strip() for c in _levels):
+                if not _esc and not _pinpoint:
                     raise Refusal(
                         f"R3: {ref} is tier {int(_tier[0])} -- the regulatory stratum -- and this row "
                         f"states a value with no structured locator. A code, standard or statute "
@@ -8526,6 +8898,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 f"--harm-finding with figure_role={figure_role!r} is refused: harm, failure and "
                 f"inadequacy (R7) are what a source FOUND, so only a `finding` row carries the flag "
                 f"(the column's own CHECK says the same). Use --figure-role finding.")
+        if row.get("harm_finding") and not any(
+                (e.get("relation") == "insufficient") for e in (relations or [])):
+            # R7 as the skill states it: a harm finding about a parameter's VALUE says what
+            # value was not enough -- a code figure, a tested range -- and that is an
+            # `insufficient` edge (owner 2026-09-13: an insufficient finding supplies
+            # direction). A harm flag pointing at nothing reaches no cell.
+            raise Refusal(
+                "--harm-finding needs an `insufficient` edge in the same call: --relation "
+                "insufficient with --to-extraction (the figure found inadequate) or --to-label "
+                "+ --to-kind, --stated and --quote. A harm not tied to a figure is a "
+                "research-stage harm_finding (log-search / add-candidate) plus a GAP, not a "
+                "judgment row. Nothing was written.")
         if claim_type == "absent" and figure_role != "finding":
             raise Refusal(
                 f"claim_type='absent' with figure_role={figure_role!r} is refused: "
@@ -8558,6 +8942,27 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 "at what it was computed FROM is a number trusted on faith, which "
                 "is exactly what v_derived_figure_check (migration 075) exists to "
                 "stop trusting silently.")
+
+        # A BYTE-IDENTICAL ROW IS A COPY, NOT A CONTEST. D-0168 protects a DIVERGENT second
+        # reading; a row equal in every column the source supplied adds nothing a reader
+        # could weigh and would count twice in anything that counts rows. Refused by the
+        # same measure _write_relation_edge uses for an edge. Session and status columns are
+        # not compared: the same reading by a second session is still the same reading.
+        _same_cols = [c for c in row
+                      if c not in ("notes", "extraction_status", "extraction_method", "contested")]
+        _keyed = ("identity_code", "icf_code", "needs_code", "medical_code", "claimed_value",
+                  "claimed_unit", "source_section", "loc_section", "loc_clause")
+        _preds = [f'"{c}" IS ?' for c in _same_cols] + [f'"{c}" IS NULL' for c in _keyed
+                                                        if c not in row]
+        _dup = conn.execute(
+            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds)
+            + " LIMIT 1", [row[c] for c in _same_cols]).fetchone()
+        if _dup:
+            raise Refusal(
+                f"add-extraction: extraction {_dup[0]} already carries this exact row "
+                f"({ref}, parameter {pid}, same lenses, claim, value, text and locator). A "
+                f"byte-identical copy is not a second reading; a divergent one is "
+                f"(D-0168). Nothing was written.")
 
         # DELIBERATELY NOT REFUSED — see the docstring. Noted so the fan-out is
         # visible in the session log rather than silent.
@@ -8782,6 +9187,9 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                               "amend-extraction")
 
         old = row[field]
+        if field == "extraction_status" and value == "verified":
+            _require_full_scan_for_verified(conn, row["ref_id"], row["parameter_id"],
+                                            "amend-extraction")
         if field == "figure_role":
             if row["claim_type"] == "absent" and value != "finding":
                 raise Refusal(
@@ -9433,6 +9841,22 @@ def add_gap_mining(*, gap_id: str,
     """
     from datetime import datetime, timezone
     created_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # A replayable record names at least one search (the column's own comment gives the
+    # shape). `{"strategies": []}` landed on 2026-11-06: an attempt that ran nothing. The
+    # JSON cell itself is a shape the 2026-11-06 ruling queues for its own change, so the
+    # test lives in the writer rather than in a CHECK that would entrench the cell.
+    try:
+        _rec = json.loads(search_strategy_record or "")
+    except ValueError:
+        _rec = None
+    if not isinstance(_rec, dict) or not isinstance(_rec.get("strategies"), list) \
+            or not _rec["strategies"]:
+        raise Refusal(
+            "--search-strategy must be a JSON object whose \"strategies\" list names at least "
+            "one search ({\"strategies\": [{\"tool\": ..., \"query\": ..., "
+            "\"candidates_returned\": N}]}). An attempt that ran no search is not a mining "
+            "attempt; a search deliberately not run is outcome 'deferred' with its blocker in "
+            "--notes. Nothing was written.")
     with connect(dry_run) as conn:
         cur = conn.execute("""
             INSERT INTO gap_mining (
@@ -10017,6 +10441,13 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
     with dbcore.connect(dry_run) as conn:
         if dbcore.exists(conn, "source_locators", "ref_id", ref):
             raise Refusal(f"{ref} already exists in source_locators. Use update-locator.")
+        # NEVER COMPUTED BY HAND (CLAUDE.md section 4). A typed id above the high-water
+        # mark moves the mark: REF-99999 landed on 2026-11-06 and the next id became
+        # REF-100000, which the shape regex then refuses -- the allocator jammed by one row.
+        _nxt = dbcore.next_ref_id(conn)
+        if ref != _nxt:
+            raise Refusal(f"--ref-id {ref} is not the next reference id, which is {_nxt} "
+                          f"(db.py next-id ref). Nothing was written.")
         dbcore.check_vocab(conn, "source_locators", "status", data.get("status"),
                            "insert_locator")
         doi = dbcore.norm_doi(data.get("doi"))

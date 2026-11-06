@@ -1593,14 +1593,19 @@ def determine(conn, parameter_id, lens, slug, note):
     _has_params = conn.execute(
         "SELECT 1 FROM sqlite_master WHERE type='table' AND name='base_parameters'"
     ).fetchone() is not None
-    _direction = None
+    _direction, _direction_ref = None, None
     if _has_params:
         _cols = {r[1] for r in conn.execute("PRAGMA table_info(base_parameters)")}
         if "accessibility_direction" in _cols:
+            # direction_ref_id (migration 122): the admitted source the direction was read
+            # from. Carried into the report so the determination can say whose finding set
+            # the rule it was read by; absent on a fixture that predates the column.
             _dir_row = conn.execute(
-                "SELECT accessibility_direction FROM base_parameters "
-                "WHERE parameter_id = ?", (parameter_id,)).fetchone()
+                "SELECT accessibility_direction%s FROM base_parameters WHERE parameter_id = ?"
+                % (", direction_ref_id" if "direction_ref_id" in _cols else ""),
+                (parameter_id,)).fetchone()
             _direction = _dir_row[0] if _dir_row else None
+            _direction_ref = _dir_row[1] if _dir_row and len(_dir_row) > 1 else None
     value_min, value_max, value_unit, value_note, value_notations = \
         compose_value(conn, links, _direction)
 
@@ -1721,6 +1726,7 @@ def determine(conn, parameter_id, lens, slug, note):
         "value_min": value_min, "value_max": value_max, "value_unit": value_unit,
         "value_note": value_note, "value_notations": value_notations,
         "accessibility_direction": _direction,
+        "direction_ref_id": _direction_ref,
         "n_extractions": n_extractions,
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
@@ -1889,6 +1895,16 @@ def gap_account(det):
         cause += (f". {n_superseded} of the {det_x} belong to a SUPERSEDED source, which is "
                   f"not gathered")
         remedy += "; re-extract those from the superseding source"
+    if det.get("accessibility_direction") is None:
+        # A cell with no direction cannot select a value whatever its evidence; compose_value
+        # says so only once links exist, so a pending cell's gap was silent on it
+        # (parameter 4, GAP-103, 2026-11-06). Named here so the gap is followed to the right
+        # verb as well as to the right evidence.
+        cause += (f". No accessibility_direction is recorded for parameter {parameter_id}, so "
+                  f"no value could be selected even with anchoring evidence")
+        remedy += ("; record which way is better for a disabled person, from an admitted "
+                   "source that holds a finding for the parameter: `db.py "
+                   "set-parameter-direction --ref-id REF-NNNNN`")
     return cause, remedy
 
 
@@ -2335,7 +2351,7 @@ def main():
 
         report.append({k: det[k] for k in
                        ("value_min", "value_max", "value_unit", "value_note",
-                        "value_notations", "accessibility_direction",
+                        "value_notations", "accessibility_direction", "direction_ref_id",
                         "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
                         "tier_basis", "governing_refs", "supporting_refs", "code_floor_only",
                         "regulatory_stratum_only", "rests_on_proxy_inference", "marker",
@@ -2372,7 +2388,10 @@ def main():
         # extractions are very different evidence bases and the old line showed
         # neither. `nonanchor=` names how many were excluded by the tier gate, so a
         # thin `stated` cannot look thick.
-        print(f"param {r['parameter_id']}×{r['lens_key']:<8} {r['state']:<12} "
+        # EVERY lens the cell is stated in, not only the COALESCE key: a cell given --identity
+        # and --icf printed as `3×MOB` and hid the ICF code it was also keyed on (2026-11-06).
+        _lenses = "/".join(v for v in (r.get("lens") or {}).values() if v) or r["lens_key"]
+        print(f"param {r['parameter_id']}×{_lenses:<8} {r['state']:<12} "
               f"basis={r['tier_basis'] or '-':<32} scale={r['design_scale']:<10} "
               f"refs={len(r['governing_refs'])} sources={r['n_sources']} "
               f"extractions={r['n_extractions']} "

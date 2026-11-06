@@ -39,6 +39,10 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 DEBT = ("NOT-READ", "READ-PARTIAL")
+# BLOCKED (migration 122): the source carries a processing_blocked_reason (no full text,
+# paywalled, ...), so nothing of it can be read and the pair is not debt until the block
+# clears. Printed apart so it is visible, never silently paid down: until 2026-11-06 such
+# sources sat under NOT-READ and the debt could not reach zero by any amount of reading.
 
 
 def main():
@@ -73,11 +77,14 @@ def main():
     debt = sum(status.get(s, 0) for s in DEBT)
     print("scan_debt — (source x active parameter) pairs not yet read in full")
     print(f"EXAMINED: {total}")
-    for s in ("EXTRACTED", "STATED-ABSENT", "READ-NOTHING-FOUND", "READ-PARTIAL",
+    for s in ("EXTRACTED", "STATED-ABSENT", "BLOCKED", "READ-NOTHING-FOUND", "READ-PARTIAL",
               "NOT-READ"):
         print(f"  {s:<19} {status.get(s, 0)}")
+    if status.get("BLOCKED"):
+        print(f"  ({status['BLOCKED']} BLOCKED pair(s) are not debt: their source carries a "
+              f"processing_blocked_reason and cannot be read until it clears)")
     if not debt:
-        print("PASS: every pair is extracted, stated absent, or read in full")
+        print("PASS: every pair is extracted, stated absent, blocked, or read in full")
         return 0
     for pid, name, not_read, partial in per_param:
         if not_read or partial:

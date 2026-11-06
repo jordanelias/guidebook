@@ -20,8 +20,9 @@ between extractions via `relate-extraction` / `derive-extraction`.
 **Keyed on the parameter, not on a container.** The subject of a determination is a `base_parameters` row
 (owner 2026-08-26); the item layer is deleted (CLAUDE.md §7). Treat any `[A-Z]-NN` code you meet as prior-version
 content, never as a target. A connection points at parameters, slugs, identity-lens codes
-(`base_taxonomy_identity`), extractions, or a methodology, **one kind per column, each a real foreign key**
-(migration 120); there is no free-text target.
+(`base_taxonomy_identity`), extractions, or a methodology, **one kind per column** (migration 120). Four of
+the five are foreign keys; `--methodology` names a methodological principle and is the one target kind with
+no table, so it is free text. The connection id is computed by the writer, never typed.
 
 ## Two homes, and which holds what
 - **A typed edge between two extractions** is the strongest link: `extraction_relations` (`condition_on`,
@@ -42,23 +43,25 @@ content, never as a target. A connection points at parameters, slugs, identity-l
 
 `category-crosstest` is the exhaustive pass (`decisions/DR-2026-07-20-intra-category-cross-test.md`, ACCEPTED
 2026-07-21; "category" is now a named cluster of parameters): the other modes follow what an author thought to
-cross-reference, this one enumerates all pairs so none is skipped. Per pair (per program) give one verdict:
-`INDEPENDENT`, `SUBSUMES`/`SUBSUMED_BY`, `INTERACTS`, `SHARED_ELEMENT_DISTINCT_PROGRAM`, `CONFLATED_VARIABLE`,
-`GENUINE_CONFLICT`. Compare only within a measurement paradigm and device class (`measurement_paradigm`,
-`device_class`); a cross-paradigm pairing is a derivation, never an identity, and never `GENUINE_CONFLICT`. Flag
+cross-reference, this one enumerates all pairs so none is skipped. A cluster has no table: name it in the GAP
+and in each connection's description. Per pair (per program) give one verdict, in words, because no column
+holds a verdict: the two are independent; one subsumes the other; they interact; they share a physical element
+under distinct programs; they are one variable conflated under two names; or they are in genuine conflict.
+Compare only within a measurement paradigm and device class (`measurement_paradigm`, `device_class`); a
+cross-paradigm pairing is a derivation, never an identity, and never a genuine conflict. Flag
 **cross-partition leakage** where a shared element or population links parameters across a cluster boundary.
-**Not built, and said so:** the DR's `cross_test_pairs` table (X6) and its hard gate on `stated` (X5). Until they
-exist a verdict has no typed home: `INTERACTS` and `SHARED_ELEMENT_DISTINCT_PROGRAM` are `connections` rows,
-`GENUINE_CONFLICT` goes to `cross-population-conflict-mapper`, and the verdicts with no row (`INDEPENDENT`,
-`SUBSUMES`, `CONFLATED_VARIABLE`) are named in a GAP for the cluster so the pass is not lost.
+**Not built, and said so:** the DR's pair table (X6) and its hard gate on `stated` (X5). Until they exist a
+verdict has no typed home: "interact" and "shared element, distinct programs" are `connections` rows, a genuine
+conflict goes to `cross-population-conflict-mapper`, and the verdicts with no row (independent, subsumes,
+conflated) are named in a GAP for the cluster so the pass is not lost.
 
 ---
 
 ## Step 0 — Scope and dedup
-`scope_type: parameter | slug | cluster`, `scope_id`, `mode`. Load existing connections for the scope
-(`python3 scripts/db.py connections --status PENDING`, then join `connection_targets` on `parameter_id` or `slug` in
-a read-only query). A new connection with the same targets and `connection_type` as an existing one is a duplicate:
-skip it.
+State the scope (a parameter, a slug or a cluster), what identifies it, and the mode. Load existing connections
+for the scope (`python3 scripts/db.py connections --status PENDING`, then join `connection_targets` on
+`parameter_id` or `slug` in a read-only query). A new connection with the same targets and `connection_type` as
+an existing one is a duplicate: `add-connection` refuses it, naming the existing id.
 
 ## Step 1 — Read, by mode
 Read the live determination and every extraction for the parameter in full; for `evidence`, also open gaps
@@ -77,40 +80,46 @@ principles not already recorded?
 | `COMPOUND-INTERACTION` | would applying specifications X and Y to one person together give a non-additive result? |
 | `METHODOLOGY` | does it affect the guidebook's method? |
 
-Confidence: `HIGH` direct evidence links the targets and the source says so; `MODERATE` implied by reasoning or an
-evidence gap; `SPECULATIVE` plausible, no direct evidence.
+Confidence is `connections.confidence`, read from the column's own CHECK (`HIGH`: direct evidence links the
+targets and the source says so; `MODERATE`: implied by reasoning or an evidence gap). A plausible relationship
+with no direct evidence is not a connection and the CHECK admits no value for it (migration 122): file it as a
+gap (`add-gap --category CR --priority P3 --description "speculative: …" --skill connection-discovery`).
 
-Route first: a relationship at MODERATE or above is a connection; a SPECULATIVE one is a gap
-(`add-gap --category CR --priority P3 --description "SPECULATIVE: …" --skill connection-discovery`, never a
-connection); an evidence or scope gap is a gap (`RP`, `AUDT` or `CONF`); a population conflict goes to
-`cross-population-conflict-mapper`; anything else is discarded. `CONN` is not a gap category.
+Route first: a relationship at MODERATE or above is a connection; an evidence or scope gap is a gap (`RP`,
+`AUDT` or `CONF`); a population conflict goes to `cross-population-conflict-mapper`; anything else is discarded.
+There is no connection-shaped gap category.
 
 ## Step 3 — Log
 ```bash
-python3 scripts/db.py next-id connections      # never increment by hand
 GUIDEBOOK_DB_PATH="$SCRATCH/guidebook.db" python3 scripts/db.py add-connection \
-  --con-id CON-XXXX --confidence HIGH --connection-type CROSS-PARAMETER \
+  --confidence HIGH --connection-type CROSS-PARAMETER \
   --filed-in <slug> --source-skill connection-discovery \
   --description "<one sentence: the relationship, its mechanism, why it matters to a determination>" \
   --parameter 3 --parameter 12 --session <session>
 ```
-`--filed-in` is a topic slug (`slugs.slug`, a foreign key). Targets are flags, each repeatable and each validated
-against its table: `--parameter`, `--target-slug`, `--identity`, `--extraction`, `--methodology`; at least one is
-required. Description bar: usable by the determination run without further lookup.
+The id is computed by the writer (omit `--con-id`; a typed one must equal `next-id connections`). `--filed-in`
+is a topic slug (`slugs.slug`, a foreign key). Targets are flags, each repeatable and each validated against
+its table: `--parameter`, `--target-slug`, `--identity`, `--extraction`, `--methodology`. The type sets the
+arity the writer holds: `CROSS-PARAMETER` and `COMPOUND-INTERACTION` need two or more `--parameter` targets,
+`CROSS-POPULATION` two or more `--identity` targets, `METHODOLOGY` one `--methodology`; a parameter target
+must be `active` (a merged or retired one is refused). Description bar: usable by the determination run
+without further lookup.
 Bad: "turning space and chair length are related". Good: "REF-xxxxx Table 2 gives a 1.35 m swept path for a
 powered chair; that exceeds the 1.2 m the turning-space figure assumes, so the turning figure needs its own row for
 that chair class."
 
 ## Step 4 — Verify and hand on
-`db.py connections --status PENDING --summary` should have grown by the number logged. Consumption: when a
-determination uses a connection, `db.py update-connection --con-id CON-XXXX --status CONSUMED --session …`. A
-connection that reveals a conflict goes to `cross-population-conflict-mapper`; do not log the conflict here.
-`connections.opus_reviewed` exists and no verb sets it; do not claim a review that no row records.
+Count before and after: `python3 scripts/db.py connections --status PENDING` lists the rows (`--summary`
+groups them by confidence only), and the list should have grown by the number logged. Consumption: when a
+determination uses a connection, `db.py update-connection --con-id CON-NNNN --status CONSUMED --session …`
+(`--status` is `connections.status`, from the CHECK). A connection that reveals a conflict goes to
+`cross-population-conflict-mapper`; do not log the conflict here. `connections.opus_reviewed` exists and no
+verb sets it; do not claim a review that no row records.
 
 ## Rules
-1. `next-id connections` for every CON-ID.
+1. Never type a connection id: the writer computes it.
 2. HIGH confidence connections feed the determination run (`scripts/assess/assess_cell.py` stage).
-3. SPECULATIVE is a CR gap, never a connection.
+3. A relationship with no direct evidence is a CR gap, never a connection.
 4. No `[A-Z]-NN` target, no `--item-code`, no prefixed free-text target: use the typed flags.
 5. Use the CLI only; the archived registers (`gap_register.md`, `connection-register-active.md`, per-topic
    `connections.md`) are not read or written.

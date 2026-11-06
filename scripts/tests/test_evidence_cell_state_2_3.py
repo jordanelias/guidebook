@@ -129,8 +129,11 @@ _live = [r[0] for r in _con.execute(
     # re-pointed specifications.icf_code at `base_icf`. A fixture still pulling `axes`
     # would build a parent nothing references and MISS the one the FK now needs, which is
     # how this test failed the moment 081 landed (rule 4: a test fixture is a caller).
+    # `evidence_sources` joined the list 2026-11-06: migration 122 gave base_parameters a
+    # direction_ref_id FK into it, and with foreign_keys ON the first INSERT into a table
+    # whose FK parent does not exist fails "no such table" (the same rule-4 lesson as 081).
     "  OR name IN ('base_parameters','terms','base_taxonomy_identity','base_icf',"
-    "              'access_needs','base_taxonomy_medical'))")]
+    "              'access_needs','base_taxonomy_medical','evidence_sources'))")]
 _con.close()
 if not _live:
     print("  [FAIL] live schema has no `specifications` — fixture cannot be built.",

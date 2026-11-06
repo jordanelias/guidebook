@@ -351,6 +351,24 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
+- id: verified_scan_integrity
+  cmd:
+  - python3
+  - scripts/audit/verified_scan_integrity.py
+  battery: db_integrity
+  kinds:
+  - data
+  - schema
+  level: advisory
+  basis: judgment/verified-reading
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-11-06 (OR-11a, owner 2026-10-29). EXAMINED prints the live verified
+    extraction count; FAILS on a verified row no full-scope source_scans reading covers.
+    Red on main while the rows written before the writer refused the state stand
+    (derive: run it; never quote the count). Its reader is the render contract (C5),
+    which prints the rows it names. Advisory until those rows are re-graded in a data PR,
+    then blocking.'
 - id: extraction_follow_up_audit
   cmd:
   - python3
@@ -609,6 +627,26 @@ checks:
     a governance document does not turn this gate red; `--baseline-against <snapshot>` does, and is not
     registered because it reports ERRORs for documents whose Status is no longer CANONICAL. Left
     uninstrumented on 2026-08-14 (A5) rather than invent a combined figure.
+- id: skill_vocabulary_audit
+  cmd:
+  - python3
+  - scripts/audit/skill_vocabulary_audit.py
+  battery: governance
+  kinds:
+  - governance
+  - docs
+  level: advisory
+  basis: base/base-derived-not-curated
+  cost: fast
+  min_items: 1
+  note: 'NEW 2026-11-06 (rule 8; owner: "ensure all terminologies and vocabularies are
+    correct"). Every backticked or ALL-CAPS-hyphenated token a skill, command or agent names
+    must resolve to a CHECK value, a schema name, a db.py verb or flag, a check id, a contract
+    criterion, an R-rule label, a registry row, a file, a marker the gate code reads, a token
+    CLAUDE.md names, or a token the file defines in its own table. Prints the unresolved
+    tokens per file; red while prior-version skills carry them (derive: run it). The three
+    skills /run-pipeline delegates to are the ones this change cleaned; the rest are named,
+    not patched (rule 4: prose is a caller).'
 - id: retired_vocabulary
   cmd:
   - python3
@@ -1037,6 +1075,23 @@ checks:
   basis: hygiene
   cost: fast
   no_floor: selftest — subject is its own fixtures, not a corpus; a floor would count the wrong thing
+- id: test_run_pipeline_refusals
+  cmd:
+  - python3
+  - scripts/tests/test_run_pipeline_refusals.py
+  battery: tests
+  kinds:
+  - tooling
+  - schema
+  level: advisory
+  basis: hygiene
+  cost: fast
+  no_floor: 'selftest — subject is its own fixtures (a temp copy of the DB written through db.py''s
+    writers, one scratch retrieval-log root); a floor would count the wrong thing. NEW 2026-11-06:
+    the refusals two operator walk-throughs of skills/run-pipeline_SKILL.md found stated and not
+    held (verified needs a full-scope reading, an extraction needs a VERIFIED source and a recorded
+    reading, a direction names its source, ids are computed, a connection has the arity its type
+    names, a conflict is keyed on a parameter).'
 - id: test_scan_contract
   cmd:
   - python3

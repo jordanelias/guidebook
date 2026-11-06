@@ -374,17 +374,28 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
         ok("R2", f"{mined_rows} citation_mining rows for {admitted} anchors")
 
     # --- R3 clause citation on quantified regulatory values -----------------------------
-    uncited = _rows(cx, f"SELECT ref_id FROM evidence_sources WHERE tier >= 4 AND "
-                        f"(article_number IS NULL OR article_number='') AND "
-                        f"(pages IS NULL OR pages='') AND "
-                        f"COALESCE(notes,'') NOT LIKE '%UNVERIFIED-QUANT%'"
-                        f"{scope}", sargs)
+    # ROW-LEVEL since 2026-11-06. This read evidence_sources alone (tier >= 4 with no
+    # article_number/pages), so a code admitted and not yet read -- holding no value at all
+    # -- was reported as an uncited value (REF-01100 in a walk-through), while the values
+    # themselves, which live on source_value_extractions with migration 053's loc_* columns,
+    # were never examined. The subject is now the quantified row: a numerical or range
+    # extraction from a tier >= 4 source with no pinpoint locator and no [UNVERIFIED-QUANT]
+    # (the same predicate db.py add-extraction refuses at write time, held here for rows
+    # written by any other path or before the refusal). Scoped by the ROW's session.
+    _loc_cols = [c[1] for c in cx.execute('PRAGMA table_info("source_value_extractions")')
+                 if c[1].startswith("loc_") and not c[1].endswith("_end") and c[1] != "loc_note"]
+    _pinpoint = " OR ".join(f"COALESCE(x.{c},'') <> ''" for c in _loc_cols) or "0"
+    uncited = _rows(cx, f"SELECT DISTINCT x.ref_id FROM source_value_extractions x "
+                        f"JOIN evidence_sources e ON e.ref_id = x.ref_id WHERE e.tier >= 4 AND "
+                        f"x.claim_type IN ('numerical','range') AND NOT ({_pinpoint}) AND "
+                        f"COALESCE(x.notes,'') NOT LIKE '%UNVERIFIED-QUANT%'"
+                        f"{scope.replace('created_by_session', 'x.created_by_session')}", sargs)
     if uncited:
-        fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry values with no clause/"
-                   f"section/page AND no [UNVERIFIED-QUANT] flag: "
+        fail("R3", f"{len(uncited)} regulatory-stratum source(s) carry quantified rows with no "
+                   f"pinpoint locator (loc_*) AND no [UNVERIFIED-QUANT] flag: "
                    f"{', '.join(r[0] for r in uncited[:5])}", len(uncited))
     else:
-        ok("R3", "all regulatory sources clause-cited or flagged [UNVERIFIED-QUANT]")
+        ok("R3", "every quantified regulatory row carries a pinpoint locator or [UNVERIFIED-QUANT]")
 
     # --- R4 combinatorial dimension ------------------------------------------------------
     # HARDENED: the original counted a query containing the substring "disabilit" as
@@ -1025,7 +1036,14 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     if _rows(cx, "SELECT COUNT(*) FROM sqlite_master WHERE name='source_scans'")[0][0]:
         cat_read = ("EXISTS (SELECT 1 FROM source_scans s WHERE s.ref_id = e.ref_id "
                     "AND s.mode = 'catalogue')")
-        live_adm = " AND e.superseded_by_ref_id IS NULL"
+        # A BLOCKED admission (processing_blocked_reason set: no full text, paywalled, ...)
+        # cannot be read, so it owes no reading until the block clears; v_scan_ledger shows
+        # it BLOCKED (migration 122) and this gate reports it rather than failing it.
+        blocked = [r[0] for r in _rows(
+            cx, "SELECT e.ref_id FROM evidence_sources e WHERE e.processing_blocked_reason IS "
+                "NOT NULL AND e.superseded_by_ref_id IS NULL" + escope + " ORDER BY e.ref_id",
+            sargs)]
+        live_adm = " AND e.superseded_by_ref_id IS NULL AND e.processing_blocked_reason IS NULL"
         if allmode:
             owed_rows = _rows(cx, "SELECT e.ref_id, " + cat_read + " FROM evidence_sources e "
                               "WHERE 1=1" + live_adm + escope + " ORDER BY e.ref_id", sargs)
@@ -1044,6 +1062,9 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
                   "phase owes them" % (len(grandfathered), R16_SCAN_FROM,
                                        ", ".join(grandfathered[:8]))
                   if grandfathered else "")
+        gf_txt += ("; REPORTED, not asserted: %d admission(s) are BLOCKED (processing_blocked_"
+                   "reason set) and owe no reading until the block clears: %s"
+                   % (len(blocked), ", ".join(blocked[:8])) if blocked else "")
         if missing_reads:
             fail("R16-scan",
                  "%d of %d admission(s) carry no catalogue-mode reading: %s. Read each "
@@ -1141,15 +1162,21 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # query shape", not "no evidence exists" — PubMed AND-chains every term, so descriptive
     # multi-concept phrasings return nothing. Recording the empty without that distinction
     # silently converts a method failure into a finding of absence.
+    # THE CLASS IS A COLUMN (migration 119, `absence_class`), and this read only the prose
+    # findings_note until 2026-11-06, so a zero-yield search classed through the typed column
+    # still failed R14. The column satisfies the rule; a findings_note still does for rows
+    # written before the column existed, so past sessions do not go red.
     bare_empty = _rows(cx, f"SELECT COUNT(*) FROM search_executions WHERE results_found = 0 AND "
-                           f"deferred_reason IS NULL AND COALESCE(findings_note,'') = ''{scope}",
+                           f"deferred_reason IS NULL AND absence_class IS NULL AND "
+                           f"COALESCE(findings_note,'') = ''{scope}",
                        sargs)[0][0]
     if bare_empty:
-        fail("R14", f"{bare_empty} zero-yield search(es) carry no findings_note. Keep the empty "
-                    f"(R8) but say WHICH it is: query-shape failure, wrong index, or genuine "
-                    f"absence. Only the last is evidence.", bare_empty)
+        fail("R14", f"{bare_empty} zero-yield search(es) carry neither an absence_class nor a "
+                    f"findings_note. Keep the empty (R8) but say WHICH it is: --absence-class "
+                    f"query_shape_failure / wrong_index / genuine_absence (amend-search "
+                    f"--set-absence-class once judged). Only the last is evidence.", bare_empty)
     else:
-        ok("R14", "every zero-yield search records why it was empty")
+        ok("R14", "every zero-yield search records why it was empty (absence_class or a note)")
 
     # --- R15 A RESOLVED CANDIDATE MUST BE RE-DESCRIBED FROM THE SOURCE ------------------------
     # LESSON: a staged candidate's description is a HYPOTHESIS, not a finding. This session staged
@@ -1256,6 +1283,19 @@ def selftest():
                "0,0,0,0,?,'t')", (T,))   # exec_id 2 absent => append-only violation for R8
     cx.execute("INSERT INTO evidence_sources (ref_id,tier,evidence_type,verification_status,"
                "notes,created_by_session) VALUES ('REF-ST1',6,'code','VERIFIED','250 lbf',?)", (T,))
+    # R3 is row-level since 2026-11-06: the uncited VALUE is an extraction of REF-ST1 with no
+    # loc_* pinpoint and no [UNVERIFIED-QUANT]. REF-ST1 alone (a code holding no row) must
+    # NOT fire -- that was the false positive the rewrite closed.
+    cx.execute("INSERT INTO source_value_extractions (ref_id,parameter_id,identity_code,claim_type,"
+               "claimed_value,claim_text,extraction_method,figure_role,created_at,"
+               "created_by_session,updated_at) VALUES ('REF-ST1',1,'MOB','numerical','250',"
+               "'250 lbf','full-read','claim','t',?,'t')", (T,))
+    # R14 NEGATIVE CASE: a zero-yield search classed through the typed column and carrying no
+    # findings_note must not fire; only exec 3 (neither) does, so R14's count is asserted at 1.
+    cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"
+               "depth_method,mining_direction,results_found,results_screened,results_admitted,"
+               "backfill,absence_class,created_by_session,created_at) VALUES (8,'s','en','q',"
+               "'web','scoping','none',0,0,0,0,'genuine_absence',?,'t')", (T,))
     # A tier-1..3 anchor, so that "zero citation_mining rows" is actually an R2
     # VIOLATION. Added 2026-08-04: the corpus previously seeded only the tier-6
     # row above, so R2's `admitted > 0` precondition was never met and the rule
@@ -1530,7 +1570,10 @@ def selftest():
     # other than 1 means in each predicate.
     # R16 became 2 on 2026-10-09 with the revoked-declination fixture (TERM-ST-V).
     count_bad = False
-    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 15), ("R17", 16)):
+    # R3 (row-level) and R14 (column-aware) counts added 2026-11-06 with their negative
+    # fixtures: R3's unread code REF-ST1 holding no row, R14's classed exec 5.
+    for rule, want in (("R16", 2), ("R16-adjudicate", 1), ("R16-scan", 15), ("R17", 16),
+                       ("R3", 1), ("R14", 1)):
         n = caught.get(rule, 0)
         if n != want:
             count_bad = True

@@ -919,6 +919,18 @@ def check_vocab(conn, table: str, column: str, value, context: str):
         )
 
 
+def jurisdiction_declared(value) -> bool:
+    """Is `value` a code `schemas.enums.JurisdictionCode` declares? The same vocabulary
+    `check_jurisdiction` refuses against, read without refusing, for a reader that needs
+    to name the rows of another home (lang_jur_map) the declared vocabulary does not
+    admit -- `db.py coverage` reports those rather than counting them as owed."""
+    import sys as _sys
+    if str(REPO_ROOT) not in _sys.path:
+        _sys.path.insert(0, str(REPO_ROOT))
+    from schemas.enums import JurisdictionCode
+    return value in {e.value for e in JurisdictionCode}
+
+
 def check_jurisdiction(value, context: str):
     """Refuse a jurisdiction code `schemas.enums.JurisdictionCode` does not declare (I7).
 

@@ -1434,6 +1434,43 @@ def _disp(family, given):
     return ", ".join(x for x in (family, given) if x) or "?"
 
 
+def repeated_author_name(authors):
+    """The first name a payload's author array lists twice, or None.
+
+    A byline never repeats an author, so a repeat means the deposit filed something else
+    (affiliations, as REF-01034's Crossref record does; derive it from the `author` array
+    of its logged payload) as authors. One
+    home for the test: db.py correct-source refuses to write from such a payload, and
+    verify_authors reports the source as MALFORMED-PAYLOAD rather than as a cross.
+    """
+    seen = set()
+    for a in authors or ():
+        key = _norm((a.get("family") or a.get("name") or "")) + "|" + _norm(a.get("given") or "")
+        if key.strip("|") and key in seen:
+            return (a.get("family") or a.get("name") or "").strip()
+        seen.add(key)
+    return None
+
+
+def decodable_body_artefacts(ref_id):
+    """'session/artefact' for each held artefact of `ref_id` that carries a decodable BODY: a
+    text derived by full_text.py, or a fetched text/HTML page. A metadata record (JSON, XML)
+    is not a body, and bytes that do not decode are not either. Read by db.py's
+    `--verbatim-exempt` refusal: the exemption is for a source that holds no such body."""
+    out = []
+    for a in _artefact_index():
+        if a.ref_id != ref_id:
+            continue
+        ct = (a.content_type or "").lower()
+        derived = a.artefact.endswith("-full-text.txt")
+        if not derived and not ct.startswith("text/"):
+            continue
+        body, _enc = a.body()
+        if body:
+            out.append("%s/%s" % (a.dname, a.artefact))
+    return out
+
+
 def _biblio_divergences(msg, row):
     """Return (mismatches, gaps) for one source against its payload.
 
@@ -1827,7 +1864,7 @@ def verify_authors(session):
     n_rows = len(rows)
     n_doi = sum(1 for r in rows if (r["doi"] or "").strip())
     examined, bad, unlogged, unexaminable = 0, [], [], []
-    biblio_bad, biblio_gap = [], []
+    biblio_bad, biblio_gap, malformed = [], [], []
     for row in rows:
         ref_id, doi = row["ref_id"], (row["doi"] or "").strip()
         if not doi:
@@ -1846,7 +1883,13 @@ def verify_authors(session):
         stored = [tuple(r) for r in cx.execute(
             "SELECT last_name, COALESCE(first_name,'') FROM evidence_source_authors "
             "WHERE ref_id=? ORDER BY position", (ref_id,))]
-        if _author_conflict(real, stored):
+        repeated = repeated_author_name(msg.get("author", []))
+        if repeated:
+            # The payload, not the row, is the thing that cannot be true (see
+            # repeated_author_name). Reported under its own word; a cross here would send
+            # an operator to correct-source, which refuses the same payload.
+            malformed.append((ref_id, repeated))
+        elif _author_conflict(real, stored):
             bad.append((ref_id, [_disp(*a) for a in real], [_disp(*a) for a in stored]))
         mm, gp = _biblio_divergences(msg, row)
         if mm:
@@ -1906,6 +1949,13 @@ def verify_authors(session):
             print(f"      {ref_id}  {doi}")
     for ref_id, real, stored in bad:
         print(f"  ✗ {ref_id}\n      logged: {'; '.join(real)}\n      stored: {'; '.join(stored)}")
+    if malformed:
+        print(f"\n  MALFORMED-PAYLOAD — {len(malformed)} source(s) whose payload repeats an "
+              f"author name; a byline never does, so the deposit filed affiliations as")
+        print("  authors. Not a cross against the stored rows, which stand; correct-source "
+              "refuses to write authors from it. Reported, not failed.")
+        for ref_id, name in malformed:
+            print(f"      {ref_id}  repeats {name!r}")
 
     # A GAP IS INCOMPLETENESS. A GAP UNDER 'COMPLETE' IS A FALSE SELF-DESCRIPTION,
     # AND THAT IS A DIFFERENT THING. This module's own docstring said so from the day
