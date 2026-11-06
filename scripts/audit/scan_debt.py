@@ -39,6 +39,14 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
 DEBT = ("NOT-READ", "READ-PARTIAL")
+# BLOCKED (migration 124): no full reading covers the pair and the source carries a
+# processing_blocked_reason the ledger classes as an obstacle to the text (no full text,
+# paywalled, language), so the pair is not debt while the obstacle stands. A partial, fragment
+# or abstract reading may cover a BLOCKED pair (it does not prove the full text obtainable);
+# the ledger row still names it, and it is printed here by scope so "blocked, abstract read" is
+# visible and not mistaken for "blocked, nothing read". A full reading outranks the block
+# (READ-NOTHING-FOUND). Nothing clears the column: the ledger alone says whether a pair is
+# still blocked. A reason the ledger does not class as an obstacle leaves the pair NOT-READ.
 
 
 def main():
@@ -63,6 +71,12 @@ def main():
             "FROM v_scan_ledger l JOIN base_parameters p USING (parameter_id) "
             "JOIN terms t ON t.term_id = p.term_id "
             "GROUP BY l.parameter_id ORDER BY l.parameter_id").fetchall()
+        blocked = conn.execute(
+            "SELECT COALESCE(text_scope, 'no reading'), COUNT(*) FROM v_scan_ledger "
+            "WHERE status = 'BLOCKED' GROUP BY 1 ORDER BY 1").fetchall()
+        # An operator's claim, named: a 'full' reading with no page count nothing verified.
+        uncounted = conn.execute("SELECT COUNT(*) FROM source_scans WHERE text_scope = 'full' "
+                                 "AND pages_read IS NULL").fetchone()[0]
         owed = conn.execute(
             "SELECT parameter_id, ref_id, status FROM v_scan_ledger WHERE status IN (?, ?) "
             "ORDER BY parameter_id, ref_id", DEBT).fetchall()
@@ -73,11 +87,18 @@ def main():
     debt = sum(status.get(s, 0) for s in DEBT)
     print("scan_debt — (source x active parameter) pairs not yet read in full")
     print(f"EXAMINED: {total}")
-    for s in ("EXTRACTED", "STATED-ABSENT", "READ-NOTHING-FOUND", "READ-PARTIAL",
+    for s in ("EXTRACTED", "STATED-ABSENT", "BLOCKED", "READ-NOTHING-FOUND", "READ-PARTIAL",
               "NOT-READ"):
         print(f"  {s:<19} {status.get(s, 0)}")
+    if status.get("BLOCKED"):
+        print(f"  ({status['BLOCKED']} BLOCKED pair(s) are not debt: no full reading covers "
+              f"them and the source carries a processing_blocked_reason the ledger classes as "
+              f"an obstacle to the text. By the strongest covering reading: "
+              + ", ".join(f"{scope} {n}" for scope, n in blocked) + ")")
+    print(f"  full readings nothing counted (text_scope 'full', pages_read NULL): {uncounted} "
+          f"-- the operator's claim, not a count")
     if not debt:
-        print("PASS: every pair is extracted, stated absent, or read in full")
+        print("PASS: every pair is extracted, stated absent, blocked, or read in full")
         return 0
     for pid, name, not_read, partial in per_param:
         if not_read or partial:

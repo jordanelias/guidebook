@@ -23,12 +23,12 @@ description: >
 Before any mining pass, probe connector availability:
 
 - **PubMed** — required for verification. If unavailable, ABORT the mining pass and log `[GAP — PubMed connector unavailable]`. Do NOT proceed with web-search-only verification (high fabrication risk per GAP-278).
-- **Semantic Scholar Graph API** (via `web_fetch` to `api.semanticscholar.org/graph/v1/paper/DOI:{doi}/citations`) — **preferred for forward mining.** This is a genuine citation-graph "cited by" endpoint, public, no auth required. Use it as the default forward-mining method for any DOI-bearing anchor.
-- **Scholar Gateway** — its `semanticSearch` tool is topical/semantic passage retrieval, **not a citation graph**. It does not reliably return actual citing papers (confirmed empirically 2026-07-20 — spot-checked results were topically similar but did not verifiably cite the anchor; see DR-2026-07-20-citation-mining-methodology-corrections.md). **Do not use it for forward mining.** It remains useful as a supplementary topic-context search, same caveats as PubMed `find_related_articles` below.
-  If neither Semantic Scholar nor Scholar Gateway is reachable, mark `forward = 0` and populate `deferred_reason` with `"no citation-graph connector available — forward mining DEFERRED"`. **Do NOT substitute PubMed topic search for forward mining** — that is the topic-evidence vs claim-evidence anti-pattern PI standing rule #7 fights. PubMed `find_related_articles` is word-weighted similarity, not actual citers; it is not a forward-mining substitute.
+- **Semantic Scholar Graph API** (via web_fetch to `api.semanticscholar.org/graph/v1/paper/DOI:{doi}/citations`) — **preferred for forward mining.** This is a genuine citation-graph "cited by" endpoint, public, no auth required. Use it as the default forward-mining method for any DOI-bearing anchor.
+- **Scholar Gateway** — its `semanticSearch` tool is topical/semantic passage retrieval, **not a citation graph**. It does not reliably return actual citing papers (confirmed empirically 2026-07-20 — spot-checked results were topically similar but did not verifiably cite the anchor; see DR-2026-07-20-citation-mining-methodology-corrections.md). **Do not use it for forward mining.** It remains useful as a supplementary topic-context search, same caveats as PubMed find_related_articles below.
+  If neither Semantic Scholar nor Scholar Gateway is reachable, mark `forward = 0` and populate `deferred_reason` with `"no citation-graph connector available — forward mining DEFERRED"`. **Do NOT substitute PubMed topic search for forward mining** — that is the topic-evidence vs claim-evidence anti-pattern PI standing rule #7 fights. PubMed find_related_articles is word-weighted similarity, not actual citers; it is not a forward-mining substitute.
 - **Consensus** — optional supplement for backward mining when CrossRef ref list is empty (e.g., conference abstracts).
-- **CrossRef** (via `web_fetch` to `api.crossref.org`) — preferred for backward mining when the source has a DOI. Authoritative for the reference list of any DOI-bearing publication.
-- **Direct document fetch** (`web_fetch`/`curl`, DOI not required) — backward mining is **not gated on having a DOI or a connector**. It only requires the source document itself, read for its own reference list. This works identically regardless of language — see §2 non-DOI sub-protocol. Do not mark a non-DOI source `backward = 0`/deferred without first fetching the actual document.
+- **CrossRef** (via web_fetch to `api.crossref.org`) — preferred for backward mining when the source has a DOI. Authoritative for the reference list of any DOI-bearing publication.
+- **Direct document fetch** (web_fetch/`curl`, DOI not required) — backward mining is **not gated on having a DOI or a connector**. It only requires the source document itself, read for its own reference list. This works identically regardless of language — see §2 non-DOI sub-protocol. Do not mark a non-DOI source `backward = 0`/deferred without first fetching the actual document.
 
 **Partial-availability rule:** If only PubMed + CrossRef are available, complete backward mining and mark forward DEFERRED with the reason above.
 
@@ -87,13 +87,9 @@ confirms a Tier 1–3 source:
    was owed and **why it was not done**.
 5. Log result. **Two flags, and the pass-that-ran flag covers two scenarios by its text:**
 
-   **`--connections` was REMOVED 2026-09-28** (DR-2026-09-26 phase 2b), the same day
-   `connections_produced` stopped being written (see step 2) — keeping it as an
-   accepted-but-discarded flag was tried first and an adversarial pass caught it as the
-   exact anti-pattern this file's own `doi`-removal precedent warns against: validating
-   a value, using it to satisfy a refusal, and reporting it as logged, while persisting
-   none of it. **A pass that ran now always uses `--notes`**, whether it found something
-   or nothing — outcomes (a) and (b) below are now one flag with different text.
+   **A pass that ran always uses `--notes`**, whether it found something or nothing — outcomes (a) and (b)
+   below are one flag with different text. `log-mining` records no connection count (`connections_produced` is
+   retired, see step 2).
 
    **Stage each discovered item on the record BEFORE calling log-mining.** This is not
    optional narration: `add-candidate --surfaced-in` refuses unless the payload is
@@ -103,7 +99,7 @@ confirms a Tier 1–3 source:
    python3 scripts/db.py log-search --slug {slug} --language en --engine crossref \
      --depth-method systematic --query-text '...' --mined-ref-id {global_ref_id} \
      --mining-direction backward --origin planned --prior-expectation '...' \
-     --result-artefact retrieval-log/{session}/{payload}.json --session {session_filename}
+     --result-artefact retrieval-log/{session}/{payload}.json --session {session_stem}
    #    (or amend-search --add-result-artefact PATH on a search already logged --
    #    this is what links the payload into search_execution_artefacts; add-candidate
    #    below refuses --surfaced-in without it)
@@ -111,13 +107,13 @@ confirms a Tier 1–3 source:
    # 2. each item the payload surfaced, staged with its provenance
    python3 scripts/db.py add-candidate --exec-id <exec from step 1> \
      --surfaced-in retrieval-log/{session}/{payload}.json --title '...' \
-     --locator 'doi:...' --session {session_filename}   # repeat per item
+     --locator 'doi:...' --session {session_stem}   # repeat per item
 
    # 3. the mining flags themselves — --notes describes the outcome, it does not file it
    # (a)/(b) the pass RAN — say what happened, found or not
    python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
      --direction backward --notes 'N items found, staged as candidates on exec <N> (see 1-2)' \
-     --session {session_filename}
+     --session {session_stem}
 
    #     Found nothing: same flag, different text — NEVER --deferred-reason.
    #     R6: deferred_reason means DELIBERATELY NOT SEARCHED and is not a findings
@@ -125,12 +121,12 @@ confirms a Tier 1–3 source:
    #     older mining note in this table sits in the wrong column.
    python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
      --direction backward --notes 'ran over N references, 0 matched the screen; ...' \
-     --session {session_filename}
+     --session {session_stem}
 
    # (c) the pass was NOT run
    python3 scripts/db.py log-mining --slug {slug} --ref {global_ref_id} \
      --direction forward --deferred-reason 'no citation-graph connector available — ...' \
-     --session {session_filename}
+     --session {session_stem}
    ```
    **A pass that runs does NOT automatically discharge a standing deferral**, and the
    judgement that call needs is this skill's business: `deferred_reason` is one column
@@ -142,16 +138,16 @@ confirms a Tier 1–3 source:
 
    > **`--ref` TAKES THE GLOBAL `REF-NNNNN`, NOT THE PER-SLUG LABEL. CORRECTED
    > 2026-08-24, and this instruction is where the defect came from.** It read
-   > `--ref {local_ref_id}`, so `log_mining` wrote a label into the pointer column
+   > `--ref {local_ref_id}`, so `log-mining` wrote a label into the pointer column
    > and left `global_ref_id` NULL. On 2026-08-23 a batch followed it and
    > `source_slug_links` ended up holding `RAP-06/09/10` while `citation_mining`
    > held `RAP-F61/F69/F70` for the same three sources — after which
    > `get_unmined_sources()` reported REF-00561, REF-00969 and REF-00970 as never
    > mined, and the next session would have re-mined finished work.
    >
-   > `--doi` is **removed**. The DOI is reachable through the reference id; copying
-   > it had already drifted 2 of 10 rows by case. The label is looked up from
-   > `source_slug_links`, which owns it — never invented at the call site.
+   > `log-mining` takes no DOI: it is reachable through the reference id, and a copy
+   > drifts by case. The label is looked up from `source_slug_links`, which owns it —
+   > never invented at the call site.
    Run once per direction (backward, then forward as separate calls).
 6. Return discovered sources to calling skill
 
@@ -193,7 +189,7 @@ When citation-miner is invoked directly:
 Backward mining is **not blocked by the absence of a DOI**. It requires only the source document itself:
 1. Fetch the source's URL. **If the URL resolves to an organisation homepage, product page, or other non-document landing page — browse the site** (publications/reports/research sections) before concluding there is nothing to mine. A landing page means you're one click from the real document, not that it doesn't exist. Confirmed this recovers real bibliographies in the majority of cases where it was tried (see DR-2026-07-20).
 2. Fetch the actual document (report, handbook, guideline PDF, etc.) and read its own reference list / cited-sources section, in whatever language it's written. This is language-agnostic — a document's own citations are just as extractable in Norwegian or Japanese as in English.
-   - If `web_fetch`'s markdown conversion fails on a binary PDF (returns a "binary content saved to..." message), download it directly (`curl`) and extract text locally with `pdfminer.six` or `pypdf`. If the sandbox's `cryptography`/`cffi` binding is broken (a `ModuleNotFoundError: _cffi_backend` / pyo3 panic), `pip install --force-reinstall cffi` resolves it.
+   - If web_fetch's markdown conversion fails on a binary PDF (returns a "binary content saved to..." message), download it directly (`curl`) and extract text locally with `pdfminer.six` or `pypdf`. If the sandbox's `cryptography`/`cffi` binding is broken (a `ModuleNotFoundError: _cffi_backend` / pyo3 panic), `pip install --force-reinstall cffi` resolves it.
 3. Filter for relevance (§3), verify each candidate against whatever record exists for it (CrossRef if it later turns out to have a DOI; otherwise the citing document itself, plus one independent corroborating source where feasible — e.g. a web search confirming the cited report's real authorship/publisher), classify tier, dedup, insert.
 4. If the document genuinely has no reference list of its own (a practice checklist, a statutory text, a product page) — that's a legitimate NULL RESULT once actually verified by fetching it, not a deferral. Deferral is for documents you could not access (paywall, 403, genuinely no mirror found), not for documents you haven't tried to fetch yet.
 5. **Do not default `evidence_type` to `grey` because a source is non-English or non-DOI.** Grey literature is a publication-type classification (informally published, non-peer-reviewed), independent of language. Check the actual venue — a journal article, monograph, or dissertation in any language is not grey literature just because it isn't in CrossRef. Verify the publisher/journal/institution before assigning `evidence_type`.
@@ -222,9 +218,7 @@ Backward mining is **not blocked by the absence of a DOI**. It requires only the
   then normalised title + `pub_year` + `v_evidence_authors.first_author_last`
   (the `evidence_sources` column of that name is a tombstone since migration 063
   and reads NULL — screen on the view or every source looks new).
-  *There is no dedup-key column.* This line named `doi_less_key`, which was  <!-- [RETIRED-VOCAB-OK] -->
-  dropped from the schema — as §4 of this same file already says, two screens
-  down. Two answers to one question is the disease; the §4 note is the true one.
+  *There is no dedup-key column.*
 
 ---
 
@@ -251,10 +245,10 @@ from it.
 - A source with no authors is refused outright. There is no display column left to write
   instead. If the work has no named author, file the issuing body as a corporate author.
 
-**Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title`/`doi_less_key`  <!-- [RETIRED-VOCAB-OK] -->
-columns (it uses `pub_year`, `pub_title`, …). Run `.schema evidence_sources` for the full
-layout. The `--year`/`--title` mapping was restored 2026-06-22 (audit F-17) — earlier it
-crashed with "table evidence_sources has no column named authors".
+**Note:** the live `evidence_sources` table has **no** `authors`/`year`/`title` columns (it uses `pub_year`,
+`pub_title`, …). List the real ones with `python3 -c "import sqlite3; print([r[1] for r in
+sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute('PRAGMA table_info(evidence_sources)')])"`.
+The `--year`/`--title` flags map to `pub_year`/`pub_title`.
 
 ### source_slug_links columns
 `ref_id, slug, local_ref_id`
@@ -266,7 +260,6 @@ crashed with "table evidence_sources has no column named authors".
 ### Adding new sources
 ```bash
 python3 scripts/db.py add-source \
-  --ref-id {global_ref_id} \        # REF-NNNNN, from dbcore.next_ref_id(conn) -- the high-water mark is the UNION of every table holding a ref_id, NOT source_locators alone (CLAUDE.md §4)
   --author "{last}|{given}" \      # repeatable, byline order; 'corp|{name}' for a body
   # or, from a display string: --authors "{authors}"   (parsed into rows; refuses ambiguity)
   --year {year} \
@@ -282,34 +275,29 @@ python3 scripts/db.py add-source \
   --doi {doi} \
   --jurisdiction {jur} \
   --lang-detected {iso_639_1_code} \
-  --lang-detection-method {native_title_verified|journal_family_inference|citing_document_language} \
+  --lang-detection-method {how the language was known} \
   --slug {slug} \
   --local-ref-id {local_ref_id} \   # the per-slug LABEL (RAP-04). A different thing.
   --session {session}
 ```
 
-**`--ref-id` and `--local-ref-id` are not the same value, and this block said they were
-until 2026-08-24.** It read `--ref-id {local_ref_id}`, which files the source under its
-per-slug label: `evidence_sources.ref_id='RAP-04'`. There is no CHECK on that column, so
-it inserts silently — and the row is then invisible to the `source_locators` high-water
-mark, collides with the next slug that mints an `RAP-04`, and renders a citation keyed to
-a label that means nothing outside one slug. `db.py add-source` now refuses a ref_id that
-is not a global reference id, and names this confusion when it does.
+**Omit `--ref-id`.** `add-source` computes the global reference id, `REF-NNNNN`
+(`dbcore.next_ref_id(conn)`: the high-water mark is the UNION of every table holding a ref_id, NOT
+`source_locators` alone, CLAUDE.md §4; `python3 scripts/db.py next-id ref` prints it). A staged lead the new
+source matches (same DOI, PMID, PMCID, ISBN, standard number or URL, else the same title) is promoted under its
+own id, so a discovery already staged by `add-locator` keeps its id. A given `--ref-id` must equal what omitting
+it yields, any other staged id is refused naming its lead, and a per-slug label such as `RAP-04` is refused
+there: filed under a label, the row would be invisible to the high-water mark and collide with the next slug that
+mints the same label.
 
-- `--ref-id` is the **global** reference id, `REF-NNNNN`, unique across the repository.
-  There is no allocator: `dbcore.next_ref_id(conn)` IS the rule — the high-water mark is the
-  UNION of every table holding a ref_id, NOT `source_locators` alone (CLAUDE.md §4). Corrected
-  2026-09-03: line 191 of this same file was swept on 2026-09-02 and this line, 24 lines below
-  it, was not — so the file taught the superseded rule while citing the section that calls it
-  wrong. Measured: `source_locators` tops out at REF-00970 and `evidence_sources` at REF-00978,
-  so the old rule mints REF-00971, a live evidence row.
-- `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`.
+- `--local-ref-id` is the **per-slug label**, `RAP-04`, meaningful only inside `{slug}`; the writer derives it from the
+  slug's own scheme when it is omitted.
 
 This is the same copy-versus-pointer confusion that put `RAP-F61/F69/F70` in
 `citation_mining` while `source_slug_links` held `RAP-06/09/10` for the same three
 sources, and reported them UNMINED after they had been fully mined.
 
-**`--lang-detected` is REQUIRED, not optional, for every `add-source` call — not just when the slug's focus is non-English.** Before 2026-07-20 this field was silently unsettable (missing from the CLI/column whitelist entirely), which meant no citation-mining discovery — including genuinely non-English ones — was taggable by language. That makes the source invisible to any future language-prioritized query, silently defeating the point of ever running a non-English-focused pass. Use `native_title_verified` when you've read the actual title/text in that language; `journal_family_inference` when inferring from publishing in the same venue as a confirmed-language source (lower confidence — say so); `citing_document_language` when extracted from a bibliography written in that language.
+**`--lang-detected` is optional in the writer; set it whenever the publication language is known**, not only when the slug's focus is non-English. A source with no language is invisible to any language-prioritised query, which silently defeats a non-English-focused pass. `--lang-detection-method` is free text with no CHECK; say how the language was known (derive the strings in use: `SELECT DISTINCT lang_detection_method FROM evidence_sources`; `add-source --help` gives examples): the title or text read in that language, inferred from the venue of a confirmed-language source (lower confidence: say so), or taken from the language of the citing bibliography.
 
 ---
 
@@ -381,7 +369,6 @@ All research skills MUST invoke citation-miner inline for every confirmed Tier 1
 **Mode:** {inline|batch}
 **Sources processed:** {N}
 **New sources discovered:** {N}
-**Connections produced:** [{CON-IDs}]
 **Slugs now fully mined:** [{list}]
 **Remaining unmined (Tier 1–3):**
 ```sql

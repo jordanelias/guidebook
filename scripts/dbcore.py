@@ -192,8 +192,18 @@ def now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
 
 
+def session_stem(session):
+    """The session as the DB stores it: the bare stem, never the `.md` pointer form.
+
+    CLAUDE.md section 7: "bare stem in the DB, `.md` in pointers". A stamp carrying `.md`
+    scopes every gate that joins on the stem to nothing, and it passes green. ONE home:
+    `audit`, `upd` (and so `stamp_for`) and db.py's `main` (for the writers that stamp the
+    session themselves) all go through here (R3-15)."""
+    return session[:-3] if isinstance(session, str) and session.endswith(".md") else session
+
+
 def audit(session: str) -> dict:
-    ts = now()
+    ts, session = now(), session_stem(session)
     return {
         "created_at": ts, "created_by_session": session,
         "updated_at": ts, "updated_by_session": session,
@@ -201,7 +211,7 @@ def audit(session: str) -> dict:
 
 
 def upd(session: str) -> dict:
-    return {"updated_at": now(), "updated_by_session": session}
+    return {"updated_at": now(), "updated_by_session": session_stem(session)}
 
 
 # ---------------------------------------------------------------------------
@@ -753,7 +763,7 @@ def check_declared(conn, table: str, column: str, value, context: str):
             % (context, table, column, value, sorted(allowed)))
 
 
-def fk_declared(conn, table: str, column: str, value, context: str):
+def fk_declared(conn, table: str, column: str, value, context: str, remedy: str = ""):
     """Refuse a value no row satisfies the column's own FOREIGN KEY, naming the target.
 
     The derived sibling of check_declared above, and added for the same reason. A writer
@@ -780,8 +790,9 @@ def fk_declared(conn, table: str, column: str, value, context: str):
             return
         raise Refusal(
             "%s: %s.%s=%r has no matching row in %s.%s. A reference must point at "
-            "something this project actually holds. Nothing was written."
-            % (context, table, column, value, parent, to_col))
+            "something this project actually holds.%s Nothing was written."
+            % (context, table, column, value, parent, to_col,
+               " List the codes with `%s`." % remedy if remedy else ""))
 
 
 # Read-only connections reused by schema_choices, keyed on the RESOLVED db path.
@@ -917,6 +928,18 @@ def check_vocab(conn, table: str, column: str, value, context: str):
             "in a migration with its justification, not as a CLI argument."
             % (context, value, table, column, sorted(vocab))
         )
+
+
+def jurisdiction_declared(value) -> bool:
+    """Is `value` a code `schemas.enums.JurisdictionCode` declares? The same vocabulary
+    `check_jurisdiction` refuses against, read without refusing, for a reader that needs
+    to name the rows of another home (lang_jur_map) the declared vocabulary does not
+    admit -- `db.py coverage` reports those rather than counting them as owed."""
+    import sys as _sys
+    if str(REPO_ROOT) not in _sys.path:
+        _sys.path.insert(0, str(REPO_ROOT))
+    from schemas.enums import JurisdictionCode
+    return value in {e.value for e in JurisdictionCode}
 
 
 def check_jurisdiction(value, context: str):

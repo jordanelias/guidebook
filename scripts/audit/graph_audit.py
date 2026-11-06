@@ -281,7 +281,7 @@ def selftest():
             cid = "SELFTEST-CON-GHOST"
             con.execute("PRAGMA foreign_keys=OFF")   # the ghost's filed_in names no slug
             _insert_row(con, "connections", {
-                "con_id": cid, "status": "PENDING", "confidence": "SPECULATIVE",
+                "con_id": cid, "status": "PENDING", "confidence": "MODERATE",
                 "filed_in": "selftest", "created_at": "selftest",
                 "created_by_session": "selftest", "updated_at": "selftest",
                 "updated_by_session": "selftest",

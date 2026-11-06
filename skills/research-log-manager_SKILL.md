@@ -27,7 +27,11 @@ Query SQLite first:
 python3 scripts/db.py coverage --slug {slug}
 ```
 
-Returns: jurisdiction/language coverage counts, completeness flag.
+Returns: the (language, jurisdiction) pairs owed (pairs_required, from `v_research_scope`) and the ones still
+unsearched (pairs_unsearched), the searched counts, searches_outside_scope, the owed jurisdictions the declared
+vocabulary refuses (jurisdictions_unreachable), the slug's slug_status and merged_into, and `complete`, which is false
+while anything owed is unsearched. For a slug whose slug_status is neither `ACTIVE` nor `STUB` (a `MERGED` one) it adds
+owes_searches false: the slug in merged_into owes them, and `log-search --slug` refuses the merged slug.
 
 For slug → topic_directory lookup:
 ```sql
@@ -61,6 +65,7 @@ After multilingual-research completes:
 2. **Log every search you ran — one row per query, verbatim (R8):**
    ```bash
    python3 scripts/db.py log-search \
+     --prior-expectation '<what you expect and why, written before you run it>' \   # refused without it (R8)
      --slug {slug} \                   # omit for a search made for one parameter (--parameter {parameter_id}) or one source (--mined-ref-id); a search naming none is refused
      --language {lang_code} \
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
@@ -72,7 +77,7 @@ After multilingual-research completes:
      --target-tier {1..6} --target-evidence-type {co1|clinical|code|...} \
      --results-found {N} --results-screened {N} --results-admitted {N} \
      --admitted-ref-id REF-NNNNN \      # repeatable; writes the admission junction too
-     --session {session_filename}
+     --session {session_stem}
    ```
    Once per query. **Keep the empties** — a zero-yield search with a well-formed
    query is a completed unit of work and evidence about the world (R8, R14).
@@ -81,11 +86,12 @@ After multilingual-research completes:
 3. **A search you deliberately did NOT run is also a row:**
    ```bash
    python3 scripts/db.py log-search \
+     --prior-expectation '<what you expect and why>' \
      --slug {slug} --language {lang_code} \
      --query-text 'n/a' --engine {engine} --depth-method scoping \
      --deferred-reason 'why — e.g. no controlled vocabulary for AR (0 aliases); \
                         a query would be back-translation, forbidden by R11' \
-     --session {session_filename}
+     --session {session_stem}
    ```
    `deferred_reason` is what makes **"not looked for"** different from
    **"nothing found"**. That distinction is the thing the whole pipeline exists
@@ -97,7 +103,6 @@ After multilingual-research completes:
 4. **Add new evidence sources:**
    ```bash
    python3 scripts/db.py add-source \
-     --ref-id {global_ref_id} \     # REF-NNNNN, NOT the per-slug label
      --author "{last}|{given}" \    # repeatable, byline order; 'corp|{name}' for a body
      # authors are ROWS since migration 063 — evidence_sources.author_display is a
      # tombstone that reads NULL. --authors "{authors}" still works and is parsed.
@@ -115,16 +120,15 @@ After multilingual-research completes:
      --jurisdiction {jur} \
      --slug {slug} \
      --local-ref-id {local_ref_id} \ # the per-slug LABEL (RAP-04). A different thing.
-     --session {session_filename}
+     --session {session_stem}
    ```
 
-   **`--ref-id` is the global `REF-NNNNN`; `--local-ref-id` is the per-slug label.** This
-   block read `--ref-id {local_ref_id}` until 2026-08-24, which files a source under a
-   label meaningful only inside one slug. `evidence_sources.ref_id` has no CHECK, so it
-   inserted silently; `add-source` now refuses it. Take the global id from
-   `dbcore.next_ref_id(conn)`: there is no allocator, and the high-water mark is the UNION of
-   every table holding a ref_id, not `source_locators` alone (CLAUDE.md §4). Corrected
-   2026-09-03 — the union rule landed 2026-08-25 and this caller was missed for nine days.
+   **Omit `--ref-id`.** `add-source` computes the global `REF-NNNNN` (`python3 scripts/db.py next-id ref` prints the next
+   one; the high-water mark is the UNION of every table holding a ref_id, not `source_locators` alone, CLAUDE.md §4). A
+   staged lead (`add-locator`) that the new source matches (same DOI, PMID, PMCID, ISBN, standard number or URL, else
+   the same title) is promoted under its own id; a given `--ref-id` must equal what omitting it yields, any other staged
+   id is refused naming its lead, and a per-slug label is refused there. `--local-ref-id` is the per-slug label, meaningful only inside one slug, and
+   is derived from the slug's own scheme when omitted.
 
 5. **Update BPC file on GitHub:** Append new findings to BPC synthesis sections.
 
@@ -150,7 +154,7 @@ After multilingual-research completes:
 
 7. **Verify LOG completeness before session-close.** Run the audit script:
    ```bash
-   python3 scripts/audit/citation_mining_completeness.py --session {session_filename}
+   python3 scripts/audit/citation_mining_completeness.py --session {session_stem}
    ```
    The script reports any Tier 1–2 source added in this session that lacks a citation_mining row. A nonzero count is a session-close blocker.
 
@@ -188,9 +192,9 @@ After multilingual-research completes:
      --priority P3 \
      --description "{language} NO-DATA across {topics}" \
      --skill research-log-manager \
-     --session {session_filename}
+     --session {session_stem}
    ```
-   *(Note: category is `RP` — `RES` was deprecated when the gaps schema CHECK constraint was tightened to RP/SW/CR/ST/MX/CD/EC/EG/CI/DEC/CONF/AUDT.)*
+   *(`--category` takes the column's own CHECK; `python3 scripts/db.py add-gap --help` prints it.)*
 5. Never permanently close a language — mark THIN and move on.
 6. All source additions go through `db.py add-source` — no raw SQL.
 7. LOG completeness verification (step 7 above) is MANDATORY before session-close. Surfaces GAP-283-class protocol violations early.

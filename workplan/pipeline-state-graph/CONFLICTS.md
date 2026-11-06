@@ -16,7 +16,7 @@ _Rendered from `conflicts.yaml` by `build_graph.py`. A conflict here is an adjud
 | C-028 | S1 | RULING-MECHANISM | OWNER+AGENT | P-QUARANTINE -> FAIL | Register invariants have no live gate (tier-consistency has one since step 1.6) |
 | C-032 | S1 | RULING-MECHANISM | OWNER+AGENT | P-V2 -> PASS | Scan contract (any source, all parameters, whatever slug) versus a writer that binds an extraction to the admitting slug |
 | C-034 | S1 | RULING-MECHANISM | AGENT | P-O -> FAIL | The vocabulary can grow only by add-term from an observation; several base tables have no sanctioned writer |
-| C-035 | S1 | RULING-MECHANISM | OWNER+AGENT | P-X -> FAIL | Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters |
+| C-035 | S1 | RULING-MECHANISM | OWNER+AGENT | P-X -> PASS | Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters |
 | C-039 | S1 | OPEN-QUESTION | OWNER | -- | Questions only the owner can answer that block engine or writer behaviour |
 | C-040 | S1 | RULING-RULING | AGENT | P-ENG-T3 -> PASS | 'Tier and evidence-type assignment' and 'anything touching specifications' are permanently manual -- but the determination is computed and the tier is derived |
 | C-013 | S2 | RULING-MECHANISM | AGENT | P-F -> FAIL | The tier verdict is a judgment output, but the tier column lives on evidence_sources and is written at admission |
@@ -165,7 +165,7 @@ Atoms whose recorded status is behind a later statement. The atom files record e
 
 ## C-035 [S1] Synthesis across parameters: ruled cardinalities and mission test versus no structure that relates two parameters
 
-**Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-X` = **FAIL**
+**Class** RULING-MECHANISM  ·  **Resolver** OWNER+AGENT  ·  **Confidence** high  ·  **Probe** `P-X` = **PASS**
 
 - owner 2026-08-27: many judgment rows feed one synthesis; many synthesis rows feed one specification.  
   _atoms:_ `LED-097`(act), `LED-098`(act)

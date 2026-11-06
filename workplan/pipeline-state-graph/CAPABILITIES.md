@@ -66,7 +66,7 @@ finding that depends on two parameters has a place to be recorded and a source t
 | C3.2 | divergence between sources is a recorded state | **PASS** | convergence_assessment.status admits divergent | MIS-06 |
 | C3.3 | a spread across lenses is carried with each lens's direction | **PASS** | matched | LED-176 |
 | C3.4 | findings plus a threshold can reach a determination | **PASS** | P-R = PASS | LED-174, LED-172 |
-| C3.5 | a synthesis-stage structure can relate two or more parameters | **FAIL** | P-X = FAIL | LED-097, LED-098 |
+| C3.5 | a synthesis-stage structure can relate two or more parameters | **PASS** | P-X = PASS | LED-097, LED-098 |
 
 ## C4 Specify, then render
 
@@ -101,7 +101,7 @@ database, with the rendering gated?
 | Determination engine (assess_cell) | specification | -- | -- | PARTIAL | True | computes state per (parameter x one lens) cell per run and emits SQL; combines sources within a cell, not across parameters (C3.5); cannot reach a determination from findings plus a threshold (C3.4). |
 | Determination gates (raise/resolve) | specification | -- | -- | PARTIAL | PARTIAL | records that a determination disagrees with a link; carries one lens column only (P-GT). |
 | Convergence assessment | synthesis | -- | -- | PARTIAL | -- | per-parameter convergence of independent roots; no cross-parameter form. |
-| Connections and conflicts (add-connection, add-conflict) | synthesis | -- | -- | False | -- | free-text targets and item-layer keys; no column can name a parameter (C3.5). |
+| Connections and conflicts (add-connection, add-conflict) | synthesis | -- | -- | False | -- | connection targets are typed columns (parameter_id, slug, identity_code, extraction_id, methodology; migration 120) and conflicts carry parameter_id (migration 122) with identity-code foreign keys (migration 121), so a parameter can be named; the C3.5 probe (P-X) reads PASS on this schema. |
 | Gaps (add-gap, assess_cell) | synthesis | -- | -- | PARTIAL | -- | records that a cell is pending and why; sub-vocabulary after OPEN/CLOSED is free text. |
 | Renderers | render | -- | -- | -- | False | none exist: the render apparatus was deleted (plan step 1.1; RULINGS R1) and the one view and one renderer of step 3.R are not built (C4.6). |
 | Checks and gates (Layer 0) | Layer 0 | -- | -- | -- | PARTIAL | the checks that would hold rendering invariants and tier derivation are quarantined (C4.8). |
