@@ -1714,6 +1714,10 @@ def main():
     p_mtc.add_argument("--session", required=True)
     p_mtc.add_argument("--dry-run", action="store_true")
 
+    sub.add_parser("screen-item-catalogue",
+                   help="Read-only: the pre-reset item subjects, stripped, with their "
+                        "items:<rowid> pointers, for the owner's approval table")
+
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
@@ -1764,7 +1768,11 @@ def main():
     p_sit.add_argument("--title", required=True)
     p_sit.add_argument("--title-source", dest="title_source")
     p_sit.add_argument("--title-payload", dest="title_payload",
-                       help="path under retrieval-log/ whose BYTES contain --title")
+                       help="path under retrieval-log/ whose BYTES contain --title, next to "
+                            "--icf-code")
+    p_sit.add_argument("--replace-reason", dest="replace_reason",
+                       help="replace a title that did not come from a payload; needs "
+                            "--title-payload. The old title and source are kept in notes")
     p_sit.add_argument("--session", required=True)
     p_sit.add_argument("--dry-run", action="store_true")
 
@@ -2879,6 +2887,9 @@ def main():
             args.approval_ref, session=args.session,
             domain=args.domain, scope_note=args.scope_note, dry_run=args.dry_run))
 
+    elif args.command == "screen-item-catalogue":
+        _emit(screen_item_catalogue())
+
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
                               session=args.session, dry_run=args.dry_run))
@@ -2896,7 +2907,8 @@ def main():
     elif args.command == "set-icf-title":
         _emit(set_icf_title(
             icf_code=args.icf_code, title=args.title, title_source=args.title_source,
-            title_payload=args.title_payload, session=args.session, dry_run=args.dry_run))
+            title_payload=args.title_payload, replace_reason=args.replace_reason,
+            session=args.session, dry_run=args.dry_run))
 
     elif args.command == "add-population-icf-link":
         _emit(insert_population_icf_link(
@@ -5930,6 +5942,14 @@ def insert_term(from_observation: int, canonical_en: str, rationale: str, sessio
                 f"FROM an observed phrase (db.py observe-term), never from nothing -- that "
                 f"is what makes the vocabulary an output of the work rather than a "
                 f"presupposition.")
+        if canonical_en.casefold() not in obs["surface_form"].casefold():
+            raise Refusal(
+                f"--canonical-en {canonical_en!r} is not inside the observed phrase "
+                f"{obs['surface_form']!r}. A name is a phrase an admitted source uses, in its "
+                f"own language (owner OR-17: the model may not coin names; ruling 2026-11-06, "
+                f"E1). Use the phrase as written, or a contiguous part of it. A concept first "
+                f"met outside English is named by that phrase until an English-language "
+                f"instrument is observed naming it.")
         clash = _name_holder(conn, canonical_en, aliases=False)
         if clash:
             raise Refusal(
@@ -6843,13 +6863,17 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
     NOTHING IS TYPED THAT THE MACHINE CAN READ (CLAUDE.md rule 8): the alias IS the
     observation's surface form, its language is the observation's (in term_aliases' own
     letter case, measured by _alias_language), and its jurisdiction is the source's. The
-    operator chooses only the alias type, from the column's CHECK.
+    operator chooses only the alias type, from the column's CHECK. The row POINTS at the
+    observation (term_aliases.observation_id, migration 117): attestation is that pointer,
+    not a substring of the notes. An alias the term already holds without a pointer is
+    promoted in place; one that already carries a pointer is refused.
 
     REFUSES: an alias type outside the CHECK, or DEPRECATED (rename-term's record); an
     unknown term or observation; an observation no adjudication names this term with; an
     observation whose phrase is not inside its quote, or whose quote is not in a file saved
-    for its source (unless the observation carries a recorded VERBATIM-EXEMPT); an alias
-    the term already holds in that language. The notes carry `source-attested`, the
+    for its source (unless the observation carries a recorded VERBATIM-EXEMPT); TRANSLATION
+    (a source's own phrase is not a rendering of the English one); an alias the term already
+    holds in that language WITH a pointer. The notes carry `source-attested`, the
     provenance marker alias_provenance_audit reads, with the observation and source.
     """
     with connect(dry_run) as conn:
@@ -6858,6 +6882,11 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         if alias_type == "DEPRECATED":
             raise Refusal("add-alias: DEPRECATED marks a former canonical name, which only "
                           "rename-term records. A phrase a source uses is a live alias.")
+        if alias_type == "TRANSLATION":
+            raise Refusal("add-alias: TRANSLATION frames a phrase as a rendering of the "
+                          "English one. A phrase a source uses is its own jurisdiction's term "
+                          "(R11, no back-translation): record it as SYNONYM, NARROWER or "
+                          "BROADER.")
         if not dbcore.exists(conn, "terms", "term_id", term_id):
             raise Refusal(f"add-alias: {term_id!r}: no such term.")
         obs = conn.execute(
@@ -6890,12 +6919,13 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 f"from it, or record why no artefact can carry it (observe-term "
                 f"--verbatim-exempt). Nothing was written.")
         lang = _alias_language(conn, obs["language"] or "EN")
-        held = conn.execute("SELECT alias_type FROM term_aliases WHERE term_id = ? "
-                            "AND alias = ? AND language = ?",
+        held = conn.execute("SELECT alias_type, observation_id FROM term_aliases "
+                            "WHERE term_id = ? AND alias = ? AND language = ?",
                             (term_id, obs["surface_form"], lang)).fetchone()
-        if held:
+        if held and held[1] is not None:
             raise Refusal(f"add-alias: {term_id} already holds {obs['surface_form']!r} "
-                          f"({lang}) as {held[0]}. Nothing was written.")
+                          f"({lang}) as {held[0]}, attested by observation {held[1]}. "
+                          f"Nothing was written.")
         others = [r[0] for r in conn.execute(
             "SELECT DISTINCT term_id FROM term_aliases WHERE alias = ? AND language = ? "
             "AND term_id <> ?", (obs["surface_form"], lang, term_id))]
@@ -6903,9 +6933,23 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 f"{obs['locator']!r}; " + (f"quote verified in {where.split(',')[0]}"
                                           if kind == "scoped" else
                                           "the observation's quote is VERBATIM-EXEMPT"))
+        if held:
+            # A model-generated or unrecorded alias whose text a source uses is PROMOTED in
+            # place: the pointer is attached, the held row's type and its history stay, and
+            # the jurisdiction is the source's where the row had none. No second row.
+            conn.execute("UPDATE term_aliases SET observation_id = ?, "
+                         "jurisdiction = COALESCE(jurisdiction, ?), "
+                         "notes = COALESCE(notes || '; ', '') || ?, "
+                         "updated_at = ?, updated_by_session = ? "
+                         "WHERE term_id = ? AND alias = ? AND language = ?",
+                         (observation_id, obs["jurisdiction"], note, dbcore.now(), session,
+                          term_id, obs["surface_form"], lang))
+            return {"term_id": term_id, "alias": obs["surface_form"], "language": lang,
+                    "promoted": True, "alias_type_kept": held[0],
+                    "also_an_alias_of": others, "dry_run": dry_run}
         row = {"term_id": term_id, "alias": obs["surface_form"], "language": lang,
                "alias_type": alias_type, "jurisdiction": obs["jurisdiction"],
-               "notes": note}
+               "observation_id": observation_id, "notes": note}
         row.update(dbcore.stamp_for(conn, "term_aliases", session))
         conn.execute(f"INSERT INTO term_aliases ({','.join(row)}) "
                      f"VALUES ({','.join('?' * len(row))})", list(row.values()))
@@ -6976,6 +7020,48 @@ def revoke_declination(term_id: str, reason: str, decision_ref: str, session: st
                 "decision": ref, "dry_run": dry_run}
 
 
+_ITEM_ASIDE = re.compile(r"\s*[(\[].*?[)\]]")
+
+
+def _item_subject(db_path, rowid: int):
+    """An old item's name with its parenthetical and bracketed text removed (its values and
+    its merge notes), or None. Owner 2026-11-06: the 93 item subjects are admitted
+    "with stripped values" and with their codes removed; the pointer is the row number."""
+    con = sqlite3.connect(f"file:{db_path}?mode=ro&immutable=1", uri=True)
+    try:
+        row = con.execute("SELECT name FROM items WHERE rowid = ?", (rowid,)).fetchone()
+    finally:
+        con.close()
+    return _ITEM_ASIDE.sub("", row[0]).strip() if row else None
+
+
+def screen_item_catalogue():
+    """The "Screen" half of "Screen, then you approve" for the item subjects: read-only.
+
+    One row per pre-reset item: its `items:<rowid>` pointer (the old code is never shown),
+    the stripped subject, whether it still states a value or carries an item code after
+    stripping, and the term that already holds it by name or alias. The judgment columns
+    (kind, implied quantity, recommendation) are the reviewer's, written in the table the
+    owner approves; nothing here is a verdict, and nothing is written.
+    """
+    path = dbcore.REPO_ROOT / "_archived/data/corpus-pre-reset-2026-08-06.db"
+    old = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
+    try:
+        items = old.execute("SELECT rowid, name FROM items ORDER BY rowid").fetchall()
+    finally:
+        old.close()
+    rows = []
+    with connect(True) as conn:
+        for rowid, name in items:
+            subject = _ITEM_ASIDE.sub("", name).strip()
+            held = _name_holder(conn, subject)
+            rows.append({"entry_ref": f"items:{rowid}", "subject": subject,
+                         "still_value_bearing": bool(_VALUE_BEARING.search(subject)),
+                         "carries_item_code": bool(_ITEM_CODE.search(subject)),
+                         "held_as": held and f"{held['term_id']} ({held['kind']})"})
+    return {"examined": len(rows), "rows": rows}
+
+
 def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
     """Prove `entry_ref` names an entry in the catalogue file; return how it resolved.
 
@@ -7004,12 +7090,20 @@ def _resolve_catalogue_entry(catalogue: str, entry_ref: str) -> str:
         return f"{catalogue} ref_id {entry_ref}"
     if path.suffix == ".db":
         m = re.fullmatch(r"terms:(TERM-\d+)", entry_ref)
-        if not m:
+        mi = re.fullmatch(r"items:(\d+)", entry_ref)
+        if not (m or mi):
             raise Refusal(
                 f"--entry-ref {entry_ref!r}: the pre-reset corpus is a permitted catalogue "
-                f"for its TERMS only, written terms:<TERM-ID>. The owner selected 'Old "
-                f"corpus terms' on 2026-10-09; the old Part 4 item names were offered and "
-                f"not selected, and the item layer stays deleted (2026-09-01).")
+                f"for its TERMS (terms:<TERM-ID>) and, since the owner's 2026-11-06 ruling, "
+                f"its item subjects by row number (items:<rowid>). An item CODE is not an "
+                f"entry reference: no old item code may reach a live row, and the item layer "
+                f"stays deleted (2026-09-01). The old Part 4 item names were not selected "
+                f"on 2026-10-09 and are admitted only as that ruling states.")
+        if mi:
+            subject = _item_subject(path, int(mi.group(1)))
+            if subject is None:
+                raise Refusal(f"--entry-ref {entry_ref!r}: no such item subject.")
+            return f"{catalogue} {entry_ref} ({subject!r})"
         con = sqlite3.connect(f"file:{path}?mode=ro&immutable=1", uri=True)
         try:
             hit = con.execute("SELECT canonical_en FROM terms WHERE term_id = ?",
@@ -7089,6 +7183,12 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
         dbcore.check_declared(conn, "terms", "catalogue", catalogue,
                               "mint-term-from-catalogue --catalogue")
         resolved = _resolve_catalogue_entry(catalogue, entry_ref)
+        if entry_ref.startswith("items:"):
+            subject = _item_subject(dbcore.REPO_ROOT / catalogue, int(entry_ref[6:]))
+            if canonical_en.casefold() not in subject.casefold():
+                raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is not inside the "
+                              f"item subject {subject!r}. A name taken from a catalogue is "
+                              f"the catalogue's own words, never a model's rewording (OR-17).")
         clash = _name_holder(conn, canonical_en)
         if clash and clash["kind"] == "term":
             raise Refusal(f"mint-term-from-catalogue: {canonical_en!r} is already "
@@ -7477,8 +7577,20 @@ def insert_icf_code(*, icf_code: str, title: str = None, title_source: str = Non
                 "title_verified": bool(title and title_payload), "dry_run": dry_run}
 
 
+def _anchored(title: str, code: str, body: str, window: int = 200) -> bool:
+    """`title` occurs within `window` characters after an occurrence of `code` in `body`.
+    A bare `title in body` is satisfied by a neighbouring code's title (CLAUDE.md 5(c))."""
+    i = body.find(code)
+    while i != -1:
+        if title in body[i:i + len(code) + window]:
+            return True
+        i = body.find(code, i + 1)
+    return False
+
+
 def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
-                  title_payload: str = None, session: str, dry_run: bool = False):
+                  title_payload: str = None, replace_reason: str = None,
+                  session: str, dry_run: bool = False):
     """Give a seeded ICF code the name CLAUDE.md section 6 requires it to be used with.
 
     GAP-ICF-TITLES is the subject: 43 of the 72 codes migration 081 seeded carry no title,
@@ -7490,40 +7602,59 @@ def set_icf_title(*, icf_code: str, title: str, title_source: str = None,
     a field to keep tidy; replacing one silently would erase whoever established it and the
     payload they established it from. A correction is a different act and owes its own
     reason.
+
+    THE CORRECTION ROUTE (migration-free): `replace_reason` replaces a title, and only with a
+    payload-verified one. 17 of the first 29 titles cite a skill file since deleted and 12
+    cite repository prose; none came from the classification's own bytes. The old title and
+    source are kept in `notes`, with the reason. Every payload check, new or replacing,
+    anchors the title to its code.
     """
     icf_code = (icf_code or "").strip()
     title = (title or "").strip()
     if not title:
         raise Refusal("--title is required and may not be blank.")
+    if replace_reason is not None and not (replace_reason.strip() and title_payload):
+        raise Refusal("--replace-reason needs a reason and --title-payload: a title is "
+                      "replaced only by one verified from the classification's bytes.")
     if not (title_source or title_payload):
         raise Refusal(
             "--title-source or --title-payload is required. A title with no source is a "
             "title from memory; the schema refuses the pair too.")
     with connect(dry_run) as conn:
         row = conn.execute(
-            "SELECT icf_code, title, title_source FROM base_icf WHERE icf_code=?",
+            "SELECT icf_code, title, title_source, notes FROM base_icf WHERE icf_code=?",
             [icf_code]).fetchone()
         if row is None:
             raise Refusal(
                 f"{icf_code!r} is not in base_icf. Mint it first:\n"
                 f"  db.py add-icf-code --icf-code {icf_code} --session ...")
-        if row["title"]:
+        if row["title"] and not replace_reason:
             raise Refusal(
                 f"{icf_code} is already titled {row['title']!r} (source "
                 f"{row['title_source']!r}). Overwriting would erase whoever established it "
-                f"and the payload they established it from. A correction is a different "
-                f"act and owes its own reason.")
+                f"and the payload they established it from. A correction owes its own "
+                f"reason: --replace-reason, with --title-payload.")
+        if row["title_source"] and row["title_source"].startswith("payload:") and row["title"]:
+            raise Refusal(f"{icf_code}'s title is already verified from "
+                          f"{row['title_source']!r}; it is not replaced.")
         if title_payload:
             bodies = _payload_bodies(title_payload, "--title-payload",
                                      "a title is verified from BYTES or it records a "
                                      "document instead")
-            if not any(title in b for b in bodies):
+            if not any(_anchored(title, icf_code, b) for b in bodies):
                 raise Refusal(
-                    f"--title {title!r} does not appear in {title_payload}. If the "
-                    f"classification words it differently, use its wording.")
+                    f"--title {title!r} does not appear next to {icf_code} in "
+                    f"{title_payload}. If the classification words it differently, use its "
+                    f"wording; a title that appears only elsewhere in the file is another "
+                    f"code's.")
             title_source = f"payload:{title_payload}"
-        conn.execute("UPDATE base_icf SET title=?, title_source=? WHERE icf_code=?",
-                     [title, title_source, icf_code])
+        note = None
+        if row["title"]:
+            note = ((row["notes"] or "") + f" | TITLE REPLACED by {session}: was "
+                    f"{row['title']!r} (source {row['title_source']!r}); "
+                    f"{replace_reason.strip()}").strip(" |")
+        conn.execute("UPDATE base_icf SET title=?, title_source=?, notes=COALESCE(?, notes) "
+                     "WHERE icf_code=?", [title, title_source, note, icf_code])
         return {"icf_code": icf_code, "title": title, "title_source": title_source,
                 "title_verified": bool(title_payload), "dry_run": dry_run}
 

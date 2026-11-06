@@ -649,6 +649,69 @@ try:
     expect_refusal("AL05", "add-alias refuses an alias the term already holds",
                    "already holds", add_alias, TA, OCW, "SYNONYM", S)
 
+    expect_refusal("AL06", "add-alias refuses TRANSLATION: a source's own phrase is not a rendering "
+                   "of the English one (R11)", "TRANSLATION", add_alias, TA, OCW, "TRANSLATION", S)
+    # AL07: an alias held WITHOUT a pointer is promoted in place by attesting it; no second row.
+    TB = FREE[15]
+    x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, "
+      "created_by_session, updated_at, updated_by_session) VALUES (?, 'corridor route', "
+      "'en', 'SYNONYM', 'model-generated', '2026-01-01 00:00', 'fixture', '2026-01-01 00:00', "
+      "'fixture')", TB)
+    o_h = attempt(observe, obs("corridor route", "PDF page 2 / corridor route",
+                               "the clear width of a corridor route is measured here"), S)
+    attempt(adj, o_h.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=TB)
+    n_before = q("SELECT count(*) FROM term_aliases WHERE term_id=?", TB)[0][0]
+    a7 = attempt(add_alias, TB, o_h.get("observation_id"), "SYNONYM", S)
+    row7 = q("SELECT observation_id, alias_type FROM term_aliases WHERE term_id=? AND "
+             "alias='corridor route'", TB)
+    record("AL07", "add-alias promotes a held alias in place: the pointer is attached, its type "
+           "and row count are kept", a7.get("promoted") is True and row7 == [(o_h["observation_id"],
+           "SYNONYM")] and q("SELECT count(*) FROM term_aliases WHERE term_id=?", TB)[0][0]
+           == n_before, f"{a7} {row7}")
+    expect_refusal("AL08", "and a second attestation of an attested alias is refused",
+                   "attested by observation", add_alias, TB, o_h.get("observation_id"),
+                   "SYNONYM", S)
+    import importlib.util as _iu
+    _sp = _iu.spec_from_file_location("alias_audit", REPO / "scripts/audit/alias_provenance_audit.py")
+    _am = _iu.module_from_spec(_sp); _sp.loader.exec_module(_am)
+    record("AL09", "alias_provenance_audit classifies from the pointer, not the notes text",
+           _am.classify("source-attested: forged", None) != "SOURCE-ATTESTED"
+           and _am.classify("model-generated", 1) == "SOURCE-ATTESTED")
+    # T2: a name is a phrase the source used
+    ins = fn("insert_term")
+    o_n = attempt(observe, obs("turnwise clearance zone", "PDF page 3 / zone",
+                               "the turnwise clearance zone of a wheelchair"), S)
+    expect_refusal("T201", "add-term refuses a name that is not inside the observed phrase "
+                   "(no model-coined gloss, OR-17)", "not inside the observed phrase", ins,
+                   o_n.get("observation_id"), "fixture invented gloss", "fixture", S,
+                   dry_run=True)
+    t202 = attempt(ins, o_n.get("observation_id"), "turnwise clearance", "fixture", S, dry_run=True)
+    record("T202", "add-term takes a contiguous part of the observed phrase", bool(t202.get("term_id")),
+           t202)
+    # T4: an ICF title is replaced only by one verified from bytes, next to its code
+    sit = fn("set_icf_title")
+    icf = q("SELECT icf_code FROM base_icf WHERE title IS NOT NULL ORDER BY icf_code LIMIT 1")[0][0]
+    pdir = pathlib.Path(TMP) / "retrieval-log"
+    pdir.mkdir(exist_ok=True)
+    (pdir / "icf.txt").write_text(f"{icf} Fixture anchored title\n" + "x" * 500 +
+                                  "\nb999 Fixture far title\n", encoding="utf-8")
+    expect_refusal("T401", "set-icf-title still refuses to overwrite without a reason",
+                   "--replace-reason", sit, icf_code=icf, title="Fixture anchored title",
+                   title_payload=str(pdir / "icf.txt"), session=S)
+    expect_refusal("T402", "a title found only far from its code is refused (a neighbour's title)",
+                   "does not appear next to", sit, icf_code=icf, title="Fixture far title",
+                   title_payload=str(pdir / "icf.txt"), replace_reason="fixture", session=S)
+    t403 = attempt(sit, icf_code=icf, title="Fixture anchored title",
+                   title_payload=str(pdir / "icf.txt"), replace_reason="fixture: from memory",
+                   session=S)
+    r403 = q("SELECT title, title_source, notes FROM base_icf WHERE icf_code=?", icf)[0]
+    record("T403", "replacement keeps the old title and source in notes, with the reason",
+           t403.get("title_verified") and r403[1].startswith("payload:") and "TITLE REPLACED" in
+           (r403[2] or "") and "fixture: from memory" in r403[2], f"{t403} {r403}")
+    expect_refusal("T404", "a payload-verified title is not replaced again", "already verified",
+                   sit, icf_code=icf, title="Fixture anchored title",
+                   title_payload=str(pdir / "icf.txt"), replace_reason="fixture", session=S)
+
     # ── M: mint-term-from-catalogue ──────────────────────────────────────────────────
     mint = fn("mint_term_from_catalogue")
     APPROVAL = next((h[3:].strip() for h in ledger_text.splitlines()
@@ -717,6 +780,22 @@ try:
                              canonical_en="fixture corpus term name"))
     record("M09", "mint resolves a pre-reset corpus TERM (the permitted half of that "
            "catalogue)", mt9.get("term_id") and mt9.get("term_id") > oldterm, mt9)
+    # M13-M15: the item subjects, by row number, with the guard unchanged
+    scr = db.screen_item_catalogue()
+    free_item = next(r for r in scr["rows"] if not r["held_as"] and not r["still_value_bearing"]
+                     and not r["carries_item_code"])
+    record("M13", "screen-item-catalogue lists every item by items:<rowid>, shows no old code, and "
+           "reads only", scr["examined"] > 0 and all(r["entry_ref"].startswith("items:")
+           for r in scr["rows"]) and not any(db._ITEM_CODE.search(r["subject"]) for r in scr["rows"]),
+           str(scr["rows"][:2]))
+    m14 = attempt(mint, **mt(catalogue=corpus, entry_ref=free_item["entry_ref"],
+                             canonical_en=free_item["subject"]), dry_run=True)
+    record("M14", "mint resolves an item subject by row number, its name the subject's own",
+           bool(m14.get("term_id")), m14)
+    expect_refusal("M15", "mint refuses a name that is not inside the item subject (no rewording)",
+                   "not inside the item subject", mint, **mt(
+                       catalogue=corpus, entry_ref=free_item["entry_ref"],
+                       canonical_en="fixture reworded name"))
     vp = run(script="validate_parameters.py")
     record("M10", "validate_parameters P2 passes with the approval entry in the ledger",
            vp.returncode == 0 and "P2: 2 catalogue-minted" in vp.stdout, vp.stdout[-300:])

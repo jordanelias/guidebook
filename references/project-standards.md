@@ -4922,3 +4922,38 @@ On the question the review put (whether the 93 item subjects, value-stripped, ma
 CONDITION: any session asking whether the 93 old item names may seed parameters, whether item subjects are still excluded as a source, whether the base vocabulary must cover the P1+P2+P3 languages, or who plans the population of the base tables.
 ACTION: (1) Treat the pre-reset item subjects, value-stripped and with their codes removed, as a permitted source of candidate names, never as containers. (2) Mint no name from them before a tooling pull request adds the catalogue route and the owner approves the screened table in a dated entry. (3) Build base vocabulary, aliases and native terms for every P1+P2+P3 language, with in-language provenance (R11); never treat an English term translated word for word as a native term. (4) Treat every [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statement 2026-11-06 (second) — every recommendation of the base-population plan is applied
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, in reply to the plan `scratchpad/session_2026-11-06-base-vocabulary-review/base-population-plan.md` and its section E of twelve owner decisions, and recorded on contact per `CLAUDE.md` rule 0. The whole message:
+
+> "apply all recommendations, carefully infer and apply all solutions from my rulings and context required for pipeline to operate, etc"
+
+and, in a message that arrived while the first was being worked on:
+
+> "e1 e3 e4; Appy yes"
+
+[ASSUMPTION: "Appy" is "Apply". The second message names the three items that block the first tooling pull request, E1, E3 and E4, and says yes to each; it is read as confirming their recommended options specifically, so those three do not rest on the blanket reading below.]
+
+**What this decides.** Each decision of the plan's section E is answered by the option the plan marked as recommended, as the plan words it. [ASSUMPTION: a blanket "apply all recommendations" is read as choosing the recommended option of every E-item other than E1, E3 and E4 (which the second message names), including the three of those the plan marks DG-NON (E5 licensing, E6 population taxonomy, E7 jurisdiction), because the owner is the one who decides those and has now decided. It is not read as approving the screened table of item subjects, the mints, the declinations or the stakes table themselves: each of those is a table the owner has not yet seen, and the 2026-10-09 guard ("Screen, then you approve") and the plan's E9 still require the owner's approval of the table before any row is written.]
+
+| Item | Answer applied |
+|---|---|
+| E1 (DG-NON) | A concept first met outside English is named by the instrument's own phrase, in its own language, until an English-language instrument of a P1+P2+P3 jurisdiction is observed naming the same concept. No English gloss is typed (OR-17). |
+| E2 | The four terms that carry a name no source used (TERM-090, TERM-092 and the two others the plan's D9 finds) are renamed to the observed phrase, in a research pull request, after the tooling merges. TERM-091 (parameter 12) is among the four the plan names; its rename needs the owner's quote on that parameter and is not applied here. |
+| E3 | The 93 item subjects are pointed at by row number in the pre-reset database (`items:<rowid>`); no old item code appears in a live row. |
+| E4 (OR-17b) | The model-generated and unrecorded aliases stay as flagged search aids, never vocabulary, and are not deleted; each becomes vocabulary only when an instrument in its language is read and the phrase is found there. |
+| E5 (DG-NON, licensing) | WHO titles in other languages: store the pointer to the persisted payload only, until the licence is read from WHO's own terms. |
+| E6 (DG-NON, population taxonomy) | The base may record each language community's own designation for an identity code, attested in its own Co-1 sources, beside the English name. No identity code changes; a gap stays visible. |
+| E7 (DG-NON, jurisdiction) | Norwegian is split into Bokmål and Nynorsk only where an instrument is published in both; other official languages of in-scope countries stay out of scope for now. |
+| E8 | Rooms are frozen until a page reads them. |
+| E9 | The model proposes a `typical_stakes` for each need that lacks one, with its warrant, in one table; the owner approves that table before any row is written. |
+| E10 | This edition relies on attestation from codes alone; no named native-speaker reviewer is required. |
+| E11 | The language-and-jurisdiction pairs that `lang_jur_map` holds for P1+P2+P3 are approved as the bucket members of OR-8. The count is derived, not quoted. |
+| E12 | The functional-axis terms and the method terms are declined as parameters, each with a reason, and kept as terms. No taxonomy change. |
+
+**What it asks of the pipeline.** "Apply … context required for pipeline to operate" is read as: build the tooling the plan names (its T1 to T4) in a tooling-only change before any row is written (`CLAUDE.md` rule 10), keep the ledger and the instrument consistent with the answers above, and stage the research that follows. It authorises no row.
+
+CONDITION: any session asking how a concept first met in a non-English instrument is named, whether the unattested aliases are vocabulary or may be deleted, whether item subjects are pointed at by code or by row, whether WHO titles in other languages may be stored verbatim, whether identity labels in other languages may be recorded, whether Norwegian is split, whether rooms are populated, whether the P1+P2+P3 language-and-jurisdiction pairs are approved bucket members, or whether the axis and method terms are parameters.
+ACTION: (1) Name a concept first met outside English by the instrument's own phrase and language; never type an English gloss. (2) Treat the unattested aliases as flagged search aids and delete none. (3) Point at item subjects by `items:<rowid>`. (4) Store a pointer to a persisted payload, not a verbatim non-English WHO title, until the licence is read. (5) Record a community's own identity designation only when attested in its own Co-1 source; change no code. (6) Leave rooms alone. (7) Treat the P1+P2+P3 pairs as the bucket members. (8) Decline the axis and method terms as parameters with reasons, in a research change after the tooling merges. (9) Write no row from the item subjects, the stakes proposal or the renames until the owner approves the table in a dated entry. (10) Treat every [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statement, quoted above.
