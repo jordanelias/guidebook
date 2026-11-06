@@ -59,3 +59,9 @@ Every query and fetch verbatim. "Prior" is written before the call, appended to 
 - F11 result: exit 35 (TLS failure), 0 bytes.
 - W2 prior: Wayback holds a snapshot of www.cdpf.org.cn; its home page links a 无障碍 section. Call `http://archive.org/wayback/available?url=www.cdpf.org.cn/`.
 - W2 result: snapshot listed (20261017135457). Fetch via `https://web.archive.org/web/20261017135457if_/https://www.cdpf.org.cn/` and via the plain `/web/20261017135457/` form: both exit 35, 0 bytes; proxy status `recentRelayFailures` shows web.archive.org:443 ws_closed_mid_exchange ×4 while a gov.cn control returned 200. Tier 5 (CDPF, any DPO) NOT-OBTAINABLE in this session.
+
+## Second reading of all six texts (local, after retrieval)
+- L3 tally script (inline python, whitespace-stripped, per PDF page) for parking forms (停车位|车位|泊位), lift forms (电梯|升降…|扶梯|直梯), and 43 element and qualifier forms across GB, LAW, REG12, BJREG, BJG, MZ. Prior: the guidance (BJG) would carry more colloquial forms than the statutes. Result: yes (无障碍车位, 直梯, 垂直电梯, 扶梯, 天桥升降梯, 轮椅升降机, 无障碍卫生间 ×33 against the code's 无障碍厕所). Shape: a substring tally locates; every form used was then read in its sentence, and the sense judged per occurrence.
+- L4 GB transcript re-read for in-instrument variants: 公共卫生间（厕所） (3.2 heading), 无障碍卫生间 used only in 3.4.4 (guest room or dwelling), 通用 defined as "general" in the 前言. Prior: no variants expected in a mandatory code. Result: three, above.
+- L5 BJG PDF p.11 rendered with `pdftoppm -f 11 -l 11 -r 50 -png` and read as an image, because the extraction interleaves speech bubbles. Result: bubble "带着大件行李，还是坐直梯吧。" (printed p.18).
+- Verification: `python3 -I tools/equiv_build.py` (from the repo root, full path) writes equivalents.tsv and checks each quote and form in the whitespace-stripped saved text; it reported failures 0. GB quotes verify against the OCR TRANSCRIPTION only, never against artefact bytes.
