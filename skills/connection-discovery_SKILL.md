@@ -6,7 +6,7 @@ description: >
   constrains turning space, corridor width and door approach), cross-population effects on one physical
   parameter, compound interactions, and methodology findings. Modes: parameter (a determination or its
   extractions), evidence (new extractions, gaps, pending connections), external (forward citations via
-  Scholar Gateway / PubMed), cluster-crosstest (every pair of parameters in a named cluster). Use after
+  Scholar Gateway / PubMed), category-crosstest (every pair of parameters in a named cluster). Use after
   citation mining, after a new or revised determination, or when a source bears on several parameters.
   Do NOT use to audit existing connections. Absorbs connection-scout (D-0146).
 ---
@@ -26,7 +26,7 @@ content, never as a target. A connection points at parameters, slugs, identity-l
 ## Two homes, and which holds what
 - **A typed edge between two extractions** is the strongest link: `extraction_relations` (`condition_on`,
   `derived_from`, `delta_over`, `insufficient`, …) points from one figure to another row and can cross
-  parameters. When one parameter's figure is computed from or conditioned on another's, file the edge
+  parameters; across two *sources* it needs `--cross-source <reason>` or the writer refuses. When one parameter's figure is computed from or conditioned on another's, file the edge
   (`derive-extraction`, `relate-extraction`); a `connections` row alone cannot be joined.
 - **A `connections` row** is the narrative index of a relationship. Its targets are typed rows in
   `connection_targets` (`parameter_id`, `slug`, `identity_code`, `extraction_id`, `methodology`; exactly one set per
@@ -38,16 +38,21 @@ content, never as a target. A connection points at parameters, slugs, identity-l
 | `parameter` (default) | a determination written or revised | the parameter's live `specifications` row and its extractions |
 | `evidence` | new extractions, gap update | `source_value_extractions`, `gaps`, PENDING connections |
 | `external` | citation mining finished for a slug | T1–T2 forward citations in `evidence_sources` |
-| `cluster-crosstest` | a named cluster (parameters sharing a physical element, an envelope or a population) | every unordered pair in the cluster |
+| `category-crosstest` | a named cluster (parameters sharing a physical element, an envelope or a population; what a letter-category was) | every unordered pair in the cluster |
 
-`cluster-crosstest` is the exhaustive pass (`decisions/DR-2026-07-20-intra-category-cross-test.md`, PROPOSED):
-the other modes follow what an author thought to cross-reference, this one enumerates all pairs so none is skipped.
-Per pair give one verdict: `INDEPENDENT`, `SUBSUMES`/`SUBSUMED_BY`, `INTERACTS`, `SHARED_ELEMENT_DISTINCT_PROGRAM`,
-`CONFLATED_VARIABLE`, `GENUINE_CONFLICT`. Compare only within a measurement paradigm and device class
-(`measurement_paradigm`, `device_class`); a cross-paradigm pairing is a derivation, never an identity, and never
-`GENUINE_CONFLICT`. Flag **cross-partition leakage** where a shared element or population links parameters across a
-cluster boundary. Only `GENUINE_CONFLICT` goes to `cross-population-conflict-mapper`; the others are typed
-`connections` rows; log unexamined pairs as gaps.
+`category-crosstest` is the exhaustive pass (`decisions/DR-2026-07-20-intra-category-cross-test.md`, ACCEPTED
+2026-07-21; "category" is now a named cluster of parameters): the other modes follow what an author thought to
+cross-reference, this one enumerates all pairs so none is skipped. Per pair (per program) give one verdict:
+`INDEPENDENT`, `SUBSUMES`/`SUBSUMED_BY`, `INTERACTS`, `SHARED_ELEMENT_DISTINCT_PROGRAM`, `CONFLATED_VARIABLE`,
+`GENUINE_CONFLICT`. Compare only within a measurement paradigm and device class (`measurement_paradigm`,
+`device_class`); a cross-paradigm pairing is a derivation, never an identity, and never `GENUINE_CONFLICT`. Flag
+**cross-partition leakage** where a shared element or population links parameters across a cluster boundary.
+**Not built, and said so:** the DR's `cross_test_pairs` table (X6) and its hard gate on `stated` (X5). Until they
+exist a verdict has no typed home: `INTERACTS` and `SHARED_ELEMENT_DISTINCT_PROGRAM` are `connections` rows,
+`GENUINE_CONFLICT` goes to `cross-population-conflict-mapper`, and the verdicts with no row (`INDEPENDENT`,
+`SUBSUMES`, `CONFLATED_VARIABLE`) are named in a GAP for the cluster so the pass is not lost.
+
+---
 
 ## Step 0 — Scope and dedup
 `scope_type: parameter | slug | cluster`, `scope_id`, `mode`. Load existing connections for the scope

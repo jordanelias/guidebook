@@ -1,13 +1,22 @@
 -- 118_adversarial_lens_sequence.sql
 -- SCHEMA migration -- the adversarial pass gains a lens for SEQUENCE.
 --
--- WHY. The owner asks for the adversarial audit to cover accuracy, logic and sequence. The eleven lenses of
+-- WHY. The owner asks for the adversarial audit to cover accuracy, logic and sequence (references/project-
+-- standards.md, "Owner statements 2026-11-06 — the pipeline skill's requirements"). The eleven lenses of
 -- migration 097 cover the first two; none covered sequence (the order stages are written and verified in,
 -- and whether every pointer resolves to a row of an earlier stage), so a critic's sequence finding had to be
 -- filed under a lens it did not belong to or not recorded. `close-adversarial-pass` derives its list of
 -- required lenses from this CHECK (dbcore.check_values), so the new lens is required of every pass closed
--- after this file; passes already closed are not reopened. Passes held open (references/project-standards.md,
--- owner ruling 2026-09-27 second, ACTION 2) now owe one more lens.
+-- after this file; passes already closed are not reopened. A pass still open would owe one more lens that no
+-- verb can add to it (a pass takes one record and findings are not amendable), so this file gives every open
+-- pass a NOT-ATTACKED row for the new lens, saying so. That is honest (the pass did not attack sequence) and
+-- leaves each pass closable exactly when it was closable before. Passes held open by owner ruling (2026-09-27
+-- second, ACTION 2) stay open; nothing here closes one.
+--
+-- ORDER. The open passes are written by data migrations dated after the 095 cutoff, which a rebuild replays
+-- after the schema migrations. The marker below places this file after the latest of them, so the backfill sees
+-- the same open passes in a rebuild as in an incremental apply (otherwise the two databases would differ).
+-- AFTER_DATA: 20261106030918
 --
 -- WHAT READS IT. db.py `record-adversarial-pass` (validates each finding's lens against this CHECK) and
 -- `close-adversarial-pass`; `.claude/agents/antagonist.md` names the lens for the critic.
@@ -56,5 +65,11 @@ INSERT INTO adversarial_findings_new (finding_id, pass_id, lens, subject_table, 
 DROP TABLE adversarial_findings;
 ALTER TABLE adversarial_findings_new RENAME TO adversarial_findings;
 CREATE INDEX ix_adversarial_findings_pass ON adversarial_findings(pass_id);
+
+INSERT INTO adversarial_findings (pass_id, lens, claim_attacked, method, verdict, created_by_session, created_at)
+  SELECT pass_id, 'S4-sequence', 'stage and write order (lens added after this pass was recorded)',
+         'not attacked: migration 118 added this lens after the pass was recorded, and a recorded pass cannot take a further finding',
+         'NOT-ATTACKED', 'migration_118', '2026-11-06 00:00'
+  FROM adversarial_passes WHERE closed_at IS NULL;
 
 PRAGMA user_version = 118;

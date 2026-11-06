@@ -554,6 +554,13 @@ _BIBLIO_FIELDS = (
     ("journal_name",   lambda m: next((t for t in (m.get("container-title") or []) if t),
                                       None)),
     ("publisher",      lambda m: m.get("publisher")),
+    # ADDED 2026-11-06 with the run-pipeline adversarial pass: Crossref carries these, so the verifier
+    # proves them and correct-source (built from this tuple) may write them. ISBN and ISSN are lists in the
+    # payload (print and electronic); the first is compared, so a stored second value reads as a mismatch
+    # to be looked at, never as a silent pass.
+    ("isbn",           lambda m: next((v for v in (m.get("ISBN") or []) if v), None)),
+    ("issn",           lambda m: next((v for v in (m.get("ISSN") or []) if v), None)),
+    ("edition",        lambda m: m.get("edition-number")),
 )
 
 # THE ONE HOME. db.py's _CORRECTABLE is built from this rather than restating it, because

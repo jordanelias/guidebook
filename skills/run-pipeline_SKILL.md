@@ -60,10 +60,11 @@ no bare axis codes or population umbrellas.
   with `scripts/research/retrieval_log.py`. **Unretrievable:** admit with `verification_status` UNVERIFIED and marker ○,
   no scan row, and never describe it as read. Log the admission as a search (R17): `log-search --origin owner-supplied`
   or `lead-index`.
-- **Bibliographic data.** `add-source` takes authors, year, title, journal name, edition, standard number, ISBN, ISSN,
-  institution, report and series number, publisher, book title, pages, DOI/PMID, URL, tier, evidence type, Co-1
-  provenance and verification; `correct-source` sets volume, issue, article number, pages, title, year and authors
-  **from the payload**. Take each field from the payload in hand, never from memory. A field the source does not
+- **Bibliographic data.** `add-source` takes authors, year, title, standard number, institution, report and series
+  number, publisher, book title, pages, DOI/PMID, URL, tier, evidence type, Co-1 provenance and verification.
+  `correct-source` then sets journal name, publisher, volume, issue, article number, pages, ISBN, ISSN, edition,
+  title, year and authors **from the persisted payload**, and `--verify-authors` checks those same fields against it,
+  so run both for any source with a Crossref record. Never type one of them from memory. A field the source does not
   carry stays empty and prints "not recorded". Every author is kept; Co-1 co-authors are the warrant.
 - **`--verify-authors` checks only against a JSON payload.** On a `.doc` or other undecodable payload it reports NOT
   SEARCHED; compare the bytes by hand and record that limit in the source's notes. It is not verification there.
@@ -86,10 +87,12 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - `relate-extraction` for comparators, `derive-extraction` for computed figures, `raise-follow-up` for doubtful rows.
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
   and access-need attribution live on the extraction's lens columns.
-- Failure, harm and inadequacy (R7) are first-class rows: a `figure_role='finding'` extraction with the verbatim
-  claim and `--harm-finding` (a typed flag; only a finding can carry it), plus an `insufficient` edge
-  (`--relation insufficient`, to the figure the source says is not enough, e.g. a code value) so the inadequacy is
-  joinable. Harm a search surfaced is also `log-search`'s `harm_finding`.
+- Failure, harm and inadequacy (R7) about a **parameter's value** are first-class rows: a `figure_role='finding'`
+  extraction with the verbatim claim and `--harm-finding` (a typed flag; only a finding can carry it), plus an
+  `insufficient` edge (`--relation insufficient`, with its quote, to the figure the source says is not enough, e.g.
+  a code value). Harm **not tied to a parameter** (a room-type or whole-route failure) has no judgment row, because
+  judgment rows are keyed on a parameter: it is `log-search`'s or `add-candidate`'s `harm_finding` at research, plus
+  a GAP naming it so it is not lost.
 - Output must be usable without re-reading the source: render and determination read the typed row and its locator.
 - Checks: `judgment_handoff_shape.py`, `extraction_relations_integrity.py`, `adjudication_integrity.py`.
 
@@ -100,7 +103,8 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`), and as a `connections` row
   (`connection-discovery`) for the narrative: its targets are typed flags (`--parameter`, `--target-slug`,
   `--identity`, `--extraction`, `--methodology`), each a foreign key. `add-conflict` where populations pull opposite ways (`cross-population-conflict-mapper`).
-  `connection-discovery --mode cluster-crosstest` enumerates every pair in a cluster so none is skipped.
+  `connection-discovery` in `category-crosstest` mode (a prose mode, not a CLI) enumerates every pair in a cluster so
+  none is skipped. An edge across two sources needs `--cross-source <reason>`.
 - **Independence.** Sources sharing a root are one source. `v_value_independence` and `external_root_registry` hold few
   rows; where empty, trace shared roots from the citations by hand. `supersession-audit` → `add-supersession-check`.
 - CLAUDE.md §6 reserves `best_practice_synthesis` to Opus-class models; no object of that name exists, so apply the

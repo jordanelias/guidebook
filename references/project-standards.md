@@ -36,6 +36,7 @@ RULE: Lived experience evidence (Co-1) is co-primary with Tier 1 on the claim ty
 DATE: Established — pre-session; reconciled 2026-07-13
 
 RULE: VIS, DEAF, DBL are three distinct independent population codes. VIS/DEAF as a compound code is an error. DBL ≠ VIS + DEAF. See workplan-orchestrator §Population Codes for full canonical list.
+AMENDED 2026-11-06: the full canonical list is the `base_taxonomy_identity` table; the skill section this rule pointed to is retired. See "Owner instruction 2026-11-06 — retire workplan-orchestrator; /run-pipeline replaces it".
 DATE: Established — pre-session; consolidated 2026-03-29
 
 RULE: IntD (Intellectual Disability) is not a standalone population code. IntD provisions are proxied through DEM (wayfinding, cognitive simplicity) and NDV (sensory environment, Easy Read signage). No §2.12, no IntD matrix column, no IntD population code table entry. All IntD specifications carry THIN-BASE disclosure.
@@ -91,6 +92,7 @@ DATE: 2026-03-18 19:00
 <!-- TRANSITIONAL — remove after CO-0004 propagation pass is complete -->
 
 RULE: CO-0004 Volume Merge and Part renumbering. 2 Volumes: Volume I (Parts 1–9), Volume II (Parts 10–12). Appendices, Bibliography, and Glossary follow Volume II but are not part of it. Supplementary unchanged. See workplan-orchestrator §CO-0004 for Part Map. CO-0004 supersedes CO-0003 structural provisions; CO-0003 terminology changes remain in full effect. SIGNED OFF 2026-03-30.
+AMENDED 2026-11-06: the Part Map this rule pointed to survives at workplan/P1-D2-D3-co0004-remapping.md; the skill section is retired. See "Owner instruction 2026-11-06 — retire workplan-orchestrator; /run-pipeline replaces it".
 DATE: 2026-03-29 00:00; signed off 2026-03-30 23:30
 
 RULE: "Cross-population" retired per CO-0003. Use "co-occurring disability" (intra-individual) or "multi-population" (inter-group). Population code notation: `+` = co-occurring in one person; `/` = different people same space.
@@ -230,6 +232,7 @@ RULE: Session start protocol (GraphQL batch read: LATEST + project-standards + w
 CONDITION: Any turn where a GitHub write operation (batch_commit, github_append, REST PUT) is planned.
 ACTION: If session start has not yet been run in the current conversation, run it before the first write. Applies even to single-question conversations that escalate to writing.
 DATE: 2026-03-31
+SUPERSEDED 2026-11-06: the skill this protocol runs through is retired; a session opens with /session-open then /orient. See "Owner instruction 2026-11-06 — retire workplan-orchestrator; /run-pipeline replaces it".
 
 RULE: "Start a new conversation" in next_action YAML is reserved for context-boundary situations only. Do not write it when context remaining is ≥20% and the next task is a direct continuation of the current workflow.
 CONDITION: Writing next_action field during session close.
@@ -264,6 +267,7 @@ RULE: Do not re-read workplan-orchestrator_SKILL.md mid-session. It is loaded at
 CONDITION: Any bash_tool call fetching workplan-orchestrator_SKILL.md after session start.
 ACTION: Reference the already-loaded skill content. If the skill was not updated this session, skip the re-read.
 DATE: 2026-03-31
+SUPERSEDED 2026-11-06: the skill no longer exists. See "Owner instruction 2026-11-06 — retire workplan-orchestrator; /run-pipeline replaces it".
 RULE: session-consolidator must record the commit OID returned by batch_commit() in the github_writes field of the session YAML. Format: `commit_oid: {first 12 chars of OID}` as a field alongside github_writes.
 CONDITION: Writing session YAML after any batch_commit() call.
 ACTION: Capture the OID from the batch_commit() return value and include it. Without this, commit claim verification is impossible for that session.
@@ -4901,9 +4905,9 @@ Given in session https://claude.ai/code/session_01Ub36iN9Wtnk3RfPq2ogN3U and rec
 
 "please retire workplan orchestrator. please create a new skill in its place called /run-pipeline (which includes a variant for processing evidence and beyond without research)"
 
-SUPERSEDES: the RULE above headed "Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator …)"; the RULE "Do not re-read workplan-orchestrator_SKILL.md mid-session"; and, as pointers only, the RULEs that send a reader to the deleted skill's "§Population Codes" (the code table is `base_taxonomy_identity`) and "§CO-0004 Part Numbering Map" (the map survives at `workplan/P1-D2-D3-co0004-remapping.md`). The skill they name no longer exists; `/session-open` and `/orient` open a session.
+Supersession, recorded here and at the superseded text: the RULE headed "Session start protocol (GraphQL batch read: LATEST + project-standards + workplan-orchestrator …)" and the RULE "Do not re-read workplan-orchestrator_SKILL.md mid-session" are SUPERSEDED, and the two RULEs that send a reader to the deleted skill's "§Population Codes" and "§CO-0004 Part Numbering Map" are AMENDED (each carries a marker line pointing here). This is stated in prose, not in the audited `SUPERSEDES:`/`BY:` grammar, because that grammar counts its target quote in the target file's raw text, which for a ledger-internal target includes the citation line itself and so can never equal one. The skill they name no longer exists; `/session-open` and `/orient` open a session. The decisions-register copies D-0058 and D-0065 stay `ACTIVE` until a data-only PR marks them SUPERSEDED (CLAUDE.md rule 10 keeps data migrations out of a tooling PR; the SQL is written and waits for that PR).
 
-**What this does.** `skills/workplan-orchestrator_SKILL.md` is deleted. Its risk-escalation rule (two or more escalation signals append a REVIEW gap) is **not carried**: the gap register is written by `add-gap`, determinations are capped by `raise-determination-gate`, and every run ends in an adversarial pass, so the rule duplicated three mechanisms that now exist and counted signals nobody records. [ASSUMPTION: the owner's retirement instruction is read as not wanting it re-homed.] Its population-code table is replaced by `base_taxonomy_identity`. The dangling live references were corrected in the same change (`governance/project-instructions-v10_14.md` skill list, `governance/population-taxonomy.md`, `references/skill-registry.md`, `references/effort-guide.md`). Frozen historical records that name the skill (the armature documents, `architecture/sqlite-data-layer.md`, dated workplans and audits) are left as the record of their time.
+**What this does.** `skills/workplan-orchestrator_SKILL.md` is deleted. Its risk-escalation rule (two or more escalation signals append a REVIEW gap) is **not carried**: it was unexecutable before the deletion (the signals were never defined anywhere in the repository, and `REVIEW` is not a `gaps.category` value), and the mechanisms that now exist, `add-gap`, `raise-determination-gate` and the closing adversarial pass, do the work it named. [ASSUMPTION: the owner's retirement instruction is read as not wanting it re-homed.] Its population-code table is replaced by `base_taxonomy_identity`. The dangling live references were corrected in the same change (`governance/project-instructions-v10_14.md` skill list, `governance/population-taxonomy.md`, `references/skill-registry.md`, `references/effort-guide.md`). Frozen historical records that name the skill (the armature documents, `architecture/sqlite-data-layer.md`, dated workplans and audits) are left as the record of their time.
 
 CONDITION: any session asking which skill orchestrates a multi-stage run, or what runs at session start.
 ACTION: Use `/run-pipeline` (variant `from-evidence`) for a multi-stage run and `/session-open` then `/orient` to start a session; do not look for `workplan-orchestrator`.
@@ -4925,4 +4929,34 @@ SUPERSEDES: the literal, line-counting reading of the 2026-10-12 "as little code
 
 CONDITION: any session adding or changing a table or column, or asking whether a PR may add code or columns.
 ACTION: (1) Judge code by whether it is the minimum that performs the action correctly, not by line count; add a column where a convention would otherwise carry a fact. (2) Put one value in each cell and each fact in the cell that names it: a foreign key where a table exists, a row per repeated value, never a list, an array or a prefixed string. (3) Before shipping a schema change, run `scripts/audit/joined_cells_census.py` and do not add a cell it would flag.
+DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statements 2026-11-06 — the pipeline skill's requirements
+
+Given in session https://claude.ai/code/session_01Ub36iN9Wtnk3RfPq2ogN3U and recorded on contact per `CLAUDE.md` rule 0, as the requirements `skills/run-pipeline_SKILL.md` implements. Quoted verbatim:
+
+"do we have a skill that manages the process of performing research then processing it throughout every stage of pipeline followed by doing an adversarial audit for accuracy, logic, sequence?"
+
+"base > research > evidence > judgment > synthesis > specification > render
+
+please retire workplan orchestrator. please create a new skill in its place called /run-pipeline (which includes a variant for processing evidence and beyond without research)
+
+research: must be performed by topic across languages and jurisdictions while tracking its queries. must be able to perform citation mining. must be able to record evidence from a source that pertains to other categories/topics/parameters to maximize search efficiency, which means that every research row for a source must list all different categories/topics/parameters found within that source. this means that a research session may search by a given slug for sources, but the actual review of any source will concern every single thing relevant to accessible design as per the reference tables in base / at suggestion of Claude while ensuring that equivalencies are found to prevent duplication. all relevant bibliographic data must be recorded.
+
+evidence stage must carefully adjudicate sources to assignrelevant populations/access needs/ICF codes properly referenced, and the evidence needs to be stored in such a manner where it can be used to inform synthesis+specifications as well as be able to be used directly by rendering.
+
+synthesis will ensure the use of cross referential analysis for table rows to see if there are any relevant links within parameters/topics/categories (eg wheel chair swept path analyses for different wheel chairs would inform different space requirements)
+
+specifications: must be able to review all evidence and syntheses of evidence to determine what best practice is, which explicitly means the most accommodating/gentle/dignified set of values/rationales/solutions for a given specification item within a category. the most commonly seen value/etc is NOT evidence of best practice but most common practice. must be able to understand code is a floor unless backed up directly by high value evidence, and we are more likely to see best practices coming from academic research/professional clinical guidelines/advocacy groups.
+
+renders: must be able to process specifications to be readable for a webpage, must be able to compile all evidence in tables for comparison, must be radically transparent in approach, must ensure proper bibliographic citations, etc."
+
+"(rendering step should refer to recent PRs that concerned the webpage display of a specification item)"
+
+"if code documents are the only things that inform a specification, then they can be best practice...it's just going to be a weaker evidence tier"
+
+**What this does.** It records, in the owner's words, the stage requirements the new skill follows and the audit dimensions (accuracy, logic, sequence) that migration 118 gives the adversarial pass a lens for. Nothing is superseded: the last statement agrees with the ratified position of the two 2026-10-30 entries (a determination resting on T4 to T6 alone is named at the weak band, with the code-derived flag, and never marked full). [ASSUMPTION: "evidence stage ... assign relevant populations/access needs/ICF codes" is read as the judgment stage, where `CLAUDE.md` section 6 places the lens crossing (owner, 2026-08-27); `skills/run-pipeline_SKILL.md` says so and names the cost of moving it. The owner's omission of a judgment stage from the requirement list is read as the same collapse.]
+
+CONDITION: any session asking what the pipeline-orchestration skill must do, how each stage is to be run, or whether the adversarial pass covers sequence.
+ACTION: Follow `skills/run-pipeline_SKILL.md`; change it by ledger entry, not by session preference.
 DATE: 2026-11-06 — owner statements, quoted above.

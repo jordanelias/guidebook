@@ -373,10 +373,10 @@ the ones it shipped, is not the kind of record this repo runs on.
    early re-sorts when a timestamp changes, mis-pairs the rows, and smears the diff across
    unrelated columns. Now ordered by the substantive columns first. Where those tie, any pairing
    is equivalent — the rows agree on everything non-volatile, so the verdict is volatile either way.
-3. **"Every table, every row" was blind to views and triggers.** `v_best_practice` carries the
-   convergence-laundering exclusion in its `WHERE` clause, so editing that view changes what the
-   project treats as a best-practice claim while leaving every row identical — and the check
-   said PASS. It now compares view/trigger/index DDL too.
+3. **"Every table, every row" was blind to views and triggers.** `v_best_practice` carries its
+   state and retirement guard in its `WHERE` clause (it carried a convergence-laundering exclusion
+   until migration 117), so editing that view changes what the project treats as a best-practice claim
+   while leaving every row identical — and the check said PASS. It now compares view/trigger/index DDL too.
 4. **Unquoted identifiers** reached `PRAGMA` and `ORDER BY`, so a legal-but-odd table name
    crashed the comparator — reintroducing, in new code, the crash-instead-of-verdict conflation
    this same session fixed in `render_audit.js` (F12).

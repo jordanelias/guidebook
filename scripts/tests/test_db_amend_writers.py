@@ -548,17 +548,12 @@ try:
                    "SELECT relevance_note FROM source_slug_links WHERE ref_id=? AND slug=?",
                    R1, mixed)[0][0] == "fixture grounds", f"out={out}")
 
-        # S10: the five citation columns add-source could not reach now land on the row (a flag
-        # that parses and never reaches the column reports a write that did not happen).
+        # S10: --standard-number (the one citation column with no payload route) lands on the row.
         R_CITE = next_ref()
-        r = add_source(R_CITE, "--journal-name", "Fixture Journal", "--edition", "2nd",
-                       "--standard-number", "FIX 1:2020", "--isbn", "978-0-00-000000-2",
-                       "--issn", "0000-0000")
-        record("S10", "add-source writes journal_name, edition, standard_number, isbn and issn",
-               r.returncode == 0 and q(
-                   "SELECT journal_name, edition, standard_number, isbn, issn "
-                   "FROM evidence_sources WHERE ref_id=?", R_CITE)
-               == [("Fixture Journal", "2nd", "FIX 1:2020", "978-0-00-000000-2", "0000-0000")],
+        r = add_source(R_CITE, "--standard-number", "FIX 1:2020")
+        record("S10", "add-source writes standard_number",
+               r.returncode == 0 and q("SELECT standard_number FROM evidence_sources WHERE ref_id=?",
+                                       R_CITE) == [("FIX 1:2020",)],
                f"rc={r.returncode} {r.stderr[-300:]!r}")
 
         # S11-S14: typed columns (migrations 119, 120). A flag that parses and never reaches its column,
@@ -615,6 +610,16 @@ try:
         finally:
             con.close()
         record("S14", "a non-finding extraction cannot carry harm_finding (CHECK)", bad, "no IntegrityError")
+        # S15: a conflict names two populations the identity lens holds; an unknown code is refused by name.
+        two = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code LIMIT 2")]
+        ok = run_cli("add-conflict", "--domain", "FIXTURE", "--pop-a", two[0], "--pop-b", two[1],
+                     "--status", "PROPOSED", "--session", S)
+        bad_ = run_cli("add-conflict", "--domain", "FIXTURE2", "--pop-a", "NOT-A-CODE", "--pop-b", two[1],
+                       "--status", "PROPOSED", "--session", S)
+        record("S15", "add-conflict accepts identity-lens codes and refuses one the lens lacks",
+               ok.returncode == 0 and bad_.returncode == 1 and not q(
+                   "SELECT 1 FROM conflicts WHERE domain='FIXTURE2'"),
+               f"rc={ok.returncode},{bad_.returncode} {bad_.stderr[-200:]!r}")
 
     # ── X: supersede-source ───────────────────────────────────────────────────
     # GAP-060. Two DOI-less fixture sources with one author, year and title are the
@@ -1510,19 +1515,21 @@ try:
     record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
            r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
 
-    # J13: migration `drop_item_layer_cluster` removed the foreign key that refused an item
-    # code on conflicts.item_code, so the writer refuses it (CLAUDE.md section 7). The control
-    # is the same row without the code: a refusal that also refused that would prove nothing.
-    base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": "AAA", "pop_b": "BBB",
+    # J13: conflicts.pop_a / pop_b are foreign keys into the identity lens (migration 121; the item_code
+    # column this once guarded is gone). A code the lens lacks is refused by name; the control is the same
+    # row with two live codes, because a refusal that also refused that would prove nothing.
+    live2 = [c for (c,) in q("SELECT identity_code FROM base_taxonomy_identity ORDER BY identity_code LIMIT 2")]
+    base = {"conflict_id": "CONF-9999", "domain": "fixture", "pop_a": live2[0], "pop_b": live2[1],
             "status": "PROPOSED"}
-    msg = refusal(db.insert_conflict, {**base, "item_code": "E-08"}, S, dry_run=True)
+    msg = refusal(db.insert_conflict, {**base, "pop_a": "AAA"}, S, dry_run=True)
     ok_id = None
     try:
         ok_id = db.insert_conflict(base, S, dry_run=True)
     except Exception as exc:  # noqa: BLE001 -- the control failing is a defect to see
         print(f"      CONTROL defect: {exc.__class__.__name__}: {exc}")
-    record("J13", "insert_conflict refuses an item code and still writes the same row without one",
-           msg is not None and "item layer" in msg and ok_id == "CONF-9999", f"refusal={msg!r} control={ok_id!r}")
+    record("J13", "insert_conflict refuses a population the identity lens lacks and still writes the same row with live codes",
+           msg is not None and "base_taxonomy_identity" in msg and ok_id == "CONF-9999",
+           f"refusal={msg!r} control={ok_id!r}")
 
     # ── M: log-search records the lens a search covered (R18) ───────────────────────────
     # Four optional columns on search_executions, each checked against the registry its own foreign

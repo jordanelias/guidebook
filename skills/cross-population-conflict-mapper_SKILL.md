@@ -18,7 +18,7 @@ description: >
 
 **Model:** Sonnet-class (retrieval/collation) · Opus-class or above (resolution synthesis + best-practice determination)
 **Input:** Environmental parameter(s) (`base_parameters`), a determination under review, or a room type
-**Keyed on the parameter.** The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`; resolve every code you file against it, codes AND names, and do not file a code the table lacks (the table below predates it).
+**Keyed on the parameter.** The item layer is deleted (CLAUDE.md §7): treat any `[A-Z]-NN` code as prior-version content, never as a target. Population codes are `base_taxonomy_identity.identity_code`, and `add-conflict` now **refuses** a `--pop-a` or `--pop-b` the table lacks (foreign keys, migration 121). The matrix below predates the table and uses descriptors (`VIS`, `DBL`, `OFS`, `SENS`, `NEU`, `IntD`) that are not all codes: choose the identity code whose name and description fit, and where none does, put the proposal to the owner. Never coin a code (OR-17).
 **Output:** Conflict domain matrix + resolution evidence register + unresolved gap flags
 **Chunk ceiling:** ≤3 conflict domains per run
 

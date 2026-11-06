@@ -986,12 +986,6 @@ def next_conf_id() -> str:
 
 
 def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
-    if data.get("item_code"):
-        raise Refusal(
-            f"item_code {data['item_code']!r} REFUSED: the item layer was deleted and the "
-            f"column is retired. A [A-Z]-NN code is prior-version content, never a container "
-            f"to file into (CLAUDE.md section 7); migration `drop_item_layer_cluster` removed "
-            f"the foreign key that used to refuse it, so this writer does.")
     if data.get("pop_a") and data.get("pop_b"):
         if data["pop_a"] > data["pop_b"]:
             raise Refusal(
@@ -1007,6 +1001,10 @@ def insert_conflict(data: dict, session: str, dry_run: bool = False) -> str:
         # column a value-set match finds first).
         dbcore.check_declared(conn, "conflicts", "status", data.get("status"),
                               "insert_conflict")
+        # pop_a, pop_b and gap_id are foreign keys (migration 121): a code the identity lens does not
+        # hold is refused by name, not left to SQLite's bare constraint failure.
+        for col in ("pop_a", "pop_b", "gap_id"):
+            dbcore.fk_declared(conn, "conflicts", col, data.get(col), f"add-conflict {col}")
         cols = ", ".join(row)
         ph   = ", ".join(["?"] * len(row))
         conn.execute(f"INSERT INTO conflicts ({cols}) VALUES ({ph})", list(row.values()))
@@ -1037,12 +1035,10 @@ def update_conflict(conflict_id: str, session: str,
         )
 
 
-def get_conflicts(item_code: str = None, domain: str = None,
+def get_conflicts(domain: str = None,
                   status: str = None, summary: bool = False) -> list | dict:
     q     = "SELECT * FROM conflicts WHERE 1=1"
     params = []
-    if item_code:
-        q += " AND item_code=?"; params.append(item_code)
     if domain:
         q += " AND domain=?";    params.append(domain)
     if status:
@@ -2346,17 +2342,13 @@ def main():
     p_as.add_argument("--publisher")
     p_as.add_argument("--publisher-location")
     p_as.add_argument("--book-title")
-    # ADDED 2026-11-06. The five citation columns the sanctioned writer could not reach, found by
-    # the run-pipeline adversarial pass: a journal article could not name its journal, a book its
-    # ISBN, a standard its number or edition, so a bibliography compiled from the row printed
-    # "not recorded". Same failure class as the 2026-09-18 venue set above, and the same owner rule:
-    # when the CLI cannot reach a column, add the verb. Write them from the payload in hand
-    # (CLAUDE.md section 5c), never from memory.
-    p_as.add_argument("--journal-name", help="the journal, as the payload prints it")
-    p_as.add_argument("--edition", help="e.g. '2nd' or '2022'; the edition the cited text is from")
+    # ADDED 2026-11-06. A standard's own number has no payload to verify it against (Crossref carries no
+    # such field), so it is typed off the instrument, as --report-number is above. Journal name, edition,
+    # ISBN and ISSN are NOT flags here: a Crossref payload carries them, so they are written by
+    # `correct-source` from the persisted payload and checked by `--verify-authors` (retrieval_log
+    # `_BIBLIO_FIELDS`), which is the 2026-08-19 lesson: a bibliographic field is never typed from memory
+    # when a payload is in hand.
     p_as.add_argument("--standard-number", help="the instrument's own number, e.g. 'ISO 21542:2021'")
-    p_as.add_argument("--isbn")
-    p_as.add_argument("--issn")
     p_as.add_argument("--grey-flag", type=int, choices=(0, 1),
                       help="1 for grey literature. evidence_type='grey' with grey_flag=0 "
                            "is the same fact disagreeing with itself across two columns")
@@ -2480,7 +2472,6 @@ def main():
 
     # conflicts
     p_confs = sub.add_parser("conflicts", help="Query conflict records")
-    p_confs.add_argument("--item")
     p_confs.add_argument("--domain")
     p_confs.add_argument("--status")
     p_confs.add_argument("--summary", action="store_true")
@@ -3157,11 +3148,7 @@ def main():
                             ("book_title", "book_title"),
                             ("grey_flag", "grey_flag"),
                             ("grey_reason", "grey_reason"),
-                            ("journal_name", "journal_name"),
-                            ("edition", "edition"),
                             ("standard_number", "standard_number"),
-                            ("isbn", "isbn"),
-                            ("issn", "issn"),
                             ):
             _v = getattr(args, _flag, None)
             # `is not None`, not truthiness: synthesis_attribution_required is an int flag
@@ -3329,7 +3316,7 @@ def main():
 
     elif args.command == "conflicts":
         result = get_conflicts(
-            item_code=args.item, domain=args.domain,
+            domain=args.domain,
             status=args.status, summary=args.summary,
         )
         _emit(result)
@@ -3617,8 +3604,8 @@ def insert_evidence_source(data: dict, session: str,
         "source_type", "publisher", "publisher_location", "book_title",
         "series", "series_number", "report_number", "institution",
         "grey_flag", "grey_reason",
-        # ADDED 2026-11-06: see the --journal-name note at the argparse block.
-        "journal_name", "edition", "standard_number", "isbn", "issn",
+        # ADDED 2026-11-06: see the --standard-number note at the argparse block.
+        "standard_number",
     })
     _validate_cols(data.keys(), _ES_COLS, "insert_evidence_source")
 
