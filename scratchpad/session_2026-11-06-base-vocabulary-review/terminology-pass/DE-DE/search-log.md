@@ -64,3 +64,9 @@ Each entry: query verbatim, PRIOR (written before the result), RESULT, SHAPE (R1
 ## Q11 — DIN 18040-1 full text (paywall check)
 - Query: web search `DIN 18040-1:2010-10 dinmedia Barrierefreies Bauen Öffentlich zugängliche Gebäude` then fetch the product page found.
 - PRIOR: DIN Media sells it; no free full text; a product page with a short abstract only.
+- RESULT: dinmedia.de product page 200 (artefact 5a933d138d378242.html): "[AKTUELL]", 30 pages, "ab 105,20 EUR inkl. MwSt.", "Dieses Dokument wurde teilweise ersetzt durch DIN EN 17210:2021-08". The body is NOT-OBTAINABLE (paid). The search also surfaced a free din.de table-of-contents download, fetched: 200, 1-page PDF (artefact a301a6bf293f64ad.pdf) carrying DIN 18040-1's clause headings. Headings are the standard's own phrases and are recorded as observations of HEADINGS only; nothing about the clause content is inferred.
+- SHAPE: well-formed. Not substituted from memory. The search summary's claim that the 2023 draft "aligns Sections 4 and 5 with DIN EN 17210" is a summary, not read.
+
+## Q12 — DIN 18040-2 TOC
+- Query: web search `DIN 18040-2:2011-09 Wohnungen Inhaltsverzeichnis din.de toc download`
+- PRIOR: din.de offers the same TOC download for part 2 under its own document id.

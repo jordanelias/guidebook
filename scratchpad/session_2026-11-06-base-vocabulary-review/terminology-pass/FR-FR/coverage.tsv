@@ -1,0 +1,61 @@
+register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+Well-illuminated (if site expected to be lit)	catalogue 2.1	FOUND	4	dispositif d'éclairage / qualité d'éclairage renforcée / valeurs d'éclairement moyen horizontal	the quantity is horizontal illuminance measured at floor level along the route
+Surface is firm, stable and slip resistant	catalogue 2.1	FOUND	2	non meuble, non glissant, non réfléchissant et sans obstacle à la roue	adds 'non réfléchissant' (non-reflective), which the English criterion lacks
+Seating	catalogue 2.1	FOUND	1	équipement permettant de s'asseoir	NARROWER: a seat in an adapted cabin or shower only; rest seating along routes is not treated
+Handrails	catalogue 2.1	FOUND	3	main courante / mains courantes	on moving walkways and escalators
+Clear width	catalogue 2.1	FOUND	4	Largeur de passage / largeur de passage utile / largeur nominale / libre de tout obstacle	two widths per door: nominal and clear
+Accessible path of travel	catalogue 2.1	FOUND	2	cheminement accessible	
+Drainage	catalogue 2.1	FOUND	2	siphon de sol / éviter la stagnation d'eau	floor drain in an adapted shower; framed as a design aim tied to cross-fall, not as drainage hardware
+Clear signage	catalogue 2.1	FOUND	3	INFORMATION ET SIGNALISATION / signalisation adaptée / signalétique	
+Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND	7	audiodescription / boucle d'induction magnétique / boucle magnétique / boucle à induction magnétique / retour visuel des informations principales fournies oralement / sous-titrage / système de transmission du signal acoustique par induction magnétique	same text uses three phrasings for the loop
+Level landings with clear space	catalogue 2.1	FOUND	2	palier de repos	
+Floor surface is stable, firm, and non-slip	catalogue 2.1	FOUND	2	revêtements de sol / tapis fixes	
+Clear space for approach	catalogue 2.1	FOUND	2	espace d'usage / obstacle à l'approche d'un fauteuil roulant	defined for wheelchair users AND people using one or two canes
+Well illuminated (if required for expected usage)	catalogue 2.1	FOUND	5	dispositif d'éclairage / qualité d'éclairage renforcée / valeurs d'éclairement moyen horizontal / éclairage suffisant	the quantity is horizontal illuminance measured at floor level along the route
+Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND	2	non meuble, non glissant, non réfléchissant et sans obstacle à la roue	adds 'non réfléchissant' (non-reflective), which the English criterion lacks
+Shelter	catalogue 2.1	SEARCHED-ABSENT	0		no canopy or shelter requirement; grep 'abri' 0/0; 'couvert' in A15 only as 'locaux collectifs couverts' for lighting
+Riser height and tread depth	catalogue 2.1	FOUND	4	Les marches répondent aux exigences suivantes / contremarche / largeur du giron	French carves tread as a WIDTH (largeur du giron); English says depth; for 'No open riser': NARROWER, only the first and last step require a riser; riser height is 'leur hauteur' (the steps' height); 'contremarche' is the riser element
+Nosing design	catalogue 2.1	FOUND	2	nez de marches	
+No open riser	catalogue 2.1	FOUND	1	contremarche	for 'No open riser': NARROWER, only the first and last step require a riser
+Level threshold	catalogue 2.1	FOUND	4	de plain-pied / ressaut dû au seuil / sans ressaut / seuils de porte	
+Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND	3	HAUTEUR LIBRE SOUS L'OBSTACLE / passage libre / passage libre sous les obstacles en hauteur	the parkade case the English criterion names
+Edge protection	catalogue 2.1	FOUND	2	dispositif de protection	purpose: to PREVENT falls (differs from A17); purpose: to WARN of the fall risk
+Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND	2	contrastés visuellement / non glissants	no 'strip': the nosing itself is contrasted
+Tactile attention indicators (truncated domes)	catalogue 2.1	FOUND	4	bande d'éveil à la vigilance / changement de revêtement de sol / dispositif d'éveil à la vigilance / plots régulièrement espacés	housing: a change of floor finish, no studs specified; studs; 'truncated domes' is not the French term
+Slope	catalogue 2.1	FOUND	4	Profil en long / dévers / pente / plan incliné	cross-slope has its own word; one French word for slope and gradient; the fixed ramp is 'plan incliné'; 'rampe' appears only in A15 as a removable ramp
+Sink faucet is easy to use or automatic	catalogue 2.1	FOUND	2	cellule de déclenchement / robinetterie	sensor tap named by its trigger cell
+Outlets and switches are at accessible heights	catalogue 2.1	FOUND	4	interrupteur de commande d'éclairage / prise de courant / prises d'alimentation électrique	
+Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		no kitchen-appliance mounting rule; 'micro-ondes' 0/0; A15 treats kitchen only as a 1.50 m passage between appliances
+Level landings with clear space and at regular intervals	catalogue 2.1	FOUND	1	palier de repos est nécessaire tous les	
+Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND	2	contrastés visuellement / non glissants	no 'strip': the nosing itself is contrasted
+Accessible lockers	catalogue 2.1	SEARCHED-ABSENT	0		'casier' 0/0, 'consigne' 0/0; nearest are 'patères' (coat hooks) and A15 'boîtes aux lettres'
+Accessible door hardware	catalogue 2.1	FOUND	3	geste de rotation du poignet / poignées de porte / serrures	
+Accessible controls	catalogue 2.1	FOUND	3	commande manuelle / dispositifs de commande / à effleurement	touch-sensitive controls excluded
+height	catalogue 2.2	FOUND	1	hauteur	
+level	catalogue 2.2	FOUND	4	dénivellation / horizontal et sans ressaut / niveau décalé / écart de niveau	'level' as difference in height; 'level' as flat; 'level' as storey
+width	catalogue 2.2	FOUND	3	largeur de passage utile / largeur nominale / libre de tout obstacle	two widths per door: nominal and clear
+clearance	catalogue 2.2	FOUND	5	HAUTEUR LIBRE SOUS L'OBSTACLE / espace libre / passage libre / passage libre sous les obstacles en hauteur / vide en partie inférieure	knee and foot clearance; the parkade case the English criterion names
+number	catalogue 2.2	FOUND	2	nombre total de places / par tranche ou fraction	for 'ratio': proportional provision; the English 'mix' of shower and bath rooms is not treated
+slope	catalogue 2.2	FOUND	4	Profil en long / dévers / pente / plan incliné	cross-slope has its own word; one French word for slope and gradient; the fixed ramp is 'plan incliné'; 'rampe' appears only in A15 as a removable ramp
+depth	catalogue 2.2	FOUND	1	profondeur	
+riser	catalogue 2.2	FOUND	2	Les marches répondent aux exigences suivantes / contremarche	for 'No open riser': NARROWER, only the first and last step require a riser; riser height is 'leur hauteur' (the steps' height); 'contremarche' is the riser element
+tread	catalogue 2.2	FOUND	2	largeur du giron	French carves tread as a WIDTH (largeur du giron); English says depth
+force	catalogue 2.2	FOUND	3	effort nécessaire pour ouvrir la porte / force de pression	lift controls
+time	catalogue 2.2	FOUND	2	durée d'ouverture / durée de fonctionnement	
+gradient	catalogue 2.2	FOUND	2	dévers / pente	cross-slope has its own word; one French word for slope and gradient
+size	catalogue 2.2	FOUND	2	dimension utile / dimensions d'encombrement	
+volume	catalogue 2.2	FOUND	1	niveau de pression acoustique	PARTIAL: sound level of an accessible pedestrian signal; adjustable paging volume is not treated
+capacity	catalogue 2.2	FOUND	1	soulever une charge	the English 'capacity' is a platform lift's
+distance	catalogue 2.2	FOUND	2	distance de lecture de référence / distance minimale	different sense from the English 'distance markers along route'
+lighting levels	catalogue 2.2	FOUND	3	dispositif d'éclairage / valeurs d'éclairement moyen horizontal	the quantity is horizontal illuminance measured at floor level along the route
+ratio	catalogue 2.2	FOUND	1	par tranche ou fraction	for 'ratio': proportional provision; the English 'mix' of shower and bath rooms is not treated
+Ramp gradient (parameter 3)	base_parameters	FOUND	2	plan incliné / rampe amovible	the fixed ramp is 'plan incliné'; 'rampe' appears only in A15 as a removable ramp
+Corridor width (parameter 4)	base_parameters	FOUND	2	circulations intérieures horizontales / largeur minimale des circulations intérieures	inside the dwelling; no 'couloir' anywhere; the corridor is a 'circulation'
+Turning circle (parameter 5)	base_parameters	FOUND	2	Espace de manœuvre avec possibilité de demi-tour / faire demi-tour	defined for wheelchairs AND people with one or two canes
+Operating force (parameter 6)	base_parameters	FOUND	3	effort nécessaire pour ouvrir la porte / force de pression	lift controls
+Reverberation time (parameter 7)	base_parameters	FOUND	2	aire d'absorption équivalente / temps de réverbération	housing uses absorption area only, no reverberation time; pointer to other acoustic rules; fallback quantity is absorption area
+LRV contrast (parameter 8)	base_parameters	FOUND	3	contraste de couleur ou de lumière / contraste visuel / fortement contrastées	BROADER: contrast is never quantified; no luminance or LRV term
+Door width (parameter 9)	base_parameters	FOUND	2	largeur de passage utile / largeur nominale	
+Colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		'température de couleur' 0/0, 'kelvin' 0/0; lighting is regulated only by illuminance, glare and timing
+Headroom clearance (parameter 11)	base_parameters	FOUND	2	HAUTEUR LIBRE SOUS L'OBSTACLE / passage libre	
+Ramp run length (parameter 12)	base_parameters	FOUND	2	longueur / quelle qu'en soit la longueur	length is attached to each tolerated slope, not stated as a run limit

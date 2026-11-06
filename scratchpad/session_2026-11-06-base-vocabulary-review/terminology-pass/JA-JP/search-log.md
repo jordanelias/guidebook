@@ -35,3 +35,20 @@ Each entry: query verbatim; PRIOR (written before the query ran); RESULT; SHAPE 
 ## Q6. 建築設計標準（令和７年度改正版）本編 PDF
 - Query: `https://www.mlit.go.jp/jutakukentiku/content/001892119.pdf`
 - PRIOR: very large PDF (several hundred pages, tens of MB), text-extractable; chapter 2 「単位空間等の設計」 by element (敷地内通路, 駐車場, 出入口, 屋内通路, 階段, 昇降機, 便所, …). May time out on size.
+- RESULT: 200, 59,903,589 bytes, 260 pages, cover 「令和７（２０２５）年５月 国土交通省」. pdftotext -layout succeeded (Japanese text extractable; figures not). Read status recorded in instruments.tsv (partly).
+- SHAPE: direct retrieval. Note the artefact is ~60 MB inside retrieval-log/ (tracked path?) — size is a tooling concern for the commit, flagged in pass-record.
+
+## Q7. JIS T 9251 (tactile walking surface indicators) — JISC
+- Query: `https://www.jisc.go.jp/app/jis/general/GnrJISNumberNameSearchList?toGnrJISStandardDetailList&jisStdNo=T9251`
+- PRIOR: JISC is a JavaScript/login-gated viewer; free on-screen viewing only, no downloadable text. Expect a page shell or redirect, no standard text. NOT-OBTAINABLE is the expected outcome.
+- RESULT: HTTP 502, 5208 bytes: JISC 「サービス停止のお知らせ … 只今メンテナンスのため、システムを停止しています」. No standard text. JIS T 9251 and JIS Z 8210 (the latter named in Ordinance 114 Art. 14(2)) are NOT-OBTAINABLE in this pass; purchase is through the Japanese Standards Association (named on the same page). Not substituted from memory.
+- SHAPE: well-formed URL; the outage makes this a non-result, not evidence of absence. One attempt only (budget).
+
+## Q8–Q10. In-text location greps over the persisted texts (not web searches)
+- Q8 query: Python `str.count` / page scan over text/1bc5c919cb81e7bf.txt for: 照明 照度 排水 有効幅 有効高さ 天井高 残響 輝度 明度 色温度 操作力 ヒアリングループ 磁気ループ 集団補聴 補聴 ロッカー 電子レンジ コンセント スイッチ レバーハンドル 把手 取っ手 蹴込み 脱輪 立ち上がり 庇 ひさし 屋根 水栓 オストメイト 水洗器具 段差 転回 回転 直径 アプローチ グラブ 排水溝 グレーチング 休憩 ベンチ いす 椅子 カームダウン クールダウン 色覚 反射 まぶしさ グレア 開閉力 開閉 触知 点字 音声案内 ピクトグラム 高低差 有効 すりつけ 手すり 段鼻 ノンスリップ 滑り
+- PRIOR (written before running): the design standard uses 有効幅員 rather than 有効幅; uses 手すり heavily; probably has 照度 and コンセント; I expected 残響時間 to be absent from a design standard of this kind and 色温度 absent; I expected 磁気ループ rather than ヒアリングループ (wrong — see result); 電子レンジ expected absent.
+- RESULT: zero hits: 有効高さ, 残響, 色温度, 操作力, 磁気ループ, 電子レンジ, 把手, ひさし, グラブ, グレーチング, まぶしさ, 開閉力, すりつけ. 有効幅 70 (all inside 有効幅員), ヒアリングループ 7, 集団補聴 18, 照度 4, 輝度 9, 明度 27, 色覚 30, 響き (separate query) present as 「響きの抑制」. Page lists recorded in the transcript.
+- SHAPE: exact-string search over pdftotext output. A zero is evidence that the string is absent from the extracted text only (figures, tables rendered as images and hyphenated line breaks are invisible to it). It is not evidence that the concept is absent: e.g. reverberation is treated as 「響きの抑制」, not as 残響.
+- Q9 query: context-line scan for 軽い力 操作に要する力 響き 照度 ロッカー 自動水栓 レバー式 電子レンジ 色温度 シェルター 上屋 車寄せ 有効幅員 戸の有効幅 前面 アプローチ 直径150 150㎝以上の円 エスコートゾーン
+- PRIOR: 軽い力 for door operation; 直径150㎝ for turning space; 上屋 for shelter.
+- RESULT: as expected for those three; 操作に要する力, 自動水栓, シェルター, 色温度, 電子レンジ zero; 戸の有効幅 zero (the standard writes 出入口の有効幅員).
