@@ -48,7 +48,7 @@ Left disputed, with reasons on the findings:
 
 ## 5. Every issue, and where it is recorded
 
-Filed as `gaps` rows on 2026-11-06 at the owner's instruction ("explicitly record all issues so that they can be resolved later"). Each row names its evidence, the command that re-derives it, and what resolves it. List them with `select gap_id, category, priority, substr(description, 1, 90) from gaps where gap_id between 'GAP-074' and 'GAP-096'`.
+Filed as `gaps` rows on 2026-11-06 at the owner's instruction ("explicitly record all issues so that they can be resolved later"). Each row names its evidence, the command that re-derives it, and what resolves it. List them with `select gap_id, category, priority, substr(description, 1, 90) from gaps where gap_id between 'GAP-074' and 'GAP-102'`.
 
 | Gap | Issue |
 |---|---|
@@ -77,3 +77,14 @@ Filed as `gaps` rows on 2026-11-06 at the owner's instruction ("explicitly recor
 | GAP-096 | Adversarial pass 7 still open (carried from the previous session) |
 
 Four older gaps are cross-referenced by appended notes: GAP-034, GAP-056, GAP-061, GAP-072. Not given a gap because it is already a standing rule or recorded where it binds: the stop hook's commit-per-turn loop (CLAUDE.md section 7), and that `log-search` writes a prior with the results (the DoD gate's R8 line says so).
+
+## 6. Resolution analysis of the register (Opus, read-only)
+
+At the owner's instruction the register above was handed to an Opus analyst, told to test each gap's claim before accepting it. Report: `scratchpad/session_2026-11-06-pipeline-batch-2/resolution-analysis-GAP-074-096.md` (per-gap evidence, options, a recommended PR sequence, an owner-decision sheet, what closes with no work, risks). Its verdicts are appended to each gap with `amend-gap`.
+
+- **The register was partly wrong.** Of the 23 gaps the analyst confirmed 5, found 17 partly right and 1 wrong (GAP-090: the verbatim check strips all whitespace, so the full Korean sentences verify and the short quotes were cut by hand; confirmed by running `quote_in_artefacts`). GAP-094's force half and GAP-096's "one open pass" (four are open: 1, 2, 5, 7) were also wrong. The corrections are on the gap rows, and the note this session appended to GAP-056 on the strength of GAP-090 is itself corrected.
+- **Six issues the register missed**, now GAP-097 to GAP-102: parameters 4 to 11 have no `accessibility_direction` (nothing can be composed); the ICF and access-need lenses are empty on every row against OR-1 action 2; `v_scan_ledger` counts a pre-screen as a full read, so the batches lowered scan debt on readings the critic disproved; none of the owner decisions is on the owner's page; adversarial pass 5 has undisposed sustained findings; typed columns contradict their notes.
+- **Under the owner's 2026-11-06 steer (minimise code, no net-negative requirement)** the analyst sized the whole tooling set at about 23 lines added and 1 removed beyond the already-ruled workplan steps (about 3 and 1 if GAP-086 is closed as accepted), and one view migration; most tooling gaps close as accepted, by prose, or by reusing an existing verb. Each recommendation is marked CLOSE-AS-ACCEPTED, RULE-OR-PROSE, REUSE, DELETE or NEW-CODE in section E of the report.
+- **Recommended order:** (A) a tooling PR carrying the ledger predicate, the test-fixture fix, the `claim_text` walk, the two-field amender widening, the deletion of the unread `--contested` flag and one line of scan-procedure prose; (B) the ruled workplan steps for the amender and the length family; (C) doctrine entries for the owner's answers; (D) a data PR setting directions and closing the gaps that need no work; (E) data PRs for read-first full-read scans, then lens fill after OR-1c, mining, Co-1 retrieval and acquisitions.
+- **Eight owner questions** are in section B of the report, ordered by what each unblocks. The first three: OR-1c (one row per ICF or need combination, or a link table); the lens for a clause under a disability heading (MOB or ALL); the type of controlled research published as a government report (`clinical` with the grey flag, `grey` tier 3, or a new route).
+- Also removed in this commit: `scratchpad/session_2026-11-06-pipeline-batch-2/awm.txt`, a byte-identical duplicate of the registered full text.
