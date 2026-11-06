@@ -70,3 +70,16 @@ Each entry: query verbatim, PRIOR (written before the result), RESULT, SHAPE (R1
 ## Q12 — DIN 18040-2 TOC
 - Query: web search `DIN 18040-2:2011-09 Wohnungen Inhaltsverzeichnis din.de toc download`
 - PRIOR: din.de offers the same TOC download for part 2 under its own document id.
+- RESULT: din.de TOC download for DIN 18040-2:2011-09 located (search) and fetched: 200, 54,915 bytes, sha256 f6950bdb… (artefact f6950bdbbfcc4b2a.pdf). Body NOT-OBTAINABLE (search summary: "PDF-Download 112,80 EUR"; product page not fetched).
+- SHAPE: well-formed.
+
+## Not searched (recorded so absence is not read as evidence)
+- ASR A3.4 (Beleuchtung), ASR A4.1 (Sanitärräume), ASR A1.8 itself: the ASR V3a.2 SUPPLEMENTS these rules; their own texts were not retrieved. ASR V3a.2 has no annex for A3.4 or A4.1 ("Diese ASR V3a.2 wird fortlaufend ergänzt."), so lighting and sanitary concepts are SEARCHED-ABSENT in V3a.2 only, not in German workplace law.
+- DIN 18041, DIN 32975, DIN 32984, DIN 18065, DIN EN 17210 (German edition): leads exist; not attempted (paid; budget).
+- Land codes other than Bayern; the Bavarian StMB explanatory PDF on DIN 18040 (secondary, surfaced in Q8): not fetched.
+- DGUV Information 215-112 (held as REF-00988 excerpt): not re-read in this pass.
+
+## Local check — existing DE aliases against retrieved bytes (not a web query)
+- Query: case-insensitive substring of each `term_aliases` DE alias in the saved texts (script in pass-record).
+- PRIOR: most parameter-level TRANSLATION aliases (Rampenneigung, Wendekreis, Bedienkraft, Flurbreite) will NOT appear; generic nouns will.
+- RESULT: 28 of 190 distinct aliases hit at least one text; the parameter TRANSLATION aliases named in the prior do not appear. Hits are inflated by substring noise (e.g. "Gang" inside "Zugang") and deflated by inflection ("lichte Höhe" misses "lichten Höhe"). A hit is a lead for adjudication, not an attestation.

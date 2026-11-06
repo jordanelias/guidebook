@@ -1,0 +1,13 @@
+register_concept	seed	jurisdiction_meant	flag	why_we_believe_it_is_used
+2.1 Shelter	Überdachung	DE	MODEL-GENERATED	I believe this is the ordinary building word for a roof over an entrance or stop; no source claimed.
+2.1 Shelter	Wetterschutz	DE	MODEL-GENERATED	Believed in use for weather protection at entrances/stops; no source claimed.
+2.1 Accessible lockers	Schließfächer	DE	MODEL-GENERATED	Believed the common word for lockable compartments; Spind is workplace usage; no source claimed.
+2.1 Accessible lockers	Spinde	DE	MODEL-GENERATED	Believed workplace usage (ASR A4.1 changing rooms is where to look); no source claimed.
+2.2 volume	Lautstärke	DE	MODEL-GENERATED	Believed the word for sound volume in device/alarm contexts; no source claimed.
+2.2 volume	Raumvolumen	DE	MODEL-GENERATED	Believed used in room-acoustics rules (DIN 18041) for room volume; no source claimed.
+2.2 lighting levels	Beleuchtungsstärke	DE	MODEL-GENERATED	Believed the term for illuminance in workplace lighting rules (ASR A3.4); no source claimed.
+2.2 ratio / P8 LRV contrast	Leuchtdichtekontrast	DE	MODEL-GENERATED	Believed used in DIN 32975; already a model-generated alias in the base; no source claimed.
+2.2 ratio / P8 LRV contrast	Reflexionsgrad	DE	MODEL-GENERATED	Believed the reflectance quantity behind LRV in German usage; no source claimed.
+P7 reverberation time	Nachhallzeit	DE	MODEL-GENERATED	Believed the standard acoustic term (DIN 18041); already a model-generated alias; no source claimed.
+P10 colour temperature	Farbtemperatur	DE	MODEL-GENERATED	Believed the lighting term (ähnlichste Farbtemperatur in standards); no source claimed.
+2.1 Audio accessibility (assistive listening half)	Höranlage / induktive Höranlage	DE	MODEL-GENERATED	Believed in use in DIN 18040-1 5.2.2 context; already a model-generated alias; no source claimed.

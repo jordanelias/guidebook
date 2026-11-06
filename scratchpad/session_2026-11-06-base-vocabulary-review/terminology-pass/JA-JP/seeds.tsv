@@ -1,0 +1,10 @@
+seed_id	concept_id	concept_label	seed_ja	flag	jurisdiction_meant	why_believed_in_use (no source claimed)
+JA-SEED-01	C27	Microwave mounting height accessible and safe	電子レンジの設置高さ	MODEL-GENERATED	JP	ordinary Japanese for a microwave's installed height; would sit in housing or kitchen guidance, not in the Barrier-Free Act family read here
+JA-SEED-02	C27	Microwave mounting height accessible and safe	高齢者が居住する住宅の設計に係る指針	MODEL-GENERATED	JP	believed to be the MLIT housing design guideline for older residents, the likelier home of kitchen-equipment heights; an instrument lead, not a term
+JA-SEED-03	P10	colour temperature	相関色温度	MODEL-GENERATED	JP	believed to be the lighting-standard term (JIS lighting standards) for colour temperature; 色温度 had zero hits in the design standard
+JA-SEED-04	P07	reverberation time	残響時間	MODEL-GENERATED	JP	standard acoustics term; absent from every text read, which treats the concept only as 響きの抑制 — search acoustics or school-facility guidance
+JA-SEED-05	P11	headroom clearance	天井の高さ	MODEL-GENERATED	JP	believed to be the Building Standards Act enforcement-order wording for ceiling height of habitable rooms; the barrier-free texts read set no headroom
+JA-SEED-06	P11	headroom clearance	はり下	MODEL-GENERATED	JP	construction usage for clear height under beams
+JA-SEED-07	Q-force	force	開閉力	MODEL-GENERATED	JP	believed used in door-hardware and automatic-door product standards for opening force; zero hits in the design standard
+JA-SEED-08	Q-force	force	操作力	MODEL-GENERATED	JP	general term for operating force of controls; zero hits in the design standard; already held as an unverified alias
+JA-SEED-09	C20	Height clearance (if sheltered or parkade)	車路の有効高さ	MODEL-GENERATED	JP	believed used in parking-structure (駐車場法施行令) wording for vehicle-way clear height; outside the barrier-free texts
