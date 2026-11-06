@@ -1,0 +1,75 @@
+concept_id	parent	test	evidence
+R2-005	door width	the clear passage through an open door or doorway, not the leaf's size	EN-CA RHFAC 3.1.8 'Clear opening width of doors and doorways'; FR-FR obs 'largeur de passage utile' (Arrêté 20 avril 2017 art. 10, II, 1°); SV-SE obs 'öppningsmåttet för fri passage' (BFS 2024:12 1 kap. 6 § 3); ES-ES obs 'reducida por el grosor de la hoja' (DB-SUA anejo A, Puertas)
+R2-012	ramp run length	the run limit is a horizontal length between landings	EN-CA B651 5.5.1 'Running slope and length'; PT-PT obs 'projecção horizontal' (DL 163/2006 Anexo 2.5.1 1): run as a horizontal projection
+R2-014	tread	tread measured as a depth front to back (RHFAC wording)	EN-CA RHFAC 2.3.7 'Riser height and tread depth'; FR-FR obs 'largeur du giron' (art. 7-1, II, 1°) and KO-KR obs '디딤판의 너비' (R1 제8호 다목 (2)) name the tread as a width; PT-PT obs 'profundidade (cobertor)' (Anexo 2.4.3 1) and 'Comprimento (cobertor)' (Anexo 1.3.1 2)); FI-FI obs 'etenemän' in 'askelman nousun ja etenemän' (1007/2017 4 § mom. 1); DA-DK obs 'grund' (BR18 kap. 2 § 49 stk. 2 nr. 3)
+R2-021	turning circle	space to manoeuvre a mobility device, shape not stated	EN-CA RHFAC 8.1.1 'manoeuvring space', 8.23.3 'maneuvering space'; B651 5.2.2; SV-SE obs 'vändmåttet av en cirkel med diametern' (1 kap. 6 § 2) attests the circle form for TERM-003
+R2-022	turning circle	an area for turning, shape not stated in the heading	EN-CA B651 A.9 'Turning areas'; SV-SE obs 'vändmåttet av en cirkel med diametern' (1 kap. 6 § 2)
+R2-035	contrast	contrast measured as luminance; B651 brackets colour into the heading	EN-CA B651 4.2; NO-NO obs 'luminanskontrast' (TEK17 § 12-4 (2) a, in quote)
+R2-036	contrast	RHFAC's word: colour named, measure not stated	EN-CA RHFAC 3.3.5 'Colour contrast between wall and floor, with no glare'
+R2-037	contrast	a surface property; a contrast is the difference of two LRVs	EN-CA B651 3.1; LRV contrast fits UK and IE only (SYNTHESIS 3d); PT-PT obs 'reflectância média' (Anexo 4.7.2: a floor band, not a contrast)
+R2-038	contrast	a formula for contrast, not a surface property	EN-CA B651 3.1 'Michelson contrast'
+R2-039	contrast	B651 defined term; relation to luminance contrast not read (body not read)	EN-CA B651 3.1 'Visual contrast'
+R2-046	level	level as a vertical difference between two surfaces	EN-CA B651 4.4.2; RHFAC 3.2.1 'No abrupt level changes'; FR-FR obs 'dénivellation', 'écart de niveau' (art. 2, II, 2° a)); NL-NL obs 'hoogteverschil groter dan 0,02 m' (Bbl art. 4.182 lid 1)
+R2-047	level	level as flat or horizontal	EN-CA RHFAC 2.1.4 'Path is level'; EN-VARIANTS obs UK 'Level' (ADM 0.26, a defined term that admits a gradient) and 'predominantly level' (3.14 d); RHFAC 4.6.2 'Lighting levels' uses the word for an amount (held under Illumination)
+R2-048	level	level as a floor of a building	EN-CA RHFAC 9.8.1 'on the entry level', 7.1.1 'multi-level building', 3.2.1 'within a storey'
+R2-049	level	level as stopping flush with the landing	EN-CA RHFAC 3.5.8 'Self-levelling and level threshold'
+R2-059	ramp	a short ramp through or up to a kerb, outside the ramp clause	EN-CA RHFAC 1.1.7, B651 8.3.3; ES-ES RH 'Vados peatonales' (TMA anexo art. 20); ZH-CN RH '缘石坡道' (2.10.1); EN-VARIANTS obs 'kerb ramp' (AU Sch 1 D3.8 (1)(d)), 'dropped kerb' (UK 1.18 b), 'Curb Ramp' (US 106.5)
+R2-059	curb	a short ramp through or up to a kerb, outside the ramp clause	EN-CA RHFAC 1.1.7, B651 8.3.3; ES-ES RH 'Vados peatonales' (TMA anexo art. 20); ZH-CN RH '缘石坡道' (2.10.1); EN-VARIANTS obs 'kerb ramp' (AU Sch 1 D3.8 (1)(d)), 'dropped kerb' (UK 1.18 b), 'Curb Ramp' (US 106.5)
+R2-060	ramp	a sloped transition that the heading names apart from a curb ramp	EN-CA B651 8.3.3 'Curb ramps and blended transitions'
+R2-071	ramp	a vehicle lane, not a pedestrian ramp	EN-CA B651 3.1 'Slip lane/uncontrolled access ramp'
+R2-072	corridor	B651 defined route; owner 2026-10-29 (fifth): navigable by a blind person, not the same as barrier-free path of travel	EN-CA B651 3.1 'Accessible route'; owner ruling 2026-10-29 (fifth); EN-VARIANTS obs NZ 'Accessible route' (Definitions)
+R2-074	corridor	RHFAC's route term; not equated with Accessible route (owner 2026-10-29 fifth)	EN-CA RHFAC 3.2 'Path of Travel', 8.3.1 'Accessible path of travel'
+R2-075	corridor	any route used for movement through a building	EN-CA RHFAC 4.1.1 'Logical arrangement of circulation routes and facilities'
+R2-076	corridor	an enclosed passage (RHFAC 3.3 title pairs Corridors and Hallways)	EN-CA RHFAC 3.3 'Corridors and Hallways'; KO-KR obs '복도의 유효폭' (R1 제7호 가목; pass: corridor and passage are one object, 복도 및 통로); ZH-CN obs '通行净宽' (2.2.2: one width word, no corridor word)
+R2-077	corridor	an exterior route for pedestrians	EN-CA B651 9.2, 3.1 'Pedestrian route'
+R2-078	corridor	a route shared with other users (B651 8.2.6 Shared-use routes)	EN-CA B651 8.2.6, 3.1 'Shared-use walkway'
+R2-083	ramp	a discrete inclined element bridging a level difference	EN-CA B651 3.1 'Ramp'; ZH-CN obs '轮椅坡道' (2.3.1); EN-VARIANTS obs US 'Ramp. A walking surface that has a running slope steeper than 1:20.' (106.5)
+R2-092	curb	an upstand at an open edge	EN-VARIANTS obs UK 'kerb on the open side of any ramp' (1.26 m), US 'Curb or Barrier' (405.9.2)
+R2-094	tactile attention indicators (truncated domes)	a warning surface; the RHFAC label names the dome profile	EN-CA B651 3.1; RHFAC 2.3.5 'Tactile attention indicators (truncated domes)'; EN-VARIANTS obs US 'Detectable Warnings' (705.1); JA-JP obs '点状ブロック等' (政令379 Art.11(1)(2))
+R2-143	door	the leaf or assembly that closes an opening	EN-CA RHFAC 3.1.8 'doors and doorways', 9.3.3 'door or doorway'; B651 5.2 'Doors and doorways'
+R2-144	door	the opening, with or without a leaf	EN-CA RHFAC 3.1.8, 9.3.3 'Clear space on outside and inside of door or doorway'
+R2-145	door	an entry with no door	EN-CA RHFAC 5.1.3 'Power-operated door or screen wall entry', 3.1.1 'open entries'
+R2-163	lift	a car in a hoistway serving floors (UK, AU, SG, IE: passenger lift)	EN-CA RHFAC 3.5, B651 5.6.1; EN-VARIANTS obs 'Elevators' (US 407.1), 'passenger lift' (UK 3.17; AU Sch 1 E3.6), 'Passenger Lifts' (SG 4.8); SV-SE RH 'personhiss' (BFS 2024:12 2 kap. 5 §)
+R2-168	lift	a platform, not a car in a hoistway (CA, US sense of lift)	EN-CA RHFAC 3.8, B651 5.6.2; EN-VARIANTS obs 'Platform Lifts' (US 410: 'lift' survives in US only here), 'platform lift' (IE 1.1.3); JA-JP RH '段差解消機' (設計標準R7 18.2)
+R2-169	lift	travels along a stair	EN-CA B651 3.1 'Enclosed stair lift', 'Unenclosed stair lift'; EN-VARIANTS obs 'stairway platform lift' (AU Sch 1 A1.1), 'Wheelchair Stairlift' (SG 4.10.3)
+R2-170	lift	a platform travelling vertically	EN-CA B651 3.1 'Enclosed vertical lift', 'Unenclosed vertical lift'; EN-VARIANTS obs UK 'vertical lifting platform (platform lift)' (3.22)
+R2-171	lift	a lift inside a dwelling	EN-CA RHFAC 9.11.4
+R2-172	lift	a lift into a pool	EN-CA RHFAC 8.10.6 'Ramp/sloped entrance or pool lift'
+R2-173	lift	an overhead lift carried by a ceiling, for a person (RHFAC 9.7.5)	EN-CA RHFAC 9.7.5 'Reinforced ceiling for lift'
+R2-176	washroom	a room with several fixtures, which may hold toilet stalls (RHFAC 5.1.5)	EN-CA RHFAC 5.1 'Accessible Washrooms', 5.1.5 'entry and toilet stall doors'; B651 6.2; EN-VARIANTS obs UK 'separate-sex toilet washrooms' (5.5)
+R2-177	washroom	a single-user room	EN-CA RHFAC 5.3, B651 6.3; EN-VARIANTS obs SG 'accessible individual washroom' (5.1.1); ZH-CN RH '无障碍厕所' (3.2.3)
+R2-178	washroom	a cubicle inside a washroom	EN-CA B651 6.2.7; EN-VARIANTS obs AU 'sanitary compartment' (Sch 1 A1.1); JA-JP RH '車椅子使用者用便房' (政令379 Art.14(2): 便房 is a cubicle within a 便所); ZH-CN RH '无障碍厕位' (3.2.2)
+R2-179	washroom	the room in a dwelling unit (RHFAC 9.8)	EN-CA RHFAC 9.8.1 'Accessible toilet room on the entry level'; EN-VARIANTS obs US 'restrooms' (28 CFR 35.151(b)(4); the Standards say toilet room)
+R2-187	lavatory	a washbasin	EN-CA B651 6.2.3, 3.1 'Lavatory'; RHFAC 5.1.16 'Sink and counter at recommended height'; EN-VARIANTS obs US 'Lavatories and Sinks' (606)
+R2-187	sink	a washbasin	EN-CA B651 6.2.3, 3.1 'Lavatory'; RHFAC 5.1.16 'Sink and counter at recommended height'; EN-VARIANTS obs US 'Lavatories and Sinks' (606)
+R2-188	sink	a kitchen, laboratory or laundry sink	EN-CA RHFAC 4.4.3 'Sink at accessible height and location' (kitchen) against 5.1.16 (washroom)
+R2-344	ramp	a ramp is what a path becomes above a slope threshold	EN-CA RHFAC 2.1.4 'Path is level or low-gradient slope (when not accommodated by ramp)'; EN-VARIANTS US 106.5; ES-ES obs 'exceda del 4%' (DB-SUA SUA 1, 4.3.1, in quote) and 'planos inclinados con pendiente superior al 6%' (TMA anexo art. 14.1): two orders, two thresholds
+R2-358	ramp	steps on a sloped run: a stair and a ramp at once	PT-PT 'Escadarias em rampa' · PT · Decreto-Lei n.º 163/2006, de 8 de Agosto (versão actualizada… · Anexo, Secção 1.4
+R2-379	tactile attention indicators (truncated domes)	a hazard field (pass note: at the top), named apart from the attention field	NO-NO 'farefelt' · NO · Byggteknisk forskrift (TEK17) med veiledning (Direktoratet f… · § 12-14 (3) c (forskrift)
+R2-380	tactile attention indicators (truncated domes)	an attention field (at entrances in § 12-4)	NO-NO 'oppmerksomhetsfelt' · NO · Byggteknisk forskrift (TEK17) med veiledning (Direktoratet f… · § 12-4 (2) b (forskrift)
+R2-381	contrast	contrast perceived by touch	FI-FI 'tuntokontrastein' · FI · Esteettömyys. Ympäristöministeriön ohje rakennuksen esteettö… · 2.2.1 (p. 12)
+R2-382	contrast	a darkness contrast with no luminance or LRV term	FI-FI 'tummuuskontrasti' · FI · Esteettömyys. Ympäristöministeriön ohje rakennuksen esteettö… · 2.10.2 (p. 28)
+R2-533	ramp	the fixed inclined plane; 'rampe' is used for a removable device	FR-FR 'plan incliné' · FR · Arrêté du 20 avril 2017 relatif à l'accessibilité aux person… · art. 2, I
+R2-534	ramp	a removable ramp	FR-FR 'rampe amovible' · FR · Arrêté du 24 décembre 2015 relatif à l'accessibilité aux per… · art. 14, II, 3° b)
+R2-535	ramp	a sloped traffic route in a workplace, carved apart from 'Rampe gemäß DIN 18040-1'	DE-DE 'Schrägrampen' · DE · ASR V3a.2 Barrierefreie Gestaltung von Arbeitsstätten · Anhang A1.8 Abs. 3 (p. 13)
+R2-536	ramp	a stair flight called 'rampa'	IT-IT 'rampa di scale' · IT · Decreto ministeriale 14 giugno 1989, n. 236 — Prescrizioni t… · punto 4.1.10
+R2-537	ramp run length	the run limit is a rise per continuous ramp, not a length	FI-FI 'yhtäjaksoisen luiskan korkeusero' · FI · Valtioneuvoston asetus rakennuksen esteettömyydestä 241/2017… · 2 § mom. 2; also JA-JP '高さ七十五センチメートル以内ごとに' (政令379 Art.19(2)(4)(iii), in quote); KO-KR '높이 0.75미터 이내마다' (R1 제12호 가목 (2), in quote); ZH-CN obs '提升高度' (2.3.1(2)); NO-NO 'for hver 1,0 m høydeforskjell' (TEK17 § 8-6 (1) c, in quote); NL-NL obs 'een hoogte van niet meer dan 1 m' (Bbl art. 4.30); DA-DK obs 'vandret repos for hver 0,60 m stigning' (BR18 kap. 2 § 56 nr. 4)
+R2-538	door width	the nominal door width, stated beside the clear passage width	FR-FR 'largeur nominale' · FR · Arrêté du 20 avril 2017 relatif à l'accessibilité aux person… · art. 10, II, 1°
+R2-539	turning circle	an activity space (SYNTHESIS 3d: square), not a circle	KO-KR '활동공간' · KR · R1 장애인ㆍ노인ㆍ임산부 등의 편의증진 보장에 관한 법률 시행규칙 [별표 1] 편의시설의 구조·재질등에 관한… · 제12호 가목 (3); PDF p. 9 of 22
+R2-540	turning circle	a movement area, not a circle	DE-DE 'Bewegungsfläche' · DE · ASR V3a.2 Barrierefreie Gestaltung von Arbeitsstätten · Anhang A1.7 Abs. 4 (p. 10)
+R2-541	turning circle	manoeuvre spaces; the turn is a manoeuvre ('inversione di marcia', punto 8.1.9)	IT-IT 'spazi di manovra' · IT · Decreto ministeriale 14 giugno 1989, n. 236 — Prescrizioni t… · punto 8.0.2
+R2-542	turning circle	turning on the spot	PT-PT 'sem deslocamento' · PT · Decreto-Lei n.º 163/2006, de 8 de Agosto (versão actualizada… · Anexo 4.4.1
+R2-543	turning circle	turning while moving	PT-PT 'com deslocamento' · PT · Decreto-Lei n.º 163/2006, de 8 de Agosto (versão actualizada… · Anexo 4.4.2
+R2-544	contrast	a difference in lightness, hue or saturation	JA-JP '色の明度、色相又は彩度の差' · JP · 政令379 · Art.12(1)(3)
+R2-545	corridor	horizontal interior circulation; no 'couloir'	FR-FR 'circulations intérieures horizontales' · FR · Arrêté du 20 avril 2017 relatif à l'accessibilité aux person… · art. 6, II
+R2-546	corridor	a shared circulation space; 'gang' does not occur	NL-NL 'gemeenschappelijke verkeersruimte' · NL · Besluit bouwwerken leefomgeving (Besluit van 3 juli 2018, St… · art. 4.181 lid 2
+R2-547	corridor	one route object for approach and interior circulation	FI-FI 'esteettömän kulkuväylän' · FI · Valtioneuvoston asetus rakennuksen esteettömyydestä 241/2017… · 2 § mom. 1
+R2-548	corridor	any space mainly used for moving; a corridor is one instance	SV-SE 'kommunikationsutrymme' · SE · Boverkets föreskrifter om byggnaders tillgänglighet och anvä… · 1 kap. 5 §
+R2-549	corridor	an exterior route only (defined term)	NO-NO 'gangatkomst' · NO · Forskrift om tekniske krav til byggverk (Byggteknisk forskri… · § 1-3 d (definisjon)
+R2-550	corridor	an interior circulation way	NO-NO 'Kommunikasjonsvei' · NO · Byggteknisk forskrift (TEK17) med veiledning (Direktoratet f… · Begreper brukt i kapittel 12
+R2-551	level	a defined step-free state with a tolerance	NO-NO 'trinnfri' · NO · Forskrift om tekniske krav til byggverk (Byggteknisk forskri… · § 1-3 m (definisjon)
+R2-552	lavatory	a toilet room (UK sense)	EN-VARIANTS 'lavatory accommodation' · UK · The Building Regulations 2010 Approved Document M Volume 2 –… · 4.14
+R2-553	tread	the stair going (UK wording); whether it equals tread depth is not judged	EN-VARIANTS 'going' · UK · The Building Regulations 2010 Approved Document M Volume 2 –… · 1.33 m
+R2-554	lift	a restricted elevator class	EN-VARIANTS 'Limited-Use/Limited-Application Elevators' · US · 2010 ADA Standards for Accessible Design · 408
+R2-557	turning circle	the turning space as a circle	SV-SE obs vändmåttet av en cirkel med diametern (BFS 2024:12 1 kap. 6 § 2) attests a circle; KO, DE, IT, PT carve it otherwise (sense_splits.tsv)
+R2-559	contrast	the difference of two light reflectance values	compound of R2-037; fits UK and IE only (SYNTHESIS 3d)

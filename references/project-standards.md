@@ -5172,3 +5172,44 @@ Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on rea
 CONDITION: any session asking whether an alias that no code uses is wrong, whether one form or several names a concept, how a disfavoured or colloquial form is handled, or whether equivalence-finding applies beyond the first example.
 ACTION: (1) Research every term as an equivalence class, with usage type and attestation per form. (2) Do not treat "not found in the instrument read" as a defect of a form. (3) Keep disfavoured forms with a usage note. (4) Promote a form to an attested alias only on a source's own use of it. (5) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statements 2026-11-06 (seventh) — the base grounds itself; base vocabulary is not verified and stored in evidence
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, after the session had proposed admitting about a hundred instruments as `evidence_sources` so that base aliases could be attested through `observed_terms`, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in order:
+
+> "we are working on the base to create a comprehensive multilingual multijurisdictional matrix of terms/concepts that can be leveraged by research"
+
+> "none of the work in base needs to be verified and stored in evidence."
+
+> "base grounds itself."
+
+> "the only thing that we need to do is ensure that our matrix works properly so that we have proper coverage across all these languages and jurisdictions"
+
+> "so long as we can confirm that we have correct coverage, we are fine"
+
+**What this decides.**
+1. **The base is the matrix and is self-grounding.** A base cell (a concept, a language, a jurisdiction, a form) carries where it was found, in the base's own columns: the source's URL and, if need be, page and line (this extends the fifth entry of the same day: "just record page number and line if need be"). It does not point into the evidence stage, and nothing in the base waits on a source being admitted, a quote being verified in a saved file, or an observation being adjudicated.
+2. **This supersedes, for base vocabulary only,** the route the 2026-10-09 ledger entry and migration 125 set up: an attested alias reached through `observed_terms` and `evidence_sources` (`db.py add-alias` requires an adjudicated observation whose quote verifies in a file saved for its source). That route stays for evidence-stage reading of a source for a parameter (the scan contract); it is no longer the way a base alias or term is grounded. [ASSUMPTION: "none of the work in base needs to be verified and stored in evidence" is read as releasing base vocabulary from the evidence stage's admission and quote-verification, not as withdrawing the rulings that a form is something a source actually uses (OR-17; E4): a form still carries the URL and locator where it was found, and a model-generated form with no source is still flagged as a search seed.]
+3. **The acceptance test is confirmed coverage.** The matrix is accepted when coverage across every language and jurisdiction can be confirmed as correct, which means a coverage measure derived from the base itself (concept by language-and-jurisdiction column), not a list kept beside it. [ASSUMPTION: "correct coverage" is read as a derivable measure that distinguishes a cell that has a form, a cell searched with none found, and a cell not yet searched; the stopping rule for "proper" is derived, not a hand-set number.]
+4. **Consequences left open for the owner's schema decision:** whether the base cell's source columns go on `term_aliases` or on a new matrix table; what happens to `term_aliases.observation_id` (migration 125); and how a concept first met outside English is held (`terms.canonical_en` is required). A design is being prepared (`scratchpad/session_2026-11-06-base-vocabulary-review/matrix-design/`); it approves nothing.
+
+CONDITION: any session asking whether a base term or alias must be admitted as evidence, verified in a saved file or adjudicated before it enters the base, or where a base cell records its source.
+ACTION: (1) Ground a base cell by its own source columns (URL, page, line), not by an `evidence_sources` row. (2) Do not admit sources or adjudicate observations merely to populate base vocabulary. (3) Keep using `observe-term`, `adjudicate-term` and `add-alias` where a source is being read for evidence. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner clarification 2026-11-06 (eighth) — English labels are allowed on non-English-origin concepts; the aim is to avoid English bias, not English words
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on reading the session's report that the 180 non-English-origin register rows carry an empty English label "because E1 forbids an English gloss", and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "you obviously can have English words for these rows."
+
+> "we are trying to avoid english BIAS"
+
+**What this decides.**
+1. **A non-English-origin concept may carry an English descriptive label.** The session read the sixth-entry and 2026-11-06 E1 answer ("a concept first met outside English is named by the instrument's own phrase … no English gloss") as forbidding any English words on such a row. The owner's aim is bias, not vocabulary: English must not be the pivot that decides which concepts exist, what the standard form is, or how a non-English concept is described. An English word on the row is allowed.
+2. **Bias is avoided by structure, not by silence.** The instrument's own phrase stays on the row as a form of the concept, in its language and jurisdiction, with its source reference. An English label on such a row is a descriptive label of ours, marked as such, and is not asserted to be a form any English-language instrument uses. No English-language form is attached to the concept until a source for an English jurisdiction is found using it. English is one column of the matrix among the others and is not read first, matched first or ranked first.
+3. **This narrows how OR-17 and E1 were applied here,** where they were read as forbidding an English label on a row whose concept English instruments have not been observed naming. They still forbid presenting a model's wording as a source's term. [ASSUMPTION: "English words for these rows" is read as an English label for the concept, flagged as a descriptive label and kept apart from attested English forms; it is not read as permission to present that label as the concept's English-language name.]
+
+CONDITION: any session asking whether a concept first met in another language may have an English label, or what avoiding English bias requires of the register and the schema.
+ACTION: (1) Give a non-English-origin concept an English descriptive label, marked as ours. (2) Keep the instrument's own phrase as a form with its language, jurisdiction and source reference. (3) Attach an English-language form only on a source for an English jurisdiction. (4) Order, match and rank no column ahead of another. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statement, quoted above.

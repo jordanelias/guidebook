@@ -1,0 +1,79 @@
+concept_id	form	language	jurisdiction	usage_type	attestation	source
+R2-050	accessible parking stall	en			owner-supplied	owner 2026-11-06 (sixth entry, item 1); not attested by the texts read
+R2-050	handicapped parking	en		outdated or disfavoured	owner-supplied	owner 2026-11-06 (sixth entry, item 1); held en/US as DEPRECATED (query term_aliases where alias='handicapped parking'); not attested by the ADA text read (EN-VARIANTS); kept with a usage note
+R2-050	barrier free parking	en			owner-supplied	owner 2026-11-06 (sixth entry); not attested by the texts read
+R2-050	accessibility parking	en			owner-supplied	owner 2026-11-06 (sixth entry); not attested by the texts read
+R2-050	disabled parking	en			owner-supplied	owner 2026-11-06 (sixth entry); held en/UK as SYNONYM (query term_aliases); not attested by the texts read
+R2-050	designated accessible spaces	en	CA	code term	instrument phrase	EN-CA · RHFAC Rating Survey v4.0 · 1.1.1, 1.1.2, 1.1.3, 1.1.11 (rating-instrument term)
+R2-050	Designated accessible parking	en	CA	code term	instrument phrase	EN-CA · CSA/ASC B651:23 · 9.4 (heading)
+R2-050	parking bay designated for disabled people	en	UK	code term	instrument phrase	EN-VARIANTS RH · Approved Document M Volume 2 · 1.18 a
+R2-050	accessible vehicle parking lots	en	SG	code term	instrument phrase	EN-VARIANTS RH · Code on Accessibility in the Built Environment · 3.3.1.1
+R2-333	accessible	en		qualifier	owner-supplied	owner 2026-11-06 (sixth entry, item 4). Scope: the CA codes' own umbrella word (B651 3.1 defines 'Accessible'); RHFAC also uses it to name a room type apart from 'Universal' (5.1 vs 5.3)
+R2-333	barrier-free	en		qualifier	owner-supplied	owner 2026-11-06 (sixth entry, item 4, via 'barrier free parking'). Scope: equivalent in usage, scope unratified [ASSUMPTION in the sixth entry]
+R2-333	inclusive	en		qualifier	owner-supplied	owner 2026-11-06 (sixth entry, item 4). Scope: wider outside this project; here it always means inclusion of persons with disabilities (CLAUDE.md section 9)
+R2-333	universal	en		qualifier	owner-supplied	owner 2026-11-06 (sixth entry, item 4). Scope as for inclusive. Conflation: RHFAC 5.3 'Universal Washrooms' uses it for a single-user room type, not as a synonym of accessible
+R2-333	wheelchair friendly	en		qualifier	owner-supplied	owner 2026-11-06 (sixth entry, item 4). Scope: NARROWER than accessible (wheelchair users only); no TSV row attests it
+R2-333	barrier-free	en	SG	qualifier	instrument phrase	EN-VARIANTS obs · Code on Accessibility in the Built Environment · 2.4.3 (in quote)
+R2-333	Wheelchair accessible	en	IE	qualifier	instrument phrase	EN-VARIANTS obs · Technical Guidance Document M · 1.4.5 (contents) 'Wheelchair accessible unisex WC'. Scope: NARROWER
+R2-333	Accessible	en	NZ	qualifier	instrument phrase	EN-VARIANTS obs · Acceptable Solutions and Verification Methods for Clause D1 · Definitions 'Accessible route'
+R2-163	elevator	en			owner-supplied	owner 2026-11-06 (sixth entry): 'an elevator is a lift'
+R2-163	lift	en		regional variant	owner-supplied	owner 2026-11-06 (sixth entry). Conflation: in CA and US 'lift' names the platform device (RHFAC 3.8, B651 5.6.2, US 410); in UK, AU, SG and IE it is the passenger lift
+R2-163	Elevators	en	CA	code term	instrument phrase	EN-CA · RHFAC 3.5 (section title); B651 5.6.1 (heading)
+R2-163	Elevators	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 407.1
+R2-163	passenger lift	en	UK	code term	instrument phrase	EN-VARIANTS obs · Approved Document M Volume 2 · 3.17; held en/UK as BROADER (query term_aliases where alias='passenger lift')
+R2-163	passenger lift	en	AU	code term	instrument phrase	EN-VARIANTS obs · Disability (Access to Premises — Buildings) Standards 2010 · Sch 1 E3.6
+R2-163	Passenger Lifts	en	SG	code term	instrument phrase	EN-VARIANTS obs · Code on Accessibility in the Built Environment · 4.8
+R2-168	Platform lifts	en	CA	code term	instrument phrase	EN-CA · RHFAC 3.8 (section title); B651 5.6.2 (heading) and 3.1 'Platform lift'
+R2-168	Platform Lifts	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 410
+R2-168	platform lift	en	IE	code term	instrument phrase	EN-VARIANTS obs · Technical Guidance Document M · 1.1.3
+R2-168	low-rise platform lift	en	AU	code term	instrument phrase	EN-VARIANTS obs · Disability (Access to Premises — Buildings) Standards 2010 · Sch 1 A1.1 (one of six defined lift types; may be narrower)
+R2-168	vertical lifting platform (platform lift)	en	UK	code term	instrument phrase	EN-VARIANTS obs · Approved Document M Volume 2 · 3.22 (the text itself brackets 'platform lift'; B651 'vertical lift' R2-170 not judged equal)
+R2-169	stairway platform lift	en	AU	code term	instrument phrase	EN-VARIANTS obs · Disability (Access to Premises — Buildings) Standards 2010 · Sch 1 A1.1
+R2-169	Wheelchair Stairlift	en	SG	code term	instrument phrase	EN-VARIANTS obs · Code on Accessibility in the Built Environment · 4.10.3
+R2-059	kerb ramp	en	AU	regional variant	instrument phrase	EN-VARIANTS obs · Disability (Access to Premises — Buildings) Standards 2010 · Sch 1 D3.8 (1)(d)
+R2-059	dropped kerb	en	UK	regional variant	instrument phrase	EN-VARIANTS obs · Approved Document M Volume 2 · 1.18 b
+R2-059	Curb Ramp	en	US	regional variant	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 106.5 (definition)
+R2-189	Faucets	en	US	regional variant	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 606.4
+R2-189	washbasin tap	en	UK	regional variant	instrument phrase	EN-VARIANTS obs · Approved Document M Volume 2 · 5.4 a
+R2-208	International Symbol of Access	en	UK	regional variant	instrument phrase	EN-VARIANTS RH · Approved Document M Volume 2 · 2.7 a
+R2-208	International Symbol of Accessibility	en	US	regional variant	instrument phrase	EN-VARIANTS RH · 2010 ADA Standards for Accessible Design · 703.7.2.1
+R2-094	Detectable Warnings	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 705.1 (scoped mainly to platform edges)
+R2-094	truncated domes	en	SG	code term	instrument phrase	EN-VARIANTS obs · Code on Accessibility in the Built Environment · 9.7.1 (a profile; RHFAC 2.3.5 brackets it into its label)
+R2-094	warning TGSI	en	SG	code term	instrument phrase	EN-VARIANTS obs · Code on Accessibility in the Built Environment · 1.2.1 (definition)
+R2-094	bande d'éveil à la vigilance	fr	FR	code term	instrument phrase	FR-FR obs · Arrêté du 20 avril 2017 · annexe 7
+R2-094	dispositif d'éveil à la vigilance	fr	FR	code term	instrument phrase	FR-FR obs · Arrêté du 24 décembre 2015 · annexe 6, I
+R2-094	Pavimento táctil indicador de advertencia	es	ES	code term	instrument phrase	ES-ES obs · Orden TMA/851/2021 · anexo art. 45.2 b)
+R2-094	cúpula truncada	es	ES	code term	instrument phrase	ES-ES obs · Orden TMA/851/2021 · anexo art. 45.2 b) (a profile)
+R2-094	감지용점형블록	ko	KR	code term	instrument phrase	KO-KR obs · 시행규칙 [별표 1] · 제16호 가목 (1)
+R2-094	원뿔절단형	ko	KR	code term	instrument phrase	KO-KR obs · 시행규칙 [별표 1] · 제16호 가목 (4) (a profile, one of three permitted)
+R2-084	Mesetas	es	ES	code term	instrument phrase	ES-ES obs · Documento Básico SUA · SUA 1, 4.3.3.1 (building code)
+R2-084	rellanos	es	ES	code term	instrument phrase	ES-ES obs · Orden TMA/851/2021 · anexo art. 14.3 (public-space order; same object per the pass)
+R2-089	ledstänger	sv	SE	code term	instrument phrase	SV-SE obs · Boverkets föreskrifter om säkerhet vid användning av byggnader (pass key P9) · 2 kap. 12 §
+R2-089	balansstöd	sv	SE	code term	instrument phrase	SV-SE obs · BFS 2011:13 (HIN) · 10 § (the class; ledstång is one form, SYNTHESIS 3e)
+R2-089	corrimãos	pt	PT	code term	instrument phrase	PT-PT obs · DL 163/2006 Anexo · 2.4.8
+R2-089	elemento preênsil	pt	PT	regional variant	instrument phrase	PT-PT obs · DL 163/2006 Anexo · 2.5.9 (orthographic variant of the next row; the graspable member, possibly narrower)
+R2-089	elemento preensível	pt	PT	regional variant	instrument phrase	PT-PT obs · DL 163/2006 Anexo · 2.4.9 1)
+R2-087	trinforkanter	da	DK	code term	instrument phrase	DA-DK obs · BR18 · kap. 2, § 58, nr. 4
+R2-087	trinkanter	da	DK	code term	instrument phrase	DA-DK obs · BR18 · kap. 2, § 49, stk. 2, nr. 7
+R2-097	Utskjutande byggnadsdelar	sv	SE	code term	instrument phrase	SV-SE obs · Boverkets föreskrifter om säkerhet vid användning av byggnader (pass key P9) · 2 kap. 26 § (heading)
+R2-097	Utstickande byggnadsdelar	sv	SE	regional variant	instrument phrase	SV-SE obs · BFS 2011:13 (HIN) · 7 § (allmänt råd); the pass: same object, other word
+R2-097	Utstikkende bygningsdeler	nb	NO	code term	instrument phrase	NO-NO obs · TEK17 med veiledning · § 12-5, preakseptert ytelse
+R2-097	utstikkende elementer	nb	NO	code term	instrument phrase	NO-NO obs · TEK17 med veiledning · § 8-4 (1), veiledning
+R2-097	elementos salientes	es	ES	code term	instrument phrase	ES-ES obs · Documento Básico SUA · SUA 2, 1.1.3
+R2-097	elementos volados	es	ES	code term	instrument phrase	ES-ES obs · Documento Básico SUA · SUA 2, 1.1.4 (soffits under stairs and ramps; possibly narrower)
+R2-004	ancho libre de paso	es	ES	regional variant	instrument phrase	ES-ES obs · Orden TMA/851/2021 · anexo art. 14.3 (TMA alternates ancho and anchura)
+R2-004	anchura libre de paso	es	ES	code term	instrument phrase	ES-ES obs · Documento Básico SUA · anejo A, Itinerario accesible, Pasillos y pasos
+R2-005	clear opening width	en	AU	code term	instrument phrase	EN-VARIANTS obs · Disability (Access to Premises — Buildings) Standards 2010 · Sch 1 D3.2 (5)
+R2-005	effective clear width	en	UK	code term	instrument phrase	EN-VARIANTS obs · Approved Document M Volume 2 · Table 2 (with its own measuring rule)
+R2-005	clear opening	en	NZ	code term	instrument phrase	EN-VARIANTS obs · Acceptable Solutions and Verification Methods for Clause D1 · 7.0.3
+R2-006	Vertical Clearance	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 307.4
+R2-006	Height clearances	en	NZ	code term	instrument phrase	EN-VARIANTS obs · Acceptable Solutions and Verification Methods for Clause D1 · 1.4.1
+R2-006	altura livre	pt	PT	code term	instrument phrase	PT-PT obs · DL 163/2006 Anexo · 4.5.1
+R2-006	altura útil de passagem	pt	PT	code term	instrument phrase	PT-PT obs · DL 163/2006 Anexo · 4.9.2 (door headroom; the pass calls it a separate quantity, so possibly narrower)
+R2-127	Operable Parts	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 309.4
+R2-127	Controls and Operating Devices	en	SG	code term	instrument phrase	EN-VARIANTS obs · Code on Accessibility in the Built Environment · 9.2
+R2-127	Comandos e controlos	pt	PT	code term	instrument phrase	PT-PT obs · DL 163/2006 Anexo · Secção 4.12 (heading)
+R2-127	dispositivos de comando	pt	PT	code term	instrument phrase	PT-PT obs · DL 163/2006 Anexo · 2.6.5 (lift controls)
+R2-092	Edge Protection	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 405.9
+R2-092	Curb or Barrier	en	US	code term	instrument phrase	EN-VARIANTS obs · 2010 ADA Standards for Accessible Design · 405.9.2 (conflation: curb as the ramp-edge upstand)
+R2-092	upstand	en	NZ	code term	instrument phrase	EN-VARIANTS obs · Acceptable Solutions and Verification Methods for Clause D1 · 3.1.3
