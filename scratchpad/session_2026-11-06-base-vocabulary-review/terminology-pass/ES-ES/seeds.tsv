@@ -1,0 +1,11 @@
+register_concept	seed_ES	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Microwave mounting height accessible and safe	altura de instalación del microondas	MODEL-GENERATED	ES	ordinary kitchen-fitting vocabulary; to search in autonomous-community housing codes and guides, not the national texts
+Reverberation time (parameter 7)	tiempo de reverberación	MODEL-GENERATED (also a held alias)	ES	believed to be the acoustic term in the CTE noise document, which was not read in this pass
+Reverberation time (parameter 7)	acondicionamiento acústico	MODEL-GENERATED	ES	believed in use for room acoustic treatment in Spanish building regulation; not read
+Colour temperature (parameter 10)	temperatura de color correlacionada	MODEL-GENERATED	ES	lighting-standard vocabulary; not expected in accessibility instruments
+Speed bumps	reductores de velocidad / pasos de peatones sobreelevados	MODEL-GENERATED	ES	believed in use in traffic-calming instructions of the transport ministry; not read
+Flower or shrub planters	jardineras	MODEL-GENERATED	ES	ordinary street-furniture word; absent from TMA/851/2021
+Guy wires	vientos / tirantes de sujeción	MODEL-GENERATED	ES	ordinary construction words; absent from all four texts
+Gradation limits	pendiente de senderos / itinerarios en el medio natural	MODEL-GENERATED	ES	natural-area trails fall outside TMA/851/2021's 'suelo urbanizado' scope; would sit in other texts
+Shelter	porche / marquesina de acceso al edificio	MODEL-GENERATED	ES	entrance canopy vocabulary; DB-SUA has no entrance-shelter rule
+Accessible lockers	taquillas accesibles	MODEL-GENERATED	ES	'taquillas' does occur (locker areas, ticket counters) but no accessible-locker rule

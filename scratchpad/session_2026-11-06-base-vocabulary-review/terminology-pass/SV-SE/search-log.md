@@ -1,13 +1,37 @@
 # Search log: terminology pass SV-SE (Swedish, Sweden), session_2026-11-06-base-vocabulary-review
 
-Rule R14: query verbatim, prior expectation written before the result, result, note on query shape. Empties kept.
+Rule R14: query verbatim, prior expectation, result, note on query shape. Empties kept. DEVIATION: for W1 and W2 the expectations were formed before each call but written into this file after the results, in one edit; they are not independently time-stamped.
 
 ## Base-derived leads (step 1)
 - `research_code_leads` where jurisdiction like '%SE%' or names BBR/Boverket: 0 rows. The instrument list is not derivable from leads.
 - `evidence_sources where jurisdiction='SE'`: REF-01023 (BFS 2024:12, URL rinfo.boverket.se), REF-01024 (BFS 2011:5 ALM 2, hosted on varberg.se), REF-01025 (FUB consultation reply, grey).
 - `references/standards-registry.md`: two SE entries that contradict each other and the base: one calls BFS 2024:12 the replacement of BBR "in force 1 July 2025"; the other calls BFS 2024:12 "ALM 2 (Boverkets allmänna råd 2024:12) in force from 1 September 2024" replacing "ALM 1 (BFS 2013:9)". The retrieved BFS 2024:12 title page (below) shows it is neither ALM nor allmänna råd. Registry defect, not corrected (outside my folder).
-- `term_aliases where lower(language)='sv'`: 120 rows (`select count(*) from term_aliases where lower(language)='sv'`), all TRANSLATION/SYNONYM/BROADER/NARROWER/DOMAIN; none carries an instrument locator. Treated as model-generated seeds.
+- `term_aliases where lower(language)='sv'`: rows counted by `select count(*), count(distinct alias) from term_aliases where lower(language)='sv'` (re-run; this line first held a hand-typed figure that was wrong), all TRANSLATION/SYNONYM/BROADER/NARROWER/DOMAIN; none carries an instrument locator. Treated as model-generated seeds.
 
 ## W0. Direct fetches of base URLs
 - W0.1 `https://rinfo.boverket.se/BFS2024-12/pdf/BFS2024-12.pdf` (URL from REF-01023). Expectation (recorded after the fact; I did not write it before fetching, which is a deviation): a short föreskrift. Result: 200, 224065 bytes, sha256 b8d1102a…, 9 pp. Title "Boverkets föreskrifter om byggnaders tillgänglighet och användbarhet för personer med nedsatt rörelse- eller orienteringsförmåga", decided 19 November 2024, in force 1 July 2025. Contains föreskrifter only, no allmänna råd and almost no measures (6 §, 2 kap. 4–5 §). Note: the new Boverket structure splits BBR into several BFS; the quantities must be elsewhere.
 - W0.2 `https://www.boverket.se/sv/lag--ratt/forfattningssamling/gallande/` (guessed listing URL). Expectation (after the fact): the list of rules in force. Result: 404. Guessed URL; shape defect, not evidence of absence.
+
+## W1. Web searches (WebSearch tool, standard mode)
+- W1.1 query: `Boverkets allmänna råd byggnaders tillgänglighet och användbarhet nedsatt rörelse- eller orienteringsförmåga 2025`. Expectation: an allmänna råd document accompanying BFS 2024:12, holding the dimensions BBR 3:1 used to carry. Result: no such allmänna råd found; results point to Boverket's "nya byggregler" page and two archived BBR guidance PDFs dated 2026. Note: query presupposed an advice document; the expectation was wrong (see W2.1).
+- W1.2 query: `Boverket enkelt avhjälpta hinder föreskrifter BFS gällande HIN`. Expectation: HIN 3 (BFS 2011:13 as amended by BFS 2013:9) is still the instrument. Result: rinfo.boverket.se PDFs for BFS 2011:13 (HIN 2), BFS 2013:9 (HIN 3) and BFS 2003:19 (HIN 1); Boverket PBL kunskapsbanken page on enkelt avhjälpta hinder.
+- W1.3 query: `"2011:13" enkelt avhjälpta hinder ändring 2025 OR 2026 Boverket föreskrifter`. Expectation: no amendment after 2013. Result: none found; a Kiwa list dated 2025-03-24 and a Stockholm guidance v3.0 dated 2025-10-30 (not retrieved) cite BFS 2011:13 as amended by 2013:9. Note: absence of an amendment in search results is not proof; currency is [UNVERIFIED] against Boverket's register itself.
+
+## W2. Retrievals through retrieval_log.fetch (artefacts under retrieval-log/session_2026-11-06-base-vocabulary-review/)
+- W2.1 `https://boverket.se/sv/PBL-kunskapsbanken/regler-om-byggande/byggregelsystemet/nya-byggregler`. Expectation: list of the BFS that replaced BBR. Result: 200, artefact a9327303d7fa8feb.html. Lists BFS 2024:4, 2024:6 to 2024:13, 2026:4, 2026:9; states "Reglerna innehåller i huvudsak inte längre några allmänna råd" and that BBR was repealed on 1 October 2026 by BFS 2026:9; transition for applying older rules ran to 30 June 2026. Read: the stripped text was grep-located for BFS, föreskrift, allmänna råd, tillgäng, kraft; not read in full.
+- W2.2 `https://www.boverket.se/globalassets/publikationer/dokument/2026/boverkets-byggregler-bbr---tillganglighet-efter-1-december-2025.pdf`. Expectation: guidance on the old BBR. Result: 200, b87cd122ace6e7b4.pdf, "Vägledning ... (före 1 juli 2026)", archived, "Publikationen uppdateras inte". Only the first two pages read; it is superseded guidance, not an instrument.
+- W2.3 `https://www.boverket.se/globalassets/publikationer/dokument/2026/boverkets-byggregler-bbr-avsnitt-3---tillganglighet-bostadsutformning-rumshojd-och-driftutrymmen.pdf`. Expectation: the old BBR section 3 text. Result: 200, 26fe99c7c3402a1e.pdf, 4164 text lines. NOT READ: BBR is repealed (W2.1), so it is not an instrument in force. It is the obvious next read for the history of Swedish terms (BBR 3:1 carried the measures the new rules dropped).
+- W2.4 `https://www.boverket.se/sv/PBL-kunskapsbanken/regler-om-byggande/krav-pa-byggnadsverk-tomter-mm/retroaktiva/enkelt/`. Expectation: confirms HIN is current. Result: 200, b4a6b8a9ac94224d.html; quotes HIN 5 § and refers to "föreskrifterna HIN"; also shows PBL 8 kap. amendments (Lag 2026:746) entering into force 2027-01-01. Grep-located only.
+- W2.5 `https://rinfo.boverket.se/BFS2011-13/pdf/BFS2013-9.pdf`. Expectation: amending text only. Result: 200, c40b915d36d9d797.pdf, 9 pp.; it is an "Omtryck" (full reprint) of BFS 2011:13 as amended, HIN 3. Read in full.
+- W2.6 `https://rinfo.boverket.se/BFS2011-13/pdf/BFS2011-13.pdf`. Expectation: original HIN 2. Result: 200, e41ecfa32b0c440f.pdf. Not read: superseded by the omtryck in W2.5.
+- W2.7 `https://rinfo.boverket.se/BFS2024-13/pdf/BFS2024-13.pdf` (URL pattern from REF-01023). Expectation: plot requirements with accessibility of walkways and parking. Result: 200, 24b5e81b0f4a0928.pdf, 5 pp. Read in full.
+- W2.8 `https://rinfo.boverket.se/BFS2024-9/pdf/BFS2024-9.pdf`. Expectation: stairs, handrails, glass marking, headroom (in the old BBR 8). Result: 200, dea239e870469ba8.pdf, 12 pp.; 1 kap. 1 § 2 states it also carries accessibility technical requirements under PBF 3 kap. 18 §. Read in full.
+
+## W3. Not attempted (budget)
+- ALM 2 (BFS 2011:5, public places and areas for installations other than buildings; REF-01024): outside "buildings", NOT-READ. Its currency is [UNVERIFIED].
+- BFS 2024:11 (bostäders lämplighet för sitt ändamål), BFS 2024:10 (buller), BFS 2024:8: NOT-READ; BFS 2024:12 points to 2024:11 for shared dwelling functions.
+- Boverket's vägledning web pages for BFS 2024:12: guidance, not instrument; NOT-READ.
+- Swedish standards: none is cited by the four texts read except SS-EN 81-70 (HIN 6 § advice, lift panels); not attempted, so not marked NOT-OBTAINABLE. Arbetsmiljöverket rules: not attempted.
+
+## W4. Alias check (held sv aliases as substrings of the four saved texts)
+- Expectation: the parameter-level TRANSLATION aliases (ramplutning, korridorbredd, dörrbredd, vändyta, manöverkraft, efterklangstid, luminanskontrast, färgtemperatur) occur 0 times. Result: confirmed 0 each. Of the distinct held aliases, 17 occur by substring (re-run the snippet in pass-record.md); "trycke" hits only inside "trycket" (printing colophon), "korridor" only inside "korridorer", "lättläst" only inside "lättlästa": substring hits are not findings.

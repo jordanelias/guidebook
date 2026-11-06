@@ -1,0 +1,76 @@
+register_concept	register_source	status	n_observations	phrases_found (distinct)	note
+Well-illuminated (if site expected to be lit)	catalogue 2.1	FOUND	2	belyses / god retningsgivende og blændfri belysning	graded, not quantified: stairs and ramps lit 'most strongly'; guidance only ('bør')
+Surface is firm, stable and slip resistant	catalogue 2.1	FOUND	4	Belægningen er fast og jævn / fast, skrid hæmmende belægning / jævn fast belægning / vandret, fast og plant areal	even and firm; slip resistance is not in BR18 text read; level, firm and plane: the area outside an entrance door; parking bay surface; slip resistance appears only in this guidance; 'skrid hæmmende' is as extracted by pdftotext (likely 'skridhæmmende' with a layout space)
+Seating	catalogue 2.1	SEARCHED-ABSENT	0		no rest seating; § 220 'publikumspladser' are spaces for wheelchair users in fixed-seat venues (reverse harvest) [counts over all saved texts: /bænk/i=0, /hvile/i=0, /siddeplads/i=0]
+Handrails	catalogue 2.1	FOUND	4	Gribeegnede håndlister / Håndlister skal føres ubrudt forbi repos og afsluttes vandret / håndlister / nemme at gribe om og holde fast i	continuity and horizontal termination; graspability stated as a performance, no profile dimension
+Clear width	catalogue 2.1	FOUND	4	Trappens fri bredde / fri bredde / fri passagebredde / passeres uhindret i deres fulde bredde	aim (sufficient for the use) then minimum; one door quantity (clear passage width); no nominal leaf width
+Accessible path of travel	catalogue 2.1	FOUND	3	Fælles adgangsveje / adgangsarealer / adgangsstier	site access areas, outside; the route object; 'tilgængelig' is not used for it
+Drainage	catalogue 2.1	SEARCHED-ABSENT	0		no surface drainage on routes; 'afløb' occurs only as the drain under a basin (§ 214, nr. 8); kap. 4 Afløb NOT-READ [counts over all saved texts: /afvand/i=0, /\bafløb\b/i=3]
+Clear signage	catalogue 2.1	FOUND	2	letlæselig og letforståelig / piktogrammer	information, not 'skiltning'; held alias 'skiltning' does not occur
+Audio accessibility and communication enhancement technologies	catalogue 2.1	FOUND	3	auditivt og visuelt er angivet / tekniske hjælpemidler, som eksempelvis teleslynger / teleslyngeanlæg	assembly rooms; equivalent-level route; door-entry and call systems
+Level landings with clear space	catalogue 2.1	FOUND	1	vandret plads	
+Floor surface is stable, firm, and non-slip	catalogue 2.1	SEARCHED-ABSENT	0		no interior floor-surface rule in the chapters read; kap. 14 Fugt og vådrum NOT-READ [counts over all saved texts: /skridsik/i=0, /skrid/i=1, /glat/i=0, /gulvbelægning/i=0]
+Clear space for approach	catalogue 2.1	FOUND	3	fri afstand / ved siden af døren modsat hængselsiden	kitchen, in front of worktops; latch-side space at a door; transfer space beside the WC
+Well illuminated (if required for expected usage)	catalogue 2.1	FOUND	2	elektrisk belysning i fornødent omfang / tilstrækkelig elektrisk belysning i forhold til anvendelsen	applies to 'Arbejdsrum mv. og fælles adgangsveje'; lighting is a general health and comfort chapter, not an access provision
+Surface is stable, firm, and slip resistant	catalogue 2.1	FOUND	4	Belægningen er fast og jævn / fast, skrid hæmmende belægning / jævn fast belægning / vandret, fast og plant areal	even and firm; slip resistance is not in BR18 text read; level, firm and plane: the area outside an entrance door; parking bay surface; slip resistance appears only in this guidance; 'skrid hæmmende' is as extracted by pdftotext (likely 'skridhæmmende' with a layout space)
+Shelter	catalogue 2.1	SEARCHED-ABSENT	0		no canopy or shelter at entrances; 'overdækket' occurs once, for a roofed courtyard (§ 395) [counts over all saved texts: /overdæk/i=1, /læskur/i=0, /\bly\b/i=0]
+Riser height and tread depth	catalogue 2.1	FOUND	3	Grunden (trinnets vandrette dybde) / stigning (lodrette højde på trinnet) / stigning på højst 0,15 m og en grund	outdoor steps alongside a ramp; riser height is 'stigning'; the same word is the rise of a ramp in § 56, nr. 4; tread is 'grund', defined as a depth
+Nosing design	catalogue 2.1	FOUND	2	trinforkanter / trinkanter	nosing as the measuring reference for guard height
+No open riser	catalogue 2.1	SEARCHED-ABSENT	0		open risers not treated [counts over all saved texts: /setstykk/i=0, /åbne trin/i=0, /stødtrin/i=0]
+Level threshold	catalogue 2.1	FOUND	3	Dørtrin må højst være 2,5 cm / i samme niveau som det indvendige gulv / niveaufri adgang	a threshold up-stand is permitted within 'niveaufri'; held alias 'niveaufri adgang' occurs
+Height clearance (if sheltered or parkade)	catalogue 2.1	FOUND-PARTIAL	1	fri højde	NARROWER: stair headroom only; no shelter or parkade case; stair headroom only; no parkade or shelter case
+Edge protection	catalogue 2.1	FOUND-PARTIAL	1	værn	DIFFERENT CARVE: 'værn' is a fall guard, no kerb or wheel stop; PARTIAL: a fall guard (guarding), not a kerb or wheel stop at a ramp edge
+Colour-contrasted and slip-resistant strip on nosing	catalogue 2.1	FOUND-PARTIAL	1	markeres med kontrastfarve	PARTIAL: contrast colour only; no slip-resistant strip; contrast colour only; no slip-resistant strip; no quantity
+Tactile attention indicators (truncated domes)	catalogue 2.1	FOUND	2	belægningsskift i farve og følbarhed / markeres taktilt	a change of paving in colour and feel; no domes, no product; tactile OR colour: either suffices
+Slope	catalogue 2.1	FOUND	3	hældning	slope stated as a ratio and as cm per m; held alias 'rampehældning' does not occur; the same word for a stair's pitch
+Sink faucet is easy to use or automatic	catalogue 2.1	SEARCHED-ABSENT	0		no tap rule [counts over all saved texts: /armatur/i=2, /blandingsbatteri/i=0, /vandhane/i=0]
+Outlets and switches are at accessible heights	catalogue 2.1	SEARCHED-ABSENT	0		no socket or switch rule [counts over all saved texts: /stikkontakt/i=0, /afbryder/i=0, /kontakt/i=0]
+Microwave mounting height accessible and safe	catalogue 2.1	SEARCHED-ABSENT	0		no appliance rule; kitchens treated only by free distance and headroom (§ 202) [counts over all saved texts: /mikro/i=0, /ovn/i=0]
+Level landings with clear space and at regular intervals	catalogue 2.1	FOUND	2	reposer for hver 12 m / vandret repos for hver 0,60 m stigning	inside common routes: interval by RISE, not length; outside: interval by LENGTH
+Colour-contrasted and slip-resistant strip	catalogue 2.1	FOUND-PARTIAL	1	markeres med kontrastfarve	PARTIAL: contrast colour only; no slip-resistant strip; contrast colour only; no slip-resistant strip; no quantity
+Accessible lockers	catalogue 2.1	SEARCHED-ABSENT	0		no lockers; nearest is § 212 storage for 'rollatorer' (reverse harvest) [counts over all saved texts: /\bskab(e)?\b/i=2, /bokse/i=0, /garderobe/i=0]
+Accessible door hardware	catalogue 2.1	SEARCHED-ABSENT	0		no door-handle rule [counts over all saved texts: /dørgreb/i=0, /håndtag/i=0, /\bgreb\b/i=0]
+Accessible controls	catalogue 2.1	FOUND	3	Brugerbetjente anlæg / placeret i en højde / taktil identifikation	height by performance, or height-adjustable; keypad 5-key; one class for every user-operated installation
+height	catalogue 2.2	FOUND	2	højde / placeret i en højde	height by performance, or height-adjustable
+level	catalogue 2.2	FOUND	4	Niveauforskelle / i samme niveau som det indvendige gulv / niveauspring og højdeforskelle / vandret	'level' as difference in height; 'level' as flat; three words for a change of level
+width	catalogue 2.2	FOUND	5	Trappens fri bredde / bredde / fri bredde / fri passagebredde / passeres uhindret i deres fulde bredde	aim (sufficient for the use) then minimum; one door quantity (clear passage width); no nominal leaf width
+clearance	catalogue 2.2	FOUND	4	fri afstand / fri højde / frit manøvreareal med en diameter	kitchen, in front of worktops; stair headroom only; no parkade or shelter case; the only turning space in BR18 text read is in the WC; held alias 'vendeplads' does not occur; transfer space beside the WC
+number	catalogue 2.2	FOUND	3	antallet af wc'er / et passende antal parkeringspladser / for hver yderligere 20. sengeplads	for 'ratio': proportional provision; no shower/bath mix; number left to judgment ('passende')
+slope	catalogue 2.2	FOUND	3	hældning	slope stated as a ratio and as cm per m; held alias 'rampehældning' does not occur; the same word for a stair's pitch
+depth	catalogue 2.2	FOUND	2	Grunden (trinnets vandrette dybde) / rumdybder	room depth, a daylight quantity; tread is 'grund', defined as a depth
+riser	catalogue 2.2	FOUND	2	stigning (lodrette højde på trinnet) / stigning på højst 0,15 m og en grund	outdoor steps alongside a ramp; riser height is 'stigning'; the same word is the rise of a ramp in § 56, nr. 4
+tread	catalogue 2.2	FOUND	2	Grunden (trinnets vandrette dybde) / stigning på højst 0,15 m og en grund	outdoor steps alongside a ramp; tread is 'grund', defined as a depth
+force	catalogue 2.2	FOUND-PARTIAL	1	personer med reduceret kraft	DIFFERENT SENSE: user's strength (guidance only); DIFFERENT SENSE: the user's strength, not a fitting's operating force
+time	catalogue 2.2	FOUND-PARTIAL	1	brugstiden	DIFFERENT SENSE: share of time in use; DIFFERENT SENSE: share of the time in use (view out)
+gradient	catalogue 2.2	FOUND	3	hældning	slope stated as a ratio and as cm per m; held alias 'rampehældning' does not occur; the same word for a stair's pitch
+size	catalogue 2.2	FOUND	2	Brugsarealet / hensigtsmæssig størrelse og udformning	parking bay
+volume	catalogue 2.2	FOUND-PARTIAL	1	rumindhold	DIFFERENT SENSE: spatial volume; DIFFERENT SENSE: spatial volume, not sound volume
+capacity	catalogue 2.2	FOUND	1	mærkelast af elevatorstol	lift rated load; named in the energy rule, not an access rule
+distance	catalogue 2.2	FOUND-PARTIAL	1	indbyrdes afstand mellem alle typer balustre	DIFFERENT SENSE: baluster spacing; no distance markers; DIFFERENT SENSE: baluster spacing; no distance markers
+lighting levels	catalogue 2.2	FOUND-PARTIAL	2	belyses / belysningsstyrke	PARTIAL: illuminance only for daylight and installation test, never for routes; PARTIAL: illuminance appears only for daylight and for the lighting installation test (§ 384), never for an access route; graded, not quantified: stairs and ramps lit 'most strongly'
+ratio	catalogue 2.2	FOUND-PARTIAL	2	1:20 (5 cm pr. m.) / for hver yderligere 20. sengeplads	PARTIAL: slope notation and proportional room count; no room-type mix; for 'ratio': proportional provision; no shower/bath mix; ratio as slope notation
+Ramp gradient (parameter 3)	base_parameters	FOUND	2	hældning	slope stated as a ratio and as cm per m; held alias 'rampehældning' does not occur
+Corridor width (parameter 4)	base_parameters	FOUND	3	Vindfang, forstuer, gange og lignende skal have en fri bredde / gangarealet / gange	corridors are one member of the 'fælles adgangsveje' list; dwelling; 'gange' (plural of 'gang'), never 'korridor'; width tied to doors opening off the passage
+Turning circle (parameter 5)	base_parameters	FOUND-PARTIAL	1	frit manøvreareal med en diameter	NARROWER: a 1.5 m diameter manoeuvring area in the WC only; the only turning space in BR18 text read is in the WC; held alias 'vendeplads' does not occur
+Operating force (parameter 6)	base_parameters	SEARCHED-ABSENT	0		no opening-force quantity; 'kraft' only as the user's strength (VT) [counts over all saved texts: /åbningskraft/i=0, /betjeningskraft/i=0, /\bN\b/i=0]
+Reverberation time (parameter 7)	base_parameters	FOUND	2	Efterklangstid / Rums efterklangstid	listed among acoustic considerations; pointer to DS 490 class C and the vejledning om lydforhold; not an access provision
+LRV contrast (parameter 8)	base_parameters	FOUND-PARTIAL	1	markeres med kontrastfarve	BROADER: contrast never quantified; no luminance or LRV term; contrast colour only; no slip-resistant strip; no quantity
+Door width (parameter 9)	base_parameters	FOUND	3	fri passagebredde / fri passagebredde på mindst 77 cm	one door quantity (clear passage width); no nominal leaf width
+Colour temperature (parameter 10)	base_parameters	SEARCHED-ABSENT	0		no colour-temperature term; lighting regulated by daylight share, illuminance test and energy [counts over all saved texts: /farvetemperatur/i=0, /kelvin/i=0]
+Headroom clearance (parameter 11)	base_parameters	FOUND	3	fri højde / fri loftshøjde	kitchen under a sloping ceiling; stair headroom only; no parkade or shelter case
+Ramp run length (parameter 12)	base_parameters	FOUND	1	reposer for hver 12 m	outside: interval by LENGTH
+Gratings	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no grating rule [counts over all saved texts: /\brist/i=0, /dæksel/i=0]
+Headroom and protruding objects	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	fri højde	PARTIAL: headroom only; protruding objects not treated; stair headroom only; no parkade or shelter case
+Headroom	b651-headings (RHFAC-does-not-name)	FOUND	2	fri højde	kitchen under a sloping ceiling; stair headroom only; no parkade or shelter case
+Protruding objects	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no protruding-object rule; § 238 treats collision with glass panes (reverse harvest) [counts over all saved texts: /fremspring/i=0, /udhæng/i=0, /udragende/i=0]
+Spouts	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no drinking fountain [counts over all saved texts: /drikke/i=0, /fontæne/i=0]
+Lavatories	b651-headings (RHFAC-does-not-name)	FOUND	2	Håndvask / Håndvask og wc skal placeres over et hjørne	basin reachable from the WC seat
+Enclosures	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		no accessible shower enclosure; § 226 'brusepladser' are workplace shower counts [counts over all saved texts: /brusenich/i=0, /bruseplads/i=1]
+Speed bumps	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		not treated [counts over all saved texts: /vejbump/i=0, /bump/i=0]
+Bollards	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		not treated [counts over all saved texts: /pullert/i=0]
+Landscaping elements	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		not treated [counts over all saved texts: /beplant/i=0, /landskab/i=0]
+Flower or shrub planters	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		not treated [counts over all saved texts: /plantekass/i=0, /krukke/i=0]
+Vegetation	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		not treated [counts over all saved texts: /vegetation/i=0, /træer/i=0, /buske/i=0]
+Guy wires	b651-headings (RHFAC-does-not-name)	FOUND-PARTIAL	1	Barduner	NARROWER: guidance for temporary structures, not BR18 text; guidance for temporary structures only
+Scaffolding	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		kap. 7 (byggepladsen) read in full: no scaffolding or route-through-works rule [counts over all saved texts: /stillads/i=0]
+Gradation limits	b651-headings (RHFAC-does-not-name)	SEARCHED-ABSENT	0		not treated [counts over all saved texts: /kornkurve/i=0, /gradering/i=0]
