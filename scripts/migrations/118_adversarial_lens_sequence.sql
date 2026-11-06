@@ -10,13 +10,16 @@
 -- after this file; passes already closed are not reopened. A pass still open would owe one more lens that no
 -- verb can add to it (a pass takes one record and findings are not amendable), so this file gives every open
 -- pass a NOT-ATTACKED row for the new lens, saying so. That is honest (the pass did not attack sequence) and
--- leaves each pass closable exactly when it was closable before. Passes held open by owner ruling (2026-09-27
+-- leaves each pass closable exactly when it was closable before. The rows carry the NEGATIVE of their pass_id as
+-- finding_id: a scratch database allocates the next positive id and a data migration INSERTs it explicitly, so
+-- an id taken from the same sequence here would collide with the findings of a pass recorded after this file was
+-- written (the first version of this file did, and failed the rebuild on pass 9). Passes held open by owner ruling (2026-09-27
 -- second, ACTION 2) stay open; nothing here closes one.
 --
 -- ORDER. The open passes are written by data migrations dated after the 095 cutoff, which a rebuild replays
 -- after the schema migrations. The marker below places this file after the latest of them, so the backfill sees
 -- the same open passes in a rebuild as in an incremental apply (otherwise the two databases would differ).
--- AFTER_DATA: 20261106030918
+-- AFTER_DATA: 20261106053823
 --
 -- WHAT READS IT. db.py `record-adversarial-pass` (validates each finding's lens against this CHECK) and
 -- `close-adversarial-pass`; `.claude/agents/antagonist.md` names the lens for the critic.
@@ -66,8 +69,8 @@ DROP TABLE adversarial_findings;
 ALTER TABLE adversarial_findings_new RENAME TO adversarial_findings;
 CREATE INDEX ix_adversarial_findings_pass ON adversarial_findings(pass_id);
 
-INSERT INTO adversarial_findings (pass_id, lens, claim_attacked, method, verdict, created_by_session, created_at)
-  SELECT pass_id, 'S4-sequence', 'stage and write order (lens added after this pass was recorded)',
+INSERT INTO adversarial_findings (finding_id, pass_id, lens, claim_attacked, method, verdict, created_by_session, created_at)
+  SELECT -pass_id, pass_id, 'S4-sequence', 'stage and write order (lens added after this pass was recorded)',
          'not attacked: migration 118 added this lens after the pass was recorded, and a recorded pass cannot take a further finding',
          'NOT-ATTACKED', 'migration_118', '2026-11-06 00:00'
   FROM adversarial_passes WHERE closed_at IS NULL;

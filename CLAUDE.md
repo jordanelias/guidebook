@@ -488,10 +488,16 @@ open. Do not read `slug × population` as any part of the answer: `base_taxonomy
   not exist.** If the answer is about the apparatus rather than the book, do not add it.
 - **Nothing is added without naming what reads it.** An unread field, an uncalled script and an
   unregistered check are the same defect.
-- **Lean** (owner, 2026-10-12: as little code as possible; clarified 2026-11-06): the **minimum code that
-  performs the action correctly**, with data centralised so errors, breaks and detritus are minimised. It is
-  not a ratchet on physical lines: a writer that refuses what it should, a typed column in place of a
-  convention, and a test that can go red are not waste. Delete what nothing reads; add what a named reader needs.
+- **Minimise code** (owner, 2026-10-12: as little code as possible; 2026-11-06: the bare essentials, written
+  as efficiently as possible, the minimum that performs the action correctly, to stay agile and lean, with data
+  centralised so errors, breaks and detritus are minimised). There is no net-negative requirement — its extreme is no
+  code. A PR touching `scripts/`, `schemas/`, `.github/` or `skills/` names what the added code reads, what
+  wrong thing reaches the guidebook without it, and any existing code it replaces or makes deletable; it need
+  not shrink the total. A writer that refuses what it should, a typed column in place of a convention, and a
+  test that can go red are not waste. Try, in order: do nothing and say why; change a rule or convention; reuse what exists;
+  delete the cause; only then add the smallest code that closes the defect.
+  Measure (one line): `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`.
+  Enforced by review, not by a check.
 - **A specific, ratified authorisation beats a blanket caution.** Blanket removal-friction winning
   ties against specific removal-permission is how this file became a ratchet.
 
