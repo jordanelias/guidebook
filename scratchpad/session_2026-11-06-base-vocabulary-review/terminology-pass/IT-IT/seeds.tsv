@@ -1,0 +1,11 @@
+register_concept	seed_it	flag	jurisdiction_meant	why_we_believe_it_is_in_use (no source claimed)
+Drainage	pendenza di scolo / caditoia	MODEL-GENERATED	IT	ordinary Italian paving vocabulary; to search in municipal regolamenti edilizi and UNI paving norms, not in DM 236
+Microwave mounting height accessible and safe	altezza del forno a microonde	MODEL-GENERATED	IT	no instrument term found; likely only in guides or product literature
+Accessible lockers	armadietti accessibili	MODEL-GENERATED	IT	believed used in workplace (D.Lgs. 81/2008 spogliatoi) and sports-facility texts, not read
+volume	volume dell'annuncio sonoro / livello sonoro	MODEL-GENERATED	IT	paging-volume sense; believed in lift and PA product norms
+Reverberation time (parameter 7)	tempo di riverberazione	MODEL-GENERATED	IT	believed the term in UNI 11532 (not attempted); the held alias 'tempo di riverbero' is the colloquial form and occurs in no text read
+Colour temperature (parameter 10)	temperatura di colore correlata (TCC)	MODEL-GENERATED	IT	believed the UNI EN 12464-1 Italian term; not read
+Tactile attention indicators (truncated domes)	codice di attenzione / percorso tattilo-plantare	MODEL-GENERATED	IT	believed used in LOGES and Italian guidance and in regional texts; absent from DM 236 and DPR 503
+Audio accessibility and communication enhancement technologies	impianto ad anello magnetico	MODEL-GENERATED	IT	the held alias is 'anello a induzione magnetica'; neither occurs in the texts read
+LRV contrast (parameter 8)	fattore di riflessione luminosa / contrasto di luminanza	MODEL-GENERATED	IT	believed used in UNI CEI and lighting norms; the texts read have only 'variazioni cromatiche'
+lighting levels	illuminamento medio (lux)	MODEL-GENERATED	IT	believed the term in UNI EN 12464-1/-2; absent from the instruments read
