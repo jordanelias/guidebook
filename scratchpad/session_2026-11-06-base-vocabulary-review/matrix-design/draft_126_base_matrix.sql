@@ -71,10 +71,9 @@ CREATE TABLE base_form_searches (
     PRIMARY KEY (term_id, source_id)
 );
 
--- 4. THE CONCEPT SIDE (E1). canonical_en stays NOT NULL (six data migrations INSERT it) and holds the
---    name; name_language says what language that name is in. Existing rows default to EN, which is
---    what the column has always held.
-ALTER TABLE terms ADD COLUMN name_language TEXT NOT NULL DEFAULT 'EN';
+-- 4. THE CONCEPT SIDE (eighth entry). canonical_en is OUR label, English allowed, never a form. Whether
+--    it is an instrument's own term or our descriptive label is DERIVED (v_term_label_basis), not typed.
+--    The concept's origin is its earliest term_forms row; no origin_language/origin_phrase columns.
 ALTER TABLE terms ADD COLUMN kind TEXT CHECK (kind IS NULL OR kind IN
     ('quantity', 'element', 'setting', 'technique', 'performance criterion', 'trigger rule',
      'outcome level', 'drafting layer'));
@@ -130,5 +129,17 @@ UNION ALL
 SELECT a.term_id, a.alias, upper(a.language), a.jurisdiction, NULL, a.alias_type, 'legacy alias',
        NULL, NULL, NULL, NULL, NULL
   FROM term_aliases a;
+
+-- Label basis, derived: the label is an instrument term iff an attested form of the concept has its
+-- exact text; otherwise it is ours ('descriptive'). Origin = the concept's first attested form.
+CREATE VIEW v_term_label_basis AS
+SELECT t.term_id, t.canonical_en AS label,
+       CASE WHEN EXISTS (SELECT 1 FROM term_forms f WHERE f.term_id = t.term_id
+                           AND f.source_id IS NOT NULL AND f.form = t.canonical_en)
+            THEN 'instrument term' ELSE 'descriptive' END AS label_basis,
+       o.form AS origin_form, o.language AS origin_language, o.source_id AS origin_source_id
+  FROM terms t
+  LEFT JOIN term_forms o ON o.form_id = (SELECT MIN(form_id) FROM term_forms f
+                                          WHERE f.term_id = t.term_id AND f.source_id IS NOT NULL);
 
 PRAGMA user_version = 126;
