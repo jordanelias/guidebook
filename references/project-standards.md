@@ -5071,3 +5071,29 @@ and, in two further messages:
 CONDITION: any session asking whether a retrieved PDF, page or extracted text is committed, or what the repository keeps of a retrieval.
 ACTION: (1) Keep the `retrieval-log/` manifest line; do not commit large retrieved files or text extracted from them. (2) Commit an artefact that a search-execution or admission gate must find. (3) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statements 2026-11-06 (sixth) — a concept is an equivalence class of forms, for every term researched
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on reading the English-variants pass's report that a held alias ("handicapped parking") did not occur in its jurisdiction's code, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in order:
+
+> "handicapped parking is still accessible parking stall etc"
+
+> "*also"
+
+> "there are lots of equivalencies"
+
+> "barrier free parking"
+
+> "accessibility parking, disabled parking,"
+
+> "this kind of equivalency finding is applicable for all terms researched"
+
+**What this decides.**
+1. **The unit of the register is an equivalence class.** A concept has many surface forms per language and jurisdiction. "Accessible parking stall", "handicapped parking", "barrier free parking", "accessibility parking" and "disabled parking" name one concept, and the held instruments add "designated accessible spaces" (RHFAC 1.1) and "designated accessible parking" (CSA/ASC B651:23, clause 9.4).
+2. **Non-occurrence in an instrument does not invalidate a form.** Attestation in a code establishes that form as that code's term; it does not decide which other forms are valid equivalents. A form the code does not use is "not attested by these texts", and the sources that could attest it are statutes, road-sign and signage manuals, municipal and advocacy guidance, and ordinary public usage.
+3. **Every term researched gets equivalence-class discovery**, not only the first form found. Each form carries its usage type (code term, colloquial, regional variant, outdated or disfavoured, product name) and its attestation (instrument phrase with locator, another source, an owner-supplied form, or an unattested seed). A disfavoured form is recorded with a usage note and not deleted, because people still search with it.
+4. **This does not widen what may become vocabulary.** OR-17 and E4 stand: a form enters the base as an attested alias only when a source in its language is read and the phrase is found there. An owner-supplied form is a seed marked as owner-supplied until a source attests it. [ASSUMPTION: the owner's examples are supplied in English; forms for the other languages are found by the passes, not translated from these.]
+
+CONDITION: any session asking whether an alias that no code uses is wrong, whether one form or several names a concept, how a disfavoured or colloquial form is handled, or whether equivalence-finding applies beyond the first example.
+ACTION: (1) Research every term as an equivalence class, with usage type and attestation per form. (2) Do not treat "not found in the instrument read" as a defect of a form. (3) Keep disfavoured forms with a usage note. (4) Promote a form to an attested alias only on a source's own use of it. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
