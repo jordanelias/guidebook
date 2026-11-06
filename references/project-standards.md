@@ -5172,3 +5172,22 @@ Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on rea
 CONDITION: any session asking whether an alias that no code uses is wrong, whether one form or several names a concept, how a disfavoured or colloquial form is handled, or whether equivalence-finding applies beyond the first example.
 ACTION: (1) Research every term as an equivalence class, with usage type and attestation per form. (2) Do not treat "not found in the instrument read" as a defect of a form. (3) Keep disfavoured forms with a usage note. (4) Promote a form to an attested alias only on a source's own use of it. (5) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statements, quoted above.
+
+## Owner statements 2026-11-06 (seventh) — the base grounds itself; base vocabulary is not verified and stored in evidence
+
+Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, after the session had proposed admitting about a hundred instruments as `evidence_sources` so that base aliases could be attested through `observed_terms`, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in order:
+
+> "we are working on the base to create a comprehensive multilingual multijurisdictional matrix of terms/concepts that can be leveraged by research"
+
+> "none of the work in base needs to be verified and stored in evidence."
+
+> "base grounds itself."
+
+**What this decides.**
+1. **The base is the matrix and is self-grounding.** A base cell (a concept, a language, a jurisdiction, a form) carries where it was found, in the base's own columns: the source's URL and, if need be, page and line (this extends the fifth entry of the same day: "just record page number and line if need be"). It does not point into the evidence stage, and nothing in the base waits on a source being admitted, a quote being verified in a saved file, or an observation being adjudicated.
+2. **This supersedes, for base vocabulary only,** the route the 2026-10-09 ledger entry and migration 125 set up: an attested alias reached through `observed_terms` and `evidence_sources` (`db.py add-alias` requires an adjudicated observation whose quote verifies in a file saved for its source). That route stays for evidence-stage reading of a source for a parameter (the scan contract); it is no longer the way a base alias or term is grounded. [ASSUMPTION: "none of the work in base needs to be verified and stored in evidence" is read as releasing base vocabulary from the evidence stage's admission and quote-verification, not as withdrawing the rulings that a form is something a source actually uses (OR-17; E4): a form still carries the URL and locator where it was found, and a model-generated form with no source is still flagged as a search seed.]
+3. **Consequences left open for the owner's schema decision:** whether the base cell's source columns go on `term_aliases` or on a new matrix table; what happens to `term_aliases.observation_id` (migration 125); and how a concept first met outside English is held (`terms.canonical_en` is required). A design is being prepared (`scratchpad/session_2026-11-06-base-vocabulary-review/matrix-design/`); it approves nothing.
+
+CONDITION: any session asking whether a base term or alias must be admitted as evidence, verified in a saved file or adjudicated before it enters the base, or where a base cell records its source.
+ACTION: (1) Ground a base cell by its own source columns (URL, page, line), not by an `evidence_sources` row. (2) Do not admit sources or adjudicate observations merely to populate base vocabulary. (3) Keep using `observe-term`, `adjudicate-term` and `add-alias` where a source is being read for evidence. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-06 — owner statements, quoted above.
