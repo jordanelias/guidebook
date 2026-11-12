@@ -5213,3 +5213,169 @@ Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on rea
 CONDITION: any session asking whether a concept first met in another language may have an English label, or what avoiding English bias requires of the register and the schema.
 ACTION: (1) Give a non-English-origin concept an English descriptive label, marked as ours. (2) Keep the instrument's own phrase as a form with its language, jurisdiction and source reference. (3) Attach an English-language form only on a source for an English jurisdiction. (4) Order, match and rank no column ahead of another. (5) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statement, quoted above.
+
+
+## Owner statements 2026-11-12 — a robust base for every language, jurisdiction and term; parameters defined dynamically; a source is read once for every parameter; the pipeline runs in every direction
+
+Four statements made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "ensure that our pipeline can be run in all directions at any stage in such a manner where we can dynamically research, adjudicate, synthesize, specify and render across a multitude of languages and jurisdictions."
+
+> "ensure that we have a robust base for languages/jurisdictions/terms/etc so that we can leverage all of them for comprehensive research, and ensure that we can dynamically derive/define new parameters as well as find linkages and equivalencies and clauses in order to group things as much as possible for clarity and robustness"
+
+> "ensure that whenever we read a source we are able to derive all information relevant to all parameters we have defined in our base so that we don't have to repeatedly read a source to get values or worry about missing it"
+
+> "Fable has permission to design, author, curate, orchestrate, delete as required to ensure code pipeline works as desired" — confirmed on the assistant's reading (code, schema, scripts, checks and skills; doctrine stays owner-gated) — and, later, "Fable allowed to curiously stress test, patch and iterat[e]".
+
+**What this records.**
+1. **Objective.** The pipeline is to be runnable in every direction from any stage, dynamically, across many languages and jurisdictions. This was an unrecorded objective in the top-down audit ledger (C-17).
+2. **Base.** Languages, jurisdictions, terms and the rest of the base are to be a robust substrate that research can use in full, new parameters are to be derivable or definable dynamically, and linkages, equivalencies and clauses are to be found and used to group, for clarity and robustness.
+3. **Read once.** A source read is to yield everything relevant to every parameter defined in the base, so no source is re-read for values and nothing is missed. This restates, and does not replace, the 2026-10-09 statement that every source is scanned for every parameter and OR-11a's full-scope scan.
+4. **Authority.** A Fable implementation agent may design, author, curate, orchestrate, delete, stress test, patch and iterate on the code pipeline, within the rules that bind code (migrations only for the database, tooling and research rows in separate PRs, scratch copies for stress tests). Mission, audience, CRPD posture, population taxonomy, evidence-tier definitions, jurisdiction scope, licensing and trajectory remain the owner's. [ASSUMPTION: the grant covers the code pipeline and not doctrine — the owner answered "Assumption is correct" to this reading.]
+
+**What it does not decide.** What "render across languages" means, whether a determination varies by jurisdiction, and how a parameter added after a source was read is applied to that source (re-read, or retained text) are open and are `OWNER DECISION REQUIRED` items in the audit's improvement programme.
+
+CONDITION: any session asking what the pipeline's omnidirectional, multilingual, multijurisdictional or read-once objectives are, or what authority the implementation agent holds.
+ACTION: (1) Treat the three objective statements as live requirements on the pipeline. (2) Do not re-read a source to extract a parameter that the source's earlier full-scope reading already covered; where a parameter postdates the reading, a catalogue-growth route must exist and is owed. (3) Implement under the authority in item 4 and no wider. (4) Treat the doctrine questions above as the owner's.
+DATE: 2026-11-12 — owner statements, quoted above.
+
+
+## Owner statement 2026-11-12 (second) — parameters are approached from a higher, abstract vantage so that commonality survives and can be unified, then specified
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "recognize that we need to approach parameters from a higher level abstract vantage as too many clauses and subclauses means we may lose commonality and therefore can't unify then specify"
+
+**What this records.** The grain at which a parameter is defined is to be abstract enough that clauses and subclauses from different instruments and jurisdictions remain comparable; defined too finely, the commonality is lost and nothing can be unified, so nothing can be specified. The order named is unify, then specify.
+
+**What it does not decide.** How the abstraction is represented (a parent/child or family relation, an equivalence group, a coarser parameter list), who judges a grouping, and how clause-level traceability is kept under a coarser parameter are open. It touches the 2026-08-26 ruling that the judgment object is the canonical parameter and the 2026-10-09 statement that the parameter list is seeded from the existing terms; neither is superseded by this entry. Whether a granularity policy is doctrine (owner-gated) or a tooling convention is `OWNER DECISION REQUIRED` in the audit's improvement programme. [ASSUMPTION: "higher level abstract vantage" is read as a change of grain for parameters, not as permission to discard clause-level extractions.]
+
+CONDITION: any session defining, splitting, merging or grouping parameters, or asking why a determination cannot be unified across instruments.
+ACTION: (1) Treat commonality across clauses, instruments and jurisdictions as a property a parameter definition must preserve. (2) Keep clause-level extractions and reach them from an abstract parameter by pointer. (3) Do not decide the grouping mechanism or the granularity policy without the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (third) — synthesis finds equivalencies, adjacencies, similarities and commonalities dynamically, so that it can discuss things properly
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), directly after the second statement of the same day, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "so our synthesis needs to be very dynamic in finding equivalencies/adjacencies/similarities/commonalities so that it can discuss things properly"
+
+**What this records.** The synthesis stage is the one that finds the relations between parameters, clauses, instruments and jurisdictions (equivalence, adjacency, similarity, commonality) and does so dynamically, as a request needs it, in order that the book's discussion is sound. It is the step that makes the abstraction in the second statement usable: unify, then specify.
+
+**What it does not decide.** The relation types, their representation, who judges them, and how a dynamic run is initiated are open. It does not change the rule that only an Opus-class model authors `best_practice_synthesis`. [ASSUMPTION: "synthesis" is read as the pipeline stage of that name, not as `best_practice_synthesis` alone.]
+
+CONDITION: any session designing or running synthesis, connection discovery or convergence.
+ACTION: (1) Treat finding equivalencies, adjacencies, similarities and commonalities as synthesis's duty, to be done on demand and not only in a planned batch. (2) Record each relation as a pointer between existing rows and copy no fact (rule 5). (3) Leave the mechanism to the audit's improvement programme and the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (fourth) — information from the stress tests may be retained across topics, at Fable's judgment of worth
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "permission to retain information from the stress tests across topics if fable deems them worthwhile"
+
+**What this records.** What a stress test learns about one topic — a behaviour, a defect, a retrieved source, a defined term or parameter, a language or jurisdiction handled — may be kept for use in the other topics, where the Fable implementation agent judges it worth keeping. The judgment of worth is Fable's.
+
+**What it does not decide.** It does not relax the rules on how a database row gets in, and it does not make a fixture real. [ASSUMPTION: "retain" covers records (logs, findings, scripts, plans) and, for the database, only rows that are real research, entered by migration. Rows the script labels `STRESS-FIXTURE` exercised a code path and are not research; they are not retained as data. Rows that are retained ship in a research pull request apart from tooling (`CLAUDE.md` rule 10), re-retrieved and verified like any other admission (R10), by the write path of §4.]
+
+CONDITION: any session deciding what from a stress test to keep, or whether a stress-test result may carry between topics.
+ACTION: (1) Keep stress-test records the Fable agent judges worth keeping, and use them across topics. (2) Do not retain `STRESS-FIXTURE` rows as data. (3) Enter any retained research row by migration, in a research pull request apart from tooling, after re-retrieval and verification. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (fifth) — the overall code is efficient, centralized and clean
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "ensure the overall code is efficient and centralized and clean"
+
+**What this records.** A standing requirement on the code as a whole: efficient (no avoidable cost in time or in repeated work), centralized (one home for each rule, vocabulary, function and fact, so a change is made once), and clean (no dead, duplicated or contradictory apparatus). It extends and does not replace the 2026-10-12 and 2026-11-06 statements on minimising code and the rule-5 and rule-8 doctrine of one home per fact.
+
+**What it does not decide.** Which duplications to remove first, whether a large module is split, and what counts as "efficient" for each tool are open and belong to the audit's improvement programme. A cleanup is a change to code and is held to the same rules as any: behaviour-preserving unless a defect is being fixed, callers swept (rule 4), tooling apart from research rows (rule 10), and proven by a test that could go red. [ASSUMPTION: "overall code" is read as the scripts, schemas, checks, skills and hooks, not the guidebook's prose or data.]
+
+CONDITION: any session adding, moving, merging or deleting code, or asked whether a piece of code is redundant, duplicated or in the wrong place.
+ACTION: (1) Prefer one home per rule, vocabulary or function, and point to it rather than copy it. (2) Delete dead and duplicated code on evidence. (3) Measure efficiency before changing it. (4) Preserve behaviour under a refactor and prove it with a before-and-after comparison. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (sixth) — the pipeline must be flexible
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "pipeline must be flexible"
+
+**What this records.** A standing property required of the pipeline as a whole, beside the objectives of the first statement of the day (any direction, any stage, dynamic, many languages and jurisdictions) and the fifth (efficient, centralized, clean). It is stated without a gloss.
+
+**What it does not decide.** What flexibility means in practice (a stage, a parameter, a language, a jurisdiction, a vocabulary or a run shape added or changed without editing code; a run entered, left or repeated at any point; a rule changed in one place) and where it must give way to a gate that holds a line are open. The tension with the derive-not-curate and one-home rules, and with gates that refuse, is for the audit's improvement programme to state; this entry resolves none of it. [ASSUMPTION: "flexible" is read as adaptable by data and configuration at the points the owner has named, not as the loosening of any refusal the project holds on purpose.]
+
+CONDITION: any session adding a fixed list, an enum, a hard-coded order or a one-shape run to the pipeline, or weighing a gate against the need to adapt.
+ACTION: (1) Prefer a change that is made by data or in one place over one that edits code in several. (2) Do not bake a stage, language, jurisdiction or run shape into code where the schema or a single registry can hold it. (3) Keep the refusals the project holds on purpose. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statements 2026-11-12 (seventh) — flexible means no hard-coded behaviours and no dead ends
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), within minutes of the sixth statement and glossing it, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in the order sent:
+
+> "and that means pipeline must not have hard coded behaviours"
+
+> "or dead ends or whatever"
+
+**What this records.** The owner's gloss on "the pipeline must be flexible": the pipeline is to carry no hard-coded behaviours and no dead ends, "or whatever" of that kind. This supplies the meaning the sixth statement left open; the [ASSUMPTION] in the sixth entry about the reading of "flexible" is superseded by this gloss on that point only.
+
+**What it does not decide.** What counts as a hard-coded behaviour (a literal, a fixed list, a fixed order, a branch on a name) as against a rule held once in a registry, a column CHECK or a contract; what counts as a dead end (a state, a row, a path, a refusal or a stage with no way onward, back or out); and the "whatever" are open and belong to the audit's improvement programme. Deliberate refusals the project holds on purpose (`CLAUDE.md` §4) are not hard-coded behaviours in this sense unless the owner says so. [ASSUMPTION: "dead end" covers a reader's, a run's and a record's: a path that cannot continue or return, a row that cannot be ended or corrected, a refusal that does not say what to do next, a stage with no outbound or inbound route.]
+
+CONDITION: any session adding a fixed list, literal, order, name-branch or one-way state to the pipeline, or finding a path, row, stage or refusal that leads nowhere.
+ACTION: (1) Hold each rule once, in the schema, a registry or the contract, and read it from there. (2) Treat a path, row, state or refusal that leads nowhere as a defect to record and remove. (3) Keep deliberate refusals. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statements, quoted above.
+
+
+## Owner statement 2026-11-12 (eighth) — a spelled-out number is translated into a numeral and unit; the untranslated wording may be kept as provenance
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), in answer to the pilot of task T-008 (a claimed number checked as a number), which showed that a spelled-out `claimed_value` (Dutch "vijf", Finnish "viisi prosenttia") could not be filed under a check that reads numerals. Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, the two phrases being the pilot's examples:
+
+> "\"vijf\" or \"viisi prosenttia\"
+>
+> lol just translate these into numbers/units as applicable. you can have an untranslated column for provenance if you want"
+
+**What this decides.**
+1. **A number written in words is translated into a numeral, and a unit where there is one,** at extraction. `claimed_value` and `claimed_unit` hold the numeral and the unit ("vijf" becomes 5; "viisi prosenttia" becomes 5 and %). The check that a claimed number is a number therefore applies to every row, and no row needs an exemption for being spelled out.
+2. **The wording as the source gave it may be kept in its own column,** so the translation can be seen against what it translates. The owner leaves the column to the implementer ("if you want"). `claim_text` still holds the verbatim quote.
+
+**What it does not decide.** The column's name, whether it is required, whether the translation is checked against the as-written wording (for example, that the wording occurs in the quote), and how the two stored rows that the pilot found (extraction 30, Dutch "vijf"; extraction 80, Finnish "viisi prosenttia") are brought into line. These belong to the task that implements it. This supplies the answer to GAP-056 on the point of how a spelled-out value is filed; it does not close the gap's other parts.
+
+CONDITION: any session extracting a figure a source writes in words, or changing the check on claimed values.
+ACTION: (1) Enter the numeral and unit as `claimed_value` and `claimed_unit`. (2) Keep the source's own wording as provenance in a column of its own where it differs from the numeral. (3) Do not exempt a row from the number check for being spelled out. (4) Do not back-translate or invent: the translation is of what the quote says.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (ninth) — everything non-English is translated, probably at synthesis, or wherever it is needed
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), directly after the eighth statement (spelled-out numbers translated into numerals and units), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "probably at synthesis or whatever we need to actually translate everything"
+
+**What this records.** The text the pipeline holds in other languages (quotations, terms, clauses, titles) is to be translated, all of it, so that it can be compared and discussed together. The owner's view of where is "probably at synthesis", and "or whatever we need": the stage is not fixed in advance, and translation is available wherever a stage needs it. Read with the eighth statement, a number is translated at extraction because the number check needs a numeral there; the rest is translated when and where it is needed, probably at synthesis.
+
+**What it does not decide.** Which stage owns translation by default, who or what translates (a person, a model, a tool) and at what class, how a translation is marked so it is never taken for the source's own words, whether a translation is reviewed, and which language is translated into (the language of a page: OD-02). It narrows OD-02 on one point only: that quotations may be translated. It does not relax the rule that a model's wording is never presented as a source's term (OR-17, E1), or the 2026-11-06 statements that English is not the pivot that decides which concepts exist (the sixth and eighth statements of that date). [ASSUMPTION: "translate everything" is read as a standing capability of the pipeline, held apart from the source text and pointing at it, not as the replacement of the source text by its translation.]
+
+CONDITION: any session translating, or deciding where translation happens, or presenting a translated quotation, term or clause.
+ACTION: (1) Treat translation as a capability to be called at the stage that needs it, not as a step fixed in one stage. (2) Keep the untranslated text and attach the translation to it by pointer, marked as a translation with its translator. (3) Never present a translation as the source's own wording. (4) Leave the default stage, the translator's class and the target language to the audit's programme and the owner. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (tenth) — a rule that synthesis translates is not necessarily hard-coding
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), directly after the ninth statement (everything non-English is translated, probably at synthesis), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "we can set a rule for synthesis to translate, which isn't hardcoding necessarily"
+
+**What this records.** Synthesis may be given a rule to translate, and a rule of that kind is not, of itself, a hard-coded behaviour in the sense of the seventh statement. It is a gloss on the line between the two: a behaviour held once, as a stated rule that can be read and changed in one place, is permitted; a behaviour fixed as a literal or a branch scattered through code is not.
+
+**What it does not decide.** Where the rule is held (the pipeline contract, the check registry, a configuration table), how it is read, and whether the owner or the implementer may change it. The "necessarily" leaves cases open: a rule can still be hard-coding if it is buried in code or restated in several places. It does not make translation exclusive to synthesis (ninth statement: wherever it is needed). [ASSUMPTION: the sentence is read as setting synthesis as the default stage for translation by a rule held in one place that other stages can override or call, not as fixing translation to synthesis alone.]
+
+CONDITION: any session placing translation, or any other default behaviour, in a stage, or judging whether a stated rule is hard-coding.
+ACTION: (1) Hold a default behaviour, including "synthesis translates", as a rule in one stated place and read it from there. (2) Do not scatter it as a literal or a name-branch in code. (3) Keep the capability callable from other stages. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.

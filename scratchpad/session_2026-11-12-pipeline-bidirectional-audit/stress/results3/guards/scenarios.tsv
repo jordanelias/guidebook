@@ -1,0 +1,13 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+guards.001.guards.record-scan	0	0.36	1	scan recorded so the writer reaches its fidelity guards	{
+guards.002.guards.control-exact	1	0.17	0	claimed value '1:12' against a quote holding '1:12': control accepted, mismatches refused	REFUSING: add-extraction: extraction 119 already carries this exact row (REF-00139, parameter 3, same lenses, claim, value, text and locator
+guards.003.guards.digit-substring	0	0.2	1	claimed value '1:1' against a quote holding '1:12': control accepted, mismatches refused	{
+guards.004.guards.decimal-shift	0	0.21	1	claimed value '1.2' against a quote holding '1:12': control accepted, mismatches refused	{
+guards.005.guards.extra-digit	1	0.2	0	claimed value '1:120' against a quote holding '1:12': control accepted, mismatches refused	REFUSING: add-extraction: claimed_value '1:120' contains ['120'], which do not appear in the verified --claim-text. A number attached to a q
+guards.006.guards.drop-colon	0	0.21	1	claimed value '112' against a quote holding '1:12': control accepted, mismatches refused	{
+guards.007.guards.number-in-words	0	0.18	1	claimed value 'twelve' against a quote holding '1:12': control accepted, mismatches refused	{
+guards.008.guards.fullwidth-digits	1	0.19	0	claimed value '１：１２' against a quote holding '1:12': control accepted, mismatches refused	REFUSING: add-extraction: claimed_value '１：１２' contains ['１', '１２'], which do not appear in the verified --claim-text. A number attached to 
+guards.009.guards.unit-in-prose	0	0.18	1	claimed value '1:12' against a quote holding '1:12': control accepted, mismatches refused	{
+guards.010.guards.quote-extra-space	1	0.23	0	a quote altered only by whitespace/homoglyph is judged against the held text	REFUSING: R3: REF-00139 is tier 6 -- the regulatory stratum -- and this row states a value with no structured locator. A code, standard or s
+guards.011.guards.quote-homoglyph	1	1.97	0	a quote altered only by whitespace/homoglyph is judged against the held text	REFUSING: add-extraction: --claim-text does not occur in any persisted retrieval artefact (EXAMINED: 505 persisted artefact(s) under retriev
+guards.012.guards.quote-truncated	1	0.2	0	a quote altered only by whitespace/homoglyph is judged against the held text	REFUSING: R3: REF-00139 is tier 6 -- the regulatory stratum -- and this row states a value with no structured locator. A code, standard or s

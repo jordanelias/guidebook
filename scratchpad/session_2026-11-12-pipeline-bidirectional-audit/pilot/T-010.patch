@@ -1,0 +1,164 @@
+From 4c82d6f90a79949da18aa18c9e9ba293f129f2a9 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 12 Nov 2026 05:48:27 +0000
+Subject: [PATCH] governance: refuse promoting lens, method and legal terms to
+ parameters [2026-11-12 05:48]
+
+add-parameter now refuses a term filed under dbcore.NON_QUANTITY_DOMAINS (functional_axis, population, medical, methodology, legal, economics); the refusal prints the live parameter domains. Before: add-parameter --term-id TERM-041 (functional_axis) rc=0, parameter minted. After: refused, nothing written; TERM-075 (legal) likewise; a circulation term still promotes. No live parameter sits in a refused domain. Tests: A7b cases AP1-AP5 in test_run_pipeline_refusals (AP1 red on the unchanged code; AP2-AP3 red with the refusal seeded off); test_scan_contract FREE fixture skips refused domains (V03 regressed otherwise). Sweep: callers in tests and one audit comment updated; machines.yaml needles unchanged.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ub36iPMfRfMYh8c88FYpXF
+---
+ scripts/audit/research_batch_dod.py         |  2 ++
+ scripts/db.py                               | 23 ++++++++++++++---
+ scripts/dbcore.py                           | 11 ++++++++
+ scripts/tests/test_run_pipeline_refusals.py | 28 +++++++++++++++++++++
+ scripts/tests/test_scan_contract.py         |  3 ++-
+ 5 files changed, 63 insertions(+), 4 deletions(-)
+
+diff --git a/scripts/audit/research_batch_dod.py b/scripts/audit/research_batch_dod.py
+index 1fcf31e..3187e5b 100644
+--- a/scripts/audit/research_batch_dod.py
++++ b/scripts/audit/research_batch_dod.py
+@@ -989,6 +989,8 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
+     # ONE EXCEPTION, stated rather than discovered: add-parameter refuses a term whose
+     # canonical_en carries a value (db.py _VALUE_BEARING) and canonical_en has no amend
+     # path, so such a term could be disposed of only by a declination that would be untrue.
++    # A SECOND, T-010: add-parameter also refuses a term filed under a lens, method or law
++    # domain (dbcore.NON_QUANTITY_DOMAINS); decline-parameter disposes of it, truthfully.
+     # add-term refuses those names, and no live term carries one; re-derive by matching
+     # `select canonical_en from terms` against _VALUE_BEARING. Meeting one is a GAP to file.
+     # THE PREDICATE IS WIDER THAN THE RULE'S TITLE. Nothing here can tell whether a source
+diff --git a/scripts/db.py b/scripts/db.py
+index 280a366..f194de7 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -1823,8 +1823,8 @@ def main():
+                           help="Promote an adjudicated term into base_parameters "
+                                "(THE SUBJECT of a determination)")
+     p_ap.add_argument("--term-id", dest="term_id", required=True,
+-                      help="terms.term_id. Refused if absent, declined, value-bearing or "
+-                           "already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
++                      help="terms.term_id. Refused if absent, declined, value-bearing, "
++                           "filed under a lens/method/law domain or already a parameter. A NAMES-NEW/NAMES-EXISTING adjudication is "
+                            "REPORTED as provenance, not required (insert_parameter)")
+     p_ap.add_argument("--notes")
+     p_ap.add_argument("--session", required=True)
+@@ -6789,6 +6789,9 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
+     which is the trap `insert_term` was built to close, wearing a new coat. The result
+     reports which provenance a promotion had; that is information for the operator, not
+     a gate.
++    * A term filed under a lens, method or law domain (`dbcore.NON_QUANTITY_DOMAINS`, T-010):
++      it names a way of looking or a body of law, not a quantity of the built environment.
++      The refusal prints the live parameter domains so the rule can be seen.
+     * A second parameter for the same term. The column is UNIQUE, so the database
+       refuses it anyway; this says WHICH parameter already holds the term, because a
+       dual home is rule 5's central prohibition and the fix is to use the existing one.
+@@ -6807,7 +6810,7 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
+     if not term_id:
+         raise Refusal("--term-id is required: a parameter is a pointer at a term.")
+     with connect(dry_run) as conn:
+-        term = conn.execute("SELECT term_id, canonical_en FROM terms WHERE term_id=?",
++        term = conn.execute("SELECT term_id, canonical_en, domain FROM terms WHERE term_id=?",
+                             [term_id]).fetchone()
+         if term is None:
+             raise Refusal(
+@@ -6815,6 +6818,20 @@ def insert_parameter(term_id: str, session: str, notes: str = None,
+                 f"comes from an observed phrase:\n"
+                 f"  db.py observe-term ...   then   db.py add-term --from-observation N "
+                 f"--canonical-en '...' --rationale '...'")
++        if term["domain"] in dbcore.NON_QUANTITY_DOMAINS:
++            live = sorted(d for (d,) in conn.execute(
++                "SELECT DISTINCT t.domain FROM base_parameters p JOIN terms t USING (term_id) "
++                "WHERE t.domain IS NOT NULL"))
++            raise Refusal(
++                f"{term_id} ({term['canonical_en']!r}) is filed under the domain "
++                f"{term['domain']!r}, which names a lens, a method or a body of law, not a "
++                f"quantity of the built environment. A parameter is what is under "
++                f"determination in a room, a route or a fitting.\n"
++                f"Domains of the live parameters: {live}. Refused domains: "
++                f"{sorted(dbcore.NON_QUANTITY_DOMAINS)} (dbcore.NON_QUANTITY_DOMAINS).\n"
++                f"If the term is a quantity filed under the wrong domain, no verb corrects a "
++                f"term's domain today: file it as a GAP; do not hand-write SQL. Nothing was "
++                f"written.")
+         declined = conn.execute(
+             "SELECT reason, created_at, created_by_session FROM parameter_declinations "
+             "WHERE term_id=? AND revoked_at IS NULL", [term_id]).fetchone()
+diff --git a/scripts/dbcore.py b/scripts/dbcore.py
+index 5f671bf..82936a4 100644
+--- a/scripts/dbcore.py
++++ b/scripts/dbcore.py
+@@ -1064,6 +1064,17 @@ def check_jurisdiction(value, context: str):
+ # — CLAUDE.md rule 4's "treat a 0-row object as unproven, not clean", inside this
+ # module's own load-bearing list.
+ 
++#: Domains under which the lens registries, method terms and bodies of law are filed in `terms`: a
++#: term filed there names a lens, a method or a body of law, not a quantity of the built environment,
++#: so `add-parameter` refuses it (T-010). Justified 2026-11-12 by
++#:   select domain, count(*) from terms group by domain
++#: against
++#:   select distinct t.domain from base_parameters p join terms t using(term_id)
++#: -- no live parameter sits in any of these. This is a stop-gap: the full rule (a parameter states its
++#: quantity kind, T-020) replaces it; do not extend it by hand.
++NON_QUANTITY_DOMAINS = frozenset(
++    {"functional_axis", "population", "medical", "methodology", "legal", "economics"})
++
+ #: Tables a writer touches that must NOT be captured into a batch migration, each with
+ #: the reason it is excluded. This is the ONLY hand-maintained half, and the burden of
+ #: proof now sits here: a table is captured unless someone argues it out.
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index 276505f..a4d8ac0 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -657,6 +657,34 @@ else:
+                 dry_run=True)
+     record("T03", "adjudicate-term refuses NAMES-NEW, naming add-term", r and "add-term" in r, r)
+ 
++print("Section A7b: add-parameter refuses a term filed under a lens, method or law domain (T-010)")
++# The refused set is dbcore.NON_QUANTITY_DOMAINS (one home); the probes are DERIVED from the live terms.
++REFUSED_DOMAINS = sorted(getattr(dbcore, "NON_QUANTITY_DOMAINS", ()))
++if feature("AP1", "dbcore.NON_QUANTITY_DOMAINS names the refused domains", REFUSED_DOMAINS,
++           "dbcore.NON_QUANTITY_DOMAINS"):
++    free = ("t.term_id NOT IN (SELECT term_id FROM base_parameters) AND t.term_id NOT IN "
++            "(SELECT term_id FROM parameter_declinations WHERE revoked_at IS NULL)")
++    for i, dom in enumerate(("functional_axis", "legal"), start=1):
++        t_ = q(f"SELECT t.term_id, t.canonical_en FROM terms t WHERE t.domain=? AND {free} ORDER BY t.term_id LIMIT 1", dom)
++        if not t_:
++            skip(f"AP{i + 1}", f"no unpromoted term of domain {dom}")
++            continue
++        r = refusal(db.insert_parameter, t_[0]["term_id"], S, dry_run=True)
++        record(f"AP{i + 1}", f"add-parameter refuses {t_[0]['term_id']} {t_[0]['canonical_en']!r} (domain {dom}), "
++                             f"naming the domain and printing the live parameter domains",
++               r and dom in r and all(d in r for (d,) in q("SELECT DISTINCT t.domain FROM base_parameters p "
++                                                           "JOIN terms t USING (term_id)")), r)
++    t_ = q(f"SELECT t.term_id, t.canonical_en FROM terms t WHERE t.domain='circulation' AND {free} "
++           "AND t.canonical_en NOT GLOB '*[0-9]*' ORDER BY t.term_id LIMIT 1")
++    if not t_:
++        skip("AP4", "no unpromoted circulation term")
++    else:
++        res, err = ok(db.insert_parameter, t_[0]["term_id"], S, dry_run=True)
++        record("AP4", f"a circulation term ({t_[0]['term_id']}) is still promoted", res is not None, err)
++    live_bad = q("SELECT DISTINCT t.domain FROM base_parameters p JOIN terms t USING (term_id) "
++                 f"WHERE t.domain IN ({','.join('?' * len(REFUSED_DOMAINS))})", *REFUSED_DOMAINS)
++    record("AP5", "no live parameter sits in a refused domain (the rule orphans nothing)", not live_bad, live_bad)
++
+ print("Section A11: a harm finding carries its insufficient edge")
+ r = refusal(db.insert_extraction, extraction(FULL_REF, P_FULL, figure_role="finding",
+                                              harm_finding=1),
+diff --git a/scripts/tests/test_scan_contract.py b/scripts/tests/test_scan_contract.py
+index 2aa2171..5d5d489 100644
+--- a/scripts/tests/test_scan_contract.py
++++ b/scripts/tests/test_scan_contract.py
+@@ -223,7 +223,8 @@ try:
+     FREE = [t for (t,) in q(
+         "SELECT term_id FROM terms t WHERE NOT EXISTS (SELECT 1 FROM base_parameters p "
+         "WHERE p.term_id = t.term_id) AND NOT EXISTS (SELECT 1 FROM parameter_declinations "
+-        "d WHERE d.term_id = t.term_id) ORDER BY term_id")
++        "d WHERE d.term_id = t.term_id) AND COALESCE(t.domain, '') NOT IN (%s) ORDER BY term_id"
++        % ",".join("?" * len(dbcore.NON_QUANTITY_DOMAINS)), *sorted(dbcore.NON_QUANTITY_DOMAINS))
+         if not db._VALUE_BEARING.search(q("SELECT canonical_en FROM terms WHERE term_id=?",
+                                           t)[0][0])]
+     PAGES = ["Fixture page one: the clear width of a door leaf is measured here.",
+-- 
+2.43.0
+

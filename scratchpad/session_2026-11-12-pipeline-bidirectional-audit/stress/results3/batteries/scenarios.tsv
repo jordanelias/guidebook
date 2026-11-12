@@ -1,0 +1,11 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+batteries.001.battery.syntax	0	1.23	0	battery syntax run as the runner requires (--all)	==============================================================================
+batteries.002.battery.structure	0	0.16	0	battery structure run as the runner requires (--all)	==============================================================================
+batteries.003.battery.data	0	3.45	0	battery data run as the runner requires (--all)	==============================================================================
+batteries.004.battery.db_integrity	0	0.91	0	battery db_integrity run as the runner requires (--all)	==============================================================================
+batteries.005.battery.tests	0	79.35	0	battery tests run as the runner requires (--all)	==============================================================================
+batteries.006.battery.schema	0	3.86	0	battery schema run as the runner requires (--all)	==============================================================================
+batteries.007.battery.governance	0	16.13	0	battery governance run as the runner requires (--all)	==============================================================================
+batteries.008.battery.attestation	0	0.71	0	battery attestation run as the runner requires (--all)	==============================================================================
+batteries.009.battery.research	0	3.86	0	battery research run as the runner requires (--all)	==============================================================================
+batteries.010.battery.render	0	0.47	0	battery render run as the runner requires (--all)	==============================================================================

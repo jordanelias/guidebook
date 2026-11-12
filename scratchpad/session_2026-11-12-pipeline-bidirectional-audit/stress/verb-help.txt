@@ -1,0 +1,1893 @@
+=== add-alias rc=0
+usage: db.py add-alias [-h] --term-id TERM_ID --observation-id OBSERVATION_ID
+                       --alias-type {BROADER,DEPRECATED,DOMAIN,NARROWER,SYNONYM,TRANSLATION}
+                       --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --term-id TERM_ID
+  --observation-id OBSERVATION_ID
+  --alias-type {BROADER,DEPRECATED,DOMAIN,NARROWER,SYNONYM,TRANSLATION}
+                        from the column's CHECK; DEPRECATED is rename-term's
+  --session SESSION
+  --dry-run
+
+=== add-candidate rc=0
+usage: db.py add-candidate [-h] [--exec-id EXEC_ID]
+                           [--found-under-slug FOUND_UNDER_SLUG]
+                           [--suggested-slug SUGGESTED_SLUG]
+                           --disposition {ADMITTED,EXHAUSTED,MISCELLANEOUS,OUT-OF-SCOPE,PENDING-VERIFICATION,REHOME}
+                           --title TITLE [--locator LOCATOR]
+                           [--locator-status LOCATOR_STATUS]
+                           [--tier-guess TIER_GUESS] [--harm-finding {0,1}]
+                           [--why-not-admitted WHY_NOT_ADMITTED]
+                           [--notes NOTES] --surfaced-in SURFACED_IN
+                           [--surfaced-quote SURFACED_QUOTE] --session SESSION
+                           [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --exec-id EXEC_ID
+  --found-under-slug FOUND_UNDER_SLUG
+                        required unless --exec-id names a search that has no
+                        slug
+  --suggested-slug SUGGESTED_SLUG
+  --disposition {ADMITTED,EXHAUSTED,MISCELLANEOUS,OUT-OF-SCOPE,PENDING-VERIFICATION,REHOME}
+                        Live vocabulary, derived from the table; not a list in
+                        this file
+  --title TITLE
+  --locator LOCATOR
+  --locator-status LOCATOR_STATUS
+  --tier-guess TIER_GUESS
+  --harm-finding {0,1}
+  --why-not-admitted WHY_NOT_ADMITTED
+  --notes NOTES
+  --surfaced-in SURFACED_IN
+                        retrieval-log/<session>/<file> (must already be a
+                        search_execution_artefacts row for --exec-id), or a
+                        tracked transcripts/ file
+  --surfaced-quote SURFACED_QUOTE
+                        a verbatim string from --surfaced-in, required only
+                        when locator carries no single DOI
+  --session SESSION
+  --dry-run
+
+=== add-case-study rc=0
+usage: db.py add-case-study [-h] --case-study-id CASE_STUDY_ID --slug SLUG
+                            --title TITLE --building-type BUILDING_TYPE
+                            --location LOCATION [--year YEAR]
+                            [--harm-finding {0,1}] --status STATUS
+                            [--sources SOURCES] [--notes NOTES]
+                            --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --case-study-id CASE_STUDY_ID
+  --slug SLUG
+  --title TITLE
+  --building-type BUILDING_TYPE
+  --location LOCATION
+  --year YEAR
+  --harm-finding {0,1}
+  --status STATUS
+  --sources SOURCES     Material with NO ref_id. A REF-NNNNN here is refused
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-code-lead rc=0
+usage: db.py add-code-lead [-h] --jurisdiction JURISDICTION
+                           --standard-name STANDARD_NAME [--clause CLAUSE]
+                           [--status {REFERENCE-ONLY,RETRIEVED,SUPERSEDED}]
+                           [--recovered-from RECOVERED_FROM] [--notes NOTES]
+                           [--distinct-from LEAD_ID] [--reason REASON]
+                           --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --jurisdiction JURISDICTION
+                        e.g. GB, DE, ISO. NOT NULL: a lead that cannot say
+                        where it applies is not retrievable.
+  --standard-name STANDARD_NAME
+                        e.g. 'BS 8300-2:2018'. Keyed with --jurisdiction;
+                        restating one standard per design parameter is
+                        refused, and so is a name that differs from a held one
+                        only in case, spacing or punctuation (see --distinct-
+                        from).
+  --clause CLAUSE       R3's locator: clause/section/page, once retrieved
+  --status {REFERENCE-ONLY,RETRIEVED,SUPERSEDED}
+                        Live vocabulary, derived from the table; not a list in
+                        this file
+  --recovered-from RECOVERED_FROM
+  --notes NOTES
+  --distinct-from LEAD_ID
+                        Repeatable. Admit a name that folds to the same key as
+                        this held lead because they are genuinely different
+                        documents. Requires --reason, which is appended to
+                        --notes.
+  --reason REASON       Only with --distinct-from: why the near-identical
+                        names are two documents.
+  --session SESSION
+  --dry-run
+
+=== add-conflict rc=0
+usage: db.py add-conflict [-h] [--conflict-id CONFLICT_ID]
+                          --parameter-id PARAMETER_ID --domain DOMAIN
+                          --pop-a POP_A --pop-b POP_B
+                          --status {ACTIVE,CLOSED,DEFERRED,PROPOSED,RESOLVED-CONSENSUS,RESOLVED-EVIDENCE,RETIRED,SUPERSEDED,UNRESOLVED}
+                          [--resolution RESOLUTION] [--evidence EVIDENCE]
+                          [--gap-id GAP_ID] [--source-skill SOURCE_SKILL]
+                          --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --conflict-id CONFLICT_ID
+                        CONF-NNNN (auto-generated if omitted)
+  --parameter-id PARAMETER_ID
+                        base_parameters.parameter_id the two populations pull
+                        in opposite directions on (the key, migration 122)
+  --domain DOMAIN       the skill's domain label for the parameter (prose; the
+                        key is --parameter-id)
+  --pop-a POP_A         base_taxonomy_identity.identity_code; the pair is
+                        ordered by the writer, in either order
+  --pop-b POP_B         the other identity_code
+  --status {ACTIVE,CLOSED,DEFERRED,PROPOSED,RESOLVED-CONSENSUS,RESOLVED-EVIDENCE,RETIRED,SUPERSEDED,UNRESOLVED}
+  --resolution RESOLUTION
+  --evidence EVIDENCE
+  --gap-id GAP_ID
+  --source-skill SOURCE_SKILL
+  --session SESSION
+  --dry-run
+
+=== add-connection rc=0
+usage: db.py add-connection [-h] [--con-id CON_ID]
+                            [--status {CLOSED,CONSUMED,CONSUMED-DEFERRED,PENDING}]
+                            --confidence {HIGH,MODERATE}
+                            --connection-type {COMPOUND-INTERACTION,CROSS-PARAMETER,CROSS-POPULATION,METHODOLOGY}
+                            --filed-in FILED_IN --description DESCRIPTION
+                            --source-skill SOURCE_SKILL
+                            [--parameter T_PARAMETERS] [--target-slug T_SLUGS]
+                            [--identity T_IDENTITIES]
+                            [--extraction T_EXTRACTIONS]
+                            [--methodology T_METHODOLOGIES] --session SESSION
+                            [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --con-id CON_ID       COMPUTED when omitted (db.py next-id connections); a
+                        given value must equal it
+  --status {CLOSED,CONSUMED,CONSUMED-DEFERRED,PENDING}
+  --confidence {HIGH,MODERATE}
+  --connection-type {COMPOUND-INTERACTION,CROSS-PARAMETER,CROSS-POPULATION,METHODOLOGY}
+  --filed-in FILED_IN   a topic slug (slugs.slug)
+  --description DESCRIPTION
+  --source-skill SOURCE_SKILL
+  --parameter T_PARAMETERS
+                        base_parameters.parameter_id this connection joins
+  --target-slug T_SLUGS
+                        slugs.slug this connection joins
+  --identity T_IDENTITIES
+                        base_taxonomy_identity.identity_code (the identity
+                        lens)
+  --extraction T_EXTRACTIONS
+                        source_value_extractions.extraction_id
+  --methodology T_METHODOLOGIES
+                        a methodological principle by name; the one target
+                        kind with no table
+  --session SESSION
+  --dry-run
+
+=== add-economics-entry rc=0
+usage: db.py add-economics-entry [-h] --entry-id ENTRY_ID --pillar PILLAR
+                                 --entry-type ENTRY_TYPE [--ref-id REF_ID]
+                                 [--source SOURCE] --finding FINDING
+                                 --status STATUS
+                                 [--value-numeric VALUE_NUMERIC]
+                                 [--value-unit VALUE_UNIT]
+                                 [--currency CURRENCY]
+                                 [--jurisdiction JURISDICTION] [--notes NOTES]
+                                 --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --entry-id ENTRY_ID
+  --pillar PILLAR
+  --entry-type ENTRY_TYPE
+  --ref-id REF_ID       Preferred. Bibliographic facts are reached through it
+  --source SOURCE       Only for an entry with NO ref_id
+  --finding FINDING
+  --status STATUS
+  --value-numeric VALUE_NUMERIC
+  --value-unit VALUE_UNIT
+  --currency CURRENCY
+  --jurisdiction JURISDICTION
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-extraction rc=0
+usage: db.py add-extraction [-h] --ref-id REF_ID --parameter-id PARAMETER_ID
+                            [--identity IDENTITY] [--icf ICF] [--needs NEEDS]
+                            [--medical MEDICAL]
+                            --claim-type {absent,framework,numerical,qualitative,range}
+                            [--claimed-value CLAIMED_VALUE]
+                            [--claimed-unit CLAIMED_UNIT]
+                            [--verbatim-exempt VERBATIM_EXEMPT]
+                            --claim-text CLAIM_TEXT
+                            [--source-section SOURCE_SECTION]
+                            [--jurisdiction JURISDICTION] [--setting SETTING]
+                            --extraction-method {auto-mined,full-read,re-read,skim}
+                            [--extraction-status {absent-confirmed,contradicted,preliminary,reviewed,verified}]
+                            [--root-id ROOT_ID]
+                            [--root-type {committee_assertion,derived_calculation,measurement_primary,participatory_finding,untraced}]
+                            [--root-ref-id ROOT_REF_ID] [--echo-of ECHO_OF]
+                            [--measurement-paradigm {anthropometric_percentile,field_observation,instrumented_physical_measurement,participatory_spatial,route_metric,stated_unmeasured,static_clearance,static_turning_circle,swept_path_dynamic}]
+                            [--device-class {bariatric_manual,bariatric_power,manual_attendant,manual_self_propelled,mixed,not_device_scoped,power_chair,scooter,walker_rollator}]
+                            [--root-population-note ROOT_POPULATION_NOTE]
+                            [--root-classification-basis ROOT_CLASSIFICATION_BASIS]
+                            [--contested {0,1}] [--file-anchor FILE_ANCHOR]
+                            [--locator-scheme LOCATOR_SCHEME]
+                            [--loc-division LOC_DIVISION]
+                            [--loc-division-end LOC_DIVISION_END]
+                            [--loc-part LOC_PART]
+                            [--loc-part-end LOC_PART_END]
+                            [--loc-section LOC_SECTION]
+                            [--loc-section-end LOC_SECTION_END]
+                            [--loc-subsection LOC_SUBSECTION]
+                            [--loc-subsection-end LOC_SUBSECTION_END]
+                            [--loc-paragraph LOC_PARAGRAPH]
+                            [--loc-paragraph-end LOC_PARAGRAPH_END]
+                            [--loc-clause LOC_CLAUSE]
+                            [--loc-clause-end LOC_CLAUSE_END]
+                            [--loc-subclause LOC_SUBCLAUSE]
+                            [--loc-subclause-end LOC_SUBCLAUSE_END]
+                            [--loc-note LOC_NOTE] [--notes NOTES]
+                            --figure-role FIGURE_ROLE [--harm-finding]
+                            [--comparator COMPARATOR] --relation RELATIONS
+                            [--to-extraction TO_EXTRACTIONS]
+                            [--to-label TO_LABELS] [--to-kind TO_KINDS]
+                            [--stated STATEDS] [--quote QUOTES]
+                            [--input-role INPUT_ROLES]
+                            [--cross-source CROSS_SOURCES] --session SESSION
+                            [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID       evidence_sources.ref_id — the source read
+  --parameter-id PARAMETER_ID
+                        base_parameters.parameter_id — THE SUBJECT (owner
+                        2026-08-26)
+  --identity IDENTITY   base_taxonomy_identity.identity_code
+  --icf ICF             base_icf.icf_code — a real ICF b/d code
+  --needs NEEDS         access_needs.need_code
+  --medical MEDICAL     base_taxonomy_medical.medical_code
+  --claim-type {absent,framework,numerical,qualitative,range}
+                        Live vocabulary, read from the column's own CHECK.
+                        'absent' records that the source asserts NO value —
+                        which is evidence, and takes no --claimed-value.
+  --claimed-value CLAIMED_VALUE
+  --claimed-unit CLAIMED_UNIT
+  --verbatim-exempt VERBATIM_EXEMPT
+                        Reason this --claim-text cannot be verified against a
+                        persisted artefact (a clause read from a standards PDF
+                        that was never retrieved as JSON/XML, say). LEDGERED
+                        onto the row's notes, and REFUSED if the text would
+                        have verified.
+  --claim-text CLAIM_TEXT
+                        REQUIRED. The source's exact phrasing of the claim,
+                        verbatim. This is the row's only guaranteed verbatim
+                        anchor — without it an extraction asserts a value with
+                        nothing of the source's own words behind it. For
+                        --claim-type absent, quote the passage that SHOULD
+                        have carried the value and does not.
+  --source-section SOURCE_SECTION
+  --jurisdiction JURISDICTION
+  --setting SETTING
+  --extraction-method {auto-mined,full-read,re-read,skim}
+                        Live vocabulary, read from the column's own CHECK
+  --extraction-status {absent-confirmed,contradicted,preliminary,reviewed,verified}
+                        Live vocabulary, read from the column's own CHECK (the
+                        column's own DEFAULT applies when omitted)
+  --root-id ROOT_ID
+  --root-type {committee_assertion,derived_calculation,measurement_primary,participatory_finding,untraced}
+                        Live vocabulary, read from the column's own CHECK
+  --root-ref-id ROOT_REF_ID
+                        evidence_sources.ref_id of the root the value traces
+                        to
+  --echo-of ECHO_OF
+  --measurement-paradigm {anthropometric_percentile,field_observation,instrumented_physical_measurement,participatory_spatial,route_metric,stated_unmeasured,static_clearance,static_turning_circle,swept_path_dynamic}
+                        Live vocabulary, read from the column's own CHECK
+  --device-class {bariatric_manual,bariatric_power,manual_attendant,manual_self_propelled,mixed,not_device_scoped,power_chair,scooter,walker_rollator}
+                        Live vocabulary, read from the column's own CHECK
+  --root-population-note ROOT_POPULATION_NOTE
+  --root-classification-basis ROOT_CLASSIFICATION_BASIS
+  --contested {0,1}
+  --file-anchor FILE_ANCHOR
+  --locator-scheme LOCATOR_SCHEME
+                        which family's naming applies (ISO clause vs ADA
+                        section)
+  --loc-division LOC_DIVISION
+  --loc-division-end LOC_DIVISION_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-part LOC_PART
+  --loc-part-end LOC_PART_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-section LOC_SECTION
+  --loc-section-end LOC_SECTION_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-subsection LOC_SUBSECTION
+  --loc-subsection-end LOC_SUBSECTION_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-paragraph LOC_PARAGRAPH
+  --loc-paragraph-end LOC_PARAGRAPH_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-clause LOC_CLAUSE
+  --loc-clause-end LOC_CLAUSE_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-subclause LOC_SUBCLAUSE
+  --loc-subclause-end LOC_SUBCLAUSE_END
+                        end of a span, e.g. ADA 2010 §604-608
+  --loc-note LOC_NOTE
+  --notes NOTES
+  --figure-role FIGURE_ROLE
+                        REQUIRED. Live vocabulary, read from
+                        source_value_extractions.figure_role's own CHECK
+                        ('claim'/'finding'/'condition'/'derived'). A value
+                        with no role reads as a claim, and a tested slope read
+                        as a claim is how '1:20, 1:16, 1:12, 1:8' became a
+                        range no source ever asserted (extraction_id 1).
+  --harm-finding        R7: this finding reports failure, harm or inadequacy
+                        (e.g. code-compliant design that caused incidents).
+                        Only with --figure-role finding.
+  --comparator COMPARATOR
+                        Live vocabulary, read from the column's own CHECK
+                        ('='/'<'/'<='/'>'/'>='/'between'/'approx'). Omit when
+                        the figure carries no stated arithmetic relation.
+  --relation RELATIONS  REQUIRED, repeatable -- one per comparator edge,
+                        aligned by position with --to-extraction/--to-
+                        label/--to-kind/--stated/--quote/--input-role/--cross-
+                        source below. Pass the literal 'none' -- alone,
+                        exactly once, no other relation flag -- to say the
+                        source states its figure ABSOLUTELY. Silence is not
+                        the same claim: five of five corridor-width sources in
+                        the live corpus state theirs against a reference they
+                        name or invoke. Otherwise one of {audited_against,
+                        condition_on, confirms, delta_over, derived_from,
+                        exceeds, insufficient, tested_at} or the literal
+                        'none' (live vocabulary, read from
+                        extraction_relations.relation's own CHECK).
+  --to-extraction TO_EXTRACTIONS
+                        Repeatable, aligned by position with --relation. A row
+                        this project already holds. Pass '-' for an edge that
+                        uses --to-label instead.
+  --to-label TO_LABELS  Repeatable, aligned by position with --relation. Prose
+                        naming a referent this project has not captured as a
+                        row. Pass '-' for an edge that uses --to-extraction
+                        instead.
+  --to-kind TO_KINDS    Repeatable, aligned by position with --relation.
+                        Required alongside --to-label. One of {own_sample,
+                        prior_source, standard, unnamed} or '-' (live
+                        vocabulary, read from the column's own CHECK).
+  --stated STATEDS      Repeatable, aligned by position with --relation. One
+                        of {inferred, named, unnamed} or '-' (live vocabulary,
+                        read from the column's own CHECK).
+  --quote QUOTES        Repeatable, aligned by position with --relation. The
+                        source's own words for the comparison -- must occur
+                        byte-for-byte in a persisted retrieval artefact
+                        (CLAUDE.md 5(c)); a quote from memory is refused.
+  --input-role INPUT_ROLES
+                        Repeatable, aligned by position with --relation.
+                        Required iff the paired --relation is derived_from.
+                        One of {base, delta, factor} or '-' (live vocabulary,
+                        read from the column's own CHECK).
+  --cross-source CROSS_SOURCES
+                        Repeatable, aligned by position with --relation. A
+                        REASON, required when a condition_on/derived_from
+                        edge's --to-extraction was extracted from a DIFFERENT
+                        --ref-id than this row: a condition drawn from another
+                        document is a synthesis act, made explicit here.
+  --session SESSION
+  --dry-run
+
+=== add-gap rc=0
+usage: db.py add-gap [-h]
+                     --category {AUDT,CD,CI,CONF,CR,DEC,EC,EG,MX,RP,ST,SW}
+                     --priority {P1,P2,P3} --description DESCRIPTION
+                     --session SESSION [--skill SKILL] [--section SECTION]
+                     [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --category {AUDT,CD,CI,CONF,CR,DEC,EC,EG,MX,RP,ST,SW}
+                        Live vocabulary, read from the column's own CHECK
+  --priority {P1,P2,P3}
+  --description DESCRIPTION
+  --session SESSION
+  --skill SKILL
+  --section SECTION
+  --dry-run
+
+=== add-gap-mining rc=0
+usage: db.py add-gap-mining [-h] --gap-id GAP_ID
+                            --search-strategy SEARCH_STRATEGY
+                            --candidates-returned CANDIDATES_RETURNED
+                            --candidates-reviewed CANDIDATES_REVIEWED
+                            --outcome {closure_evidence_found,deferred,gap_recategorized,null_result,partial_evidence_found}
+                            [--discoveries DISCOVERIES]
+                            [--candidate-dois CANDIDATE_DOIS]
+                            --check-method {cochrane_direct,composite,multilingual_research,pubmed_cluster,scholar_gateway_lived_experience,standards_body_direct}
+                            [--notes NOTES] --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --gap-id GAP_ID       Gap ID, e.g. GAP-069
+  --search-strategy SEARCH_STRATEGY
+                        JSON object: {"strategies":[{"tool":...,"query":...,"c
+                        andidates_returned":N},...]}
+  --candidates-returned CANDIDATES_RETURNED
+  --candidates-reviewed CANDIDATES_REVIEWED
+  --outcome {closure_evidence_found,deferred,gap_recategorized,null_result,partial_evidence_found}
+  --discoveries DISCOVERIES
+                        JSON array of FK ref_ids INSERTed this attempt
+  --candidate-dois CANDIDATE_DOIS
+                        JSON array of DOIs of unverified candidates (PI rule
+                        #10 gate)
+  --check-method {cochrane_direct,composite,multilingual_research,pubmed_cluster,scholar_gateway_lived_experience,standards_body_direct}
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-icf-code rc=0
+usage: db.py add-icf-code [-h] --icf-code ICF_CODE [--title TITLE]
+                          [--title-source TITLE_SOURCE]
+                          [--title-payload TITLE_PAYLOAD] [--notes NOTES]
+                          --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --icf-code ICF_CODE   b/d/e/s + digits, optionally a range (d450, b1342,
+                        d310–d329). `component` and `is_range` are DERIVED
+                        from it
+  --title TITLE         the classification's own wording. Needs a source
+  --title-source TITLE_SOURCE
+                        the document stating the title — weaker than a
+                        payload, and meant to read as weaker
+  --title-payload TITLE_PAYLOAD
+                        path under retrieval-log/ whose BYTES contain --title.
+                        ONLY this makes the title verified rather than
+                        recorded
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-locator rc=0
+usage: db.py add-locator [-h] [--ref-id REF_ID] [--doi DOI] [--pmid PMID]
+                         [--pmcid PMCID] [--isbn ISBN] [--issn ISSN]
+                         [--url URL] [--standard-number STANDARD_NUMBER]
+                         [--title TITLE] [--authors AUTHORS] [--notes NOTES]
+                         [--used-in-bpcs USED_IN_BPCS] [--pub-year PUB_YEAR]
+                         [--tier-claimed TIER_CLAIMED]
+                         --recovered-from RECOVERED_FROM
+                         --status {PROMOTED,REFERENCE-ONLY,RETIRED,SCREENED-OUT}
+                         --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID       omit it: computed by dbcore.next_ref_id (CLAUDE.md
+                        section 4). Given, it must equal the computed id
+  --doi DOI
+  --pmid PMID
+  --pmcid PMCID
+  --isbn ISBN
+  --issn ISSN
+  --url URL
+  --standard-number STANDARD_NUMBER
+  --title TITLE
+  --authors AUTHORS
+  --notes NOTES
+  --used-in-bpcs USED_IN_BPCS
+  --pub-year PUB_YEAR
+  --tier-claimed TIER_CLAIMED
+  --recovered-from RECOVERED_FROM
+  --status {PROMOTED,REFERENCE-ONLY,RETIRED,SCREENED-OUT}
+                        Live vocabulary, read from the column's own CHECK
+  --session SESSION
+  --dry-run
+
+=== add-medical rc=0
+usage: db.py add-medical [-h] --code CODE --display-name DISPLAY_NAME
+                         [--description DESCRIPTION] --icd11 ICD11
+                         [--icd11-payload ICD11_PAYLOAD] [--identity IDENTITY]
+                         [--relationship {identity_first,member_of,names}]
+                         [--icf ICF] [--role {PRIMARY,SECONDARY,SITUATIONAL}]
+                         [--mapping-confidence {high_predictive,low,minimal,moderate}]
+                         [--note NOTE] --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --code CODE           MD-<UPPER>, e.g. MD-AUTISM
+  --display-name DISPLAY_NAME
+                        the project's OWN name for the concept — not copied
+                        prose
+  --description DESCRIPTION
+                        the project's OWN definition
+  --icd11 ICD11         comma list of ICD-11 codes this ANCHORS to. A bare
+                        code is a fact; it is a pointer, not borrowed text
+                        (rule 5)
+  --icd11-payload ICD11_PAYLOAD
+                        path under retrieval-log/ whose bytes CONTAIN every
+                        --icd11 code. ONLY this sets icd11_verified_at; absent
+                        means NULL, and NULL means not verified
+  --identity IDENTITY   base_taxonomy_identity.identity_code to cross to
+  --relationship {identity_first,member_of,names}
+                        required with --identity
+  --icf ICF             base_icf.icf_code to cross to
+  --role {PRIMARY,SECONDARY,SITUATIONAL}
+                        required with --icf. No ALIAS: a diagnosis is never an
+                        alias of a functional demand (074)
+  --mapping-confidence {high_predictive,low,minimal,moderate}
+                        required with --icf; functional-taxonomy §3.2
+  --note NOTE
+  --session SESSION
+  --dry-run
+
+=== add-parameter rc=0
+usage: db.py add-parameter [-h] --term-id TERM_ID [--notes NOTES]
+                           --session SESSION [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --term-id TERM_ID  terms.term_id. Refused if absent, declined, value-bearing
+                     or already a parameter. A NAMES-NEW/NAMES-EXISTING
+                     adjudication is REPORTED as provenance, not required
+                     (insert_parameter)
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-population-icf-link rc=0
+usage: db.py add-population-icf-link [-h] --population POPULATION
+                                     --icf-code ICF_CODE --mechanism MECHANISM
+                                     --mapping-confidence {high_predictive,low_indicative,moderate_contextual}
+                                     --provenance PROVENANCE [--notes NOTES]
+                                     --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --population POPULATION
+                        base_taxonomy_identity.identity_code — LIVE code, not
+                        a retired one
+  --icf-code ICF_CODE   d### or a range d###–d###. Free text by design: there
+                        is no d-code registry to point at yet (080)
+  --mechanism MECHANISM
+                        HOW the deficit arises — biomechanical, sensory,
+                        autonomic, cognitive. The same population may reach
+                        one code by two mechanisms and both are real rows
+  --mapping-confidence {high_predictive,low_indicative,moderate_contextual}
+  --provenance PROVENANCE
+                        WHERE this row came from: a ref_id, or the promotion
+                        that produced it. A mapping with no provenance is
+                        skill prose in a table
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-population-match rc=0
+usage: db.py add-population-match [-h] --ref-id REF_ID
+                                  --target-population TARGET_POPULATION
+                                  [--study-population STUDY_POPULATION]
+                                  [--sample-size SAMPLE_SIZE]
+                                  --match-grade {EXACT,MISMATCH,PARTIAL,PROXY}
+                                  [--mismatch-note MISMATCH_NOTE]
+                                  [--gap-id GAP_ID] --session SESSION
+                                  [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --target-population TARGET_POPULATION
+  --study-population STUDY_POPULATION
+  --sample-size SAMPLE_SIZE
+  --match-grade {EXACT,MISMATCH,PARTIAL,PROXY}
+                        Live vocabulary, read from the column's own CHECK
+  --mismatch-note MISMATCH_NOTE
+  --gap-id GAP_ID
+  --session SESSION
+  --dry-run
+
+=== add-source rc=0
+usage: db.py add-source [-h] [--ref-id REF_ID] [--author LAST|GIVEN]
+                        [--authors "Last I; Last I"] [--url URL]
+                        [--url-accessed URL_ACCESSED] [--pages PAGES]
+                        [--doi-resolution-outcome {NO-MATCH,RESOLVED,REVERTED}]
+                        [--source-type {book,book_chapter,case_study,code,commentary,conference_paper,editorial,grey,guideline,internal,journal_article,letter,other,primary_research,report,standard,thesis}]
+                        [--institution INSTITUTION]
+                        [--report-number REPORT_NUMBER] [--series SERIES]
+                        [--series-number SERIES_NUMBER]
+                        [--publisher PUBLISHER]
+                        [--publisher-location PUBLISHER_LOCATION]
+                        [--book-title BOOK_TITLE]
+                        [--standard-number STANDARD_NUMBER]
+                        [--processing-blocked-reason {language,no-doi,no-full-text,no-quantified-claims,not-indexed,out-of-scope,paywalled,superseded,tier-not-required}]
+                        [--grey-flag {0,1}] [--grey-reason GREY_REASON]
+                        --year YEAR --title TITLE [--tier TIER] [--doi DOI]
+                        [--pmid PMID] [--jurisdiction JURISDICTION]
+                        [--evidence-type EVIDENCE_TYPE] [--scope SCOPE]
+                        [--co1-provenance CO1_PROVENANCE]
+                        [--co1-source-type CO1_SOURCE_TYPE]
+                        [--synthesis-attribution-required {0,1}]
+                        [--lang-detected LANG_DETECTED]
+                        [--lang-detection-method LANG_DETECTION_METHOD]
+                        [--metadata-quality {AUTHOR-TITLE-ONLY,COMPLETE,COMPLETE-STATUTORY,GREY,NULL,PMID-ONLY}]
+                        [--verification-method {citing-bibliography,co1-attestation,corroborated-not-retrieved,direct-render,tool}]
+                        [--verified-by-tool VERIFIED_BY_TOOL]
+                        [--verification-status {UNVERIFIED,VERIFIED}]
+                        [--slug SLUG] [--local-ref-id LOCAL_REF_ID]
+                        --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID       omit it: computed -- the next id, or the id of the
+                        staged locator this source matches (same DOI, pmid,
+                        pmcid, isbn, standard number or URL; else the same
+                        title). Given, it must be one of those two
+  --author LAST|GIVEN   Repeatable, in byline order. 'Payne|Sarah R.' for a
+                        person, 'corp|World Health Organization' for a
+                        corporate author. Preferred: it stores the given name,
+                        which --authors cannot.
+  --authors "Last I; Last I"
+                        Display form, parsed into author rows. Kept because
+                        every skill and runbook writes it. Each part must be a
+                        surname followed by initials; anything this cannot
+                        parse without guessing is REFUSED rather than
+                        approximated.
+  --url URL
+  --url-accessed URL_ACCESSED
+  --pages PAGES
+  --doi-resolution-outcome {NO-MATCH,RESOLVED,REVERTED}
+                        Read from the column's own CHECK (rule 8), live since
+                        migration 091
+  --source-type {book,book_chapter,case_study,code,commentary,conference_paper,editorial,grey,guideline,internal,journal_article,letter,other,primary_research,report,standard,thesis}
+                        Live vocabulary, read from the column's own CHECK
+  --institution INSTITUTION
+                        the PERFORMING organisation, as ERIC's INSTITUTION
+                        field and a report's own title page use the term; the
+                        sponsor goes in --publisher
+  --report-number REPORT_NUMBER
+                        e.g. HUD-PDR 397; the issuer's own number
+  --series SERIES
+  --series-number SERIES_NUMBER
+  --publisher PUBLISHER
+  --publisher-location PUBLISHER_LOCATION
+  --book-title BOOK_TITLE
+  --standard-number STANDARD_NUMBER
+                        the instrument's own number, e.g. 'ISO 21542:2021'
+  --processing-blocked-reason {language,no-doi,no-full-text,no-quantified-claims,not-indexed,out-of-scope,paywalled,superseded,tier-not-required}
+                        why the source cannot be read (no full text,
+                        paywalled, ...), from the column's own CHECK. An
+                        unretrievable source is admitted UNVERIFIED with this
+                        set; v_scan_ledger then shows it BLOCKED, not as
+                        reading debt. Refused as copies of a typed fact: no-
+                        quantified-claims, superseded. Nothing clears it: a
+                        full reading outranks it in v_scan_ledger; the column
+                        stays as the retrieval record. `amend-source --field
+                        processing_blocked_reason` re-describes it later
+  --grey-flag {0,1}     1 for grey literature. evidence_type='grey' with
+                        grey_flag=0 is the same fact disagreeing with itself
+                        across two columns
+  --grey-reason GREY_REASON
+                        WHY it is grey: the venue, in a phrase
+  --year YEAR
+  --title TITLE
+  --tier TIER           optional: the tier is derived from --evidence-type and
+                        --scope; a value that disagrees is refused
+  --doi DOI
+  --pmid PMID
+  --jurisdiction JURISDICTION
+  --evidence-type EVIDENCE_TYPE
+  --scope SCOPE         clinical: high_control | lower_control. standard_eb:
+                        national | international. Every other type takes
+                        'intrinsic', which is supplied automatically. The tier
+                        is CHECKED against it.
+  --co1-provenance CO1_PROVENANCE
+                        HOW the co-production is evidenced — name the disabled
+                        people or organisation. D-0178: 'published_corpus'
+                        says where it was PUBLISHED, not that disabled people
+                        CO-PRODUCED it. Required for --evidence-type co1.
+  --co1-source-type CO1_SOURCE_TYPE
+  --synthesis-attribution-required {0,1}
+  --lang-detected LANG_DETECTED
+                        ISO 639-1 code for the source's actual publication
+                        language
+  --lang-detection-method LANG_DETECTION_METHOD
+                        How --lang-detected was determined, e.g.
+                        'native_title_verified', 'journal_family_inference',
+                        'citing_document_language'
+  --metadata-quality {AUTHOR-TITLE-ONLY,COMPLETE,COMPLETE-STATUTORY,GREY,NULL,PMID-ONLY}
+                        REQUIRED in practice, not just schema — see
+                        adversarial-research skill. COMPLETE if DOI/full
+                        metadata confirmed via CrossRef/PubMed/Semantic
+                        Scholar; AUTHOR-TITLE-ONLY if only single-source
+                        (citing-document) attestation.
+  --verification-method {citing-bibliography,co1-attestation,corroborated-not-retrieved,direct-render,tool}
+                        REQUIRED when --verification-status VERIFIED. How the
+                        standing was established (D-0157).
+  --verified-by-tool VERIFIED_BY_TOOL
+                        REQUIRED when --verification-method tool: which tool
+                        (crossref, pubmed, semantic-scholar, ...). Invariant
+                        I4b.
+  --verification-status {UNVERIFIED,VERIFIED}
+                        REQUIRED in practice. VERIFIED requires an independent
+                        connector/registry hit (CrossRef, PubMed, Semantic
+                        Scholar, a second citing source). A source found only
+                        in one citing document's bibliography, with no
+                        independent hit, is UNVERIFIED with disposition OPEN,
+                        not VERIFIED — do not upgrade it because the citing
+                        document looks authoritative.
+  --slug SLUG           Link to slug. The slug and the label are resolved
+                        before anything is written; a refusal leaves no row.
+  --local-ref-id LOCAL_REF_ID
+                        Per-slug label (with --slug only). Optional: DERIVED
+                        from the slug's own scheme when omitted. Give it where
+                        derivation refuses (a slug whose labels mix schemes,
+                        GAP-013).
+  --session SESSION
+  --dry-run
+
+=== add-supersession-check rc=0
+usage: db.py add-supersession-check [-h] --slug SLUG --local-ref LOCAL_REF
+                                    --ref REF --tier {1,2,3,4,5,6}
+                                    --evidence-type {clinical,co1,co2,code,grey,national_fw,sr_meta,standard_eb}
+                                    --outcome {co1_addition_logged,current_best,divergent_no_supersession,pending,refined_by,superseded_by}
+                                    [--superseding-refs SUPERSEDING_REFS]
+                                    [--superseding-dois SUPERSEDING_DOIS]
+                                    [--refinement-dimension REFINEMENT_DIMENSION]
+                                    [--divergence-notes DIVERGENCE_NOTES]
+                                    --search-strategy SEARCH_STRATEGY
+                                    --check-method {cochrane_direct,composite,multilingual_research,pubmed_search,scholar_gateway,standards_body_direct}
+                                    [--notes NOTES] --session SESSION
+                                    [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --slug SLUG
+  --local-ref LOCAL_REF
+                        Local ref id, e.g. RAP-23
+  --ref REF             Global ref_id, e.g. REF-00064
+  --tier {1,2,3,4,5,6}
+  --evidence-type {clinical,co1,co2,code,grey,national_fw,sr_meta,standard_eb}
+  --outcome {co1_addition_logged,current_best,divergent_no_supersession,pending,refined_by,superseded_by}
+  --superseding-refs SUPERSEDING_REFS
+                        JSON array of FK ref_ids (for already-verified
+                        candidates)
+  --superseding-dois SUPERSEDING_DOIS
+                        JSON array of DOIs (for not-yet-INSERTed candidates
+                        per PI rule #10)
+  --refinement-dimension REFINEMENT_DIMENSION
+                        Required when outcome=refined_by; names the dimension
+                        refined
+  --divergence-notes DIVERGENCE_NOTES
+                        Required when outcome=divergent_no_supersession;
+                        summarizes divergence
+  --search-strategy SEARCH_STRATEGY
+                        JSON object: {tool, query, date_filter,
+                        candidates_returned, candidates_reviewed}
+  --check-method {cochrane_direct,composite,multilingual_research,pubmed_search,scholar_gateway,standards_body_direct}
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== add-term rc=0
+usage: db.py add-term [-h] --from-observation FROM_OBSERVATION
+                      --canonical-en CANONICAL_EN --rationale RATIONALE
+                      [--definition DEFINITION] [--domain DOMAIN]
+                      [--scope-note SCOPE_NOTE]
+                      [--distinct-from DISTINCT_FROM] --session SESSION
+                      [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --from-observation FROM_OBSERVATION
+                        observed_terms.observation_id the term is minted FROM
+  --canonical-en CANONICAL_EN
+                        the parameter's name — never a value, never a
+                        comparator
+  --rationale RATIONALE
+                        why this phrase names a concept we did not hold
+  --definition DEFINITION
+  --domain DOMAIN
+  --scope-note SCOPE_NOTE
+  --distinct-from DISTINCT_FROM
+                        repeatable: a TERM-ID the writer reports as a near
+                        match (shared tokens) that this concept is NOT; the
+                        --rationale says why. Without it a near match is
+                        refused
+  --session SESSION
+  --dry-run
+
+=== adjudicate-term rc=0
+usage: db.py adjudicate-term [-h] --observation-id OBSERVATION_ID
+                             --outcome {DEFERRED,NAMES-EXISTING,NAMES-NEW,NOT-OURS}
+                             [--term-id TERM_ID] --rationale RATIONALE
+                             --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --observation-id OBSERVATION_ID
+  --outcome {DEFERRED,NAMES-EXISTING,NAMES-NEW,NOT-OURS}
+                        Live vocabulary, read from the column's own CHECK
+  --term-id TERM_ID     Required for NAMES-EXISTING; refused otherwise. NAMES-
+                        NEW is written only by `add-term --from-observation`,
+                        and this verb refuses --outcome NAMES-NEW
+  --rationale RATIONALE
+                        Why. An adjudication that cannot be contested is not
+                        one.
+  --session SESSION
+  --dry-run
+
+=== amend-extraction rc=0
+usage: db.py amend-extraction [-h] --extraction-id EXTRACTION_ID
+                              --field {comparator,extraction_method,extraction_status,figure_role,root_ref_id,root_type}
+                              --value VALUE --reason REASON --session SESSION
+                              [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --extraction-id EXTRACTION_ID
+  --field {comparator,extraction_method,extraction_status,figure_role,root_ref_id,root_type}
+                        ONLY these two. A wrong claimed_value or claim_text is
+                        a SECOND ROW and a contest (D-0168), not an overwrite.
+  --value VALUE
+  --reason REASON       Why. Appended to notes, never overwriting it.
+  --session SESSION
+  --dry-run
+
+=== amend-gap rc=0
+usage: db.py amend-gap [-h] --gap-id GAP_ID --append-note APPEND_NOTE
+                       --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --gap-id GAP_ID
+  --append-note APPEND_NOTE
+                        Appended after a '|| CORRECTED <date>:' marker. close-
+                        gap moves status only, and gaps has no closure-note
+                        column, so this is the only way to correct a filed
+                        description.
+  --session SESSION
+  --dry-run
+
+=== amend-population-match rc=0
+usage: db.py amend-population-match [-h] --match-id MATCH_ID
+                                    --match-grade {EXACT,MISMATCH,PARTIAL,PROXY}
+                                    --reason REASON --session SESSION
+                                    [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --match-id MATCH_ID
+  --match-grade {EXACT,MISMATCH,PARTIAL,PROXY}
+                        Live vocabulary, read from the column's own CHECK
+  --reason REASON       Appended to mismatch_note with the grade it replaces
+  --session SESSION
+  --dry-run
+
+=== amend-search rc=0
+usage: db.py amend-search [-h] --exec-id EXEC_ID --append-note APPEND_NOTE
+                          [--set-target-evidence-type SET_TARGET_EVIDENCE_TYPE]
+                          [--set-absence-class {genuine_absence,query_shape_failure,wrong_index}]
+                          [--set-harm-finding]
+                          [--set-origin {adversarial-pass,incidental,lead-index,owner-supplied,planned}]
+                          [--clear-target]
+                          [--set-mined-ref-id SET_MINED_REF_ID]
+                          [--set-origin-pass-id SET_ORIGIN_PASS_ID]
+                          [--add-result-artefact ADD_RESULT_ARTEFACTS]
+                          --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --exec-id EXEC_ID
+  --append-note APPEND_NOTE
+                        Appended after a '|| CORRECTED <date>:' marker. The
+                        existing note is never rewritten -- R8 makes this log
+                        append-only.
+  --set-target-evidence-type SET_TARGET_EVIDENCE_TYPE
+                        Correct a MISCLASSIFIED target_evidence_type. The
+                        replaced value is appended to findings_note, so the
+                        correction is itself logged rather than silent.
+  --set-absence-class {genuine_absence,query_shape_failure,wrong_index}
+                        R14: classify a zero-yield search (query-shape failure
+                        / wrong index / genuine absence). Write-once; refused
+                        when the search found anything.
+  --set-harm-finding    Raise harm_finding 0 -> 1. R7 makes harm first-class,
+                        so a search logged with the flag down that did surface
+                        harm has an incomplete record. Only rises; lowering is
+                        refused.
+  --set-origin {adversarial-pass,incidental,lead-index,owner-supplied,planned}
+                        Correct a row's origin. --set-origin adversarial-pass
+                        with no --set-origin-pass-id is accepted here for
+                        history that predates adversarial_passes; --append-
+                        note must say why no pass id exists.
+  --clear-target        NULL target_tier/target_evidence_type/target_scope
+                        together (2026-09-27, DR-2026-09-26 5.2d). Required
+                        before --set-origin can move a row off 'planned' when
+                        any of the three is set; combine both flags in one
+                        call.
+  --set-mined-ref-id SET_MINED_REF_ID
+                        NULL -> a value only; refuses a mining_direction of
+                        none and a value already set.
+  --set-origin-pass-id SET_ORIGIN_PASS_ID
+                        NULL -> a value only; requires origin=adversarial-pass
+                        (pass --set-origin too, or it must already be set).
+  --add-result-artefact ADD_RESULT_ARTEFACTS
+                        repeatable; same refusal as log-search --result-
+                        artefact (RC1, DR-2026-09-26 2.2b), for a payload
+                        fetched after logging or history never linked at the
+                        time.
+  --session SESSION
+  --dry-run
+
+=== amend-source rc=0
+usage: db.py amend-source [-h] --ref-id REF_ID --field FIELD
+                          --replacement REPLACEMENT --reason REASON
+                          [--tier TIER] [--scope SCOPE]
+                          [--co1-provenance CO1_PROVENANCE]
+                          [--co1-source-type CO1_SOURCE_TYPE]
+                          --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --field FIELD         A judgement field, not a bibliographic one.
+                        Bibliographic fields belong to correct-source and are
+                        refused here.
+  --replacement REPLACEMENT
+  --reason REASON       Why the previous text was wrong. Recorded in
+                        metadata_integrity_detail with the replaced text.
+  --tier TIER           Optional with --field scope or --field evidence_type:
+                        the tier moves to the one value the ratified ladder
+                        derives, in the same statement, and a value that
+                        disagrees is refused. The tier is never set on its
+                        own.
+  --scope SCOPE         Only with --field evidence_type: the scope the new
+                        tier is derived from. Required when the new type spans
+                        more than one tier; derived when it admits exactly
+                        one.
+  --co1-provenance CO1_PROVENANCE
+                        Only with --field evidence_type --replacement co1, and
+                        required there: the D-0178 warrant naming the co-
+                        production. A move OFF co1 keeps the old warrant in
+                        the ledger and NULLs the column.
+  --co1-source-type CO1_SOURCE_TYPE
+                        Only with --field evidence_type --replacement co1, and
+                        required there: a member of
+                        schemas.enums.Co1SourceType. grain_for grades a Co-1
+                        source's grain from it.
+  --session SESSION
+  --dry-run
+
+=== amend-term rc=0
+usage: db.py amend-term [-h] --term-id TERM_ID --field {definition,scope_note}
+                        --replacement REPLACEMENT --reason REASON
+                        --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --term-id TERM_ID
+  --field {definition,scope_note}
+  --replacement REPLACEMENT
+  --reason REASON
+  --session SESSION
+  --dry-run
+
+=== annotate-parameter rc=0
+usage: db.py annotate-parameter [-h] --parameter-id PARAMETER_ID --note NOTE
+                                --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --parameter-id PARAMETER_ID
+  --note NOTE
+  --session SESSION
+  --dry-run
+
+=== close-adversarial-pass rc=0
+usage: db.py close-adversarial-pass [-h] --pass-id PASS_ID --session SESSION
+                                    [--dry-run]
+
+Close a pass once every lens is covered and at least one row SURVIVED (RC4).
+Do NOT use it on pass 1: the owner ruling of 2026-09-27 (second;
+references/project-standards.md, ACTION (2)) holds pass 1 OPEN. Pass 2 was
+left open by its session (sessions/session_2026-09-28-research-
+batch-21-selection.md); the process-gap plan the owner approved on 2026-10-01
+says not to close it, citing that ruling, which names only pass 1. Nothing
+refuses either; the operator is the gate.
+
+options:
+  -h, --help         show this help message and exit
+  --pass-id PASS_ID
+  --session SESSION
+  --dry-run
+
+=== close-gap rc=0
+usage: db.py close-gap [-h] --gap-id GAP_ID --status STATUS --session SESSION
+                       [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --gap-id GAP_ID
+  --status STATUS    Must start with CLOSED (e.g. CLOSED-FIXED)
+  --session SESSION
+  --dry-run
+
+=== conflicts rc=0
+usage: db.py conflicts [-h] [--domain DOMAIN]
+                       [--status {ACTIVE,CLOSED,DEFERRED,PROPOSED,RESOLVED-CONSENSUS,RESOLVED-EVIDENCE,RETIRED,SUPERSEDED,UNRESOLVED}]
+                       [--parameter-id PARAMETER_ID] [--summary]
+
+options:
+  -h, --help            show this help message and exit
+  --domain DOMAIN
+  --status {ACTIVE,CLOSED,DEFERRED,PROPOSED,RESOLVED-CONSENSUS,RESOLVED-EVIDENCE,RETIRED,SUPERSEDED,UNRESOLVED}
+  --parameter-id PARAMETER_ID
+                        conflicts keyed on this base_parameters.parameter_id
+  --summary
+
+=== connections rc=0
+usage: db.py connections [-h] [--status STATUS] [--confidence CONFIDENCE]
+                         [--summary]
+
+options:
+  -h, --help            show this help message and exit
+  --status STATUS
+  --confidence CONFIDENCE
+  --summary
+
+=== correct-source rc=0
+usage: db.py correct-source [-h] --ref-id REF_ID --field FIELDS
+                            --log-session LOG_SESSION --session SESSION
+                            [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --field FIELDS        Repeatable. One of: authors, article_number, edition,
+                        isbn, issn, issue, journal_name, pages, pub_title,
+                        pub_year, publisher, volume. There is NO flag for the
+                        VALUE — it comes from the payload.
+  --log-session LOG_SESSION
+                        retrieval-log session holding the payload to read
+  --session SESSION
+  --dry-run
+
+=== coverage rc=0
+usage: db.py coverage [-h] --slug SLUG
+
+options:
+  -h, --help   show this help message and exit
+  --slug SLUG
+
+=== decline-parameter rc=0
+usage: db.py decline-parameter [-h] --term-id TERM_ID --reason REASON
+                               --session SESSION [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --term-id TERM_ID  terms.term_id being declined — must exist and must not
+                     already be a parameter
+  --reason REASON    WHY this term is not a quantity under determination (an
+                     element, a lens term, a method). Required: a declination
+                     that cannot say why cannot be contested.
+  --session SESSION
+  --dry-run
+
+=== delete-connection rc=0
+usage: db.py delete-connection [-h] --con-id CON_ID --session SESSION
+                               [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --con-id CON_ID
+  --session SESSION
+  --dry-run
+
+=== derive-extraction rc=0
+usage: db.py derive-extraction [-h] --ref-id REF_ID
+                               --parameter-id PARAMETER_ID
+                               [--identity IDENTITY] [--icf ICF]
+                               [--needs NEEDS] [--medical MEDICAL] --base BASE
+                               --delta DELTA [--claimed-value CLAIMED_VALUE]
+                               [--claimed-unit CLAIMED_UNIT]
+                               [--comparator COMPARATOR]
+                               [--conversion-note CONVERSION_NOTE]
+                               --claim-text CLAIM_TEXT --session SESSION
+                               [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --parameter-id PARAMETER_ID
+  --identity IDENTITY
+  --icf ICF
+  --needs NEEDS
+  --medical MEDICAL
+  --base BASE           extraction_id of the base figure
+  --delta DELTA         extraction_id of the delta figure
+  --claimed-value CLAIMED_VALUE
+                        Omit to compute base + delta
+  --claimed-unit CLAIMED_UNIT
+                        Overrides the base figure's unit -- requires
+                        --conversion-note
+  --comparator COMPARATOR
+  --conversion-note CONVERSION_NOTE
+                        Required when --claimed-unit overrides the base/delta
+                        unit
+  --claim-text CLAIM_TEXT
+  --session SESSION
+  --dry-run
+
+=== dispose-adversarial-finding rc=0
+usage: db.py dispose-adversarial-finding [-h] --finding-id FINDING_ID
+                                         --disposition {OWNER-RULED,PROVISIONAL-DISPUTED,REJECTED,REPAIRED}
+                                         [--ref REF] [--reason REASON]
+                                         --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --finding-id FINDING_ID
+  --disposition {OWNER-RULED,PROVISIONAL-DISPUTED,REJECTED,REPAIRED}
+  --ref REF             REPAIRED: a scripts/migrations/data_*.sql path. OWNER-
+                        RULED: references/project-standards.md :: "<verbatim
+                        quote>", occurring exactly once. Ignored for
+                        REJECTED/PROVISIONAL-DISPUTED, which take --reason
+                        instead.
+  --reason REASON       Required for REJECTED and PROVISIONAL-DISPUTED.
+  --session SESSION
+  --dry-run
+
+=== gaps rc=0
+usage: db.py gaps [-h] [--priority {P1,P2,P3}] [--status STATUS]
+
+options:
+  -h, --help            show this help message and exit
+  --priority {P1,P2,P3}
+  --status STATUS
+
+=== is-mined rc=0
+usage: db.py is-mined [-h] --slug SLUG --ref REF
+
+options:
+  -h, --help   show this help message and exit
+  --slug SLUG
+  --ref REF
+
+=== link-admission rc=0
+usage: db.py link-admission [-h] --exec-id EXEC_ID --ref-id REF_ID
+                            --reason REASON --session SESSION [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --exec-id EXEC_ID
+  --ref-id REF_ID
+  --reason REASON    Why the edge was not written when the search was logged.
+                     Appended to the search's findings_note.
+  --session SESSION
+  --dry-run
+
+=== link-source-slug rc=0
+usage: db.py link-source-slug [-h] --ref-id REF_ID --slug SLUG
+                              --rationale RATIONALE
+                              [--local-ref-id LOCAL_REF_ID] --session SESSION
+                              [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --slug SLUG           Target slug. Vocabulary is the slugs table's own.
+  --rationale RATIONALE
+                        WHICH CLAIM of this source bears on THIS slug. The
+                        link is a judgement and the warrant is stored with it;
+                        a link with no rationale cannot be told from a mis-
+                        file.
+  --local-ref-id LOCAL_REF_ID
+                        The per-slug label. Optional: DERIVED from the slug's
+                        own scheme when omitted. Give it where derivation
+                        refuses (a slug whose labels mix schemes, GAP-013). A
+                        label another ref_id holds on the slug is refused.
+  --session SESSION
+  --dry-run
+
+=== log-mining rc=0
+usage: db.py log-mining [-h] --slug SLUG --ref REF
+                        --direction {backward,forward}
+                        [--deferred-reason DEFERRED_REASON] [--notes NOTES]
+                        [--discharge-deferral] [--status MINING_STATUS]
+                        --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --slug SLUG
+  --ref REF
+  --direction {backward,forward}
+  --deferred-reason DEFERRED_REASON
+                        Why this anchor was NOT mined -- DELIBERATELY NOT
+                        SEARCHED (R6). Never a findings channel: if the pass
+                        RAN, use --notes.
+  --notes NOTES         What a pass that RAN found, including nothing. Writes
+                        citation_mining.notes, which existed with no writer
+                        until 2026-09-18. APPENDS -- it never overwrites an
+                        earlier pass's note. Mutually exclusive with
+                        --deferred-reason.
+  --discharge-deferral  Assert that the deferral standing on this row belongs
+                        to the direction just run, and clear it (its text is
+                        carried into notes, never destroyed). NOT automatic,
+                        and that is the point: deferred_reason is ONE column
+                        while backward and forward are TWO, so a backward pass
+                        cannot tell whether the standing deferral was its own.
+                        Without this flag the deferral stands and the result
+                        says so.
+  --status MINING_STATUS
+                        citation_mining_status to set on the source. Live
+                        vocabulary from the column's own CHECK. Derived when
+                        omitted: 'deferred' with --deferred-reason, 'mined'
+                        otherwise -- so an executed zero-yield pass (--notes)
+                        derives 'mined', which is the 2026-09-18 ruling that
+                        executed IS mined. This help said "'mined' with
+                        connections, 'deferred' without" until that day, which
+                        described neither the code nor the ruling.
+  --session SESSION
+  --dry-run
+
+=== log-search rc=0
+usage: db.py log-search [-h] [--prior-expectation PRIOR_EXPECTATION]
+                        [--slug SLUG] [--parameter PARAMETER]
+                        --language LANGUAGE --query-text QUERY_TEXT
+                        --engine ENGINE --depth-method {scoping,systematic}
+                        --session SESSION [--jurisdiction JURISDICTION]
+                        [--target-tier {1,2,3,4,5,6}]
+                        [--target-evidence-type {clinical,co1,co2,code,grey,national_fw,sr_meta,standard_eb}]
+                        [--target-scope {high_control,international,intrinsic,lower_control,national}]
+                        [--terms-used TERMS_USED]
+                        [--mining-direction {backward,both,forward,none}]
+                        [--results-found RESULTS_FOUND]
+                        [--results-screened RESULTS_SCREENED]
+                        [--results-admitted RESULTS_ADMITTED]
+                        [--admitted-ref-id ADMITTED_REF_IDS]
+                        [--saturation-signal {none,partial,saturated}]
+                        [--findings-note FINDINGS_NOTE]
+                        [--harm-finding HARM_FINDING]
+                        [--absence-class {genuine_absence,query_shape_failure,wrong_index}]
+                        [--deferred-reason DEFERRED_REASON]
+                        [--backfill BACKFILL]
+                        [--origin {adversarial-pass,incidental,lead-index,owner-supplied,planned}]
+                        [--mined-ref-id MINED_REF_ID]
+                        [--origin-pass-id ORIGIN_PASS_ID]
+                        [--result-artefact RESULT_ARTEFACTS]
+                        [--identity IDENTITY] [--icf ICF] [--needs NEEDS]
+                        [--medical MEDICAL] [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --prior-expectation PRIOR_EXPECTATION
+                        What you expect this search to find, written BEFORE
+                        you run it. DR-2026-05-09: logged in advance to expose
+                        confirmation bias. This is the only moment it can
+                        honestly be recorded -- a prior written after reading
+                        the results is a rationalisation wearing the field
+                        that prevents one.
+  --slug SLUG           the slug searched; omit it for a search that names
+                        --parameter or --mined-ref-id instead (R43)
+  --parameter PARAMETER
+                        base_parameters.parameter_id this search looked for
+                        (R43); with no --slug, this or --mined-ref-id must
+                        name the subject
+  --language LANGUAGE   ISO 639-1, uppercase (EN, FR)
+  --query-text QUERY_TEXT
+                        the query VERBATIM (R8: log it before screening)
+  --engine ENGINE       pubmed, crossref, web, ...
+  --depth-method {scoping,systematic}
+  --session SESSION
+  --jurisdiction JURISDICTION
+                        omit for a search not scoped to one
+  --target-tier {1,2,3,4,5,6}
+  --target-evidence-type {clinical,co1,co2,code,grey,national_fw,sr_meta,standard_eb}
+  --target-scope {high_control,international,intrinsic,lower_control,national}
+  --terms-used TERMS_USED
+                        JSON array of the aliases actually fired — the column
+                        is json_valid-checked, and it is 0% populated today,
+                        so no logged search can yet show which terms it used
+  --mining-direction {backward,both,forward,none}
+  --results-found RESULTS_FOUND
+  --results-screened RESULTS_SCREENED
+  --results-admitted RESULTS_ADMITTED
+  --admitted-ref-id ADMITTED_REF_IDS
+                        repeatable; also written to the search_admissions
+                        junction
+  --saturation-signal {none,partial,saturated}
+  --findings-note FINDINGS_NOTE
+  --harm-finding HARM_FINDING
+                        R7: failure/harm/inadequacy is first-class evidence
+  --absence-class {genuine_absence,query_shape_failure,wrong_index}
+                        R14, for a search that found nothing: was the query
+                        malformed, the index wrong, or is the evidence
+                        genuinely absent. Omit until judged; set later with
+                        amend-search --set-absence-class.
+  --deferred-reason DEFERRED_REASON
+                        a search DELIBERATELY not run. This is what makes 'not
+                        looked for' different from 'nothing found'.
+  --backfill BACKFILL   1 = reconstructed after the fact, not logged as it
+                        happened
+  --origin {adversarial-pass,incidental,lead-index,owner-supplied,planned}
+  --mined-ref-id MINED_REF_ID
+                        the source this pass mined; required with a --mining-
+                        direction other than none
+  --origin-pass-id ORIGIN_PASS_ID
+                        required with --origin adversarial-pass
+  --result-artefact RESULT_ARTEFACTS
+                        repeatable; retrieval-log/<session>/<file> path of a
+                        payload this search returned (RC1, DR-2026-09-26
+                        2.2b). Refused unless the chain resolves to a fetched,
+                        2xx artefact this search's own query_text or
+                        mined_ref_id identifies.
+  --identity IDENTITY   base_taxonomy_identity.identity_code this search
+                        covered
+  --icf ICF             base_icf.icf_code this search covered
+  --needs NEEDS         access_needs.need_code this search covered
+  --medical MEDICAL     base_taxonomy_medical.medical_code this search covered
+                        (the registry holds no row until it is filled)
+  --dry-run
+
+=== merge-parameter rc=0
+usage: db.py merge-parameter [-h] --from FROM_ID --into INTO_ID
+                             --reason REASON --session SESSION [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --from FROM_ID
+  --into INTO_ID
+  --reason REASON
+  --session SESSION
+  --dry-run
+
+=== migrate rc=0
+usage: db.py migrate [-h]
+
+options:
+  -h, --help  show this help message and exit
+
+=== mint-term-from-catalogue rc=0
+usage: db.py mint-term-from-catalogue [-h]
+                                      --catalogue {_archived/data/corpus-pre-reset-2026-08-06.db,references/co1-verified-sources.json,references/co2-verified-sources.json,references/standards-registry.md,references/tier456-verified-sources.json}
+                                      --entry-ref ENTRY_REF
+                                      --canonical-en CANONICAL_EN
+                                      --definition DEFINITION
+                                      [--domain DOMAIN]
+                                      [--scope-note SCOPE_NOTE]
+                                      --approval-ref APPROVAL_REF
+                                      --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --catalogue {_archived/data/corpus-pre-reset-2026-08-06.db,references/co1-verified-sources.json,references/co2-verified-sources.json,references/standards-registry.md,references/tier456-verified-sources.json}
+  --entry-ref ENTRY_REF
+                        the entry the name comes from: a registry
+                        standard_cited value, a verified-source ref_id, or
+                        terms:<TERM-ID> in the pre-reset corpus
+  --canonical-en CANONICAL_EN
+  --definition DEFINITION
+  --domain DOMAIN
+  --scope-note SCOPE_NOTE
+  --approval-ref APPROVAL_REF
+                        the dated `## ` heading of the ledger entry that
+                        records the owner's approval, found exactly once in
+                        references/project-standards.md
+  --session SESSION
+  --dry-run
+
+=== next-id rc=0
+usage: db.py next-id [-h] {connections,gaps,terms,conflicts,ref}
+
+positional arguments:
+  {connections,gaps,terms,conflicts,ref}
+
+options:
+  -h, --help            show this help message and exit
+
+=== observe-term rc=0
+usage: db.py observe-term [-h] --ref-id REF_ID --surface-form SURFACE_FORM
+                          [--language LANGUAGE] [--locator LOCATOR]
+                          [--context-quote CONTEXT_QUOTE]
+                          [--verbatim-exempt VERBATIM_EXEMPT] [--notes NOTES]
+                          --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --surface-form SURFACE_FORM
+                        The phrase AS THE SOURCE WRITES IT. Not normalised,
+                        not translated, not mapped to one of our terms.
+  --language LANGUAGE   The language the phrase APPEARS IN, which need not be
+                        the source's own language
+  --locator LOCATOR     R3: where in the source it appears. REQUIRED for a new
+                        observation: an observation is one SIGHTING, keyed on
+                        the phrase and its place (migration 102)
+  --context-quote CONTEXT_QUOTE
+                        REQUIRED for a new observation: the sentence the
+                        phrase sits in, verbatim. It must contain the phrase
+                        and be found in a file saved FOR this source
+                        (scripts/research/full_text.py registers one)
+  --verbatim-exempt VERBATIM_EXEMPT
+                        Reason no artefact of this source can carry the quote
+                        (a page read from an image, say). LEDGERED onto the
+                        row's notes, and REFUSED where a decodable body is
+                        held for the source (a text page, a derived text, or a
+                        PDF with a text layer) unless a page render of it is
+                        persisted (page_image.py)
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== raise-determination-gate rc=0
+usage: db.py raise-determination-gate [-h] --parameter-id PARAMETER_ID
+                                      [--identity IDENTITY]
+                                      --verdict {CONTRADICTS,MISLINKED,UNDER-CONSERVATIVE,UNLINKED}
+                                      [--trigger-ref-id TRIGGER_REF_ID]
+                                      [--trigger-tier TRIGGER_TIER]
+                                      [--trigger-evidence-type TRIGGER_EVIDENCE_TYPE]
+                                      --detail DETAIL --session SESSION
+                                      [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --parameter-id PARAMETER_ID
+  --identity IDENTITY   base_taxonomy_identity.identity_code. OMIT to gate
+                        every lens on this parameter — what an audit that does
+                        not yet know which cells exist should do
+  --verdict {CONTRADICTS,MISLINKED,UNDER-CONSERVATIVE,UNLINKED}
+  --trigger-ref-id TRIGGER_REF_ID
+                        the source that raised it. Its tier and evidence_type
+                        are READ from it; passing them too is refused
+  --trigger-tier TRIGGER_TIER
+                        required ONLY without --trigger-ref-id: an audit-
+                        raised gate has no source, so the strength is asserted
+  --trigger-evidence-type TRIGGER_EVIDENCE_TYPE
+                        required ONLY without --trigger-ref-id
+  --detail DETAIL       WHAT was found
+  --session SESSION
+  --dry-run
+
+=== raise-follow-up rc=0
+usage: db.py raise-follow-up [-h] --extraction-id EXTRACTION_ID
+                             --reason {read-outside-admitting-purpose}
+                             --warrant WARRANT --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --extraction-id EXTRACTION_ID
+  --reason {read-outside-admitting-purpose}
+  --warrant WARRANT     what a reviewer should re-check, and why
+  --session SESSION
+  --dry-run
+
+=== reattribute-candidate rc=0
+usage: db.py reattribute-candidate [-h] --candidate-id CANDIDATE_ID
+                                   --exec-id EXEC_ID --reason REASON
+                                   [--surfaced-in SURFACED_IN]
+                                   [--surfaced-quote SURFACED_QUOTE]
+                                   --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --candidate-id CANDIDATE_ID
+  --exec-id EXEC_ID     The search that ACTUALLY surfaced it. Must already be
+                        logged -- backfill it with log-search first if it was
+                        not.
+  --reason REASON       Why the original attribution was wrong. Carried into
+                        notes with the old exec_id, so the move is itself on
+                        the record.
+  --surfaced-in SURFACED_IN
+                        RC1 (DR-2026-09-26 2.2d), same refusal as add-
+                        candidate. NULL -> a value only; a value already set
+                        needs a new exec.
+  --surfaced-quote SURFACED_QUOTE
+                        required only when the candidate's locator carries no
+                        single DOI
+  --session SESSION
+  --dry-run
+
+=== record-adversarial-pass rc=0
+usage: db.py record-adversarial-pass [-h] --subject-session SUBJECT_SESSION
+                                     --subject-commit SUBJECT_COMMIT
+                                     --reviewer-transcript REVIEWER_TRANSCRIPT
+                                     --author-transcript AUTHOR_TRANSCRIPT
+                                     --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --subject-session SUBJECT_SESSION
+                        Bare stem or .md form; the writer strips a trailing
+                        .md
+  --subject-commit SUBJECT_COMMIT
+                        The sha the reviewer read
+  --reviewer-transcript REVIEWER_TRANSCRIPT
+                        Tracked path under transcripts/
+  --author-transcript AUTHOR_TRANSCRIPT
+                        Tracked path under transcripts/; must differ from
+                        --reviewer-transcript
+  --session SESSION
+  --dry-run
+
+=== record-scan rc=0
+usage: db.py record-scan [-h] --ref-id REF_ID --mode {catalogue,targeted}
+                         [--target-parameter-id TARGET_PARAMETER_ID]
+                         --text-scope {abstract,fragment,full,partial}
+                         --file-sha256 FILE_SHA256
+                         --method {full-read,pre-screen} [--open-pass-done]
+                         [--notes NOTES] --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --mode {catalogue,targeted}
+                        catalogue: every active parameter up to the computed
+                        catalogue version; targeted: one parameter
+  --target-parameter-id TARGET_PARAMETER_ID
+                        required with --mode targeted, refused otherwise
+  --text-scope {abstract,fragment,full,partial}
+                        how much of the document the file read holds; 'full'
+                        is refused over a fetched file and over a text missing
+                        pages; over a text with no page markers the result
+                        says `uncounted`
+  --file-sha256 FILE_SHA256
+                        the manifest sha256 of the saved file read; it must be
+                        a file the retrieval-log holds for this source
+  --method {full-read,pre-screen}
+  --open-pass-done      the open pass for quantities the catalogue lacks was
+                        done
+  --notes NOTES
+  --session SESSION
+  --dry-run
+
+=== relate-extraction rc=0
+usage: db.py relate-extraction [-h] --from FROM_EXTRACTION
+                               --relation {audited_against,condition_on,confirms,delta_over,derived_from,exceeds,insufficient,tested_at}
+                               [--to-extraction TO_EXTRACTION]
+                               [--to-label TO_LABEL]
+                               [--to-kind {own_sample,prior_source,standard,unnamed}]
+                               [--stated {inferred,named,unnamed}]
+                               [--quote QUOTE]
+                               [--input-role {base,delta,factor}]
+                               [--cross-source CROSS_SOURCE_REASON]
+                               [--notes NOTES] [--repoint]
+                               [--old-label OLD_LABEL] --session SESSION
+                               [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --from FROM_EXTRACTION
+                        source_value_extractions.extraction_id -- the figure
+                        this edge qualifies
+  --relation {audited_against,condition_on,confirms,delta_over,derived_from,exceeds,insufficient,tested_at}
+                        Live vocabulary, read from
+                        extraction_relations.relation's own CHECK
+  --to-extraction TO_EXTRACTION
+                        A row this project already holds
+  --to-label TO_LABEL   Prose naming a referent this project has not captured
+                        as a row
+  --to-kind {own_sample,prior_source,standard,unnamed}
+                        Required alongside --to-label. Live vocabulary, read
+                        from the column's own CHECK
+  --stated {inferred,named,unnamed}
+                        Required unless --repoint. Live vocabulary, read from
+                        the column's own CHECK
+  --quote QUOTE         The source's own words, verbatim -- must occur byte-
+                        for-byte in a persisted retrieval artefact. Required
+                        unless --repoint
+  --input-role {base,delta,factor}
+                        Required iff --relation is derived_from. Live
+                        vocabulary, read from the column's own CHECK
+  --cross-source CROSS_SOURCE_REASON
+                        A reason, required when --relation is
+                        condition_on/derived_from and --to-extraction was
+                        extracted from a DIFFERENT ref_id than --from
+  --notes NOTES
+  --repoint             Given an existing --from/--relation LABEL edge, NULL
+                        the label and kind, point it at --to-extraction
+                        instead, and ledger the old label into notes. How an
+                        'ADAAG' label edge becomes a real row pointer once ADA
+                        405 is admitted and extracted.
+  --old-label OLD_LABEL
+                        Disambiguates --repoint when --from/--relation matches
+                        more than one label edge
+  --session SESSION
+  --dry-run
+
+=== rename-term rc=0
+usage: db.py rename-term [-h] --term-id TERM_ID --canonical-en CANONICAL_EN
+                         [--from-observation FROM_OBSERVATION]
+                         [--ruling-quote RULING_QUOTE] --reason REASON
+                         --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --term-id TERM_ID
+  --canonical-en CANONICAL_EN
+  --from-observation FROM_OBSERVATION
+                        an English observation adjudicated to this term whose
+                        phrase contains the new name
+  --ruling-quote RULING_QUOTE
+                        the owner's words, verbatim, found exactly once in
+                        references/project-standards.md, containing the new
+                        name
+  --reason REASON
+  --session SESSION
+  --dry-run
+
+=== resolve-candidate rc=0
+usage: db.py resolve-candidate [-h] --candidate-id CANDIDATE_ID
+                               --disposition {ADMITTED,EXHAUSTED,MISCELLANEOUS,OUT-OF-SCOPE,PENDING-VERIFICATION,REHOME}
+                               --redescription REDESCRIPTION
+                               [--admitted-ref-id ADMITTED_REF_ID]
+                               [--suggested-slug SUGGESTED_SLUG]
+                               [--clear-suggested-slug] --session SESSION
+                               [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --candidate-id CANDIDATE_ID
+  --disposition {ADMITTED,EXHAUSTED,MISCELLANEOUS,OUT-OF-SCOPE,PENDING-VERIFICATION,REHOME}
+                        Live vocabulary, read from the column's own CHECK
+  --redescription REDESCRIPTION
+                        What the SOURCE says, now that it has been read.
+                        Appended after a RESOLVED marker; the staged
+                        hypothesis is kept.
+  --admitted-ref-id ADMITTED_REF_ID
+                        Required when --disposition ADMITTED
+  --suggested-slug SUGGESTED_SLUG
+                        REQUIRED with --disposition REHOME, refused otherwise:
+                        the slug the candidate belongs under. Must be a
+                        filable (not MERGED) slug other than the one it was
+                        found under; the replaced value is recorded in the
+                        RESOLVED line.
+  --clear-suggested-slug
+                        Empty a stale suggested_slug (not with REHOME). The
+                        cleared value is recorded in the RESOLVED line.
+  --session SESSION
+  --dry-run
+
+=== resolve-determination-gate rc=0
+usage: db.py resolve-determination-gate [-h] --gate-id GATE_ID
+                                        --rationale RATIONALE
+                                        --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --gate-id GATE_ID
+  --rationale RATIONALE
+                        the adjudication. A gate released with no stated
+                        reason is a cell let through by nobody
+  --session SESSION
+  --dry-run
+
+=== resolve-follow-up rc=0
+usage: db.py resolve-follow-up [-h] --follow-up-id FOLLOW_UP_ID
+                               --resolution RESOLUTION --session SESSION
+                               [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --follow-up-id FOLLOW_UP_ID
+  --resolution RESOLUTION
+  --session SESSION
+  --dry-run
+
+=== retire-parameter rc=0
+usage: db.py retire-parameter [-h] --parameter-id PARAMETER_ID --reason REASON
+                              --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --parameter-id PARAMETER_ID
+  --reason REASON
+  --session SESSION
+  --dry-run
+
+=== retire-specification rc=0
+usage: db.py retire-specification [-h] --specification-id SPECIFICATION_ID
+                                  [--reason REASON]
+                                  [--superseded-by SUPERSEDED_BY]
+                                  --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --specification-id SPECIFICATION_ID
+  --reason REASON       REQUIRED to retire: why this determination no longer
+                        stands. The trigger on the table refuses without it.
+  --superseded-by SUPERSEDED_BY
+                        The specification that replaced it. May be supplied on
+                        a LATER call, once the replacement exists — which is
+                        the real order of events: retire, re-determine, then
+                        link.
+  --session SESSION
+  --dry-run
+
+=== revoke-declination rc=0
+usage: db.py revoke-declination [-h] --term-id TERM_ID --reason REASON
+                                --decision-ref DECISION_REF --session SESSION
+                                [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --term-id TERM_ID
+  --reason REASON
+  --decision-ref DECISION_REF
+                        decisions/DR-....md, or 'references/project-
+                        standards.md :: "<verbatim quote>"' found once
+  --session SESSION
+  --dry-run
+
+=== set-icf-title rc=0
+usage: db.py set-icf-title [-h] --icf-code ICF_CODE --title TITLE
+                           [--title-source TITLE_SOURCE]
+                           [--title-payload TITLE_PAYLOAD] --session SESSION
+                           [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --icf-code ICF_CODE
+  --title TITLE
+  --title-source TITLE_SOURCE
+  --title-payload TITLE_PAYLOAD
+                        path under retrieval-log/ whose BYTES contain --title
+  --session SESSION
+  --dry-run
+
+=== set-parameter-direction rc=0
+usage: db.py set-parameter-direction [-h] --parameter-id PARAMETER_ID
+                                     --direction {contested,higher_is_better,lower_is_better}
+                                     --rationale RATIONALE --ref-id REF_ID
+                                     --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --parameter-id PARAMETER_ID
+  --direction {contested,higher_is_better,lower_is_better}
+                        higher_is_better (widest minimum corridor) /
+                        lower_is_better (lowest maximum threshold height,
+                        gentlest maximum ramp slope) / contested (population-
+                        contested: no single value is anchored, DR-2026-07-21
+                        section 5)
+  --rationale RATIONALE
+                        WHY, for a disabled person. Required by the schema
+                        too.
+  --ref-id REF_ID       the admitted source the direction was READ FROM
+                        (ledger 2026-10-30 ACTION 6: never hand-set); it must
+                        hold an extraction for this parameter. Stored in
+                        base_parameters.direction_ref_id
+  --session SESSION
+  --dry-run
+
+=== supersede-source rc=0
+usage: db.py supersede-source [-h] --ref-id REF_ID --by BY --reason REASON
+                              --session SESSION [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --ref-id REF_ID    The source that stops counting
+  --by BY            The admitted source that replaces it
+  --reason REASON    Why these are one source. Appended to the superseded
+                     row's notes as a dated SUPERSEDED line.
+  --session SESSION
+  --dry-run
+
+=== unlink-admission rc=0
+usage: db.py unlink-admission [-h] --exec-id EXEC_ID --ref-id REF_ID
+                              --reason REASON --session SESSION [--dry-run]
+
+options:
+  -h, --help         show this help message and exit
+  --exec-id EXEC_ID
+  --ref-id REF_ID
+  --reason REASON    Why the edge is wrong. Appended to the search's
+                     findings_note.
+  --session SESSION
+  --dry-run
+
+=== unmined rc=0
+usage: db.py unmined [-h] [--slug SLUG] [--tier-max TIER_MAX]
+
+options:
+  -h, --help           show this help message and exit
+  --slug SLUG          Filter to specific slug
+  --tier-max TIER_MAX
+
+=== unmined-gaps rc=0
+usage: db.py unmined-gaps [-h] [--gap-id GAP_ID] [--priority {P1,P2,P3}]
+                          [--include-not-addressable] [--include-recent]
+
+options:
+  -h, --help            show this help message and exit
+  --gap-id GAP_ID       Filter to a specific gap_id (returns its state)
+  --priority {P1,P2,P3}
+                        Filter to priority
+  --include-not-addressable
+                        Include NOT-ADDRESSABLE gaps in results (default:
+                        ADDRESSABLE only)
+  --include-recent      Include gaps with created_at within last 6 months
+                        (default: skip)
+
+=== update-code-lead rc=0
+usage: db.py update-code-lead [-h] --lead-id LEAD_ID --append-note APPEND_NOTE
+                              [--status STATUS] [--clause CLAUSE]
+                              --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --lead-id LEAD_ID
+  --append-note APPEND_NOTE
+                        Appended as a dated UPDATED segment carrying any
+                        replaced status or clause. The existing note is never
+                        rewritten.
+  --status STATUS       From the column's own CHECK; any move is allowed and
+                        ledgered
+  --clause CLAUSE       R3's locator, replacing the held one
+  --session SESSION
+  --dry-run
+
+=== update-conflict rc=0
+usage: db.py update-conflict [-h] --conflict-id CONFLICT_ID
+                             [--status {ACTIVE,CLOSED,DEFERRED,PROPOSED,RESOLVED-CONSENSUS,RESOLVED-EVIDENCE,RETIRED,SUPERSEDED,UNRESOLVED}]
+                             [--resolution RESOLUTION] [--evidence EVIDENCE]
+                             [--gap-id GAP_ID] --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --conflict-id CONFLICT_ID
+  --status {ACTIVE,CLOSED,DEFERRED,PROPOSED,RESOLVED-CONSENSUS,RESOLVED-EVIDENCE,RETIRED,SUPERSEDED,UNRESOLVED}
+  --resolution RESOLUTION
+  --evidence EVIDENCE
+  --gap-id GAP_ID
+  --session SESSION
+  --dry-run
+
+=== update-connection rc=0
+usage: db.py update-connection [-h] --con-id CON_ID
+                               --status {CLOSED,CONSUMED,CONSUMED-DEFERRED,PENDING}
+                               --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --con-id CON_ID
+  --status {CLOSED,CONSUMED,CONSUMED-DEFERRED,PENDING}
+                        Live vocabulary, read from the column's own CHECK
+  --session SESSION
+  --dry-run
+
+=== update-gap-addressability rc=0
+usage: db.py update-gap-addressability [-h] --gap-id GAP_ID
+                                       --addressability {ADDRESSABLE,NOT-ADDRESSABLE,TRIAGE-NEEDED}
+                                       --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --gap-id GAP_ID
+  --addressability {ADDRESSABLE,NOT-ADDRESSABLE,TRIAGE-NEEDED}
+  --session SESSION
+  --dry-run
+
+=== update-locator rc=0
+usage: db.py update-locator [-h] --ref-id REF_ID
+                            --status {PROMOTED,REFERENCE-ONLY,RETIRED,SCREENED-OUT}
+                            [--reason REASON] --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --ref-id REF_ID
+  --status {PROMOTED,REFERENCE-ONLY,RETIRED,SCREENED-OUT}
+                        Live vocabulary, read from the column's own CHECK
+  --reason REASON       REQUIRED for SCREENED-OUT: why this lead was worked
+                        and judged unacceptable. The judgement is what the
+                        work bought; a lead dismissed with no record of why is
+                        indistinguishable from one nobody examined.
+  --session SESSION
+  --dry-run

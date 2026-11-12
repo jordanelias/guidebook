@@ -1,0 +1,2 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+probes.001.probes.script-pairs	0	0.07	0	normalise_quote and name screens on mark-only / decimal-only / digit-script pairs: collisions are defects	{

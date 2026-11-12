@@ -1,0 +1,56 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+chain.001.chain.anchor	0	0	0	a real held source with a full-text scan and extractions	{"ref": "REF-00139", "scan_sha": [["6ef9ca54ca4533749c5dff13f7a9ae8cc14bd9c98b4f3fde3c5a09ca7466b8cb"]], "extraction": [[119, 3, "Changes in
+chain.002.chain.record-scan-real	0	0.34	1	a real full reading names bytes the retrieval log holds	{
+chain.003.chain.observe-term-real	1	0.19	0	a phrase observed verbatim from the held text	REFUSING: observe-term: --surface-form 'Changes vertical' does not occur inside its own --context-quote. The quote is the sighting's evidenc
+chain.004.chain.add-extraction-second-row	1	0.22	0	a dissenting/second row for an already extracted figure under another lens (D-0168 contest)	REFUSING: R3: this row states a value with no locator -- no --source-section, none of --loc-division, --loc-part, --loc-section, --loc-subse
+chain.005.chain.verb.is-mined	0	0.15	0	is-mined in sequence on the persistent chain DB with ids re-read from it	{
+chain.006.chain.verb.log-mining	1	0.13	0	log-mining in sequence on the persistent chain DB with ids re-read from it	REFUSING: REF-00985: no --deferred-reason and no --notes. A mining pass that ran and does not say what it found (even 'nothing') is indistin
+chain.007.chain.verb.unmined	0	0.16	0	unmined in sequence on the persistent chain DB with ids re-read from it	[
+chain.008.chain.verb.add-locator	1	0.28	0	add-locator in sequence on the persistent chain DB with ids re-read from it	        OR standard_number IS NOT NULL OR title IS NOT NULL
+chain.009.chain.verb.update-locator	1	0.17	0	update-locator in sequence on the persistent chain DB with ids re-read from it	REFUSING: REF-00985: not in source_locators.
+chain.010.chain.verb.link-source-slug	0	0.19	1	link-source-slug in sequence on the persistent chain DB with ids re-read from it	{
+chain.011.chain.verb.link-admission	1	0.23	0	link-admission in sequence on the persistent chain DB with ids re-read from it	REFUSING: exec 1 -> REF-00985: REFUSED. No search_candidates row records that this search surfaced a candidate which was admitted as this so
+chain.012.chain.verb.unlink-admission	1	0.18	0	unlink-admission in sequence on the persistent chain DB with ids re-read from it	REFUSING: exec 1 -> REF-00985: no such admission edge to remove.
+chain.013.chain.verb.add-population-match	1	0.2	0	add-population-match in sequence on the persistent chain DB with ids re-read from it	REFUSING: target_population '1' is not in `base_taxonomy_identity`.
+chain.014.chain.verb.amend-population-match	1	0.14	0	amend-population-match in sequence on the persistent chain DB with ids re-read from it	REFUSING: 1: no such population match.
+chain.015.chain.verb.add-case-study	0	0.16	1	add-case-study in sequence on the persistent chain DB with ids re-read from it	{
+chain.016.chain.verb.add-economics-entry	1	0.2	0	add-economics-entry in sequence on the persistent chain DB with ids re-read from it	REFUSING: insert_economics_entry: economics_entries.pillar does not accept 'STRESS-FIXTURE'. The schema's own CHECK declares: ['construction
+chain.017.chain.verb.add-supersession-check	2	0.17	0	add-supersession-check in sequence on the persistent chain DB with ids re-read from it	{"error": "--search-strategy is not valid JSON: Expecting value: line 1 column 1 (char 0)"}
+chain.018.chain.verb.supersede-source	1	0.29	0	supersede-source in sequence on the persistent chain DB with ids re-read from it	REFUSING: --by STRESS-FIXTURE is not in evidence_sources. Supersession is between two ADMITTED sources. Nothing was written.
+chain.019.chain.verb.correct-source	1	0.27	0	correct-source in sequence on the persistent chain DB with ids re-read from it	REFUSING: REF-00985: cannot correct STRESS-FIXTURE — this writer rewrites only fields retrieval_log --verify-authors can prove: article_numb
+chain.020.chain.verb.amend-source	1	0.16	0	amend-source in sequence on the persistent chain DB with ids re-read from it	REFUSING: REF-00985: 'STRESS-FIXTURE' is not an amendable judgement field. Amendable: co1_provenance, co1_source_type, grey_reason, verifica
+chain.021.chain.verb.amend-extraction	1	0.24	0	amend-extraction in sequence on the persistent chain DB with ids re-read from it	REFUSING: amend-extraction: source_value_extractions.comparator does not accept 'STRESS-FIXTURE'. The schema's own CHECK declares: ['<', '<=
+chain.022.chain.verb.relate-extraction	1	0.23	0	relate-extraction in sequence on the persistent chain DB with ids re-read from it	REFUSING: relate-extraction: pass --to-extraction or --to-label -- an edge naming no referent describes nothing.
+chain.023.chain.verb.derive-extraction	2	0.15	0	derive-extraction in sequence on the persistent chain DB with ids re-read from it	db.py derive-extraction: error: argument --base: invalid int value: 'STRESS-FIXTURE'
+chain.024.chain.verb.raise-follow-up	0	0.23	1	raise-follow-up in sequence on the persistent chain DB with ids re-read from it	{
+chain.025.chain.verb.resolve-follow-up	0	0.17	0	resolve-follow-up in sequence on the persistent chain DB with ids re-read from it	{
+chain.026.chain.verb.add-conflict	1	0.16	0	add-conflict in sequence on the persistent chain DB with ids re-read from it	REFUSING: add-conflict --pop-a: conflicts.pop_a='STRESS-FIXTURE' has no matching row in base_taxonomy_identity.identity_code. A reference mu
+chain.027.chain.verb.update-conflict	1	0.19	0	update-conflict in sequence on the persistent chain DB with ids re-read from it	REFUSING: update-conflict: 1 is not a conflict. Nothing was written.
+chain.028.chain.verb.conflicts	0	0.17	0	conflicts in sequence on the persistent chain DB with ids re-read from it	[]
+chain.029.chain.verb.connections	0	0.19	0	connections in sequence on the persistent chain DB with ids re-read from it	[]
+chain.030.chain.verb.update-connection	1	0.21	0	update-connection in sequence on the persistent chain DB with ids re-read from it	REFUSING: update-connection: CON-1 is not a connection. Nothing was written.
+chain.031.chain.verb.delete-connection	0	0.16	0	delete-connection in sequence on the persistent chain DB with ids re-read from it	{
+chain.032.chain.verb.add-code-lead	0	0.26	1	add-code-lead in sequence on the persistent chain DB with ids re-read from it	{
+chain.033.chain.verb.update-code-lead	0	0.16	0	update-code-lead in sequence on the persistent chain DB with ids re-read from it	{
+chain.034.chain.verb.add-alias	0	0.22	0	add-alias in sequence on the persistent chain DB with ids re-read from it	{
+chain.035.chain.verb.amend-term	0	0.19	0	amend-term in sequence on the persistent chain DB with ids re-read from it	{
+chain.036.chain.verb.rename-term	1	0.18	0	rename-term in sequence on the persistent chain DB with ids re-read from it	REFUSING: rename-term: give exactly one warrant for the new name -- --from-observation N (a phrase an admitted source uses) or --ruling-quot
+chain.037.chain.verb.decline-parameter	1	0.19	0	decline-parameter in sequence on the persistent chain DB with ids re-read from it	Retiring a parameter is a different act on parameter 3's own row, not a declination. Nothing was written.
+chain.038.chain.verb.revoke-declination	1	0.17	0	revoke-declination in sequence on the persistent chain DB with ids re-read from it	REFUSING: --decision-ref must name the decision that reverses the declination: a decision record that exists under decisions/ (decisions/DR-
+chain.039.chain.verb.annotate-parameter	0	0.2	0	annotate-parameter in sequence on the persistent chain DB with ids re-read from it	{
+chain.040.chain.verb.set-parameter-direction	1	0.21	0	set-parameter-direction in sequence on the persistent chain DB with ids re-read from it	A direction conditions every determination computed for the parameter, so overwriting it silently re-points those at a rule they were not co
+chain.041.chain.verb.merge-parameter	1	0.19	0	merge-parameter in sequence on the persistent chain DB with ids re-read from it	REFUSING: merge-parameter --into: parameter 3 has OPEN determination gate(s) [1]. Resolve each with its rationale first (db.py resolve-deter
+chain.042.chain.verb.raise-determination-gate	1	0.18	0	raise-determination-gate in sequence on the persistent chain DB with ids re-read from it	REFUSING: a gate with no --trigger-ref-id must state --trigger-tier and --trigger-evidence-type. Doctrine requires every gate to carry the s
+chain.043.chain.verb.resolve-determination-gate	0	0.19	0	resolve-determination-gate in sequence on the persistent chain DB with ids re-read from it	{
+chain.044.chain.verb.retire-specification	1	0.16	0	retire-specification in sequence on the persistent chain DB with ids re-read from it	REFUSING: specification 1 was already retired at 2026-09-16 06:01. Retiring it twice records nothing new. If you meant to record what replac
+chain.045.chain.verb.record-adversarial-pass	1	0.15	0	record-adversarial-pass in sequence on the persistent chain DB with ids re-read from it	REFUSING: reviewer_transcript 'STRESS-FIXTURE' does not resolve under transcripts/.
+chain.046.chain.verb.dispose-adversarial-finding	1	0.29	0	dispose-adversarial-finding in sequence on the persistent chain DB with ids re-read from it	REFUSING: finding 1: already disposed as 'PROVISIONAL-DISPUTED'. A disposition is not amended by a second call.
+chain.047.chain.verb.close-adversarial-pass	0	0.29	0	close-adversarial-pass in sequence on the persistent chain DB with ids re-read from it	{
+chain.048.chain.verb.add-gap-mining	2	0.16	0	add-gap-mining in sequence on the persistent chain DB with ids re-read from it	db.py add-gap-mining: error: argument --candidates-returned: invalid int value: 'STRESS-FIXTURE'
+chain.049.chain.verb.close-gap	1	0.2	0	close-gap in sequence on the persistent chain DB with ids re-read from it	REFUSING: status must start with CLOSED, got 'STRESS-FIXTURE'
+chain.050.chain.verb.amend-gap	0	0.2	0	amend-gap in sequence on the persistent chain DB with ids re-read from it	{
+chain.051.chain.verb.update-gap-addressability	0	0.22	0	update-gap-addressability in sequence on the persistent chain DB with ids re-read from it	{
+chain.052.chain.verb.gaps	0	0.17	0	gaps in sequence on the persistent chain DB with ids re-read from it	[
+chain.053.chain.verb.next-id	2	0.18	0	next-id in sequence on the persistent chain DB with ids re-read from it	db.py next-id: error: argument entity: invalid choice: 'STRESS-FIXTURE' (choose from 'connections', 'gaps', 'terms', 'conflicts', 'ref')
+chain.054.chain.assess-after-chain	0	0.2	5	determine the anchor's parameter after the chain's additions	param 3×MOB      provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+chain.055.chain.emit-batch-sql	0	0.15	0	capture everything the chain wrote	Wrote /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/chain/batch.sql — 5 insert(s), 7 update(

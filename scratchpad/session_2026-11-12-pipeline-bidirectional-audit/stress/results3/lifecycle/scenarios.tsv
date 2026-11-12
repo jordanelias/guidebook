@@ -1,0 +1,10 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+lifecycle.001.lifecycle.ledger-before	0	0	0	v_scan_ledger distribution before	{"sql": "select status,count(*) from v_scan_ledger group by 1", "params": [], "rows": [["EXTRACTED", 94], ["NOT-READ", 417], ["READ-NOTHING-
+lifecycle.002.lifecycle.add-parameter	0	0.18	1	define a parameter dynamically	{
+lifecycle.003.lifecycle.ledger-after-define	0	0	0	every source now owes the new parameter	{"sql": "select status,count(*) from v_scan_ledger group by 1", "params": [], "rows": [["EXTRACTED", 94], ["NOT-READ", 475], ["READ-NOTHING-
+lifecycle.004.lifecycle.targeted-scan	0	0.33	1	read ONE source against the new parameter	{
+lifecycle.005.lifecycle.ledger-after-targeted	0	0	0	that source's pair is discharged, the rest stay owed	{"sql": "select status,count(*) from v_scan_ledger group by 1", "params": [], "rows": [["EXTRACTED", 94], ["NOT-READ", 474], ["READ-NOTHING-
+lifecycle.006.lifecycle.merge-parameter	1	0.17	0	merge the new parameter into another (a change of grain)	REFUSING: merge-parameter --into: parameter 3 has OPEN determination gate(s) [1]. Resolve each with its rationale first (db.py resolve-deter
+lifecycle.007.lifecycle.ledger-after-merge	0	0	0	what a change of grain did to completed scans	{"sql": "select status,count(*) from v_scan_ledger group by 1", "params": [], "rows": [["EXTRACTED", 94], ["NOT-READ", 474], ["READ-NOTHING-
+lifecycle.008.lifecycle.retire-parameter	0	0.17	0	retire a parameter with no open gate	{
+lifecycle.009.lifecycle.ledger-after-retire	0	0	0	ledger after retire	{"sql": "select status,count(*) from v_scan_ledger group by 1", "params": [], "rows": [["EXTRACTED", 94], ["NOT-READ", 417], ["READ-NOTHING-
