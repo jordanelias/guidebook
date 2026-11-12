@@ -318,3 +318,72 @@ views confined to one stage or none: v_best_practice, v_coverage_branch, v_cover
 ```
 
 Render surfaces in code: `grep -c 'add_parser(' scripts/db.py` lines; no verb named render (`grep -n '"render' scripts/db.py` → none); `ls scripts/generate` = context_map.py owner_browser.html owner_browser_build.py research_contract_hook.py ; stage-map render tables = weighting_profile only.
+
+## 6. Comparison: blind outputs against the audit's figures and verdicts
+
+Written after the handshake files were read. 'Same' means my blind figure equals the audit's.
+
+| Topic | Blind result (sections 1-5) | Audit says | Outcome |
+|---|---|---|---|
+| Section-Z queries | Q1-Q41 as printed in section 1; Q11 43 captured, Q19 75 checks (30 blocking, 43 advisory, 2 informational), Q22 20 codes + 1 NULL over 35, Q29 1101 records in 32 manifests, 111 with a ref, 49 of 59 sources | BU §Z, HS-2 V01-V26 | same on every query |
+| (a) Lens routing | gather functions take no lens; six lenses on parameter 3 give the same state, basis, value, 27 sources, 35 governing rows; the lens moves population directness (MOB: PROXY 17, PARTIAL 8, NOT_ASSESSED 5, EXACT 1; others NOT_ASSESSED 31) and the sha | HS-1 REQ-077, HS-A02; HS-2 F-01; BU problem 3 | same on the defect. Differs on description: the 35 governing rows are T4-T6 instruments, device class NULL or not_device_scoped, none mentioning wheelchair; the audit calls them "wheelchair-tagged" and "wheelchair evidence" (objection FA-10) |
+| (b) Retired-only rows and the validators | 8 rows, 0 live; `validate_evidence_state` EXAMINED 13 (8 retired cells + 5 convergence rows); `validate_verification_consistency` EXAMINED 5 (retired); `derivation_handshake_integrity` determinations 0, EXAMINED 1 | HS-1 REQ-020, REQ-024; HS-2 F-11; HS-3 IMP-04 | same for the three the audit names; the audit missed `validate_verification_consistency` (FA-22). Post-blind: blocking `test_db_integrity` C10 fails on every provisional scratch determination (section 7), against "passes every gate" (FA-02) |
+| (c) Mobility split | `MOB` active; no `AMB`, `WHEEL` in `base_taxonomy_identity`; extractions `MOB` 170 of 214; population grades `MOB` 59 of 61; all 8 determinations `MOB` | HS-1 HS-A01; HS-2 F-02 | same |
+| (d) Read once | 18 scans, 11 sources, all catalogue-mode `pre-screen` at catalogue_version 12, open pass 0; ledger 580 = 58 x 10; EXTRACTED 94, STATED-ABSENT 7, READ-NOTHING-FOUND 22, READ-PARTIAL 40, NOT-READ 417; 47 live sources never scanned | HS-1 REQ-098, §5.2 | same. The "text layer" figure (23 of 58) was not in my blind set; re-derived afterwards it is 17 to 20 depending on the kind counted, and ignores natively textual artefacts (FA-11) |
+| (e) Language and jurisdiction | map 70 pairs, 19 languages, 48 jurisdictions, scope set on 0; enum 36; 17 map codes outside the enum over 19 pairs; language codes in mixed case in two tables; `evidence_sources.language` NULL on 59; `canonical_en` ASCII on 94 of 94; CJK given name truncated in the view; the NFKD-and-strip normaliser folds が to か and ガ to カ | HS-1 §1.D; HS-2 F-10, F-14 | same; the kana collision was found blind and matches F-10 |
+| (f) Synthesis tables | `connections`, `connection_targets`, `conflicts`, `reasoning_doc_citations`, `supersession_check` 0 rows; convergence rows 5, reached only from retired determinations; no parameter or lens column on `convergence_assessment` or `gaps` | HS-1 REQ-043, REQ-100, B4 | same |
+| (g) Render and walkability | no render verb or generator; stage map gives render one table; instrument live: 56 tables, 23 views, 90 FKs, `NO PATH` on 10 lines (five render pairs, two sections), nine orphans | HS-1 REQ-005, REQ-006, REQ-083 | same, except the audit's "prints NO PATH five times" (FA-25). The committed WALKABILITY.md is at user_version 101; the audit used the live run |
+
+## 7. Post-blind runs cited in fa-antagonist-objections.md
+
+### 7.1 Gates against scratch copies holding one live determination (FA-02)
+
+```
+p3_DEAF test_db_integrity rc=1 :: FAILED:   [C10] no published cell rests on an unverified or disputed source 
+p3_MOB test_db_integrity rc=1 :: FAILED:   [C10] no published cell rests on an unverified or disputed source 
+p12_BLIND test_db_integrity rc=1 :: FAILED:   [C10] no published cell rests on an unverified or disputed source 
+p7_MOB test_db_integrity rc=0 :: 
+canonical test_db_integrity rc=0
+p3_DEAF scripts/validate_evidence_state.py rc=0 :: PASS: 15 records checked, 0 errors, 0 warnings;EXAMINED: 15;
+p3_DEAF scripts/validate_verification_consistency.py rc=0 :: EXAMINED: 6;
+p3_DEAF scripts/audit/derivation_handshake_integrity.py rc=0 :: EXAMINED: 2;VERDICT: CLEAN;
+p3_DEAF scripts/audit/extraction_follow_up_audit.py rc=0 :: EXAMINED: 1;PASS: no live determination rests on an open follow-up or a skimmed figure;
+```
+
+### 7.2 Four cells on one scratch copy, then capture (FA-09)
+
+```
+[(9, 3, 'MOB', 'provisional', None, 9), (10, 12, 'MOB', 'provisional', None, 10), (11, 4, 'MOB', 'pending', 'GAP-103', None), (12, 9, 'MOB', 'pending', 'GAP-104', None)]
+      2 INSERT INTO "convergence_assessment
+     46 INSERT INTO "convergence_sources
+      2 INSERT INTO "gaps
+    183 INSERT INTO "specification_extraction_links
+     37 INSERT INTO "specification_source_links
+      4 INSERT INTO "specifications
+```
+
+### 7.3 Vacuity guard on a floored blocking check printing EXAMINED 0 (FA-01)
+
+```
+validate_evidence_state blocking min_items 1 -> examined 0 item(s), below the declared minimum of 1 — the check passed by having nothing to look at
+adjudication_integrity blocking min_items 1 -> examined 0 item(s), below the declared minimum of 1 — the check passed by having nothing to look at
+validate_verification_consistency blocking min_items 1 -> examined 0 item(s), below the declared minimum of 1 — the check passed by having nothing to look at
+derivation_handshake_integrity advisory min_items 1 -> examined 0 item(s), below the declared minimum of 1 — the check passed by having nothing to look at
+```
+
+### 7.4 Derived artefacts per live source, by kind (FA-11)
+
+```
+live 58 on disk 48 any derived record 23
+{'text-extraction': 17, 'page-render': 3, 'pdf-bibliography': 2, 'extraction': 3, 'render': 1}
+text-extraction or extraction: 20
+```
+
+### 7.5 Verb list: the brief's grep against the parser (FA-15)
+
+```
+grep -o form: 59
+AST literal-named add_parser calls: 72
+```
+
+sha256sum data/guidebook.db after all runs: c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d
