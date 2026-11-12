@@ -1799,3 +1799,692 @@ $ git status --short
 ?? scratchpad/session_2026-11-12-pipeline-bidirectional-audit/suite-work/
 ?? workplan/2026-11-12-bidirectional-pipeline/
 ```
+
+
+# ROUND 2: resolution of antagonist objections (re-runs of the antagonist's evidence)
+
+c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
+
+```
+$ GUIDEBOOK_DB_PATH=/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1/r2/upd.db python3 scripts/audit/migration_reproducibility.py 2>&1 | tail -3; echo EXIT=${PIPESTATUS[0]}
+======================================================================
+  PASS: the committed DB matches what the migration history produces.
+VERDICT: PASS
+EXIT=0
+[exit 0]
+```
+
+```
+$ GUIDEBOOK_DB_PATH=/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1/r2/upd.db python3 scripts/audit/migration_reproducibility.py --deep 2>&1 | tail -5; echo EXIT=${PIPESTATUS[0]}
+  seven core invariants cannot see, because an UPDATE changes no COUNT:
+    evidence_sources
+  Those writes owe a data migration; this check reports the divergence
+  rather than choosing.
+VERDICT: FAIL (deep)
+EXIT=1
+[exit 0]
+```
+
+```
+$ grep -n -B2 -A6 'id: migration_reproducibility' governance/check-registry.yaml | grep -E 'id:|level' 
+246:- id: migration_reproducibility
+258:- id: migration_reproducibility_deep
+[exit 0]
+```
+
+```
+$ grep -n -i 'COUNTS only\|row COUNTS' CLAUDE.md | cut -c1-160
+88:→ Enforced by `migration_reproducibility` (blocking), **which compares row COUNTS only** — an UPDATE
+117:generation date and a drift warning. Derive every volatile fact — row counts, schema version, CI
+[exit 0]
+```
+
+```
+$ grep -n -E "'conditioning'|\"conditioning\"" scripts/assess/assess_cell.py | head -20 | cut -c1-170
+468:            role, why = "conditioning", None
+1096:        "population_directness": pop, "value_directness": val, "conditioning": cond,
+1139:    return [r for r in recs if r["conditioning"] not in (COND_NON_ANCHORING, COND_DISCOUNTED)]
+1338:    down_weighted = [r["ref_id"] for r in recs if r["conditioning"] == COND_DOWN_WEIGHTED]
+1340:                  if r["conditioning"] in (COND_DISCOUNTED, COND_NON_ANCHORING)]
+2398:                                              "population_directness", "conditioning",
+[exit 0]
+```
+
+```
+$ sed -n '340,352p;422,430p;462,470p' scripts/assess/assess_cell.py | cut -c1-170
+
+#: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
+#: `gather_sources` filters on it, `gather_extraction_links` grades on it, and K01
+#: recomputes the sha from the links this produces -- so the three cannot disagree.
+#: Before 077 the predicate lived only inside gather_sources' SQL while the sha hashed an
+#: UNFILTERED count, which is how re-grading a row could flip a cell from `stated` to
+#: `pending` without moving its attestation.
+VALUE_SUPPLYING_ROLES = ("claim", "derived")
+CONDITIONING_ROLES = ("condition",)
+#: Rows that report something ABOUT the parameter without asserting a value for it.
+#: They supply DIRECTION, never value (owner ruling 2026-09-13), and since the owner
+#: statement of 2026-09-16 they may also carry a determination as a PROXY -- see
+#: `gather_findings` and the proxy branch in `determine()`.
+    Returns one dict per extraction, with `role` in:
+
+      governing     figure_role supplies a value AND the row's source survived the tier,
+                    verification and supersession gates -- i.e. its ref_id is in the
+                    governing set this determination actually used.
+      conditioning  figure_role='condition'. Qualifies a governing row. Carried onto the
+                    determination so a slope arrives with its run length attached.
+      excluded      everything else, with a MANDATORY reason. This is the row that makes
+                    a `pending` cell legible: "examined, and here is why it did not
+                f"extraction_method={method!r}: a skimmed figure is not publishable "
+                f"(owner ruling 2026-10-09, 'skimmed values are not publishable'); it is "
+                f"recorded and shown, never set as the value")
+        elif frole in VALUE_SUPPLYING_ROLES and ref in gov:
+            role, why = "governing", None
+        elif frole in CONDITIONING_ROLES:
+            role, why = "conditioning", None
+        elif frole in VALUE_SUPPLYING_ROLES:
+            # Value-supplying, but its source did not survive the anchoring gates.
+[exit 0]
+```
+
+```
+$ cd /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1 && python3 -I runsum2.py p4_MOB p4_DEAF p4_ALL
+p4_MOB (4, 'MOB', 'pending', None) governing []
+p4_MOB (4, 'MOB', 'pending', None) conditioning [('ALL', 2)]
+p4_MOB (4, 'MOB', 'pending', None) excluded [('ALL', 9), ('MOB', 13)]
+p4_DEAF (4, 'DEAF', 'pending', None) governing []
+p4_DEAF (4, 'DEAF', 'pending', None) conditioning [('ALL', 2)]
+p4_DEAF (4, 'DEAF', 'pending', None) excluded [('ALL', 9), ('MOB', 13)]
+p4_ALL (4, 'ALL', 'pending', None) governing []
+p4_ALL (4, 'ALL', 'pending', None) conditioning [('ALL', 2)]
+p4_ALL (4, 'ALL', 'pending', None) excluded [('ALL', 9), ('MOB', 13)]
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+print(c.execute('select x.identity_code, x.figure_role, count(*) from source_value_extractions x where parameter_id=4 and identity_code=\'ALL\' group by 1,2').fetchall())
+print(c.execute('select p.parameter_id,t.canonical_en from base_parameters p join terms t using(term_id) where p.parameter_id in (4,9)').fetchall())"
+[('ALL', 'claim', 9), ('ALL', 'condition', 2)]
+[(4, 'corridor width'), (9, 'door width')]
+[exit 0]
+```
+
+```
+$ cd /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1 && python3 -I runsum2.py p5_DEAF p6_DEAF p8_DEAF p11_DEAF
+p5_DEAF (5, 'DEAF', 'pending', None) governing []
+p5_DEAF (5, 'DEAF', 'pending', None) conditioning []
+p5_DEAF (5, 'DEAF', 'pending', None) excluded [('ALL', 2), ('MOB', 6)]
+p6_DEAF (6, 'DEAF', 'pending', None) governing []
+p6_DEAF (6, 'DEAF', 'pending', None) conditioning []
+p6_DEAF (6, 'DEAF', 'pending', None) excluded [('ALL', 3), ('MOB', 8)]
+p8_DEAF (8, 'DEAF', 'pending', None) governing []
+p8_DEAF (8, 'DEAF', 'pending', None) conditioning []
+p8_DEAF (8, 'DEAF', 'pending', None) excluded [('ALL', 1), ('BLIND', 3), ('MOB', 1)]
+p11_DEAF (11, 'DEAF', 'pending', None) governing []
+p11_DEAF (11, 'DEAF', 'pending', None) conditioning []
+p11_DEAF (11, 'DEAF', 'pending', None) excluded [('ALL', 5), ('MOB', 2)]
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+print(c.execute('select parameter_id,identity_code,figure_role,count(*) from source_value_extractions where parameter_id in (5,6,8,11) group by 1,2,3').fetchall())"
+[(5, 'ALL', 'claim', 2), (5, 'MOB', 'claim', 4), (5, 'MOB', 'finding', 2), (6, 'ALL', 'claim', 2), (6, 'ALL', 'finding', 1), (6, 'MOB', 'claim', 8), (8, 'ALL', 'finding', 1), (8, 'BLIND', 'claim', 3), (8, 'MOB', 'finding', 1), (11, 'ALL', 'claim', 5), (11, 'MOB', 'claim', 2)]
+[exit 0]
+```
+
+```
+$ cd /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1 && sed -i 's#file:r2/{name}.db#file:r2/{name}.db#' runsum2.py && python3 -I runsum2.py p3_allfig_DEAF
+p3_allfig_DEAF (3, 'DEAF', 'provisional', '○') governing [('ALL', 35)]
+p3_allfig_DEAF (3, 'DEAF', 'provisional', '○') conditioning [('ALL', 21), ('SCI', 1)]
+p3_allfig_DEAF (3, 'DEAF', 'provisional', '○') excluded [(None, 1), ('ALL', 60), ('MS', 2), ('SCI', 2)]
+[exit 0]
+```
+
+```
+$ sed -n '255,300p' scripts/assess/assess_cell.py | cut -c1-150
+def gather_sources(conn, parameter_id):
+    """The sources holding an EXTRACTION FOR THIS PARAMETER. Not the slug's sources.
+
+    THE DEFECT THIS CLOSES, measured 2026-09-10. This function took a `slug` and
+    joined `source_slug_links`, so the governing set was "everything admitted to this
+    topic". `parameter_id` was carried through determine()'s signature, sha(), the
+    report dict and validate_parameter() and never reached the evidence at all -- the
+    071 re-key was cosmetic at the exact point where the engine decides. The visible
+    result was `param 1 x MOB -> stated basis=T1+CO1+T2` anchored on all 10 sources
+    linked to `accessible-circulation-geometry`, 8 of which the engine's own report
+    flagged `tier_inconsistent`, and every one of the 10 DOWN-WEIGHTED.
+
+    The cause was one absent table-writer, not a bad query: `db.py` held ZERO
+    references to `source_value_extractions`, so no parameter->evidence edge existed
+    and the slug was the only join available. `db.py add-extraction` (migration 073,
+    same change as this) creates the edge; this query uses it.
+
+    DISTINCT IS LOAD-BEARING, not tidiness. Evidence to judgment is 1:N (D-0168): one
+    code document yields many clause-level extractions for one parameter. Without
+    DISTINCT, NBC 3.8's clauses would each add a copy of the same source to the
+    governing set, and a single document would look like corroboration of itself --
+    the independence failure `v_value_independence` exists to detect, manufactured
+    inside the engine.
+
+    A CONSEQUENCE WORTH STATING, because it is stop condition 6 of the operative
+    plan ("any `stated` cell whose governing set includes a source with no extraction
+    for that parameter -- do not merge the migration"): after this change that cell is
+    not merely forbidden, it is unconstructible. Every ref_id in the governing set
+    came out of this query, and this query returns only sources that hold an
+    extraction for the parameter being determined.
+
+    ONLY VALUE-SUPPLYING ROWS GOVERN (added 2026-09-13, migration 075's whole point).
+    Holding an extraction for the parameter was never enough. Measured on the live
+    corpus the day the grading landed: specification 1 was `stated` at T1 -- the
+    strongest claim this project makes -- on four rows of which TWO WERE CONDITIONS
+    (the slopes a treadmill was set to; the ADA range a study tested) and two were
+    findings, one of them `claim_type='absent'`, asserting nothing whatever. Not one
+    governing row was a claim. Specification 2 was the same shape.
+
+    So the predicate is `figure_role IN ('claim','derived')`:
+
+      claim     -- the row states a value for the parameter. Governs.
+      derived   -- the row's value was computed from other rows. Governs; its band
+                   is the floored mean of its inputs' (owner ruling 2026-09-13).
+      finding   -- the row reports something ABOUT the parameter without asserting a
+                   value: "code-compliant width fails 10-100% of users". Supplies
+[exit 0]
+```
+
+```
+$ sed -n '1240,1256p' scripts/db.py | cut -c1-160; sed -n '5395,5445p' scripts/db.py | cut -c1-160
+    with connect(readonly=True) as conn:
+        rows = [dict(r) for r in conn.execute(q, params).fetchall()]
+    if summary:
+        from collections import Counter
+        return dict(Counter(r["status"] for r in rows))
+    return rows
+
+
+def delete_connection(con_id: str, session: str, dry_run: bool = False):
+    """Hard-delete a connection and its targets. Use sparingly — for data corrections only."""
+    with connect(dry_run) as conn:
+        conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
+        conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
+
+
+# --- CLI ---
+
+
+
+def unlink_admission(exec_id: int, ref_id: str, reason: str, session: str,
+                     dry_run: bool = False):
+    """Remove an admission edge that is wrong. The corrective half of link-admission.
+
+    ADDED 2026-09-26. db.py had no DELETE or UPDATE on search_admissions at all, so a
+    wrong edge -- however it got there: a mis-typed --admitted-ref-id, or a
+    link-admission that faithfully copied a candidate's wrong exec_id -- could not be
+    corrected through any sanctioned path. Shaped like reattribute_candidate: the move
+    needs a reason, and the removed edge is kept in the search's findings_note, because
+    the junction row itself is gone.
+
+    results_admitted drops by the edge removed, never below the edges that remain (the
+    rule _results_admitted_after states). It does not touch the candidate
+    row: if the candidate's own exec_id is what was wrong, correct it with
+    reattribute-candidate as well -- the result names any candidate that still points
+    at this search, so the second half is not forgotten.
+
+    CAPTURING IT. This is a DELETE, and the capture path is additive by default: run
+    emit_batch_sql.py with --allow-delete search_admissions, which renders the removed
+    row as a keyed DELETE (only for a table a writer here deletes from). Found the first
+    time the verb was used for real (GAP-050's repair, 2026-09-26): emit refused the
+    scratch, correctly, until that opt-in existed.
+    """
+    reason = dbcore.require_reason(
+        reason, f"exec {exec_id} -> {ref_id}",
+        "Removing a provenance edge without saying why erases an attribution without "
+        "a trace of what replaced it.")
+    with connect(dry_run) as conn:
+        ref = dbcore.fold_ref(ref_id)
+        ex = conn.execute("SELECT exec_id, findings_note, results_admitted "
+                          "FROM search_executions WHERE exec_id=?", [exec_id]).fetchone()
+        if ex is None:
+            raise Refusal(f"exec {exec_id}: no such search execution.")
+        if not conn.execute("SELECT 1 FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                            [exec_id, ref]).fetchone():
+            raise Refusal(f"exec {exec_id} -> {ref}: no such admission edge to remove.")
+        conn.execute("DELETE FROM search_admissions WHERE exec_id=? AND ref_id=?",
+                     [exec_id, ref])
+        edges = conn.execute("SELECT COUNT(*) FROM search_admissions WHERE exec_id=?",
+                             [exec_id]).fetchone()[0]
+        was = ex["results_admitted"] or 0
+        count = _results_admitted_after(was, edges, linked=False)
+        detail = f"{ref}: {reason}"
+        if count != was:
+            detail += f" results_admitted {was} -> {count}."
+        # One stamp for both the note's date and updated_at (GAP-053, migration 100),
+        # so they cannot disagree -- link_admission's own pattern.
+        stamp = dbcore.now()
+        conn.execute("UPDATE search_executions SET results_admitted=?, findings_note=?, "
+[exit 0]
+```
+
+```
+$ sed -n '3540,3562p;3576,3584p' references/project-standards.md | cut -c1-300
+> **"retire in place then"**
+
+Given in answer to the proposal `scripts/migrations/076_never_reuse_identifiers.sql` named and
+declined to smuggle in: *"The single rule that would make both unnecessary is `retire in place,
+never hard-delete`, for which the mechanism is already half-built (`evidence_sources.superseded_by_ref_id`,
+`base_parameters.status = 'retired'`, `source_locators.status = 'RETIRED'`) … That is a doctrine
+change and an owner decision, so it is named here and not smuggled in."* It is now made. Recorded on
+contact per `CLAUDE.md` rule 0; the paperwork below is what the ruling CHANGES, never an argument
+against it.
+
+**WHAT IT SUPERSEDES.** 076's framing of the two floors as permanent; any future data migration that
+hard-deletes rows to retract them; and `assess_cell`'s re-determination refusal keying on NOT EXISTS,
+which the same comment says "could key on NOT RETIRED" under this rule — that is now the design, not
+a hypothetical.
+
+**WHAT IT DOES NOT TOUCH, stated because the boundary is easy to over-read.** `CLAUDE.md` §8's
+"Code, checks, scripts, dead tables and views: delete them" stands unchanged. This ruling governs
+DATA ROWS AND IDENTIFIERS, where deleting destroys provenance the project cannot reconstruct. Git
+history genuinely is the archive for code, so a deleted script loses nothing; a deleted row loses
+the fact that it existed. The two are different objects and §8's removal-friendly posture on
+apparatus is not weakened.
+
+**WHY IT WAS RULED, in the owner's own framing:** *"This is a recurring provenance and data
+that could surface it filters on status**, and that sweep is rule 4's ("a VIEW IS a caller") applied
+to this ruling.
+
+CONDITION: Any session about to delete a data row, retract a source, clear a corpus, or design a
+supersede path; and any migration that would empty a table.
+ACTION: (1) Retire in place — set the status the table already carries — never hard-delete. (2)
+Before the first retirement, sweep every reader that could surface a retired row and make it filter;
+a view that does not is the defect. (3) Re-key `assess_cell`'s re-determination refusal on NOT
+RETIRED rather than NOT EXISTS. (4) Where a row MUST genuinely leave (owner-ordered destruction,
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+no=[];yes=[]
+for (n,s) in c.execute(\"select name,sql from sqlite_master where type='table' and name<>'sqlite_sequence'\").fetchall():
+    cols=[r for r in c.execute(f'pragma table_info(\"{n}\")') if r[5]==1]
+    if len(cols)==1 and cols[0][2].upper()=='INTEGER':
+        (yes if 'AUTOINCREMENT' in s.upper() else no).append(n)
+print('AUTOINC',len(yes),yes);print('ROWID-REUSE',len(no),no)"
+AUTOINC 10 ['gap_mining', 'evidence_source_authors', 'extraction_relations', 'base_parameters', 'determination_gates', 'specifications', 'identity_icf_map', 'source_scans', 'extraction_follow_ups', 'source_value_extractions']
+ROWID-REUSE 14 ['convergence_assessment', 'specification_source_links', 'search_admissions', 'research_code_leads', 'term_adjudications', 'specification_extraction_links', 'convergence_sources', 'adversarial_passes', 'search_execution_artefacts', 'observed_terms', 'search_executions', 'search_candidates', 'adversarial_findings', 'connection_targets']
+[exit 0]
+```
+
+```
+$ grep -n -i 'rowid' scripts/audit/identifier_floor_audit.py | head -5 | cut -c1-160
+10:(`dbcore.ref_id_high_water`), and `parameter_id` / `specification_id` are rowid aliases that
+100:        # No AUTOINCREMENT: SQLite will reissue MAX(rowid)+1, so the live floor is
+105:        seqs[table] = ("max(rowid) — NO AUTOINCREMENT", mx)
+146:                "%s has no AUTOINCREMENT, so SQLite reissues MAX(rowid)+1 and emptying the "
+[exit 0]
+```
+
+```
+$ GUIDEBOOK_DB_PATH=/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1/r2/addp.db python3 scripts/db.py add-parameter --term-id TERM-004 --session session_2026-11-12-ag1-r2 2>&1 | tail -12
+{
+  "parameter_id": 13,
+  "term_id": "TERM-004",
+  "canonical_en": "lever handle",
+  "status": "active",
+  "provenance": "base-vocabulary",
+  "adjudicated_by": null,
+  "outcome": null,
+  "dry_run": false
+}
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+print(c.execute(\"select count(*) from term_adjudications where term_id='TERM-004'\").fetchall(), c.execute(\"select count(*) from observed_terms where observation_id in (select observation_id from term_adjudications where term_id='TERM-004')\").fetchall())
+print(c.execute('select count(*) from observed_terms o where not exists (select 1 from term_adjudications a where a.observation_id=o.observation_id)').fetchall())
+print(c.execute('select p.parameter_id,p.term_id,(select count(*) from term_adjudications a where a.term_id=p.term_id) from base_parameters p').fetchall())
+"
+[(0,)] [(0,)]
+[(8,)]
+[(3, 'TERM-001', 18), (4, 'TERM-002', 0), (5, 'TERM-003', 1), (6, 'TERM-005', 0), (7, 'TERM-007', 0), (8, 'TERM-011', 0), (9, 'TERM-021', 0), (10, 'TERM-024', 0), (11, 'TERM-061', 0), (12, 'TERM-091', 2)]
+[exit 0]
+```
+
+```
+$ sed -n '5186,5194p' references/project-standards.md | cut -c1-420
+> "the only thing that we need to do is ensure that our matrix works properly so that we have proper coverage across all these languages and jurisdictions"
+
+> "so long as we can confirm that we have correct coverage, we are fine"
+
+**What this decides.**
+1. **The base is the matrix and is self-grounding.** A base cell (a concept, a language, a jurisdiction, a form) carries where it was found, in the base's own columns: the source's URL and, if need be, page and line (this extends the fifth entry of the same day: "just record page number and line if need be"). It does not point into the evidence stage, and nothing in the base waits on a source being admitted, a quote 
+2. **This supersedes, for base vocabulary only,** the route the 2026-10-09 ledger entry and migration 125 set up: an attested alias reached through `observed_terms` and `evidence_sources` (`db.py add-alias` requires an adjudicated observation whose quote verifies in a file saved for its source). That route stays for evidence-stage reading of a source for a parameter (the scan contract); it is no longer the way a base
+3. **The acceptance test is confirmed coverage.** The matrix is accepted when coverage across every language and jurisdiction can be confirmed as correct, which means a coverage measure derived from the base itself (concept by language-and-jurisdiction column), not a list kept beside it. [ASSUMPTION: "correct coverage" is read as a derivable measure that distinguishes a cell that has a form, a cell searched with none
+4. **Consequences left open for the owner's schema decision:** whether the base cell's source columns go on `term_aliases` or on a new matrix table; what happens to `term_aliases.observation_id` (migration 125); and how a concept first met outside English is held (`terms.canonical_en` is required). A design is being prepared (`scratchpad/session_2026-11-06-base-vocabulary-review/matrix-design/`); it approves nothing.
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+print(c.execute(\"select name from sqlite_master where type='table' and (name like 'syn_%' or name like 'spe_%' or name like '%judgment%' or name like 'jud_%')\").fetchall())"
+[('specification_source_links',), ('specification_extraction_links',), ('specifications',)]
+[exit 0]
+```
+
+```
+$ sed -n '1815,1820p;1750,1756p' references/project-standards.md | cut -c1-300
+**3. The hand-off keys are not sound as written.**
+- **Part E contradicts Part B.** Part E §4 and §5 still say `syn_items` "gains `judgment_item_id NOT
+  NULL`" and `spe_items` "gains `synthesis_item_id NOT NULL`" — the single back-pointer that Part B
+  and the RULE above explicitly reject. Part B was corrected after the owner's cardinality question;
+  **Part E was never updated to match.**
+- **`evi_items.research_item_id` is on the wrong table.** It is a per-*source* fact placed on every
+  *extraction*, so two extractions from one paper can name different leads and both pass. It is also
+`272/256` mined DOIs, the 12-skill-file count) and are unverifiable as written.
+
+**7. Burden of proof unpaid.** §1 requires naming *what wrong thing reaches the guidebook* if a new
+object does not exist. `jud_items`, `syn_judgment_links` and `spe_synthesis_links` were justified by
+spine integrity — an argument **about the apparatus**, which §1 explicitly rejects. `figures`, the
+vocabulary check and the `site_pages_fresh` promotion do pay it. The promotion also ignores the
+[exit 0]
+```
+
+```
+$ sed -n '915,932p' scripts/db.py | cut -c1-150
+        # rewrite" — a fact written into two tables is drift waiting to happen,
+        # and a parity check does not prevent that, it makes it survivable and
+        # therefore permanent. Nothing ever READ the JSON: it was write-only
+        # data guarded by a test. The junction is the record, and it carries its
+        # own created_at.
+        for ref_id in ids:
+            if not conn.execute("SELECT 1 FROM evidence_sources WHERE ref_id=?",
+                                [ref_id]).fetchone():
+                # Named, not a bare FOREIGN KEY constraint failed. The whole
+                # transaction rolls back, execution row included.
+                raise Refusal(
+                    f"--admitted-ref-id {ref_id} is not in evidence_sources. "
+                    f"File the source first (`db.py add-source`), then log the "
+                    f"search that admitted it.")
+            conn.execute(
+                "INSERT INTO search_admissions "
+                "(exec_id, ref_id, created_at, created_by_session) "
+                "VALUES (?, ?, ?, ?)", [exec_id, ref_id, ts, session])
+[exit 0]
+```
+
+```
+$ sed -n '5290,5302p' scripts/db.py | cut -c1-150
+        incomplete record is not rewriting what the search found").
+
+    The one place the rule lives; its cases are L03, L06 and U03 in
+    scripts/tests/test_db_amend_writers.py.
+    """
+    was = was or 0
+    return max(was, edges) if linked else max(edges, was - 1)
+
+
+def link_admission(exec_id: int, ref_id: str, reason: str, session: str,
+                   dry_run: bool = False):
+    """Record that an EXISTING search admitted a source, when a resolved candidate says so.
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+a={r[1] for r in c.execute('pragma table_info(v_item_provenance)')}
+b={r[1] for r in c.execute('pragma table_info(v_determination_provenance)')}
+print('only item',sorted(a-b));print('only det',sorted(b-a))
+import re
+for v in ('v_item_provenance','v_determination_provenance'):
+    s=c.execute('select sql from sqlite_master where name=?',(v,)).fetchone()[0]
+    print(v, sorted(set(re.findall(r'(?:FROM|JOIN)\s+(\w+)',s,re.I))))
+"
+only item ['author_display', 'cell_state', 'jurisdiction', 'lens_code', 'parameter_domain', 'pub_title', 'pub_year', 'regulatory_stratum_only', 'source_role', 'source_tier', 'tier_basis']
+only det ['claim_text', 'claimed_unit', 'claimed_value', 'comparator', 'exclusion_reason', 'extraction_id', 'figure_role', 'lens', 'role', 'state', 'tier']
+v_item_provenance ['base_parameters', 'evidence_sources', 'terms', 'v_evidence_authors']
+v_determination_provenance ['base_parameters', 'evidence_sources', 'source_value_extractions', 'specification_extraction_links', 'specifications', 'terms']
+[exit 0]
+```
+
+```
+$ grep -n -i 'migration 064\|v_item_provenance' CLAUDE.md | cut -c1-200
+94:*Proof: migration 064 exists because 063 swept eight Python readers and six skills and missed
+95:`v_item_provenance`; a byte-exact diff proved it clean because the view rendered 0 rows.*
+[exit 0]
+```
+
+```
+$ grep -n 'slug' scripts/assess/assess_cell.py | sed -n '1,40p' | cut -c1-150
+22:cell's IDENTITY; the engine still gathered its EVIDENCE by slug, so `parameter_id` reached
+36:`--slug` survives as the topic a determination is RECORDED under. It no longer selects
+156:#   gap descriptions are PARAMETER-scoped as of 2026-09-10 (they were slug-scoped, and
+158:#   is not corpus-level absence, and is not the same absence a missing slug-link is);
+256:    """The sources holding an EXTRACTION FOR THIS PARAMETER. Not the slug's sources.
+258:    THE DEFECT THIS CLOSES, measured 2026-09-10. This function took a `slug` and
+259:    joined `source_slug_links`, so the governing set was "everything admitted to this
+269:    and the slug was the only join available. `db.py add-extraction` (migration 073,
+1299:def determine(conn, parameter_id, lens, slug, note):
+1310:    # for THIS parameter (B4c); `slug` no longer selects evidence and is carried only
+1410:                    basis=f"Qualified synthesis from {len(t3c)} T3-clinical sources on {slug}")
+1572:        # Before B4c the same cell came out `stated` on the slug's evidence, none of
+1732:        "slug": slug, "note": note,
+1824:                  "to the slug and still have been read for no parameter at "
+1963:def validate_slug(conn, slug):
+1967:    the gap description, and a row naming a topic that is not in `slugs` points at nothing.
+1968:    Existence only: a MERGED slug still names the topic its work was done under.
+1970:    if not conn.execute("SELECT 1 FROM slugs WHERE slug=?", (slug,)).fetchone():
+1972:            f"slug {slug!r}: no such slug. The slug is the topic this determination is "
+1973:            f"recorded under (--slug); it does not select evidence. Name an existing one "
+1974:            f"(SELECT slug, status FROM slugs); db.py has no slug writer (derive: "
+1975:            f"grep -n 'INSERT INTO slugs' scripts/db.py is empty), so a new slug is a "
+1976:            f"migration (see how the last one landed: grep -ln 'INSERT INTO slugs' "
+2076:        f"or in --identity/--icf/--needs/--medical. --slug is not part of the cell's "
+2137:    # NO LONGER "the slug to gather from" -- B4c gathers by parameter_id. This is the
+2141:    ap.add_argument("--slug", required=True,
+2206:    for (parameter_id, lens, slug, note) in [(args.parameter_id, lens, args.slug, args.note)]:
+2208:        validate_slug(conn, slug)
+2213:        det = determine(conn, parameter_id, lens, slug, note)
+2218:            # It used to read "no evidence is linked via slug '<slug>' ... This
+2219:            # records absence of a slug-link" and point at the item_bpc_links
+2226:                    f"{parameter_id}×{lens_key(lens)}; recorded while working slug "
+2227:                    f"'{slug}'. Remedy: {remedy}. Determination pending per §2.4.")
+2383:                        "parameter_id", "lens", "lens_key", "slug", "note", "state", "design_scale",
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import yaml;sm=yaml.safe_load(open('governance/stage-map.yaml'))['tables']
+for t in ('source_locators','data_migrations','decisions','research_code_leads'): print(t, sm.get(t))"
+source_locators research
+data_migrations infrastructure
+decisions infrastructure
+research_code_leads research
+[exit 0]
+```
+
+```
+$ cd /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1/r2/tree && python3 scripts/audit/claude_md_spine.py; echo EXIT=$?
+EXAMINED: 7 contract stage(s) against 1 SPINE line
+FAIL: CLAUDE.md's SPINE line disagrees with the contract, which is the single home.
+  CLAUDE.md : research -> base -> evidence -> judgment -> synthesis -> specification -> render
+  governance/pipeline-contract.yaml: base -> research -> evidence -> judgment -> synthesis -> specification -> render
+  Correct CLAUDE.md, or change the contract first if the spine itself was re-ruled.
+EXIT=1
+[exit 0]
+```
+
+```
+$ cd /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/ag1/r2/tree && cp /home/user/guidebook/CLAUDE.md CLAUDE.md && python3 scripts/audit/claude_md_spine.py; echo EXIT=$?
+EXAMINED: 7 contract stage(s) against 1 SPINE line
+PASS: SPINE matches governance/pipeline-contract.yaml — base -> research -> evidence -> judgment -> synthesis -> specification -> render
+EXIT=0
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+print(c.execute(\"select name from sqlite_master where sql like '%saturation_signal%'\").fetchall())"
+git grep -n saturation_signal -- scripts schemas governance skills ':!scripts/migrations' | cut -c1-140 | head -8
+[('search_executions',), ('v_coverage_jurisdiction',)]
+scripts/db.py:677:               results_admitted: int = 0, saturation_signal: str = None,
+scripts/db.py:829:        "saturation_signal": saturation_signal,
+scripts/db.py:2510:    p_ls.add_argument("--saturation-signal", choices=dbcore.schema_choices("search_executions", "saturation_signal"))
+scripts/db.py:2977:            saturation_signal=args.saturation_signal,
+[exit 0]
+```
+
+```
+$ sed -n '1,12p' scripts/audit/research_batch_dod.py >/dev/null; grep -n 'v_coverage_jurisdiction' scripts/audit/research_batch_dod.py | head -3 | cut -c1-140; grep -n 'v_coverage_jurisdiction' skills/research-log-manager_SKILL.md | head -2 | cut -c1-140
+1123:    # coverage record at all (v_coverage_jurisdiction reads search_executions) and no
+100:   > Coverage is derived from the log (`v_coverage_jurisdiction` / `v_coverage_language` / `v_coverage_lens`); read it with
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+for r in c.execute('select slug, exec_id, target_tier, target_evidence_type, origin, backfill, created_at from search_executions where slug is not null order by slug, exec_id limit 400'):
+    pass
+import collections
+d=collections.defaultdict(list)
+for r in c.execute('select slug, exec_id, target_tier, target_evidence_type, origin, backfill from search_executions where slug is not null order by slug, exec_id'): d[r[0]].append(r[1:])
+for k,v in d.items(): print(k, [(x[0],x[1],x[2],x[3],x[4]) for x in v][:12], len(v))
+"
+accessible-circulation-geometry [(29, 1, 'co1', 'planned', 0), (30, 2, 'sr_meta', 'planned', 0), (31, 1, 'clinical', 'planned', 0), (32, 1, 'clinical', 'planned', 0), (33, 2, 'co1', 'planned', 0), (34, 2, 'co2', 'planned', 0), (35, 2, 'co1', 'planned', 0), (36, 2, 'co2', 'planned', 0), (37, 2, 'co1', 'planned', 0), (38, 5, 'national_fw', 'planned', 0), (39, 2, 'co1', 'planned', 0), (40, 2, 'co1', 'planned', 0)] 168
+room-acoustic-performance [(1, 1, 'co1', 'planned', 0), (2, 1, 'co1', 'planned', 0), (3, 2, 'sr_meta', 'planned', 0), (4, 5, 'national_fw', 'planned', 0), (5, 1, 'clinical', 'planned', 0), (6, 1, 'clinical', 'planned', 0), (7, 2, 'sr_meta', 'planned', 0), (8, 1, 'co1', 'planned', 0), (9, 1, 'co1', 'planned', 0), (10, 1, 'co1', 'planned', 0), (11, 1, 'co1', 'planned', 0), (12, 1, 'co1', 'planned', 0)] 28
+[exit 0]
+```
+
+```
+$ sed -n '60,66p' governance/research-contract.yaml | cut -c1-200
+  - id: R1
+    phase: before-admitting
+    title: "Co-1 / T2 / Co-2 pass FIRST"
+    hook: >-
+      Co-1 / T2 / Co-2 pass FIRST - no exceptions (Co-1 co-primary w/ T1, CRPD 4.3)
+    anchor: "skills/multilingual-research_SKILL.md Step 1; CRPD Art. 4.3; governance/tier-system.md"
+    enforcer: R1
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+for r in c.execute('select s.slug, a.exec_id, a.ref_id, e.evidence_type, e.tier from search_admissions a join search_executions s using(exec_id) join evidence_sources e using(ref_id) order by s.slug, a.exec_id, a.ref_id'): print(r)
+" | head -70
+(None, 203, 'REF-00468', 'grey', 3)
+('accessible-circulation-geometry', 30, 'REF-00984', 'sr_meta', 2)
+('accessible-circulation-geometry', 31, 'REF-00983', 'clinical', 1)
+('accessible-circulation-geometry', 31, 'REF-00985', 'clinical', 1)
+('accessible-circulation-geometry', 31, 'REF-00986', 'clinical', 1)
+('accessible-circulation-geometry', 38, 'REF-00988', 'national_fw', 5)
+('accessible-circulation-geometry', 42, 'REF-00989', 'co1', 1)
+('accessible-circulation-geometry', 43, 'REF-00990', 'code', 6)
+('accessible-circulation-geometry', 43, 'REF-00991', 'code', 6)
+('accessible-circulation-geometry', 45, 'REF-00992', 'code', 6)
+('accessible-circulation-geometry', 46, 'REF-00993', 'co1', 1)
+('accessible-circulation-geometry', 49, 'REF-00994', 'standard_eb', 4)
+('accessible-circulation-geometry', 51, 'REF-00995', 'code', 6)
+('accessible-circulation-geometry', 52, 'REF-00996', 'national_fw', 5)
+('accessible-circulation-geometry', 57, 'REF-00997', 'national_fw', 5)
+('accessible-circulation-geometry', 59, 'REF-00998', 'national_fw', 5)
+('accessible-circulation-geometry', 62, 'REF-00999', 'clinical', 3)
+('accessible-circulation-geometry', 64, 'REF-00977', 'sr_meta', 2)
+('accessible-circulation-geometry', 64, 'REF-01000', 'clinical', 3)
+('accessible-circulation-geometry', 65, 'REF-01001', 'clinical', 3)
+('accessible-circulation-geometry', 70, 'REF-00979', 'clinical', 1)
+('accessible-circulation-geometry', 70, 'REF-00980', 'clinical', 1)
+('accessible-circulation-geometry', 70, 'REF-01002', 'clinical', 1)
+('accessible-circulation-geometry', 77, 'REF-01003', 'clinical', 3)
+('accessible-circulation-geometry', 77, 'REF-01004', 'clinical', 1)
+('accessible-circulation-geometry', 78, 'REF-01005', 'grey', 3)
+('accessible-circulation-geometry', 91, 'REF-01006', 'co1', 1)
+('accessible-circulation-geometry', 93, 'REF-01009', 'co1', 1)
+('accessible-circulation-geometry', 95, 'REF-01011', 'clinical', 3)
+('accessible-circulation-geometry', 99, 'REF-01007', 'clinical', 3)
+('accessible-circulation-geometry', 100, 'REF-01008', 'grey', 3)
+('accessible-circulation-geometry', 105, 'REF-01029', 'grey', 3)
+('accessible-circulation-geometry', 114, 'REF-01015', 'code', 6)
+('accessible-circulation-geometry', 115, 'REF-01016', 'code', 6)
+('accessible-circulation-geometry', 116, 'REF-01015', 'code', 6)
+('accessible-circulation-geometry', 117, 'REF-01016', 'code', 6)
+('accessible-circulation-geometry', 118, 'REF-01017', 'code', 6)
+('accessible-circulation-geometry', 119, 'REF-01017', 'code', 6)
+('accessible-circulation-geometry', 125, 'REF-01012', 'code', 6)
+('accessible-circulation-geometry', 126, 'REF-01013', 'code', 6)
+('accessible-circulation-geometry', 127, 'REF-01014', 'standard_eb', 4)
+('accessible-circulation-geometry', 128, 'REF-01018', 'code', 6)
+('accessible-circulation-geometry', 132, 'REF-01019', 'code', 6)
+('accessible-circulation-geometry', 140, 'REF-01026', 'code', 6)
+('accessible-circulation-geometry', 147, 'REF-01020', 'code', 6)
+('accessible-circulation-geometry', 148, 'REF-01021', 'national_fw', 5)
+('accessible-circulation-geometry', 157, 'REF-01025', 'grey', 3)
+('accessible-circulation-geometry', 159, 'REF-01023', 'code', 6)
+('accessible-circulation-geometry', 164, 'REF-01030', 'national_fw', 5)
+('accessible-circulation-geometry', 166, 'REF-01027', 'code', 6)
+('accessible-circulation-geometry', 169, 'REF-01028', 'code', 6)
+('accessible-circulation-geometry', 171, 'REF-01029', 'grey', 3)
+('accessible-circulation-geometry', 182, 'REF-01022', 'grey', 3)
+('accessible-circulation-geometry', 183, 'REF-01024', 'national_fw', 5)
+('accessible-circulation-geometry', 186, 'REF-01031', 'code', 6)
+('accessible-circulation-geometry', 189, 'REF-01032', 'code', 6)
+('accessible-circulation-geometry', 192, 'REF-00139', 'code', 6)
+('accessible-circulation-geometry', 193, 'REF-01033', 'clinical', 1)
+('accessible-circulation-geometry', 193, 'REF-01034', 'clinical', 1)
+('accessible-circulation-geometry', 193, 'REF-01035', 'clinical', 3)
+('accessible-circulation-geometry', 193, 'REF-01036', 'clinical', 1)
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+cols=[r[1] for r in c.execute('pragma table_info(evidence_sources)')]
+print([x for x in cols if 'grey' in x or 'warrant' in x or 'note' in x or 'type' in x or 'peer' in x])
+for r in c.execute(\"select ref_id, evidence_type, source_type, grey_flag, substr(coalesce(verification_note,''),1,200), substr(pub_title,1,70) from evidence_sources where ref_id in ('REF-01022','REF-01025','REF-01029')\"): print(r)
+print('NO sources:')
+for r in c.execute(\"select ref_id, lang_detected, substr(pub_title,1,80), publisher from evidence_sources where jurisdiction='NO'\"): print(r)
+"
+['source_type', 'pub_year_note', 'evidence_type', 'co1_source_type', 'bpc_note', 'grey_flag', 'grey_reason', 'verification_note', 'notes', 'subtype', 'code_currency_notes', 'standard_number_note', 'author_display_note', 'publisher_note']
+('REF-01022', 'grey', 'letter', 1, '', 'Internetconsultatie verzamelbesluit Bbl 2024 (reactie van Ieder(in), 9')
+('REF-01025', 'grey', 'grey', 1, '', 'Yttrande över Boverkets remiss ang. Revidering av Boverkets byggregler')
+('REF-01029', 'grey', 'report', 1, '', 'Metodología para la evaluación e implementación de Accesibilidad Unive')
+NO sources:
+('REF-01012', 'no', 'Byggteknisk forskrift (TEK17) — § 12-16. Rampe', None)
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+for r in c.execute(\"select ref_id, grey_reason from evidence_sources where ref_id in ('REF-01022','REF-01025','REF-01029')\"): print(r)
+"
+('REF-01022', "consultation reply (internetconsultatie reactie) by a national umbrella organisation, dated 9 November 2023 and signed by its director; not peer-reviewed; no DOI. CO-1-ADJACENT AND NOT CLAIMED AS CO-1 (D-0178): the letter calls its author 'het netwerk van mensen met een beperking of chronische ziekte', but its governance (who controls the network) was not retrieved -- iederin.nl pages answered with a bot-challenge stub (HTTP 202) -- and no individual disabled author or consulted member is named.")
+('REF-01025', "consultation reply (remissvar) to a government agency by a rights organisation, dated Stockholm 2007-01-10; not peer-reviewed; no DOI; hosted on the organisation's own site")
+('REF-01029', "report authored by a disability-sector umbrella platform (CERMI Comunidad de Madrid), dated 'Madrid, diciembre de 2018', with municipal support credited on the last page ('Con el apoyo de'); not peer-reviewed; no DOI; hosted on the Ayuntamiento de Madrid site")
+[exit 0]
+```
+
+## Round 2 (antagonist objections): commands not logged by the wrapper, and final checks
+```
+$ read 01-antagonist-objections.md and 01-antagonist-blind.md; re-ran for each blocking and material objection (outputs above in this log): migration_reproducibility with a value-only edit and with --deep (REQ-090); parameter 4 x MOB/DEAF/ALL roles and parameters 5, 6, 8, 11 x DEAF (REQ-077); counterfactual: re-tag parameter 3 MOB figures ALL, determine x DEAF -> governing [(ALL,35)]; delete_connection / unlink_admission source and PS:3540-3590 (REQ-018); AUTOINCREMENT derivation (REQ-019); add-parameter --term-id TERM-004 (REQ-029/033); syn_/spe_ table existence, PS:1786-1791, db.py:915-932 (REQ-012); WP lines 78,79,127,135,139,141,143,150; PS:583-586 and RATIFICATION-RECORD 115-134 (HS-A06); view column sets (v_item_provenance); claude_md_spine red test on a scratch tree; search and admission order per slug (REQ-052); grey_reason of the three non-English grey sources (REQ-066); saturation_signal view (HS-A13); PS:368-382, PS:5041-5046, PS:588-592, PS:170-173.
+$ python3 -I accept.py (marks vs evidence, top/bottom side, prose lines):
+rows 118 mark-bad 0 side-gaps 0
+prose lines (whole file) 75
+$ X02c diff HS1 vs final -> HS-A06, HS-A09, HS-A13, REQ-017, 018, 019, 029, 033, 038, 052, 064, 066, 074, 090, 098 differ (boundaries B9, B12 changed separately)
+$ resolution table tallies (grep -c on the table): upheld 95, amended 48 (includes the section 1.1 header row), withdrawn 1, not attacked 39; referred markers: 9 rows
+```
+
+## End of round 2
+```
+c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
+```
