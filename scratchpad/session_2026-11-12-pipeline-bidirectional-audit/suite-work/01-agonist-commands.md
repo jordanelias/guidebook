@@ -2488,3 +2488,134 @@ $ resolution table tallies (grep -c on the table): upheld 95, amended 48 (includ
 ```
 c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
 ```
+
+
+# ROUND 3: accuracy-correction pass (antagonist confirmation)
+
+c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
+
+```
+$ grep -n -F '9. **OW-1.** Yes: a view mapped' references/project-standards.md | cut -c1-80; sed -n '4761p' references/project-standards.md | cut -c1-420
+4760:9. **OW-1.** Yes: a view mapped to a stage counts as a member of that stage
+10. **OW-2.** The prompt's option: `workplan/pipeline-state-graph/walkability.py` outlives the instrument and is registered as the stage-pair gate, by one registry entry that fails when a stage pair has no path (the workplan's completion test, item 7). [ASSUMPTION: the entry is added once the views key of OW-1 has landed. Before that the pairs ending at render print NO PATH by construction, so registering it earlier 
+[exit 0]
+```
+
+```
+$ python3 -I -c "
+import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
+print(c.execute(\"select sql from sqlite_master where name='v_best_practice'\").fetchone()[0][:400])"; grep -n 'views_no_stage' workplan/pipeline-state-graph/walkability.py | head -3 | cut -c1-200; sed -n '62p' workplan/2026-10-23-pipeline-resolution-workplan.md | cut -c1-300
+CREATE VIEW v_best_practice AS
+    SELECT *
+    FROM "specifications"
+    WHERE state IN ('stated', 'provisional')
+      AND retired_at IS NULL
+155:out['views_no_stage'] = sorted(v for v in vedge if len(vstages(v)) <= 1)
+235:print('views confined to one stage or none:', ', '.join(out['views_no_stage']))
+| T-5: walkability into render prints NO PATH by construction | T-5 proposes mapping its views to `render` (§5, T-5), gated on OW-1 | the owner's 2026-10-23 statement requires walkability but does not rule on views (§1) |
+[exit 0]
+```
+
+```
+$ grep -n -F 'nothing joins it' references/project-standards.md | cut -c1-200; sed -n '1756,1760p' references/project-standards.md | cut -c1-260; sed -n '13p' decisions/DR-2026-08-06-clean-room-evidence-reset.md | cut -c1-300
+1759:  the clue store — *"nothing joins it, no determination may cite it"* — and this key would make it
+  *extraction*, so two extractions from one paper can name different leads and both pass. It is also
+  unsatisfiable for the six admitted sources with no clue-store row (REF-00965–970, measured).
+- **It also reverses a ratified demotion without recording a supersession.** `DR-2026-08-06` demoted
+  the clue store — *"nothing joins it, no determination may cite it"* — and this key would make it
+  the root of every citation walk.
+live; everything research produced is preserved and demoted to reference.
+[exit 0]
+```
+
+```
+$ python3 scripts/db.py add-alias --help 2>&1 | head -25
+usage: db.py add-alias [-h] --term-id TERM_ID --observation-id OBSERVATION_ID
+                       --alias-type {BROADER,DEPRECATED,DOMAIN,NARROWER,SYNONYM,TRANSLATION}
+                       --session SESSION [--dry-run]
+
+options:
+  -h, --help            show this help message and exit
+  --term-id TERM_ID
+  --observation-id OBSERVATION_ID
+  --alias-type {BROADER,DEPRECATED,DOMAIN,NARROWER,SYNONYM,TRANSLATION}
+                        from the column's CHECK; DEPRECATED is rename-term's
+  --session SESSION
+  --dry-run
+[exit 0]
+```
+
+```
+$ sed -n '2940,2950p' scripts/db.py | cut -c1-150
+            "con_id": args.con_id,
+            "status": args.status,
+            "confidence": args.confidence,
+            "connection_type": args.connection_type,
+            "filed_in": args.filed_in,
+            "description": args.description,
+            "source_skill": args.source_skill,
+            "opus_reviewed": 0,
+        }
+        insert_connection(data, targets,
+                          session=args.session, dry_run=args.dry_run)
+[exit 0]
+```
+
+```
+$ section 8 tally commands (as printed in the document)
+upheld 93
+amended 55
+withdrawn 1
+not attacked 35
+rows 184
+position rows (P-01-n only) 183
+Referred 10
+      1 Referred: OD-01
+      2 Referred: OD-04
+      1 Referred: OD-08
+      1 Referred: OD-14
+      1 Referred: OD-17
+      1 Referred: OD-18
+      1 Referred: OD-23
+      2 Referred: new OD
+$ X02b
+      7 **CONTRADICTED**
+      5 **MET**
+     69 **PARTIAL**
+     30 **UNMET**
+      7 **UNPROVEN**
+$ X02c
+> HS-A06 PARTIAL;> HS-A09 UNPROVEN;> HS-A13 PARTIAL;> REQ-017 PARTIAL;> REQ-018 CONTRADICTED;> REQ-019 PARTIAL;> REQ-029 PARTIAL;> REQ-033 PARTIAL;> REQ-038 PARTIAL;> REQ-060 CONTRADICTED;> REQ-064 UNMET;> REQ-066 PARTIAL;> REQ-074 UNPROVEN;> REQ-090 PARTIAL;> REQ-096 UNMET;> REQ-098 PARTIAL;
+$ boundaries (this doc)
+     12 **PARTIAL**
+      5 **UNMET**
+$ sha
+c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
+```
+```
+Referred (anchored) 9
+upheld 93
+amended 55
+withdrawn 1
+not attacked 35
+rows 118 mark-bad 0 side-gaps 0
+prose lines (whole file) 76
+c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
+```
+```
+$ grep -n -i "clue" decisions/DR-2026-08-24-scaffolding-is-phase-specific.md | head -4; sed -n 28p decisions/DR-2026-08-27-base-sources-is-a-target-registry.md
+76:**What holds instead:** the evening ruling — clue material is *"not stored as usable for any case
+86:them back into a markdown clues document is struck** — it would convert structured fields into prose,
+260:### §2.3 The clue store is a historical artifact, and duplication out of it is the point
+262:> *"The clues table is a historical artifact. The DOIs it contains are expected to be used by the
+DR-2026-08-27-base-sources-is-a-target-registry.md
+evidence_sources. It is a third input to the research matrix alongside the clue store. Measured:
+```
+## End of round 3
+```
+c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d  data/guidebook.db
+ M scratchpad/session_2026-11-12-pipeline-bidirectional-audit/commands.jsonl
+ M scratchpad/session_2026-11-12-pipeline-bidirectional-audit/suite-work/01-agonist-commands.md
+ M workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md
+?? scratchpad/session_2026-11-12-pipeline-bidirectional-audit/suite-work/01-antagonist-confirmation.md
+```

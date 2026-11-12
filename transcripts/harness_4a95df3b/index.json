@@ -23,21 +23,21 @@
   {
     "started": "2026-11-12T02:54:23",
     "role": "antagonist",
-    "bytes": 3231466,
+    "bytes": 3473044,
     "agent_id_prefix": "acca09d2",
     "file": "2026-11-12T02-54-23_antagonist_acca09d2.jsonl"
   },
   {
     "started": "2026-11-12T03:21:58",
     "role": "antagonist",
-    "bytes": 1821208,
+    "bytes": 2456123,
     "agent_id_prefix": "a57db701",
     "file": "2026-11-12T03-21-58_antagonist_a57db701.jsonl"
   },
   {
     "started": "2026-11-12T03:39:37",
     "role": "antagonist",
-    "bytes": 1515759,
+    "bytes": 2068597,
     "agent_id_prefix": "af9bcc71",
     "file": "2026-11-12T03-39-37_antagonist_af9bcc71.jsonl"
   }
