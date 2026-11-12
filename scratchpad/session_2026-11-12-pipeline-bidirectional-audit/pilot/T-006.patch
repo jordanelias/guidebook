@@ -1,0 +1,50 @@
+From 722d1edbb4c043acf60dc80120ba62d9fed06663 Mon Sep 17 00:00:00 2001
+From: pilot <pilot@example.invalid>
+Date: Thu, 12 Nov 2026 05:41:28 +0000
+Subject: [PATCH] governance: refuse delete-connection on a missing id
+ [2026-11-12 05:41]
+
+delete-connection looked up nothing: a mistyped id printed {"deleted": ...} with rc=0 while the real connection stayed. It now refuses an id that is not a connection, in update-connection's wording, and writes nothing. Two cases added to test_run_pipeline_refusals.py (N10 refusal, red before; N11 a live connection still deletes with its targets). Evidence before: CON-9999 -> deleted, rc=0. After: REFUSING: delete-connection: CON-9999 is not a connection. Nothing was written., rc=1. Sweep: no caller in views, skills, registry or governance prose; only generated state-graph files and workplan prose name the verb.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ub36iPMfRfMYh8c88FYpXF
+---
+ scripts/db.py                               | 2 ++
+ scripts/tests/test_run_pipeline_refusals.py | 8 ++++++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/scripts/db.py b/scripts/db.py
+index 280a366..1a20fb1 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -1248,6 +1248,8 @@ def get_conflicts(domain: str = None,
+ def delete_connection(con_id: str, session: str, dry_run: bool = False):
+     """Hard-delete a connection and its targets. Use sparingly — for data corrections only."""
+     with connect(dry_run) as conn:
++        if not dbcore.exists(conn, "connections", "con_id", con_id):
++            raise Refusal(f"delete-connection: {con_id} is not a connection. Nothing was written.")
+         conn.execute("DELETE FROM connection_targets WHERE con_id=?", [con_id])
+         conn.execute("DELETE FROM connections WHERE con_id=?", [con_id])
+ 
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index 276505f..a7d486a 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -839,6 +839,14 @@ r = refusal(db.update_connection_status, ABSENT_CON, "CONSUMED", session=S, dry_
+ record("N08", "update-connection refuses an unknown con_id", r and ABSENT_CON in r, r)
+ res, err = ok(db.update_connection_status, NEXT_CON, "CONSUMED", session=S, dry_run=True)
+ record("N09", "a CHECK status on a live connection is accepted", err is None, err)
++r = refusal(db.delete_connection, ABSENT_CON, session=S, dry_run=True)
++record("N10", "delete-connection refuses an unknown con_id", r and ABSENT_CON in r and "Nothing was written" in r, r)
++with scratch() as c:                       # NEXT_CON was written by N05, so the copy holds it
++    res, err = ok(db.delete_connection, NEXT_CON, session=S, dry_run=False)
++    gone = c.execute("SELECT (SELECT COUNT(*) FROM connections WHERE con_id=?)"
++                     " + (SELECT COUNT(*) FROM connection_targets WHERE con_id=?)", (NEXT_CON, NEXT_CON)).fetchone()[0]
++    record("N11", "delete-connection still deletes a connection that exists, with its targets",
++           err is None and gone == 0, err or f"{gone} rows remain")
+ 
+ print("Section B4/B5/D4/R3-14: conflicts -- keyed on the parameter, an unordered pair, two real populations")
+ CODES = [r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>'ALL' "
+-- 
+2.43.0
+

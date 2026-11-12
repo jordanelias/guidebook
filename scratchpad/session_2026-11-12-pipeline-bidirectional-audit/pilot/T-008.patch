@@ -1,0 +1,283 @@
+From 6e77a56e2433eb912b27c2d321f51b6da6e8641c Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 12 Nov 2026 05:51:25 +0000
+Subject: [PATCH] governance: compare claimed values as numbers in the verbatim
+ check [2026-11-12 05:51]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PILOT (not for push). _require_verbatim now reads the numbers a quote states BEFORE punctuation is removed (retrieval_log.read_numbers: decimal marks, grouping, ratios 1:12 / 1/12 / 1 in 12 / 12分の1) and requires each number of claimed_value to equal one as a number. Before: 12 under '1.2 m', 0.6 under '6.0 s', 1:1 and 112 under '1:12' and 'twelve' were ACCEPTED. After: refused; 1.2 vs '1,2 m', 1200 vs '1 200 mm' and 1:12 vs 十二分の一 still accepted. A numerical/range claimed_value with no number is refused; an ambiguous 1.200 is refused asking for the unambiguous form. _verbatim_norm, now unread, is deleted. Sweep: one caller (insert_extraction, reached by add-extraction and derive-extraction); no view, skill or registry hit. Census of stored rows: 2 non-exempt rows would be refused (extractions 30 and 80), listed not amended.
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ub36iPMfRfMYh8c88FYpXF
+---
+ scripts/db.py                               | 70 ++++++++++----------
+ scripts/research/retrieval_log.py           | 72 +++++++++++++++++++++
+ scripts/tests/test_run_pipeline_refusals.py | 64 ++++++++++++++++++
+ 3 files changed, 173 insertions(+), 33 deletions(-)
+
+diff --git a/scripts/db.py b/scripts/db.py
+index 280a366..cca0338 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -8508,7 +8508,8 @@ def _verbatim(text: str, ref_id: str = None):
+ 
+ 
+ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
+-                      exempt_reason: str = None, claimed_value: str = None):
++                      exempt_reason: str = None, claimed_value: str = None,
++                      claim_type: str = None):
+     """Refuse a quoted field that is not in the bytes -- ONE RULE, EVERY QUOTED COLUMN.
+ 
+     The verifier had exactly one call site before 2026-09-13: `extraction_relations.quote`,
+@@ -8557,35 +8558,42 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
+             f"Nothing was written.")
+ 
+     if claimed_value:
+-        digits = re.findall(r"\d+", str(claimed_value))
+-        if digits:
+-            body = _verbatim_norm(text)
+-            missing = [d for d in digits if d not in body]
+-            if missing:
+-                # THE CHECK ABOVE IS MONOLINGUAL, AND SILENTLY SO. It asks whether
+-                # the Arabic digits of claimed_value occur in the quote. A Japanese
+-                # statute writes its numerals in kanji -- 勾配は、十二分の一を超えないこと
+-                # states 1:12 and contains no digit at all -- so EVERY CJK code value
+-                # was unextractable, and --verbatim-exempt could not rescue it because
+-                # the exemption is refused when the text verifies, which this text
+-                # does. The escape hatch was closed against the one case that needed
+-                # it. R5 says non-English work is academic, not lesser; a guard that
+-                # only reads Arabic numerals makes it unfilable.
+-                #
+-                # This WIDENS what counts as the number appearing in the quote; it
+-                # does not loosen the standard. The figure must still be present in
+-                # the source's own sentence -- merely written the way that language
+-                # writes it. A fabricated number fails here exactly as before.
+-                missing = [d for d in digits if d not in _cjk_to_arabic(body)]
++        # THE CLAIMED NUMBER IS COMPARED AS A NUMBER (T-008). It was a digit-run substring test
++        # against the quote with every separator already deleted, so 12 passed under "1.2 m", 0.6
++        # under "6.0 s", 1:1 and 112 under "1:12". Both sides are read BEFORE punctuation goes.
++        # The CJK step stays what it was: widen how the source may WRITE the number (十二分の一
++        # states 1:12 and holds no digit), never what must match.
++        rl = _retrieval_log()
++        claimed = rl.read_numbers(str(claimed_value))
++        stated = rl.read_numbers(_cjk_to_arabic(text), parts=True)
++        if not claimed:
++            if claim_type in ("numerical", "range"):
++                raise Refusal(
++                    f"{context}: claim_type={claim_type!r} states a quantity but claimed_value "
++                    f"{claimed_value!r} contains no number, so nothing can be compared with "
++                    f"the {field}. Write the figure the source states as a number (a spelled-"
++                    f"out cardinal, such as a Finnish or Dutch word, is not one), or use claim_type="
++                    f"'qualitative'. Nothing was written.")
++        else:
++            for c in claimed:
++                if len(c) > 1:
++                    raise Refusal(
++                        f"{context}: claimed_value {claimed_value!r} holds a number that reads "
++                        f"two ways ({' or '.join(sorted(str(float(v[1])) for v in c))}) -- one "
++                        f"group of three digits after a mark. Write the unambiguous form "
++                        f"(1200, or 1.2), not 1.200 or 1,200. Nothing was written.")
++            missing = [str(float(next(iter(c))[1])) for c in claimed
++                       if not any(c & s for s in stated)]
+             if missing:
+                 raise Refusal(
+                     f"{context}: claimed_value {claimed_value!r} contains {missing}, which "
+-                    f"do not appear in the verified {field}. A number attached to a quote "
+-                    f"rather than read from one is the 2026-08-19 fabrication shape with a "
+-                    f"figure in place of an author -- and it is how a title, which verifies "
+-                    f"because titles really are in the payload, came to carry an invented "
+-                    f"measurement. Quote the sentence that states the value. Nothing was "
+-                    f"written.")
++                    f"are not numbers the verified {field} states (compared as numbers, so "
++                    f"1.2 is not 12, 6.0 is not 0.6 and 1:12 is not 1:1). A number attached "
++                    f"to a quote rather than read from one is the 2026-08-19 fabrication "
++                    f"shape with a figure in place of an author -- and it is how a title, "
++                    f"which verifies because titles really are in the payload, came to carry "
++                    f"an invented measurement. Quote the sentence that states the value. "
++                    f"Nothing was written.")
+     return None
+ 
+ 
+@@ -8622,11 +8630,6 @@ def _cjk_to_arabic(text):
+                   text)
+ 
+ 
+-def _verbatim_norm(text):
+-    """The shared normalisation, for the digit test. One home (retrieval_log)."""
+-    return _retrieval_log().normalise_quote(text)
+-
+-
+ def _refuse_live_confirmation(conn, context, to_extraction):
+     """A `confirms` edge aimed at a row a LIVE PROXY determination is governed by would change the
+     marker the engine writes for it (only a proxy determination reads the edges), and nothing
+@@ -9143,7 +9146,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+         # is itself refused when the text would have verified.
+         _exempt_note = _require_verbatim(
+             str(row["claim_text"]), row.get("ref_id"), "--claim-text",
+-            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value)
++            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value,
++            claim_type=claim_type)
+         if _exempt_note:
+             row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
+ 
+diff --git a/scripts/research/retrieval_log.py b/scripts/research/retrieval_log.py
+index 5b0b13f..ec12910 100644
+--- a/scripts/research/retrieval_log.py
++++ b/scripts/research/retrieval_log.py
+@@ -644,6 +644,78 @@ def normalise_quote(text):
+     return "".join(ch for ch in s if ch.isalnum())
+ 
+ 
++# A number as the page WRITES it, one alternative per way of writing it, most specific first.
++# Grouping and decimal marks are told apart by SHAPE, never guessed: 1.234,56 and 1,234.56 have
++# one reading, 1,50,000 and 1 200 have one, 1,2 is a decimal, and a lone 1.200 or 1,200 is the
++# one shape that is ambiguous (see `read_numbers`).
++_NUMBER = re.compile(r"""
++    (?P<ratio>(?<![\d.,])(?P<a>\d+(?:[.,]\d+)?)(?:\s?[:/\u2236]\s?|\s+in\s+)(?P<b>\d+(?:[.,]\d+)?)(?![\d]))
++  | (?P<nof>(?P<n>\d+)\s?(?:\u5206\u306e|\u5206\u4e4b|\ubd84\uc758)\s?(?P<m>\d+))
++  | (?P<eu>\d{1,3}(?:\.\d{3})+,\d+)
++  | (?P<en>\d{1,3}(?:,\d{3})+\.\d+)
++  | (?P<in>\d{1,2}(?:,\d{2})+,\d{3}(?:\.\d+)?)
++  | (?P<sp>\d{1,3}(?:[ \u00a0\u202f]\d{3})+(?:[.,]\d+)?)(?!\d)
++  | (?P<g>\d{1,3}(?:(?P<gm>[.,])\d{3})+)(?!\d)
++  | (?P<d>\d+(?:[.,]\d+)?)
++""", re.X)
++
++
++def read_numbers(text, parts=False):
++    """The numbers `text` STATES, each as the set of readings it can have -- compared as numbers.
++
++    WHY THIS EXISTS (T-008). The guard on `claimed_value` asked whether the digit RUNS of the claimed
++    value occurred as substrings of `normalise_quote(quote)`, which has already deleted every
++    separator. So 12 passed under "no higher than 1.2 m", 0.6 under "6.0 s", 1:1 and 112 under "1:12":
++    a figure with a shifted decimal point or a dropped colon rode in under a quote that verified.
++    The numbers have to be read BEFORE the punctuation is removed, which is why this sits beside
++    `normalise_quote` and does not reuse it.
++
++    Returns a list with one frozenset per number found, in order; a reading is (kind, Fraction),
++    kind "n" for a plain number and "r" for a RATIO (1:12, 1/12, 1 in 12, and the CJK/Korean n-th-part
++    form 12分の1), which is ONE number, the quotient, and is matched only by another ratio. A sign is
++    not read: magnitudes are compared. The only token with two readings is a lone group of exactly
++    three digits after a mark (1.200, 1,200): one point two, or twelve hundred. In a quote that is
++    the source's own typography and both stand; in a claimed value the caller refuses it and asks for
++    the unambiguous form (len(reading) > 1), because it is not ours to guess.
++
++    `parts=True` is for the QUOTE side only: a ratio's two operands, and the pieces of a space-grouped
++    number, are ALSO stated numbers ("AS 1428.1:2021" is a standard and a year, "800 750" is two
++    widths in a table, and neither is 1428.1/2021 or 800750). The claimed side never takes parts.
++
++    CJK numerals are NOT converted here: the caller that reads Japanese has `_cjk_to_arabic`.
++    """
++    from fractions import Fraction
++
++    def dec(t):                                   # "1,2" and "1.2" are both one point two
++        return Fraction(t.replace(",", "."))
++
++    out = []
++    for m in _NUMBER.finditer(unicodedata.normalize("NFKC", _TAG.sub(" ", text or ""))):
++        t = m.group(0)
++        if m.group("ratio") or m.group("nof"):
++            a, b = ((dec(m.group("a")), dec(m.group("b"))) if m.group("ratio")
++                    else (Fraction(m.group("m")), Fraction(m.group("n"))))
++            if b:
++                out.append(frozenset({("r", a / b)}))
++            out.extend(frozenset({("n", x)}) for x in (a, b) if parts)
++        elif m.group("eu"):
++            out.append(frozenset({("n", dec(t.replace(".", "")))}))
++        elif m.group("en") or m.group("in"):
++            out.append(frozenset({("n", Fraction(t.replace(",", "")))}))
++        elif m.group("sp"):
++            out.append(frozenset({("n", dec(re.sub(r"[ \u00a0\u202f]", "", t)))}))
++            if parts:
++                out.extend(frozenset({("n", dec(x))}) for x in re.split(r"[ \u00a0\u202f]", t))
++        elif m.group("g"):
++            grouped = Fraction(re.sub(r"[.,]", "", t))
++            lone = len(re.findall(r"[.,]", t)) == 1 and not t.startswith("0")
++            out.append(frozenset({("n", grouped), ("n", dec(t))}) if lone
++                       else frozenset({("n", dec(t))}) if t.startswith("0") else frozenset({("n", grouped)}))
++        else:
++            out.append(frozenset({("n", dec(t))}))
++    return out
++
++
+ _XMLDECL_RE = re.compile(rb"""<\?xml[^>]{0,200}?encoding\s*=\s*["']([A-Za-z0-9_.:\-]+)["']""",
+                          re.I)
+ _CHARSET_RE = re.compile(rb"""charset\s*=\s*["']?([A-Za-z0-9_.:\-]+)""", re.I)
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index 276505f..241a738 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -1723,4 +1723,68 @@ with scratch() as c:
+     else:
+         skip("ST3", "no declared pair, or no linked source")
+ 
++print("Section T-008: the claimed number is compared as a NUMBER, not as digit runs inside the quote")
++# TASK-FIXTURE: one held text of sentences, each stating a figure in the way its language writes it.
++T8_SENT = {
++    "m": "The handrail is to be no higher than 1.2 m above the floor.",
++    "s": "A recovery time of 6.0 s was recorded after the climb.",
++    "r": "The running slope is to be not steeper than 1:12 on any ramp run.",
++    "de": "Der Handlauf liegt bei 1,2 m ueber dem Boden des Ganges.",
++    "sp": "Der Gang ist an der engsten Stelle 1 200 mm breit.",
++    "ja": "\u52fe\u914d\u306f\u3001\u5341\u4e8c\u5206\u306e\u4e00\u3092\u8d85\u3048\u306a\u3044\u3053\u3068\u3002",
++    "in": "The fee is capped at 1,50,000 rupees for a single building.",
++    "am": "The span is 1.234,56 mm between the two fixings in the frame.",
++    "ab": "The landing is 1.200 deep, measured between the two walls.",
++    "in12": "The maximum gradient of a ramp is to be 1 in 12, figure 11.",
++    "tab": "Straight-on (without a turn or 800 750 oblique approach)",
++    "std": "AS 1428.1:2021 provides the minimum design requirements for building work.",
++}
++T8_REF = new_source(verified=True)
++held_text(T8_REF, "\n".join(T8_SENT.values()) + "\n")
++
++
++def t8(claimed, key):
++    return refusal(db._require_verbatim, T8_SENT[key], T8_REF, "--claim-text", "T-008", claimed_value=claimed)
++
++
++def t8_ok(claimed, key):
++    return ok(db._require_verbatim, T8_SENT[key], T8_REF, "--claim-text", "T-008", claimed_value=claimed)[1] is None
++
++
++for tid, claimed, key, why in [
++        ("T8-01", "12", "m", "a shifted decimal point: 12 is not 1.2"),
++        ("T8-02", "0.6", "s", "digits 0 and 6 are in 6.0 s, but 0.6 is not 6.0"),
++        ("T8-03", "1:1", "r", "1:1 is not 1:12"),
++        ("T8-04", "112", "r", "112 is not stated anywhere in 1:12"),
++        ("T8-05", "120.0", "sp", "120.0 is not 1 200"),
++        ("T8-24", "1:8", "in12", "1:8 is not 1 in 12")]:
++    r = t8(claimed, key)
++    record(tid, f"claimed_value {claimed!r} is refused against {T8_SENT[key][:40]!r}... ({why})",
++           r is not None and "claimed_value" in r, r)
++for tid, claimed, key in [
++        ("T8-06", "1.2", "m"), ("T8-07", "1.2", "de"), ("T8-08", "1200", "sp"), ("T8-09", "1:12", "ja"),
++        ("T8-10", "1:12", "r"), ("T8-11", "1/12", "r"), ("T8-12", "6", "s"), ("T8-13", "150000", "in"),
++        ("T8-14", "1234.56", "am"), ("T8-20", "1:12", "in12"), ("T8-21", "800", "tab"), ("T8-22", "750", "tab"),
++        ("T8-23", "1428.1", "std")]:
++    record(tid, f"claimed_value {claimed!r} is accepted against {T8_SENT[key][:40]!r}...", t8_ok(claimed, key),
++           ok(db._require_verbatim, T8_SENT[key], T8_REF, "--claim-text", "T-008", claimed_value=claimed)[1])
++r = t8("1.200", "ab")
++record("T8-15", "an ambiguous claimed_value (1.200: one point two, or twelve hundred) is refused and asks for the "
++                "unambiguous form", r is not None and "unambiguous" in r, r)
++# end to end through the writer, on the live full-scope source: the same refusals reach add-extraction.
++shifted = VALUE[:-1] + "." + VALUE[-1]
++r = refusal(db.insert_extraction, extraction(FULL_REF, P_FULL, claimed_value=shifted),
++            session=S, dry_run=True, relations=[])
++record("T8-16", "add-extraction refuses a decimal-shifted claimed_value under a quote that verifies", r is not None, r)
++r = refusal(db.insert_extraction, extraction(FULL_REF, P_FULL, claimed_value="twelve"),
++            session=S, dry_run=True, relations=[])
++record("T8-17", "add-extraction refuses a numerical claimed_value that contains no number", r is not None, r)
++res, err = ok(db.insert_extraction, extraction(FULL_REF, P_FULL, claim_type="qualitative", claimed_value="twelve"),
++              session=S, dry_run=True, relations=[])
++record("T8-18", "...but a qualitative claimed_value with no number is not a quantity and still passes",
++       res is not None, err)
++res, err = ok(db.insert_extraction, extraction(FULL_REF, P_FULL), session=S, dry_run=True, relations=[])
++record("T8-19", "...and the legitimate numerical row (the quote's own figure) still passes", res is not None, err)
++
++
+ finish()
+-- 
+2.43.0
+
