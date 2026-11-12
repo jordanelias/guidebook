@@ -19,5 +19,19 @@
     "bytes": 2078288,
     "agent_id_prefix": "ad8cef1f",
     "file": "2026-11-12T02-25-05_adversarial_ad8cef1f.jsonl"
+  },
+  {
+    "started": "2026-11-12T02:54:23",
+    "role": "antagonist",
+    "bytes": 2504306,
+    "agent_id_prefix": "acca09d2",
+    "file": "2026-11-12T02-54-23_antagonist_acca09d2.jsonl"
+  },
+  {
+    "started": "2026-11-12T03:21:58",
+    "role": "antagonist",
+    "bytes": 454934,
+    "agent_id_prefix": "a57db701",
+    "file": "2026-11-12T03-21-58_antagonist_a57db701.jsonl"
   }
 ]
