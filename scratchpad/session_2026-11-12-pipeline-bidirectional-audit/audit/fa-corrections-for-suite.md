@@ -202,3 +202,14 @@ The eight-document suite is dropped by the owner in favour of one remediation wo
 | S-25 | New tests: AT-104 (the base changes by data alone), AT-105 (a root can be registered), AT-106 (every refusal names a next action). New tasks: T-041, T-042, T-043, T-047, T-048. | HS-3 §9; the workplan |
 | S-26 | OD-29 added: whether retire-in-place covers link rows (`delete-connection`, `unlink-admission`; HS-1 REQ-018). | the workplan's register; HS-3 §9.7 |
 
+## 9. Correction pass after the pilots (2026-11-12)
+
+| Id | What changed | Where |
+|---|---|---|
+| S-27 | Three tasks were piloted (T-006, T-008, T-010); the change worked in each; every task file was regenerated with the mechanical corrections (integration base, one gate before the commit, pilot against real execution, a filtered sweep with a definition of caller and the hits as written, per-check before-and-after runs, derived probes and collision-free case ids, sweep-found fixes in scope). | the workplan's section 12; every task file |
+| S-28 | The prior workplan's numeral gloss is superseded by the owner's eighth statement of 2026-11-12: a number in words is entered as a numeral with `value_as_written`. | T-008, T-016, T-111 |
+| S-29 | REQ-104 (translate everything, callable from any stage, default stage a rule held once) enters the requirement set as UNMET. | HS-1 §1; HS-3 §9.8; T-049, T-112 |
+| S-30 | The definition of hard-coded is sharpened by the owner's tenth statement: a rule declared once is not hard-coding. | HS-3 §9.8; the workplan's section 7 and D-30 |
+| S-31 | OD-02 narrowed (quotations may be translated); OD-30 added (who translates; review). | the workplan's register |
+| S-32 | A statement relayed with the pilot results was checked and is not accurate: extraction 80 does not hold a numeral (its value is the Finnish words and its unit cell a sentence). T-111 treats the two rows differently for that reason. | T-111 section 3 |
+

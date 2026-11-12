@@ -9,12 +9,13 @@ _Written 2026-11-12 (UTC) by the handshake-and-adversarial leg of the bidirectio
 What stands in the way, in order of harm to the book:
 
 1. **A determination is computed without regard to the group it is for.** The engine gathers evidence by parameter alone. Fixed by the chain [T-016](tasks/T-016-wp-t1a-reading.md) → [T-017](tasks/T-017-wp-t2-conditions.md) → [T-018](tasks/T-018-link-table.md) → [T-019](tasks/T-019-lens-gather.md).
-2. **Guards that a wrong figure or a misquote should not pass, pass it**: the number check, the quote and name checks outside Latin script, a source admitted with no verification standing. [T-008](tasks/T-008-claimed-number-check.md), [T-009](tasks/T-009-script-aware-guards.md), [T-007](tasks/T-007-add-source-standing.md).
+2. **Guards that a wrong figure or a misquote should not pass, pass it**: the number check (a figure written in words is now entered as a numeral, by the owner's ruling of 2026-11-12), the quote and name checks outside Latin script, a source admitted with no verification standing. [T-008](tasks/T-008-claimed-number-check.md), [T-009](tasks/T-009-script-aware-guards.md), [T-007](tasks/T-007-add-source-standing.md).
 3. **The mobility group the owner split is still one code**, and most figures sit on it. [T-102](tasks/T-102-mobility-split.md) (owner decision OD-14).
 4. **Nothing exists at render**, so every stage pair ending there has no path. [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md) (owner decisions).
 5. **The base is English-shaped and its scope is in no table**: jurisdictions in code, scope unrecorded, forms unattested. [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-101](tasks/T-101-scope-fill.md), [T-028](tasks/T-028-concept-identity.md).
 6. **A step backward leaves no typed cause**: a gap does not say what it is a gap in. [T-013](tasks/T-013-typed-gaps.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-022](tasks/T-022-contract-re-entry.md).
 7. **A source must be re-read for every later parameter, parameters are flat, and synthesis finds nothing.** [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-029](tasks/T-029-term-relations.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md) (owner decisions).
+8. **Text in other languages cannot be compared or discussed together**: nowhere holds a translation. [T-049](tasks/T-049-translation-home.md), [T-112](tasks/T-112-translate-held-text.md) (the owner asked for it on 2026-11-12; the target language is OD-02).
 
 **Start now:** the tasks of Wave 0 need no owner decision, no design and no earlier wave (section 4). **Then stop for the owner** at the points listed in section 6; the questions are in section 8, each with a one-line answer form.
 
@@ -32,11 +33,13 @@ The seven further suite documents first planned are not written; the owner dropp
 
 ## 2. How to execute
 
+0. **Merge this workplan first.** The task files assume the workplan is on the branch a task starts from. Until its pull request is merged to `main`, the integration base is the workplan branch (`origin/ccr-408aaa9b-z3e4s0`); every task file sets `$BASE` by one line that tests which of the two holds the workplan, and gates and measures against it. A task started from a `main` that lacks the workplan would diff the whole workplan: the pilots showed it.
 1. **One task, one session, one pull request.** Pick the next task by section 4 or 5. Open its file. Read `CLAUDE.md`. Do exactly what the file says, in its order: preconditions, evidence, change, sweep, verification, commit, adversarial pass, pull request last.
 2. **One pull request merges at a time** (the prior workplan's rule WR-1: `grep -n "WR-1" workplan/2026-10-23-pipeline-resolution-workplan.md`). Branches may be prepared side by side; each later one takes the merged predecessor with `git merge origin/main` and derives its migration number again. Merging is the owner's act unless the owner has said otherwise; an executor does not merge its own pull request and does not watch it (CLAUDE.md rule 9).
 3. **Tooling before research, never together** (CLAUDE.md rule 10). A research task starts only when the tooling it names is on `main`.
 4. **A task that is `NOT FOR SONNET`** waits for the Fable implementation agent (design) or an Opus-class session (judgment), as its first line says. The owner authorised the Fable agent to "design, author, curate, orchestrate, delete as required" for code, schema, scripts, checks and skills (`grep -n -F "design, author, curate, orchestrate" references/project-standards.md`); doctrine stays with the owner.
 5. **When a task stops**, it reports what it ran, what it saw and what it expected, and changes nothing further. A stop is a result, not a failure. Do not work around it.
+5a. **The first execution of an unpiloted task is its pilot.** All but three of the task files have never been executed (section 12 says which, by command). The executor of each ends the pull request body with a heading "Task-file defects" listing what in the file was wrong, missing or ambiguous, even when the change succeeded, so the files that follow can be corrected.
 6. **When the ground has moved** (a task's evidence command no longer gives the output the file states), the task stops. Either the defect is already fixed, or an earlier merge changed the facts; the orchestrating session re-reads the task against `main` before anyone resumes it.
 7. **Nothing in this plan loosens a refusal the project holds on purpose.** The two refusals CLAUDE.md §4 says must stay absent stay absent.
 
@@ -44,63 +47,66 @@ The seven further suite documents first planned are not written; the owner dropp
 
 Generated from the task files; regenerate the same view with `grep -h -E "^\| (Task|Wave|Kind|Executor) " workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md`.
 
-| Task | Title | Wave | Layer | Kind | Executor | Needs merged first | Owner decisions |
-|---|---|---|---|---|---|---|---|
-| [T-001](tasks/T-001-layer0-marks-and-text.md) | Mark what is superseded, and make the Layer 0 commands run as written | 0 (now) | 0 | TOOLING | Sonnet | none | none |
-| [T-002](tasks/T-002-contract-entry-text.md) | Make the contract entries say what the owner's stage order says | 0 (now) | 1 | TOOLING | Sonnet | none | none |
-| [T-003](tasks/T-003-owner-queue-answered-marks.md) | One home for "answered" in the owner queue | 0 (now) | 0 | TOOLING | Sonnet | none | none |
-| [T-004](tasks/T-004-spec-checks-report-live-rows.md) | Specification checks say how many of the rows they read are live | 0 (now) | 0 | TOOLING | Sonnet | none | none |
-| [T-005](tasks/T-005-retired-row-view-fixture.md) | A seeded test that a retired determination is surfaced by no determination view | 0 (now) | 0 | TOOLING | Sonnet | none | none |
-| [T-006](tasks/T-006-delete-connection-refusal.md) | `delete-connection` refuses an id that is not a row | 0 (now) | 2 | TOOLING | Sonnet | none | none |
-| [T-007](tasks/T-007-add-source-standing.md) | `add-source` writes a verification standing and a source type, or refuses | 0 (now) | 2 | TOOLING | Sonnet | none | none |
-| [T-008](tasks/T-008-claimed-number-check.md) | The claimed number is checked as a number | 0 (now) | 2 | TOOLING | Sonnet | none (coordinate with T-016 if it is open: both touch the extraction writer) | none |
-| [T-009](tasks/T-009-script-aware-guards.md) | Quote and name guards that work outside Latin script | 0 (now) | 2 | TOOLING | Sonnet | none (after T-008 if both are open, to avoid conflicting edits) | none |
-| [T-010](tasks/T-010-add-parameter-domain-refusal.md) | `add-parameter` refuses a term that is not a design quantity (first step) | 0 (now) | 2 | TOOLING | Sonnet | none | none |
-| [T-011](tasks/T-011-supersession-pointer.md) | Re-determining a cell points the retired row at its successor | 0 (now) | 2 | TOOLING | Sonnet | none | none |
-| [T-012](tasks/T-012-follow-up-reasons.md) | Follow-up reasons for a skimmed figure and an absence finding | 0 (now) | 2 | TOOLING | Sonnet | none | none |
-| [T-013](tasks/T-013-typed-gaps.md) | A gap says what it is a gap in, and a search says which gap caused it | 0 (now) | 1-2 | TOOLING | Sonnet | none | none |
-| [T-014](tasks/T-014-stress-harness-and-probes.md) | Keep the stress scripts as a characterisation harness and their probes as tests | 0 (now) | 0 | TOOLING | Sonnet | none | none |
-| [T-015](tasks/T-015-language-fold.md) | Language codes folded at the writers and in the coverage views | 0 (now) | 2 | TOOLING | Sonnet | none | none |
-| [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses prose units) | 1 (chain, first) | 2 | TOOLING | Sonnet | T-008 merged (both change the extraction writer) | none |
-| [T-017](tasks/T-017-wp-t2-conditions.md) | The prior workplan's T-2: conditions become branches | 1 (chain) | 2 | TOOLING | Sonnet | T-016 merged | none |
-| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | 1 | TOOLING | NOT FOR SONNET | T-017 merged; `T-018-design.md` present | none |
-| [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | 2 | TOOLING | Sonnet | T-016, T-017, T-018 merged | OD-08 |
-| [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | 1-2 | TOOLING | Sonnet | T-010 merged | OD-24 |
-| [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | 2 | TOOLING | Sonnet | T-019 merged | OD-21 |
-| [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | 1 | TOOLING | Sonnet | T-002, T-012, T-013 merged | OD-18 |
-| [T-023](tasks/T-023-ledger-relayed-statements.md) | Enter the relayed statements of 2026-10-12 in the ledger | 2 | 0 | TOOLING | Sonnet | none | OD-28 |
-| [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | 1 | TOOLING | Sonnet | none | OD-01 |
-| [T-025](tasks/T-025-base-writers.md) | Writers for the base tables a ruled task must write | 3 | 2 | TOOLING | Sonnet | T-024 merged | none |
-| [T-026](tasks/T-026-alias-attestation.md) | A form says how it is attested, and a search says which forms it used | 3 | 1-2 | TOOLING | Sonnet | none | none |
-| [T-027](tasks/T-027-source-identity-edition.md) | The source's own title, edition and currency can be written | 3 | 2 | TOOLING | Sonnet | none | none |
-| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 3 | 1 | TOOLING | NOT FOR SONNET | T-026 merged | OD-03 |
-| [T-029](tasks/T-029-term-relations.md) | Typed pointers between terms | 4 | 1 | TOOLING | Sonnet | T-020 merged | none |
-| [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | 1-2 | TOOLING | Sonnet | T-016, T-020 merged | OD-22 |
-| [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 4 | 1-2 | TOOLING | NOT FOR SONNET | T-019 merged | OD-23 |
-| [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | 1 | TOOLING | NOT FOR SONNET | T-029 merged | OD-07, OD-25, OD-19, OD-29 |
-| [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | 2 | TOOLING | Sonnet | T-029, T-030 merged | none |
-| [T-034](tasks/T-034-cell-status-verb.md) | One read-only answer for a cell at every stage | 4 | 2 | TOOLING | Sonnet | T-013 merged | none |
-| [T-035](tasks/T-035-skills-repair.md) | Skills that describe the database that exists | 4 | 2 | TOOLING | Sonnet | none for token corrections | none |
-| [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | 1 | TOOLING | Sonnet | T-024 merged; T-101 merged | OD-01 |
-| [T-037](tasks/T-037-render.md) | Render from the database | 5 | 2 | TOOLING | NOT FOR SONNET | T-019, T-036 merged | OD-02, OD-08, OD-12 |
-| [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | 0 | TOOLING | Sonnet | T-037 merged (a render view mapped to the render stage) | OD-26 |
-| [T-039](tasks/T-039-owner-edits.md) | The owner's edits as proposals through the write path | 5 | 2 | TOOLING | NOT FOR SONNET | T-037 merged | OD-20 |
-| [T-040](tasks/T-040-deletion-candidates-sweep.md) | Caller sweep for the deletion candidates | 5 | 2 | TOOLING | Sonnet | T-013, T-032 merged | none |
-| [T-041](tasks/T-041-one-home-for-helpers.md) | One home for helpers defined twice | 0 (now) | 2 | TOOLING | Sonnet | T-014 merged (the harness is the proof) | none |
-| [T-042](tasks/T-042-derive-choices-and-counts.md) | Counts in the registry as commands, and one Layer 0 measure corrected | 0 (now) | 0-2 | TOOLING | Sonnet | none | none |
-| [T-043](tasks/T-043-refusals-name-next-action.md) | Every refusal says what to do next | 0 (now) | 2 | TOOLING | Sonnet | T-014 merged | none |
-| [T-047](tasks/T-047-add-by-data-test.md) | A durable test that the base changes by data alone | 3 (end) | 0 | TOOLING | Sonnet | T-015, T-020, T-024, T-025, T-029 merged | none |
-| [T-048](tasks/T-048-root-registry-writer.md) | A writer for the root registry | 2 | 2 | TOOLING | Sonnet | none | none |
-| [T-101](tasks/T-101-scope-fill.md) | Record the research scope on every pair | research | 3 | RESEARCH | Sonnet | T-025 merged | OD-04 |
-| [T-102](tasks/T-102-mobility-split.md) | Execute the mobility split | research | 3 | RESEARCH | NOT FOR SONNET | T-018, T-025 merged | OD-14 |
-| [T-103](tasks/T-103-medical-lens.md) | Fill the medical lens by correspondence | research | 3 | RESEARCH | NOT FOR SONNET | none (`add-medical` exists) | OD-15 |
-| [T-104](tasks/T-104-verify-governing-sources.md) | Verify the sources a first determination would rest on | research | 3 | RESEARCH | Sonnet | none | none |
-| [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | 3 | RESEARCH | NOT FOR SONNET | T-008, T-009, T-016 merged; T-031 if OD-23 chose an inventory | none |
-| [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | research | 3 | RESEARCH | NOT FOR SONNET | T-019 merged | none |
-| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | 3 | RESEARCH | NOT FOR SONNET | T-026 merged | none |
-| [T-108](tasks/T-108-unit-condition-repair.md) | Move conditions out of the unit cell | research | 3 | RESEARCH | Sonnet | T-016 merged | none |
-| [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | 3 | RESEARCH | NOT FOR SONNET | T-020 merged | none |
-| [T-110](tasks/T-110-first-determinations.md) | First live determinations | research | 3 | RESEARCH | NOT FOR SONNET | T-019, T-102, T-104 merged | none |
+| Task | Title | Wave | Layer | Kind | Executor | Needs merged first | Owner decisions | Piloted |
+|---|---|---|---|---|---|---|---|---|
+| [T-001](tasks/T-001-layer0-marks-and-text.md) | Mark what is superseded, and make the Layer 0 commands run as written | 0 (now) | 0 | TOOLING | Sonnet | none | none | no |
+| [T-002](tasks/T-002-contract-entry-text.md) | Make the contract entries say what the owner's stage order says | 0 (now) | 1 | TOOLING | Sonnet | none | none | no |
+| [T-003](tasks/T-003-owner-queue-answered-marks.md) | One home for "answered" in the owner queue | 0 (now) | 0 | TOOLING | Sonnet | none | none | no |
+| [T-004](tasks/T-004-spec-checks-report-live-rows.md) | Specification checks say how many of the rows they read are live | 0 (now) | 0 | TOOLING | Sonnet | none | none | no |
+| [T-005](tasks/T-005-retired-row-view-fixture.md) | A seeded test that a retired determination is surfaced by no determination view | 0 (now) | 0 | TOOLING | Sonnet | none | none | no |
+| [T-006](tasks/T-006-delete-connection-refusal.md) | `delete-connection` refuses an id that is not a row | 0 (now) | 2 | TOOLING | Sonnet | none | none | yes |
+| [T-007](tasks/T-007-add-source-standing.md) | `add-source` writes a verification standing and a source type, or refuses | 0 (now) | 2 | TOOLING | Sonnet | none | none | no |
+| [T-008](tasks/T-008-claimed-number-check.md) | The claimed number is checked as a number, and a number written in words is filed as a numeral | 0 (now) | 1-2 | TOOLING | Sonnet | none | none | in part |
+| [T-009](tasks/T-009-script-aware-guards.md) | Quote and name guards that work outside Latin script | 0 (now) | 2 | TOOLING | Sonnet | none (after T-008 if both are open, to avoid conflicting edits) | none | no |
+| [T-010](tasks/T-010-add-parameter-domain-refusal.md) | `add-parameter` refuses a term that is not a design quantity (first step) | 0 (now) | 2 | TOOLING | Sonnet | none | none | yes |
+| [T-011](tasks/T-011-supersession-pointer.md) | Re-determining a cell points the retired row at its successor | 0 (now) | 2 | TOOLING | Sonnet | none | none | no |
+| [T-012](tasks/T-012-follow-up-reasons.md) | Follow-up reasons for a skimmed figure and an absence finding | 0 (now) | 2 | TOOLING | Sonnet | none | none | no |
+| [T-013](tasks/T-013-typed-gaps.md) | A gap says what it is a gap in, and a search says which gap caused it | 0 (now) | 1-2 | TOOLING | Sonnet | none | none | no |
+| [T-014](tasks/T-014-stress-harness-and-probes.md) | Keep the stress scripts as a characterisation harness and their probes as tests | 0 (now) | 0 | TOOLING | Sonnet | none | none | no |
+| [T-015](tasks/T-015-language-fold.md) | Language codes folded at the writers and in the coverage views | 0 (now) | 2 | TOOLING | Sonnet | none | none | no |
+| [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses prose units) | 1 (chain, first) | 2 | TOOLING | Sonnet | T-008 merged (it changes the same writer, and it built what replaces this task's numeral gloss) | none | no |
+| [T-017](tasks/T-017-wp-t2-conditions.md) | The prior workplan's T-2: conditions become branches | 1 (chain) | 2 | TOOLING | Sonnet | T-016 merged | none | no |
+| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | 1 | TOOLING | NOT FOR SONNET | T-017 merged; `T-018-design.md` present | none | no |
+| [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | 2 | TOOLING | Sonnet | T-016, T-017, T-018 merged | OD-08 | no |
+| [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | 1-2 | TOOLING | Sonnet | T-010 merged | OD-24 | no |
+| [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | 2 | TOOLING | Sonnet | T-019 merged | OD-21 | no |
+| [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | 1 | TOOLING | Sonnet | T-002, T-012, T-013 merged | OD-18 | no |
+| [T-023](tasks/T-023-ledger-relayed-statements.md) | Enter the relayed statements of 2026-10-12 in the ledger | 2 | 0 | TOOLING | Sonnet | none | OD-28 | no |
+| [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | 1 | TOOLING | Sonnet | none | OD-01 | no |
+| [T-025](tasks/T-025-base-writers.md) | Writers for the base tables a ruled task must write | 3 | 2 | TOOLING | Sonnet | T-024 merged | none | no |
+| [T-026](tasks/T-026-alias-attestation.md) | A form says how it is attested, and a search says which forms it used | 3 | 1-2 | TOOLING | Sonnet | none | none | no |
+| [T-027](tasks/T-027-source-identity-edition.md) | The source's own title, edition and currency can be written | 3 | 2 | TOOLING | Sonnet | none | none | no |
+| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 3 | 1 | TOOLING | NOT FOR SONNET | T-026 merged | OD-03 | no |
+| [T-029](tasks/T-029-term-relations.md) | Typed pointers between terms | 4 | 1 | TOOLING | Sonnet | T-020 merged | none | no |
+| [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | 1-2 | TOOLING | Sonnet | T-016, T-020 merged | OD-22 | no |
+| [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 4 | 1-2 | TOOLING | NOT FOR SONNET | T-019 merged | OD-23 | no |
+| [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | 1 | TOOLING | NOT FOR SONNET | T-029 merged | OD-07, OD-25, OD-19, OD-29 | no |
+| [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | 2 | TOOLING | Sonnet | T-029, T-030 merged | none | no |
+| [T-034](tasks/T-034-cell-status-verb.md) | One read-only answer for a cell at every stage | 4 | 2 | TOOLING | Sonnet | T-013 merged | none | no |
+| [T-035](tasks/T-035-skills-repair.md) | Skills that describe the database that exists | 4 | 2 | TOOLING | Sonnet | none for token corrections | none | no |
+| [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | 1 | TOOLING | Sonnet | T-024 merged; T-101 merged | OD-01 | no |
+| [T-037](tasks/T-037-render.md) | Render from the database | 5 | 2 | TOOLING | NOT FOR SONNET | T-019, T-036 merged | OD-02, OD-08, OD-12, OD-30 | no |
+| [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | 0 | TOOLING | Sonnet | T-037 merged (a render view mapped to the render stage) | OD-26 | no |
+| [T-039](tasks/T-039-owner-edits.md) | The owner's edits as proposals through the write path | 5 | 2 | TOOLING | NOT FOR SONNET | T-037 merged | OD-20 | no |
+| [T-040](tasks/T-040-deletion-candidates-sweep.md) | Caller sweep for the deletion candidates | 5 | 2 | TOOLING | Sonnet | T-013, T-032 merged | none | no |
+| [T-041](tasks/T-041-one-home-for-helpers.md) | One home for helpers defined twice | 0 (now) | 2 | TOOLING | Sonnet | T-014 merged (the harness is the proof) | none | no |
+| [T-042](tasks/T-042-derive-choices-and-counts.md) | Counts in the registry as commands, and one Layer 0 measure corrected | 0 (now) | 0-2 | TOOLING | Sonnet | none | none | no |
+| [T-043](tasks/T-043-refusals-name-next-action.md) | Every refusal says what to do next | 0 (now) | 2 | TOOLING | Sonnet | T-014 merged | none | no |
+| [T-047](tasks/T-047-add-by-data-test.md) | A durable test that the base changes by data alone | 3 (end) | 0 | TOOLING | Sonnet | T-015, T-020, T-024, T-025, T-029 merged | none | no |
+| [T-048](tasks/T-048-root-registry-writer.md) | A writer for the root registry | 2 | 2 | TOOLING | Sonnet | none | none | no |
+| [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | 1-2 | TOOLING | Sonnet | T-008 merged (the fidelity rule uses its number reader) | none | no |
+| [T-101](tasks/T-101-scope-fill.md) | Record the research scope on every pair | research | 3 | RESEARCH | Sonnet | T-025 merged | OD-04 | no |
+| [T-102](tasks/T-102-mobility-split.md) | Execute the mobility split | research | 3 | RESEARCH | NOT FOR SONNET | T-018, T-025 merged | OD-14 | no |
+| [T-103](tasks/T-103-medical-lens.md) | Fill the medical lens by correspondence | research | 3 | RESEARCH | NOT FOR SONNET | none (`add-medical` exists) | OD-15 | no |
+| [T-104](tasks/T-104-verify-governing-sources.md) | Verify the sources a first determination would rest on | research | 3 | RESEARCH | Sonnet | none | none | no |
+| [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | 3 | RESEARCH | NOT FOR SONNET | T-008, T-009, T-016 merged; T-031 if OD-23 chose an inventory | none | no |
+| [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | research | 3 | RESEARCH | NOT FOR SONNET | T-019 merged | none | no |
+| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | 3 | RESEARCH | NOT FOR SONNET | T-026 merged | none | no |
+| [T-108](tasks/T-108-unit-condition-repair.md) | Move conditions out of the unit cell | research | 3 | RESEARCH | Sonnet | T-016 merged; T-008 merged | none | no |
+| [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | 3 | RESEARCH | NOT FOR SONNET | T-020 merged | none | no |
+| [T-110](tasks/T-110-first-determinations.md) | First live determinations | research | 3 | RESEARCH | NOT FOR SONNET | T-019, T-102, T-104 merged | none | no |
+| [T-111](tasks/T-111-as-written-wording-for-stored-rows.md) | Bring the two stored spelled-out figures into line | research | 3 | RESEARCH | Sonnet | T-008 merged | none | no |
+| [T-112](tasks/T-112-translate-held-text.md) | Translate the held non-English text that synthesis needs | research | 3 | RESEARCH | NOT FOR SONNET | T-049 merged | OD-02, OD-30 | no |
 
 ## 4. Wave 0: what can start now
 
@@ -150,11 +156,11 @@ Two links on it are not Sonnet's to start: T-018 needs a one-page design from th
 | Wave | Purpose | Tasks | Order inside the wave |
 |---|---|---|---|
 | 1 | the lens chain and the parameter kind | [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-020](tasks/T-020-quantity-kind.md) | Serial: T-016, T-017, T-018, T-019. T-020 beside them once OD-24 is answered. |
-| 2 | carriers for going back | [T-021](tasks/T-021-cell-question-gate.md), [T-022](tasks/T-022-contract-re-entry.md), [T-023](tasks/T-023-ledger-relayed-statements.md), [T-048](tasks/T-048-root-registry-writer.md) | T-048 any time; T-021, T-022, T-023 as their answers arrive. |
+| 2 | carriers for going back, and for translation | [T-021](tasks/T-021-cell-question-gate.md), [T-022](tasks/T-022-contract-re-entry.md), [T-023](tasks/T-023-ledger-relayed-statements.md), [T-048](tasks/T-048-root-registry-writer.md), [T-049](tasks/T-049-translation-home.md) | T-048 any time; T-049 after T-008; T-021, T-022, T-023 as their answers arrive. |
 | 3 | a base that is data | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-027](tasks/T-027-source-identity-edition.md), [T-028](tasks/T-028-concept-identity.md), [T-047](tasks/T-047-add-by-data-test.md) | T-024 then T-025; T-026 and T-027 any time; T-028 after OD-03; T-047 last. |
 | 4 | reading once, abstraction, synthesis | [T-029](tasks/T-029-term-relations.md), [T-030](tasks/T-030-units-as-data.md), [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md), [T-034](tasks/T-034-cell-status-verb.md), [T-035](tasks/T-035-skills-repair.md) | T-034 after T-013; T-035 any time; T-029 after T-020; T-030, T-031, T-032 after their answers; T-033 after T-029 and T-030. |
 | 5 | render and the gate over it | [T-036](tasks/T-036-jurisdiction-comparison-view.md), [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-039](tasks/T-039-owner-edits.md), [T-040](tasks/T-040-deletion-candidates-sweep.md) | T-036 after T-024 and T-101; T-037 after its three answers; T-038 after T-037; T-039; T-040. |
-| research | rows, each in its own pull request | [T-101](tasks/T-101-scope-fill.md), [T-102](tasks/T-102-mobility-split.md), [T-103](tasks/T-103-medical-lens.md), [T-104](tasks/T-104-verify-governing-sources.md), [T-105](tasks/T-105-read-held-sources.md), [T-106](tasks/T-106-retag-lenses.md), [T-107](tasks/T-107-attest-forms.md), [T-108](tasks/T-108-unit-condition-repair.md), [T-109](tasks/T-109-parameter-kinds-data.md), [T-110](tasks/T-110-first-determinations.md) | T-104 and T-108 are ungated; the rest wait for tooling, an answer, or an Opus-class session. |
+| research | rows, each in its own pull request | [T-101](tasks/T-101-scope-fill.md), [T-102](tasks/T-102-mobility-split.md), [T-103](tasks/T-103-medical-lens.md), [T-104](tasks/T-104-verify-governing-sources.md), [T-105](tasks/T-105-read-held-sources.md), [T-106](tasks/T-106-retag-lenses.md), [T-107](tasks/T-107-attest-forms.md), [T-108](tasks/T-108-unit-condition-repair.md), [T-109](tasks/T-109-parameter-kinds-data.md), [T-110](tasks/T-110-first-determinations.md), [T-111](tasks/T-111-as-written-wording-for-stored-rows.md), [T-112](tasks/T-112-translate-held-text.md) | T-104 is ungated; T-111 follows T-008 and T-108 follows T-016; the rest wait for tooling, an answer, or an Opus-class session. |
 
 **Dependency list** (a task on the left needs every task on the right merged; generated from the task files):
 
@@ -177,22 +183,25 @@ T-032 <- T-029   [owner: OD-07, OD-25, OD-19, OD-29]
 T-033 <- T-029, T-030
 T-034 <- T-013
 T-036 <- T-024, T-101   [owner: OD-01]
-T-037 <- T-019, T-036   [owner: OD-02, OD-08, OD-12]
+T-037 <- T-019, T-036   [owner: OD-02, OD-08, OD-12, OD-30]
 T-038 <- T-037   [owner: OD-26, only if an interim gate is wanted]
 T-039 <- T-037   [owner: OD-20]
 T-040 <- T-013, T-032
 T-041 <- T-014
 T-043 <- T-014
 T-047 <- T-015, T-020, T-024, T-025, T-029
+T-049 <- T-008
 T-101 <- T-025   [owner: OD-04]
 T-102 <- T-018, T-025; an Opus-class session   [owner: OD-14]
 T-103 <- (no task)   [owner: OD-15]
 T-105 <- T-008, T-009, T-016, T-031 (T-031 only if OD-23 chooses a clause inventory)
 T-106 <- T-019
 T-107 <- T-026
-T-108 <- T-016
+T-108 <- T-008, T-016
 T-109 <- T-020
 T-110 <- T-019, T-102, T-104; the blocking battery green on the scratch copy; an Opus-class session
+T-111 <- T-008
+T-112 <- T-049   [owner: OD-02, OD-30]
 ```
 
 ## 6. Stop points
@@ -206,14 +215,20 @@ T-110 <- T-019, T-102, T-104; the blocking battery green on the scratch copy; an
 | Before T-102, and so T-110 | the owner (OD-14), then an Opus-class session | carrying rows written under `MOB` | T-104, T-106 after T-019 |
 | Before T-031 | the owner (OD-23) | how a later parameter reaches a source already read | T-105 on sources whose text is held |
 | Before T-032 | the owner (OD-07, OD-25, OD-19, OD-29) | what synthesis records | T-029 and T-033, once OD-24 has released T-020 |
-| Before T-037, and so T-038, T-039 | the owner (OD-02, OD-08, OD-12; OD-20 for T-039) | render | every earlier wave |
+| Before T-037, and so T-038, T-039 | the owner (OD-02, OD-08, OD-12, OD-30; OD-20 for T-039) | render | every earlier wave |
+| Before T-112 | the owner (OD-02 for the target language, OD-30 for who translates) | translating held text | T-049 (the home for translations) needs neither |
 | Before T-110 | the blocking battery, green on the scratch copy, the integrity test included | a first live determination | — |
 | At the end of every wave | the owner | the wave's lines of the Definition of Done (section 10), run and reported; `python3 workplan/pipeline-state-graph/walkability.py` run as a command until T-038 registers it | — |
 | At any time | the owner | anything touching mission, audience, CRPD posture, population taxonomy, evidence-tier definitions, jurisdiction scope, licensing or trajectory | — |
 
 ## 7. Three tracks across the waves
 
-The measurements behind this section are in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §9. The readings of "hard-coded" and "dead end" used there are the audit's and are unratified: a behaviour is hard-coded when changing it means editing code for something that is data, or editing code in more than one place; a dead end is a row, state, path, stage or refusal with no sanctioned way onward, back or out.
+The measurements behind this section are in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §9. **What counts as hard-coded** was sharpened by the owner on 2026-11-12: "we can set a rule for synthesis to translate, which isn't hardcoding necessarily" (`grep -n -F "isn't hardcoding necessarily" references/project-standards.md`). So: a behaviour declared **once** as a rule, in a stated place (a column's CHECK, a table, the pipeline contract, the check registry, one named constant), and read from there, is **not** hard-coding. A literal, a fixed list or a branch on a name that is typed in more than one place, or typed in code where a table, a CHECK, the contract or the registry already holds it, **is**. The word "necessarily" leaves the line open and the reading is the audit's. A dead end is a row, state, path, stage or refusal with no sanctioned way onward, back or out (also the audit's reading). The measures below therefore ask two things of a rule: that it is declared once, and that its values are not typed again elsewhere. They do not flag a rule for existing.
+
+```
+for r in NON_QUANTITY_DOMAINS QUANTITY_CLAIM_TYPES NOTATION_FAMILIES RULE_VERSION JurisdictionCode; do printf '%s declared %s time(s)\n' $r "$(git grep -n -E "^\s*(class )?$r\b\s*(=|\()" -- scripts schemas | wc -l)"; done   # each 0 or 1
+git grep -n -e "'functional_axis'" -e '"functional_axis"' -- scripts schemas ':(exclude)scripts/tests' ':(exclude)scripts/migrations'   # a rule's values typed as a literal outside its home: none today; after T-010, one line, in dbcore
+```
 
 | Track | Owner statement | Finding | Tasks | Proof |
 |---|---|---|---|---|
@@ -221,7 +236,8 @@ The measurements behind this section are in `scratchpad/session_2026-11-12-pipel
 | Centralized | REQ-101 | Helpers defined twice; jurisdictions and unit families as lists in code; typed counts in the registry. The command-line value lists are already read from the schema. | [T-041](tasks/T-041-one-home-for-helpers.md), [T-042](tasks/T-042-derive-choices-and-counts.md), [T-024](tasks/T-024-jurisdiction-registry.md), [T-030](tasks/T-030-units-as-data.md) | T-041's command prints `{}`; the stress logs are identical before and after (T-014's `stress_diff.py`) |
 | Clean | REQ-101 | Skills naming structures that are gone; a verb that reports success having done nothing; a documented command that does not run; checks whose prose contradicts the data; dead apparatus. | [T-035](tasks/T-035-skills-repair.md), [T-006](tasks/T-006-delete-connection-refusal.md), [T-001](tasks/T-001-layer0-marks-and-text.md), [T-004](tasks/T-004-spec-checks-report-live-rows.md), [T-040](tasks/T-040-deletion-candidates-sweep.md) | `skill_vocabulary_audit` exits 0; each task's after-test |
 | Declined | REQ-101 | Splitting `scripts/db.py`: no measured cost saved, every import and ledger reference changed. | none | revisit only on a measured problem |
-| No hard-coded behaviour | REQ-102 | Jurisdictions, scope, lens selection, units, what may be a parameter. Already data-driven and kept: the check registry, vocabularies read from the column's CHECK, the derived capture set, one home for stage ids. | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-101](tasks/T-101-scope-fill.md), [T-019](tasks/T-019-lens-gather.md), [T-030](tasks/T-030-units-as-data.md), [T-010](tasks/T-010-add-parameter-domain-refusal.md), [T-020](tasks/T-020-quantity-kind.md), [T-029](tasks/T-029-term-relations.md), [T-047](tasks/T-047-add-by-data-test.md) | the add-by-data test (T-047): a language and jurisdiction pair, a jurisdiction, a term, a parameter and a term pointer are added by sanctioned verbs with no file under `scripts/` or `schemas/` changed |
+| No hard-coded behaviour | REQ-102 | Jurisdictions (two homes: an enum and a table that disagree), scope (in no home), lens selection (ignored), units (the engine's own copy), what may be a parameter (no rule). Already data-driven and kept: the check registry, vocabularies read from the column's CHECK, the derived capture set, one home for stage ids. | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-101](tasks/T-101-scope-fill.md), [T-019](tasks/T-019-lens-gather.md), [T-030](tasks/T-030-units-as-data.md), [T-010](tasks/T-010-add-parameter-domain-refusal.md), [T-020](tasks/T-020-quantity-kind.md), [T-029](tasks/T-029-term-relations.md), [T-047](tasks/T-047-add-by-data-test.md) | the add-by-data test (T-047): a language and jurisdiction pair, a jurisdiction, a term, a parameter and a term pointer are added by sanctioned verbs with no file under `scripts/` or `schemas/` changed |
+| Translation, wherever it is needed | REQ-104 (owner, ninth and tenth statements of 2026-11-12) | Nothing holds a translation. A number written in words is entered as a numeral at extraction with the wording kept in its own column (T-008); everything else is translated when a stage needs it, by default at synthesis, and that default is one line in the pipeline contract. One design at both grains: the source's wording is kept in a cell that names it, our rendering in a cell that names it as ours, the writer checks against the verified bytes, and the translator is recorded. | [T-008](tasks/T-008-claimed-number-check.md), [T-049](tasks/T-049-translation-home.md), [T-111](tasks/T-111-as-written-wording-for-stored-rows.md), [T-112](tasks/T-112-translate-held-text.md) | AT-107 (translate from a stage other than synthesis, by data alone; the original unchanged; the pointer resolves), AT-108 (changing the rule's one home changes the behaviour with no code edit), AT-109 (a translation that changes a figure is refused) |
 | No dead ends: structural | REQ-103 | Stage pairs ending at render; the root registry and the base tables with no writer; the empty medical lens. | [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-048](tasks/T-048-root-registry-writer.md), [T-025](tasks/T-025-base-writers.md), [T-103](tasks/T-103-medical-lens.md) | walkability prints no `NO PATH`; CLAUDE.md §4's derivation prints no `UNWRITABLE` line that is not intended |
 | No dead ends: state | REQ-103 | A retired determination with no successor; a `pending` row nothing will fill; a new parameter's owed readings where no text is held. | [T-011](tasks/T-011-supersession-pointer.md), [T-019](tasks/T-019-lens-gather.md), [T-031](tasks/T-031-clause-unit-and-open-pass.md) | each task's after-test |
 | No dead ends: operational | REQ-103 | Refusals that name no next action; a silent no-op; a command that does not run as written. | [T-043](tasks/T-043-refusals-name-next-action.md), [T-006](tasks/T-006-delete-connection-refusal.md), [T-001](tasks/T-001-layer0-marks-and-text.md) | every distinct refusal the harness produces names a next action |
@@ -249,22 +265,22 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 - **Tasks blocked until answered.** T-024 (sub-national rows only; the table and country rows proceed without it), T-036, T-037
 - **Where the evidence is.** HS-1 C-03, HS-A12; `REF-01013`, `REF-00995`
 
-### OD-02  The language of a page, and whether a source's sentence may be translated
+### OD-02  The language of a page, and how a translated quotation is shown
 
-- **Question.** Is a page written in English with each source quoted in its own language, or are pages produced in several languages? May a quotation be shown in translation, and marked how?
-- **Why it is the owner's.** Audience and the reading surface are doctrine; a translated quotation is no longer the source's words.
+- **Question.** **Narrowed on 2026-11-12.** The owner said "probably at synthesis or whatever we need to actually translate everything" (`grep -n -F "actually translate everything" references/project-standards.md`): quotations may be translated, and that part is no longer asked. Still open: which language or languages a page is written in (and so which language held text is translated into), and how a translated quotation is shown beside its original on a page.
+- **Why it is the owner's.** Audience and the reading surface are doctrine. The ninth statement leaves the target language to the owner and does not relax two standing rules: a model's wording is never presented as a source's term, and English is not the pivot that decides which concepts exist.
 - **Options and what follows from each.**
-  - (i) English pages; each source quoted in its own language. *Then:* Render needs one language; quotes need script support only.
-  - (ii) Pages in several languages. *Then:* Every fixed sentence needs a translation and an owner for it; out of reach of this plan.
-  - (t) A marked translation beside the original, where the owner permits one. *Then:* Needs a place to hold the translation and who made it.
-- **Recommendation (the audit's, not a decision).** (i) for this edition; originals always shown; a marked translation only where the owner permits.
-- **Answer in one line.** `OD-02: English pages, sources quoted in the original` · `OD-02: English pages, originals with marked translations` · `OD-02: pages in <languages>`
-- **Tasks blocked until answered.** T-037
-- **Where the evidence is.** HS-1 C-02
+  - (i) English pages; every quotation shown in its own language with a marked translation beside it. *Then:* One target language; the translations of T-112 are into English.
+  - (ii) Pages in several languages. *Then:* Every fixed sentence of a page needs a translation and an owner for it; translations of held text are needed into each page language; beyond this plan.
+  - (iii) English pages; the translation shown, the original one step away. *Then:* Shorter pages; the reader meets our wording first, so the mark that it is a translation carries more weight.
+- **Recommendation (the audit's, not a decision).** (i).
+- **Answer in one line.** `OD-02: pages in English, originals with marked translations beside them` · `OD-02: pages in <languages>` · `OD-02: pages in English, translation shown, original on request`
+- **Tasks blocked until answered.** T-037 (render); T-112 (the language to translate into). Not blocked: T-049, which builds the home for translations and takes the target language as an argument
+- **Where the evidence is.** HS-1 C-02, REQ-104
 
 ### OD-03  A concept that has no English name
 
-- **Question.** How is a concept held when it was first met in another language and has no settled English name?
+- **Question.** How is a concept held when it was first met in another language and has no settled English name? (Unaffected by the owner's statement of 2026-11-12 on translation: a translation is an aid attached to held text and never mints or names a concept.)
 - **Why it is the owner's.** It changes the base vocabulary's identity rule, which every stage points into; the ledger records the schema decision as open.
 - **Options and what follows from each.**
   - (a) A forms table with a pointer to the display form. *Then:* A schema change across every writer that screens or matches a name (T-028).
@@ -581,6 +597,19 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 - **Tasks blocked until answered.** T-032 (how `delete-connection` ends); no other task
 - **Where the evidence is.** `grep -n -F "RETIRE IN PLACE, NEVER HARD-DELETE" references/project-standards.md`; HS-1 REQ-018
 
+### OD-30  Who may translate, and must a translation be reviewed before it is used
+
+- **Question.** A translation is a model's, a tool's or a person's wording standing beside a source's. May any model translate, or only one at or above a given class? Must a translation be reviewed, and by whom, before synthesis relies on it, and before a reader is shown it?
+- **Why it is the owner's.** The capability floor for synthesis is an owner rule, and what a reader is shown as a rendering of a source's words is audience and mission. The ninth statement leaves "who or what translates … and at what class" and "whether a translation is reviewed" open.
+- **Options and what follows from each.**
+  - (a) Any model may translate; synthesis may read an unreviewed translation as an aid; only a reviewed one is shown to a reader. *Then:* Translation is cheap and early; a page never shows an unchecked rendering.
+  - (b) Opus-class or above translates; review before a reader sees it. *Then:* Fewer, slower translations; the same floor as synthesis.
+  - (c) A person reviews every translation before any use. *Then:* The strongest guarantee; translation becomes the pace of the pipeline.
+- **Recommendation (the audit's, not a decision).** (a). The audit's reading: recording a translation is mechanical (the table marks it, keeps the original and names the translator), while relying on one is a judgment, so the gate belongs where it is relied on, not where it is recorded.
+- **Answer in one line.** `OD-30: any model, review before a reader sees it` · `OD-30: Opus-class or above, review before a reader sees it` · `OD-30: a person reviews every translation`
+- **Tasks blocked until answered.** T-112 (who runs it), T-037 (which translations a page may show). Not blocked: T-049
+- **Where the evidence is.** REQ-104; `grep -n -F "who or what translates" references/project-standards.md`
+
 ## 9. Retained stress-test value
 
 Three rounds of stress scripts found defects that no registered check finds. What is kept and why is in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/RETAINED.md` (the owner permitted retention: `grep -n -F "retain" references/project-standards.md | tail -3`).
@@ -608,9 +637,9 @@ The plan is done when every line below gives its "done" result on `main`, run by
 | D-11 | jurisdictions: scope is data | `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select count(*), sum(scope_status is not null) from lang_jur_map\").fetchall())"` | the second number is 0 | the two numbers are equal |
 | D-12 | languages: one spelling per language | `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"SELECT (SELECT COUNT(DISTINCT language) FROM v_coverage_language), (SELECT COUNT(DISTINCT UPPER(language)) FROM search_executions WHERE deferred_reason IS NULL)\").fetchall())"` | the two numbers differ | equal |
 | D-13 | flexible: the base changes by data alone | `f=$(grep -l 'AT-104' scripts/tests/*.py); echo "file=$f"; [ -n "$f" ] && python3 $f; echo rc=$?` | `file=` (none) and `rc=1` | a file is named and `rc=0` |
-| D-14 | no hard-coded unit list | `grep -c NOTATION_FAMILIES scripts/assess/assess_cell.py` | not 0 | 0 |
+| D-14 | units: one home, and a unit can be added without editing the engine | `git grep -n -E "^\s*NOTATION_FAMILIES\s*=" -- scripts schemas` | one line, in the engine (`scripts/assess/assess_cell.py`) | no line in the engine; and the after-test of `tasks/T-030-units-as-data.md` (parameter 12 has a value in both notations) |
 | D-15 | languages and scripts: the guards hold outside Latin script | the evidence command in section 3 of `tasks/T-009-script-aware-guards.md` | `True True`, then empty token sets | `False False`, then non-empty token sets and `True` |
-| D-16 | adjudicate: a wrong number does not verify | the tests T-008 adds (named in its pull request), run directly | absent | exit 0 |
+| D-16 | adjudicate: a wrong number does not verify, and a number in words is filed as a numeral | the first command (the probe) in section 3 of `tasks/T-008-claimed-number-check.md`; python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select count(*) from source_value_extractions where value_as_written is not null\").fetchall())" | six lines `ACCEPTED`; the query fails (no column) | six lines `REFUSED`; a count above 0 once T-111 has landed |
 | D-17 | read once | `python3 scripts/audit/scan_debt.py 2>&1 \| grep -E 'EXAMINED\|DEBT'` | a `DEBT:` line | no `DEBT:` line, or the debt OD-23's answer leaves, named |
 | D-18 | synthesize: relations can be found and kept | `python3 scripts/db.py --help \| tr "," "\n" \| grep -c -E "synthesis-candidates\|relation-candidates"` | 0 | 1; and the relation rows of T-032 exist per OD-25 |
 | D-19 | specify: a live determination the blocking gates examine | `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select sum(retired_at is null) from specifications\").fetchall())"; cp data/guidebook.db "$SCRATCH/i.db" && GUIDEBOOK_DB_PATH="$SCRATCH/i.db" python3 scripts/tests/test_db_integrity.py > /dev/null; echo rc=$?` | no live row (the test passes on history only) | above 0, and `rc=0` |
@@ -620,6 +649,9 @@ The plan is done when every line below gives its "done" result on `main`, run by
 | D-23 | no typed counts in the registry | `grep -c -E '[0-9]+ today' governance/check-registry.yaml` | not 0 | 0 |
 | D-24 | the database is what its migrations make | `python3 scripts/migrate_db.py --rebuild "$SCRATCH/rebuilt.db" && python3 scripts/audit/migration_reproducibility.py --deep; echo rc=$?` | `rc=0` | `rc=0` |
 | D-25 | the gates are sound | `python3 scripts/run_checks.py --selftest; echo rc=$?` | `rc=0` | `rc=0` |
+| D-28 | translate from any stage, by data alone | `f=$(grep -l 'AT-107' scripts/tests/*.py); echo "file=$f"; [ -n "$f" ] && python3 $f > "$SCRATCH/at107.txt" 2>&1; echo rc=$?; grep -E 'EXAMINED\|FAILED' "$SCRATCH/at107.txt"` | `file=` (none) and `rc=1` | a file is named, `rc=0`, `EXAMINED:` above 0 (the same file holds AT-108 and AT-109) |
+| D-29 | the default stage for translation is a rule in one place | `grep -n -A2 "^translation:" governance/pipeline-contract.yaml; git grep -n -E "default_stage" -- scripts schemas \| wc -l` | no such key | the key with its stage; the count shows the readers, and AT-108 (in the file of D-28) shows that changing the key changes the behaviour |
+| D-30 | rules are declared once | the first command of section 7 of this file | `NOTATION_FAMILIES`, `RULE_VERSION`, `JurisdictionCode` once each; the others not yet | every line 0 or 1; `JurisdictionCode` 0, or generated from the table |
 | D-26 | every task is accounted for | `for f in workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md; do echo "$f"; done` | the list | each is merged (its after-test is green on `main`) or declined in the owner's words in the ledger |
 | D-27 | every owner decision is answered or deferred by the owner | `for n in $(grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md \| cut -c5-); do printf '%s %s\n' $n $(grep -c -F "$n:" references/project-standards.md); done` | every count is 0 | no count is 0 |
 
@@ -635,4 +667,42 @@ A line whose command a task changes (a renamed verb, a moved test) is updated in
 - Behaviour at a hundred times the present row counts.
 - Not exercised by any stress round: candidate staging to admission, a citation-mining row, merging or declining a parameter that holds figures, a non-English source end to end.
 - `scripts/run_checks.py --all` was never run in one call, by instruction; the ten batteries were run one at a time on a copy.
+- All but three of the task files have not been executed by anyone (section 12). The three that were each had defects that only execution showed.
+- T-008 as redesigned on the owner's ruling (the `value_as_written` column, its writers, the refusal of a digitless figure) and T-049 (translations) are designs of this pass and unpiloted.
+- Whether `derive-extraction` should take the as-written wording (T-008 item 6 leaves it to what the verb does today).
 - `sessions/` was searched with `git grep`, not read end to end; an owner ruling that only lives there and matches none of the searches would be missing from this plan.
+
+## 12. Pilot results (2026-11-12), and what has and has not been tested
+
+**What was piloted.** Three Sonnet-class executors each took one Wave 0 task in a scratch clone, following only the task file: T-006, T-008 and T-010. Reports and patches: `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-006-report.md`, `T-008-report.md`, `T-010-report.md` and the `.patch` beside each. Nothing was pushed; the canonical database did not move.
+
+**Result.** In all three the change worked: red before, green after. In all three the task file had defects that only execution showed. None of the defects was an executor's error. One was a design fault in the plan: T-008 as first written made a figure that a source writes in words impossible to file.
+
+**What changed in the plan because of it.**
+
+| What the pilots showed | Class | What was done | Where |
+|---|---|---|---|
+| The base branch: in a clone `origin/main` lacks the workplan, so branching from it, the code-size line and the default gate all measured the whole workplan | mechanical, every file | every file sets `$BASE` by test and uses it; this index says to merge the workplan first | section 2 of every task file; section 2 here |
+| The gate was listed before the commit and was run twice (`preflight.sh`, then `run_checks.py` on the same diff) | mechanical, every file | one gate, `preflight.sh --base "$BASE" --explain`, once, before the commit; it reads the working tree, so no commit is needed first | section 6 step 4, section 7 |
+| `/session-open` and `git switch -c` do not fit a pilot clone | mechanical, every file | each file says what applies to a real execution and what to a pilot | section 2 |
+| The sweep printed up to two hundred lines, most of them plans, generated state-graph files and the ledger, so "stop on a caller this file does not mention" could not be met | mechanical, every file | the sweep has a stated exclusion list with reasons, a definition of caller against mention, the hits as of writing, and the callers already known; the stop condition is "a caller you cannot repair in scope" | section 5, section 9 |
+| "Read each check's `EXAMINED:` line" could not be followed: a passing check prints none in the gate's output | mechanical, every file | each file names the checks that read what it touches and gives one loop that runs each as the registry does, before and after, and prints its subject | section 6 steps 1 and 3 |
+| The test files are registered as advisory, so a test the change turned red (T-010, case V03 of `test_scan_contract`) would not have stopped the gate | mechanical, every file | the before-and-after comparison of failing cases is the stop, at any level | section 6 step 3, section 9 |
+| Ids typed into tests and evidence; case ids that collided with existing ones | mechanical, every file | case ids take the task number as prefix, checked free first; probes are derived by query; the evidence commands of T-010 and T-020 derive their term | section 6; T-010, T-020 |
+| A write verb in an evidence command, safe only because of the inline database path | mechanical | a reminder is printed beside every such command | section 3 |
+| "Add nothing this file does not name" against "fix what the sweep finds" | mechanical, every file | a caller the sweep finds is in scope and is listed in the pull request | sections 5, 8, 9 |
+| A "still works" probe that picked a declined term and failed for the wrong reason | mechanical, every file | a positive probe must be one no other refusal stops | section 6 |
+| T-006: the function to copy from, the test file, how to build the positive case, a worked `add-connection`, the check to read | mechanical | written into the file | `tasks/T-006-delete-connection-refusal.md` |
+| T-010: two real callers missed (a test fixture that turned red; a stale comment) | mechanical | named as callers in the file | `tasks/T-010-add-parameter-domain-refusal.md` section 5 |
+| T-010: the refusal could not say what to do with a quantity filed under the wrong domain, because no verb corrects a domain | judgment | `domain` becomes amendable through `amend-term`, with a guard; the refusal names both next actions. Reason: a refusal with no route is a dead end, and one tuple member closes it | T-010 item 3 |
+| T-010: the refused domains are a constant, `dbcore.NON_QUANTITY_DOMAINS` | judgment | kept, as a rule declared once with its warrant in its comment (the owner's tenth statement allows that), tested for staleness, and deleted by T-020 when a parameter states its quantity kind. Reason: which domains name a lens or a body of law cannot be computed; it is judged, so it is named and held in one place, and it must not outlive the column that replaces it | T-010 item 1; T-020 item 2 |
+| T-008: a figure written in words became unfilable | owner ruling | the owner ruled: enter the numeral and unit; the wording may be kept in its own column. T-008 adds `value_as_written`; the prior workplan's numeral gloss is superseded and removed from T-016 | T-008; T-016; T-111 |
+| T-008: two stored rows the new check would refuse | judgment | history stands: the check applies when a row is written. Extraction 30 holds a numeral and gets its wording filled in. Extraction 80 holds words as its value, so it is not amended: a second row carries the numeral. Both in a research task | `tasks/T-111-as-written-wording-for-stored-rows.md` |
+| T-008: which claim types state a quantity was typed inline | judgment | one declared rule, `dbcore.QUANTITY_CLAIM_TYPES`, tested against the column's CHECK and read by T-016 too. Reason: the CHECK cannot say which of its values are quantities | T-008 item 5 |
+| T-008: number forms (a standard's number read as a ratio, a table cell read as one number, "1 in 12", an ambiguous `1,200`) | judgment | symbol ratios are typed and their operands also count on the quote side; a ratio in words is matched by its operands; an ambiguous token is refused in a claimed value and, in a quote, needs the wording recorded. No language's words are listed in code. Reason: "1:20 where the run exceeds 12 m" must not verify `1:12`, and no rule may depend on a list of languages | T-008 items 1, 2, 4 |
+| T-008: the evidence command reimplemented the old logic and could not show the result | mechanical | it now runs the real writer function with the quote lookup stubbed, so the same command shows before and after | T-008 section 3 |
+| T-008: `amend-extraction` listed as a reader; `_verbatim_norm` left undecided; prose that restates the old check in immutable files | mechanical | readers corrected; delete; the pointer goes on the gap row through `amend-gap` in T-111, never into a committed migration or a session file | T-008 items 6, 7 and section 5 |
+
+**Which tasks were piloted.** By command: piloted, `grep -L "^\*\*Pilot status.\*\* Not piloted" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md`; not piloted, the same with `-l`. Today the piloted ones are T-006 and T-010 (each as corrected, with one unpiloted addition in T-010) and T-008 in part (its number comparison; the column and its writers follow the owner's ruling and were written after the pilot). Every other task is unpiloted.
+
+**What that means for the executor.** The mechanical defects were of the generator, so they were fixed in every file at once; the fixes themselves have not been piloted. An unpiloted file's evidence command has been run and prints what the file says, and nothing more is known about it. The riskiest unpiloted files are the ones with a schema migration or a new design: [T-008](tasks/T-008-claimed-number-check.md), [T-049](tasks/T-049-translation-home.md), [T-013](tasks/T-013-typed-gaps.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-015](tasks/T-015-language-fold.md), [T-024](tasks/T-024-jurisdiction-registry.md), [T-026](tasks/T-026-alias-attestation.md). The safest are the ones that change text or add a test: [T-002](tasks/T-002-contract-entry-text.md), [T-003](tasks/T-003-owner-queue-answered-marks.md), [T-004](tasks/T-004-spec-checks-report-live-rows.md), [T-005](tasks/T-005-retired-row-view-fixture.md).

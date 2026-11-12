@@ -2,6 +2,8 @@
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Evidence base: `workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md`, as corrected by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/fa-corrections-for-suite.md` (where they differ, the corrections govern). Every number in this file was read on 2026-11-12 and is given with the command that produces it: re-run the command; do not trust the number._
 
+**Pilot status.** Not piloted. Three tasks of this plan were executed in scratch clones (T-006, T-008, T-010) and the defects they showed in the task files were corrected in every file by one generator; this file's own steps have not been executed by anyone. Its evidence command was run on 2026-11-12 and printed what section 3 states. Expect to find a defect in this file, and report it rather than work around it.
+
 ## 1. Identity
 
 | | |
@@ -16,7 +18,8 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 ## 2. Preconditions
 
-- **Tasks that must be merged to `main` first:** T-008 merged (both change the extraction writer). Check with `git log origin/main --oneline | grep -i -E "<the commit subject of that task>"`, or by running that task's own after-test.
+- **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
+- **Tasks that must be merged to the integration base first:** T-008 merged (it changes the same writer, and it built what replaces this task's numeral gloss). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
 - **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
 - **Tests that must be red (or green) before you start:** T-1a's done-when unmet: `grep -rn "def parse_bound" scripts` returns a line. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
@@ -24,11 +27,15 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ```
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
-git fetch origin main && git switch -c task/t-016-wp-t1a-reading origin/main  # never commit on main
+git fetch origin
+BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+git switch -c task/t-016-wp-t1a-reading "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-016" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
 ```
-Shell variables do not survive from one tool call to the next in this harness. Begin every later command block with the same `export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-016"` line (the path is fixed, so repeating it is safe), and pass `GUIDEBOOK_DB_PATH` inline on each call as shown. Open the session with `/session-open` before the first command, so the command log lands in this task's own folder (CLAUDE.md §7).
+- **Shell variables do not survive from one tool call to the next in this harness.** Begin every later command block with the `BASE=…` line and the `export SCRATCH=…` line above (both are fixed, so repeating them is safe), and pass `GUIDEBOOK_DB_PATH` inline on each `db.py` call as shown.
+- **Real execution** (the working repository, a pull request intended): run `/session-open` before the first command, so the command log lands in this task's own session folder (CLAUDE.md §7), and create the branch as shown.
+- **Pilot or dry run** (a scratch clone, no pull request): do not run `/session-open`, do not touch `scratchpad/CURRENT`, stay on the branch you were given instead of `git switch -c`, and stop after section 7 (no push, no pull request, no `/batch-done`). Say in your report that it was a pilot.
 
 ## 3. The problem, in the guidebook's terms
 
@@ -42,57 +49,85 @@ grep -rn 'def parse_bound' scripts; sed -n '/\*\*T-1a Reading/,/Code +45/p' work
 
 **Expected output today:** `scripts/assess/assess_cell.py` defines `parse_bound`; the workplan paragraph for T-1a with its done-when.
 
-If the output differs, the ground has moved: stop (section 9).
+If the output differs, the ground has moved: stop (section 9). Ids that appear in this command are probes read on 2026-11-12; where the command derives an id by query, that is deliberate, and a test you write must do the same (section 6).
 
 ## 4. The change
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Execute T-1a exactly as written in `workplan/2026-10-23-pipeline-resolution-workplan.md` (and the report section it cites). It is fully specified there, with its tests (N1–N11, M1–M5). This file adds nothing to it and removes nothing.
-2. It deletes code (`parse_bound`, the duplicate arithmetic in `derive_extraction`): report `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`.
+1. Execute T-1a as written in `workplan/2026-10-23-pipeline-resolution-workplan.md` and the report section it cites (`scratchpad/session_2026-10-22-pipeline-stress-test/resolution-report-2026-10-22.md`, T-1 steps 1 to 7), with its tests (N1 to N11, M1 to M5), **except for the three points below**, where a later owner statement governs (CLAUDE.md rule 0).
+2. **Skip step 6, the numeral gloss.** The owner ruled on 2026-11-12 that a number written in words is entered as a numeral and unit, with the source's wording in a column of its own (`grep -n -F "just translate these into numbers/units" references/project-standards.md`). T-008 built that: `--value-as-written` and the column `value_as_written`. Add no `--numeral-gloss` argument and write no `NUMERAL-GLOSS:` text into `notes` (a marker in a note is two facts in one cell, which the owner's schema ruling of 2026-11-06 forbids).
+3. **In step 3**, the sentence `figure_refusal` returns for a value with no digit names `--value-as-written`, not `--numeral-gloss`. Where the step writes the claim types `numerical` and `range`, read `dbcore.QUANTITY_CLAIM_TYPES` (declared by T-008); do not type the pair again.
+4. **Test N8 is restated:** the quote of extraction 80, with value `5`, unit `%` and no `value_as_written`, is refused; with `--value-as-written 'viisi prosenttia'` it is accepted and the column holds that wording. Derive the quote from the row; do not retype it.
+5. It deletes code (`parse_bound`, the duplicate arithmetic in `derive_extraction`): the code-size line must show it.
 
 **What reads what this task adds or changes:** `add-extraction`, `amend-extraction`, `derive-extraction`, the engine.
 
-**Code size.** Report in the pull request the output of `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`, and for anything added name what reads it and what existing code it replaces or makes deletable.
+**Code size.** Report in the pull request the output of `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'` (run it after `git add`, so new files count), and for anything added name what reads it and what existing code it replaces or makes deletable. The base is the point where your branch left `$BASE`, not `origin/main` by name.
 
 ## 5. Caller sweep
 
-Run each for every name listed, and record the output in the pull request description. A view is a caller; so is a skill; so is the check registry; so is prose (CLAUDE.md rule 4).
+Names to sweep: `parse_bound`, `NOTATION_FAMILIES`, `derive_extraction`, `numeral-gloss`
 
-Names: `parse_bound`, `NOTATION_FAMILIES`, `derive_extraction`
+**What a caller is.** A hit is a *caller* when its behaviour or its truth changes with this task: code that calls or imports the name; a test that exercises the behaviour you are changing, even if it asserts nothing about it; a view, trigger or index; a registry `cmd` or `basis`; a skill, command or governance sentence that states the behaviour being changed. A hit that stays true after your change is a *mention* and needs nothing. **Fixing a caller the sweep finds is in scope** (CLAUDE.md rule 4): make the fix in this pull request and list it there.
+
+**What the sweep leaves out, and why.** `workplan/` (plans, and the generated `workplan/pipeline-state-graph/graph.json` and `STATE-GRAPH.md`, which list every verb and are rebuilt by their builder; only `machines.yaml` there is hand-written, and it is swept); `references/project-standards.md` (the append-only ledger: a sentence there is superseded by a new entry, never edited); `scripts/migrations/` (immutable once committed); `sessions/`, `_archived/`, `audits/`, `versions/`, `dossier/`, `transcripts/`, `scratchpad/` (frozen records).
 
 ```
-N='<name>'
-git grep -n -e "$N" -- . ':(exclude)transcripts' ':(exclude)scratchpad'          # the tree; git grep sees the paths .ignore hides
+N='<name>'                                                 # run once per name
+git grep -n -F -e "$N" -- scripts schemas .github .claude skills ':(exclude)scripts/migrations'                    # code, tests, skills, agents, commands, hooks, workflows
 python3 -I -c "import sqlite3,sys;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print([(r[0],r[1]) for r in c.execute('select type,name from sqlite_master where sql like ?',('%'+sys.argv[1]+'%',))])" "$N"   # views, triggers, indexes
-git grep -n -e "$N" -- skills .claude                                              # skills, agents, commands, hooks
 python3 -c "import yaml,sys;print([c['id'] for c in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if sys.argv[1] in str(c)])" "$N"   # the check registry
-git grep -n -e "$N" -- governance references architecture CLAUDE.md workplan        # prose that restates it
+git grep -n -F -e "$N" -- governance architecture CLAUDE.md references workplan/pipeline-state-graph/machines.yaml ':(exclude)references/project-standards.md' ':(exclude)references/search-log'   # prose and hand-written needles
 ```
-A hit in a view, a skill, the registry or prose is fixed in this same pull request, or the task stops and reports it. An object that returns 0 rows is unproven, not clean.
+If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) and report its result. An object that returns 0 rows is unproven, not clean.
+
+**Hits when this file was written** (2026-11-12, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
+
+- `parse_bound`: code and skills: `scripts/assess/assess_cell.py`. Prose: none.
+- `NOTATION_FAMILIES`: code and skills: `scripts/assess/assess_cell.py`, `scripts/tests/test_assess_cell_pilot.py`. Prose: none.
+- `derive_extraction`: code and skills: `scripts/audit/extraction_relations_integrity.py`, `scripts/db.py`. Prose: `workplan/pipeline-state-graph/machines.yaml`.
+- `numeral-gloss`: no file. The name does not exist yet, or lives only in the excluded paths.
+
+Every test file in that list is run before and after the change (section 6): a test that calls what you change is a caller even when it asserts nothing about it.
 
 ## 6. Verification
 
-**Red before, green after.** The workplan's done-when, each line run and shown. Plus the stress harness of T-014 before and after: the only differing steps are the ones T-1a intends (`guards.unit-in-prose` now refused).
-
-**Fixtures.** Anything a test or probe writes goes to a copy (`$SCRATCH`), is labelled `TASK-FIXTURE`, and never reaches `data/guidebook.db`. A new test must be able to fail: show it red on the unchanged code (or on a seeded defect) before you show it green.
-
-**The gate, once, when the diff is ready:**
+**Step 1, before any edit: the before-run.** These registered checks read what this task touches: `test_assess_cell_pilot`, `extraction_relations_integrity`, `test_run_pipeline_refusals`, `test_scan_contract`, `test_db_amend_writers`, `test_author_presence`, `test_search_log_completeness`, `test_validate_evidence_state_2_4`, `claude_md_spine`, `research_contract_sync`. Run each as the registry runs it and keep the output. The command reads each check's `cmd` from the registry, so a renamed script is still found:
 
 ```
-scripts/preflight.sh                                                   # once, when the diff is ready
-python3 scripts/run_checks.py --changed-from origin/main --explain     # once; never --all
-python3 scripts/run_checks.py --selftest                               # after any rename, new check or registry edit
+CHECKS="test_assess_cell_pilot extraction_relations_integrity test_run_pipeline_refusals test_scan_contract test_db_amend_writers test_author_presence test_search_log_completeness test_validate_evidence_state_2_4 claude_md_spine research_contract_sync"
+for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(next(x['cmd'] for x in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if x['id']==sys.argv[1])))" $c); $cmd > "$SCRATCH/before-$c.txt" 2>&1; echo "$c rc=$? | $(grep -E 'EXAMINED|RESULTS|FAILED|VERDICT' "$SCRATCH/before-$c.txt" | tr '\n' ' ' | cut -c1-200)"; done
 ```
-**Proof that each gate examined something.** In the `--explain` output find every check this task touches and read its `EXAMINED: <n>` line. A check listed under `NOTHING-IN-SCOPE`, or printing `EXAMINED: 0`, has not passed: say so in the pull request and treat it as not verified. A check that is red on untouched `origin/main` tells you nothing about your diff; name it and move on (the standing advisory failures on `main` are listed in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-stress-audit.md` row B-82).
+
+Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
+
+**Step 2: red before, green after.** The workplan's done-when, each line run and shown. Plus the stress harness of T-014 before and after: the only differing steps are the ones T-1a intends (`guards.unit-in-prose` now refused).
+
+**Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T016-01`, `T016-02`, …) and confirm the prefix is free first (`grep -c '"T016-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
+
+**Fixtures.** Anything a test or probe writes goes to a copy, is labelled `TASK-FIXTURE`, and never reaches `data/guidebook.db`.
+
+**Step 3, after the change: the after-run.** The same loop with `after-` in place of `before-`. Then compare, check by check: `diff <(grep -E '\[✗\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/before-$c.txt") <(grep -E '\[✗\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/after-$c.txt")`. No failing case may appear that was not failing before; the `EXAMINED:` number may only change by the cases you added.
+
+**Step 4: the gate, once.**
+
+```
+BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
+```
+- **Run it once, when every edit is made, before the commit.** It compares your working tree (committed or not, untracked files included) with the point where your branch left `$BASE`, so it does not need a commit first. `preflight.sh` runs the registry selftest and then `run_checks.py --changed-from`: do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
+- **A passing check prints no `EXAMINED:` line in this output.** The subject of each check is read in the per-check runs above (`$SCRATCH/after-<check>.txt`), not here. In `gate.txt` read three things: the `RESULT` line; any check under `NOTHING-IN-SCOPE` (it has not passed: say so); any blocking `FAIL`.
+- **A check that was already red before your change** (the before-run shows it) tells you nothing about your diff: name it in the pull request with its before and after lines, and move on.
 
 **The canonical database must not move:** `sha256sum data/guidebook.db` gives the value recorded in section 2.
 
 ## 7. Commit
 
+Commit **after** the gate of section 6 is clean.
 ```
 git add -A . ':!transcripts' ':!*commands.jsonl'      # add the two append-only logs only at a natural break (CLAUDE.md rule 6)
-git commit -m "governance: execute workplan T-1a reading [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the sweep result>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
+git commit -m "governance: execute workplan T-1a reading [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the callers the sweep found and what was done to each>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
 ```
 The format is `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, taken from `date -u`. Do not copy trailers from this file; use the ones your session was given.
 
@@ -105,8 +140,8 @@ The format is `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, taken
 - Do not treat any `[A-Z]-NN` code (old item codes met in `references/`, `working/`) as a container, an example or a name.
 - Do not put research rows (`scripts/migrations/data_*`, new evidence, extractions, determinations) in a tooling pull request, or tooling in a research one (CLAUDE.md rule 10).
 - Do not push to `main`, rebase, or force-push. Do not subscribe to pull-request activity or schedule check-ins.
-- Do not hand-type a count into any file or message; write the command that computes it.
-- Do not add a table, column, check, verb or script that this file does not name. If one seems needed, stop and report.
+- Do not hand-type a count into any file or message; write the command that computes it. Do not type into a test an id, a code or a count the database can derive.
+- Do not add a table, column, check, verb or script that section 4 does not name. If one seems needed, stop and report. **This does not forbid fixing a caller:** a test fixture, a comment, a skill sentence or a help string that the sweep of section 5 shows is made false or red by your change is in scope, is fixed in this pull request, and is listed there.
 - Do not weaken a refusal, relax a CHECK, quarantine a check or change a registry level to make something pass.
 
 ## 9. Stop conditions
@@ -115,11 +150,12 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a precondition in section 2 is not met, or an owner decision named there is unanswered or answered in another form;
 - the evidence command in section 3 does not give today's expected output (the defect may already be fixed, or the ground has moved);
 - the red test is not red before the change, or is not green after it, after one honest attempt;
-- the caller sweep finds a caller this file does not mention;
-- a blocking check goes red that was green on `origin/main`;
+- the sweep of section 5 finds a caller (as defined there) that you cannot repair without adding something section 4 does not name. A caller you can repair is repaired and listed; a mention is left;
+- a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
 - The workplan text and the code disagree about what exists: stop and report; do not reinterpret the plan.
+- Any other step of T-1a depends on the numeral gloss in a way the three points above do not cover.
 
 ## 10. Rollback
 
@@ -127,8 +163,9 @@ Before merge: close the pull request and delete the branch; nothing else has cha
 
 ## 11. Adversarial pass and pull request
 
+Real execution only; a pilot stops after section 7.
 1. Run `/adversarial` once on the finished diff (a read-only critic attacks the claim, then you repair). One pass; no pass on the pass. For a research task the pass is recorded in the database with `db.py record-adversarial-pass` and closed with `close-adversarial-pass`.
 2. Run `/batch-done`; it is the only definition of finished.
-3. Push the branch. Open the pull request **last**, once, when the diff-scoped gate is clean. Title = the commit subject. Body: the problem, the evidence before and after, the sweep output, the checks with their `EXAMINED:` lines, what was not verified. End the body with the pull-request attribution line your session instructions give.
+3. Push the branch. Open the pull request **last**, once, against the integration base (section 2). Title = the commit subject. Body: the problem; the evidence before and after; each caller the sweep found and what was done to it; each check you ran with its `EXAMINED:` line, before and after; the code-size line; what was not verified. End the body with the pull-request attribution line your session instructions give.
 4. Immediately after creating the pull request call `unsubscribe_pr_activity` for it (creating a pull request subscribes the session by itself). Do not watch it, do not poll, do not schedule a reminder. Push nothing afterwards except a deliberate change; the final push is never `[skip ci]`.
-5. One pull request merges at a time. If another task's pull request merged while you worked, take it with `git merge origin/main` (never rebase) and, if you carry a schema migration, renumber it by the rule above.
+5. One pull request merges at a time. If another task's pull request merged while you worked, take it with `git merge "$BASE"` after `git fetch origin` (never rebase) and, if you carry a schema migration, derive its number again by the rule in section 4.
