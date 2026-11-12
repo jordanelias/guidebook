@@ -5283,3 +5283,18 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session deciding what from a stress test to keep, or whether a stress-test result may carry between topics.
 ACTION: (1) Keep stress-test records the Fable agent judges worth keeping, and use them across topics. (2) Do not retain `STRESS-FIXTURE` rows as data. (3) Enter any retained research row by migration, in a research pull request apart from tooling, after re-retrieval and verification. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (fifth) — the overall code is efficient, centralized and clean
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "ensure the overall code is efficient and centralized and clean"
+
+**What this records.** A standing requirement on the code as a whole: efficient (no avoidable cost in time or in repeated work), centralized (one home for each rule, vocabulary, function and fact, so a change is made once), and clean (no dead, duplicated or contradictory apparatus). It extends and does not replace the 2026-10-12 and 2026-11-06 statements on minimising code and the rule-5 and rule-8 doctrine of one home per fact.
+
+**What it does not decide.** Which duplications to remove first, whether a large module is split, and what counts as "efficient" for each tool are open and belong to the audit's improvement programme. A cleanup is a change to code and is held to the same rules as any: behaviour-preserving unless a defect is being fixed, callers swept (rule 4), tooling apart from research rows (rule 10), and proven by a test that could go red. [ASSUMPTION: "overall code" is read as the scripts, schemas, checks, skills and hooks, not the guidebook's prose or data.]
+
+CONDITION: any session adding, moving, merging or deleting code, or asked whether a piece of code is redundant, duplicated or in the wrong place.
+ACTION: (1) Prefer one home per rule, vocabulary or function, and point to it rather than copy it. (2) Delete dead and duplicated code on evidence. (3) Measure efficiency before changing it. (4) Preserve behaviour under a refactor and prove it with a before-and-after comparison. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
