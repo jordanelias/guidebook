@@ -59,7 +59,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 1. `scripts/db.py`, function `delete_connection` (`grep -n 'def delete_connection' scripts/db.py`; locate by symbol): before the two DELETEs, look the id up with the helper the file already uses for this (`dbcore.exists(conn, "connections", "con_id", con_id)`); if no row, raise the file's `Refusal`.
 2. Word the message as `update_connection_status` words its own for an unknown id (`grep -n -A6 'def update_connection_status' scripts/db.py`; that function is what the verb `update-connection` calls), with the verb name changed to `delete-connection`, the id named, and the sentence "Nothing was written." Under REQ-103 a refusal names a next action: add that the ids that exist are listed by `db.py connections`.
-3. Change nothing else. The verb still hard-deletes; whether it should is OD-29 and T-032, not this task.
+3. Change nothing else. The verb still hard-deletes here. OD-29 is resolved under delegation (both retire in place), and T-050, which waits for this task, turns `delete-connection` and `unlink-admission` into retirements; the refusal this task adds stays.
 
 **What reads what this task adds or changes:** Sessions acting on the printed result.
 

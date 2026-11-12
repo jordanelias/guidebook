@@ -55,7 +55,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. One test under `scripts/tests/` (registered in the `tests` battery): on a scratch copy, using sanctioned verbs only, add a language–jurisdiction pair, a jurisdiction with its approval pointer, a term from an observation, a parameter with its kind, a term relation, and log a search for the new pair; assert each row exists and that no file under `scripts/` or `schemas/` changed.
+1. One test under `scripts/tests/` (registered in the `tests` battery): on a scratch copy, using sanctioned verbs only, add a language–jurisdiction pair, a jurisdiction with its approval pointer, a term from an observation, a quantity kind (T-020's table, with its approval pointer), a parameter with that kind, a term relation, and log a search for the new pair; assert each row exists and that no file under `scripts/` or `schemas/` changed.
 2. Put the string `AT-104` in the test file's docstring: the workplan's Definition of Done finds the test by it (`grep -l 'AT-104' scripts/tests/*.py`).
 
 **What reads what this task adds or changes:** the `tests` battery

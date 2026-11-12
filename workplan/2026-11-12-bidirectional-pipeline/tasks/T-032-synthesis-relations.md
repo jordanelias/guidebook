@@ -21,12 +21,13 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-029 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words, in one of the forms below. An answer relayed in chat, or inferred, is not an answer. If it is absent, stop, except where an entry below says which part may proceed without it.
-  - **OD-07** — Answer form: "OD-07: synthesis stays inside the engine" or "OD-07: separable, with its own rows". Check: `grep -n -F "OD-07:" references/project-standards.md`.
-  - **OD-25** — Answer form: "OD-25: relations = <list>; judged by <class>". Check: `grep -n -F "OD-25:" references/project-standards.md`.
-  - **OD-19** — Answer form: "OD-19: record only" or "OD-19: the engine applies <rule>". Check: `grep -n -F "OD-19:" references/project-standards.md`.
-  - **OD-29** — how `delete-connection` ends. Answer forms: "OD-29: both retire in place", "OD-29: connections retire; an admission edge may be deleted", or "OD-29: both may be deleted". Check: `grep -n -F "OD-29:" references/project-standards.md`.
+- **Tasks that must be merged to the integration base first:** T-029, T-050 merged (T-050 gives connections their retired mark, which this reshape keeps). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Owner decisions:** none outstanding. The decisions this task needed are resolved under delegation (next bullet); none is still the owner's.
+- **Delegated resolutions this task rests on.** OD-07: synthesis is a separable stage with its own rows. OD-25: relations are equivalence, commonality, similarity and adjacency, judged at the Opus floor. OD-12: judged discussion is a synthesis row, quoted by render, shown only once reviewed. OD-29: relations retire in place. The engine's handling of conflict between groups is not this task (T-053, held by the owner's OD-19). Each is a resolution by an Opus-class model under the owner's delegation of 2026-11-12: not the owner's words, reversible by the owner, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-07 OD-12 OD-25 OD-29; do gate $n; done
+```
 - **Tests that must be red (or green) before you start:** AT-70 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -61,9 +62,14 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. As designed after the answers. Whatever the design, the reshaped table carries a status that means retired and no verb hard-deletes a connection, unless the owner's answer to OD-29 records the exception (the owner's ruling of 2026-09-16: `grep -n -F 'RETIRE IN PLACE, NEVER HARD-DELETE' references/project-standards.md`). Before the first retirement every reader of the table filters on that status.
+1. Design (the Fable agent or an Opus-class session), then build, to the delegated resolutions:
+   - **OD-07.** Synthesis rows are separable: relation rows, conflict rows (`conflicts`, already a synthesis table) and convergence (`convergence_assessment`, computed by the engine, unchanged). A determination points at the synthesis rows it rests on through a link table, never a list in a cell (the 2026-11-06 schema-shape ruling).
+   - **OD-25.** One relation home, made by reshaping `connections` and `connection_targets` (they hold no rows today: `select (select count(*) from connections),(select count(*) from connection_targets)`). The relation kind is a CHECK of exactly `equivalence`, `commonality`, `similarity`, `adjacency`; each row carries its judge, warrant and status. The existing `connection_type` values describe what is related, not how: derive them from the targets where possible rather than keep a second vocabulary. Conflict and convergence are not re-recorded as relations. Only equivalence and commonality may ground unification. A relation is written only with a judge at the synthesis floor (Opus-class or above); candidates come from T-033 and are never written without judgment.
+   - **OD-12.** A judged-discussion row: text written at the Opus floor about a determination's divergence, branch or caveat, with its author, warrant, a hash of the rows it discusses, and a review status; the read view render uses returns only rows reviewed by an Opus-class instance other than the author, and says when a determination's discussion is unreviewed.
+   - **OD-29.** No verb hard-deletes a relation. The retired mark T-050 added survives the reshape, and every reader filters on it.
+2. Not this task: harm asymmetry and broadest benefit in the engine (T-053, OD-19, the owner's).
 
-**What reads what this task adds or changes:** T-033; render. Its discussion reads translations through `v_translations_current` (T-049) and never presents one as a source's wording.
+**What reads what this task adds or changes:** T-033; render (T-037) reads relation and discussion rows; the engine reads the determination's links to synthesis rows. Its discussion reads translations through `v_translations_current` (T-049) and never presents one as a source's wording.
 
 **Schema migration (this task has one).** Never type a migration number. Derive it at execution time: `ls scripts/migrations | grep -E '^[0-9]{3}_' | sort | tail -1` gives the highest; yours is that plus one, zero-padded, in `scripts/migrations/NNN_<slug>.sql`, and it ends by setting `PRAGMA user_version` to the same number. Run `python3 scripts/audit/joined_cells_census.py` before and after and keep both outputs (the last line is `EXAMINED: … candidate(s)`; a new column must not add a candidate). Apply it only with `python3 scripts/migrate_db.py` (this is the one sanctioned way `data/guidebook.db` changes). Prove it with `python3 scripts/migrate_db.py --rebuild "$SCRATCH/rebuilt.db"` (exit 0) and `python3 scripts/audit/migration_reproducibility.py --deep` (PASS). SQLite cannot add a `NOT NULL` foreign key or change a CHECK in place: use create, copy, drop, rename inside the migration, and list every view and index that names the table (`select type, name from sqlite_master where sql like '%<table>%'`; they must be recreated). The pull request contains no `scripts/migrations/data_*` file.
 
@@ -71,7 +77,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 ## 5. Caller sweep
 
-Names to sweep: `INTO connections`, `FROM connections`, `connection_targets`, `add-conflict`, `delete-connection`, `add-connection`
+Names to sweep: `INTO connections`, `FROM connections`, `connection_targets`, `add-conflict`, `delete-connection`, `add-connection`, `convergence_id`, `connection_type`
 
 **What a caller is.** A hit is a *caller* when its behaviour or its truth changes with this task: code that calls or imports the name; a test that exercises the behaviour you are changing, even if it asserts nothing about it; a view, trigger or index; a registry `cmd` or `basis`; a skill, command or governance sentence that states the behaviour being changed. A hit that stays true after your change is a *mention* and needs nothing. **Fixing a caller the sweep finds is in scope** (CLAUDE.md rule 4): make the fix in this pull request and list it there.
 
@@ -108,7 +114,7 @@ for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(ne
 
 Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
 
-**Step 2: red before, green after.** AT-70.
+**Step 2: red before, green after.** AT-70; and, on a scratch copy: a relation of each of the four kinds is recorded with a judge and refused without one; a fifth kind is refused by the CHECK; a discussion row with no review is not returned by the read view render uses; retiring a relation leaves the row and hides it from every reader.
 
 **Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T032-01`, `T032-02`, …) and confirm the prefix is free first (`grep -c '"T032-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
 
@@ -158,6 +164,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
 
 ## 10. Rollback
 

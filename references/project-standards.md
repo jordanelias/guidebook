@@ -5379,3 +5379,481 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session placing translation, or any other default behaviour, in a stage, or judging whether a stated rule is hard-coding.
 ACTION: (1) Hold a default behaviour, including "synthesis translates", as a rule in one stated place and read it from there. (2) Do not scatter it as a literal or a name-branch in code. (3) Keep the capability callable from other stages. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner delegation 2026-11-12 — twenty of the standing owner decisions are delegated to an Opus-class model, to be resolved by three stated criteria
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`). The owner asked how many of the standing owner decisions (OD-01 to OD-30 of `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`, OD-16 withdrawn) a model could resolve "if granted permission with the criteria being whatever is best for (1) long-term integrity of project in terms of accuracy, academic rigour and provenance, (2) making information legible for different user types, and (3) ensuring comprehensive coverage across all disability lenses, ethical approaches and universal/population/individual design modes". The assistant answered that 20 of 29 could be resolved by those criteria and 9 could not; the owner replied. Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "I guess opus can do it"
+
+**What this delegates.** Resolution of the twenty decisions listed below, by an Opus-class model, judged against the owner's three criteria above. The set, by the register's own numbering: OD-01, OD-02, OD-03, OD-05, OD-06, OD-07, OD-08, OD-10, OD-11, OD-12, OD-14, OD-18, OD-20, OD-21, OD-22, OD-24, OD-25, OD-26, OD-29, OD-30.
+
+**What it does not delegate.** OD-04, OD-09, OD-13, OD-15, OD-17, OD-19, OD-23, OD-27 and OD-28 remain the owner's: they turn on what the owner's own earlier answer covered or said (OD-04, OD-28), the owner's acts (OD-13, OD-17), licensing (OD-15, OD-23), the project's trajectory and control (OD-09, OD-27), and the weighing of one group's harm against another's under the owner's CRPD posture (OD-19).
+
+**How a delegated resolution is held.** (a) It is recorded as a delegated resolution, never as the owner's words, with the criterion that decided it and what would change it; (b) it is reversible by the owner at any time and stands until then; (c) an interpretation of the owner's own words (OD-06, OD-18, OD-20, OD-29) is a defensible reading and not a statement of what the owner meant; (d) OD-01, OD-02, OD-12 and OD-14 are checked by a second, independent Opus-class instance before they are relied on; (e) a resolution never overrides a standing owner ruling, and where the criteria conflict with one it is referred back as still the owner's. [ASSUMPTION: the owner's numbering of the criteria is their order of priority (1, then 2, then 3), and "I guess opus can do it" is read as accepting the assistant's list of twenty and its conditions (a) to (e); both are unratified.]
+
+CONDITION: any session asking whether one of the twenty decisions is answered, or relying on a resolution of one.
+ACTION: (1) Treat a delegated resolution recorded below, once it is, as the standing answer to its decision until the owner reverses it, and cite it as delegated. (2) Do not treat the nine reserved decisions as delegated. (3) Do not use a delegated resolution to override a standing owner ruling. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner delegation, quoted above.
+
+
+## Delegated resolution 2026-11-12 — OD-01 jurisdiction in a determination, sub-national codes, climate and culture
+
+This is a resolution by an Opus-class model under the owner's delegation of 2026-11-12 ("I guess opus can do it", entry above), judged against the owner's three criteria. **It is not the owner's words**, it stands until the owner reverses it, and under the delegation's condition (d) it is **not to be relied on until a second, independent Opus-class instance has checked it**. The reasoning, the facts checked and the commands are in `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-01).
+
+OD-01: one determination, with typed climate and cultural conditions; sub-national codes with a parent
+
+**The resolution.** One live determination per parameter and lens set, each in-scope jurisdiction's figure shown beside it as a spread by pointer (the comparison view). Where a source conditions a figure on climate or cultural context, that is a typed condition on the figure and the determination branches by it (OR-2); a cultural caveat from another source is a pointer note, never a value. A sub-national instrument carries its own code with its country as parent. Whether a sub-national jurisdiction owes research coverage of its own is referred to the reserved decision on scope (OD-04 in the register).
+
+**What decided it.** Criterion 1 (integrity): the determination key is ruled (2026-08-26, 2026-08-28) and a per-jurisdiction determination would change it and count adoptions as findings; filing an Ontario or Flemish instrument under its country misstates provenance. Criterion 2: one best practice with the jurisdictions beside it is what the owner asked for on 2026-10-30. Criterion 3: climate and culture are conditions some groups' provisions turn on (the 2026-04-07 thermoregulation and Kawa rules; `governance/armature_v4_resolutions.md` Q29).
+
+**Reversal condition.** A parameter whose values cannot be compared across jurisdictions on one scale, or the owner requiring a determination per jurisdiction; for parents, a scope rule that the roll-up misroutes.
+
+CONDITION: any session designing the jurisdiction registry, the comparison view or render, filing a sub-national instrument, or recording a climatic or cultural condition.
+ACTION: (1) Keep one determination per parameter and lens set; show jurisdictions as a spread by pointer. (2) Type climate and cultural conditions on figures; never key a determination on them. (3) File a sub-national instrument under its own code with a parent; correct held rows forward in a research pull request. (4) Leave sub-national coverage to the owner's scope decision. (5) Do not rely on this entry until the independent check of condition (d) is recorded.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-02 the language of a page, and how a translated quotation is shown
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it; **not to be relied on until the independent check of condition (d) is recorded**. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-02).
+
+OD-02: pages in English, originals with marked translations beside them
+
+**The resolution.** Pages are in English for this edition. Every non-English quotation, term and clause is shown in its own language and script, with our translation beside it marked as a translation with its translator and review status; the original carries its language tag (WCAG 2.2, 3.1.2 Language of Parts). The page language is a parameter of render, not fixed in it.
+
+**What decided it.** Criterion 1: the reader can check our rendering against the source's words, and no unreviewed translated prose of ours fills the page. Criterion 2 pulled toward pages in several languages; criterion 1 was given priority (working assumption that the numbering is the priority order, unratified), and criterion 2 is kept in part by showing originals and keeping the page language a parameter. English pages are not the English bias ruled against on 2026-11-06, which concerns which concepts exist and which column is read first.
+
+**Reversal condition.** The owner naming a non-English-reading primary audience, or reviewed translation capacity for a second page language.
+
+CONDITION: any session rendering a page, translating held text for a page, or showing a translated quotation.
+ACTION: (1) Render pages in English. (2) Show the original beside every translation, marked and language-tagged. (3) Keep the page language a render parameter. (4) Do not rely on this entry until the independent check of condition (d) is recorded.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-03 a concept that has no English name
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-03).
+
+OD-03: forms table; canonical_en kept as our English descriptive label, never a form; the display name derived by E1
+
+**The resolution.** A concept's identity is its neutral id. Its names are rows in a forms table, every attested form in any language, one row per occurrence with its source. `canonical_en` stays as our English descriptive label, never a form and never read first; whether a label is an instrument's own term or ours is derived, not typed. The name shown is derived by E1 (the origin instrument's phrase until an English-jurisdiction instrument attests an English form); a stored, warranted choice is used only where no derivation decides.
+
+**What decided it.** Criterion 1: every name carries its attestation, and a derived display cannot disagree with the forms. Criterion 2: an English page keeps a label for every concept. Criterion 3: a concept English does not carve is held on equal footing. Consistent with E1, the sixth, seventh and eighth statements of 2026-11-06.
+
+**Reversal condition.** The display name proving underivable for most concepts, or the owner reversing E1 or the eighth clarification.
+
+CONDITION: any session minting, naming or displaying a concept first met outside English, or designing the concept-identity change.
+ACTION: (1) Hold forms as rows with their sources. (2) Keep `canonical_en` as our marked label, not a form. (3) Derive the display name by E1; store a choice only with a warrant where no derivation decides.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-05 evidence from outside the scope that citation mining surfaces
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-05).
+
+OD-05: stage as a lead
+
+**The resolution.** Evidence from outside the scope that mining surfaces is staged as a lead with the mined source it came from, its jurisdiction and its claimed tier; it is never admitted, and never discarded, until the slug's buckets 1 and 2 are exhausted as the owner's standing order of 2026-09-28 defines, and then only within the scope the owner sets (OD-04 in the register, reserved). **Referred back to the owner:** whether a study whose finding does not depend on jurisdiction is "evidence from a jurisdiction" under that order.
+
+**What decided it.** The 2026-09-28 order forbids admitting out-of-bucket evidence before exhaustion, so admission is not available to a delegated answer. Criterion 1 then favours keeping the evidence over refusing it; criterion 3 favours keeping it findable, because non-bucket evidence is where several lenses are thinnest.
+
+**Reversal condition.** The owner answering the referred question, widening the scope, or the buckets being exhausted for the slug.
+
+CONDITION: any session mining citations that surface a source from a jurisdiction outside the scope in force.
+ACTION: (1) Record it as a lead with its origin, jurisdiction and claimed tier. (2) Do not admit it before the slug's buckets 1 and 2 are exhausted. (3) Do not discard it.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-06 which stage assigns the lenses
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. It is a reading of the owner's 2026-11-06 sentence ("evidence stage must carefully adjudicate sources to assign relevant populations/access needs/ICF codes"), a defensible reading and not a statement of what the owner meant (delegation condition (c)). Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-06).
+
+OD-06: judgment assigns the lenses
+
+**The resolution.** Lens codes are assigned at judgment, from the full reading; evidence harvests the source's words and concepts verbatim and assigns none.
+
+**What decided it.** The owner's own division of 2026-08-27 ("evidence is probably working by doing more cursory scans … then judgment phase will actually do the deep read"), the overruling of DR-2026-08-24 §2.4, and OR-1's requirement that every relevant model be filled, which only the full reading can meet (criteria 1 and 3).
+
+**Reversal condition.** The owner saying the 2026-11-06 sentence meant tagging at admission.
+
+CONDITION: any session tagging lenses on figures or designing admission writers.
+ACTION: (1) Assign lenses at judgment. (2) Give admission writers no lens arguments.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-07 what one synthesis row is
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-07).
+
+OD-07: separable, with its own rows
+
+**The resolution.** Synthesis is a separable stage whose rows a determination points at: convergence (computed by the engine and stored, as now), judged relations, conflicts and any judged discussion text. A run may invoke synthesis from any stage, the specification pass included; what synthesis finds is kept. A determination points at its synthesis rows through a link table, never a list in a cell.
+
+**What decided it.** Criterion 1: a finding that is not kept cannot be cited, checked or reversed. Criterion 2: the page's discussion points at kept rows. Criterion 3: cross-lens conflicts and cross-parameter adjacencies must persist to be counted.
+
+**Reversal condition.** Measured evidence that kept relation rows go stale faster than they are re-judged.
+
+CONDITION: any session designing synthesis tables or the determination's pointers to them.
+ACTION: (1) Keep synthesis findings as rows with judge and warrant. (2) Point determinations at them through a link table. (3) Leave the engine's computed convergence where it is.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-08 what an absent cell means
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-08).
+
+OD-08: no row
+
+**The resolution.** No determination row is stored for a cell without a figure. A lens judged relevant to a parameter that has no figure is recorded as an open gap naming the parameter and the lens, in the cross-stage gap register. Whether a cell is not relevant, not yet researched, or researched and empty is derived from gaps, searches and readings.
+
+**What decided it.** OR-1 (no rows except for the actual relevant lens) and the 2026-10-30 statement that a "Not set" row should not be shown. Criterion 1: a stored non-determination can be read as a claim and duplicates the gap. Criterion 2: the derived answer distinguishes the three meanings a `pending` row cannot. Criterion 3's risk, that absence becomes silent, is met by the required gap.
+
+**Reversal condition.** A reader-facing need the cell-status answer cannot meet from gaps, searches and readings, or the owner restoring stored `pending` cells.
+
+CONDITION: any session writing determinations, routing lenses, or rendering a cell with no determination.
+ACTION: (1) Write no determination row without a figure. (2) Record a relevant lens with no figure as an open typed gap. (3) Derive the meaning of absence; do not store it.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-11 which stage owns the gap register
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-11).
+
+OD-11: cross-stage register
+
+**The resolution.** The gap register is written by whichever stage finds the gap; each gap names the stage that raised it (from the pipeline contract's stage ids) and what it is a gap in. The stage map marks it cross-stage, and the walkability instrument must count it as a member of each stage it carries, verified by running the instrument before and after the change.
+
+**What decided it.** Gaps are already written by research sessions and the engine and pointed at from judgment and specification; confining them to research would forbid the gap the absent-cell resolution requires (criteria 1 and 3). The stage map's own dispute note reached the same answer.
+
+**Reversal condition.** The stage map gaining a stage for it, or the owner assigning gaps to one stage.
+
+CONDITION: any session writing a gap, mapping tables to stages, or changing the walkability instrument.
+ACTION: (1) Let any stage raise a gap, naming itself. (2) Mark the register cross-stage in the stage map. (3) Run the walkability instrument before and after; lose no path.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-12 how render's prose is produced, and whether it is stored
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it; **not to be relied on until the independent check of condition (d) is recorded**. It answers the owner-queue prompts OW-1b and OW-1c. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-12).
+
+OD-12: templates, rebuilt
+
+**The resolution.** Render assembles every sentence by templates held in one place from typed rows, and writes no prose of its own judgment. Discussion that needs judgment (a divergence approach, a relation, a caveat) is a synthesis-stage row written at the Opus floor with its warrant and quoted by pointer. The render table holds the complete prose and bibliography the owner asked for in OW-1, regenerated in full from its inputs at each build, with an input hash per row, never edited and never read as the source of a fact. Translations appear only as the page-language and translator resolutions allow.
+
+**What decided it.** Criterion 1: every sentence traces to a row and nothing written at render can drift; a rebuilt table is no second home of a fact (rule 5). Criterion 2 pulled toward written prose; it is met by placing the judged discussion at synthesis, where the Opus floor and the warrant already apply, which keeps render deterministic and consistent with the owner's 2026-10-30 "simply PRESENTING information without claiming correctness". Criterion 3: templates over typed lens and condition rows show every lens and branch held.
+
+**Reversal condition.** A measured build cost that makes full regeneration impractical (then stored with an input-hash drift check), or reader testing showing template prose fails the 2026-10-30 legibility requirement in a way synthesis discussion does not cure.
+
+CONDITION: any session building the renderer or the render table, or writing prose for a page.
+ACTION: (1) Assemble page text by templates from typed rows. (2) Put judged discussion in synthesis rows at the Opus floor and quote them by pointer. (3) Regenerate the render table in full with input hashes; edit nothing in it. (4) Do not rely on this entry until the independent check of condition (d) is recorded.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-14 carrying the rows written under MOB since the split was ratified
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it; **not to be relied on until the independent check of condition (d) is recorded**. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-14).
+
+OD-14: judge each row; fan out only rows that name neither group, flagged; never fan out a grade
+
+**The resolution.** Each row written under `MOB` is judged by the users it names (a study by its participants, a provision by the users its text names) and tagged `AMB`, `WHEEL` or both through the link table, without copying the figure. A row that names no one more specific than mobility is fanned out to both, flagged as awaiting re-derivation. A grade of a study's own participants is never fanned out: grades against `MOB` are re-graded as new rows against each new code the study bears on, and the old grade rows are retired in place. `MOB` is retired in place in the identity registry. **Referred back to the owner:** the wording for part-time wheelchair users; until it is given, a gap that concerns them names both codes and states as its condition that the person uses both modes.
+
+**What decided it.** The 2026-08-25 ruling chose fan-out because judging rows would "decide applicability by inference, before synthesis", which DR-2026-08-24 §2.4 then forbade; the owner overruled §2.4 on 2026-08-27 and placed the crossing at judgment, and OR-1c's link table removed the copying cost. The ruling's "never fan out a grade" is kept in full. Criterion 1: a row that says whom it concerns is not tagged for a group it excludes. Criterion 3: rows that name no one keep both groups rather than losing their tag.
+
+**Reversal condition.** The owner restating blanket fan-out, or the re-derivation finding that judged rows needed revision as often as fanned ones.
+
+CONDITION: any session executing the mobility split, tagging AMB or WHEEL, re-grading population matches against MOB, or naming part-time wheelchair users in a gap.
+ACTION: (1) Judge each MOB row by the users it names; tag through the link table. (2) Fan out, flagged, only rows that name neither group. (3) Re-grade rather than fan out grades; retire the MOB grades and the MOB code in place. (4) Leave the part-time wording to the owner; meanwhile name both codes with the condition. (5) Do not rely on this entry until the independent check of condition (d) is recorded.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-18 what "all directions" covers
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. It is a reading of the owner's objective of 2026-11-12 ("run in all directions at any stage"), defensible and not a statement of what the owner meant (condition (c)). Reasoning, evidence and the five corrections: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-18).
+
+OD-18: confirm the entry and re-entry conditions of TD §3, with the five corrections in workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md (OD-18); status updates on earlier rows allowed, copies of later facts forbidden
+
+**The resolution.** The cold-entry and re-entry conditions of the top-down specification §3 stand, corrected so that a specification with insufficient evidence writes no row and raises a typed gap; a "provisional reading" re-entry reads as a skimmed or preliminary reading until the owner answers the open question on `provisional`; and the base, synthesis and render postconditions take the delegated resolutions of the same date. An earlier stage's row may record a change in its own state (verification standing, retired, superseded-by); it never records a later stage's use or fact, which is reached by pointer.
+
+**What decided it.** Criterion 1: re-entry stays additive and every fact keeps one home (rule 5). Criteria 2 and 3: every stage can answer, per lens, what is held, owed or refused.
+
+**Reversal condition.** The owner correcting a condition, or a needed re-entry that no condition permits.
+
+CONDITION: any session writing re-entry conditions into the pipeline contract, or updating an earlier stage's row because of later work.
+ACTION: (1) Write the corrected conditions into the contract. (2) Update an earlier row only in its own state. (3) Reach later use by pointer, never by a copy on the earlier row.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-20 the owner's edits
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. It is a reading of the owner's 2026-10-28 request for an interface to "review and edit … and have it propagate", defensible and not a statement of what the owner meant (condition (c)). Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-20).
+
+OD-20: proposals through the write path
+
+**The resolution.** The owner's changes are proposals applied through the sanctioned write path, each reaching the database by migration with the owner named as judge and the reason recorded on the row it changes; dependants are recomputed. An edit aimed at a computed value (a determination's state, value or marker) is applied to the figure, source or rule it was computed from, or recorded as an open question on the cell, never written into the determination (owner, 2026-09-09 evening: "you have to compute it").
+
+**What decided it.** Criterion 1: every change keeps who made it and why, and the database stays what its migrations make. Criterion 2: "propagate" is met by recomputation.
+
+**Reversal condition.** The owner ordering a direct-write route.
+
+CONDITION: any session applying a change the owner made on the review page or in conversation.
+ACTION: (1) Apply it through the verbs and a migration, with the owner as judge. (2) Route an edit to a computed value to its inputs or to a question on the cell.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-21 a question about a published cell
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-21).
+
+OD-21: yes, as an open gate
+
+**The resolution.** A reader's or the owner's objection to a published value is recorded in the database as an open gate on the cell, with who raised it and the objection's text; the cell is shown as questioned until the gate is closed by re-derivation or by a recorded answer with its warrant. The flag says "questioned", not "wrong".
+
+**What decided it.** Criterion 1: an objection in a session file is lost provenance, and a questioned value shown unmarked overstates its standing. Criterion 2: the owner's 2026-10-30 "radically transparent for my audience". Criterion 3: objections from disabled readers about their own lens are input the book should keep.
+
+**Reversal condition.** Gates raised faster than they can be answered, so the flag stops carrying information.
+
+CONDITION: any session receiving an objection to a published value, or designing the cell-question gate.
+ACTION: (1) Record the objection as an open gate on the cell. (2) Show the cell as questioned. (3) Close it only with a re-derivation or a recorded answer.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-22 rounding direction for converted lengths
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. It answers the owner-queue prompt OR-10b only. Reasoning, evidence and the disposition of the other open prompts: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-22).
+
+OD-22: round a minimum up and a maximum down
+
+**The resolution.** A converted figure is shown at the nearest quarter inch or 5 mm (the owner's increment, OR-10) that does not fall on the wrong side of the source's bound: a minimum never shows below the source, a maximum never above it. When the nearest increment is already on the safe side it is used unchanged. The stored bound stays exact, and the shown figure is marked as converted. **Not resolved here:** the other open prompts of the owner queue. OW-1b and OW-1c are answered by the render resolution of the same date; OR-1c and OR-17b were answered by the owner on 2026-11-06; OR-5b, OR-6c, OR-22b, OR-23b, OT-2, OR-14b and OR-25 remain the owner's.
+
+**What decided it.** Criterion 1: 762 mm shown as 760 mm under "at least 30 in" misstates the source. Criterion 3: a minimum shown low harms the users it protects. The ledger recorded direction as unanswered by OR-10 and the owner delegated this question; the word "nearest" is kept within the safe side.
+
+**Reversal condition.** The owner reading "nearest" as excluding any direction rule.
+
+CONDITION: any session converting or showing a converted minimum or maximum.
+ACTION: (1) Show the nearest quarter inch or 5 mm on the safe side of the source's bound. (2) Keep the stored bound exact. (3) Treat the other open prompts as still the owner's.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-24 how coarse a parameter is, and its quantity kinds
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-24).
+
+OD-24: flat and coarse; kinds = length, gradient (ratio, percentage or degrees as notations), force, time, luminous reflectance and its contrast (LRV), colour temperature, held as rows and extended by data with a warrant; element required: no
+
+**The resolution.** A parameter is one measured quantity, with every clause variation a typed condition and families reached by typed term pointers; two cases are two parameters only when they cannot be placed on one scale or their accessibility directions differ. Clause-level extractions are kept and reached by pointer. Each parameter states its quantity kind from a registry of kinds held as rows (seeded from what the live parameters need, not from a list typed in code) and extended by data with a warrant. A parameter need not belong to an element; elements reach parameters by term pointers, many to many.
+
+**What decided it.** The owner's statement of 2026-11-12 (second) that too fine a grain loses the commonality needed to "unify then specify". Criterion 1: one determination per quantity, no parent and child values to keep in step. Criterion 2: one value with its conditions. Criterion 3: group differences ride on lenses, and opposite directions split. Requiring an element would recreate the container the owner deleted.
+
+**Reversal condition.** A parameter whose cases share a scale and direction but cannot be determined together without losing a group's difference, or a kind that cannot be added without a schema change.
+
+CONDITION: any session defining, splitting, merging or typing a parameter, or adding a quantity kind.
+ACTION: (1) Keep parameters flat and coarse; apply the split test. (2) Carry variations as typed conditions. (3) State a kind from the kinds registry; add a kind by data with a warrant. (4) Require no element.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-25 which relations synthesis records, and who may judge them
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. The definitions are a reading of the owner's four words of 2026-11-12 (third), at low confidence on the line between similarity and commonality. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-25).
+
+OD-25: relations = equivalence, commonality, similarity, adjacency; judged by an Opus-class model or above; conflict and convergence stay in their existing tables; candidates by query at any class
+
+**The resolution.** Equivalence: the two name or measure the same thing and are interchangeable. Commonality: they share an identified element (a quantity, a basis, a root) and differ in others, so they unify on that element with the differences kept as conditions. Similarity: they resemble each other without an identified shared element, a lead for judgment and never a ground to unify. Adjacency: distinct things that bear on or constrain each other (the owner's swept-path example). A recorded relation carries its judge and warrant; candidates found by query are not recorded without judgment.
+
+**What decided it.** Criterion 1: the four license different acts, so only equivalence and commonality may ground unification; conflict and convergence already have homes (rule 5); a relation that decides what is unified is synthesis and takes the Opus floor. Criteria 2 and 3: the discussion can say which relation it rests on, and adjacency across lenses is where compound effects appear.
+
+**Reversal condition.** The owner glossing the words otherwise, or judged relations showing similarity and commonality cannot be told apart reliably.
+
+CONDITION: any session recording or judging a relation between parameters, clauses, instruments, jurisdictions or figures.
+ACTION: (1) Use one of the four kinds, with its test. (2) Record judge and warrant; judge at the Opus floor. (3) Unify only on equivalence or commonality. (4) Keep conflict and convergence in their own tables.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-26 an interim stage-pair gate before render exists
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-26).
+
+OD-26: wait
+
+**The resolution.** No interim gate on a stored baseline. The walkability instrument is run as a command at the end of every wave and before and after any change to the stage map; OW-2's registration follows render as planned.
+
+**What decided it.** Criterion 1: a stored baseline is a curated list that can rot without going red (rules 7a and 8), and while render does not exist no lost path can put a wrong thing into the book (CLAUDE.md §8's test). Measured 2026-11-12: every pair without a path involves render (`python3 workplan/pipeline-state-graph/walkability.py | grep "NO PATH"`).
+
+**Reversal condition.** A wave-end run finding a non-render path lost between waves; then an interim gate with an exemption derived from the graph, never stored.
+
+CONDITION: any session asking whether the stage-pair gate should be registered before render exists.
+ACTION: (1) Register no interim gate. (2) Run the instrument at each wave end and around stage-map changes.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-29 retire-in-place and link rows
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. It is a reading of the owner's ruling of 2026-09-16 ("retire in place then"), defensible and not a statement of what the owner meant (condition (c)); it departs from the audit's recommendation. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-29).
+
+OD-29: both retire in place
+
+**The resolution.** A connection and a search-to-source admission edge are both data rows under the 2026-09-16 ruling; neither is hard-deleted. A connection gains a retired status; an admission edge gains retired-at, retired-by and reason columns, and `unlink-admission` becomes a retire verb that no longer writes the removed edge into a note. A genuine deletion of either is an exception the owner rules on case by case (that ruling's ACTION (4)). Before the first retirement, every reader of either table filters on the mark (that ruling's execution condition).
+
+**What decided it.** The ruling governs "DATA ROWS AND IDENTIFIERS" and reserves exceptions to the owner, so an exception for edges is not available to a delegated answer. Criterion 1: a retired edge keeps the fact that an attribution was claimed and withdrawn; the present note is a correction appended in a cell, which the owner's 2026-11-06 schema-shape statement forbids.
+
+**Reversal condition.** The owner ruling an exception for edges without an identifier.
+
+CONDITION: any session removing a connection or an admission edge, or reshaping either table.
+ACTION: (1) Retire in place; hard-delete neither. (2) Make every reader filter on the retired mark first. (3) Bring any genuine deletion to the owner.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Delegated resolution 2026-11-12 — OD-30 who may translate, and review before use
+
+A resolution by an Opus-class model under the owner's delegation of 2026-11-12, judged against the owner's three criteria; **not the owner's words**; standing until the owner reverses it. Reasoning and evidence: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` (section OD-30).
+
+OD-30: any model, review before a reader sees it
+
+**The resolution.** Any model may draft a translation, recorded with its translator. Synthesis may read an unreviewed translation only as an aid, and relies on a passage only after its Opus-class author has checked it against the original. A reader is shown only a translation reviewed by an Opus-class instance other than its translator, recorded in the translation's reviewer columns, beside the original. A translation that changes a figure is refused.
+
+**What decided it.** Criterion 1 puts the gate where a translation is relied on and where it is shown. Criterion 3: cheap drafting lets every held language reach synthesis, against English bias. A person reviewing every translation would be stronger for criterion 1 in principle, but the project has no named native-speaker reviewer (E10, 2026-11-06) and the owner cannot carry manual load (2026-09-09), so it would stop translation; the independent Opus-class review was chosen instead.
+
+**Reversal condition.** A fluent reader's sample check of reviewed translations finding meaning-changing errors, or the owner naming human reviewers.
+
+CONDITION: any session translating held text, relying on a translation in synthesis, or showing one to a reader.
+ACTION: (1) Record every translation with its translator. (2) Check a relied-on passage against the original at the Opus floor. (3) Show only translations reviewed by a different Opus-class instance, beside the original.
+DATE: 2026-11-12 — delegated resolution, not an owner statement.
+
+
+## Convention 2026-11-12 — how a delegated resolution's standing is recorded, and when it opens a task's gate
+
+Recorded by an Opus-class model in the same delegated pass, after the independent review of condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-REVIEW.md`) found that every task gate read only the literal `OD-NN:` and so opened on a delegated line before its check was recorded. **This is a convention for reading the ledger, not an owner ruling**; it changes no ruling and no doctrine, and the owner may replace it.
+
+**Two kinds of line, latest wins.** For each decision of the register `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` §8, the ledger carries:
+- a status line, `OD-NN STATUS: <value>`, one of: `ANSWERED BY THE OWNER` (written by the session that records the owner's quoted answer), `RESOLVED UNDER DELEGATION`, `WITHDRAWN, REFERRED BACK TO THE OWNER`, `REFERRED BACK TO THE OWNER`;
+- for a delegated resolution, a check line, `OD-NN CHECK: <value>`, one of: `not required`, `pending`, `confirmed`, `confirmed with corrections applied`, `referred back`.
+
+Each is read as the last line of its kind for that id: `grep -F "OD-NN STATUS:" references/project-standards.md | tail -1`, and the same for `CHECK:`. A later line supersedes an earlier one; no line is edited.
+
+**The gate.** A task's precondition on a decision is OPEN only when (1) the last status line is `ANSWERED BY THE OWNER`, or (2) the last status line is `RESOLVED UNDER DELEGATION` **and** the last check line is `not required`, `confirmed` or `confirmed with corrections applied`. Every other state is CLOSED, including no status line at all, `pending`, a withdrawn resolution and a referral. **A task whose text requires the owner's own words** (for example the mobility split, T-102) **is open only on `ANSWERED BY THE OWNER`**; a delegated resolution never satisfies it. The one command a task file uses:
+
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+```
+
+**What it replaces.** The `grep -n -F "OD-NN:"` checks in the task files, which a delegated line, a withdrawn line and an owner's answer all satisfied alike. The `OD-NN:` answer lines stay as the record of what was answered; they no longer open a gate by themselves.
+
+CONDITION: any task or session deciding whether a register decision is settled enough to act on.
+ACTION: (1) Run the gate above for each decision the task names; act only on OPEN. (2) For a task that requires the owner's words, act only on `ANSWERED BY THE OWNER`. (3) When recording an owner's answer to a register decision, add the line `OD-NN STATUS: ANSWERED BY THE OWNER` in the same entry. (4) Never edit a status or check line; append a new one.
+DATE: 2026-11-12 — convention recorded in the delegated pass, not an owner statement.
+
+
+## Correction 2026-11-12 — to the delegated resolution of OD-14, the rows written under MOB: withdrawn and referred back to the owner
+
+A correction by the Opus-class model that wrote the delegated resolution "Delegated resolution 2026-11-12 — OD-14 carrying the rows written under MOB since the split was ratified" above, on the independent review of condition (d). **That resolution is withdrawn.** It is not the owner's words and never was; nothing may be built on it.
+
+**Why.** Its decisive argument was that the owner's 2026-08-25 ruling ("yes, AMB and WHEEL to fan out") lost its force because its reason was removed by the 2026-08-27 overruling of DR-2026-08-24 §2.4. That reason is the recording session's gloss, not the owner's words; the choice the owner was shown was "fan" or "drop" (`scratchpad/session_2026-08-25-pipeline-smoke-test-mobility/logs/F5-population-split-design.md` §8 item 2), not fan-out against judging; and concluding that an owner rule no longer binds because a later ruling removed its basis, where the later ruling does not name it, is the act the delegation reserved (OD-13 in the register; condition (e)). It also presupposed the answer to an open owner question, GAP-076 (whether a clause that names no one but sits under a disability heading carries `MOB` or `ALL`).
+
+**A narrower version exists, and is left for the owner to take or refuse.** The review found it sound in principle: (1) the 2026-08-25 ruling's operative words cover the 31 `item_population_links` rows of a table since dropped; (2) every figure now under `MOB` was written after the split and after the 2026-08-27 ruling placed the crossing at judgment (`python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select min(created_at),max(created_at),count(*) from source_value_extractions where identity_code='MOB'\").fetchall())"`); (3) the ruling's grade clause ("Not fanned out, ever") is kept in full; (4) rows whose `MOB` tag rests on a heading and whose text names no group wait on GAP-076 (`select status, description from gaps where gap_id='GAP-076'`); (5) `evidence_population_match` has no retirement column (`PRAGMA table_info(evidence_population_match)`), so retiring grade rows needs a tooling change first, and `base_taxonomy_identity.status` takes `deprecated`, not "retired". **The question for the owner, in one line:** "The 2026-08-25 fan-out ruling covered the 31 item links. For the post-split MOB figures and grades, may judgment tag each row by the users it names, fanning out (flagged) only rows that name neither group; and is a clause that names no one but sits under a disability heading MOB or ALL (GAP-076)?" The wording for part-time wheelchair users is also the owner's.
+
+OD-14 STATUS: WITHDRAWN, REFERRED BACK TO THE OWNER
+OD-14 CHECK: referred back
+
+CONDITION: any session executing the mobility split, tagging AMB or WHEEL, re-grading population matches against MOB, or reading the withdrawn OD-14 entry above.
+ACTION: (1) Treat the delegated OD-14 resolution as withdrawn; build nothing on it. (2) Start the mobility split (T-102) only when the status line for OD-14 reads ANSWERED BY THE OWNER. (3) Put the one-line question above, with GAP-076, to the owner.
+DATE: 2026-11-12 — correction in the delegated pass, not an owner statement.
+
+
+## Correction 2026-11-12 — to the delegated resolution of OD-01, jurisdiction in a determination
+
+A correction, on the independent review of condition (d), to "Delegated resolution 2026-11-12 — OD-01 jurisdiction in a determination, sub-national codes, climate and culture" above. Still a delegated resolution, not the owner's words. The review confirmed it with corrections; these are the corrections, and they are applied.
+
+1. **The parent is a provenance relation only.** The sentence of the resolutions file "Coverage and scope roll up through the parent", and the entry's reversal clause "a scope rule that the roll-up misroutes", are withdrawn. Whether a sub-national instrument counts toward its country's coverage, or owes coverage of its own, is the reserved scope decision (OD-04 in the register). A provincial code must not stand in for its country's coverage: REF-01013 was admitted because the national standard was blocked (`sessions/session_2026-09-28-research-batch-22-selection.md:72`).
+2. **Four held cases, not two.** GAP-077 (`select description from gaps where gap_id='GAP-077'`) names REF-00992 (Approved Document M vol. 2, "for use in England", filed `UK`), REF-00995 (Flemish Government decree, filed `BE`), REF-01013 (Ontario Building Code, filed `CA`) and REF-01029 (a Madrid methodology, filed `ES`).
+3. **Warrants.** Branching a determination by a climatic or cultural condition rests on OR-2 ("Branches, and an empty headline when all are conditioned"). The Kawa and PAS 6463 rules and `governance/armature_v4_resolutions.md` Q29 (an Opus 4.6 resolution, not an owner ruling) warrant only that culture and climate are conditions, not keys. A cultural condition that branches a figure keeps the Kawa rule's flag for Person Mode co-design ("Specify the physics; flag the spatial model for Person Mode co-design").
+4. **Spelling.** A sub-national code follows ISO 3166-2 except where the project convention overrides it: under `UK`, never `GB` (`governance/jurisdiction-philosophy.md` §3.3), so England's code is spelled with the `UK` prefix.
+
+OD-01 STATUS: RESOLVED UNDER DELEGATION
+OD-01 CHECK: confirmed with corrections applied
+
+CONDITION: any session designing the jurisdiction registry, filing a sub-national instrument, or recording a climatic or cultural condition.
+ACTION: (1) Give a sub-national instrument its own code with its country as parent, as provenance only; decide nothing about its coverage. (2) Re-file the four held cases in a research pull request after the registry exists. (3) Branch by a climatic or cultural condition under OR-2, and keep the Person Mode co-design flag on a cultural branch. (4) Spell sub-national codes under the UK convention.
+DATE: 2026-11-12 — correction in the delegated pass, not an owner statement.
+
+
+## Correction 2026-11-12 — to the delegated resolution of OD-02, the language of a page
+
+A correction, on the independent review of condition (d), to "Delegated resolution 2026-11-12 — OD-02 the language of a page, and how a translated quotation is shown" above. Still a delegated resolution, not the owner's words; confirmed with corrections, which are applied.
+
+1. **It is a reading of the owner's words under condition (c).** The owner's statement of 2026-11-12 asks that the pipeline "render across a multitude of languages and jurisdictions", and its entry records what that means as open and the owner's (`grep -n -F "render across languages" references/project-standards.md`). This resolution reads it, defensibly and not as a statement of what the owner meant, as met in this edition by showing each source's own language, tagged, beside our marked translation, with the page language a parameter of render, and not by pages written in several languages.
+2. **The anti-bias rulings are not narrowed.** The sentence "English pages are not the English bias ruled against on 2026-11-06, which concerns which concepts exist and which column is read first" is withdrawn. In its place: English pages are held to the 2026-11-06 rulings against English bias ("we are trying to avoid english BIAS") by showing the original first or beside every translation, by never presenting our English as a source's term, and by keeping English one column of the matrix; they are not exempt from those rulings.
+3. **The cost of a second page language was overstated.** Under the render resolution fixed sentences are a bounded set of templates, translatable once per language, and under OD-30 a translation is reviewed before a reader sees it. The reason for English only in this edition is criterion 1's priority over criterion 2 (an unratified assumption), not that a second language would be unreviewed prose.
+4. **The parameter is tested.** The renderer must emit a page in a second language by data alone (a template set and a page-language value), with no code edit, so that the parameter is not a hard-coded behaviour in effect (owner, 2026-11-12, seventh).
+5. **English is the target for display only.** The translations of T-112 are into English for display; this resolution does not fix the language in which synthesis compares evidence, which the ninth statement left open.
+
+OD-02 STATUS: RESOLVED UNDER DELEGATION
+OD-02 CHECK: confirmed with corrections applied
+
+CONDITION: any session rendering a page, translating held text, or reading what "render across a multitude of languages" requires.
+ACTION: (1) Render pages in English with every original shown, tagged, beside its marked translation. (2) Prove a second page language works by data alone. (3) Treat English as the display target only, not as the language synthesis compares in. (4) Treat this as a delegated reading of the owner's objective, reversible by the owner.
+DATE: 2026-11-12 — correction in the delegated pass, not an owner statement.
+
+
+## Correction 2026-11-12 — to the delegated resolution of OD-12, how render's prose is produced
+
+A correction, on the independent review of condition (d), to "Delegated resolution 2026-11-12 — OD-12 how render's prose is produced, and whether it is stored" above. Still a delegated resolution, not the owner's words; confirmed with corrections, which are applied.
+
+OD-12: templates at render; judged discussion as Opus synthesis rows quoted by pointer, shown only once reviewed; render table rebuilt outside the database
+
+1. **The label.** The one-line answer `templates, rebuilt` misdescribed the choice. It is OW-1b's "mixed" option (templates, with a model-written discussion where there is a dispute or a branch), with the model's text moved from render to synthesis **and without the owner's review that both model-writing options offered**. The owner was not asked to give up that review; the delegated resolution removes it on the ground that the owner has said he cannot carry manual load (2026-09-09, "I can't handle this load manually"), and the owner may restore it.
+2. **Review before display.** A judged-discussion row carries its review status; a reader is shown it only once an Opus-class instance other than its author has reviewed it (the OD-30 rule applied to discussion), or the page says the discussion is unreviewed.
+3. **"Nothing to go stale" is withdrawn.** The 2026-10-30 critic's finding stands (`workplan/2026-10-30-ramp-spec-pages/RENDER-CONTRACT-parameters-3-and-12.md` §8, position 5): the deployed copy a reader sees can be stale between builds. The per-row input hash is what detects it, and it is read by one check that compares the deployed rows' hashes with the hashes of their inputs now; the check is named in the render task, or the hash is not added.
+4. **Where the table lives.** The render table is a build product outside `data/guidebook.db`: writing it into the database at every build would need a migration each time (`CLAUDE.md` rule 3), append-only and immutable. This departs from the [ASSUMPTION] recorded with OW-1 ("the render table lives in the database and the site reads it"), an assumption and not the owner's words; the owner should know it. The 2026-08-27 rule that no committed file is a render still holds: the product is generated, not committed.
+5. **The owner's queue.** OW-1b and OW-1c in `governance/owner-browser.yaml` are marked "resolved under delegation (ledger, OD-12)", not "answered".
+6. **Both readings of OW-1b are answered.** Templates rewrite no source sentence, and a translated sentence is shown only as OD-02 and OD-30 allow.
+
+OD-12 STATUS: RESOLVED UNDER DELEGATION
+OD-12 CHECK: confirmed with corrections applied
+
+CONDITION: any session building the renderer or render table, writing discussion text for a page, or marking OW-1b and OW-1c.
+ACTION: (1) Assemble page text by templates; quote judged discussion from reviewed synthesis rows by pointer. (2) Generate the render table outside the database, with per-row input hashes read by a named staleness check. (3) Mark OW-1b and OW-1c resolved under delegation, not answered. (4) Treat the removal of the owner's review as a delegated choice the owner may reverse.
+DATE: 2026-11-12 — correction in the delegated pass, not an owner statement.
+
+
+## Status lines 2026-11-12 — the delegated resolutions that needed no independent check, and OD-10
+
+Recorded in the same delegated pass, under the convention above. The resolutions below were not among the four that condition (d) sends to an independent check, so their check is `not required`; each stands as delegated, reversible by the owner, and is not the owner's words. OD-10 was referred back in the first pass and has no resolution.
+
+OD-03 STATUS: RESOLVED UNDER DELEGATION
+OD-03 CHECK: not required
+OD-05 STATUS: RESOLVED UNDER DELEGATION
+OD-05 CHECK: not required
+OD-06 STATUS: RESOLVED UNDER DELEGATION
+OD-06 CHECK: not required
+OD-07 STATUS: RESOLVED UNDER DELEGATION
+OD-07 CHECK: not required
+OD-08 STATUS: RESOLVED UNDER DELEGATION
+OD-08 CHECK: not required
+OD-10 STATUS: REFERRED BACK TO THE OWNER
+OD-11 STATUS: RESOLVED UNDER DELEGATION
+OD-11 CHECK: not required
+OD-18 STATUS: RESOLVED UNDER DELEGATION
+OD-18 CHECK: not required
+OD-20 STATUS: RESOLVED UNDER DELEGATION
+OD-20 CHECK: not required
+OD-21 STATUS: RESOLVED UNDER DELEGATION
+OD-21 CHECK: not required
+OD-22 STATUS: RESOLVED UNDER DELEGATION
+OD-22 CHECK: not required
+OD-24 STATUS: RESOLVED UNDER DELEGATION
+OD-24 CHECK: not required
+OD-25 STATUS: RESOLVED UNDER DELEGATION
+OD-25 CHECK: not required
+OD-26 STATUS: RESOLVED UNDER DELEGATION
+OD-26 CHECK: not required
+OD-29 STATUS: RESOLVED UNDER DELEGATION
+OD-29 CHECK: not required
+OD-30 STATUS: RESOLVED UNDER DELEGATION
+OD-30 CHECK: not required
+
+**Two corrections that touch these, found while folding them into the plan.** (1) OD-11: the gap register is marked cross-stage in the stage map, but the stage that raised a gap is not given a column now; it is added when a reader needs it (`CLAUDE.md` §8, "Nothing is added without naming what reads it"), and the walkability instrument is run before and after the stage-map change. (2) OD-05: staging needs no new code; the clue store already holds a lead's jurisdiction, origin and claimed tier (`PRAGMA table_info(source_locators)`), and `search_candidates.disposition` already admits `OUT-OF-SCOPE`, so the resolution is carried by a convention in the mining skills.
+
+CONDITION: any task or session gating on one of the decisions listed.
+ACTION: (1) Read these lines through the gate of the convention above. (2) Treat OD-10 as the owner's.
+DATE: 2026-11-12 — status lines recorded in the delegated pass, not owner statements.

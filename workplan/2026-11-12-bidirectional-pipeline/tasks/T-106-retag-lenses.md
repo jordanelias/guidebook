@@ -68,7 +68,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Per D-2: fill a lens only where a quote names the users.
+1. Per D-2: fill a lens only where a quote names the users. Judgment assigns the lenses (OD-06, resolved under delegation; owner 2026-08-27, the deep read is judgment's). Do not tag `MOB`, `AMB` or `WHEEL` here: the mobility rows wait for the owner's answer to OD-14 (T-102).
 
 **What reads what this task adds or changes:** the engine
 

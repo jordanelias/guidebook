@@ -22,8 +22,8 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
 - **Tasks that must be merged to the integration base first:** T-018, T-025 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words, in one of the forms below. An answer relayed in chat, or inferred, is not an answer. If it is absent, stop, except where an entry below says which part may proceed without it.
-  - **OD-14** — Answer forms: "OD-14: fan out to both", "OD-14: judge each row", or "OD-14: fan out code provisions, judge studies"; and how part-time wheelchair users are named in a gap. Check: `grep -n -F "OD-14:" references/project-standards.md`.
+- **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words. **A delegated resolution does not open this task:** the delegated resolution of OD-14 was withdrawn on independent review and referred back to the owner (`grep -n -F "Correction 2026-11-12 — to the delegated resolution of OD-14" references/project-standards.md`). Start only when the last status line for OD-14 reads `ANSWERED BY THE OWNER` (`grep -F "OD-14 STATUS:" references/project-standards.md | tail -1`); any other value, or none, is a stop.
+  - **OD-14** — how the figures and grades written under `MOB` since the split are carried, and how part-time wheelchair users are named in a gap. The one-line question put to the owner, with GAP-076 (whether a clause that names no one but sits under a disability heading carries `MOB` or `ALL`), is in the correction entry above, with the narrower version the independent review found sound; do not execute that version without the owner's answer.
 - **Tests that must be red (or green) before you start:** AT-62 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -69,7 +69,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Add the two ratified codes; carry the rows as the owner's answer directs; a grade of a study's own participants is never fanned out.
+1. Add the two ratified codes; carry the rows as the owner's answer directs; a grade of a study's own participants is never fanned out (the 2026-08-25 ruling). Before the first row: retiring grade rows needs a retirement column `evidence_population_match` does not have (`PRAGMA table_info(evidence_population_match)`), which is a tooling pull request first (rule 10) — stop and file it if the owner's answer requires it; `MOB` in `base_taxonomy_identity` is marked `deprecated` (its status CHECK), never deleted.
 
 **What reads what this task adds or changes:** every lens-keyed table
 
@@ -134,6 +134,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- the last status line for OD-14 is anything but `ANSWERED BY THE OWNER`;
 
 ## 10. Rollback
 
