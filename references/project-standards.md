@@ -5238,3 +5238,18 @@ Four statements made in the session that audited the pipeline (`session_2026-11-
 CONDITION: any session asking what the pipeline's omnidirectional, multilingual, multijurisdictional or read-once objectives are, or what authority the implementation agent holds.
 ACTION: (1) Treat the three objective statements as live requirements on the pipeline. (2) Do not re-read a source to extract a parameter that the source's earlier full-scope reading already covered; where a parameter postdates the reading, a catalogue-growth route must exist and is owed. (3) Implement under the authority in item 4 and no wider. (4) Treat the doctrine questions above as the owner's.
 DATE: 2026-11-12 — owner statements, quoted above.
+
+
+## Owner statement 2026-11-12 (second) — parameters are approached from a higher, abstract vantage so that commonality survives and can be unified, then specified
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "recognize that we need to approach parameters from a higher level abstract vantage as too many clauses and subclauses means we may lose commonality and therefore can't unify then specify"
+
+**What this records.** The grain at which a parameter is defined is to be abstract enough that clauses and subclauses from different instruments and jurisdictions remain comparable; defined too finely, the commonality is lost and nothing can be unified, so nothing can be specified. The order named is unify, then specify.
+
+**What it does not decide.** How the abstraction is represented (a parent/child or family relation, an equivalence group, a coarser parameter list), who judges a grouping, and how clause-level traceability is kept under a coarser parameter are open. It touches the 2026-08-26 ruling that the judgment object is the canonical parameter and the 2026-10-09 statement that the parameter list is seeded from the existing terms; neither is superseded by this entry. Whether a granularity policy is doctrine (owner-gated) or a tooling convention is `OWNER DECISION REQUIRED` in the audit's improvement programme. [ASSUMPTION: "higher level abstract vantage" is read as a change of grain for parameters, not as permission to discard clause-level extractions.]
+
+CONDITION: any session defining, splitting, merging or grouping parameters, or asking why a determination cannot be unified across instruments.
+ACTION: (1) Treat commonality across clauses, instruments and jurisdictions as a property a parameter definition must preserve. (2) Keep clause-level extractions and reach them from an abstract parameter by pointer. (3) Do not decide the grouping mechanism or the granularity policy without the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
