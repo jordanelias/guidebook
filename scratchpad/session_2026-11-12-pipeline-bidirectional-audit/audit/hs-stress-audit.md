@@ -4,6 +4,8 @@ _Handshake leg, 2026-11-12 (UTC). Subject: `scratchpad/session_2026-11-12-pipeli
 
 ## 0. Verdict first
 
+_Final pass: round 3 (`results3/`) is audited in §7. Where §7 overturns a sentence of §0 to §6, §7 governs; the sentences overturned are listed at the head of §7._
+
 **The stress tests confirm the audit's main findings, overturn one of its withdrawals, and expose five defects it had not found. They are also much narrower than their step counts suggest, and three of their "passes" tested nothing.**
 
 1. **Coverage is wide in invocation and thin in effect.** Round 1 runs the same script nine times; its topics differ only in slug, language, lenses and probe strings, so most "same across nine topics" results are one result repeated. Across both rounds no extraction, no citation-mining row and no candidate was written; every one of the determinations reported per topic is `pending`; no determination passed through the write path; and no registry battery ran (each of the ten `--battery` calls ended in a usage error).
@@ -185,3 +187,72 @@ Seven scenarios the two rounds did not cover. Each names what it would settle.
 - Whether `emit_batch_sql.py` refuses the second parallel batch at capture (scenario 4).
 - Whether an open determination gate changes anything the engine stores (B-51 shows the hash does not move).
 - Round 2's sweep refusals were read at their messages; the split between script-induced and semantic refusal is by the placeholder appearing in the message and is a lower bound.
+
+---
+
+## 7. Round 3 (`results3/`), and what it overturns
+
+Round 3 (`stress_run3.py`) was written to repair the faults §4 named and to run the scenarios of §5. Parts: `probes`, `real`, `guards`, `batches`, `lifecycle`, `reentry`, `batteries`. Counts: `python3 -I -c "import json,glob,collections;c=collections.Counter(str(json.loads(l)['rc']) for f in glob.glob('results3/*/log.jsonl') for l in open(f));print(sum(c.values()),dict(c))"`.
+
+### 7.0 Sentences of §0 to §6 that no longer stand
+| Earlier sentence | Now |
+|---|---|
+| "no extraction … was written" (§0 item 1, §2, §4 W-2) | Three extractions were written on `REF-00139` under three lens tags, with a relation edge and a population match (`real.add-extraction.SCI`, `.MS`, `.ALL`, `real.relate-extraction`, `real.add-population-match`) [V]. No candidate and no citation-mining row has been written in any round. |
+| "every one of the determinations … is `pending`" (§0 item 1) | True of rounds 1 and 2. Round 3 holds six `provisional` determinations on one database (`real.assess.*`) [V]. |
+| "no determination passed through the write path" (§0 item 1, §2.2 item 3) | Round 3 attempted it and failed at rebuild. **The failure is the script's:** its clone was reused across three runs and held three migration files of the same batch (`ls <stress-run>/real/clone/scripts/migrations | grep 20261112`). Re-run by this leg in a clean clone with one migration emitted from the same `batch.sql`: rebuild exits 0 and the rebuilt database equals the scratch database row for row in every table but the migration ledger; six live determinations; `PRAGMA foreign_key_check` empty [V]. The write path carries determinations. |
+| "no registry battery ran" (§0 item 1, §2.2 item 2) | All ten ran as `--battery <name> --all` and returned PASS (`results3/batteries/log.jsonl`) [V]. |
+| "parallel batches … surface at rebuild"; AT-101 unproven (§2.2 item 1, §3) | The second batch is refused **at capture**: "the scratch was copied from a different base, or rows were deleted. Refusing to emit" (`batches.capture-B-against-A`) [V]. The message does not name the remedy. |
+| The claimed-number finding was "not yet through the writer" (§2.3 item 1) | Reproduced at the writer (7.2). |
+| F-10's collisions were shown only on mark-only pairs by this leg (§2.2 item 5) | Reproduced by the script's own probe (7.1). |
+
+### 7.1 Classification, round 3
+| id | part | behaviour | evidence | cause | class |
+|---|---|---|---|---|---|
+| B-62 | probes | Quotes differing only in a vowel sign (Devanagari), a tone mark (Thai), pointing (Hebrew), vowel marks (Arabic) or voicing (kana) normalise to one string; `0.6`, `0,6` and full-width `０．６` collide | `results3/probes/log.jsonl` `collisions_rl.normalise_quote` [V] | P | defect |
+| B-63 | probes | The name tokeniser returns nothing for every non-Latin probe string, Hangul included | same line, `empty_name_token_sets` [V] | P | defect |
+| B-64 | real | A full-read scan, an observation, an adjudication, three extractions, a relation edge and a second population grade were written by the sanctioned verbs | `real.record-scan` to `real.add-population-match` [V] | P | as-designed |
+| B-65 | real | A byte-identical extraction is refused; a divergent one is written with a note | `real.add-extraction.MOB`, `.SCI` [V] | P | refusal-correct |
+| B-66 | real | Six determinations of parameter 3 on one database (`MOB`, `SCI`, `MS`, `ALL`, an ICF code, an access need) report the same sources, the same extraction count and the same marker, with figures tagged `SCI`, `MS` and `ALL` present | `real.assess.*`; `real/assess-*.json` [V] | P | defect |
+| B-67 | real | With six live determinations: `test_db_integrity` exits 1 at C10; `validate_evidence_state` PASS over live and retired cells; `derivation_handshake_integrity` CLEAN over six | `real.gate.*` [V] | P | as-designed |
+| B-68 | real | Determination views return rows once determinations exist | `real.render-views` [V] | P | as-designed |
+| B-69 | real | Rebuild fails on a duplicated batch | `real.migrate-rebuild`; three files in the reused clone [V] | X | vacuous pass |
+| B-70 | guards | Claimed `1:1`, `1.2` and `112` are each accepted against a quote stating `1:2`, `1:5`, `1:12` | `guards.digit-substring`, `.decimal-shift`, `.drop-colon` [V] | P | defect |
+| B-71 | guards | Claimed `twelve` is accepted: a value with no digit is not checked at all | `guards.number-in-words` [V] | P | defect |
+| B-72 | guards | Claimed `1:120` refused; claimed full-width `１：１２` refused | `guards.extra-digit`, `.fullwidth-digits` [V] | P | refusal-correct |
+| B-73 | guards | A unit cell holding prose ("mm per metre of rise (stated 1:12)") is accepted | `guards.unit-in-prose` [V] | P | defect |
+| B-74 | guards | A quote with a Cyrillic look-alike letter is refused as not found | `guards.quote-homoglyph` [V] | P | refusal-correct |
+| B-75 | guards | The extra-space and truncated-quote probes were stopped by a missing locator argument | `guards.quote-extra-space`, `.quote-truncated` [V] | X | vacuous pass |
+| B-76 | batches | Batch B, captured from the old base after batch A is applied, is refused at capture | `batches.capture-B-against-A` [V] | P | refusal-correct |
+| B-77 | lifecycle | A new parameter adds one owed pair per source; a targeted full read of a held text discharges its pair as read-nothing-found; retiring the parameter removes its pairs | `lifecycle.ledger-*`, `lifecycle.targeted-scan` [V] | P | as-designed |
+| B-78 | lifecycle | `thermal comfort` promoted to a parameter again | `lifecycle.add-parameter` [V] | P | defect |
+| B-79 | lifecycle | `merge-parameter --from 11 --into 3` refused for the open gate on parameter 3; merge is untested | `lifecycle.merge-parameter` [V] | X | vacuous pass |
+| B-80 | reentry | Retire, then determine the same cell again: the new row is written and the retired row's `superseded_by_specification_id` stays NULL | `reentry.retire-specification`, `reentry.assess-2-same-cell`, `reentry.supersession-pointer` (row 9 against row 10) [V] | P | defect |
+| B-81 | reentry | A follow-up is raised and resolved; the one open gate is resolved; `raise-determination-gate` refused for a missing argument | `reentry.*` [V] | P/X | as-designed |
+| B-82 | batteries | Every battery PASS. Advisory failures: `scan_debt` (data); `verified_scan_integrity` (db_integrity); `test_scan_contract` (tests); `validate_schema_cross_check` (schema); `skill_vocabulary_audit`, `retired_vocabulary`, `research_tooling_separation` (governance); `research_dod`, `research_protocol_audit`, `metadata_integrity_audit` (research). Nothing-in-scope: `extraction_follow_up_audit`, `citation_mining_session`, `medical_lens_integrity`, `adversarial_pass_recorded`, `search_log_completeness` | `results3/batteries/log.jsonl`, the `RESULT:`, `NON-BLOCKING failures` and `NOTHING-IN-SCOPE` lines [V] | P | as-designed |
+
+Round-3 rows by class: `grep -c -E '^\| B-(6[2-9]|7[0-9]|8[0-2]) .*\| defect \|$' hs-stress-audit.md`, and likewise for the other classes.
+
+### 7.2 What round 3 settles
+1. **The number check fails at the writer** (B-70, B-71). IMP-44 stands and is widened: a claimed value with no digit must be refused or carried by a typed exemption, not passed unchecked.
+2. **The normaliser collisions are real** (B-62) and the tokeniser is empty for every non-Latin script tried (B-63). IMP-23 stands.
+3. **Lens-blindness holds on real multi-lens rows on one database** (B-66). IMP-08 stands as the first precondition of a determination.
+4. **The write path carries a determination** (7.0, this leg's clean re-run). The precondition list for a first live determination loses nothing and gains nothing.
+5. **Parallel batches are stopped at capture** (B-76). IMP-41 is reduced to a sentence in the pipeline skill and, optionally, a clearer message; AT-101 is green for the refusal. OD-27 stands only as the owner's choice.
+6. **Catalogue growth has a working discharge route where the text is held** (B-77): a targeted full read. OD-23's option (a) is therefore supported by the code today for held texts; what is missing is still the inventory that would make a re-read unnecessary.
+7. **Re-determination leaves no supersession pointer** (B-80). New: IMP-46, AT-103.
+8. **The writer accepts prose in the unit cell** (B-73). This is the prior workplan's T-1a refusal, unbuilt; no new entry.
+9. **The blocking batteries are green on a copy of `main`** (B-82). Every earlier "unrun" statement about batteries is withdrawn.
+
+### 7.3 Still untested after three rounds
+A candidate staged and resolved; a citation-mining row; `merge-parameter` and `decline-parameter` on a parameter with figures; `raise-determination-gate`; a non-English source read end to end; `add-source` with a URL and no standing; a quote differing from the held text only in a mark, through the writer with a locator given; a session-scoped gate with `scratchpad/CURRENT` set.
+
+### 7.4 Script faults in round 3 (proposed fixes, not made)
+The clone is reused across runs (delete it first, or emit into a fresh directory); two guard probes omit the locator; `raise-determination-gate` omits `--trigger-evidence-type`; the merge probe targets a parameter with an open gate.
+
+## 8. Final pass: what the stress logs were used for after round 3
+
+- **Timings** (REQ-101, efficient): read from the logs' `seconds` field; no efficiency task follows (HS-3 §9.1).
+- **Refusal messages** (REQ-103, operational dead ends): the distinct `REFUSING` messages across all three rounds, and how many carry a cue to a next action, are counted by the command in workplan task T-043. The cue test is a regular expression and therefore a heuristic [I]; the task lists the messages it flags so a person can judge each.
+- **Characterisation harness** (REQ-101, clean and centralized): the scripts are repaired and given a normalised log diff by workplan task T-014; tasks that claim to preserve behaviour cite that diff.
+- **Not added:** no new stress round was run in the final pass.
+

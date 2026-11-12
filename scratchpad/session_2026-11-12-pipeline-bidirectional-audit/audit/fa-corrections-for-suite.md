@@ -171,6 +171,34 @@ IMP-09 and REQ-074 (B-17, B-28); HS-A02 (B-18); IMP-18, REQ-063 and REQ-064 (B-0
 ### 6.5 What the stress tests did not test (do not cite them for it)
 No extraction, candidate or mining row was written in either round; every per-topic determination is `pending`; no determination went through the write path; no battery ran; the backward funnel query failed on the script's own SQL; the "nine topics" are one sequence nine times. Details and the script changes: HS-5 §4.
 
+### 6.6 Round 3 (final): what changed again
+| # | Earlier statement (this file or HS-5 §0–§6) | Final |
+|---|---|---|
+| S-13 | No extraction was written in any round; every determination pending | Three extractions and six `provisional` determinations were written on one database in round 3 |
+| S-14 | S-10: the round trip is untested with a determination and by content | Holds by content for a batch with six determinations (handshake leg's clean-clone re-run). Round 3's own failure was a reused clone |
+| S-15 | S-09: no single battery has run | All ten batteries ran and PASS; advisory failures and nothing-in-scope checks are listed in HS-5 B-82 |
+| S-16 | S-03, AT-101: the parallel-batch collision surfaces at rebuild; capture untested | The second batch is refused at capture. IMP-41 is a sentence in the skill; AT-101 is green for the refusal |
+| S-17 | S-01: number check shown on the live functions only | Reproduced at the writer: `1:1`, `1.2`, `112` and `twelve` accepted against a quote stating `1:12` |
+| S-18 | S-12: collisions shown on the handshake leg's pairs | Reproduced by the script's probe for Devanagari, Thai, Hebrew, Arabic, kana and decimal forms |
+| S-19 | (new) | Retire and re-determine leaves the retired row's supersession pointer NULL: IMP-46, AT-103 |
+| S-20 | (new) | A targeted full read of a held text discharges a new parameter's pair for that source; retiring a parameter removes its pairs |
+| S-21 | (new) | `add-extraction` accepts prose in the unit cell (the prior workplan's T-1a refusal, unbuilt) |
+
+The single list of what still stands, ranked, is `hs-improvement-programme.md` §8 (Final recommendations). The executable plan is `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`; the other seven suite documents are not to be written.
+
 ## 7. Confirmation-pass corrections
 
 The rows of `fa-confirmation.md` marked inaccurate are disposed in `hs-adversarial-findings.md` §6 (K-01 to K-22). Those that change a row of §1 here: C-04, C-07, C-08, C-10, C-17 (rewritten above), and §3 and §4 (rebuilt).
+
+## 8. Final pass: REQ-101 to REQ-103, and what replaces the suite
+
+The eight-document suite is dropped by the owner in favour of one remediation workplan: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` with one file per task under `tasks/`. `01-handshake-ledger.md` stays as the evidence base; where it differs from this file, this file governs.
+
+| Id | What changed | Where |
+|---|---|---|
+| S-22 | Three owner statements of 2026-11-12 enter the requirement set: REQ-101 (efficient, centralized, clean; PARTIAL), REQ-102 (flexible, no hard-coded behaviours; PARTIAL), REQ-103 (no dead ends; UNMET). The readings of "hard-coded" and "dead end" are the audit's and unratified. | HS-1 §1 (rows after REQ-100); HS-3 §9 |
+| S-23 | A finding carried by CLAUDE.md rule 8 is not reproduced: the `argparse` value lists are already read from the schema (`derived_not_curated_audit` CLEAN); the rule's grep pair cannot see two of the deriving helpers. Task T-042 corrects the sentence. | HS-3 §9.2 |
+| S-24 | Splitting `scripts/db.py` is declined; no efficiency task is proposed (measured cost is small). | HS-3 §9.1, §9.2 |
+| S-25 | New tests: AT-104 (the base changes by data alone), AT-105 (a root can be registered), AT-106 (every refusal names a next action). New tasks: T-041, T-042, T-043, T-047, T-048. | HS-3 §9; the workplan |
+| S-26 | OD-29 added: whether retire-in-place covers link rows (`delete-connection`, `unlink-admission`; HS-1 REQ-018). | the workplan's register; HS-3 §9.7 |
+

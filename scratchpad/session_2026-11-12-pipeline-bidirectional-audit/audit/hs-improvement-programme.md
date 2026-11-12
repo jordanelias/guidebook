@@ -558,7 +558,8 @@ The stress run shows the question is live at the writer: what may be promoted to
 | AT-78 | IMP-43 | `add-source` with no `--verification-status`, or no `--source-type`, is refused; `select count(*) from evidence_sources where verification_status is null` stays 0. | accepted; two rows written with NULL (`cold.evidence.add-source-minimal`, `lateral.add-source-jurisdiction-UK`) |
 | AT-79 | IMP-44 | With a scan recorded, a claimed `12` against a quote stating "1.2 m", `0.6` against "6.0 s" and `5` against "1:15" are each refused; `1.2` against "1,2 m" is accepted. | the check accepts all four of the first kind (tested on the live functions; not yet through the writer, which needs a scan first) |
 | AT-100 | IMP-45 | `delete-connection` on an id that is not a row exits non-zero. | exits 0 and prints `{"deleted": "CON-1"}` (`chain.031`) |
-| AT-101 | IMP-41 | After batch A is applied to a clone's canonical copy, `emit_batch_sql.py` for batch B (captured from the old base) refuses and names regeneration. | UNPROVEN: not run; today the collision surfaces at rebuild (`crosstopic.005`) |
+| AT-101 | IMP-41 | After batch A is applied to a clone's canonical copy, `emit_batch_sql.py` for batch B (captured from the old base) refuses and names regeneration. | green for the refusal (round 3, `batches.capture-B-against-A`); red only for the wording: the message names the cause, not the remedy |
+| AT-103 | IMP-46 | On a scratch copy: determine a cell, retire it, determine it again; the retired row's `superseded_by_specification_id` is the new row's id. | NULL (round 3, `reentry.supersession-pointer`) |
 | AT-102 | IMP-02 | Every command CLAUDE.md §1 prints runs as written on a scratch copy. | `run_checks.py --battery <name>` alone exits 2 (`tools.055` to `.064`) |
 
 ### Preconditions, restated
@@ -581,3 +582,142 @@ The rows of that file marked inaccurate that touch this programme, each re-run o
 | D-02 · "four governing sources" for every provisional cell | **amended**: parameter 3 four, parameter 12 one |
 | D-21 · "the owner's 'yes'" | **amended**: "Taken from the prompt's 'yes'" |
 | D-12 · IMP-07's dependency on a mapped view | **upheld as unverifiable**: marked [U] in the entry |
+
+---
+
+## 8. Final recommendations (the single list the workplan is built from)
+
+_Final pass, after round 3 of the stress tests (`hs-stress-audit.md` §7). No further review round follows. Task ids (T-nnn) are files under `workplan/2026-11-12-bidirectional-pipeline/tasks/`. "Now" means: no owner word, no unmet dependency, nothing red on untouched `main`._
+
+### 8.1 Changes made by round 3
+- **IMP-46 (new).** Re-determination leaves the retired row's supersession pointer NULL (HS-5 B-80). The engine sets it when it writes a determination for a cell whose latest retired row has none. TD: REQ-018, REQ-014. Reads it: the provenance views, render's history. Wrong thing: a reader cannot follow a superseded value to the one that replaced it. Files: `scripts/assess/assess_cell.py` (the write in `main`), reusing the UPDATE `retire_specification` already holds. AT-103. Gate: none.
+- **IMP-41 reduced.** The second parallel batch is refused at capture (HS-5 B-76). What remains is a sentence in the pipeline skill that research batches are serial and a later one is regenerated, and, optionally, the refusal naming that remedy. OD-27 stands as the owner's choice only.
+- **IMP-44 widened.** A claimed value with no digit passes unchecked (HS-5 B-71); the check must refuse it or require a typed exemption.
+- **IMP-42 split.** IMP-42a: `add-parameter` refuses a term whose `terms.domain` marks it as not a design quantity (the functional-axis, population, methodology, legal, medical and economics domains, read from the live rows), which needs no new vocabulary and is doable now. IMP-42b: the quantity-kind column (with IMP-30a), which needs OD-24.
+- **Precondition list for a first live determination:** unchanged. The write path is now shown to carry determinations (HS-5 §7.0).
+- **Withdrawn for want of support:** nothing further. IMP-11, IMP-16, OD-16 and AT-56 stay withdrawn.
+
+### 8.2 Everything still standing, ranked by harm to the guidebook
+
+| Rank | Id | What | Task | Wave | Owner gate | Test | Evidence |
+|---|---|---|---|---|---|---|---|
+| 1 | IMP-08, IMP-09, IMP-10 | The engine gathers by the lens tags on the figure; no row for a lens no figure carries; wrong-lens fixture | T-019 | 1 (chain) | OD-08 for one sub-case | AT-50, AT-51, AT-52, AT-55 | HS-5 B-66, B-17 |
+| 2 | IMP-44 | The claimed number is checked as a number | T-008 | now | none | AT-79 | HS-5 B-70, B-71 |
+| 3 | IMP-20 | Execute the mobility split | T-102 | research | OD-14 | AT-62 | HS-2 F-02 |
+| 4 | R-6 | Verify the governing sources a cell rests on | T-104 | research | none | C10 of `test_db_integrity` | HS-5 B-67 |
+| 5 | IMP-23 | Quote and name guards that work in every script in scope | T-009 | now | none | AT-59, AT-60 | HS-5 B-62, B-63 |
+| 6 | IMP-42a | `add-parameter` refuses non-quantity domains | T-010 | now | none | AT-77 (first half) | HS-5 B-05, B-78 |
+| 7 | IMP-42b, IMP-30a | A parameter states its quantity kind | T-020, T-109 | 1 | OD-24 | AT-77 | HS-5 B-05 |
+| 8 | IMP-43 | A source is written with its standing and type | T-007 | now | none | AT-78 | HS-5 B-12 |
+| 9 | IMP-40 | The link table for several codes of one model | T-018 | 1 (chain) | none (ruled) | AT-32 | HS-1 REQ-076 |
+| 10 | T-1a, T-2 (prior workplan) | Reading and conditions, the links before the lens fix; the writer refuses prose units | T-016, T-017 | 1 (chain) | none | the workplan's done-when | HS-5 B-73 |
+| 11 | IMP-46 | Supersession pointer on re-determination | T-011 | now | none | AT-103 | HS-5 B-80 |
+| 12 | IMP-18, IMP-19 | The scope recorded; writers for the base tables | T-025, T-101 | 3 | OD-04 | AT-27, AT-57 | HS-5 B-01, B-34 |
+| 13 | IMP-17 | Jurisdictions in a table the writers read | T-024 | 3 | OD-01 for sub-national rows, OD-04 for membership | AT-28, AT-58, AT-61 | HS-5 B-33 |
+| 14 | IMP-27, IMP-26, IMP-28 | A full read with its open pass; the clause as a unit; catalogue growth | T-031, T-105 | 4 | OD-23 | AT-64, AT-65, AT-66 | HS-5 B-06, B-77 |
+| 15 | IMP-12 | A gap that says what it is a gap in | T-013 | now | none | AT-73, AT-10 | HS-5 B-16 |
+| 16 | IMP-13 | Follow-up reasons for the ruled backward edges | T-012 | now (two values) | OD-10, OD-21 for two more | AT-08, AT-11 | HS-5 B-48 |
+| 17 | IMP-22 | Forms that say how they are attested; searches that say what they used | T-026, T-107 | 3 | none | AT-23, AT-24, AT-26 | HS-5 B-49 |
+| 18 | IMP-21 | A concept that is not an English string | T-028 | 3 | OD-03 | AT-25 | HS-1 REQ-055 |
+| 19 | IMP-29, IMP-30b, IMP-31 | Pointers between terms; units as data; conditions out of the unit cell | T-029, T-030, T-108 | 4 | OD-22, OD-24 | AT-67, AT-68, AT-69, AT-30 | HS-5 B-73 |
+| 20 | IMP-32, IMP-33, IMP-34 | Relations synthesis can record, find and be read for | T-032, T-033 | 4 | OD-07, OD-19, OD-25 | AT-70, AT-71 | HS-1 §5.4 |
+| 21 | IMP-14 | A question about a cell | T-021 | 2 | OD-21 | AT-72 | HS-5 B-23 |
+| 22 | IMP-37, IMP-38, IMP-07, IMP-39 | Jurisdiction comparison; render; the stage-pair gate; the owner's edits | T-036 to T-039 | 5 | OD-01, OD-02, OD-08, OD-12, OD-20, OD-26 | AT-31, AT-35 to AT-39, AT-53 | HS-5 B-20, B-29 |
+| 23 | IMP-24 (T-6a), IMP-25 | Language codes folded at writers and views; the source's own identity and edition | T-015, T-027 | now / 3 | none | AT-74, AT-03 | HS-2 F-19 |
+| 24 | IMP-35, IMP-36 | A read-only answer for a cell; skills that describe the database that exists | T-034, T-035 | 4 | none | AT-07, `skill_vocabulary_audit` | HS-2 F-18 |
+| 25 | IMP-45 | A delete that deletes nothing says so | T-006 | now | none | AT-100 | HS-5 B-42 |
+| 26 | IMP-04 | Specification checks report live and retired rows | T-004 | now | none | AT-54 | HS-2 F-11 |
+| 27 | IMP-02, IMP-41, IMP-03a, IMP-06 | Marks and Layer 0 text; serial batches; contract entry text; the owner queue | T-001, T-002, T-003 | now | none | AT-43, AT-75, AT-102 | HS-5 B-53, B-76 |
+| 28 | IMP-03b, IMP-01 | Re-entry conditions in the contract; O1–O8 in the ledger | T-022, T-023 | 2 | OD-18, OD-28 | AT-44 | TD C-17 |
+| 29 | IMP-05 | Deletion candidates behind a caller sweep | T-040 | 5 | none | `--selftest`, `schema_reference_audit` | FA-03 |
+| 30 | Research: R-1, R-2, R-3, R-4, R-5 | Medical lens; reading; lens re-tagging; form attestation; first determinations | T-103, T-105, T-106, T-107, T-110 | research | OD-15 for R-1 | AT-63, AT-64 | — |
+| — | Retention | Stress probes as permanent regression tests; fixtures | T-014, T-005 | now | none | the tests themselves | `stress/RETAINED.md` |
+
+Count the rows: `grep -c -E '^\| [0-9]+ \| ' <this file>` over this section. Owner decisions standing: `grep -c '^### OD-' REMEDIATION-WORKPLAN.md` in the workplan folder, which carries the register in full (OD-16 withdrawn; OD-28 added: the owner confirms the wording of the relayed statements O1–O8 before they are entered in the ledger).
+
+---
+
+## 9. Code quality, flexibility and dead ends (REQ-101, REQ-102, REQ-103)
+
+_Warrants. REQ-101, OWNER: "ensure the overall code is efficient and centralized and clean" (`grep -n -F 'efficient and centralized and clean' references/project-standards.md`). REQ-102, OWNER: "pipeline must be flexible", glossed by the owner as "pipeline must not have hard coded behaviours" (`grep -n -F 'must not have hard coded behaviours' references/project-standards.md`). REQ-103, OWNER: "or dead ends or whatever" (same entry). The ledger leaves open what counts as hard-coded and as a dead end. Readings used here, both ASSUMPTION and unratified: a behaviour is hard-coded when changing it means editing code in more than one place, or editing code at all for something that is data (a vocabulary, a scope, a list); a dead end is a row, state, path, stage or refusal with no sanctioned way onward, back or out. A refusal the project holds on purpose is neither (the two refusals CLAUDE.md §4 keeps absent stay absent; every writer refusal stays)._
+
+**Verdict.** The code is fast enough for on-demand work and is already built on the right patterns in several places; it is not centralised where it was written twice, it carries vocabularies in code that are data, and it has dead ends at render, at the root registry, at the medical lens, and in about half of its refusal messages. One refactor is declined: splitting `scripts/db.py`.
+
+### 9.1 Efficient (measured; nothing proposed)
+| Cost | Measure | Reading |
+|---|---|---|
+| A verb | seconds per step in `stress/results2/sweep/log.jsonl` (`python3 -I -c "import json;s=sorted(json.loads(l)['seconds'] for l in open('stress/results2/sweep/log.jsonl'));print(s[0],s[len(s)//2],s[-1])"`, run in the audit session folder) | well under a second; does not matter |
+| A determination | the `.assess.` steps of `stress/results3/real/log.jsonl` | well under a second per cell |
+| Capture, migration, rebuild | `real.emit-batch-sql`, `real.emit-data-migration`, `real.migrate-rebuild` | about two seconds for the rebuild |
+| The diff-scoped gate | `registry.changed-from-main` in `stress/results2/tools/log.jsonl` | about two minutes, once per pull request |
+| Batteries | `stress/results3/batteries/log.jsonl` | `tests` dominates; `governance` next, almost all of it `retired_vocabulary_audit` |
+
+For the owner's goal (dynamic runs on demand) the pipeline's own time is not a constraint; the constraints are reading, judgment and the merge. **No efficiency task is proposed.** Not measured: behaviour at a hundred times the present row counts. `v_scan_ledger` is a cross join of sources and parameters with correlated subqueries and `v_coverage_priority` a cross join of slugs and pairs; both grow with the product, and neither is slow today [I from the view bodies].
+
+### 9.2 Centralized (one home)
+| Finding | Evidence | One home | Task |
+|---|---|---|---|
+| The same helper defined in two or more files: `next_gap_id` (`scripts/db.py`, `scripts/assess/assess_cell.py`), `_is_tracked` (`db.py`, `retrieval_log.py`), `db_path`, `columns`, `_jlist`, `glob_to_re`, `_tables` | syntax-tree walk over `scripts/`, `schemas/`, `.claude/hooks/`, `workplan/` for top-level function names defined in more than one file (command in T-041) | `scripts/dbcore.py` for database helpers; the importing file for the rest | T-041 |
+| `argparse` `choices=` lists: **already derived; the measure in CLAUDE.md rule 8 under-counts** | `python3 scripts/audit/derived_not_curated_audit.py` prints `VERDICT: CLEAN` on a copy of `main`. The lines the rule-8 grep pair leaves over (`grep -n 'choices=' scripts/db.py \| grep -v 'choices=dbcore\.\(schema_choices\|check_values\)'`) are two comments, flags limited to 0 and 1, lists read by `dbcore.schema_range` or `_ladder_evidence_types()`, and three named constants [V, read 2026-11-12] | nothing to move; correct the sentence in CLAUDE.md rule 8 that lists these as an outstanding violation, so that it names the audit and not a grep that cannot see two of the deriving helpers | T-042 |
+| Hand-written "N today" counts in the registry | `grep -c -E '[0-9]+ today' governance/check-registry.yaml` | the command that computes each | T-042 |
+| Jurisdiction vocabulary in a Python enum beside `lang_jur_map` | HS-1 REQ-065 | a base table | T-024 |
+| Notation families as a list in the engine | `grep -n NOTATION_FAMILIES scripts/assess/assess_cell.py` | rows (units) | T-030 |
+| `dbcore.normalise_quote_text` is **not** a copy of `retrieval_log.normalise_quote` | read: it collapses whitespace for ledger quotes | none needed; the stress probe's label was wrong | — |
+| Database opens | `grep -rn 'sqlite3.connect(' --include=*.py scripts schemas` outside tests and migrations, by file | `dbcore.connect` for writers; read-only opens are checked by `readonly_db_open_audit` (38 of 38 in the stress run) | none: already gated |
+
+**Splitting `scripts/db.py`: declined.** It is one file of many top-level functions (`python3 -c "import ast;print(sum(isinstance(n,ast.FunctionDef) for n in ast.parse(open('scripts/db.py').read()).body))"`) and every verb. The measures above find almost no dead code in it (one function named exactly once anywhere, `update_gap_priority`, a candidate and not proof) and one duplicated helper. Its refusals are its value, tests and skills import it by symbol, and line references to it sit across the ledger. A split changes every import and every such reference for no change in behaviour and no measured cost saved. Revisit only if a measured problem appears.
+
+### 9.3 Clean
+| Finding | Evidence | Task |
+|---|---|---|
+| Skills that name structures and codes that do not exist | `python3 scripts/audit/skill_vocabulary_audit.py` (FAIL) | T-035 |
+| A verb that exits 0 having done nothing | HS-5 B-42 | T-006 |
+| A documented command that does not run | HS-5 B-53 | T-001 |
+| Checks whose prose contradicts the database | HS-2 F-19 | T-004 |
+| A dead-code candidate in `db.py` | the syntax-tree measure above | T-041 (sweep, then delete or keep with its caller named) |
+| Advisory failures standing on `main` | HS-5 B-82 | each is debt its own check names; `test_scan_contract`, `validate_schema_cross_check` and `research_dod` have unread causes (T-040 lists them first) |
+| Audit scripts no registry entry runs | `batch_capture_report.py`, `joined_cells_census.py`, `rename_insurance.py` | none: they are tools run by hand, and CLAUDE.md names the second |
+| Session-id forms | the writer stores the bare stem when given `.md` (HS-5 B-10) | none: handled at the writer |
+
+### 9.4 Hard-coded behaviour (REQ-102), and where the working pattern already exists
+Already flexible, to extend and not replace: checks are registry-driven (`governance/check-registry.yaml`, `run_checks.py`); vocabularies are read from the column's CHECK (`dbcore.check_values`); the capture set is derived (`dbcore.writable_tables`); stage ids have one home (`governance/pipeline-contract.yaml`; no stage sequence was found typed into code by `grep -rn -E "['\"]research['\"], *['\"]evidence['\"]" --include=*.py scripts schemas workplan .claude`, a search and therefore [I]); floorless checks declare a kind.
+
+| Hard-coded today | Evidence | Change by data or in one place | Task | Test |
+|---|---|---|---|---|
+| Jurisdictions (a code edit to add one) | HS-5 B-33 | a row, with its approval pointer | T-024 | AT-104 |
+| Research scope (in no table) | HS-5 B-01 | `lang_jur_map.scope_status` | T-025, T-101 | AT-57 |
+| Lens selection (ignored) | HS-5 B-66 | the lens tags on the figure | T-019 | AT-50 |
+| Units and notation families | HS-5 B-73 | rows | T-030 | AT-68 |
+| What may be a parameter | HS-5 B-05 | first a named constant (T-010), then the quantity kind (T-020) | T-010, T-020 | AT-77 |
+| Vocabulary lists in `argparse` | 9.2: none found; already read from the CHECK | stays | — | `derived_not_curated_audit` (CLEAN) |
+| Parameters flat, no family | HS-1 §5.3 | term pointers | T-029 | AT-67 |
+| One batch at a time | HS-5 B-76 | stays: the refusal is deliberate (ids are fixed at capture); OD-27 if the owner wants otherwise | — | AT-101 |
+| The engine's rule label | `grep -n 'RULE_VERSION =' scripts/assess/assess_cell.py` | stays: one home, bumped per the prior workplan's WR-2 | — | — |
+
+**AT-104 (new, durable).** On a scratch copy, by sanctioned verbs and data alone: add a language–jurisdiction pair, a jurisdiction, a vocabulary term from an observation, a parameter with its kind, and a term pointer; log a search for the new pair; `git status --porcelain scripts schemas` is empty. Red today (a jurisdiction needs an enum edit; a pair has no verb). Built by T-047.
+
+### 9.5 Dead ends (REQ-103)
+| Kind | Dead end | Evidence | Way out | Task | Test |
+|---|---|---|---|---|---|
+| structural | every stage pair ending at render | `python3 workplan/pipeline-state-graph/walkability.py | grep -c 'NO PATH'` | a render view mapped to the stage | T-037, T-038 | AT-53 |
+| structural | `external_root_registry` has no writer, so `root_id` cannot be written | HS-1 REQ-080; the empty-parent derivation of CLAUDE.md §4 | a writer for the registry | T-048 | AT-105 |
+| structural | the medical lens: empty registry and crossings | `select count(*) from base_taxonomy_medical` | fill by correspondence | T-103 | AT-63 |
+| structural | base tables with no writer | HS-1 §4 | verbs with their readers | T-025 | AT-104 |
+| state | a retired determination with no successor pointer | HS-5 B-80 | the engine writes it | T-011 | AT-103 |
+| state | a new parameter's owed readings, where no text is held | HS-5 B-77 and HS-1 §5.2 | OD-23 | T-031 | AT-65 |
+| state | a `pending` row for a lens nothing will ever fill | HS-5 B-17 | no row | T-019 | AT-52 |
+| operational | refusals that name no next action | of the distinct refusal messages in the stress logs, about half carry a cue to a next action (measure in T-043; a heuristic, [I]) | each names the verb or argument to use | T-043 | AT-106 |
+| operational | `delete-connection` on a missing id; `--battery` alone | HS-5 B-42, B-53 | T-006, T-001 | AT-100, AT-102 |
+| reader | no carrier for a question about a cell; no rendered claim to trace | HS-5 B-23, B-29 | T-021, T-037 | AT-72, AT-35 |
+| process | skills pointing at deleted structures; an owner prompt answered but unmarked | 9.3; HS-2 F-19 | T-035, T-003 | `skill_vocabulary_audit`; AT-75 |
+
+**AT-105.** A root can be registered and an extraction can then carry `root_id`. Red: the registry has no writer and `add-extraction` refuses any `root_id`. **AT-106.** Over the refusal messages the retained stress harness produces, every message names a next action; red today.
+
+### 9.6 Order
+Reductions first (T-041; T-042 replaces typed counts in the registry and corrects one Layer 0 sentence), then the writer fixes, then tables that replace code lists (T-024, T-030), then the add-by-data test (T-047). Refactors of `db.py` beyond these are declined. Every behaviour-preserving change is proven with the retained stress scripts as a characterisation harness (T-014): run before and after, diff the logs after removing the fields that vary (`at`, `seconds`, absolute scratch paths, the hash line), and report `git diff --shortstat origin/main -- scripts schemas .github skills ':!scripts/migrations'`.
+
+### 9.7 Added while writing the workplan
+- **OD-29 (new).** HS-1 REQ-018 is PARTIAL: the owner ruled "retire in place, never hard-delete" for data rows and identifiers (`grep -n -F 'RETIRE IN PLACE, NEVER HARD-DELETE' references/project-standards.md`), and two verbs still delete, `delete-connection` and `unlink-admission`. No entry of this programme carried it. Whether the ruling covers a link row with no identifier of its own is a reading of the owner's ruling, so it is asked (OD-29 in the workplan's register), and the connection half is folded into T-032, which reshapes that table. `connections` holds no row today (`select count(*) from connections`), so nothing is lost meanwhile.
+- **T-042 narrowed** (9.2): the command-line value lists were found already derived; the task replaces typed counts in the registry and corrects the measure in CLAUDE.md rule 8.
+- **Where the tasks are.** `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` (index, register, Definition of Done) and `tasks/` beside it. Every task's evidence command was run on 2026-11-12 against the canonical database (read-only) or a copy, and the output stated in the task file is what it printed.
+

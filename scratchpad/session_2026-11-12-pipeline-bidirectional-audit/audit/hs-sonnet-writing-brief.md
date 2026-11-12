@@ -2,6 +2,8 @@
 
 _Handshake leg, 2026-11-12 (UTC), HEAD `186defb`. This brief is executable as written. Canadian English throughout the suite (colour, organise, licence as noun, centre, catalogue)._
 
+> **Superseded, 2026-11-12 (final pass).** The owner dropped the eight-document suite this brief describes. What replaces it is `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` with one self-contained file per task under `tasks/`. This brief is kept as a record and is not to be executed.
+
 ## 0. Verdict first
 
 _Amended 2026-11-12 after an independent antagonist pass. Read `fa-corrections-for-suite.md` (same folder as this brief) before any `hs-*` file: where it and an earlier draft of the suite disagree, it governs. What changed in this brief is in §4._

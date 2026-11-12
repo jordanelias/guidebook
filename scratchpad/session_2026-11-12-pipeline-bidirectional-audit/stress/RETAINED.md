@@ -74,3 +74,13 @@ Whether any of them is worth admitting is a research judgment for the session th
 - The parameter ids and `ref_id`s the scripts allocated (13, 14, `REF-01037` to `REF-01039`, `TERM-095`, `GAP-103`, `GAP-104`, `CON-0001`): the next real batch will allocate the same values.
 - Any conclusion that a verb "works" from round 2's sweep: most verbs ran with `--dry-run` on placeholder arguments.
 - Any conclusion about lenses from the per-topic determinations: all are `pending`.
+
+## 5. Round 3 (final)
+
+**Keep, in addition:** `results3/real/log.jsonl` and `real/assess-*.json` (the only record of extractions and of six determinations on one database), `results3/guards/log.jsonl` (the number check at the writer), `results3/probes/log.jsonl` (the mark-only and decimal-only pairs, which replace round 1's pairs as the regression fixture for the normaliser), `results3/batches/log.jsonl` (refusal at capture), `results3/lifecycle/log.jsonl` (the ledger after define, targeted read and retire), `results3/reentry/log.jsonl` (the missing supersession pointer), `results3/batteries/log.jsonl` (the state of every battery on a copy of `main`).
+
+**Discard:** `real.migrate-rebuild` and `real.migration-reproducibility-deep` as evidence about the pipeline (the clone held three copies of one batch); the three extractions, the observation, the adjudication, the relation, the population grade and the six determinations as data. They were written from a real held source by a mechanical script with no reading behind them and belong to no research session; they stay in the scratch copy.
+
+**One research lead worth carrying:** `REF-00139` is the one held source with a full-read scan route proven end to end (the text layer is on file and its hash is accepted). It is the natural first source for the reading task (workplan T-105), which must do the reading afresh under the research rules.
+
+**What the workplan builds from these records** (`workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` §9): task T-014 repairs the scripts and adds a normalised log diff, so that they serve as a characterisation harness; each probe becomes a permanent test inside the task whose defect it proves (T-005, T-006, T-007, T-008, T-009, T-010, T-011, T-019, T-020), red before the fix.

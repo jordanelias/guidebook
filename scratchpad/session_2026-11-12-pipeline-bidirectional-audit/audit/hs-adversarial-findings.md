@@ -250,7 +250,7 @@ PY
 
 ## 4. What this leg could not read or run
 
-_Added by the resolution pass:_ `test_db_integrity`, `validate_verification_consistency`, `adjudication_integrity`, the three test files named in F-18 and `emit_batch_sql.py` were run on scratch copies. The stress run then exercised `emit_data_migration.py`, `migrate_db.py --rebuild`, `run_checks.py --selftest` and `run_checks.py --changed-from origin/main --explain` on scratch copies (HS-5 B-38, B-40, B-54). Still not run by anyone: `run_checks.py --all`, a single battery, `research_dod_session` on its own. Not established: which retained artefacts are a source's full text; whether the workplan's task order (T-1a → T-2 → T-3) is forced or only planned.
+_Added by the resolution pass:_ `test_db_integrity`, `validate_verification_consistency`, `adjudication_integrity`, the three test files named in F-18 and `emit_batch_sql.py` were run on scratch copies. The stress run then exercised `emit_data_migration.py`, `migrate_db.py --rebuild`, `run_checks.py --selftest` and `run_checks.py --changed-from origin/main --explain` on scratch copies (HS-5 B-38, B-40, B-54). Round 3 ran every battery (`--battery <name> --all`): all PASS (HS-5 B-82). Still not run by anyone: `run_checks.py --all` in one call; `research_dod_session` with a session set. Not established: which retained artefacts are a source's full text; whether the workplan's task order (T-1a → T-2 → T-3) is forced or only planned.
 
 
 - `sessions/` was not read; searches there were by `grep -r` on chosen terms only. No ruling is reported absent on that basis.
