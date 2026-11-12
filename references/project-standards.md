@@ -5268,3 +5268,18 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session designing or running synthesis, connection discovery or convergence.
 ACTION: (1) Treat finding equivalencies, adjacencies, similarities and commonalities as synthesis's duty, to be done on demand and not only in a planned batch. (2) Record each relation as a pointer between existing rows and copy no fact (rule 5). (3) Leave the mechanism to the audit's improvement programme and the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (fourth) — information from the stress tests may be retained across topics, at Fable's judgment of worth
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "permission to retain information from the stress tests across topics if fable deems them worthwhile"
+
+**What this records.** What a stress test learns about one topic — a behaviour, a defect, a retrieved source, a defined term or parameter, a language or jurisdiction handled — may be kept for use in the other topics, where the Fable implementation agent judges it worth keeping. The judgment of worth is Fable's.
+
+**What it does not decide.** It does not relax the rules on how a database row gets in, and it does not make a fixture real. [ASSUMPTION: "retain" covers records (logs, findings, scripts, plans) and, for the database, only rows that are real research, entered by migration. Rows the script labels `STRESS-FIXTURE` exercised a code path and are not research; they are not retained as data. Rows that are retained ship in a research pull request apart from tooling (`CLAUDE.md` rule 10), re-retrieved and verified like any other admission (R10), by the write path of §4.]
+
+CONDITION: any session deciding what from a stress test to keep, or whether a stress-test result may carry between topics.
+ACTION: (1) Keep stress-test records the Fable agent judges worth keeping, and use them across topics. (2) Do not retain `STRESS-FIXTURE` rows as data. (3) Enter any retained research row by migration, in a research pull request apart from tooling, after re-retrieval and verification. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
