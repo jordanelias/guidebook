@@ -69,6 +69,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. Per `/run-pipeline`.
+2. **Before the first determination, the mobility codes are the owner's confirmed ones** (confirmed 2026-11-12, fifth set, which discharged T-102's report: `grep -n -F "OD-14: codes confirmed as proposed in T-102-design.md" references/project-standards.md` prints a line, and T-102 has merged). Key a mobility determination on a child (`WHEEL`, `LLD`, `WALKAID`, `T-102-design.md` section 2; revised by the owner on 2026-11-12, sixth to ninth sets: `LLD` replaces `PROSTH`, `SCI` is retired to `WHEEL`, `UPL` is outside the family; a figure linked to two children is counted once at `MOB`) where its figures are for that child; a determination at `MOB` gathers its children by the parent pointer (T-055) and must pass the design-equivalence test of 2026-07-23 for that parameter, or it is not written (the children's demands are opposed on ramp gradient, 2026-08-25). Never key a determination on a wheelchair drive or an impairment level: they are conditions on figures.
 
 **What reads what this task adds or changes:** render
 

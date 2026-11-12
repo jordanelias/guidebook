@@ -55,7 +55,7 @@ _Written 2026-11-12 (UTC) by the Opus-class model that wrote the delegated resol
 
 ## 2. New owner questions that arose (register entries, proposed)
 
-These are not yet in `REMEDIATION-WORKPLAN.md` §8, so D-27 does not count them; a session that enters them there gives each the next free id. The ids below are placeholders for this file only.
+These are not yet in `REMEDIATION-WORKPLAN.md` §8, so D-27 does not count them; a session that enters them there gives each the next free id. The ids below are placeholders for this file only. **[ENTERED in the twelfth-instruction pass, 2026-11-12]** as OD-31 (PQ-1, narrowed to the GAP-076 confirmation; the rest of PQ-1 is OD-14), OD-32 (PQ-2), OD-33 (PQ-3, resolved under the twelfth instruction), OD-34 (PQ-4), OD-35 (PQ-5): `grep -n -E "^### OD-3[1-5]" workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`; prompts in `DECISION-CLOSURE.md`.
 
 ### PQ-1  A clause that names no one but sits under a disability heading: `MOB` or `ALL` (GAP-076), and the post-split `MOB` rows
 - **Question.** The 2026-08-25 fan-out ruling covered the 31 item links. For the post-split `MOB` figures and grades, may judgment tag each row by the users it names, fanning out (flagged) only rows that name neither group; and is a clause that names no one but sits under a disability heading `MOB` or `ALL`?
@@ -92,12 +92,168 @@ The other open owner items this pass touched are already in the register or the 
 
 ## 3. What this pass could not resolve, or did not verify
 
-- **The generator cannot read the gate.** `build_batches.py` reads only the "Owner decisions" bullet, so a task whose decisions are all delegated is shown as READY, and a reversal by the owner would not change the generated plan until a task file is edited. The executor's gate run (section 2 of each file, and stop condition 9) is what holds the line. Changing the generator is a script change, outside this pass.
+- **[FIXED in the twelfth-instruction pass: the generator now reads both decision bullets and the ledger gate; `DECISION-CLOSURE.md` §3.]** **The generator cannot read the gate.** `build_batches.py` reads only the "Owner decisions" bullet, so a task whose decisions are all delegated is shown as READY, and a reversal by the owner would not change the generated plan until a task file is edited. The executor's gate run (section 2 of each file, and stop condition 9) is what holds the line. Changing the generator is a script change, outside this pass.
 - **OD-10 and OD-14** are the owner's. OD-14's narrower version is written down for the owner and not executed.
-- **T-026 and T-028 may build two homes for forms** (attestation columns on `term_aliases`, and a forms table). T-028 now requires its design to name one home; the overlap is not resolved here.
-- **T-113's verbs are unproven.** Whether `amend-source` and `amend-extraction` accept `--field jurisdiction` was not run; the task stops and files a writer gap if they do not.
+- **[FIXED in the twelfth-instruction pass: T-026 waits for T-028's one-page design, which names the one table.]** **T-026 and T-028 may build two homes for forms** (attestation columns on `term_aliases`, and a forms table). T-028 now requires its design to name one home; the overlap is not resolved here.
+- **[SETTLED in the twelfth-instruction pass by reading `scripts/db.py`: `amend-source` takes `jurisdiction`, `amend-extraction` does not; T-024 item 4 adds it.]** **T-113's verbs are unproven.** Whether `amend-source` and `amend-extraction` accept `--field jurisdiction` was not run; the task stops and files a writer gap if they do not.
 - **T-051's readers are partly verified.** `walkability.py` maps a table to whatever value the stage map gives it and refuses to walk only `base`, `infrastructure` and `UNMAPPED` (read in its code), so `cross-stage` stays walkable; `owner_browser_build.py`'s handling of an unknown stage value was not run.
 - **T-050's re-link rule** (a retired admission edge is never un-retired; a re-admission is a new search) is a design choice of this pass, made so that the verb names a next action; a reviewer may prefer another.
 - **The OD-22 rounding resolution** keeps the owner's increment and the word "nearest" within the safe side; if the owner reads "nearest" as excluding any direction, it is reversed, and T-030's converter case changes.
 - **None of the five new task files, and none of the edits, has been piloted.** The first execution of each is its pilot (workplan §2, step 5a).
 - **Not examined by the independent review** (its own list): the other sixteen delegated decisions; the handshake ledger's HS-1 C-02, C-03, HS-A12; whether Q29 was ever owner-ratified.
+
+## 4. The last fold pass: the owner's answers of 2026-11-12, and the twelfth-instruction pass before it
+
+_Written 2026-11-12 (UTC) by the Opus-class model of the twelfth-instruction pass. Plan documents, the ledger (appended only) and the session generator; `sha256sum data/guidebook.db` unchanged (`c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`). The owner's answers are `grep -n -F "Owner answers 2026-11-12" references/project-standards.md`; the decision-by-decision record is `DECISION-CLOSURE.md`._
+
+**Every file changed, and why** (derive the set: `git status --short -- references/project-standards.md workplan/2026-11-12-bidirectional-pipeline scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`):
+- `references/project-standards.md`: appended "Register entries 2026-11-12 … OD-31 to OD-35; OD-33 resolved" (with OD-33's status and check lines) and "Convention addendum 2026-11-12" (`DEFERRED BY THE OWNER`). No line edited; the owner's answer entries and the thirteenth and fourteenth statements were appended by the coordinator and are untouched.
+- `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`: reads both decision bullets and the ledger gate; shows every stop; splits the owner queue into blocking, standing and open with what each releases; sees design-file stops; excludes design files from the task list; flags an unregistered decision.
+- `REMEDIATION-PLAN.md`: regenerated.
+- `REMEDIATION-WORKPLAN.md`: register entries OD-31 to OD-36; the twelve answers marked with their answer lines and what each releases (four "ANSWERED, builds nothing"); typed counts replaced by commands; §6 stop rows for the answered decisions removed and OD-36's added; D-09, D-11, D-17, D-27, D-27b, D-35, D-36 rewritten or added; the dependency list, the task table and the wave wording brought to the gate state; §13 records both passes.
+- `DECISION-CLOSURE.md` (new): verdict, the confirmation table, the facts found, the issues fixed, the prompts still open (OD-36, OD-14, OD-31, OD-17), the mobility-family facts (§5).
+- `tasks/T-001`: item 6, the OD-13 back-pointer and marker.
+- `tasks/T-012`: no `provisional` reason value (OD-10).
+- `tasks/T-023`: the eight sentences located and quoted verbatim from the transcript (OD-28).
+- `tasks/T-024`: item 4 (`amend-extraction` takes `jurisdiction`, for T-113); item 5 (coverage maps a sub-national code to its country, OD-04); gate reads OD-04.
+- `tasks/T-026`: waits for T-028's forms-home design file; builds on the table it names.
+- `tasks/T-028`: its one-page design comes first and names the one forms home.
+- `tasks/T-031`: designed from the OD-23 answer (inventory, no shown clause text, retained-text backing, the derived re-read flag, the duplicate-read rule).
+- `tasks/T-032`: records conflicts with judge and warrant now (OD-19); gate reads OD-19.
+- `tasks/T-037`: gate reads OD-33.
+- `tasks/T-049`: "none outstanding" wording beside its delegated bullet.
+- `tasks/T-052`: P1+P2+P3 as the scope in force; instruments only (OD-34); gate reads OD-04, OD-05, OD-34.
+- `tasks/T-053`: waits on OD-36; builds only the approved ordering.
+- `tasks/T-101`: OD-01 moved to a delegated bullet; the exact OD-04 codes, the scope rule, and an after-test that prints `0 0`.
+- `tasks/T-102`: OD-31 in its gate; item 1 and AT-62 corrected for the thirteenth statement (codes are what OD-14's answer names; `parent_code` if hierarchical).
+- `tasks/T-103`: OD-15's answer, no legal opinion, attribution as the recorded assumption, display at the default.
+- `tasks/T-105`: OD-05 gate; hard dependency on T-031 (OD-23 chose the inventory).
+- `tasks/T-106`: OD-06 gate; no division of `MOB` tagged, and `device_class` not used as a stand-in.
+- `tasks/T-109`: OD-24 gate.
+- `tasks/T-113`: the verbs as read in `scripts/db.py`; coverage settled by OD-04.
+- `FOLD-LOG.md`: the earlier open items marked entered or fixed; this section.
+
+**What could not be resolved here.**
+- OD-14 and OD-31 wait on the research memo on population umbrellas (the owner's fourteenth statement is its lens); their prompts are unchanged. OD-36 is new and the owner's. OD-17 is asked after T-022.
+- The OD-13 marker must be written into `governance/jurisdiction-philosophy.md`, which this pass may not edit: T-001 item 6 does it.
+- The OD-10 alignment of governance and architecture prose is listed, not made (`DECISION-CLOSURE.md` §3).
+- `source_value_extractions.jurisdiction` repeats the source's value on most rows (a rule-5 question left to T-024's report).
+- The WHO licence copy read on 2026-11-12 is not persisted in `retrieval-log/`; T-103's executor fetches and persists it if it is relied on.
+- T-031's re-read flag rests on "retained text on disk", which depends on which artefacts are full texts (workplan §11).
+- None of these task edits has been piloted.
+
+## 5. The third-set fold (OD-14 and OD-37, 2026-11-12)
+
+_The owner's reply to `POPULATION-UMBRELLAS-MEMO.md` (`grep -n -F "Owner answers 2026-11-12 (third set)" references/project-standards.md`). The memo's recommendation is not adopted wholesale. `sha256sum data/guidebook.db` unchanged; the ledger was not touched in this fold._
+
+**Every file changed, and why.**
+- `REMEDIATION-WORKPLAN.md`: OD-14 marked answered with the owner's words and answer line; OD-37 entered as answered; OD-31's status restated for the device decomposition; §0 item 3, the task table (T-102 retitled; T-054, T-055, T-114 added), the critical-path note, the dependency list, the §6 stop rows, D-09 and the §13 record.
+- `tasks/T-102-mobility-split.md`: redesigned for the device decomposition (design first, owner report before rows, children under `MOB`, descriptors in one home, rows carried by judgment, no grade fanned out, after-tests); depends on T-055 and its design file; OD-31 holds only the row items.
+- `tasks/T-054-identity-retires-to-need.md` (new, tooling): an identity code retires to the access need that carries it.
+- `tasks/T-055-mobility-family-tooling.md` (new, tooling): the `device_class` values the design names, and a parent's determination that gathers its children.
+- `tasks/T-114-retire-move-ves-to-needs.md` (new, research): `MOVE` and `VES` retired to `A-PRECISION` and `A-STABLE`.
+- `tasks/T-025-base-writers.md`: the identity verb takes a parent and a display-name amend.
+- `tasks/T-106-retag-lenses.md`: fills ICF and needs lenses of `MOB` rows; touches no identity code of the family.
+- `tasks/T-110-first-determinations.md`: waits for T-102's owner report; keys on children.
+- `DECISION-CLOSURE.md`: §0 re-verdict, §1 rows for OD-14, OD-31, OD-37, §3 fold record, §4 OD-14's prompt removed and OD-31's rewritten, §5 note.
+- `REMEDIATION-PLAN.md`: regenerated.
+
+**What could not be resolved here.**
+- The exact mobility codes, display names and edges are T-102's design to propose and the owner's to see; the plan's starting proposal is in `DECISION-CLOSURE.md` §0.
+- `AMB` of 2026-08-25 is neither minted nor retired by this plan: reported as an open edge.
+- Whether the device vocabulary should become a table rather than a CHECK (flexibility) is left as a stop in T-055.
+- The memo's findings on `MH`, `NDV`, `TALL`, `DEAF`, `LMB` and `ALL` stand as open edges for the owner (register `### OD-37`); only `ALL` is in a live prompt (OD-31).
+- None of the new or redesigned task files is piloted.
+
+## 6. The fourth-set fold (OD-31 and OD-36, 2026-11-12): the last
+
+_`sha256sum data/guidebook.db` unchanged; the ledger was not touched in this fold._
+
+**Every file changed, and why.**
+- `REMEDIATION-WORKPLAN.md`: OD-31 and OD-36 marked answered with the owner's selections and answer lines; T-102 and T-053 rows and dependencies updated; T-056 and T-115 added; the two stop rows removed; D-35 restated and D-37 added; §13 records that no decision holding up a task is open.
+- `tasks/T-102-mobility-split.md`: OD-31's rule for a provision that names no one; the hold removed (design and owner report still first).
+- `tasks/T-053-engine-conflict-between-groups.md`: the approved ordering as a `harm_classes` table, a warrant pointer per side, refusal to apply where unwarranted, ties to a named judge, after-tests.
+- `tasks/T-056-all-leaves-identity-lens.md` (new, tooling) and `tasks/T-115-retag-all-rows.md` (new, research).
+- `DECISION-CLOSURE.md`: final verdict; OD-31 and OD-36 rows; §3 fold record; §4 holds only OD-17.
+- `REMEDIATION-PLAN.md`: regenerated.
+
+**What could not be resolved here.**
+- Whether T-056's successor for `ALL` is a second column beside T-054's `superseded_by_need` or a generalised successor is left to T-056's executor, with the rule that it has one home.
+- Warrants for harm classes must come from held figures with a `harm_finding`; how many such figures exist for the live conflict cases is unknown until T-032 records conflicts, so T-053 may build an engine that refuses on every current case. That is the owner's rule working, not a defect.
+- D-27b's done result needs OD-17, which cannot be asked until T-022 merges.
+- None of the new or rewritten task files is piloted.
+
+## 7. The three design files (T-018, T-028, T-102), 2026-11-12
+
+_Written by an Opus-class designer under the owner's instruction "Opus to write design files that must be written first". Plan documents only: no script, schema, governance file, skill, ledger entry, database row or git state was changed; `sha256sum data/guidebook.db` was the same before and after. Generator after this pass (re-run it, do not trust this line): `python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py` printed `tasks 68 batches 8 missing deps [] crit 8`, and no task carries a `DESIGN:` status._
+
+**Files written.**
+- `tasks/T-018-design.md`: `extraction_lens_links` (four typed lens columns, exactly one per link row; `basis`/`basis_text` warrant; retire in place) and `v_live_lens_links`; the four lens columns of `source_value_extractions` carried, NULLed and held NULL by an inverted CHECK (kept: committed data migrations INSERT them); `AFTER_DATA` marker required; verbs `add-lens-link`, `retire-lens-link`, repeatable lens flags with `--lens-basis*` on `add-extraction`/`derive-extraction`; the gather predicate (cell codes within the figure's live links); a `SUPERSEDES` pair recording OR-1c over the 2026-08-28 "Never a `population_*` link table" clause.
+- `tasks/T-028-design.md`: the one forms home is `term_aliases` (no `term_forms`), rebuilt by T-028 to one row per occurrence (`form_id` = old `rowid`) with `usage_type`; T-026's attestation and locator columns named; `canonical_en` kept `NOT NULL` as our label; `v_term_names` derives the label basis and the name shown (E1); the six name-screening writers and how each changes; AT-25's red test.
+- `tasks/T-102-design.md`: proposed children `WHEEL` (wheelchair users), `PROSTH` (people who use a lower-limb prosthesis), `WALKAID` (people who use walking aids) under `MOB`, renamed "disabled people with mobility needs"; `device_class` gains `lower_limb_prosthesis`, `crutches`, `cane`; five open edges with recommendations; the row-by-row carry; after-tests; the draft owner report (section 10), not appended.
+
+**Task files changed, and why.**
+- `T-018`: design present; Sonnet executes it; item 2 names the new verbs and drops `amend-extraction`; Step 2 points at the design's tests.
+- `T-028`: design named; the build items restated on `term_aliases`; sweep names widened; AT-25 restated. Its NOT FOR SONNET status kept, as the delegated resolution of OD-03 said.
+- `T-026`: the forms home named (`term_aliases`), the exact attestation vocabulary (five values, "another source" included) and locator columns; no key change (T-028's).
+- `T-107`: now also waits for T-028 (the occurrence grain); writes occurrences by T-026's routes.
+- `T-019`: the gather predicate is T-018's; AT-32's second half is T-019's; the evidence command reads `v_live_lens_links`.
+- `T-055`: the three `device_class` values exactly; `device_class` becomes amendable; the parent gather on `v_live_lens_links`.
+- `T-025`: the flags T-102 calls; no provenance or history column (the report holds them).
+- `T-056`: item 4 (a writer rewriting a figure's `identity_code`) withdrawn: T-018 replaces it, and as written it deadlocked with T-054's refusal.
+- `T-115`: moves figures off `ALL` with T-018's verbs, in the order the last-link refusal forces.
+- `T-106`, `T-102`, `T-110`, `T-049`: use the link verbs, the design's names, or `form_id`; the evidence commands of T-102, T-106, T-115 and T-102's after-test (3) now read `v_live_lens_links` (after T-018 the figure's lens columns are NULL, so the old queries would have examined nothing).
+
+**Not resolved; needs the owner or a later fold.**
+- T-102's codes, names and edges are proposals for the owner (the report of `T-102-design.md` section 10): the three children and their names; `MOB`'s new name; `AMB` not minted; scooter users on `MOB`; ambulatory wheelchair users inside `WHEEL`; `PROSTH` lower-limb only and under `MOB` rather than `LMB`; the proposed ICF crossings. The report lets rows be written on the recommended options while listing every row an alternative would move ([ASSUMPTION] in the design; the owner may require rows to wait).
+- `PROSTH` and `WALKAID` names are descriptive: no organisation of prosthesis users or of walking-aid users was retrieved (memo §3.3). `SCI`'s description names impairment levels; it is outside the family and left.
+- OR-1c's [ASSUMPTION] (that the measurement met "unless that is more prone to errors") is unchanged; T-018 records its supersession of the 2026-08-28 clause by rule 0.
+- T-028's display tie-break (several English instruments naming one concept differently: the first recorded is shown until `rename-term --from-form` chooses) is arbitrary and may be the owner's to change.
+- No task builds the base coverage view the seventh 2026-11-06 statement makes the acceptance test (AT-23 is listed against T-026 and T-107, whose changes do not describe it).
+- `REMEDIATION-WORKPLAN.md` was not edited in this pass and is now stale in four places, for the next fold: the §3 task table still says T-018 is NOT FOR SONNET and T-107 depends on T-026 alone; the §5 critical-path note and dependency list still say T-018 and T-102 wait for their designs; the §6 stop rows for the three designs are discharged. `REMEDIATION-PLAN.md` (generated) is current.
+- None of the three designs has been executed or piloted; expect defects and report them in the executing pull request.
+
+## 8. The fifth-set fold (OD-14 codes, OD-17, OD-38, OD-39), 2026-11-12
+
+_Plan documents and the session generator only; the ledger entry for the fifth set was appended by the coordinating session before this fold and is not touched here. `sha256sum data/guidebook.db` unchanged (`c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`)._
+
+**Every file changed, and why.**
+- `REMEDIATION-WORKPLAN.md`: §1 lists `OPEN-ITEMS-PLAN.md`; §3 rows for T-018 (OD-39), T-028 (OD-38), T-102 (codes confirmed); §5 critical-path note and dependency lines for T-018, T-028, T-102, T-110; §6 the T-102 stop row discharged as to the owner; §8 OD-14 fifth-set addendum, OD-17 `DEFERRED BY THE OWNER`, new entries OD-38 and OD-39 with status lines; §10 D-09's done result names the confirmed codes; §11 the T-113 scope point marked answered by OD-04; §13 the fifth-set record.
+- `tasks/T-102-mobility-split.md`: item 2 (the owner report) discharged, the draft not appended; item 3 writes no ICF crossings until the owner names them; after-test (2) reads the confirmation; the OD-14 bullet quotes the confirmed codes.
+- `tasks/T-102-design.md`: §0, §7 and §10 marked: confirmed, report discharged and kept as record, ICF crossings not confirmed by name.
+- `tasks/T-110-first-determinations.md`: item 2 reads the confirmation, not the report.
+- `tasks/T-028-concept-identity.md` and `tasks/T-028-design.md`: OD-38 in the gate; `rename-term --from-form` takes a named judge and a reason, recorded in typed columns rather than the `AMENDED` trailer on `scope_note`.
+- `tasks/T-018-link-table.md` and `tasks/T-018-design.md`: OD-39 in the gate; the supersession recorded in prose, not by a machine pair.
+- `DECISION-CLOSURE.md`: a note after §0; §4's OD-17 heading marked deferred.
+- `REMEDIATION-PLAN.md`: regenerated.
+
+**Found while folding.**
+- **The design's `SUPERSEDES` pair for OD-39 would have turned `supersession_backpointer_audit` red.** Its claim that both quotes occur once was measured with `grep -c`, which counts lines; under the audit's normalisation the target quote occurs twice already, the audit counts the target in the raw ledger so the citation line adds a third, and the marker it needs must sit beside an immutable paragraph. Tested on a scratch copy (PASS became FAIL, "target quote occurs 3 time(s)"). Corrected in the T-018 files; recorded in `OPEN-ITEMS-PLAN.md`.
+- **The answer line of OD-14 (fifth set) does not name the ICF crossings** of the design's §7 item 3. They are held back, not inferred.
+- **`rename-term` records its reason by appending an `AMENDED` line to `scope_note`**, which the 2026-11-06 schema-shape statement forbids; OD-38 asks that the pick be recorded with its reason, so T-028 now records judge and reason in typed columns.
+
+## 9. The OI-13 fold (sixth to ninth sets), 2026-11-12
+
+_Plan documents and the session generator only; the four ledger entries were appended by the coordinating session and are not touched here. `sha256sum data/guidebook.db` unchanged (`c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`). The owner's answer arrived in four messages while this fold ran (`grep -n -E "Owner (answer|clarification) 2026-11-12 \((sixth|seventh|eighth|ninth) set\)" references/project-standards.md`); only the last state is folded: `MOB` with `WHEEL` (taking in `SCI`), `LLD`, `WALKAID`; `LMB` becomes `UPL`, outside mobility._
+
+**Every file changed, and why.**
+- `tasks/T-054-identity-retires-to-need.md`: item 1a, `superseded_by_identity` under one exactly-one successor CHECK (shared by `SCI`→`WHEEL` and `LMB`→`UPL`; a rename rejected: identifiers retire in place); item 1b, `identity_icf_map` rows retire in place with `retire-population-icf-link` (without it `SCI` and `LMB`, which carry crossings, could never be retired: a dead end); live-row counting, `evidence_population_match` (no foreign key) named, `add-population-match` refuses a deprecated target; red test extended; Traces to OI-13.
+- `tasks/T-054`, `T-055`, `T-056`: their test-id prefix said `T051-` (a copying defect); corrected to each task's own number.
+- `tasks/T-056-all-leaves-identity-lens.md`: its successor column widens T-054's one CHECK, never a second rule.
+- `tasks/T-102-design.md`: §0 the family as revised and the departure from "by device" for `LLD`, chosen by the owner; one home per fact (`LLD` the condition, `device_class = 'lower_limb_prosthesis'` the device, one-way consistency); §2 `LLD` replaces `PROSTH` (description proposed, owner confirms), the `SCI` edge reported; §3 E4 answered; §4 and §6 rows; new §6a (carry `SCI`'s figures, grade and crossings, then retire it to `WHEEL`); §5 a figure counted once; §7, §8 tests 1, 2, 5, 6 and new 9, 10; §9 tooling needs; §11 sweep names.
+- `tasks/T-102-mobility-split.md`: depends on T-054; OI-13 in its preconditions; item 4a (`SCI`→`WHEEL`); `LLD` in items 1 and 4; after-test (4a).
+- `tasks/T-055-mobility-family-tooling.md`: a figure gathered once (red test added); `lower_limb_prosthesis` stays a descriptor.
+- `tasks/T-025-base-writers.md`: the amend takes `--description` and `--category`, so owner-confirms wording is corrected by one call.
+- `tasks/T-106-retag-lenses.md`, `tasks/T-110-first-determinations.md`: the revised children.
+- `tasks/T-116-upl-for-upper-limb.md` (new, research) and `tasks/T-058-upl-prose-callers.md` (new, tooling).
+- `REMEDIATION-WORKPLAN.md`: §3 rows (T-054, T-102, new T-116, T-058), dependency lines, §8 OD-14 addendum, D-09, §13.
+- `OPEN-ITEMS-PLAN.md`: OI-03 restated; OI-13 resolved (class R); OI-48 to OI-50 and prompts 13 to 15 added; prompt 11 marked answered; §7a.
+- `DECISION-CLOSURE.md`: a note before §1.
+- `REMEDIATION-PLAN.md`: regenerated.
+
+**Found while folding.**
+- **`UPL` is a retired token.** DR-2026-07-23's crosswalk "UPL→LMB" and `governance/retired-vocabulary.yaml` record it, and older governance prose files `UPL` under mobility (`MOB/UPL`). The owner's eighth set reverses the crosswalk; T-058 marks the DR by a `SUPERSEDES` pair (its target is outside the ledger, so the audit can verify it; the target quote counts once under the audit's normalisation) and corrects the record.
+- **All six `LMB` crossings name grip and bilateral arm function**, so all go to `UPL`; none to `LLD`.
+- **Every `SCI` figure names "wheelchair users with cervical cord injury"**, so the retirement to `WHEEL` moves no figure against its words; the `SCI` grade's participants are wheelchair users, so it is re-graded against `WHEEL` once (not fanned out).
+- **The identity category CHECK has no value for a physical group outside mobility**; `UPL` is proposed under `general`, and the owner confirms (OI-49).
+

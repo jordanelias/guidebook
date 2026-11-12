@@ -5857,3 +5857,306 @@ OD-30 CHECK: not required
 CONDITION: any task or session gating on one of the decisions listed.
 ACTION: (1) Read these lines through the gate of the convention above. (2) Treat OD-10 as the owner's.
 DATE: 2026-11-12 — status lines recorded in the delegated pass, not owner statements.
+
+
+## Owner instruction 2026-11-12 (twelfth) — the remaining owner decisions are to be resolved before the plan is called complete; Opus may be used for judgment where appropriate
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), after the delegated resolutions and the independent review (PR #218), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "Address issues within remediation plan. Confirm that owner decisions located within batches are still actively required rather than having been answered in the most recent passes. I think it would be best to get the decisions resolved before saying the plan is complete. You have permission to use Opus for judgment if appropriate here."
+
+**What this records.** (1) The plan's issues are to be addressed. (2) Which owner decisions still hold up work, as against ones already answered, is to be confirmed from the plan and the ledger. (3) The plan is not to be called complete while a decision that holds up work stands open. (4) An Opus-class model may be used for judgment "if appropriate".
+
+**What it does not decide.** What is appropriate. [ASSUMPTION: appropriate means a decision where the owner's three criteria of 2026-11-12 (integrity, legibility, coverage) settle the answer, no standing owner ruling is overridden, and the decision is not the owner's own act or words, a licensing or legal determination, the project's trajectory or control, or the weighing of one group's harm against another's under the owner's CRPD posture. A decision outside that line is prepared for the owner as a prompt with the facts found and a recommendation, and is not resolved by a model. Unratified.] The twelfth instruction does not lift the reservations recorded in the delegation entry above; it extends the use of a model's judgment only as far as the assumption above allows.
+
+CONDITION: any session asking whether the remediation plan is complete, or which owner decisions still hold up work.
+ACTION: (1) Treat the plan as incomplete while a decision that blocks a task stands open. (2) Resolve by a model only what the assumption above allows, and record it as a delegated resolution with the gate convention. (3) Prepare every other open decision as a prompt for the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner instruction, quoted above.
+
+
+## Register entries 2026-11-12 — the fold's five owner questions entered as OD-31 to OD-35; OD-33 resolved under the twelfth instruction
+
+Recorded in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), in the pass the owner's twelfth instruction of 2026-11-12 asked for (entry above), by an Opus-class model. **Nothing here is the owner's words.** The five questions the fold raised (`workplan/2026-11-12-bidirectional-pipeline/FOLD-LOG.md` §2, PQ-1 to PQ-5) were not in the register (`workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` §8), so the gate loop and the Definition of Done did not count them. They are entered under the next free ids: OD-31 (PQ-1, the part of GAP-076 the owner's answer of 2026-11-06 left hedged), OD-32 (PQ-2), OD-33 (PQ-3), OD-34 (PQ-4), OD-35 (PQ-5). The facts found and the prompt for each are in `workplan/2026-11-12-bidirectional-pipeline/DECISION-CLOSURE.md`.
+
+Applying the line the twelfth entry records as an [ASSUMPTION], four of the five are the owner's and are prepared, not resolved: OD-31 (population taxonomy, and confirming the owner's own hedged words), OD-32 (the owner's own review load), OD-34 (the reach of the owner's standing order of 2026-09-28: jurisdiction scope), OD-35 (how the owner's own decisions are read). One is resolved:
+
+OD-33: the render table is a build product outside the database, generated from it at each build
+
+**The resolution.** The render table of OW-1 is generated from `data/guidebook.db` at each build and is not stored in it; each row carries the hash of its inputs, read by the one staleness check that the render task names. This is the content of correction 4 to the delegated resolution of OD-12 (entry above), which the independent review required to be stated and which is already in force under that decision's gate; this entry gives it its own register id so that the owner can reverse it alone.
+
+**What decided it.** Criterion 1: a table written into the database at every build would need a migration at every build, append-only and immutable (`CLAUDE.md` rule 3), so the database would accumulate superseded copies of rendered prose, a second home of facts (rule 5). Read from the database at build time, the page still comes "from database directly" (owner, 2026-10-30), and the 2026-08-27 rule that no committed file is a render is kept, because the product is generated and not committed. No owner ruling is overridden: the location "in the database" is recorded beside OW-1 as an [ASSUMPTION], not as the owner's words. Not reserved: it is a question of code architecture, not mission, audience, scope, licensing, trajectory or the weighing of groups.
+
+**Reversal condition.** The owner placing the render table in the database (then a write path for it is designed first), or a measured build cost that a stored table would remove.
+
+OD-33 STATUS: RESOLVED UNDER DELEGATION
+OD-33 CHECK: not required
+
+The check is `not required` because the substance is that of the OD-12 correction, which the independent review produced and whose check line already reads confirmed with corrections applied; nothing beyond it is decided here.
+
+CONDITION: any session designing the render table, or asking whether rendered prose is stored in the database.
+ACTION: (1) Generate the render table at build time from the database; store none of it there. (2) Carry an input hash per row, read by one named staleness check. (3) Treat OD-31, OD-32, OD-34 and OD-35 as the owner's. (4) Treat this as a resolution under the twelfth instruction's [ASSUMPTION], reversible by the owner.
+DATE: 2026-11-12 — register entries and one resolution in the twelfth-instruction pass, not owner statements.
+
+
+## Convention addendum 2026-11-12 — the status value for a decision the owner defers
+
+Recorded in the same pass, as an addendum to "Convention 2026-11-12 — how a delegated resolution's standing is recorded, and when it opens a task's gate" (entry above). **A convention for reading the ledger, not an owner ruling**; the owner may replace it. The Definition of Done (`workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` §10, D-27) has always allowed a decision to end as "deferred by the owner", but the convention gave that no status value, so no command could find it.
+
+**The addendum.** One further status value, `DEFERRED BY THE OWNER`, written only by the session that records the owner's quoted deferral of a register decision, in the same entry. The gate reads it as CLOSED (a deferred decision opens no task). D-27 counts it as settled for a decision that no task's gate reads.
+
+CONDITION: any session recording the owner's deferral of a register decision.
+ACTION: (1) Append the status line with the value `DEFERRED BY THE OWNER` beside the quoted deferral. (2) Never use it for a decision a task's gate reads; a deferral of such a decision leaves the task stopped.
+DATE: 2026-11-12 — convention addendum, not an owner statement.
+
+
+## Owner statement 2026-11-12 (thirteenth) — MOB decomposes into more specific identity populations
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), while the decision about carrying the rows written under `MOB` (OD-14) was being prepared for the owner, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "MOB is more difficult than other categories in that it decomposes into more specific identity populations (e.g. prosthetics vs wheelchairs vs other mobility aids, power wheelchair vs manual wheelchair, paraplegia vs quadraplegia)"
+
+**What this records.** The mobility identity is a family and not one population: it divides by the aid a person uses (a prosthesis, a wheelchair, other mobility aids), within wheelchairs by drive (power or manual), and by the level of impairment (paraplegia or quadriplegia, spelled by the owner "quadraplegia"). It is harder than the other identity categories because of this depth. The owner's examples are examples ("e.g."), not a closed list.
+
+**What it does not decide.** Which of these divisions become identity codes, which stay descriptions of a study's participants or of a device (the extraction's `device_class` already holds one of them), how deep the hierarchy goes, whether the 2026-08-25 two-way split into ambulant people and wheelchair users stands as the first division or is superseded by a deeper one, and what a row written under `MOB` is carried as. These bear on OD-14 and on the population taxonomy, which is the owner's. [ASSUMPTION: the statement is a description of the domain that widens the question OD-14 asks, not an answer to it, and it does not by itself supersede the 2026-08-25 ruling.]
+
+CONDITION: any session splitting, tagging or carrying the mobility identity, or reading a figure's population under `MOB`.
+ACTION: (1) Treat `MOB` as a family with more than two levels of division, not as a pair. (2) Do not assume the two-way split is the whole decomposition. (3) Keep a division that describes a device or a participant's level in one home only (rule 5), and decide with the owner whether it is an identity code or a descriptor. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (fourteenth) — advocacy groups and disability ethics are the lens for grouping, sorting and taxonomy
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), while a research pass on whether "mobility" and other population umbrellas make sense as identity categories was running, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "use advocacy groups and disability ethics as a lens for grouping/sorting/taxonomy"
+
+**What this records.** How disabled people organise themselves through their own advocacy groups, and what disability ethics proposes, are to be the lens through which the project groups, sorts and classifies people. It is stated as a method for the analysis of the taxonomy and says nothing yet about which categories result.
+
+**What it does not decide.** Which advocacy groups count, how their categories are turned into codes, how the ethical approaches are weighed where they disagree, and which of the registry's present identity codes change. The population taxonomy remains the owner's. It does not supersede the 2026-08-28 ruling that a determination is keyed on four lens columns, nor the project's rule to work from the ICF and access-need frame; it is a lens on how the groupings within them are drawn. [ASSUMPTION: "advocacy groups" is read as disabled people's own organisations and self-advocacy groups (the CRPD's "representative organizations"), not charities or bodies speaking for disabled people; unratified.]
+
+CONDITION: any session defining, splitting, merging, renaming or sorting identity or population categories.
+ACTION: (1) Take the organisation of disabled people's own advocacy groups, and the approaches of disability ethics, as the lens for how categories are drawn. (2) Record the group or ethical source a grouping rests on, as provenance. (3) Leave the choice among competing groupings to the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner answers 2026-11-12 — OD-04 (research scope), OD-23 (a later parameter reaching a source already read), OD-15 (the medical lens and the WHO licence), OD-19 (conflict between groups in the engine)
+
+Given by the owner in answer to prompts put to them in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`); the prompts are in `workplan/2026-11-12-bidirectional-pipeline/DECISION-CLOSURE.md` §4. Recorded on contact per `CLAUDE.md` rule 0. The owner's words are quoted verbatim; a menu option the owner selected is quoted as the option's label.
+
+**OD-04.** The owner selected: "P1+P2+P3 as recorded; UN out; sub-national counts toward its country".
+OD-04: scope = P1+P2+P3 as recorded; UN: out; sub-national: counts toward its country
+OD-04 STATUS: ANSWERED BY THE OWNER
+*What it settles.* The set recorded in the ledger on 2026-10-30 and 2026-11-06 (US UK AU CA DE NO SE ISO EU · FR CH NL DK FI BE IE ES IT PT · JP SG NZ KR CN) is the scope for base, research and page; `UN` is outside it (cited, owing no coverage); a sub-national instrument counts toward its country and owes no coverage alone. This replaces buckets 1 and 2 of 2026-09-28 as the first floor of research (it adds BE, CH, CN, DK and IT, and drops UN). [The set itself had been recorded as the assistant's assumption; selecting this option confirms it.]
+
+**OD-23.** The owner said: "Clause inventory backed by retained text; clause NOT shown. However, we can still read a source more than once--we just want to minimize duplicate reads for efficiency and managing effort. We can flag a source to be read again for later parameters."
+OD-23: clause inventory backed by retained text; held clause text shown: no; a source may be read again, flagged, for a later parameter
+OD-23 STATUS: ANSWERED BY THE OWNER
+*What it settles.* A later parameter reaches a source already read by matching a stored inventory of the source's clauses, backed by the retained text; held clause text is not shown on a page. Re-reading is permitted, not forbidden: the aim is to minimise duplicate readings, and a source can be flagged to be read again for a later parameter where the inventory and retained text do not reach. This qualifies the 2026-11-12 objective ("so that we don't have to repeatedly read a source"): it is an efficiency aim, not a prohibition.
+
+**OD-15.** The owner said: "We do not need licenses as this is a not-for-profit advocacy project."
+OD-15: proceed; no WHO written agreement sought; the owner's ground is that the project is a not-for-profit advocacy project
+OD-15 STATUS: ANSWERED BY THE OWNER
+*What it settles.* The medical lens is filled from ICD-11 at block grain by correspondence, as ruled on 2026-09-11, without waiting for or seeking a WHO written agreement. *A caveat recorded with it, not an objection:* the WHO terms read on 2026-11-12 (`https://icd.who.int/en/docs/icd11-license.pdf`; CC BY-ND 3.0 IGO; clause 1.2.4 on mappings, crosswalks and translations) as quoted in the prompt carry no exemption for not-for-profit use, and whether the project's correspondence is a "crosswalk" under that clause is a legal reading no one in this session made. [UNVERIFIED: that not-for-profit status removes the requirement. The decision, and the risk, are the owner's.] [ASSUMPTION: attribution (code, title and URI together, the WHO named as source, the correspondence marked as the project's own addition) is kept as ordinary practice; it was part of the option the owner was shown and the owner's answer did not refuse it; unratified.]
+
+**OD-19.** The owner selected: "Record now; the engine applies an ordering once you approve it".
+OD-19: record now; the engine applies an ordering once the owner approves it
+OD-19 STATUS: ANSWERED BY THE OWNER
+*What it settles.* The engine records every conflict between groups as a row with its named judge and computes nothing from it today. A rule that the engine applies (the harm-asymmetry ordering) is to be added only after the owner approves the ordering in mechanical form and where its warrants come from. *That approval is a separate, later decision* (it is entered in the register as a new decision; until it is given, the engine part, T-053, stays stopped).
+
+CONDITION: any session relying on the research scope, the route a later parameter takes to a source already read, the medical lens, or the engine's handling of a conflict between groups.
+ACTION: (1) Treat OD-04, OD-23, OD-15 and OD-19 as answered by the owner as above. (2) Treat the harm ordering as still to be approved. (3) Do not read the OD-15 answer as a legal opinion on the WHO terms. (4) Treat the [UNVERIFIED] and [ASSUMPTION] marks above as unratified.
+DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Owner answers 2026-11-12 (second set) — OD-28, OD-10, OD-34, OD-13, OD-32, OD-09, OD-27, OD-35
+
+Given by the owner in answer to prompts put to them in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`); the prompts are in `workplan/2026-11-12-bidirectional-pipeline/DECISION-CLOSURE.md` §4. Recorded on contact per `CLAUDE.md` rule 0. Each is a menu option the owner selected, quoted as the option's label.
+
+**OD-28.** Selected: "Enter them verbatim from the transcript".
+OD-28: enter the eight sentences of 2026-10-12 verbatim from the committed transcript
+OD-28 STATUS: ANSWERED BY THE OWNER
+*What it settles.* The eight relayed sentences (O1 to O8) are the owner's own and are entered in the ledger exactly as in the transcript, including the openings the relays trimmed ("use Opus to" in O1, "yeah, and" in O7). Task T-023 enters them.
+
+**OD-10.** Selected: "Strength: 'provisional' = thin evidence; a re-read is a reading's own status".
+OD-10: provisional means strength of evidence; a re-read owed is a reading's own status
+OD-10 STATUS: ANSWERED BY THE OWNER
+*What it settles.* A cell's `provisional` keeps the computed meaning of thin evidence (2026-09-09). The 2026-10-30 "stage … go back and review the source again" is read as applying to a reading (a `preliminary` reading or a follow-up), as the 2026-10-30 entry already applied it. [ASSUMPTION: that is how the two statements are reconciled; the owner selected the option that says so.]
+
+**OD-34.** Selected: "Instruments only: a T1–T3 study is admitted on its merits".
+OD-34: the 2026-09-28 bucket order covers codes and standards, not laboratory or clinical studies whose finding does not depend on the country; such a T1–T3 study is admitted on its merits
+OD-34 STATUS: ANSWERED BY THE OWNER
+
+**OD-13.** Selected: "Superseded by the pair rulings".
+OD-13: the 2026-03-19 "at least nine languages" rule is superseded by the language–jurisdiction pair rulings
+OD-13 STATUS: ANSWERED BY THE OWNER
+*What it settles.* A back-pointer is appended and the old sentence marked, by the supersession convention (`SUPERSEDES` lines, anchored on quotes occurring once at both ends); the ledger itself is not edited.
+
+**OD-32.** Selected: "Independent model review suffices; I can still question any cell".
+OD-32: independent model review suffices; the owner can question any cell
+OD-32 STATUS: ANSWERED BY THE OWNER
+
+**OD-09.** Selected: "On demand, judgments warranted; no request table".
+OD-09: runs may be carried through on demand without the owner present, each judgment warranted; no request table
+OD-09 STATUS: ANSWERED BY THE OWNER
+
+**OD-27.** Selected: "Serial is fine".
+OD-27: research batches land serially
+OD-27 STATUS: ANSWERED BY THE OWNER
+
+**OD-35.** Selected: "Keep it".
+OD-35: the status-and-check convention for decisions is kept
+OD-35 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session relying on the relayed statements of 2026-10-12, the meaning of `provisional`, the reach of the bucket order, the nine-languages rule, review of model-written discussion, unattended runs, parallel batches or the gate convention.
+ACTION: (1) Treat these eight as answered by the owner as above. (2) Mark the superseded sentence of OD-13 by a back-pointer, not by editing the ledger. (3) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Owner answers 2026-11-12 (third set) — OD-14 (what MOB is) and the identity-lens rule (new OD-37)
+
+Given by the owner in reply to prompts on the population-umbrellas memo (`workplan/2026-11-12-bidirectional-pipeline/POPULATION-UMBRELLAS-MEMO.md`), put to them in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`). The owner did not choose a menu option and sent this message instead. Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "MOVE and VES are access needs, agreed. Decompose MOB by device to wheelchair user, prosthetic device user, other mobility aids (or something like that). retain MH and NDV and TALL"
+
+**What this settles.**
+1. **MOB is decomposed by device** into wheelchair user, prosthetic device user and other mobility aids. The owner's "(or something like that)" leaves the exact names and the edges (whether `MOB` remains as the parent, where a person with a mobility need who uses no aid is placed, where the 2026-08-25 `AMB` goes, whether power and manual wheelchair and paraplegia and quadriplegia stay descriptors in `device_class` and the medical lens) to the design of task T-102, which proposes them from the memo's evidence and reports them to the owner. This is the owner's answer to OD-14; it widens the 2026-08-25 two-way split (ambulant people and wheelchair users) to a division by device. It does not by itself say that the 2026-08-25 ruling is withdrawn.
+2. **`MOVE` and `VES` are access needs** and not identity populations ("agreed" to the memo's finding).
+3. **`MH`, `NDV` and `TALL` are retained** as identity codes, against the memo's finding that they are the least defensible categories under the advocacy lens.
+4. **The memo's rule for the whole registry** (identity codes only where an organised, self-named community exists) is therefore not adopted wholesale. The owner took three of its findings and set aside one group of three; the memo's other flagged codes (`ALL`, `DEAF`, `LMB`, `COM`) were not addressed and stand as they are until the owner says otherwise.
+
+OD-14: MOB is decomposed by device into wheelchair user, prosthetic device user and other mobility aids; the exact codes and edges are settled by the design of T-102 and reported to the owner
+OD-14 STATUS: ANSWERED BY THE OWNER
+OD-37: identity-lens rule for the memo's flagged codes: MOVE and VES are access needs; MH, NDV and TALL are retained; MOB is decomposed by device; the memo's wholesale rule is not adopted; ALL, DEAF, LMB and COM stand unchanged unless the owner says otherwise
+OD-37 STATUS: ANSWERED BY THE OWNER
+
+**What it does not settle.** OD-31 (how a provision under a disability heading that names no one is tagged, and so what happens to `ALL`) was not answered by this reply and remains open. [ASSUMPTION: "(or something like that)" invites the proposal of exact codes by the T-102 design, subject to the owner seeing them; it is not a delegation to decide the taxonomy without reporting. Unratified.]
+
+CONDITION: any session splitting, tagging or carrying the mobility identity, or moving `MOVE` or `VES`, or touching `MH`, `NDV` or `TALL`.
+ACTION: (1) Decompose `MOB` by device (wheelchair user, prosthetic device user, other mobility aids) in the T-102 design, and report the exact codes and edges to the owner. (2) Move `MOVE` and `VES` to the access-need frame. (3) Leave `MH`, `NDV` and `TALL` as identity codes. (4) Keep a division held in `device_class` and as an identity code in one home only (rule 5). (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Owner answers 2026-11-12 (fourth set) — OD-31 (a provision under a disability heading that names no one; ALL) and OD-36 (the harm ordering)
+
+Given by the owner in answer to prompts put to them in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`); the prompts are in `workplan/2026-11-12-bidirectional-pipeline/DECISION-CLOSURE.md` §4. Recorded on contact per `CLAUDE.md` rule 0. Each is a menu option the owner selected, quoted as the option's label.
+
+**OD-31.** Selected: "Heading's group; ALL leaves the identity lens".
+OD-31: a provision that names no one carries the group its heading names (under a mobility heading, the parent MOB with no child; under a general disability heading, no identity, only its ICF and access-need lenses); ALL leaves the identity lens, universal being stated once, by design_scale
+OD-31 STATUS: ANSWERED BY THE OWNER
+*What it settles.* The hedged reading of 2026-11-06 ("I guess we can see it as a universal?") is resolved as: `ALL` is not an identity; "universal" is `design_scale = 'universal'`, held once (rule 5). Rows filed under `ALL` as an identity are re-tagged by their links. With the 2026-11-12 answer on OD-14, this removes the last hold on writing the rows filed under `MOB` (T-102).
+
+**OD-36.** Selected: "Approve that ordering, held once as data; each class warranted by a held source's own finding".
+OD-36: the harm ordering injury > loss of independent use > pain > effort > discomfort is approved, held once as data, each class warranted by a held source's own finding and never by a model's estimate; a tie goes to a named judge
+OD-36 STATUS: ANSWERED BY THE OWNER
+*What it settles.* The engine may apply the ordering where groups conflict (OD-19: "the engine applies an ordering once you approve it"), defaulting to the less harmful option for the group the ordering protects and flagging the supplementary provision for the other group, a tie being referred to a named judge. The ordering is a row, changeable in one place; the warrant for each class is a held source's finding. T-053 builds it.
+
+CONDITION: any session tagging a provision that names no group, using `ALL` as an identity, or building the engine's handling of a conflict between groups.
+ACTION: (1) Tag a provision that names no one by its heading's group, or by its ICF and access-need lenses alone; do not use `ALL` as an identity. (2) State "universal" by `design_scale` only. (3) Hold the harm ordering as data with a held source's finding as each class's warrant. (4) Refer a tie to a named judge.
+DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Owner answers 2026-11-12 (fifth set) — the T-102 codes, OD-17 (the contract), the display name of a concept (new OD-38), the link-table supersession (new OD-39)
+
+Given by the owner in answer to prompts put to them in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), after the designs `tasks/T-018-design.md`, `tasks/T-028-design.md` and `tasks/T-102-design.md` were written. Recorded on contact per `CLAUDE.md` rule 0. Each is a menu option the owner selected, quoted as the option's label.
+
+**T-102 codes (OD-14, confirmation of the exact codes).** Selected: "Confirm all as proposed".
+OD-14: codes confirmed as proposed in T-102-design.md: MOB stays as the parent, renamed "disabled people with mobility needs", with three device children, WHEEL (wheelchair users, including ambulatory and part-time wheelchair users), PROSTH (people who use a lower-limb prosthesis) and WALKAID (people who use walking aids: crutches, canes, frames, rollators); AMB is not minted; scooter users stay on MOB with device_class = scooter; PROSTH covers the lower limb only and LMB is unchanged; a person with a mobility need who uses no aid has no child (MOB plus ICF d4 codes and access needs)
+*What it settles.* The report to the owner that T-102 was to make in the ledger before any row is written is discharged by this confirmation; the executor may write rows on these options. [Not the owner's: "PROSTH" and "WALKAID" are descriptive names; the design records that no organisation of prosthesis users or of walking-aid users was found.]
+
+**OD-17.** Selected: "Ratify after T-022 merges, once I have read the corrected contract".
+OD-17: the owner will ratify the corrected contract after T-002 and T-022 have merged, once they have read it
+OD-17 STATUS: DEFERRED BY THE OWNER
+*What it settles.* Nothing waits on it. The assistant asks again with the diff of the corrected `governance/pipeline-contract.yaml` in front of the owner.
+
+**OD-38 (new): which English name is shown for a concept that several English-language instruments name differently.** Selected: "First recorded, until a named judge picks; the pick is recorded with its reason".
+OD-38: the first English name recorded is shown until a named judge picks one with rename-term --from-form; the pick is recorded with its reason
+OD-38 STATUS: ANSWERED BY THE OWNER
+
+**OD-39 (new): whether the owner's link-table ruling of 2026-11-06 supersedes the 2026-08-28 clause "Never a population_* link table".** Selected: "Yes, the 2026-11-06 ruling supersedes that clause".
+OD-39: the 2026-11-06 link-table ruling supersedes the 2026-08-28 clause "Never a population_* link table"; T-018 appends the SUPERSEDES/BY pair and builds extraction_lens_links
+OD-39 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's rows, ratifying or asking about the contract, choosing the shown English name of a concept, or building the lens link table.
+ACTION: (1) Write the mobility family on the confirmed codes. (2) Treat OD-17 as deferred, to be asked after T-022 merges. (3) Follow OD-38 in T-028's `rename-term`. (4) Add the supersession pointer in T-018.
+DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Correction 2026-11-12 — to the fifth set of owner answers: how OD-39's supersession is recorded
+
+The fifth set ("Owner answers 2026-11-12 (fifth set)") says, on OD-39, that "T-018 appends the SUPERSEDES/BY pair". **That is the recorder's wording, not the option the owner selected.** The owner selected "Yes, the 2026-11-12 … 2026-11-06 ruling supersedes that clause" — that the 2026-11-06 link-table ruling supersedes the 2026-08-28 clause "Never a `population_*` link table". The mechanism was a design assumption. Tested on a scratch copy of the ledger, a `SUPERSEDES` pair for it makes `supersession_backpointer_audit` fail: the audit counts the target quote in the raw ledger, so the citation line is a second occurrence; the quote already occurs twice under the audit's normalisation; and a marker beside the 2026-08-28 paragraph cannot be added to an append-only ledger. The supersession is therefore recorded in prose, by this entry and by `workplan/2026-11-12-bidirectional-pipeline/tasks/T-018-link-table.md`, following the 2026-09-01 precedent.
+
+CONDITION: any session asking whether the 2026-08-28 clause "Never a `population_*` link table" still binds, or how OD-39 is recorded.
+ACTION: (1) Treat the 2026-08-28 clause as superseded by the 2026-11-06 link-table ruling, on the owner's answer to OD-39. (2) Do not add a `SUPERSEDES` pair for it; this entry is the record. (3) Where the fifth set says T-018 appends the pair, read it as this entry corrects.
+DATE: 2026-11-12 — correction by the recorder, not an owner statement.
+
+
+## Owner answer 2026-11-12 (sixth set) — SCI and LMB go under MOB (OI-13)
+
+Given by the owner in answer to the open item OI-13 of `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` (whether the spinal cord injury and limb-difference identity codes sit under the mobility family). Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "SCI and LMB go under MOB"
+
+**What this settles.** `SCI` (spinal cord injury) and `LMB` (limb differences) take `MOB` as their parent, through the registry's existing `parent_code` column, beside the three device children confirmed in the fifth set (`WHEEL`, `PROSTH`, `WALKAID`). The mobility family is then: the parent `MOB`, with children `WHEEL`, `PROSTH`, `WALKAID`, `SCI` and `LMB`.
+
+OI-13: SCI and LMB take MOB as their parent
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+**What it does not settle.** How the two kinds of child relate (a child by device, a child by condition: a person may be in more than one, for example a wheelchair user with a spinal cord injury, or a person with a limb difference who uses a prosthesis, so `WHEEL`, `SCI`, `LMB` and `PROSTH` are not exclusive), what `PROSTH` and `LMB` each hold where they overlap (the T-102 design proposed that `PROSTH` covers lower-limb prostheses only and that `LMB` is unchanged), and whether a determination at `MOB` gathers its children by `parent_code` (T-055). [ASSUMPTION: the children are not mutually exclusive, because the identity lens takes at least one code per figure and a figure may name more than one group; unratified.]
+
+CONDITION: any session writing the mobility family's registry rows, or tagging a figure that names a spinal cord injury, a limb difference, a prosthesis, a wheelchair or another aid.
+ACTION: (1) Set `parent_code = MOB` for `SCI` and `LMB`. (2) Do not treat the five children as mutually exclusive. (3) Keep the overlap of `PROSTH` and `LMB` as the design states it, and report any figure that needs both. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner answer, quoted above.
+
+
+## Owner clarification 2026-11-12 (seventh set) — SCI is basically WHEEL and LMB is basically PROSTH: they are the same populations, not additional children (clarifies OI-13)
+
+Given by the owner directly after the sixth set ("SCI and LMB go under MOB"), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "except SCI is the same as WHEELCHAIR basically and LMB is the same as PROSTHETIC"
+
+**What this records.** The owner's clarification of their own OI-13 answer: `SCI` (people with spinal cord injuries) is, in the owner's word, "basically" the same population as `WHEEL` (wheelchair users), and `LMB` (people with limb differences; upper-limb disabilities, as the registry describes it) is "basically" the same as `PROSTH` (people who use a prosthesis). They do not add two further children to the five in the sixth set; each pair is one population under two names. Rule 5 (one home per fact) therefore applies: a population is held under one code.
+
+**What it does not decide.** (1) Which of each pair's names survives. The owner's decomposition of 2026-11-12 is by device ("wheelchair user, prosthetic device user, other mobility aids"), which is the reading this entry follows. (2) What becomes of the cases the word "basically" leaves out: the registry's `LMB` description includes upper-limb disabilities (a lower-limb prosthesis, which is what `PROSTH` was proposed to cover, is narrower), and a person with an incomplete spinal cord injury may walk (the research memo cites a source that spinal cord injury does not imply a wheelchair); impairment level (paraplegia, quadriplegia) is a descriptor in the medical lens and ICF codes, not an identity code. (3) How the rows now under `SCI` (3 extractions, 9 identity–ICF map rows, 1 population match) and `LMB` (no extractions, 6 identity–ICF map rows) are carried, as the counts stood on 2026-11-12. [ASSUMPTION: the surviving codes are the device codes `WHEEL` and `PROSTH`; `SCI` and `LMB` are retired in favour of them, their rows re-tagged by what each names, and `PROSTH` is described so that it holds what `LMB` held (limb differences, upper and lower, and prosthetic devices) unless the owner narrows it; unratified.]
+
+OI-13: SCI is the same population as WHEEL and LMB is the same population as PROSTH; each pair is held under one code
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's registry rows, retiring `SCI` or `LMB`, or tagging a figure that names a spinal cord injury, a limb difference, a prosthesis or a wheelchair.
+ACTION: (1) Hold each pair under one code, the device code, and retire the other by the sanctioned verb with its successor. (2) Describe `PROSTH` so it holds what `LMB` held, or report the case it leaves out. (3) Re-tag the rows under `SCI` and `LMB` by what each names; do not fan out a grade. (4) Keep impairment level in the medical lens and ICF codes. (5) Treat the [ASSUMPTION] mark above as unratified. This supersedes, on the point of `SCI` and `LMB` being additional children, the sixth set's account of the family.
+DATE: 2026-11-12 — owner clarification, quoted above.
+
+
+## Owner clarification 2026-11-12 (eighth set) — LMB becomes UPL (upper limb) and is not part of mobility; only SCI is the same as WHEEL
+
+Given by the owner directly after the seventh set, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in the order sent:
+
+> "LMB should be UPL for upper limb then"
+
+> "and that doesnt concern mobility"
+
+**What this records.** The owner corrects the seventh set's pairing of `LMB` with `PROSTH`. `LMB` (registry: "people with limb differences; upper-limb disabilities") is to be **`UPL`, for upper limb**, and it **does not concern mobility**: it is not a child of `MOB` and it is not the same population as `PROSTH`. What stands from the seventh set is that `SCI` is basically the same population as `WHEEL`. The mobility family is therefore the parent `MOB` with the device children `WHEEL` (which takes in `SCI`), `PROSTH` and `WALKAID`. The sixth set's placing of `LMB` under `MOB` is set aside by this entry.
+
+**What it does not decide.** (1) How `LMB` becomes `UPL`: a rename of the code, or a new code with `LMB` retired to it (the registry's code is a key that identity–ICF map rows point at; there are 6 such rows and no extractions on `LMB` as of 2026-11-12). (2) The display name and description of `UPL` (the registry's present description combines limb differences and upper-limb disabilities). (3) The cases at the edge: a lower-limb difference in a person who uses no prosthesis (not upper limb, and no aid), an upper-limb prosthesis user (upper limb, not mobility), and whether an upper-limb disability that affects reach is a lens on reach and manipulation parameters (it is the owner's existing `upper-limb-impairment-built-environment` topic). [ASSUMPTION: `UPL` is a population in the identity lens like the others and keeps `LMB`'s ICF map rows; the lower-limb difference without a prosthesis is placed by the T-102 design on `MOB` with ICF d4 codes, and an upper-limb prosthesis user on `UPL`; unratified.]
+
+OI-13: SCI is the same population as WHEEL; LMB becomes UPL (upper limb) and is not part of the mobility family; PROSTH is a device child of MOB, separate from UPL
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's rows, retiring `SCI`, or renaming, retiring or tagging `LMB` or `UPL`.
+ACTION: (1) Hold `SCI` and `WHEEL` as one population under `WHEEL`. (2) Make `LMB` into `UPL` (upper limb), outside the mobility family, by the sanctioned verb with the successor if it is a new code; move its map rows without duplicating. (3) Do not describe `PROSTH` as holding what `LMB` held. (4) Treat the [ASSUMPTION] mark above as unratified. This supersedes the seventh set's pairing of `LMB` with `PROSTH` and the sixth set's placing of `LMB` under `MOB`.
+DATE: 2026-11-12 — owner clarification, quoted above.
+
+
+## Owner clarification 2026-11-12 (ninth set) — the lower-limb child of MOB is LLD, "people with lower-limb differences", not PROSTH
+
+Given by the owner in answer to the prompt "Rename PROSTH" (put to them because, after `LMB` became `UPL` and left mobility, "PROSTH" read as any prosthesis user). Recorded on contact per `CLAUDE.md` rule 0. The owner selected the option's label: "LLD — 'people with lower-limb differences'".
+
+**What this settles.** The lower-limb child of `MOB` is **`LLD`, people with lower-limb differences**, replacing the proposed `PROSTH`. It is defined by the condition (a lower-limb difference), not by the device, so it holds people who use a lower-limb prosthesis and people with a lower-limb difference who use none. It is the lower-limb counterpart of `UPL` (upper limb, outside mobility). The mobility family is therefore the parent `MOB` with the children `WHEEL` (which takes in `SCI`), `LLD` and `WALKAID`. This departs, for this one child, from the owner's earlier decomposition "by device" (wheelchair user, prosthetic device user, other mobility aids); the owner chose it knowing so.
+
+**What it does not decide.** (1) That a lower-limb prosthesis is a device and is held in `device_class` (the T-102 design proposed adding `lower_limb_prosthesis`, `crutches` and `cane`): with `LLD` defined by the condition, whether the prosthesis value remains in `device_class` as a descriptor of a figure or participants is for the design to restate, keeping one home per fact. (2) The registry description of `LLD`. (3) Whether the old `LMB` rows' lower-limb content goes to `LLD` and its upper-limb content to `UPL`: `LMB` was described as "people with limb differences; upper-limb disabilities", and the owner has made `LMB` into `UPL`; the 6 identity–ICF map rows on `LMB` (as of 2026-11-12) have to be placed on `UPL` or `LLD` by what each names. [ASSUMPTION: the identity codes are not mutually exclusive, so a person with a lower-limb difference who also uses a wheelchair or walking aid is in `LLD` and in `WHEEL` or `WALKAID`; unratified.]
+
+OI-13: the lower-limb child of MOB is LLD, people with lower-limb differences (replacing PROSTH); the mobility family is MOB with WHEEL (taking in SCI), LLD and WALKAID; LMB becomes UPL outside mobility
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's registry rows, or tagging a figure that names a lower-limb difference, a prosthesis, a wheelchair or another aid.
+ACTION: (1) Use `LLD`, not `PROSTH`. (2) Place the rows of the old `LMB` on `UPL` or `LLD` by what each names. (3) Keep the prosthesis, where it is a device fact, in `device_class` only if the design settles it there without a second home. (4) Treat the [ASSUMPTION] mark above as unratified. This supersedes the confirmed T-102 code `PROSTH` (fifth set) and the seventh set's pairing of `LMB` with `PROSTH`.
+DATE: 2026-11-12 — owner clarification (selected option), quoted above.
