@@ -7,17 +7,17 @@ _Handshake leg, 2026-11-12 (UTC), HEAD `186defb`. Nothing here is implemented; t
 _Amended 2026-11-12 after an independent antagonist pass (`fa-antagonist-objections.md`). What changed, and why, is in §6 (resolution record) and in `fa-corrections-for-suite.md`. The first version of this section was wrong on what can start now and on what must precede a first determination._
 
 **No determination should be made canonical until three things hold.**
-1. **The engine gathers by the lens tags on the figure.** No gate tests the lens today (HS-2 F-01). This is the prior workplan's task T-3 (`workplan/2026-10-23-pipeline-resolution-workplan.md`), which needs T-2, which needs T-1a, and which may not open until the ruled link table for several codes of one model (PS:4926) is designed (IMP-08, IMP-40). It is not a first-wave item.
-2. **The blocking `test_db_integrity` criterion C10 is green for the cell.** Every `provisional` cell determined on a scratch copy fails it today, because four governing sources of parameter 3 are not `VERIFIED` (R-6). The ledger records this as intended (PS:4544).
+1. **The engine gathers by the lens tags on the figure.** No gate tests the lens today (HS-2 F-01). This is the prior workplan's task T-3 (`workplan/2026-10-23-pipeline-resolution-workplan.md`), which needs T-2, which needs T-1a (IMP-08). The owner has also ruled a link table for several codes of one model (PS:4926; IMP-40); building it before or inside T-3 is this leg's sequencing, which the ledger does not state. It is not a first-wave item.
+2. **The blocking `test_db_integrity` criterion C10 is green for the cell.** Every `provisional` cell determined on a scratch copy fails it today (only parameters 3 and 12 determine `provisional`): parameter 3 on four governing sources that are not `VERIFIED`, parameter 12 on one (R-6). The ledger records this as intended (PS:4544).
 3. **The mobility split is executed.** It is ratified (PS:1291-1296); it is a research change with one execution question left to the owner (IMP-20, OD-14).
 
 The specification validators do examine a live row when one exists. Their defect on `main` is narrower than first stated: they count retired rows as their subject (IMP-04).
 
-**What can start now, with no owner word, no unmet dependency and nothing turning red on `main`** (§3 gives the dependencies): IMP-02, IMP-03a, IMP-04 (report-only form), IMP-06, IMP-12, IMP-13 (two of its values), IMP-23, and the two tasks the prior workplan marks "needs nothing" and whose done-when is still unmet, T-1a and T-6a (IMP-24 is T-6a). IMP-01 needs one owner reply. Everything else waits on a dependency or on the owner.
+**What can start now, with no owner word, no unmet dependency and nothing turning red on `main`** (§3 gives the dependencies): IMP-02, IMP-03a, IMP-04 (report-only form), IMP-06, IMP-12 (columns only; it deletes nothing), IMP-13 (two of its values), IMP-23, IMP-43, IMP-44, IMP-45 (the last three from the stress audit, §7), and the two tasks the prior workplan marks "needs nothing" and whose done-when is still unmet, T-1a and T-6a (IMP-24 is T-6a). IMP-01 needs one owner reply. Everything else waits on a dependency or on the owner.
 
 **The programme is blocked behind the owner at eight points that matter:** what a jurisdiction is to a determination (OD-01), what language a page is in (OD-02), how a concept is held without English (OD-03), what the scope answer of 2026-10-30 covers (OD-04), how a later parameter reaches a source already read (OD-23), how coarse a parameter is (OD-24), what a synthesis row is (OD-07), and how render is produced and stored (OD-12).
 
-Counts: improvements `grep -c '^### IMP-' <this file>`; of which withdrawn `grep -c '^### IMP-.*WITHDRAWN' <this file>`; owner decisions `grep -c '^### OD-' <this file>`; of which withdrawn `grep -c '^### OD-.*WITHDRAWN' <this file>`; new acceptance tests `grep -c '^| AT-[5-9][0-9] ' <this file>`.
+Counts: improvements `grep -c '^### IMP-' <this file>`; of which withdrawn `grep -c '^### IMP-.*WITHDRAWN' <this file>`; owner decisions `grep -c '^### OD-' <this file>`; of which withdrawn `grep -c '^### OD-.*WITHDRAWN' <this file>`; new acceptance tests `grep -c -E '^\| AT-([5-9][0-9]|1[0-9]{2}) ' <this file>`.
 
 ## 0.1 How to read an entry
 
@@ -87,11 +87,11 @@ Two parts, because they have different gates.
 - **Why it is not a first-wave item (FA-12).** The instrument prints `NO PATH` on ten lines today (five pairs ending at render, in each of two sections). Registered now, at any level, the check is red on untouched `main`. The ledger's own note says so: registering before the views key lands "would fail at once" (PS:4761). The first version of this entry proposed a different test (non-zero only when an existing path is lost) with the absent pairs "derived from the stage map's empty stages"; that is not the ruled gate, and the derivation does not work, because the stage map gives render one table (`weighting_profile`), so no stage is empty.
 - **TD:** REQ-006, REQ-017. **BU:** HS-2 F-03.
 - **Reads it:** `run_checks.py`, once registered. **Wrong thing:** a migration severs a stage from the spine unseen.
-- **Files:** `governance/check-registry.yaml`, `governance/stage-map.yaml` (`views:` key, OW-1), the instrument. **Deps:** a render view mapped to the render stage (IMP-38; workplan T-5). Until then the instrument is a command run at the end of each phase, which is the alternative the workplan names. **Layer:** 0. **Kind:** TOOLING. **AT:** AT-01, AT-53. **Owner gate:** none for the ruled gate; an interim form is OD-26.
+- **Files:** `governance/check-registry.yaml`, `governance/stage-map.yaml` (`views:` key, OW-1), the instrument. **Deps:** a render view mapped to the render stage (IMP-38; workplan T-5). [U: that a mapped view gives the render pairs a path cannot be run, because the instrument has no `views:` support yet; the ledger's own note is only that the entry is added once the views key has landed.] Until then the instrument is a command run at the end of each phase, which is the alternative the workplan names. **Layer:** 0. **Kind:** TOOLING. **AT:** AT-01, AT-53. **Owner gate:** none for the ruled gate; an interim form is OD-26.
 
 ### IMP-08 The engine gathers by the lens tags on the figure (the prior workplan's T-3)
 - **Change:** CODE. A figure reaches a cell only through the lens codes written on it; a figure tagged for everyone reaches only a cell for everyone; no traversal through a crossing map.
-- **Warrant, stated by class (FA-21).** OWNER for the `ALL` half: "No, ALL reaches only an ALL determination" (PS:4657). LEDGER reading for the general rule: PS:4630 is the assistant's reading of the owner's "yes" to the OR-1 prompt, marked as such at PS:4628, with D-0184 ACTIVE. It is not owner speech.
+- **Warrant, stated by class (FA-21).** OWNER for the `ALL` half: "No, ALL reaches only an ALL determination" (PS:4657). LEDGER reading for the general rule: PS:4630 is the assistant's reading, "Taken from the prompt's 'yes'" (the owner's own OR-1 answer contains no "yes"), marked as the assistant's at PS:4628, with D-0184 ACTIVE. It is not owner speech.
 - **This is task T-3 of `workplan/2026-10-23-pipeline-resolution-workplan.md`**, and its dependencies are that plan's, which the first version of this entry dropped (FA-05): T-3 needs T-2 (conditions); T-2 needs T-1a (reading), whose done-when is unmet (`grep -rn "def parse_bound" scripts` still returns `scripts/assess/assess_cell.py:624`); and "how a determination and its figures carry several codes of one model is settled by OR-1c before this PR opens", which is the link table of IMP-40. T-3 also changes the attestation (the hash covers every lens code), makes a pending cell claim no derivation path, and lets a NULL lens be filled with warrant. D-2 (filling a NULL lens where a quote names the users) follows T-3.
 - **TD:** HS-A02, REQ-077, REQ-074. **BU:** BU problem 3; HS-2 F-01.
 - **Reads it:** every determination. **Wrong thing:** "ramp gradient for Deaf people: at most 5 %", governed by 35 code provisions tagged `MOB`.
@@ -104,21 +104,21 @@ Two parts, because they have different gates.
 - **Reads it:** render's empty-state rule. **Wrong thing:** rows for people a parameter does not concern.
 - **Deps:** IMP-08. **Layer:** 2. **Kind:** TOOLING. **AT:** AT-52, AT-33. **Owner gate:** OD-08 for what an absent cell means and whether a relevant lens with no figure keeps a stored row.
 
-### IMP-10 The one seeded-defect test that is missing
-- **Change:** CODE, one fixture, inside T-3's tests. The repository already seeds and catches the other defects the first version listed (FA-08): `scripts/tests/test_validate_evidence_state_2_4.py` (eleven seeded defects, the first "stated without a governing source"); `scripts/tests/test_evidence_cell_state_2_3.py:221` (a regulatory-only row above the weakest marker, also refused by the schema CHECK); `scripts/tests/test_assess_cell_pilot.py:843-858` (a demoted confirmer found by its marker; a corrected comparator found by its bounds; a retired row treated as history). All three are registered in the `tests` battery at advisory level. Absent: a determination whose governing rows carry another lens.
+### IMP-10 The two seeded-defect tests that are missing
+- **Change:** CODE, two fixtures. Of the five other defects the first version listed, four already have a seeded test (FA-08); the fifth, a retired row surfaced by a view, has none, and the first amendment of this entry wrongly said it had (the existing test is that a retired determination is not *stale*, a different defect): `scripts/tests/test_validate_evidence_state_2_4.py` (eleven seeded defects, the first "stated without a governing source"); `scripts/tests/test_evidence_cell_state_2_3.py:221` (a regulatory-only row above the weakest marker, also refused by the schema CHECK); `scripts/tests/test_assess_cell_pilot.py:843-858` (a demoted confirmer found by its marker; a corrected comparator found by its bounds; a retired row treated as history). All three are registered in the `tests` battery at advisory level. Absent: a determination whose linked figures carry another lens (inside T-3's tests), and a retired determination surfaced by a determination view (TD's AT-19).
 - **TD:** HS-A02, REQ-077. **BU:** HS-2 F-01.
 - **Reads it:** the `tests` battery. **Wrong thing:** the lens fix regresses unseen.
 - **Deps:** written before IMP-08 merges, so it is seen red first. **Layer:** 0. **Kind:** TOOLING. **AT:** AT-55. **Owner gate:** none.
 
 ### IMP-11 WITHDRAWN — identifiers allocated where rows land
 - **Change:** NOTHING. The first version said the engine "cannot determine two cells independently" and that "dynamic" meant one cell per merged pull request. That was wrong (FA-09). Four cells determined one after another on one scratch copy took `specification_id` 9 to 12 and gaps `GAP-103` and `GAP-104`, and `emit_batch_sql.py` captured them as one delta. Ids collide only between two separate copies of the same base, which is true of every id a `db.py` verb allocates on a scratch copy; the engine's emitted header already says to regenerate against the canonical database before replay (`scripts/assess/assess_cell.py:2183-2187`), and the workplan merges one pull request at a time (WR-1).
-- **What is not known:** whether two separately captured copies fail at replay. No leg ran `emit_data_migration.py` or `migrate_db.py`.
+- **Now known (stress run, `crosstopic.005`):** three separately captured batches fail at rebuild on `UNIQUE constraint failed: evidence_sources.ref_id`. The collision is real for parallel batches and is taken up, in its corrected form, as IMP-41.
 - **Convention that stands in its place:** one scratch copy per batch of cells; regenerate before replay.
 
 ### Wave 2 — typed causes for backward travel
 
 ### IMP-12 A gap that says what it is a gap in, and a search that says which gap caused it
-- **Change:** CODE (schema). `gaps` gains `parameter_id`, the four lens columns, `jurisdiction`, `language` (FKs where a table exists); `search_executions` gains `gap_id`. Then DELETE `gap_mining`, its verbs and audit.
+- **Change:** CODE (schema). `gaps` gains `parameter_id`, the four lens columns, `jurisdiction`, `language` (FKs where a table exists); `search_executions` gains `gap_id`. Nothing is deleted by this entry: `gap_mining`, its verbs and its audit become a deletion candidate under IMP-05's caller sweep, and they have callers (`git grep -l gap_mining -- scripts schemas governance skills .claude ':(exclude)scripts/migrations'`: the registry entry `gap_mining_audit`, two test files, `scripts/audit/graph/topology.py`, `scripts/audit/graph_audit.py`, `scripts/db.py`, `scripts/dbcore.py`, `skills/gap-driven-mining_SKILL.md` and governance files).
 - **TD:** REQ-040, REQ-014, B10, C-21. **BU:** BU §B.4; RENDER-CONTRACT E8 "BLOCKED: `gaps` has no parameter key".
 - **Reads it:** the engine (writes), `coverage`, render's Gaps element, IMP-35's cell status. **Wrong thing:** the book's stated gaps cannot be listed for a parameter or a group.
 - **Files:** a schema migration; `db.py add-gap`, `log-search`; `assess_cell.py:2225`. **Deps:** OD-11 only for which stage's contract carries it. **Layer:** 1–2. **Kind:** TOOLING. **AT:** AT-10, AT-73. **Risk:** 110 existing gaps have prose subjects; backfill is a RESEARCH task, not a migration guess. **Owner gate:** none.
@@ -283,10 +283,10 @@ Two parts, because they have different gates.
 - **TD:** REQ-009. **BU:** browser is read-only. **AT:** AT-20, AT-42. **Owner gate:** OD-20.
 
 ### IMP-40 The link table for several codes of one model
-- **Change:** CODE (schema), ruled and unbuilt. Owner: "link table unless that is more prone to errors" (PS:4926); ACTION (1) "Carry several codes of one model on a figure by a link table; do not write the figure once per combination" (PS:4941). The ledger leaves "the shape of the table, and what happens to the four lens columns" to a tooling pull request that precedes T-3 (PS:4938). The first version of this programme marked the requirement UNMET (HS-1 REQ-076) and carried no improvement for it (FA-05).
+- **Change:** CODE (schema), ruled and unbuilt. Owner: "link table unless that is more prone to errors" (PS:4926); ACTION (1) "Carry several codes of one model on a figure by a link table; do not write the figure once per combination" (PS:4941). The ledger gives "the shape of the table, and what happens to the four lens columns" to "the tooling PR" (PS:4934) and says T-3 and D-2 "can be designed, as a tooling pull request first" (PS:4938), which puts tooling before data. It does not say a link-table pull request precedes T-3, and the workplan's condition on T-3 ("settled by OR-1c before this PR opens") is met by the owner's answer. **Placing this entry before T-3, or inside it, is this leg's sequencing, not a citation.** The first version of this programme marked the requirement UNMET (HS-1 REQ-076) and carried no improvement for it (FA-05).
 - **TD:** REQ-076, REQ-073. **BU:** one column per model on figures and determinations.
 - **Reads it:** the engine's gather (IMP-08), `add-extraction`, D-2, IMP-20, render's lens controls. **Wrong thing:** a figure about two ICF codes is written twice or carries only one.
-- **Files:** a schema migration; `db.py add-extraction`, `amend-extraction`. **Deps:** T-2 (workplan order). **Layer:** 1. **Kind:** TOOLING. **AT:** AT-32. **Risk:** the owner's condition ("unless that is more prone to errors") was met by a measurement the ledger marks as the assistant's. **Owner gate:** none (ruled).
+- **Files:** a schema migration; `db.py add-extraction`, `amend-extraction`. **Deps:** none stated by the ledger or the workplan; this leg proposes it land with or just before T-3 so the gather is written once against the final shape. **Layer:** 1. **Kind:** TOOLING. **AT:** AT-32. **Risk:** the owner's condition ("unless that is more prone to errors") was met by a measurement the ledger marks as the assistant's. **Owner gate:** none (ruled).
 
 ### Research tasks the tooling unlocks (each its own pull request)
 - **R-1** Fill the medical lens by correspondence (HS-A03; `add-medical` exists). Owner gate: OD-15.
@@ -354,7 +354,7 @@ Answered on the record, and the first version cited the item the answer replaced
 **Recommendation:** after IMP-03.
 
 ### OD-18 What "all directions" covers
-Confirm the entry and re-entry conditions for judgment, synthesis, specification and render (TD §3 is inference), and whether an earlier stage's row may be updated to record later use (REQ-012 against live writers). **Recommendation:** allow status updates on earlier rows; forbid copying later facts into them.
+Confirm the cold-entry and re-entry conditions for judgment, synthesis, specification and render (TD §3 is inference), and whether an earlier stage's row may be updated to record later use (REQ-012 against live writers). The forward entry strings that IMP-03a corrects follow the owner's stated order (PS:1454) and are not part of this question. **Recommendation:** allow status updates on earlier rows; forbid copying later facts into them.
 
 ### OD-19 Conflict between groups in the engine
 Harm asymmetry and broadest benefit are canonical doctrine the engine does not apply. **Recommendation:** record conflicts and the rule applied as rows; the engine reads them only after the owner approves the rule's mechanical form.
@@ -399,6 +399,9 @@ _Amended (FA-04, FA-18). T-n and D-n are tasks of `workplan/2026-10-23-pipeline-
 | IMP-23 | script-aware guards; no list, no gate | coordinate with T-1a's numeral gloss; re-run `observation_verbatim_audit` |
 | IMP-12 | typed columns on `gaps`, `gap_id` on a search | existing gaps (`select count(*) from gaps`) are not back-filled by migration |
 | IMP-13 (two values) | the skimmed-figure and absence-finding reasons | the provisional and reader-question values wait on OD-10, OD-21 |
+| IMP-43 | `add-source` requires a verification standing and a source type | existing callers and skills that omit them (rule 4 sweep) |
+| IMP-44 | the claimed-number check compares numbers | coordinate with T-1a (the writer's refusals) and IMP-23; re-verify stored figures by report, not by rewrite |
+| IMP-45 | `delete-connection` refuses an id that is not a row | none |
 
 **Needs one owner reply:** IMP-01 (the O1–O8 wording).
 
@@ -407,7 +410,7 @@ _Amended (FA-04, FA-18). T-n and D-n are tasks of `workplan/2026-10-23-pipeline-
 | Wave | Contents | Kind | Waits on |
 |---|---|---|---|
 | **0** | IMP-02, 03a, 04, 06; IMP-01 after the owner's reply | TOOLING | IMP-01: one reply |
-| **1** | T-1a, T-6a/IMP-24, IMP-23; then T-2, IMP-40, IMP-08/09/10 | TOOLING | the chain above; IMP-09's stored-row question on OD-08 |
+| **1** | T-1a, T-6a/IMP-24, IMP-23, IMP-43, IMP-44, IMP-45; IMP-42 with the quantity-kind column of IMP-30, before any further parameter is minted; then T-2, IMP-40, IMP-08/09/10 | TOOLING | the chain above; IMP-09's stored-row question on OD-08; IMP-42's policy on OD-24 |
 | **2** | IMP-12, IMP-13; IMP-14 and IMP-03b | TOOLING | IMP-14: OD-21; IMP-03b: OD-18 and IMP-12 to 14; two IMP-13 values: OD-10, OD-21 |
 | **3** | IMP-17, IMP-22, IMP-25 (tooling); IMP-19 with its readers; then IMP-18, IMP-20, R-1, R-4 (data) | both, tooling first | IMP-18: OD-04; IMP-20: OD-14, IMP-40; R-1: OD-15; IMP-21: OD-03; IMP-25's shown titles: OD-02 |
 | **4** | IMP-29, IMP-30 (tables); IMP-34 (figure and term candidates), IMP-35, IMP-36 (token corrections) | TOOLING | IMP-30's rounding: OD-22; IMP-34 needs IMP-29, IMP-30; IMP-35 needs IMP-12 |
@@ -415,7 +418,7 @@ _Amended (FA-04, FA-18). T-n and D-n are tasks of `workplan/2026-10-23-pipeline-
 | **5** | IMP-37; IMP-38, IMP-39; IMP-07 once a render view exists | TOOLING | OD-01, OD-02, OD-08, OD-12, OD-20; OD-26 if an interim gate is wanted |
 | last | R-6, then R-5 | RESEARCH | IMP-08, IMP-40, IMP-20; C10 green for the cell |
 
-Withdrawn: IMP-11, IMP-16, OD-16. IMP-05 deletes nothing until a caller sweep has run.
+Withdrawn: IMP-11 (its subject returns, corrected, as IMP-41), IMP-16, OD-16. IMP-05 deletes nothing until a caller sweep has run.
 
 **Order rules.** Tooling before the rows that use it (rule 10). One pull request merges at a time (workplan WR-1). A schema change runs `joined_cells_census.py` before and after (CLAUDE.md §4) and `run_checks.py --selftest` after any rename. The gate is run once, when the diff is ready (CLAUDE.md §1). Nothing is added without the reader named in its entry existing or landing with it. The order T-1a → T-2 → T-3 is taken from the workplan (§5, §7); this leg did not test independently that it is forced.
 
@@ -430,9 +433,9 @@ TD's AT-01 to AT-49 stand, with AT-04 made conditional on OD-12. Red today was o
 | AT-50 | IMP-08 | On a scratch copy, every figure linked (any role) to the determination for parameter 3 × `MOB` carries the lens `MOB`, and the linked set is not empty. A fixture with two lens tags on one parameter asserts the same (IMP-10). | 122 linked figures, 6 of them not tagged `MOB` (`select l.role, x.identity_code, count(*) from specification_extraction_links l join source_value_extractions x using(extraction_id) … group by 1,2`). The first version tested parameter 3 × `DEAF`, which has no tagged figure and would pass having examined nothing after the fix (FA-17). |
 | AT-51 | IMP-08 | On a scratch copy, every figure linked to parameter 9 × `ALL` carries `ALL`, the set is not empty, and no `ALL`-tagged figure is linked to parameter 9 × `MOB`. | parameter 9 × `ALL`: 12 `ALL` figures and 4 `MOB` figures linked. (Parameter 3 holds no `ALL` figure.) |
 | AT-52 | IMP-09 | A cell whose lens no figure of the parameter carries yields no determination row (parameter 3 × `DEAF`). | a `provisional` row is stored. Rests on the ledger's unratified assumption for the general rule (PS:4630); the relevant-lens case is OD-08. |
-| AT-53 | IMP-07 | The registry holds the stage-pair gate and it exits non-zero when a path that exists is removed. | `grep -c walkability governance/check-registry.yaml` = 0 |
+| AT-53 | IMP-07 | The registry holds the stage-pair gate, and it exits non-zero while any stage pair prints `NO PATH` in either zigzag section of the instrument (the workplan's §8 items 6–7; the ruling at PS:4761). | no registry entry names the instrument (YAML load in HS-1 REQ-006); the instrument exits 0 over ten `NO PATH` lines. It cannot be green until the render pairs have a path (IMP-07), so it is red by construction if registered today. |
 | AT-54 | IMP-04 | Each of the four checks prints how many of the determinations it read are live and how many retired, and on `main` the live figure is 0; the `EXAMINED:` line and the registry floors are unchanged, and `run_checks.py --battery schema` gives the same verdict before and after. | no such line; `validate_evidence_state` prints "8 cells", `validate_verification_consistency` "5 stated/provisional specification(s)" |
-| AT-55 | IMP-10 | A seeded determination whose linked figures carry another lens turns a named test red. | no such fixture; the other seeded defects are already caught (`python3 scripts/tests/test_validate_evidence_state_2_4.py`) |
+| AT-55 | IMP-10 | Two seeded defects each turn a named test red: a determination whose linked figures carry another lens; a retired determination surfaced by a determination view. | neither fixture exists (`grep -rn "v_best_practice\|v_pending" scripts/tests` returns a fixture stub only); the other four seeded defects are already caught (`python3 scripts/tests/test_validate_evidence_state_2_4.py`; `test_evidence_cell_state_2_3.py:221`; `test_assess_cell_pilot.py:843-858`) |
 | AT-56 | — | WITHDRAWN (FA-09). Four cells on one scratch copy take distinct ids and capture as one delta; that is green today. Replay of two separate copies was not tested. | — |
 | AT-57 | IMP-18 | Every `lang_jur_map` row has a scope, and `v_research_scope` returns no scoped-out pair. | scope NULL on every row; view returns all |
 | AT-58 | IMP-17 | Every jurisdiction in `lang_jur_map` resolves in the vocabulary the writers read. | 17 do not |
@@ -453,7 +456,7 @@ TD's AT-01 to AT-49 stand, with AT-04 made conditional on OD-12. Red today was o
 | AT-73 | IMP-12 | Every gap the engine writes carries its parameter and lens; a search can name the gap that caused it. | no such columns |
 | AT-74 | IMP-24 | T-6a's done-when: `SELECT COUNT(DISTINCT language) FROM v_coverage_language` equals `SELECT COUNT(DISTINCT UPPER(language)) FROM search_executions WHERE deferred_reason IS NULL`; and `observe-term`, `add-alias`, `add-source` refuse a language the map does not hold. Stored history is not rewritten. | the two counts differ; the three writers do not refuse |
 | AT-75 | IMP-06 | Every prompt the ledger answers is marked answered. | OR-1c |
-| AT-76 | IMP-16 | Every live determination carries the current rule version and recomputes to its stored answer. | not red: 0 live rows; it is UNPROVEN until one exists |
+| AT-76 | — (was IMP-16, withdrawn) | Every live determination carries the current rule version and recomputes to its stored answer. | not red: 0 live rows; it is UNPROVEN until one exists |
 
 ---
 
@@ -498,3 +501,83 @@ The complete record, one row per objection with this leg's re-run evidence, is i
 | FA-31 | §0 | **amended** |
 | FA-32 | IMP-05 | **withdrawn**: the view is not a subset |
 | FA-34 | IMP-03 | **amended**: split into 03a (text) and 03b (schema change, Wave 2) |
+
+---
+
+## 7. Stress-test deltas (from `hs-stress-audit.md`, HS-5)
+
+Evidence tags are scenario names in `stress/results/<topic>/log.jsonl` and `stress/results2/*/log.jsonl`; behaviour ids (B-nn) are HS-5 §1.
+
+### IMP-41 Research batches are serial; say so where the second one is stopped
+- **Change:** CONVENTION, then the smallest CODE if the capture does not already refuse. Every id a verb allocates on a scratch copy is written into the batch as an explicit value, so two batches captured from one base collide (B-40: `UNIQUE constraint failed: evidence_sources.ref_id` at rebuild). The workplan already merges one pull request at a time (WR-1); what is missing is that a later research batch cannot be "renumbered" like a schema migration: its rows must be regenerated by re-running its verbs on a copy of the new `main`. The stop should come at capture, with that step named.
+- **TD:** REQ-001 (dynamic), REQ-019, REQ-090. **BU:** BU §C.1; HS-5 B-40. This is IMP-11's subject; IMP-11 was withdrawn on the ground that replay was untested, and the test has now been run.
+- **Reads it:** `emit_batch_sql.py`, `/run-pipeline`, `/session-open`. **Wrong thing:** two sessions research in parallel and the second session's verified rows are lost or re-typed from memory.
+- **Files:** `skills/run-pipeline_SKILL.md`; `scripts/research/emit_batch_sql.py` only if AT-101 is red. **Deps:** none. **Layer:** 1–2. **Kind:** TOOLING. **AT:** AT-101. **Risk:** low. **Owner gate:** none for the convention; OD-27 if parallel batches are wanted (that needs ids allocated at replay, which this programme does not propose unasked).
+
+### IMP-42 A term becomes a parameter only when it states what it measures
+- **Change:** CODE, small, with the quantity-kind column of IMP-30 (now split: IMP-30a the column and its vocabulary, IMP-30b units and conversion). `add-parameter` refuses a term with no quantity kind.
+- **TD:** REQ-034, REQ-099, HS-A14 (a parameter and its element are distinct terms, PS:612), REQ-098. **BU:** HS-5 B-05: `grab bar`, `Reach & manipulation`, `thermal comfort`, `jurisdictional accessibility standards` and `wheelchair propulsion` each became an active parameter in one command.
+- **Reads it:** `add-parameter`; `v_scan_ledger` (each parameter is one owed reading per source); the engine (each parameter is a determinable cell per lens). **Wrong thing:** an element or a method concept is "determined", fills the ledger with readings nobody owes, and appears as a pending cell with a gap.
+- **Files:** schema migration (one column, CHECK vocabulary); `scripts/db.py insert_parameter`. **Deps:** none. **Layer:** 1–2. **Kind:** TOOLING. **AT:** AT-77. **Risk:** the ten live parameters need a kind each, a small data change in its own pull request. **Owner gate:** none for the refusal; the vocabulary of kinds and the granularity policy are OD-24.
+
+### IMP-43 A source is written with its verification standing and its type, or not at all
+- **Change:** CODE, small. `add-source` refuses when `--verification-status` or `--source-type` is absent.
+- **TD:** REQ-051, REQ-023; `governance/research-contract.yaml:217-219` ("UNVERIFIED is a real value - say it"). **BU:** HS-5 B-12: two fixture sources written with `verification_status` NULL, one with `source_type` NULL.
+- **Reads it:** C10 of `test_db_integrity`, the engine's `_verified`, `metadata_integrity_audit`. **Wrong thing:** a source whose standing nobody stated is read as neither verified nor unverified.
+- **Files:** `scripts/db.py` (`add-source` dispatch). **Deps:** none. **Layer:** 2. **Kind:** TOOLING. **AT:** AT-78. **Risk:** skills and tests that call `add-source` without them (sweep first). **Owner gate:** none.
+
+### IMP-44 The claimed number is checked as a number
+- **Change:** CODE, small. `_require_verbatim` (`scripts/db.py:8559-8563`) takes the digit runs of `claimed_value` and asks whether each occurs anywhere in the quote after punctuation has been stripped. Compare instead the numbers the quote states, with their decimal position and grouping read before normalisation.
+- **TD:** REQ-023, CLAUDE.md §5(c). **BU:** HS-5 §2.3 item 1, tested on the live functions: `12` accepted against "1.2 m", `0.6` against "6.0 s", `8.33` against "83.3 %", `5` against "1:15 in 2015".
+- **Reads it:** `add-extraction`, `amend-extraction`, `derive-extraction`. **Wrong thing:** a figure with a shifted decimal point, under a quote that verifies, governs a determination.
+- **Files:** `scripts/db.py` (`_require_verbatim`, the CJK helpers), `scripts/research/retrieval_log.py` only for a number tokeniser. **Deps:** none; coordinate with T-1a and IMP-23. **Layer:** 2. **Kind:** TOOLING. **AT:** AT-79. **Risk:** locale formats (`1.234,56`, `1,50,000`, `12 500`) must be read, not refused; stored figures are re-checked by a report, not rewritten. **Owner gate:** none.
+
+### IMP-45 A delete that deletes nothing says so
+- **Change:** CODE, one refusal. `delete-connection` on an id that is not a row prints `{"deleted": …}` and exits 0 (B-42); `update-connection` on the same id refuses.
+- **TD:** REQ-021 ("not done" and "done" are different states), REQ-018. **BU:** HS-5 B-42.
+- **Reads it:** sessions that act on the printed result. **Wrong thing:** a session believes a wrong connection was removed.
+- **Files:** `scripts/db.py`. **Deps:** none. **Layer:** 2. **Kind:** TOOLING. **AT:** AT-100. **Owner gate:** none (whether hard deletion of a connection should exist at all is REQ-018's question and is not reopened here).
+
+### Changes to existing entries
+- **IMP-02** gains one mark: CLAUDE.md §1 "Use `--battery <name>`" becomes the form that runs (`--battery <name>` with `--kinds`, `--all` or `--changed-from`; B-53). AT-102.
+- **IMP-30** is split: IMP-30a (quantity kind on a parameter; Wave 1, with IMP-42) and IMP-30b (units and exact conversion as rows; OD-22 for rounding).
+- **IMP-04** is confirmed as a reporting fix: the diff-scoped gate on a copy of `main` is green with these checks counting retired rows (B-54).
+- **IMP-09, IMP-12, IMP-17, IMP-18, IMP-23, IMP-28** each now cite a stress reproduction (B-17, B-16, B-33, B-01 and B-34, B-31 and B-32, B-06).
+
+### OD-27 Are parallel research batches wanted?
+Today a batch's ids are fixed when it is captured, so two sessions working from one base cannot both land (B-40). Options: (a) serial batches, each later one regenerated on the new `main` (IMP-41); (b) ids allocated at replay, a change to the capture and migration tools and to how the engine's hash treats ids. **Recommendation:** (a) for now; (b) only if the owner wants several topics researched at once.
+
+### OD-24, extended
+The stress run shows the question is live at the writer: what may be promoted to a parameter (B-05). The vocabulary of quantity kinds, and whether a parameter must belong to an element, are part of the granularity policy.
+
+### New acceptance tests
+
+| ID | For | Test | Red today because |
+|---|---|---|---|
+| AT-77 | IMP-42 | On a scratch copy, `add-parameter --term-id TERM-008` (grab bar) and `--term-id TERM-075` (a legal concept) are refused. | both accepted (`base.add-parameter-existing-term` in the grabbar and method topics) |
+| AT-78 | IMP-43 | `add-source` with no `--verification-status`, or no `--source-type`, is refused; `select count(*) from evidence_sources where verification_status is null` stays 0. | accepted; two rows written with NULL (`cold.evidence.add-source-minimal`, `lateral.add-source-jurisdiction-UK`) |
+| AT-79 | IMP-44 | With a scan recorded, a claimed `12` against a quote stating "1.2 m", `0.6` against "6.0 s" and `5` against "1:15" are each refused; `1.2` against "1,2 m" is accepted. | the check accepts all four of the first kind (tested on the live functions; not yet through the writer, which needs a scan first) |
+| AT-100 | IMP-45 | `delete-connection` on an id that is not a row exits non-zero. | exits 0 and prints `{"deleted": "CON-1"}` (`chain.031`) |
+| AT-101 | IMP-41 | After batch A is applied to a clone's canonical copy, `emit_batch_sql.py` for batch B (captured from the old base) refuses and names regeneration. | UNPROVEN: not run; today the collision surfaces at rebuild (`crosstopic.005`) |
+| AT-102 | IMP-02 | Every command CLAUDE.md §1 prints runs as written on a scratch copy. | `run_checks.py --battery <name>` alone exits 2 (`tools.055` to `.064`) |
+
+### Preconditions, restated
+- **Before any further parameter is minted:** IMP-42 with IMP-30a.
+- **Before new extractions are written (R-2, R-3):** IMP-44, and IMP-23 for sources outside Latin script.
+- **Before a first live determination (R-5):** unchanged from §0: IMP-08 with IMP-40, IMP-20, R-6, and the blocking battery green on the scratch copy.
+- **Research batches:** one at a time (IMP-41).
+
+### Resolution record, confirmation pass (`fa-confirmation.md`)
+The rows of that file marked inaccurate that touch this programme, each re-run or re-read before disposal. The complete list is in `hs-adversarial-findings.md` §6.
+
+| Confirmation row | Disposition |
+|---|---|
+| D-04 · IMP-12 still ordered a deletion | **amended**: IMP-12 deletes nothing; callers listed by command |
+| D-04 · IMP-03a ungated while OD-18 asked the same strings | **amended**: OD-18 asks cold-entry and re-entry conditions only |
+| D-05 · IMP-40 and §0 attributed an order to the ledger | **amended**: stated as this leg's sequencing; PS:4934 and PS:4938 quoted for what they say |
+| D-06 · AT-76 "For: IMP-16" | **amended** |
+| D-08 · "already seeds the other defects" | **amended**: four of five; IMP-10 is two fixtures; AT-55 restated |
+| D-12 · AT-53 not restated | **amended** to the ruled gate |
+| D-02 · "four governing sources" for every provisional cell | **amended**: parameter 3 four, parameter 12 one |
+| D-21 · "the owner's 'yes'" | **amended**: "Taken from the prompt's 'yes'" |
+| D-12 · IMP-07's dependency on a mapped view | **upheld as unverifiable**: marked [U] in the entry |

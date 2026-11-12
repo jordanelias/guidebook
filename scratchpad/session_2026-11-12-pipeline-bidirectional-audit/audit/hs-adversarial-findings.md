@@ -19,7 +19,7 @@ _Amended 2026-11-12 after an independent antagonist pass (`fa-antagonist-objecti
 - at the end of the first pass: the same.
 - before and after the resolution pass (further engine runs and the check runs of §5, all on fresh copies under `…/scratchpad/hs2/`): `c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`.
 
-All stress tests ran on copies under `/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/hs/`. Audits were pointed at a copy with `GUIDEBOOK_DB_PATH` inline. No repository file other than the four `hs-*.md` outputs was written; no git command that changes state was run.
+All stress tests ran on copies under `/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/hs/`. Audits were pointed at a copy with `GUIDEBOOK_DB_PATH` inline. In the first pass no repository file other than the four `hs-*.md` outputs was written. Later passes also wrote `fa-corrections-for-suite.md`, `hs-stress-audit.md` and `stress/RETAINED.md`, and annotated one sentence of `bu-capability-inventory.md`. No git command that changes state was run in any pass.
 
 Counts in this file: findings `grep -c '^### F-' <this file>`; corrections `grep -c '\[CORRECTION' <this file>`; claims re-verified `grep -c '^| V[0-9]' <this file>`; antagonist objections by severity and disposition, the commands at the head of §5.
 
@@ -130,7 +130,7 @@ Also: the C-03 reading; C-09's "evidence stage" reading (the ledger marks it `[A
 
 ### F-18 BU's blind spots.
 - No blocking check run (`migration_reproducibility`, `test_db_integrity`, `schema_reference_audit`, `research_dod_session`); `validate_evidence_state` now run here.
-- No negative test run by the leg; no verb exercised on a scratch copy except the engine; no capture → migration → rebuild round trip. The repository itself holds seeded-defect tests the leg did not find: `scripts/tests/test_validate_evidence_state_2_4.py` (run here: eleven seeded defects caught, `ALL PASS`), `scripts/tests/test_evidence_cell_state_2_3.py:221`, `scripts/tests/test_assess_cell_pilot.py:843-858` (run here: `PASS: all pilot-engine branch tests`). None seeds a wrong-lens determination.
+- No negative test run by the leg; no verb exercised on a scratch copy except the engine; no capture → migration → rebuild round trip. The repository itself holds seeded-defect tests the leg did not find, covering four of the five other defects this leg first proposed to seed (a retired row surfaced by a view has none): `scripts/tests/test_validate_evidence_state_2_4.py` (run here: eleven seeded defects caught, `ALL PASS`), `scripts/tests/test_evidence_cell_state_2_3.py:221`, `scripts/tests/test_assess_cell_pilot.py:843-858` (run here: `PASS: all pilot-engine branch tests`). None seeds a wrong-lens determination.
 - `assess_cell.determine` read to line 1598 of about 1770; `classify`, `derivation_handshake`, `_confirmed_bands` unread.
 - Skills unread except `run-pipeline`. Now measured: `skill_vocabulary_audit` → `FAIL: 76 token(s) in 18 file(s)`; `multilingual-research` names `best_practice_synthesis`, `co1_pass_summary`, `jurisdiction_coverage`, `native_aliases`; `cross-population-conflict-mapper` teaches `DBL, MCAS, NEU, OFS, POTS, SENS, VIS`. The two skills that operate D3 research and conflict mapping presuppose structures and codes that no longer exist.
 - `workplan/` and hooks unread (F-03, F-12).
@@ -202,14 +202,14 @@ Also: the C-03 reading; C-09's "evidence stage" reading (the ledger marks it `[A
 ### 2.7 Commands used for figures new to this leg
 
 ```
-# retained artefacts per live source: (live, with a file on disk, with ANY derived record, with none).
-# The third figure is not "a text layer": tally r.get('derivation_kind') per source to separate
-# text-extraction and extraction records from page renders and bibliography extracts (FA-11).
+# retained artefacts per live source: prints (live, with a file on disk, with a text-extraction or
+# extraction record, with only other derived records, with none). A page render or a bibliography
+# extract is not a text layer (FA-11).
 python3 -I - <<'PY'
 import sqlite3, json, glob, os, collections
 c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
 live={r[0] for r in c.execute("select ref_id from evidence_sources where superseded_by_ref_id is null")}
-disk,derived=set(),set()
+disk,text,other=set(),set(),set()
 for m in glob.glob('retrieval-log/*/manifest.jsonl'):
     for line in open(m,encoding='utf-8'):
         try: r=json.loads(line)
@@ -219,8 +219,9 @@ for m in glob.glob('retrieval-log/*/manifest.jsonl'):
         a=r.get('artefact') or ''
         p=a if os.path.exists(a) else os.path.join(os.path.dirname(m), os.path.basename(a))
         if os.path.exists(p): disk.add(ref)
-        if r.get('derived_from'): derived.add(ref)
-print(len(live), len(disk), len(derived), len(live-disk))
+        if r.get('derived_from'):
+            (text if r.get('derivation_kind') in ('text-extraction','extraction') else other).add(ref)
+print(len(live), len(disk), len(text), len(other-text), len(live-disk))
 PY
 # lens tags of the governing rows of a scratch determination
 #   select x.identity_code, count(*) from specification_extraction_links l join source_value_extractions x using(extraction_id)
@@ -249,13 +250,13 @@ PY
 
 ## 4. What this leg could not read or run
 
-_Added by the resolution pass:_ `test_db_integrity`, `validate_verification_consistency`, `adjudication_integrity`, the three test files named in F-18 and `emit_batch_sql.py` were run on scratch copies. Still not run: `emit_data_migration.py`, `migrate_db.py`, `run_checks.py` in any mode. Not established: which retained artefacts are a source's full text; whether the workplan's task order (T-1a → T-2 → T-3) is forced or only planned.
+_Added by the resolution pass:_ `test_db_integrity`, `validate_verification_consistency`, `adjudication_integrity`, the three test files named in F-18 and `emit_batch_sql.py` were run on scratch copies. The stress run then exercised `emit_data_migration.py`, `migrate_db.py --rebuild`, `run_checks.py --selftest` and `run_checks.py --changed-from origin/main --explain` on scratch copies (HS-5 B-38, B-40, B-54). Still not run by anyone: `run_checks.py --all`, a single battery, `research_dod_session` on its own. Not established: which retained artefacts are a source's full text; whether the workplan's task order (T-1a → T-2 → T-3) is forced or only planned.
 
 
 - `sessions/` was not read; searches there were by `grep -r` on chosen terms only. No ruling is reported absent on that basis.
 - `governance/evidence-methodology.md`, `time-model.md`, `tier-system.md`, `conceptual-model.md`: cited sections located by grep, not read through.
 - `scripts/db.py` and `assess_cell.py`: the gather functions, the name screens and the verb list were read; the rest was not.
-- Not run: `run_checks.py` in any mode, `migration_reproducibility`, `test_db_integrity`, `schema_reference_audit`, the capture and migration tools, any `db.py` write verb.
+- Not run by this leg: `run_checks.py` in any mode, `migration_reproducibility`, `schema_reference_audit`, `emit_data_migration.py`, `migrate_db.py`, any `db.py` write verb. (`test_db_integrity` and `emit_batch_sql.py` were run in the resolution pass; the stress run exercised the write verbs and the migration tools, HS-5.)
 - `origin/ramp-spec-pages-work` (the old static generator) was not fetched.
 
 ---
@@ -308,3 +309,36 @@ A row with two dispositions (amended, and one part referred or withdrawn) is cou
 | FA-32 | minor | `v_item_provenance` is not a subset (subject) | view bodies read; on the four-cell copy the two views return different counts | **withdrawn**: the deletion |
 | FA-33 | minor | brief: "three audit files"; appends after a closed round; scratchpad outputs (consistency) | read | **amended**: HS-4 §0, §2 order, §1.1 item 8 |
 | FA-34 | minor | `re_entry:` is a code change (existence) | `grep -n extra schemas/pipeline_contract.py` | **amended**: IMP-03 split |
+
+---
+
+## 6. Resolution record, confirmation pass (`fa-confirmation.md`)
+
+The antagonist's confirmation found the amended files accurate enough to build on and listed rows marked inaccurate (count: `grep -c '^|.*| inaccurate |' fa-confirmation.md`; by severity `grep -c '| material |$'` and `grep -c '| minor |$'` on the same file). Each was re-run or re-read by this leg. All held. Tally of this table: `grep -c -E '^\| K-[0-9]{2} \| material ' hs-adversarial-findings.md`, and the same with `minor`.
+
+| # | severity | row of `fa-confirmation.md` | re-run evidence | disposition |
+|---|---|---|---|---|
+| K-01 | material | D-04: IMP-12 still orders "DELETE `gap_mining`" | `git grep -l gap_mining -- scripts schemas governance skills .claude ':(exclude)scripts/migrations'` returns the registry, two test files, two graph scripts, `db.py`, `dbcore.py`, a skill and governance files | **amended**: HS-3 IMP-12, HS-1 §7 |
+| K-02 | material | S5: FC §4 incomplete | read against the 28 rows | **amended**: FC §4 rebuilt row by row |
+| K-03 | material | D-12: AT-53 not restated | read | **amended**: AT-53 states the ruled gate |
+| K-04 | material | D-05: IMP-40 and §0 cite an order the ledger does not state | PS:4934, PS:4938 re-read | **amended**: marked as this leg's sequencing in HS-3 IMP-40, §0, and FC C-07 |
+| K-05 | material | D-08: "already seeds the other defects" | `grep -rn "v_best_practice\|v_pending" scripts/tests` returns a fixture stub only | **amended**: HS-3 IMP-10 and AT-55, HS-2 F-18, FC C-10: four of five; two fixtures missing |
+| K-06 | minor | D-02: parameter 12 fails C10 on one source | fresh 12 × `MOB` copy: the R-6 query returns `REF-01016` only | **amended**: HS-1 REQ-024, HS-3 §0 |
+| K-07 | minor | D-04: IMP-03a against OD-18 | read | **amended**: OD-18 narrowed |
+| K-08 | minor | D-06: AT-76 "For: IMP-16"; FC C-08 on AT-20 | read | **amended** |
+| K-09 | minor | D-09: HS-1 REQ-019 calls the collision a defect | read; and the stress run's `crosstopic.005` | **amended**: stated as the property of a scratch copy, with the stress evidence |
+| K-10 | minor | D-12: brief's paraphrase of PS:4761 | `sed -n 4761p` | **amended**: HS-4 Document 2 |
+| K-11 | minor | D-15: FC C-17 points at commands that are not there | read | **amended**: FC C-17 carries both commands |
+| K-12 | minor | D-16: "three permitted searches" against a fourth | read | **amended**: four, the `sessions/` search named |
+| K-13 | minor | D-17: Document 3 lacks the 9 × `MOB` run | read | **amended** |
+| K-14 | minor | D-20: "three governance files" | the command returns four | **amended**: no number |
+| K-15 | minor | D-21: three warrant labels | `sed -n '4542p;4667p'` | **amended**: HS-3 IMP-08, HS-4 §0 and Document 2 |
+| K-16 | minor | D-28: Document 2 points at `queue` | YAML load: prompts under `decisions` | **amended** |
+| K-17 | minor | D-33: "four rounds"; document 7's ids have no fold round | read | **amended**: six steps, Round 4b added |
+| K-18 | minor | S4: Document 4's wave scope | read | **amended**: covers the doable-now table |
+| K-19 | minor | S5: FC C-04 "nothing is deleted" and its affected ids | read | **amended** |
+| K-20 | minor | S5: FC §3 omits OD-23 and AT-53 from "restated" | read | **amended** |
+| K-21 | minor | S6: the §2.7 command prints 23, not 20 and 3 | amended command run: `58 48 20 3 10` | **amended**: the command now tallies the derivation kind |
+| K-22 | minor | HS-2 line 22 and §4 stale sentences | read | **amended** |
+
+The one row marked unverifiable (IMP-07's dependency on a mapped render view) is carried as [U] in the entry.
