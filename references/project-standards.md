@@ -5379,3 +5379,20 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session placing translation, or any other default behaviour, in a stage, or judging whether a stated rule is hard-coding.
 ACTION: (1) Hold a default behaviour, including "synthesis translates", as a rule in one stated place and read it from there. (2) Do not scatter it as a literal or a name-branch in code. (3) Keep the capability callable from other stages. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner delegation 2026-11-12 — twenty of the standing owner decisions are delegated to an Opus-class model, to be resolved by three stated criteria
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`). The owner asked how many of the standing owner decisions (OD-01 to OD-30 of `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`, OD-16 withdrawn) a model could resolve "if granted permission with the criteria being whatever is best for (1) long-term integrity of project in terms of accuracy, academic rigour and provenance, (2) making information legible for different user types, and (3) ensuring comprehensive coverage across all disability lenses, ethical approaches and universal/population/individual design modes". The assistant answered that 20 of 29 could be resolved by those criteria and 9 could not; the owner replied. Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "I guess opus can do it"
+
+**What this delegates.** Resolution of the twenty decisions listed below, by an Opus-class model, judged against the owner's three criteria above. The set, by the register's own numbering: OD-01, OD-02, OD-03, OD-05, OD-06, OD-07, OD-08, OD-10, OD-11, OD-12, OD-14, OD-18, OD-20, OD-21, OD-22, OD-24, OD-25, OD-26, OD-29, OD-30.
+
+**What it does not delegate.** OD-04, OD-09, OD-13, OD-15, OD-17, OD-19, OD-23, OD-27 and OD-28 remain the owner's: they turn on what the owner's own earlier answer covered or said (OD-04, OD-28), the owner's acts (OD-13, OD-17), licensing (OD-15, OD-23), the project's trajectory and control (OD-09, OD-27), and the weighing of one group's harm against another's under the owner's CRPD posture (OD-19).
+
+**How a delegated resolution is held.** (a) It is recorded as a delegated resolution, never as the owner's words, with the criterion that decided it and what would change it; (b) it is reversible by the owner at any time and stands until then; (c) an interpretation of the owner's own words (OD-06, OD-18, OD-20, OD-29) is a defensible reading and not a statement of what the owner meant; (d) OD-01, OD-02, OD-12 and OD-14 are checked by a second, independent Opus-class instance before they are relied on; (e) a resolution never overrides a standing owner ruling, and where the criteria conflict with one it is referred back as still the owner's. [ASSUMPTION: the owner's numbering of the criteria is their order of priority (1, then 2, then 3), and "I guess opus can do it" is read as accepting the assistant's list of twenty and its conditions (a) to (e); both are unratified.]
+
+CONDITION: any session asking whether one of the twenty decisions is answered, or relying on a resolution of one.
+ACTION: (1) Treat a delegated resolution recorded below, once it is, as the standing answer to its decision until the owner reverses it, and cite it as delegated. (2) Do not treat the nine reserved decisions as delegated. (3) Do not use a delegated resolution to override a standing owner ruling. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner delegation, quoted above.
