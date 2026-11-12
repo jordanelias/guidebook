@@ -1,0 +1,68 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+tools.001.audit.adherence_log_audit	0	0.26	0	adherence_log_audit.py run bare on a scratch DB: examines something, or says what it needs	============================================================
+tools.002.audit.adjudication_integrity	0	0.03	0	adjudication_integrity.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.003.audit.adversarial_pass_audit	2	0.03	0	adversarial_pass_audit.py run bare on a scratch DB: examines something, or says what it needs	usage: adversarial_pass_audit.py --session <session-stem-or-.md>
+tools.004.audit.alias_provenance_audit	0	0.04	0	alias_provenance_audit.py run bare on a scratch DB: examines something, or says what it needs	==========================================================================
+tools.005.audit.batch_capture_report	2	0.03	0	batch_capture_report.py run bare on a scratch DB: examines something, or says what it needs	batch_capture_report.py: error: the following arguments are required: --session
+tools.006.audit.citation_mining_completeness	0	0.03	0	citation_mining_completeness.py run bare on a scratch DB: examines something, or says what it needs	=== Citation-mining completeness audit ===
+tools.007.audit.claims_docket	0	0.03	0	claims_docket.py run bare on a scratch DB: examines something, or says what it needs	usage: claims_docket.py [-h] [--base BASE] [--docket DOCKET] [--selftest]
+tools.008.audit.claude_md_spine	0	0.06	0	claude_md_spine.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 7 contract stage(s) against 1 SPINE line
+tools.009.audit.column_vocabulary_audit	0	0.04	0	column_vocabulary_audit.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 56 tables, 818 columns, 4 roles
+tools.010.audit.db_path_env_audit	0	0.48	0	db_path_env_audit.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.011.audit.derivation_handshake_integrity	0	0.16	0	derivation_handshake_integrity.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.012.audit.derived_not_curated_audit	0	2.95	0	derived_not_curated_audit.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 2 argparse choices= literal(s) across 1 writer file(s), against 95 live CHECK vocabular(ies); 31 row dict(s) against the columns o
+tools.013.audit.extraction_follow_up_audit	0	0.04	0	extraction_follow_up_audit.py run bare on a scratch DB: examines something, or says what it needs	extraction_follow_up_audit — open follow-ups; live values resting on one
+tools.014.audit.extraction_relations_integrity	0	0.02	0	extraction_relations_integrity.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 271  (214 source_value_extractions row(s), 57 extraction_relations edge(s), 0 v_derived_figure_check row(s))
+tools.015.audit.gap_mining_audit	0	0.03	0	gap_mining_audit.py run bare on a scratch DB: examines something, or says what it needs	====================================================================
+tools.016.audit.graph_audit	0	2.22	0	graph_audit.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.017.audit.identifier_floor_audit	0	0.26	0	identifier_floor_audit.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 3 identifier floor(s) against 226 committed migration file(s)
+tools.018.audit.joined_cells_census	0	0.14	0	joined_cells_census.py run bare on a scratch DB: examines something, or says what it needs	access_needs.design_obligation                  rows=   17 json=   0 delimited=  12 appended=   0  e.g. 'Be perceivable and operable without
+tools.019.audit.judgment_handoff_shape	0	0.02	0	judgment_handoff_shape.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 3 invariant(s) of the evidence->judgment hand-off
+tools.020.audit.jurisdiction_db_vocabulary	0	0.03	0	jurisdiction_db_vocabulary.py run bare on a scratch DB: examines something, or says what it needs	Rejected spellings, read from governance/jurisdiction-philosophy.md: {'GB': 'UK'}
+tools.021.audit.matrix_consistency	0	0.02	0	matrix_consistency.py run bare on a scratch DB: examines something, or says what it needs	aggregate × person      doc=DOWN-WEIGHTED  code=DOWN-WEIGHTED  OK
+tools.022.audit.medical_lens_integrity	0	0.06	0	medical_lens_integrity.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.023.audit.metadata_integrity_audit	1	0.02	0	metadata_integrity_audit.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.024.audit.migration_reproducibility	0	0.06	0	migration_reproducibility.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.025.audit.observation_verbatim_audit	0	1.9	0	observation_verbatim_audit.py run bare on a scratch DB: examines something, or says what it needs	observation_verbatim_audit — is each observation's quote in its own source?
+tools.026.audit.pipeline_contract_audit	0	0.21	0	pipeline_contract_audit.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.027.audit.provenance_artefact_audit	2	0.05	0	provenance_artefact_audit.py run bare on a scratch DB: examines something, or says what it needs	provenance_artefact_audit.py: error: the following arguments are required: --mode
+tools.028.audit.readonly_db_open_audit	0	0.65	0	readonly_db_open_audit.py run bare on a scratch DB: examines something, or says what it needs	======================================================================
+tools.029.audit.rename_insurance	2	0.03	0	rename_insurance.py run bare on a scratch DB: examines something, or says what it needs	rename_insurance.py: error: need --snapshot or --compare
+tools.030.audit.research_batch_dod	2	0.05	0	research_batch_dod.py run bare on a scratch DB: examines something, or says what it needs	research_batch_dod.py: error: give --session <id> or --all
+tools.031.audit.research_protocol_audit	1	0.02	0	research_protocol_audit.py run bare on a scratch DB: examines something, or says what it needs	============================================================
+tools.032.audit.research_tooling_separation	1	0.19	0	research_tooling_separation.py run bare on a scratch DB: examines something, or says what it needs	Changeset vs origin/main: 605 path(s)
+tools.033.audit.retired_vocabulary_audit	1	14.94	0	retired_vocabulary_audit.py run bare on a scratch DB: examines something, or says what it needs	==========================================================================
+tools.034.audit.scan_debt	1	0.04	0	scan_debt.py run bare on a scratch DB: examines something, or says what it needs	scan_debt — (source x active parameter) pairs not yet read in full
+tools.035.audit.schema_reference_audit	0	0.26	0	schema_reference_audit.py run bare on a scratch DB: examines something, or says what it needs	EXAMINED: 1125 SQL identifier references in 188 files against 80 live tables and views
+tools.036.audit.search_log_completeness	2	0.05	0	search_log_completeness.py run bare on a scratch DB: examines something, or says what it needs	search_log_completeness.py: error: the following arguments are required: --session
+tools.037.audit.skill_vocabulary_audit	1	0.53	0	skill_vocabulary_audit.py run bare on a scratch DB: examines something, or says what it needs	skill_vocabulary_audit — every value a skill, command or agent names resolves to a home
+tools.038.audit.source_slug_links_duplicates	0	0.03	0	source_slug_links_duplicates.py run bare on a scratch DB: examines something, or says what it needs	=== source_slug_links duplicate audit ===
+tools.039.audit.supersession_backpointer_audit	0	0.13	0	supersession_backpointer_audit.py run bare on a scratch DB: examines something, or says what it needs	SUPERSEDES lines found (ledger + decisions/*.md): 11
+tools.040.audit.verified_scan_integrity	1	0.03	0	verified_scan_integrity.py run bare on a scratch DB: examines something, or says what it needs	verified_scan_integrity — every live extraction rests on a VERIFIED source and a reading (OR-11a)
+tools.041.validate.validate_cross_refs	0	0.05	0	validate_cross_refs.py bare	WARN [sessions/handoff-next-session.md]: UNDETERMINED: HEAD 804a4bf is not in this clone, but the clone is SHALLOW — history cannot answer w
+tools.042.validate.validate_evidence_state	0	0.16	0	validate_evidence_state.py bare	EXAMINED: 13
+tools.043.validate.validate_jurisdiction	0	0.07	0	validate_jurisdiction.py bare	WARN  registry: Block 2: SUPERSEDED — ISO 21542:2011 in ISO requires update before publication
+tools.044.validate.validate_parameters	0	0.05	0	validate_parameters.py bare	P2: 0 catalogue-minted term(s) checked against the ledger
+tools.045.validate.validate_schema	0	0.03	0	validate_schema.py bare	ENTITY_REGISTRY declares no entity type, so there is no YAML entity corpus to validate. This is an empty scope, not a configuration fault. R
+tools.046.validate.validate_verification_consistency	0	0.03	0	validate_verification_consistency.py bare	OK verification-consistency: 5 stated/provisional specification(s) consistent (/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be
+tools.047.validate.doctrine_recheck	1	0.17	0	doctrine_recheck.py bare	Doctrine snapshot 2026-11-12 04:47: 11 CANONICAL govs · 8 CANONICAL rules · 102 BPC files
+tools.048.research.emit_batch_sql.help	0	0.04	0	emit_batch_sql.py --help	usage: emit_batch_sql.py [-h] [--scratch SCRATCH] [--canonical CANONICAL]
+tools.049.research.full_text.help	0	0.05	0	full_text.py --help	usage: full_text.py [-h] --ref-id REF_ID --session SESSION
+tools.050.research.mining_screen.help	0	0.05	0	mining_screen.py --help	usage: mining_screen.py [-h] [--ref REF] [--all] [--screen SCREEN] [--compare]
+tools.051.research.page_image.help	0	0.05	0	page_image.py --help	usage: page_image.py [-h] --artefact ARTEFACT --session SESSION --pages PAGES
+tools.052.research.retrieval_log.help	0	0.07	0	retrieval_log.py --help	usage: retrieval_log.py [-h] --session SESSION [--verify-authors] [--backfill]
+tools.053.research.mining_screen.compare	0	0.06	0	citation-mining screens compared over deposited references	ref           refs  provenance                slope-loose              slope-strict  slope-strict-plus-motion
+tools.054.registry.list	0	0.1	0	registry + quarantine, runs nothing	id                                       battery      level          kinds
+tools.055.registry.battery.syntax	2	0.1	0	battery syntax on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.056.registry.battery.structure	2	0.08	0	battery structure on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.057.registry.battery.data	2	0.1	0	battery data on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.058.registry.battery.db_integrity	2	0.12	0	battery db_integrity on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.059.registry.battery.schema	2	0.1	0	battery schema on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.060.registry.battery.governance	2	0.09	0	battery governance on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.061.registry.battery.attestation	2	0.13	0	battery attestation on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.062.registry.battery.research	2	0.1	0	battery research on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.063.registry.battery.render	2	0.12	0	battery render on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.064.registry.battery.tests	2	0.1	0	battery tests on the scratch DB	run_checks.py: error: give one of --all, --kinds, or --changed-from
+tools.065.registry.selftest	0	0.62	0	selftest (where a rename fails)	==============================================================================
+tools.066.registry.changed-from-main	0	112.44	0	diff-scoped gate against origin/main, explained	==============================================================================
+tools.067.tools.repo-tree-changed-by-tools	0	0	0	no tool wrote into the repository tree outside scratchpad/transcripts	{"before": "", "after": "", "changed": false}

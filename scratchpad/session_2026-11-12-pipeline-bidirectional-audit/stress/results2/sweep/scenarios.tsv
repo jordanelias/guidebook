@@ -1,0 +1,74 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+sweep.001.verb.add-alias	0	0.19	0	add-alias: mechanically-built required args from real DB values; --dry-run	{
+sweep.002.verb.add-candidate	1	0.17	0	add-candidate: mechanically-built required args from real DB values; --dry-run	REFUSING: add-candidate: locator carries no single DOI, so surfaced_quote is required.
+sweep.003.verb.add-case-study	0	0.17	0	add-case-study: mechanically-built required args from real DB values; --dry-run	{
+sweep.004.verb.add-code-lead	0	0.13	0	add-code-lead: mechanically-built required args from real DB values; --dry-run	{
+sweep.005.verb.add-conflict	1	0.16	0	add-conflict: mechanically-built required args from real DB values; --dry-run	REFUSING: add-conflict --pop-a: conflicts.pop_a='STRESS-FIXTURE' has no matching row in base_taxonomy_identity.identity_code. A reference mu
+sweep.006.verb.add-connection	1	0.14	0	add-connection: mechanically-built required args from real DB values; --dry-run	REFUSING: a connection needs at least one target: --parameter, --target-slug, --identity, --extraction or --methodology. Nothing was written
+sweep.007.verb.add-economics-entry	1	0.18	0	add-economics-entry: mechanically-built required args from real DB values; --dry-run	REFUSING: insert_economics_entry: economics_entries.pillar does not accept 'STRESS-FIXTURE'. The schema's own CHECK declares: ['construction
+sweep.008.verb.add-extraction	1	0.13	0	add-extraction: mechanically-built required args from real DB values; --dry-run	REFUSING: add-extraction: no source_scans row covers REF-00985 for parameter 3. Record the reading first -- db.py record-scan --ref-id REF-0
+sweep.009.verb.add-gap	0	0.16	0	add-gap: mechanically-built required args from real DB values; --dry-run	{
+sweep.010.verb.add-gap-mining	2	0.16	0	add-gap-mining: mechanically-built required args from real DB values; --dry-run	db.py add-gap-mining: error: argument --candidates-returned: invalid int value: 'STRESS-FIXTURE'
+sweep.011.verb.add-icf-code	1	0.18	0	add-icf-code: mechanically-built required args from real DB values; --dry-run	REFUSING: d450 is already in base_icf (title 'Walking'). One row per code — a second is the dual home rule 5 forbids. To add or correct a ti
+sweep.012.verb.add-locator	1	0.21	0	add-locator: mechanically-built required args from real DB values; --dry-run	        OR standard_number IS NOT NULL OR title IS NOT NULL
+sweep.013.verb.add-medical	1	0.17	0	add-medical: mechanically-built required args from real DB values; --dry-run	A digit here would produce a token matching the prior-version item-code shape [A-Z]-NN that CLAUDE.md §7 warns every grep still meets. That 
+sweep.014.verb.add-parameter	1	0.16	0	add-parameter: mechanically-built required args from real DB values; --dry-run	Key the determination on parameter_id 3.
+sweep.015.verb.add-population-icf-link	0	0.16	0	add-population-icf-link: mechanically-built required args from real DB values; --dry-run	{
+sweep.016.verb.add-population-match	1	0.16	0	add-population-match: mechanically-built required args from real DB values; --dry-run	REFUSING: target_population '1' is not in `base_taxonomy_identity`.
+sweep.017.verb.add-source	2	0.18	0	add-source: mechanically-built required args from real DB values; --dry-run	db.py: error: add-source needs --author (repeatable, preferred) or --authors
+sweep.018.verb.add-supersession-check	2	0.16	0	add-supersession-check: mechanically-built required args from real DB values; --dry-run	{"error": "--search-strategy is not valid JSON: Expecting value: line 1 column 1 (char 0)"}
+sweep.019.verb.add-term	1	0.16	0	add-term: mechanically-built required args from real DB values; --dry-run	Name the PARAMETER, not the value: 'corridor width', not 'corridor width >=1200 mm'. The value belongs in the determination.
+sweep.020.verb.adjudicate-term	0	0.17	0	adjudicate-term: mechanically-built required args from real DB values; --dry-run	{
+sweep.021.verb.amend-extraction	1	0.14	0	amend-extraction: mechanically-built required args from real DB values; --dry-run	REFUSING: amend-extraction: source_value_extractions.comparator does not accept 'STRESS-FIXTURE'. The schema's own CHECK declares: ['<', '<=
+sweep.022.verb.amend-gap	0	0.13	0	amend-gap: mechanically-built required args from real DB values; --dry-run	{
+sweep.023.verb.amend-population-match	1	0.19	0	amend-population-match: mechanically-built required args from real DB values; --dry-run	REFUSING: 1: no such population match.
+sweep.024.verb.amend-search	0	0.16	0	amend-search: mechanically-built required args from real DB values; --dry-run	{
+sweep.025.verb.amend-source	1	0.16	0	amend-source: mechanically-built required args from real DB values; --dry-run	REFUSING: REF-00985: 'STRESS-FIXTURE' is not an amendable judgement field. Amendable: co1_provenance, co1_source_type, grey_reason, verifica
+sweep.026.verb.amend-term	0	0.2	0	amend-term: mechanically-built required args from real DB values; --dry-run	{
+sweep.027.verb.annotate-parameter	0	0.23	0	annotate-parameter: mechanically-built required args from real DB values; --dry-run	{
+sweep.028.verb.close-adversarial-pass	0	0.17	0	close-adversarial-pass: mechanically-built required args from real DB values; --dry-run	{
+sweep.029.verb.close-gap	1	0.15	0	close-gap: mechanically-built required args from real DB values; --dry-run	REFUSING: status must start with CLOSED, got 'STRESS-FIXTURE'
+sweep.030.verb.conflicts	0	0.17	0	conflicts: mechanically-built required args from real DB values; real run on a fresh copy	[]
+sweep.031.verb.connections	0	0.19	0	connections: mechanically-built required args from real DB values; real run on a fresh copy	[]
+sweep.032.verb.correct-source	1	0.17	0	correct-source: mechanically-built required args from real DB values; --dry-run	REFUSING: REF-00985: cannot correct STRESS-FIXTURE — this writer rewrites only fields retrieval_log --verify-authors can prove: article_numb
+sweep.033.verb.coverage	0	0.17	0	coverage: mechanically-built required args from real DB values; real run on a fresh copy	{
+sweep.034.verb.decline-parameter	1	0.17	0	decline-parameter: mechanically-built required args from real DB values; --dry-run	Retiring a parameter is a different act on parameter 3's own row, not a declination. Nothing was written.
+sweep.035.verb.delete-connection	0	0.18	0	delete-connection: mechanically-built required args from real DB values; --dry-run	{
+sweep.036.verb.derive-extraction	2	0.17	0	derive-extraction: mechanically-built required args from real DB values; --dry-run	db.py derive-extraction: error: argument --base: invalid int value: 'STRESS-FIXTURE'
+sweep.037.verb.dispose-adversarial-finding	1	0.17	0	dispose-adversarial-finding: mechanically-built required args from real DB values; --dry-run	REFUSING: finding 1: already disposed as 'PROVISIONAL-DISPUTED'. A disposition is not amended by a second call.
+sweep.038.verb.gaps	0	0.19	0	gaps: mechanically-built required args from real DB values; real run on a fresh copy	[
+sweep.039.verb.is-mined	0	0.17	0	is-mined: mechanically-built required args from real DB values; real run on a fresh copy	{
+sweep.040.verb.link-admission	1	0.17	0	link-admission: mechanically-built required args from real DB values; --dry-run	REFUSING: exec 1 -> REF-00985: REFUSED. No search_candidates row records that this search surfaced a candidate which was admitted as this so
+sweep.041.verb.link-source-slug	0	0.18	0	link-source-slug: mechanically-built required args from real DB values; --dry-run	{
+sweep.042.verb.log-mining	1	0.19	0	log-mining: mechanically-built required args from real DB values; --dry-run	REFUSING: REF-00985: no --deferred-reason and no --notes. A mining pass that ran and does not say what it found (even 'nothing') is indistin
+sweep.043.verb.log-search	1	0.13	0	log-search: mechanically-built required args from real DB values; --dry-run	REFUSING: --prior-expectation is required. Write what you expect this search to find BEFORE you run it (DR-2026-05-09 24). Written afterward
+sweep.044.verb.merge-parameter	1	0.17	0	merge-parameter: mechanically-built required args from real DB values; --dry-run	REFUSING: merge-parameter --into: parameter 3 has OPEN determination gate(s) [1]. Resolve each with its rationale first (db.py resolve-deter
+sweep.045.verb.migrate	0	0.3	0	migrate: mechanically-built required args from real DB values; real run on a fresh copy	Current schema version: 125
+sweep.046.verb.mint-term-from-catalogue	1	0.17	0	mint-term-from-catalogue: mechanically-built required args from real DB values; --dry-run	REFUSING: mint-term-from-catalogue: --canonical-en '1' carries a number, a comparator or a min/max word ('1'). The owner asked for 'cleaned 
+sweep.047.verb.next-id	2	0.16	0	next-id: mechanically-built required args from real DB values; real run on a fresh copy	db.py next-id: error: argument entity: invalid choice: 'STRESS-FIXTURE' (choose from 'connections', 'gaps', 'terms', 'conflicts', 'ref')
+sweep.048.verb.observe-term	1	0.18	0	observe-term: mechanically-built required args from real DB values; --dry-run	REFUSING: observe-term: --locator is required for a new observation. An observation is one SIGHTING, keyed on the phrase AND its place (migr
+sweep.049.verb.raise-determination-gate	1	0.2	0	raise-determination-gate: mechanically-built required args from real DB values; --dry-run	REFUSING: a gate with no --trigger-ref-id must state --trigger-tier and --trigger-evidence-type. Doctrine requires every gate to carry the s
+sweep.050.verb.raise-follow-up	0	0.17	0	raise-follow-up: mechanically-built required args from real DB values; --dry-run	{
+sweep.051.verb.reattribute-candidate	0	0.15	0	reattribute-candidate: mechanically-built required args from real DB values; --dry-run	{
+sweep.052.verb.record-adversarial-pass	1	0.19	0	record-adversarial-pass: mechanically-built required args from real DB values; --dry-run	REFUSING: reviewer_transcript 'STRESS-FIXTURE' does not resolve under transcripts/.
+sweep.053.verb.record-scan	1	0.2	0	record-scan: mechanically-built required args from real DB values; --dry-run	REFUSING: record-scan: no file saved for REF-00985 has sha256 0000000000000000... The reading must name bytes the retrieval-log holds FOR th
+sweep.054.verb.relate-extraction	1	0.17	0	relate-extraction: mechanically-built required args from real DB values; --dry-run	REFUSING: relate-extraction: pass --to-extraction or --to-label -- an edge naming no referent describes nothing.
+sweep.055.verb.rename-term	1	0.2	0	rename-term: mechanically-built required args from real DB values; --dry-run	REFUSING: rename-term: give exactly one warrant for the new name -- --from-observation N (a phrase an admitted source uses) or --ruling-quot
+sweep.056.verb.resolve-candidate	1	0.18	0	resolve-candidate: mechanically-built required args from real DB values; --dry-run	REFUSING: candidate 1: ADMITTED without --admitted-ref-id names no evidence row. Say which source it became.
+sweep.057.verb.resolve-determination-gate	0	0.18	0	resolve-determination-gate: mechanically-built required args from real DB values; --dry-run	{
+sweep.058.verb.resolve-follow-up	1	0.23	0	resolve-follow-up: mechanically-built required args from real DB values; --dry-run	REFUSING: resolve-follow-up: follow-up 1: no such row.
+sweep.059.verb.retire-parameter	1	0.23	0	retire-parameter: mechanically-built required args from real DB values; --dry-run	REFUSING: retire-parameter: parameter 3 has OPEN determination gate(s) [1]. Resolve each with its rationale first (db.py resolve-determinati
+sweep.060.verb.retire-specification	1	0.17	0	retire-specification: mechanically-built required args from real DB values; --dry-run	REFUSING: specification 1 was already retired at 2026-09-16 06:01. Retiring it twice records nothing new. If you meant to record what replac
+sweep.061.verb.revoke-declination	1	0.17	0	revoke-declination: mechanically-built required args from real DB values; --dry-run	REFUSING: --decision-ref must name the decision that reverses the declination: a decision record that exists under decisions/ (decisions/DR-
+sweep.062.verb.set-icf-title	1	0.17	0	set-icf-title: mechanically-built required args from real DB values; --dry-run	REFUSING: --title-source or --title-payload is required. A title with no source is a title from memory; the schema refuses the pair too.
+sweep.063.verb.set-parameter-direction	1	0.2	0	set-parameter-direction: mechanically-built required args from real DB values; --dry-run	A direction conditions every determination computed for the parameter, so overwriting it silently re-points those at a rule they were not co
+sweep.064.verb.supersede-source	1	0.17	0	supersede-source: mechanically-built required args from real DB values; --dry-run	REFUSING: --by STRESS-FIXTURE is not in evidence_sources. Supersession is between two ADMITTED sources. Nothing was written.
+sweep.065.verb.unlink-admission	1	0.22	0	unlink-admission: mechanically-built required args from real DB values; --dry-run	REFUSING: exec 1 -> REF-00985: no such admission edge to remove.
+sweep.066.verb.unmined	0	0.17	0	unmined: mechanically-built required args from real DB values; real run on a fresh copy	[
+sweep.067.verb.unmined-gaps	0	0.13	0	unmined-gaps: mechanically-built required args from real DB values; real run on a fresh copy	[
+sweep.068.verb.update-code-lead	0	0.18	0	update-code-lead: mechanically-built required args from real DB values; --dry-run	{
+sweep.069.verb.update-conflict	1	0.16	0	update-conflict: mechanically-built required args from real DB values; --dry-run	REFUSING: update-conflict: 1 is not a conflict. Nothing was written.
+sweep.070.verb.update-connection	1	0.18	0	update-connection: mechanically-built required args from real DB values; --dry-run	REFUSING: update-connection: CON-1 is not a connection. Nothing was written.
+sweep.071.verb.update-gap-addressability	0	0.21	0	update-gap-addressability: mechanically-built required args from real DB values; --dry-run	{
+sweep.072.verb.update-locator	1	0.17	0	update-locator: mechanically-built required args from real DB values; --dry-run	REFUSING: REF-00985: not in source_locators.
+sweep.073.sweep.coverage	0	0	0	every db.py verb invoked	{"verbs": 72, "invoked": 72}
