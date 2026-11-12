@@ -510,4 +510,5 @@ def main():
     print("canonical sha256 before/after:", s0, sha(CANON), "UNCHANGED" if s0 == sha(CANON) else "!!! MOVED !!!")
 
 
-main()
+if __name__ == "__main__":
+    main()
