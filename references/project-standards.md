@@ -5857,3 +5857,18 @@ OD-30 CHECK: not required
 CONDITION: any task or session gating on one of the decisions listed.
 ACTION: (1) Read these lines through the gate of the convention above. (2) Treat OD-10 as the owner's.
 DATE: 2026-11-12 — status lines recorded in the delegated pass, not owner statements.
+
+
+## Owner instruction 2026-11-12 (twelfth) — the remaining owner decisions are to be resolved before the plan is called complete; Opus may be used for judgment where appropriate
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), after the delegated resolutions and the independent review (PR #218), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "Address issues within remediation plan. Confirm that owner decisions located within batches are still actively required rather than having been answered in the most recent passes. I think it would be best to get the decisions resolved before saying the plan is complete. You have permission to use Opus for judgment if appropriate here."
+
+**What this records.** (1) The plan's issues are to be addressed. (2) Which owner decisions still hold up work, as against ones already answered, is to be confirmed from the plan and the ledger. (3) The plan is not to be called complete while a decision that holds up work stands open. (4) An Opus-class model may be used for judgment "if appropriate".
+
+**What it does not decide.** What is appropriate. [ASSUMPTION: appropriate means a decision where the owner's three criteria of 2026-11-12 (integrity, legibility, coverage) settle the answer, no standing owner ruling is overridden, and the decision is not the owner's own act or words, a licensing or legal determination, the project's trajectory or control, or the weighing of one group's harm against another's under the owner's CRPD posture. A decision outside that line is prepared for the owner as a prompt with the facts found and a recommendation, and is not resolved by a model. Unratified.] The twelfth instruction does not lift the reservations recorded in the delegation entry above; it extends the use of a model's judgment only as far as the assumption above allows.
+
+CONDITION: any session asking whether the remediation plan is complete, or which owner decisions still hold up work.
+ACTION: (1) Treat the plan as incomplete while a decision that blocks a task stands open. (2) Resolve by a model only what the assumption above allows, and record it as a delegated resolution with the gate convention. (3) Prepare every other open decision as a prompt for the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner instruction, quoted above.
