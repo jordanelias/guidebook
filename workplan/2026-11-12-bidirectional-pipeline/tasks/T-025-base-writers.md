@@ -55,7 +55,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Two verbs only, each with the refusals that are its value: add a pair / set a pair's scope (`lang_jur_map`); add an identity code (`base_taxonomy_identity`) requiring a ledger pointer. The captured set is derived from the writers, so it gains the tables without a list being edited: confirm by the evidence command.
+1. Two verbs only, each with the refusals that are its value: add a pair / set a pair's scope (`lang_jur_map`); add an identity code (`base_taxonomy_identity`) requiring a ledger pointer, with an optional `--parent` (the existing `parent_code` column; the parent must be an `active` code) and an amend of its display name with the replaced value recorded (T-102 needs both: the device decomposition of the owner's OD-14 answer makes `MOB` a parent). The captured set is derived from the writers, so it gains the tables without a list being edited: confirm by the evidence command.
 2. Each verb lands with its reader: T-101 (scope) and T-102 (mobility codes). Do not add verbs for tables no ruled task writes.
 
 **What reads what this task adds or changes:** `emit_batch_sql.py`; T-101; T-102.

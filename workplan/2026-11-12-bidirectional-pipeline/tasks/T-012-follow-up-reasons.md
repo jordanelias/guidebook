@@ -55,7 +55,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. A schema migration that rebuilds `extraction_follow_ups` with the CHECK widened by two values: `skimmed-needs-full-read` and `absence-needs-tested-value`. Add no other value: `provisional-needs-reread` waits on OD-10 and a reader's question on OD-21.
+1. A schema migration that rebuilds `extraction_follow_ups` with the CHECK widened by two values: `skimmed-needs-full-read` and `absence-needs-tested-value`. Add no other value. No value is named for `provisional`: the owner answered OD-10 on 2026-11-12 (`grep -n -F "OD-10: provisional means strength of evidence" references/project-standards.md`): `provisional` is the cell's computed strength, and a re-read owed is a reading's own status (`extraction_status = 'preliminary'`, or a follow-up on the reading). A reader's question is OD-21's open gate (T-021), not a follow-up value.
 2. `scripts/db.py raise-follow-up`: nothing to change if its `--reason` choices are read from the CHECK (`dbcore.check_values`); if they are typed, switch them to the CHECK in this task.
 3. `scripts/audit/extraction_follow_up_audit.py`: make sure it does not hard-code the single reason.
 

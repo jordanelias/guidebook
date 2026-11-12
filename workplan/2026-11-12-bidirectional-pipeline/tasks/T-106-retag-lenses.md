@@ -22,7 +22,12 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
 - **Tasks that must be merged to the integration base first:** T-019 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
+- **Owner decisions:** none outstanding. The decisions this task needed are resolved under delegation (next bullet); none is still the owner's.
+- **Delegated resolutions this task rests on.** OD-06: judgment assigns the lens codes, from the full reading; evidence assigns none. (The mobility codes are not this task's: OD-14, the owner's, through T-102.) Each is a resolution by an Opus-class model under the owner's delegation of 2026-11-12: not the owner's words, reversible by the owner, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop and report: a CLOSED gate is a stop like those of section 9.
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-06; do gate $n; done
+```
 - **Tests that must be red (or green) before you start:** REQ-073 unmet. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -68,7 +73,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Per D-2: fill a lens only where a quote names the users. Judgment assigns the lenses (OD-06, resolved under delegation; owner 2026-08-27, the deep read is judgment's). Do not tag `MOB`, `AMB` or `WHEEL` here: the mobility rows wait for the owner's answer to OD-14 (T-102).
+1. Per D-2: fill a lens only where a quote names the users. Judgment assigns the lenses (OD-06, resolved under delegation; owner 2026-08-27, the deep read is judgment's). Do not tag an identity code of the mobility family here (`MOB`, or a child T-102 adds): the identity carrying is T-102's. **Do** fill the ICF (d4) and needs lenses of figures on `MOB` where the quote names the function or need: a figure that names no group stays on the parent `MOB` under T-102, and these lenses are what then make it findable (OD-14 answered 2026-11-12). Do not write a device into `device_class` as a stand-in for an identity tag.
 
 **What reads what this task adds or changes:** the engine
 

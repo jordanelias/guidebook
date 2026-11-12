@@ -1,4 +1,4 @@
-# T-102  Execute the mobility split
+# T-102  Decompose the mobility family by device, and carry the rows filed under MOB
 
 > **NOT FOR SONNET** — population taxonomy; re-tagging is a judgment about each figure. Opus-class or above, with the owner's answer. A Sonnet-class executor that opens this file does not start it: it reports that the task is waiting, and for what.
 
@@ -11,20 +11,22 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 | | |
 |---|---|
 | Task | T-102 |
-| Title | Execute the mobility split |
+| Title | Decompose the mobility family by device, and carry the rows filed under MOB |
 | Wave | research |
 | Layer (CLAUDE.md §3) | 3 |
 | Kind | **RESEARCH** (CLAUDE.md rule 10: tooling and research never share a pull request) |
 | Executor | NOT FOR SONNET (see the note above) |
-| Traces to | IMP-20 in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` |
+| Traces to | IMP-20 in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md`; the owner's answer to OD-14 (2026-11-12, third set: "Decompose MOB by device to wheelchair user, prosthetic device user, other mobility aids (or something like that)"); OD-37; `workplan/2026-11-12-bidirectional-pipeline/POPULATION-UMBRELLAS-MEMO.md` (advisory, not adopted wholesale) |
 
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-018, T-025 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Tasks that must be merged to the integration base first:** T-018, T-025, T-055 merged; and the design `T-102-design.md` present (written first by an Opus-class session under item 1 below, committed beside the task files, and reported to the owner by item 2 before any row is written; T-055 builds from it). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
 - **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words. **A delegated resolution does not open this task:** the delegated resolution of OD-14 was withdrawn on independent review and referred back to the owner (`grep -n -F "Correction 2026-11-12 — to the delegated resolution of OD-14" references/project-standards.md`). Start only when the last status line for OD-14 reads `ANSWERED BY THE OWNER` (`grep -F "OD-14 STATUS:" references/project-standards.md | tail -1`); any other value, or none, is a stop.
-  - **OD-14** — how the figures and grades written under `MOB` since the split are carried, and how part-time wheelchair users are named in a gap. The one-line question put to the owner, with GAP-076 (whether a clause that names no one but sits under a disability heading carries `MOB` or `ALL`), is in the correction entry above, with the narrower version the independent review found sound; do not execute that version without the owner's answer.
-- **Tests that must be red (or green) before you start:** AT-62 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
+  - **OD-14** — **Answered by the owner, 2026-11-12 (third set):** "Decompose MOB by device to wheelchair user, prosthetic device user, other mobility aids (or something like that)" (`grep -n -F "OD-14: MOB is decomposed by device" references/project-standards.md`). The exact codes and edges are this task's design to propose and to report to the owner (item 2); the owner's "(or something like that)" is not a licence to decide the taxonomy without that report. Check: `grep -F "OD-14 STATUS:" references/project-standards.md | tail -1` must read `ANSWERED BY THE OWNER`.
+  - **OD-37** — answered with OD-14 (`MOVE` and `VES` are access needs, handled by T-054 and T-114; `MH`, `NDV`, `TALL` retained; `ALL`, `DEAF`, `LMB`, `COM` unchanged). Check: `grep -F "OD-37 STATUS:" references/project-standards.md | tail -1` reads `ANSWERED BY THE OWNER`.
+  - **OD-31** — **answered by the owner, 2026-11-12 (fourth set):** "Heading's group; ALL leaves the identity lens" (`grep -n -F "OD-31: a provision that names no one" references/project-standards.md`). Check: `grep -F "OD-31 STATUS:" references/project-standards.md | tail -1` must read `ANSWERED BY THE OWNER`. The design-first and owner-report steps (section 4, items 1 and 2) still precede any row.
+- **Tests that must be red (or green) before you start:** AT-62 red (restated in section 6). (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
 ```
@@ -53,27 +55,32 @@ Research batches are serial: if another research batch merged after you copied t
 
 ## 3. The problem, in the guidebook's terms
 
-The owner split the mobility group because ambulant people and wheelchair users pull ramp gradient opposite ways; every figure and determination still sits on the superseded code.
+The owner split the mobility group on 2026-08-25 (`AMB`, `WHEEL`) and on 2026-11-12 decomposed it by device instead: wheelchair users, prosthetic device users, other mobility aids. Every mobility figure still sits on `MOB`, and the registry has no child of it; device and impairment level have no settled home.
 
-**Evidence command** (run from the repository root, after the set-up block so that `$SCRATCH` exists; it reads the canonical database read-only or works on a copy):
+**Evidence command** (run from the repository root; read-only):
 
 ```
-python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select identity_code, count(*) from source_value_extractions group by 1 order by 2 desc\").fetchall())"
+python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select identity_code, parent_code, status from base_taxonomy_identity where category='mobility' order by 1\").fetchall()); print(c.execute(\"select identity_code, count(*) from source_value_extractions group by 1 order by 2 desc\").fetchall()); print(c.execute(\"select device_class, count(*) from source_value_extractions where identity_code='MOB' group by 1\").fetchall()); print(c.execute(\"select count(*) from evidence_population_match where target_population='MOB'\").fetchall())"
 ```
 
-**Expected output today:** Most figures tagged `MOB`; no `AMB`, no `WHEEL`.
+**Expected output today:** `MOB`, `SCI`, `LMB` under mobility, none with a parent; most figures tagged `MOB`; `device_class` empty on most `MOB` rows; grades against `MOB`. Facts behind the design (keyword counts of what each row names, the device vocabulary, the rule-5 risk): `workplan/2026-11-12-bidirectional-pipeline/DECISION-CLOSURE.md` §5.
 
-If the output differs, the ground has moved: stop (section 9). Ids that appear in this command are probes read on 2026-11-12; where the command derives an id by query, that is deliberate, and a test you write must do the same (section 6).
+If the output differs, the ground has moved: stop (section 9).
 
 ## 4. The change
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Add the two ratified codes; carry the rows as the owner's answer directs; a grade of a study's own participants is never fanned out (the 2026-08-25 ruling). Before the first row: retiring grade rows needs a retirement column `evidence_population_match` does not have (`PRAGMA table_info(evidence_population_match)`), which is a tooling pull request first (rule 10) — stop and file it if the owner's answer requires it; `MOB` in `base_taxonomy_identity` is marked `deprecated` (its status CHECK), never deleted.
-
-**What reads what this task adds or changes:** every lens-keyed table
-
-**Data migration.** This task lands rows through `scripts/emit_data_migration.py`, which names the file itself; never type a migration name or number, and never edit the file it writes. The pull request contains no schema migration and no file under `scripts/` other than that one `scripts/migrations/data_*` file.
+1. **Design first (`tasks/T-102-design.md`, one page, Opus-class).** It proposes, from the memo's evidence and the registry, and decides nothing the owner has not:
+   - **The children, each with `parent_code = 'MOB'`** (the column exists; no schema change), `MOB` itself kept `active` as the parent. The plan's starting proposal, which the design confirms or corrects with reasons: `WHEEL` (wheelchair users; the 2026-08-25 code, and a constituency a membership organisation names), a prosthetic-device-user code, and an other-mobility-aids code (crutches, canes, walking frames, rollators). Display names in the communities' own words where a self-named community exists (the fourteenth statement), each with its provenance; a code string that is not an initialism of one organisation.
+   - **A person with a mobility need who uses no aid** stays on the parent `MOB` and is reached through the ICF d4 codes and the access needs (`A-EFFORT`, `A-STABLE`, `A-REACH`), not given a child, unless the design finds a self-named community for it.
+   - **`AMB` of the 2026-08-25 ruling is an open edge, reported, not decided:** the design says what the device decomposition does to it (absorbed into the other-aids child and the parent, minted as a further child, or retired unminted) and leaves the choice to the owner. The same for three further edges: scooter users (a wheeled device; liminal by the memo's sources), ambulatory and part-time wheelchair users (on both sides of a device line), and the overlap of a prosthetic-device-user code with `LMB` (limb difference), which OD-37 leaves unchanged.
+   - **Descriptors, one home each (rule 5):** wheelchair drive (power, manual, attendant, scooter) stays in `device_class` and never becomes a code; the design names the `device_class` values the children need that the CHECK lacks (a prosthesis, crutches, a cane or stick), which T-055 adds. Impairment level (paraplegia, quadriplegia) stays out of the identity lens: the medical lens when a source names it, ICF b-codes for the function it changes. No division is held both as a code and in `device_class`.
+   - **Commonality at the parent** (owner, 2026-11-12, second statement): a determination at `MOB` gathers its children by the parent pointer (T-055 builds the gather); a child's determination gathers only that child.
+2. **Report to the owner before any row is written.** Append to `references/project-standards.md` a dated entry headed "Report 2026-…: the mobility codes as designed (T-102)": the codes, display names, parents, descriptors, and the open edges of item 1, each with its evidence. It is a report, not an owner statement, and carries no status line. Write no row until it is appended; an owner reply that changes the codes changes the design first.
+3. **Add the children** with T-025's identity verb, each with its parent and the ledger pointer to the OD-14 answer.
+4. **Carry the rows filed under `MOB`, by judgment, row by row:** a figure whose own words name wheelchair users goes to `WHEEL` (and its drive, if stated, to `device_class`); one naming a prosthesis to the prosthetic child; one naming crutches, canes, frames or rollators to the other-aids child; one naming several goes to each through the link table of T-018, never copied. **A figure that names no one takes the group its heading names (OD-31, answered 2026-11-12):** under a mobility heading it stays on the parent `MOB` (the parent is not superseded) and goes to no child, since it names no device; under a general disability heading ("persons with disabilities", "accessible") it carries **no identity** and is carried by its ICF and access-need lenses alone (T-106 fills them; a row may not be left with no lens, by the column CHECK); universal good design is never tagged `ALL` (`ALL` leaves the identity lens: T-056, T-115), and "universal" is stated only by the determination's `design_scale`. Record the heading that decided each such row in the pull request. **A grade of a study's own participants is never fanned out** (the 2026-08-25 ruling): the `MOB` grade stays as the parent-level grade; a new grade against a child is written only where the study's participants are that child. No grade is retired, so `evidence_population_match` needs no retirement column.
+5. **`MOB`'s display name** ("disabled people with mobility needs; wheelchair users") joins two things in one cell; the design proposes a parent name without "wheelchair users", applied by the identity verb.
 
 ## 5. Caller sweep
 
@@ -88,7 +95,12 @@ Structures this task touches, for orientation: `MOB`. The ledger (`references/pr
 
 ## 6. Verification
 
-**Red before, green after.** AT-62.
+**Red before, green after.** AT-62, restated for the device decomposition. After, on the migrated database:
+(1) the children named in the design exist with `parent_code = 'MOB'` and `MOB` is `active`: `select identity_code, parent_code, status from base_taxonomy_identity where category='mobility' or parent_code='MOB'`;
+(2) the owner report exists and precedes the rows: `grep -n -F "the mobility codes as designed (T-102)" references/project-standards.md`;
+(3) no figure still on `MOB` names a wheelchair, a prosthesis or a walking aid in its own words: `python3 -I -c "import sqlite3,re;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);P=re.compile(r'wheel ?chair|rollstuhl|fauteuil roulant|silla de ruedas|rullstol|pyörätuoli|rolstoel|carrozzina|cadeira de rodas|車いす|車椅子|휠체어|轮椅|prosthe|amput|crutch|\\bcanes?\\b|walking (aid|frame|stick)|walker|rollator',re.I);print(sum(1 for (t,) in c.execute(\"select coalesce(claim_text,'')||' '||coalesce(source_section,'') from source_value_extractions where identity_code='MOB'\") if P.search(t)))"` prints 0 (a row the executor judged otherwise is listed in the pull request with its reason);
+(4) no grade was fanned out: `select count(*) from evidence_population_match where target_population='MOB'` is unchanged, and every new child grade names its participants;
+(5) no division is held twice: no identity code's display name or description names a wheelchair drive or an impairment level.
 
 **Fixtures.** Probes run on `$SCRATCH/t.db`; the batch's own rows are written on `$SCRATCH/s.db` and reach `data/guidebook.db` only through the write path of section 2.
 
@@ -107,7 +119,7 @@ scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "
 Commit **after** the gate of section 6 is clean.
 ```
 git add -A . ':!transcripts' ':!*commands.jsonl'      # add the two append-only logs only at a natural break (CLAUDE.md rule 6)
-git commit -m "run-pipeline: execute the ratified mobility split [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the callers the sweep found and what was done to each>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
+git commit -m "run-pipeline: decompose the mobility family by device and carry the MOB rows [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the callers the sweep found and what was done to each>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
 ```
 The format is `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, taken from `date -u`. Do not copy trailers from this file; use the ones your session was given.
 
