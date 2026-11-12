@@ -5298,3 +5298,18 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session adding, moving, merging or deleting code, or asked whether a piece of code is redundant, duplicated or in the wrong place.
 ACTION: (1) Prefer one home per rule, vocabulary or function, and point to it rather than copy it. (2) Delete dead and duplicated code on evidence. (3) Measure efficiency before changing it. (4) Preserve behaviour under a refactor and prove it with a before-and-after comparison. (5) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (sixth) — the pipeline must be flexible
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "pipeline must be flexible"
+
+**What this records.** A standing property required of the pipeline as a whole, beside the objectives of the first statement of the day (any direction, any stage, dynamic, many languages and jurisdictions) and the fifth (efficient, centralized, clean). It is stated without a gloss.
+
+**What it does not decide.** What flexibility means in practice (a stage, a parameter, a language, a jurisdiction, a vocabulary or a run shape added or changed without editing code; a run entered, left or repeated at any point; a rule changed in one place) and where it must give way to a gate that holds a line are open. The tension with the derive-not-curate and one-home rules, and with gates that refuse, is for the audit's improvement programme to state; this entry resolves none of it. [ASSUMPTION: "flexible" is read as adaptable by data and configuration at the points the owner has named, not as the loosening of any refusal the project holds on purpose.]
+
+CONDITION: any session adding a fixed list, an enum, a hard-coded order or a one-shape run to the pipeline, or weighing a gate against the need to adapt.
+ACTION: (1) Prefer a change that is made by data or in one place over one that edits code in several. (2) Do not bake a stage, language, jurisdiction or run shape into code where the schema or a single registry can hold it. (3) Keep the refusals the project holds on purpose. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
