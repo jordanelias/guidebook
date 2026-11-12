@@ -5349,3 +5349,18 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session extracting a figure a source writes in words, or changing the check on claimed values.
 ACTION: (1) Enter the numeral and unit as `claimed_value` and `claimed_unit`. (2) Keep the source's own wording as provenance in a column of its own where it differs from the numeral. (3) Do not exempt a row from the number check for being spelled out. (4) Do not back-translate or invent: the translation is of what the quote says.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (ninth) — everything non-English is translated, probably at synthesis, or wherever it is needed
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), directly after the eighth statement (spelled-out numbers translated into numerals and units), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "probably at synthesis or whatever we need to actually translate everything"
+
+**What this records.** The text the pipeline holds in other languages (quotations, terms, clauses, titles) is to be translated, all of it, so that it can be compared and discussed together. The owner's view of where is "probably at synthesis", and "or whatever we need": the stage is not fixed in advance, and translation is available wherever a stage needs it. Read with the eighth statement, a number is translated at extraction because the number check needs a numeral there; the rest is translated when and where it is needed, probably at synthesis.
+
+**What it does not decide.** Which stage owns translation by default, who or what translates (a person, a model, a tool) and at what class, how a translation is marked so it is never taken for the source's own words, whether a translation is reviewed, and which language is translated into (the language of a page: OD-02). It narrows OD-02 on one point only: that quotations may be translated. It does not relax the rule that a model's wording is never presented as a source's term (OR-17, E1), or the 2026-11-06 statements that English is not the pivot that decides which concepts exist (the sixth and eighth statements of that date). [ASSUMPTION: "translate everything" is read as a standing capability of the pipeline, held apart from the source text and pointing at it, not as the replacement of the source text by its translation.]
+
+CONDITION: any session translating, or deciding where translation happens, or presenting a translated quotation, term or clause.
+ACTION: (1) Treat translation as a capability to be called at the stage that needs it, not as a step fixed in one stage. (2) Keep the untranslated text and attach the translation to it by pointer, marked as a translation with its translator. (3) Never present a translation as the source's own wording. (4) Leave the default stage, the translator's class and the target language to the audit's programme and the owner. (5) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
