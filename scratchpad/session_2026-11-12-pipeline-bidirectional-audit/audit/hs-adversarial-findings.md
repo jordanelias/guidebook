@@ -4,32 +4,37 @@ _Handshake leg, 2026-11-12 (UTC), HEAD `186defb`, `PRAGMA user_version` 125. Eve
 
 ## 0. Verdict first
 
+_Amended 2026-11-12 after an independent antagonist pass (`fa-antagonist-objections.md`). Its objections (count: `grep -c -E '^\| FA-[0-9]{2} ' fa-antagonist-objections.md`) were each re-run; every one held at least in part. The dispositions are in §5, and every claim that changed is listed in `fa-corrections-for-suite.md`. Where this leg was wrong it says so in the finding._
+
 **Both legs are sound on what they looked at and wrong, or silent, on what decides the objective.** The bottom-up leg's measurements reproduce: every query and engine run re-executed here returned what it reported. The top-down leg's quotations are accurate: every quote checked sits at the cited line. The failures are of reach:
 
-1. **Neither leg caught that the engine contradicts two live owner rulings on who a determination is for** (F-01, F-02). BU saw the mechanism and could not know the ruling; TD knew a ruling of the same message and did not carry its operative clause.
+1. **Neither leg caught that the engine's treatment of the lens contradicts the owner's answer on `ALL` and the ledger's reading of the OR-1 answer, or that the mobility split the owner ratified was never executed** (F-01, F-02). BU saw the mechanism and could not know the ruling; TD knew a ruling of the same message and did not carry its operative clause.
 2. **TD did not read the ledger span that fixes the key, the lenses and the mobility split**, and its ledger is short by at least eighteen requirements (F-07). Three of its headline sentences are wrong as written (F-04, F-05, F-06).
 3. **BU never opened `workplan/`**, so it missed the walkability instrument the owner ordered registered, the draft render contract, and the reason render is absent (F-03, F-12). It ran none of the blocking specification checks; one of its inferences about them is now confirmed by run, and one of its "correct" findings is wrong (F-10).
-4. **No test in either leg could go red.** Every result is a positive observation. The one negative test run here (a determination for the wrong population, pushed through three checks) passed green (F-01).
+4. **Neither leg ran a test that could go red.** Every result of theirs is a positive observation. This leg pushed a determination for the wrong population through three specification checks, which passed, and in its first pass called that "every gate". That was wrong: the blocking `test_db_integrity`, which the first pass did not run, exits 1 on the same copy at criterion C10, for unverified governing sources. No gate tests the lens; one gate stops the cell for another reason (F-01). The repository does hold seeded-defect tests for the other specification rules (F-18).
 
 **Canonical database hash.** `sha256sum data/guidebook.db`:
 - before this leg's first command: `c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`
 - after seven engine runs on scratch copies and every audit run above: `c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`
-- at the end of this leg: recorded in the hand-back; unchanged at the time this file was written.
+- at the end of the first pass: the same.
+- before and after the resolution pass (further engine runs and the check runs of §5, all on fresh copies under `…/scratchpad/hs2/`): `c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`.
 
 All stress tests ran on copies under `/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/hs/`. Audits were pointed at a copy with `GUIDEBOOK_DB_PATH` inline. No repository file other than the four `hs-*.md` outputs was written; no git command that changes state was run.
 
-Counts in this file: findings `grep -c '^### F-' <this file>`; corrections `grep -c '\[CORRECTION' <this file>`; claims re-verified `grep -c '^| V[0-9]' <this file>`.
+Counts in this file: findings `grep -c '^### F-' <this file>`; corrections `grep -c '\[CORRECTION' <this file>`; claims re-verified `grep -c '^| V[0-9]' <this file>`; antagonist objections by severity and disposition, the commands at the head of §5.
 
 ---
 
 ## 1. Findings, worst first
 
-### F-01 A determination for the wrong people passes every gate. Both legs missed that it contradicts a ruling. [VERIFIED]
+### F-01 No gate tests the lens: a determination for the wrong people passes the three specification checks and is stopped only by an unrelated criterion. Both legs missed that the behaviour contradicts the record. [VERIFIED; title and body amended, FA-02, FA-10, FA-21]
 - **Run.** `cp data/guidebook.db $S/p3_DEAF.db; python3 scripts/assess/assess_cell.py --db $S/p3_DEAF.db --emit-sql $S/p3_DEAF.sql --parameter-id 3 --slug accessible-circulation-geometry --identity DEAF --session session_2026-11-12-hs-stress --stamp '2026-11-12 04:00' --report-json $S/p3_DEAF.json`
 - **Result.** Ramp gradient × Deaf and hard-of-hearing people: `provisional`, marker `○`, maximum 5 %, 27 governing sources, 35 governing extractions. `select x.identity_code, count(*) from specification_extraction_links l join source_value_extractions x using(extraction_id) where l.role='governing' …` on the `BLIND` and `ALL` copies returns `[('MOB', 35)]`. The same answer came back for `BLIND`, `ALL`, `MOB` and the access need `A-REACH`; only the hash differs.
-- **Gates on that copy.** `validate_evidence_state.py` → `PASS: 15 records checked`; `derivation_handshake_integrity.py` → `VERDICT: CLEAN`, `determinations: 1`; `extraction_follow_up_audit.py` → `PASS`, `live determinations: 1`.
-- **Ruling contradicted.** PS:4630: "a figure reaches a determination only through the lens tags written on that figure, so D-0184 stands"; PS:4657: "No, ALL reaches only an ALL determination"; PS:4614: "Do not store table rows for parameters when there is a missing lens".
-- **Against BU.** It reported the mechanism (problem 3) and rated it third. It is first: every determination the engine can write today is of this kind. BU did not test whether any check could notice.
+- **Checks on that copy.** `validate_evidence_state.py` → `PASS: 15 records checked`; `derivation_handshake_integrity.py` → `VERDICT: CLEAN`, `determinations: 1`; `extraction_follow_up_audit.py` → `PASS`, `live determinations: 1`.
+- **The gate the first pass did not run.** `GUIDEBOOK_DB_PATH=$S/p3_DEAF.db python3 scripts/tests/test_db_integrity.py; echo $?` → `RESULTS: 55/56 checks passed`, `FAILED: [C10] no published cell rests on an unverified or disputed source`, `1`. The same on 3 × `MOB` and 12 × `BLIND`; exit 0 on a copy of `main` and on a `pending` cell (7 × `DEAF`). C10 reads live rows (`scripts/tests/test_db_integrity.py:545-561`) and fires because four governing sources are not `VERIFIED` (`REF-01013`, `REF-01014`, `REF-01016`, `REF-01026` on the 3 × `MOB` copy), which the ledger records as intended (PS:4544). It fires equally for the correct lens, so it is not a test of the lens. **"Passes every gate" was false; this leg ran three checks and generalised.**
+- **What the 35 rows are.** Tagged `MOB`; all from T4–T6 instruments (`select e.tier, e.evidence_type, count(*) …` → standards 2, national frameworks 8, codes 25); `device_class` NULL or `not_device_scoped`; none of their `claim_text` mentions a wheelchair. They are regulatory ramp provisions. The first pass called them "wheelchair evidence"; that was wrong.
+- **What is contradicted, by warrant class.** OWNER: "No, ALL reaches only an ALL determination" (PS:4657); "Do not store table rows for parameters when there is a missing lens … for when the parameter is not relevant" (PS:4614). LEDGER reading, not owner speech: "a figure reaches a determination only through the lens tags written on that figure, so D-0184 stands" (PS:4630, prefaced at PS:4628 "The readings below are the assistant's and are marked").
+- **Against BU.** It reported the mechanism (problem 3) and rated it third. It is first: every determination the engine can write today gathers without regard to lens. BU did not test whether any check could notice, and described the rows as "wheelchair evidence".
 - **Against TD.** REQ-073, REQ-074 and REQ-077 quote the same owner message and never state the gather rule; no acceptance test of TD's goes red on this (AT-34 tests only the `ALL` and medical cases).
 - [CORRECTION: TD, ledger — add the requirement "a figure reaches a determination only through its own lens tags" (HS-A02), class LEDGER reading of an owner answer.] [CORRECTION: BU, ranking — problem 3 is the worst defect, and it is a contradiction of a ruling, not only a capability fact.]
 
@@ -38,7 +43,7 @@ Counts in this file: findings `grep -c '^### F-' <this file>`; corrections `grep
 - `select identity_code, count(*) from source_value_extractions group by 1` → `MOB` 170 of 214; `select * from base_taxonomy_identity` holds `MOB` active and neither `AMB` nor `WHEEL`; Q1: all eight determinations are parameter 3 × `MOB`, which is ramp gradient.
 - `grep -n -E '\bAMB\b|\bWHEEL\b' references/project-standards.md` shows no line after PS:1299 that withdraws, defers or executes it.
 - **Against TD.** It lies in PS:1146-2547, which TD read in part. **Against BU.** It used `MOB` as its test lens without asking whether the code is live doctrine (it could not, by its brief).
-- Population taxonomy is owner-gated; the ruling exists, its execution details (whether `MOB` survives as an additive tag; part-time wheelchair users) were left to "owner confirmation". OWNER DECISION REQUIRED (HS-3 OD-14).
+- The codes and the fate of `MOB` are ratified (PS:1291-1296: "Settles the two questions the split design … put to the owner"; "`MOB` is superseded") and are not to be asked again; the first pass re-asked them and was wrong (FA-14). What is open is narrower: how the figures and grades written under `MOB` since are carried (`select count(*) from source_value_extractions x join evidence_sources e using(ref_id) where x.identity_code='MOB' and e.tier>=4` of them come from T4–T6 instruments, which have no participants to judge by), and how part-time wheelchair users are named in a gap (HS-3 OD-14). All eight stored determinations are already retired.
 
 ### F-03 The stage-pair gate and the view mapping the owner ordered on 2026-10-29 do not exist as gates; BU did not find the instrument, TD recorded the requirement as if it stood. [VERIFIED]
 - PS:4731 "Yes, register it"; PS:4761 "registered as the stage-pair gate, by one registry entry that fails when a stage pair has no path"; PS:4729 "Yes, map views to a stage".
@@ -71,8 +76,8 @@ Listed with verdicts in HS-1 §2 (HS-A01 to HS-A18). The ones that change the pl
 1. **AT-04 against REQ-084.** AT-04: "No table at … render holds an author name, a title, a DOI or a year." REQ-084: the render table holds "complete prose, bibliographic information". Both cannot pass unless the render table is a derived cache; that is OW-1c, unanswered.
 2. **§3.6 cold entry against REQ-074.** "Where evidence is insufficient it answers with a pending determination and a gap" against "no row at all for a lens the parameter is not relevant to" and the ledger reading "none for a lens that no figure carries" (PS:4630). TD names the conflict (C-13) and still writes both as requirements.
 3. **REQ-012 is marked [R].** The three rules at the head of TD §3 are each labelled as ruled; rule 1 ("re-entry adds, it never rewrites") stands on REQ-012, which TD's self-attack 3 calls session reasoning the owner did not make. The live writers do the opposite at three edges (HS-1 REQ-012).
-4. **REQ-096.** "Authored at the Opus floor" where the ledger says "Opus-class or above, which includes Fable-class" (PS:609).
-- [CORRECTION: TD AT-04 — conditional on OW-1c.] [CORRECTION: TD §3 head — rule 1 is [I], not [R].] [CORRECTION: TD REQ-096 — class wording per PS:609.]
+4. **REQ-096.** "Authored at the Opus floor" where the ledger says "Opus-class or above, which includes Fable-class" (PS:608).
+- [CORRECTION: TD AT-04 — conditional on OW-1c.] [CORRECTION: TD §3 head — rule 1 is [I], not [R].] [CORRECTION: TD REQ-096 — class wording per PS:608.]
 
 ### F-09 BU reports grep-derived "no reader" lists as VERIFIED, against a standing rule. [VERIFIED]
 - PS:663: "Do NOT use grep … to establish it, and do not report a hit count as a finding." BU §G.3 and §G.5 rest on `grep` for names, and §G.5 concedes over-reporting.
@@ -104,8 +109,11 @@ Listed with verdicts in HS-1 §2 (HS-A01 to HS-A18). The ones that change the pl
 - OR-12a (PS:4696) scoped out Arabic, Bengali, Hindi and Swahili; P1+P2+P3 (PS:5026) names 24 codes. Neither is data. BU reported the NULLs as "nothing refuses on it"; the stronger statement is that `db.py coverage` asks for research the owner forbade (PS:4295-4297).
 - TD's set arithmetic for C-06 reproduces: bucket-only `['UN']`; P-only `['BE','CH','CN','DK','IT']`.
 
-### F-15 The engine cannot determine two cells independently. [VERIFIED]
-- Seven scratch runs for seven different cells each allocated `specification_id` 9, and the pending one `GAP-103`. BU found this with two; it is general. Until ids are allocated at capture or replay, "dynamic" means one cell per merged pull request.
+### F-15 Ids collide between separate scratch copies of one base, not between cells. [VERIFIED; amended, FA-09]
+- The first pass said "the engine cannot determine two cells independently" and that "dynamic" meant "one cell per merged pull request". That was wrong.
+- Four cells determined one after another on **one** scratch copy (3, 12, 4, 9 × `MOB`) took `specification_id` 9, 10, 11, 12 and gaps `GAP-103`, `GAP-104`; `python3 scripts/research/emit_batch_sql.py --scratch $S/multi.db --out $S/multi_batch.sql` wrote one delta of inserts with no update or delete.
+- Each single-cell run on a **separate** fresh copy took `specification_id` 9, and each `pending` one `GAP-103`. That is true of any id a `db.py` verb allocates on a scratch copy; the engine's emitted header says to regenerate against the canonical database before replay (`scripts/assess/assess_cell.py:2183-2187`).
+- Not tested by any leg: whether two separately captured copies fail at replay (`emit_data_migration.py`, `migrate_db.py` were not run).
 
 ### F-16 Independence: what each breach could have biased.
 - **TD** read `dossier/26` and the table, key and view listings of `dossier/30` (row counts, no render writer, which tables are empty). Likely effects: C-01 and §3.7 are firmer about render's emptiness than prose alone supports; the C-03 reading matches the schema (F-05); REQ-071 names columns it saw.
@@ -122,7 +130,7 @@ Also: the C-03 reading; C-09's "evidence stage" reading (the ledger marks it `[A
 
 ### F-18 BU's blind spots.
 - No blocking check run (`migration_reproducibility`, `test_db_integrity`, `schema_reference_audit`, `research_dod_session`); `validate_evidence_state` now run here.
-- No negative test anywhere; no verb exercised on a scratch copy except the engine; no capture → migration → rebuild round trip.
+- No negative test run by the leg; no verb exercised on a scratch copy except the engine; no capture → migration → rebuild round trip. The repository itself holds seeded-defect tests the leg did not find: `scripts/tests/test_validate_evidence_state_2_4.py` (run here: eleven seeded defects caught, `ALL PASS`), `scripts/tests/test_evidence_cell_state_2_3.py:221`, `scripts/tests/test_assess_cell_pilot.py:843-858` (run here: `PASS: all pilot-engine branch tests`). None seeds a wrong-lens determination.
 - `assess_cell.determine` read to line 1598 of about 1770; `classify`, `derivation_handshake`, `_confirmed_bands` unread.
 - Skills unread except `run-pipeline`. Now measured: `skill_vocabulary_audit` → `FAIL: 76 token(s) in 18 file(s)`; `multilingual-research` names `best_practice_synthesis`, `co1_pass_summary`, `jurisdiction_coverage`, `native_aliases`; `cross-population-conflict-mapper` teaches `DBL, MCAS, NEU, OFS, POTS, SENS, VIS`. The two skills that operate D3 research and conflict mapping presuppose structures and codes that no longer exist.
 - `workplan/` and hooks unread (F-03, F-12).
@@ -182,7 +190,7 @@ Also: the C-03 reading; C-09's "evidence stage" reading (the ledger marks it `[A
 | V24 | BU | five contract criteria with `check: null` | YAML load | same |
 | V25 | BU | no render code, `parts/` moved, no `site/` or `specs/` | `ls` | same |
 | V26 | BU | 72 verbs | `grep -c 'add_parser(' scripts/db.py` | same |
-| V27 | TD | the quotations at these cited lines (PS:4385, 4947, 4729, 4731, 4761, 5011, 5019, 5206, 5182, 5184, 5188, 4655, 4835, 2690, 4614, 4991, 3687, 4833, 3540, 4472, 4723, 5194, 4580, 4598, 3737, 3980, 4683, 4657, 4926, 4840, 4844, 3644, 4667, 5126, 4834, 4673, 5204, 5154, 4713, 5076, 5088, 4679, 4396, 4381, 4979, 4843, 4938, 4826 and others) | `grep -n -F`; three that wrap a line read with `sed -n` (PS:1048, 4295, 874) | all present |
+| V27 | TD | the quotations at these cited lines (PS:4385, 4947, 4729, 4731, 4761, 5011, 5019, 5206, 5182, 5184, 5188, 4655, 4835, 2690, 4614, 4991, 3687, 4833, 3540, 4472, 4723, 5194, 4580, 4598, 3737, 3980, 4683, 4657, 4926, 4840, 4844, 3644, 4667, 5126, 4834, 4673, 5204, 5154, 4713, 5076, 5088, 4679, 4396, 4381, 4979, 4843, 4938, 4826 and others) | `grep -n -F`; three that wrap a line read with `sed -n` (PS:1048, 4295, 874) | present, except four references corrected in §5 (FA-26): "5 is three" is at PS:2419; the Fable-class wording at PS:608; "prompts for research to target" at PS:1968; PS:5206 carries different words from PS:5019 |
 | V28 | TD | PC:2-3 `PROPOSED`, `ratified: false`; synthesis and specification entries circular | read | same; conclusion corrected (F-04) |
 | V29 | TD | IG:11 relays O7 and O8, "none is in the ledger yet" | read | same; O1–O6 overlooked (F-06) |
 | V30 | TD | memory notes at the cited lines | `grep -n -F` | same |
@@ -194,7 +202,9 @@ Also: the C-03 reading; C-09's "evidence stage" reading (the ledger marks it `[A
 ### 2.7 Commands used for figures new to this leg
 
 ```
-# retained artefacts per live source (48 / 23 / 10 of 58)
+# retained artefacts per live source: (live, with a file on disk, with ANY derived record, with none).
+# The third figure is not "a text layer": tally r.get('derivation_kind') per source to separate
+# text-extraction and extraction records from page renders and bibliography extracts (FA-11).
 python3 -I - <<'PY'
 import sqlite3, json, glob, os, collections
 c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True)
@@ -226,7 +236,7 @@ PY
 3. [CORRECTION: TD §0 item 2 and C-03, climate and cultural-context rules exist; the jurisdiction-neutral reading is an assumption that matches a schema TD had seen.]
 4. [CORRECTION: TD §0 item 3, C-08, C-18, O1/O3/O5/O6 and the 2026-11-12 statements gloss "dynamic" and "hard-coded".]
 5. [CORRECTION: TD §1, add HS-A03 to HS-A18; record the three-step history of the lens CHECK under REQ-072.]
-6. [CORRECTION: TD AT-04, conditional on OW-1c; TD §3 rule 1 is inference; TD REQ-096 wording per PS:609.]
+6. [CORRECTION: TD AT-04, conditional on OW-1c; TD §3 rule 1 is inference; TD REQ-096 wording per PS:608.]
 7. [CORRECTION: TD REQ-006, REQ-017, ruled and unexecuted.]
 8. [CORRECTION: TD C-17, the objective is now in the ledger (PS:5218-5241); O1–O8 still are not.]
 9. [CORRECTION: BU §0, problem 3 ranks first and contradicts PS:4630, PS:4657, PS:4614.]
@@ -239,8 +249,62 @@ PY
 
 ## 4. What this leg could not read or run
 
+_Added by the resolution pass:_ `test_db_integrity`, `validate_verification_consistency`, `adjudication_integrity`, the three test files named in F-18 and `emit_batch_sql.py` were run on scratch copies. Still not run: `emit_data_migration.py`, `migrate_db.py`, `run_checks.py` in any mode. Not established: which retained artefacts are a source's full text; whether the workplan's task order (T-1a → T-2 → T-3) is forced or only planned.
+
+
 - `sessions/` was not read; searches there were by `grep -r` on chosen terms only. No ruling is reported absent on that basis.
 - `governance/evidence-methodology.md`, `time-model.md`, `tier-system.md`, `conceptual-model.md`: cited sections located by grep, not read through.
 - `scripts/db.py` and `assess_cell.py`: the gather functions, the name screens and the verb list were read; the rest was not.
 - Not run: `run_checks.py` in any mode, `migration_reproducibility`, `test_db_integrity`, `schema_reference_audit`, the capture and migration tools, any `db.py` write verb.
 - `origin/ramp-spec-pages-work` (the old static generator) was not fetched.
+
+---
+
+## 5. Resolution record (antagonist pass of 2026-11-12) — the complete record for all four `hs-*` files
+
+Each objection was re-run by this leg on fresh scratch copies (`…/scratchpad/hs2/`) or re-read at the cited lines before disposal. Disposition vocabulary: **upheld** (the objection failed; why), **amended** (how), **withdrawn**, **referred to owner**. Every objection held at least in part; none is upheld against the antagonist.
+
+Tally, by command (run in the folder holding this file):
+
+```
+for sev in blocking material minor; do for d in upheld amended withdrawn 'referred to owner'; do printf '%s %s: ' "$sev" "$d"; grep -c -E "^\| FA-[0-9]{2} \| $sev \|.*\*\*$d" hs-adversarial-findings.md; done; done
+```
+
+A row with two dispositions (amended, and one part referred or withdrawn) is counted under each.
+
+| FA id | severity | objection (lens) | evidence (this leg's re-run) | disposition |
+|---|---|---|---|---|
+| FA-01 | blocking | IMP-04's live-only `EXAMINED:` turns blocking checks red on `main` (redness) | `run_checks.vacuity_failure(c,'EXAMINED: 0')` returns a failure string for `validate_evidence_state`, `adjudication_integrity`, `validate_verification_consistency` (all blocking, `min_items: 1`); `scripts/run_checks.py:264-266` returns `FAIL` on it | **amended**: IMP-04 is report-only; the token and the floors are untouched; AT-54 restated |
+| FA-02 | blocking | "passes every gate" is false (subject) | fresh copies: 3 × `DEAF`, 3 × `MOB`, 12 × `BLIND` → `test_db_integrity` exit 1, `[C10]`; 7 × `DEAF` (pending) and a copy of `main` → exit 0; four governing sources not `VERIFIED` | **amended**: F-01 retitled and extended; HS-1 §0 and §6; HS-3 §0, R-5, R-6. This leg was wrong. |
+| FA-03 | blocking | the four unlinked skills have readers (existence) | `sed -n 71p .claude/agents/antagonist.md`; `grep -n -E 'adversarial-research\|integrity-protocol' governance/pipeline-contract.yaml` → 105, 113, 312, 314; `scripts/audit/claims_docket.py:3,134`; `scripts/validate_verification_consistency.py:94`; `governance/decision-protocol.md:59`; `sync_claude_skills.py --check` names a missing `description:` line as the cause | **withdrawn**: the deletion; HS-1 §7 row removed. This leg was wrong. |
+| FA-04 | blocking | "first wave doable now, no owner decision" contradicts its own entries (consistency) | read against IMP-01, 03, 04, 05, 07, 08, 10, 11; `grep -n extra schemas/pipeline_contract.py` → 14, 23, 31, 39 | **amended**: HS-3 §0 and §3 rebuilt; the doable-now list is IMP-02, 03a, 04, 06, 12, 13 (two values), 23, T-1a, T-6a |
+| FA-05 | material | IMP-08 drops the workplan chain and the ruled link table (prior work) | PS:4926, 4934-4941 read; workplan T-1a/T-2/T-3 text and §7 read; `grep -rn "def parse_bound" scripts` → `assess_cell.py:624` | **amended**: IMP-08 is T-3 with its chain; IMP-40 added for the link table |
+| FA-06 | material | IMP-16 rests on superseded text and proposes what exists (supersession) | PS:4560 read; `grep -n STORED_ANSWER scripts/assess/assess_cell.py` → 1772; `scripts/dbcore.py:406-409`; `test_assess_cell_pilot.py` → PASS | **withdrawn**: IMP-16 |
+| FA-07 | material | OD-16 is answered on the record (supersession) | PS:4546 read; workplan WR-2 read | **withdrawn**: OD-16; IMP-08's gate line corrected |
+| FA-08 | material | negative fixtures already exist (prior work) | `test_validate_evidence_state_2_4.py` → eleven "caught", `ALL PASS`; `test_evidence_cell_state_2_3.py:221`; `test_assess_cell_pilot.py:843-858`; all three registered, advisory, `tests` battery | **amended**: IMP-10 is the one missing fixture; AT-55 restated; F-18 corrected |
+| FA-09 | material | cells do not collide on one copy (redness) | four runs on one copy → ids 9–12, `GAP-103`, `GAP-104`; `emit_batch_sql.py` wrote one delta | **amended**: F-15, HS-1 §0 D2 and REQ-025; IMP-11 and AT-56 **withdrawn**. This leg was wrong. |
+| FA-10 | material | the governing rows are not "wheelchair evidence" (fidelity) | on the 3 × `DEAF` copy: tiers 4–6 only; `device_class` NULL 11, `not_device_scoped` 24; `claim_text like '%wheelchair%'` → 0 | **amended**: F-01, HS-1 §6, HS-3 IMP-08; BU §0 problem 3 annotated |
+| FA-11 | material | "23 hold a text layer" miscounts (count) | `derivation_kind` per live source: `text-extraction` 17, `extraction` 3, `page-render` 3, `pdf-bibliography` 2, `render` 1; 20 sources with a text-extraction or extraction record; on-disk extensions tallied | **amended**: HS-1 REQ-022, REQ-098, §5.2; HS-3 OD-23, AT-65; the §2.7 comment |
+| FA-12 | material | IMP-07 is not the ruled gate and is red on `main` (fidelity) | stage map: render holds `weighting_profile`; instrument prints `NO PATH` on 10 lines; workplan §8 items 6–7; PS:4761 | **amended**: IMP-07 sequenced after a render view; an interim form **referred to owner** (OD-26) |
+| FA-13 | material | REQ-074's second example is not a "not relevant" case (fidelity) | parameter 7 is reverberation time; PS:4630 assumption and PS:4648 ACTION read | **amended**: example withdrawn; verdict kept on ramp gradient × `DEAF` with its basis marked inferred; AT-52 restated |
+| FA-14 | material | OD-14 re-asks what PS:1291-1296 ratified (owner gate) | PS:1291-1311 read; 107 of the `MOB` figures from tier ≥ 4 (query in F-02); `select count(*), sum(retired_at is not null) from specifications` → 8, 8 | **amended**: OD-14 narrowed; IMP-20 rewritten; F-02's last bullet. This leg was wrong. |
+| FA-15 | material | the brief's verb-list grep drops verbs (count) | grep → 59; AST walk → 72 | **amended**: HS-4 Document 7 uses the AST command |
+| FA-16 | material | the brief forbids text-search facts and prescribes them; HS-1 marks such facts verified (consistency) | read; registry and stage map re-derived by YAML load; view bodies read for `retired_at` | **amended**: HS-4 §1.1 item 7 reworded and its commands replaced where a structure exists; HS-1 rows given structural evidence or lowered to inferred |
+| FA-17 | material | AT-50 and AT-51 pass vacuously after the fix (redness) | parameter 3 tags: `MOB` 116, `SCI` 3, `MS` 2, NULL 1, no `DEAF`, no `ALL`; 3 × `MOB` links 122 figures, 6 not `MOB`; 9 × `ALL` links 12 `ALL` and 4 `MOB` | **amended**: both tests restated on non-empty subjects |
+| FA-18 | material | Wave 4 "no gate" and the IMP-17/19 dependency are wrong (consistency) | read | **amended**: HS-3 §3 and the five entries |
+| FA-19 | material | IMP-24 reverses what the workplan declines and misdescribes the live column (prior work) | `scripts/db.py:3385-3389`; workplan T-6a and §6 (K-9, K-10); T-6a's done-when counts differ today | **amended**: IMP-24 is T-6a extended to three writers; no back-fill; AT-74 restated |
+| FA-20 | material | `--slug`, `reasoning_doc_citations`, `opus_reviewed` have readers (existence) | `assess_cell.py:1963-1969`, `2224-2228`; `git grep -l reasoning_doc_citations -- scripts schemas governance skills .claude`; `scripts/db.py:2947`, `governance/conceptual-model.md:122` | **withdrawn** for `--slug`; **amended** for the other two (sweep-gated candidates) |
+| FA-21 | material | the lens-tag rule is classed as owner speech in three files (warrant class) | PS:4628 read | **amended**: HS-1 §0, F-01, HS-3 §0 and IMP-08, HS-4 §0 and Document 2 |
+| FA-22 | material | a fourth check examines retired rows; `adjudication_integrity`'s subject is sources (subject) | `validate_verification_consistency` → "5 stated/provisional", `EXAMINED: 5`; `adjudication_integrity` → `EXAMINED: 59`, readiness line "8 determination(s)" | **amended**: IMP-04 names four checks correctly |
+| FA-23 | minor | wrong cross-references (existence) | read | **amended** |
+| FA-24 | minor | "in two places" is a typed count that disagrees with the table (count) | the file's own command | **amended**: HS-1 §0 |
+| FA-25 | minor | `NO PATH` is ten lines; only pending runs allocate a gap (count) | `walkability.py` piped to `grep -c 'NO PATH'` → 10; `gap_register_id` NULL on the 3 × `DEAF` copy | **amended**: HS-1 REQ-006, REQ-025 |
+| FA-26 | minor | four line references (fidelity) | `grep -n -F` → 2419, 608, 1968; `sed -n 5206p` | **amended**: HS-1; V27; HS-4 |
+| FA-27 | minor | HS-A09's command returns a hit (subject) | the command → `claims_docket.py`; `ls` of the two named gate files fails | **amended**: command replaced |
+| FA-28 | minor | OD-22's command lists section names (existence) | run; the prompts are under `decisions` | **amended**: command corrected |
+| FA-29 | minor | AT-69's instrument and count (redness) | query → 33 rows in 27 strings | **amended**: AT-69 uses the query |
+| FA-30 | minor | OD-04 omits the owner's later answer (supersession) | `grep -n -F 'Yes it is P1+P2+P3'` → 4835, 5026 | **amended**: OD-04 carries it and asks only what it covers |
+| FA-31 | minor | "all three are tooling" (consistency) | read | **amended**: HS-3 §0 |
+| FA-32 | minor | `v_item_provenance` is not a subset (subject) | view bodies read; on the four-cell copy the two views return different counts | **withdrawn**: the deletion |
+| FA-33 | minor | brief: "three audit files"; appends after a closed round; scratchpad outputs (consistency) | read | **amended**: HS-4 §0, §2 order, §1.1 item 8 |
+| FA-34 | minor | `re_entry:` is a code change (existence) | `grep -n extra schemas/pipeline_contract.py` | **amended**: IMP-03 split |

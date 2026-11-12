@@ -16,7 +16,7 @@
   {
     "started": "2026-11-12T02:25:05",
     "role": "adversarial",
-    "bytes": 2078288,
+    "bytes": 2707906,
     "agent_id_prefix": "ad8cef1f",
     "file": "2026-11-12T02-25-05_adversarial_ad8cef1f.jsonl"
   },
@@ -37,7 +37,7 @@
   {
     "started": "2026-11-12T03:39:37",
     "role": "antagonist",
-    "bytes": 2068597,
+    "bytes": 2248857,
     "agent_id_prefix": "af9bcc71",
     "file": "2026-11-12T03-39-37_antagonist_af9bcc71.jsonl"
   }

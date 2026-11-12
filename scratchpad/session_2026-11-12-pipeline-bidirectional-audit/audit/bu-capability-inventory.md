@@ -42,6 +42,10 @@ specification-stage and render-stage gate, view and check is either vacuous or e
    copies, parameter 3 × `MOB`, × `BLIND` and × ICF `d450` returned the same state, basis, marker, 27 governing sources,
    122 linked extractions and the same value; only the sha and the population-assessment list differ (§C.2). A
    determination "for blind people" is today computed on wheelchair evidence. VERIFIED by run.
+   [AMENDED 2026-11-12 by the handshake leg's resolution pass, FA-10: the rows are not wheelchair evidence. The 35
+   governing rows are tagged `MOB` and come from T4–T6 instruments (codes, national frameworks, standards); none is
+   device-scoped and none mentions a wheelchair. The defect stands: a cell for one lens is governed by rows tagged
+   for another. See `hs-adversarial-findings.md` F-01 and §5.]
 4. **Jurisdiction and language are not in the determination's key and are not consumed downstream of judgment.**
    `specifications` has no jurisdiction or language column (`Q30`). The engine reads `jurisdiction` only to count
    distinct jurisdictions for the regulatory "richness" test (`assess_cell.py:1147-1199`). A request for
