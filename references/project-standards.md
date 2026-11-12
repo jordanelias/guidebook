@@ -5330,3 +5330,22 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session adding a fixed list, literal, order, name-branch or one-way state to the pipeline, or finding a path, row, stage or refusal that leads nowhere.
 ACTION: (1) Hold each rule once, in the schema, a registry or the contract, and read it from there. (2) Treat a path, row, state or refusal that leads nowhere as a defect to record and remove. (3) Keep deliberate refusals. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statements, quoted above.
+
+
+## Owner statement 2026-11-12 (eighth) — a spelled-out number is translated into a numeral and unit; the untranslated wording may be kept as provenance
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), in answer to the pilot of task T-008 (a claimed number checked as a number), which showed that a spelled-out `claimed_value` (Dutch "vijf", Finnish "viisi prosenttia") could not be filed under a check that reads numerals. Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, the two phrases being the pilot's examples:
+
+> "\"vijf\" or \"viisi prosenttia\"
+>
+> lol just translate these into numbers/units as applicable. you can have an untranslated column for provenance if you want"
+
+**What this decides.**
+1. **A number written in words is translated into a numeral, and a unit where there is one,** at extraction. `claimed_value` and `claimed_unit` hold the numeral and the unit ("vijf" becomes 5; "viisi prosenttia" becomes 5 and %). The check that a claimed number is a number therefore applies to every row, and no row needs an exemption for being spelled out.
+2. **The wording as the source gave it may be kept in its own column,** so the translation can be seen against what it translates. The owner leaves the column to the implementer ("if you want"). `claim_text` still holds the verbatim quote.
+
+**What it does not decide.** The column's name, whether it is required, whether the translation is checked against the as-written wording (for example, that the wording occurs in the quote), and how the two stored rows that the pilot found (extraction 30, Dutch "vijf"; extraction 80, Finnish "viisi prosenttia") are brought into line. These belong to the task that implements it. This supplies the answer to GAP-056 on the point of how a spelled-out value is filed; it does not close the gap's other parts.
+
+CONDITION: any session extracting a figure a source writes in words, or changing the check on claimed values.
+ACTION: (1) Enter the numeral and unit as `claimed_value` and `claimed_unit`. (2) Keep the source's own wording as provenance in a column of its own where it differs from the numeral. (3) Do not exempt a row from the number check for being spelled out. (4) Do not back-translate or invent: the translation is of what the quote says.
+DATE: 2026-11-12 — owner statement, quoted above.
