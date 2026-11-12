@@ -28,7 +28,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi; echo "BASE=$BASE"
 git switch -c task/t-116-upl-for-upper-limb "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-116" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -88,7 +88,7 @@ Prose callers are T-058's (a tooling pull request after this one). Here, list th
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```

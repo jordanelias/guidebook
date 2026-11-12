@@ -35,7 +35,7 @@ for n in OD-02 OD-08 OD-12 OD-30 OD-33; do gate $n; done
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi; echo "BASE=$BASE"
 git switch -c task/t-037-render "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-037" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
@@ -118,7 +118,7 @@ Each line shows the check's subject (`EXAMINED:`). A check that is red here was 
 **Step 4: the gate, once.**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
 - **Run it once, when every edit is made, before the commit.** It compares your working tree (committed or not, untracked files included) with the point where your branch left `$BASE`, so it does not need a commit first. `preflight.sh` runs the registry selftest and then `run_checks.py --changed-from`: do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
@@ -160,6 +160,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
 - the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
+- OR-14b (whether an element page is derived when read or written by the specifications pass) is unanswered in the owner queue: write no element page and say so in the pull request (OPEN-ITEMS-PLAN.md, R1);
 
 ## 10. Rollback
 

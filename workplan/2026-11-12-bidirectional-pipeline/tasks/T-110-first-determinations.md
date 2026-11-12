@@ -30,7 +30,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi; echo "BASE=$BASE"
 git switch -c task/t-110-first-determinations "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-110" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -95,7 +95,7 @@ Structures this task touches, for orientation: `specifications`. The ledger (`re
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
@@ -134,6 +134,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- an owner-queue prompt is still unanswered (no `answered` mark in `governance/owner-browser.yaml`) and a cell turns on it: a cell whose marker turns on OR-22b or OR-23b, or whose value turns on OR-5b or OR-6c, is not written; list each such cell in the report (OPEN-ITEMS-PLAN.md, R1);
 
 ## 10. Rollback
 

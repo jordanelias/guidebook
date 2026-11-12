@@ -35,7 +35,7 @@ for n in OD-05; do gate $n; done
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi; echo "BASE=$BASE"
 git switch -c task/t-105-read-held-sources "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-105" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -99,7 +99,7 @@ Structures this task touches, for orientation: `source_scans`. The ledger (`refe
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
@@ -138,6 +138,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- OR-25 (whether batch 23's extraction cap carries over to scans) is unanswered in the owner queue: this is a default, not a halt. Batch by source, one source being the review unit (the recommended option), and say so in the pull request (OPEN-ITEMS-PLAN.md, R1);
 
 ## 10. Rollback
 
