@@ -5313,3 +5313,20 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session adding a fixed list, an enum, a hard-coded order or a one-shape run to the pipeline, or weighing a gate against the need to adapt.
 ACTION: (1) Prefer a change that is made by data or in one place over one that edits code in several. (2) Do not bake a stage, language, jurisdiction or run shape into code where the schema or a single registry can hold it. (3) Keep the refusals the project holds on purpose. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statements 2026-11-12 (seventh) — flexible means no hard-coded behaviours and no dead ends
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), within minutes of the sixth statement and glossing it, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in the order sent:
+
+> "and that means pipeline must not have hard coded behaviours"
+
+> "or dead ends or whatever"
+
+**What this records.** The owner's gloss on "the pipeline must be flexible": the pipeline is to carry no hard-coded behaviours and no dead ends, "or whatever" of that kind. This supplies the meaning the sixth statement left open; the [ASSUMPTION] in the sixth entry about the reading of "flexible" is superseded by this gloss on that point only.
+
+**What it does not decide.** What counts as a hard-coded behaviour (a literal, a fixed list, a fixed order, a branch on a name) as against a rule held once in a registry, a column CHECK or a contract; what counts as a dead end (a state, a row, a path, a refusal or a stage with no way onward, back or out); and the "whatever" are open and belong to the audit's improvement programme. Deliberate refusals the project holds on purpose (`CLAUDE.md` §4) are not hard-coded behaviours in this sense unless the owner says so. [ASSUMPTION: "dead end" covers a reader's, a run's and a record's: a path that cannot continue or return, a row that cannot be ended or corrected, a refusal that does not say what to do next, a stage with no outbound or inbound route.]
+
+CONDITION: any session adding a fixed list, literal, order, name-branch or one-way state to the pipeline, or finding a path, row, stage or refusal that leads nowhere.
+ACTION: (1) Hold each rule once, in the schema, a registry or the contract, and read it from there. (2) Treat a path, row, state or refusal that leads nowhere as a defect to record and remove. (3) Keep deliberate refusals. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statements, quoted above.
