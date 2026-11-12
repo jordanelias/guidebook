@@ -5364,3 +5364,18 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session translating, or deciding where translation happens, or presenting a translated quotation, term or clause.
 ACTION: (1) Treat translation as a capability to be called at the stage that needs it, not as a step fixed in one stage. (2) Keep the untranslated text and attach the translation to it by pointer, marked as a translation with its translator. (3) Never present a translation as the source's own wording. (4) Leave the default stage, the translator's class and the target language to the audit's programme and the owner. (5) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (tenth) — a rule that synthesis translates is not necessarily hard-coding
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), directly after the ninth statement (everything non-English is translated, probably at synthesis), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "we can set a rule for synthesis to translate, which isn't hardcoding necessarily"
+
+**What this records.** Synthesis may be given a rule to translate, and a rule of that kind is not, of itself, a hard-coded behaviour in the sense of the seventh statement. It is a gloss on the line between the two: a behaviour held once, as a stated rule that can be read and changed in one place, is permitted; a behaviour fixed as a literal or a branch scattered through code is not.
+
+**What it does not decide.** Where the rule is held (the pipeline contract, the check registry, a configuration table), how it is read, and whether the owner or the implementer may change it. The "necessarily" leaves cases open: a rule can still be hard-coding if it is buried in code or restated in several places. It does not make translation exclusive to synthesis (ninth statement: wherever it is needed). [ASSUMPTION: the sentence is read as setting synthesis as the default stage for translation by a rule held in one place that other stages can override or call, not as fixing translation to synthesis alone.]
+
+CONDITION: any session placing translation, or any other default behaviour, in a stage, or judging whether a stated rule is hard-coding.
+ACTION: (1) Hold a default behaviour, including "synthesis translates", as a rule in one stated place and read it from there. (2) Do not scatter it as a literal or a name-branch in code. (3) Keep the capability callable from other stages. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
