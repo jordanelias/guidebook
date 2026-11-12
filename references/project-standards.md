@@ -5213,3 +5213,28 @@ Given in session https://claude.ai/code/session_01Ub36iPbFEPovMCoes1oKx9, on rea
 CONDITION: any session asking whether a concept first met in another language may have an English label, or what avoiding English bias requires of the register and the schema.
 ACTION: (1) Give a non-English-origin concept an English descriptive label, marked as ours. (2) Keep the instrument's own phrase as a form with its language, jurisdiction and source reference. (3) Attach an English-language form only on a source for an English jurisdiction. (4) Order, match and rank no column ahead of another. (5) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-06 — owner statement, quoted above.
+
+
+## Owner statements 2026-11-12 — a robust base for every language, jurisdiction and term; parameters defined dynamically; a source is read once for every parameter; the pipeline runs in every direction
+
+Four statements made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "ensure that our pipeline can be run in all directions at any stage in such a manner where we can dynamically research, adjudicate, synthesize, specify and render across a multitude of languages and jurisdictions."
+
+> "ensure that we have a robust base for languages/jurisdictions/terms/etc so that we can leverage all of them for comprehensive research, and ensure that we can dynamically derive/define new parameters as well as find linkages and equivalencies and clauses in order to group things as much as possible for clarity and robustness"
+
+> "ensure that whenever we read a source we are able to derive all information relevant to all parameters we have defined in our base so that we don't have to repeatedly read a source to get values or worry about missing it"
+
+> "Fable has permission to design, author, curate, orchestrate, delete as required to ensure code pipeline works as desired" — confirmed on the assistant's reading (code, schema, scripts, checks and skills; doctrine stays owner-gated) — and, later, "Fable allowed to curiously stress test, patch and iterat[e]".
+
+**What this records.**
+1. **Objective.** The pipeline is to be runnable in every direction from any stage, dynamically, across many languages and jurisdictions. This was an unrecorded objective in the top-down audit ledger (C-17).
+2. **Base.** Languages, jurisdictions, terms and the rest of the base are to be a robust substrate that research can use in full, new parameters are to be derivable or definable dynamically, and linkages, equivalencies and clauses are to be found and used to group, for clarity and robustness.
+3. **Read once.** A source read is to yield everything relevant to every parameter defined in the base, so no source is re-read for values and nothing is missed. This restates, and does not replace, the 2026-10-09 statement that every source is scanned for every parameter and OR-11a's full-scope scan.
+4. **Authority.** A Fable implementation agent may design, author, curate, orchestrate, delete, stress test, patch and iterate on the code pipeline, within the rules that bind code (migrations only for the database, tooling and research rows in separate PRs, scratch copies for stress tests). Mission, audience, CRPD posture, population taxonomy, evidence-tier definitions, jurisdiction scope, licensing and trajectory remain the owner's. [ASSUMPTION: the grant covers the code pipeline and not doctrine — the owner answered "Assumption is correct" to this reading.]
+
+**What it does not decide.** What "render across languages" means, whether a determination varies by jurisdiction, and how a parameter added after a source was read is applied to that source (re-read, or retained text) are open and are `OWNER DECISION REQUIRED` items in the audit's improvement programme.
+
+CONDITION: any session asking what the pipeline's omnidirectional, multilingual, multijurisdictional or read-once objectives are, or what authority the implementation agent holds.
+ACTION: (1) Treat the three objective statements as live requirements on the pipeline. (2) Do not re-read a source to extract a parameter that the source's earlier full-scope reading already covered; where a parameter postdates the reading, a catalogue-growth route must exist and is owed. (3) Implement under the authority in item 4 and no wider. (4) Treat the doctrine questions above as the owner's.
+DATE: 2026-11-12 — owner statements, quoted above.
