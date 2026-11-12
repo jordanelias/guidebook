@@ -1,0 +1,31 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+real.001.real.anchor	0	0	0	held source with a full-text scan and an extraction	{"ref": "REF-00139", "sha": "6ef9ca54ca4533749c5dff13f7a9ae8cc14bd9c98b4f3fde3c5a09ca7466b8cb", "extraction": [119, 3, "Changes in vertical 
+real.002.real.record-scan	0	0.44	1	a full reading naming held bytes	{
+real.003.real.observe-term	0	0.24	1	a contiguous phrase observed verbatim with locator and quote	{
+real.004.real.adjudicate-names-existing	0	0.16	1	the observation names the existing parameter's term	{
+real.005.real.add-extraction.MOB	1	0.21	0	a correctly cited second row under another lens is accepted	REFUSING: add-extraction: extraction 119 already carries this exact row (REF-00139, parameter 3, same lenses, claim, value, text and locator
+real.006.real.add-extraction.SCI	0	0.24	1	a correctly cited second row under another lens is accepted	{
+real.007.real.add-extraction.MS	0	0.21	1	a correctly cited second row under another lens is accepted	{
+real.008.real.add-extraction.ALL	0	0.17	1	a correctly cited second row under another lens is accepted	{
+real.009.real.relate-extraction	0	0.17	1	a condition edge between two rows of the same source	{
+real.010.real.add-population-match	0	0.17	1	grade population-of-study vs population-served (R13)	{
+real.011.real.assess.p3.identity.MOB	0	0.17	5	determine parameter 3 under identity=MOB on the SAME database that holds the extractions	param 3×MOB      provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+real.012.real.assess.p3.identity.SCI	0	0.18	5	determine parameter 3 under identity=SCI on the SAME database that holds the extractions	param 3×SCI      provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+real.013.real.assess.p3.identity.MS	0	0.18	5	determine parameter 3 under identity=MS on the SAME database that holds the extractions	param 3×MS       provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+real.014.real.assess.p3.identity.ALL	0	0.17	5	determine parameter 3 under identity=ALL on the SAME database that holds the extractions	param 3×ALL      provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+real.015.real.assess.p3.icf.d410	0	0.16	5	determine parameter 3 under icf=d410 on the SAME database that holds the extractions	param 3×d410     provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+real.016.real.assess.p3.needs.A-AT	0	0.17	5	determine parameter 3 under needs=A-AT on the SAME database that holds the extractions	param 3×A-AT     provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+real.017.real.determinations	0	0	0	determinations written	{"sql": "select specification_id,parameter_id,identity_code,icf_code,needs_code,state,marker,value_min,value_max,value_unit from specificati
+real.018.real.render-views	0	0	0	render views over the determination	{"sql": "select (select count(*) from v_best_practice), (select count(*) from v_determination_provenance)", "params": [], "rows": [[6, 750]]
+real.019.real.gate.test_db_integrity	1	0.59	0	test_db_integrity on the database holding the determination: does it examine it, and does it go red on a wrong-lens/unverified one?	[A] Foreign key referential integrity
+real.020.real.gate.validate_evidence_state	0	0.18	0	validate_evidence_state on the database holding the determination: does it examine it, and does it go red on a wrong-lens/unverified one?	EXAMINED: 25
+real.021.real.gate.derivation_handshake	0	0.18	0	derivation_handshake on the database holding the determination: does it examine it, and does it go red on a wrong-lens/unverified one?	======================================================================
+real.022.real.gate.medical_lens	0	0.06	0	medical_lens on the database holding the determination: does it examine it, and does it go red on a wrong-lens/unverified one?	======================================================================
+real.023.real.gate.verified_scan	1	0.05	0	verified_scan on the database holding the determination: does it examine it, and does it go red on a wrong-lens/unverified one?	verified_scan_integrity — every live extraction rests on a VERIFIED source and a reading (OR-11a)
+real.024.real.gate.judgment_handoff	0	0.03	0	judgment_handoff on the database holding the determination: does it examine it, and does it go red on a wrong-lens/unverified one?	EXAMINED: 3 invariant(s) of the evidence->judgment hand-off
+real.025.real.emit-batch-sql	0	0.13	0	capture the judgment + specification delta	Wrote /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/real/batch.sql — 1148 insert(s), 0 updat
+real.026.real.emit-data-migration	0	0.1	0	migration file in the clone	/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/real/clone/scripts/migrations/data_20261112050
+real.027.real.migrate-rebuild	1	1.93	0	rebuild from history in the clone	Rebuilding /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/real/rebuilt.db from migration hist
+real.028.real.rebuilt-vs-scratch-counts	0	0	0	rebuilt equals scratch by row count	{"data_migrations": [476, 477], "evidence_population_match": [62, 61], "extraction_relations": [58, 57], "source_value_extractions": [217, 2
+real.029.real.migration-reproducibility-deep	1	1.78	0	content comparison, every row (advisory)	======================================================================
+real.030.real.backward.provenance	0	0	0	determination -> sources by the provenance view	{"sql": "select * from v_determination_provenance limit 40", "params": [], "rows": [[9, 3, "ramp gradient", "provisional", "MOB", "condition

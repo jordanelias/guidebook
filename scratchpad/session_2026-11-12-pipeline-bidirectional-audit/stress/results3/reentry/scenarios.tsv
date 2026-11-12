@@ -1,0 +1,12 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+reentry.001.reentry.record-scan	0	0.32	1	scan	{
+reentry.002.reentry.add-extraction	1	0.23	0	a correctly cited second row under another lens is accepted	REFUSING: add-extraction: extraction 119 already carries this exact row (REF-00139, parameter 3, same lenses, claim, value, text and locator
+reentry.003.reentry.assess-1	0	0.19	5	determine	param 3×MOB      provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+reentry.004.reentry.raise-determination-gate	1	0.17	0	raise-determination-gate on the live determination's data	REFUSING: a gate with no --trigger-ref-id must state --trigger-tier and --trigger-evidence-type. Doctrine requires every gate to carry the s
+reentry.005.reentry.resolve-determination-gate	0	0.18	0	resolve-determination-gate on the live determination's data	{
+reentry.006.reentry.raise-follow-up	0	0.19	1	raise-follow-up on the live determination's data	{
+reentry.007.reentry.resolve-follow-up	0	0.13	0	resolve-follow-up on the live determination's data	{
+reentry.008.reentry.retire-specification	0	0.16	0	retire the determination in place	{
+reentry.009.reentry.assess-2-same-cell	0	0.16	5	re-determine the same cell after retirement: allowed, and does the new row point back at the retired one?	param 3×MOB      provisional  basis=T4-6-only-threshold+CO1+T2-direction(proxy_inference) scale=universal  refs=27 sources=31 extractions=12
+reentry.010.reentry.supersession-pointer	0	0	0	retired -> superseding pointer	{"sql": "select specification_id,state,retired_at,superseded_by_specification_id from specifications where parameter_id=? and identity_code=
+reentry.011.reentry.gaps-after	0	0	0	gaps raised by the engine and the follow-up	{"sql": "select gap_id,category,priority,status,substr(description,1,100) from gaps order by gap_id desc limit 5", "params": [], "rows": [["
