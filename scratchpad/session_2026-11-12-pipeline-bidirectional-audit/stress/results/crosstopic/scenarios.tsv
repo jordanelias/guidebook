@@ -1,0 +1,6 @@
+tag	rc	seconds	tables_changed	expectation	first_line
+crosstopic.001.clone	0	24.83	0	local clone	
+crosstopic.002.emit-migration-from-acoustics	0	0.04	0	apply topic acoustics's independent delta to the same history	/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/crosstopic/clone/scripts/migrations/data_20261
+crosstopic.003.emit-migration-from-reach	0	0.04	0	apply topic reach's independent delta to the same history	/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/crosstopic/clone/scripts/migrations/data_20261
+crosstopic.004.emit-migration-from-thermal	0	0.04	0	apply topic thermal's independent delta to the same history	/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/crosstopic/clone/scripts/migrations/data_20261
+crosstopic.005.rebuild-with-all-deltas	1	2.21	0	rebuild from history plus the independently captured deltas: collisions on ids / unique keys surface here	Rebuilding /tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run/crosstopic/rebuilt-all.db from migr

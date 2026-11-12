@@ -63,6 +63,75 @@ TOPICS = {
             "hi": "कमरे का तापमान 22 से 26 डिग्री सेल्सियस के बीच रहना चाहिए।",
             "hi-b": "कमरे का तापमान 20 से 24 डिग्री सेल्सियस के बीच रहना चाहिए।",
         }),
+    "luminance": dict(
+        slug="luminance-contrast-lrv-evidence-base", param_term_like="LRV%", lenses_identity=["BLIND", "VES", "ALL", "AUT"], lang="ja", jur="JP", strings={
+            "ja": "床と壁の輝度比（LRV）の差は30ポイント以上とする。",
+            "ja-b": "床と壁の輝度比（LRV）の差は20ポイント以上とする。",
+            "de": "Der Leuchtdichtekontrast soll mindestens 0,4 betragen.",
+            "en": "A difference of at least 30 LRV points between adjacent surfaces.",
+            "ko": "인접 표면의 LRV 차이는 30점 이상이어야 한다.",
+            "ar": "يجب ألا يقل فرق معامل الانعكاس عن 30 نقطة.",
+            "hi": "आसन्न सतहों के बीच LRV का अंतर कम से कम 30 अंक होना चाहिए।",
+            "hi-b": "आसन्न सतहों के बीच LRV का अंतर कम से कम 20 अंक होना चाहिए।",
+            "th": "ค่าความแตกต่าง LRV ต้องไม่น้อยกว่า 30 จุด",
+        }),
+    "circadian": dict(
+        slug="circadian-lighting-melanopic-edi", param_term_like="colour temperature", lenses_identity=["DEM", "ALL", "AUT", "BLIND"], lang="sv", jur="SE", strings={
+            "sv": "Korrelerad färgtemperatur bör vara mellan 2700 och 4000 K.",
+            "de": "Die Farbtemperatur soll 3000 K nicht überschreiten.",
+            "ja": "色温度は3000K以下とする。",
+            "zh": "色温不应超过3000开尔文。",
+            "ru": "Цветовая температура не должна превышать 3000 К.",
+            "ar": "ينبغي ألا تتجاوز درجة حرارة اللون 3000 كلفن.",
+            "hi": "रंग तापमान 3000 K से अधिक नहीं होना चाहिए।",
+            "hi-b": "रंग तापमान 4000 K से अधिक नहीं होना चाहिए।",
+        }),
+    "flash": dict(
+        slug="flash-threshold-photosensitive-safety", param_term_like="flash%", lenses_identity=["EPI", "ALL", "AUT", "MS"], lang="en", jur="UK", strings={
+            "en": "No more than three flashes in any one-second period.",
+            "fr": "Pas plus de trois éclats par période d'une seconde.",
+            "de": "Nicht mehr als drei Blitze pro Sekunde.",
+            "ja": "1秒間に3回を超える点滅をしてはならない。",
+            "ja-b": "1秒間に4回を超える点滅をしてはならない。",
+            "ar": "لا أكثر من ثلاث ومضات في الثانية الواحدة.",
+            "hi": "प्रति सेकंड तीन से अधिक झिलमिलाहट नहीं होनी चाहिए।",
+            "hi-b": "प्रति सेकंड चार से अधिक झिलमिलाहट नहीं होनी चाहिए।",
+            "th": "ไม่เกินสามครั้งต่อวินาที",
+        }),
+    "grabbar": dict(
+        slug="fold-down-grab-bar-specification", param_term_like="grab%", lenses_identity=["MOB", "LMB", "SCI", "ALL"], lang="fr", jur="CA", strings={
+            "en": "Grab bars shall resist a load of 1.33 kN (300 lbf).",
+            "fr": "La barre d'appui doit résister à une charge de 1,33 kN.",
+            "de": "Haltegriffe: Durchmesser 30 bis 40 mm.",
+            "ja": "手すりの直径は32mm以上36mm以下とする。",
+            "ja-b": "手すりの直径は28mm以上32mm以下とする。",
+            "zh": "扶手直径应为30至40毫米。",
+            "ko": "손잡이의 지름은 30mm 이상 40mm 이하로 한다.",
+            "hi": "ग्रैब बार का व्यास 30 से 40 मिमी होना चाहिए।",
+            "hi-b": "ग्रैब बार का व्यास 20 से 30 मिमी होना चाहिए।",
+        }),
+    "cost": dict(
+        slug="construction-cost-data", param_term_like="cost%", lenses_identity=["ALL", "MOB"], lang="en", jur="CA", strings={
+            "en-CAD": "Retrofit cost of CAD 12,500 per door opening.",
+            "ja-yen": "改修費は1戸あたり120万円とする。",
+            "de-eur": "Kosten von 4.200 € je Rampe (1.234,56 € Nebenkosten).",
+            "ar-sar": "تكلفة 5000 ريال لكل مدخل.",
+            "hi-inr": "लागत ₹1,50,000 प्रति इकाई।",
+            "hi-inr-b": "लागत ₹1,20,000 प्रति इकाई।",
+            "fr-ch": "Coût de 12 500 CHF par rampe.",
+            "number-in-words": "twelve thousand five hundred dollars",
+        }),
+    "method": dict(
+        slug="jurisdiction-matrix-accessibility-standards", param_term_like="jurisdiction%", lenses_identity=["ALL"], lang="fr", jur="CA", strings={
+            "fr-QC": "Code de construction du Québec, chapitre I, section 3.8.",
+            "en-ON": "Ontario Building Code, O. Reg. 332/12, Section 3.8.",
+            "de-NRW": "Landesbauordnung Nordrhein-Westfalen, § 49.",
+            "es": "Código Técnico de la Edificación, DB-SUA, Anejo A.",
+            "ja": "建築基準法施行令第126条の2。",
+            "it": "D.M. 236/1989, art. 4.1.",
+            "ar": "الكود السعودي للبناء، الفصل 2.",
+            "hi": "राष्ट्रीय भवन संहिता, भाग 3।",
+        }),
 }
 
 
@@ -183,6 +252,7 @@ def pass1_forward(R, T):
     # fixture observation -> new term -> new parameter (the observe/adjudicate/add-term/add-parameter chain)
     cand = rows(R.db, "select e.ref_id,e.claim_text from source_value_extractions e where length(e.claim_text)>60 order by e.extraction_id limit 8")
     obs_id = None
+    obs_surface = None
     for ref, claim in cand:
         words = re.findall(r"[A-Za-z]{4,}", claim)
         if len(words) < 3:
@@ -197,17 +267,21 @@ def pass1_forward(R, T):
         after = rows(R.db, "select coalesce(max(observation_id),0) from observed_terms")[0][0]
         if after > before:
             obs_id = after
+            obs_surface = surface
             break
     if obs_id:
         R.dbpy("base.adjudicate-names-new", "NAMES-NEW via adjudicate-term is refused by design", "adjudicate-term", "--observation-id", str(obs_id),
                "--outcome", "NAMES-NEW", "--rationale", "STRESS-FIXTURE", "--session", S)
         R.dbpy("base.add-term-value-bearing", "a value-bearing canonical name is refused", "add-term", "--from-observation", str(obs_id),
                "--canonical-en", "STRESS-FIXTURE concept not above 0.6 s", "--rationale", "STRESS-FIXTURE value-bearing test", "--session", S)
-        R.dbpy("base.add-term-new", "mint a new term from the observation", "add-term", "--from-observation", str(obs_id),
-               "--canonical-en", f"STRESS-FIXTURE {R.topic} concept", "--rationale", "STRESS-FIXTURE: dynamic term definition", "--session", S)
-        newt = rows(R.db, "select term_id from terms where canonical_en like 'STRESS-FIXTURE%' order by rowid desc limit 1")
-        if newt:
-            R.dbpy("base.add-parameter-new-term", "promote the fixture term to a parameter", "add-parameter", "--term-id", newt[0][0], "--session", S)
+        nterms = rows(R.db, "select count(*) from terms")[0][0]
+        R.dbpy("base.add-term-new", "mint a new term from the observation (name must lie inside the observed phrase)", "add-term", "--from-observation", str(obs_id),
+               "--canonical-en", obs_surface, "--rationale", "STRESS-FIXTURE: dynamic term definition from the observed phrase", "--session", S)
+        if rows(R.db, "select count(*) from terms")[0][0] > nterms:
+            newt = rows(R.db, "select term_id from terms order by rowid desc limit 1")
+            R.dbpy("base.add-parameter-new-term", "promote the new term to a parameter", "add-parameter", "--term-id", newt[0][0], "--session", S)
+        else:
+            R.note("base.add-parameter-new-term", "n/a: add-term created no term", {"skipped": "add-term refused or wrote nothing"})
     else:
         R.note("base.observe-chain", "observation chain not completed", {"skipped": "no observation was accepted by observe-term across candidates tried"})
     # read-once: what the system says about already-read sources once the parameter list grew
@@ -222,24 +296,24 @@ def pass1_forward(R, T):
            "--absence-class", "query_shape_failure", "--jurisdiction", T["jur"], "--session", S)
     ex = rows(R.db, "select max(exec_id) from search_executions")[0][0]
     R.dbpy("research.add-candidate-fixture", "stage a candidate", "add-candidate", "--exec-id", str(ex), "--found-under-slug", slug, "--disposition", "PENDING-VERIFICATION",
-           "--title", "STRESS-FIXTURE candidate", "--surfaced-in", "STRESS-FIXTURE", "--session", S)
+           "--title", "STRESS-FIXTURE candidate", "--surfaced-in", "STRESS-FIXTURE", "--surfaced-quote", "STRESS-FIXTURE quote", "--session", S)
     R.dbpy("research.log-search-wrong-session-form", "a '.md' session id scopes a gate to nothing; expect refusal or a silent accept", "log-search", "--slug", slug, "--language", "en",
-           "--query-text", "STRESS-FIXTURE wrong session form", "--engine", "stress-script", "--depth-method", "scoping", "--session", S + ".md")
+           "--query-text", "STRESS-FIXTURE wrong session form", "--engine", "stress-script", "--depth-method", "scoping", "--prior-expectation", "STRESS-FIXTURE expects zero results", "--session", S + ".md")
     R.dbpy("research.unmined-gaps", "gap-driven mining entry point lists gaps", "unmined-gaps")
     # ---------------- EVIDENCE
     doi = rows(R.db, "select doi from evidence_sources where doi is not null and doi<>'' limit 1")
     if doi:
         R.dbpy("evidence.add-source-duplicate-doi", "R9: a duplicate DOI cross-files or is refused", "add-source", "--doi", doi[0][0], "--year", "2020",
-               "--title", "STRESS-FIXTURE duplicate doi", "--authors", "Fixture A", "--source-type", "report", "--session", S)
+               "--title", "STRESS-FIXTURE duplicate doi", "--authors", "Fixture A", "--source-type", "report", "--evidence-type", "grey", "--session", S)
     R.dbpy("evidence.add-source-fixture", "add a minimal fixture source (expect: refused for lacking retrieval/verification fields, or written UNVERIFIED)", "add-source",
            "--year", "2020", "--title", "STRESS-FIXTURE source", "--authors", "Fixture A", "--source-type", "report", "--slug", slug,
-           "--verification-status", "UNVERIFIED", "--lang-detected", T["lang"], "--jurisdiction", T["jur"], "--session", S)
+           "--verification-status", "UNVERIFIED", "--evidence-type", "grey", "--lang-detected", T["lang"], "--jurisdiction", T["jur"], "--session", S)
     # ---------------- JUDGMENT
     anyref = rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0]
     pid = (rows(R.db, "select parameter_id from base_parameters order by parameter_id desc limit 1") or [[3]])[0][0]
     R.dbpy("judgment.add-extraction-unfound-quote", "an extraction whose quote is in no saved file is refused", "add-extraction", "--ref-id", anyref, "--parameter-id", str(pid),
            "--claim-type", "numerical", "--claimed-value", "0.6", "--claimed-unit", "s", "--claim-text", "STRESS-FIXTURE sentence found in no file",
-           "--extraction-method", "full-read", "--identity", "ALL", "--session", S)
+           "--extraction-method", "full-read", "--identity", "ALL", "--figure-role", "claim", "--relation", "none", "--session", S)
     R.dbpy("judgment.record-scan-bogus-sha", "a scan without a held file hash is refused", "record-scan", "--ref-id", anyref, "--mode", "catalogue", "--text-scope", "full",
            "--file-sha256", "0" * 64, "--method", "full-read", "--session", S)
     # ---------------- SYNTHESIS
@@ -308,9 +382,9 @@ def pass2_backward(R, T):
 def pass3_cold(R, T):
     probes = [
         ("base", "add-term-without-observation", ["add-term", "--canonical-en", "STRESS cold", "--rationale", "x", "--session", R.sess]),
-        ("research", "log-search-without-slug", ["log-search", "--language", "en", "--query-text", "x", "--engine", "x", "--depth-method", "scoping", "--session", R.sess]),
-        ("evidence", "add-source-minimal", ["add-source", "--year", "2020", "--title", "STRESS cold", "--session", R.sess]),
-        ("judgment", "add-extraction-absent-ref", ["add-extraction", "--ref-id", "REF-99999", "--parameter-id", "7", "--claim-type", "numerical", "--claim-text", "x", "--extraction-method", "skim", "--session", R.sess]),
+        ("research", "log-search-without-slug", ["log-search", "--language", "en", "--query-text", "x", "--engine", "x", "--depth-method", "scoping", "--prior-expectation", "STRESS-FIXTURE", "--session", R.sess]),
+        ("evidence", "add-source-minimal", ["add-source", "--year", "2020", "--title", "STRESS cold", "--authors", "Fixture A", "--evidence-type", "grey", "--session", R.sess]),
+        ("judgment", "add-extraction-absent-ref", ["add-extraction", "--ref-id", "REF-99999", "--parameter-id", "7", "--claim-type", "numerical", "--claim-text", "x", "--extraction-method", "skim", "--figure-role", "claim", "--relation", "none", "--session", R.sess]),
         ("synthesis", "add-connection-absent-parameter", ["add-connection", "--confidence", "HIGH", "--connection-type", "CROSS-PARAMETER", "--filed-in", T["slug"], "--description", "x", "--source-skill", "stress", "--parameter", "9999", "--session", R.sess]),
     ]
     for stage, tag, args in probes:
@@ -332,6 +406,36 @@ def pass4_lateral(R, T):
     R.sql("lateral.evidence-by-language", "held sources by detected language", "select lang_detected,count(*) from evidence_sources group by 1 order by 2 desc")
 
 
+def pass4b_vocab(R, T):
+    base = ["--year", "2020", "--title", "STRESS-FIXTURE jurisdiction probe", "--authors", "Fixture A", "--source-type", "report", "--evidence-type", "grey", "--session", R.sess]
+    for j in ("UK", "CA-ON", "DE-NW", "XX"):
+        R.dbpy(f"lateral.add-source-jurisdiction-{j}", f"jurisdiction vocabulary behaviour for {j}: national accepted, sub-national and unknown refused or accepted?", "add-source", "--jurisdiction", j, *base)
+    for lg in ("zh-Hant", "zh", "ZZ", "ar"):
+        R.dbpy(f"lateral.log-search-language-{lg}", f"language-code vocabulary behaviour for {lg}", "log-search", "--slug", T["slug"], "--language", lg, "--query-text", "STRESS-FIXTURE language probe",
+               "--engine", "stress-script", "--depth-method", "scoping", "--prior-expectation", "STRESS-FIXTURE", "--session", R.sess)
+
+
+def pass6_determinism(R, T):
+    outs = []
+    for k in ("a", "b"):
+        fresh = R.scratch / f"det-{k}.db"
+        shutil.copyfile(CANON, fresh)
+        sqlp, rj = R.scratch / f"det-{k}.sql", R.scratch / f"det-{k}.json"
+        R.step(f"determinism.assess-{k}", "the same cell on two fresh copies is byte-identical (engine docstring promises it)",
+               [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(fresh), "--emit-sql", str(sqlp), "--parameter-id", "3", "--slug", "accessible-circulation-geometry", "--identity", "ALL",
+                "--session", R.sess, "--stamp", "2026-11-12 00:00:00", "--report-json", str(rj)], db=fresh)
+        outs.append((sqlp, rj))
+    same = [(outs[0][i].exists() and outs[1][i].exists() and outs[0][i].read_bytes() == outs[1][i].read_bytes()) for i in (0, 1)]
+    R.note("determinism.compare", "emit-sql and report-json byte-identical across two fresh runs", {"sql_identical": same[0], "report_identical": same[1]})
+    # idempotence: the same cell twice on ONE copy
+    one = R.scratch / "det-once.db"
+    shutil.copyfile(CANON, one)
+    for k in (1, 2):
+        R.step(f"determinism.assess-same-db-run{k}", "a re-run for the same cell on the same DB is refused by the row-identity index",
+               [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(one), "--emit-sql", str(R.scratch / f"det-once{k}.sql"), "--parameter-id", "3", "--slug", "accessible-circulation-geometry",
+                "--identity", "ALL", "--session", R.sess, "--stamp", "2026-11-12 00:00:00"], db=one)
+
+
 def pass5_adversarial(R, T):
     R.dbpy("adversarial.retire-parameter-with-extractions", "retire a parameter that has extractions: expect refusal or cascade", "retire-parameter", "--parameter-id", "3",
            "--reason", "STRESS-FIXTURE", "--session", R.sess)
@@ -339,7 +443,7 @@ def pass5_adversarial(R, T):
           "select (select count(*) from source_value_extractions where parameter_id=3), (select retired_at from base_parameters where parameter_id=3)")
     R.dbpy("adversarial.number-in-words-claim", "an extraction whose number is written in words", "add-extraction", "--ref-id",
            rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0], "--parameter-id", "9", "--claim-type", "numerical",
-           "--claimed-value", "sixty", "--claimed-unit", "cm", "--claim-text", T["strings"].get("number-in-words", "STRESS-FIXTURE"), "--extraction-method", "skim", "--identity", "ALL", "--session", R.sess)
+           "--claimed-value", "sixty", "--claimed-unit", "cm", "--claim-text", T["strings"].get("number-in-words", "STRESS-FIXTURE"), "--extraction-method", "skim", "--identity", "ALL", "--figure-role", "claim", "--relation", "none", "--session", R.sess)
 
 
 def writepath_replay(R, T):
@@ -373,18 +477,36 @@ def finish(R):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--topics", default="acoustics,reach,thermal")
+    ap.add_argument("--topics", default="acoustics,reach,thermal,luminance,circadian,flash,grabbar,cost,method")
     ap.add_argument("--out", default=str(HERE / "results"))
     a = ap.parse_args()
     s0 = sha(CANON)
     for name in a.topics.split(","):
         R = Run(name, a.out)
-        for fn in (pass1_forward, pass2_backward, pass3_cold, pass4_lateral, pass5_adversarial, writepath_replay):
+        for fn in (pass1_forward, pass2_backward, pass3_cold, pass4_lateral, pass4b_vocab, pass5_adversarial, pass6_determinism, writepath_replay):
             try:
                 fn(R, TOPICS[name])
             except Exception:  # a script bug is logged, not fatal
                 R.note(f"SCRIPT-ERROR.{fn.__name__}", "script runs", {"traceback": traceback.format_exc()})
         finish(R)
+    # cross-topic: two independently captured deltas applied to one history (id allocation collisions)
+    try:
+        names = a.topics.split(",")
+        R = Run("crosstopic", a.out)
+        clone = R.scratch / "clone"
+        R.step("clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
+        made = 0
+        for nm in names[:3]:
+            sqlp = SCRATCH / nm / "batch.sql"
+            if sqlp.exists() and sqlp.stat().st_size:
+                rc, so, se = R.step(f"emit-migration-from-{nm}", f"apply topic {nm}'s independent delta to the same history", [PY, "-I", "scripts/emit_data_migration.py", "--session", f"session_2026-11-12-stress-{nm}.md",
+                       "--summary", f"STRESS-FIXTURE {nm}", "--input", str(sqlp), "--output-dir", str(clone / "scripts/migrations"), "--force-timestamp", f"2026111208000{made}"], cwd=clone)
+                made += 1
+        R.step("rebuild-with-all-deltas", "rebuild from history plus the independently captured deltas: collisions on ids / unique keys surface here",
+               [PY, "-I", "scripts/migrate_db.py", "--rebuild", str(R.scratch / "rebuilt-all.db")], cwd=clone, timeout=900)
+        finish(R)
+    except Exception:
+        print("crosstopic failed:", traceback.format_exc())
     print("canonical sha256 before/after:", s0, sha(CANON), "UNCHANGED" if s0 == sha(CANON) else "!!! MOVED !!!")
 
 

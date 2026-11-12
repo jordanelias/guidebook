@@ -1,0 +1,57 @@
+[
+ {
+  "value_min": null,
+  "value_max": null,
+  "value_unit": null,
+  "value_note": null,
+  "value_notations": null,
+  "accessibility_direction": null,
+  "direction_ref_id": null,
+  "parameter_id": 8,
+  "lens": {
+   "identity_code": "AUT",
+   "icf_code": null,
+   "needs_code": null,
+   "medical_code": null
+  },
+  "lens_key": "AUT",
+  "slug": "luminance-contrast-lrv-evidence-base",
+  "note": "",
+  "state": "pending",
+  "design_scale": "population",
+  "tier_basis": null,
+  "governing_refs": [],
+  "supporting_refs": [],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "rests_on_proxy_inference": 0,
+  "marker": null,
+  "excluded_not_publishable": [
+   179,
+   180,
+   181
+  ],
+  "skimmed_findings": [
+   206
+  ],
+  "skimmed_finding_refs": [
+   "REF-01028"
+  ],
+  "n_findings_left_out": 2,
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "6c1605ee9eb6dfb373f2d007418bd1295bb587669d0ec9720798b9477d6c66a1",
+  "n_sources": 0,
+  "n_extractions": 5,
+  "non_anchoring_on_tier": [],
+  "needs_population_assessment": [],
+  "tier_inconsistent": [],
+  "falsification": null,
+  "convergence": null,
+  "confidence": null,
+  "gap_register_id": "GAP-104",
+  "specification_id": 9,
+  "convergence_id": null,
+  "source_records": []
+ }
+]
