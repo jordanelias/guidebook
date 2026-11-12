@@ -182,3 +182,33 @@ _`sha256sum data/guidebook.db` unchanged; the ledger was not touched in this fol
 - Warrants for harm classes must come from held figures with a `harm_finding`; how many such figures exist for the live conflict cases is unknown until T-032 records conflicts, so T-053 may build an engine that refuses on every current case. That is the owner's rule working, not a defect.
 - D-27b's done result needs OD-17, which cannot be asked until T-022 merges.
 - None of the new or rewritten task files is piloted.
+
+## 7. The three design files (T-018, T-028, T-102), 2026-11-12
+
+_Written by an Opus-class designer under the owner's instruction "Opus to write design files that must be written first". Plan documents only: no script, schema, governance file, skill, ledger entry, database row or git state was changed; `sha256sum data/guidebook.db` was the same before and after. Generator after this pass (re-run it, do not trust this line): `python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py` printed `tasks 68 batches 8 missing deps [] crit 8`, and no task carries a `DESIGN:` status._
+
+**Files written.**
+- `tasks/T-018-design.md`: `extraction_lens_links` (four typed lens columns, exactly one per link row; `basis`/`basis_text` warrant; retire in place) and `v_live_lens_links`; the four lens columns of `source_value_extractions` carried, NULLed and held NULL by an inverted CHECK (kept: committed data migrations INSERT them); `AFTER_DATA` marker required; verbs `add-lens-link`, `retire-lens-link`, repeatable lens flags with `--lens-basis*` on `add-extraction`/`derive-extraction`; the gather predicate (cell codes within the figure's live links); a `SUPERSEDES` pair recording OR-1c over the 2026-08-28 "Never a `population_*` link table" clause.
+- `tasks/T-028-design.md`: the one forms home is `term_aliases` (no `term_forms`), rebuilt by T-028 to one row per occurrence (`form_id` = old `rowid`) with `usage_type`; T-026's attestation and locator columns named; `canonical_en` kept `NOT NULL` as our label; `v_term_names` derives the label basis and the name shown (E1); the six name-screening writers and how each changes; AT-25's red test.
+- `tasks/T-102-design.md`: proposed children `WHEEL` (wheelchair users), `PROSTH` (people who use a lower-limb prosthesis), `WALKAID` (people who use walking aids) under `MOB`, renamed "disabled people with mobility needs"; `device_class` gains `lower_limb_prosthesis`, `crutches`, `cane`; five open edges with recommendations; the row-by-row carry; after-tests; the draft owner report (section 10), not appended.
+
+**Task files changed, and why.**
+- `T-018`: design present; Sonnet executes it; item 2 names the new verbs and drops `amend-extraction`; Step 2 points at the design's tests.
+- `T-028`: design named; the build items restated on `term_aliases`; sweep names widened; AT-25 restated. Its NOT FOR SONNET status kept, as the delegated resolution of OD-03 said.
+- `T-026`: the forms home named (`term_aliases`), the exact attestation vocabulary (five values, "another source" included) and locator columns; no key change (T-028's).
+- `T-107`: now also waits for T-028 (the occurrence grain); writes occurrences by T-026's routes.
+- `T-019`: the gather predicate is T-018's; AT-32's second half is T-019's; the evidence command reads `v_live_lens_links`.
+- `T-055`: the three `device_class` values exactly; `device_class` becomes amendable; the parent gather on `v_live_lens_links`.
+- `T-025`: the flags T-102 calls; no provenance or history column (the report holds them).
+- `T-056`: item 4 (a writer rewriting a figure's `identity_code`) withdrawn: T-018 replaces it, and as written it deadlocked with T-054's refusal.
+- `T-115`: moves figures off `ALL` with T-018's verbs, in the order the last-link refusal forces.
+- `T-106`, `T-102`, `T-110`, `T-049`: use the link verbs, the design's names, or `form_id`; the evidence commands of T-102, T-106, T-115 and T-102's after-test (3) now read `v_live_lens_links` (after T-018 the figure's lens columns are NULL, so the old queries would have examined nothing).
+
+**Not resolved; needs the owner or a later fold.**
+- T-102's codes, names and edges are proposals for the owner (the report of `T-102-design.md` section 10): the three children and their names; `MOB`'s new name; `AMB` not minted; scooter users on `MOB`; ambulatory wheelchair users inside `WHEEL`; `PROSTH` lower-limb only and under `MOB` rather than `LMB`; the proposed ICF crossings. The report lets rows be written on the recommended options while listing every row an alternative would move ([ASSUMPTION] in the design; the owner may require rows to wait).
+- `PROSTH` and `WALKAID` names are descriptive: no organisation of prosthesis users or of walking-aid users was retrieved (memo §3.3). `SCI`'s description names impairment levels; it is outside the family and left.
+- OR-1c's [ASSUMPTION] (that the measurement met "unless that is more prone to errors") is unchanged; T-018 records its supersession of the 2026-08-28 clause by rule 0.
+- T-028's display tie-break (several English instruments naming one concept differently: the first recorded is shown until `rename-term --from-form` chooses) is arbitrary and may be the owner's to change.
+- No task builds the base coverage view the seventh 2026-11-06 statement makes the acceptance test (AT-23 is listed against T-026 and T-107, whose changes do not describe it).
+- `REMEDIATION-WORKPLAN.md` was not edited in this pass and is now stale in four places, for the next fold: the §3 task table still says T-018 is NOT FOR SONNET and T-107 depends on T-026 alone; the §5 critical-path note and dependency list still say T-018 and T-102 wait for their designs; the §6 stop rows for the three designs are discharged. `REMEDIATION-PLAN.md` (generated) is current.
+- None of the three designs has been executed or piloted; expect defects and report them in the executing pull request.

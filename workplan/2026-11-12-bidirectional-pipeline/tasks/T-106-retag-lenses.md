@@ -62,10 +62,10 @@ After the lens fix most cells are empty because figures carry one model.
 **Evidence command** (run from the repository root, after the set-up block so that `$SCRATCH` exists; it reads the canonical database read-only or works on a copy):
 
 ```
-python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select sum(identity_code is not null), sum(icf_code is not null), sum(needs_code is not null) from source_value_extractions\").fetchall())"
+python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select sum(identity_code is not null), sum(icf_code is not null), sum(needs_code is not null) from v_live_lens_links\").fetchall())"
 ```
 
-**Expected output today:** Almost all identity only.
+**Expected output today:** Almost all identity only. (The figure's lens codes are read through T-018's `v_live_lens_links`: after T-018 the four lens columns of `source_value_extractions` are NULL, and a query on them examines nothing.)
 
 If the output differs, the ground has moved: stop (section 9). Ids that appear in this command are probes read on 2026-11-12; where the command derives an id by query, that is deliberate, and a test you write must do the same (section 6).
 
@@ -73,7 +73,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Per D-2: fill a lens only where a quote names the users. Judgment assigns the lenses (OD-06, resolved under delegation; owner 2026-08-27, the deep read is judgment's). Do not tag an identity code of the mobility family here (`MOB`, or a child T-102 adds): the identity carrying is T-102's. **Do** fill the ICF (d4) and needs lenses of figures on `MOB` where the quote names the function or need: a figure that names no group stays on the parent `MOB` under T-102, and these lenses are what then make it findable (OD-14 answered 2026-11-12). Do not write a device into `device_class` as a stand-in for an identity tag.
+1. Per D-2: fill a lens only where a quote names the users. Each lens is a link row written with `db.py add-lens-link --extraction-id N --icf|--needs|--medical <code> --basis named_in_text --basis-text "<the words>"` (`T-018-design.md` section 6); a judged link replaces a `carried` one in the same call. Judgment assigns the lenses (OD-06, resolved under delegation; owner 2026-08-27, the deep read is judgment's). Do not tag an identity code of the mobility family here (`MOB`, or a child T-102 adds): the identity carrying is T-102's. **Do** fill the ICF (d4) and needs lenses of figures on `MOB` where the quote names the function or need: a figure that names no group stays on the parent `MOB` under T-102, and these lenses are what then make it findable (OD-14 answered 2026-11-12). Do not write a device into `device_class` as a stand-in for an identity tag.
 
 **What reads what this task adds or changes:** the engine
 

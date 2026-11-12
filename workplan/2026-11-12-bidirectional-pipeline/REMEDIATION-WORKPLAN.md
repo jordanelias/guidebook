@@ -75,7 +75,7 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | [T-015](tasks/T-015-language-fold.md) | Language codes folded at the writers and in the coverage views | 0 (now) | 2 | TOOLING | Sonnet | none | none | no |
 | [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses prose units) | 1 (chain, first) | 2 | TOOLING | Sonnet | T-008 merged (it changes the same writer, and it built what replaces this task's numeral gloss) | none | no |
 | [T-017](tasks/T-017-wp-t2-conditions.md) | The prior workplan's T-2: conditions become branches | 1 (chain) | 2 | TOOLING | Sonnet | T-016 merged | none | no |
-| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | 1 | TOOLING | NOT FOR SONNET | T-017 merged; `T-018-design.md` present | none | no |
+| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | 1 | TOOLING | Sonnet (executing `T-018-design.md`) | T-017 merged; `T-018-design.md` present (written 2026-11-12) | none | no |
 | [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | 2 | TOOLING | Sonnet | T-016, T-017, T-018 merged | none outstanding (OD-08 resolved under delegation) | no |
 | [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | 1-2 | TOOLING | Sonnet | T-010 merged | none outstanding (OD-24 delegated) | no |
 | [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | 2 | TOOLING | Sonnet | T-019 merged | none outstanding (OD-21 delegated) | no |
@@ -117,7 +117,7 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | [T-104](tasks/T-104-verify-governing-sources.md) | Verify the sources a first determination would rest on | research | 3 | RESEARCH | Sonnet | none | none | no |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | 3 | RESEARCH | NOT FOR SONNET | T-008, T-009, T-016, T-031 merged (OD-23 chose the inventory) | none outstanding (OD-05 delegated) | no |
 | [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | research | 3 | RESEARCH | NOT FOR SONNET | T-019 merged | none outstanding (OD-06 delegated; mobility codes wait for OD-14) | no |
-| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | 3 | RESEARCH | NOT FOR SONNET | T-026 merged | none | no |
+| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | 3 | RESEARCH | NOT FOR SONNET | T-026, T-028 merged | none | no |
 | [T-108](tasks/T-108-unit-condition-repair.md) | Move conditions out of the unit cell | research | 3 | RESEARCH | Sonnet | T-016 merged; T-008 merged | none | no |
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | 3 | RESEARCH | NOT FOR SONNET | T-020 merged | none outstanding (OD-24 delegated) | no |
 | [T-110](tasks/T-110-first-determinations.md) | First live determinations | research | 3 | RESEARCH | NOT FOR SONNET | T-019, T-102, T-104 merged | none | no |
@@ -172,7 +172,7 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 
 [T-014](tasks/T-014-stress-harness-and-probes.md) → [T-008](tasks/T-008-claimed-number-check.md) → [T-016](tasks/T-016-wp-t1a-reading.md) → [T-017](tasks/T-017-wp-t2-conditions.md) → [T-018](tasks/T-018-link-table.md) → [T-019](tasks/T-019-lens-gather.md) → { [T-104](tasks/T-104-verify-governing-sources.md), [T-102](tasks/T-102-mobility-split.md), [T-106](tasks/T-106-retag-lenses.md) } → [T-110](tasks/T-110-first-determinations.md).
 
-Two links on it are not Sonnet's to start: T-018 needs a one-page design from the Fable agent, and T-102 needs its own one-page design (Opus-class), reported to the owner before any row, T-055 merged, (OD-14 and OD-31 were answered on 2026-11-12).
+One link on it is not Sonnet's to start: T-102 is an Opus-class session. Its design (`tasks/T-102-design.md`) and T-018's (`tasks/T-018-design.md`) are written; T-102 still reports its exact codes and edges to the owner in the ledger before any row is written, and waits for T-018, T-025 and T-055 to merge (OD-14 and OD-31 were answered on 2026-11-12).
 
 | Wave | Purpose | Tasks | Order inside the wave |
 |---|---|---|---|
@@ -188,7 +188,7 @@ Two links on it are not Sonnet's to start: T-018 needs a one-page design from th
 ```
 T-016 <- T-008
 T-017 <- T-016
-T-018 <- T-017; plus the design file from the Fable agent
+T-018 <- T-017; the design file `tasks/T-018-design.md` (written 2026-11-12)
 T-019 <- T-016, T-017, T-018   [delegated: OD-08]
 T-020 <- T-010   [delegated: OD-24]
 T-021 <- T-019   [delegated: OD-21]
@@ -225,7 +225,7 @@ T-102 <- T-018, T-025, T-055; the design `tasks/T-102-design.md`, reported to th
 T-103 <- (no task)   [owner: OD-15, answered]
 T-105 <- T-008, T-009, T-016, T-031   [delegated: OD-05; T-031 hard since OD-23 chose the inventory]
 T-106 <- T-019   [delegated: OD-06]
-T-107 <- T-026
+T-107 <- T-026, T-028
 T-108 <- T-008, T-016
 T-109 <- T-020   [delegated: OD-24]
 T-110 <- T-019, T-102, T-104; the T-102 owner report in the ledger; the blocking battery green on the scratch copy; an Opus-class session
@@ -240,9 +240,9 @@ T-115 <- T-018, T-056   [owner: OD-31, answered]
 
 | When | Who is waited for | What for | What can continue meanwhile |
 |---|---|---|---|
-| Before T-018 | the Fable implementation agent | the one-page design of the link table (`tasks/T-018-design.md`) | all of Wave 0; T-016, T-017; T-048, T-027, T-035 |
-| Before T-026 | the Fable implementation agent | the one-page forms-home design of T-028 (`tasks/T-028-design.md`), naming the one table that holds a form | everything else in Wave 3 |
-| Before T-102, and so T-110 | an Opus-class session (the one-page design `tasks/T-102-design.md`, reported to the owner in the ledger), then T-055 | the device decomposition's exact codes and edges (OD-14 answered 2026-11-12) | T-104; T-106 after T-019 (ICF and needs lenses only); T-054, T-114 |
+| Before T-018 | DISCHARGED 2026-11-12: the design of the link table is written (`tasks/T-018-design.md`) | nothing further; T-018 is Sonnet's | — |
+| Before T-026 | DISCHARGED 2026-11-12: the forms-home design of T-028 is written (`tasks/T-028-design.md`) and names the one table that holds a form (`term_aliases`) | nothing further for T-026; T-028 itself stays NOT FOR SONNET | — |
+| Before T-102, and so T-110 | the design `tasks/T-102-design.md` is written (2026-11-12); STILL OUTSTANDING: the Opus-class session reports the exact codes and edges to the owner in the ledger (draft text in the design, section 10), and T-055 merges | the device decomposition's exact codes and edges (OD-14 answered 2026-11-12) | T-104; T-106 after T-019 (ICF and needs lenses only); T-054, T-114 |
 | Before T-110 | the blocking battery, green on the scratch copy, the integrity test included | a first live determination | — |
 | At the end of every wave | the owner | the wave's lines of the Definition of Done (section 10), run and reported; `python3 workplan/pipeline-state-graph/walkability.py` run as a command until T-038 registers it | — |
 | Whenever a task's delegation gate prints CLOSED | the owner, or the correction that closed it | the decision that gate reads (section 13) | every task whose gates are OPEN |

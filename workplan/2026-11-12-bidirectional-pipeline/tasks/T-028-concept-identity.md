@@ -1,6 +1,6 @@
 # T-028  A concept that is not an English string
 
-> **NOT FOR SONNET** — schema design after the owner's answer; the Fable implementation agent designs, Sonnet may execute the design. A Sonnet-class executor that opens this file does not start it: it reports that the task is waiting, and for what.
+> **NOT FOR SONNET** — the design is committed beside this file as `T-028-design.md` (2026-11-12): the one forms home is `term_aliases`, rebuilt to one row per occurrence; `canonical_en` stays as our label; `v_term_names` derives the label basis and the name shown. The delegated resolution of OD-03 keeps this task's NOT FOR SONNET status, because the change rewrites the semantics of every name screen: an Opus-class session executes the design exactly; where this file and the design differ, the design governs. A Sonnet-class executor that opens this file does not start it: it reports that the task is waiting, and for what.
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Evidence base: `workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md`, as corrected by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/fa-corrections-for-suite.md` (where they differ, the corrections govern). Every number in this file was read on 2026-11-12 and is given with the command that produces it: re-run the command; do not trust the number._
 
@@ -62,8 +62,9 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Design (the Fable agent), then build, to the delegated resolution of OD-03 (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md`, section OD-03): a concept's identity is `terms.term_id`; its names are rows of **one** forms table, one row per occurrence with its language, jurisdiction, source locator and usage type. Start from the 2026-11-06 design (`scratchpad/session_2026-11-06-base-vocabulary-review/matrix-design/base-matrix-design.md`, `term_forms`), which approves nothing; do not leave two homes for forms beside `term_aliases` and T-026's attestation columns: the design states which one holds a form and how the other is retired or pointed at. `canonical_en` stays as our English descriptive label, never a form and never matched first. Whether a label is an instrument's own term is derived by a view, not typed: add no label-kind column. The name shown is derived by E1 (the origin instrument's phrase until an English-jurisdiction instrument attests an English form); a stored choice with its warrant only where the derivation cannot decide.
-2. The design is one page, written before code and before T-026 starts, committed as `tasks/T-028-design.md`, and it names every writer that screens or matches a name and how each changes, and the one table that holds a form, on which T-026 puts its attestation columns (T-026 waits for this file; this task's build waits for T-026).
+1. Build `tasks/T-028-design.md` (committed 2026-11-12), to the delegated resolution of OD-03 (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md`, section OD-03): a concept's identity is `terms.term_id`; its names are rows of **one** forms table, **`term_aliases`** (no `term_forms` table is built: the design's section 2 says why), rebuilt by one schema migration to one row per occurrence keyed by `form_id` (= the old `rowid`), with a unique occurrence index in place of the primary key and a nullable `usage_type` (design sections 3 and 10; the migration carries an `AFTER_DATA` marker). T-026's attestation and locator columns are on the same table (design section 4). `canonical_en` stays `NOT NULL` as our English descriptive label, never a form and never matched first (section 6). The label basis and the name shown are derived by one view, `v_term_names` (section 7): add no label-kind column and no display pointer; the stored, warranted choice is the label itself, set by `rename-term --from-form`.
+2. Change every writer that screens or matches a name as the design's section 8 table says: `_name_holder`, `_near_terms`, `add-term` (its observation route writes the first form; a new base route `--first-form`), `rename-term` (no alias row; `--from-form`), `mint-term-from-catalogue`, `add-alias` (occurrences; `DOMAIN` refused). Legacy `alias_type` values are not rewritten (section 5).
+3. Repair the callers of the design's section 13 and add the tests of its section 14 (T028-01 is AT-25).
 
 **What reads what this task adds or changes:** Every writer that screens or matches a name; the coverage view of the base; render (the name shown).
 
@@ -73,7 +74,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 ## 5. Caller sweep
 
-Names to sweep: `canonical_en`
+Names to sweep: `canonical_en`, `term_aliases`, `_name_holder`, `_near_terms`, `alias_type` (the design's section 13 lists the callers found by reading the code on 2026-11-12)
 
 **What a caller is.** A hit is a *caller* when its behaviour or its truth changes with this task: code that calls or imports the name; a test that exercises the behaviour you are changing, even if it asserts nothing about it; a view, trigger or index; a registry `cmd` or `basis`; a skill, command or governance sentence that states the behaviour being changed. A hit that stays true after your change is a *mention* and needs nothing. **Fixing a caller the sweep finds is in scope** (CLAUDE.md rule 4): make the fix in this pull request and list it there.
 
@@ -105,7 +106,7 @@ for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(ne
 
 Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
 
-**Step 2: red before, green after.** AT-25.
+**Step 2: red before, green after.** AT-25: a concept can be stored whose first and only attested form is non-English, with an English label marked as descriptive and not counted as an attested English form. The cases, probes and expected red output today are `T-028-design.md` section 14 (T028-01 to T028-06).
 
 **Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T028-01`, `T028-02`, …) and confirm the prefix is free first (`grep -c '"T028-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
 

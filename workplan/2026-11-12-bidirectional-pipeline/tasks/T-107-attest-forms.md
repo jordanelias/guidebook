@@ -21,7 +21,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-026 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Tasks that must be merged to the integration base first:** T-026 merged; T-028 merged (its rebuild gives `term_aliases` one row per occurrence: before it, a second instrument or jurisdiction using a form the term already holds in that language cannot be stored; `T-028-design.md` section 4). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
 - **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
 - **Tests that must be red (or green) before you start:** AT-23 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
@@ -68,7 +68,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Per the rulings of 2026-11-06 (sixth, seventh).
+1. Per the rulings of 2026-11-06 (sixth, seventh), writing each attested occurrence with `add-alias`'s base route or observation route as `T-028-design.md` sections 4 and 8 name them (one row per occurrence; the first located occurrence of a held seed's text promotes that seed in place), typing `usage_type` where the source shows it, and never presenting `canonical_en` as a form.
 
 **What reads what this task adds or changes:** multilingual search
 

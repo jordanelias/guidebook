@@ -57,17 +57,17 @@ Figures from accessibility codes were filed under `ALL` because their sentence n
 
 ```
 python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);T=[t for (t,) in c.execute(\"select name from sqlite_master where type='table'\")];print({t+'.'+r[1]:c.execute('select count(*) from \"'+t+'\" where \"'+r[1]+'\"=?',('ALL',)).fetchone()[0] for t in T for r in c.execute('pragma table_info(\"'+t+'\")') if r[1] in ('identity_code','target_population','pop_a','pop_b','parent_code')})"
-python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select e.evidence_type, count(*), count(distinct s.ref_id), sum(s.icf_code is not null), sum(s.needs_code is not null) from source_value_extractions s join evidence_sources e using(ref_id) where s.identity_code='ALL' group by 1\").fetchall())"
+python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select e.evidence_type, count(*), count(distinct s.ref_id), sum(exists(select 1 from v_live_lens_links j where j.extraction_id=s.extraction_id and j.icf_code is not null)), sum(exists(select 1 from v_live_lens_links j where j.extraction_id=s.extraction_id and j.needs_code is not null)) from v_live_lens_links k join source_value_extractions s using(extraction_id) join evidence_sources e using(ref_id) where k.identity_code='ALL' group by 1\").fetchall())"
 ```
 
-**Expected output today:** `ALL` on figures of codes from a handful of sources, with no ICF or needs lens on any of them (counts in the output). If the output differs, the ground has moved: stop (section 9).
+**Expected output today:** `ALL` on figures of codes from a handful of sources, with no ICF or needs lens on any of them (counts in the output). If the output differs, the ground has moved: stop (section 9). (The figure's lens codes are read through T-018's `v_live_lens_links`: after T-018 the four lens columns of `source_value_extractions` are NULL, and a query on them examines nothing.)
 
 ## 4. The change
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. Read each figure's clause and its heading in the source (the verified quote and locator; re-open the retained text where the quote does not show the heading). Tag it by the OD-31 rule: a heading that names a group gives that group (under a mobility heading, the parent `MOB` and no child, since no device is named; another group's heading, that group); a general disability heading, or none, gives **no identity**: fill its ICF and access-need lenses from the clause (link rows through T-018 where it serves several). Never `ALL`; never copy the figure.
-2. Move each row off `ALL` with T-056's lens writer, recording the heading that decided it as the reason. A row whose clause supports no lens at all is reported, not forced.
+2. Move each row off `ALL` with T-018's verbs (`T-018-design.md` section 6): first `add-lens-link` for each code the row now carries (`--basis heading` with the heading's words, or `named_in_text` with the clause's), then `retire-lens-link` on its `ALL` link with the heading that decided it as the reason (the verb refuses to retire a figure's last live link, so the order is fixed). T-056 builds no lens writer (corrected 2026-11-12). A row whose clause supports no lens at all is reported, not forced, and keeps its `ALL` link, which then blocks step 3 until the owner rules on it.
 3. Then `retire-identity --code ALL --to-design-scale universal` with the ledger pointer to the OD-31 answer.
 4. Determinations: none is keyed on `ALL` today (`select count(*) from specifications where identity_code='ALL'`); if one is by then, it is re-determined at `design_scale = 'universal'` by the engine, never edited.
 

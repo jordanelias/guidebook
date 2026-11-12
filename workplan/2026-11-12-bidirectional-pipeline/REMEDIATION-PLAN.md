@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-12 20:08 UTC from the 68 task files at commit 9a4edc7 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-12 20:40 UTC from the 68 task files at commit ba96484 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -18,18 +18,18 @@ _Generated 2026-11-12 20:08 UTC from the 68 task files at commit 9a4edc7 by `scr
 
 | Batch | Tasks | READY | OWNER-blocked (a gate CLOSED) | DESIGN file missing | NOT FOR SONNET | Tooling / research | Lanes |
 |---|---|---|---|---|---|---|---|
-| 1 | 27 | 25 | 0 | 1 | 1 | 25 / 2 | 13 |
-| 2 | 15 | 13 | 0 | 0 | 2 | 11 / 4 | 10 |
-| 3 | 7 | 6 | 0 | 0 | 1 | 3 / 4 | 7 |
-| 4 | 5 | 3 | 0 | 1 | 2 | 5 / 0 | 5 |
+| 1 | 27 | 26 | 0 | 0 | 1 | 25 / 2 | 13 |
+| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 9 |
+| 3 | 8 | 6 | 0 | 0 | 2 | 3 / 5 | 8 |
+| 4 | 5 | 4 | 0 | 0 | 1 | 5 / 0 | 5 |
 | 5 | 4 | 2 | 0 | 0 | 2 | 3 / 1 | 4 |
-| 6 | 5 | 1 | 0 | 1 | 3 | 4 / 1 | 5 |
-| 7 | 4 | 1 | 0 | 1 | 3 | 2 / 2 | 4 |
+| 6 | 5 | 2 | 0 | 0 | 3 | 4 / 1 | 5 |
+| 7 | 4 | 1 | 0 | 0 | 3 | 2 / 2 | 4 |
 | 8 | 1 | 0 | 0 | 0 | 1 | 0 / 1 | 1 |
 
 Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | wc -l`, and the generator's own output.
 
-**Longest dependency chain (8 tasks):** T-008 (READY) → T-016 (READY) → T-017 (READY) → T-018 (DESIGN: T-018-design.md; NOT FOR SONNET) → T-019 (READY) → T-055 (DESIGN: T-102-design.md) → T-102 (DESIGN: T-102-design.md; NOT FOR SONNET) → T-110 (NOT FOR SONNET).
+**Longest dependency chain (8 tasks):** T-008 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
 
 ## Batch 1
 
@@ -54,7 +54,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-015](tasks/T-015-language-fold.md) | Language codes folded at the writers and in the coverage views | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-023](tasks/T-023-ledger-relayed-statements.md) | Enter the relayed statements of 2026-10-12 in the ledger | 2 | TOOLING | READY | yes | — | not piloted |
 | [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | TOOLING | READY | yes | — | not piloted |
-| [T-026](tasks/T-026-alias-attestation.md) | A form says how it is attested, and a search says which forms it used | 3 | TOOLING | DESIGN: T-028-design.md | no | — | not piloted |
+| [T-026](tasks/T-026-alias-attestation.md) | A form says how it is attested, and a search says which forms it used | 3 | TOOLING | READY | yes | — | not piloted |
 | [T-027](tasks/T-027-source-identity-edition.md) | The source's own title, edition and currency can be written | 3 | TOOLING | READY | yes | — | not piloted |
 | [T-035](tasks/T-035-skills-repair.md) | Skills that describe the database that exists | 4 | TOOLING | READY | yes | — | not piloted |
 | [T-042](tasks/T-042-derive-choices-and-counts.md) | Counts in the registry as commands, and one Layer 0 measure corrected | 0 (now) | TOOLING | READY | yes | — | not piloted |
@@ -81,7 +81,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 1.12: T-103
 - Lane 1.13: T-104
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-103; a design file missing: T-026 (T-028-design.md).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-103.
 
 ## Batch 2
 
@@ -100,7 +100,6 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | TOOLING | READY | yes | T-008 | not piloted |
 | [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | Admission edges and connections retire in place instead of being deleted | 2 | TOOLING | READY | yes | T-006 | not piloted |
 | [T-056](tasks/T-056-all-leaves-identity-lens.md) | ALL leaves the identity lens: universal is stated once, by design_scale | 2 | TOOLING | READY | yes | T-054 | not piloted |
-| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | RESEARCH | NOT FOR SONNET | no | T-026 | not piloted |
 | [T-111](tasks/T-111-as-written-wording-for-stored-rows.md) | Bring the two stored spelled-out figures into line | research | RESEARCH | READY | yes | T-008 | not piloted |
 | [T-113](tasks/T-113-file-sub-national-instruments.md) | File the four held sub-national instruments under their own codes | research | RESEARCH | READY | yes | T-024 | not piloted |
 | [T-114](tasks/T-114-retire-move-ves-to-needs.md) | Retire MOVE and VES to the access needs that carry them | research | RESEARCH | READY | yes | T-054 | not piloted |
@@ -113,16 +112,15 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 2.4: T-025
 - Lane 2.5: T-028
 - Lane 2.6: T-034
-- Lane 2.7: T-107
-- Lane 2.8: T-111
-- Lane 2.9: T-113
-- Lane 2.10: T-114
+- Lane 2.7: T-111
+- Lane 2.8: T-113
+- Lane 2.9: T-114
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028, T-107.
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028.
 
 ## Batch 3
 
-**Entry:** merged and green on `$BASE`: T-008, T-016, T-020, T-025, T-049.
+**Entry:** merged and green on `$BASE`: T-008, T-016, T-020, T-025, T-026, T-028, T-049.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
@@ -130,6 +128,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-029](tasks/T-029-term-relations.md) | Typed pointers between terms | 4 | TOOLING | READY | yes | T-020 | not piloted |
 | [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | TOOLING | READY | yes | T-016, T-020 | not piloted |
 | [T-101](tasks/T-101-scope-fill.md) | Record the research scope on every pair | research | RESEARCH | READY | yes | T-025 | not piloted |
+| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | RESEARCH | NOT FOR SONNET | no | T-026, T-028 | not piloted |
 | [T-108](tasks/T-108-unit-condition-repair.md) | Move conditions out of the unit cell | research | RESEARCH | READY | yes | T-008, T-016 | not piloted |
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | RESEARCH | NOT FOR SONNET | no | T-020 | not piloted |
 | [T-112](tasks/T-112-translate-held-text.md) | Translate the held non-English text that synthesis needs | research | RESEARCH | READY | yes | T-049 | not piloted |
@@ -140,11 +139,12 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 3.2: T-029
 - Lane 3.3: T-030
 - Lane 3.4: T-101
-- Lane 3.5: T-108
-- Lane 3.6: T-109
-- Lane 3.7: T-112
+- Lane 3.5: T-107
+- Lane 3.6: T-108
+- Lane 3.7: T-109
+- Lane 3.8: T-112
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-109.
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-107, T-109.
 
 ## Batch 4
 
@@ -152,7 +152,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | TOOLING | DESIGN: T-018-design.md; NOT FOR SONNET | no | T-017 | not piloted |
+| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | TOOLING | READY | yes | T-017 | not piloted |
 | [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | TOOLING | NOT FOR SONNET | no | T-029, T-050 | not piloted |
 | [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | TOOLING | READY | yes | T-029, T-030 | not piloted |
 | [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | TOOLING | READY | yes | T-024, T-101 | not piloted |
@@ -166,7 +166,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 4.4: T-036
 - Lane 4.5: T-047
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-018, T-032; a design file missing: T-018 (T-018-design.md).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-032.
 
 ## Batch 5
 
@@ -174,7 +174,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | TOOLING | READY | after T-018 | T-016, T-017, T-018 | not piloted |
+| [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | TOOLING | READY | yes | T-016, T-017, T-018 | not piloted |
 | [T-040](tasks/T-040-deletion-candidates-sweep.md) | Caller sweep for the deletion candidates | 5 | TOOLING | READY | after T-032 | T-013, T-032 | not piloted |
 | [T-053](tasks/T-053-engine-conflict-between-groups.md) | Conflict between groups in the engine | 4 | TOOLING | NOT FOR SONNET | no | T-032 | not piloted |
 | [T-115](tasks/T-115-retag-all-rows.md) | Re-tag the figures filed under ALL by their heading's group, then retire ALL | research | RESEARCH | NOT FOR SONNET | no | T-018, T-056 | not piloted |
@@ -194,10 +194,10 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | TOOLING | READY | after T-018 | T-019 | not piloted |
+| [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | TOOLING | READY | yes | T-019 | not piloted |
 | [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 4 | TOOLING | NOT FOR SONNET | no | T-019 | not piloted |
 | [T-037](tasks/T-037-render.md) | Render from the database | 5 | TOOLING | NOT FOR SONNET | no | T-019, T-032, T-036, T-049 | not piloted |
-| [T-055](tasks/T-055-mobility-family-tooling.md) | Tooling for the mobility family: the devices it needs, and a parent's determination that g | 4 | TOOLING | DESIGN: T-102-design.md | no | T-019 | not piloted |
+| [T-055](tasks/T-055-mobility-family-tooling.md) | Tooling for the mobility family: the devices it needs, and a parent's determination that g | 4 | TOOLING | READY | yes | T-019 | not piloted |
 | [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | research | RESEARCH | NOT FOR SONNET | no | T-019 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
@@ -208,7 +208,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 6.4: T-055
 - Lane 6.5: T-106
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-031, T-037, T-106; a design file missing: T-055 (T-102-design.md).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-031, T-037, T-106.
 
 ## Batch 7
 
@@ -216,9 +216,9 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | TOOLING | READY | after T-018, T-032, T-037 | T-037 | not piloted |
+| [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | TOOLING | READY | after T-032, T-037 | T-037 | not piloted |
 | [T-039](tasks/T-039-owner-edits.md) | The owner's edits as proposals through the write path | 5 | TOOLING | NOT FOR SONNET | no | T-021, T-037 | not piloted |
-| [T-102](tasks/T-102-mobility-split.md) | Decompose the mobility family by device, and carry the rows filed under MOB | research | RESEARCH | DESIGN: T-102-design.md; NOT FOR SONNET | no | T-018, T-025, T-055 | not piloted |
+| [T-102](tasks/T-102-mobility-split.md) | Decompose the mobility family by device, and carry the rows filed under MOB | research | RESEARCH | NOT FOR SONNET | no | T-018, T-025, T-055 | not piloted |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | RESEARCH | NOT FOR SONNET | no | T-008, T-009, T-016, T-031 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
@@ -228,7 +228,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 7.3: T-102
 - Lane 7.4: T-105
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-039, T-102, T-105; a design file missing: T-102 (T-102-design.md).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-039, T-102, T-105.
 
 ## Batch 8
 
@@ -301,7 +301,6 @@ OD-17 (no status line)
 
 | Task | Title | Batch | Decisions (owner's words / delegated) |
 |---|---|---|---|
-| [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 4 | — / — |
 | [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 2 | — / OD-03 |
 | [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 6 | OD-23 / — |
 | [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | — / OD-07, OD-12, OD-19, OD-25, OD-29 |
@@ -312,7 +311,7 @@ OD-17 (no status line)
 | [T-103](tasks/T-103-medical-lens.md) | Fill the medical lens by correspondence | 1 | OD-15 / — |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | 7 | — / OD-05 |
 | [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | 6 | — / OD-06 |
-| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | 2 | — / — |
+| [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | 3 | — / — |
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | 3 | — / OD-24 |
 | [T-110](tasks/T-110-first-determinations.md) | First live determinations | 8 | — / — |
 | [T-115](tasks/T-115-retag-all-rows.md) | Re-tag the figures filed under ALL by their heading's group, then retire ALL | 5 | OD-31 / — |
