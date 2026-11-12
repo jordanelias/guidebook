@@ -19,6 +19,7 @@ What is still open is listed in section 2, one row per item, each classed:
 - **C** needs the owner;
 - **D** resolvable only at execution time (a pilot, a run, a probe);
 - **E** not resolvable now; accepted as a standing limit or declined, with the reason.
+- **R** resolved since this plan was written (kept for the record; not counted).
 
 Counts by class, and how many need the owner (re-run; the table is the only home of the classes):
 
@@ -27,7 +28,7 @@ F=workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md
 grep -E '^\| OI-[0-9]+ \|' "$F" | grep -o -E ' \| [A-E] \| [^|]*\|$' | cut -c4 | sort | uniq -c      # per class (inventory rows only: the class is the second-last cell)
 grep -E '^\| OI-[0-9]+ \|' "$F" | grep -o -E ' \| [A-E] \| [^|]*\|$' | wc -l                        # all open items
 grep -E '^\| OI-[0-9]+ \|' "$F" | grep -E ' \| C \| [^|]*\|$' | cut -d'|' -f2                       # the ones that need the owner
-# at writing: A 3, B 3, C 10, D 16, E 15; 47 in all
+# at writing (after the OI-13 fold): A 3, B 3, C 12, D 16, E 15; 49 open. A resolved row keeps its id with class R and is not counted (OI-13).
 ```
 
 **The three findings that matter most**, in the owner's order of criteria (integrity first):
@@ -68,7 +69,7 @@ Sources were read in full or by section as the coordinator asked, and searched w
 |---|---|---|---|---|---|
 | OI-01 | The plan branch is not merged; `main` carries the earlier workplan of PR #218, without the design files, the fifth-set entry or this fold | `REMEDIATION-WORKPLAN.md:44` (§2 step 0); `git log --oneline origin/main..origin/ccr-408aaa9b-z3e4s0` | `git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline references/project-standards.md && echo current` prints `current` | C | Opus coordinator commits and opens the PR; **the owner merges**; R0 |
 | OI-02 | Every task file's `$BASE` line tests only that `origin/main` *has* the workplan, so it picks a stale `main` | §2 set-up of every task file: `grep -l 'git cat-file -e origin/main:workplan' workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md \| wc -l` | the line picks the plan branch whenever it differs from `main` in this folder, and `main` otherwise; checked on a clone where `main` is stale and on one where it is current | A | Opus coordinator, one scripted replace over the task files, in the PR of OI-01; R0 |
-| OI-03 | The children's ICF crossings (`WHEEL` d465 d420 d410; `PROSTH` d450 d455; `WALKAID` d450 d465) are not named by the fifth-set answer line | `tasks/T-102-design.md:132`; ledger `references/project-standards.md:6058` | an owner line naming them, or T-102's PR lists them as not written | C | owner; R1. Blocks no row |
+| OI-03 | The mobility children's ICF crossings are not named by any answer line. As revised (sixth to ninth sets): `WHEEL` receives `SCI`'s crossings that T-102 judges to hold for wheelchair users (design §6a); the design's proposed `WHEEL` d465 d420 d410, `LLD` (was `PROSTH`) d450 d455 and `WALKAID` d450 d465 wait for an explicit yes | `tasks/T-102-design.md` §6a and §7 item 3; ledger fifth to ninth sets | an owner line naming them, or T-102's PR lists them as not written | C | owner; R1. Blocks no row |
 | OI-04 | OD-17: ratifying the corrected contract, deferred by the owner | workplan `### OD-17` (`REMEDIATION-WORKPLAN.md:486`) | `grep -F "OD-17 STATUS:" references/project-standards.md \| tail -1` reads `ANSWERED BY THE OWNER` | C | owner, after T-002 and T-022 merge, with the diff; R6 |
 | OI-05 | A supersession whose target is inside the ledger cannot be verified by `supersession_backpointer_audit` (raw-text target count; marker beside an immutable paragraph) | `scripts/audit/supersession_backpointer_audit.py` docstring; `tasks/T-018-design.md` §5 step 6 | accepted: in-ledger supersessions are recorded in prose (the 2026-09-01 precedent); rule 0 already says "Naming them is yours" | E | — (T-018's own case fixed in step 1). Not worth new code: no wrong thing reaches the book that a prose entry does not prevent |
 | OI-06 | `rename-term` records every reason as an `AMENDED` trailer on `scope_note`, a correction joined in a note; OD-38 needs the pick's judge and reason in typed columns | `scripts/db.py` (`grep -n 'def rename_term' scripts/db.py`); `tasks/T-028-concept-identity.md` §4 item 2 | after T-028: `rename-term --from-form` without `--judge` is refused; judge and reason are columns; `python3 scripts/audit/joined_cells_census.py` reports no new candidate | D | Opus executor of T-028 names the one home; R5 |
@@ -78,7 +79,7 @@ Sources were read in full or by section as the coordinator asked, and searched w
 | OI-10 | Owner-queue prompt OR-14b: the element page written by the specifications pass, or derived when read | `DELEGATED-RESOLUTIONS.md:407`; AT-46 | an answered mark and ledger line; T-037 says which | C | owner; R1. Bears on T-037 |
 | OI-11 | Owner-queue prompt OR-25: does batch 23's extraction cap carry over to scans; possibly answered in substance by the read-once statement, which only the owner can confirm | `DELEGATED-RESOLUTIONS.md:407` | an answered mark and ledger line | C | owner; R1. Bears on T-105 |
 | OI-12 | Owner-queue prompt OT-2: approve the definition of "barrier-free path of travel" | `DELEGATED-RESOLUTIONS.md:407`; ledger 2026-10-29 OT-1 entry | an answered mark; a data PR mints the term | C | owner; R1. No task here waits on it |
-| OI-13 | Whether `SCI` and `LMB` take `MOB` as parent (the design calls it "a further owner question, not asked here") | `tasks/T-102-design.md:50` | an owner line, or the question recorded as declined | C | owner, asked with T-110 (the first `MOB` parent determination); R6 |
+| OI-13 | ~~Whether `SCI` and `LMB` take `MOB` as parent~~ **ANSWERED 2026-11-12 (sixth to ninth sets):** "SCI and LMB go under MOB"; then "except SCI is the same as WHEELCHAIR basically and LMB is the same as PROSTHETIC"; "LMB should be UPL for upper limb then"; "and that doesnt concern mobility"; and the selected option "LLD — 'people with lower-limb differences'". Family: `MOB` with `WHEEL` (taking in `SCI`), `LLD`, `WALKAID`; `LMB` becomes `UPL`, outside mobility | `tasks/T-102-design.md` §0, §2, §6a; `grep -n -E "Owner (answer|clarification) 2026-11-12 \((sixth|seventh|eighth|ninth) set\)" references/project-standards.md` | folded: T-054 (identity successor, crossing retirement), T-102 (`SCI` to `WHEEL`, `LLD`), T-116 and T-058 (`UPL`), T-025, T-055, T-106, T-110, D-09 | R | — (resolved; its open edges are OI-48 to OI-50) |
 | OI-14 | The delegation's [ASSUMPTION] that the owner's criteria are numbered in priority order (integrity, then legibility, then coverage); OD-02's English-only pages rest on it | ledger "Owner delegation 2026-11-12" (`references/project-standards.md:5394`); OD-02 correction 3 | an owner line confirming or reordering | C | owner, one tap; R1 |
 | OI-15 | The other unratified [ASSUMPTION] marks in the 2026-11-12 entries (the twelfth instruction's line for "appropriate", "advocacy groups" read as disabled people's own organisations, the OD-10 reconciliation, OD-15's attribution, "(or something like that)") | `sed -n '/^## Owner delegation 2026-11-12/,$p' references/project-standards.md \| grep -c '\[ASSUMPTION'` | accepted as standing readings, each reversible by the owner and none blocking a task | E | — Asking each would cost the owner load the 2026-09-09 statement says he cannot carry |
 | OI-16 | OD-15: whether not-for-profit status removes WHO's clause 1.2.4 is [UNVERIFIED]; no legal reading was made | ledger OD-15 answer; `DECISION-CLOSURE.md` §2 (OD-15) | accepted: the owner took the decision and the risk; T-103 keeps attribution and marks the correspondence as the project's own addition | E | — |
@@ -108,11 +109,14 @@ Sources were read in full or by section as the coordinator asked, and searched w
 | OI-40 | `sessions/` searched with `git grep`, not read end to end | `REMEDIATION-WORKPLAN.md:847` | accepted: a ruling found later supersedes on contact (rule 0) | E | — |
 | OI-41 | Harm-class warrants may be absent for every current conflict, so T-053's engine may refuse on all of them | `FOLD-LOG.md:182` | accepted: the owner's OD-36 rule working | E | — |
 | OI-42 | T-018 moves the "at least one lens" rule from a figure-row CHECK to a writer refusal and a blocking integrity case; a hand INSERT could bypass the writer | `tasks/T-018-design.md:221` | accepted: the same exposure as every cross-table rule; rule 3 forbids hand writes | E | — |
-| OI-43 | The population memo read English-language and international pages only, could not reach Disabled Peoples' International, and had no co-production; `PROSTH` and `WALKAID` are descriptive names | `POPULATION-UMBRELLAS-MEMO.md` §10 (from line 359); `FOLD-LOG.md:209` | accepted and stated as provenance in T-102's rows; reopened on new evidence | E | — |
+| OI-43 | The population memo read English-language and international pages only, could not reach Disabled Peoples' International, and had no co-production; `WALKAID` is a descriptive name (`LLD` is the owner's own wording, ninth set) | `POPULATION-UMBRELLAS-MEMO.md` §10 (from line 359); `FOLD-LOG.md:209` | accepted and stated as provenance in T-102's rows; reopened on new evidence | E | — |
 | OI-44 | The memo's findings on `MH` (clinical naming), `NDV` (a coalition held flat), `TALL`, `DEAF`, `LMB`, `COM` | `FOLD-LOG.md:165`; register `### OD-37` | accepted: OD-37 says they stand unless the owner says otherwise | E | — |
 | OI-45 | `device_class` stays a CHECK, not a table | `FOLD-LOG.md:164`; `tasks/T-102-design.md` §12 F | accepted: a rule declared once (workplan §7's line on hard-coding) | E | — |
 | OI-46 | Sixteen delegated resolutions had no independent check, and the review did not examine HS-1 C-02, C-03 or HS-A12 | `FOLD-LOG.md:103` | accepted: delegation condition (d) names four; the decisions those handshake rows bear on (OD-01, OD-02) were checked | E | — |
 | OI-47 | OD-22's reading of "nearest" as nearest on the safe side | `FOLD-LOG.md:101` | accepted: delegated, reversible, its reversal condition recorded | E | — |
+| OI-48 | The `SCI` edge of the owner's "basically": a person with an incomplete spinal cord injury may walk (memo §3.4: SCI does not imply a wheelchair); under the fold such a person is placed by device (`WALKAID`, or `MOB` with ICF d450/d455), never under `WHEEL`, and the injury and its level go to the medical lens and ICF b-codes; the condition community loses a code of its own | ledger seventh set "What it does not decide" (2); `tasks/T-102-design.md` §2 (the `SCI` edge) | an owner line accepting the loss, or restoring a condition code (then T-102's §6a is reversed by a new task) | C | owner; R1. Blocks no row: every held `SCI` figure names wheelchair users |
+| OI-49 | The wording the owner confirms: `UPL`'s display name, description and category (proposed: "people with upper-limb differences or disabilities"; category `general`, the CHECK having no physical-not-mobility value) and `LLD`'s description (proposed in `T-102-design.md` §2) | `tasks/T-116-upl-for-upper-limb.md` §4 item 1; `tasks/T-102-design.md` §2 | an owner line confirming or changing each; a change is one `amend-identity` call (T-025, widened to description and category) | C | owner; R1. Blocks no row: written as proposed and amended if the owner answers otherwise |
+| OI-50 | The edges of `UPL` and `LLD` the eighth and ninth sets leave open: an upper-limb prosthesis user is `UPL` and a lower-limb one is `LLD` with `device_class` naming the prosthesis (the ledger's [ASSUMPTION]s); the identity codes are not mutually exclusive (a person with a lower-limb difference who uses a wheelchair is `LLD` and `WHEEL`; ninth-set [ASSUMPTION]); whether `UPL` has children (not asked; none invented) | ledger eighth and ninth sets | an owner line ratifying the two readings; the children question asked only if the owner raises it | C | owner; R1. Blocks no row |
 
 ## 3. The resolution plan, by batch
 
@@ -198,7 +202,7 @@ OI-06 (T-028), OI-25 (T-007), OI-26 (T-008's pilot), OI-27 (T-031), OI-28 (after
 
 ### R6. After the milestones
 
-OI-04 when T-002 and T-022 have merged (the owner reads the contract's diff); OI-13 when T-110 first considers a `MOB` parent determination; OI-19 after T-110, each acceptance test run on a scratch copy with `EXAMINED` above 0, a red one filed as a task.
+OI-04 when T-002 and T-022 have merged (the owner reads the contract's diff); OI-19 after T-110, each acceptance test run on a scratch copy with `EXAMINED` above 0, a red one filed as a task.
 
 ## 4. The pilot plan
 
@@ -286,7 +290,7 @@ In the order of what each bears on. None blocks R0, R2 or Wave 0.
 
 **6. Unretrievable codes (OR-23b, OI-08).** "Is a registry citation (jurisdiction, standard number, clause) a valid route for an unretrievable code or standard (T4 to T6)?" — `yes, a registry citation is a valid route` · `no: no academic route, no tier and no anchor` · `<other>`
 
-**7. ICF crossings of the mobility children (OI-03).** "'Confirm all as proposed' named the codes and edges. Do the proposed crossings also stand: WHEEL to d465, d420, d410; PROSTH to d450, d455; WALKAID to d450, d465 (moderate, contextual)?" — `yes, as proposed` · `none` · `<changes>`
+**7. ICF crossings of the mobility children (OI-03).** "'Confirm all as proposed' named the codes and edges. Do the proposed crossings also stand: WHEEL to d465, d420, d410 (beside the SCI crossings T-102 carries to WHEEL); LLD to d450, d455; WALKAID to d450, d465 (moderate, contextual)?" — `yes, as proposed` · `none` · `<changes>`
 
 **8. Element pages (OR-14b, OI-10).** "Is a page for an element (a ramp as a whole) derived when read from its parameters' determinations, or written by the specifications pass?" — `derived when read` · `written by the pass` · `<other>`
 
@@ -294,7 +298,13 @@ In the order of what each bears on. None blocks R0, R2 or Wave 0.
 
 **10. Term definition (OT-2, OI-12).** "Approve the drafted definition and scope note of 'barrier-free path of travel' (in your queue)?" — `approve` · `change: <what>`
 
-**11. SCI and LMB under MOB (OI-13; ask when T-110 first considers a MOB-level determination).** "Should spinal cord injury (SCI) and limb difference (LMB) be children of MOB, so MOB-level determinations gather their figures?" — `no, leave them unparented` · `SCI under MOB` · `both under MOB`
+**11. [ANSWERED 2026-11-12, sixth to ninth sets]** SCI and LMB under MOB (OI-13): SCI is held under WHEEL; LMB becomes UPL, outside mobility; the lower-limb child is LLD.
+
+**13. The SCI edge (OI-48).** "You said SCI is basically WHEELCHAIR. People with an incomplete spinal cord injury who walk would then be filed by their aid (walking aid, or mobility with no aid), with the injury in the medical lens, and spinal cord injury would have no identity code of its own. Accept that?" — `accept` · `keep a condition code for SCI as well`
+
+**14. Wording of UPL and LLD (OI-49).** "UPL: 'people with upper-limb differences or disabilities', category general. LLD: 'people with lower-limb differences', described as people with a lower-limb difference, from limb loss or from birth, whether or not they use a prosthesis. Confirm?" — `confirm both` · `change: <what>`
+
+**15. Edges of UPL and LLD (OI-50).** "An upper-limb prosthesis user is UPL; a lower-limb one is LLD, with the prosthesis noted on the figure; and a person can be in two groups at once (for example LLD and WHEEL). Confirm?" — `confirm` · `change: <what>`
 
 **12. OD-17 (OI-04; ask after T-002 and T-022 merge, with the diff).** "Do you ratify the corrected pipeline contract?" — `ratified as corrected` · `not yet`
 
@@ -309,9 +319,13 @@ In the order of what each bears on. None blocks R0, R2 or Wave 0.
 **Needs the owner's yes before it starts:**
 - **Publishes:** the R0 merge (prompt 1); later, every task PR (merging is the owner's act).
 - **Spends:** the pilot programme of section 4 (one session per pilot row, two of them Opus-class and long), the R2 probe session, and the OI-28 characterisation run.
-- **Touches doctrine:** the T-4 carry task (evidence-tier and synthesis rules: needs prompts 3 to 6 answered first); writing the ICF crossings (prompt 7, population taxonomy); any change to `governance/population-taxonomy.md` beyond a pointer that T-102's sweep lists (OI-34); prompt 11.
+- **Touches doctrine:** the T-4 carry task (evidence-tier and synthesis rules: needs prompts 3 to 6 answered first); writing the ICF crossings (prompt 7, population taxonomy); prompts 13 to 15 (population taxonomy, all non-blocking); any change to `governance/population-taxonomy.md` beyond a pointer that T-102's sweep lists (OI-34); prompt 11.
 
 Nothing else in this plan needs the owner: plan edits, new tooling tasks and execution-time items are the coordinator's and the executors' under the standing authorisation for code and plans.
+
+## 7a. The OI-13 fold (2026-11-12, after this plan was written)
+
+The owner answered OI-13 and clarified it three times (sixth to ninth sets). The mobility family is `MOB` with `WHEEL` (which takes in `SCI`), `LLD` ("people with lower-limb differences", defined by the condition, replacing `PROSTH`) and `WALKAID`; `LMB` becomes `UPL`, upper limb, outside mobility. New tasks: **T-116** (research, Sonnet, after T-025 and T-054: mint `UPL`, place `LMB`'s six crossings by what each names, retire `LMB` to `UPL`) and **T-058** (tooling, Sonnet, after T-116: the DR-2026-07-23 crosswalk back-pointer, the retired-vocabulary record, prose callers). Changed: T-054 (identity successor; crossing rows retire in place), T-102 and its design (`LLD`; `SCI` retired to `WHEEL`, design §6a), T-025 (amend takes description and category), T-055 (a figure counted once at a parent), T-056, T-106, T-110, D-09. Open edges: OI-48 to OI-50. Record: `FOLD-LOG.md` §9. The pilot plan is unchanged except that T-054 gained items; it stays a real-execution pilot.
 
 ## 8. What could not be verified in this pass
 

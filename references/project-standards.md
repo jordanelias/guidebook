@@ -6088,3 +6088,75 @@ The fifth set ("Owner answers 2026-11-12 (fifth set)") says, on OD-39, that "T-0
 CONDITION: any session asking whether the 2026-08-28 clause "Never a `population_*` link table" still binds, or how OD-39 is recorded.
 ACTION: (1) Treat the 2026-08-28 clause as superseded by the 2026-11-06 link-table ruling, on the owner's answer to OD-39. (2) Do not add a `SUPERSEDES` pair for it; this entry is the record. (3) Where the fifth set says T-018 appends the pair, read it as this entry corrects.
 DATE: 2026-11-12 — correction by the recorder, not an owner statement.
+
+
+## Owner answer 2026-11-12 (sixth set) — SCI and LMB go under MOB (OI-13)
+
+Given by the owner in answer to the open item OI-13 of `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` (whether the spinal cord injury and limb-difference identity codes sit under the mobility family). Recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "SCI and LMB go under MOB"
+
+**What this settles.** `SCI` (spinal cord injury) and `LMB` (limb differences) take `MOB` as their parent, through the registry's existing `parent_code` column, beside the three device children confirmed in the fifth set (`WHEEL`, `PROSTH`, `WALKAID`). The mobility family is then: the parent `MOB`, with children `WHEEL`, `PROSTH`, `WALKAID`, `SCI` and `LMB`.
+
+OI-13: SCI and LMB take MOB as their parent
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+**What it does not settle.** How the two kinds of child relate (a child by device, a child by condition: a person may be in more than one, for example a wheelchair user with a spinal cord injury, or a person with a limb difference who uses a prosthesis, so `WHEEL`, `SCI`, `LMB` and `PROSTH` are not exclusive), what `PROSTH` and `LMB` each hold where they overlap (the T-102 design proposed that `PROSTH` covers lower-limb prostheses only and that `LMB` is unchanged), and whether a determination at `MOB` gathers its children by `parent_code` (T-055). [ASSUMPTION: the children are not mutually exclusive, because the identity lens takes at least one code per figure and a figure may name more than one group; unratified.]
+
+CONDITION: any session writing the mobility family's registry rows, or tagging a figure that names a spinal cord injury, a limb difference, a prosthesis, a wheelchair or another aid.
+ACTION: (1) Set `parent_code = MOB` for `SCI` and `LMB`. (2) Do not treat the five children as mutually exclusive. (3) Keep the overlap of `PROSTH` and `LMB` as the design states it, and report any figure that needs both. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner answer, quoted above.
+
+
+## Owner clarification 2026-11-12 (seventh set) — SCI is basically WHEEL and LMB is basically PROSTH: they are the same populations, not additional children (clarifies OI-13)
+
+Given by the owner directly after the sixth set ("SCI and LMB go under MOB"), recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "except SCI is the same as WHEELCHAIR basically and LMB is the same as PROSTHETIC"
+
+**What this records.** The owner's clarification of their own OI-13 answer: `SCI` (people with spinal cord injuries) is, in the owner's word, "basically" the same population as `WHEEL` (wheelchair users), and `LMB` (people with limb differences; upper-limb disabilities, as the registry describes it) is "basically" the same as `PROSTH` (people who use a prosthesis). They do not add two further children to the five in the sixth set; each pair is one population under two names. Rule 5 (one home per fact) therefore applies: a population is held under one code.
+
+**What it does not decide.** (1) Which of each pair's names survives. The owner's decomposition of 2026-11-12 is by device ("wheelchair user, prosthetic device user, other mobility aids"), which is the reading this entry follows. (2) What becomes of the cases the word "basically" leaves out: the registry's `LMB` description includes upper-limb disabilities (a lower-limb prosthesis, which is what `PROSTH` was proposed to cover, is narrower), and a person with an incomplete spinal cord injury may walk (the research memo cites a source that spinal cord injury does not imply a wheelchair); impairment level (paraplegia, quadriplegia) is a descriptor in the medical lens and ICF codes, not an identity code. (3) How the rows now under `SCI` (3 extractions, 9 identity–ICF map rows, 1 population match) and `LMB` (no extractions, 6 identity–ICF map rows) are carried, as the counts stood on 2026-11-12. [ASSUMPTION: the surviving codes are the device codes `WHEEL` and `PROSTH`; `SCI` and `LMB` are retired in favour of them, their rows re-tagged by what each names, and `PROSTH` is described so that it holds what `LMB` held (limb differences, upper and lower, and prosthetic devices) unless the owner narrows it; unratified.]
+
+OI-13: SCI is the same population as WHEEL and LMB is the same population as PROSTH; each pair is held under one code
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's registry rows, retiring `SCI` or `LMB`, or tagging a figure that names a spinal cord injury, a limb difference, a prosthesis or a wheelchair.
+ACTION: (1) Hold each pair under one code, the device code, and retire the other by the sanctioned verb with its successor. (2) Describe `PROSTH` so it holds what `LMB` held, or report the case it leaves out. (3) Re-tag the rows under `SCI` and `LMB` by what each names; do not fan out a grade. (4) Keep impairment level in the medical lens and ICF codes. (5) Treat the [ASSUMPTION] mark above as unratified. This supersedes, on the point of `SCI` and `LMB` being additional children, the sixth set's account of the family.
+DATE: 2026-11-12 — owner clarification, quoted above.
+
+
+## Owner clarification 2026-11-12 (eighth set) — LMB becomes UPL (upper limb) and is not part of mobility; only SCI is the same as WHEEL
+
+Given by the owner directly after the seventh set, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in the order sent:
+
+> "LMB should be UPL for upper limb then"
+
+> "and that doesnt concern mobility"
+
+**What this records.** The owner corrects the seventh set's pairing of `LMB` with `PROSTH`. `LMB` (registry: "people with limb differences; upper-limb disabilities") is to be **`UPL`, for upper limb**, and it **does not concern mobility**: it is not a child of `MOB` and it is not the same population as `PROSTH`. What stands from the seventh set is that `SCI` is basically the same population as `WHEEL`. The mobility family is therefore the parent `MOB` with the device children `WHEEL` (which takes in `SCI`), `PROSTH` and `WALKAID`. The sixth set's placing of `LMB` under `MOB` is set aside by this entry.
+
+**What it does not decide.** (1) How `LMB` becomes `UPL`: a rename of the code, or a new code with `LMB` retired to it (the registry's code is a key that identity–ICF map rows point at; there are 6 such rows and no extractions on `LMB` as of 2026-11-12). (2) The display name and description of `UPL` (the registry's present description combines limb differences and upper-limb disabilities). (3) The cases at the edge: a lower-limb difference in a person who uses no prosthesis (not upper limb, and no aid), an upper-limb prosthesis user (upper limb, not mobility), and whether an upper-limb disability that affects reach is a lens on reach and manipulation parameters (it is the owner's existing `upper-limb-impairment-built-environment` topic). [ASSUMPTION: `UPL` is a population in the identity lens like the others and keeps `LMB`'s ICF map rows; the lower-limb difference without a prosthesis is placed by the T-102 design on `MOB` with ICF d4 codes, and an upper-limb prosthesis user on `UPL`; unratified.]
+
+OI-13: SCI is the same population as WHEEL; LMB becomes UPL (upper limb) and is not part of the mobility family; PROSTH is a device child of MOB, separate from UPL
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's rows, retiring `SCI`, or renaming, retiring or tagging `LMB` or `UPL`.
+ACTION: (1) Hold `SCI` and `WHEEL` as one population under `WHEEL`. (2) Make `LMB` into `UPL` (upper limb), outside the mobility family, by the sanctioned verb with the successor if it is a new code; move its map rows without duplicating. (3) Do not describe `PROSTH` as holding what `LMB` held. (4) Treat the [ASSUMPTION] mark above as unratified. This supersedes the seventh set's pairing of `LMB` with `PROSTH` and the sixth set's placing of `LMB` under `MOB`.
+DATE: 2026-11-12 — owner clarification, quoted above.
+
+
+## Owner clarification 2026-11-12 (ninth set) — the lower-limb child of MOB is LLD, "people with lower-limb differences", not PROSTH
+
+Given by the owner in answer to the prompt "Rename PROSTH" (put to them because, after `LMB` became `UPL` and left mobility, "PROSTH" read as any prosthesis user). Recorded on contact per `CLAUDE.md` rule 0. The owner selected the option's label: "LLD — 'people with lower-limb differences'".
+
+**What this settles.** The lower-limb child of `MOB` is **`LLD`, people with lower-limb differences**, replacing the proposed `PROSTH`. It is defined by the condition (a lower-limb difference), not by the device, so it holds people who use a lower-limb prosthesis and people with a lower-limb difference who use none. It is the lower-limb counterpart of `UPL` (upper limb, outside mobility). The mobility family is therefore the parent `MOB` with the children `WHEEL` (which takes in `SCI`), `LLD` and `WALKAID`. This departs, for this one child, from the owner's earlier decomposition "by device" (wheelchair user, prosthetic device user, other mobility aids); the owner chose it knowing so.
+
+**What it does not decide.** (1) That a lower-limb prosthesis is a device and is held in `device_class` (the T-102 design proposed adding `lower_limb_prosthesis`, `crutches` and `cane`): with `LLD` defined by the condition, whether the prosthesis value remains in `device_class` as a descriptor of a figure or participants is for the design to restate, keeping one home per fact. (2) The registry description of `LLD`. (3) Whether the old `LMB` rows' lower-limb content goes to `LLD` and its upper-limb content to `UPL`: `LMB` was described as "people with limb differences; upper-limb disabilities", and the owner has made `LMB` into `UPL`; the 6 identity–ICF map rows on `LMB` (as of 2026-11-12) have to be placed on `UPL` or `LLD` by what each names. [ASSUMPTION: the identity codes are not mutually exclusive, so a person with a lower-limb difference who also uses a wheelchair or walking aid is in `LLD` and in `WHEEL` or `WALKAID`; unratified.]
+
+OI-13: the lower-limb child of MOB is LLD, people with lower-limb differences (replacing PROSTH); the mobility family is MOB with WHEEL (taking in SCI), LLD and WALKAID; LMB becomes UPL outside mobility
+OI-13 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's registry rows, or tagging a figure that names a lower-limb difference, a prosthesis, a wheelchair or another aid.
+ACTION: (1) Use `LLD`, not `PROSTH`. (2) Place the rows of the old `LMB` on `UPL` or `LLD` by what each names. (3) Keep the prosthesis, where it is a device fact, in `device_class` only if the design settles it there without a second home. (4) Treat the [ASSUMPTION] mark above as unratified. This supersedes the confirmed T-102 code `PROSTH` (fifth set) and the seventh set's pairing of `LMB` with `PROSTH`.
+DATE: 2026-11-12 — owner clarification (selected option), quoted above.

@@ -232,3 +232,28 @@ _Plan documents and the session generator only; the ledger entry for the fifth s
 - **The answer line of OD-14 (fifth set) does not name the ICF crossings** of the design's §7 item 3. They are held back, not inferred.
 - **`rename-term` records its reason by appending an `AMENDED` line to `scope_note`**, which the 2026-11-06 schema-shape statement forbids; OD-38 asks that the pick be recorded with its reason, so T-028 now records judge and reason in typed columns.
 
+## 9. The OI-13 fold (sixth to ninth sets), 2026-11-12
+
+_Plan documents and the session generator only; the four ledger entries were appended by the coordinating session and are not touched here. `sha256sum data/guidebook.db` unchanged (`c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`). The owner's answer arrived in four messages while this fold ran (`grep -n -E "Owner (answer|clarification) 2026-11-12 \((sixth|seventh|eighth|ninth) set\)" references/project-standards.md`); only the last state is folded: `MOB` with `WHEEL` (taking in `SCI`), `LLD`, `WALKAID`; `LMB` becomes `UPL`, outside mobility._
+
+**Every file changed, and why.**
+- `tasks/T-054-identity-retires-to-need.md`: item 1a, `superseded_by_identity` under one exactly-one successor CHECK (shared by `SCI`→`WHEEL` and `LMB`→`UPL`; a rename rejected: identifiers retire in place); item 1b, `identity_icf_map` rows retire in place with `retire-population-icf-link` (without it `SCI` and `LMB`, which carry crossings, could never be retired: a dead end); live-row counting, `evidence_population_match` (no foreign key) named, `add-population-match` refuses a deprecated target; red test extended; Traces to OI-13.
+- `tasks/T-054`, `T-055`, `T-056`: their test-id prefix said `T051-` (a copying defect); corrected to each task's own number.
+- `tasks/T-056-all-leaves-identity-lens.md`: its successor column widens T-054's one CHECK, never a second rule.
+- `tasks/T-102-design.md`: §0 the family as revised and the departure from "by device" for `LLD`, chosen by the owner; one home per fact (`LLD` the condition, `device_class = 'lower_limb_prosthesis'` the device, one-way consistency); §2 `LLD` replaces `PROSTH` (description proposed, owner confirms), the `SCI` edge reported; §3 E4 answered; §4 and §6 rows; new §6a (carry `SCI`'s figures, grade and crossings, then retire it to `WHEEL`); §5 a figure counted once; §7, §8 tests 1, 2, 5, 6 and new 9, 10; §9 tooling needs; §11 sweep names.
+- `tasks/T-102-mobility-split.md`: depends on T-054; OI-13 in its preconditions; item 4a (`SCI`→`WHEEL`); `LLD` in items 1 and 4; after-test (4a).
+- `tasks/T-055-mobility-family-tooling.md`: a figure gathered once (red test added); `lower_limb_prosthesis` stays a descriptor.
+- `tasks/T-025-base-writers.md`: the amend takes `--description` and `--category`, so owner-confirms wording is corrected by one call.
+- `tasks/T-106-retag-lenses.md`, `tasks/T-110-first-determinations.md`: the revised children.
+- `tasks/T-116-upl-for-upper-limb.md` (new, research) and `tasks/T-058-upl-prose-callers.md` (new, tooling).
+- `REMEDIATION-WORKPLAN.md`: §3 rows (T-054, T-102, new T-116, T-058), dependency lines, §8 OD-14 addendum, D-09, §13.
+- `OPEN-ITEMS-PLAN.md`: OI-03 restated; OI-13 resolved (class R); OI-48 to OI-50 and prompts 13 to 15 added; prompt 11 marked answered; §7a.
+- `DECISION-CLOSURE.md`: a note before §1.
+- `REMEDIATION-PLAN.md`: regenerated.
+
+**Found while folding.**
+- **`UPL` is a retired token.** DR-2026-07-23's crosswalk "UPL→LMB" and `governance/retired-vocabulary.yaml` record it, and older governance prose files `UPL` under mobility (`MOB/UPL`). The owner's eighth set reverses the crosswalk; T-058 marks the DR by a `SUPERSEDES` pair (its target is outside the ledger, so the audit can verify it; the target quote counts once under the audit's normalisation) and corrects the record.
+- **All six `LMB` crossings name grip and bilateral arm function**, so all go to `UPL`; none to `LLD`.
+- **Every `SCI` figure names "wheelchair users with cervical cord injury"**, so the retirement to `WHEEL` moves no figure against its words; the `SCI` grade's participants are wheelchair users, so it is re-graded against `WHEEL` once (not fanned out).
+- **The identity category CHECK has no value for a physical group outside mobility**; `UPL` is proposed under `general`, and the owner confirms (OI-49).
+

@@ -25,6 +25,8 @@ The generator gives the same split: `python3 -I scratchpad/session_2026-11-12-pi
 
 **After the fifth set (2026-11-12).** The owner confirmed T-102's codes and edges (OD-14), deferred OD-17 (status `DEFERRED BY THE OWNER`; asked again after T-002 and T-022 merge), and answered two new decisions entered with their answers, OD-38 (the English name shown when instruments differ) and OD-39 (the link-table supersession). D-27 and D-27b both print nothing; the generator's line reads the register from `REMEDIATION-WORKPLAN.md` §8 (re-run it). T-102's report to the owner is discharged. This table and §4 are as of the fourth set; the fifth-set rows are in the register (`grep -n -E "^### OD-3[89]" workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`). Items still open in the plan as a whole, including owner questions outside the register: `OPEN-ITEMS-PLAN.md`.
 
+**After OI-13 (2026-11-12, sixth to ninth sets).** Not a register decision (an open item of `OPEN-ITEMS-PLAN.md`), so D-27 and the generator's decision line are unchanged. It revises OD-14's confirmed codes: the mobility children are `WHEEL` (taking in `SCI`), `LLD` (replacing `PROSTH`) and `WALKAID`; `LMB` becomes `UPL`, outside mobility. Its open edges are prepared as owner prompts 13 to 15 of `OPEN-ITEMS-PLAN.md` §6; none blocks a task.
+
 ## 1. Every register decision, confirmed
 
 Searches: `git grep` and `grep -r` over `references/project-standards.md`, `decisions/`, `governance/` and `sessions/` (the Grep tool cannot see `sessions/`), plus the committed transcripts where a wording was in question. Gate: the function of `REMEDIATION-WORKPLAN.md` §13. "Blocks" is read from the task files' section 2 by the generator.

@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-12 21:00 UTC from the 68 task files at commit c5c566d by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-12 21:24 UTC from the 70 task files at commit 12e2246 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -20,8 +20,8 @@ _Generated 2026-11-12 21:00 UTC from the 68 task files at commit c5c566d by `scr
 |---|---|---|---|---|---|---|---|
 | 1 | 27 | 26 | 0 | 0 | 1 | 25 / 2 | 13 |
 | 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 9 |
-| 3 | 8 | 6 | 0 | 0 | 2 | 3 / 5 | 8 |
-| 4 | 5 | 4 | 0 | 0 | 1 | 5 / 0 | 5 |
+| 3 | 9 | 7 | 0 | 0 | 2 | 3 / 6 | 9 |
+| 4 | 6 | 5 | 0 | 0 | 1 | 6 / 0 | 6 |
 | 5 | 4 | 2 | 0 | 0 | 2 | 3 / 1 | 4 |
 | 6 | 5 | 2 | 0 | 0 | 3 | 4 / 1 | 5 |
 | 7 | 4 | 1 | 0 | 0 | 3 | 2 / 2 | 4 |
@@ -120,7 +120,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 3
 
-**Entry:** merged and green on `$BASE`: T-008, T-016, T-020, T-025, T-026, T-028, T-049.
+**Entry:** merged and green on `$BASE`: T-008, T-016, T-020, T-025, T-026, T-028, T-049, T-054.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
@@ -132,6 +132,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-108](tasks/T-108-unit-condition-repair.md) | Move conditions out of the unit cell | research | RESEARCH | READY | yes | T-008, T-016 | not piloted |
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | RESEARCH | NOT FOR SONNET | no | T-020 | not piloted |
 | [T-112](tasks/T-112-translate-held-text.md) | Translate the held non-English text that synthesis needs | research | RESEARCH | READY | yes | T-049 | not piloted |
+| [T-116](tasks/T-116-upl-for-upper-limb.md) | Hold the upper-limb population as UPL, and retire LMB to it | research | RESEARCH | READY | yes | T-025, T-054 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
@@ -143,12 +144,13 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 3.6: T-108
 - Lane 3.7: T-109
 - Lane 3.8: T-112
+- Lane 3.9: T-116
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-107, T-109.
 
 ## Batch 4
 
-**Entry:** merged and green on `$BASE`: T-015, T-017, T-020, T-024, T-025, T-029, T-030, T-050, T-101.
+**Entry:** merged and green on `$BASE`: T-015, T-017, T-020, T-024, T-025, T-029, T-030, T-050, T-101, T-116.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
@@ -157,6 +159,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | TOOLING | READY | yes | T-029, T-030 | not piloted |
 | [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | TOOLING | READY | yes | T-024, T-101 | not piloted |
 | [T-047](tasks/T-047-add-by-data-test.md) | A durable test that the base changes by data alone | 3 (end) | TOOLING | READY | yes | T-015, T-020, T-024, T-025, T-029 | not piloted |
+| [T-058](tasks/T-058-upl-prose-callers.md) | UPL reinstated for upper limb: the retired crosswalk and the prose that names LMB or UPL | 3 | TOOLING | READY | yes | T-116 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
@@ -165,6 +168,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 4.3: T-033
 - Lane 4.4: T-036
 - Lane 4.5: T-047
+- Lane 4.6: T-058
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-032.
 
@@ -212,13 +216,13 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 7
 
-**Entry:** merged and green on `$BASE`: T-008, T-009, T-016, T-018, T-021, T-025, T-031, T-037, T-055.
+**Entry:** merged and green on `$BASE`: T-008, T-009, T-016, T-018, T-021, T-025, T-031, T-037, T-054, T-055.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
 | [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | TOOLING | READY | after T-032, T-037 | T-037 | not piloted |
 | [T-039](tasks/T-039-owner-edits.md) | The owner's edits as proposals through the write path | 5 | TOOLING | NOT FOR SONNET | no | T-021, T-037 | not piloted |
-| [T-102](tasks/T-102-mobility-split.md) | Decompose the mobility family by device, and carry the rows filed under MOB | research | RESEARCH | NOT FOR SONNET | no | T-018, T-025, T-055 | not piloted |
+| [T-102](tasks/T-102-mobility-split.md) | Decompose the mobility family by device, and carry the rows filed under MOB | research | RESEARCH | NOT FOR SONNET | no | T-018, T-025, T-054, T-055 | not piloted |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | RESEARCH | NOT FOR SONNET | no | T-008, T-009, T-016, T-031 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
