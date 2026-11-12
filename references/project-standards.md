@@ -5253,3 +5253,18 @@ Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidi
 CONDITION: any session defining, splitting, merging or grouping parameters, or asking why a determination cannot be unified across instruments.
 ACTION: (1) Treat commonality across clauses, instruments and jurisdictions as a property a parameter definition must preserve. (2) Keep clause-level extractions and reach them from an abstract parameter by pointer. (3) Do not decide the grouping mechanism or the granularity policy without the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
 DATE: 2026-11-12 — owner statement, quoted above.
+
+
+## Owner statement 2026-11-12 (third) — synthesis finds equivalencies, adjacencies, similarities and commonalities dynamically, so that it can discuss things properly
+
+Made in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), directly after the second statement of the same day, recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim:
+
+> "so our synthesis needs to be very dynamic in finding equivalencies/adjacencies/similarities/commonalities so that it can discuss things properly"
+
+**What this records.** The synthesis stage is the one that finds the relations between parameters, clauses, instruments and jurisdictions (equivalence, adjacency, similarity, commonality) and does so dynamically, as a request needs it, in order that the book's discussion is sound. It is the step that makes the abstraction in the second statement usable: unify, then specify.
+
+**What it does not decide.** The relation types, their representation, who judges them, and how a dynamic run is initiated are open. It does not change the rule that only an Opus-class model authors `best_practice_synthesis`. [ASSUMPTION: "synthesis" is read as the pipeline stage of that name, not as `best_practice_synthesis` alone.]
+
+CONDITION: any session designing or running synthesis, connection discovery or convergence.
+ACTION: (1) Treat finding equivalencies, adjacencies, similarities and commonalities as synthesis's duty, to be done on demand and not only in a planned batch. (2) Record each relation as a pointer between existing rows and copy no fact (rule 5). (3) Leave the mechanism to the audit's improvement programme and the owner. (4) Treat the [ASSUMPTION] mark above as unratified.
+DATE: 2026-11-12 — owner statement, quoted above.
