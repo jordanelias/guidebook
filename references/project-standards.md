@@ -6053,3 +6053,38 @@ OD-36 STATUS: ANSWERED BY THE OWNER
 CONDITION: any session tagging a provision that names no group, using `ALL` as an identity, or building the engine's handling of a conflict between groups.
 ACTION: (1) Tag a provision that names no one by its heading's group, or by its ICF and access-need lenses alone; do not use `ALL` as an identity. (2) State "universal" by `design_scale` only. (3) Hold the harm ordering as data with a held source's finding as each class's warrant. (4) Refer a tie to a named judge.
 DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Owner answers 2026-11-12 (fifth set) — the T-102 codes, OD-17 (the contract), the display name of a concept (new OD-38), the link-table supersession (new OD-39)
+
+Given by the owner in answer to prompts put to them in the session that audited the pipeline (`session_2026-11-12-pipeline-bidirectional-audit`), after the designs `tasks/T-018-design.md`, `tasks/T-028-design.md` and `tasks/T-102-design.md` were written. Recorded on contact per `CLAUDE.md` rule 0. Each is a menu option the owner selected, quoted as the option's label.
+
+**T-102 codes (OD-14, confirmation of the exact codes).** Selected: "Confirm all as proposed".
+OD-14: codes confirmed as proposed in T-102-design.md: MOB stays as the parent, renamed "disabled people with mobility needs", with three device children, WHEEL (wheelchair users, including ambulatory and part-time wheelchair users), PROSTH (people who use a lower-limb prosthesis) and WALKAID (people who use walking aids: crutches, canes, frames, rollators); AMB is not minted; scooter users stay on MOB with device_class = scooter; PROSTH covers the lower limb only and LMB is unchanged; a person with a mobility need who uses no aid has no child (MOB plus ICF d4 codes and access needs)
+*What it settles.* The report to the owner that T-102 was to make in the ledger before any row is written is discharged by this confirmation; the executor may write rows on these options. [Not the owner's: "PROSTH" and "WALKAID" are descriptive names; the design records that no organisation of prosthesis users or of walking-aid users was found.]
+
+**OD-17.** Selected: "Ratify after T-022 merges, once I have read the corrected contract".
+OD-17: the owner will ratify the corrected contract after T-002 and T-022 have merged, once they have read it
+OD-17 STATUS: DEFERRED BY THE OWNER
+*What it settles.* Nothing waits on it. The assistant asks again with the diff of the corrected `governance/pipeline-contract.yaml` in front of the owner.
+
+**OD-38 (new): which English name is shown for a concept that several English-language instruments name differently.** Selected: "First recorded, until a named judge picks; the pick is recorded with its reason".
+OD-38: the first English name recorded is shown until a named judge picks one with rename-term --from-form; the pick is recorded with its reason
+OD-38 STATUS: ANSWERED BY THE OWNER
+
+**OD-39 (new): whether the owner's link-table ruling of 2026-11-06 supersedes the 2026-08-28 clause "Never a population_* link table".** Selected: "Yes, the 2026-11-06 ruling supersedes that clause".
+OD-39: the 2026-11-06 link-table ruling supersedes the 2026-08-28 clause "Never a population_* link table"; T-018 appends the SUPERSEDES/BY pair and builds extraction_lens_links
+OD-39 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session writing the mobility family's rows, ratifying or asking about the contract, choosing the shown English name of a concept, or building the lens link table.
+ACTION: (1) Write the mobility family on the confirmed codes. (2) Treat OD-17 as deferred, to be asked after T-022 merges. (3) Follow OD-38 in T-028's `rename-term`. (4) Add the supersession pointer in T-018.
+DATE: 2026-11-12 — owner answers, quoted above.
+
+
+## Correction 2026-11-12 — to the fifth set of owner answers: how OD-39's supersession is recorded
+
+The fifth set ("Owner answers 2026-11-12 (fifth set)") says, on OD-39, that "T-018 appends the SUPERSEDES/BY pair". **That is the recorder's wording, not the option the owner selected.** The owner selected "Yes, the 2026-11-12 … 2026-11-06 ruling supersedes that clause" — that the 2026-11-06 link-table ruling supersedes the 2026-08-28 clause "Never a `population_*` link table". The mechanism was a design assumption. Tested on a scratch copy of the ledger, a `SUPERSEDES` pair for it makes `supersession_backpointer_audit` fail: the audit counts the target quote in the raw ledger, so the citation line is a second occurrence; the quote already occurs twice under the audit's normalisation; and a marker beside the 2026-08-28 paragraph cannot be added to an append-only ledger. The supersession is therefore recorded in prose, by this entry and by `workplan/2026-11-12-bidirectional-pipeline/tasks/T-018-link-table.md`, following the 2026-09-01 precedent.
+
+CONDITION: any session asking whether the 2026-08-28 clause "Never a `population_*` link table" still binds, or how OD-39 is recorded.
+ACTION: (1) Treat the 2026-08-28 clause as superseded by the 2026-11-06 link-table ruling, on the owner's answer to OD-39. (2) Do not add a `SUPERSEDES` pair for it; this entry is the record. (3) Where the fifth set says T-018 appends the pair, read it as this entry corrects.
+DATE: 2026-11-12 — correction by the recorder, not an owner statement.

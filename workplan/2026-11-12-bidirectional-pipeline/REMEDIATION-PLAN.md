@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-12 20:40 UTC from the 68 task files at commit ba96484 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-12 21:00 UTC from the 68 task files at commit c5c566d by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -255,9 +255,9 @@ Every register decision (`grep -o -E '^### OD-[0-9]+' REMEDIATION-WORKPLAN.md`),
 
 ### Standing, blocks no task: CLOSED, and no task's gate reads it (1)
 
-OD-17 (no status line)
+OD-17 (DEFERRED BY THE OWNER)
 
-### Open by the ledger gate (35)
+### Open by the ledger gate (37)
 
 | Decision | Gate | Read by |
 |---|---|---|
@@ -296,12 +296,14 @@ OD-17 (no status line)
 | OD-35 | OPEN (owner) | no task gate |
 | OD-36 | OPEN (owner) | T-053 |
 | OD-37 | OPEN (owner) | T-054, T-102, T-114 |
+| OD-38 | OPEN (owner) | T-028 |
+| OD-39 | OPEN (owner) | T-018 |
 
 ## NOT FOR SONNET
 
 | Task | Title | Batch | Decisions (owner's words / delegated) |
 |---|---|---|---|
-| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 2 | — / OD-03 |
+| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 2 | OD-38 / OD-03 |
 | [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 6 | OD-23 / — |
 | [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | — / OD-07, OD-12, OD-19, OD-25, OD-29 |
 | [T-037](tasks/T-037-render.md) | Render from the database | 6 | — / OD-02, OD-08, OD-12, OD-30, OD-33 |

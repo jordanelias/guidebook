@@ -212,3 +212,23 @@ _Written by an Opus-class designer under the owner's instruction "Opus to write 
 - No task builds the base coverage view the seventh 2026-11-06 statement makes the acceptance test (AT-23 is listed against T-026 and T-107, whose changes do not describe it).
 - `REMEDIATION-WORKPLAN.md` was not edited in this pass and is now stale in four places, for the next fold: the §3 task table still says T-018 is NOT FOR SONNET and T-107 depends on T-026 alone; the §5 critical-path note and dependency list still say T-018 and T-102 wait for their designs; the §6 stop rows for the three designs are discharged. `REMEDIATION-PLAN.md` (generated) is current.
 - None of the three designs has been executed or piloted; expect defects and report them in the executing pull request.
+
+## 8. The fifth-set fold (OD-14 codes, OD-17, OD-38, OD-39), 2026-11-12
+
+_Plan documents and the session generator only; the ledger entry for the fifth set was appended by the coordinating session before this fold and is not touched here. `sha256sum data/guidebook.db` unchanged (`c9ecb8461baf2d36ba73215d991f4b46ab97b25458b6b2e3b471e9b401ab7c4d`)._
+
+**Every file changed, and why.**
+- `REMEDIATION-WORKPLAN.md`: §1 lists `OPEN-ITEMS-PLAN.md`; §3 rows for T-018 (OD-39), T-028 (OD-38), T-102 (codes confirmed); §5 critical-path note and dependency lines for T-018, T-028, T-102, T-110; §6 the T-102 stop row discharged as to the owner; §8 OD-14 fifth-set addendum, OD-17 `DEFERRED BY THE OWNER`, new entries OD-38 and OD-39 with status lines; §10 D-09's done result names the confirmed codes; §11 the T-113 scope point marked answered by OD-04; §13 the fifth-set record.
+- `tasks/T-102-mobility-split.md`: item 2 (the owner report) discharged, the draft not appended; item 3 writes no ICF crossings until the owner names them; after-test (2) reads the confirmation; the OD-14 bullet quotes the confirmed codes.
+- `tasks/T-102-design.md`: §0, §7 and §10 marked: confirmed, report discharged and kept as record, ICF crossings not confirmed by name.
+- `tasks/T-110-first-determinations.md`: item 2 reads the confirmation, not the report.
+- `tasks/T-028-concept-identity.md` and `tasks/T-028-design.md`: OD-38 in the gate; `rename-term --from-form` takes a named judge and a reason, recorded in typed columns rather than the `AMENDED` trailer on `scope_note`.
+- `tasks/T-018-link-table.md` and `tasks/T-018-design.md`: OD-39 in the gate; the supersession recorded in prose, not by a machine pair.
+- `DECISION-CLOSURE.md`: a note after §0; §4's OD-17 heading marked deferred.
+- `REMEDIATION-PLAN.md`: regenerated.
+
+**Found while folding.**
+- **The design's `SUPERSEDES` pair for OD-39 would have turned `supersession_backpointer_audit` red.** Its claim that both quotes occur once was measured with `grep -c`, which counts lines; under the audit's normalisation the target quote occurs twice already, the audit counts the target in the raw ledger so the citation line adds a third, and the marker it needs must sit beside an immutable paragraph. Tested on a scratch copy (PASS became FAIL, "target quote occurs 3 time(s)"). Corrected in the T-018 files; recorded in `OPEN-ITEMS-PLAN.md`.
+- **The answer line of OD-14 (fifth set) does not name the ICF crossings** of the design's §7 item 3. They are held back, not inferred.
+- **`rename-term` records its reason by appending an `AMENDED` line to `scope_note`**, which the 2026-11-06 schema-shape statement forbids; OD-38 asks that the pick be recorded with its reason, so T-028 now records judge and reason in typed columns.
+

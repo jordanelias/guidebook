@@ -23,6 +23,8 @@ The generator gives the same split: `python3 -I scratchpad/session_2026-11-12-pi
 
 **The mobility children T-102's design starts from** (it confirms or corrects them and reports to the owner before any row): `MOB` active as the parent; `WHEEL`, a prosthetic-device-user code and an other-mobility-aids code with `parent_code = 'MOB'`; no-aid people on the parent; drive and impairment level as descriptors; open edges reported (`AMB`, scooters, ambulatory wheelchair users, overlap with `LMB`). A provision that names no one: its heading's group (parent `MOB` under a mobility heading), else no identity, only ICF and needs lenses (OD-31).
 
+**After the fifth set (2026-11-12).** The owner confirmed T-102's codes and edges (OD-14), deferred OD-17 (status `DEFERRED BY THE OWNER`; asked again after T-002 and T-022 merge), and answered two new decisions entered with their answers, OD-38 (the English name shown when instruments differ) and OD-39 (the link-table supersession). D-27 and D-27b both print nothing; the generator's line reads the register from `REMEDIATION-WORKPLAN.md` §8 (re-run it). T-102's report to the owner is discharged. This table and §4 are as of the fourth set; the fifth-set rows are in the register (`grep -n -E "^### OD-3[89]" workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`). Items still open in the plan as a whole, including owner questions outside the register: `OPEN-ITEMS-PLAN.md`.
+
 ## 1. Every register decision, confirmed
 
 Searches: `git grep` and `grep -r` over `references/project-standards.md`, `decisions/`, `governance/` and `sessions/` (the Grep tool cannot see `sessions/`), plus the committed transcripts where a wording was in question. Gate: the function of `REMEDIATION-WORKPLAN.md` §13. "Blocks" is read from the task files' section 2 by the generator.
@@ -169,7 +171,7 @@ What each option would meet or breach is a legal reading the owner (or counsel) 
 
 Only OD-17 remains, and it blocks nothing; ask it after T-022 merges. **Answered by the owner on 2026-11-12 and removed from this list:** OD-04, OD-09, OD-10, OD-13, OD-14, OD-15, OD-19, OD-23, OD-27, OD-28, OD-31, OD-32, OD-34, OD-35, OD-36, OD-37 (`grep -n -E "^OD-(04|09|10|13|14|15|19|23|27|28|31|32|34|35|36|37):" references/project-standards.md`). Their former prompts are in this file's history (`git log -p -- workplan/2026-11-12-bidirectional-pipeline/DECISION-CLOSURE.md`).
 
-### 1. OD-17: ratify the corrected pipeline contract (blocks nothing; ask after T-022 merges)
+### 1. OD-17: ratify the corrected pipeline contract (blocks nothing; ask after T-022 merges) — DEFERRED BY THE OWNER (fifth set), to be asked again with the corrected contract's diff
 **Question.** When T-002 and T-022 have corrected the contract, do you ratify it?
 **Why it is yours.** Ratification is your act.
 **Answer in one line.** `OD-17: ratified as corrected` · `OD-17: not yet`

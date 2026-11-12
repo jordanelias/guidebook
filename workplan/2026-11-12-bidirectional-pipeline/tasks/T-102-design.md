@@ -16,7 +16,9 @@ _Written 2026-11-12 by an Opus-class designer under the owner's instruction "Opu
 
 **Confidence.** High (about 85%) that the children should be device-defined with drive and level as descriptors: the owner's words, the memo's evidence (no retrieved organisation is constituted by drive or by level) and rule 5 agree. Medium (about 65%) on `WHEEL` including ambulatory wheelchair users and on scooter users staying on the parent. Medium (about 60%) on restricting the prosthesis child to lower-limb prostheses. Low to medium (about 50%) on the display names of `PROSTH` and `WALKAID`: no organisation of prosthesis users or of walking-aid users was retrieved (memo §3.3), so those names are descriptive, not self-chosen, and the report says so.
 
-**The owner's calls** (each answerable in one line, section 10): the three codes and their names; `MOB`'s new name; `AMB`; scooter users; the wording and placement of ambulatory wheelchair users; the scope of the prosthesis child; the proposed ICF crossings of the children. Already the owner's and not reopened: MOB decomposes by device (OD-14, third set); MOB stays as a parent and a provision naming no one under a mobility heading stays on it (OD-31, fourth set: the selected option names "the parent MOB with no child"); MOVE and VES are needs, LMB unchanged (OD-37).
+**[ANSWERED 2026-11-12, fifth set]** The owner selected "Confirm all as proposed" (`grep -n -F "OD-14: codes confirmed as proposed in T-102-design.md" references/project-standards.md`): the three codes and names, `MOB`'s new name, `AMB` not minted, scooter users on `MOB`, ambulatory and part-time wheelchair users in `WHEEL`, `PROSTH` lower-limb only with `LMB` unchanged, no child for a person who uses no aid. The answer line does not name the proposed ICF crossings (section 7, item 3); they are not written until the owner says so explicitly. Section 10's report is discharged and is not appended.
+
+**The owner's calls, as put** (each answerable in one line, section 10): the three codes and their names; `MOB`'s new name; `AMB`; scooter users; the wording and placement of ambulatory wheelchair users; the scope of the prosthesis child; the proposed ICF crossings of the children. Already the owner's and not reopened: MOB decomposes by device (OD-14, third set); MOB stays as a parent and a provision naming no one under a mobility heading stays on it (OD-31, fourth set: the selected option names "the parent MOB with no child"); MOVE and VES are needs, LMB unchanged (OD-37).
 
 ## 1. The rulings this rests on (read, not restated)
 
@@ -125,9 +127,9 @@ On 2026-11-12, run against the canonical database's `identity_code` column (befo
 
 Rows only, through the write path of CLAUDE.md §4 (scratch copy → `db.py` → `emit_batch_sql.py` → `emit_data_migration.py` → `migrate_db.py`); no schema migration, no code.
 
-1. The report of section 10 appended to `references/project-standards.md`, **before any row**. If the owner's reply changes a code, a name or an edge, this design is corrected first, then the rows follow the correction.
-2. `base_taxonomy_identity`: three children (T-025's add verb, `--parent MOB`, with the ledger pointer to the report's heading); `MOB`'s display name (T-025's amend verb, the replaced value recorded as that verb records it).
-3. **PROPOSED (owner confirms) in the report, written only if confirmed:** the children's ICF crossings with `add-population-icf-link`, `--mapping-confidence moderate_contextual`, provenance "T-102 design and report": `WHEEL` → d465 Moving around using equipment, d420 Transferring oneself, d410 Changing basic body position; `PROSTH` → d450 Walking, d455 Moving around; `WALKAID` → d450 Walking, d465 Moving around using equipment. (The memo flags `MOB`'s nine `high_predictive` crossings as overstated; this design does not touch them.)
+1. [DISCHARGED 2026-11-12: the owner confirmed the codes in the fifth set; the report is not appended.] ~~The report of section 10 appended to `references/project-standards.md`, **before any row**.~~ If the owner's reply changes a code, a name or an edge, this design is corrected first, then the rows follow the correction.
+2. `base_taxonomy_identity`: three children (T-025's add verb, `--parent MOB`, with the ledger pointer to the fifth-set entry, `Owner answers 2026-11-12 (fifth set)`); `MOB`'s display name (T-025's amend verb, the replaced value recorded as that verb records it).
+3. **PROPOSED (owner confirms), written only if confirmed — not named by the fifth-set answer line, so not yet confirmed:** the children's ICF crossings with `add-population-icf-link`, `--mapping-confidence moderate_contextual`, provenance "T-102 design and report": `WHEEL` → d465 Moving around using equipment, d420 Transferring oneself, d410 Changing basic body position; `PROSTH` → d450 Walking, d455 Moving around; `WALKAID` → d450 Walking, d465 Moving around using equipment. (The memo flags `MOB`'s nine `high_predictive` crossings as overstated; this design does not touch them.)
 4. `extraction_lens_links`: the judged links and retirements of section 6.
 5. `source_value_extractions.device_class`: where the figure's words state the device and the cell is NULL.
 6. `evidence_population_match`: new child grades only as section 6 allows.
@@ -152,6 +154,8 @@ Plus the research gate (`research_batch_dod.py --session "$STEM"`) and `migratio
 - **T-055:** the three `device_class` values of section 4, exactly; `device_class` added to `amend-extraction`'s amendable fields (today it is not: `grep -n '_AMENDABLE_SVE_FIELDS =' -A3 scripts/db.py`), so that a stated drive or aid can be recorded on an existing figure; the parent gather of section 5.
 
 ## 10. The post-design OWNER REPORT (draft; the T-102 executor appends it, adjusted only for facts re-derived on the day, before any row is written)
+
+**[DISCHARGED 2026-11-12 — kept as record only; do not append.]** The owner confirmed the codes and edges directly (fifth set, "Confirm all as proposed"; `grep -n -F "Owner answers 2026-11-12 (fifth set)" references/project-standards.md`). The draft below is what was put to the owner. Its last-paragraph licence and the [ASSUMPTION] after it are moot. Its item 6 (the ICF crossings) is not covered by name by the answer line and waits for an explicit yes.
 
 Append to the end of `references/project-standards.md`, replacing `YYYY-MM-DD` with `date -u +%F`. It carries no status line. Do not append it from this design pass.
 
