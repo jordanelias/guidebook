@@ -1,6 +1,6 @@
 # 42 — Doctrine, mission and ethos documents (verbatim)
 
-_Generated 2026-11-12 02:02 UTC at commit e73b588 by build_owner_prose.py; verbatim text is copied, never paraphrased._
+_Generated 2026-11-12 02:24 UTC at commit 3db0a4e by build_owner_prose.py; verbatim text is copied, never paraphrased._
 
 
 Authorship note: these are the repository's mission documents. `mission-PROVISIONAL.md` is provisional by its own name; whether a given sentence is the owner's own words or an assistant's drafting is stated (or not) inside each file — the audit must not assume.

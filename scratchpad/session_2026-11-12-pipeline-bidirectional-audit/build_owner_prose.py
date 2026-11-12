@@ -77,3 +77,16 @@ o.append("\n```\n" + "\n".join(l for l in dr.read_text().split("\n") if l.starts
 o.append("\n## Files\n\n" + "\n".join(f"- `{p}`" for p in g))
 (OUT / "43-owner-acts-elsewhere.md").write_text("\n".join(o))
 print(len(sel), "owner sections;", sum(len(x) for x in verb), "bytes verbatim;", len(g), "files elsewhere")
+
+# 44 the remaining ## sections, unfiltered: a heading filter is not a reading. Added after the top-down
+# leg found the 2026-08-25..08-28 rulings (spine, hand-offs, lenses, the determination's subject) fell outside it.
+selset = {(a, b) for a, b, _, _ in sel}
+rest = [x for x in secs if (x[0], x[1]) not in selset]
+r = [f"# 44 — Remaining `##` sections of project-standards.md, verbatim (not selected by heading)\n\n{STAMP}\n",
+     f"{len(rest)} sections. Selection of 40/41 was by heading keyword; these may hold owner rulings under non-obvious headings (the 2026-08-25..08-28 block does).\n",
+     "| lines | heading | bytes |", "|---|---|---|"]
+r += [f"| {a}-{b} | {h.replace('|','/')[:150]} | {len(body)} |" for a, b, h, body in rest]
+for a, b, h, body in rest:
+    r.append(f"\n\n<!-- references/project-standards.md:{a}-{b} -->\n\n" + body)
+(OUT / "44-project-standards-remainder-verbatim.md").write_text("\n".join(r))
+print(len(rest), "remaining sections;", sum(len(x[3]) for x in rest), "bytes")

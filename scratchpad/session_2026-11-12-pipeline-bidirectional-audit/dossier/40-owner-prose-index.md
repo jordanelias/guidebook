@@ -1,6 +1,6 @@
 # 40 — Owner prose index (`references/project-standards.md`)
 
-_Generated 2026-11-12 02:02 UTC at commit e73b588 by build_owner_prose.py; verbatim text is copied, never paraphrased._
+_Generated 2026-11-12 02:24 UTC at commit 3db0a4e by build_owner_prose.py; verbatim text is copied, never paraphrased._
 
 
 63 of 88 `##` sections of `references/project-standards.md` record an owner act or the locked doctrine; their full text is in `41-owner-rulings-verbatim.md`. Line numbers are in `references/project-standards.md` at the commit above.

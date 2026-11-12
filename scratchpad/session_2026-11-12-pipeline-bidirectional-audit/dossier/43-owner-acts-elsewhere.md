@@ -1,6 +1,6 @@
 # 43 — Other files that record owner acts (located, not copied)
 
-_Generated 2026-11-12 02:02 UTC at commit e73b588 by build_owner_prose.py; verbatim text is copied, never paraphrased._
+_Generated 2026-11-12 02:24 UTC at commit 3db0a4e by build_owner_prose.py; verbatim text is copied, never paraphrased._
 
 
 `.ignore` hides `sessions/`, `_archived/`, `audits/`, `versions/` from ripgrep and the Grep tool — use `grep -r` / `git grep` (CLAUDE.md §7).

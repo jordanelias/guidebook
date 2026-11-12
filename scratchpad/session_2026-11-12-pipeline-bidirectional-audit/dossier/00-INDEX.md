@@ -14,6 +14,7 @@ Regenerate everything with `python3 -I scratchpad/session_2026-11-12-pipeline-bi
 | `41-owner-rulings-verbatim.md` | those rulings in full | verbatim |
 | `42-doctrine-verbatim.md` | mission, ethos, jurisdiction philosophy, audience priority | verbatim |
 | `43-owner-acts-elsewhere.md` | where else owner acts live (`sessions/`, `decisions/`…), located not copied | derived |
+| `44-project-standards-remainder-verbatim.md` | the sections of project-standards.md that 40/41 did not select by heading, incl. the 2026-08-25..08-28 rulings on spine, hand-offs, lenses, determination subject | verbatim |
 
 Not in the dossier because they are read directly: `CLAUDE.md` (Layer 0 rules and the five-layer ruling), `decisions/DR-2026-08-19-research-restart-operative-instrument.md`, `governance/pipeline-contract.yaml`, `governance/stage-map.yaml`, `governance/check-registry.yaml`, `scripts/` themselves, `data/guidebook.db` (open read-only).
 
