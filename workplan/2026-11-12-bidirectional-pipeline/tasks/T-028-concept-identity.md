@@ -22,8 +22,12 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
 - **Tasks that must be merged to the integration base first:** T-026 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words, in one of the forms below. An answer relayed in chat, or inferred, is not an answer. If it is absent, stop, except where an entry below says which part may proceed without it.
-  - **OD-03** — Answer forms: "OD-03: forms table with a display pointer", "OD-03: keep canonical_en, add a label kind", or "OD-03: nothing until a non-English-origin concept is minted". Check: `grep -n -F "OD-03:" references/project-standards.md`.
+- **Owner decisions:** none outstanding. The decisions this task needed are resolved under delegation (next bullet); none is still the owner's.
+- **Delegated resolutions this task rests on.** OD-03: forms table; `canonical_en` kept as our English descriptive label, never a form; the name shown derived by E1. Each is a resolution by an Opus-class model under the owner's delegation of 2026-11-12: not the owner's words, reversible by the owner, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-03; do gate $n; done
+```
 - **Tests that must be red (or green) before you start:** AT-25 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -58,9 +62,10 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. As the owner's answer directs; no change on the third answer except recording the trigger.
+1. Design (the Fable agent), then build, to the delegated resolution of OD-03 (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md`, section OD-03): a concept's identity is `terms.term_id`; its names are rows of **one** forms table, one row per occurrence with its language, jurisdiction, source locator and usage type. Start from the 2026-11-06 design (`scratchpad/session_2026-11-06-base-vocabulary-review/matrix-design/base-matrix-design.md`, `term_forms`), which approves nothing; do not leave two homes for forms beside `term_aliases` and T-026's attestation columns: the design states which one holds a form and how the other is retired or pointed at. `canonical_en` stays as our English descriptive label, never a form and never matched first. Whether a label is an instrument's own term is derived by a view, not typed: add no label-kind column. The name shown is derived by E1 (the origin instrument's phrase until an English-jurisdiction instrument attests an English form); a stored choice with its warrant only where the derivation cannot decide.
+2. The design is one page, written before code, and it names every writer that screens or matches a name and how each changes.
 
-**What reads what this task adds or changes:** Every writer that screens or matches a name.
+**What reads what this task adds or changes:** Every writer that screens or matches a name; the coverage view of the base; render (the name shown).
 
 **Schema migration (this task has one).** Never type a migration number. Derive it at execution time: `ls scripts/migrations | grep -E '^[0-9]{3}_' | sort | tail -1` gives the highest; yours is that plus one, zero-padded, in `scripts/migrations/NNN_<slug>.sql`, and it ends by setting `PRAGMA user_version` to the same number. Run `python3 scripts/audit/joined_cells_census.py` before and after and keep both outputs (the last line is `EXAMINED: … candidate(s)`; a new column must not add a candidate). Apply it only with `python3 scripts/migrate_db.py` (this is the one sanctioned way `data/guidebook.db` changes). Prove it with `python3 scripts/migrate_db.py --rebuild "$SCRATCH/rebuilt.db"` (exit 0) and `python3 scripts/audit/migration_reproducibility.py --deep` (PASS). SQLite cannot add a `NOT NULL` foreign key or change a CHECK in place: use create, copy, drop, rename inside the migration, and list every view and index that names the table (`select type, name from sqlite_master where sql like '%<table>%'`; they must be recreated). The pull request contains no `scripts/migrations/data_*` file.
 
@@ -150,6 +155,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
 
 ## 10. Rollback
 

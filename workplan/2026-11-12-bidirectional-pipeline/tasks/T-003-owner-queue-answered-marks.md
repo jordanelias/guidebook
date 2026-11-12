@@ -57,6 +57,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 1. `governance/owner-browser.yaml`: for each prompt in the list that a ledger heading answers, add the `answered` mark in the shape the answered prompts already carry (date and ledger heading). Find the answering heading with `grep -n -F '<id>' references/project-standards.md`. Mark only prompts whose answer is quoted in the ledger; leave the rest.
 2. Do not add a script. If more than the prompts found by the evidence command need marking, list them in the pull request.
+3. **Prompts settled by a delegated resolution are not "answered".** OW-1b and OW-1c are marked "resolved under delegation (ledger, OD-12)" and OR-10b "resolved under delegation (ledger, OD-22)", each with the ledger heading of the delegated resolution and of its correction where there is one (`grep -n -F "Delegated resolution 2026-11-12 — OD-12" references/project-standards.md`). Use a key distinct from `answered`, so the owner's page shows them apart from the owner's own answers. If `scripts/generate/owner_browser_build.py` drops or mis-shows the new key, it is a caller (section 5): repair it if one condition does it, otherwise list it and stop for that part.
 
 **What reads what this task adds or changes:** `scripts/generate/owner_browser_build.py`; the owner.
 
@@ -64,7 +65,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 ## 5. Caller sweep
 
-Names to sweep: `OR-1c`
+Names to sweep: `OR-1c`, `OW-1b`, `OR-10b`
 
 **What a caller is.** A hit is a *caller* when its behaviour or its truth changes with this task: code that calls or imports the name; a test that exercises the behaviour you are changing, even if it asserts nothing about it; a view, trigger or index; a registry `cmd` or `basis`; a skill, command or governance sentence that states the behaviour being changed. A hit that stays true after your change is a *mention* and needs nothing. **Fixing a caller the sweep finds is in scope** (CLAUDE.md rule 4): make the fix in this pull request and list it there.
 

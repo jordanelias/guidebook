@@ -68,7 +68,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. One table, proposed with warrants, approved by the owner, entered by migration.
+1. One table, proposed with warrants, approved by the owner, entered by migration. The kinds are the rows of T-020's table (seeded from the delegated resolution of OD-24); a parameter that fits none is reported, and a new kind is proposed with its warrant for the add-kind verb, never typed into a cell.
 
 **What reads what this task adds or changes:** T-030
 

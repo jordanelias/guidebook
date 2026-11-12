@@ -21,12 +21,13 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-019, T-036 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words, in one of the forms below. An answer relayed in chat, or inferred, is not an answer. If it is absent, stop, except where an entry below says which part may proceed without it.
-  - **OD-02** — the language or languages of a page, and how a translated quotation is marked beside its original (that quotations may be translated is already answered: owner statement 2026-11-12, ninth) Check: `grep -n -F "OD-02:" references/project-standards.md`.
-  - **OD-08** — what an absent cell shows Check: `grep -n -F "OD-08:" references/project-standards.md`.
-  - **OD-12** — how the prose is produced and whether the render table is stored (OW-1b, OW-1c) Check: `grep -n -F "OD-12:" references/project-standards.md`.
-  - **OD-30** — whether a translation must be reviewed, and by whom, before a reader is shown it Check: `grep -n -F "OD-30:" references/project-standards.md`.
+- **Tasks that must be merged to the integration base first:** T-019, T-032, T-036, T-049 merged (T-032 holds the judged-discussion rows render quotes; T-049 the translations it shows). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Owner decisions:** none outstanding. The decisions this task needed are resolved under delegation (next bullet); none is still the owner's.
+- **Delegated resolutions this task rests on.** OD-02 (a reading of the owner's "render across a multitude of languages"): pages in English, every original shown, tagged, beside a marked translation; the page language a parameter proved by data alone. OD-08: no row for an absent cell; the gap is stated. OD-12: templates at render; judged discussion quoted from reviewed synthesis rows; the render table a build product outside the database with input hashes read by a named staleness check. OD-30: only reviewed translations are shown. Each is a resolution by an Opus-class model under the owner's delegation of 2026-11-12: not the owner's words, reversible by the owner, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-02 OD-08 OD-12 OD-30; do gate $n; done
+```
 - **Tests that must be red (or green) before you start:** AT-35 to AT-39 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -61,9 +62,14 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. As designed after the answers.
+1. Design (from the draft contract `workplan/2026-10-30-ramp-spec-pages/RENDER-CONTRACT-parameters-3-and-12.md`, whose §8 position 5 records the critic's findings this design must meet), then build, to the delegated resolutions:
+   - **OD-12.** Every sentence is assembled by templates held in one home from typed rows. Judged discussion is quoted by pointer from T-032's discussion rows and shown only when reviewed; otherwise the page says the discussion is unreviewed. No model is called at render. The render table is a build product **outside** `data/guidebook.db`, regenerated in full at each build and never committed (2026-08-27), each row carrying a hash of its inputs; one check, named and registered in this pull request, compares the deployed rows' hashes with their inputs now and reports stale rows — or the hash is not added (CLAUDE.md §8).
+   - **OD-02.** Pages in English. Every non-English quotation, term and clause is shown in its own language and script, first or beside, with our translation marked as a translation with its translator and review status; the original carries its language tag (WCAG 2.2, success criterion 3.1.2). The page language is a parameter: a test emits a page in a second language by data alone (a template set and a page-language value), with no code edit.
+   - **OD-30.** A translation is shown only if `v_translations_current` gives it status `reviewed` by a reviewer other than its translator; otherwise only the original is shown.
+   - **OD-08.** A cell with no determination shows no row; the Gaps element states the gap with its link (T-013's typed gaps). Whether the cell is not relevant, not yet researched, or researched and empty is derived (T-034 where merged), never stored.
+2. The owner's standing requirements are not reopened: the audience and disability lenses with the filters first; in-scope jurisdictions only; WCAG 2.2 AA tested and recorded, never self-certified (ledger, 2026-10-30).
 
-**What reads what this task adds or changes:** The reader.
+**What reads what this task adds or changes:** The reader; the staleness check reads the render table's input hashes.
 
 **Code size.** Report in the pull request the output of `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'` (run it after `git add`, so new files count), and for anything added name what reads it and what existing code it replaces or makes deletable. The base is the point where your branch left `$BASE`, not `origin/main` by name.
 
@@ -101,7 +107,7 @@ for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(ne
 
 Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
 
-**Step 2: red before, green after.** AT-35 to AT-39.
+**Step 2: red before, green after.** AT-35 to AT-39; and: a second-language page is emitted by data alone; an unreviewed translation and an unreviewed discussion row are not shown; on a scratch copy, changing an input of a built row turns the staleness check red.
 
 **Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T037-01`, `T037-02`, …) and confirm the prefix is free first (`grep -c '"T037-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
 
@@ -153,6 +159,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
 
 ## 10. Rollback
 

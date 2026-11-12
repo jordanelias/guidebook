@@ -4,6 +4,8 @@ _Written 2026-11-12 (UTC) by the handshake-and-adversarial leg of the bidirectio
 
 ## 0. Verdict
 
+**Since this was written (2026-11-12, later the same day).** Twenty of the owner decisions were delegated to an Opus-class model; eighteen now stand as delegated resolutions, OD-10 and OD-14 are referred back to the owner, and nine stay reserved. Section 13 records that pass, the independent check, the ledger gate every task now uses, and the build plan; the register (section 8) carries each decision's status. Where this verdict says "owner decisions", read section 13 for which are still the owner's.
+
 **The owner's objective is not met today, and it can be met.** The objective (`grep -n -F "run in all directions" references/project-standards.md`): the pipeline "can be run in all directions at any stage in such a manner where we can dynamically research, adjudicate, synthesize, specify and render across a multitude of languages and jurisdictions". Three later statements of the same day add that the code be "efficient and centralized and clean", that the pipeline be flexible, glossed by the owner as having no "hard coded behaviours", and that it have no dead ends (`grep -n -E "^## Owner statement 2026-11-12" references/project-standards.md`).
 
 What stands in the way, in order of harm to the book:
@@ -11,11 +13,11 @@ What stands in the way, in order of harm to the book:
 1. **A determination is computed without regard to the group it is for.** The engine gathers evidence by parameter alone. Fixed by the chain [T-016](tasks/T-016-wp-t1a-reading.md) → [T-017](tasks/T-017-wp-t2-conditions.md) → [T-018](tasks/T-018-link-table.md) → [T-019](tasks/T-019-lens-gather.md).
 2. **Guards that a wrong figure or a misquote should not pass, pass it**: the number check (a figure written in words is now entered as a numeral, by the owner's ruling of 2026-11-12), the quote and name checks outside Latin script, a source admitted with no verification standing. [T-008](tasks/T-008-claimed-number-check.md), [T-009](tasks/T-009-script-aware-guards.md), [T-007](tasks/T-007-add-source-standing.md).
 3. **The mobility group the owner split is still one code**, and most figures sit on it. [T-102](tasks/T-102-mobility-split.md) (owner decision OD-14).
-4. **Nothing exists at render**, so every stage pair ending there has no path. [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md) (owner decisions).
+4. **Nothing exists at render**, so every stage pair ending there has no path. [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md) (its decisions resolved under delegation; still behind the reserved OD-04 through T-036).
 5. **The base is English-shaped and its scope is in no table**: jurisdictions in code, scope unrecorded, forms unattested. [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-101](tasks/T-101-scope-fill.md), [T-028](tasks/T-028-concept-identity.md).
 6. **A step backward leaves no typed cause**: a gap does not say what it is a gap in. [T-013](tasks/T-013-typed-gaps.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-022](tasks/T-022-contract-re-entry.md).
 7. **A source must be re-read for every later parameter, parameters are flat, and synthesis finds nothing.** [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-029](tasks/T-029-term-relations.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md) (owner decisions).
-8. **Text in other languages cannot be compared or discussed together**: nowhere holds a translation. [T-049](tasks/T-049-translation-home.md), [T-112](tasks/T-112-translate-held-text.md) (the owner asked for it on 2026-11-12; the target language is OD-02).
+8. **Text in other languages cannot be compared or discussed together**: nowhere holds a translation. [T-049](tasks/T-049-translation-home.md), [T-112](tasks/T-112-translate-held-text.md) (the owner asked for it on 2026-11-12; the target language, English for display, is resolved under delegation as OD-02).
 
 **Start now:** the tasks of Wave 0 need no owner decision, no design and no earlier wave (section 4). **Then stop for the owner** at the points listed in section 6; the questions are in section 8, each with a one-line answer form.
 
@@ -26,6 +28,10 @@ What stands in the way, in order of harm to the book:
 | `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` | This index: order, dependencies, stop points, the owner decision register, the Definition of Done. |
 | `workplan/2026-11-12-bidirectional-pipeline/tasks/T-<id>-<slug>.md` | One file per task, self-contained. Count them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | grep -v -- -design | wc -l`. Ids are not contiguous (the hundreds are research tasks; unused numbers mean nothing). |
 | `workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md` | The evidence base, requirement by requirement. **Where it differs from `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/fa-corrections-for-suite.md`, the corrections file governs.** One example: its headline that a wrong-group determination "passes every gate" is false; the blocking integrity check stops it for unverified governing sources, though for the wrong reason. |
+| `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-PLAN.md` | The batches, lanes and owner queue, generated from the task files by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`; never hand-edited. |
+| `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS.md` | The delegated resolutions of twenty register decisions, with the independent check's verdicts, the corrections applied, and the build plan (its last section). Not the owner's words. |
+| `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-REVIEW.md` | The independent Opus-class review of OD-01, OD-02, OD-12 and OD-14 (delegation condition (d)). |
+| `workplan/2026-11-12-bidirectional-pipeline/FOLD-LOG.md` | What the fold of the resolutions into this plan changed, file by file; the owner questions it raised; what it could not resolve. |
 | `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/` | The audit: `hs-handshake-matrix.md` (verdict per requirement), `hs-adversarial-findings.md`, `hs-improvement-programme.md` (each IMP entry, the acceptance tests, the final recommendations in §8 and the code-quality, flexibility and dead-end findings in §9), `hs-stress-audit.md` (three rounds of stress tests), `fa-corrections-for-suite.md`. A task file never requires you to open these. |
 | `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/` | The stress scripts and their logs, kept as a characterisation harness (`RETAINED.md` says what is kept and why). |
 
@@ -44,6 +50,8 @@ The seven further suite documents first planned are not written; the owner dropp
 7. **Nothing in this plan loosens a refusal the project holds on purpose.** The two refusals CLAUDE.md §4 says must stay absent stay absent.
 
 ## 3. All tasks
+
+**The Owner decisions column after the delegated pass:** "delegated" means resolved under delegation and read through the ledger gate of section 13, which a task runs before it starts; it is not the owner's answer, and the owner may reverse it at any time, which closes the gate again.
 
 Generated from the task files; regenerate the same view with `grep -h -E "^\| (Task|Wave|Kind|Executor) " workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md`.
 
@@ -67,36 +75,40 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses prose units) | 1 (chain, first) | 2 | TOOLING | Sonnet | T-008 merged (it changes the same writer, and it built what replaces this task's numeral gloss) | none | no |
 | [T-017](tasks/T-017-wp-t2-conditions.md) | The prior workplan's T-2: conditions become branches | 1 (chain) | 2 | TOOLING | Sonnet | T-016 merged | none | no |
 | [T-018](tasks/T-018-link-table.md) | The link table for several codes of one model on a figure | 1 (chain) | 1 | TOOLING | NOT FOR SONNET | T-017 merged; `T-018-design.md` present | none | no |
-| [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | 2 | TOOLING | Sonnet | T-016, T-017, T-018 merged | OD-08 | no |
-| [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | 1-2 | TOOLING | Sonnet | T-010 merged | OD-24 | no |
-| [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | 2 | TOOLING | Sonnet | T-019 merged | OD-21 | no |
-| [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | 1 | TOOLING | Sonnet | T-002, T-012, T-013 merged | OD-18 | no |
+| [T-019](tasks/T-019-lens-gather.md) | The engine gathers by the lens tags on the figure (the prior workplan's T-3) | 1 (chain, last) | 2 | TOOLING | Sonnet | T-016, T-017, T-018 merged | none outstanding (OD-08 resolved under delegation) | no |
+| [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | 1-2 | TOOLING | Sonnet | T-010 merged | none outstanding (OD-24 delegated) | no |
+| [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | 2 | TOOLING | Sonnet | T-019 merged | none outstanding (OD-21 delegated) | no |
+| [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | 1 | TOOLING | Sonnet | T-002, T-012, T-013 merged | none outstanding (OD-18, OD-08 delegated) | no |
 | [T-023](tasks/T-023-ledger-relayed-statements.md) | Enter the relayed statements of 2026-10-12 in the ledger | 2 | 0 | TOOLING | Sonnet | none | OD-28 | no |
-| [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | 1 | TOOLING | Sonnet | none | OD-01 | no |
+| [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | 1 | TOOLING | Sonnet | none | none outstanding (OD-01 delegated) | no |
 | [T-025](tasks/T-025-base-writers.md) | Writers for the base tables a ruled task must write | 3 | 2 | TOOLING | Sonnet | T-024 merged | none | no |
 | [T-026](tasks/T-026-alias-attestation.md) | A form says how it is attested, and a search says which forms it used | 3 | 1-2 | TOOLING | Sonnet | none | none | no |
 | [T-027](tasks/T-027-source-identity-edition.md) | The source's own title, edition and currency can be written | 3 | 2 | TOOLING | Sonnet | none | none | no |
-| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 3 | 1 | TOOLING | NOT FOR SONNET | T-026 merged | OD-03 | no |
+| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 3 | 1 | TOOLING | NOT FOR SONNET | T-026 merged | none outstanding (OD-03 delegated) | no |
 | [T-029](tasks/T-029-term-relations.md) | Typed pointers between terms | 4 | 1 | TOOLING | Sonnet | T-020 merged | none | no |
-| [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | 1-2 | TOOLING | Sonnet | T-016, T-020 merged | OD-22 | no |
+| [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | 1-2 | TOOLING | Sonnet | T-016, T-020 merged | none outstanding (OD-22, OD-24 delegated) | no |
 | [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 4 | 1-2 | TOOLING | NOT FOR SONNET | T-019 merged | OD-23 | no |
-| [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | 1 | TOOLING | NOT FOR SONNET | T-029 merged | OD-07, OD-25, OD-19, OD-29 | no |
+| [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | 1 | TOOLING | NOT FOR SONNET | T-029, T-050 merged | none outstanding (OD-07, OD-12, OD-25, OD-29 delegated; OD-19 moved to T-053) | no |
 | [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | 2 | TOOLING | Sonnet | T-029, T-030 merged | none | no |
 | [T-034](tasks/T-034-cell-status-verb.md) | One read-only answer for a cell at every stage | 4 | 2 | TOOLING | Sonnet | T-013 merged | none | no |
 | [T-035](tasks/T-035-skills-repair.md) | Skills that describe the database that exists | 4 | 2 | TOOLING | Sonnet | none for token corrections | none | no |
-| [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | 1 | TOOLING | Sonnet | T-024 merged; T-101 merged | OD-01 | no |
-| [T-037](tasks/T-037-render.md) | Render from the database | 5 | 2 | TOOLING | NOT FOR SONNET | T-019, T-036 merged | OD-02, OD-08, OD-12, OD-30 | no |
-| [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | 0 | TOOLING | Sonnet | T-037 merged (a render view mapped to the render stage) | OD-26 | no |
-| [T-039](tasks/T-039-owner-edits.md) | The owner's edits as proposals through the write path | 5 | 2 | TOOLING | NOT FOR SONNET | T-037 merged | OD-20 | no |
+| [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | 1 | TOOLING | Sonnet | T-024 merged; T-101 merged | none outstanding (OD-01 delegated; OD-04 reaches it through T-101) | no |
+| [T-037](tasks/T-037-render.md) | Render from the database | 5 | 2 | TOOLING | NOT FOR SONNET | T-019, T-032, T-036, T-049 merged | none outstanding (OD-02, OD-08, OD-12, OD-30 delegated) | no |
+| [T-038](tasks/T-038-stage-pair-gate.md) | Register the stage-pair gate | 5 | 0 | TOOLING | Sonnet | T-037 merged (a render view mapped to the render stage) | none outstanding (OD-26 delegated: wait) | no |
+| [T-039](tasks/T-039-owner-edits.md) | The owner's edits as proposals through the write path | 5 | 2 | TOOLING | NOT FOR SONNET | T-021, T-037 merged | none outstanding (OD-20 delegated) | no |
 | [T-040](tasks/T-040-deletion-candidates-sweep.md) | Caller sweep for the deletion candidates | 5 | 2 | TOOLING | Sonnet | T-013, T-032 merged | none | no |
 | [T-041](tasks/T-041-one-home-for-helpers.md) | One home for helpers defined twice | 0 (now) | 2 | TOOLING | Sonnet | T-014 merged (the harness is the proof) | none | no |
 | [T-042](tasks/T-042-derive-choices-and-counts.md) | Counts in the registry as commands, and one Layer 0 measure corrected | 0 (now) | 0-2 | TOOLING | Sonnet | none | none | no |
 | [T-043](tasks/T-043-refusals-name-next-action.md) | Every refusal says what to do next | 0 (now) | 2 | TOOLING | Sonnet | T-014 merged | none | no |
 | [T-047](tasks/T-047-add-by-data-test.md) | A durable test that the base changes by data alone | 3 (end) | 0 | TOOLING | Sonnet | T-015, T-020, T-024, T-025, T-029 merged | none | no |
 | [T-048](tasks/T-048-root-registry-writer.md) | A writer for the root registry | 2 | 2 | TOOLING | Sonnet | none | none | no |
-| [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | 1-2 | TOOLING | Sonnet | T-008 merged (the fidelity rule uses its number reader) | none | no |
+| [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | 1-2 | TOOLING | Sonnet | T-008 merged (the fidelity rule uses its number reader) | none (OD-30 delegated: the review rule) | no |
+| [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | Admission edges and connections retire in place instead of being deleted | 2 | 2 | TOOLING | Sonnet | T-006 merged | none outstanding (OD-29 delegated) | no |
+| [T-051](tasks/T-051-gap-register-cross-stage.md) | The gap register is marked cross-stage in the stage map | 0 (now) | 1 | TOOLING | Sonnet | none | none outstanding (OD-11 delegated) | no |
+| [T-052](tasks/T-052-mining-stages-out-of-scope-leads.md) | Mining stages an out-of-scope source as a lead | 0 (now) | 2 | TOOLING | Sonnet | none | none outstanding (OD-05 delegated) | no |
+| [T-053](tasks/T-053-engine-conflict-between-groups.md) | Conflict between groups in the engine | 4 | 2 | TOOLING | NOT FOR SONNET | T-032 merged | OD-19 (the owner's) | no |
 | [T-101](tasks/T-101-scope-fill.md) | Record the research scope on every pair | research | 3 | RESEARCH | Sonnet | T-025 merged | OD-04 | no |
-| [T-102](tasks/T-102-mobility-split.md) | Execute the mobility split | research | 3 | RESEARCH | NOT FOR SONNET | T-018, T-025 merged | OD-14 | no |
+| [T-102](tasks/T-102-mobility-split.md) | Execute the mobility split | research | 3 | RESEARCH | NOT FOR SONNET | T-018, T-025 merged | OD-14 — the owner's words only (the delegated resolution was withdrawn) | no |
 | [T-103](tasks/T-103-medical-lens.md) | Fill the medical lens by correspondence | research | 3 | RESEARCH | NOT FOR SONNET | none (`add-medical` exists) | OD-15 | no |
 | [T-104](tasks/T-104-verify-governing-sources.md) | Verify the sources a first determination would rest on | research | 3 | RESEARCH | Sonnet | none | none | no |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | 3 | RESEARCH | NOT FOR SONNET | T-008, T-009, T-016 merged; T-031 if OD-23 chose an inventory | none | no |
@@ -106,11 +118,12 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | 3 | RESEARCH | NOT FOR SONNET | T-020 merged | none | no |
 | [T-110](tasks/T-110-first-determinations.md) | First live determinations | research | 3 | RESEARCH | NOT FOR SONNET | T-019, T-102, T-104 merged | none | no |
 | [T-111](tasks/T-111-as-written-wording-for-stored-rows.md) | Bring the two stored spelled-out figures into line | research | 3 | RESEARCH | Sonnet | T-008 merged | none | no |
-| [T-112](tasks/T-112-translate-held-text.md) | Translate the held non-English text that synthesis needs | research | 3 | RESEARCH | NOT FOR SONNET | T-049 merged | OD-02, OD-30 | no |
+| [T-112](tasks/T-112-translate-held-text.md) | Translate the held non-English text that synthesis needs | research | 3 | RESEARCH | Sonnet (drafting); a review verdict is Opus-class | T-049 merged | none outstanding (OD-02, OD-30 delegated) | no |
+| [T-113](tasks/T-113-file-sub-national-instruments.md) | File the four held sub-national instruments under their own codes | research | 3 | RESEARCH | Sonnet | T-024 merged | none outstanding (OD-01 delegated) | no |
 
 ## 4. Wave 0: what can start now
 
-**No owner decision, no design, no earlier wave.** The set, by command: `grep -l "^| Wave | 0 (now) |" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md`. Today that is: [T-001](tasks/T-001-layer0-marks-and-text.md), [T-002](tasks/T-002-contract-entry-text.md), [T-003](tasks/T-003-owner-queue-answered-marks.md), [T-004](tasks/T-004-spec-checks-report-live-rows.md), [T-005](tasks/T-005-retired-row-view-fixture.md), [T-006](tasks/T-006-delete-connection-refusal.md), [T-007](tasks/T-007-add-source-standing.md), [T-008](tasks/T-008-claimed-number-check.md), [T-009](tasks/T-009-script-aware-guards.md), [T-010](tasks/T-010-add-parameter-domain-refusal.md), [T-011](tasks/T-011-supersession-pointer.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-013](tasks/T-013-typed-gaps.md), [T-014](tasks/T-014-stress-harness-and-probes.md), [T-015](tasks/T-015-language-fold.md), [T-041](tasks/T-041-one-home-for-helpers.md), [T-042](tasks/T-042-derive-choices-and-counts.md), [T-043](tasks/T-043-refusals-name-next-action.md).
+**No owner decision, no design, no earlier wave.** The set, by command: `grep -l "^| Wave | 0 (now) |" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md`. Today that is: [T-001](tasks/T-001-layer0-marks-and-text.md), [T-002](tasks/T-002-contract-entry-text.md), [T-003](tasks/T-003-owner-queue-answered-marks.md), [T-004](tasks/T-004-spec-checks-report-live-rows.md), [T-005](tasks/T-005-retired-row-view-fixture.md), [T-006](tasks/T-006-delete-connection-refusal.md), [T-007](tasks/T-007-add-source-standing.md), [T-008](tasks/T-008-claimed-number-check.md), [T-009](tasks/T-009-script-aware-guards.md), [T-010](tasks/T-010-add-parameter-domain-refusal.md), [T-011](tasks/T-011-supersession-pointer.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-013](tasks/T-013-typed-gaps.md), [T-014](tasks/T-014-stress-harness-and-probes.md), [T-015](tasks/T-015-language-fold.md), [T-041](tasks/T-041-one-home-for-helpers.md), [T-042](tasks/T-042-derive-choices-and-counts.md), [T-043](tasks/T-043-refusals-name-next-action.md), [T-051](tasks/T-051-gap-register-cross-stage.md), [T-052](tasks/T-052-mining-stages-out-of-scope-leads.md) (the last two added by the delegated pass).
 
 **Merge order** (one at a time; the reason is in brackets):
 
@@ -131,7 +144,9 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 15. [T-002](tasks/T-002-contract-entry-text.md) (the contract; after T-001, same file)
 16. [T-042](tasks/T-042-derive-choices-and-counts.md) (the registry and one CLAUDE.md sentence; after T-001, same file)
 17. [T-003](tasks/T-003-owner-queue-answered-marks.md) (the owner queue)
-18. [T-043](tasks/T-043-refusals-name-next-action.md) (last: by then the new refusals of T-006, T-007, T-008 and T-010 exist and must also name a next action)
+18. [T-051](tasks/T-051-gap-register-cross-stage.md) (the stage map; run the walkability instrument before and after)
+19. [T-052](tasks/T-052-mining-stages-out-of-scope-leads.md) (two skills; no code)
+20. [T-043](tasks/T-043-refusals-name-next-action.md) (last: by then the new refusals of T-006, T-007, T-008 and T-010 exist and must also name a next action)
 
 **What may be drafted side by side** (files touched decide it; merge is still one at a time):
 
@@ -141,7 +156,7 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | Engine | T-011, T-013, T-041 | `scripts/assess/assess_cell.py` |
 | Schema | T-012, T-013, T-015 | the next migration number (derived at execution time, again after each merge) |
 | Layer 0 text | T-001, T-002, T-042, T-003 | `CLAUDE.md`, `governance/pipeline-contract.yaml`, `governance/check-registry.yaml` |
-| Independent | T-004, T-005, T-014 | nothing with the others |
+| Independent | T-004, T-005, T-014, T-051, T-052 | nothing with the others |
 
 **Also free of any precondition, placed later only for order:** [T-026](tasks/T-026-alias-attestation.md) (tooling), [T-027](tasks/T-027-source-identity-edition.md) (tooling), [T-035](tasks/T-035-skills-repair.md) (tooling), [T-048](tasks/T-048-root-registry-writer.md) (tooling), [T-104](tasks/T-104-verify-governing-sources.md) (research). Any of them may be pulled forward. By command: `grep -L "Owner decisions that must be answered first" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md | xargs grep -l "merged to .main. first:\*\* none" | xargs grep -L "NOT FOR SONNET"`.
 
@@ -151,16 +166,16 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 
 [T-014](tasks/T-014-stress-harness-and-probes.md) → [T-008](tasks/T-008-claimed-number-check.md) → [T-016](tasks/T-016-wp-t1a-reading.md) → [T-017](tasks/T-017-wp-t2-conditions.md) → [T-018](tasks/T-018-link-table.md) → [T-019](tasks/T-019-lens-gather.md) → { [T-104](tasks/T-104-verify-governing-sources.md), [T-102](tasks/T-102-mobility-split.md), [T-106](tasks/T-106-retag-lenses.md) } → [T-110](tasks/T-110-first-determinations.md).
 
-Two links on it are not Sonnet's to start: T-018 needs a one-page design from the Fable agent, and T-102 needs the owner's answer to OD-14 and an Opus-class session.
+Two links on it are not Sonnet's to start: T-018 needs a one-page design from the Fable agent, and T-102 needs the owner's answer to OD-14 (in the owner's words: the delegated resolution was withdrawn on review) and an Opus-class session.
 
 | Wave | Purpose | Tasks | Order inside the wave |
 |---|---|---|---|
 | 1 | the lens chain and the parameter kind | [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-020](tasks/T-020-quantity-kind.md) | Serial: T-016, T-017, T-018, T-019. T-020 beside them once OD-24 is answered. |
-| 2 | carriers for going back, and for translation | [T-021](tasks/T-021-cell-question-gate.md), [T-022](tasks/T-022-contract-re-entry.md), [T-023](tasks/T-023-ledger-relayed-statements.md), [T-048](tasks/T-048-root-registry-writer.md), [T-049](tasks/T-049-translation-home.md) | T-048 any time; T-049 after T-008; T-021, T-022, T-023 as their answers arrive. |
+| 2 | carriers for going back, and for translation | [T-021](tasks/T-021-cell-question-gate.md), [T-022](tasks/T-022-contract-re-entry.md), [T-023](tasks/T-023-ledger-relayed-statements.md), [T-048](tasks/T-048-root-registry-writer.md), [T-049](tasks/T-049-translation-home.md), [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | T-048 any time; T-049 after T-008; T-050 after T-006; T-021 after T-019; T-022 after its three; T-023 on the owner's OD-28. |
 | 3 | a base that is data | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-027](tasks/T-027-source-identity-edition.md), [T-028](tasks/T-028-concept-identity.md), [T-047](tasks/T-047-add-by-data-test.md) | T-024 then T-025; T-026 and T-027 any time; T-028 after OD-03; T-047 last. |
-| 4 | reading once, abstraction, synthesis | [T-029](tasks/T-029-term-relations.md), [T-030](tasks/T-030-units-as-data.md), [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md), [T-034](tasks/T-034-cell-status-verb.md), [T-035](tasks/T-035-skills-repair.md) | T-034 after T-013; T-035 any time; T-029 after T-020; T-030, T-031, T-032 after their answers; T-033 after T-029 and T-030. |
+| 4 | reading once, abstraction, synthesis | [T-029](tasks/T-029-term-relations.md), [T-030](tasks/T-030-units-as-data.md), [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md), [T-034](tasks/T-034-cell-status-verb.md), [T-035](tasks/T-035-skills-repair.md), [T-053](tasks/T-053-engine-conflict-between-groups.md) | T-034 after T-013; T-035 any time; T-029 after T-020; T-030, T-031, T-032 after their answers; T-033 after T-029 and T-030. T-053 after T-032 and the owner's OD-19. |
 | 5 | render and the gate over it | [T-036](tasks/T-036-jurisdiction-comparison-view.md), [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-039](tasks/T-039-owner-edits.md), [T-040](tasks/T-040-deletion-candidates-sweep.md) | T-036 after T-024 and T-101; T-037 after its three answers; T-038 after T-037; T-039; T-040. |
-| research | rows, each in its own pull request | [T-101](tasks/T-101-scope-fill.md), [T-102](tasks/T-102-mobility-split.md), [T-103](tasks/T-103-medical-lens.md), [T-104](tasks/T-104-verify-governing-sources.md), [T-105](tasks/T-105-read-held-sources.md), [T-106](tasks/T-106-retag-lenses.md), [T-107](tasks/T-107-attest-forms.md), [T-108](tasks/T-108-unit-condition-repair.md), [T-109](tasks/T-109-parameter-kinds-data.md), [T-110](tasks/T-110-first-determinations.md), [T-111](tasks/T-111-as-written-wording-for-stored-rows.md), [T-112](tasks/T-112-translate-held-text.md) | T-104 is ungated; T-111 follows T-008 and T-108 follows T-016; the rest wait for tooling, an answer, or an Opus-class session. |
+| research | rows, each in its own pull request | [T-101](tasks/T-101-scope-fill.md), [T-102](tasks/T-102-mobility-split.md), [T-103](tasks/T-103-medical-lens.md), [T-104](tasks/T-104-verify-governing-sources.md), [T-105](tasks/T-105-read-held-sources.md), [T-106](tasks/T-106-retag-lenses.md), [T-107](tasks/T-107-attest-forms.md), [T-108](tasks/T-108-unit-condition-repair.md), [T-109](tasks/T-109-parameter-kinds-data.md), [T-110](tasks/T-110-first-determinations.md), [T-111](tasks/T-111-as-written-wording-for-stored-rows.md), [T-112](tasks/T-112-translate-held-text.md), [T-113](tasks/T-113-file-sub-national-instruments.md) | T-104 is ungated; T-111 follows T-008 and T-108 follows T-016; the rest wait for tooling, an answer, or an Opus-class session. T-113 follows T-024. |
 
 **Dependency list** (a task on the left needs every task on the right merged; generated from the task files):
 
@@ -168,31 +183,35 @@ Two links on it are not Sonnet's to start: T-018 needs a one-page design from th
 T-016 <- T-008
 T-017 <- T-016
 T-018 <- T-017; plus the design file from the Fable agent
-T-019 <- T-016, T-017, T-018   [owner: OD-08, for one sub-case only]
-T-020 <- T-010   [owner: OD-24]
-T-021 <- T-019   [owner: OD-21]
-T-022 <- T-002, T-012, T-013   [owner: OD-18]
+T-019 <- T-016, T-017, T-018   [delegated: OD-08]
+T-020 <- T-010   [delegated: OD-24]
+T-021 <- T-019   [delegated: OD-21]
+T-022 <- T-002, T-012, T-013   [delegated: OD-18, OD-08]
 T-023 <- (no task)   [owner: OD-28]
-T-024 <- (no task)   [owner: OD-01, for sub-national rows only]
+T-024 <- (no task)   [delegated: OD-01]
 T-025 <- T-024
-T-028 <- T-026   [owner: OD-03]
+T-028 <- T-026   [delegated: OD-03]
 T-029 <- T-020
-T-030 <- T-016, T-020   [owner: OD-22]
+T-030 <- T-016, T-020   [delegated: OD-22, OD-24]
 T-031 <- T-019   [owner: OD-23]
-T-032 <- T-029   [owner: OD-07, OD-25, OD-19, OD-29]
+T-032 <- T-029, T-050   [delegated: OD-07, OD-12, OD-25, OD-29]
 T-033 <- T-029, T-030
 T-034 <- T-013
-T-036 <- T-024, T-101   [owner: OD-01]
-T-037 <- T-019, T-036   [owner: OD-02, OD-08, OD-12, OD-30]
-T-038 <- T-037   [owner: OD-26, only if an interim gate is wanted]
-T-039 <- T-037   [owner: OD-20]
+T-036 <- T-024, T-101   [delegated: OD-01; OD-04 through T-101]
+T-037 <- T-019, T-032, T-036, T-049   [delegated: OD-02, OD-08, OD-12, OD-30]
+T-038 <- T-037   [delegated: OD-26 (wait)]
+T-039 <- T-021, T-037   [delegated: OD-20]
 T-040 <- T-013, T-032
 T-041 <- T-014
 T-043 <- T-014
 T-047 <- T-015, T-020, T-024, T-025, T-029
-T-049 <- T-008
+T-049 <- T-008   [delegated: OD-30]
+T-050 <- T-006   [delegated: OD-29]
+T-051 <- (no task)   [delegated: OD-11]
+T-052 <- (no task)   [delegated: OD-05]
+T-053 <- T-032   [owner: OD-19]
 T-101 <- T-025   [owner: OD-04]
-T-102 <- T-018, T-025; an Opus-class session   [owner: OD-14]
+T-102 <- T-018, T-025; an Opus-class session   [owner: OD-14, in the owner's words; the delegated resolution was withdrawn]
 T-103 <- (no task)   [owner: OD-15]
 T-105 <- T-008, T-009, T-016, T-031 (T-031 only if OD-23 chooses a clause inventory)
 T-106 <- T-019
@@ -201,7 +220,8 @@ T-108 <- T-008, T-016
 T-109 <- T-020
 T-110 <- T-019, T-102, T-104; the blocking battery green on the scratch copy; an Opus-class session
 T-111 <- T-008
-T-112 <- T-049   [owner: OD-02, OD-30]
+T-112 <- T-049   [delegated: OD-02, OD-30]
+T-113 <- T-024   [delegated: OD-01]
 ```
 
 ## 6. Stop points
@@ -209,16 +229,13 @@ T-112 <- T-049   [owner: OD-02, OD-30]
 | When | Who is waited for | What for | What can continue meanwhile |
 |---|---|---|---|
 | Before T-018 | the Fable implementation agent | the one-page design of the link table (`tasks/T-018-design.md`) | all of Wave 0; T-016, T-017; T-048, T-026, T-027, T-035 |
-| Inside T-019 | the owner (OD-08) | one sub-case only: a relevant lens with no figure | the ruled part of T-019 is built without it |
-| Before T-020, and so T-029, T-030, T-047, T-109 | the owner (OD-24) | quantity kinds; parameter granularity | everything not listed |
-| Before T-101, and so T-036 | the owner (OD-04) | what the scope answer covers | T-024, T-025 (the writers) |
-| Before T-102, and so T-110 | the owner (OD-14), then an Opus-class session | carrying rows written under `MOB` | T-104, T-106 after T-019 |
+| Before T-101, and so T-036, T-037, T-038, T-039 | the owner (OD-04) | what the scope answer covers, including whether a sub-national instrument owes coverage | T-024, T-025, T-113 (the writers and the re-filing) |
+| Before T-102, and so T-110 | the owner (OD-14, in the owner's words, with GAP-076), then an Opus-class session | carrying rows written under `MOB` | T-104, T-106 after T-019 (no mobility codes) |
 | Before T-031 | the owner (OD-23) | how a later parameter reaches a source already read | T-105 on sources whose text is held |
-| Before T-032 | the owner (OD-07, OD-25, OD-19, OD-29) | what synthesis records | T-029 and T-033, once OD-24 has released T-020 |
-| Before T-037, and so T-038, T-039 | the owner (OD-02, OD-08, OD-12, OD-30; OD-20 for T-039) | render | every earlier wave |
-| Before T-112 | the owner (OD-02 for the target language, OD-30 for who translates) | translating held text | T-049 (the home for translations) needs neither |
+| Before T-053 | the owner (OD-19) | conflict between groups in the engine | everything else, T-032 included |
 | Before T-110 | the blocking battery, green on the scratch copy, the integrity test included | a first live determination | — |
 | At the end of every wave | the owner | the wave's lines of the Definition of Done (section 10), run and reported; `python3 workplan/pipeline-state-graph/walkability.py` run as a command until T-038 registers it | — |
+| Whenever a task's delegation gate prints CLOSED | the owner, or the correction that closed it | the decision that gate reads (section 13) | every task whose gates are OPEN |
 | At any time | the owner | anything touching mission, audience, CRPD posture, population taxonomy, evidence-tier definitions, jurisdiction scope, licensing or trajectory | — |
 
 ## 7. Three tracks across the waves
@@ -247,12 +264,15 @@ A deliberate refusal is not a dead end and is not loosened: one research batch a
 
 ## 8. Owner decision register
 
+**Status after the delegated pass (2026-11-12).** Each entry below now opens with its status. Eighteen are **RESOLVED UNDER DELEGATION** (an Opus-class model's resolution under the owner's delegation, not the owner's words, reversible by the owner); OD-10 and OD-14 are **REFERRED BACK** to the owner; nine are **still the owner's**. A task no longer checks `grep -n -F "OD-NN:"`, which a delegated, a withdrawn and an owner's line all satisfied alike: it runs the ledger gate of section 13, which is OPEN only for an owner's answer, or for a delegated resolution whose independent check is not required or is recorded as confirmed. A task that needs the owner's words (T-102, T-053) opens only on an owner's answer. The rest of this register is as first written, so "Recommendation (the audit's …)" and "Tasks blocked until answered" describe the state before the pass; the status line says what holds now.
+
 Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recommendation is labelled as one. To answer, the owner says one of the answer forms; the session that hears it appends it to `references/project-standards.md` in the ledger's form, quoting the owner, so that the line `OD-NN: …` can be found by `grep -n -F "OD-NN:" references/project-standards.md`. A task checks for exactly that. OD-16 was withdrawn (it was answered on the record). Count the entries: `grep -c "^### OD-" workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`.
 
-**Which answers release the most work:** OD-24 (T-020 and everything behind it), OD-04 (scope), OD-14 (the mobility split, which the first determinations wait on), OD-02 with OD-08 and OD-12 (render), OD-23 (reading once). These ids belong to this plan; an older series with the same letters appears in `decisions/` and is unrelated.
+**Which answers release the most work (after the delegated pass):** OD-04 (scope: T-101 and, through T-036, render), OD-14 (the mobility split, which the first determinations wait on), OD-23 (reading once), OD-19 (T-053). The earlier list named OD-24, OD-02, OD-08 and OD-12, which are now resolved under delegation. These ids belong to this plan; an older series with the same letters appears in `decisions/` and is unrelated.
 
 ### OD-01  Jurisdiction in a determination; jurisdictions below the country; climate and culture
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check (condition (d)) recorded as confirmed with corrections applied, `grep -n -F "Correction 2026-11-12 — to the delegated resolution of OD-01" references/project-standards.md`. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-01" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-01. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-024, T-036, T-113 (and T-037 through T-036).
 - **Question.** Is there one determination per parameter and group, with the jurisdictions shown beside it as a spread, or one determination per jurisdiction? Is a province, state or region a jurisdiction of its own? Are climate and cultural context recorded as typed conditions?
 - **Why it is the owner's.** Jurisdiction scope and the shape of the book's central claim are doctrine. The ledger holds no ruling on the cell key carrying a jurisdiction.
 - **Options and what follows from each.**
@@ -267,6 +287,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-02  The language of a page, and how a translated quotation is shown
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check (condition (d)) recorded as confirmed with corrections applied, `grep -n -F "Correction 2026-11-12 — to the delegated resolution of OD-02" references/project-standards.md`. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-02" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-02. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-037, T-112.
 - **Question.** **Narrowed on 2026-11-12.** The owner said "probably at synthesis or whatever we need to actually translate everything" (`grep -n -F "actually translate everything" references/project-standards.md`): quotations may be translated, and that part is no longer asked. Still open: which language or languages a page is written in (and so which language held text is translated into), and how a translated quotation is shown beside its original on a page.
 - **Why it is the owner's.** Audience and the reading surface are doctrine. The ninth statement leaves the target language to the owner and does not relax two standing rules: a model's wording is never presented as a source's term, and English is not the pivot that decides which concepts exist.
 - **Options and what follows from each.**
@@ -280,6 +301,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-03  A concept that has no English name
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-03" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-03. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-028.
 - **Question.** How is a concept held when it was first met in another language and has no settled English name? (Unaffected by the owner's statement of 2026-11-12 on translation: a translation is an aid attached to held text and never mints or names a concept.)
 - **Why it is the owner's.** It changes the base vocabulary's identity rule, which every stage points into; the ledger records the schema decision as open.
 - **Options and what follows from each.**
@@ -293,6 +315,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-04  What the scope answer of 2026-10-30 covers
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** T-101; through it T-036, T-037, T-038, T-039 and every coverage reading; and whether a sub-national instrument owes coverage (the OD-01 correction).
 - **Question.** The owner answered "Yes it is P1+P2+P3" and "do not include countries outside of the major identified countries for now" about the specification page. Does that answer also set the research scope and the base's languages? Is the set recorded in the ledger as an assumption the set meant? Is `UN` in? Are script and regional variants separate pairs?
 - **Why it is the owner's.** Jurisdiction scope is doctrine. The set written into the ledger is marked there as the assistant's assumption.
 - **Options and what follows from each.**
@@ -306,6 +329,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-05  Evidence from outside the scope that citation mining surfaces
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-05" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-05. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-052, T-105.
 - **Question.** When mining a confirmed source turns up evidence from a jurisdiction outside the scope, is it admitted, staged as a lead, or refused?
 - **Why it is the owner's.** Jurisdiction scope; and admitting it changes what the book rests on.
 - **Options and what follows from each.**
@@ -319,6 +343,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-06  Which stage assigns the lenses
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-06" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-06. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-106.
 - **Question.** Does "evidence stage" in the owner's list of 2026-11-06 mean evidence and judgment together, so that judgment assigns the lens codes?
 - **Why it is the owner's.** It is a reading of the owner's own words; population taxonomy.
 - **Options and what follows from each.**
@@ -331,6 +356,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-07  What one synthesis row is
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-07" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-07. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-032.
 - **Question.** Is synthesis a step inside the engine, or a separable stage whose rows a determination points at?
 - **Why it is the owner's.** It fixes what the synthesis stage holds, which is the spine the owner ruled.
 - **Options and what follows from each.**
@@ -343,6 +369,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-08  What an absent cell means
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-08" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-08. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-019, T-022, T-037.
 - **Question.** A cell with no determination may be not relevant, not yet researched, or researched and empty. Is any of these stored as a determination row?
 - **Why it is the owner's.** It decides what a reader is told about absence, which is the book's honesty about its gaps.
 - **Options and what follows from each.**
@@ -355,6 +382,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-09  What "dynamically" may do unattended
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** no task; it governs how `/run-pipeline` is invoked.
 - **Question.** May a run be started and carried through stages without the owner present, and is the request recorded as a row?
 - **Why it is the owner's.** Trajectory and the owner's control of the project.
 - **Options and what follows from each.**
@@ -367,6 +395,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-10  `provisional`: strength of evidence, or a re-read owed
 
+- **Status (2026-11-12): REFERRED BACK TO THE OWNER** (first delegated pass). Two owner statements give `provisional` two meanings (2026-09-09 evening: computed from tier arithmetic; 2026-10-30: "provisional means that we have to go back and review the source again"), and either option overrides one; see `DELEGATED-RESOLUTIONS.md`, section OD-10, for a reading offered to the owner. **Blocks now:** no task; T-022 writes the B11 edge with a follow-up row and leaves `provisional` alone.
 - **Question.** Does `provisional` mean the evidence is thin, or that a reading is still owed?
 - **Why it is the owner's.** It is the meaning of a cell state a reader sees.
 - **Options and what follows from each.**
@@ -379,6 +408,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-11  Which stage owns the gap register
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-11" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-11. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-051.
 - **Question.** Is the gap register a research table, or a cross-stage register written by whichever stage finds the gap?
 - **Why it is the owner's.** Stage assignment follows the owner's spine.
 - **Options and what follows from each.**
@@ -391,6 +421,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-12  How render's prose is produced, and whether it is stored
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check (condition (d)) recorded as confirmed with corrections applied, `grep -n -F "Correction 2026-11-12 — to the delegated resolution of OD-12" references/project-standards.md`. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-12" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-12. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-032, T-037, T-003 (the queue mark).
 - **Question.** Are page sentences produced from fixed templates over typed rows, or written? Is the rendered table stored or rebuilt? (The owner queue's OW-1b and OW-1c.)
 - **Why it is the owner's.** Mission: the book is a thinking tool and not an authority; who writes its sentences is the owner's.
 - **Options and what follows from each.**
@@ -403,6 +434,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-13  The "at least nine languages" rule of March 2026
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** no task.
 - **Question.** Is that rule superseded by the later rulings that count language and jurisdiction pairs?
 - **Why it is the owner's.** Only the owner retires an owner rule where the later ruling does not name it.
 - **Options and what follows from each.**
@@ -415,6 +447,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-14  Carrying the rows written under `MOB` since the split was ratified
 
+- **Status (2026-11-12): WITHDRAWN, REFERRED BACK TO THE OWNER** (independent review). The delegated resolution rested on treating the 2026-08-25 ruling as lapsed, which the delegation reserves, and it presupposed GAP-076 (MOB or ALL). The one-line question for the owner and the narrower version the review found sound: `grep -n -F "Correction 2026-11-12 — to the delegated resolution of OD-14" references/project-standards.md`. **Blocks now:** T-102, and through it T-110; T-106 leaves the mobility codes alone. Opens only on `OD-14 STATUS: ANSWERED BY THE OWNER`.
 - **Question.** The split of the mobility group into ambulant people and wheelchair users is ratified and unexecuted. How are the figures and grades written under `MOB` since then carried, and how are part-time wheelchair users named in a gap?
 - **Why it is the owner's.** Population taxonomy.
 - **Options and what follows from each.**
@@ -428,6 +461,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-15  Filling the medical lens
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** T-103.
 - **Question.** Is the medical lens filled by correspondence as the corrected ruling says, and on what terms given the WHO licence?
 - **Why it is the owner's.** Population taxonomy and licensing.
 - **Options and what follows from each.**
@@ -440,6 +474,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-17  Ratify the corrected pipeline contract
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** no task.
 - **Question.** After the entry texts are corrected (T-002) and the re-entry conditions added (T-022), does the owner ratify the contract as corrected?
 - **Why it is the owner's.** Ratification is the owner's act.
 - **Options and what follows from each.**
@@ -452,6 +487,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-18  What "all directions" covers
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-18" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-18. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-022.
 - **Question.** Are the cold-entry and re-entry conditions for judgment, synthesis, specification and render, as listed in the top-down specification, the conditions the owner means? May an earlier stage's row be updated to record later use?
 - **Why it is the owner's.** The conditions are an inference from the owner's objective, not the owner's words.
 - **Options and what follows from each.**
@@ -464,6 +500,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-19  Conflict between groups in the engine
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** T-053 (the engine part, split from T-032).
 - **Question.** Harm asymmetry and broadest benefit are doctrine the engine does not apply. Does the engine apply a rule, or only record the conflict and the rule a person applied?
 - **Why it is the owner's.** CRPD posture and the weighing of one group's harm against another's benefit.
 - **Options and what follows from each.**
@@ -476,6 +513,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-20  The owner's edits
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-20" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-20. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-039.
 - **Question.** Are the owner's changes to a value made as proposals applied through the write path?
 - **Why it is the owner's.** It is the owner's own tool.
 - **Options and what follows from each.**
@@ -488,6 +526,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-21  A question about a published cell
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-21" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-21. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-021.
 - **Question.** Is a reader's or the owner's objection to a published value recorded in the database, flagging the cell?
 - **Why it is the owner's.** Audience, and what the book admits about itself.
 - **Options and what follows from each.**
@@ -500,6 +539,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-22  Rounding direction for converted lengths, and the other open prompts
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-22" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-22. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-030, T-003 (the queue mark).
 - **Question.** When a minimum or a maximum is converted between units, which way is it rounded (the owner queue's OR-10b)? And each other prompt the queue still shows as open.
 - **Why it is the owner's.** A rounding rule changes published values.
 - **Options and what follows from each.**
@@ -512,6 +552,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-23  How a parameter defined later reaches a source already read
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** T-031; T-105 where an inventory is chosen.
 - **Question.** The owner asked that a source be read once. When a new parameter is defined, how does it reach the sources already read: by re-reading, by sweeping retained text, or by matching a stored inventory of clauses? May held clause text be shown?
 - **Why it is the owner's.** Licensing (holding and showing a standard's text) and trajectory (cost of every later parameter).
 - **Options and what follows from each.**
@@ -525,6 +566,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-24  How coarse a parameter is, and its quantity kinds
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-24" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-24. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-020, T-030, T-047, T-109.
 - **Question.** Is a parameter one measured quantity of an element with every clause variation a typed condition, a hierarchy, or fine-grained with groups above? What are the kinds of quantity, and must a parameter belong to an element?
 - **Why it is the owner's.** It decides what the book can unify and what divergence it can show; the owner raised it directly.
 - **Options and what follows from each.**
@@ -538,6 +580,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-25  Which relations synthesis records, and who may judge them
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-25" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-25. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-032.
 - **Question.** The owner named equivalencies, adjacencies, similarities and commonalities. Which relation kinds are recorded, and which class of model may judge one?
 - **Why it is the owner's.** It is the vocabulary of the book's discussion; the capability floor is an owner rule.
 - **Options and what follows from each.**
@@ -550,6 +593,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-26  An interim stage-pair gate before render exists
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-26" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-26. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-038.
 - **Question.** The ruled gate fails on any stage pair with no path, and every pair ending at render has none until render exists. Is an interim gate wanted meanwhile?
 - **Why it is the owner's.** It would add a stored baseline of today's paths, a curated list of the kind the project's rules forbid; only the owner can accept that.
 - **Options and what follows from each.**
@@ -562,6 +606,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-27  Are parallel research batches wanted?
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** no task.
 - **Question.** Two research batches drafted from the same base cannot both land: the second is refused at capture and must be redone from the new `main`. Is that acceptable, or must batches run in parallel?
 - **Why it is the owner's.** Trajectory: it sets how fast research can go and how much tooling is worth building for it.
 - **Options and what follows from each.**
@@ -574,6 +619,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-28  The wording of the statements relayed on 2026-10-12
 
+- **Status (2026-11-12): still the owner's** (reserved by the delegation of 2026-11-12; no delegated resolution exists or may be written). **Blocks now:** T-023.
 - **Question.** Eight owner sentences (O1 to O8) are quoted in a design file as relayed. Does the owner confirm the wording, so that they can be entered in the ledger?
 - **Why it is the owner's.** Only the owner can say what the owner said.
 - **Options and what follows from each.**
@@ -586,6 +632,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-29  Does retire-in-place cover link rows?
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-29" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-29. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-050, T-032, T-006 (its note).
 - **Question.** The owner ruled "retire in place, never hard-delete" for data rows and identifiers. Two verbs still delete: `delete-connection` (a connection and its targets) and `unlink-admission` (the edge between a search and a source it admitted, built later with a sanctioned capture of the delete). Does the ruling cover a connection, and does it cover an edge that carries no identifier of its own?
 - **Why it is the owner's.** It is a reading of the owner's own ruling; a deleted row loses the fact that it existed.
 - **Options and what follows from each.**
@@ -599,6 +646,7 @@ Each entry is **OWNER DECISION REQUIRED**. Nothing here is decided; each recomme
 
 ### OD-30  Who may translate, and must a translation be reviewed before it is used
 
+- **Status (2026-11-12): RESOLVED UNDER DELEGATION** — not the owner's words; reversible by the owner; independent check not required. Ledger: `grep -n -F "Delegated resolution 2026-11-12 — OD-30" references/project-standards.md`; reasoning: `DELEGATED-RESOLUTIONS.md`, section OD-30. **Blocks now:** nothing while its gate reads OPEN. **Read by:** T-049, T-112, T-037.
 - **Question.** A translation is a model's, a tool's or a person's wording standing beside a source's. May any model translate, or only one at or above a given class? Must a translation be reviewed, and by whom, before synthesis relies on it, and before a reader is shown it?
 - **Why it is the owner's.** The capability floor for synthesis is an owner rule, and what a reader is shown as a rendering of a source's words is audience and mission. The ninth statement leaves "who or what translates … and at what class" and "whether a translation is reviewed" open.
 - **Options and what follows from each.**
@@ -653,12 +701,18 @@ The plan is done when every line below gives its "done" result on `main`, run by
 | D-29 | the default stage for translation is a rule in one place | `grep -n -A2 "^translation:" governance/pipeline-contract.yaml; git grep -n -E "default_stage" -- scripts schemas \| wc -l` | no such key | the key with its stage; the count shows the readers, and AT-108 (in the file of D-28) shows that changing the key changes the behaviour |
 | D-30 | rules are declared once | the first command of section 7 of this file | `NOTATION_FAMILIES`, `RULE_VERSION`, `JurisdictionCode` once each; the others not yet | every line 0 or 1; `JurisdictionCode` 0, or generated from the table |
 | D-26 | every task is accounted for | `for f in workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md; do echo "$f"; done` | the list | each is merged (its after-test is green on `main`) or declined in the owner's words in the ledger |
-| D-27 | every owner decision is answered or deferred by the owner | `for n in $(grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md \| cut -c5-); do printf '%s %s\n' $n $(grep -c -F "$n:" references/project-standards.md); done` | every count is 0 | no count is 0 |
+| D-27 | every owner decision is answered by the owner, resolved under delegation with its gate OPEN, or deferred by the owner | the gate loop of section 13 (it prints one line per register decision) | the delegated decisions OPEN; OD-10, OD-14 and the nine reserved CLOSED | every line OPEN, or the owner's deferral of that decision recorded in the ledger |
+| D-31 | retire in place: no verb deletes an admission edge or a connection (T-050) | `grep -c -E "DELETE FROM (search_admissions\|connections\|connection_targets)" scripts/db.py` | not 0 | 0, and T-050's after-test green |
+| D-32 | the gap register is cross-stage, and no path was lost (T-051) | `python3 -c "import yaml;print(yaml.safe_load(open('governance/stage-map.yaml'))['tables']['gaps'])"` | `synthesis` | `cross-stage`, and D-01's count no higher than before T-051 |
+| D-33 | an out-of-scope mined source is staged, not admitted (T-052) | `grep -c -E 'OUT-OF-SCOPE\|outside the scope in force' skills/citation-miner_SKILL.md skills/gap-driven-mining_SKILL.md` | 0 for each | at least 1 for each |
+| D-34 | sub-national instruments are filed under their own codes (T-113) | `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select ref_id, jurisdiction from evidence_sources where ref_id in ('REF-00992','REF-00995','REF-01013','REF-01029')\").fetchall())"` | the country codes | each a sub-national code whose parent is the country |
+| D-35 | conflict between groups is handled as the owner answered (T-053) | the after-test of `tasks/T-053-engine-conflict-between-groups.md` | no answer (OD-19 reserved) | green, or the owner's deferral recorded |
 
 A line whose command a task changes (a renamed verb, a moved test) is updated in the same pull request; a prose caller is a caller.
 
 ## 11. What this plan does not settle
 
+- **Added by the delegated pass** (details in `FOLD-LOG.md`): the batch generator reads only the "Owner decisions" bullet, so a task whose decisions are all delegated shows as READY; the executor's own gate run (section 13) is what stops it if a delegated resolution is reversed. OD-10 and OD-14 are back with the owner. The forms home of T-028 and the attestation of T-026 may overlap (T-028's design must name one home). T-113 declares sub-national codes, a vocabulary act the OD-01 correction allows only as provenance; whether that is a scope act is OD-04's to say.
 - Why `scripts/audit/doctrine_recheck.py` exits 1 when run bare while its battery is green (the registered invocation differs; inferred, not shown).
 - The causes of three advisory failures standing on `main`: `test_scan_contract`, `validate_schema_cross_check`, `research_dod`. T-040 reads and reports them.
 - Whether `add-source` refuses a NULL standing when a URL is given (not probed); T-007 closes it either way.
@@ -706,3 +760,16 @@ A line whose command a task changes (a renamed verb, a moved test) is updated in
 **Which tasks were piloted.** By command: piloted, `grep -L "^\*\*Pilot status.\*\* Not piloted" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md`; not piloted, the same with `-l`. Today the piloted ones are T-006 and T-010 (each as corrected, with one unpiloted addition in T-010) and T-008 in part (its number comparison; the column and its writers follow the owner's ruling and were written after the pilot). Every other task is unpiloted.
 
 **What that means for the executor.** The mechanical defects were of the generator, so they were fixed in every file at once; the fixes themselves have not been piloted. An unpiloted file's evidence command has been run and prints what the file says, and nothing more is known about it. The riskiest unpiloted files are the ones with a schema migration or a new design: [T-008](tasks/T-008-claimed-number-check.md), [T-049](tasks/T-049-translation-home.md), [T-013](tasks/T-013-typed-gaps.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-015](tasks/T-015-language-fold.md), [T-024](tasks/T-024-jurisdiction-registry.md), [T-026](tasks/T-026-alias-attestation.md). The safest are the ones that change text or add a test: [T-002](tasks/T-002-contract-entry-text.md), [T-003](tasks/T-003-owner-queue-answered-marks.md), [T-004](tasks/T-004-spec-checks-report-live-rows.md), [T-005](tasks/T-005-retired-row-view-fixture.md).
+
+## 13. Delegated resolutions, the independent check, and the fold (2026-11-12)
+
+**What happened.** The owner delegated twenty register decisions to an Opus-class model (`grep -n -F "I guess opus can do it" references/project-standards.md`). The model resolved nineteen and referred OD-10 back (`DELEGATED-RESOLUTIONS.md`). A second, independent Opus-class instance checked the four the delegation names (`DELEGATED-RESOLUTIONS-REVIEW.md`): OD-01, OD-02 and OD-12 confirmed with corrections; OD-14 referred back. The corrections are appended to the ledger and marked in the resolutions file; OD-14 is withdrawn. Eighteen delegated resolutions stand.
+
+**The gate every task now uses** (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). The ledger carries, per decision, a status line `OD-NN STATUS:` and, for a delegated resolution, a check line `OD-NN CHECK:`; the last of each wins. A decision is OPEN for a task only when its status is `ANSWERED BY THE OWNER`, or `RESOLVED UNDER DELEGATION` with its check `not required`, `confirmed` or `confirmed with corrections applied`. A task that needs the owner's words opens only on the first. Run for every decision:
+
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in $(grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md | cut -c5-); do gate $n; done
+```
+
+**What the fold changed.** Every task that read a delegated decision now names it in a "Delegated resolutions this task rests on" bullet with the gate, says what the resolution requires in its section 4, and stops (section 9) if the gate prints CLOSED. Five tasks are new: T-050 (OD-29), T-051 (OD-11), T-052 (OD-05), T-053 (the engine part of T-032, held by the reserved OD-19), T-113 (OD-01, research). The build plan, decision by decision, is the last section of `DELEGATED-RESOLUTIONS.md`; the file-by-file record is `FOLD-LOG.md`. `REMEDIATION-PLAN.md` was regenerated from the task files.

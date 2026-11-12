@@ -20,8 +20,12 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
 - **Tasks that must be merged to the integration base first:** T-010 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions that must be answered first.** The answer must be in `references/project-standards.md` (the ledger), in the owner's words, in one of the forms below. An answer relayed in chat, or inferred, is not an answer. If it is absent, stop, except where an entry below says which part may proceed without it.
-  - **OD-24** — the vocabulary of quantity kinds and whether a parameter must belong to an element. Answer form: "OD-24: kinds = <list>; element required: yes|no". Check: `grep -n -F "OD-24:" references/project-standards.md`.
+- **Owner decisions:** none outstanding. The decisions this task needed are resolved under delegation (next bullet); none is still the owner's.
+- **Delegated resolutions this task rests on.** OD-24: parameters are flat and coarse; a parameter states a quantity kind from a table of kinds held as rows and extended by data with a warrant; a parameter need not belong to an element. Each is a resolution by an Opus-class model under the owner's delegation of 2026-11-12: not the owner's words, reversible by the owner, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop (section 9):
+```
+gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
+for n in OD-24; do gate $n; done
+```
 - **Tests that must be red (or green) before you start:** AT-77 (second half) red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -58,11 +62,12 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Schema migration: `base_parameters.quantity_kind` with a CHECK holding exactly the owner's list from OD-24. `add-parameter` requires `--quantity-kind` (choices read from the CHECK) and refuses without it, naming the kinds.
+1. Schema migration: a base table of quantity kinds (one row per kind: its id, a definition, the ledger entry that admitted it, and the four session and time columns), seeded with exactly the kinds of the delegated resolution of OD-24 (`grep -n -F "OD-24:" references/project-standards.md`: length; gradient, with ratio, percentage and degrees as notations; force; time; luminous reflectance and its contrast (LRV); colour temperature), and `base_parameters.quantity_kind`, a nullable foreign key into it. **Not a CHECK list:** one verb adds a kind and refuses without an approval pointer (the pattern `mint-term-from-catalogue` uses), so the add-by-data test (T-047) can add one with no code edit. `add-parameter` requires `--quantity-kind`, reads its choices from the table, and refuses without it, naming the kinds. Add no element column: the delegated answer is that a parameter need not belong to an element; elements reach parameters by term pointers (T-029).
 2. **Delete the stop-gap of T-010 in this pull request:** `dbcore.NON_QUANTITY_DOMAINS`, the refusal in `insert_parameter` that reads it, the fixture filter in `scripts/tests/test_scan_contract.py`, the sentence in `scripts/audit/research_batch_dod.py` and T-010's test cases. The kind is the rule; two rules for one decision are two homes. Keep the amendable `domain` field of `amend-term`.
 3. The ten live parameters get their kind in a separate research pull request (T-109), not here: the column is nullable for existing rows until then, and `add-parameter` enforces it for new ones.
+4. **The split test is a rule of judgment, not code:** two cases are two parameters only when they cannot be placed on one scale or their accessibility directions differ. State it in the help text of `add-parameter` (one sentence); build no check for it.
 
-**What reads what this task adds or changes:** `add-parameter`; T-030 (units by kind); the engine's composer.
+**What reads what this task adds or changes:** `add-parameter`; the add-kind verb; T-030 (units reference kinds); the engine's composer; T-047.
 
 **Schema migration (this task has one).** Never type a migration number. Derive it at execution time: `ls scripts/migrations | grep -E '^[0-9]{3}_' | sort | tail -1` gives the highest; yours is that plus one, zero-padded, in `scripts/migrations/NNN_<slug>.sql`, and it ends by setting `PRAGMA user_version` to the same number. Run `python3 scripts/audit/joined_cells_census.py` before and after and keep both outputs (the last line is `EXAMINED: … candidate(s)`; a new column must not add a candidate). Apply it only with `python3 scripts/migrate_db.py` (this is the one sanctioned way `data/guidebook.db` changes). Prove it with `python3 scripts/migrate_db.py --rebuild "$SCRATCH/rebuilt.db"` (exit 0) and `python3 scripts/audit/migration_reproducibility.py --deep` (PASS). SQLite cannot add a `NOT NULL` foreign key or change a CHECK in place: use create, copy, drop, rename inside the migration, and list every view and index that names the table (`select type, name from sqlite_master where sql like '%<table>%'`; they must be recreated). The pull request contains no `scripts/migrations/data_*` file.
 
@@ -70,7 +75,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 ## 5. Caller sweep
 
-Names to sweep: `insert_parameter`, `add-parameter`, `NON_QUANTITY_DOMAINS`
+Names to sweep: `insert_parameter`, `add-parameter`, `NON_QUANTITY_DOMAINS`, `quantity_kind`
 
 **What a caller is.** A hit is a *caller* when its behaviour or its truth changes with this task: code that calls or imports the name; a test that exercises the behaviour you are changing, even if it asserts nothing about it; a view, trigger or index; a registry `cmd` or `basis`; a skill, command or governance sentence that states the behaviour being changed. A hit that stays true after your change is a *mention* and needs nothing. **Fixing a caller the sweep finds is in scope** (CLAUDE.md rule 4): make the fix in this pull request and list it there.
 
@@ -104,7 +109,7 @@ for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(ne
 
 Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
 
-**Step 2: red before, green after.** Before: rc=0. After: refused without a kind; accepted with one.
+**Step 2: red before, green after.** Before: rc=0. After: refused without a kind; accepted with one of the table's kinds; on a scratch copy a new kind added by the verb with an approval pointer is then accepted by `add-parameter`, with `git status --porcelain scripts schemas` empty.
 
 **Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T020-01`, `T020-02`, …) and confirm the prefix is free first (`grep -c '"T020-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
 
@@ -154,6 +159,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
 
 ## 10. Rollback
 
