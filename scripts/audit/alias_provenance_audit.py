@@ -55,9 +55,21 @@ PROVENANCE_MARKERS = ("model-generated", "curated", "repo shorthand",
                       "source-attested") + VERIFIED_MARKERS
 
 
-def classify(notes, observation_id=None):
-    """Attestation is the pointer to an observation (migration 125), not a substring of the
-    notes: a row whose free text merely says "source-attested" is not attested."""
+def classify(notes, observation_id=None, attestation="unrecorded"):
+    """The typed `attestation` column (migration 130) is read first: instrument and
+    other_source are SOURCE-ATTESTED, model_seed is MODEL-GENERATED, owner_supplied is
+    OWNER-SUPPLIED. Only an `unrecorded` row falls back to the notes markers below, so the
+    curated, repo-shorthand and VERIFIED-* classes survive until T-107 re-attests them.
+
+    The fallback keeps the older rule: attestation is the pointer to an observation (migration
+    125), not a substring of the notes; a row whose free text merely says "source-attested" is
+    not attested."""
+    if attestation in ("instrument", "other_source"):
+        return "SOURCE-ATTESTED"
+    if attestation == "model_seed":
+        return "MODEL-GENERATED"
+    if attestation == "owner_supplied":
+        return "OWNER-SUPPLIED"
     n = notes or ""
     for m in VERIFIED_MARKERS:
         if m in n:
@@ -88,13 +100,14 @@ def main():
     con.row_factory = sqlite3.Row
 
     rows = con.execute(
-        "SELECT term_id, alias, language, notes, created_by_session, observation_id FROM term_aliases"
+        "SELECT term_id, alias, language, notes, created_by_session, observation_id, attestation "
+        "FROM term_aliases"
     ).fetchall()
 
     by_lang = {}
     offenders = []
     for r in rows:
-        cls = classify(r["notes"], r["observation_id"])
+        cls = classify(r["notes"], r["observation_id"], r["attestation"])
         d = by_lang.setdefault(r["language"], {})
         d[cls] = d.get(cls, 0) + 1
         if cls == "UNKNOWN" and session_date(r["created_by_session"]) >= CUTOFF_SESSION_DATE:
@@ -108,7 +121,7 @@ def main():
     print(f"EXAMINED: {len(rows)}\n")
 
     hdr = (f"{'lang':<6}{'total':>7}{'verified':>10}{'attested':>10}{'model-gen':>11}"
-           f"{'curated':>9}{'code':>6}{'UNKNOWN':>9}")
+           f"{'owner':>7}{'curated':>9}{'code':>6}{'UNKNOWN':>9}")
     print(hdr)
     print("-" * len(hdr))
     tot_unknown = tot_verified = 0
@@ -120,12 +133,13 @@ def main():
         tot_unknown += unk
         tot_verified += ver
         print(f"{lang:<6}{tot:>7}{ver:>10}{d.get('SOURCE-ATTESTED',0):>10}"
-              f"{d.get('MODEL-GENERATED',0):>11}"
+              f"{d.get('MODEL-GENERATED',0):>11}{d.get('OWNER-SUPPLIED',0):>7}"
               f"{d.get('CURATED-EN',0):>9}{d.get('PROJECT-CODE',0):>6}{unk:>9}")
     print("-" * len(hdr))
     print(f"{'all':<6}{len(rows):>7}{tot_verified:>10}"
           f"{sum(d.get('SOURCE-ATTESTED',0) for d in by_lang.values()):>10}"
           f"{sum(d.get('MODEL-GENERATED',0) for d in by_lang.values()):>11}"
+          f"{sum(d.get('OWNER-SUPPLIED',0) for d in by_lang.values()):>7}"
           f"{sum(d.get('CURATED-EN',0) for d in by_lang.values()):>9}"
           f"{sum(d.get('PROJECT-CODE',0) for d in by_lang.values()):>6}{tot_unknown:>9}")
 
@@ -159,7 +173,8 @@ def main():
                   f"({r['created_by_session']})")
         if len(offenders) > 20:
             print(f"  ... and {len(offenders) - 20} more")
-        print(f"\n  Record one of: {', '.join(PROVENANCE_MARKERS)} in term_aliases.notes.")
+        print("\n  Record the form's attestation (db.py add-alias: an observation, a locator or --seed),")
+        print(f"  or, for a row not yet re-attested, one of: {', '.join(PROVENANCE_MARKERS)} in term_aliases.notes.")
         return 1
 
     print(f"\nRESULTS: all post-{CUTOFF_SESSION_DATE} aliases carry provenance")

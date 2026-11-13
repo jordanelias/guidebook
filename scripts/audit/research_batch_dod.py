@@ -859,11 +859,14 @@ def audit(session=None, allmode=False, capture=None, use_baseline=True):
     # --- R11 vocabulary provenance ---------------------------------------------------------
     noprov_scope = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE 1=1"
                        f"{scope}", sargs)[0][0]
-    noprov = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE COALESCE(notes,'')=''"
-                       f"{scope}", sargs)[0][0]
+    # A form's provenance is in the cell that names it (T-026): a typed attestation is a
+    # sourcing statement, so only a row with an empty note AND attestation 'unrecorded' lacks one.
+    noprov = _rows(cx, f"SELECT COUNT(*) FROM term_aliases WHERE COALESCE(notes,'')='' "
+                       f"AND attestation = 'unrecorded'{scope}", sargs)[0][0]
     if noprov:
-        fail("R11", f"{noprov} alias(es) with no sourcing note. No back-translation: every alias "
-                    f"needs its authoritative in-language basis or [UNVERIFIED-TERMS].", noprov)
+        fail("R11", f"{noprov} alias(es) with no sourcing note and no typed attestation. No "
+                    f"back-translation: every alias needs its authoritative in-language basis "
+                    f"(add-alias records it) or [UNVERIFIED-TERMS].", noprov)
     else:
         # EXAMINED, per CLAUDE.md §2(a). This printed "all vocabulary carries
         # in-language sourcing provenance" over ZERO aliases for batch 05 -- and

@@ -56,7 +56,11 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 - **Equivalence before minting.** Search terms and aliases first. A phrase a source uses for a term we hold is an
   alias, reached only through the chain `observe-term` (its `--context-quote` must be found byte-for-byte in a file
   saved for the source: a `scripts/research/full_text.py` derivation or the fetched page) → `adjudicate-term
-  --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK). A comparator ("not steeper than")
+  --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK; it writes `attestation`, `other_source`
+  unless `--attestation instrument`). A form read where no observation exists takes the base route (`add-alias --alias
+  --language --jurisdiction --source-url --source-page|--source-clause --attestation`; the pair must be in `lang_jur_map`);
+  a search aid with no locator takes `--seed owner_supplied|model_seed` and is never vocabulary. A search names the forms it
+  fired with `log-search --form-id`. A comparator ("not steeper than")
   or a value is not a name for the concept: adjudicate it `NOT-OURS`. The name rule is the writer's own: `add-term
   --canonical-en` and `rename-term --canonical-en` refuse a name carrying a digit, a comparison symbol, a `min` or
   `max` word, or a comparator word (`than`, `at least`, `at most`, `no more`, `no less`, `no fewer`, `no greater`,

@@ -985,6 +985,186 @@ try:
                    "is extraction_method = 'skim', not a second home in a follow-up row",
                    "CHECK", raise_fu, E_ONLY_SKIM, "skimmed-needs-full-read", "w", S)
 
+    # ── T-026: a form says how it is attested; a search says which forms it fired ─────
+    # Every probe is chosen by query; every fixture is labelled TASK-FIXTURE, made by SQL on
+    # this copy where the writer under test would otherwise make the state it is meant to
+    # distinguish (T026-01/02), and removed again where a later audit reads the table.
+    T26S = "session_2026-11-13-t026-task-fixture"        # post-cutoff, so the audit reads it
+    HAS_ATT = "attestation" in [r[1] for r in q("PRAGMA table_info(term_aliases)")]
+    con = sqlite3.connect(DB)
+    try:
+        held_tokens = set()
+        for (nm,) in con.execute("SELECT canonical_en FROM terms UNION ALL SELECT alias FROM "
+                                 "term_aliases"):
+            held_tokens |= db._name_tokens(nm)
+        FIXW = [w for w in ("taskfixturea", "taskfixtureb", "taskfixturec", "taskfixtured",
+                            "taskfixturee", "taskfixturef", "taskfixtureg") if w not in held_tokens]
+        LJ_EN = con.execute("SELECT language, jurisdiction FROM lang_jur_map WHERE "
+                            "upper(language)='EN' ORDER BY jurisdiction LIMIT 1").fetchone()
+        LJ_NO = con.execute(
+            "SELECT a.language, b.jurisdiction FROM (SELECT DISTINCT language FROM lang_jur_map) a, "
+            "(SELECT DISTINCT jurisdiction FROM lang_jur_map) b WHERE NOT EXISTS (SELECT 1 FROM "
+            "lang_jur_map m WHERE m.language=a.language AND m.jurisdiction=b.jurisdiction) "
+            "ORDER BY 1, 2 LIMIT 1").fetchone()
+        LAB = next(((t, n) for t, n in con.execute("SELECT term_id, canonical_en FROM terms")
+                    if len(db._name_tokens(n)) >= 2), None)
+        ALANG = db._alias_language(con, "EN")
+    finally:
+        con.close()
+    T26 = FREE[17:21]                                     # four terms nothing else here touched
+    if len(FIXW) < 7 or len(T26) < 4 or not (LJ_EN and LJ_NO and LAB):
+        print("      SKIPPED-NO-FIXTURE: T026 needs 7 unheld words, 4 free terms, an EN pair, "
+              "an unpaired pair and a two-token label")
+    else:
+        def seed_sql(term, text, att, **loc):
+            cols = {"term_id": term, "alias": text, "language": ALANG, "alias_type": "SYNONYM",
+                    "notes": "model-generated TASK-FIXTURE", "created_at": "2026-11-13 00:00",
+                    "created_by_session": T26S, "updated_at": "2026-11-13 00:00",
+                    "updated_by_session": T26S}
+            if HAS_ATT:
+                cols["attestation"] = att
+                cols.update(loc)
+            return x(f"INSERT INTO term_aliases ({','.join(cols)}) VALUES "
+                     f"({','.join('?' * len(cols))})", *cols.values())
+
+        def near(name):
+            c = sqlite3.connect(DB)
+            try:
+                return {t for t, _ in db._near_terms(c, name)}
+            finally:
+                c.close()
+
+        # T026-01 (AT-24 a): a model seed made by SQL (never by the new writer, which the old
+        # code lacks) is not vocabulary: _near_terms does not return its term.
+        seed_a = f"{FIXW[0]} {FIXW[1]}"
+        seed_sql(T26[0], seed_a, "model_seed")
+        record("T026-01", "_near_terms does not compare a model_seed alias (AT-24 a): a seed is a "
+               "search aid, so it neither names a concept nor blocks a new one",
+               HAS_ATT and T26[0] not in near(f"{seed_a} {FIXW[2]}"), near(f"{seed_a} {FIXW[2]}"))
+        # T026-02: the positive control, and a label still screens.
+        att_a = f"{FIXW[3]} {FIXW[4]}"
+        seed_sql(T26[1], att_a, "instrument", jurisdiction=LJ_EN[1],
+                 source_url="https://example.org/task-fixture", source_clause="1.1")
+        record("T026-02", "_near_terms still returns the term of an instrument-attested alias, and "
+               "of a label: the screen was narrowed, not switched off",
+               HAS_ATT and T26[1] in near(f"{att_a} {FIXW[5]}") and LAB[0] in near(f"{LAB[1]} {FIXW[6]}"),
+               (near(f"{att_a} {FIXW[5]}"), near(f"{LAB[1]} {FIXW[6]}")))
+
+        # T026-03 (AT-24 b): a search that fired the seed is found by the flag join; the junction
+        # stores the form's KEY, not the rowid.
+        rid = q("SELECT rowid FROM term_aliases WHERE term_id=? AND alias=?", T26[0], seed_a)
+        LS = ["log-search", "--prior-expectation", "fixture: nothing", "--slug", SLUG_A,
+              "--language", "EN", "--query-text", "TASK-FIXTURE fixture query", "--engine", "web",
+              "--depth-method", "scoping", "--session", S]
+        r3 = run(*LS, *(["--form-id", str(rid[0][0])] if rid else []))
+        e3 = json.loads(r3.stdout)["exec_id"] if r3.returncode == 0 and r3.stdout.strip() else None
+        flagged = q("SELECT DISTINCT f.exec_id FROM search_execution_forms f JOIN term_aliases a "
+                    "USING (term_id, alias, language) WHERE a.attestation NOT IN "
+                    "('instrument','other_source')")
+        stored = q("SELECT term_id, alias, language FROM search_execution_forms WHERE exec_id=?", e3)
+        record("T026-03", "log-search --form-id writes a search_execution_forms row by the form's key, "
+               "and the flag join (a seed's attestation) finds the search (AT-24 b)",
+               e3 and (e3,) in flagged and stored == [(T26[0], seed_a, ALANG)],
+               (r3.stdout[-200:], r3.stderr[-300:], flagged, stored))
+
+        # T026-04: --terms-used is refused naming --form-id; an unknown --form-id is refused;
+        # neither writes anything.
+        n_ex, n_jn = (q("SELECT COUNT(*) FROM search_executions")[0][0],
+                      q("SELECT COUNT(*) FROM search_execution_forms")[0][0])
+        r4a = run(*LS, "--terms-used", '["x"]')
+        r4b = run(*LS, "--form-id", "999999999")
+        record("T026-04", "log-search refuses --terms-used (naming --form-id) and a --form-id that "
+               "names no row, and writes nothing for either",
+               r4a.returncode == 1 and "--form-id" in r4a.stderr and r4b.returncode == 1
+               and "names no term_aliases row" in r4b.stderr
+               and (q("SELECT COUNT(*) FROM search_executions")[0][0],
+                    q("SELECT COUNT(*) FROM search_execution_forms")[0][0]) == (n_ex, n_jn),
+               (r4a.returncode, r4a.stderr[-200:], r4b.returncode, r4b.stderr[-200:]))
+
+        # T026-05: the base route writes the locator and attestation; it promotes a seed in place
+        # (one row, type kept); an observation route cannot re-attest an attested row.
+        aliasfn = fn("add_alias")
+        base_kw = dict(language=LJ_EN[0], jurisdiction=LJ_EN[1], source_url="https://example.org/t26",
+                       source_clause="2.3", attestation="instrument")
+        b5 = attempt(aliasfn, T26[2], None, "SYNONYM", S, alias="corridor route", **base_kw)
+        r5 = q("SELECT attestation, source_url, source_clause, jurisdiction, observation_id FROM "
+               "term_aliases WHERE term_id=? AND alias='corridor route'", T26[2])
+        seed_sql(T26[3], "door leaf", "model_seed")
+        n_t3 = q("SELECT COUNT(*) FROM term_aliases WHERE term_id=?", T26[3])[0][0]
+        p5 = attempt(aliasfn, T26[3], None, "SYNONYM", S, alias="door leaf", **base_kw)
+        r5p = q("SELECT attestation, alias_type, source_clause FROM term_aliases WHERE term_id=? "
+                "AND alias='door leaf'", T26[3])
+        o5 = attempt(observe, obs("corridor route", "PDF page 2 / T026",
+                                  "the clear width of a corridor route is measured here"), S)
+        attempt(adj, o5.get("observation_id"), "NAMES-EXISTING", "fixture", S, term_id=T26[2])
+        d5 = refusal(aliasfn, T26[2], o5.get("observation_id"), "SYNONYM", S)
+        record("T026-05", "add-alias base route writes the locator and attestation; it promotes a "
+               "seed in place (one row, type kept); a held instrument row is refused by the "
+               "observation route (no downgrade)",
+               r5 == [("instrument", "https://example.org/t26", "2.3", LJ_EN[1], None)]
+               and p5.get("promoted") is True
+               and r5p == [("instrument", "SYNONYM", "2.3")]
+               and q("SELECT COUNT(*) FROM term_aliases WHERE term_id=?", T26[3])[0][0] == n_t3
+               and d5 and "already holds" in d5
+               and q("SELECT attestation FROM term_aliases WHERE term_id=? AND alias='corridor route'",
+                     T26[2]) == [("instrument",)], (b5, r5, p5, r5p, d5))
+
+        # T026-06: the refusals of the base and seed routes; none writes a row.
+        n_all = q("SELECT COUNT(*) FROM term_aliases")[0][0]
+        c6 = [refusal(aliasfn, T26[2], None, "SYNONYM", S, alias="t26 nolocator", **{**base_kw, "source_clause": None}),
+              refusal(aliasfn, T26[2], None, "SYNONYM", S, alias="t26 nourl", **{**base_kw, "source_url": None}),
+              refusal(aliasfn, T26[2], None, "SYNONYM", S, alias="t26 badpair",
+                      **{**base_kw, "language": LJ_NO[0], "jurisdiction": LJ_NO[1]}),
+              refusal(aliasfn, T26[2], None, "SYNONYM", S, alias="t26 seedloc", language=LJ_EN[0],
+                      seed="model_seed", source_url="https://example.org/t26"),
+              refusal(aliasfn, T26[2], None, "SYNONYM", S, alias="t26 seedatt", language=LJ_EN[0],
+                      seed="instrument"),
+              refusal(aliasfn, T26[2], 1, "SYNONYM", S, alias="t26 twoRoutes", **base_kw)]
+        want6 = ["--source-page or --source-clause", "--source-url", "lang_jur_map holds no pair",
+                 "--source-url", "an attestation needs a locator", "exactly one route"]
+        record("T026-06", "add-alias refuses a base route with no locator or no URL, a pair "
+               "lang_jur_map lacks, a seed with a locator, a seed that is an attestation, and "
+               "two routes; each in words, none writes a row",
+               all(m and w in m for m, w in zip(c6, want6))
+               and q("SELECT COUNT(*) FROM term_aliases")[0][0] == n_all, c6)
+
+        # T026-07/08: the audit reads the typed column first, and still fails an unrecorded,
+        # unmarked post-cutoff row.
+        def owner_total(out):
+            for line in out.splitlines():
+                if line.startswith("all "):
+                    return int(line.split()[5])
+        a0 = run_audit("alias_provenance_audit.py")
+        seed_sql(T26[3], "t26 owner supplied", "owner_supplied")
+        x("UPDATE term_aliases SET notes=NULL WHERE alias='t26 owner supplied'")
+        a7 = run_audit("alias_provenance_audit.py")
+        record("T026-07", "alias_provenance_audit counts a post-cutoff owner_supplied row with no notes "
+               "as OWNER-SUPPLIED and exits 0",
+               a7.returncode == 0 and a0.returncode == 0 and owner_total(a7.stdout) is not None
+               and owner_total(a7.stdout) == (owner_total(a0.stdout) or 0) + 1,
+               (a0.stdout[-300:], a7.stdout[-500:], a7.stderr[-200:]))
+        seed_sql(T26[3], "t26 unrecorded", "unrecorded")
+        x("UPDATE term_aliases SET notes=NULL WHERE alias='t26 unrecorded'")
+        a8 = run_audit("alias_provenance_audit.py")
+        x("DELETE FROM term_aliases WHERE alias IN ('t26 unrecorded', 't26 owner supplied')")
+        record("T026-08", "an unrecorded post-cutoff row with no marker still fails the audit "
+               "(the refusal is not weakened)",
+               a8.returncode == 1 and "t26 unrecorded" in a8.stdout, a8.stdout[-400:])
+
+        # T026-09: R11 accepts a typed attestation in place of a note, and still fails an
+        # unrecorded row with an empty note, scoped to a fixture session.
+        SD = "session_2026-11-13-t026-dod-fixture"
+        d9 = attempt(aliasfn, T26[2], None, "SYNONYM", SD, alias="t26 dod base", **base_kw)
+        g9a = run("--session", SD, script="audit/research_batch_dod.py")
+        x("INSERT INTO term_aliases (term_id, alias, language, alias_type, notes, created_at, "
+          "created_by_session, updated_at, updated_by_session) VALUES (?, 't26 dod bare', ?, "
+          "'SYNONYM', NULL, 't', ?, 't', ?)", T26[2], ALANG, SD, SD)
+        g9b = run("--session", SD, script="audit/research_batch_dod.py")
+        record("T026-09", "research_batch_dod R11 passes a base-route row with empty notes and "
+               "fails an unrecorded row with empty notes",
+               "R11: PASS" in g9a.stdout and "R11:" in g9b.stdout and "R11: PASS" not in g9b.stdout
+               and "no typed attestation" in g9b.stdout, (d9, g9a.stdout[-300:], g9b.stdout[-500:]))
+
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")
     x("INSERT INTO observed_terms (ref_id, surface_form, language, locator, context_quote, "
