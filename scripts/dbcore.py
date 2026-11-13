@@ -1471,8 +1471,12 @@ def live_determinations_linked(conn, extraction_id, *, governing_only=False, pro
     (`specification_extraction_links`), as sorted specification ids. Empty when none does.
 
     The row-level counterpart of `determinations_resting_on`, which answers for a source. Every
-    extraction of a parameter is linked, graded by the part it played, when a determination is
-    written, so "linked" means "read for this answer". `governing_only` narrows it to the rows
+    extraction of a parameter is linked when a determination is written, graded by the part it
+    played; a figure whose live lens links do not carry every code the cell states is linked
+    `excluded` with the reason "not stated in this cell's lens (...)" (T-019, so that K02 holds). So
+    "linked" means "an extraction of this parameter", NOT "read for this answer": a figure added to
+    or amended under the parameter later is linked to every live cell of it, in or out of its lens.
+    `governing_only` narrows it to the rows
     that supplied the value; `proxy_only` to determinations that rest on a proxy inference, the
     only ones whose marker reads `confirms` edges. LIVE means `retired_at IS NULL`, as there.
     """

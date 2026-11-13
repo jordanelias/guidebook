@@ -96,6 +96,8 @@ os.environ["GUIDEBOOK_DB_PATH"] = DB
 os.environ["GUIDEBOOK_RETRIEVAL_LOG"] = FARM
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "scripts" / "research"))
+sys.path.insert(0, str(REPO))
+from schemas.enums import EvidenceMarker  # noqa: E402
 import db        # noqa: E402
 import dbcore    # noqa: E402
 import retrieval_log  # noqa: E402
@@ -1526,7 +1528,7 @@ STAMP = dbcore.now()                    # the shape every stored created_at has:
 def assess(db_path, pid, slug, *extra, stamp=None, session=S):
     return subprocess.run([sys.executable, str(REPO / "scripts/assess/assess_cell.py"), "--db", db_path,
                            "--emit-sql", os.path.join(TMP, "a.sql"), "--parameter-id", str(pid),
-                           "--slug", slug, "--identity", IDENT, "--icf", ICF, "--session", session,
+                           "--slug", slug, "--identity", CELL_IDENT, "--icf", ICF, "--session", session,
                            "--stamp", stamp or STAMP, *extra],
                           capture_output=True, text=True, env=dict(os.environ))
 
@@ -1535,9 +1537,29 @@ P_NODIR = scalar("SELECT parameter_id FROM base_parameters WHERE status='active'
                  "accessibility_direction IS NULL AND parameter_id IN (SELECT parameter_id FROM "
                  "source_value_extractions) AND parameter_id<>? ORDER BY 1 LIMIT 1", P_FULL)
 CELL_P = P_NODIR if P_NODIR is not None else P1
-if ICF is None:
+# T-019: a figure reaches a cell only through the live lens links written on it, so the engine cases key their
+# cell on an identity taken by query from a live link of the cell's own parameter, and the first such figure is
+# given the ICF code the cell also states, through the sanctioned verb on this test's copy (no live figure
+# carries two lenses). Its warrant is a word of the figure's own claim text.
+CELL_FIG = q("SELECT l.extraction_id, l.identity_code, x.claim_text FROM source_value_extractions x JOIN "
+             "v_live_lens_links l USING (extraction_id) WHERE x.parameter_id=? AND l.identity_code IS NOT NULL "
+             "ORDER BY 1 LIMIT 1", CELL_P)
+CELL_IDENT = CELL_FIG[0][1] if CELL_FIG else None
+CELL_WORD = next(iter(re.findall(r"\w+", CELL_FIG[0][2] or "")), "") if CELL_FIG else ""
+
+
+def link_cell_figure(flag, code):
+    """Give the cell's figure one more lens link on the current copy; the refusal, if any, or None."""
+    r_ = cli("add-lens-link", "--extraction-id", str(CELL_FIG[0][0]), flag, code, "--basis", "named_in_text",
+             "--basis-text", CELL_WORD, "--session", S)
+    return None if r_.returncode == 0 else (r_.stderr + r_.stdout)[-300:]
+
+
+CELL_LINKED = bool(CELL_FIG and CELL_WORD and ICF is not None and link_cell_figure("--icf", ICF) is None)
+if not CELL_LINKED:
     for t_ in ("E01-E03", "E05", "E06", "E11", "E12"):
-        skip(t_, "the ICF registry is empty")
+        skip(t_, "the ICF registry is empty, or no figure of the cell's parameter carries an identity link "
+                 "to give the cell's ICF code to")
 else:
     # Before E01 writes that cell to the test copy, so the accepted call below is not a duplicate.
     with scratch() as c:
@@ -1575,9 +1597,39 @@ else:
                r.returncode == 0 and gap and "set-parameter-direction" in gap[0][0],
                (r.stdout + r.stderr)[-300:] if r.returncode else (gap[0][0][-200:] if gap else "no gap"))
         record("E02", "the summary line prints every lens the cell was given",
-               f"param {P_NODIR}×{IDENT}/" in r.stdout, r.stdout[:120])
+               f"param {P_NODIR}×{CELL_IDENT}/" in r.stdout, r.stdout[:120])
         record("E03", "the report carries direction_ref_id beside the direction",
                "direction_ref_id" in rep, list(rep)[:5])
+        # T-019: the handshake audit exempts an ENGINE-written pending cell from the missing-path note (it has no
+        # answer and claims no path) and keeps the note for a pending row the engine would not have written.
+        with scratch() as c:
+            path = os.environ["GUIDEBOOK_DB_PATH"]
+            sid = c.execute("SELECT MAX(specification_id) FROM specifications WHERE parameter_id=? AND "
+                            "retired_at IS NULL", (P_NODIR,)).fetchone()[0]
+            audit = lambda: subprocess.run(  # noqa: E731
+                [sys.executable, str(REPO / "scripts/audit/derivation_handshake_integrity.py"), "--db", path],
+                capture_output=True, text=True, env=dict(os.environ)).stdout
+            noted = lambda: f"specification {sid}: no derivation_paths recorded" in audit()  # noqa: E731
+            record("F5-a", "an engine-written pending cell (rule_version set, a figure stated in its lens) is "
+                           "not noted for its missing path", sid is not None and not noted())
+            # HAND: the row as a route that skips the engine would leave it.
+            engine_rv = c.execute("SELECT rule_version FROM specifications WHERE specification_id=?", (sid,)).fetchone()[0]
+            c.execute("UPDATE specifications SET rule_version=NULL WHERE specification_id=?", (sid,))
+            c.commit()
+            record("F5-b", "...a pending row with no rule_version is noted", noted())
+            other = scalar("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN "
+                           "(SELECT l.identity_code FROM v_live_lens_links l JOIN source_value_extractions x "
+                           "USING (extraction_id) WHERE x.parameter_id=? AND l.identity_code IS NOT NULL) "
+                           "ORDER BY 1 LIMIT 1", P_NODIR)
+            c.execute("UPDATE specifications SET rule_version=?, identity_code=? WHERE specification_id=?",
+                      (engine_rv, other, sid))
+            c.commit()
+            record("F5-c", "...and so is a pending row in a lens no live-linked figure of its parameter carries "
+                           "(the engine would refuse it)", other is not None and noted())
+            c.execute("UPDATE specifications SET identity_code=?, state='provisional', marker=? WHERE "
+                      "specification_id=?", (CELL_IDENT, EvidenceMarker.WEAK.value, sid))
+            c.commit()
+            record("F5-d", "...and a hand-written `provisional` row with no derivation_paths is still noted", noted())
     else:
         for t_ in ("E01", "E02", "E03"):
             skip(t_, "no active direction-less parameter holds an extraction")
@@ -1694,15 +1746,16 @@ else:
                isinstance(via, sqlite3.Row) and via[0] == A_PAR, via)
 
     # The engine's own gap: reached from its cell, never copied into the new columns (rule 5).
-    P_ENG = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id NOT IN "
-                   "(SELECT parameter_id FROM specifications) AND parameter_id NOT IN "
-                   "(SELECT parameter_id FROM source_value_extractions) ORDER BY 1 LIMIT 1")
+    # T-019: a parameter no figure is read for has no cell (the engine refuses and writes nothing: OD-08), so the
+    # engine's pending cell is the section-C figure's, given the needs code the cell also states.
+    P_ENG = CELL_P if CELL_LINKED else None
     if P_ENG is None:
-        skip("T013-10", "every active parameter has a determination or an extraction, so no probe is certain to be pending")
+        skip("T013-10", "no figure of an active parameter can carry the identity, ICF and needs codes of an engine cell")
     else:
         with scratch() as c:
             path = os.environ["GUIDEBOOK_DB_PATH"]
             rj = os.path.join(TMP, "t013-assess.json")
+            link_cell_figure("--needs", A_NEED)
             # A lens no earlier case writes (E01-E12 use the default identity and ICF): add a needs code (trap a).
             r = assess(path, P_ENG, SLUG, "--needs", A_NEED, "--report-json", rj)
             rep = json.load(open(rj))[0] if r.returncode == 0 else {}
@@ -1716,7 +1769,7 @@ else:
             record("T013-10", "an engine-made gap is reached through its cell (specifications.gap_register_id holds the "
                               "parameter and lenses) and its own subject columns stay NULL: the fact is held once",
                    r.returncode == 0 and rep.get("state") == "pending" and cell is not None and g is not None
-                   and tuple(cell)[:4] == (P_ENG, IDENT, ICF, A_NEED) and all(v_ is None for v_ in tuple(g)),
+                   and tuple(cell)[:4] == (P_ENG, CELL_IDENT, ICF, A_NEED) and all(v_ is None for v_ in tuple(g)),
                    ((r.stdout + r.stderr)[-250:], cell and tuple(cell), g and tuple(g)))
             gid_e = rep.get("gap_register_id") or ""
             try:
@@ -1725,12 +1778,12 @@ else:
             except sqlite3.OperationalError as exc:
                 via = exc
             record("T013-11", "...and v_gap_subject, the cross-stage view, gives that gap its parameter and lenses from the cell",
-                   isinstance(via, sqlite3.Row) and tuple(via) == (P_ENG, IDENT, ICF, A_NEED, "specifications"), via)
+                   isinstance(via, sqlite3.Row) and tuple(via) == (P_ENG, CELL_IDENT, ICF, A_NEED, "specifications"), via)
 
             # (add-gap A) the cell is live: the subject is held there, so a typed gap for it is the second home.
             gap_cli_ = lambda *a: cli("add-gap", "--category", "EG", "--priority", "P3", "--description",  # noqa: E731
                                       "TASK-FIXTURE gap", "--session", S, *a)
-            subj_flags = ["--parameter", str(P_ENG), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED]
+            subj_flags = ["--parameter", str(P_ENG), "--identity", CELL_IDENT, "--icf", ICF, "--needs", A_NEED]
             g_before = c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
             ra = gap_cli_(*subj_flags)
             spec_id = c.execute("SELECT specification_id FROM specifications WHERE gap_register_id=?", (gid_e,)).fetchone()
@@ -1750,7 +1803,7 @@ else:
             record("T013-14", "an OPEN gap whose cell is retired is not in v_pending, and db.py gaps still gives its parameter "
                               "and lenses (read from the cell through v_gap_subject) and the home it came from",
                    in_pending == 0 and (shown.get("parameter_id"), shown.get("identity_code"), shown.get("icf_code"),
-                                        shown.get("needs_code"), shown.get("subject_home")) == (P_ENG, IDENT, ICF, A_NEED, "specifications")
+                                        shown.get("needs_code"), shown.get("subject_home")) == (P_ENG, CELL_IDENT, ICF, A_NEED, "specifications")
                    and "description" in shown and "status" in shown,
                    (in_pending, {k_: shown.get(k_) for k_ in ("parameter_id", "identity_code", "subject_home")}))
             # (add-gap A, the legitimate shape) a retired cell holds nothing: the subject may be typed.
@@ -1763,7 +1816,7 @@ else:
             base_ls = ["log-search", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
                        "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S]
             r1 = cli(*base_ls, "--parameter", str(other_p), "--gap-id", gid_e)
-            r2 = cli(*base_ls, "--parameter", str(P_ENG), "--identity", IDENT, "--gap-id", gid_e)
+            r2 = cli(*base_ls, "--parameter", str(P_ENG), "--identity", CELL_IDENT, "--gap-id", gid_e)
             record("T013-16", "log-search --gap-id of an engine gap refuses a search for another parameter (naming both) and "
                               "accepts a search that agrees with the cell",
                    r1.returncode != 0 and str(other_p) in r1.stderr and str(P_ENG) in r1.stderr and gid_e in r1.stderr
