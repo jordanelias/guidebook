@@ -176,7 +176,7 @@ scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "
 
 ## 7. Commit
 
-Commit **after** the gate of section 6 is clean.
+Commit **after** the gate of section 6 is clean. This task has two commits: the `migrate_db.py` change was committed alone in section 6 step 2.5 (the harness's clone must see it); this one carries the scratchpad repairs and `stress_diff.py`.
 ```
 git add -A . ':!transcripts' ':!*commands.jsonl'      # add the two append-only logs only at a natural break (CLAUDE.md rule 6)
 git commit -m "governance: repair stress scripts and add a normalised log diff for behaviour-preservation proofs [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the callers the sweep found and what was done to each>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
@@ -195,6 +195,8 @@ The format is `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, taken
 - Do not hand-type a count into any file or message; write the command that computes it. Do not type into a test an id, a code or a count the database can derive.
 - Do not add a table, column, check, verb or script that section 4 does not name. If one seems needed, stop and report. **This does not forbid fixing a caller:** a test fixture, a comment, a skill sentence or a help string that the sweep of section 5 shows is made false or red by your change is in scope, is fixed in this pull request, and is listed there.
 - Do not weaken a refusal, relax a CHECK, quarantine a check or change a registry level to make something pass.
+- Do not run the `batteries` part of `stress_run3.py` (it runs `run_checks.py --all`), and never run a stress script without `--out` under `$SCRATCH`.
+- Do not leave the stress scratch behind: when step 2 and the comparisons are done, `rm -rf "$(python3 -c 'import tempfile;print(tempfile.gettempdir())')/guidebook-stress"` (its clones and scratch databases hold `STRESS-FIXTURE` rows). Keep `$SCRATCH` until the pull request is written; it holds the evidence.
 
 ## 9. Stop conditions
 
@@ -206,7 +208,8 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
-- The two unchanged runs differ after normalisation: report the field; do not hide it by normalising more.
+- the set-up's `BASE=` line prints an empty value;
+- in section 6 step 2, B1 and B2 differ in any field other than `real.migrate-rebuild [stderr]`, or C1 and C2 differ in any field, or A1 and C1 differ in an `rc` that section 4 item 1 does not account for: report the field; do not hide it by normalising more (`stress_diff.py` has no option to). A1 and A2 differing in `real.*` is the expected red, not a stop.
 
 ## 10. Rollback
 
