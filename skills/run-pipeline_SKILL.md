@@ -59,7 +59,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK; it writes `attestation`, `other_source`
   unless `--attestation instrument`). A form read where no observation exists takes the base route (`add-alias --alias
   --language --jurisdiction --source-url --source-page|--source-clause --attestation`; the pair must be in `lang_jur_map`);
-  a search aid with no locator takes `--seed owner_supplied|model_seed` and is never vocabulary. A search names the forms it
+  a search aid with no locator takes `--seed owner_supplied --approval-ref '<ledger heading naming it>'` and is never vocabulary (`--seed model_seed` is refused, OR-17). A search names the forms it
   fired with `log-search --form-id`. A comparator ("not steeper than")
   or a value is not a name for the concept: adjudicate it `NOT-OURS`. The name rule is the writer's own: `add-term
   --canonical-en` and `rename-term --canonical-en` refuse a name carrying a digit, a comparison symbol, a `min` or
@@ -69,10 +69,10 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 - **A new concept arises while a source is in hand** (`observe-term` needs `--ref-id` and a persisted quote), so base
   is re-entered from stages 3–4. **Claude never generates a phrase, name or alias** (OR-17): it is the source's own
   wording, present in its jurisdiction and language. `add-term --from-observation` mints the term and its NAMES-NEW
-  adjudication together; it refuses a near match (shared tokens with a term or alias) unless `--distinct-from
+  adjudication together; it refuses a near match (shared tokens with a term or an alias that is not a `model_seed`) unless `--distinct-from
   TERM-ID` names it and the rationale says why. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
-  approval flag — `--approval-ref` belongs to the catalogue route (`mint-term-from-catalogue`, D3) only.
+  approval flag — `--approval-ref` belongs to the catalogue route (`mint-term-from-catalogue`, D3) and to `add-alias --seed owner_supplied` only.
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an
   extraction for the parameter (ledger 2026-10-30, ACTION 6; stored in `base_parameters.direction_ref_id`); a
   direction with no source is refused. Without a direction stage 6 cannot select a value and says so in its gap. A

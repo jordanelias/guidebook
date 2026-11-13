@@ -326,7 +326,7 @@ checks:
   basis: unattributed
   cost: fast
   min_items: 1
-  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the term_aliases row count (2382 today). min_items:1
+  note: 'INSTRUMENTED 2026-08-14 (A5): EXAMINED prints the term_aliases row count plus the completed zero-result searches (T-026; re-run for the figure). min_items:1
     — the controlled vocabulary is populated repo content, not a corpus that could legitimately empty
     out.'
 - id: observation_verbatim_audit

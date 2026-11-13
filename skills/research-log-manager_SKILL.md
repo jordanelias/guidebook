@@ -71,7 +71,7 @@ After multilingual-research completes:
      --jurisdiction {jur_code} \        # omit if the search was not jurisdiction-scoped
      --identity {identity_code} --icf {icf_code} --needs {need_code} \   # the lens this query covered; each optional and checked against its registry (--medical once that registry has rows)
      --query-text '{the query, exactly as fired}' \
-     --form-id {rowid} --form-id {rowid} \   # repeatable: the rowid of each term_aliases row this query fired (select rowid, term_id, alias, language from term_aliases); stored by the form's key. --terms-used is refused
+     --form-id {rowid} --form-id {rowid} \   # repeatable: the rowid of each term_aliases row this query fired (select rowid, term_id, alias, language from term_aliases); stored by the form's key; a form's language must be the search's --language. --terms-used is refused
      --engine {pubmed|crossref|web|...} \
      --depth-method {scoping|systematic} \             # only two; a citation chase is --mining-direction
      --target-tier {1..6} --target-evidence-type {co1|clinical|code|...} \

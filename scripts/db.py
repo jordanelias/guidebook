@@ -969,6 +969,10 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                 raise Refusal(f"--form-id {fid} names no term_aliases row. Read the rowid now "
                               f"(select rowid, term_id, alias, language from term_aliases). "
                               f"Nothing was written.")
+            if frow["language"].upper() != language:
+                raise Refusal(f"--form-id {fid} is the {frow['language']!r} form "
+                              f"{frow['alias']!r}, but this search is --language {language!r}: a "
+                              f"search fires the forms of its own language. Nothing was written.")
             forms[tuple(frow)] = None
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
@@ -2056,7 +2060,12 @@ def main():
                        help="instrument or other_source: required on the base route, optional "
                             "on the observation route (default other_source)")
     p_aal.add_argument("--seed", choices=dbcore.schema_choices("term_aliases", "attestation"),
-                       help="seed route: owner_supplied or model_seed (a search aid, never vocabulary)")
+                       help="seed route: owner_supplied (a search aid, never vocabulary); "
+                            "model_seed is withheld (OR-17)")
+    p_aal.add_argument("--approval-ref", dest="approval_ref",
+                       help="seed route: the dated `## ` heading of the ledger entry in which "
+                            "the owner supplies the alias, found once and naming it; printed, "
+                            "not stored")
     p_aal.add_argument("--alias-type", dest="alias_type", required=True,
                        choices=dbcore.schema_choices("term_aliases", "alias_type"),
                        help="from the column's CHECK; DEPRECATED is rename-term's")
@@ -3382,7 +3391,8 @@ def main():
                         language=args.language, jurisdiction=args.jurisdiction,
                         source_url=args.source_url, source_page=args.source_page,
                         source_line=args.source_line, source_clause=args.source_clause,
-                        attestation=args.attestation, seed=args.seed))
+                        attestation=args.attestation, seed=args.seed,
+                        approval_ref=args.approval_ref))
 
     elif args.command == "mint-term-from-catalogue":
         _emit(mint_term_from_catalogue(
@@ -6602,10 +6612,11 @@ def _near_terms(conn, name: str) -> list:
     --distinct-from. Exact matches are _name_holder's; this is the near miss nothing checked
     (2026-11-06).
 
-    An alias compares only when its `attestation` is instrument or other_source (T-026,
-    OD-03, E4): a model_seed, owner_supplied or unrecorded form is a search aid, never
-    vocabulary, so it neither names a concept nor blocks a new one. The label comparison is
-    unchanged."""
+    An alias compares unless its `attestation` is model_seed (T-026): a known unattested
+    seed is a search aid, so it neither names a concept nor blocks a new one. An `unrecorded`
+    or owner_supplied alias is STILL compared, as before 130: E4 (whether a form without a
+    locator is vocabulary) is an open owner question, and a live refusal is not weakened on
+    the strength of an open question. The label comparison is unchanged."""
     want = _name_tokens(name)
     if not want:
         return []
@@ -6613,7 +6624,7 @@ def _near_terms(conn, name: str) -> list:
     for term_id, held in conn.execute(
             "SELECT term_id, canonical_en FROM terms UNION ALL "
             "SELECT term_id, alias FROM term_aliases WHERE upper(language)='EN' "
-            "AND attestation IN ('instrument','other_source')"):
+            "AND attestation <> 'model_seed'"):
         have = _name_tokens(held)
         # Near: the new name's tokens sit inside an existing name's ('ramp runs' in 'ramp run
         # length'), or an existing name of TWO OR MORE tokens sits inside the new one. A
@@ -7609,23 +7620,44 @@ def rename_term(term_id: str, canonical_en: str, reason: str, session: str,
                 "alias_language": lang, "changed": True, "dry_run": dry_run}
 
 
+#: The one seed value the writer WITHHOLDS (OR-17: "the model may not generate its own phrases,
+#: names or aliases"). The column, the fill and the audit keep the value for the rows that carry
+#: it; only the writer refuses it, until the owner rules whether a model-made search aid may be
+#: written at all. To reverse: set this to None.
+_SEED_WITHHELD = "model_seed"
+
+#: The tier from which an evidence source belongs to the regulatory stratum (T4-T6: code,
+#: national framework, international standard); the bound db.py's R3 locator refusal already uses.
+_REGULATORY_FROM_TIER = 4
+
+
+def _regulatory_pairs():
+    """The (evidence_type, scope) pairs the tier ladder derives to the regulatory stratum --
+    read from schemas.tier_derivation.TIER_MAP, never listed here."""
+    from schemas.tier_derivation import TIER_MAP  # noqa: E402
+    return {k for k, tier in TIER_MAP.items() if tier >= _REGULATORY_FROM_TIER}
+
+
 def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
               dry_run: bool = False, *, alias: str = None, language: str = None,
               jurisdiction: str = None, source_url: str = None, source_page: str = None,
               source_line: int = None, source_clause: str = None,
-              attestation: str = None, seed: str = None):
+              attestation: str = None, seed: str = None, approval_ref: str = None):
     """Record a form of a term and HOW IT IS ATTESTED. Exactly one route per call:
 
       observation   --observation-id N [--attestation instrument|other_source]
                     the phrase an admitted source uses (default other_source: that a
-                    source used it is read; whether it is an instrument is a judgment);
+                    source used it is read; `instrument` needs the source to belong to the
+                    regulatory stratum, derived from the tier ladder);
       base          --alias T --language XX --jurisdiction YY --source-url U
                     (--source-page P | --source-clause C) [--source-line N]
                     --attestation instrument|other_source
                     a form read where no observation exists; the locator is the warrant
                     and created_by_session the judge (no rationale column, T-026);
-      seed          --alias T --language XX [--jurisdiction YY] --seed owner_supplied|model_seed
-                    a search aid with no locator. It is never vocabulary (E4).
+      seed          --alias T --language XX [--jurisdiction YY] --seed owner_supplied
+                    --approval-ref "<a dated ledger heading naming the alias>"
+                    a search aid with no locator, never vocabulary (E4). `--seed model_seed`
+                    is REFUSED (OR-17, see _SEED_WITHHELD).
 
     `term_aliases` had no writer at all (critique F5), so a new language alias had no
     sanctioned path. Aliases are a reading aid, never evidence (catalogue-plan-v2 section
@@ -7638,21 +7670,26 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
 
     PROMOTION AND NO DOWNGRADE. The key is (term_id, alias, language). A held row whose
     attestation is model_seed, owner_supplied or unrecorded is promoted in place by the
-    observation or the base route (attestation and pointer or locator set, jurisdiction
-    set where NULL, type and history kept); no second row. A held row already attested is
-    refused by every route: a second occurrence waits for T-028's occurrence grain, and an
-    instrument row is never re-attested as other_source. The seed route refuses any held
-    row.
+    observation or the base route (attestation and pointer or locator set, type and history
+    kept, updated_by_session set to this session); no second row. It is REFUSED when its
+    type is TRANSLATION or DEPRECATED (the routes refuse those for a new row; the legacy type
+    must be typed first, T-028/T-107) or when its jurisdiction is not NULL and not the
+    attesting source's or the supplied one (a seed's unrecorded jurisdiction is not laundered
+    into an attested row). A held row already attested is refused by every route: a second
+    occurrence waits for T-028's occurrence grain, and an instrument row is never re-attested
+    as other_source. The seed route refuses any held row.
 
     REFUSES: neither or several routes; an alias type outside the CHECK, DEPRECATED
     (rename-term's record) or TRANSLATION (a source's own phrase is not a rendering of the
     English one, R11); an unknown term or observation; an observation no adjudication names
     this term with, whose phrase is not inside its quote, or whose quote is not in a file
-    saved for its source (unless VERBATIM-EXEMPT); a base route with no locator, a pair
-    lang_jur_map lacks, or an attestation outside instrument|other_source; a seed route
-    with a locator or an attestation, or a seed that is an attestation; a held jurisdiction
-    that differs from the one given. The observation route keeps writing the
-    `source-attested` note alias_provenance_audit has always read.
+    saved for its source (unless VERBATIM-EXEMPT); `instrument` for a source outside the
+    regulatory stratum; a base route with no locator, a blank locator part, a URL that is
+    not http(s)://host with no whitespace, a pair lang_jur_map lacks, or an attestation
+    outside instrument|other_source; a seed route with a locator or an attestation, a seed
+    that is an attestation, `model_seed`, or `owner_supplied` with no ledger heading naming
+    the alias (a Delegated resolution is refused). The observation route also writes a
+    `source-attested` note, a human-readable record; the audit reads the typed column first.
     """
     base = alias is not None and seed is None
     routes = (observation_id is not None) + base + (seed is not None)
@@ -7662,8 +7699,12 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
             "source uses); --alias T --language XX --jurisdiction YY --source-url U "
             "(--source-page P | --source-clause C) --attestation instrument|other_source "
             "(a form read where no observation exists); or --alias T --language XX "
-            "--seed owner_supplied|model_seed (a search aid, no locator). Nothing was written.")
+            "--seed owner_supplied --approval-ref '<ledger heading>' (a search aid, no "
+            "locator). Nothing was written.")
     route = "observation" if observation_id is not None else "base" if base else "seed"
+    # a blank locator part is no locator: trimmed here, refused by name below
+    source_url, source_page, source_clause = ((v.strip() if isinstance(v, str) else v)
+                                              for v in (source_url, source_page, source_clause))
     locator = {"source_url": source_url, "source_page": source_page,
                "source_line": source_line, "source_clause": source_clause}
     given = [f"--{k.replace('_', '-')}" for k, v in locator.items() if v is not None]
@@ -7680,10 +7721,39 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
             raise Refusal(f"add-alias: {', '.join(given + (['--attestation'] if attestation else []))} "
                           f"with --seed: a seed carries no locator and no attestation. A form "
                           f"read in an instrument or another source takes the base route.")
-        if seed in ("instrument", "other_source", "unrecorded"):
+        if seed in (*dbcore.ATTESTED_FORMS, "unrecorded"):
             raise Refusal(f"add-alias: --seed {seed}: an attestation needs a locator (the base "
-                          f"route); a seed is owner_supplied or model_seed. Nothing was written.")
-    if attestation is not None and route != "seed" and attestation not in ("instrument", "other_source"):
+                          f"route); a seed is a search aid with none. Nothing was written.")
+        if seed == _SEED_WITHHELD:
+            raise Refusal(
+                f"add-alias: --seed {seed} is withheld (OR-17: the model may not generate its "
+                f"own phrases, names or aliases). Whether a model-made search aid may be "
+                f"written at all is an open owner question; the column and the existing rows "
+                f"keep the value. An owner-supplied seed takes --seed owner_supplied "
+                f"--approval-ref. Nothing was written.")
+        if approval_ref is None or not approval_ref.strip():
+            raise Refusal("add-alias: --seed owner_supplied needs --approval-ref, the dated `## ` "
+                          "heading of the ledger entry that records the owner supplying this "
+                          "alias; an owner-supplied seed with no recorded owner statement is "
+                          "a model's. Nothing was written.")
+        approval_ref = approval_ref.strip()
+        if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
+            raise Refusal(f"add-alias: --approval-ref {approval_ref!r} carries no date. Give the "
+                          f"dated `## ` heading of the approving ledger entry.")
+        n = dbcore.ledger_heading_count(approval_ref)
+        if n != 1:
+            raise Refusal(f"add-alias: --approval-ref {approval_ref!r} is the heading of {n} "
+                          f"ledger entries; it must be exactly one. Nothing was written.")
+        if approval_ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
+            raise Refusal(f"add-alias: --approval-ref {approval_ref!r} is a delegated resolution "
+                          f"(a model's), not the owner's words. Nothing was written.")
+        if not dbcore.ledger_entry_names(approval_ref, alias.strip()):
+            raise Refusal(f"add-alias: the ledger entry {approval_ref!r} does not name "
+                          f"{alias.strip()!r}. Record the owner supplying this alias in a dated "
+                          f"entry that names it, then give that entry's heading.")
+    elif approval_ref is not None:
+        raise Refusal("add-alias: --approval-ref belongs to --seed owner_supplied. Nothing was written.")
+    if attestation is not None and route != "seed" and attestation not in dbcore.ATTESTED_FORMS:
         raise Refusal(f"add-alias: --attestation {attestation!r}: a form read in a source is "
                       f"instrument (a code, standard or statute uses it) or other_source. A seed "
                       f"takes --seed. Nothing was written.")
@@ -7697,8 +7767,12 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
             raise Refusal("add-alias: the base route needs --source-page or --source-clause: the "
                           "locator is the warrant, and a URL alone does not say where the form "
                           "is used. Nothing was written.")
-    if source_url is not None and not re.match(r"https?://", source_url):
-        raise Refusal(f"add-alias: --source-url {source_url!r} is not an http(s) URL.")
+    for flag, v in (("--source-page", source_page), ("--source-clause", source_clause)):
+        if v is not None and not v:
+            raise Refusal(f"add-alias: {flag} is blank. Give the page or clause, or omit it.")
+    if source_url is not None and not re.fullmatch(r"https?://[^/\s]\S*", source_url):
+        raise Refusal(f"add-alias: --source-url {source_url!r} is not an http(s) URL with a host "
+                      f"and no whitespace.")
     if source_line is not None and source_line < 1:
         raise Refusal("add-alias: --source-line is a line number, 1 or more.")
     with connect(dry_run) as conn:
@@ -7720,11 +7794,19 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         if route == "observation":
             obs = conn.execute(
                 "SELECT o.observation_id, o.ref_id, o.surface_form, o.language, o.locator, "
-                "o.context_quote, o.notes, e.jurisdiction FROM observed_terms o "
+                "o.context_quote, o.notes, e.jurisdiction, e.tier, e.evidence_type, e.scope "
+                "FROM observed_terms o "
                 "JOIN evidence_sources e ON e.ref_id = o.ref_id WHERE o.observation_id = ?",
                 (observation_id,)).fetchone()
             if obs is None:
                 raise Refusal(f"add-alias: observation {observation_id}: no such observed term.")
+            if attestation == "instrument" and (obs["evidence_type"], obs["scope"]) not in _regulatory_pairs():
+                raise Refusal(
+                    f"add-alias: --attestation instrument needs a source in the regulatory "
+                    f"stratum (a code, national framework or international standard); "
+                    f"{obs['ref_id']} is tier {obs['tier']}, evidence_type "
+                    f"{obs['evidence_type']!r}. Use other_source (the default), or the base "
+                    f"route with the instrument's own URL and clause. Nothing was written.")
             if not _names_term(conn, observation_id, term_id):
                 raise Refusal(
                     f"add-alias: no adjudication of observation {observation_id} names "
@@ -7774,19 +7856,26 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                             "source_url, notes FROM term_aliases WHERE term_id = ? AND alias = ? "
                             "AND language = ?", (term_id, text, lang)).fetchone()
         if held and (route == "seed" or held["observation_id"] is not None
-                     or held["attestation"] in ("instrument", "other_source")):
+                     or held["attestation"] in dbcore.ATTESTED_FORMS):
             how = (f"attested by observation {held['observation_id']}"
                    if held["observation_id"] is not None else
                    f"attested as {held['attestation']}" + (f" at {held['source_url']}" if held["source_url"] else "")
-                   if held["attestation"] in ("instrument", "other_source") else
+                   if held["attestation"] in dbcore.ATTESTED_FORMS else
                    f"held as {held['attestation']}")
             raise Refusal(f"add-alias: {term_id} already holds {text!r} ({lang}) as {held['alias_type']}, "
                           f"{how}. A second occurrence of an attested form waits for T-028's "
                           f"occurrence grain; a held row is never re-attested. Nothing was written.")
-        if held and jur is not None and held["jurisdiction"] is not None and held["jurisdiction"] != jur:
+        if held and held["alias_type"] in ("TRANSLATION", "DEPRECATED"):
+            raise Refusal(f"add-alias: {term_id} holds {text!r} ({lang}) with the legacy type "
+                          f"{held['alias_type']}, which no route writes for a new row. Promoting "
+                          f"it would attest a back-translation or a former name as a source's "
+                          f"own phrase; the legacy type is typed first (T-028/T-107). Nothing "
+                          f"was written.")
+        if held and held["jurisdiction"] is not None and held["jurisdiction"] != jur:
             raise Refusal(f"add-alias: {term_id} holds {text!r} ({lang}) for jurisdiction "
-                          f"{held['jurisdiction']!r}, not {jur!r}. A held jurisdiction is not "
-                          f"overwritten. Nothing was written.")
+                          f"{held['jurisdiction']!r}; the attesting source's is {jur!r}. A held "
+                          f"jurisdiction is neither overwritten nor kept under a source of "
+                          f"another or no jurisdiction. Nothing was written.")
         others = [r[0] for r in conn.execute(
             "SELECT DISTINCT term_id FROM term_aliases WHERE alias = ? AND language = ? "
             "AND term_id <> ?", (text, lang, term_id))]
@@ -7796,10 +7885,9 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
                 **(locator if route == "base" else {})}
         if held:
             # A model-seeded, owner-supplied or unrecorded alias whose text a source uses is
-            # PROMOTED in place: the pointer or locator is attached, the held row's type and
-            # its history stay, and the jurisdiction is the source's where the row had none.
-            upd = dict(sets, jurisdiction=held["jurisdiction"] if held["jurisdiction"] is not None else jur,
-                       updated_at=dbcore.now(), updated_by_session=session)
+            # PROMOTED in place: the pointer or locator is attached and the held row's type and
+            # history stay. updated_* name the promoting session (created_* stay the seed's).
+            upd = dict(sets, jurisdiction=jur, updated_at=dbcore.now(), updated_by_session=session)
             if note:
                 upd["notes"] = (held["notes"] + "; " if held["notes"] else "") + note
             conn.execute("UPDATE term_aliases SET " + ", ".join(f"{k} = ?" for k in upd)
@@ -7814,10 +7902,13 @@ def add_alias(term_id: str, observation_id: int, alias_type: str, session: str,
         row.update(dbcore.stamp_for(conn, "term_aliases", session))
         conn.execute(f"INSERT INTO term_aliases ({','.join(row)}) "
                      f"VALUES ({','.join('?' * len(row))})", list(row.values()))
-        return {"term_id": term_id, "alias": text, "language": lang, "route": route,
-                "alias_type": alias_type, "jurisdiction": jur,
-                "attestation": sets["attestation"], "also_an_alias_of": others,
-                "dry_run": dry_run}
+        out = {"term_id": term_id, "alias": text, "language": lang, "route": route,
+               "alias_type": alias_type, "jurisdiction": jur,
+               "attestation": sets["attestation"], "also_an_alias_of": others,
+               "dry_run": dry_run}
+        if route == "seed":
+            out["approval_ref"] = approval_ref        # printed, not stored: the table has no column for it
+        return out
 
 
 def _decision_reference(ref: str) -> str:
