@@ -46,7 +46,7 @@ stages:
   - id: base-jurisdiction-vocabulary
     kind: integrity
     criterion: Every jurisdiction value resolves to the declared vocabulary.
-    references: D-0167; the architecture note's base.jurisdictions, which has no table yet
+    references: D-0167; the architecture note's base.jurisdictions, now the table base_jurisdictions (db.py add-jurisdiction admits a code)
     check: scripts/validate_jurisdiction.py
   - id: base-parameter-vocabulary
     kind: completeness

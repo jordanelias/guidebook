@@ -365,6 +365,35 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+#: The ledger's own convention for an entry that is NOT the owner's words: a heading that
+#: begins "Delegated resolution" (an Opus-class model resolving a register decision under the
+#: owner's delegation of 2026-11-12). A typed prefix of the ledger, not a vocabulary list.
+LEDGER_DELEGATED_PREFIX = "Delegated resolution"
+
+
+def ledger_entry_names(heading: str, token: str) -> bool:
+    """Does the ledger entry under `## <heading>` name `token` as a whole token?
+
+    The entry is the text from its heading to the next `## ` heading. A whole token is the
+    string not touched on either side by a letter, digit or dash, so `US` is not found in
+    `US-CA` or `USA`, and a code is not found inside a longer word. Case-sensitive: codes
+    are upper case. A heading found other than once names nothing (False).
+    """
+    want = normalise_quote_text(heading)
+    lines = LEDGER_PATH.read_text(encoding="utf-8").splitlines()
+    starts = [i for i, l in enumerate(lines)
+              if l.startswith("## ") and normalise_quote_text(l[3:]) == want]
+    if len(starts) != 1:
+        return False
+    body = []
+    for l in lines[starts[0] + 1:]:
+        if l.startswith("## "):
+            break
+        body.append(l)
+    return re.search(r"(?<![A-Za-z0-9-])%s(?![A-Za-z0-9-])" % re.escape(token),
+                     "\n".join(body)) is not None
+
+
 def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
     """Refuse unless `quote` is in the ledger exactly once -- tied to one recorded ruling.
 
@@ -948,7 +977,7 @@ def declared_jurisdictions() -> set:
 
     Read through its own read-only connection on GUIDEBOOK_DB_PATH (the canonical file when
     unset), so no writer's call site threads a connection through. A database below
-    migration 129 has no such table, and that is a Refusal, never an empty set: an empty
+    the migration that creates the table has no such table, and that is a Refusal, never an empty set: an empty
     vocabulary would refuse every code or (read the other way) admit every one, and either
     reading hides that the migrations were not applied. No caller catches it into a pass.
     """

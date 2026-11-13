@@ -99,7 +99,7 @@ def main() -> int:
                                 f"-- rejected, must be '{good}'")
 
     # Every corpus value must be a DECLARED code, one a row of base_jurisdictions holds.
-    # With no table (a database below migration 129) dbcore raises a Refusal, and with an
+    # With no table (a database below the migration that creates base_jurisdictions) dbcore raises a Refusal, and with an
     # empty one there is no vocabulary: either way this check examined no code, which is
     # failure mode (a), so it FAILS with the reason rather than passing.
     sys.path.insert(0, str(REPO_ROOT / "scripts"))
@@ -127,6 +127,28 @@ def main() -> int:
                    f"not a jurisdiction at all and the value is mis-filed.")
             (reported if t in REPORT_ONLY else findings).append(msg)
 
+    # AT REST, EVERY ADMISSION ANSWERS FOR ITSELF. A row the verb wrote carries the dated ledger
+    # heading that records its approval; a seed row (the migration's) carries neither a pointer
+    # nor a session. So a pointer must be found exactly once in the ledger and the entry must
+    # name the code (the verb's own test, dbcore.ledger_entry_names), and a row with no pointer
+    # but a session landed without an approval (a raw INSERT, or a pointer cleared afterwards).
+    for code, ref, session in conn.execute(
+            "SELECT jurisdiction_code, admission_ref, created_by_session FROM base_jurisdictions"):
+        examined += 1
+        if ref is None:
+            if session is not None:
+                findings.append(f"  base_jurisdictions.{code}: landed without an approval "
+                                f"(no admission_ref, written by {session})")
+        elif dbcore.ledger_heading_count(ref) != 1:
+            findings.append(f"  base_jurisdictions.{code}: admission_ref {ref!r} is the heading of "
+                            f"{dbcore.ledger_heading_count(ref)} ledger entries; it must be exactly one")
+        elif ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
+            findings.append(f"  base_jurisdictions.{code}: admission_ref {ref!r} is a delegated "
+                            f"resolution, not the owner's words; scope is the owner's decision")
+        elif not dbcore.ledger_entry_names(ref, code):
+            findings.append(f"  base_jurisdictions.{code}: the ledger entry {ref!r} does not name "
+                            f"{code!r}")
+
     print(f"Rejected spellings, read from {PHILOSOPHY.relative_to(REPO_ROOT)}: {bad_map}")
     print(f"Declared codes in base_jurisdictions: {len(declared)}")
     print(f"Tables with a jurisdiction column (derived, {len(EXEMPT)} exempt, "
@@ -136,7 +158,7 @@ def main() -> int:
         print("\n".join(reported))
     if findings:
         print("\n".join(findings))
-    print(f"EXAMINED: {examined} (table x rejected-spelling pair)")
+    print(f"EXAMINED: {examined} (table x rejected-spelling pair, declared value, admission row)")
     print(f"VERDICT: {'FAIL' if findings else 'PASS'}")
     return 1 if findings else 0
 

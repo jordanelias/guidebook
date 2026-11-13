@@ -13,10 +13,51 @@
 -- for the rest. parent_code, admission_ref and created_* are NULL on them: no single ledger
 -- heading admitted the seeded set (the enum's comments cite several rulings and, for the
 -- first group, jurisdiction-tracker 4.7.3, which is not a ledger entry), so naming one
--- would be a guess. A NULL admission_ref therefore marks exactly the seeded set; this
--- header is its record. UN is seeded because the table is the vocabulary a row may carry,
+-- would be a guess. A NULL admission_ref therefore marks exactly the seeded set, and a seed
+-- row never carries a session (the migration wrote it); scripts/audit/jurisdiction_db_vocabulary.py
+-- reports a row with no admission_ref that does, and a pointer no ledger heading answers.
+-- This header is the seed's record. UN is seeded because the table is the vocabulary a row may carry,
 -- not the research scope: OD-04's "UN: out" is recorded on lang_jur_map.scope_status, and
 -- search_executions already holds rows with jurisdiction 'UN'.
+--
+-- THE SEED'S PROVENANCE, quoted verbatim from schemas/enums.py JurisdictionCode as the
+-- last commit that declared it left it (the comments that named the ruling behind each
+-- admission; the enum is deleted in this change and git history is not a place a reader
+-- looks):
+--
+--       # Admitted 2026-09-18 (owner ruling). Each was already live in the corpus
+--       # tables while absent from this enum, so the declared vocabulary could not be
+--       # used to gate the column it describes.
+--       BE = "BE"   # Belgium -- REF-00995 (Flemish decree), REF-00996 (Handboek Toegankelijkheid)
+--       ES = "ES"   # Spain -- search_executions (CTE DB-SUA line of enquiry)
+--       HR = "HR"   # Croatia -- REF-01001 (Lepoglavec 2023)
+--       IT = "IT"   # Italy -- search_executions
+--
+--       # Admitted 2026-10-01, executing the owner ruling of 2026-09-28 ("jurisdiction
+--       # scope: buckets 1-2 exhausted before reaching further", references/
+--       # project-standards.md). PT and FI are named Bucket-2 members and UN a Bucket-1
+--       # member of that ruling, which calls UN's absence from this enum "a tooling gap
+--       # (rule 10: fix in its own PR)". Where each is live:
+--       #     select jurisdiction, count(*) from <table> where jurisdiction in
+--       #         ('PT','FI','UN','UG') group by 1;
+--       PT = "PT"   # Portugal -- Bucket 2
+--       FI = "FI"   # Finland -- Bucket 2
+--       UN = "UN"   # United Nations -- Bucket 1. A meta-code like ISO and EU, not a country.
+--       # UG is NOT in either bucket and is admitted by owner decision D2, approved 2026-10-01
+--       # (references/project-standards.md, grep "plan's decisions D1–D4 approved"): declared
+--       # for PR #165's rows, which are not unwound; outside research scope by the 2026-09-28
+--       # ruling. This enum is the declared vocabulary of rows held, not the canonical list --
+--       # so declaring UG licenses no further Ugandan research; the ruling, not this list,
+--       # sets research scope.
+--       UG = "UG"   # Uganda
+--
+--       # Meta-codes (not individual countries)
+--       ISO = "ISO"   # ISO international standards
+--       EU = "EU"     # European Union directives
+--       INT = "INT"   # International / no single jurisdiction. DISTINCT FROM ISO: ISO
+--       #               means an ISO-published standard, INT means the work spans
+--       #               jurisdictions without being one -- REF-00994 (IPC Accessibility
+--       #               Guide) and REF-00977 (a review searched across three databases).
 --
 -- KIND is `country`, `sub-national` or `meta`; a sub-national code names its parent country
 -- in parent_code (a pointer, rule 5), and the table CHECK binds the pointer to that kind.
@@ -43,15 +84,29 @@
 -- STAGE: base.
 
 CREATE TABLE base_jurisdictions (
+    -- THE SHAPE OF A CODE, held by the table where a table can hold it: upper-case letters,
+    -- digits and at most one dash, with a letter first; the GB prefix is the ruled rejected
+    -- spelling (UK is the project's code). The dash belongs to a sub-national code and to
+    -- no other kind, and a sub-national code is exactly <parent_code>-<a non-empty
+    -- subdivision>. That the parent is a `country` cannot be a CHECK (it reads another
+    -- row); the writer, db.py add-jurisdiction, refuses it.
     jurisdiction_code  TEXT PRIMARY KEY
                        CHECK (jurisdiction_code = UPPER(jurisdiction_code)
-                              AND jurisdiction_code NOT LIKE 'GB%'),
+                              AND jurisdiction_code NOT LIKE 'GB%'
+                              AND jurisdiction_code GLOB '[A-Z]*'
+                              AND jurisdiction_code NOT GLOB '*[^A-Z0-9-]*'
+                              AND jurisdiction_code NOT GLOB '*-*-*'
+                              AND jurisdiction_code NOT GLOB '*-'),
     kind               TEXT NOT NULL CHECK (kind IN ('country', 'sub-national', 'meta')),
     parent_code        TEXT REFERENCES base_jurisdictions(jurisdiction_code),
     admission_ref      TEXT,
     created_at         TEXT,
     created_by_session TEXT,
-    CHECK ((kind = 'sub-national') = (parent_code IS NOT NULL))
+    CHECK ((kind = 'sub-national') = (parent_code IS NOT NULL)),
+    CHECK ((kind = 'sub-national') = (jurisdiction_code LIKE '%-%')),
+    CHECK (kind <> 'sub-national'
+           OR (substr(jurisdiction_code, 1, length(parent_code) + 1) = parent_code || '-'
+               AND length(jurisdiction_code) > length(parent_code) + 1))
 );
 
 INSERT INTO base_jurisdictions (jurisdiction_code, kind) VALUES

@@ -34,7 +34,7 @@
 |---|---|---|---|
 | ENT-11 | **Population** | DONE (enum) | — |
 | ENT-12 | **Sub-population** | Deferred | A7 |
-| ENT-13 | **Jurisdiction** | DONE (enum) | — |
+| ENT-13 | **Jurisdiction** | DONE (table `base_jurisdictions`) | — |
 | ENT-14 | **Audience** | Deferred | A4 |
 | ENT-15 | **Co-1 Collaborator** | Deferred | Post-launch |
 | ENT-16 | **Building Type** | Deferred | A6 |
@@ -174,7 +174,7 @@ evidence_type: EvidenceType   # members: schemas/enums.py
 |---|---|
 | schemas/enums.py — EvidenceTier (1–6 per T-03) | ✓ |
 | schemas/enums.py — EvidenceType (per T-03) | ✓ |
-| `base_jurisdictions` — the declared jurisdiction vocabulary (a table since migration 129; count the rows, never quote them: `SELECT COUNT(*) FROM base_jurisdictions`) | ✓ |
+| `base_jurisdictions` — the declared jurisdiction vocabulary (a table, not an enum; count the rows, never quote them: `SELECT COUNT(*) FROM base_jurisdictions`) | ✓ |
 | schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
 | schemas/evidence_source.py (531 records) | ✓ |
 | scripts/validate_schema.py (6 entity types + cross-check) | ✓ |

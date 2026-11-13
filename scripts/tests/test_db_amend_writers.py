@@ -1443,7 +1443,7 @@ try:
         "_jdv", REPO / "scripts" / "audit" / "jurisdiction_db_vocabulary.py")
     jdv = importlib.util.module_from_spec(_spec)
     _spec.loader.exec_module(jdv)
-    DECLARED = dbcore.declared_jurisdictions()
+    DECLARED = getattr(dbcore, "declared_jurisdictions", set)()     # empty on a tree without the registry
     REJECTED = jdv.rejected_spellings()
     check_jur = getattr(dbcore, "check_jurisdiction", None)
     UNDECLARED = "XX"
@@ -1489,7 +1489,7 @@ try:
     record("J05", "log-search refuses an undeclared jurisdiction before it writes",
            msg and "base_jurisdictions" in msg and counts("search_executions") == n_exec,
            f"got {msg!r}")
-    ES_LIKE = sorted(DECLARED)[0]
+    ES_LIKE = (sorted(DECLARED) or ["XX"])[0]
     msg = refusal(db.insert_code_lead, {"jurisdiction": ES_LIKE.lower(),
                                         "standard_name": "Fixture lead J06",
                                         "status": "REFERENCE-ONLY"}, S)
@@ -1897,194 +1897,266 @@ try:
     # ── T024: jurisdictions are rows of base_jurisdictions, admitted by a verb ──────────────
     # IMP-17. The declared vocabulary used to be an enum in code, so admitting a jurisdiction
     # meant editing a file and the pairs lang_jur_map owes named codes the writers refused.
-    # Every probe is chosen by query. The refusal cases assert the stderr starts REFUSING:, so
-    # that an absent verb or flag (an argparse error) cannot pass as a refusal.
-    import re as _re24
-    DECL0 = dbcore.declared_jurisdictions()
-    MAP24 = sorted({j for (j,) in q("SELECT DISTINCT jurisdiction FROM lang_jur_map")})
-    ADM = next((j for j in MAP24 if j not in DECL0), None)
-    HELD24 = sorted(DECL0)[0]
-    APPROVAL = next((l[3:].strip() for l in reversed(
-        (REPO / "references" / "project-standards.md").read_text(encoding="utf-8").splitlines())
-        if l.startswith("## ") and _re24.search(r"\d{4}-\d{2}-\d{2}", l)
-        and dbcore.ledger_heading_count(l[3:].strip()) == 1), None)
-    META = next((c for (c,) in q("SELECT jurisdiction_code FROM base_jurisdictions "
-                                 "WHERE kind='meta' ORDER BY 1")), None)
-    PAIR24 = q("SELECT p.slug, p.language, p.jurisdiction FROM v_coverage_priority p "
-               "JOIN base_jurisdictions b ON b.jurisdiction_code = p.jurisdiction "
-               "WHERE b.kind='country' ORDER BY p.slug, p.jurisdiction, p.language LIMIT 1")
-    record("T024-00", "the probes exist: an owed code the vocabulary refused, a once-found "
-           "dated ledger heading, a meta code, an owed unsearched pair of a held country",
-           bool(ADM and APPROVAL and META and PAIR24),
-           f"adm={ADM} approval={APPROVAL!r} meta={META} pair={PAIR24}")
-    SLUG24, LANG24, COUNTRY24 = PAIR24[0]
-    SUB24 = COUNTRY24 + "-T024"
-    n_jur = lambda: q("SELECT COUNT(*) FROM base_jurisdictions")[0][0]          # noqa: E731
-
-    def add_jur(*a):
-        return run_cli("add-jurisdiction", *a)
-
-    def refused24(r, n0):
-        return (r.returncode != 0 and r.stderr.startswith("REFUSING:") and n_jur() == n0)
-
-    # T024-01 the seed: the rows with no admission pointer are the enum's members at the
-    # commit before it was deleted -- derived from history, never typed.
-    seeded = {c for (c,) in q("SELECT jurisdiction_code FROM base_jurisdictions "
-                              "WHERE admission_ref IS NULL")}
-    enum_src = None
-    try:
-        # The last committed state of schemas/enums.py that still declared the class.
-        for h in subprocess.run(["git", "log", "--format=%H", "--", "schemas/enums.py"], cwd=REPO,
-                                capture_output=True, text=True, check=True).stdout.split():
-            src = subprocess.run(["git", "show", f"{h}:schemas/enums.py"], cwd=REPO,
-                                 capture_output=True, text=True, check=True).stdout
-            if "class JurisdictionCode" in src:
-                enum_src = src
-                break
-    except (OSError, subprocess.CalledProcessError):
-        enum_src = None
-    if enum_src is None:
-        print("      SKIPPED-NO-FIXTURE T024-01: no committed schemas/enums.py declares JurisdictionCode here")
+    # Every probe is chosen by query. A refusal case asserts the message names its ground (and
+    # the CLI cases that the stderr starts REFUSING:), so that an absent verb or flag cannot
+    # pass as a refusal. On a tree without the registry each case RECORDS a red line instead
+    # of crashing (the ids are read from this file, so a new case is covered the day it is added).
+    import contextlib                                                      # noqa: E402
+    import io                                                              # noqa: E402
+    import re as _re24                                                     # noqa: E402
+    T024_READY = (hasattr(dbcore, "declared_jurisdictions") and hasattr(db, "add_jurisdiction")
+                  and bool(q("SELECT 1 FROM sqlite_master WHERE name='base_jurisdictions'")))
+    if not T024_READY:
+        for tid in sorted(set(_re24.findall(r'"(T024-\d\d)"', pathlib.Path(__file__).read_text(
+                encoding="utf-8")))):
+            record(tid, "the registry exists (base_jurisdictions, dbcore.declared_jurisdictions, "
+                   "db.add_jurisdiction)", False, "absent in this tree")
     else:
-        ns = {}
-        exec(compile(enum_src, "enums_before.py", "exec"), ns)               # noqa: S102
-        members = {m.value for m in ns["JurisdictionCode"]}
-        record("T024-01", "the seed is the enum's members and nothing else (admission_ref NULL)",
-               seeded == members and seeded, f"only-seeded={sorted(seeded - members)} "
-               f"only-enum={sorted(members - seeded)}")
+        DECL0 = dbcore.declared_jurisdictions()
+        MAP24 = sorted({j for (j,) in q("SELECT DISTINCT jurisdiction FROM lang_jur_map")})
+        UNHELD = [j for j in MAP24 if j not in DECL0]
+        ADM, OTHER = (UNHELD + [None, None])[:2]
+        HELD24 = sorted(DECL0)[0]
+        META = next((c for (c,) in q("SELECT jurisdiction_code FROM base_jurisdictions "
+                                     "WHERE kind='meta' ORDER BY 1")), None)
+        PAIR24 = q("SELECT p.slug, p.language, p.jurisdiction FROM v_coverage_priority p "
+                   "JOIN base_jurisdictions b ON b.jurisdiction_code = p.jurisdiction "
+                   "WHERE b.kind='country' ORDER BY p.slug, p.jurisdiction, p.language LIMIT 1")
+        # A real dated, non-delegated heading found once that does not name ADM: for the CLI cases,
+        # which read the real ledger (a subprocess cannot be given the fixture ledger below).
+        REAL_H = next((l[3:].strip() for l in reversed(
+            (REPO / "references" / "project-standards.md").read_text(encoding="utf-8").splitlines())
+            if l.startswith("## ") and _re24.search(r"\d{4}-\d{2}-\d{2}", l)
+            and not l[3:].startswith(dbcore.LEDGER_DELEGATED_PREFIX)
+            and dbcore.ledger_heading_count(l[3:].strip()) == 1
+            and ADM and not dbcore.ledger_entry_names(l[3:].strip(), ADM)), None)
+        record("T024-00", "the probes exist: two owed codes the vocabulary refused, a real ledger "
+               "heading, a meta code, an owed unsearched pair of a held country",
+               bool(ADM and OTHER and REAL_H and META and PAIR24),
+               f"adm={ADM} other={OTHER} real={REAL_H!r} meta={META} pair={PAIR24}")
+        SLUG24, LANG24, COUNTRY24 = PAIR24[0]
+        SUB24, DASHED = COUNTRY24 + "-T024", COUNTRY24 + "-ZZ"
+        # THE FIXTURE LEDGER. The verb reads dbcore.LEDGER_PATH; the in-process cases swap it for
+        # this file, whose entries stand for the owner's words (TASK-FIXTURE) and for the kinds of
+        # entry that must NOT admit a code.
+        H_OK = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 admits some codes"
+        H_NONAME = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 says nothing of any code"
+        H_DELEG = "Delegated resolution 2026-11-13 — TASK-FIXTURE T024 names a code"
+        H_DUP = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 heading found twice"
+        named = " ".join([ADM, OTHER, SUB24, DASHED, META + "-T024", ADM + "-T024", COUNTRY24])
+        FIXL = pathlib.Path(TMP) / "ledger-t024.md"
+        FIXL.write_text(
+            f"## {H_OK}\nThe owner admits {ADM}, {SUB24} and {HELD24}, and the fixture codes "
+            f"{DASHED} {META}-T024 {ADM}-T024.\n\n## {H_NONAME}\nNothing about jurisdictions.\n\n"
+            f"## {H_DELEG}\n{named}\n\n## {H_DUP}\n{named}\n\n## {H_DUP}\n{named}\n",
+            encoding="utf-8")
+        REAL_LEDGER, dbcore.LEDGER_PATH = dbcore.LEDGER_PATH, FIXL
+        n_jur = lambda: q("SELECT COUNT(*) FROM base_jurisdictions")[0][0]      # noqa: E731
+        N0 = n_jur()
 
-    n0 = n_jur()
-    ok = [ADM, "--kind", "country"]
-    r = add_jur("--code", ADM, "--kind", "country", "--approval-ref", "no date here",
-                "--session", S)
-    record("T024-02", "add-jurisdiction refuses an --approval-ref with no date",
-           refused24(r, n0), f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM, "--kind", "country", "--approval-ref",
-                "2000-01-01 an entry that is not in the ledger", "--session", S)
-    record("T024-03", "...and one that is the heading of no ledger entry",
-           refused24(r, n0) and "0 ledger entries" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
-    # A heading found twice: the real ledger has none, so the ledger is swapped for a copy
-    # with one repeated, in this process (the verb reads dbcore.LEDGER_PATH).
-    dup_path = pathlib.Path(TMP) / "ledger-dup.md"
-    dup_path.write_text(f"## {APPROVAL}\nfirst\n\n## {APPROVAL}\nsecond\n", encoding="utf-8")
-    real_ledger, dbcore.LEDGER_PATH = dbcore.LEDGER_PATH, dup_path
-    try:
-        msg = refusal(db.add_jurisdiction, ADM, "country", None, APPROVAL, S, dry_run=True)
-    except AttributeError as exc:                       # the verb is absent: a red case
-        msg = None
-        print(f"      DEFECT: {exc}")
-    finally:
-        dbcore.LEDGER_PATH = real_ledger
-    record("T024-04", "...and one found more than once",
-           msg is not None and "2 ledger entries" in msg, f"{msg!r}")
-    r = add_jur("--code", HELD24, "--kind", "country", "--approval-ref", APPROVAL, "--session", S)
-    record("T024-05", "refuses a code already held", refused24(r, n0) and "already held" in r.stderr,
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", BAD, "--kind", "country", "--approval-ref", APPROVAL, "--session", S)
-    record("T024-06", f"refuses a GB-prefixed code ({BAD})", refused24(r, n0),
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM.lower(), "--kind", "country", "--approval-ref", APPROVAL,
-                "--session", S)
-    record("T024-07", "refuses a code that is not upper case", refused24(r, n0),
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM, "--kind", "region", "--approval-ref", APPROVAL, "--session", S)
-    record("T024-08", "refuses a --kind outside the column's CHECK, naming the kinds",
-           refused24(r, n0) and "sub-national" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM, "--kind", "country", "--parent", COUNTRY24, "--approval-ref",
-                APPROVAL, "--session", S)
-    record("T024-09", "refuses a parent on a row that is not sub-national", refused24(r, n0),
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", SUB24, "--kind", "sub-national", "--approval-ref", APPROVAL,
-                "--session", S)
-    record("T024-10", "refuses a sub-national row with no parent", refused24(r, n0),
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", META + "-T024", "--kind", "sub-national", "--parent", META,
-                "--approval-ref", APPROVAL, "--session", S)
-    record("T024-11", "refuses a parent that is held but not a country (a meta code)",
-           refused24(r, n0) and "country" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM + "-T024", "--kind", "sub-national", "--parent", ADM,
-                "--approval-ref", APPROVAL, "--session", S)
-    record("T024-12", "...and a parent that is not held at all", refused24(r, n0),
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM, "--kind", "sub-national", "--parent", COUNTRY24,
-                "--approval-ref", APPROVAL, "--session", S)
-    record("T024-13", "refuses a sub-national code that does not start '<parent>-'",
-           refused24(r, n0) and f"{COUNTRY24}-" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
-    r = add_jur("--code", ADM, "--kind", "country", "--approval-ref", APPROVAL, "--session", " ")
-    record("T024-14", "refuses a blank --session", refused24(r, n0),
-           f"rc={r.returncode} {r.stderr[-200:]!r}")
+        def verb(code, kind, parent=None, ref=H_OK, session=S, dry=False):
+            return refusal(db.add_jurisdiction, code, kind, parent, ref, session, dry_run=dry)
 
-    # Admission: no file is edited, and every reader sees the code.
-    def tree_state():
-        return subprocess.run(["git", "status", "--porcelain", "scripts", "schemas"], cwd=REPO,
-                              capture_output=True, text=True).stdout
-    cov0 = db.get_coverage_completeness(SLUG24)
-    tree0 = tree_state()
-    before_ok = refusal(dbcore.check_jurisdiction, ADM, "T024") is not None
-    r = add_jur("--code", ADM, "--kind", "country", "--approval-ref", APPROVAL, "--session", S)
-    row = q("SELECT kind, parent_code, admission_ref, created_by_session FROM base_jurisdictions "
-            "WHERE jurisdiction_code=?", ADM)
-    record("T024-15", "add-jurisdiction admits the probe as a country with the pointer and the session",
-           r.returncode == 0 and row == [("country", None, APPROVAL, S)],
-           f"rc={r.returncode} {r.stderr[-200:]!r} {row}")
-    ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
-                 "fixture T024: a search in an admitted code", "--engine", "manual",
-                 "--depth-method", "scoping", "--session", S, "--prior-expectation",
-                 "fixture prior, written before the call", "--jurisdiction", ADM)
-    cov1 = db.get_coverage_completeness(SLUG24)
-    record("T024-16", "...then check_jurisdiction accepts it and log-search --jurisdiction logs it",
-           before_ok and refusal(dbcore.check_jurisdiction, ADM, "T024") is None
-           and ls.returncode == 0
-           and q("SELECT COUNT(*) FROM search_executions WHERE jurisdiction=?", ADM)[0][0] >= 1,
-           f"before_refused={before_ok} log-search rc={ls.returncode} {ls.stderr[-200:]!r}")
-    record("T024-17", "...the code leaves jurisdictions_unreachable of coverage",
-           ADM in cov0["jurisdictions_unreachable"] and ADM not in cov1["jurisdictions_unreachable"],
-           f"{cov0['jurisdictions_unreachable']} -> {cov1['jurisdictions_unreachable']}")
-    record("T024-18", "...and admitting it edited no file under scripts or schemas",
-           tree_state() == tree0, f"{tree0!r} -> {tree_state()!r}")
+        def refused(msg, *needles):
+            return msg is not None and n_jur() == N0 and all(n in msg for n in needles)
 
-    # Roll-up (OD-04): a search under a sub-national code counts toward its country.
-    unsearched0 = [list(x) for x in cov0["pairs_unsearched"]]
-    pre = db.get_coverage_completeness(SLUG24)
-    rs = add_jur("--code", SUB24, "--kind", "sub-national", "--parent", COUNTRY24,
-                 "--approval-ref", APPROVAL, "--session", S)
-    ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
-                 "fixture T024: a search in a sub-national code", "--engine", "manual",
-                 "--depth-method", "scoping", "--session", S, "--prior-expectation",
-                 "fixture prior, written before the call", "--jurisdiction", SUB24)
-    post = db.get_coverage_completeness(SLUG24)
-    pair_open = lambda: q("SELECT 1 FROM v_coverage_priority WHERE slug=? AND language=? "      # noqa: E731
-                          "AND jurisdiction=?", SLUG24, LANG24, COUNTRY24)
-    record("T024-19", "a search logged under a sub-national code raises pairs_searched by one "
-           "and removes the pair from v_coverage_priority",
-           rs.returncode == 0 and ls.returncode == 0
-           and post["pairs_searched"] == pre["pairs_searched"] + 1 and not pair_open()
-           and [LANG24, COUNTRY24] in [list(x) for x in pre["pairs_unsearched"]],
-           f"add rc={rs.returncode} {rs.stderr[-150:]!r} log rc={ls.returncode} {ls.stderr[-150:]!r} "
-           f"searched {pre['pairs_searched']} -> {post['pairs_searched']} open={pair_open()}")
-    record("T024-20", "...it appears under the country in v_coverage_jurisdiction, and "
-           "_in_research_scope is true for the sub-national code",
-           bool(q("SELECT 1 FROM v_coverage_jurisdiction WHERE slug=? AND jurisdiction=?",
-                  SLUG24, COUNTRY24))
-           and not q("SELECT 1 FROM v_coverage_jurisdiction WHERE jurisdiction=?", SUB24)
-           and db._in_research_scope(LANG24, SUB24) is True,
-           f"scope={db._in_research_scope(LANG24, SUB24)}")
+        try:
+            record("T024-01", "refuses an --approval-ref with no date",
+                   refused(verb(ADM, "country", ref="no date here"), "no date"))
+            record("T024-02", "...one that is the heading of no ledger entry",
+                   refused(verb(ADM, "country", ref="2000-01-01 an entry not in the ledger"),
+                           "0 ledger entries"))
+            record("T024-03", "...one found more than once",
+                   refused(verb(ADM, "country", ref=H_DUP), "2 ledger entries"))
+            record("T024-04", "...one whose entry says nothing of the code",
+                   refused(verb(ADM, "country", ref=H_NONAME), "does not name"))
+            record("T024-05", "...and one whose entry names ANOTHER code than the one admitted",
+                   refused(verb(OTHER, "country", ref=H_OK), "does not name"))
+            record("T024-06", "...and a delegated resolution, which is a model's and not the "
+                   "owner's words, even when it names the code",
+                   refused(verb(ADM, "country", ref=H_DELEG), "delegated"))
+            record("T024-07", "refuses a code already held",
+                   refused(verb(HELD24, "country", ref=H_OK), "already held"))
+            record("T024-08", "refuses a GB-prefixed code",
+                   refused(verb(BAD, "country"), "GB"))
+            shapes = [ADM.lower(), ADM[0] + " " + ADM[1:], "-", "123", ADM + "-", "-" + ADM,
+                      ADM + "-A-B", ADM + "_X", COUNTRY24 + "-"]
+            bad = [c for c in shapes if not refused(verb(c, "country"), "must be upper-case")]
+            record("T024-09", "refuses a code that is not upper-case letters and digits, a letter "
+                   "first, with at most one dash followed by a subdivision",
+                   not bad, f"accepted {bad}")
+            record("T024-10", "refuses a dash in a country or meta code",
+                   refused(verb(DASHED, "country"), "dash belongs")
+                   and refused(verb(META + "-T024", "meta"), "dash belongs"))
+            record("T024-11", "refuses a --kind outside the column's CHECK, naming the kinds",
+                   refused(verb(ADM, "region"), "sub-national"))
+            record("T024-12", "refuses a parent on a row that is not sub-national",
+                   refused(verb(ADM, "country", COUNTRY24), "sub-national"))
+            record("T024-13", "refuses a sub-national row with no parent",
+                   refused(verb(SUB24, "sub-national"), "--parent"))
+            record("T024-14", "refuses a parent that is held but not a country, and one not held",
+                   refused(verb(META + "-T024", "sub-national", META), "country")
+                   and refused(verb(ADM + "-T024", "sub-national", ADM), "country"))
+            record("T024-15", "refuses a sub-national code that does not start '<parent>-'",
+                   refused(verb(ADM, "sub-national", COUNTRY24), f"{COUNTRY24}-"))
+            record("T024-16", "refuses a blank --session",
+                   refused(verb(ADM, "country", session=" "), "--session"))
 
-    # amend-extraction --field jurisdiction (item 4)
-    X24 = q("SELECT extraction_id FROM source_value_extractions ORDER BY extraction_id LIMIT 1")[0][0]
-    NOT_HELD = next((j for j in MAP24 if j not in dbcore.declared_jurisdictions()), None)
-    ax = lambda v: run_cli("amend-extraction", "--extraction-id", str(X24), "--field",         # noqa: E731
-                           "jurisdiction", "--value", v, "--reason", "fixture T024",
-                           "--session", S)
-    r_ok, r_bad = ax(HELD24), ax(NOT_HELD or "ZZ")
-    record("T024-21", "amend-extraction --field jurisdiction accepts a held code",
-           r_ok.returncode == 0 and q("SELECT jurisdiction FROM source_value_extractions "
-                                      "WHERE extraction_id=?", X24)[0][0] == HELD24,
-           f"rc={r_ok.returncode} {r_ok.stderr[-200:]!r}")
-    record("T024-22", "...and refuses a code not held",
-           r_bad.returncode != 0 and r_bad.stderr.startswith("REFUSING:")
-           and q("SELECT jurisdiction FROM source_value_extractions WHERE extraction_id=?",
-                 X24)[0][0] == HELD24, f"rc={r_bad.returncode} {r_bad.stderr[-200:]!r}")
+            # --dry-run writes nothing; the CLI is wired to the same function.
+            dry = db.add_jurisdiction(ADM, "country", None, H_OK, S, dry_run=True)
+            record("T024-17", "--dry-run reports the row and leaves the table as it was",
+                   dry.get("dry_run") is True and n_jur() == N0
+                   and not q("SELECT 1 FROM base_jurisdictions WHERE jurisdiction_code=?", ADM),
+                   f"{dry} {n_jur()} vs {N0}")
+            r = run_cli("add-jurisdiction", "--code", ADM, "--kind", "country", "--session", S)
+            record("T024-18", "a missing --approval-ref is argparse's usage error (rc 2): the flag "
+                   "is required, so it can never be a REFUSING line",
+                   r.returncode == 2 and "--approval-ref" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
+            r = run_cli("add-jurisdiction", "--code", ADM, "--kind", "country",
+                        "--approval-ref", REAL_H, "--session", S)
+            record("T024-19", "the CLI reaches the verb: a real dated ledger entry that does not "
+                   "name the code is REFUSING, and nothing is written",
+                   r.returncode == 1 and r.stderr.startswith("REFUSING:") and "does not name" in r.stderr
+                   and n_jur() == N0, f"rc={r.returncode} {r.stderr[-200:]!r}")
+
+            # Admission: no file is edited, and every reader sees the code.
+            cov0 = db.get_coverage_completeness(SLUG24)
+            before_ok = refusal(dbcore.check_jurisdiction, ADM, "T024") is not None
+            out = db.add_jurisdiction(ADM, "country", None, H_OK, S)
+            row = q("SELECT kind, parent_code, admission_ref, created_by_session "
+                    "FROM base_jurisdictions WHERE jurisdiction_code=?", ADM)
+            record("T024-20", "add-jurisdiction admits the probe as a country with the pointer "
+                   "stored and the session", row == [("country", None, H_OK, S)], f"{out} {row}")
+            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+                         "fixture T024: a search in an admitted code", "--engine", "manual",
+                         "--depth-method", "scoping", "--session", S, "--prior-expectation",
+                         "fixture prior, written before the call", "--jurisdiction", ADM)
+            cov1 = db.get_coverage_completeness(SLUG24)
+            record("T024-21", "...then check_jurisdiction accepts it and log-search --jurisdiction "
+                   "logs it",
+                   before_ok and refusal(dbcore.check_jurisdiction, ADM, "T024") is None
+                   and ls.returncode == 0
+                   and q("SELECT COUNT(*) FROM search_executions WHERE jurisdiction=?", ADM)[0][0] >= 1,
+                   f"before_refused={before_ok} log-search rc={ls.returncode} {ls.stderr[-200:]!r}")
+            record("T024-22", "...and the code leaves jurisdictions_unreachable of coverage",
+                   ADM in cov0["jurisdictions_unreachable"]
+                   and ADM not in cov1["jurisdictions_unreachable"],
+                   f"{cov0['jurisdictions_unreachable']} -> {cov1['jurisdictions_unreachable']}")
+
+            # Roll-up (OD-04): a search under a sub-national code counts toward its country.
+            pre = db.get_coverage_completeness(SLUG24)
+            db.add_jurisdiction(SUB24, "sub-national", COUNTRY24, H_OK, S)
+            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+                         "fixture T024: a search in a sub-national code", "--engine", "manual",
+                         "--depth-method", "scoping", "--session", S, "--prior-expectation",
+                         "fixture prior, written before the call", "--jurisdiction", SUB24)
+            post = db.get_coverage_completeness(SLUG24)
+            pair_open = lambda: q("SELECT 1 FROM v_coverage_priority WHERE slug=? AND language=? "   # noqa: E731
+                                  "AND jurisdiction=?", SLUG24, LANG24, COUNTRY24)
+            record("T024-23", "a search logged under a sub-national code raises pairs_searched by "
+                   "one and removes the pair from v_coverage_priority",
+                   ls.returncode == 0 and post["pairs_searched"] == pre["pairs_searched"] + 1
+                   and not pair_open()
+                   and [LANG24, COUNTRY24] in [list(x) for x in pre["pairs_unsearched"]],
+                   f"log rc={ls.returncode} {ls.stderr[-150:]!r} searched "
+                   f"{pre['pairs_searched']} -> {post['pairs_searched']} open={pair_open()}")
+            record("T024-24", "...it appears under the country in v_coverage_jurisdiction, and "
+                   "_in_research_scope is true for the sub-national code",
+                   bool(q("SELECT 1 FROM v_coverage_jurisdiction WHERE slug=? AND jurisdiction=?",
+                          SLUG24, COUNTRY24))
+                   and not q("SELECT 1 FROM v_coverage_jurisdiction WHERE jurisdiction=?", SUB24)
+                   and db._in_research_scope(LANG24, SUB24) is True,
+                   f"scope={db._in_research_scope(LANG24, SUB24)}")
+
+            # amend-extraction --field jurisdiction (item 4)
+            X24 = q("SELECT extraction_id FROM source_value_extractions ORDER BY extraction_id "
+                    "LIMIT 1")[0][0]
+            NOT_HELD = next((j for j in MAP24 if j not in dbcore.declared_jurisdictions()), None)
+            ax = lambda v: run_cli("amend-extraction", "--extraction-id", str(X24), "--field",     # noqa: E731
+                                   "jurisdiction", "--value", v, "--reason", "fixture T024",
+                                   "--session", S)
+            r_ok, r_bad = ax(HELD24), ax(NOT_HELD or "ZZ")
+            record("T024-25", "amend-extraction --field jurisdiction accepts a held code",
+                   r_ok.returncode == 0 and q("SELECT jurisdiction FROM source_value_extractions "
+                                              "WHERE extraction_id=?", X24)[0][0] == HELD24,
+                   f"rc={r_ok.returncode} {r_ok.stderr[-200:]!r}")
+            record("T024-26", "...and refuses a code not held",
+                   r_bad.returncode != 0 and r_bad.stderr.startswith("REFUSING:")
+                   and q("SELECT jurisdiction FROM source_value_extractions WHERE extraction_id=?",
+                         X24)[0][0] == HELD24, f"rc={r_bad.returncode} {r_bad.stderr[-200:]!r}")
+
+            # The table's own CHECKs hold the shapes for a row written any other way.
+            def raw_insert(code, kind, parent=None, ref=None, session=None):
+                con = sqlite3.connect(DB)
+                try:
+                    con.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, "
+                                "parent_code, admission_ref, created_by_session) "
+                                "VALUES (?,?,?,?,?)", (code, kind, parent, ref, session))
+                    return None
+                except sqlite3.IntegrityError as exc:
+                    return str(exc)
+                finally:
+                    con.rollback()
+                    con.close()
+            ctrl = raw_insert(COUNTRY24 + "-CTRL", "sub-national", COUNTRY24)
+            hurt = {
+                "a dash in a country": raw_insert(DASHED + "X", "country"),
+                "a sub-national code with no dash": raw_insert(ADM + "S", "sub-national", COUNTRY24),
+                "a sub-national code not starting with its parent": raw_insert(
+                    ADM + "-Q", "sub-national", COUNTRY24),
+                "an empty subdivision": raw_insert(COUNTRY24 + "-", "sub-national", COUNTRY24),
+                "a second dash": raw_insert(COUNTRY24 + "-A-B", "sub-national", COUNTRY24),
+                "a parent on a country": raw_insert(ADM + "P", "country", COUNTRY24),
+                "no parent on a sub-national": raw_insert(COUNTRY24 + "-NP", "sub-national"),
+                "lower case": raw_insert(ADM.lower() + "L", "country"),
+                "a digit first": raw_insert("1" + ADM, "country"),
+                "a space": raw_insert(ADM + " S", "country"),
+                "a GB prefix": raw_insert(BAD + "X", "country"),
+            }
+            missed = [k for k, v in hurt.items() if not (v and "CHECK constraint failed" in v)]
+            record("T024-27", "the table's CHECKs refuse each malformed row and accept a well-formed "
+                   "sub-national one",
+                   ctrl is None and not missed, f"control={ctrl!r} not refused: {missed}")
+
+            # At rest: the blocking audit re-checks every pointer (it reads dbcore.LEDGER_PATH, the
+            # fixture here) and flags a row that landed without one.
+            def audit(*rows):
+                path = os.path.join(TMP, "audit-t024.db")
+                shutil.copy(REPO / "data" / "guidebook.db", path)
+                con = sqlite3.connect(path)
+                for r_ in rows:
+                    con.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, "
+                                "admission_ref, created_by_session) VALUES (?,?,?,?)", r_)
+                con.commit()
+                con.close()
+                saved = os.environ["GUIDEBOOK_DB_PATH"]
+                os.environ["GUIDEBOOK_DB_PATH"] = path
+                jdv.DEFAULT_DB = pathlib.Path(path)
+                buf = io.StringIO()
+                try:
+                    with contextlib.redirect_stdout(buf):
+                        rc = jdv.main()
+                finally:
+                    os.environ["GUIDEBOOK_DB_PATH"] = saved
+                return rc, buf.getvalue()
+            rc0, out0 = audit()
+            rc1, out1 = audit((ADM, "country", H_OK, S))
+            record("T024-28", "the audit passes the seed alone and a row whose pointer is found once "
+                   "and whose entry names the code", rc0 == 0 and rc1 == 0, f"{rc0} {rc1} {out1[-300:]}")
+            rc2, out2 = audit((ADM, "country", None, S))
+            record("T024-29", "...flags a row that landed with a session and no admission_ref",
+                   rc2 == 1 and "landed without an approval" in out2, f"{rc2} {out2[-300:]}")
+            rc3, out3 = audit((ADM, "country", "2000-01-01 an entry not in the ledger", S))
+            record("T024-30", "...flags a pointer no ledger heading answers",
+                   rc3 == 1 and "0 ledger entries" in out3, f"{rc3} {out3[-300:]}")
+            rc4, out4 = audit((ADM, "country", H_NONAME, S))
+            record("T024-31", "...flags an entry that does not name the code",
+                   rc4 == 1 and "does not name" in out4, f"{rc4} {out4[-300:]}")
+            rc5, out5 = audit((ADM, "country", H_DELEG, S))
+            record("T024-32", "...and a pointer to a delegated resolution",
+                   rc5 == 1 and "delegated resolution" in out5, f"{rc5} {out5[-300:]}")
+        finally:
+            dbcore.LEDGER_PATH = REAL_LEDGER
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

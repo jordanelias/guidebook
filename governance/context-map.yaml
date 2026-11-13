@@ -584,6 +584,7 @@ writers:
     - evidence_sources
     - source_slug_links
     scripts/tests/test_assess_cell_pilot.py:
+    - base_jurisdictions
     - base_parameters
     - determination_gates
     - evidence_sources
@@ -595,6 +596,7 @@ writers:
     scripts/tests/test_db_amend_writers.py:
     - adversarial_findings
     - adversarial_passes
+    - base_jurisdictions
     - evidence_sources
     - research_code_leads
     - search_executions

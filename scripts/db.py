@@ -7893,23 +7893,30 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
 
     Admitting a code converts a candidate jurisdiction into a declared one, which is a
     decision on research scope and the owner's. The pointer is the dated `## ` heading of
-    the ledger entry that records it, found exactly once in references/project-standards.md
-    -- the same limit as mint-term-from-catalogue: it proves a unique dated entry exists,
-    not that the entry approves this code, and the operator answers for the match.
+    the ledger entry that records it, found exactly once in references/project-standards.md,
+    and THAT ENTRY MUST NAME THE CODE as a whole token (dbcore.ledger_entry_names): a dated
+    entry about something else, or about another code, does not admit this one. An entry
+    under the ledger's "Delegated resolution" heading prefix is a model's resolution under
+    delegation, not the owner's words, and admits nothing. What stays unproved is that the
+    entry APPROVES the code rather than mentions it; the operator answers for that.
+    `scripts/audit/jurisdiction_db_vocabulary.py` re-checks every pointer at rest.
 
-    A sub-national code names a held `country` as its parent and is written
-    `<parent>-<subdivision>`; coverage counts a search under it toward that country
-    (OD-04). The kinds are read from the column's own CHECK.
+    A sub-national code names a held `country` as its parent and is exactly
+    `<parent>-<subdivision>`; coverage counts a search under it toward that country (OD-04).
+    A country or meta code has no dash. The kinds are read from the column's own CHECK, and
+    the table's CHECKs hold the same shapes for a row written any other way.
     """
     code = (code or "").strip()
     approval_ref = re.sub(r"^##\s+", "", (approval_ref or "").strip())
     if not (session or "").strip():
         raise Refusal("add-jurisdiction: --session is required and may not be blank.")
-    if not code or code != code.upper() or code.startswith("GB"):
-        raise Refusal(
-            f"add-jurisdiction: --code {code!r} must be non-blank upper case and must not "
-            f"start 'GB' (the project writes UK for the United Kingdom, "
-            f"governance/jurisdiction-philosophy.md section 3.3).")
+    if code.startswith("GB"):
+        raise Refusal(f"add-jurisdiction: --code {code!r} starts 'GB'; the project writes UK for "
+                      f"the United Kingdom (governance/jurisdiction-philosophy.md section 3.3).")
+    if not re.fullmatch(r"[A-Z][A-Z0-9]*(-[A-Z0-9]+)?", code):
+        raise Refusal(f"add-jurisdiction: --code {code!r} must be upper-case letters and digits, "
+                      f"a letter first, with at most one dash that is followed by a "
+                      f"subdivision.")
     if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
         raise Refusal(f"add-jurisdiction: --approval-ref {approval_ref!r} carries no date. "
                       f"Give the dated `## ` heading of the approving ledger entry.")
@@ -7920,6 +7927,16 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
             f"entries; it must be exactly one. Record the approving words in a dated entry "
             f"of references/project-standards.md first (CLAUDE.md rule 0), then give that "
             f"entry's `## ` heading as written.")
+    if approval_ref.startswith(dbcore.LEDGER_DELEGATED_PREFIX):
+        raise Refusal(
+            f"add-jurisdiction: --approval-ref {approval_ref!r} is a delegated resolution "
+            f"(a model's, under the owner's delegation), not the owner's words. Admitting a "
+            f"jurisdiction is a decision on research scope and the owner's.")
+    if not dbcore.ledger_entry_names(approval_ref, code):
+        raise Refusal(
+            f"add-jurisdiction: the ledger entry {approval_ref!r} does not name {code!r}. "
+            f"Record the owner's words admitting this code in a dated entry that names it, "
+            f"then give that entry's heading.")
     with connect(dry_run) as conn:
         if dbcore.exists(conn, "base_jurisdictions", "jurisdiction_code", code):
             raise Refusal(f"add-jurisdiction: {code!r} is already held. Nothing was written.")
@@ -7927,19 +7944,23 @@ def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
                               "add-jurisdiction --kind")
         if kind == "sub-national":
             if not parent:
-                raise Refusal(f"add-jurisdiction: a sub-national code needs --parent, the "
-                              f"held country it counts toward.")
+                raise Refusal("add-jurisdiction: a sub-national code needs --parent, the "
+                              "held country it counts toward.")
             held = conn.execute("SELECT kind FROM base_jurisdictions WHERE jurisdiction_code=?",
                                 (parent,)).fetchone()
             if held is None or held[0] != "country":
                 raise Refusal(f"add-jurisdiction: --parent {parent!r} is not a held row of "
                               f"kind 'country' ({'not held' if held is None else held[0]}).")
-            if not code.startswith(parent + "-"):
-                raise Refusal(f"add-jurisdiction: a sub-national code starts '{parent}-' "
-                              f"(ISO 3166-2 beside its parent); {code!r} does not.")
-        elif parent:
-            raise Refusal(f"add-jurisdiction: --parent is for kind 'sub-national' only; "
-                          f"{kind!r} has none.")
+            if not code.startswith(parent + "-") or code == parent + "-":
+                raise Refusal(f"add-jurisdiction: a sub-national code is '{parent}-' and a "
+                              f"subdivision (ISO 3166-2 beside its parent); {code!r} is not.")
+        else:
+            if parent:
+                raise Refusal(f"add-jurisdiction: --parent is for kind 'sub-national' only; "
+                              f"{kind!r} has none.")
+            if "-" in code:
+                raise Refusal(f"add-jurisdiction: a dash belongs to a sub-national code only; "
+                              f"{code!r} is kind {kind!r}.")
         row = {"jurisdiction_code": code, "kind": kind, "parent_code": parent or None,
                "admission_ref": approval_ref}
         row.update(dbcore.stamp_for(conn, "base_jurisdictions", session))
@@ -9754,9 +9775,11 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # this, filters on root_id IS NOT NULL, so a row that leaves root_id null is not examined
 # at all. The vocabulary already carried the right value, 'untraced'. Gated below by the
 # column's own CHECK, so this widens WHO may correct it, not WHAT to.
-# jurisdiction ADDED 2026-11-13 (T-024): the four sub-national instruments are re-filed under
-# their sub-national codes (T-113), and amend-source already corrects the source's own
-# jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to.
+# jurisdiction ADDED 2026-11-13 (T-024): a row filed under a country is re-filed under a
+# sub-national code (T-113), and amend-source already corrects the source's own
+# jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to. Like
+# add-extraction it holds no relation to the source's jurisdiction, and a value cannot be
+# cleared here (a blank is refused).
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
                                    "root_type", "root_ref_id", "value_as_written",

@@ -234,6 +234,31 @@ def main():
            "(the row's CHECK pins a regulatory-stratum-only cell at weak)",
            d["regulatory_stratum_only"] == 1 and d["marker"] == WEAK, f"{d['marker']}")
 
+    # 3e. ("US","US-CA") -- OD-04: a sub-national code counts toward its country, read from
+    # base_jurisdictions.parent_code. One jurisdiction, not two; and with the table absent the
+    # engine is unchanged (the same two sources count as two, as in 3d).
+    def _with_registry(c, rows):
+        c.execute("CREATE TABLE base_jurisdictions (jurisdiction_code TEXT PRIMARY KEY, "
+                  "kind TEXT, parent_code TEXT)")
+        c.executemany("INSERT INTO base_jurisdictions VALUES (?,?,?)", rows)
+        return c
+    _reg = [("US", "country", None), ("CA", "country", None), ("US-CA", "sub-national", "US")]
+    d = determine(_with_registry(synth_db([{"tier": 5, "evidence_type": "national_fw",
+                                            "jurisdiction": j} for j in ("US", "US-CA")]), _reg),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t45-sub-national")
+    expect("T4-5(US, US-CA) => NOT rich (a sub-national code counts toward its country)",
+           d["state"] != "provisional", d["state"])
+    d = determine(_with_registry(synth_db([{"tier": 5, "evidence_type": "national_fw",
+                                            "jurisdiction": j} for j in ("US-CA", "CA")]), _reg),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t45-sub-national-control")
+    expect("T4-5(US-CA, CA) => rich (two countries, one reached through its sub-national code)",
+           d["state"] == "provisional", d["state"])
+    d = determine(synth_db([{"tier": 5, "evidence_type": "national_fw", "jurisdiction": j}
+                            for j in ("US", "US-CA")]),
+                  1, {"identity_code": "MOB"}, "syn-slug", "t45-no-registry")
+    expect("T4-5(US, US-CA) with no registry table => rich (unchanged: the engine splits no strings)",
+           d["state"] == "provisional", d["state"])
+
     # 4. All sources disqualified -> pending + flag (§2.8)
     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical",
                              "verification_status": "UNVERIFIED-CLOSED"}]),
