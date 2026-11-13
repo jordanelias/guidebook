@@ -1,0 +1,730 @@
+From 76c323bfdd56b56a822b3d4d2066a70960970b3a Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 03:51:26 +0000
+Subject: [PATCH] governance: execute workplan T-1a reading [2026-11-13 03:51]
+
+Pilot commit (T-016, stacked on the T-008 re-pilot). Notation arithmetic moved to dbcore (NOTATION_FAMILIES, to_canonical, from_canonical, bound_on_scale); parse_bound deleted; dbcore.unit_refusal and dbcore.figure_refusal added and wired into insert_extraction; value-supplying numerical rows need a comparator; one derived-arithmetic check (_refuse_derived_mismatch) in insert_extraction and relate_extraction, the duplicate in derive_extraction deleted. Callers: skills/run-pipeline_SKILL.md, scripts/audit/extraction_relations_integrity.py (comment), test fixtures (comparator), test_assess_cell_pilot (patches dbcore).
+---
+ scripts/assess/assess_cell.py                 | 187 +----------------
+ .../audit/extraction_relations_integrity.py   |   6 +-
+ scripts/db.py                                 |  54 +++--
+ scripts/dbcore.py                             | 198 ++++++++++++++++++
+ scripts/tests/test_assess_cell_pilot.py       |  13 +-
+ scripts/tests/test_run_pipeline_refusals.py   | 101 ++++++++-
+ skills/run-pipeline_SKILL.md                  |   6 +-
+ 7 files changed, 364 insertions(+), 201 deletions(-)
+
+diff --git a/scripts/assess/assess_cell.py b/scripts/assess/assess_cell.py
+index 3f9c403..732ed33 100644
+--- a/scripts/assess/assess_cell.py
++++ b/scripts/assess/assess_cell.py
+@@ -102,10 +102,6 @@ import os
+ import re
+ import sqlite3
+ import sys
+-# EXACT, NEVER FLOAT. The ruling of 2026-09-17 turns on 1:20 being exactly 5%, and
+-# on 1:12 being exactly 100/12 rather than 8.33. Fraction is what makes "exact" a
+-# property this code can test rather than a word in a comment.
+-from fractions import Fraction
+ 
+ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+ sys.path.insert(0, REPO_ROOT)
+@@ -495,182 +491,11 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
+     return out
+ 
+ 
+-#: NOTATIONS OF ONE QUANTITY, and the arithmetic that relates them. Owner ruling
+-#: 2026-09-17: "Present both -- don't choose between ratio or percentage."
+-#:
+-#: THIS IS A DEFINITION, NOT A CURATED FACT, which is why it is a literal here and
+-#: not derived from the corpus (CLAUDE.md rule 8 asks for derivation of facts the
+-#: machine can compute; the relation between `1:20` and `5 %` is mathematics and
+-#: there is nothing in the database to read it off).
+-#:
+-#: A FAMILY IS NOT A UNIT. Members are two ways of WRITING one dimensionless
+-#: quantity. Millimetres and degrees are different units, and the ruling says so in
+-#: its own ACTION (4): composing across THEM stays refused. Adding a member here is
+-#: a claim that two notations denote the same quantity exactly, which is a
+-#: mathematical claim and should be made deliberately.
+-NOTATION_FAMILIES = {
+-    "gradient": ("%", "rise:run ratio"),
+-}
+-#: Every family member MUST appear here, and the guard below refuses one that does
+-#: not. Without it, adding a notation to the tuple above and forgetting the
+-#: arithmetic makes `to_canonical` fall through to `Fraction(text)` and read the
+-#: number AS IF it were already canonical -- `5` degrees silently becoming `5 %`.
+-#: That is the shape a reviewer of the 2026-09-17 ruling flagged: `degrees` is the
+-#: ARCTANGENT of the ratio, not a rescaling of it, so it is not a notation of this
+-#: quantity at all and belongs to a family of its own or to none. Membership is a
+-#: mathematical claim; this makes forgetting to back it up an error rather than a
+-#: wrong answer.
+-_CONVERTIBLE = {"%", "rise:run ratio"}
+-_RATIO_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*$")
+-
+-
+-def notation_family(unit):
+-    """Which family a stated unit belongs to, or None if it stands alone."""
+-    for fam, members in NOTATION_FAMILIES.items():
+-        if (unit or "").strip() in members:
+-            return fam
+-    return None
+-
+-
+-def to_canonical(raw, unit):
+-    """One stated value -> an exact Fraction on its family's canonical scale.
+-
+-    The canonical scale is the family's FIRST member -- percent for gradient -- and
+-    the conversion is exact because it is done in Fraction, never float: `1:12` is
+-    100/12, which is 8.333... and is never rounded here. Rounding happens once, at
+-    render, and is marked inexact when it happens.
+-    """
+-    txt = (raw or "").strip()
+-    if not txt:
+-        return None
+-    fam = notation_family(unit)
+-    if fam and (unit or "").strip() not in _CONVERTIBLE:
+-        raise NotImplementedError(
+-            "%r is listed in NOTATION_FAMILIES[%r] but no conversion is defined for "
+-            "it. A family member is a claim that two notations denote ONE quantity "
+-            "exactly; back it with arithmetic in to_canonical/from_canonical, or "
+-            "remove it. Falling through here would read the number as if it were "
+-            "already canonical." % (unit, fam))
+-    m = _RATIO_RE.match(txt)
+-    if m and fam:
+-        rise, run = Fraction(m.group(1)), Fraction(m.group(2))
+-        if run == 0:
+-            return None
+-        return rise / run * 100                      # rise:run -> percent, exactly
+-    try:
+-        return Fraction(txt)
+-    except (TypeError, ValueError):
+-        return None
+-
+-
+-def from_canonical(value, notation):
+-    """A canonical Fraction -> (text, exact) in one notation of its family.
+-
+-    `exact` is False when the notation cannot hold the value without rounding --
+-    8.333...% is the case this project actually has -- and the caller MARKS it,
+-    because ACTION (3) of the ruling forbids a rounded figure standing where a
+-    source's own figure would.
+-    """
+-    if value is None:
+-        return None, True
+-    if notation == "%":
+-        as_float = float(value)
+-        text = ("%g" % as_float)
+-        return text, Fraction(text) == value
+-    if notation not in _CONVERTIBLE:
+-        raise NotImplementedError(
+-            "no rendering defined for notation %r; see _CONVERTIBLE" % (notation,))
+-    if notation == "rise:run ratio":
+-        if value == 0:
+-            return "0", True
+-        run = Fraction(100) / value                  # percent -> 1:n, exactly
+-        text = "1:%g" % float(run)
+-        return text, Fraction(1, 1) / Fraction(text.split(":")[1]) * 100 == value
+-    return None, True
+-
+-
+-def bound_on_scale(claimed_value, unit, comparator, claim_type):
+-    """One governing claim -> (lo, hi) as exact Fractions on its family's scale.
+-
+-    The same comparator rules as `parse_bound` -- the comparator IS the bound -- but
+-    the NUMBER goes through `to_canonical`, so `1:20` and `5 %` land on one scale and
+-    can be compared. `parse_bound` is left exactly as it was: it answers "what bound
+-    does this claim state, in its own notation", which is still what the docstring
+-    below promises and what other callers want. This answers the different question
+-    the owner ruling of 2026-09-17 requires, which is "where does this claim sit
+-    relative to one written the other way".
+-    """
+-    raw = (claimed_value or "").strip()
+-    if not raw:
+-        return None
+-    cmp_ = (comparator or "").strip()
+-    if cmp_ == "between" or claim_type == "range":
+-        parts = re.split(r"\s+to\s+", raw)
+-        if len(parts) == 2:
+-            lo, hi = to_canonical(parts[0], unit), to_canonical(parts[1], unit)
+-            if lo is not None and hi is not None:
+-                return (min(lo, hi), max(lo, hi))
+-        return None
+-    v = to_canonical(raw, unit)
+-    if v is None:
+-        return None
+-    if cmp_ in (">=", ">"):
+-        return (v, None)
+-    if cmp_ in ("<=", "<"):
+-        return (None, v)
+-    return (v, v)
+-
+-
+-def parse_bound(claimed_value, comparator, claim_type):
+-    """One governing claim -> (lo, hi) in its own unit, or None if it states no number.
+-
+-    The comparator IS the bound, which is why migration 075 added it: "more than thirty
+-    centimetres" stored as a bare 30 turns a floor into a point, and a determination built
+-    from points is a determination that has quietly dropped every inequality its sources
+-    stated.
+-
+-      =, approx, or no comparator on a numerical claim -> a point:   (v, v)
+-      >=, >                                            -> a floor:   (v, None)
+-      <=, <                                            -> a ceiling: (None, v)
+-      between, or a range claim written "a to b"       -> (a, b)
+-
+-    STRICTNESS IS NOT MODELLED, deliberately. `>` and `>=` both land as (v, None): the
+-    columns are REAL and carry no open/closed flag, and inventing one here would put a
+-    distinction in the determination that no render surface can show and no source states
+-    precisely enough to defend. The comparator stays on the extraction, which is where a
+-    reader can see it.
+-
+-    Returns None for anything that is not a number -- a qualitative claim, a ratio like
+-    '1:12', a value with words in it. Those govern the STATE of a cell (they are still
+-    `figure_role='claim'`) without contributing a numeric bound, and the caller says so
+-    rather than silently treating them as zero.
+-    """
+-    raw = (claimed_value or "").strip()
+-    if not raw:
+-        return None
+-    cmp_ = (comparator or "").strip()
+-
+-    def num(tok):
+-        try:
+-            return float(tok)
+-        except (TypeError, ValueError):
+-            return None
+-
+-    if cmp_ == "between" or claim_type == "range":
+-        parts = re.split(r"\s+to\s+|\s*-\s*|\s*–\s*", raw)
+-        if len(parts) == 2:
+-            lo, hi = num(parts[0]), num(parts[1])
+-            if lo is not None and hi is not None:
+-                return (min(lo, hi), max(lo, hi))
+-        return None
+-    v = num(raw)
+-    if v is None:
+-        return None
+-    if cmp_ in (">=", ">"):
+-        return (v, None)
+-    if cmp_ in ("<=", "<"):
+-        return (None, v)
+-    return (v, v)
++# The notation arithmetic (NOTATION_FAMILIES, to_canonical, from_canonical, bound_on_scale)
++# lives in dbcore, so the writer that refuses an unreadable figure and the engine that reads
++# it are one definition. Names are imported back so the engine's public names stay valid.
++from dbcore import (NOTATION_FAMILIES, _CONVERTIBLE, notation_family,  # noqa: E402,F401 -- one home (T-016)
++                    to_canonical, from_canonical, bound_on_scale)
+ 
+ 
+ def derivation_handshake(conn, parameter_id, lens, sources):
+@@ -930,7 +755,7 @@ def compose_value(conn, links, direction):
+ 
+     # ── AN INCOHERENT INTERVAL IS A DEFECT, NOT A VALUE ───────────────────────────
+     # vmin > vmax cannot describe anything. It arises when a claim carries NO
+-    # comparator: `parse_bound`'s own docstring says the comparator IS the bound, and
++    # comparator: `dbcore.bound_on_scale`'s own docstring says the comparator IS the bound, and
+     # a bare number is read as a POINT, so a ceiling stored without `<=` contributes
+     # a floor as well. Before the 2026-09-17 ruling this was unreachable on parameter
+     # 3 by luck -- the offending row was written as a ratio and the engine could not
+diff --git a/scripts/audit/extraction_relations_integrity.py b/scripts/audit/extraction_relations_integrity.py
+index 16e27e1..2a89d02 100644
+--- a/scripts/audit/extraction_relations_integrity.py
++++ b/scripts/audit/extraction_relations_integrity.py
+@@ -140,9 +140,9 @@ def main() -> int:
+     # --- 3. v_derived_figure_check: a derived value that disagrees with its --
+     #        own recomputed inputs.
+     #
+-    # TOLERANCE MATCHES THE WRITER'S, AND MUST. `db.py derive_extraction` accepts a
+-    # supplied --claimed-value within 1e-9 of base+delta (db.py: `abs(cn - (bn + dn))
+-    # > 1e-9`). This check compared with SQL `<>`, i.e. exactly. Binary floating point
++    # TOLERANCE MATCHES THE WRITER'S, AND MUST. `db.py _refuse_derived_mismatch` (add-extraction,
++    # relate-extraction, derive-extraction) accepts a derived figure within 1e-9 of base+delta
++    # (`abs(recomputed - stored) > 1e-9`). This check compared with SQL `<>`, i.e. exactly. Binary floating point
+     # makes those two rules disagree on ordinary decimals: 0.1 + 0.2 = 0.30000000000000004,
+     # so a row the sanctioned writer had just accepted turned this BLOCKING gate red
+     # with `stored=0.3, recomputed=0.30000000000000004`. A gate that fails what its own
+diff --git a/scripts/db.py b/scripts/db.py
+index 3434fc1..9e7d0c5 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -6405,7 +6405,7 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session:
+ # refusal: `E-08 Corridor Clear Width (>=1200 mm Minimum)` biased every finding filed
+ # into it, because the container announced the determination before the evidence did.
+ # Measured 2026-09-09: no live terms.canonical_en contains any of these.
+-_VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
++_VALUE_BEARING = dbcore.VALUE_BEARING
+ # Comparator WORDS are screened in NAMES only. A definition or description is ordinary
+ # English ("rather than reflection"), so it keeps `_VALUE_BEARING` (digits, symbols, min/max)
+ # and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
+@@ -8714,6 +8714,20 @@ def _refuse_live_confirmation(conn, context, to_extraction):
+             f"then re-determine. Nothing was written.")
+ 
+ 
++def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
++    """Refuse a derived figure that disagrees with its own base + delta -- the ONE home of that
++    arithmetic. Reads `v_derived_figure_check` inside the caller's transaction, so the raise rolls
++    back the row and its edges. Tolerance: `extraction_relations_integrity.EPSILON`, which reads
++    the same view after the fact. The view joins on equal units and plain numerals, so a converted
++    row is not compared (its `--conversion-note` is its only record)."""
++    bad = conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
++                       (extraction_id,)).fetchone()
++    if bad and abs(bad["recomputed"] - bad["stored"]) > 1e-9:
++        raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
++                      f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
++                      f"defect this check exists to stop. Nothing was written.")
++
++
+ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
+                          from_figure_role, from_comparator,
+                          relation: str, session: str, context: str,
+@@ -9318,6 +9332,23 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+                 dbcore.check_declared(conn, "source_value_extractions", col,
+                                       row[col], "insert_extraction")
+ 
++        # --- the figure must be readable (T-016) ------------------------------
++        # A unit that is a sentence and a value the engine cannot place on a scale are both
++        # left OUT of a determination's value without anyone being told; refuse them here,
++        # with the fix, instead of finding them in a census afterwards. The qualitative and
++        # absent claim types are not quantities and pass (`dbcore.figure_refusal`).
++        for _why in (dbcore.unit_refusal(row.get("claimed_unit")),
++                     dbcore.figure_refusal(value, row.get("claimed_unit"),
++                                           row.get("comparator"), claim_type)):
++            if _why:
++                raise Refusal(f"add-extraction: {_why}. Nothing was written.")
++        if figure_role in ("claim", "derived") and claim_type == "numerical" \
++                and not row.get("comparator"):
++            raise Refusal(
++                "add-extraction: a value-supplying numerical row needs --comparator ('=' for a "
++                "point); a bare number is read as a point and adds a floor as well as a ceiling. "
++                "Nothing was written.")
++
+         # --- the relation edges (migration 075's extraction_relations) --------
+         # REQUIRED, and checked here rather than only at the parser so the PYTHON
+         # API path refuses too -- the same discipline --claim-text already gets.
+@@ -9394,6 +9425,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+                 input_role=edge.get("input_role"), notes=edge.get("notes"),
+                 cross_source_reason=edge.get("cross_source_reason"),
+                 session=session, context="add-extraction"))
++        if figure_role == "derived":
++            _refuse_derived_mismatch(conn, extraction_id, "add-extraction")
+ 
+         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
+                 "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
+@@ -9432,6 +9465,8 @@ def relate_extraction(from_extraction: int, relation: str, session: str,
+             to_kind=to_kind, stated=stated, quote=quote, input_role=input_role,
+             notes=notes, cross_source_reason=cross_source_reason,
+             session=session, context="relate-extraction")
++        if row["figure_role"] == "derived" and relation == "derived_from":
++            _refuse_derived_mismatch(conn, from_extraction, "relate-extraction")
+     return {"relation_id": rid, "from_extraction_id": from_extraction,
+             "relation": relation, "dry_run": dry_run}
+ 
+@@ -9735,20 +9770,11 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
+             except (TypeError, ValueError):
+                 return None
+         bn, dn = _num(base_row["claimed_value"]), _num(delta_row["claimed_value"])
+-        if claimed_value is not None:
+-            cn = _num(claimed_value)
+-            if bn is not None and dn is not None and cn is not None \
+-                    and abs(cn - (bn + dn)) > 1e-9:
+-                raise Refusal(
+-                    f"derive-extraction: --claimed-value {claimed_value} does not "
+-                    f"equal base + delta (base extraction {base} = {base_row['claimed_value']!r}, "
+-                    f"delta extraction {delta} = {delta_row['claimed_value']!r}, sum "
+-                    f"= {bn + dn}). A derived figure that disagrees with its own "
+-                    f"inputs is the defect this verb exists to prevent. Nothing "
+-                    f"was written.")
+-        elif bn is not None and dn is not None:
++        # A supplied --claimed-value is compared with base + delta by `insert_extraction`
++        # (`_refuse_derived_mismatch`), the one home of that arithmetic.
++        if claimed_value is None and bn is not None and dn is not None:
+             claimed_value = _fmt_num(bn + dn)
+-        else:
++        elif claimed_value is None:
+             raise Refusal(
+                 f"derive-extraction: --claimed-value is required when base or "
+                 f"delta does not parse as a plain number (base extraction {base} "
+diff --git a/scripts/dbcore.py b/scripts/dbcore.py
+index 26f38ff..7215e3d 100644
+--- a/scripts/dbcore.py
++++ b/scripts/dbcore.py
+@@ -40,6 +40,7 @@ import re
+ import sqlite3
+ from contextlib import contextmanager
+ from datetime import datetime, timezone
++from fractions import Fraction
+ from pathlib import Path
+ 
+ # ---------------------------------------------------------------------------
+@@ -415,6 +416,203 @@ ENGINE_EXTRACTION_COLUMNS = ("figure_role", "claim_type", "extraction_method", "
+ QUANTITY_CLAIM_TYPES = ("numerical", "range")
+ 
+ 
++#: NOTATIONS OF ONE QUANTITY, and the arithmetic that relates them. Owner ruling
++#: 2026-09-17: "Present both -- don't choose between ratio or percentage."
++#:
++#: THIS IS A DEFINITION, NOT A CURATED FACT, which is why it is a literal here and
++#: not derived from the corpus (CLAUDE.md rule 8 asks for derivation of facts the
++#: machine can compute; the relation between `1:20` and `5 %` is mathematics and
++#: there is nothing in the database to read it off).
++#:
++#: A FAMILY IS NOT A UNIT. Members are two ways of WRITING one dimensionless
++#: quantity. Millimetres and degrees are different units, and the ruling says so in
++#: its own ACTION (4): composing across THEM stays refused. Adding a member here is
++#: a claim that two notations denote the same quantity exactly, which is a
++#: mathematical claim and should be made deliberately.
++NOTATION_FAMILIES = {
++    "gradient": ("%", "rise:run ratio"),
++}
++#: Every family member MUST appear here, and the guard below refuses one that does
++#: not. Without it, adding a notation to the tuple above and forgetting the
++#: arithmetic makes `to_canonical` fall through to `Fraction(text)` and read the
++#: number AS IF it were already canonical -- `5` degrees silently becoming `5 %`.
++#: That is the shape a reviewer of the 2026-09-17 ruling flagged: `degrees` is the
++#: ARCTANGENT of the ratio, not a rescaling of it, so it is not a notation of this
++#: quantity at all and belongs to a family of its own or to none. Membership is a
++#: mathematical claim; this makes forgetting to back it up an error rather than a
++#: wrong answer.
++_CONVERTIBLE = {"%", "rise:run ratio"}
++_RATIO_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*$")
++
++
++def notation_family(unit):
++    """Which family a stated unit belongs to, or None if it stands alone."""
++    for fam, members in NOTATION_FAMILIES.items():
++        if (unit or "").strip() in members:
++            return fam
++    return None
++
++
++def to_canonical(raw, unit):
++    """One stated value -> an exact Fraction on its family's canonical scale.
++
++    The canonical scale is the family's FIRST member -- percent for gradient -- and
++    the conversion is exact because it is done in Fraction, never float: `1:12` is
++    100/12, which is 8.333... and is never rounded here. Rounding happens once, at
++    render, and is marked inexact when it happens.
++    """
++    txt = (raw or "").strip()
++    if not txt:
++        return None
++    fam = notation_family(unit)
++    if fam and (unit or "").strip() not in _CONVERTIBLE:
++        raise NotImplementedError(
++            "%r is listed in NOTATION_FAMILIES[%r] but no conversion is defined for "
++            "it. A family member is a claim that two notations denote ONE quantity "
++            "exactly; back it with arithmetic in to_canonical/from_canonical, or "
++            "remove it. Falling through here would read the number as if it were "
++            "already canonical." % (unit, fam))
++    m = _RATIO_RE.match(txt)
++    if m and fam:
++        rise, run = Fraction(m.group(1)), Fraction(m.group(2))
++        if run == 0:
++            return None
++        return rise / run * 100                      # rise:run -> percent, exactly
++    try:
++        return Fraction(txt)
++    except (TypeError, ValueError):
++        return None
++
++
++def from_canonical(value, notation):
++    """A canonical Fraction -> (text, exact) in one notation of its family.
++
++    `exact` is False when the notation cannot hold the value without rounding --
++    8.333...% is the case this project actually has -- and the caller MARKS it,
++    because ACTION (3) of the ruling forbids a rounded figure standing where a
++    source's own figure would.
++    """
++    if value is None:
++        return None, True
++    if notation == "%":
++        as_float = float(value)
++        text = ("%g" % as_float)
++        return text, Fraction(text) == value
++    if notation not in _CONVERTIBLE:
++        raise NotImplementedError(
++            "no rendering defined for notation %r; see _CONVERTIBLE" % (notation,))
++    if notation == "rise:run ratio":
++        if value == 0:
++            return "0", True
++        run = Fraction(100) / value                  # percent -> 1:n, exactly
++        text = "1:%g" % float(run)
++        return text, Fraction(1, 1) / Fraction(text.split(":")[1]) * 100 == value
++    return None, True
++
++
++def bound_on_scale(claimed_value, unit, comparator, claim_type):
++    """One governing claim -> (lo, hi) as exact Fractions on its family's scale.
++
++    The comparator IS the bound, which is why migration 075 added it: "more than thirty
++    centimetres" stored as a bare 30 turns a floor into a point, and a determination built
++    from points has quietly dropped every inequality its sources stated.
++
++      =, approx, or no comparator on a numerical claim -> a point:   (v, v)
++      >=, >                                            -> a floor:   (v, None)
++      <=, <                                            -> a ceiling: (None, v)
++      between, or a range claim written "a to b"       -> (a, b)
++
++    STRICTNESS IS NOT MODELLED, deliberately: the columns carry no open/closed flag, and
++    `>` and `>=` both land as (v, None). The NUMBER goes through `to_canonical`, so `1:20`
++    and `5 %` land on one scale and can be compared -- "where does this claim sit relative
++    to one written the other way" (owner ruling 2026-09-17). None for anything that is not
++    a number: those claims still govern the STATE of a cell without a numeric bound.
++    """
++    raw = (claimed_value or "").strip()
++    if not raw:
++        return None
++    cmp_ = (comparator or "").strip()
++    if cmp_ == "between" or claim_type == "range":
++        parts = re.split(r"\s+to\s+", raw)
++        if len(parts) == 2:
++            lo, hi = to_canonical(parts[0], unit), to_canonical(parts[1], unit)
++            if lo is not None and hi is not None:
++                return (min(lo, hi), max(lo, hi))
++        return None
++    v = to_canonical(raw, unit)
++    if v is None:
++        return None
++    if cmp_ in (">=", ">"):
++        return (v, None)
++    if cmp_ in ("<=", "<"):
++        return (None, v)
++    return (v, v)
++
++
++#: A name or a unit may not state its own answer: digits, comparator symbols, min/max words. Moved
++#: here from `db.py` (which keeps `_VALUE_BEARING = dbcore.VALUE_BEARING`) so that the screen on a
++#: term's name and the screen on a unit are one definition.
++VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
++
++
++def unit_refusal(unit):
++    """The sentence that refuses a `claimed_unit` that is not a bare scale, else None.
++
++    A unit names the scale only. `rise:run ratio (maximum) where the height difference is
++    <= 0.05 m` is a unit, a condition and a comparator in one cell, and no reader can use it.
++    `dB(A)` is a weighting and passes.
++    """
++    u = (unit or "").strip()
++    if not u:
++        return None
++    if (VALUE_BEARING.search(u) or re.search(r"[;,]|\b(where|if|unless|except|only|when)\b", u, re.I)
++            or ("(" in u and not re.fullmatch(r"[A-Za-z]+\([A-Z]\)", u))):
++        return ("a unit names the scale only. Put a condition in its own row (`add-extraction "
++                "--figure-role condition` on the parameter it measures) joined by `--relation "
++                "condition_on`; put applicability (new build, alteration, building type) in "
++                "`--setting`; put commentary in `--notes`")
++    return None
++
++
++def figure_refusal(value, unit, comparator, claim_type):
++    """The sentence that refuses a quantity figure the engine cannot read, else None.
++
++    None when `claim_type` is not one of `QUANTITY_CLAIM_TYPES`. Otherwise None only when
++    `bound_on_scale` reads the figure AND it is neither a slash ratio in a gradient unit
++    (`bound_on_scale` reads `1/12` as 0.083 %, so that is tested first) nor an inverted
++    gradient ratio (`12:1`).
++    """
++    if claim_type not in QUANTITY_CLAIM_TYPES:
++        return None
++    v, u = (value or "").strip(), (unit or "").strip()
++    if "/" in v and notation_family(u):
++        return "write a gradient ratio as rise:run (1:12), not 1/12, which reads as 0.083 %"
++    if bound_on_scale(v, u, comparator, claim_type) is None:
++        if re.search(r"\d\s*%", v):
++            return f"write the number ({v.replace('%', '').strip()}) and put % in --claimed-unit"
++        if re.search(r"\d\s+in\s+\d", v):
++            return "write '1 in 12' as 1:12 with --claimed-unit 'rise:run ratio'"
++        if re.search(r"\d,\d", v):
++            return "write a decimal comma as a point (30,0 -> 30.0); the digits stay the same"
++        if ":" in v and not notation_family(u):
++            return ("a ratio needs the unit 'rise:run ratio' -- if, and only if, the source measures "
++                    "rise over HORIZONTAL run; rise over slope length is a different unit")
++        if claim_type == "range":
++            return "write a range as 'a to b' (e.g. '0 to 4.8')"
++        if not re.search(r"\d", v):
++            return ("a number written in words is entered as a numeral and unit, with the source's "
++                    "wording in --value-as-written")
++        return f"{v!r} with unit {u!r} cannot be placed on any scale"
++    if notation_family(u):
++        for part in re.split(r"\s+to\s+", v):
++            if ":" in part:
++                rise, run = (Fraction(x) for x in part.split(":", 1))
++                if rise > run:
++                    return ("an inverted ratio (rise larger than run): write 1:12, and record the "
++                            "source's order in --notes")
++    return None
++
++
+ def validate_cols(data_keys, whitelist: frozenset, context: str):
+     unknown = set(data_keys) - whitelist
+     if unknown:
+diff --git a/scripts/tests/test_assess_cell_pilot.py b/scripts/tests/test_assess_cell_pilot.py
+index 447878c..59042c5 100644
+--- a/scripts/tests/test_assess_cell_pilot.py
++++ b/scripts/tests/test_assess_cell_pilot.py
+@@ -945,7 +945,7 @@ def main():
+     # were already canonical. `degrees` is the arctangent of the ratio, not a
+     # rescaling, so adding it to the family by analogy would make 5 degrees read as
+     # 5 % -- silently, and only in the composed value.
+-    import assess_cell as _ac
++    import dbcore as _ac                         # the one home of the notation arithmetic (T-016)
+     _saved = _ac.NOTATION_FAMILIES["gradient"]
+     try:
+         _ac.NOTATION_FAMILIES["gradient"] = _saved + ("degrees",)
+@@ -959,6 +959,17 @@ def main():
+     finally:
+         _ac.NOTATION_FAMILIES["gradient"] = _saved
+ 
++    # The reader has ONE home (dbcore). Exact Fractions: `1:12` is 100/12, never 8.33 (T-016).
++    from fractions import Fraction as _F
++    for _args, _want in ((("1:12", "rise:run ratio", "<=", "numerical"), (None, _F(25, 3))),
++                         (("8.33", "%", "<=", "numerical"), (None, _F("8.33"))),
++                         (("1:20", "rise:run ratio", ">=", "numerical"), (_F(5), None)),
++                         (("0 to 4.8", "%", "between", "range"), (_F(0), _F("4.8"))),
++                         (("1/12", "rise:run ratio", "<=", "numerical"), (None, _F(1, 12))),
++                         (("8.33%", "%", "<=", "numerical"), None)):
++        _got = _ac.bound_on_scale(*_args)
++        expect(f"NOTATION: dbcore.bound_on_scale{_args} reads {_want}", _got == _want, str(_got))
++
+     # And a claim with no number at all is still reported rather than dropped (086).
+     d = determine(synth_db([
+         {"tier": 6, "evidence_type": "code", "jurisdiction": "US",
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index f0febfe..833b473 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -327,7 +327,7 @@ FIGURE = r"[A-Za-z][^\n.]{20,100}\b(\d{3,4})\b[^\n.]{0,40}"
+ 
+ def extraction(ref, pid, **over):
+     base = {"ref_id": ref, "parameter_id": pid, "identity_code": IDENT,
+-            "claim_type": "numerical", "claimed_value": VALUE, "claimed_unit": "mm",
++            "claim_type": "numerical", "claimed_value": VALUE, "claimed_unit": "mm", "comparator": "=",
+             "claim_text": QUOTE, "extraction_method": "full-read", "figure_role": "claim",
+             "source_section": "section 3", "loc_section": "3"}
+     base.update(over)
+@@ -1791,4 +1791,103 @@ with scratch() as c:
+     record(f"T008-{n + 8:02d}", "the column's own CHECK refuses a blank wording", blank)
+ 
+ 
++print("Section T016: a written figure is readable, or the writer refuses with the fix (notation arithmetic has one home)")
++T16 = dict(
++    pct="A ramp gradient of 8.33% is the greatest permitted.", slash="The fall is 1/12 over the run.",
++    inv="A slope of 12:1 is shown on the drawing.", ratio="Ramps are to be not steeper than 1:12 along the run.",
++    cond="Where the height difference is at most 0.05 m a ramp is to be not steeper than 1:12.",
++    qual="The surface is to be slip-resistant when wet.", base="The first flight rises 5.5 percent.",
++    delta="The second flight rises 9.25 percent.", ok="The combined rise is 14.75 percent.",
++    bad="The combined rise is 99 percent.")
++# N8 (restated): the quote is read from the row that holds a figure written in words, never retyped.
++T16_WORDS = q("SELECT claim_text, claimed_value FROM source_value_extractions WHERE claim_type IN "
++              "(SELECT value FROM json_each(?)) AND claimed_value NOT GLOB '*[0-9]*' "
++              "ORDER BY extraction_id LIMIT 1", json.dumps(list(dbcore.QUANTITY_CLAIM_TYPES)))
++with scratch() as c:
++    t16ref = new_source(verified=True)
++    held_text(t16ref, "\n".join(list(T16.values()) + [T16_WORDS[0][0] if T16_WORDS else ""]))
++    hand_scan(c, t16ref, "full")
++    pid = P_ACTIVE[0]
++    c1 = lambda sql, *p: c.execute(sql, p).fetchone()[0]       # the scratch copy, where the writers act
++
++    def t16row(key, value, unit, cmp_="<=", **o):
++        return extraction(t16ref, pid, **{"claim_text": T16[key], "claimed_value": value, "claimed_unit": unit,
++                                          "comparator": cmp_, **o})
++    # (id, key, value, unit, comparator, a phrase the refusal must carry; None = accepted)
++    for tid, key, val, unit, cmp_, want in (
++            ("N1", "pct", "8.33%", "%", "<=", "put % in --claimed-unit"),
++            ("N2", "slash", "1/12", "rise:run ratio", "<=", "not 1/12"),
++            ("N3", "inv", "12:1", "rise:run ratio", "<=", "inverted"),
++            ("N4", "cond", "1:12", "rise:run ratio (maximum) where the height difference is <= 0.05 m", "<=",
++             "condition_on"),
++            ("N4b", "ratio", "1:12", "rise:run ratio max", "<=", "condition_on"),          # only the value-bearing screen
++            ("N4c", "ratio", "1:12", "rise:run ratio unless steep", "<=", "condition_on"),  # only the condition words
++            ("N4e", "ratio", "1:12", "ratio (new build)", "<=", "condition_on"),            # only the parenthesis rule
++            ("N5", "ratio", "1:12", "ratio", "<=", "rise:run ratio"),
++            ("N6", "ratio", "1:12", "rise:run ratio", None, "--comparator"),
++            ("N7", "ratio", "1:12", "rise:run ratio", "<=", None)):
++        r = refusal(db.insert_extraction, t16row(key, val, unit, cmp_), session=S, dry_run=True, relations=[])
++        if want:
++            record(f"T016-{tid}", f"{val!r} / {unit!r} / {cmp_!r} is refused with the fix", r and want in r, r)
++        else:
++            res, err = ok(db.insert_extraction, t16row(key, val, unit, cmp_), session=S, dry_run=True, relations=[])
++            record(f"T016-{tid}", f"{val!r} / {unit!r} / {cmp_!r} (control) is accepted", err is None, err)
++    res, err = ok(db.insert_extraction, extraction(t16ref, pid, claim_text=T16["qual"], claim_type="qualitative",
++                                                   claimed_value="slip-resistant", claimed_unit=None, comparator=None),
++                  session=S, dry_run=True, relations=[])
++    record("T016-N7b", "a qualitative claim with no unit and no comparator (control) is accepted", err is None, err)
++    if T16_WORDS:
++        words_q, words_v = T16_WORDS[0]
++        w = lambda **o: extraction(t16ref, pid, claim_text=words_q, claimed_value="5", claimed_unit="%",
++                                   comparator="<=", **o)
++        r = refusal(db.insert_extraction, w(), session=S, dry_run=True, relations=[])
++        record("T016-N8", "the quote of a figure written in words, value 5, unit %, no --value-as-written: refused",
++               r and "--value-as-written" in r, r)
++        res, err = ok(db.insert_extraction, w(value_as_written=words_v), session=S, dry_run=False, relations=[])
++        record("T016-N8a", "the same with the source's wording is accepted and the column holds that wording",
++               err is None and c1("SELECT value_as_written FROM source_value_extractions WHERE extraction_id=?",
++                                      res["extraction_id"]) == words_v, err)
++    else:
++        skip("T016-N8", "no row holds a quantity claim whose value has no digit")
++    # N9-N11: a derived figure that contradicts its inputs. Inputs and the control are made by the writer.
++    base = db.insert_extraction(t16row("base", "5.5", "%", "="), session=S, dry_run=False, relations=[])["extraction_id"]
++    delta = db.insert_extraction(t16row("delta", "9.25", "%", "="), session=S, dry_run=False, relations=[])["extraction_id"]
++    edges = lambda: [{"relation": "derived_from", "to_extraction": e, "stated": "named",
++                      "quote": T16[k], "input_role": ro} for e, k, ro in ((base, "base", "base"), (delta, "delta", "delta"))]
++    n_rows = lambda: (c1("SELECT COUNT(*) FROM source_value_extractions"),
++                      c1("SELECT COUNT(*) FROM extraction_relations"))
++    before = n_rows()
++    r = refusal(db.insert_extraction, t16row("bad", "99", "%", "=", figure_role="derived"), session=S,
++                dry_run=False, relations=edges())
++    record("T016-N9", "a derived row stored 99 against base 5.5 + delta 9.25 is refused, and no row or edge is left",
++           r and "disagrees" in r and n_rows() == before, r or n_rows())
++    res, err = ok(db.insert_extraction, t16row("ok", "14.75", "%", "=", figure_role="derived"), session=S,
++                  dry_run=True, relations=edges())
++    record("T016-N10", "the same with the sum 14.75 (control) is accepted", err is None, err)
++    # SHIM: `derive_extraction` passes no locator, so on the unshimmed verb the R3 locator refusal (every tier
++    # since 2026-11-06) fires first and nothing past it is reachable. The shim adds the locator the verb cannot take.
++    before = n_rows()
++    _insert = db.insert_extraction
++    db.insert_extraction = lambda data, *a, **k: _insert({**data, "source_section": "section 3"}, *a, **k)
++    r = refusal(db.derive_extraction, ref_id=t16ref, parameter_id=pid, base=base, delta=delta, claimed_value="99",
++                comparator="=", claim_text=T16["bad"], session=S, identity=IDENT, dry_run=False)
++    record("T016-N11", "derive-extraction with a mismatched --claimed-value is refused, and writes nothing",
++           r and "base + delta" in r and n_rows() == before, r or n_rows())
++    res, err = ok(db.derive_extraction, ref_id=t16ref, parameter_id=pid, base=base, delta=delta, comparator="=",
++                  claim_text=T16["ok"], session=S, identity=IDENT, dry_run=False)
++    record("T016-N11a", "derive-extraction computing the sum itself (control) is accepted and stores 14.75",
++           err is None and c1("SELECT claimed_value FROM source_value_extractions WHERE extraction_id=?",
++                                  res["extraction_id"]) == "14.75", err)
++    db.insert_extraction = _insert
++    # relate-extraction: a delta edge that makes a derived row contradict its inputs. HAND: the row is made
++    # with its base edge only (the check has no delta to compare with yet), as a later edge would find it.
++    only_base = db.insert_extraction(t16row("bad", "99", "%", "=", figure_role="derived"),
++                                     session=S, dry_run=False, relations=edges()[:1])["extraction_id"]
++    before = n_rows()
++    r = refusal(db.relate_extraction, only_base, "derived_from", S, to_extraction=delta, stated="named",
++                quote=T16["delta"], input_role="delta")
++    record("T016-N11b", "relate-extraction adding the delta edge to that row is refused, and no edge is left",
++           r and "disagrees" in r and n_rows() == before, r or n_rows())
++
++
+ finish()
+diff --git a/skills/run-pipeline_SKILL.md b/skills/run-pipeline_SKILL.md
+index 3c70b3b..f6cb458 100644
+--- a/skills/run-pipeline_SKILL.md
++++ b/skills/run-pipeline_SKILL.md
+@@ -189,7 +189,11 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
+   verb), and `observe-term --verbatim-exempt` is refused on the same ground. The
+   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
+   names the renders, so the adversarial pass can check the locator against them; a
+-  byte-identical second row (a divergent reading is a contest, D-0168, and is written).
++  byte-identical second row (a divergent reading is a contest, D-0168, and is written); a `--claimed-unit` that is a
++  sentence rather than a scale (the condition is its own row, `--relation condition_on`; applicability is `--setting`);
++  a quantity figure the engine cannot place on a scale (`8.33%`, `1/12`, `12:1`, `1 in 12`, a decimal comma; the refusal
++  names the fix); a value-supplying numerical row with no `--comparator`; and a `derived` figure that disagrees with its
++  own base + delta (`add-extraction`, `relate-extraction` and `derive-extraction` alike).
+ - `relate-extraction` for comparators (`--cross-source <reason>` makes a condition drawn from another document an
+   explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures,
+   `raise-follow-up` for doubtful rows — its `--reason` vocabulary is `extraction_follow_ups.reason` (`raise-follow-up
+-- 
+2.43.0
+
