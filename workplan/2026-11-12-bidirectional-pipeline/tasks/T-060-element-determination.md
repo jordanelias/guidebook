@@ -29,7 +29,7 @@ cd /home/user/guidebook                                    # repository root; ev
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
 W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
-git switch -c task/t-060-wp-t2-conditions "$BASE"                               # real execution only; never commit on main (see below for a pilot)
+git switch -c task/t-060-element-determination "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-060" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
 ```
@@ -58,6 +58,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. **Write `tasks/T-060-design.md` first** (an Opus-class session; the other tasks' design files, `T-018-design.md`, `T-028-design.md` and `T-102-design.md`, are the shape to follow), answering the questions of section 3. This task does nothing else until that file exists and the owner's reading of it is recorded where the other designs record theirs.
+   **A constraint the design must meet (added 2026-11-13 by the fold of the Edmonton case study, ADJUDICATION Q9 and R2; from OR-14b's "The element is still never a container that figures are filed into" and rule 5):** an element determination row holds pointers to its parameters' determinations (`specifications.specification_id`, real foreign keys) and pointers to the relation and condition rows that cross them (`extraction_relations` and T-032's relation rows), and nothing else: **no value column**, no unit, no copied bound, no copied note. A rule that belongs to no single parameter (the Edmonton checklist's items 4.7 and 7.1: handrails on both sides when the stair is 1100 mm or wider) is reached through the `condition_on` edge between the two parameters' figures, not stored on the element. The design names the test that proves it: a check, run in section 6, that the element table's columns (`PRAGMA table_info`) include none whose name or declared type holds a value (no `value`, `bound`, `min`, `max`, `unit`, `claimed_` column), and that every non-key column is a foreign key or a stamp. Where the element itself lives (a term reached by T-029's `element has parameter` pointer, or a `base_elements` row) is the owner's open question OD-49 (b); the design reads its answer, or keeps both open by pointing at the term.
 2. Then build exactly what the design names: the table with real foreign keys to the parameter determinations it composes, the rule version, the writer and its refusals, the staleness check, and its place in the stage map. `T-037` builds no element page until this task has merged (T-037's stop).
 3. Nothing is added that the design does not name (CLAUDE.md §8).
 

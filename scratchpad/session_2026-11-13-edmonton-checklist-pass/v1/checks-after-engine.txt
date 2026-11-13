@@ -1,0 +1,218 @@
+##### scripts/tests/test_db_integrity.py
+
+[A] Foreign key referential integrity
+  [✓] A01: source_slug_links → evidence_sources  (76 examined)
+  [✓] A05: evidence_population_match → evidence_sources  (63 examined)
+  [✓] A14: evidence_population_match.target_population → base_taxonomy_identity  (63 examined)
+  [✓] A07: citation_mining global_ref_id resolves as a ref_id identity  (39 examined)
+  [✓] A09: evidence_sources.superseded_by_ref_id → evidence_sources  (1 examined)
+  [✓] A10: specification_source_links.specification_id → specifications  (38 examined)
+  [✓] A11: specification_source_links.ref_id → evidence_sources  (38 examined)
+  [✓] A12: search_admissions.exec_id → search_executions  (62 examined)
+  [✓] A13: search_admissions.ref_id → evidence_sources  (62 examined)
+
+[B] Enum column validation
+  [✓] B01: verification_status matches the column's own CHECK  (60 examined)
+  [✓] B02: metadata_quality matches the column's own CHECK  (60 examined)
+  [✓] B03: doi_resolution_outcome matches the column's own CHECK  (32 examined)
+  [✓] B04: url_resolution_outcome matches the column's own CHECK  [examined 0 — NOTHING IN SCOPE]
+  [✓] B05: source_type matches the column's own CHECK  (35 examined)
+  [✓] B06: gaps.status matches the column's own CHECK  (128 examined)
+  [✓] S01: a candidate and its admission AGREE on which search (agreement, not truth -- RC1, DR-2026-09-26 2.2f: this compares two typed pointers, not either against the bytes a search actually returned, which is what provenance_artefact_audit.py is for)  (7 examined)
+  [✓] B10: evidence_sources.tier lower bound (>=1, NULL permitted)  (60 examined)
+  [✓] B11: evidence_sources.tier upper bound (<=6, NULL permitted)  (60 examined)
+  [✓] I1: no source is VERIFIED with effort still owed  (54 examined)
+  [✓] I2: a VERIFIED source records at least one attempt  (54 examined)
+  [✓] I3: closure is earned and reasoned  [examined 0 — NOTHING IN SCOPE]
+  [✓] I3b: closure rests on at least two recorded attempts  [examined 0 — NOTHING IN SCOPE]
+  [✓] I4: VERIFIED is reachable only by a method that obtains the artefact  (54 examined)
+  [✓] I4b: method='tool' names the tool that established it  (26 examined)
+  [✓] B07: verification_disposition values  (60 examined)
+  [✓] B08: verification_method values  (55 examined)
+  [✓] B09: verification_closure_reason values  [examined 0 — NOTHING IN SCOPE]
+
+[C] Consistency invariants
+  [✓] C01: VERIFIED rows all have an audit trail (doi/url/pmid or verified_by_tool)  (54 examined)
+  [✓] C02: All DOI rows have doi_resolution_outcome set (pre-pipeline backfill applied)  (20 examined)
+  [✓] C03: COMPLETE rows all have author rows (v_evidence_authors)  (31 examined)
+  [✓] C04: COMPLETE rows: either have doi, or co1-verified, or NO-MATCH on record  (31 examined)
+  [✓] C08: citation_mining_status='mined' ⟺ a non-deferred mining row resolves to it  (60 examined)
+  [✓] C10: no published cell rests on an unverified or disputed source  [examined 0 — NOTHING IN SCOPE]
+  [✓] C07: value columns hold values, not placeholder states  (262 examined)
+  [✓] C09: a source marked mining-deferred has a deferred mining row  (60 examined)
+  [✓] C05: v1_legacy parity (table dropped, check skipped)  [examined 0 — NOTHING IN SCOPE]
+
+[D] Duplicate and collision detection
+  [✓] D01: No unexpected duplicate DOIs (known IEC 60118-4 triple excluded)  (20 examined)
+  [✓] D02: v1_legacy ref_id parity (table dropped, check skipped)  [examined 0 — NOTHING IN SCOPE]
+  [✓] D04: No duplicate DOI-less sources (author+year+title collision)  (39 examined)
+  [✓] D05: Every DOI-less source has a computable dedup key  (40 examined)
+
+[E] Schema contract
+  [✓] E01: evidence_sources has all required columns (21 checked)  (21 examined)
+  [✓] E04: data_migrations log non-empty (476 entries)  (476 examined)
+  [✓] E05: Required backfill migrations recorded  (2 examined)
+  [✓] E06: SQLite PRAGMA integrity_check = ok  (1 examined)
+  [✓] E07: PRAGMA foreign_key_check reports no violation  (106 examined)
+
+[G] Evidence chain integrity
+  [✓] G01: evidence_source_authors → evidence_sources (no orphan author rows)  (143 examined)
+  [✓] G02: COMPLETE person-authored sources have ≥1 author row  (24 examined)
+  [✓] G03: ORCID values stored as plain identifier (no URL prefix)  [examined 0 — NOTHING IN SCOPE]
+  [✓] T018-05: every figure has at least one live lens link (D-0182, held by v_live_lens_links)  (230 examined)
+
+[H] JSON-array ↔ junction parity — RETIRED, see below
+
+[K] Determination attestation
+  [✓] K01: every recorded derivation_sha verifies against its own row  (10 examined)
+  [✓] K02: every determination written since migration 077 accounts for every extraction of its parameter  (10 examined)
+
+[L] Shadow-store parity
+  [✓] L02: every archived code lead is still in research_code_leads  (179 examined)
+  [✓] L04: sessions/LATEST-RESEARCH gives citation_mining_session a subject  (1 examined)
+
+[M] dbcore.check_values() vocabulary parsing
+  [✓] M01: check_values() never returns a comment fragment as a value  (861 examined)
+  [✓] M02: every hand-writable field named in db.py is a live column  (25 examined)
+  [✓] M03: _AMENDABLE and _CORRECTABLE are disjoint  (25 examined)
+  [✓] M04: evidence_sources hand-writer classification coverage  (97 examined)
+
+======================================================================
+RESULTS: 57/57 checks passed
+
+PASSED HAVING EXAMINED NOTHING (8): B04, I3, I3b, B09, C10, C05, D02, G03
+  Their scope is empty. They are not evidence that the thing they check is true.
+EXAMINED: 4015 subject-inspections across 49 instrumented check(s) of 57
+======================================================================
+rc=0
+##### scripts/audit/derivation_handshake_integrity.py
+======================================================================
+derivation_handshake_integrity
+======================================================================
+
+  determinations: 10  gates: 1 (1 open)  distinct (population, ICF code) pairs: 56
+EXAMINED: 11
+VERDICT: CLEAN
+rc=0
+##### scripts/validate_evidence_state.py
+OK cell-state machine: 18 cells, 5 convergence rows validated from guidebook.db
+
+PASS: 23 records checked, 0 errors, 0 warnings
+EXAMINED: 23
+rc=0
+##### scripts/audit/medical_lens_integrity.py
+======================================================================
+medical_lens_integrity
+======================================================================
+  base_taxonomy_medical holds 0 rows.
+  NOT an unexecuted ruling: D-0170 adopted the lens 2026-08-27. And NOT
+  licensing — the owner ruled 'use ICD-11' on 2026-09-11, which this message
+  went on claiming for an hour after the fact (swept 2026-09-11, rule 4:
+  prose callers are the ones no gate covers).
+  The lens is populated by CORRESPONDENCE from the identity and axis
+  registries, bounded at roughly 15-20 rows, plus on demand thereafter.
+  See references/project-standards.md, the 2026-09-11 entries.
+
+  unverified anchors: 0 of 0
+EXAMINED: 0
+VERDICT: CLEAN
+rc=0
+##### scripts/audit/extraction_relations_integrity.py
+EXAMINED: 287  (230 source_value_extractions row(s), 57 extraction_relations edge(s), 0 v_derived_figure_check row(s))
+UNCHECKED: 0 of 0 derived row(s) are outside v_derived_figure_check (unit-converted, or a value the view's numeric GLOB rejects) and CANNOT be arithmetically re-verified here
+VERDICT: CLEAN
+rc=0
+##### scripts/audit/judgment_handoff_shape.py
+EXAMINED: 3 invariant(s) of the evidence->judgment hand-off
+  - source_value_extractions.ref_id NOT NULL
+  - no UNIQUE index on source_value_extractions
+  - source_value_extractions.ref_id -> evidence_sources(ref_id)
+PASS: shape holds (source_value_extractions currently 230 rows — shape is checked, not content).
+rc=0
+##### scripts/audit/verified_scan_integrity.py
+verified_scan_integrity — every live extraction rests on a VERIFIED source and a reading (OR-11a)
+EXAMINED: 228
+  VERIFIED-WITHOUT-FULL-READING: 27 row(s)
+    REF-00977: 1 row(s) (parameter, extraction): [(3, 39)]
+    REF-00988: 1 row(s) (parameter, extraction): [(3, 19)]
+    REF-00989: 2 row(s) (parameter, extraction): [(3, 20), (3, 21)]
+    REF-00990: 2 row(s) (parameter, extraction): [(3, 22), (3, 23)]
+    REF-00991: 1 row(s) (parameter, extraction): [(3, 24)]
+    REF-00993: 1 row(s) (parameter, extraction): [(3, 27)]
+    REF-00994: 2 row(s) (parameter, extraction): [(3, 28), (3, 29)]
+    REF-00995: 1 row(s) (parameter, extraction): [(3, 30)]
+    REF-00996: 2 row(s) (parameter, extraction): [(3, 31), (3, 32)]
+    REF-00997: 3 row(s) (parameter, extraction): [(3, 33), (3, 34), (3, 35)]
+    REF-00998: 1 row(s) (parameter, extraction): [(3, 36)]
+    REF-00999: 2 row(s) (parameter, extraction): [(3, 37), (3, 38)]
+    REF-01000: 2 row(s) (parameter, extraction): [(3, 40), (3, 41)]
+    REF-01001: 2 row(s) (parameter, extraction): [(3, 42), (3, 43)]
+    REF-01008: 4 row(s) (parameter, extraction): [(3, 63), (3, 64), (3, 68), (3, 69)]
+    remedy: record the full reading (scripts/research/full_text.py, then db.py record-scan --text-scope full) or re-grade the row (db.py amend-extraction --field extraction_status)
+  SOURCE-NOT-VERIFIED: 10 row(s)
+    REF-01002: 2 row(s) (parameter, extraction): [(3, 44), (3, 45)]
+    REF-01013: 1 row(s) (parameter, extraction): [(3, 75)]
+    REF-01014: 2 row(s) (parameter, extraction): [(3, 76), (3, 77)]
+    REF-01016: 2 row(s) (parameter, extraction): [(3, 79), (12, 140)]
+    REF-01026: 3 row(s) (parameter, extraction): [(3, 95), (3, 96), (3, 97)]
+    remedy: verify the source (db.py correct-source, or amend-source --field verification_status) or retire the row through the extraction writers
+  NO-COVERING-READING: 103 row(s)
+    REF-00977: 1 row(s) (parameter, extraction): [(3, 39)]
+    REF-00979: 2 row(s) (parameter, extraction): [(3, 46), (3, 47)]
+    REF-00980: 1 row(s) (parameter, extraction): [(3, 48)]
+    REF-00983: 2 row(s) (parameter, extraction): [(3, 12), (3, 16)]
+    REF-00984: 1 row(s) (parameter, extraction): [(3, 14)]
+    REF-00985: 2 row(s) (parameter, extraction): [(3, 11), (3, 15)]
+    REF-00986: 1 row(s) (parameter, extraction): [(3, 13)]
+    REF-00988: 2 row(s) (parameter, extraction): [(3, 19), (12, 116)]
+    REF-00989: 2 row(s) (parameter, extraction): [(3, 20), (3, 21)]
+    REF-00990: 2 row(s) (parameter, extraction): [(3, 22), (3, 23)]
+    REF-00991: 1 row(s) (parameter, extraction): [(3, 24)]
+    REF-00993: 1 row(s) (parameter, extraction): [(3, 27)]
+    REF-00994: 2 row(s) (parameter, extraction): [(3, 28), (3, 29)]
+    REF-00995: 3 row(s) (parameter, extraction): [(3, 30), (3, 115), (12, 118)]
+    REF-00996: 2 row(s) (parameter, extraction): [(3, 31), (3, 32)]
+    REF-00997: 3 row(s) (parameter, extraction): [(3, 33), (3, 34), (3, 35)]
+    REF-00998: 1 row(s) (parameter, extraction): [(3, 36)]
+    REF-00999: 2 row(s) (parameter, extraction): [(3, 37), (3, 38)]
+    REF-01000: 2 row(s) (parameter, extraction): [(3, 40), (3, 41)]
+    REF-01001: 2 row(s) (parameter, extraction): [(3, 42), (3, 43)]
+    REF-01002: 2 row(s) (parameter, extraction): [(3, 44), (3, 45)]
+    REF-01003: 1 row(s) (parameter, extraction): [(3, 49)]
+    REF-01004: 2 row(s) (parameter, extraction): [(3, 50), (3, 51)]
+    REF-01005: 7 row(s) (parameter, extraction): [(3, 52), (3, 53), (3, 54), (3, 55), (3, 56), (3, 57), (3, 67)]
+    REF-01006: 1 row(s) (parameter, extraction): [(3, 58)]
+    REF-01007: 1 row(s) (parameter, extraction): [(3, 59)]
+    REF-01008: 9 row(s) (parameter, extraction): [(3, 60), (3, 61), (3, 62), (3, 63), (3, 64), (3, 65), (3, 66), (3, 68)] ...
+    REF-01009: 1 row(s) (parameter, extraction): [(3, 71)]
+    REF-01010: 1 row(s) (parameter, extraction): [(3, 70)]
+    REF-01011: 2 row(s) (parameter, extraction): [(3, 72), (3, 73)]
+    REF-01012: 1 row(s) (parameter, extraction): [(3, 74)]
+    REF-01013: 1 row(s) (parameter, extraction): [(3, 75)]
+    REF-01014: 2 row(s) (parameter, extraction): [(3, 76), (3, 77)]
+    REF-01015: 1 row(s) (parameter, extraction): [(3, 78)]
+    REF-01016: 2 row(s) (parameter, extraction): [(3, 79), (12, 140)]
+    REF-01017: 1 row(s) (parameter, extraction): [(3, 80)]
+    REF-01018: 6 row(s) (parameter, extraction): [(3, 81), (3, 126), (3, 127), (12, 132), (12, 133), (12, 134)]
+    REF-01020: 4 row(s) (parameter, extraction): [(3, 84), (3, 85), (3, 86), (3, 106)]
+    REF-01021: 2 row(s) (parameter, extraction): [(3, 87), (3, 88)]
+    REF-01022: 1 row(s) (parameter, extraction): [(3, 112)]
+    REF-01023: 1 row(s) (parameter, extraction): [(3, 90)]
+    REF-01024: 2 row(s) (parameter, extraction): [(3, 113), (3, 114)]
+    REF-01025: 2 row(s) (parameter, extraction): [(3, 93), (3, 94)]
+    REF-01026: 3 row(s) (parameter, extraction): [(3, 95), (3, 96), (3, 97)]
+    REF-01027: 3 row(s) (parameter, extraction): [(3, 98), (3, 99), (12, 141)]
+    REF-01029: 2 row(s) (parameter, extraction): [(3, 101), (3, 102)]
+    REF-01030: 7 row(s) (parameter, extraction): [(3, 103), (3, 104), (3, 105), (3, 128), (3, 129), (12, 145), (12, 146)]
+    remedy: record the reading (db.py record-scan)
+FAIL: 140 (row, class) pair(s) across 228 live extraction(s); each class above names its remedy.
+rc=1
+##### scripts/audit/schema_reference_audit.py
+EXAMINED: 1353 SQL identifier references in 188 files against 85 live tables and views
+  KNOWN: evidence_sources_v1_legacy  (2 site(s)) — Guarded reference. scripts/tests/test_db_integrity.py reads it only after SELECT COUNT(*) FROM sqlite_master WHERE name='evidence_sources_v1_legacy' returns non-zero -- the parity check runs only while the legacy table exists.
+  KNOWN: items  (1 site(s)) — Deliberate reference to the PRE-RESET corpus, not the live schema. scripts/db.py (_item_subject) opens _archived/data/corpus-pre-reset-2026-08-06.db read-only and immutable and reads its `items.name`, the 93 item subjects the owner admitted as a basis on 2026-11-06 (ledger: "Owner statements 2026-11-06"). The live database has no `items` table (migration drop_item_layer_cluster) and a rebuild does not restore one.
+  KNOWN: no_such_table  (1 site(s)) — Selftest fixture in scripts/audit/graph_audit.py, same purpose as zzz_phantom.
+  KNOWN: real_table  (1 site(s)) — Selftest fixture in scripts/audit/graph/extract_code.py, proving the extractor distinguishes a real CREATE TABLE from a mention of one.
+  KNOWN: zzz_phantom  (1 site(s)) — Selftest fixture in scripts/audit/graph_audit.py -- a table name chosen BECAUSE it does not exist, to prove the audit reports a phantom.
+RESULT: PASS — every table and view a caller names exists
+rc=0

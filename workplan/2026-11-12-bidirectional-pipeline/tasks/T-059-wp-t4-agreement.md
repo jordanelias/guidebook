@@ -29,7 +29,7 @@ cd /home/user/guidebook                                    # repository root; ev
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
 W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
-git switch -c task/t-059-wp-t2-conditions "$BASE"                               # real execution only; never commit on main (see below for a pilot)
+git switch -c task/t-059-wp-t4-agreement "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-059" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
 ```

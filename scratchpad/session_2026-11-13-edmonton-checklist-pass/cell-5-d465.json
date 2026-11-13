@@ -1,0 +1,66 @@
+[
+ {
+  "value_min": null,
+  "value_max": null,
+  "value_unit": null,
+  "value_note": null,
+  "value_notations": null,
+  "accessibility_direction": null,
+  "direction_ref_id": null,
+  "parameter_id": 5,
+  "lens": {
+   "identity_code": null,
+   "icf_code": "d465",
+   "needs_code": null,
+   "medical_code": null
+  },
+  "lens_key": "d465",
+  "slug": "accessible-circulation-geometry",
+  "note": "REF-01037 digest, third run: the one engine run per cell, after every write.",
+  "state": "pending",
+  "design_scale": "population",
+  "tier_basis": null,
+  "governing_refs": [],
+  "supporting_refs": [],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "rests_on_proxy_inference": 0,
+  "marker": null,
+  "excluded_not_publishable": [],
+  "skimmed_findings": [],
+  "skimmed_finding_refs": [],
+  "n_findings_left_out": 0,
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "b3e77cfec025b831e394bbd2defaac0ab9d09e6ea1949d9e27009dac01356a4d",
+  "n_sources": 1,
+  "n_extractions_in_lens": 2,
+  "n_extractions_outside_lens": 8,
+  "unkeyed_models": [],
+  "non_anchoring_on_tier": [],
+  "needs_population_assessment": [
+   "REF-01037"
+  ],
+  "tier_inconsistent": [],
+  "falsification": null,
+  "convergence": null,
+  "confidence": null,
+  "gap_register_id": "GAP-120",
+  "specification_id": 11,
+  "convergence_id": null,
+  "source_records": [
+   {
+    "ref_id": "REF-01037",
+    "tier": 3,
+    "evidence_type": "grey",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "NOT_ASSESSED",
+    "conditioning": "DOWN-WEIGHTED",
+    "conditioning_before_tier_gate": "DOWN-WEIGHTED",
+    "tier_consistent": true
+   }
+  ]
+ }
+]

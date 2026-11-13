@@ -19,8 +19,8 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-016 merged; T-008 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
-- **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
+- **Tasks that must be merged to the integration base first:** T-016 merged; T-008 merged; T-061 merged (its reformat path in `amend-extraction` is the verb this task's reformats call). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all. The rows whose unit is the bare word `ratio` (`SELECT extraction_id FROM source_value_extractions WHERE claimed_unit='ratio'`) are not this task's: they are T-086's (`tasks/T-086-bare-ratio-rows.md`), which waits on the owner's answer to whether changing that unit to `rise:run ratio` is a reformat or a new reading; leave them as they are here.
 - **Tests that must be red (or green) before you start:** AT-69 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
 
@@ -68,6 +68,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 1. For each row: `amend-extraction` to reformat in place (the owner allowed it: same digits and quote, old text kept in notes) so the unit cell holds a unit and the condition becomes a `condition_on` edge to a condition row. Never change a digit.
 2. The spelled-out figure of extraction 80 (class f in the prior workplan's D-1 table) is not repaired here with a numeral gloss: that design is superseded by the owner's statement of 2026-11-12, and T-111 files the numeral row. If T-111 is merged, skip class f; the conditioned 8 % relaxation of the same source is still this task's, written with `--value-as-written` for its wording.
+3. **The dash ranges (added 2026-11-13, OI-57 (13)).** The prior D-1 also reformatted range figures written `a-b`, which the engine cannot read (`dbcore.figure_refusal` answers "write a range as 'a to b'"). Select them by query, never by id: `select extraction_id, claimed_value, claimed_unit from source_value_extractions where claim_type='range' and claimed_value glob '*[0-9]-[0-9]*'` (on 2026-11-13: extractions 11 and 12, `0-4.8` and `3.5-15` degrees). For each, `amend-extraction --field claimed_value --value '<a> to <b>'` with the same numbers (T-061's reformat rule accepts exactly this: its docstring's `` `0-4.8` -> `0 to 4.8` ``), reason "OR-3: a range written a-b is reformatted to a to b; same numbers". **Chosen (fold 2026-11-13):** here, beside the unit reformats, since the verb and the ruling are the same. Rejected: a task of its own for two rows.
 
 **What reads what this task adds or changes:** the engine
 
@@ -86,7 +87,7 @@ Structures this task touches, for orientation: `claimed_unit`. The ledger (`refe
 
 ## 6. Verification
 
-**Red before, green after.** AT-69: the count is 0; every amended row still verifies.
+**Red before, green after.** AT-69: the count is 0; every amended row still verifies. Step 3: its selection query prints `[]` after, and the two rows' `claimed_value` read `a to b` with the same numbers.
 
 **Fixtures.** Probes run on `$SCRATCH/t.db`; the batch's own rows are written on `$SCRATCH/s.db` and reach `data/guidebook.db` only through the write path of section 2.
 

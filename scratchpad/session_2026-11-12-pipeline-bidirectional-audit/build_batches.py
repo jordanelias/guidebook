@@ -12,6 +12,14 @@ A decision named in the 'Owner decisions' bullet needs the owner's words (OPEN o
 named in the 'Delegated resolutions' bullet is OPEN on that, or on RESOLVED UNDER DELEGATION with its check not
 required / confirmed. A design file named in the dependency bullet (`T-nnn-design.md`) is a stop until it exists.
 A dependency written 'none (after T-nnn if both are open ...)' is SOFT: an ordering hint, not a gate.
+MERGED is read from git, never typed: a task is merged when a merge commit reachable from HEAD names its branch,
+`task/` + the file stem in lower case (the branch every task file's set-up block creates; GitHub's subject is
+"Merge pull request #N from <owner>/task/<stem>"). A merged task leaves the open batches and is listed apart; a
+dependency on it is satisfied. A SQUASH merge leaves no merge commit; it is read from its single commit, whose
+subject is the pull request title plus " (#N)": a task is merged when such a subject reachable from HEAD begins
+"T-nnn:" or says "execute workplan T-nnn" (the two title forms the task pull requests have used; a title that only
+mentions a task, such as a plan fold's "T-057/T-059/T-060 authored", is not read as a merge). A rebase merge leaves
+neither and the task stays open: re-check.
 Batch = 1 + the longest chain of hard dependencies. Within a batch, tasks that touch the same file are one
 SERIAL LANE (merge in the lane's order); different lanes may be worked in parallel.
 """
@@ -94,6 +102,20 @@ for f in TASKS:
         designs=[d for d in designs if not (W / "tasks" / d).exists()],
         piloted=bool(re.search(r"\*\*Pilot status\.\*\* \*\*Piloted", t)))
 
+missing = sorted({d for t in tasks.values() for d in t["hard"] if d not in tasks})   # over every task file, merged or not
+
+# --- merged tasks (see the docstring): out of the batches, and a dependency on one is satisfied
+_branches = set(re.findall(r"/task/(\S+)\s*$", subprocess.run(["git", "log", "--merges", "--format=%s", "HEAD"], cwd=ROOT,
+                                                               capture_output=True, text=True).stdout, re.M))
+_squashed = set(re.findall(r"^(?:(T-\d+):|.*\bexecute workplan (T-\d+)\b).*\(#\d+\)\s*$", subprocess.run(
+    ["git", "log", "--no-merges", "--format=%s", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout, re.M))
+_squashed = {a or b for a, b in _squashed}
+done = {tid: tasks.pop(tid) for tid in sorted(tasks, key=lambda x: int(x[2:]))
+        if tasks[tid]["file"][:-3].lower() in _branches or tid in _squashed}
+for t in tasks.values():
+    t["hard"] -= set(done)
+    t["soft"] -= set(done)
+
 # --- batches: longest chain of hard dependencies
 memo, stack = {}, set()
 
@@ -110,7 +132,6 @@ def depth(t):
     return d
 
 
-missing = sorted({d for t in tasks.values() for d in t["hard"] if d not in tasks})
 for t in tasks:
     tasks[t]["batch"] = depth(t)
 nb = max(t["batch"] for t in tasks.values())
@@ -202,7 +223,7 @@ now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"
 L = []
 A = L.append
 A("# Remediation plan, in batches by dependency\n")
-A(f"_Generated {now} from the {len(tasks)} task files at commit {sha} by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. "
+A(f"_Generated {now} from the {len(tasks) + len(done)} task files ({len(tasks)} open, {len(done)} merged) at commit {sha} by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. "
   "Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._\n")
 A("**What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** "
   "Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.\n")
@@ -222,6 +243,9 @@ for b in range(1, nb + 1):
     c = collections.Counter(k for t in ids for k in kinds(tasks[t]))
     A(f"| {b} | {len(ids)} | {c['READY']} | {c['OWNER']} | {c['DESIGN']} | {c['NOT FOR SONNET']} | {sum(tasks[t]['kind']=='TOOLING' for t in ids)} / {sum(tasks[t]['kind']=='RESEARCH' for t in ids)} | {len(lanes(ids))} |")
 A("\nCounts are derived; the commands that check them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | wc -l`, and the generator's own output.\n")
+A("**Merged** (a merge commit on HEAD names the task's branch, or a squash commit's subject begins `T-nnn:` or says `execute workplan T-nnn` and ends `(#N)`; out of the batches below, and a dependency on one is satisfied; "
+  "re-derive: `git log --merges --format=%s HEAD | grep -o 'task/t-[0-9a-z-]*'` and `git log --no-merges --format=%s HEAD | grep -E '^T-[0-9]+:|execute workplan T-[0-9]+' | grep -E '\\(#[0-9]+\\)$'`): "
+  + (", ".join(f"[{t}](tasks/{done[t]['file']})" for t in done) or "none") + ".\n")
 A(f"**Longest dependency chain ({len(crit)} tasks):** " + " → ".join(f"{t} ({tasks[t]['status']})" for t in crit) + ".\n")
 if missing:
     A(f"**Dependencies naming a task with no file (fix the task file):** {', '.join(missing)}\n")
@@ -230,7 +254,7 @@ for b in range(1, nb + 1):
     ids = [t for t in tasks if tasks[t]["batch"] == b]
     A(f"## Batch {b}\n")
     if b == 1:
-        A("**Entry:** the workplan is on the integration base. No task is a prerequisite.\n")
+        A("**Entry:** the workplan is on the integration base. No open task is a prerequisite (a merged one may be: see **Merged** above).\n")
     else:
         prev = sorted({d for t in ids for d in tasks[t]["hard"]}, key=lambda x: int(x[2:]))
         A("**Entry:** merged and green on `$BASE`: " + ", ".join(prev) + ".\n")
@@ -307,7 +331,7 @@ A("\nEach file says who does it. Everything that depends on one of these waits f
 A("## Where the pilots stand\n")
 A("`grep -L \"Not piloted\" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md` lists the tasks a pilot has touched. Results, defects found and what changed in the plan are in section 12 of `REMEDIATION-WORKPLAN.md` and in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/`.\n")
 OUT.write_text("\n".join(L))
-print("tasks", len(tasks), "batches", nb, "missing deps", missing, "crit", len(crit))
+print("tasks", len(tasks), "batches", nb, "missing deps", missing, "crit", len(crit), "merged", list(done))
 print("decisions", len(REGISTER), "blocking", blocking, "standing", standing, "open", len(opened), "unregistered", unreg)
 for b in range(1, nb + 1):
     ids = [t for t in tasks if tasks[t]["batch"] == b]

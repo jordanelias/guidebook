@@ -1,0 +1,28 @@
+# Task-authoring brief (Opus-class authors; read this, then CLAUDE.md, then your cluster)
+
+Written 2026-11-13 by the coordinating session. You AUTHOR task files for the owner's remediation plan. You change no script, schema, row or ruling, and you open no pull request. Output: task files in `workplan/2026-11-12-bidirectional-pipeline/tasks/` and a hand-back block for the coordinator. The owner's instruction for this step (2026-11-13): every prior-workplan item with a ruling and no task gets a task, or a decline recorded in the owner's words. None may be declined without the owner's words; a task may be marked held when a ruling is not yet complete, and then the file says exactly what it waits on.
+
+## Read first
+1. `/home/user/guidebook/CLAUDE.md` (rules 5, 7a, 8, 10 bind what you write: a task that adds code names what reads it and what wrong thing reaches the guidebook without it; no hand-typed counts anywhere: write the command; research and tooling ship apart).
+2. Two finished exemplars from this plan, for shape only: `tasks/T-017-wp-t2-conditions.md` (a tooling task, executed and critiqued; the sections 1 to 9 order, the "Chosen" notes, section 9 stop conditions) and `tasks/T-057-base-coverage-view.md` (a recent authoring). Stay with their section order and the self-contained rule: a Sonnet-class executor reads CLAUDE.md and the one task file only.
+3. `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`: the table of tasks (find your neighbours: `grep -n '^| \[T-' ...`), "The prior workplan mapped", and the owner decision register. `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` rows OI-52 and OI-56.
+4. The prior workplan item itself: `workplan/2026-10-23-pipeline-resolution-workplan.md` (find your ids with `grep -n -E '^\*\*(T-[0-9]|H-0)|^\| D-[0-9]|^\| S-1'`), and the owner's ruling line for each: `grep -n -E '^OR-[0-9]+b?:' references/project-standards.md` and then the quoted words, which `grep -r` or `git grep` find (the Grep tool does not see `sessions/`, `audits/` or the ledger's older parts; use `git grep`). Cite each ruling by a `grep -n -F '<exact words>' references/project-standards.md` command, as the other task files do.
+
+## What each task file must contain
+- The same header table and sections as T-017 (identity, why, evidence, the steps with exact commands, the sweep with its "caller, not mention" definition and exclusion list, tests with a red-before and a seeded defect for every new refusal or branch, gate, commit, stop conditions). Evidence commands: run each yourself, READ-ONLY, on a scratch copy of the database (`cp data/guidebook.db "$SCR/…"`, `GUIDEBOOK_DB_PATH` inline, delete the copy; never write `data/guidebook.db`), and write into the file what it printed. A command you could not run is stated as not run.
+- Dependencies by task id, derived (check `ls tasks`), and what each depends on in the code (name the function, view or column, not a line number). Several tasks in the stack changed things your tasks may touch; read the live code on `HEAD` before you describe it: `_refuse_derived_mismatch`, `dbcore.unit_refusal` and `figure_refusal` (T-016), `conditioned_governing` and `RULE_VERSION` (T-017), `extraction_lens_links` and `add-lens-link` (T-018), `_lens_clause` (T-019), `v_gap_subject` (T-013), `base_jurisdictions` (T-024), `attestation` (T-026).
+- A "Chosen (authoring 2026-11-13)" note for every design choice you make, with the alternative you rejected and why. A choice that is doctrine (a tier, a vocabulary, a population term, a rule the owner has not ruled) is NOT yours: write it as an owner question in the file and in your hand-back, and mark the step held.
+- Executor class: Sonnet-class only if every step is mechanical from the file; otherwise "NOT FOR SONNET" with the reason. Research tasks (rows into the database) say TASK KIND: RESEARCH and are separate from tooling (rule 10).
+- No hand-typed counts: every figure is the command that computes it.
+
+## What you must not do
+- Do not edit `REMEDIATION-WORKPLAN.md`, `OPEN-ITEMS-PLAN.md`, `REMEDIATION-PLAN.md`, the ledger, or any other author's files. The coordinator integrates the index and runs the generator. Edit only your own new task files, and (if you must correct an existing task file that your item changes) say so in the hand-back and do not edit it.
+- Do not use `git worktree add`; disk is tight. Do not create files at the filesystem root. Delete only scratch you created, by exact path, never by glob over /tmp. Work in `/home/user/guidebook` on the current branch; do not commit or push (the coordinator does).
+- Do not reuse a task number outside your block. If you need another task, take the next free number in your block and say so.
+
+## Hand-back (reply with exactly this)
+1. Per item: the prior id (or OI-56 item), the task id(s) you wrote, executor class, kind (TOOLING / RESEARCH), size (1 pull request or more), dependencies, owner decisions it needs (ledger id or an OPEN one), and whether it is held and on what.
+2. For the index: one row per task in the exact column order of the REMEDIATION-WORKPLAN task table (copy a neighbour's row format), plus the wave and any dependency edge lines the generator reads (`grep -n 'depends\|Depends' ... build_batches.py` to see how it parses the table).
+3. Owner questions raised, each with the ledger lines it rests on.
+4. Defects you found in existing task files or in the plan while authoring (command, output, what was expected).
+5. Anything you decided was NOT a task, with the reason and the ruling that supports it. A decline needs the owner's words; if there are none, say so and write the task.
