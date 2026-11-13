@@ -25,6 +25,7 @@ _Written 2026-11-12 (UTC) by the Opus-class model that wrote the delegated resol
 - `T-006`: its note on OD-29 now points at T-050.
 - `T-019`: OD-08 gate; item 4 removes the path that kept a `pending` row for a lens no figure carries; the gap is raised at judgment.
 - `T-020`: OD-24 gate; kinds become rows of a table with an add-kind verb (not a CHECK list); no element column; the T-010 stop-gap is still deleted here; red test extended to adding a kind by data.
+  - **[Correction 2026-11-13]** The T-010 stop-gap is no longer deleted by T-020: the folded `tasks/T-020-quantity-kind.md` (section 4 item 2, chosen at the pilot of 2026-11-13) keeps `dbcore.NON_QUANTITY_DOMAINS` and its refusal, because with the kind in place a lens or legal term would otherwise become promotable, and section 8 of that file forbids weakening a refusal. The line above records what this pass wrote on 2026-11-12 and is left as written.
 - `T-021`: OD-21 gate; "only on yes" removed; no invented tier for a reader's question.
 - `T-022`: OD-18 and OD-08 gates; the edges written with the five corrections; B11 a follow-up row while OD-10 is the owner's.
 - `T-023`, `T-031`, `T-101`, `T-103`: their reserved-decision check reads the status line and requires `ANSWERED BY THE OWNER`; T-101 also asks the owner whether a sub-national jurisdiction owes coverage (the OD-01 correction refers it to OD-04).

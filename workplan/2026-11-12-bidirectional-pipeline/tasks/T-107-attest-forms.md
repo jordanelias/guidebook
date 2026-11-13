@@ -69,6 +69,10 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. Per the rulings of 2026-11-06 (sixth, seventh), writing each attested occurrence with `add-alias`'s base route or observation route as `T-028-design.md` sections 4 and 8 name them (one row per occurrence; the first located occurrence of a held seed's text promotes that seed in place), typing `usage_type` where the source shows it, and never presenting `canonical_en` as a form.
+2. **Inputs this task receives** (added 2026-11-13 from the folded T-026 and T-028; each is re-attested by item 1's routes, never by editing a cell):
+   - (a) The `VERIFIED-GLOSSARY`, `VERIFIED-CROSS` and `VERIFIED-NATIVE` rows that T-026's fill writes as `unrecorded` (they carry no observation and no locator). T-026's pull request lists them by command (its section 4 item 1); re-derive them on `$BASE`: `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);[print(r) for r in c.execute(\"select form_id, term_id, alias, language from term_aliases where attestation='unrecorded' and (instr(notes,'VERIFIED-GLOSSARY')>0 or instr(notes,'VERIFIED-CROSS')>0 or instr(notes,'VERIFIED-NATIVE')>0) order by 2,3\")]"`.
+   - (b) Member rows that `add-term --from-observation` writes as `unrecorded` with their `observation_id` when the quote cannot be verified (T-028 section 4 item 1): each is promoted through `add-alias` once its quote is verified (`select form_id, term_id, alias, language, observation_id from term_aliases where attestation='unrecorded' and observation_id is not null`).
+   - (c) `usage_type`, NULL on every row after T-028's migration: typed by judgment as each row is touched, including the frozen legacy `DOMAIN` rows (`select form_id, term_id, alias, language, notes from term_aliases where alias_type='DOMAIN'`), whose `alias_type` stays as it is (`T-028-design.md` section 5).
 
 **What reads what this task adds or changes:** multilingual search
 

@@ -67,7 +67,7 @@ python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro'
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. If any live row carries `MOVE` or `VES` (the second evidence command), re-tag it by judgment through the sanctioned lens writers: its need (`A-PRECISION` for a movement disorder, `A-STABLE` for a vestibular one), and the medical lens where the source names a diagnosis. Never copy the figure. If no writer can change that row's lens, stop: a writer gap for its own tooling pull request.
-2. `retire-identity --code MOVE --need A-PRECISION` and `retire-identity --code VES --need A-STABLE`, each with the ledger pointer to the OD-37 answer and a reason quoting it.
+2. `retire-identity --code MOVE --need A-PRECISION` and `retire-identity --code VES --need A-STABLE`, each with `--approval-ref "Owner answers 2026-11-12 (third set) — OD-14 (what MOB is) and the identity-lens rule (new OD-37)"` (the full heading of the OD-37 answer, found exactly once) and a `--reason` quoting it.
 3. Do not touch `MH`, `NDV` or `TALL` (retained by the owner) or `ALL`, `DEAF`, `LMB`, `COM` (unchanged unless the owner says otherwise).
 
 **What reads what this task adds or changes:** every writer that takes an identity code (they now refuse the two codes and name the need); the lens switch.
