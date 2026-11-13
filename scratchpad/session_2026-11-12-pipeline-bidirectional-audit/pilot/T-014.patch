@@ -1,0 +1,245 @@
+From 8295ae6ab7fa77389372dc8f8cfb848d1f810a4b Mon Sep 17 00:00:00 2001
+From: pilot <pilot@example.invalid>
+Date: Fri, 13 Nov 2026 03:24:41 +0000
+Subject: [PATCH] governance: repair stress scripts and add a normalised log
+ diff for behaviour-preservation proofs [2026-11-13 03:24]
+
+PILOT commit (dry run, never pushed). Fixes: fresh clone before each write-path replay (stress_run.py x2, stress_run3.py), locator on the quote probes, trigger tier+evidence type on raise-determination-gate, merge probe at a parameter with no open gate (explicit args), guard lens SCI so the control is not a duplicate, retire probe on an unmerged parameter, funnel and post-retire SQL probes, dbcore.normalise_quote_text dropped from lang_probe.py. Adds stress_diff.py.
+---
+ .../stress/lang_probe.py                      | 14 ++--
+ .../stress/stress_diff.py                     | 66 +++++++++++++++++++
+ .../stress/stress_run.py                      |  9 +--
+ .../stress/stress_run3.py                     | 22 +++++--
+ 4 files changed, 92 insertions(+), 19 deletions(-)
+ create mode 100644 scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_diff.py
+
+diff --git a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/lang_probe.py b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/lang_probe.py
+index c7bac72..ad7e1d9 100644
+--- a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/lang_probe.py
++++ b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/lang_probe.py
+@@ -3,7 +3,6 @@
+ Usage: python3 -I lang_probe.py '<json {label: string}>'
+ Loads the repo's functions by path and applies them to the given strings:
+   - research/retrieval_log.normalise_quote   (quote verification)
+-  - dbcore.normalise_quote_text              (the dbcore copy)
+   - db._name_tokens / db._VALUE_BEARING_NAME (term-name screens)
+ Reports normalised form, token set, whether a value-bearing screen fires, and
+ any set of DIFFERENT input strings that normalise to the SAME text (a collision).
+@@ -21,7 +20,7 @@ def load(name, rel):
+ 
+ out = {"errors": {}}
+ mods = {}
+-for n, rel in (("rl", "research/retrieval_log.py"), ("dbcore", "dbcore.py"), ("dbmod", "db.py")):
++for n, rel in (("rl", "research/retrieval_log.py"), ("dbmod", "db.py")):
+     try:
+         mods[n] = load(n, rel)
+     except BaseException as e:  # noqa
+@@ -30,11 +29,10 @@ strings = json.loads(sys.argv[1])
+ res = {}
+ for label, s in strings.items():
+     r = {"input": s}
+-    for fn, key in ((("rl", "normalise_quote"), "rl.normalise_quote"), (("dbcore", "normalise_quote_text"), "dbcore.normalise_quote_text")):
+-        try:
+-            r[key] = getattr(mods[fn[0]], fn[1])(s)
+-        except BaseException as e:  # noqa
+-            r[key] = f"ERROR {e!r}"
++    try:
++        r["rl.normalise_quote"] = mods["rl"].normalise_quote(s)
++    except BaseException as e:  # noqa
++        r["rl.normalise_quote"] = f"ERROR {e!r}"
+     try:
+         r["db._name_tokens"] = sorted(mods["dbmod"]._name_tokens(s))
+     except BaseException as e:  # noqa
+@@ -45,7 +43,7 @@ for label, s in strings.items():
+         r["db._VALUE_BEARING_NAME_fires"] = f"ERROR {e!r}"
+     res[label] = r
+ out["per_string"] = res
+-for key in ("rl.normalise_quote", "dbcore.normalise_quote_text"):
++for key in ("rl.normalise_quote",):
+     g = {}
+     for label, r in res.items():
+         v = r.get(key)
+diff --git a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_diff.py b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_diff.py
+new file mode 100644
+index 0000000..180bb9f
+--- /dev/null
++++ b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_diff.py
+@@ -0,0 +1,66 @@
++#!/usr/bin/env python3
++"""Print the steps whose behaviour differs between two stress result folders (the before/after proof of a refactor).
++
++    python3 -I stress_diff.py RESULTS_A RESULTS_B [--strip REGEX ...]
++
++Each folder holds <part>/log.jsonl as written by stress_run*.py. Steps are matched on (part, tag without its running counter, repeat number). A step differs when
++its argv, rc, stdout, stderr or changed differ AFTER removing what varies between runs: `at`, `seconds` and
++`canonical_sha256` (never compared), absolute scratch paths, date-times (session stamps, created_at) and 14-digit
++migration timestamps. Exit 0 when nothing differs, 1 when something does. It reads nothing in the book.
++Anything else that varies is reported, not hidden: add a --strip only after deciding it is noise, and say so.
++"""
++import argparse, difflib, json, re, sys
++from pathlib import Path
++
++FIELDS = ("argv", "rc", "stdout", "stderr", "changed")
++NOISE = [
++    (r"/(?:tmp|var/tmp)/[^\s\"'`,)\]]*", "<SCRATCH-PATH>"),      # absolute scratch paths
++    (r"\b\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2})?Z?", "<TIMESTAMP>"),  # session stamps, created_at
++    (r"\b20\d{12}\b", "<MIGRATION-TIMESTAMP>"),                  # migration file stamps
++]
++
++
++def load(folder):
++    steps, seen = {}, {}
++    for p in sorted(Path(folder).glob("*/log.jsonl")):
++        for line in p.read_text().splitlines():
++            if line.strip():
++                r = json.loads(line)
++                name = re.sub(r"\.\d{3}\.", ".", r["tag"], count=1)  # the running counter shifts when a step is skipped
++                seen[(p.parent.name, name)] = seen.get((p.parent.name, name), 0) + 1
++                steps[(p.parent.name, name + (f"#{seen[(p.parent.name, name)]}" if seen[(p.parent.name, name)] > 1 else ""))] = r
++    return steps
++
++
++def norm(value, extra):
++    s = json.dumps(value, ensure_ascii=False, sort_keys=True, indent=1)
++    for pat, repl in NOISE + [(x, "<STRIPPED>") for x in extra]:
++        s = re.sub(pat, repl, s)
++    return s
++
++
++def main():
++    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
++    ap.add_argument("a")
++    ap.add_argument("b")
++    ap.add_argument("--strip", action="append", default=[], help="extra regex to remove from every field (a decision to call it noise)")
++    args = ap.parse_args()
++    A, B = load(args.a), load(args.b)
++    differing = 0
++    for key in sorted(set(A) | set(B)):
++        if key not in A or key not in B:
++            differing += 1
++            print(f"DIFF {key[0]} {key[1]}: present only in {'B' if key not in A else 'A'}")
++            continue
++        for f in FIELDS:
++            x, y = norm(A[key].get(f), args.strip), norm(B[key].get(f), args.strip)
++            if x != y:
++                differing += 1
++                print(f"DIFF {key[0]} {key[1]} [{f}]")
++                for d in list(difflib.unified_diff(x.splitlines(), y.splitlines(), "A", "B", lineterm="", n=0))[2:12]:
++                    print("    " + d[:200])
++    print(f"EXAMINED: {len(set(A) | set(B))} step(s) in {len({k[0] for k in A} | {k[0] for k in B})} part(s); differing fields: {differing}")
++    sys.exit(1 if differing else 0)
++
++
++main()
+diff --git a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run.py b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run.py
+index f573b9b..c469fb1 100644
+--- a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run.py
++++ b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run.py
+@@ -365,7 +365,7 @@ def pass2_backward(R, T):
+              left join source_value_extractions e on e.parameter_id=p.parameter_id
+              left join evidence_sources s on s.ref_id=e.ref_id
+              left join source_locators l on l.ref_id=s.ref_id
+-             left join search_candidates sc on sc.locator=l.locator
++             left join search_candidates sc on sc.resolved_ref_id=s.ref_id
+              left join search_executions se on se.exec_id=sc.exec_id
+             group by 1""")
+     R.sql("backward.spec-to-source-walk", "retired specifications -> links -> extractions -> sources",
+@@ -440,7 +440,7 @@ def pass5_adversarial(R, T):
+     R.dbpy("adversarial.retire-parameter-with-extractions", "retire a parameter that has extractions: expect refusal or cascade", "retire-parameter", "--parameter-id", "3",
+            "--reason", "STRESS-FIXTURE", "--session", R.sess)
+     R.sql("adversarial.post-retire-state", "what did the retire do to extractions/specifications?",
+-          "select (select count(*) from source_value_extractions where parameter_id=3), (select retired_at from base_parameters where parameter_id=3)")
++          "select (select count(*) from source_value_extractions where parameter_id=3), (select status from base_parameters where parameter_id=3)")
+     R.dbpy("adversarial.number-in-words-claim", "an extraction whose number is written in words", "add-extraction", "--ref-id",
+            rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0], "--parameter-id", "9", "--claim-type", "numerical",
+            "--claimed-value", "sixty", "--claimed-unit", "cm", "--claim-text", T["strings"].get("number-in-words", "STRESS-FIXTURE"), "--extraction-method", "skim", "--identity", "ALL", "--figure-role", "claim", "--relation", "none", "--session", R.sess)
+@@ -448,8 +448,8 @@ def pass5_adversarial(R, T):
+ 
+ def writepath_replay(R, T):
+     clone = R.scratch / "clone"
+-    if not clone.exists():
+-        R.step("writepath.clone", "local clone for write-path replay", ["git", "clone", "--quiet", str(REPO), str(clone)])
++    shutil.rmtree(clone, ignore_errors=True)  # a reused clone holds the last run's migration and fails the rebuild
++    R.step("writepath.clone", "local clone for write-path replay", ["git", "clone", "--quiet", str(REPO), str(clone)])
+     canon_copy = R.scratch / "canonical-copy.db"
+     shutil.copyfile(CANON, canon_copy)
+     out_sql = R.scratch / "batch.sql"
+@@ -494,6 +494,7 @@ def main():
+         names = a.topics.split(",")
+         R = Run("crosstopic", a.out)
+         clone = R.scratch / "clone"
++        shutil.rmtree(clone, ignore_errors=True)  # a reused clone makes `git clone` fail and keeps the last run's migrations
+         R.step("clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
+         made = 0
+         for nm in names[:3]:
+diff --git a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run3.py b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run3.py
+index a0c95a4..abb02db 100644
+--- a/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run3.py
++++ b/scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run3.py
+@@ -20,6 +20,7 @@ from stress_run2 import ctx, build_args, finish_  # noqa: E402
+ 
+ REF = "REF-00139"
+ SLUG = "accessible-circulation-geometry"
++GUARD_LENS = "SCI"  # the anchor extractions all carry MOB; the same lens would be refused as a byte-identical copy before any guard ran
+ 
+ 
+ def anchor(db):
+@@ -101,8 +102,8 @@ def part_real(out):
+     shutil.copyfile(CANON, canon_copy)
+     R.step("real.emit-batch-sql", "capture the judgment + specification delta", [PY, "-I", "scripts/research/emit_batch_sql.py", "--scratch", str(R.db), "--canonical", str(canon_copy), "--out", str(out_sql)])
+     clone = R.scratch / "clone"
+-    if not clone.exists():
+-        R.step("real.clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
++    shutil.rmtree(clone, ignore_errors=True)  # a reused clone holds the last run's migration and fails the rebuild
++    R.step("real.clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
+     if out_sql.exists() and out_sql.stat().st_size:
+         R.step("real.emit-data-migration", "migration file in the clone", [PY, "-I", "scripts/emit_data_migration.py", "--session", S + ".md", "--summary", "STRESS-FIXTURE real chain", "--input", str(out_sql),
+                "--output-dir", str(clone / "scripts/migrations")], cwd=clone, db=canon_copy)
+@@ -130,15 +131,15 @@ def part_guards(out):
+     for name, v, u in cases:
+         fresh = R.scratch / f"g-{name}.db"
+         shutil.copyfile(base, fresh)
+-        add_ext(R, f"guards.{name}", ex, "MOB", value=v, unit=u, expect=f"claimed value {v!r} against a quote holding {ex[3]!r}: control accepted, mismatches refused", db=fresh)
++        add_ext(R, f"guards.{name}", ex, GUARD_LENS, value=v, unit=u, expect=f"claimed value {v!r} against a quote holding {ex[3]!r}: control accepted, mismatches refused", db=fresh)
+     # quote variants: a mark-only edit, a mixed-script substitution
+     for name, q in (("quote-extra-space", claim_variant(ex[2], lambda s: s.replace(" ", "  ", 1))), ("quote-homoglyph", claim_variant(ex[2], lambda s: s.replace("a", "а", 1))),
+                     ("quote-truncated", ex[2][: max(40, len(ex[2]) // 2)])):
+         fresh = R.scratch / f"g-{name}.db"
+         shutil.copyfile(base, fresh)
+         R.dbpy(f"guards.{name}", "a quote altered only by whitespace/homoglyph is judged against the held text", "add-extraction", "--ref-id", REF, "--parameter-id", str(ex[1]), "--claim-type", "numerical",
+-               "--claimed-value", str(ex[3]), "--claimed-unit", ex[4] or "", "--claim-text", q[:300], "--source-section", ex[6] or "STRESS", "--extraction-method", "full-read", "--identity", "MOB",
+-               "--figure-role", "claim", "--relation", "none", "--session", S, db=fresh)
++               "--claimed-value", str(ex[3]), "--claimed-unit", ex[4] or "", "--claim-text", q[:300], "--source-section", ex[6] or "STRESS", "--extraction-method", "full-read", "--identity", GUARD_LENS,
++               "--figure-role", "claim", "--relation", "none", "--session", S, *loc_args(R.db), db=fresh)
+     finish_(R)
+ 
+ 
+@@ -184,9 +185,13 @@ def part_lifecycle(out):
+     R.sql("lifecycle.ledger-after-define", "every source now owes the new parameter", "select status,count(*) from v_scan_ledger group by 1")
+     R.dbpy("lifecycle.targeted-scan", "read ONE source against the new parameter", "record-scan", "--ref-id", REF, "--mode", "targeted", "--target-parameter-id", str(new), "--text-scope", "full", "--file-sha256", sha_, "--method", "full-read", "--session", S)
+     R.sql("lifecycle.ledger-after-targeted", "that source's pair is discharged, the rest stay owed", "select status,count(*) from v_scan_ledger group by 1")
+-    R.dbpy("lifecycle.merge-parameter", "merge the new parameter into another (a change of grain)", *["merge-parameter", *build_args("merge-parameter", ctx(R.db), S)[0]])
++    into = rows(R.db, "select parameter_id from base_parameters p where status='active' and parameter_id<>? and not exists "
++                "(select 1 from determination_gates g where g.parameter_id=p.parameter_id and g.resolved_at is null) order by parameter_id limit 1", (new,))
++    R.dbpy("lifecycle.merge-parameter", "merge the new parameter into one with no open gate (a change of grain)", "merge-parameter", "--from", str(new), "--into", str(into[0][0]),
++           "--reason", "STRESS-FIXTURE: change of grain", "--session", S)
+     R.sql("lifecycle.ledger-after-merge", "what a change of grain did to completed scans", "select status,count(*) from v_scan_ledger group by 1")
+-    R.dbpy("lifecycle.retire-parameter", "retire a parameter with no open gate", "retire-parameter", "--parameter-id", str(new), "--reason", "STRESS-FIXTURE", "--session", S)
++    R.dbpy("lifecycle.retire-parameter", "retire a parameter that holds extractions and has no open gate (the merged one cannot be retired)", "retire-parameter", "--parameter-id", str(into[0][0]),
++           "--reason", "STRESS-FIXTURE", "--session", S)
+     R.sql("lifecycle.ledger-after-retire", "ledger after retire", "select status,count(*) from v_scan_ledger group by 1")
+     finish_(R)
+ 
+@@ -205,6 +210,9 @@ def part_reentry(out):
+     c = ctx(R.db)
+     for v in ("raise-determination-gate", "resolve-determination-gate", "raise-follow-up", "resolve-follow-up"):
+         args, _ = build_args(v, ctx(R.db), S)
++        if v == "raise-determination-gate":  # no --trigger-ref-id, so the strength of the trigger is asserted: take a pair a held source carries
++            tier, etype = rows(R.db, "select tier, evidence_type from evidence_sources where evidence_type is not null order by tier desc, ref_id limit 1")[0]
++            args += ["--trigger-tier", str(tier), "--trigger-evidence-type", etype]
+         R.dbpy(f"reentry.{v}", f"{v} on the live determination's data", v, *args)
+     R.dbpy("reentry.retire-specification", "retire the determination in place", "retire-specification", "--specification-id", str(spec), "--reason", "STRESS-FIXTURE re-entry", "--session", S)
+     R.step("reentry.assess-2-same-cell", "re-determine the same cell after retirement: allowed, and does the new row point back at the retired one?", [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(R.db),
+-- 
+2.43.0
+
