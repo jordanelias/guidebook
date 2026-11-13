@@ -2126,6 +2126,12 @@ def main():
                            "evidence, and takes no --claimed-value.")
     p_ax.add_argument("--claimed-value", dest="claimed_value")
     p_ax.add_argument("--claimed-unit", dest="claimed_unit")
+    p_ax.add_argument("--value-as-written", dest="value_as_written",
+                      help="The source's own wording of the figure, exactly as it stands in "
+                           "--claim-text, when it does not write the claimed number as a "
+                           "numeral (vijf procent; 1,200 for 1200). The numeral goes in "
+                           "--claimed-value and the unit in --claimed-unit. Refused when the "
+                           "quote states every claimed number as a numeral.")
     # REQUIRED, and this flag is the ONLY thing holding the verbatim guarantee.
     # Before migration 073 `parameter` was NOT NULL, so every row carried at least
     # the source's own phrase for what it measures. 073 retired that column (its
@@ -2301,10 +2307,10 @@ def main():
     p_rx.add_argument("--session", required=True)
     p_rx.add_argument("--dry-run", action="store_true")
 
-    # amend-extraction -- figure_role / comparator ONLY. Everything else is a second
+    # amend-extraction -- _AMENDABLE_SVE_FIELDS ONLY. Everything else is a second
     # row and a contest (D-0168), not an overwrite.
     p_amx = sub.add_parser("amend-extraction",
-                           help="Change figure_role or comparator on an existing "
+                           help="Change a gradeable field (see --field) on an existing "
                                 "row, with a reason ledgered into notes")
     p_amx.add_argument("--extraction-id", dest="extraction_id", type=int,
                        required=True)
@@ -2314,7 +2320,7 @@ def main():
     # CHECK" in miniature -- one list fewer.
     p_amx.add_argument("--field", required=True,
                        choices=sorted(_AMENDABLE_SVE_FIELDS),
-                       help="ONLY these two. A wrong claimed_value or claim_text is "
+                       help="ONLY these fields. A wrong claimed_value or claim_text is "
                             "a SECOND ROW and a contest (D-0168), not an overwrite.")
     p_amx.add_argument("--value", required=True)
     p_amx.add_argument("--reason", required=True,
@@ -3274,6 +3280,7 @@ def main():
                "needs_code": args.needs, "medical_code": args.medical,
                "claim_type": args.claim_type, "claimed_value": args.claimed_value,
                "claimed_unit": args.claimed_unit, "claim_text": args.claim_text,
+               "value_as_written": args.value_as_written,
                "source_section": args.source_section,
                "jurisdiction": args.jurisdiction, "setting": args.setting,
                "extraction_method": args.extraction_method,
@@ -8507,8 +8514,132 @@ def _verbatim(text: str, ref_id: str = None):
     return _retrieval_log().quote_in_artefacts(text, ref_id=ref_id)
 
 
+def _require_stated_numbers(text, claimed_value, claim_type, value_as_written, field, context):
+    """Every number in `claimed_value` is one `text` states -- compared as a number, not as digits.
+
+    The old guard asked whether the digit RUNS of the claim were substrings of the quote with its
+    punctuation removed, so `12` passed under "no higher than 1.2 m", `0.6` under "6.0 s" and `1:1`
+    under "1:12": a figure with a shifted decimal point governed a published value. The reader is
+    `retrieval_log.number_tokens`, which reads before punctuation goes. The rules, in order:
+
+    (a) an AMBIGUOUS claimed token (`1.200`, `1,200`) is refused: enter `1200` or `1.2`.
+    (b) a claimed RATIO is stated when the quote states it as a symbol ratio, or when each of its
+        operands equals, once, a number the quote states as a WHOLE token (`1 in 12`, `1 zu 12`,
+        `12分の1` once `_cjk_to_arabic` has run). An operand of another symbol ratio does not
+        count, so `AS 1428.1:2021` cannot hide `1 in 12` and `1:12` is not stated by "1:20 ... 12 m".
+    (c) any other claimed number equals a number the quote states (operands and pieces count).
+    (d) a number matched only by an AMBIGUOUS quote token, or by nothing, is not stated as a
+        numeral. The row is then accepted only with `value_as_written`: the source's own wording of
+        the figure ("vijf procent", "viisi prosenttia", "1,200"), which must be a literal span of
+        the quote (`wording in text`: punctuation, case and spacing as they stand, because a
+        normalisation that deletes separators lets `1,200` pass under `120.0` or `12,00`) and
+        must not state a different figure (every number in it, CJK numerals converted as the quote's
+        are, must be ambiguous and have a claimed number among its readings). When every claimed
+        number is stated, `value_as_written` is refused: the column is not for copying numerals.
+
+    A claim of a QUANTITY type (`dbcore.QUANTITY_CLAIM_TYPES`; none given counts as one) that holds
+    no number at all is refused, and the message says where the numeral and the wording go.
+
+    KNOWN AND ACCEPTED, because no table of number words is kept to check them (CLAUDE.md rule 8):
+    a plain `12` is stated by "1:12"; a ratio written in words is matched by its operands only; and
+    A WORDING THAT CONTAINS NO NUMERAL IS NOT CHECKED FOR MEANING. It must be a literal span of the
+    quote, nothing more, so ANY WORD OR LETTER OF THE QUOTE DEFEATS THE GUARD: `12` under "no higher
+    than 1.2 m" is accepted with the wording "higher", or "m", or "e". The tests show one such case
+    per headline refusal (T008-RES). That the wording means the claimed number is the extractor's
+    judgment, recorded by the column and the row's session; the adversarial pass and a reviewer
+    check it. No length or word rule is added: a one-character wording (五) can be legitimate.
+    Not read, so no route (stop and report, per the task file): signs, units, fractions, mixed
+    numbers, powers of ten, an Arabic decimal separator, a leading comma decimal, a worded ratio's
+    meaning. Inherent ambiguity is resolved by letting a token match either reading
+    (`retrieval_log.number_tokens`). `amend-extraction` cannot clear a wording (a blank --value is
+    refused), and an exempt row's wording is stored unchecked on insert but checked on amend.
+    """
+    rl = _retrieval_log()
+    claimed = str(claimed_value).strip() if claimed_value is not None else ""
+    wording = str(value_as_written).strip() if value_as_written is not None else ""
+    if not claimed:
+        if wording:
+            raise Refusal(f"{context}: --value-as-written was given but there is no claimed value "
+                          f"to translate. Nothing was written.")
+        return
+    claim = rl.number_tokens(claimed)
+    if not claim:
+        if claim_type is None or claim_type in dbcore.QUANTITY_CLAIM_TYPES:
+            raise Refusal(
+                f"{context}: claimed_value {claimed!r} states no number, and a claim of type "
+                f"{claim_type or 'numerical'!r} states a quantity. Enter the numeral in "
+                f"--claimed-value and the unit in --claimed-unit, and give the source's own "
+                f"wording of the figure in --value-as-written (it must occur in the quote). "
+                f"Nothing was written.")
+        if wording:
+            raise Refusal(f"{context}: --value-as-written was given but claimed_value "
+                          f"{claimed!r} contains no number to translate. Nothing was written.")
+        return
+    for _, readings, _ in claim:
+        if len(readings) > 1:
+            raise Refusal(
+                f"{context}: claimed_value {claimed!r} is ambiguous ({sorted(map(str, readings))}): "
+                f"a lone group of three digits after a point or comma may be a decimal or a "
+                f"thousands group. Enter the unambiguous form (1200 or 1.2), and if the source "
+                f"writes it the ambiguous way give that in --value-as-written. Nothing was written.")
+    quote = [t for t in rl.number_tokens(_cjk_to_arabic(text), quote_side=True) if len(t[1]) == 1]
+
+    def stated(kind, reading):
+        if kind == "num":
+            return any(k == "num" and reading in r for k, r, _ in quote)
+        if any(k == "ratio" and reading in r for k, r, _ in quote):
+            return True
+        whole = [r for k, r, w in quote if k == "num" and w]
+        for operand in reading:                      # each operand consumes one whole token
+            hit = next((i for i, r in enumerate(whole) if operand in r), None)
+            if hit is None:
+                return False
+            del whole[hit]
+        return True
+
+    unstated = [next(iter(r)) for k, r, _ in claim if not stated(k, next(iter(r)))]
+    if not unstated:
+        if wording:
+            raise Refusal(
+                f"{context}: --value-as-written was given, but the quote states every claimed "
+                f"number as a numeral. The column holds the source's wording of a figure it "
+                f"does not write as a numeral; it is not for copying one. Drop it. Nothing was "
+                f"written.")
+        return
+    shown = ", ".join(":".join(map(str, u)) if isinstance(u, tuple) else str(u) for u in unstated)
+    if not wording:
+        raise Refusal(
+            f"{context}: claimed_value {claimed!r}: {shown} is not stated as a numeral in the "
+            f"verified {field} (compared as numbers: 12 is not 1.2, and 1:1 is not 1:12). A number "
+            f"attached to a quote rather than read from one is the 2026-08-19 fabrication shape "
+            f"with a figure in place of an author. If the source writes the figure in words or "
+            f"with an ambiguous mark, enter the numeral in --claimed-value and the source's own "
+            f"wording in --value-as-written; otherwise quote the sentence that states it. "
+            f"Nothing was written.")
+    if wording not in text:
+        raise Refusal(
+            f"{context}: --value-as-written {wording!r} is not a literal span of {field} "
+            f"(punctuation, case and spacing as they stand). It is the span of the verified "
+            f"quote that the numeral translates. Nothing was written.")
+    pool = set()
+    for k, r, _ in claim:
+        reading = next(iter(r))
+        pool.add(reading)
+        if k == "ratio":
+            pool.update(reading)
+    for _, readings, _ in rl.number_tokens(_cjk_to_arabic(wording)):
+        if len(readings) == 1 or not readings & pool:
+            raise Refusal(
+                f"{context}: --value-as-written {wording!r} states a figure of its own "
+                f"({sorted(map(str, readings))}) that is not a reading of the claimed value "
+                f"{claimed!r}. It may hold numerals only where they are ambiguous (1,200) and "
+                f"one reading is the claimed number; a clear numeral belongs in --claimed-value. "
+                f"Nothing was written.")
+
+
 def _require_verbatim(text: str, ref_id: str, field: str, context: str,
-                      exempt_reason: str = None, claimed_value: str = None):
+                      exempt_reason: str = None, claimed_value: str = None,
+                      claim_type: str = None, value_as_written: str = None):
     """Refuse a quoted field that is not in the bytes -- ONE RULE, EVERY QUOTED COLUMN.
 
     The verifier had exactly one call site before 2026-09-13: `extraction_relations.quote`,
@@ -8524,10 +8655,11 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
     were written". They had not -- nothing verified claim_text -- so the verb succeeded only
     when a base row's text HAPPENED to be in a payload. Now the premise is true.
 
-    THE NUMBER MUST BE IN THE QUOTE. A numerical claim whose own digits do not appear in the
+    THE NUMBER MUST BE IN THE QUOTE. A numerical claim whose own numbers are not stated by the
     verified sentence is a number attached to a quote rather than read from one, which is
     exactly how `1525` and `9999` reached the table during the audit -- both with quotes
     that verified, because the quote was a TITLE and the title was genuinely in the payload.
+    `_require_stated_numbers` does that comparison, as numbers and not as digit runs.
 
     EXEMPTION IS EXPLICIT AND LEDGERED, never silent. A clause read from a standards PDF
     that was never persisted as an artefact is a real case; "I could not be bothered to
@@ -8556,36 +8688,7 @@ def _require_verbatim(text: str, ref_id: str, field: str, context: str,
             f"--verbatim-exempt with the reason, which is ledgered on the row. "
             f"Nothing was written.")
 
-    if claimed_value:
-        digits = re.findall(r"\d+", str(claimed_value))
-        if digits:
-            body = _verbatim_norm(text)
-            missing = [d for d in digits if d not in body]
-            if missing:
-                # THE CHECK ABOVE IS MONOLINGUAL, AND SILENTLY SO. It asks whether
-                # the Arabic digits of claimed_value occur in the quote. A Japanese
-                # statute writes its numerals in kanji -- 勾配は、十二分の一を超えないこと
-                # states 1:12 and contains no digit at all -- so EVERY CJK code value
-                # was unextractable, and --verbatim-exempt could not rescue it because
-                # the exemption is refused when the text verifies, which this text
-                # does. The escape hatch was closed against the one case that needed
-                # it. R5 says non-English work is academic, not lesser; a guard that
-                # only reads Arabic numerals makes it unfilable.
-                #
-                # This WIDENS what counts as the number appearing in the quote; it
-                # does not loosen the standard. The figure must still be present in
-                # the source's own sentence -- merely written the way that language
-                # writes it. A fabricated number fails here exactly as before.
-                missing = [d for d in digits if d not in _cjk_to_arabic(body)]
-            if missing:
-                raise Refusal(
-                    f"{context}: claimed_value {claimed_value!r} contains {missing}, which "
-                    f"do not appear in the verified {field}. A number attached to a quote "
-                    f"rather than read from one is the 2026-08-19 fabrication shape with a "
-                    f"figure in place of an author -- and it is how a title, which verifies "
-                    f"because titles really are in the payload, came to carry an invented "
-                    f"measurement. Quote the sentence that states the value. Nothing was "
-                    f"written.")
+    _require_stated_numbers(text, claimed_value, claim_type, value_as_written, field, context)
     return None
 
 
@@ -8611,7 +8714,8 @@ def _cjk_num(run):
 def _cjk_to_arabic(text):
     """`text` with each run of CJK numerals rewritten as its Arabic value.
 
-    Used ONLY to widen the number-in-the-quote check for CJK sources. 分の is not in
+    Used ONLY to widen the number-in-the-quote check for CJK sources: `_require_stated_numbers`
+    applies it to the quote before the number reader runs. 分の is not in
     the character class, so 十二分の一 splits into the runs 十二 and 一 and renders
     "12分の1" -- which is how the figure is read aloud and how every secondary source
     in this corpus writes it.
@@ -8620,11 +8724,6 @@ def _cjk_to_arabic(text):
                   lambda m: str(_cjk_num(m.group(0)))
                   if _cjk_num(m.group(0)) is not None else m.group(0),
                   text)
-
-
-def _verbatim_norm(text):
-    """The shared normalisation, for the digit test. One home (retrieval_log)."""
-    return _retrieval_log().normalise_quote(text)
 
 
 def _refuse_live_confirmation(conn, context, to_extraction):
@@ -9007,16 +9106,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end",
         "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note",
         "extraction_method", "extraction_status", "notes",
-        "figure_role", "comparator", "harm_finding",
+        "figure_role", "comparator", "harm_finding", "value_as_written",
     })
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
     dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
     row = {k: v for k, v in data.items() if v is not None}
 
     # A BLANK IS NOT AN ABSENCE — normalise before anything reads these.
-    for col in _LENS_COLUMNS:
+    for col in (*_LENS_COLUMNS, "value_as_written"):
         if col in row and not str(row[col]).strip():
             del row[col]
+    if "value_as_written" in row:
+        row["value_as_written"] = str(row["value_as_written"]).strip()
 
     with dbcore.connect(dry_run) as conn:
         ref = dbcore.fold_ref(row.get("ref_id"))
@@ -9143,7 +9244,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # is itself refused when the text would have verified.
         _exempt_note = _require_verbatim(
             str(row["claim_text"]), row.get("ref_id"), "--claim-text",
-            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value)
+            "add-extraction", exempt_reason=verbatim_exempt, claimed_value=value,
+            claim_type=claim_type, value_as_written=row.get("value_as_written"))
         if _exempt_note:
             row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
 
@@ -9460,7 +9562,7 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # column's own CHECK, so this widens WHO may correct it, not WHAT to.
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
-                                   "root_type", "root_ref_id"})
+                                   "root_type", "root_ref_id", "value_as_written"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -9510,6 +9612,11 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                               "amend-extraction")
 
         old = row[field]
+        if field == "value_as_written":
+            # The shared number rule, against the row's own quote and figure: a stored row is
+            # brought into line without touching either. (The quote was verified when written.)
+            _require_stated_numbers(row["claim_text"] or "", row["claimed_value"], row["claim_type"],
+                                    value, "--claim-text", "amend-extraction")
         if field == "extraction_status" and value == "verified":
             _require_full_scan_for_verified(conn, row["ref_id"], row["parameter_id"],
                                             "amend-extraction")

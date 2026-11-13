@@ -408,6 +408,12 @@ ENGINE_SOURCE_COLUMNS = ("tier", "evidence_type", "co1_source_type", "verificati
 ENGINE_EXTRACTION_COLUMNS = ("figure_role", "claim_type", "extraction_method", "claimed_value",
                              "claimed_unit", "comparator")
 
+#: The `source_value_extractions.claim_type` values that state a QUANTITY, so a `claimed_value` of
+#: that type must contain a number. A JUDGED rule, not a derived one: no CHECK says which claim
+#: types are quantities (a test holds every member inside the column's own vocabulary, so a
+#: renamed type cannot leave this behind). Read by `db._require_stated_numbers`.
+QUANTITY_CLAIM_TYPES = ("numerical", "range")
+
 
 def validate_cols(data_keys, whitelist: frozenset, context: str):
     unknown = set(data_keys) - whitelist

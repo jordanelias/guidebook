@@ -216,7 +216,7 @@ machines:
       - {file: scripts/db.py, func: insert_extraction, needle: "R3: \\{ref\\} is tier"}
   - id: M04.t2
     from: "any"
-    to: "any (extraction_method, extraction_status, figure_role, comparator, root_type, root_ref_id only)"
+    to: "any (extraction_method, extraction_status, figure_role, comparator, root_type, root_ref_id, value_as_written only)"
     via: "db.py amend-extraction"
     guards: ["a changed claimed_value or claim_text is NOT amendable: it is a second row and a contest (D-0168)"]
     evidence:

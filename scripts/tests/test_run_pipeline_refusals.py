@@ -1723,4 +1723,164 @@ with scratch() as c:
     else:
         skip("ST3", "no declared pair, or no linked source")
 
+print("Section T-008: a claimed number is compared with the quote as a number; a figure in words is filed as a numeral with its wording")
+# The quotes are held as one fixture text on a fixture source, so every case below reaches the real
+# verbatim check; the numbers in them are literals because the point is how a figure is WRITTEN.
+Q = {"dec": "The ramp is to be no higher than 1.2 m.", "time": "The signal stays for a time of 6.0 s.",
+     "ratio": "A ramp is to be not steeper than 1:12.", "space": "The width is 1 200 mm at its narrowest point.",
+     "in": "A ramp is to have a gradient of 1 in 12.", "std": "AS 1428.1:2021 requires a gradient of 1 in 12.",
+     "r20": "A ramp is not steeper than 1:20 where the run exceeds 12 m.", "kanji": "勾配は、十二分の一を超えないこと。",
+     "comma": "The length is 1,2 m between the rails.", "thou": "The clearance is 1,200 mm above the floor.",
+     "indian": "The area is 1,50,000 square metres.", "eu": "The fee is 1.234,56 euros.", "table": "Rows: 800 750",
+     "tab": "Table 2 Not exceeding 5 m 1:15 333 mm Not exceeding 2 m 1:12 166 mm",
+     "w1200": "The width is 120.0 mm.", "h": "A height of 12,00 m.", "cl": "See clause 1.2 (00) for this.",
+     "rooms": "Rooms 1, 200 mm apart.", "lead": "A lip of .5 in.", "lead2": "A width of 12 mm.", "lead3": "A lip of 5 in.",
+     "sp20": "A ramp is not steeper than 1 : 20 where the run exceeds 12 m.", "z": "The scale is 5 000:1 200 here.",
+     "fn": "The clear width is 1200\u00b9 mm.", "apos": "The width is 1'200 mm.", "apos2": "The width is 1\u2019200 mm.",
+     "list": "Widths of 100,200,300 mm are offered.",
+     "nl": "Een hellingbaan krijgt vijf procent bij niveauverschillen van 50 cm of groter.",
+     "fi": "Luiskan kaltevuus saa olla enintään viisi prosenttia."}
+with scratch() as c:
+    t8 = new_source(verified=True)
+    held_text(t8, "\n".join(Q.values()))
+    hand_scan(c, t8, "full")
+
+    def rv(q, claimed, wording=None, **kw):
+        """The Refusal text, or None when `_require_verbatim` accepts. claim_type defaults to numerical."""
+        return refusal(db._require_verbatim, Q[q], t8, "--claim-text", "T008", claimed_value=claimed,
+                       value_as_written=wording, **({"claim_type": "numerical"} | kw))
+
+    refused = [
+        ("01", "12 under 'no higher than 1.2 m' (a shifted decimal point)", "dec", "12", None),
+        ("02", "0.6 under '6.0 s'", "time", "0.6", None),
+        ("03", "1:1 under a quote that states only 1:12", "ratio", "1:1", None),
+        ("04", "112 under 1:12 (a digit run across two numbers)", "ratio", "112", None),
+        ("05", "120.0 under '1 200 mm'", "space", "120.0", None),
+        ("06", "1:8 under '1 in 12'", "in", "1:8", None),
+        ("07", "1:12 under '1:20 where the run exceeds 12 m' (its 1 is only an operand of 1:20)", "r20", "1:12", None),
+        ("08", "1.200 as a claimed value (asks for the unambiguous form)", "thou", "1.200", None),
+        ("09", "1.2 under '1,200 mm' with no wording (the only match is ambiguous)", "thou", "1.2", None),
+        ("10", "5 under the Dutch sentence with no wording", "nl", "5", None),
+        ("11", "a wording that is not in the quote", "nl", "5", "vijftien procent"),
+        ("48", "1:333 under the table row '1:15 333 mm' (333 is a piece, not a whole number)", "tab", "1:333", None),
+        ("12", "a wording given when the quote states the number as a numeral", "space", "1200", "1 200"),
+    ]
+    for n, name, q_, cv, w in refused:
+        r = rv(q_, cv, w)
+        record(f"T008-{n}", f"refused: {name}", r is not None and "Nothing was written" in r, r)
+    r = rv("ratio", "twelve")
+    record("T008-13", "'twelve' as a numerical value is refused and the message names --value-as-written",
+           r is not None and "--value-as-written" in r and "--claimed-unit" in r, r)
+    r = rv("fi", "viisi prosenttia", None, claim_type="range")
+    record("T008-14", "words as a range value are refused the same way (both quantity types)",
+           r is not None and "--value-as-written" in r, r)
+    r = refusal(db._require_verbatim, Q["ratio"], t8, "--claim-text", "T008", claimed_value="twelve")
+    record("T008-15", "a call that gives no claim_type is treated as a quantity (twelve is refused)",
+           r is not None and "--value-as-written" in r, r)
+    for n, name, q_, cv, w in [("16", "12 with the wording '1.2 m' (a clear numeral that states a different figure)", "dec", "12", "1.2 m"),
+                               ("17", "1:12 with the wording '1:20' under the 1:20 sentence", "r20", "1:12", "1:20"),
+                               ("18", "9999 with the wording '1,200' (ambiguous, but 9999 is not a reading)", "thou", "9999", "1,200")]:
+        r = rv(q_, cv, w)
+        record(f"T008-{n}", f"refused (item 4, the wording must not state a different figure): {name}",
+               r is not None and "figure of its own" in r, r)
+
+    accepted = [
+        ("19", "1:15 under a table row '1:15 333 mm' (the 333 belongs to the next column; stored rows state it so)", "tab", "1:15", None),
+        ("20", "1.2 under '1,2 m'", "comma", "1.2", None), ("21", "1200 under '1 200 mm'", "space", "1200", None),
+        ("22", "1:12 under the kanji sentence", "kanji", "1:12", None), ("23", "1:12 under '1:12'", "ratio", "1:12", None),
+        ("24", "1/12 under '1:12'", "ratio", "1/12", None), ("25", "1:12 under '1 in 12'", "in", "1:12", None),
+        ("26", "1:12 under 'AS 1428.1:2021 ... 1 in 12' (a cited standard does not block a ratio in words)", "std", "1:12", None),
+        ("27", "6 under '6.0 s'", "time", "6", None), ("28", "150000 under '1,50,000'", "indian", "150000", None),
+        ("29", "1234.56 under '1.234,56'", "eu", "1234.56", None), ("30", "800 under '800 750'", "table", "800", None),
+        ("31", "750 under '800 750'", "table", "750", None), ("32", "1428.1 under 'AS 1428.1:2021'", "std", "1428.1", None),
+        ("33", "12 under '1:12' (known residual: 12 is stated)", "ratio", "12", None),
+        ("34", "5 with 'vijf procent' under the Dutch sentence", "nl", "5", "vijf procent"),
+        ("35", "5 with 'viisi prosenttia' under the Finnish sentence", "fi", "5", "viisi prosenttia"),
+        ("36", "1200 with the wording '1,200' under '1,200 mm'", "thou", "1200", "1,200"),
+        ("37", "1.2 with the wording '1,200' under '1,200 mm'", "thou", "1.2", "1,200"),
+        ("38", "9999 with the wording 'higher' (known residual: a wording with no numeral is the extractor's judgment)", "dec", "9999", "higher"),
+    ]
+    for n, name, q_, cv, w in [
+            ("50", "1200 with '1,200' under '120.0 mm' (a decimal shift: the wording is not in the quote)", "w1200", "1200", "1,200"),
+            ("51", "1.2 with '1,200' under '120.0 mm'", "w1200", "1.2", "1,200"),
+            ("52", "1200 with '1,200' under '12,00 m'", "h", "1200", "1,200"),
+            ("53", "1200 with '1,200' under 'clause 1.2 (00)'", "cl", "1200", "1,200"),
+            ("54", "1.2 with '1,200' under 'rooms 1, 200 mm apart'", "rooms", "1.2", "1,200"),
+            ("55", ".12 under '12 mm' (a leading-dot decimal is a decimal)", "lead2", ".12", None),
+            ("56", ".5 under '5 in'", "lead3", ".5", None), ("57", "5 under 'a lip of .5 in'", "lead", "5", None),
+            ("58", "1:20 under the kanji sentence for 1:12 with the kanji wording of 1:12", "kanji", "1:20", "十二分の一"),
+            ("59", "99 under the kanji sentence with the wording 十二", "kanji", "99", "十二"),
+            ("60", "1:12 under '1 : 20 where the run exceeds 12 m' (a spaced colon is still a ratio)", "sp20", "1:12", None),
+            ("61", "0 under '5 000:1 200' (the padded piece 000 is not a number)", "z", "0", None),
+            ("62", "0:1 under '5 000:1 200'", "z", "0:1", None)]:
+        r = rv(q_, cv, w)
+        record(f"T008-{n}", f"refused: {name}", r is not None and "Nothing was written" in r, r)
+    for n, name, q_, cv, w in [
+            ("63", "0.5 under 'a lip of .5 in'", "lead", "0.5", None),
+            ("64", "1200 under '1200\u00b9 mm' (a footnote mark is not a digit)", "fn", "1200", None),
+            ("65", "1200 under \"1'200 mm\" (apostrophe grouping)", "apos", "1200", None),
+            ("66", "1200 under '1\u2019200 mm'", "apos2", "1200", None),
+            ("67", "200 under '100,200,300 mm' (comma groups are numbers as well)", "list", "200", None),
+            ("68", "1:20 under '1 : 20'", "sp20", "1:20", None)]:
+        res, err = ok(db._require_verbatim, Q[q_], t8, "--claim-text", "T008", claimed_value=cv, value_as_written=w,
+                      claim_type="numerical")
+        record(f"T008-{n}", f"accepted: {name}", err is None, err)
+    # THE RESIDUAL, shown plainly: a wording with no numeral is not checked for meaning (rule 8: no word list),
+    # so one word of the quote (the longest, derived) defeats the guard for each headline refusal above, and so
+    # does one letter. A reviewer and the adversarial pass are the check; these cases are accepted ON PURPOSE.
+    for n, q_, cv in [("01", "dec", "12"), ("02", "time", "0.6"), ("03", "ratio", "1:1"), ("04", "ratio", "112"),
+                      ("05", "space", "120.0"), ("06", "in", "1:8"), ("07", "r20", "1:12"), ("08", "w1200", "1200")]:
+        word = max(re.findall(r"[^\W\d_]+", Q[q_]), key=len)
+        res, err = ok(db._require_verbatim, Q[q_], t8, "--claim-text", "T008", claimed_value=cv, value_as_written=word,
+                      claim_type="numerical")
+        record(f"T008-RES-{n}", f"RESIDUAL (accepted on purpose): {cv} under {Q[q_]!r} with the wording {word!r}", err is None, err)
+    res, err = ok(db._require_verbatim, Q["dec"], t8, "--claim-text", "T008", claimed_value="12", value_as_written="m",
+                  claim_type="numerical")
+    record("T008-RES-09", "RESIDUAL (accepted on purpose): 12 under 'no higher than 1.2 m' with the one-letter wording 'm'",
+           err is None, err)
+    for n, name, q_, cv, w in accepted:
+        res, err = ok(db._require_verbatim, Q[q_], t8, "--claim-text", "T008", claimed_value=cv, value_as_written=w,
+                      claim_type="numerical")
+        record(f"T008-{n}", f"accepted: {name}", err is None, err)
+    res, err = ok(db._require_verbatim, Q["dec"], t8, "--claim-text", "T008", claimed_value="wide", claim_type="qualitative")
+    record("T008-39", "accepted: a qualitative value with no number", err is None, err)
+    record("T008-40", "dbcore.QUANTITY_CLAIM_TYPES are all in the claim_type CHECK (a renamed type cannot leave it behind)",
+           set(dbcore.QUANTITY_CLAIM_TYPES) <= dbcore.check_values(con, "source_value_extractions", "claim_type")
+           and dbcore.QUANTITY_CLAIM_TYPES, dbcore.QUANTITY_CLAIM_TYPES)
+    record("T008-41", "db._verbatim_norm is gone (its only caller was the digit-substring test)",
+           not hasattr(db, "_verbatim_norm"))
+    ax = lambda **o: extraction(t8, P_FULL, claim_text=Q["nl"], claimed_value="5", claimed_unit="%",
+                                source_section="section T8", loc_section="T8", **o)
+    r = refusal(db.insert_extraction, ax(), session=S, dry_run=True, relations=[])
+    record("T008-42", "end to end: add-extraction's writer refuses 5 under the Dutch sentence with no wording",
+           r is not None and "--value-as-written" in r, r)
+    res, err = ok(db.insert_extraction, ax(value_as_written="vijf procent"), session=S, dry_run=False, relations=[])
+    stored = c.execute("SELECT value_as_written FROM source_value_extractions WHERE ref_id=?", (t8,)).fetchall()
+    record("T008-43", "...and writes it with the wording, in the new column",
+           err is None and [tuple(x) for x in stored] == [("vijf procent",)], err or stored)
+    hand("UPDATE source_value_extractions SET value_as_written=NULL WHERE ref_id=?", t8)     # HAND: a row written before the column
+    eid = c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", (t8,)).fetchone()[0]
+    r = refusal(db.amend_extraction, eid, "value_as_written", "vijftien procent", "probe", session=S, dry_run=True)
+    record("T008-44", "amend-extraction refuses a wording that is not in the stored quote",
+           r is not None and "literal span" in r, r)
+    r = refusal(db.amend_extraction, eid, "value_as_written", "Vijf  PROCENT", "probe", session=S, dry_run=True)
+    record("T008-49", "...and a wording that is the quote's words in other case or spacing (a literal span only)",
+           r is not None and "literal span" in r, r)
+    res, err = ok(db.amend_extraction, eid, "value_as_written", "vijf procent", "T-008 probe", session=S, dry_run=False)
+    got = c.execute("SELECT value_as_written, claimed_value FROM source_value_extractions WHERE extraction_id=?", (eid,)).fetchone()
+    record("T008-45", "amend-extraction sets the wording on a stored row and leaves its figure alone",
+           err is None and tuple(got) == ("vijf procent", "5"), err or tuple(got))
+    ref2 = new_source(verified=True)
+    held_text(ref2, Q["space"])
+    hand_scan(c, ref2, "full")
+    db.insert_extraction(extraction(ref2, P_FULL, claim_text=Q["space"], claimed_value="1200", source_section="section T8",
+                                    loc_section="T8"), S, dry_run=False, relations=[])
+    eid2 = c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", (ref2,)).fetchone()[0]
+    r = refusal(db.amend_extraction, eid2, "value_as_written", "1 200", "probe", session=S, dry_run=True)
+    record("T008-46", "amend-extraction refuses a wording on a row whose quote states the number as a numeral",
+           r is not None and "states every claimed number" in r, r)
+    h = cli("add-extraction", "--help")
+    record("T008-47", "add-extraction takes --value-as-written", "--value-as-written" in h.stdout, h.stdout[-200:])
+
+
 finish()
