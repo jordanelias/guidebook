@@ -212,14 +212,14 @@
   {
     "started": "2026-11-13T04:53:54",
     "role": "other",
-    "bytes": 518837,
+    "bytes": 1325379,
     "agent_id_prefix": "a2ab8d11",
     "file": "2026-11-13T04-53-54_other_a2ab8d11.jsonl"
   },
   {
     "started": "2026-11-13T04:53:54",
     "role": "other",
-    "bytes": 434090,
+    "bytes": 1087482,
     "agent_id_prefix": "a769f26e",
     "file": "2026-11-13T04-53-54_other_a769f26e.jsonl"
   }
