@@ -1364,6 +1364,23 @@ def delete_connection(con_id: str, session: str, dry_run: bool = False):
 # --- CLI ---
 
 
+def _add_lens_flags(p):
+    """The four repeatable lens flags and their one warrant, for add-extraction and derive-extraction
+    (a figure's lens is a set of links, OR-1c; argparse's default keeps only the last of a repeated flag)."""
+    p.add_argument("--identity", action="append", help="base_taxonomy_identity.identity_code (repeatable)")
+    p.add_argument("--icf", action="append", help="base_icf.icf_code — a real ICF b/d code (repeatable)")
+    p.add_argument("--needs", action="append", help="access_needs.need_code (repeatable)")
+    p.add_argument("--medical", action="append", help="base_taxonomy_medical.medical_code (repeatable)")
+    p.add_argument("--lens-basis", dest="lens_basis", choices=_lens_basis_choices(),
+                   help="REQUIRED with any lens flag. Why the figure is stated in these groups (live "
+                        "vocabulary, read from extraction_lens_links.basis's own CHECK): the figure's own "
+                        "words name them, its heading does, or its study's participants are them. A code "
+                        "with a different warrant is added afterwards with add-lens-link.")
+    p.add_argument("--lens-basis-text", dest="lens_basis_text",
+                   help="REQUIRED with any lens flag. The exact words that warrant the links; found in the "
+                        "figure's own words or its source's saved file, or refused.")
+
+
 def _vocab_help(column: str) -> str:
     """An extraction_relations vocabulary for --help, read from the column's own CHECK.
     `add-extraction`'s aligned flags cannot take `choices=` because each also admits the
@@ -2265,11 +2282,9 @@ def main():
     p_ax.add_argument("--parameter-id", dest="parameter_id", type=int, required=True,
                       help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
     # The four lenses. At least one is required (D-0182); the CLI names them by lens
-    # rather than by column so the operator is choosing a LENS, not filling a field.
-    p_ax.add_argument("--identity", help="base_taxonomy_identity.identity_code")
-    p_ax.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
-    p_ax.add_argument("--needs", help="access_needs.need_code")
-    p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
+    # rather than by column so the operator is choosing a LENS, not filling a field. Each flag
+    # may be repeated (OR-1c): one link per code, all with the warrant of --lens-basis.
+    _add_lens_flags(p_ax)
     p_ax.add_argument("--claim-type", dest="claim_type", required=True,
                       choices=dbcore.schema_choices("source_value_extractions", "claim_type"),
                       help="Live vocabulary, read from the column's own CHECK. "
@@ -2481,6 +2496,31 @@ def main():
     p_amx.add_argument("--session", required=True)
     p_amx.add_argument("--dry-run", action="store_true")
 
+    # add-lens-link / retire-lens-link -- a figure's lens is a set of links (OR-1c, migration 131).
+    p_all = sub.add_parser("add-lens-link",
+                           help="State an existing figure in one more lens code, with the words that "
+                                "warrant it (replaces a carried link for the same code in one act)")
+    p_all.add_argument("--extraction-id", dest="extraction_id", type=int, required=True)
+    p_all.add_argument("--identity", help="base_taxonomy_identity.identity_code")
+    p_all.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
+    p_all.add_argument("--needs", help="access_needs.need_code")
+    p_all.add_argument("--medical", help="base_taxonomy_medical.medical_code")
+    p_all.add_argument("--basis", required=True, choices=_lens_basis_choices(),
+                       help="Live vocabulary, read from extraction_lens_links.basis's own CHECK ('carried' is "
+                            "written only by migration 131)")
+    p_all.add_argument("--basis-text", dest="basis_text", required=True,
+                       help="The exact words that warrant the link: found in the figure's own words, in a "
+                            "file saved for its source, or (study_participants) in a graded study_population")
+    p_all.add_argument("--session", required=True)
+    p_all.add_argument("--dry-run", action="store_true")
+
+    p_rll = sub.add_parser("retire-lens-link",
+                           help="Retire one lens link in place (never the figure's last live one)")
+    p_rll.add_argument("--link-id", dest="link_id", type=int, required=True)
+    p_rll.add_argument("--reason", required=True)
+    p_rll.add_argument("--session", required=True)
+    p_rll.add_argument("--dry-run", action="store_true")
+
     # derive-extraction -- a figure_role='derived' row, computed base+delta, plus
     # the two derived_from edges v_derived_figure_check re-verifies it against.
     p_dx = sub.add_parser("derive-extraction",
@@ -2488,10 +2528,7 @@ def main():
                                "derived_from edges that prove it")
     p_dx.add_argument("--ref-id", required=True)
     p_dx.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
-    p_dx.add_argument("--identity")
-    p_dx.add_argument("--icf")
-    p_dx.add_argument("--needs")
-    p_dx.add_argument("--medical")
+    _add_lens_flags(p_dx)
     p_dx.add_argument("--base", type=int, required=True,
                       help="extraction_id of the base figure")
     p_dx.add_argument("--delta", type=int, required=True,
@@ -3461,6 +3498,7 @@ def main():
                "parameter_id": args.parameter_id,
                "identity_code": args.identity, "icf_code": args.icf,
                "needs_code": args.needs, "medical_code": args.medical,
+               "lens_basis": args.lens_basis, "lens_basis_text": args.lens_basis_text,
                "claim_type": args.claim_type, "claimed_value": args.claimed_value,
                "claimed_unit": args.claimed_unit, "claim_text": args.claim_text,
                "value_as_written": args.value_as_written,
@@ -3529,11 +3567,20 @@ def main():
                                args.reason, session=args.session,
                                dry_run=args.dry_run))
 
+    elif args.command == "add-lens-link":
+        _emit(add_lens_link(args.extraction_id, args.session, identity=args.identity, icf=args.icf,
+                            needs=args.needs, medical=args.medical, basis=args.basis,
+                            basis_text=args.basis_text, dry_run=args.dry_run))
+
+    elif args.command == "retire-lens-link":
+        _emit(retire_lens_link(args.link_id, args.reason, args.session, dry_run=args.dry_run))
+
     elif args.command == "derive-extraction":
         _emit(derive_extraction(
             ref_id=args.ref_id, parameter_id=args.parameter_id,
             identity=args.identity, icf=args.icf, needs=args.needs,
-            medical=args.medical, base=args.base, delta=args.delta,
+            medical=args.medical, lens_basis=args.lens_basis,
+            lens_basis_text=args.lens_basis_text, base=args.base, delta=args.delta,
             claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
             comparator=args.comparator, conversion_note=args.conversion_note,
             claim_text=args.claim_text, session=args.session, dry_run=args.dry_run))
@@ -9510,6 +9557,87 @@ def _build_relation_groups(relations, to_extractions, to_labels, to_kinds, state
     return out
 
 
+# A FIGURE'S LENS LIVES IN extraction_lens_links (OR-1c, migration 131): one row per (figure, code), the
+# four typed columns of which a row states exactly one, and a warrant. The figure's own four columns are held
+# NULL by the table's CHECK. The helpers below are the one home of what a link write checks; insert_extraction
+# (every code of a new figure), add-lens-link and retire-lens-link all call them.
+
+def _require_lens_code(conn, col: str, code: str):
+    """`code` is a live key in the registry the lens column points at (a registry with no rows is named, not
+    left to `FOREIGN KEY constraint failed`, CLAUDE.md section 4), and a retired identity is not newly used."""
+    table, key = _LENS_COLUMNS[col]
+    if not dbcore.exists(conn, table, key, code):
+        n = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
+        if n == 0:
+            raise Refusal(
+                f"{col} {code!r}: the registry `{table}` holds no rows, so no code "
+                f"is valid in this lens yet and the INSERT would fail with "
+                f"`FOREIGN KEY constraint failed`. Seed the registry in a "
+                f"migration, or state the value in a lens that has one.")
+        raise Refusal(
+            f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
+            f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
+    if col == "identity_code" and conn.execute(
+            "SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (code,)).fetchone()[0] == "deprecated":
+        raise Refusal(
+            f"{col} {code!r} is deprecated: a figure is not newly stated in a retired group; "
+            f"use the live code that replaced it. Nothing was written.")
+
+
+def _lens_basis_choices():
+    """The warrants a writer may state: the column's own CHECK, minus `carried`, which only migration 131 writes."""
+    return [v for v in (dbcore.schema_choices("extraction_lens_links", "basis") or []) if v != "carried"] or None
+
+
+def _require_lens_warrant(conn, basis, basis_text, ref_id, words, context):
+    """A link's warrant: a basis from the column's own CHECK (not `carried`) and the exact words that warrant it,
+    found, case-insensitively, in the figure's own words (`words`: its claim_text, source_section and
+    root_population_note), in a file saved for its source (`_verbatim`), or, for `study_participants`, in a
+    study_population graded for the source (evidence_population_match.source_ref). Returns the stripped text."""
+    allowed = set(_lens_basis_choices() or ())
+    if basis not in allowed:
+        raise Refusal(
+            f"{context}: a lens link needs --lens-basis / --basis, one of {sorted(allowed)} (the warrant for "
+            f"stating the figure in this group). Nothing was written.")
+    text = (basis_text or "").strip()
+    if not text:
+        raise Refusal(
+            f"{context}: the warrant's words are blank. Give --lens-basis-text / --basis-text: the exact words "
+            f"of the figure, its heading or its study's participants that name the group. Nothing was written.")
+    low = text.lower()
+    if any(low in (w or "").lower() for w in words):
+        return text
+    where = ["the figure's claim_text, source_section and root_population_note"]
+    if _verbatim(text, ref_id)[0]:
+        return text
+    where.append(f"a file saved for {ref_id}")
+    if basis == "study_participants":
+        if any(low in (r[0] or "").lower() for r in conn.execute(
+                "SELECT study_population FROM evidence_population_match WHERE source_ref=?", (ref_id,))):
+            return text
+        where.append(f"the study_population of an evidence_population_match row for {ref_id}")
+    raise Refusal(
+        f"{context}: the warrant {text!r} is not in {'; nor in '.join(where)}. A link rests on words the source "
+        f"holds, never on memory (CLAUDE.md 5(c)). Quote the figure's own words, or the heading or participant "
+        f"description that names the group. Nothing was written.")
+
+
+def _live_links(conn, extraction_id: int) -> set:
+    """The figure's live links as {(lens column, code)}: the one read of its lens."""
+    return {(c, r[c]) for r in conn.execute(
+        "SELECT * FROM v_live_lens_links WHERE extraction_id=?", (extraction_id,))
+        for c in _LENS_COLUMNS if r[c] is not None}
+
+
+def _write_lens_link(conn, extraction_id: int, col: str, code: str, basis: str, basis_text, session: str) -> int:
+    """INSERT one live link and return its link_id. The caller has checked the code and the warrant."""
+    row = {"extraction_id": extraction_id, col: code, "basis": basis, "basis_text": basis_text,
+           **dbcore.stamp_for(conn, "extraction_lens_links", session)}
+    return conn.execute(
+        f"INSERT INTO extraction_lens_links ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
+        list(row.values())).lastrowid
+
+
 def insert_extraction(data: dict, session: str, dry_run: bool = False,
                       relations: list = None, verbatim_exempt: str = None):
     """Record ONE judgment item: what one source asserts for one parameter.
@@ -9560,7 +9688,10 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
       and produced a `PRAGMA foreign_key_check` violation against `populations`.
 
     * NO LENS AT ALL. D-0182: absence in a lens is fine, absence in all four is not.
-      A value attached to no lens is a value about nobody.
+      A value attached to no lens is a value about nobody. Since migration 131 (OR-1c) the lens
+      is a set of LINKS, not the figure's four columns (held NULL): each lens key of `data`
+      takes one code or a list, `lens_basis` / `lens_basis_text` (not columns) are the warrant of
+      every link the call writes, and the figure and its links land in one transaction.
 
     * The claim/value contradiction, IN WORDS. The table's own CHECK already refuses
       `claim_type='absent'` with a value and any other claim_type without one; this
@@ -9609,7 +9740,6 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
     """
     _COLS = frozenset({
         "ref_id", "parameter_id",
-        "identity_code", "icf_code", "needs_code", "medical_code",
         "jurisdiction", "setting",
         "claim_type", "claimed_value", "claimed_unit", "claim_text", "source_section",
         "root_id", "root_type", "root_ref_id", "echo_of", "measurement_paradigm",
@@ -9622,12 +9752,22 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         "extraction_method", "extraction_status", "notes",
         "figure_role", "comparator", "harm_finding", "value_as_written",
     })
+    # THE LENS KEYS AND THE WARRANT ARE NOT COLUMNS OF THE FIGURE (migration 131): they become its links.
+    # A key takes one code or a list; a BLANK IS NOT AN ABSENCE, so a blank code is dropped before
+    # anything reads it.
+    data = dict(data)
+    lens_basis, lens_basis_text = data.pop("lens_basis", None), data.pop("lens_basis_text", None)
+    lens = {}
+    for col in _LENS_COLUMNS:
+        given = data.pop(col, None)
+        given = [given] if isinstance(given, str) else list(given or ())
+        lens[col] = [str(c).strip() for c in given if c is not None and str(c).strip()]
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
     dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
     row = {k: v for k, v in data.items() if v is not None}
 
     # A BLANK IS NOT AN ABSENCE — normalise before anything reads these.
-    for col in (*_LENS_COLUMNS, "value_as_written"):
+    for col in ("value_as_written",):
         if col in row and not str(row[col]).strip():
             del row[col]
     if "value_as_written" in row:
@@ -9714,26 +9854,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             _require_full_scan_for_verified(conn, ref, pid, "add-extraction")
 
         # --- the lenses ------------------------------------------------------
-        if not any(row.get(c) for c in _LENS_COLUMNS):
+        if not any(lens.values()):
             raise Refusal(
                 "an extraction must be stated in at least one lens (D-0182): pass one or "
                 "more of --identity / --icf / --needs / --medical. A value attached to no "
                 "lens is a value about nobody.")
-        for col, (table, key) in _LENS_COLUMNS.items():
-            code = row.get(col)
-            if not code:
-                continue
-            if not dbcore.exists(conn, table, key, code):
-                n = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
-                if n == 0:
-                    raise Refusal(
-                        f"{col} {code!r}: the registry `{table}` holds no rows, so no code "
-                        f"is valid in this lens yet and the INSERT would fail with "
-                        f"`FOREIGN KEY constraint failed`. Seed the registry in a "
-                        f"migration, or state the value in a lens that has one.")
-                raise Refusal(
-                    f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
-                    f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
+        for col, codes in lens.items():
+            dup = sorted({c for c in codes if codes.count(c) > 1})
+            if dup:
+                raise Refusal(f"{col}: {dup} given more than once in this call. A figure holds one live "
+                              f"link per code. Nothing was written.")
+            for code in codes:
+                _require_lens_code(conn, col, code)
 
         # --- the claim -------------------------------------------------------
         claim_type = row.get("claim_type")
@@ -9762,6 +9894,12 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             claim_type=claim_type, value_as_written=row.get("value_as_written"))
         if _exempt_note:
             row["notes"] = ((row.get("notes") or "") + " " + _exempt_note).strip()
+
+        # THE LENS WARRANT: the words that name the group are the figure's own (or its source's).
+        lens_basis_text = _require_lens_warrant(
+            conn, lens_basis, lens_basis_text, ref,
+            (row.get("claim_text"), row.get("source_section"), row.get("root_population_note")),
+            "add-extraction")
 
         # THE STRUCTURED LOCATOR, for the regulatory stratum only (added 2026-09-20).
         # R3 says a quantified value needs a locator, and `source_section` free text
@@ -9900,13 +10038,14 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # not compared: the same reading by a second session is still the same reading.
         _same_cols = [c for c in row
                       if c not in ("notes", "extraction_status", "extraction_method", "contested")]
-        _keyed = ("identity_code", "icf_code", "needs_code", "medical_code", "claimed_value",
-                  "claimed_unit", "source_section", "loc_section", "loc_clause")
+        _keyed = ("claimed_value", "claimed_unit", "source_section", "loc_section", "loc_clause")
         _preds = [f'"{c}" IS ?' for c in _same_cols] + [f'"{c}" IS NULL' for c in _keyed
                                                         if c not in row]
-        _dup = conn.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds)
-            + " LIMIT 1", [row[c] for c in _same_cols]).fetchone()
+        # "Same lenses" is the set of live links: the figure's own lens columns are held NULL.
+        _want = {(c, code) for c, codes in lens.items() for code in codes}
+        _dup = next(((d[0],) for d in conn.execute(
+            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds),
+            [row[c] for c in _same_cols]) if _live_links(conn, d[0]) == _want), None)
         if _dup:
             raise Refusal(
                 f"add-extraction: extraction {_dup[0]} already carries this exact row "
@@ -9930,6 +10069,9 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             f"INSERT INTO source_value_extractions ({','.join(row)}) "
             f"VALUES ({','.join('?' * len(row))})", list(row.values()))
         extraction_id = cur.lastrowid
+        links = [{"link_id": _write_lens_link(conn, extraction_id, col, code, lens_basis, lens_basis_text,
+                                              session), "lens": col, "code": code}
+                 for col, codes in lens.items() for code in codes]
 
         # THE EDGES, IN THIS SAME TRANSACTION -- the `add-term` precedent (a term
         # and its adjudication land together). `relations` is `[]` for the literal
@@ -9953,11 +10095,93 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
             _refuse_derived_mismatch(conn, extraction_id, "add-extraction")
 
         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
-                "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
+                "lens": links,
                 "claim_type": claim_type, "claimed_value": value,
                 "figure_role": figure_role, "comparator": row.get("comparator"),
                 "relation_ids": relation_ids,
                 "siblings_for_this_parameter": len(prior),
+                "dry_run": dry_run}
+
+
+def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf: str = None,
+                  needs: str = None, medical: str = None, basis: str = None, basis_text: str = None,
+                  dry_run: bool = False):
+    """State an existing figure in ONE more lens code (OR-1c), with the words that warrant it.
+
+    Refuses: a figure that does not exist; none or more than one code; a code the registry lacks or a
+    retired identity (`_require_lens_code`); a missing basis, a blank or unfound warrant
+    (`_require_lens_warrant`); a live link already holding the code, EXCEPT a `carried` one, which is
+    retired in this same transaction ("superseded by judged link <id>") because a judged warrant
+    replaces a carried one in one act. The retirement is written first and its reason completed once
+    the new link has an id: the partial unique index admits one live link per (figure, code)."""
+    given = {col: code for col, code in (("identity_code", identity), ("icf_code", icf),
+                                         ("needs_code", needs), ("medical_code", medical))
+             if code is not None}
+    if len(given) != 1:
+        raise Refusal(f"add-lens-link: name exactly one code, with one of --identity / --icf / --needs / "
+                      f"--medical (got {len(given)}). Repeat the verb for each code. Nothing was written.")
+    ((col, code),) = given.items()
+    with dbcore.connect(dry_run) as conn:
+        fig = conn.execute(
+            "SELECT ref_id, claim_text, source_section, root_population_note "
+            "FROM source_value_extractions WHERE extraction_id=?", (extraction_id,)).fetchone()
+        if fig is None:
+            raise Refusal(f"add-lens-link: extraction {extraction_id}: no such figure. Nothing was written.")
+        _require_lens_code(conn, col, code)
+        text = _require_lens_warrant(
+            conn, basis, basis_text, fig["ref_id"],
+            (fig["claim_text"], fig["source_section"], fig["root_population_note"]), "add-lens-link")
+        held = conn.execute(
+            f"SELECT link_id, basis FROM extraction_lens_links WHERE extraction_id=? AND {col}=? "
+            f"AND retired_at IS NULL", (extraction_id, code)).fetchone()
+        if held is not None and held["basis"] != "carried":
+            raise Refusal(
+                f"add-lens-link: extraction {extraction_id} already holds a live {held['basis']} link "
+                f"({held['link_id']}) for {col} {code!r}. A figure holds one live link per code; retire it "
+                f"first (retire-lens-link) if its warrant is wrong. Nothing was written.")
+        if held is not None:
+            conn.execute(
+                "UPDATE extraction_lens_links SET retired_at=?, retired_by_session=?, retirement_reason=?, "
+                "updated_at=?, updated_by_session=? WHERE link_id=?",
+                [dbcore.now(), dbcore.session_stem(session), "superseded by judged link", dbcore.now(),
+                 dbcore.session_stem(session), held["link_id"]])
+        link_id = _write_lens_link(conn, extraction_id, col, code, basis, text, session)
+        if held is not None:
+            conn.execute("UPDATE extraction_lens_links SET retirement_reason=? WHERE link_id=?",
+                         (f"superseded by judged link {link_id}", held["link_id"]))
+        return {"link_id": link_id, "extraction_id": extraction_id, "lens": col, "code": code,
+                "basis": basis, "retired_carried_link_id": held["link_id"] if held else None,
+                "dry_run": dry_run}
+
+
+def retire_lens_link(link_id: int, reason: str, session: str, dry_run: bool = False):
+    """Retire one lens link in place (OD-29): the three retired_* columns and the updated_* pair.
+
+    Refuses: no such link; already retired; a blank reason; and the figure's LAST live link, because a
+    figure with no lens is a value about nobody (D-0182) and the schema no longer holds that rule."""
+    with dbcore.connect(dry_run) as conn:
+        link = conn.execute("SELECT extraction_id, retired_at FROM extraction_lens_links WHERE link_id=?",
+                            (link_id,)).fetchone()
+        if link is None:
+            raise Refusal(f"retire-lens-link: link {link_id}: no such link. Nothing was written.")
+        if link["retired_at"] is not None:
+            raise Refusal(f"retire-lens-link: link {link_id} was retired at {link['retired_at']}. "
+                          f"Nothing was written.")
+        if not (reason or "").strip():
+            raise Refusal("retire-lens-link: --reason is blank. Say why the figure is no longer stated "
+                          "in this group. Nothing was written.")
+        if conn.execute("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?",
+                        (link["extraction_id"],)).fetchone()[0] == 1:
+            raise Refusal(
+                f"retire-lens-link: link {link_id} is extraction {link['extraction_id']}'s last live link. "
+                f"Add the replacing link first with add-lens-link; a figure with no lens is a value about "
+                f"nobody (D-0182). Nothing was written.")
+        conn.execute(
+            "UPDATE extraction_lens_links SET retired_at=?, retired_by_session=?, retirement_reason=?, "
+            "updated_at=?, updated_by_session=? WHERE link_id=?",
+            [dbcore.now(), dbcore.session_stem(session), reason.strip(), dbcore.now(),
+             dbcore.session_stem(session), link_id])
+        return {"link_id": link_id, "extraction_id": link["extraction_id"], "retired": True,
                 "dry_run": dry_run}
 
 
@@ -10252,6 +10476,7 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
                       delta: int, claim_text: str, session: str,
                       dry_run: bool = False, identity: str = None, icf: str = None,
                       needs: str = None, medical: str = None,
+                      lens_basis: str = None, lens_basis_text: str = None,
                       claimed_value: str = None, claimed_unit: str = None,
                       comparator: str = None, conversion_note: str = None):
     """Write a figure_role='derived' row computed as base + delta, plus the two
@@ -10332,7 +10557,8 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
 
         data = {"ref_id": ref_id, "parameter_id": parameter_id,
                 "identity_code": identity, "icf_code": icf, "needs_code": needs,
-                "medical_code": medical, "claim_type": "numerical",
+                "medical_code": medical, "lens_basis": lens_basis,
+                "lens_basis_text": lens_basis_text, "claim_type": "numerical",
                 "claimed_value": claimed_value, "claimed_unit": unit,
                 "claim_text": claim_text, "figure_role": "derived",
                 "comparator": comparator, "extraction_method": "auto-mined",

@@ -908,6 +908,23 @@ def run_checks(db_path):
            subject=subj("SELECT COUNT(*) FROM evidence_source_authors "
                         "WHERE COALESCE(orcid,'') <> ''"))
 
+    # T018-05: D-0182 ("a figure carries at least one lens") moved off the figure's CHECK when
+    # migration 131 inverted it (OR-1c), so the schema no longer holds it; the writers refuse a
+    # figure with no live link and this case is the floor under a hand-written INSERT that does not.
+    # Guarded: on a database without the view the case is RED with the reason, never an exception
+    # that hides every later case.
+    try:
+        no_lens = conn.execute(
+            "SELECT COUNT(*) FROM source_value_extractions x WHERE NOT EXISTS "
+            "(SELECT 1 FROM v_live_lens_links k WHERE k.extraction_id = x.extraction_id)").fetchone()[0]
+        t018_err = ""
+    except sqlite3.Error as exc:
+        no_lens, t018_err = -1, f"v_live_lens_links cannot be read: {exc}"
+    record("T018-05", "every figure has at least one live lens link (D-0182, held by v_live_lens_links)",
+           no_lens == 0,
+           t018_err or f"{no_lens} figure(s) with no live lens link: add-lens-link, then retire-lens-link",
+           subject=subj("SELECT COUNT(*) FROM source_value_extractions"))
+
     # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
     # Two edges on the walk are being migrated out of JSON TEXT columns and into
     # foreign-keyed junction tables (migrations 044 and 050). Until the columns

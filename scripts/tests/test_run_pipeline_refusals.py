@@ -332,7 +332,16 @@ def extraction(ref, pid, **over):
             "claim_text": QUOTE, "extraction_method": "full-read", "figure_role": "claim",
             "source_section": "section 3", "loc_section": "3", "comparator": "="}
     base.update(over)
+    # A figure's lens is a set of links since migration 131 (OR-1c); their warrant travels in the payload
+    # (lens_basis, lens_basis_text), and the words must be the figure's own: the first word of its claim text.
+    base.setdefault("lens_basis", "named_in_text")
+    base.setdefault("lens_basis_text", next(iter(str(base.get("claim_text") or "").split()), ""))
     return base
+
+
+def lens_of(text):
+    """The warrant keyword arguments of derive_extraction for a claim text: the text's own first word."""
+    return {"lens_basis": "named_in_text", "lens_basis_text": text.split()[0]}
 
 
 def _live_full():
@@ -2274,11 +2283,11 @@ with scratch() as c:
     _insert = db.insert_extraction
     db.insert_extraction = lambda data, *a, **k: _insert({**data, "source_section": "section 3"}, *a, **k)
     try:
-        r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["bad"],
+        r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["bad"], **lens_of(T16["bad"]),
                     session=S, identity=IDENT, claimed_value="99", comparator="=")
         record("T016-N11", "derive-extraction with a wrong --claimed-value is refused by the shared check, nothing written",
                r is not None and "disagrees with its own base + delta" in r and counts() == before, (r, counts(), before))
-        res, err = ok(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"],
+        res, err = ok(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"], **lens_of(T16["good"]),
                       session=S, identity=IDENT, comparator="=")
     finally:
         db.insert_extraction = _insert
@@ -2286,7 +2295,7 @@ with scratch() as c:
                        ((res or {}).get("extraction_id"),)).fetchone()
     record("T016-N11a", "derive-extraction with no --claimed-value computes and stores 14.75",
            err is None and stored is not None and stored[0] == "14.75", err or stored)
-    r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"],
+    r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"], **lens_of(T16["good"]),
                 session=S, identity=IDENT, comparator="=")
     # KNOWN DEFECT, three blockers in the order they are reached (all go red when the verb is repaired; remove the shim then):
     #   N11c  it passes no locator, so R3 refuses every row it builds;
@@ -2296,12 +2305,12 @@ with scratch() as c:
            r is not None and r.startswith("R3:"), r)
     db.insert_extraction = lambda data, *a, **k: _insert({**data, "source_section": "section 3"}, *a, **k)
     try:
-        r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"],
+        r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"], **lens_of(T16["good"]),
                     session=S, identity=IDENT)
         record("T016-N11d", "KNOWN DEFECT 2/3: with the locator supplied, derive-extraction is refused for want of --comparator",
                r is not None and "--comparator" in r, r)
         r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id,
-                    claim_text="5.5 + 9.25 = 14.75", session=S, identity=IDENT, comparator="=")
+                    claim_text="5.5 + 9.25 = 14.75", **lens_of("5.5 + 9.25 = 14.75"), session=S, identity=IDENT, comparator="=")
         record("T016-N11e", "KNOWN DEFECT 3/3: ...and a computation statement as the claim text is refused as non-verbatim",
                r is not None and "claim-text" in r, r)
     finally:

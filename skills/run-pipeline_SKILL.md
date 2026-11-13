@@ -178,8 +178,11 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
 crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
-  figure: parameter, at least one lens column (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
-  is stated in at least one lens, D-0182), value and unit (a number the source writes in words, or with an ambiguous
+  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
+  is stated in at least one lens, D-0182). Each flag repeats, one link per code in `extraction_lens_links` (the
+  figure's own lens columns are held NULL), and `--lens-basis` with `--lens-basis-text` (the figure's own words that
+  name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
+  `add-lens-link`, and `retire-lens-link` retires one (never the last). Value and unit (a number the source writes in words, or with an ambiguous
   mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`;
   `--comparator` for a numerical figure, `=` for a point), `--claim-text`
   verbatim, locator, `--figure-role`,

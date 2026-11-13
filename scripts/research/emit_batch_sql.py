@@ -204,7 +204,15 @@ def emit(scratch_path, canonical_path, out_path, allow_delete=(), replay_path=No
                     where(pk, row)))
         if inserts or updates:
             lines.append("-- %s: %d insert(s), %d update(s)" % (table, len(inserts) - restores, len(updates)))
-            lines += inserts + updates
+            # A table's UPDATEs BEFORE its INSERTs. The UPDATEs bring rows already in the table to their
+            # end-state values; the INSERTs add rows of the end state. So every row present at each step is
+            # a row of the batch's end state, and every UNIQUE index, partial ones included, holds at each
+            # step (a unique index that holds over a set of rows holds over any subset). The other order
+            # failed a batch that retires a row and adds its replacement (extraction_lens_links'
+            # ux_extraction_lens_live, specifications' idx_spec_row_identity): the INSERT arrived while the
+            # row it replaces was still live. Foreign keys need no ordering: migrate_db checks them once, at
+            # the end of the file.
+            lines += updates + inserts
             lines.append("")
         n_ins += len(inserts) - restores
         n_upd += len(updates)

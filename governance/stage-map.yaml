@@ -73,6 +73,11 @@ judged_on: '2026-09-17'
 # 2026-10-14 (RULINGS R32): `source_value_extractions` and `extraction_relations` moved to JUDGMENT, where
 # governance/pipeline-contract.yaml and the owner's words (LED-106, LED-108) place them; their `disputed:`
 # entries are deleted with the dispute.
+#
+# 2026-11-13, tooling T-018 (migration 131, OR-1c): `extraction_lens_links` as JUDGMENT, judged by the
+# executor of T-018 under T-018-design.md. A figure's lens codes are the crossing, which is judgment's
+# output (CLAUDE.md §6); its parent row, `source_value_extractions`, is already judgment; and its other
+# foreign keys point into `base`, which is not a stage, so the table crosses no stage.
 judged_against: 'CLAUDE.md §3 stage table; stage ids from governance/pipeline-contract.yaml'
 
 tables:
@@ -103,6 +108,7 @@ tables:
   evidence_sources: evidence
   external_root_registry: evidence
   extraction_follow_ups: judgment
+  extraction_lens_links: judgment
   extraction_relations: judgment
   gap_mining: research
   gaps: synthesis

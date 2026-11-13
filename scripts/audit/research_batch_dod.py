@@ -1329,10 +1329,15 @@ def selftest():
     # R3 is row-level since 2026-11-06: the uncited VALUE is an extraction of REF-ST1 with no
     # loc_* pinpoint and no [UNVERIFIED-QUANT]. REF-ST1 alone (a code holding no row) must
     # NOT fire -- that was the false positive the rewrite closed.
-    cx.execute("INSERT INTO source_value_extractions (ref_id,parameter_id,identity_code,claim_type,"
-               "claimed_value,claim_text,extraction_method,figure_role,created_at,"
-               "created_by_session,updated_at) VALUES ('REF-ST1',1,'MOB','numerical','250',"
-               "'250 lbf','full-read','claim','t',?,'t')", (T,))
+    # A figure's lens is a link, not a column of the figure (migration 131, OR-1c): the figure is
+    # written without one and its `carried` link follows (a fixture standing for a pre-existing figure).
+    fig = cx.execute("INSERT INTO source_value_extractions (ref_id,parameter_id,claim_type,"
+                     "claimed_value,claim_text,extraction_method,figure_role,created_at,"
+                     "created_by_session,updated_at) VALUES ('REF-ST1',1,'numerical','250',"
+                     "'250 lbf','full-read','claim','t',?,'t')", (T,)).lastrowid
+    cx.execute("INSERT INTO extraction_lens_links (extraction_id,identity_code,basis,created_at,"
+               "created_by_session,updated_at,updated_by_session) VALUES (?,'MOB','carried','t',?,'t',?)",
+               (fig, T, T))
     # R14 NEGATIVE CASE: a zero-yield search classed through the typed column and carrying no
     # findings_note must not fire; only exec 3 (neither) does, so R14's count is asserted at 1.
     cx.execute("INSERT INTO search_executions (exec_id,slug,language,query_text,engine,"

@@ -753,6 +753,7 @@ try:
         X_PAYLOAD = {"ref_id": XD, "parameter_id": PID and PID[0],
                      "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
                      "claim_text": "fixture: the source states nothing for this parameter",
+                     "lens_basis": "named_in_text", "lens_basis_text": "states nothing",
                      "extraction_method": "skim"}
         # No artefact carries a fixture's words; the exemption is the writer's own path
         # for that, and it is ledgered on the row.
@@ -1725,7 +1726,8 @@ try:
     readable(ref_p)
     X_P = {"ref_id": ref_p, "parameter_id": PARAM, "identity_code": lens_live["--identity"],
            "claim_type": "absent", "figure_role": "finding",
-           "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim"}
+           "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim",
+           "lens_basis": "named_in_text", "lens_basis_text": "states nothing"}
     try:
         got = db.insert_extraction(dict(X_P), S, relations=[], verbatim_exempt=X_EXEMPT)
     except Exception as exc:  # noqa: BLE001 -- recorded red below
@@ -1741,6 +1743,135 @@ try:
     record("V02", "an unregistered root_id is refused naming the registry, and a payload naming a slug is refused",
            msg_root and "external_root_registry" in msg_root and msg_slug and "slug" in msg_slug
            and counts("source_value_extractions") == n_sve, f"root={msg_root!r} slug={msg_slug!r}")
+
+    # ── T018: several codes of one model on a figure, by a link table (OR-1c) ─────────────────────
+    # Every probe is chosen by query on the copy; every fixture row says TASK-FIXTURE. Every read of
+    # the new table or view is guarded, so on a database without them a case records [✗] with the
+    # reason and the later cases still run.
+    def t018_read(sql, *params):
+        try:
+            return q(sql, *params), ""
+        except sqlite3.Error as exc:
+            return None, f"{exc.__class__.__name__}: {exc}"
+
+    def t018_live(extraction_id):
+        rows, err = t018_read("SELECT identity_code, icf_code, needs_code, medical_code, basis FROM "
+                              "v_live_lens_links WHERE extraction_id=? ORDER BY link_id", extraction_id)
+        return rows, err
+
+    T18_D1, T18_D2 = [c for (c,) in q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' "
+                                      "ORDER BY icf_code LIMIT 2")]
+    T18_TEXT = "TASK-FIXTURE T018: the source names two functions on one figure"
+    T18_FLAGS = ("--claim-type", "absent", "--figure-role", "finding", "--relation", "none",
+                 "--extraction-method", "skim", "--verbatim-exempt", "TASK-FIXTURE: no artefact carries it",
+                 "--session", S)
+
+    def t018_add(label, *lens):
+        ref, _ = add_o(f"T018 {label}", "--evidence-type", "grey")
+        readable(ref)
+        r = run_cli("add-extraction", "--ref-id", ref, "--parameter-id", str(PARAM), *lens,
+                    "--claim-text", f"{T18_TEXT} ({label})", *T18_FLAGS)
+        got = q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", ref)
+        return r, (got[0][0] if got else None)
+
+    # T018-01 (AT-32, first half): one figure, two ICF codes, two links.
+    r01, fig01 = t018_add("two icf", "--icf", T18_D1, "--icf", T18_D2, "--lens-basis", "named_in_text",
+                          "--lens-basis-text", "TASK-FIXTURE")
+    live01, err01 = t018_live(fig01) if fig01 else (None, "no figure was written")
+    cols01 = q("SELECT identity_code, icf_code, needs_code, medical_code FROM source_value_extractions "
+               "WHERE extraction_id=?", fig01) if fig01 else None
+    record("T018-01", "one figure with two ICF codes is stored once with two live links, and its own lens columns stay NULL",
+           r01.returncode == 0 and live01 is not None
+           and sorted((x[1], x[4]) for x in live01) == sorted([(T18_D1, "named_in_text"), (T18_D2, "named_in_text")])
+           and cols01 == [(None, None, None, None)],
+           f"rc={r01.returncode} {(r01.stdout + r01.stderr)[-250:]!r} links={live01} {err01} cols={cols01}")
+
+    # A figure with exactly one link, for T018-02 and -03.
+    r_b, fig_b = t018_add("one identity", "--identity", POP, "--lens-basis", "named_in_text",
+                          "--lens-basis-text", "TASK-FIXTURE")
+    only, err_b = t018_live(fig_b) if fig_b else (None, "no figure was written")
+    only_id = t018_read("SELECT link_id FROM v_live_lens_links WHERE extraction_id=?", fig_b)[0] if fig_b else None
+    n_links = t018_read("SELECT COUNT(*) FROM extraction_lens_links")[0]
+    r02 = run_cli("retire-lens-link", "--link-id", str(only_id[0][0] if only_id else 0),
+                  "--reason", "TASK-FIXTURE: retiring a figure's last link", "--session", S)
+    out02 = r02.stdout + r02.stderr
+    record("T018-02", "retire-lens-link refuses a figure's last live link, names add-lens-link, and writes nothing",
+           r02.returncode != 0 and "add-lens-link" in out02 and only is not None and len(only) == 1
+           and t018_read("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?", fig_b)[0] == [(1,)]
+           and t018_read("SELECT COUNT(*) FROM extraction_lens_links")[0] == n_links,
+           f"rc={r02.returncode} {out02[-250:]!r} probe={only} {err_b}")
+
+    # T018-03: a warrant that is nowhere in the figure's words is refused, naming where it looked.
+    r03 = run_cli("add-lens-link", "--extraction-id", str(fig_b or 0), "--icf", T18_D2,
+                  "--basis", "named_in_text", "--basis-text", "zq-not-in-the-figure-xq", "--session", S)
+    out03 = r03.stdout + r03.stderr
+    record("T018-03", "add-lens-link refuses a --basis-text found in neither the figure's words nor its source's file, and says where it looked",
+           r03.returncode != 0 and "claim_text" in out03 and "zq-not-in-the-figure-xq" in out03
+           and t018_read("SELECT COUNT(*) FROM extraction_lens_links")[0] == n_links,
+           f"rc={r03.returncode} {out03[-300:]!r}")
+
+    # T018-04 / T018-08: a judged link replaces a carried one in one call, and the captured batch replays.
+    probe04, err04 = t018_read(
+        "SELECT k.link_id, k.extraction_id, k.identity_code, x.claim_text FROM v_live_lens_links k "
+        "JOIN source_value_extractions x ON x.extraction_id = k.extraction_id "
+        "JOIN base_taxonomy_identity i ON i.identity_code = k.identity_code AND i.status = 'active' "
+        "WHERE k.basis = 'carried' AND TRIM(COALESCE(x.claim_text, '')) <> '' ORDER BY k.link_id LIMIT 1")
+    base_copy = os.path.join(TMP, "t018-base.db")
+    shutil.copy(DB, base_copy)
+    if probe04:
+        l04, fig04, code04, ct04 = probe04[0]
+        word04 = max(ct04.split(), key=len)
+        r04 = run_cli("add-lens-link", "--extraction-id", str(fig04), "--identity", code04,
+                      "--basis", "named_in_text", "--basis-text", word04, "--session", S)
+        rows04, e04 = t018_read("SELECT link_id, basis, basis_text FROM v_live_lens_links "
+                                "WHERE extraction_id=? AND identity_code=?", fig04, code04)
+        old04, e04b = t018_read("SELECT retired_at IS NOT NULL, retirement_reason FROM extraction_lens_links "
+                                "WHERE link_id=?", l04)
+        new_id = rows04[0][0] if rows04 else None
+        ok04 = (r04.returncode == 0 and rows04 is not None and len(rows04) == 1
+                and rows04[0][1:] == ("named_in_text", word04) and old04 is not None
+                and old04[0][0] == 1 and old04[0][1] == f"superseded by judged link {new_id}")
+        detail04 = f"rc={r04.returncode} {(r04.stdout + r04.stderr)[-250:]!r} live={rows04} {e04} old={old04} {e04b}"
+    else:
+        ok04, detail04 = False, f"no carried identity link to probe (v_live_lens_links: {err04 or 'empty'})"
+    record("T018-04", "add-lens-link on a code that has a carried link retires it ('superseded by judged link <id>') and leaves one live link",
+           ok04, detail04)
+
+    # T018-08: the capture replays. emit_mod is imported where case M03 reads the lens columns.
+    sql08 = os.path.join(TMP, "t018-replay.sql")
+    try:
+        emit_mod.emit(DB, base_copy, sql08, replay_path=base_copy)
+        replay_copy = os.path.join(TMP, "t018-replayed.db")
+        shutil.copy(base_copy, replay_copy)
+        import migrate_db                                            # noqa: E402
+        con08 = sqlite3.connect(replay_copy, isolation_level=None)
+        try:
+            migrate_db._apply_atomically(con08, migrate_db._split_statements(open(sql08, encoding="utf-8").read()),
+                                         label="T018-08 replay")
+        finally:
+            con08.close()
+        want = q("SELECT * FROM extraction_lens_links ORDER BY link_id")
+        got = sqlite3.connect(replay_copy).execute("SELECT * FROM extraction_lens_links ORDER BY link_id").fetchall()
+        ok08, detail08 = bool(probe04) and want == got and len(want) > 0, f"scratch {len(want)} rows, replay {len(got)} rows"
+    except BaseException as exc:  # noqa: BLE001 -- SystemExit from emit, IntegrityError from the replay
+        ok08, detail08 = False, f"{exc.__class__.__name__}: {exc}"
+    record("T018-08", "the captured batch replays: applying emit_batch_sql's output to the base reproduces extraction_lens_links row for row",
+           ok08, detail08)
+
+    # T018-07: the figure's own lens columns are a dead home: a hand-written INSERT naming one is refused.
+    con07 = sqlite3.connect(DB)
+    try:
+        con07.execute("INSERT INTO source_value_extractions (ref_id, parameter_id, identity_code, claim_type, "
+                      "extraction_method, created_at, updated_at) VALUES (?, ?, ?, 'absent', 'skim', 't', 't')",
+                      (REF, PARAM, POP))
+        out07 = None
+    except sqlite3.IntegrityError as exc:
+        out07 = str(exc)
+    finally:
+        con07.rollback()
+        con07.close()
+    record("T018-07", "a hand-written INSERT into source_value_extractions that names a lens column is refused by the table's CHECK",
+           out07 is not None and "CHECK constraint failed" in out07, f"got {out07!r}")
 
     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
     # determination is governed by is refused (dbcore.live_determinations_linked), through both
