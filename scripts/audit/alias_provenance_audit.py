@@ -30,6 +30,12 @@ there is a defined route out of MODEL-GENERATED rather than a permanent label:
 It also reports languages that lang_jur_map requires but for which no alias
 exists at all — those cannot be searched, whatever the coverage tables say.
 
+It also READS (does not fail) the forms each completed zero-result search fired
+(search_execution_forms, T-026): the sixth statement calls a zero-result search on a word no
+instrument uses "an empty search on an invented word", and a search that fired no attested
+form is that shape. Recording the forms is opt-in (log-search --form-id), so a search that
+omitted it is not detectable here and reads as "no form recorded".
+
 Read-only. Exit 1 on an unmarked post-cutoff alias; exit 0 otherwise.
 """
 import os
@@ -118,7 +124,21 @@ def main():
     print("=" * 74)
     print(f"database: {DB_PATH}")
     print(f"aliases:  {len(rows)}")
-    print(f"EXAMINED: {len(rows)}\n")
+    # Completed (not deferred) searches that found nothing, and the forms each recorded firing.
+    try:
+        zero = con.execute(
+            "SELECT s.exec_id, s.language, COUNT(f.exec_id) AS forms, "
+            "COALESCE(SUM(a.attestation IN ('instrument','other_source')), 0) AS attested "
+            "FROM search_executions s "
+            "LEFT JOIN search_execution_forms f ON f.exec_id = s.exec_id "
+            "LEFT JOIN term_aliases a ON a.term_id = f.term_id AND a.alias = f.alias "
+            "AND a.language = f.language "
+            "WHERE s.results_found = 0 AND s.deferred_reason IS NULL "
+            "GROUP BY s.exec_id ORDER BY s.exec_id").fetchall()
+    except sqlite3.OperationalError:
+        zero = []
+    print(f"zero-result searches: {len(zero)}")
+    print(f"EXAMINED: {len(rows) + len(zero)}\n")
 
     hdr = (f"{'lang':<6}{'total':>7}{'verified':>10}{'attested':>10}{'model-gen':>11}"
            f"{'owner':>7}{'curated':>9}{'code':>6}{'UNKNOWN':>9}")
@@ -155,6 +175,14 @@ def main():
         print("  lang_jur_map requires these; a per-language query builder cannot emit a")
         print("  query without vocabulary, so their search coverage is structurally zero.")
         print("  Build from published glossaries (references/native-alias-verification.md).")
+
+    print(f"\nZERO-RESULT SEARCHES AND THE FORMS THEY FIRED (read, not failed): {len(zero)} search(es)")
+    print("  A zero-result search with no attested form is 'an empty search on an invented word'.")
+    print("  Omitting --form-id is not detectable (the junction is opt-in): 'no form recorded'")
+    print("  means none was named, not that none was fired.")
+    for exec_id, lang, forms, attested in zero:
+        print(f"  exec {exec_id} ({lang}): {forms} form(s) recorded, {attested} attested"
+              + ("" if attested else "  <- no attested form"))
 
     if tot_verified == 0:
         print(f"\nNOTE: no alias has reached {'/'.join(VERIFIED_MARKERS)} yet.")
