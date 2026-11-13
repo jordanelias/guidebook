@@ -123,7 +123,9 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-4"  # pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
+RULE_VERSION = "pilot-5"  # pilot-5 (T-017, prior workplan T-2): conditioned governing claims are branches, not the
+#   headline (OR-2). Payload format unchanged; K01/K02 read this label as a link-set version.
+#   pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
 #   marker, and the rules for which findings count, who may confirm and what a marker needs changed
 #   (references/project-standards.md, "Owner statements 2026-10-21"). The sha payload is
 #   UNCHANGED from pilot-3, so K01 and K02 read both labels. Rows labelled pilot-3 were written
@@ -634,6 +636,35 @@ def _table_exists(conn, name):
 
 
 def compose_value(conn, links, direction):
+    """The determination's value from its HEADLINE claims; conditioned claims are branches (OR-2).
+
+    A governing claim with an outgoing `condition_on` edge holds only under that condition
+    (migration 075: "this figure only holds given a second figure"), so it is a branch beside the
+    headline, never part of it (owner, OR-2: "Branches, and an empty headline when all are
+    conditioned"). The edge points FROM the conditioned claim: an edge ARRIVING at a row conditions
+    nothing (the relaxation rows point at the general claim they relax; reading them the other way
+    would push the general claims out of the headline). Link roles are unchanged, so a conditioned
+    row stays `governing`. Every note returned, a decline included, says how many claims are
+    branches: a decline computed over the headline alone is otherwise read as a statement about
+    every governing claim. Returns what `_compose_headline` returns."""
+    gov = {l["extraction_id"] for l in links if l["role"] == "governing"}
+    conditioned = set()
+    if gov and _table_exists(conn, "extraction_relations"):
+        conditioned = {r[0] for r in conn.execute(
+            "SELECT from_extraction_id FROM extraction_relations WHERE relation = 'condition_on'")} & gov
+    headline = [l for l in links
+                if not (l["role"] == "governing" and l["extraction_id"] in conditioned)]
+    if conditioned and not any(l["role"] == "governing" for l in headline):
+        return None, None, None, (f"piecewise only: all {len(conditioned)} governing claim(s) are "
+                                  f"conditioned (condition_on); the branches are the answer"), None
+    vmin, vmax, unit, note, notations = _compose_headline(conn, headline, direction)
+    if conditioned:
+        note = ((note + "; ") if note else "") + (
+            f"{len(conditioned)} conditioned claim(s) are branches, not the headline")
+    return vmin, vmax, unit, note, notations
+
+
+def _compose_headline(conn, links, direction):
     """The determination's value, selected MOST-ACCOMMODATINGLY (owner, 2026-07-21).
 
     Ratified rule, `governance/evidence-architecture.md`: a determination anchors on "the
@@ -645,7 +676,7 @@ def compose_value(conn, links, direction):
     value_unit` since the 057 baseline has been NULL because the engine passed literal None
     into those three slots, having no rule it could apply.
 
-    Returns (value_min, value_max, value_unit, note). A NULL triple always arrives with a
+    Returns (value_min, value_max, value_unit, note, notations). A NULL triple always arrives with a
     note saying WHY, because "no value" and "no rule to pick one" are different facts and a
     determination that cannot tell them apart is the pending-versus-never-read collision
     again, one column along.

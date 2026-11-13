@@ -9200,6 +9200,13 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"that explicit, or point at a same-source row.")
         if relation == "confirms":
             _refuse_live_confirmation(conn, context, to_extraction)
+        if relation == "condition_on" and dbcore.live_determinations_linked(
+                conn, from_id, governing_only=True):
+            raise Refusal(
+                f"{context}: extraction {from_id} governs a live determination; a condition_on edge "
+                f"from it would move it out of that headline without re-deciding it. Retire the "
+                f"specification first (db.py retire-specification), add the edge, re-determine. "
+                f"Nothing was written.")
         if to_kind is not None:
             raise Refusal(
                 f"{context}: --to-kind is meaningless with --to-extraction -- a row "

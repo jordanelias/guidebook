@@ -1834,6 +1834,37 @@ try:
                f"{msg_np!r}")
         record("G10", "while regrading is still refused for it (any live determination)",
                "live determination" in (amend(GOV_X) or ""))
+        # T-017: a condition_on edge FROM a governing row would move it out of its live headline
+        # (assess_cell.compose_value), so it is refused like a regrade; the relaxation shape, an
+        # edge from a condition row TO a governing one, changes what a render shows and not the
+        # stored answer, so it is not. Rows are chosen by query; the target is any condition row.
+        cond = q("SELECT extraction_id FROM source_value_extractions WHERE figure_role='condition' "
+                 "ORDER BY 1")
+        COND_TO = next((c for (c,) in cond if c != GOV_X), None)
+        COND_FROM, COND_QUOTE = next(((c, qt) for c, qt in q(
+            "SELECT r.from_extraction_id, r.quote FROM extraction_relations r JOIN "
+            "source_value_extractions x ON x.extraction_id = r.from_extraction_id WHERE "
+            "r.relation='condition_on' AND x.figure_role='condition' AND r.quote IS NOT NULL "
+            "ORDER BY 1") if linked(c, governing_only=True) == [] and c != GOV_X), (None, None))
+        cedge = dict(stated="named", quote="fixture quote", dry_run=True,
+                     cross_source_reason="fixture: the target is chosen by query, not by source")
+        n_rel = counts("extraction_relations")
+        msg_c5 = refusal(db.relate_extraction, GOV_X, "condition_on", S,
+                         **dict(cedge, to_extraction=COND_TO)) if COND_TO else None
+        record("T017-B5", "relate-extraction refuses a condition_on edge FROM a governing row of a "
+               "live determination, naming it and retire-specification, and writes nothing",
+               COND_TO is not None and msg_c5 and "governs a live determination" in msg_c5
+               and "retire-specification" in msg_c5 and counts("extraction_relations") == n_rel,
+               f"to={COND_TO} {msg_c5!r}")
+        got_c6 = None
+        if COND_FROM:
+            try:
+                got_c6 = db.relate_extraction(COND_FROM, "condition_on", S,
+                                              **dict(cedge, to_extraction=GOV_X, quote=COND_QUOTE))
+            except Refusal as exc:
+                got_c6 = str(exc)
+        record("T017-B6", "...but the same edge from a condition row to that governing row is accepted",
+               COND_FROM is not None and isinstance(got_c6, dict), f"from={COND_FROM} {got_c6!r}")
         # Source-level and comparator guards: the other columns the engine reads. The marker and
         # the interval are caches over them, so a change under a live determination is refused.
         ref_gov = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]
