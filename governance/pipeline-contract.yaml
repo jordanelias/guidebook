@@ -188,10 +188,10 @@ stages:
       and derived_from both require a resolvable to_extraction_id; v_derived_figure_check recomputes any
       row graded figure_role='derived' from its linked base/delta inputs rather than trusting the stored
       value on faith, the same posture derivation_sha and K01 (scripts/tests/test_db_integrity.py) already
-      take toward a determination. Grading figure_role/comparator on existing rows, and writing the
-      relations themselves, has no writer yet as of this migration — CLAUDE.md section 8 (nothing is added
-      without naming what reads it) is why the CLI verb is owed to whichever change first needs it, not
-      built speculatively here.
+      take toward a determination. Migration 075 shipped without a writer for the grading or the
+      relations; db.py now has them (`add-extraction`, `amend-extraction`, `relate-extraction`,
+      `derive-extraction`), and assess_cell.compose_value reads `condition_on` edges from governing rows
+      (an outgoing edge makes the claim a branch beside the headline, OR-2).
     references: scripts/migrations/075_extraction_relations.sql; CLAUDE.md section 5 (point, do not copy)
     check: null
   - id: figure-role-stated

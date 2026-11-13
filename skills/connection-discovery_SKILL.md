@@ -28,7 +28,11 @@ no table, so it is free text. The connection id is computed by the writer, never
 - **A typed edge between two extractions** is the strongest link: `extraction_relations` (`condition_on`,
   `derived_from`, `delta_over`, `insufficient`, …) points from one figure to another row and can cross
   parameters; across two *sources* it needs `--cross-source <reason>` or the writer refuses. When one parameter's figure is computed from or conditioned on another's, file the edge
-  (`derive-extraction`, `relate-extraction`); a `connections` row alone cannot be joined.
+  (`derive-extraction`, `relate-extraction`); a `connections` row alone cannot be joined. A `condition_on` edge runs
+  `--from` the claim that holds only under the condition `--to` the condition row (the engine sets a governing claim
+  with such an outgoing edge beside the headline as a branch; an edge arriving at a claim conditions nothing). The
+  writer refuses the reverse of an existing pair, and an edge from a row that governs a live determination and has no
+  such edge yet (retire the specification first).
 - **A `connections` row** is the narrative index of a relationship. Its targets are typed rows in
   `connection_targets` (`parameter_id`, `slug`, `identity_code`, `extraction_id`, `methodology`; exactly one set per
   row), so a renamed or merged parameter cannot orphan a link and every target joins.

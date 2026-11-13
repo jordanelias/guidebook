@@ -124,7 +124,10 @@ from schemas.evidence_state import (  # noqa: E402
 )
 
 RULE_VERSION = "pilot-5"  # pilot-5 (T-017, prior workplan T-2): conditioned governing claims are branches, not the
-#   headline (OR-2). Payload format unchanged; K01/K02 read this label as a link-set version.
+#   headline (OR-2). The sha payload gains one term, `|branches:<ids>`, only when a governing claim
+#   has an outgoing `condition_on` edge (`sha()`), so an edge filed after a determination moves the
+#   sha; the payload of a cell with no such claim is the pilot-4 payload, bar the label. K01
+#   recomputes the term from `extraction_relations`; K02 reads this label as a link-set version.
 #   pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
 #   marker, and the rules for which findings count, who may confirm and what a marker needs changed
 #   (references/project-standards.md, "Owner statements 2026-10-21"). The sha payload is
@@ -635,36 +638,52 @@ def _table_exists(conn, name):
         (name,)).fetchone() is not None
 
 
+def conditioned_governing(conn, links):
+    """The governing claims of `links` that hold only under a condition, as sorted extraction ids:
+    those with an OUTGOING `condition_on` edge. The one reader of that fact: `compose_value` takes
+    the branches from it and `sha()` hashes it, so an edge filed after a determination moves the
+    sha instead of silently changing what the engine would answer."""
+    gov = {l["extraction_id"] for l in links if l["role"] == "governing"}
+    if not gov or not _table_exists(conn, "extraction_relations"):
+        return []
+    return sorted({r[0] for r in conn.execute(
+        "SELECT from_extraction_id FROM extraction_relations WHERE relation = 'condition_on'")} & gov)
+
+
 def compose_value(conn, links, direction):
     """The determination's value from its HEADLINE claims; conditioned claims are branches (OR-2).
 
     A governing claim with an outgoing `condition_on` edge holds only under that condition
     (migration 075: "this figure only holds given a second figure"), so it is a branch beside the
     headline, never part of it (owner, OR-2: "Branches, and an empty headline when all are
-    conditioned"). The edge points FROM the conditioned claim: an edge ARRIVING at a row conditions
-    nothing (the relaxation rows point at the general claim they relax; reading them the other way
-    would push the general claims out of the headline). Link roles are unchanged, so a conditioned
-    row stays `governing`. Every note returned, a decline included, says how many claims are
-    branches: a decline computed over the headline alone is otherwise read as a statement about
-    every governing claim. Returns what `_compose_headline` returns."""
-    gov = {l["extraction_id"] for l in links if l["role"] == "governing"}
-    conditioned = set()
-    if gov and _table_exists(conn, "extraction_relations"):
-        conditioned = {r[0] for r in conn.execute(
-            "SELECT from_extraction_id FROM extraction_relations WHERE relation = 'condition_on'")} & gov
+    conditioned"). The edge points FROM the conditioned claim (`--from` the claim that holds only
+    under the condition, `--to` the condition): an edge ARRIVING at a row conditions nothing (the
+    relaxation rows point at the general claim they relax; reading them the other way would push the
+    general claims out of the headline). Link roles are unchanged, so a conditioned row stays
+    `governing`. Every note returned, a decline included, says how many claims are branches, and
+    the notes of a headline that has branches name their denominator as UNCONDITIONED governing
+    claims: a note computed over the headline alone is otherwise read as a statement about every
+    governing claim. Returns what `_compose_headline` returns.
+
+    OPEN OWNER QUESTION (OI-55 (9)): OR-2 (2026-10-29) puts a conditioned claim beside the headline
+    even when it is the gentlest value; the rulings of 2026-10-30 say the gentlest value is the
+    gentlest value and that the steepest code value is never highlighted. This function encodes
+    OR-2 and does not reconcile the three."""
+    conditioned = set(conditioned_governing(conn, links))
     headline = [l for l in links
                 if not (l["role"] == "governing" and l["extraction_id"] in conditioned)]
     if conditioned and not any(l["role"] == "governing" for l in headline):
         return None, None, None, (f"piecewise only: all {len(conditioned)} governing claim(s) are "
                                   f"conditioned (condition_on); the branches are the answer"), None
-    vmin, vmax, unit, note, notations = _compose_headline(conn, headline, direction)
+    vmin, vmax, unit, note, notations = _compose_headline(
+        conn, headline, direction, "unconditioned " if conditioned else "")
     if conditioned:
         note = ((note + "; ") if note else "") + (
             f"{len(conditioned)} conditioned claim(s) are branches, not the headline")
     return vmin, vmax, unit, note, notations
 
 
-def _compose_headline(conn, links, direction):
+def _compose_headline(conn, links, direction, scope=""):
     """The determination's value, selected MOST-ACCOMMODATINGLY (owner, 2026-07-21).
 
     Ratified rule, `governance/evidence-architecture.md`: a determination anchors on "the
@@ -676,7 +695,9 @@ def _compose_headline(conn, links, direction):
     value_unit` since the 057 baseline has been NULL because the engine passed literal None
     into those three slots, having no rule it could apply.
 
-    Returns (value_min, value_max, value_unit, note, notations). A NULL triple always arrives with a
+    Returns (value_min, value_max, value_unit, note, notations). `scope` ("unconditioned " when the
+    caller has set conditioned claims aside) prefixes "governing claim(s)" in every note that counts
+    or names them, so a denominator is named for what it counts. A NULL triple always arrives with a
     note saying WHY, because "no value" and "no rule to pick one" are different facts and a
     determination that cannot tell them apart is the pending-versus-never-read collision
     again, one column along.
@@ -742,13 +763,13 @@ def _compose_headline(conn, links, direction):
             stated_notations.add((unit or "").strip())
     if not bounds:
         return None, None, None, (
-            "no governing claim states a numeric value (all are qualitative, or a "
+            f"no {scope}governing claim states a numeric value (all are qualitative, or a "
             "notation this engine does not read into a bound)"), None
     if len(scales) > 1:
         return None, None, None, (
-            "governing claims are stated in different units (%s); composing an interval "
+            "%sgoverning claims are stated in different units (%s); composing an interval "
             "would require a conversion no source stated"
-            % ", ".join(sorted(repr(u) for u in scales))), None
+            % (scope, ", ".join(sorted(repr(u) for u in scales)))), None
     scale = next(iter(scales))
     family = scale if scale in NOTATION_FAMILIES else None
     unit = (NOTATION_FAMILIES[family][0] if family
@@ -768,7 +789,7 @@ def _compose_headline(conn, links, direction):
     caveat = None
     if unparsed:
         _shown = ", ".join(sorted({repr(v) for v, _u in unparsed}))
-        caveat = (f"composed from {len(bounds)} of {len(bounds) + len(unparsed)} governing "
+        caveat = (f"composed from {len(bounds)} of {len(bounds) + len(unparsed)} {scope}governing "
                   f"claims: {len(unparsed)} state no parsable numeric bound ({_shown}) and "
                   f"contribute to the cell's STATE but not to this interval")
 
@@ -1070,7 +1091,7 @@ def regulatory_richness(t45, t6):
     return False, "below §2.3 richness"
 
 
-def sha(parameter_id, lens, links):
+def sha(parameter_id, lens, links, conditioned=()):
     """Cell-scoped derivation sha: identity + governing set + EVIDENCE READ + rule
     version, so pending cells do not all share one constant hash (staleness stays
     checkable).
@@ -1079,7 +1100,8 @@ def sha(parameter_id, lens, links):
     a stored sha, and K01 was re-keyed to (parameter_id × lens) by migration 071. Two
     implementations of one hash that disagree is a hash that attests nothing, so this
     one and K01's move together or not at all. `lens` is the COALESCE value, not the
-    whole dict — see lens_key().
+    whole dict — see lens_key(). `conditioned` (pilot-5) is `conditioned_governing()`, hashed as a
+    `|branches:` term only when non-empty; K01 recomputes it from `extraction_relations`.
 
     WHY `n_extractions` IS IN THE PAYLOAD (added 2026-09-10). Without it, two
     materially different cells hash IDENTICALLY, because both have an empty governing
@@ -1114,7 +1136,12 @@ def sha(parameter_id, lens, links):
     same rule_version ⇒ same state + same derivation_sha". A determination stamped
     before an extraction arrived IS stale, and K01 saying so is the check working.
     """
-    payload = f"{parameter_id}|{lens}|" + link_payload(links) + "::" + RULE_VERSION
+    # The branch term (pilot-5): the governing claims that hold only under a condition
+    # (`conditioned_governing`), absent when there are none. Without it the headline would depend on
+    # `extraction_relations`, which the sha does not otherwise read, and an edge filed after the
+    # determination would change the answer with nothing going red.
+    branches = ("|branches:" + ",".join(map(str, sorted(conditioned)))) if conditioned else ""
+    payload = f"{parameter_id}|{lens}|" + link_payload(links) + branches + "::" + RULE_VERSION
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -1557,12 +1584,14 @@ def determine(conn, parameter_id, lens, slug, note):
     # CHECK, and a proxy determination's code leaves weak only to the extent that studies confirm
     # its governing rows (`_confirmed_bands`), a rule that lives here alone because a CHECK cannot
     # read extraction_relations. THE MARKER IS A CACHE over those edges and over how rows are
-    # graded and sources verified: `derivation_sha` hashes none of it. `db.py` refuses a `confirms`
-    # edge to a row a live proxy determination is governed by (`_refuse_live_confirmation`) and
-    # regrading a row in a live determination's provenance (`amend_extraction`); retiring the
-    # determination is how it is re-determined. NOT guarded: a change of a source's
-    # verification_status, of a governing row's comparator, and a finding row added after the
-    # answer was written.
+    # graded and sources verified: `derivation_sha` hashes none of it (its one edge term is the set
+    # of conditioned governing claims, below). `db.py` refuses a `confirms`
+    # edge to a row a live proxy determination is governed by (`_refuse_live_confirmation`),
+    # a `condition_on` edge from a row that governs a live determination and has none yet
+    # (`_write_relation_edge`), and regrading a row in a live determination's provenance
+    # (`amend_extraction`); retiring the determination is how it is re-determined. NOT guarded: a
+    # change of a source's verification_status, of a governing row's comparator, and a finding row
+    # added after the answer was written.
     marker = None
     if state in ("stated", "provisional"):
         if regulatory_stratum_only:
@@ -1614,7 +1643,8 @@ def determine(conn, parameter_id, lens, slug, note):
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(parameter_id, lens_key(lens), links),
+        "derivation_sha": sha(parameter_id, lens_key(lens), links,
+                              conditioned_governing(conn, links)),
         "functional_basis": functional_basis,
         "derivation_paths": derivation_paths,
         "derivation_rationale": derivation_rationale,
@@ -1649,7 +1679,10 @@ def stale_determinations(conn):
 
     THE STORED MARKER IS A CACHE. It is read off the sources' verification and tier, the rows'
     grading and comparators, and the `confirms` edges, and `derivation_sha` hashes none of them
-    (K01 verifies only the stored junction, K02 only that it is complete). `db.py` refuses the
+    (K01 verifies only the stored junction and the conditioned governing claims, K02 only that the
+    junction is complete). The stored VALUE and its note are read off the `condition_on` edges
+    from governing rows (`compose_value`): those edges are in the sha payload, so a filed or
+    removed one makes the sha, and with it this check, differ. `db.py` refuses the
     routes it knows (a regrading, an edge, a source's engine-read columns); a data migration, the
     verification cron or a route not yet thought of does not pass through it. This is what
     notices, whichever route moved the input. The remedy is the one the refusals name: retire the
