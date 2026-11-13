@@ -1,0 +1,55 @@
+[
+ {
+  "value_min": null,
+  "value_max": null,
+  "value_unit": null,
+  "value_note": null,
+  "value_notations": null,
+  "accessibility_direction": null,
+  "direction_ref_id": null,
+  "parameter_id": 8,
+  "lens": {
+   "identity_code": "ALL",
+   "icf_code": null,
+   "needs_code": null,
+   "medical_code": null
+  },
+  "lens_key": "ALL",
+  "slug": "luminance-contrast-and-pattern",
+  "note": "",
+  "state": "pending",
+  "design_scale": "population",
+  "tier_basis": null,
+  "governing_refs": [],
+  "supporting_refs": [],
+  "code_floor_only": 0,
+  "regulatory_stratum_only": 0,
+  "rests_on_proxy_inference": 0,
+  "marker": null,
+  "excluded_not_publishable": [],
+  "skimmed_findings": [
+   206
+  ],
+  "skimmed_finding_refs": [
+   "REF-01028"
+  ],
+  "n_findings_left_out": 2,
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "a47d8fabebdb6b8a5ea11ad295dd40ffde05ed6821ef5d9a7d9e31e0dd7891d9",
+  "n_sources": 0,
+  "n_extractions_in_lens": 2,
+  "n_extractions_outside_lens": 4,
+  "unkeyed_models": [],
+  "non_anchoring_on_tier": [],
+  "needs_population_assessment": [],
+  "tier_inconsistent": [],
+  "falsification": null,
+  "convergence": null,
+  "confidence": null,
+  "gap_register_id": "GAP-120",
+  "specification_id": 18,
+  "convergence_id": null,
+  "source_records": []
+ }
+]

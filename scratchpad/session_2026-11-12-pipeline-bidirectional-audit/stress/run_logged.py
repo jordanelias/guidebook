@@ -13,7 +13,7 @@ reads the headline and the log holds the rest.
 import argparse, hashlib, json, os, sqlite3, subprocess, sys, time
 from pathlib import Path
 
-REPO = Path("/home/user/guidebook")
+REPO = Path(__file__).resolve().parents[3]  # the scripts live inside the checkout they test
 CANON = REPO / "data/guidebook.db"
 
 

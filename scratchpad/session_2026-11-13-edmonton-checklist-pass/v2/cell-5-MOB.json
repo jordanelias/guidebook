@@ -1,0 +1,84 @@
+[
+ {
+  "value_min": null,
+  "value_max": null,
+  "value_unit": null,
+  "value_note": null,
+  "value_notations": null,
+  "accessibility_direction": null,
+  "direction_ref_id": null,
+  "parameter_id": 5,
+  "lens": {
+   "identity_code": "MOB",
+   "icf_code": null,
+   "needs_code": null,
+   "medical_code": null
+  },
+  "lens_key": "MOB",
+  "slug": "accessible-circulation-geometry",
+  "note": "Replay of the REF-01037 digest: the one engine run after every write (ADJUDICATION F11).",
+  "state": "pending",
+  "design_scale": "universal",
+  "tier_basis": null,
+  "governing_refs": [],
+  "supporting_refs": [],
+  "code_floor_only": 1,
+  "regulatory_stratum_only": 1,
+  "rests_on_proxy_inference": 0,
+  "marker": null,
+  "excluded_not_publishable": [
+   183,
+   211
+  ],
+  "skimmed_findings": [
+   193,
+   194
+  ],
+  "skimmed_finding_refs": [
+   "REF-00468"
+  ],
+  "n_findings_left_out": 2,
+  "has_unverified_sources": 0,
+  "all_sources_disqualified": 0,
+  "derivation_sha": "045eb42c9fc896cc0a2e3c39aaf8da37b88ca9f6f5827a7b1741c51af3b9f426",
+  "n_sources": 2,
+  "n_extractions_in_lens": 8,
+  "n_extractions_outside_lens": 2,
+  "unkeyed_models": [],
+  "non_anchoring_on_tier": [],
+  "needs_population_assessment": [],
+  "tier_inconsistent": [],
+  "falsification": null,
+  "convergence": null,
+  "confidence": null,
+  "gap_register_id": "GAP-115",
+  "specification_id": 9,
+  "convergence_id": null,
+  "source_records": [
+   {
+    "ref_id": "REF-00139",
+    "tier": 6,
+    "evidence_type": "code",
+    "grain": "code",
+    "grain_why": "default map",
+    "scale_directness": "NON-ANCHORING",
+    "population_directness": "PROXY",
+    "conditioning": "NON-ANCHORING",
+    "conditioning_before_tier_gate": "NON-ANCHORING",
+    "tier_consistent": true
+   },
+   {
+    "ref_id": "REF-01037",
+    "tier": 3,
+    "evidence_type": "grey",
+    "grain": "specific",
+    "grain_why": "default map",
+    "scale_directness": "DIRECT",
+    "population_directness": "PROXY",
+    "conditioning": "DOWN-WEIGHTED",
+    "conditioning_before_tier_gate": "DOWN-WEIGHTED",
+    "tier_consistent": true
+   }
+  ]
+ }
+]

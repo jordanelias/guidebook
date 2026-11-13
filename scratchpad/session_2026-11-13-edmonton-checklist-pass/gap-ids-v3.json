@@ -1,0 +1,17 @@
+{
+ "log-search-subject": "GAP-103",
+ "mining-forward": "GAP-104",
+ "engine-text": "GAP-105",
+ "pub-year": "GAP-106",
+ "follow-up-reason": "GAP-107",
+ "harm": "GAP-108",
+ "parked": "GAP-109",
+ "direction": "GAP-110",
+ "deferred": "GAP-111",
+ "jurisdiction": "GAP-112",
+ "leads": "GAP-113",
+ "text-defects": "GAP-114",
+ "relation-kind": "GAP-115",
+ "co1-pass": "GAP-116",
+ "r16": "GAP-117"
+}

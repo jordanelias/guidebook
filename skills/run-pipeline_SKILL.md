@@ -42,7 +42,7 @@ is owed has one home, the view `v_research_scope`: every `lang_jur_map` row not 
 (column added by migration 122; the view by migration 123); a NULL is owed, so an unrecorded scope never shrinks the requirement, and the fill of the column is a
 data PR. `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
 `[language, jurisdiction]` pairs still owed), searches_outside_scope (logged searches whose pair is not owed) and
-jurisdictions_unreachable (owed rows `schemas.enums.JurisdictionCode` refuses: a search there cannot be logged, so
+jurisdictions_unreachable (owed rows `base_jurisdictions` does not hold: a search there cannot be logged, so
 they stay unsearched). `complete` is false while anything owed is unsearched or refused by the declared vocabulary,
 and false over an empty requirement (open owner question 5 of the 2026-11-06 round-3 adjudication,
 `workplan/2026-11-06-run-pipeline-round-3-adjudication.md`). For a slug whose slug_status is neither `ACTIVE` nor
@@ -56,7 +56,11 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 - **Equivalence before minting.** Search terms and aliases first. A phrase a source uses for a term we hold is an
   alias, reached only through the chain `observe-term` (its `--context-quote` must be found byte-for-byte in a file
   saved for the source: a `scripts/research/full_text.py` derivation or the fetched page) → `adjudicate-term
-  --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK). A comparator ("not steeper than")
+  --outcome NAMES-EXISTING --term-id` → `add-alias --alias-type` (from the CHECK; it writes `attestation`, `other_source`
+  unless `--attestation instrument`). A form read where no observation exists takes the base route (`add-alias --alias
+  --language --jurisdiction --source-url --source-page|--source-clause --attestation`; the pair must be in `lang_jur_map`);
+  a search aid with no locator takes `--seed owner_supplied --approval-ref '<ledger heading naming it>'` and is never vocabulary (`--seed model_seed` is refused, OR-17). A search names the forms it
+  fired with `log-search --form-id`. A comparator ("not steeper than")
   or a value is not a name for the concept: adjudicate it `NOT-OURS`. The name rule is the writer's own: `add-term
   --canonical-en` and `rename-term --canonical-en` refuse a name carrying a digit, a comparison symbol, a `min` or
   `max` word, or a comparator word (`than`, `at least`, `at most`, `no more`, `no less`, `no fewer`, `no greater`,
@@ -65,10 +69,10 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 - **A new concept arises while a source is in hand** (`observe-term` needs `--ref-id` and a persisted quote), so base
   is re-entered from stages 3–4. **Claude never generates a phrase, name or alias** (OR-17): it is the source's own
   wording, present in its jurisdiction and language. `add-term --from-observation` mints the term and its NAMES-NEW
-  adjudication together; it refuses a near match (shared tokens with a term or alias) unless `--distinct-from
+  adjudication together; it refuses a near match (shared tokens with a term or an alias that is not a `model_seed`) unless `--distinct-from
   TERM-ID` names it and the rationale says why. `adjudicate-term` never writes NAMES-NEW. Owner approval is the data
   PR the owner reads (OR-17: "bulk, with me reading the PR"); `add-parameter` and `decline-parameter` take no
-  approval flag — `--approval-ref` belongs to the catalogue route (`mint-term-from-catalogue`, D3) only.
+  approval flag — `--approval-ref` belongs to the catalogue route (`mint-term-from-catalogue`, D3) and to `add-alias --seed owner_supplied` only.
 - `set-parameter-direction --ref-id` records which way is better **from an admitted source** that holds an
   extraction for the parameter (ledger 2026-10-30, ACTION 6; stored in `base_parameters.direction_ref_id`); a
   direction with no source is refused. Without a direction stage 6 cannot select a value and says so in its gap. A
@@ -86,8 +90,8 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   (R8). A search names what it looked for (`--slug`, `--parameter` or `--mined-ref-id`); `--slug` must exist and
   `--parameter` must be active. `--language` is a two-letter code from `lang_jur_map` (derive: `SELECT DISTINCT
   language FROM lang_jur_map`), folded to upper case on write, and a language the map does not hold is refused (the map is the vocabulary of research
-  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `schemas.enums.JurisdictionCode`
-  declares. The pair is not checked: a search in any declared jurisdiction is logged, and the result's
+  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `base_jurisdictions`
+  holds (a sub-national code counts toward its parent country in `coverage`; admit one with `add-jurisdiction`). The pair is not checked: a search in any declared jurisdiction is logged, and the result's
   in_research_scope says whether the pair counts toward what `coverage` owes (`v_research_scope`). A search outside it
   is counted apart (searches_outside_scope), never refused (R8). `--result-artefact retrieval-log/<session>/<file>`
   (repeatable) links a persisted payload whose URL carries the query's host and identifying value; the path is the
@@ -174,8 +178,14 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
 crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
-  figure: parameter, at least one lens column (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
-  is stated in at least one lens, D-0182), value and unit, `--claim-text` verbatim, locator, `--figure-role`,
+  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
+  is stated in at least one lens, D-0182). Each flag repeats, one link per code in `extraction_lens_links` (the
+  figure's own lens columns are held NULL), and `--lens-basis` with `--lens-basis-text` (the figure's own words that
+  name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
+  `add-lens-link`, and `retire-lens-link` retires one (never the last). Value and unit (a number the source writes in words, or with an ambiguous
+  mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`;
+  `--comparator` for a numerical figure, `=` for a point), `--claim-text`
+  verbatim, locator, `--figure-role`,
   `--claim-type`, and `--relation` (**required**; `none` for an absolute figure). `add-extraction --help` prints every
   vocabulary, each read from its own column: `claim_type`, `extraction_method`, `extraction_status`, `root_type`,
   `measurement_paradigm`, `device_class`, `figure_role` and `comparator` of `source_value_extractions`; `relation`,
@@ -185,16 +195,23 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   `--source-section` suffices below tier 4, the locator hierarchy (`--loc-division` … `--loc-subclause`) is
   required from tier 4 — unless `[UNVERIFIED-QUANT]` is in `--notes` (R3); `--verbatim-exempt` when a decodable body is held for the source (a fetched `text/*` page, a derived text, or a PDF
   with a text layer) and no page render is persisted (`scripts/research/page_image.py`; the refusal names the files and the
-  verb), and `observe-term --verbatim-exempt` is refused on the same ground. The
+  verb), and `observe-term --verbatim-exempt` is refused on the same ground; a `--claimed-unit` holding `;` or `,`, a comparator symbol, a number standing alone,
+  `min`/`max` beside other words, or a parenthesis other than a one-capital suffix such as `dB(A)` (a number goes in
+  `--claimed-value`, a condition in its own row with `--relation condition_on` filed `--from` the claim that holds only under it and `--to` the condition, applicability in `--setting`; a
+  sentence-like unit with none of those shapes passes until units are data, T-030); a quantity figure the engine
+  cannot place on a scale (`8.33%`, `1/12`, `12:1`, `1 in 12`, a decimal comma, a non-ASCII digit, a bare number under
+  `rise:run ratio`, `a:b` under another unit; the refusal names the fix); a value-supplying numerical row with no
+  `--comparator`, also by `amend-extraction --field figure_role`; a `derived` figure that disagrees with its own base +
+  delta (`add-extraction`, `relate-extraction`, `amend-extraction`). The
   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).
 - `relate-extraction` for comparators (`--cross-source <reason>` makes a condition drawn from another document an
   explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures,
   `raise-follow-up` for doubtful rows — its `--reason` vocabulary is `extraction_follow_ups.reason` (`raise-follow-up
-  --help` prints it; a doubt it cannot name is a GAP until the owner extends it).
+  --help` prints it, and says what each means: `absence-needs-tested-value` is only for a `claim_type='absent'` extraction whose tested value is still to find by backward citation mining; a doubt it cannot name is a GAP until the owner extends it).
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
-  and access-need attribution live on the extraction's lens columns. A second grade for the same source and
+  and access-need attribution live on the extraction's lens links (`v_live_lens_links`, one row per code). A second grade for the same source and
   population is a contest, written with a NOTE, never refused (CLAUDE.md §4).
 - Failure, harm and inadequacy (R7) about a **parameter's value** are first-class rows: a `figure_role='finding'`
   extraction with the verbatim claim and `--harm-finding` (a typed flag; only a finding can carry it), **plus an
@@ -213,7 +230,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross
-  parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`), and as a `connections` row
+  parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`; a `condition_on` edge runs `--from` the claim that holds only under the condition, `--to` the condition, and an edge arriving at a claim conditions nothing; the writer refuses the reverse of an existing pair, and an edge from a row that governs a live determination and has no such edge yet), and as a `connections` row
   (`connection-discovery`) for the narrative: its targets are typed flags (`--parameter`, `--target-slug`,
   `--identity`, `--extraction`, `--methodology`); four are foreign keys, `--methodology` is a name with no table. The
   id is computed (omit `--con-id`); the type sets the arity the writer holds (`CROSS-PARAMETER` and
@@ -241,12 +258,19 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   [--report-json <file>]` per cell on the scratch DB (it takes `--db`, not `GUIDEBOOK_DB_PATH`; it writes the convergence
   row and the determination together; `--slug` names an existing topic, `SELECT slug FROM slugs`, and selects no
   evidence, and a slug that does not exist is refused). **A cell** is a parameter × the lens codes given (`specifications`' unique
-  row identity); today every lens of a parameter gathers the same extractions, and whether a lens should filter them
-  is an open owner question. Do not hand-assign. Review its output against these tests; a failure is a gate or a
+  row identity); a figure reaches a cell only through the live lens links written on it (`v_live_lens_links`): every
+  lens the cell states must be among them and a lens it leaves NULL imposes nothing; a lens no figure of the parameter
+  carries has no cell (the engine refuses and writes nothing; if the lens is relevant, raise the gap at judgment with
+  `add-gap`). Do not hand-assign. Review its output against these tests; a failure is a gate or a
   GAP, never a hand edit. A re-run for the same cell is refused: `retire-specification` first.
   1. Name the **most accommodating** value found in practice, read by the parameter's direction. `contested` means no
      single value: show the spread with each population's direction. Frequency is never evidence; the steepest value a
-     code allows is never highlighted. A cell with no direction stays `pending` and names `set-parameter-direction` in
+     code allows is never highlighted. The engine takes the headline from the governing claims with no outgoing
+     `condition_on` edge and lists the rest as branches (OR-2, 2026-10-29): it is empty ("piecewise only") when every
+     governing claim is conditioned, so a gentler value that holds only under a condition is a branch and may be the
+     gentlest value found yet not the headline. Whether that sits with "the gentlest value is the gentlest value" and
+     "never by highlighting the steepest code value" (2026-10-30) is an open owner question (OI-55 (9)): read the
+     headline and the branches together and flag a case where they pull apart, do not rule on it. A cell with no direction stays `pending` and names `set-parameter-direction` in
      its gap. A parameter whose direction stands with no source (history from before the source rule; derive it as in
      stage 1) is read by that direction, and the report's `direction_ref_id` is NULL for it; whether that is
      backfilled is open owner question 7 of the 2026-11-06 round-3 adjudication.

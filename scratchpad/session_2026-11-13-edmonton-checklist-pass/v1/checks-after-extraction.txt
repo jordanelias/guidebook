@@ -1,0 +1,245 @@
+##### scripts/audit/judgment_handoff_shape.py
+EXAMINED: 3 invariant(s) of the evidence->judgment hand-off
+  - source_value_extractions.ref_id NOT NULL
+  - no UNIQUE index on source_value_extractions
+  - source_value_extractions.ref_id -> evidence_sources(ref_id)
+PASS: shape holds (source_value_extractions currently 228 rows — shape is checked, not content).
+rc=0
+##### scripts/audit/extraction_relations_integrity.py
+EXAMINED: 285  (228 source_value_extractions row(s), 57 extraction_relations edge(s), 0 v_derived_figure_check row(s))
+UNCHECKED: 0 of 0 derived row(s) are outside v_derived_figure_check (unit-converted, or a value the view's numeric GLOB rejects) and CANNOT be arithmetically re-verified here
+VERDICT: CLEAN
+rc=0
+##### scripts/audit/adjudication_integrity.py
+======================================================================
+adjudication_integrity.py — evidence-adjudication substrate
+======================================================================
+[1] PASS: all 60 evidence_sources are tier-consistent (stored tier == derive_tier(evidence_type, scope)).
+
+[readiness] determination-field coverage (honest; not a pass/fail):
+    specifications: 8 determination(s)
+        state distribution: {'pending': 3, 'provisional': 5}
+        excluded from best-practice: regulatory_stratum_only=2, code_floor_only=1
+    source_value_extractions: 228 row(s) — value-directness assessable
+    convergence_assessment: {'pending_assessment': 5}
+
+[siblings] authoritative §10 enforcers (not re-run here):
+    matrix_consistency.py (grain×scale matrix) · validate_evidence_state.py (per-cell state machine)
+
+======================================================================
+EXAMINED: 60
+VERDICT: PASS   (tier inconsistencies=0)
+======================================================================
+rc=0
+##### scripts/audit/observation_verbatim_audit.py
+observation_verbatim_audit — is each observation's quote in its own source?
+EXAMINED: 151
+  scoped    110
+  unscoped  29
+  missing   12
+  exempt    0
+  REPORTED, not counted: 6 observation(s) whose phrase is not inside its own quote: [10, 28, 51, 62, 70, 73]
+  missing: 12 < baseline 17 -- debt paid down; lower observation-quote-missing in governance/research-contract-baseline.json in this PR
+  unscoped: 29 < baseline 37 -- debt paid down; lower observation-quote-unscoped in governance/research-contract-baseline.json in this PR
+PASS: no class above its baseline
+rc=0
+##### scripts/audit/provenance_artefact_audit.py
+usage: provenance_artefact_audit.py [-h] --mode {surfaced,attribution}
+provenance_artefact_audit.py: error: the following arguments are required: --mode
+rc=2
+##### scripts/audit/metadata_integrity_audit.py
+======================================================================
+metadata_integrity_audit.py (per DR-2026-05-20)
+======================================================================
+
+[1] FAIL: 20 COMPLETE/COMPLETE-STATUTORY rows with open integrity flag
+    REF-00139  mq=COMPLETE-STATUTORY vs=VERIFIED   mis=CORRECTED
+      detail: 2026-10-31 verification_note CORRECTED (R9a asks for the held id to be reused; the row must say what
+    REF-00977  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-18 jurisdiction CORRECTED (Filed NULL in batch 15. INT rather than a country code: a systema
+    REF-00992  mq=COMPLETE-STATUTORY vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-18 jurisdiction CORRECTED (Normalised GB->UK. governance/jurisdiction-philosophy.md line 127
+    REF-00999  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-18 jurisdiction CORRECTED (Filed NULL in batch 15 though determinable and known at admission
+    REF-01000  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-18 jurisdiction CORRECTED (Filed NULL in batch 15 though determinable: the study is of Londo
+    REF-01002  mq=COMPLETE           vs=UNVERIFIED mis=CORRECTED
+      detail: 2026-09-18 verification_status CORRECTED (I4 CAUGHT A GRADING ERROR AND THE CHECK IS RIGHT. I4 asser
+    REF-01005  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-19 doi_resolution_outcome CORRECTED (R9/R10 DOI pre-check RUN AND RECORDED, which it had not
+    REF-01006  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-20 source_type CORRECTED (Wrote Crossref's spelling 'journal-article' at admission; the voca
+    REF-01009  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-28 doi_resolution_outcome CORRECTED (add-source omitted --doi-resolution-outcome at admissio
+    REF-01011  mq=COMPLETE           vs=VERIFIED   mis=CORRECTED
+      detail: 2026-09-28 doi_resolution_outcome CORRECTED (add-source omitted --doi-resolution-outcome at admissio
+    ... (10 more)
+[2] INFO: 30 / 50 eligible rows lack a cross-check record (60.0% — pre-DR-2026-05-20 legacy)
+    These rows cleared rule #10's existence gate but predate the cross-check
+    protocol. Future synthesis claims on these rows should run cross-check first.
+
+[3] INFO: Owner-review queue (metadata_integrity_status NOT IN ('OK','RESOLVED',NULL))
+    Total: 24 rows
+      CORRECTED                 24
+
+======================================================================
+VERDICT: FAIL
+EXAMINED: 60
+======================================================================
+rc=1
+##### scripts/audit/verified_scan_integrity.py
+verified_scan_integrity — every live extraction rests on a VERIFIED source and a reading (OR-11a)
+EXAMINED: 226
+  VERIFIED-WITHOUT-FULL-READING: 27 row(s)
+    REF-00977: 1 row(s) (parameter, extraction): [(3, 39)]
+    REF-00988: 1 row(s) (parameter, extraction): [(3, 19)]
+    REF-00989: 2 row(s) (parameter, extraction): [(3, 20), (3, 21)]
+    REF-00990: 2 row(s) (parameter, extraction): [(3, 22), (3, 23)]
+    REF-00991: 1 row(s) (parameter, extraction): [(3, 24)]
+    REF-00993: 1 row(s) (parameter, extraction): [(3, 27)]
+    REF-00994: 2 row(s) (parameter, extraction): [(3, 28), (3, 29)]
+    REF-00995: 1 row(s) (parameter, extraction): [(3, 30)]
+    REF-00996: 2 row(s) (parameter, extraction): [(3, 31), (3, 32)]
+    REF-00997: 3 row(s) (parameter, extraction): [(3, 33), (3, 34), (3, 35)]
+    REF-00998: 1 row(s) (parameter, extraction): [(3, 36)]
+    REF-00999: 2 row(s) (parameter, extraction): [(3, 37), (3, 38)]
+    REF-01000: 2 row(s) (parameter, extraction): [(3, 40), (3, 41)]
+    REF-01001: 2 row(s) (parameter, extraction): [(3, 42), (3, 43)]
+    REF-01008: 4 row(s) (parameter, extraction): [(3, 63), (3, 64), (3, 68), (3, 69)]
+    remedy: record the full reading (scripts/research/full_text.py, then db.py record-scan --text-scope full) or re-grade the row (db.py amend-extraction --field extraction_status)
+  SOURCE-NOT-VERIFIED: 10 row(s)
+    REF-01002: 2 row(s) (parameter, extraction): [(3, 44), (3, 45)]
+    REF-01013: 1 row(s) (parameter, extraction): [(3, 75)]
+    REF-01014: 2 row(s) (parameter, extraction): [(3, 76), (3, 77)]
+    REF-01016: 2 row(s) (parameter, extraction): [(3, 79), (12, 140)]
+    REF-01026: 3 row(s) (parameter, extraction): [(3, 95), (3, 96), (3, 97)]
+    remedy: verify the source (db.py correct-source, or amend-source --field verification_status) or retire the row through the extraction writers
+  NO-COVERING-READING: 103 row(s)
+    REF-00977: 1 row(s) (parameter, extraction): [(3, 39)]
+    REF-00979: 2 row(s) (parameter, extraction): [(3, 46), (3, 47)]
+    REF-00980: 1 row(s) (parameter, extraction): [(3, 48)]
+    REF-00983: 2 row(s) (parameter, extraction): [(3, 12), (3, 16)]
+    REF-00984: 1 row(s) (parameter, extraction): [(3, 14)]
+    REF-00985: 2 row(s) (parameter, extraction): [(3, 11), (3, 15)]
+    REF-00986: 1 row(s) (parameter, extraction): [(3, 13)]
+    REF-00988: 2 row(s) (parameter, extraction): [(3, 19), (12, 116)]
+    REF-00989: 2 row(s) (parameter, extraction): [(3, 20), (3, 21)]
+    REF-00990: 2 row(s) (parameter, extraction): [(3, 22), (3, 23)]
+    REF-00991: 1 row(s) (parameter, extraction): [(3, 24)]
+    REF-00993: 1 row(s) (parameter, extraction): [(3, 27)]
+    REF-00994: 2 row(s) (parameter, extraction): [(3, 28), (3, 29)]
+    REF-00995: 3 row(s) (parameter, extraction): [(3, 30), (3, 115), (12, 118)]
+    REF-00996: 2 row(s) (parameter, extraction): [(3, 31), (3, 32)]
+    REF-00997: 3 row(s) (parameter, extraction): [(3, 33), (3, 34), (3, 35)]
+    REF-00998: 1 row(s) (parameter, extraction): [(3, 36)]
+    REF-00999: 2 row(s) (parameter, extraction): [(3, 37), (3, 38)]
+    REF-01000: 2 row(s) (parameter, extraction): [(3, 40), (3, 41)]
+    REF-01001: 2 row(s) (parameter, extraction): [(3, 42), (3, 43)]
+    REF-01002: 2 row(s) (parameter, extraction): [(3, 44), (3, 45)]
+    REF-01003: 1 row(s) (parameter, extraction): [(3, 49)]
+    REF-01004: 2 row(s) (parameter, extraction): [(3, 50), (3, 51)]
+    REF-01005: 7 row(s) (parameter, extraction): [(3, 52), (3, 53), (3, 54), (3, 55), (3, 56), (3, 57), (3, 67)]
+    REF-01006: 1 row(s) (parameter, extraction): [(3, 58)]
+    REF-01007: 1 row(s) (parameter, extraction): [(3, 59)]
+    REF-01008: 9 row(s) (parameter, extraction): [(3, 60), (3, 61), (3, 62), (3, 63), (3, 64), (3, 65), (3, 66), (3, 68)] ...
+    REF-01009: 1 row(s) (parameter, extraction): [(3, 71)]
+    REF-01010: 1 row(s) (parameter, extraction): [(3, 70)]
+    REF-01011: 2 row(s) (parameter, extraction): [(3, 72), (3, 73)]
+    REF-01012: 1 row(s) (parameter, extraction): [(3, 74)]
+    REF-01013: 1 row(s) (parameter, extraction): [(3, 75)]
+    REF-01014: 2 row(s) (parameter, extraction): [(3, 76), (3, 77)]
+    REF-01015: 1 row(s) (parameter, extraction): [(3, 78)]
+    REF-01016: 2 row(s) (parameter, extraction): [(3, 79), (12, 140)]
+    REF-01017: 1 row(s) (parameter, extraction): [(3, 80)]
+    REF-01018: 6 row(s) (parameter, extraction): [(3, 81), (3, 126), (3, 127), (12, 132), (12, 133), (12, 134)]
+    REF-01020: 4 row(s) (parameter, extraction): [(3, 84), (3, 85), (3, 86), (3, 106)]
+    REF-01021: 2 row(s) (parameter, extraction): [(3, 87), (3, 88)]
+    REF-01022: 1 row(s) (parameter, extraction): [(3, 112)]
+    REF-01023: 1 row(s) (parameter, extraction): [(3, 90)]
+    REF-01024: 2 row(s) (parameter, extraction): [(3, 113), (3, 114)]
+    REF-01025: 2 row(s) (parameter, extraction): [(3, 93), (3, 94)]
+    REF-01026: 3 row(s) (parameter, extraction): [(3, 95), (3, 96), (3, 97)]
+    REF-01027: 3 row(s) (parameter, extraction): [(3, 98), (3, 99), (12, 141)]
+    REF-01029: 2 row(s) (parameter, extraction): [(3, 101), (3, 102)]
+    REF-01030: 7 row(s) (parameter, extraction): [(3, 103), (3, 104), (3, 105), (3, 128), (3, 129), (12, 145), (12, 146)]
+    remedy: record the reading (db.py record-scan)
+FAIL: 140 (row, class) pair(s) across 226 live extraction(s); each class above names its remedy.
+rc=1
+##### scripts/audit/scan_debt.py
+scan_debt — (source x active parameter) pairs not yet read in full
+EXAMINED: 590
+  EXTRACTED           100
+  STATED-ABSENT       9
+  BLOCKED             0
+  READ-NOTHING-FOUND  24
+  READ-PARTIAL        40
+  NOT-READ            417
+  full readings nothing counted (text_scope 'full', pages_read NULL): 4 -- the operator's claim, not a count
+  parameter 4 (corridor width): 47 not read, 4 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 5 (turning circle): 47 not read, 5 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 6 (operating force): 47 not read, 4 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 7 (reverberation time): 47 not read, 5 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 8 (LRV contrast): 47 not read, 5 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 9 (door width): 47 not read, 4 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 10 (colour temperature): 47 not read, 5 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 11 (headroom clearance): 47 not read, 5 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00988, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00995, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001 ...
+  parameter 12 (ramp run length): 41 not read, 3 read only partially -- REF-00977, REF-00979, REF-00980, REF-00983, REF-00984, REF-00985, REF-00986, REF-00989, REF-00990, REF-00991, REF-00993, REF-00994, REF-00996, REF-00997, REF-00998, REF-00999, REF-01000, REF-01001, REF-01002, REF-01003 ...
+DEBT: 457 pair(s). Read each source against the whole list and record it (db.py record-scan; scripts/research/full_text.py derives a held PDF's text), or a targeted reading for one new parameter (record-scan --mode targeted).
+rc=1
+##### scripts/audit/search_log_completeness.py --session session_2026-11-13-edmonton-checklist-pass
+Session: session_2026-11-13-edmonton-checklist-pass
+Ledger: scratchpad/session_2026-11-13-edmonton-checklist-pass/commands.jsonl -- 65 line(s): WebSearch 0, WebFetch 0, Bash 65, other 0
+Manifest: retrieval-log/session_2026-11-13-edmonton-checklist-pass/manifest.jsonl -- 12 line(s)
+Bash lines scanned for bare curl/wget: 65
+search_executions rows for this session: 1 (by engine: owner-supplied=1)
+Unwitnessed: 1 row(s) logged under engine(s) owner-supplied are outside the FAIL rule: no WebSearch/WebFetch line witnesses them (an MCP search tool leaves no line; a curl call is read for its host only).
+EXAMINED: 0
+VERDICT: NOTHING-IN-SCOPE — no WebSearch or WebFetch line in this session's ledger, so no search can be shown unlogged.
+rc=0
+##### scripts/audit/citation_mining_completeness.py
+=== Citation-mining completeness audit ===
+  DB: /tmp/claude-0/-home-user-guidebook/5dbc61f3-e21d-5874-a6a8-3a991f0f402c/scratchpad/edm/guidebook.db
+  Session scope: (all)
+  Tier scope: 1..2
+  EXAMINED: 16 slug-linked T1-2 source(s) in scope
+  Outstanding (no citation_mining row): 0
+  VERDICT: CLEAN
+  Total in scope: 16
+  Total with citation_mining row: 16 (100.0%)
+  Total citation_mining_status='mined': 9 (56.2%)  <- the owner ruling's column
+rc=0
+##### scripts/audit/research_batch_dod.py --session session_2026-11-13-edmonton-checklist-pass
+==============================================================================
+research_batch_dod — RESEARCH DEFINITION-OF-DONE — session=session_2026-11-13-edmonton-checklist-pass
+==============================================================================
+  R1: PASS — 0 co1/co2-targeted searches, 0 co1/co2 sources, 1 reasoned waivers
+  R2: PASS — 1 citation_mining rows for 1 anchors
+  R3: PASS — every quantified regulatory row carries a pinpoint locator or [UNVERIFIED-QUANT]
+  R4: PASS — 2 population linkages produced across 1 searches
+  R5: PASS — EXAMINED: 0 non-English admissions, so this asserts nothing. REPORTED, not asserted: 0 admission(s) waived by 'R5-GREY-WARRANTED:' in grey_reason; 0 non-English search(es) targeted 'grey' (a target is what was sought, not how a source was filed); 0 admission(s) with no language recorded, read as English and not examined
+  R6: PASS — no findings smuggled into deferred_reason
+  R7: PASS — EXAMINED: 1 search(es); every one screened no more than it found and admitted no more than it screened. REPORTED, not asserted: 0 candidate(s) registered for 1 screened; 0 row(s) carry harm_finding=1. Whether harm and off-slug material reached a row is adversarial standing subject 1
+  R8: PASS — 0 zero-yield searches retained; log intact (no deleted rows). NOT TESTED: that each prior preceded its search -- log-search writes the prior with the results, after the search ran, and dbcore.now() is minute-precision; the adversarial pass and the transcript (and the tool-call ledger, for a search it records) are its only witnesses
+  R9: PASS — this batch introduced no duplicate DOIs
+  R9a: PASS — 0 admitted DOI(s) and 1 URL-only admission(s) checked against the stash; none held under a different ref_id
+  R9b: PASS — 1 admitted ref_id(s) checked against the stash across 6 identifier types; no collision
+  R10: PASS — every VERIFIED source has a locator AND a recorded resolution outcome
+  R10b: PASS — EXAMINED: 1 admitted source(s) carrying a URL; none left verification_status NULL
+  R11: PASS — EXAMINED: 0 aliases. This batch wrote none, so this asserts nothing about the corpus
+  R11-harvest: PASS — 55 concept observation(s) across this batch's admissions; every admitted source that can be read carries at least one. Whether they are the RIGHT phrases is NOT tested here -- judgment adjudicates them
+  R16-adjudicate: PASS — EXAMINED: 55 observation(s) on this batch's admissions; every one adjudicated
+  R16-scan: PASS — EXAMINED: 1 admission(s); every one carries a catalogue-mode reading. Whether the reading saw everything is NOT tested here -- adversarial standing subject 4
+  R17: PASS — EXAMINED: 1 admission(s); every one has a search behind it
+  R12: PASS — structured homes used (economics_entries=1 for 0 prose findings)
+  R13: PASS — all 1 tier-1..3 admissions carry a population match ROW -- presence only. Nothing here reads match_grade or mismatch_note, so 'graded' was an overclaim and is gone
+  R14: PASS — every zero-yield search records why it was empty (absence_class or a note)
+  R15: PASS — resolved candidates are re-described from the source
+------------------------------------------------------------------------------
+  ✗ R16: 16 of 22 term(s) named by adjudications of this batch's observations hold neither a parameter nor a declination: TERM-004, TERM-006, TERM-008, TERM-009, TERM-010, TERM-013, TERM-014, TERM-017. A concept a source states a figure for is filed against a parameter (db.py add-parameter --term-id T) or, if it is not a quantity under determination (an element, a lens term, a method), declined with its reason (db.py decline-parameter --term-id T --reason ...)
+------------------------------------------------------------------------------
+  NON-COMPLIANT: 1 rule(s) unmet.
+  Per owner directive 2026-07-24: RESEARCH IS INVALID IF IT IS NOT COMPLIANT WITH
+  OUR GOVERNANCE AND VERIFICATION TOOLS AND RULES AND ETHOS.
+  Remediate, or record an explicit reasoned waiver in the PR before merge.
+==============================================================================
+rc=1

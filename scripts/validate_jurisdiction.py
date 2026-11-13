@@ -3,7 +3,7 @@
 scripts/validate_jurisdiction.py — Validate jurisdiction codes and standards-registry.
 
 Per governance/jurisdiction-philosophy.md (A8):
-- All jurisdiction codes resolve to JurisdictionCode enum
+- All jurisdiction codes resolve to a base_jurisdictions row
 - GB rejected (must be UK)
 - Standards-registry entries have required fields and valid status
 - BPC jurisdiction coverage tracked
@@ -24,11 +24,13 @@ import sys
 
 import yaml
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from schemas.enums import JurisdictionCode
+import dbcore
 
-VALID_CODES = {member.value for member in JurisdictionCode}
+# The table is the vocabulary; a database without it is a Refusal that stops this check
+# (it would otherwise have examined no code at all).
+VALID_CODES = dbcore.declared_jurisdictions()
 VALID_STATUSES = {"CURRENT", "UPDATED", "SUPERSEDED", "WITHDRAWN"}
 REQUIRED_REGISTRY_FIELDS = {
     "jurisdiction", "standard_cited", "current_version",

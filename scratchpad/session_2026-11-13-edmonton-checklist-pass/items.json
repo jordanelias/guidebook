@@ -1,0 +1,765 @@
+{
+ "1.1": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Designated barrier-free parking spaces located closest to barrier-free entrance"
+   ]
+  ]
+ },
+ "1.2": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Barrier-free unobstructed path of travel ("
+   ],
+   [
+    "BEST",
+    "minimum width of 1500mm/59”"
+   ],
+   [
+    "CODE",
+    ") from parking area to building entrance (clear of snow, garbage cans, sign posts and other obstacles; pathway well lit; not behind vehicles). Pathway shall have colour contrast and distinctive patterns where there are changes in level and surface material"
+   ]
+  ]
+ },
+ "1.3": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Curb ramp to sidewalk located between parking spaces"
+   ]
+  ]
+ },
+ "1.4": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Access aisle painted on pavement between barrier-free parking spaces"
+   ]
+  ]
+ },
+ "1.5": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Accessible parking symbols painted on pavement at the entrance of each stall."
+   ],
+   [
+    "BEST",
+    "The symbol and any associated background paint should not occupy the entire area. The more painted surface, the more likely pavement will become slippery"
+   ]
+  ]
+ },
+ "1.6": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Vertically mounted sign showing accessibility symbol located near the centre line of each designated stall (minimum 1500mm/60” from ground to mid sign, max 2500mm/98” high)"
+   ]
+  ]
+ },
+ "1.7": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Number of designated accessible parking spaces per number of parking stalls: 1 accessible stall per 2-10 spaces, 2 per 11-25 spaces, 2 per 26-50 and 4 per 51-100. One additional accessible stall for each additional increment of 100 or part thereof"
+   ]
+  ]
+ },
+ "1.8": {
+  "page": 1,
+  "segs": [
+   [
+    "CODE",
+    "Passenger loading zones need: an access aisle not less than 1500mm/59” to 6000mm/236” long adjacent and parallel to the vehicle pull-up space, a curb ramp where there are curbs between the access aisle and the vehicle pull-up space and a clear height of not less than 2750mm/108” at the pull-up space and along the vertical access and egress routes"
+   ]
+  ]
+ },
+ "1.9": {
+  "page": 1,
+  "segs": [
+   [
+    "BEST",
+    "If the location of designated parking stalls is not easily visible from the approach viewpoint, appropriate directional signs showing location of designated stalls shall be provided"
+   ]
+  ]
+ },
+ "1.10": {
+  "page": 2,
+  "segs": [
+   [
+    "BEST",
+    "Ensure there is a clear accessible path between accessible stalls and the payment machine"
+   ]
+  ]
+ },
+ "1.11": {
+  "page": 2,
+  "segs": [
+   [
+    "BEST",
+    "Information for parking payment is easy to understand and clearly visible for accessible stalls"
+   ]
+  ]
+ },
+ "2.1": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "Barrier-free path of travel from parking and/or drop off zone to entrance"
+   ]
+  ]
+ },
+ "2.2": {
+  "page": 2,
+  "segs": [
+   [
+    "BEST",
+    "Signage at all non-accessible entrances should clearly indicate location of barrier-free entrance"
+   ]
+  ]
+ },
+ "2.3": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "Doorway clearance is 850mm when the door is in the open 90 degree position"
+   ],
+   [
+    "BEST",
+    "(920mm/36” preferred)"
+   ]
+  ]
+ },
+ "2.4": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "Door operating device should not require tight grasping or twisting of the wrist (doors should have lever handles)"
+   ]
+  ]
+ },
+ "2.5": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "The primary entrance is barrier-free"
+   ],
+   [
+    "BEST",
+    "(automatic sliding doors are optimal; power doors with large paddle/push plate is the next best alternative, wave to open preferred where feasible)"
+   ]
+  ]
+ },
+ "2.6": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "In addition to the barrier-free entrances required, not less than 50% of the pedestrian entrances, including the primary entrance of a building, including walkways leading to the entrances from a public thoroughfare and from on-site parking areas, shall be barrier-free"
+   ]
+  ]
+ },
+ "2.7": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "If entrance is through doors in a series, leave enough room (1200mm/47” plus the width of the door) for a wheelchair to occupy the vestibule while opening the 2nd door"
+   ]
+  ]
+ },
+ "2.8": {
+  "page": 2,
+  "segs": [
+   [
+    "BEST",
+    "Automatic door operator button is 800mm/31.5”-1500mm/59” from the ground and is located 1500mm/59” back from the door. Large well marked opener/button"
+   ]
+  ]
+ },
+ "2.9": {
+  "page": 2,
+  "segs": [
+   [
+    "CODE",
+    "Level, or beveled doorway threshold (maximum of 13mm/0.5” rise)"
+   ]
+  ]
+ },
+ "2.10": {
+  "page": 2,
+  "segs": [
+   [
+    "BEST",
+    "Colour contrast to identify doorway threshold, frame or entrance."
+   ],
+   [
+    "CODE",
+    "Corridors should be 1100mm/43”"
+   ],
+   [
+    "BEST",
+    "(recommend 1800mm/71”)"
+   ]
+  ]
+ },
+ "3.1": {
+  "page": 3,
+  "segs": [
+   [
+    "CODE",
+    "Facilities and services for persons with disabilities identified with appropriate symbols (e.g. availability of assistive listening devices)"
+   ]
+  ]
+ },
+ "3.2": {
+  "page": 3,
+  "segs": [
+   [
+    "BEST",
+    "Signage available in symbol form for those with visual processing difficulties or who are unable to read"
+   ]
+  ]
+ },
+ "3.3": {
+  "page": 3,
+  "segs": [
+   [
+    "BEST",
+    "Signage includes braille as well as large print, high colour contrast tactile lettering that is a mix of caps and lower case letters and is designed to prevent glare"
+   ]
+  ]
+ },
+ "3.4": {
+  "page": 3,
+  "segs": [
+   [
+    "BEST",
+    "General and way-finding signage consistent in design and easily identifiable"
+   ]
+  ]
+ },
+ "3.5": {
+  "page": 3,
+  "segs": [
+   [
+    "BEST",
+    "Braille signage mounted at appropriate height (chest level) and location"
+   ]
+  ]
+ },
+ "3.6": {
+  "page": 3,
+  "segs": [
+   [
+    "CODE",
+    "Signage font in Sans Serif (e.g., Verdana, Arial) for reading ease. Signage should be 1350mm/51” high from floor level and not located on a door (should be 150mm/6” from the door frame). If tactile signage is installed it should be 1200mm/47” from floor level"
+   ],
+   [
+    "BEST",
+    "(building directories should be tactile)"
+   ]
+  ]
+ },
+ "4.1": {
+  "page": 3,
+  "segs": [
+   [
+    "CODE",
+    "Slip-resistant, tactile finish or strips contrasting in colour and texture on all landings, tread edges/stair nosings, and the beginning and end of a ramp. Changes in elevation at stairwells shall be indicated by tactile strips, which are as wide as the stair and have colour contrast"
+   ]
+  ]
+ },
+ "4.2": {
+  "page": 3,
+  "segs": [
+   [
+    "CODE",
+    "Step demarcation in yellow on sides and back of escalator steps"
+   ]
+  ]
+ },
+ "4.3": {
+  "page": 3,
+  "segs": [
+   [
+    "BEST",
+    "Steps for stairs have a rise between 125mm/5” and 180mm/7” and a run of not less than 280mm/11” (should not be open between steps). Avoid single isolated steps"
+   ]
+  ]
+ },
+ "4.4": {
+  "page": 3,
+  "segs": [
+   [
+    "CODE",
+    "Illumination shall be positioned to minimize glare and shadow"
+   ]
+  ]
+ },
+ "4.5": {
+  "page": 3,
+  "segs": [
+   [
+    "BEST",
+    "Ensure any open area beneath the stairs is enclosed with planters, railings, benches, fencing etc to ensure no access. Tactile strips under the stairs on the ground and a contrasting colour on the back of the stairwell above the tactile strips to alert a potential safety hazard"
+   ]
+  ]
+ },
+ "4.6": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Carpet is securely attached"
+   ]
+  ]
+ },
+ "4.7": {
+  "page": 4,
+  "segs": [
+   [
+    "CODE",
+    "A stairway shall have a handrail on at least one side, but if it is 1100mm/43” or more wide, it shall have handrails on both sides."
+   ],
+   [
+    "BEST",
+    "Handrails should be splinter and rust proof, located on both sides of the stairs and ramps, and have a colour contrast from wall and surrounding environment."
+   ],
+   [
+    "CODE",
+    "A ramp shall have handrails on both sides"
+   ]
+  ]
+ },
+ "4.8": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Handrails should have a system of tactile cues (texture changes) within 300mm/12” from each end"
+   ]
+  ]
+ },
+ "5.1": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Doors have clear colour contrast from door surroundings"
+   ]
+  ]
+ },
+ "5.2": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Location of elevators clearly identified at main entrance"
+   ]
+  ]
+ },
+ "5.3": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Preferred dimension of elevator car to allow for optimal turning radius of 1500x1500mm/60x60” with elevator door at least 910 – 915mm/36” wide"
+   ],
+   [
+    "CODE",
+    "(one elevator has inside dimensions that will accommodate a stretcher at 2010mm/79” long and 610mm/24” wide)"
+   ],
+   [
+    "BEST",
+    "1828mm/72” by 2032mm/80”"
+   ]
+  ]
+ },
+ "5.4": {
+  "page": 4,
+  "segs": [
+   [
+    "CODE",
+    "Elevator buttons and emergency controls mounted at an accessible height (1045mm/41”-1095mm/43” from ground)"
+   ]
+  ]
+ },
+ "5.5": {
+  "page": 4,
+  "segs": [
+   [
+    "CODE",
+    "Elevator buttons and emergency controls incorporate large print tactile numbers and Braille mounted in a raised fashion (not flush or recessed)."
+   ],
+   [
+    "BEST",
+    "Colour contrast shall be used to identify the floor registration button panel from background, call buttons should protrude from adjacent surface"
+   ]
+  ]
+ },
+ "5.6": {
+  "page": 4,
+  "segs": [
+   [
+    "CODE",
+    "Braille and tactile numbers placed on both sides of door jambs at appropriate height to identify floor level"
+   ]
+  ]
+ },
+ "5.7": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Visual indicator in elevators to indicate “help on the way” for use in an emergency"
+   ]
+  ]
+ },
+ "5.8": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Audible communication system shall be available for accessing elevators, inside the car and have an announcement identifying the direction of travel and floors"
+   ]
+  ]
+ },
+ "5.9": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Elevator waiting areas should have seating in close proximity"
+   ]
+  ]
+ },
+ "5.10": {
+  "page": 4,
+  "segs": [
+   [
+    "BEST",
+    "Elevator doors shall begin to close after a minimum of 8 seconds from the fully open position"
+   ]
+  ]
+ },
+ "6.1": {
+  "page": 5,
+  "segs": [
+   [
+    "BEST",
+    "Ramps are used for any slope steeper than 1 in 20 in a path of travel. Preferred maximum slope is 1 in 16"
+   ],
+   [
+    "CODE",
+    "(1 in 12 in AB building code)"
+   ]
+  ]
+ },
+ "6.2": {
+  "page": 5,
+  "segs": [
+   [
+    "BEST",
+    "With the ramp at any point shall not be less than 1500mm/60”"
+   ],
+   [
+    "CODE",
+    "; 870mm/34” min clearspace between handrails. Level landings/ resting areas provided at 9m/10yd intervals along ramp"
+   ]
+  ]
+ },
+ "6.3": {
+  "page": 5,
+  "segs": [
+   [
+    "BEST",
+    "Minimize or avoid tight turns or switch-backs"
+   ]
+  ]
+ },
+ "6.4": {
+  "page": 5,
+  "segs": [
+   [
+    "BEST",
+    "Strong colour contrast and tactile surfacing on all ramp landings and a 15mm/0.6” wide strip in contrasting colour and texture at the top of ramp to warn users of a change in elevation"
+   ]
+  ]
+ },
+ "6.5": {
+  "page": 5,
+  "segs": [
+   [
+    "CODE",
+    "Landings designed to accommodate larger chairs and scooters (able to open doors without backing onto ramp). Landings must be min 1200mm/47”long and same width as the ramp"
+   ]
+  ]
+ },
+ "7.1": {
+  "page": 5,
+  "segs": [
+   [
+    "CODE",
+    "A stairway should have a handrail on at least one side but if it is 1100mm or more wide it shall have handrails on both sides and are continuously graspable. Ramps should have handrails on both sides"
+   ],
+   [
+    "BEST",
+    "(recommend handrails on both sides of the stairwell regardless of width)"
+   ],
+   [
+    "CODE",
+    ". Handrails should have a diameter not less than 30mm/1.18” or more than 43mm/1.69”"
+   ]
+  ]
+ },
+ "7.2": {
+  "page": 5,
+  "segs": [
+   [
+    "BEST",
+    "Handrails in contrasting colour to wall or surrounding area"
+   ]
+  ]
+ },
+ "7.3": {
+  "page": 5,
+  "segs": [
+   [
+    "CODE",
+    "Handrails provided at two heights with an unobscured view between. Handrail height should be 865mm/34” and no more than 965mm/38”"
+   ]
+  ]
+ },
+ "7.4": {
+  "page": 5,
+  "segs": [
+   [
+    "BEST",
+    "Handrails extend horizontally beyond last stair and terminate to wall or ground"
+   ]
+  ]
+ },
+ "8.1": {
+  "page": 6,
+  "segs": [
+   [
+    "BEST",
+    "Single door entrance is optimal. Have a wave to open or push button available"
+   ]
+  ]
+ },
+ "8.2": {
+  "page": 6,
+  "segs": [
+   [
+    "BEST",
+    "For washrooms without entrance door, there is only one turn with clear corner so persons who are blind do not become disoriented"
+   ]
+  ]
+ },
+ "8.3": {
+  "page": 6,
+  "segs": [
+   [
+    "BEST",
+    "Proper signage located outside the entrance and stall door"
+   ]
+  ]
+ },
+ "8.4": {
+  "page": 6,
+  "segs": [
+   [
+    "BEST",
+    "Sinks, garbage cans, etc. located around perimeter rather than in the centre of the room"
+   ]
+  ]
+ },
+ "8.5": {
+  "page": 6,
+  "segs": [
+   [
+    "BEST",
+    "Accessible sink (minimum knee space of 735mm/29”) with soap and towel dispenser close to sink at preferred height of 1200mm/47”. Include a low mounted or tilt mirror 1000mm/39” above floor and insulate any exposed pipes. Automatic or sensor operated faucets preferred"
+   ]
+  ]
+ },
+ "8.6": {
+  "page": 6,
+  "segs": [
+   [
+    "CODE",
+    "ACCESSIBLE WASHROOM STALL: • minimum 1700mm x 1500mm/70 x 60” • door that swings outward so person with limited mobility can close it independently • equipped with door pull handle, coat hook, grab bars at various appropriate heights and placement • can be locked from the inside with a large, sliding latch (not thumb-turning) • toilet paper reachable without leaning too far off toilet • accessible toilet height between 400mm-460mm/16”-18”"
+   ],
+   [
+    "BEST",
+    "• various toilet size and heights. Or adding a step stool option if unavailable. • at least one urinal should have a vertically mounted grab bar installed on each side • Call buttons shall be installed in all barrier-free washroom stalls for facilities (which are staffed with security) during open hours"
+   ]
+  ]
+ },
+ "8.7": {
+  "page": 6,
+  "segs": [
+   [
+    "CODE",
+    "Self-contained, gender inclusive/family washroom available, with proper signage provided in an accessible location"
+   ]
+  ]
+ },
+ "9.1": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "Public and emergency phones mounted at an accessible height with a minimum of 865mm/34” and a maximum of 1370mm/54 above the floor"
+   ]
+  ]
+ },
+ "9.2": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "TTY (built in typewriter) phone for users who are Deaf or hard of hearing."
+   ],
+   [
+    "BEST",
+    "Video Relay Service (VRS), Video Relay Interpreting (VRI) or other live captioning app are other available options"
+   ]
+  ]
+ },
+ "9.3": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "At least one drinking fountain at accessible height (610mm/24” from ground preferred) spout located near front, controls either automatic or easily operated, cane detectable. Proper knee space below"
+   ]
+  ]
+ },
+ "9.4": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "One accessible section of counter in all areas that serve the public. A barrier-free counter surface shall not be more than 865mm/34” above the floor"
+   ]
+  ]
+ },
+ "9.5": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "Shelving, coat hooks and light switches at an accessible height"
+   ]
+  ]
+ },
+ "9.6": {
+  "page": 7,
+  "segs": [
+   [
+    "BEST",
+    "Have a variety of seating options available, including"
+   ],
+   [
+    "CODE",
+    "space for persons using wheelchairs to sit/park in all public seating areas, including companion seating (without blocking walk through areas)."
+   ],
+   [
+    "BEST",
+    "(i.e. seats with a variety of widths, adjustable armrests and backrests). Have designated priority/accessibility/priority seating clearly marked"
+   ]
+  ]
+ },
+ "9.7": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "Level wheelchair seating area (in theatres, lecture halls, sports arenas, etc), to also include companion seating and unobstructed views"
+   ]
+  ]
+ },
+ "9.8": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "Glass doors or partitions include a contrasting strip of colour across at eye-level"
+   ]
+  ]
+ },
+ "9.9": {
+  "page": 7,
+  "segs": [
+   [
+    "BEST",
+    "Hearing loops provided (counter loop or portable hearing loop)"
+   ]
+  ]
+ },
+ "10.1": {
+  "page": 7,
+  "segs": [
+   [
+    "CODE",
+    "All alarm systems to include an audible and visual signal"
+   ]
+  ]
+ },
+ "11.1": {
+  "page": 8,
+  "segs": [
+   [
+    "BEST",
+    "Well anchored"
+   ],
+   [
+    "CODE",
+    "furniture should only be placed outside the main path of travel (inside or outside) and is detectable by someone who uses a cane"
+   ]
+  ]
+ },
+ "11.2": {
+  "page": 8,
+  "segs": [
+   [
+    "CODE",
+    "There should be good colour contrast between street furniture and background surfaces (generally, grey colours should be avoided as they blend into the general background)"
+   ]
+  ]
+ },
+ "11.3": {
+  "page": 8,
+  "segs": [
+   [
+    "CODE",
+    "Variety of benches should be provided (some including a back and an arm rest)"
+   ]
+  ]
+ },
+ "11.4": {
+  "page": 8,
+  "segs": [
+   [
+    "BEST",
+    "Have a quiet space available"
+   ]
+  ]
+ }
+}

@@ -2,7 +2,7 @@
 **Status:** CANONICAL — A8 Session 1
 **Phase:** Stage A Phase 8 — Jurisdiction philosophy
 **Created:** 2026-04-29 19:30 UTC
-**Doctrinal basis:** project-standards Core Doctrine (L20–21) · jurisdiction-tracker SKILL.md · `schemas/enums.py` JurisdictionCode · project-standards L121
+**Doctrinal basis:** project-standards Core Doctrine (L20–21) · jurisdiction-tracker SKILL.md · the `base_jurisdictions` table · project-standards L121
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### 1.1 Canonical jurisdictions
 
-The guidebook's evidence base covers 24 countries plus 2 meta-jurisdictions. This list was confirmed at A3. `schemas/enums.py` JurisdictionCode declares a superset (codes admitted by later owner rulings, and further meta-codes); derive its members with `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)), sorted(m.value for m in J))"`.
+The guidebook's evidence base covers 24 countries plus 2 meta-jurisdictions. This list was confirmed at A3. The table `base_jurisdictions` declares a superset (codes admitted by later owner rulings, and further meta-codes); derive its members with `SELECT jurisdiction_code, kind, parent_code FROM base_jurisdictions`. A code is admitted with `db.py add-jurisdiction`, which records the ledger entry that approves it.
 
 | Code | Country | Region | Selection rationale |
 |---|---|---|---|
@@ -113,7 +113,7 @@ The jurisdiction-tracker skill (run once per edition) performs the currency chec
 
 ### 3.3 UK convention
 
-The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is documented in the JurisdictionCode enum docstring and enforced by two checks: `validate_jurisdiction.py` over the standards-registry and source YAML, and `scripts/audit/jurisdiction_db_vocabulary.py` over the DATABASE.
+The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is documented here and enforced by two checks: `validate_jurisdiction.py` over the standards-registry and source YAML, and `scripts/audit/jurisdiction_db_vocabulary.py` over the DATABASE.
 
 *(Corrected 2026-09-18. This sentence previously said "enforced by the validator", singular, and that was false of the database: `validate_jurisdiction.py` globs files and never reads a table, so it passed with 0 errors while 27 rows across five tables held the rejected `GB` code — two of them written the same day. A rule stated at ERROR level with no gate on the data is a rule the corpus can violate silently, and this document asserting enforcement is what made it invisible. The second check closes that, derives its tables from the live schema, and parses the rejected spellings out of the table below rather than carrying its own copy.)*
 
@@ -125,12 +125,12 @@ The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project conventio
 
 | Check | Severity | Description |
 |---|---|---|
-| Valid code | ERROR | Every jurisdiction code resolves to JurisdictionCode enum |
+| Valid code | ERROR | Every jurisdiction code resolves to a `base_jurisdictions` row |
 | UK not GB | ERROR | `GB` appearing as a jurisdiction code is rejected; must be `UK` |
 | Standards-registry format | ERROR | Each entry in standards-registry.md has all required fields |
 | Standards-registry status | WARNING | SUPERSEDED entries flagged for author action |
 | BPC jurisdiction coverage | WARNING | BPC files with <24 jurisdiction records flagged |
-| Source-jurisdiction consistency | WARNING | EvidenceSource.jurisdiction resolves to JurisdictionCode or is null |
+| Source-jurisdiction consistency | WARNING | EvidenceSource.jurisdiction resolves to a `base_jurisdictions` row or is null |
 
 ### 4.2 convert_jurisdictions.py scope
 
@@ -156,7 +156,7 @@ Validates output from the jurisdiction-tracker skill before it is committed to s
 | Required fields | ERROR | Each entry has jurisdiction, standard_cited, current_version, status, last_checked |
 | Status enum | ERROR | Status is one of CURRENT, UPDATED, SUPERSEDED, WITHDRAWN |
 | Date format | ERROR | last_checked matches YYYY-MM-DD HH:MM |
-| Jurisdiction code | ERROR | jurisdiction resolves to JurisdictionCode enum or is a full country name mappable to a code |
+| Jurisdiction code | ERROR | jurisdiction resolves to a `base_jurisdictions` row or is a full country name mappable to a code |
 | Duplicate detection | WARNING | Same jurisdiction-standard pair appearing twice with different statuses |
 
 ---

@@ -2,9 +2,13 @@
 """Stress script, round 3: DEPTH. Fixes the round-1/2 script faults the audit named (hs-stress-audit.md §4, W-1..W-11) and
 runs its seven further scenarios on a REAL held source (REF-00139): read to the end, evidenced cells across lenses with the
 gates, the write path with a determination compared by content, parallel batches at capture, the fidelity guards through
-the writers, the parameter life cycle, and backward/re-entry in rows. Plus every registry battery run correctly.
+the writers, the parameter life cycle, and backward/re-entry in rows.
 
-    python3 -I stress_run3.py [--out DIR] [--parts real,guards,batches,lifecycle,reentry,batteries,probes]
+    python3 -I stress_run3.py --out DIR [--parts real,guards,batches,lifecycle,reentry,batteries,probes]
+
+Precondition of the `batches` part: `stress_run.py --topics acoustics,reach --out DIR` has run (it leaves the two topic
+databases under <tmp>/guidebook-stress); without it the part raises and the run exits 1. `batteries` is callable by
+name only (it runs `run_checks.py --battery <b> --all`).
 
 Scratch copies only; the canonical DB is never written (hash recorded around every step). It does not judge.
 Faults it corrects: the observed phrase is a CONTIGUOUS bigram of the quote; every extraction carries a locator;
@@ -24,7 +28,7 @@ SLUG = "accessible-circulation-geometry"
 
 def anchor(db):
     sc = rows(db, "select file_sha256 from source_scans where ref_id=? and text_scope='full' limit 1", (REF,))
-    ex = rows(db, "select extraction_id,parameter_id,claim_text,claimed_value,claimed_unit,claim_type,source_section from source_value_extractions where ref_id=? order by extraction_id limit 1", (REF,))
+    ex = rows(db, "select extraction_id,parameter_id,claim_text,claimed_value,claimed_unit,claim_type,source_section,comparator from source_value_extractions where ref_id=? order by extraction_id limit 1", (REF,))
     return (sc[0][0] if sc else None), (ex[0] if ex else None)
 
 
@@ -45,9 +49,24 @@ def loc_args(db):
     return out
 
 
+def cmp_args(ex):
+    """The anchor row's comparator as an add-extraction flag, when it has one (a value-supplying numerical row needs it)."""
+    return ("--comparator", ex[7]) if ex[7] else ()
+
+
+def free_lens(db, ex):
+    """The first active identity code on which the anchor's source and parameter hold no extraction yet (derived, not typed)."""
+    r = rows(db, "select identity_code from base_taxonomy_identity i where status='active' and not exists (select 1 from source_value_extractions e where e.ref_id=? and e.parameter_id=? and e.identity_code=i.identity_code) order by identity_code limit 1", (REF, ex[1]))
+    return r[0][0] if r else None
+
+
+def has_cell(db, ex, lens):
+    return bool(rows(db, "select 1 from source_value_extractions where ref_id=? and parameter_id=? and identity_code=? limit 1", (REF, ex[1], lens)))
+
+
 def add_ext(R, tag, ex, lens, value=None, unit=None, expect="a correctly cited second row under another lens is accepted", db=None, extra=()):
-    eid, pid, claim, val, u, ctype, sect = ex
-    extra = (*loc_args(db or R.db), *extra)
+    eid, pid, claim, val, u, ctype, sect, _cmp = ex
+    extra = (*loc_args(db or R.db), *cmp_args(ex), *extra)
     return R.dbpy(tag, expect, "add-extraction", "--ref-id", REF, "--parameter-id", str(pid), "--claim-type", ctype or "numerical",
                   "--claimed-value", str(value if value is not None else val), "--claimed-unit", (unit if unit is not None else u) or "",
                   "--claim-text", claim[:300], "--source-section", sect or "STRESS table", "--extraction-method", "full-read", "--identity", lens,
@@ -79,6 +98,9 @@ def part_real(out):
         R.dbpy("real.adjudicate-names-existing", "the observation names the existing parameter's term", "adjudicate-term", "--observation-id", str(obs), "--outcome", "NAMES-EXISTING", "--term-id", term,
                "--rationale", "STRESS-FIXTURE: the phrase names the existing parameter", "--session", S)
     for lens in ("MOB", "SCI", "MS", "ALL"):
+        if has_cell(R.db, ex, lens):
+            R.note(f"real.add-extraction.{lens}.skipped", "the anchor (or an earlier step) already carries this cell: a repeat is refused as a byte-identical copy, which proves nothing", {"lens": lens, "parameter_id": ex[1]})
+            continue
         add_ext(R, f"real.add-extraction.{lens}", ex, lens)
     e = rows(R.db, "select extraction_id from source_value_extractions where ref_id=? order by extraction_id desc limit 2", (REF,))
     if len(e) == 2:
@@ -101,8 +123,8 @@ def part_real(out):
     shutil.copyfile(CANON, canon_copy)
     R.step("real.emit-batch-sql", "capture the judgment + specification delta", [PY, "-I", "scripts/research/emit_batch_sql.py", "--scratch", str(R.db), "--canonical", str(canon_copy), "--out", str(out_sql)])
     clone = R.scratch / "clone"
-    if not clone.exists():
-        R.step("real.clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
+    shutil.rmtree(clone, ignore_errors=True)  # a reused clone keeps the previous run's migration
+    R.step("real.clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
     if out_sql.exists() and out_sql.stat().st_size:
         R.step("real.emit-data-migration", "migration file in the clone", [PY, "-I", "scripts/emit_data_migration.py", "--session", S + ".md", "--summary", "STRESS-FIXTURE real chain", "--input", str(out_sql),
                "--output-dir", str(clone / "scripts/migrations")], cwd=clone, db=canon_copy)
@@ -122,6 +144,11 @@ def part_guards(out):
     sha_, ex = anchor(R.db)
     if not (sha_ and ex):
         return finish_(R)
+    lens = free_lens(R.db, ex)
+    if not lens:
+        R.note("guards.skip", "an active lens with no extraction on the anchor's source and parameter exists", {"parameter_id": ex[1]})
+        return finish_(R)
+    R.note("guards.lens", "the lens the guard cases use, derived by query", {"lens": lens})
     base = R.scratch / "guards-base.db"
     shutil.copyfile(R.db, base)
     R.dbpy("guards.record-scan", "scan recorded so the writer reaches its fidelity guards", "record-scan", "--ref-id", REF, "--mode", "catalogue", "--text-scope", "full", "--file-sha256", sha_, "--method", "full-read", "--session", S, db=base)
@@ -130,15 +157,15 @@ def part_guards(out):
     for name, v, u in cases:
         fresh = R.scratch / f"g-{name}.db"
         shutil.copyfile(base, fresh)
-        add_ext(R, f"guards.{name}", ex, "MOB", value=v, unit=u, expect=f"claimed value {v!r} against a quote holding {ex[3]!r}: control accepted, mismatches refused", db=fresh)
+        add_ext(R, f"guards.{name}", ex, lens, value=v, unit=u, expect=f"claimed value {v!r} against a quote holding {ex[3]!r}: control accepted, mismatches refused", db=fresh)
     # quote variants: a mark-only edit, a mixed-script substitution
     for name, q in (("quote-extra-space", claim_variant(ex[2], lambda s: s.replace(" ", "  ", 1))), ("quote-homoglyph", claim_variant(ex[2], lambda s: s.replace("a", "а", 1))),
                     ("quote-truncated", ex[2][: max(40, len(ex[2]) // 2)])):
         fresh = R.scratch / f"g-{name}.db"
         shutil.copyfile(base, fresh)
         R.dbpy(f"guards.{name}", "a quote altered only by whitespace/homoglyph is judged against the held text", "add-extraction", "--ref-id", REF, "--parameter-id", str(ex[1]), "--claim-type", "numerical",
-               "--claimed-value", str(ex[3]), "--claimed-unit", ex[4] or "", "--claim-text", q[:300], "--source-section", ex[6] or "STRESS", "--extraction-method", "full-read", "--identity", "MOB",
-               "--figure-role", "claim", "--relation", "none", "--session", S, db=fresh)
+               "--claimed-value", str(ex[3]), "--claimed-unit", ex[4] or "", "--claim-text", q[:300], "--source-section", ex[6] or "STRESS", "--extraction-method", "full-read", "--identity", lens,
+               "--figure-role", "claim", "--relation", "none", "--session", S, *loc_args(R.db), *cmp_args(ex), db=fresh)
     finish_(R)
 
 
@@ -152,7 +179,9 @@ def part_batches(out):
     a, b = SCRATCH / "acoustics" / "topic.db", SCRATCH / "reach" / "topic.db"
     if not (a.exists() and b.exists()):
         R.note("batches.skip", "round-1 scratch DBs present", {"missing": [str(p) for p in (a, b) if not p.exists()]})
-        return finish_(R)
+        # no scenarios.tsv is written: the part did not finish, and stress_diff.py reports it rather than comparing two empty parts
+        raise RuntimeError("batches precondition unmet: run stress_run.py --topics acoustics,reach --out DIR first (it leaves <tmp>/guidebook-stress/{acoustics,reach}/topic.db); missing: "
+                           + ", ".join(str(p) for p in (a, b) if not p.exists()))
     canon_a = R.scratch / "canon-with-A.db"
     shutil.copyfile(CANON, canon_a)
     R.step("batches.capture-A", "capture batch A against canonical", [PY, "-I", "scripts/research/emit_batch_sql.py", "--scratch", str(a), "--canonical", str(CANON), "--out", str(R.scratch / "A.sql")], db=canon_a)
@@ -184,9 +213,14 @@ def part_lifecycle(out):
     R.sql("lifecycle.ledger-after-define", "every source now owes the new parameter", "select status,count(*) from v_scan_ledger group by 1")
     R.dbpy("lifecycle.targeted-scan", "read ONE source against the new parameter", "record-scan", "--ref-id", REF, "--mode", "targeted", "--target-parameter-id", str(new), "--text-scope", "full", "--file-sha256", sha_, "--method", "full-read", "--session", S)
     R.sql("lifecycle.ledger-after-targeted", "that source's pair is discharged, the rest stay owed", "select status,count(*) from v_scan_ledger group by 1")
-    R.dbpy("lifecycle.merge-parameter", "merge the new parameter into another (a change of grain)", *["merge-parameter", *build_args("merge-parameter", ctx(R.db), S)[0]])
+    into = rows(R.db, "select parameter_id from base_parameters p where status='active' and parameter_id<>? and not exists (select 1 from determination_gates g where g.parameter_id=p.parameter_id and g.resolved_at is null) order by parameter_id limit 1", (new,))
+    if not into:
+        R.note("lifecycle.skip-merge", "an active parameter with no open gate exists to merge into", {"new": new})
+        return finish_(R)
+    into = into[0][0]
+    R.dbpy("lifecycle.merge-parameter", "merge the new parameter into another with no open gate (a change of grain)", "merge-parameter", "--from", str(new), "--into", str(into), "--reason", "STRESS-FIXTURE: change of grain", "--session", S)
     R.sql("lifecycle.ledger-after-merge", "what a change of grain did to completed scans", "select status,count(*) from v_scan_ledger group by 1")
-    R.dbpy("lifecycle.retire-parameter", "retire a parameter with no open gate", "retire-parameter", "--parameter-id", str(new), "--reason", "STRESS-FIXTURE", "--session", S)
+    R.dbpy("lifecycle.retire-parameter", "retire a parameter with no open gate", "retire-parameter", "--parameter-id", str(into), "--reason", "STRESS-FIXTURE", "--session", S)
     R.sql("lifecycle.ledger-after-retire", "ledger after retire", "select status,count(*) from v_scan_ledger group by 1")
     finish_(R)
 
@@ -198,14 +232,23 @@ def part_reentry(out):
     if not (sha_ and ex):
         return finish_(R)
     R.dbpy("reentry.record-scan", "scan", "record-scan", "--ref-id", REF, "--mode", "catalogue", "--text-scope", "full", "--file-sha256", sha_, "--method", "full-read", "--session", S)
-    add_ext(R, "reentry.add-extraction", ex, "MOB")
+    if has_cell(R.db, ex, "MOB"):
+        R.note("reentry.add-extraction.skipped", "the anchor already carries the MOB cell: a repeat is refused as a byte-identical copy, which proves nothing", {"lens": "MOB", "parameter_id": ex[1]})
+    else:
+        add_ext(R, "reentry.add-extraction", ex, "MOB")
     R.step("reentry.assess-1", "determine", [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(R.db), "--emit-sql", str(R.scratch / "a1.sql"), "--parameter-id", str(ex[1]), "--slug", SLUG,
            "--identity", "MOB", "--session", S, "--stamp", "2026-11-12 00:00:00"])
     spec = rows(R.db, "select max(specification_id) from specifications")[0][0]
-    c = ctx(R.db)
+    gate = None
     for v in ("raise-determination-gate", "resolve-determination-gate", "raise-follow-up", "resolve-follow-up"):
         args, _ = build_args(v, ctx(R.db), S)
-        R.dbpy(f"reentry.{v}", f"{v} on the live determination's data", v, *args)
+        if v == "raise-determination-gate":
+            args += ["--trigger-ref-id", REF]  # the pointer: tier and evidence type are read from the held source
+        if v == "resolve-determination-gate" and gate:
+            args[args.index("--gate-id") + 1] = str(gate)  # resolve the gate the raise created, not a pre-existing one
+        rc, _, _ = R.dbpy(f"reentry.{v}", f"{v} on the live determination's data", v, *args)
+        if v == "raise-determination-gate" and rc == 0:
+            gate = rows(R.db, "select max(gate_id) from determination_gates")[0][0]
     R.dbpy("reentry.retire-specification", "retire the determination in place", "retire-specification", "--specification-id", str(spec), "--reason", "STRESS-FIXTURE re-entry", "--session", S)
     R.step("reentry.assess-2-same-cell", "re-determine the same cell after retirement: allowed, and does the new row point back at the retired one?", [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(R.db),
            "--emit-sql", str(R.scratch / "a2.sql"), "--parameter-id", str(ex[1]), "--slug", SLUG, "--identity", "MOB", "--session", S, "--stamp", "2026-11-12 00:00:01"])
@@ -239,10 +282,11 @@ def part_probes(out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=str(HERE / "results3"))
-    ap.add_argument("--parts", default="probes,real,guards,batches,lifecycle,reentry,batteries")
+    ap.add_argument("--out", required=True)  # no default: Run() empties each log.jsonl it opens, and RETAINED.md keeps those logs
+    ap.add_argument("--parts", default="probes,real,guards,batches,lifecycle,reentry")  # batteries is callable by name; it runs run_checks.py --all
     a = ap.parse_args()
     s0 = sha(CANON)
+    failed = []
     fns = {"real": part_real, "guards": part_guards, "batches": part_batches, "lifecycle": part_lifecycle, "reentry": part_reentry, "batteries": part_batteries, "probes": part_probes}
     for p in a.parts.split(","):
         try:
@@ -250,7 +294,11 @@ def main():
         except Exception:
             import traceback
             print("PART FAILED", p, traceback.format_exc())
+            failed.append(p)
     print("canonical sha256 before/after:", s0, sha(CANON), "UNCHANGED" if s0 == sha(CANON) else "!!! MOVED !!!")
+    if failed:
+        print("PARTS FAILED:", ",".join(failed))
+        sys.exit(1)
 
 
 if __name__ == "__main__":

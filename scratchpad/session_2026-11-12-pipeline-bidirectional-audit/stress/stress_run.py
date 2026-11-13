@@ -12,13 +12,13 @@ into a source tree (emit_data_migration, migrate_db) run in a local clone.
 
 Fixtures are marked STRESS-FIXTURE and live only in the scratch DBs.
 """
-import argparse, hashlib, json, os, re, shutil, sqlite3, subprocess, sys, time, traceback
+import argparse, hashlib, json, os, re, shutil, sqlite3, subprocess, sys, tempfile, time, traceback
 from pathlib import Path
 
-REPO = Path("/home/user/guidebook")
+REPO = Path(__file__).resolve().parents[3]  # the scripts live inside the checkout they test; their location is the fact
 CANON = REPO / "data/guidebook.db"
 HERE = Path(__file__).resolve().parent
-SCRATCH = Path("/tmp/claude-0/-home-user-guidebook/4a95df3b-fb51-5352-bc12-be9e9394a981/scratchpad/stress-run")
+SCRATCH = Path(tempfile.gettempdir()) / "guidebook-stress"
 PY = sys.executable
 
 TOPICS = {
@@ -365,7 +365,7 @@ def pass2_backward(R, T):
              left join source_value_extractions e on e.parameter_id=p.parameter_id
              left join evidence_sources s on s.ref_id=e.ref_id
              left join source_locators l on l.ref_id=s.ref_id
-             left join search_candidates sc on sc.locator=l.locator
+             left join search_candidates sc on sc.resolved_ref_id=s.ref_id
              left join search_executions se on se.exec_id=sc.exec_id
             group by 1""")
     R.sql("backward.spec-to-source-walk", "retired specifications -> links -> extractions -> sources",
@@ -437,19 +437,28 @@ def pass6_determinism(R, T):
 
 
 def pass5_adversarial(R, T):
-    R.dbpy("adversarial.retire-parameter-with-extractions", "retire a parameter that has extractions: expect refusal or cascade", "retire-parameter", "--parameter-id", "3",
-           "--reason", "STRESS-FIXTURE", "--session", R.sess)
-    R.sql("adversarial.post-retire-state", "what did the retire do to extractions/specifications?",
-          "select (select count(*) from source_value_extractions where parameter_id=3), (select retired_at from base_parameters where parameter_id=3)")
-    R.dbpy("adversarial.number-in-words-claim", "an extraction whose number is written in words", "add-extraction", "--ref-id",
-           rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0], "--parameter-id", "9", "--claim-type", "numerical",
+    # a parameter that has extractions and no open gate, so the retire meets its own rule, not the gate's
+    tgt = rows(R.db, "select p.parameter_id from base_parameters p where p.status='active' and exists (select 1 from source_value_extractions e where e.parameter_id=p.parameter_id) "
+               "and not exists (select 1 from determination_gates g where g.parameter_id=p.parameter_id and g.resolved_at is null) order by p.parameter_id limit 1")
+    if tgt:
+        tgt = tgt[0][0]
+        rc, _, _ = R.dbpy("adversarial.retire-parameter-with-extractions", "retire a parameter that has extractions and no open gate: expect refusal or cascade", "retire-parameter", "--parameter-id", str(tgt),
+                          "--reason", "STRESS-FIXTURE", "--session", R.sess)
+        st = rows(R.db, "select (select count(*) from source_value_extractions where parameter_id=?), (select status from base_parameters where parameter_id=?)", (tgt, tgt))[0]
+        R.note("adversarial.post-retire-state", "the state agrees with the retire's outcome: rc 0 -> retired, refused -> active; extractions kept either way",
+               {"parameter_id": tgt, "retire_rc": rc, "extractions": st[0], "status": st[1], "consistent": (rc == 0) == (st[1] == "retired")})
+    else:
+        R.note("adversarial.skip-retire", "an active parameter with extractions and no open gate exists", {})
+    ref = rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0]
+    par = rows(R.db, "select l.parameter_id from v_scan_ledger l join base_parameters p using(parameter_id) where l.ref_id=? and l.status='NOT-READ' and p.status='active' order by 1 limit 1", (ref,))
+    R.dbpy("adversarial.number-in-words-claim", "an extraction whose number is written in words", "add-extraction", "--ref-id", ref, "--parameter-id", str(par[0][0] if par else 0), "--claim-type", "numerical",
            "--claimed-value", "sixty", "--claimed-unit", "cm", "--claim-text", T["strings"].get("number-in-words", "STRESS-FIXTURE"), "--extraction-method", "skim", "--identity", "ALL", "--figure-role", "claim", "--relation", "none", "--session", R.sess)
 
 
 def writepath_replay(R, T):
     clone = R.scratch / "clone"
-    if not clone.exists():
-        R.step("writepath.clone", "local clone for write-path replay", ["git", "clone", "--quiet", str(REPO), str(clone)])
+    shutil.rmtree(clone, ignore_errors=True)  # a reused clone keeps the previous run's migration
+    R.step("writepath.clone", "local clone for write-path replay", ["git", "clone", "--quiet", str(REPO), str(clone)])
     canon_copy = R.scratch / "canonical-copy.db"
     shutil.copyfile(CANON, canon_copy)
     out_sql = R.scratch / "batch.sql"
@@ -478,7 +487,7 @@ def finish(R):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--topics", default="acoustics,reach,thermal,luminance,circadian,flash,grabbar,cost,method")
-    ap.add_argument("--out", default=str(HERE / "results"))
+    ap.add_argument("--out", required=True)  # no default: Run() empties each log.jsonl it opens, and RETAINED.md keeps those logs
     a = ap.parse_args()
     s0 = sha(CANON)
     for name in a.topics.split(","):
@@ -494,6 +503,7 @@ def main():
         names = a.topics.split(",")
         R = Run("crosstopic", a.out)
         clone = R.scratch / "clone"
+        shutil.rmtree(clone, ignore_errors=True)  # a reused clone keeps the previous run's migration
         R.step("clone", "local clone", ["git", "clone", "--quiet", str(REPO), str(clone)])
         made = 0
         for nm in names[:3]:

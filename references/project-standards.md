@@ -6213,3 +6213,71 @@ OI-50 STATUS: ANSWERED BY THE OWNER
 CONDITION: any session building the T-4 agreement task, writing a determination's marker or value, tagging or crossing a mobility figure, minting or rewording `UPL`, `LLD`, `WHEEL` or `WALKAID`, building an element page, batching a scan, or minting "barrier-free path of travel".
 ACTION: (1) T-4: ask the three open edges of OR-5b first; build the divergence rule as OR-6c states it (higher tier states and the lower tier's dispute is noted; Co-1 and T1 are one rank, and a same-rank divergence waits for an Opus-class approach). (2) OR-22b: a floor claim confirmed by absence reads the confirming study's band. (3) OR-23b: a registry citation is a valid route for T4 to T6 only. (4) OR-14b: file the element-determination tooling task; T-037 builds no element page until it has merged. (5) OR-25: batch scans by source. (6) T-102 writes the OI-03 crossings; T-116 and T-025 use the OI-49 wording. (7) Treat the [ASSUMPTION] marks above as unratified, and the two [ASSUMPTION] marks of the eighth and ninth sets as ratified by OI-50. This supersedes, for the element case only, the R17 deferral of cross-parameter synthesis tables.
 DATE: 2026-11-13 — owner answers (selected options, and typed words where quoted), above.
+
+## The link table for a figure's lens codes — what OD-39 and OR-1c let T-018 build (migration 131)
+
+On the owner's answer to OD-39 (`grep -n -F "OD-39: the 2026-11-06 link-table ruling supersedes" references/project-standards.md`), the link-table ruling of 2026-11-06 (OR-1c: *"link table unless that is more prone to errors"*) supersedes the clause of the 2026-08-28 ACTION that forbade a `population_*` link table. The owner's words carry no scope: *"Yes, the 2026-11-06 ruling supersedes that clause"*. T-018 builds `extraction_lens_links`, one row per (figure, lens code), and `v_live_lens_links` as the one read surface. The recorder's correction of 2026-11-12 (`grep -n -F "Correction 2026-11-12 — to the fifth set" references/project-standards.md`) explains why this is a prose entry and carries no machine `SUPERSEDES` pair: the audit cannot anchor a target that is itself in this ledger.
+
+**[ASSUMPTION: the supersession is read as covering a figure's lens codes only, not `specifications` or any other table that carries lens columns — the owner's answer names no table; the reading follows OR-1c's own subject, which is the figure ("several codes of one model on a figure"). Unratified; if the owner means a wider reading, every table in the command below is in question.]**
+
+**[ASSUMPTION: the rest of the 2026-08-28 ACTION is read as standing where D-0182 left it — four typed lens columns with real foreign keys, the lens names in the name (no `population`), `population_code` retired in favour of the four — because OD-39 names only the `population_*` link-table clause. Unratified.]** The clause "Never two lenses in one row" does NOT stand as a ruling: D-0182 (owner 2026-09-01, the entry headed "The lens CHECK is at least one, not exactly one", `grep -n -F "overturned that clause" references/project-standards.md`) overturned it, holding that *"a link MUST be tied to at least one"* and *"ideally it ties into many"*. A link row of `extraction_lens_links` states exactly one code by a CHECK. That is T-018's design choice for a new table (it keeps every lens a typed foreign key), not a restoration of the 2026-08-28 clause.
+
+**An open reading of OR-1c, not a settled one.** The owner's decision sheet asked about a figure or a determination. T-018 builds the link table for figures only, and a determination's cell stays a key with one code per model. Whether the link table should cover determinations too is unanswered (OI-55 in the open-items plan). Nothing in this entry decides it.
+
+The figure's own four lens columns are no longer a home for its lens: migration 131 carries every value into `extraction_lens_links` as a `carried` link (count them with `select count(*), count(distinct extraction_id) from extraction_lens_links where basis='carried'`: one row per value, so more rows than figures where a figure holds several), holds the columns NULL by CHECK, and does not drop them because committed data migrations INSERT them. D-0182's rule that a link be tied to at least one lens now lives in the writers and in the blocking `test_db_integrity` case T018-05, not in a CHECK on the figure.
+
+The tables that carry lens columns are derived, never listed here: `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);L={'identity_code','icf_code','needs_code','medical_code'};print([(t,[x for x in (r[1] for r in c.execute(f'pragma table_info(\"{t}\")')) if x in L]) for (t,) in c.execute(\"select name from sqlite_master where type='table'\")])"`, keeping those whose list is non-empty. Under the reading above, only `source_value_extractions` (now held NULL) moved to links.
+
+CONDITION: any session asking whether a figure may carry several codes of one lens model, whether a `population_*` link table is forbidden, where a figure's lens lives, whether determinations take a link table, or writing or capturing an `INSERT` that names a lens column of `source_value_extractions`.
+ACTION: (1) Read a figure's lens from `v_live_lens_links`, never from the four columns on `source_value_extractions`. (2) Write it with `add-extraction` / `derive-extraction` (repeat the lens flag; `--lens-basis` and `--lens-basis-text` are required) and `add-lens-link` / `retire-lens-link`. (3) A research batch captured before migration 131 merged, and merged after it, holds an `INSERT` of a lens column that the table's CHECK refuses; capture it again through those verbs. (4) Treat the two [ASSUMPTION] marks above as unratified, and the determination question as open.
+DATE: 2026-11-13 — recorded by the T-018 executor on the owner's answer to OD-39; not itself an owner statement.
+
+## Owner statements 2026-11-13 (eleventh set) — the Edmonton checklist digest: questions and the refusal register
+
+Given in the coordinating session of the Edmonton checklist digest (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), dated by the server clock, UTC, and relayed to the fold of the case study by the coordinator's brief (`scratchpad/session_2026-11-13-edmonton-checklist-pass/FOLD-BRIEF.md`). The questions Q1 to Q9 and their framing are copied from the hand-off to the adjudicator (`scratchpad/session_2026-11-13-edmonton-checklist-pass/HANDOFF-TO-FABLE.md` section 2); statements 1 to 5 and the instructions from the brief. [ASSUMPTION: the relay quotes the owner faithfully — basis: the two relays agree word for word; the adjudicator flagged that nothing should rest on these words until they are in this ledger, which is why they are recorded here.] **These are questions, proposals and instructions, not rulings,** except the two sentences of Q1 marked below. Nothing here answers a register decision, so no `STATUS:` line is written.
+
+**The framing messages, in order:**
+
+> "perform a research pass on this PDF. what do you extract? give me a document with everything you did"
+> "use the research approach from pipeline."
+> "ie how would you digest this PDF in pipeline"
+> "again, you are treating this PDF as if it came up in a research sweep"
+> "you must digest it following the pipeline rules"
+> "show me a report of what you did for the digest including results"
+
+**The questions, in order:**
+
+> **Q1.** "best practice is the best/most forgiving/etc of all values/approaches for a given term. isn't it presumptuous to have a best practice column at this stage? differentiate as code floor vs above code floor"
+> **Q2.** "what does the workplan plan to do to address all the parameters/subjects within this PDF that are not currently defined as a term in base?"
+> **Q3.** "how do we dynamically improve our base for terminology/parameters/concepts?"
+> **Q4.** "how do we ensure that we aren't duplicating if we add dynamically, ie find equivalencies and synonyms?"
+> **Q5.** "how do we differentiate between something as a clause/branch/subitem for a term/parameter versus its own?"
+> **Q6.** "how do you handle different values for a parameter based upon different access needs/ICF codes/identities? or different design modes of universal vs population vs person specific?"
+> **Q7.** "how do you handle a commercial versus residential versus public?"
+> **Q8.** "and how do you handle whether something is too granular to be valuable versus too encompassing to be useful?"
+> **Q9.** "how do you combine things like stair widths and handrails? different parameters, but belonging together in specification?"
+
+**What Q1 states as a rule.** Two of its sentences state a rule rather than ask: "best practice is the best/most forgiving/etc of all values/approaches for a given term" restates the 2026-10-30 rulings that best practice is the most accommodating value for the intended group, an output of the determination and not a label on an input; and "differentiate as code floor vs above code floor" adds an instruction. [ASSUMPTION: the instruction is read as — derive floor and above-floor against the code stratum of the same parameter and jurisdiction, never type it on a figure; record a source's own "code" marking as root attribution (the code's `ref_id` when held, else `untraced` with the marking quoted as the classification basis) and the source's own pairing of a higher figure with a code figure as a relation edge; and store no "best practice" on any input row — basis: the adjudication of Q1, `scratchpad/session_2026-11-13-edmonton-checklist-pass/ADJUDICATION.md` section 1, which rests on OR-19's presumed echo and rule 8; unratified.] The question in Q1 ("isn't it presumptuous…") was a question about a column of the digest's report, never of the schema.
+
+**What the pipeline cannot execute (2026-11-13), in this order:**
+
+> **1.** "it may be worthwhile to have a mechanism whereby when our scripting/pipeline cannot execute something, we explicitly flag it as a gap/issue for future resolution in a register alongside having an agent fix it by hand with correct context so we aren't losing content alongside filling in its resolution and proposed amendments for that gap/issue in register"
+> **2.** "that way we aren't held up"
+> **3.** "it could be like a layer 2 protocol or something"
+> **4.** "refusals will need to be dynamically typed/categorized and read by something so that we can have a proper register of specific instances of refusals as well as a way to understand them as a class so that we are able to point towards area for resolution"
+> **5.** "it could also then be a cue to run a script/double check a protocol or skill/etc to ensure that the digest was actually performed correctly"
+
+[ASSUMPTION: statement 1's "fix it by hand" is read as the agent recording the intended row, its refusal and a proposed amendment in the register, the content being replayed through the sanctioned writer once the tooling is fixed — basis: CLAUDE.md rules 3 and 10 and §4 leave only writing through an existing verb or parking, and the words do not say "into the database"; the other reading, a canonical row written by hand, is put to the owner as a register question and is not acted on.] [ASSUMPTION: statement 3's "layer 2 protocol" is read as a per-stage protocol (acknowledge, refuse-and-park, replay) on a Layer 1 carrier under a Layer 0 gate, in the layers of the 2026-09-09 ruling — basis: the adjudication's Q10; unratified.]
+
+**The instructions:**
+
+> "pass off all of my questions and your answers about Edmonton PDT to Fable for adjudication and reconciliation with aim to incorporate into pipeline with view of ensuring best long-term integrity of project, legibility and logical coherence, and disability coverage"
+> "you need to consider how to resolve all issues identified"
+> "then fold into remediation plan"
+> "remember the fable is treating the Edmonton PDF and related questions/concerns I raised alongside your responses subsequently as a case study to be used to improve entire pipeline"
+
+[ASSUMPTION: "PDT" is PDF — basis: the hand-off's reading; the only document in question is the Edmonton checklist PDF.]
+
+CONDITION: any session digesting a source whose figures a code also states, judging a figure's lens or comparator, deciding what `design_scale` holds, typing a figure's circumstance, minting or declining terms from a single source, building or reading the refusal register, or asked what the owner said about the Edmonton checklist.
+ACTION: (1) The statements are carried by the remediation plan (`workplan/2026-11-12-bidirectional-pipeline/`) as follows, and by nothing else: Q1 by T-035 item 2, T-071 step 3 and T-087; Q2 and Q3 by T-079's deferred-adjudication arm, T-087 and register decision OD-50; Q4 by T-029 item 2 (with T-033 as already planned); Q5 and Q8 by OD-24 as already resolved under delegation; Q6 by OD-47, OD-48 and T-056; Q7 by OD-49, T-091 and T-092; Q9 by T-060's design constraint and T-029; statements 1 to 5 by T-088 and T-089, with OD-54 holding the reading the assumption above sets aside; the instruction's "disability coverage" by T-090. (2) The adjudication's eight owner questions are register decisions OD-47 to OD-54, all open and not yet asked (`REMEDIATION-WORKPLAN.md` §8; phone-ready forms in `DECISION-CLOSURE.md` §4); this entry answers none of them. (3) Treat every [ASSUMPTION] above as unratified.
+DATE: 2026-11-13 — owner statements (questions, proposals and instructions), relayed and recorded on contact by the fold of the Edmonton case study; not owner answers.
