@@ -16,42 +16,42 @@
   {
     "started": "2026-11-13T03:04:28",
     "role": "other",
-    "bytes": 463583,
+    "bytes": 1280653,
     "agent_id_prefix": "a00a4358",
     "file": "2026-11-13T03-04-28_other_a00a4358.jsonl"
   },
   {
     "started": "2026-11-13T03:04:28",
     "role": "other",
-    "bytes": 432923,
+    "bytes": 964641,
     "agent_id_prefix": "a18bff39",
     "file": "2026-11-13T03-04-28_other_a18bff39.jsonl"
   },
   {
     "started": "2026-11-13T03:04:28",
     "role": "other",
-    "bytes": 434848,
+    "bytes": 1103647,
     "agent_id_prefix": "a7b763bf",
     "file": "2026-11-13T03-04-28_other_a7b763bf.jsonl"
   },
   {
     "started": "2026-11-13T03:04:28",
     "role": "other",
-    "bytes": 462711,
+    "bytes": 981257,
     "agent_id_prefix": "a9e08c08",
     "file": "2026-11-13T03-04-28_other_a9e08c08.jsonl"
   },
   {
     "started": "2026-11-13T03:04:28",
     "role": "other",
-    "bytes": 433025,
+    "bytes": 1377448,
     "agent_id_prefix": "ab051092",
     "file": "2026-11-13T03-04-28_other_ab051092.jsonl"
   },
   {
     "started": "2026-11-13T03:04:28",
     "role": "other",
-    "bytes": 458046,
+    "bytes": 889813,
     "agent_id_prefix": "ad481f5e",
     "file": "2026-11-13T03-04-28_other_ad481f5e.jsonl"
   }
