@@ -274,9 +274,31 @@ def next_gap_id() -> str:
     return f"GAP-{int(row['gap_id'].split('-')[1]) + 1:03d}"
 
 
+def _check_language(conn, language: str) -> None:
+    """Refuse a language `lang_jur_map` does not hold (the 19-language doctrine; a new language is
+    a doctrine change, owner question 5). One home for `log-search` and `add-gap`."""
+    _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
+    if _langs and language not in _langs:
+        raise Refusal(
+            f"--language {language!r} is not a language lang_jur_map holds "
+            f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
+            f"languages (rule 8); a language is added there, not at the search.")
+
+
 def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
+    """Insert a gap. A gap that has NO cell may name what it is a gap in (parameter, the four lens
+    codes, jurisdiction, language); each is refused by name before any row is written, the way
+    `log_search` refuses its own. A gap the assessment engine files for a pending cell names none of
+    these: its cell already holds them, reached through `specifications.gap_register_id` (rule 5)."""
     row = {**data, **audit(session)}
+    if row.get("language") is not None:
+        row["language"] = row["language"].strip().upper()
+    dbcore.check_jurisdiction(row.get("jurisdiction"), "add-gap --jurisdiction")
     with connect(dry_run) as conn:
+        for col in ("parameter_id", *_LENS_COLUMNS):
+            dbcore.fk_declared(conn, "gaps", col, row.get(col), f"add-gap {col}")
+        if row.get("language") is not None:
+            _check_language(conn, row["language"])
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
@@ -683,7 +705,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
                identity_code: str = None, icf_code: str = None,
                needs_code: str = None, medical_code: str = None,
                parameter_id: int = None, absence_class: str = None,
-               dry_run: bool = False) -> int:
+               gap_id: str = None, dry_run: bool = False) -> int:
     """Append one row to search_executions. Returns its exec_id.
 
     A search names what it looked for: a `slug`, a `parameter_id` (a catalogue
@@ -846,6 +868,8 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         "identity_code": identity_code, "icf_code": icf_code,
         "needs_code": needs_code, "medical_code": medical_code,
         "parameter_id": parameter_id, "absence_class": absence_class,
+        # The gap this search was run to close (nullable: most searches are not for a gap).
+        "gap_id": gap_id,
     }
     if absence_class is not None and results_found != 0:
         raise Refusal(f"--absence-class {absence_class!r} with --results-found {results_found}: only a "
@@ -857,7 +881,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # Each lens code must name a row of the registry its own foreign key points at. Read
         # from PRAGMA foreign_key_list, so no vocabulary is restated here, and a blank value
         # is refused rather than dropped: a blank is not an absence.
-        for col in (*_LENS_COLUMNS, "parameter_id", "slug"):
+        for col in (*_LENS_COLUMNS, "parameter_id", "slug", "gap_id"):
             dbcore.fk_declared(conn, "search_executions", col, row[col], f"log-search {col}")
         if slug:
             _check_slug_filable(conn, slug)       # a MERGED slug is a folded topic (R3-14)
@@ -874,12 +898,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # reported by `_in_research_scope`, and a real search outside it is logged and
         # visible, never refused (R8; the pair refusal made ISO, INT and UN searches
         # unloggable, R2-2).
-        _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
-        if _langs and language not in _langs:
-            raise Refusal(
-                f"--language {language!r} is not a language lang_jur_map holds "
-                f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
-                f"languages (rule 8); a language is added there, not at the search.")
+        _check_language(conn, language)
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
@@ -2412,6 +2431,16 @@ def main():
     p_ag.add_argument("--session", required=True)
     p_ag.add_argument("--skill")
     p_ag.add_argument("--section")
+    # What the gap is a gap IN. For a gap with no cell only: the assessment engine's own gap is
+    # reached from its cell (specifications.gap_register_id), never copied (rule 5). The flag names
+    # are log-search's for the same columns; each value is checked by insert_gap.
+    p_ag.add_argument("--parameter", type=int, help="base_parameters.parameter_id the gap is in")
+    p_ag.add_argument("--identity", help="base_taxonomy_identity.identity_code the gap is in")
+    p_ag.add_argument("--icf", help="base_icf.icf_code the gap is in")
+    p_ag.add_argument("--needs", help="access_needs.need_code the gap is in")
+    p_ag.add_argument("--medical", help="base_taxonomy_medical.medical_code the gap is in")
+    p_ag.add_argument("--jurisdiction", help="the jurisdiction the gap is in (omit for none)")
+    p_ag.add_argument("--language", help="ISO 639-1 language the gap is in (omit for none)")
     p_ag.add_argument("--dry-run", action="store_true")
 
     # close-gap
@@ -2549,6 +2578,8 @@ def main():
     p_ls.add_argument("--needs", help="access_needs.need_code this search covered")
     p_ls.add_argument("--medical", help="base_taxonomy_medical.medical_code this search covered "
                                         "(the registry holds no row until it is filled)")
+    p_ls.add_argument("--gap-id", dest="gap_id",
+                      help="gaps.gap_id this search was run to close (refused unless held)")
     p_ls.add_argument("--dry-run", action="store_true")
 
     # add-source
@@ -2928,6 +2959,12 @@ def main():
             data["skill"] = args.skill
         if args.section:
             data["section"] = args.section
+        for col, val in (("parameter_id", args.parameter), ("identity_code", args.identity),
+                         ("icf_code", args.icf), ("needs_code", args.needs),
+                         ("medical_code", args.medical), ("jurisdiction", args.jurisdiction),
+                         ("language", args.language)):
+            if val is not None:          # a blank is refused by insert_gap, not dropped here
+                data[col] = val
         insert_gap(data, session=args.session, dry_run=args.dry_run)
         _emit({"gap_id": gap_id, "dry_run": args.dry_run})
 
@@ -2991,7 +3028,7 @@ def main():
             identity_code=args.identity, icf_code=args.icf,
             needs_code=args.needs, medical_code=args.medical,
             parameter_id=args.parameter, absence_class=args.absence_class,
-            dry_run=args.dry_run)
+            gap_id=args.gap_id, dry_run=args.dry_run)
         _emit({"exec_id": exec_id, "slug": args.slug,
                "in_research_scope": _in_research_scope(args.language, args.jurisdiction),
                "admitted": len(args.admitted_ref_ids or []),

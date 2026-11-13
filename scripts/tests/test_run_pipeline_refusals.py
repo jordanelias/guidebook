@@ -1572,6 +1572,152 @@ else:
     else:
         for t_ in ("E01", "E02", "E03"):
             skip(t_, "no active direction-less parameter holds an extraction")
+# ─────────────────────── T-013: a gap says what it is a gap in; a search says which gap caused it ───────────────────────
+print("Section T013: add-gap names a cell-less gap's parameter, lens, jurisdiction and language; log-search --gap-id; "
+      "an engine-made gap is reached through its cell, never copied (rule 5)")
+GAP_SUBJECT = ("parameter_id", "identity_code", "icf_code", "needs_code", "medical_code", "jurisdiction", "language")
+gcols = [x[1] for x in con.execute("PRAGMA table_info(gaps)")]
+secols = [x[1] for x in con.execute("PRAGMA table_info(search_executions)")]
+fk_of = lambda t, col: [tuple(f[2:5]) for f in con.execute(f'PRAGMA foreign_key_list("{t}")') if f[3] == col]  # noqa: E731
+record("T013-01", "gaps holds the seven subject columns and search_executions holds gap_id (the lens and parameter "
+                  "columns point where search_executions' own do; gap_id points at gaps)",
+       all(c_ in gcols for c_ in GAP_SUBJECT) and "gap_id" in secols
+       and all(fk_of("gaps", c_) == fk_of("search_executions", c_) and fk_of("gaps", c_)
+               for c_ in ("parameter_id", "identity_code", "icf_code", "needs_code", "medical_code"))
+       and fk_of("search_executions", "gap_id") == [("gaps", "gap_id", "gap_id")],
+       ([c_ for c_ in GAP_SUBJECT if c_ not in gcols], "gap_id" in secols))
+
+A_PAR = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' ORDER BY 1 LIMIT 1")
+A_NEED = scalar("SELECT need_code FROM access_needs ORDER BY 1 LIMIT 1")
+A_MED = scalar("SELECT medical_code FROM base_taxonomy_medical ORDER BY 1 LIMIT 1")
+gap_cli = lambda *a: cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE gap",  # noqa: E731
+                         "--session", S, *a)
+stored_gap = lambda c_, gid: dict(c_.execute("SELECT * FROM gaps WHERE gap_id=?", (gid,)).fetchone() or {})  # noqa: E731
+n_gaps = lambda c_: c_.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]  # noqa: E731
+n_se = lambda c_: c_.execute("SELECT COUNT(*) FROM search_executions").fetchone()[0]  # noqa: E731
+
+
+def se_gap(c_, exec_id):
+    """The gap_id on an execution row, or 'NO-COLUMN' on a database that has no such column (red, not a crash)."""
+    try:
+        return c_.execute("SELECT gap_id FROM search_executions WHERE exec_id=?", (exec_id,)).fetchone()[0]
+    except sqlite3.OperationalError:
+        return "NO-COLUMN"
+
+
+
+if None in (A_PAR, IDENT, ICF, A_NEED, LANG, JUR):
+    skip("T013-02..T013-11", "a registry or the research-scope map is empty")
+else:
+    flags = ["--parameter", str(A_PAR), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED,
+             "--jurisdiction", JUR, "--language", LANG.lower()]
+    want = {"parameter_id": A_PAR, "identity_code": IDENT, "icf_code": ICF, "needs_code": A_NEED,
+            "jurisdiction": JUR, "language": LANG}
+    if A_MED is not None:
+        flags += ["--medical", A_MED]
+        want["medical_code"] = A_MED
+    else:
+        skip("T013-03/medical", "base_taxonomy_medical holds no row, so --medical has no code to store")
+    with scratch() as c:
+        before = n_gaps(c)
+        r = gap_cli(*flags)
+        gid = json.loads(r.stdout)["gap_id"] if r.returncode == 0 and r.stdout.strip() else None
+        row = stored_gap(c, gid) if gid else {}
+        record("T013-02", "add-gap stores each subject flag in its own column (the language folded to the case the map "
+                          "holds), for a gap that has no cell",
+               r.returncode == 0 and n_gaps(c) == before + 1 and all(row.get(k_) == v_ for k_, v_ in want.items()),
+               (r.stderr[-200:], {k_: row.get(k_) for k_ in want}))
+        r0 = gap_cli()
+        g0 = json.loads(r0.stdout)["gap_id"] if r0.returncode == 0 and r0.stdout.strip() else None
+        row0 = stored_gap(c, g0) if g0 else {}
+        record("T013-03", "add-gap with no subject flag still works and leaves the seven columns NULL",
+               g0 is not None and all(row0.get(k_) is None for k_ in GAP_SUBJECT), (r0.stderr[-200:], row0))
+
+        # Each refusal: non-zero exit, the flag or column named, and no row written.
+        bad = {"--parameter": ("parameter_id", str(scalar("SELECT MAX(parameter_id) FROM base_parameters") + 1000)),
+               "--identity": ("identity_code", IDENT + "-NO-SUCH"), "--icf": ("icf_code", ICF + "-NO-SUCH"),
+               "--needs": ("needs_code", A_NEED + "-NO-SUCH"), "--medical": ("medical_code", "NO-SUCH-MEDICAL"),
+               "--jurisdiction": ("jurisdiction", JUR + "-NO-SUCH"), "--language": ("--language", "ZZ")}
+        for k_, (name_, val_) in bad.items():
+            n0 = n_gaps(c)
+            rb = gap_cli(k_, val_)
+            record(f"T013-04{k_[2:5]}", f"add-gap {k_} {val_!r} is refused naming {name_}, and no row is written",
+                   rb.returncode != 0 and name_ in rb.stderr + rb.stdout and n_gaps(c) == n0
+                   and "Traceback" not in rb.stderr and "unrecognized arguments" not in rb.stderr,
+                   (rb.returncode, (rb.stderr + rb.stdout)[-250:]))
+        rb = gap_cli("--identity", "")
+        record("T013-05", "add-gap --identity '' (a blank) is refused, not dropped", rb.returncode != 0 and n_gaps(c) == before + 2,
+               (rb.stderr + rb.stdout)[-200:])
+
+        # log-search --gap-id
+        ls = lambda gap, *a: cli("log-search", "--parameter", str(A_PAR), "--language", LANG, "--query-text",  # noqa: E731
+                                 "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
+                                 "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S,
+                                 "--gap-id", gap, *a)
+        e0 = n_se(c)
+        rl = ls(gid or "NO-GAP")
+        eid = json.loads(rl.stdout)["exec_id"] if rl.returncode == 0 and rl.stdout.strip() else None
+        held_gap = se_gap(c, eid) if eid else None
+        record("T013-06", "log-search --gap-id stores a held gap id on the execution row",
+               eid is not None and n_se(c) == e0 + 1 and gid is not None and held_gap == gid,
+               (rl.stderr[-200:], held_gap))
+        unheld = db.next_gap_id()                       # numeric ordering: the next id, which no row holds
+        e1 = n_se(c)
+        ru = ls(unheld, "--dry-run")
+        rw = ls(unheld)
+        record("T013-07", "log-search --gap-id of a gap nothing holds is refused naming the id (dry run and real), "
+                          "and no row is written", ru.returncode != 0 and rw.returncode != 0
+               and unheld in ru.stderr + ru.stdout and unheld in rw.stderr + rw.stdout and n_se(c) == e1
+               and "unrecognized arguments" not in ru.stderr + rw.stderr,
+               ((ru.stderr + ru.stdout)[-250:], n_se(c) - e1))
+        rn = cli("log-search", "--parameter", str(A_PAR), "--language", LANG, "--query-text", "TASK-FIXTURE probe",
+                 "--engine", "manual", "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected",
+                 "--session", S)
+        enull = json.loads(rn.stdout)["exec_id"] if rn.returncode == 0 and rn.stdout.strip() else None
+        record("T013-08", "a search for no gap still logs, with gap_id NULL",
+               enull is not None and se_gap(c, enull) is None, rn.stderr[-200:])
+        try:
+            via = c.execute("SELECT g.parameter_id FROM search_executions e JOIN gaps g ON g.gap_id=e.gap_id "
+                            "WHERE e.exec_id=?", (eid,)).fetchone() if eid else None
+        except sqlite3.OperationalError as exc:
+            via = exc
+        record("T013-09", "the gap a search points at is read back through the pointer, with the parameter it is in",
+               isinstance(via, sqlite3.Row) and via[0] == A_PAR, via)
+
+    # The engine's own gap: reached from its cell, never copied into the new columns (rule 5).
+    P_ENG = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id NOT IN "
+                   "(SELECT parameter_id FROM specifications) AND parameter_id NOT IN "
+                   "(SELECT parameter_id FROM source_value_extractions) ORDER BY 1 LIMIT 1")
+    if P_ENG is None:
+        skip("T013-10", "every active parameter has a determination or an extraction, so no probe is certain to be pending")
+    else:
+        with scratch() as c:
+            path = os.environ["GUIDEBOOK_DB_PATH"]
+            rj = os.path.join(TMP, "t013-assess.json")
+            # A lens no earlier case writes (E01-E12 use the default identity and ICF): add a needs code (trap a).
+            r = assess(path, P_ENG, SLUG, "--needs", A_NEED, "--report-json", rj)
+            rep = json.load(open(rj))[0] if r.returncode == 0 else {}
+            cell = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, gap_register_id "
+                             "FROM specifications WHERE gap_register_id=?", (rep.get("gap_register_id") or "",)).fetchone()
+            try:
+                g = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, medical_code, jurisdiction, "
+                              "language FROM gaps WHERE gap_id=?", (rep.get("gap_register_id") or "",)).fetchone()
+            except sqlite3.OperationalError:
+                g = None                                   # no such columns: red below, not a crash
+            record("T013-10", "an engine-made gap is reached through its cell (specifications.gap_register_id holds the "
+                              "parameter and lenses) and its own subject columns stay NULL: the fact is held once",
+                   r.returncode == 0 and rep.get("state") == "pending" and cell is not None and g is not None
+                   and tuple(cell)[:4] == (P_ENG, IDENT, ICF, A_NEED) and all(v_ is None for v_ in tuple(g)),
+                   ((r.stdout + r.stderr)[-250:], cell and tuple(cell), g and tuple(g)))
+            pend = c.execute("SELECT parameter_id FROM v_pending WHERE gap_register_id=?", (rep.get("gap_register_id") or "",)).fetchone()
+            record("T013-11", "...and v_pending, the cross-stage view, gives that gap its parameter by the join",
+                   pend is not None and pend[0] == P_ENG, pend)
+
+h_ls, h_ag = cli("log-search", "--help").stdout, cli("add-gap", "--help").stdout
+record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the seven subject flags",
+       "--gap-id" in h_ls and all(f_ in h_ag for f_ in ("--parameter", "--identity", "--icf", "--needs", "--medical",
+                                                          "--jurisdiction", "--language")), (h_ls[-100:], h_ag[-100:]))
+
 # The verified-scan reader: independent oracle (SQL over the base tables), not the script's own query.
 LIVE = ("FROM source_value_extractions x JOIN evidence_sources e USING (ref_id) JOIN base_parameters p "
         "USING (parameter_id) WHERE e.superseded_by_ref_id IS NULL AND p.status='active'")
