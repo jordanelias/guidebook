@@ -2359,8 +2359,10 @@ def main():
                            "design that caused incidents). Only with --figure-role finding.")
     p_ax.add_argument("--comparator",
                       help="Live vocabulary, read from the column's own CHECK "
-                           "('='/'<'/'<='/'>'/'>='/'between'/'approx'). Omit when "
-                           "the figure carries no stated arithmetic relation.")
+                           "('='/'<'/'<='/'>'/'>='/'between'/'approx'). REQUIRED for a "
+                           "value-supplying numerical row (--figure-role claim or derived; "
+                           "'=' for a point): the writer refuses it without one. Omit for a "
+                           "finding, a condition or a non-numerical claim.")
     p_ax.add_argument("--relation", action="append", dest="relations", required=True,
                       help="REQUIRED, repeatable -- one per comparator edge, aligned "
                            "by position with --to-extraction/--to-label/--to-kind/"
@@ -6588,7 +6590,7 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
 # refusal: `E-08 Corridor Clear Width (>=1200 mm Minimum)` biased every finding filed
 # into it, because the container announced the determination before the evidence did.
 # Measured 2026-09-09: no live terms.canonical_en contains any of these.
-_VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
+_VALUE_BEARING = dbcore.VALUE_BEARING          # one definition (T-016): the unit screen reads it too
 # Comparator WORDS are screened in NAMES only. A definition or description is ordinary
 # English ("rather than reflection"), so it keeps `_VALUE_BEARING` (digits, symbols, min/max)
 # and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
@@ -9210,6 +9212,27 @@ def _refuse_live_confirmation(conn, context, to_extraction):
             f"then re-determine. Nothing was written.")
 
 
+def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
+    """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic, run
+    by every writer that can complete a derived row (add-extraction, relate-extraction, amend-extraction to
+    `derived`; derive-extraction reaches it through add-extraction). It reads EVERY `v_derived_figure_check`
+    row of the extraction (one per base x delta pair) and refuses when any disagrees, which is
+    `extraction_relations_integrity`'s own rule, so that blocking check never fails a row a writer accepted.
+    The raise happens inside the caller's transaction, so it rolls back the row and its edges. Tolerance: that
+    check's EPSILON, so the writer accepts the 0.1 + 0.2 = 0.3 it also accepts.
+
+    WHAT IS NOT CHECKED: the view joins on equal units and plain numerals, so a row converted between units
+    (a derived figure in mm over a base in m) or whose base is a range is not compared; integrity reports it
+    UNCHECKED. `--conversion-note` exists only on `derive-extraction` (not on this path), so on this path such a
+    row carries no record of its conversion."""
+    for bad in conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
+                            (extraction_id,)).fetchall():
+        if abs(bad["recomputed"] - bad["stored"]) > 1e-9:
+            raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
+                          f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
+                          f"defect this check exists to stop. Nothing was written.")
+
+
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                          from_figure_role, from_comparator,
                          relation: str, session: str, context: str,
@@ -9815,6 +9838,17 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 dbcore.check_declared(conn, "source_value_extractions", col,
                                       row[col], "insert_extraction")
 
+        # --- the figure must be readable (T-016) ----------------------------------
+        # A unit that is a sentence and a value the engine cannot place on a scale are both left OUT of a
+        # determination's value without anyone being told; refuse them here, with the fix.
+        # (The prefix names add-extraction also when derive-extraction reaches this writer: the writer is
+        # shared and its refusals carry one prefix; see derive_extraction's comment.)
+        for _why in (dbcore.unit_refusal(row.get("claimed_unit")),
+                     dbcore.figure_refusal(value, row.get("claimed_unit"), row.get("comparator"), claim_type),
+                     dbcore.comparator_refusal(figure_role, claim_type, row.get("comparator"))):
+            if _why:
+                raise Refusal(f"add-extraction: {_why}. Nothing was written.")
+
         # --- the relation edges (migration 075's extraction_relations) --------
         # REQUIRED, and checked here rather than only at the parser so the PYTHON
         # API path refuses too -- the same discipline --claim-text already gets.
@@ -9891,6 +9925,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 input_role=edge.get("input_role"), notes=edge.get("notes"),
                 cross_source_reason=edge.get("cross_source_reason"),
                 session=session, context="add-extraction"))
+        if figure_role == "derived":
+            _refuse_derived_mismatch(conn, extraction_id, "add-extraction")
 
         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
                 "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
@@ -9929,6 +9965,8 @@ def relate_extraction(from_extraction: int, relation: str, session: str,
             to_kind=to_kind, stated=stated, quote=quote, input_role=input_role,
             notes=notes, cross_source_reason=cross_source_reason,
             session=session, context="relate-extraction")
+        if row["figure_role"] == "derived" and relation == "derived_from":
+            _refuse_derived_mismatch(conn, from_extraction, "relate-extraction")
     return {"relation_id": rid, "from_extraction_id": from_extraction,
             "relation": relation, "dry_run": dry_run}
 
@@ -10114,6 +10152,9 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                         f"least one derived_from edge carrying input_role=base. "
                         f"extraction {extraction_id} has none -- add one with "
                         f"relate-extraction first.")
+            if _why := dbcore.comparator_refusal(value, row["claim_type"], row["comparator"]):
+                raise Refusal(f"amend-extraction: extraction {extraction_id}: {_why}. Set it first with "
+                              f"amend-extraction --field comparator. Nothing was written.")
             if value == "claim":
                 bad = conn.execute(
                     "SELECT relation FROM extraction_relations "
@@ -10175,6 +10216,10 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             f"UPDATE source_value_extractions SET {field}=?, notes=?, "
             f"updated_at=?, updated_by_session=? WHERE extraction_id=?",
             (value, merged, stamp, session, extraction_id))
+        if field == "figure_role" and value == "derived":
+            # Checked on the UPDATED row, so the view sees it: a base edge alone is accepted above (the delta
+            # may come next), and relate-extraction runs this same check when the delta edge arrives.
+            _refuse_derived_mismatch(conn, extraction_id, "amend-extraction")
     return {"extraction_id": extraction_id, "field": field, "old": old, "new": value,
             "changed": True, "dry_run": dry_run}
 
@@ -10194,6 +10239,15 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
     called at all); the actual WRITE -- the row and both derived_from edges -- is
     the ONE transaction inside that single `insert_extraction` call, the same
     guarantee every other caller of it gets.
+
+    KNOWN DEFECT, recorded by T-016 and NOT repaired here: this verb cannot write a row. Three independent
+    blockers stand in front of `insert_extraction`'s arithmetic, each reached once the one before is cleared
+    (tests T016-N11c, N11d, N11e assert them, and go red when the verb is repaired):
+      1. it passes no locator (no `source_section`, no `loc_*`), so R3 refuses every row it builds;
+      2. a value-supplying numerical row needs `--comparator` and `p_dx` has no default for it;
+      3. its `claim_text` is "the analyst's computation statement" (see the edge comment below), which the
+         verbatim check refuses unless a source says it in those words.
+    The refusals reached through it carry the prefix `add-extraction:` (the writer is shared).
     """
     with dbcore.connect(dry_run, readonly=True) as conn:
         base_row = conn.execute(
@@ -10241,20 +10295,11 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
             except (TypeError, ValueError):
                 return None
         bn, dn = _num(base_row["claimed_value"]), _num(delta_row["claimed_value"])
-        if claimed_value is not None:
-            cn = _num(claimed_value)
-            if bn is not None and dn is not None and cn is not None \
-                    and abs(cn - (bn + dn)) > 1e-9:
-                raise Refusal(
-                    f"derive-extraction: --claimed-value {claimed_value} does not "
-                    f"equal base + delta (base extraction {base} = {base_row['claimed_value']!r}, "
-                    f"delta extraction {delta} = {delta_row['claimed_value']!r}, sum "
-                    f"= {bn + dn}). A derived figure that disagrees with its own "
-                    f"inputs is the defect this verb exists to prevent. Nothing "
-                    f"was written.")
-        elif bn is not None and dn is not None:
+        # A supplied --claimed-value is compared with base + delta by `_refuse_derived_mismatch`
+        # (the one home of that arithmetic), inside `insert_extraction`'s transaction.
+        if claimed_value is None and bn is not None and dn is not None:
             claimed_value = _fmt_num(bn + dn)
-        else:
+        elif claimed_value is None:
             raise Refusal(
                 f"derive-extraction: --claimed-value is required when base or "
                 f"delta does not parse as a plain number (base extraction {base} "

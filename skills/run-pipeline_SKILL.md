@@ -180,7 +180,8 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
   figure: parameter, at least one lens column (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
   is stated in at least one lens, D-0182), value and unit (a number the source writes in words, or with an ambiguous
-  mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`), `--claim-text`
+  mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`;
+  `--comparator` for a numerical figure, `=` for a point), `--claim-text`
   verbatim, locator, `--figure-role`,
   `--claim-type`, and `--relation` (**required**; `none` for an absolute figure). `add-extraction --help` prints every
   vocabulary, each read from its own column: `claim_type`, `extraction_method`, `extraction_status`, `root_type`,
@@ -191,7 +192,14 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   `--source-section` suffices below tier 4, the locator hierarchy (`--loc-division` … `--loc-subclause`) is
   required from tier 4 — unless `[UNVERIFIED-QUANT]` is in `--notes` (R3); `--verbatim-exempt` when a decodable body is held for the source (a fetched `text/*` page, a derived text, or a PDF
   with a text layer) and no page render is persisted (`scripts/research/page_image.py`; the refusal names the files and the
-  verb), and `observe-term --verbatim-exempt` is refused on the same ground. The
+  verb), and `observe-term --verbatim-exempt` is refused on the same ground; a `--claimed-unit` holding `;` or `,`, a comparator symbol, a number standing alone,
+  `min`/`max` beside other words, or a parenthesis other than a one-capital suffix such as `dB(A)` (a number goes in
+  `--claimed-value`, a condition in its own row with `--relation condition_on`, applicability in `--setting`; a
+  sentence-like unit with none of those shapes passes until units are data, T-030); a quantity figure the engine
+  cannot place on a scale (`8.33%`, `1/12`, `12:1`, `1 in 12`, a decimal comma, a non-ASCII digit, a bare number under
+  `rise:run ratio`, `a:b` under another unit; the refusal names the fix); a value-supplying numerical row with no
+  `--comparator`, also by `amend-extraction --field figure_role`; a `derived` figure that disagrees with its own base +
+  delta (`add-extraction`, `relate-extraction`, `amend-extraction`). The
   exemption is accepted on a persisted page render, or on a source holding nothing decodable; the marker it writes
   names the renders, so the adversarial pass can check the locator against them; a
   byte-identical second row (a divergent reading is a contest, D-0168, and is written).
