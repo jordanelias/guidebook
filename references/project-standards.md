@@ -6160,3 +6160,56 @@ OI-13 STATUS: ANSWERED BY THE OWNER
 CONDITION: any session writing the mobility family's registry rows, or tagging a figure that names a lower-limb difference, a prosthesis, a wheelchair or another aid.
 ACTION: (1) Use `LLD`, not `PROSTH`. (2) Place the rows of the old `LMB` on `UPL` or `LLD` by what each names. (3) Keep the prosthesis, where it is a device fact, in `device_class` only if the design settles it there without a second home. (4) Treat the [ASSUMPTION] mark above as unratified. This supersedes the confirmed T-102 code `PROSTH` (fifth set) and the seventh set's pairing of `LMB` with `PROSTH`.
 DATE: 2026-11-12 — owner clarification (selected option), quoted above.
+
+## Owner answers 2026-11-13 (tenth set) — the T-4 agreement rules (OR-5b, OR-6c), the floor marker and the code route (OR-22b, OR-23b), element pages (OR-14b), scan batches (OR-25), the term "barrier-free path of travel" (OT-2), the order of the three criteria (OI-14), and the mobility family's crossings, SCI edge, wording and edges (OI-03, OI-48, OI-49, OI-50)
+
+Given in the session that opened from PR #219, in reply to the prompts of `workplan/2026-11-12-bidirectional-pipeline/OPEN-ITEMS-PLAN.md` section 6 asked one by one with their context (the context text is the owner queue's own, `governance/owner-browser.yaml`). Dated by the server clock, UTC. Each answer is the owner's selected option or typed words, quoted; a reading by the assistant is marked [ASSUMPTION] and is not the owner's.
+
+**OR-5b — how a Co-1 source is shown to be academically sound.** The owner first answered with a link only: "https://equator-network.org/". The assistant read that as conformity to the reporting guideline for the source's design, and asked. The owner replied:
+
+> "Yes, PRISM for systematic reviews/meta-analyses, academic rigour re PubMed for any other study outside those bounds, and then ISO for T4-6 as relevant"
+
+[ASSUMPTION: "PRISM" is PRISMA, the EQUATOR reporting guideline for systematic reviews and meta-analyses — the spelling differs; unratified.] [ASSUMPTION: "ISO for T4-6 as relevant" means the standards body's own instrument (an ISO or national standard) is the test for the regulatory stratum; unratified.] **What it does not decide.** (1) What "academic rigour re PubMed" means: indexed in PubMed, or judged by the standard PubMed-indexed work meets. The two differ, and the first collides with the research contract's R5 ("Non-English peer-reviewed work is ACADEMIC, not grey. Non-indexation in PubMed/Scopus is an INDEXING fact, not an evidence-quality fact"). The assistant does not choose between them. (2) How a DPO position statement or a lived-experience publication, which has no reporting guideline and is not a study in the sense of the second clause, is shown to be sound. The assistant had stated that by a guideline test such a source would set direction only; the reply does not confirm or reverse that. (3) Whether the three-part test is for Co-1 only or for every tier's soundness. T-4 step 3 asks the owner these three before it builds the field and verb.
+
+OR-5b STATUS: ANSWERED BY THE OWNER, PARTLY (the test is named; its three edges above are open)
+
+**OR-6c — how far "the T1 figure is stated, the T2 dispute noted" reaches.** The owner selected "Any different tiers" and added: "Co-1 and T1 are same value". The assistant read this as one rank for Co-1 and T1 and asked; the owner answered "Yes, both (1) and (2)":
+
+> (1) Co-1 against T2 (or lower): the Co-1 figure is stated and the T2 dispute noted, as for T1; (2) Co-1 against T1: same rank, so neither is stated over the other, and the divergence waits for an approach written by an Opus-class session (the same applies to two sources of the same tier).
+
+The design range is unchanged (the OR-6c prompt's stated default; the owner did not alter it).
+OR-6c STATUS: ANSWERED BY THE OWNER
+
+**OR-22b — the marker of a floor claim a study confirms by absence.** Selected: "The study's own band". The cell reads the band of the verified, retrieved study that confirmed it; migration 116's regulation-only rule (○) does not apply to it.
+OR-22b STATUS: ANSWERED BY THE OWNER
+
+**OR-23b — whether a registry citation is a valid route for an unretrievable code or standard.** Selected: "Yes, for T4 to T6". An unretrievable code or standard keeps its tier and may anchor below the weak band when cited by jurisdiction, standard number and clause; the academic route is still required of the other kinds of source.
+OR-23b STATUS: ANSWERED BY THE OWNER
+
+**OR-14b — who writes an element page.** Selected: "Written by the pass". The specifications pass writes an element-level determination from the related parameters' determinations. **Effect:** a new stage output (a table and a rule version) built in a tooling pull request; it ends the deferral of cross-parameter synthesis tables (R17) for the element case. The element is still never a container that figures are filed into. The plan has no task for this (T-037 stops on OR-14b; the element pointer was mapped to T-029 on the derived-at-read basis); the coordinating session files one.
+OR-14b STATUS: ANSWERED BY THE OWNER
+
+**OR-25 — whether batch 23's extraction cap carries over to scans.** Selected: "No cap; one source (Recommended)". Ratifies the 2026-10-09 recommendation: one source is the review unit; D-3 and T-105 batch by source.
+OR-25 STATUS: ANSWERED BY THE OWNER
+
+**OT-2 — the term "barrier-free path of travel".** Selected: "Approve" the drafted definition and scope note as shown in the owner queue (`governance/owner-browser.yaml`, OT-2). A data pull request mints the term from observation 68 with `db.py add-term`, citing this answer; observation 71 is untouched and waits on its own prompt.
+OT-2 STATUS: ANSWERED BY THE OWNER
+
+**OI-14 — the order of the three criteria.** Selected: "Yes: 1, then 2, then 3". This ratifies, from this date, the assumption in the delegation entry (2026-11-12) that integrity, rigour and provenance come before legibility, which comes before coverage. It is a new line; the delegation entry is not edited. It is not retroactive in effect: decisions already resolved on that order stand as resolved.
+OI-14 STATUS: ANSWERED BY THE OWNER
+
+**OI-03 — the mobility children's ICF crossings.** Selected: "Yes, as proposed": `WHEEL` to d465, d420, d410 (beside the `SCI` crossings T-102 judges to hold for wheelchair users); `LLD` to d450, d455; `WALKAID` to d450, d465 (moderate, contextual), as in `tasks/T-102-design.md` sections 6a and 7. T-102 writes them with the stated confidence and mechanism.
+OI-03 STATUS: ANSWERED BY THE OWNER
+
+**OI-48 — the `SCI` edge.** Selected: "Accept". A person with an incomplete spinal cord injury who walks is placed by aid (`WALKAID`, or `MOB` with ICF d450/d455), never under `WHEEL`; the injury and its level are held in the medical lens and ICF b-codes; `SCI` has no identity code of its own.
+OI-48 STATUS: ANSWERED BY THE OWNER
+
+**OI-49 — the wording of `UPL` and `LLD`.** Selected: "Confirm both". `UPL`: display name "people with upper-limb differences or disabilities", category `general`. `LLD`: description "People with a lower-limb difference, from limb loss or from birth, whether or not they use a prosthesis. The prosthesis, where a figure concerns one, is recorded on the figure, never as a code."
+OI-49 STATUS: ANSWERED BY THE OWNER
+
+**OI-50 — the edges of `UPL` and `LLD`.** Selected: "Confirm both" of (a) and (b): (a) an upper-limb prosthesis user is `UPL`, a lower-limb one is `LLD` with the prosthesis named in `device_class`; (b) the identity codes are not mutually exclusive, so a person with a lower-limb difference who uses a wheelchair is `LLD` and `WHEEL`. (c), whether `UPL` has children, was not asked and none is invented. This ratifies the two [ASSUMPTION] marks of the eighth and ninth sets.
+OI-50 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session building the T-4 agreement task, writing a determination's marker or value, tagging or crossing a mobility figure, minting or rewording `UPL`, `LLD`, `WHEEL` or `WALKAID`, building an element page, batching a scan, or minting "barrier-free path of travel".
+ACTION: (1) T-4: ask the three open edges of OR-5b first; build the divergence rule as OR-6c states it (higher tier states and the lower tier's dispute is noted; Co-1 and T1 are one rank, and a same-rank divergence waits for an Opus-class approach). (2) OR-22b: a floor claim confirmed by absence reads the confirming study's band. (3) OR-23b: a registry citation is a valid route for T4 to T6 only. (4) OR-14b: file the element-determination tooling task; T-037 builds no element page until it has merged. (5) OR-25: batch scans by source. (6) T-102 writes the OI-03 crossings; T-116 and T-025 use the OI-49 wording. (7) Treat the [ASSUMPTION] marks above as unratified, and the two [ASSUMPTION] marks of the eighth and ninth sets as ratified by OI-50. This supersedes, for the element case only, the R17 deferral of cross-parameter synthesis tables.
+DATE: 2026-11-13 — owner answers (selected options, and typed words where quoted), above.
