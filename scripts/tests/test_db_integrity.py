@@ -1100,9 +1100,25 @@ def run_checks(db_path):
             # ONE home of that fact (pre-077 it was not stored at all, which is
             # why the old payload had to approximate it with a count).
             links = conn.execute(
-                "SELECT role, extraction_id FROM specification_extraction_links "
+                "SELECT role, extraction_id, exclusion_reason FROM specification_extraction_links "
                 "WHERE specification_id = ?", (cid,)).fetchall()
-            body = "|".join(sorted(f"{r[0]}:{r[1]}" for r in links))
+            if rv in COALESCE_LENS_SHA_VERSIONS:
+                body = "|".join(sorted(f"{r[0]}:{r[1]}" for r in links))
+            else:
+                # pilot-6 on: each figure's in-lens state for the cell is part of the hash, derived
+                # here from the live lens links (never from the stored reason), and the stored reason
+                # must agree with it. A lens link added or retired under a live determination moves
+                # it even when the figure's role stays `excluded`.
+                states = {}
+                for r in links:
+                    states[r[1]] = all(conn.execute(
+                        f"SELECT 1 FROM v_live_lens_links WHERE extraction_id = ? AND {col} = ?",
+                        (r[1], code)).fetchone() for col, code in zip(
+                            ("identity_code", "icf_code", "needs_code", "medical_code"), lens4) if code)
+                    if states[r[1]] == (r[2] or "").startswith("not stated in this cell's lens ("):
+                        stale.append(f"{cid} (param {pid}, {rv}): the stored lens reason of "
+                                     f"extraction {r[1]} disagrees with its live lens links")
+                body = "|".join(sorted(f"{r[0]}:{r[1]}" + ("" if states[r[1]] else ":out") for r in links))
             # pilot-5 on: the governing claims that hold only under a condition, an outgoing
             # `condition_on` edge each (assess_cell.conditioned_governing), hashed only when any.
             # Recomputed from the edge table, the one home of that fact, so an edge filed after

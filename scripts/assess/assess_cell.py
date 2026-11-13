@@ -912,9 +912,14 @@ def link_payload(links):
     wanted and ruled out only because nothing stored it.
 
     Role is inside the hash, not just the id: a row moving excluded -> governing is
-    EXACTLY the change that must move the attestation, and it moves no id.
+    EXACTLY the change that must move the attestation, and it moves no id. So is the figure's
+    in-lens state for this cell (pilot-6, T-019): a lens link added to or retired from a figure that
+    stays `excluded` for another reason changes no role, and an out-of-lens figure is hashed as
+    `<role>:<id>:out`. The state is `l["in_lens"]`, read from `v_live_lens_links` when the links
+    were graded, never a copy; K01 re-derives it from the same view and the stored reason must agree.
     """
-    return "|".join(sorted(f"{l['role']}:{l['extraction_id']}" for l in links))
+    return "|".join(sorted(f"{l['role']}:{l['extraction_id']}" + ("" if l["in_lens"] else ":out")
+                           for l in links))
 
 
 def count_extractions(conn, parameter_id, lens):
@@ -1147,50 +1152,28 @@ def regulatory_richness(t45, t6):
 
 
 def sha(parameter_id, lens, links, conditioned=()):
-    """Cell-scoped derivation sha: identity + governing set + EVIDENCE READ + rule
-    version, so pending cells do not all share one constant hash (staleness stays
-    checkable).
+    """Cell-scoped derivation sha: parameter + the four lens codes + the graded link set + the
+    conditioned governing claims + rule version, so pending cells do not all share one constant
+    hash and staleness stays checkable.
 
-    The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies
-    a stored sha, and K01 was re-keyed to (parameter_id × lens) by migration 071. Two
-    implementations of one hash that disagree is a hash that attests nothing, so this
-    one and K01's move together or not at all. `lens` is the four-code dict from pilot-6 on, hashed
-    as all four codes in LENS_ORDER; the earlier link-set labels hashed the COALESCE key
-    (`lens_key()`), which K01 keeps for them (COALESCE_LENS_SHA_VERSIONS). `conditioned` (pilot-5) is `conditioned_governing()`, hashed as a
-    `|branches:` term only when non-empty; K01 recomputes it from `extraction_relations`.
+    The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies a stored
+    sha. Two implementations of one hash that disagree is a hash that attests nothing, so this one
+    and K01's move together or not at all. `lens` is the four-code dict from pilot-6 on, joined with
+    `|` in LENS_ORDER (a code never contains the separator, so two splits of the same characters
+    across two models cannot collide); the earlier link-set labels hashed the COALESCE key
+    (`lens_key()`), which K01 keeps for them (COALESCE_LENS_SHA_VERSIONS). The links are
+    `link_payload()`: each extraction's role and whether the cell's lens reaches it (pilot-6).
+    `conditioned` (pilot-5) is `conditioned_governing()`, hashed as a `|branches:` term only when
+    non-empty; K01 recomputes it from `extraction_relations`.
 
-    WHY `n_extractions` IS IN THE PAYLOAD (added 2026-09-10). Without it, two
-    materially different cells hash IDENTICALLY, because both have an empty governing
-    set:
-
-        (a) a parameter NEVER READ            — 0 sources, 0 extractions
-        (b) a parameter READ AND REJECTED     — 2 sources, 2 extractions, both
-                                                non-anchoring on tier (B5a)
-
-    Reproduced 2026-09-10: both produced f6c0126a5726af3c…. Their gap DESCRIPTIONS
-    differ; the attestation did not. B5a creates a new route into that collision class
-    and, on today's corpus — where every source's tier is underivable from its own
-    (evidence_type, scope) — the universal one. So the sha failed to move across
-    exactly the transition this change exists to make visible: somebody reading the
-    parameter for the first time.
-
-    WHY THE COUNT AND NOT THE SORTED GATHERED-REF SET, which is the other candidate
-    and carries strictly more information (it would also move when one rejected source
-    is swapped for another). K01 must recompute this payload from the database, and
-    `specifications` stores neither quantity. A count is recomputable there in one
-    line — `SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?`,
-    the whole of `count_extractions()`. The gathered set is not: reproducing it means
-    reproducing gather_sources()' DISTINCT and its `superseded_by_ref_id IS NULL`
-    filter inside the check, i.e. a SECOND HOME for the gather rule, free to drift
-    from the engine's. A hash whose two implementations can silently disagree attests
-    nothing, which is the exact failure this docstring already warns about. The count
-    is the largest payload term that keeps one home.
-
-    CONSEQUENCE, stated because it widens K01: the sha now moves when EVIDENCE for the
-    parameter is added, not only when the stored row is edited. That is the doctrine
-    it was built for — evidence-architecture §10 mechanical check 2, "same evidence +
-    same rule_version ⇒ same state + same derivation_sha". A determination stamped
-    before an extraction arrived IS stale, and K01 saying so is the check working.
+    THE SHA IS NOT A COUNT OF EVIDENCE. Before migration 077 it hashed an unfiltered extraction
+    count so that a parameter never read and one read and rejected hashed differently; the graded
+    links say the same thing, and each extraction of the parameter the cell reaches is among them,
+    so the sha moves when evidence for the parameter is added or a figure leaves the cell's lens,
+    not only when the stored row is edited. That is the doctrine it was built for: evidence-
+    architecture §10 mechanical check 2, "same evidence + same rule_version => same state + same
+    derivation_sha". A determination stamped before an extraction arrived, or before a lens link
+    was added or retired, IS stale, and K01 saying so is the check working.
     """
     # The branch term (pilot-5): the governing claims that hold only under a condition
     # (`conditioned_governing`), absent when there are none. Without it the headline would depend on
@@ -1211,7 +1194,7 @@ def _verified(rec):
     return (rec["verification_status"] or "") in VERIFIED_OK
 
 
-def _confirmed_bands(conn, parameter_id, links, confirmer_anchors):
+def _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens):
     """R39: each governing source's band under confirmation by study. One confirmed clause does
     not confirm the code (owner 2026-10-21): an unconfirmed row is weak, and a source takes the
     floor of the mean of its rows, so it reaches the confirming band only when every row does.
@@ -1225,21 +1208,24 @@ def _confirmed_bands(conn, parameter_id, links, confirmer_anchors):
     for that tested code value"). The edge needs a row referent and a quote, so an absence that
     examined nothing carries no such edge and confirms nothing. A confirmed row takes the floor of
     the mean of its confirmers' bands, a source the floor of the mean of its rows'. A `to_label`
-    referent names no row and confirms nothing."""
+    referent names no row and confirms nothing. The confirming row is stated in the cell's lens
+    (`_lens_clause`, as in `gather_confirmers`): a finding tagged for another group confirms nothing
+    here, though its source is a confirmer through a row that is."""
     rows = {l["extraction_id"]: l["ref_id"] for l in links if l["role"] == "governing"}
     if not rows or not _table_exists(conn, "extraction_relations"):
         return {}
     confirmer_bands = {r["ref_id"]: band(r["tier"], r["evidence_type"])
                        for r in confirmer_anchors if _verified(r)}
     skim, skim_params = _publishable_clause(conn, "e")
+    lens_sql, lens_vals = _lens_clause(lens, "e")
     confirmers = {}
     for to_id, from_ref in conn.execute(
             "SELECT r.to_extraction_id, e.ref_id FROM extraction_relations r "
             "JOIN source_value_extractions e ON e.extraction_id = r.from_extraction_id "
             "WHERE r.relation = 'confirms' AND e.parameter_id = ? "
-            "AND e.figure_role IN (%s) %s AND r.to_extraction_id IN (%s)"
-            % (",".join("?" * len(DIRECTION_SUPPLYING_ROLES)), skim, ",".join("?" * len(rows))),
-            (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *rows)):
+            "AND e.figure_role IN (%s) %s %s AND r.to_extraction_id IN (%s)"
+            % (",".join("?" * len(DIRECTION_SUPPLYING_ROLES)), skim, lens_sql, ",".join("?" * len(rows))),
+            (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals, *rows)):
         if from_ref in confirmer_bands:
             confirmers.setdefault(to_id, {})[from_ref] = confirmer_bands[from_ref]
     by_source = {}
@@ -1269,6 +1255,8 @@ def determine(conn, parameter_id, lens, slug, note):
     # `main`, so every caller sees it. The engine cannot judge whether the lens is relevant to the
     # parameter, so the gap is the judgment session's to raise.
     n_extractions = count_extractions(conn, parameter_id, lens)
+    n_outside_lens = conn.execute("SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?",
+                                  (parameter_id,)).fetchone()[0] - n_extractions
     if n_extractions == 0:
         raise Refusal(
             f"no figure of parameter {parameter_id} is stated in this lens "
@@ -1674,7 +1662,7 @@ def determine(conn, parameter_id, lens, slug, note):
             by_ref = {r["ref_id"]: r for r in recs}
             verified = [g for g in governing if _verified(by_ref[g])]
             if rests_on_proxy_inference:
-                confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors)
+                confirmed = _confirmed_bands(conn, parameter_id, links, confirmer_anchors, lens)
                 source_bands = [confirmed.get(g, EvidenceMarker.WEAK) for g in verified]
             else:
                 source_bands = [band(by_ref[g]["tier"], by_ref[g]["evidence_type"])
@@ -1699,7 +1687,9 @@ def determine(conn, parameter_id, lens, slug, note):
         "value_note": value_note, "value_notations": value_notations,
         "accessibility_direction": _direction,
         "direction_ref_id": _direction_ref,
-        "n_extractions": n_extractions,
+        # The two counts name their scope: the figures of the parameter the cell's lens reaches, and
+        # those it does not. Neither is "the parameter's extractions".
+        "n_extractions_in_lens": n_extractions, "n_extractions_outside_lens": n_outside_lens,
         "unkeyed_models": unkeyed_models(conn, lens, links),
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
@@ -1753,8 +1743,10 @@ def stale_determinations(conn):
 
     THE STORED MARKER IS A CACHE. It is read off the sources' verification and tier, the rows'
     grading and comparators, and the `confirms` edges, and `derivation_sha` hashes none of them
-    (K01 verifies only the stored junction and the conditioned governing claims, K02 only that the
-    junction is complete). The stored VALUE and its note are read off the `condition_on` edges
+    (K01 verifies only the stored junction, each figure's in-lens state read off the live lens links,
+    and the conditioned governing claims, K02 only that the junction is complete). A lens link added
+    to or retired from a figure moves that in-lens state, so it moves the sha and is reported here as
+    `derivation_sha` (or as the lens, when no figure is stated in the cell's lens any more). The stored VALUE and its note are read off the `condition_on` edges
     from governing rows (`compose_value`): those edges are in the sha payload, so a filed or
     removed one makes the sha, and with it this check, differ. `db.py` refuses the
     routes it knows (a regrading, an edge, a source's engine-read columns); a data migration, the
@@ -1792,8 +1784,13 @@ def gap_account(det):
     description that names the wrong absence is followed."""
     parameter_id = det["parameter_id"]
     det_at = det["n_sources"]
-    det_x = det["n_extractions"]
+    det_x = det["n_extractions_in_lens"]
     n_superseded = det["n_extractions_superseded"]
+    # Every count below is over the figures the cell's lens reaches, so the text names that lens
+    # as its scope, and says how many of the parameter's figures lie outside it.
+    cell = ", ".join(f"{c}={det['lens'][c]}" for c in LENS_ORDER if det["lens"].get(c))
+    held = f"{det_x} extraction(s) of parameter {parameter_id} stated in the lens ({cell})"
+    outside = det["n_extractions_outside_lens"]
     scan = scan_command(parameter_id)
     # No zero-extraction branch: a cell no figure is stated in is refused in `determine` (OD-08, T-019)
     # and never reaches a gap, so `det_x` is at least one here.
@@ -1806,8 +1803,7 @@ def gap_account(det):
         # measured the effect of the parameter and stated no value for it.
         # This block's own comment says a gap naming the wrong cause is worse
         # than a vague one because it is followed -- this is that, fixed.
-        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id} "
-                 f"from {det['n_finding_sources']} source(s), but NONE STATES A "
+        cause = (f"{held} from {det['n_finding_sources']} source(s), but NONE STATES A "
                  f"VALUE: every one is a `finding` (an effect measured) or a "
                  f"`condition`, and a determination needs a threshold to reason "
                  f"against" +
@@ -1829,7 +1825,7 @@ def gap_account(det):
         # counted finding source either, and fell through to the supersession text
         # below although nothing was replaced (owner 2026-10-21: such a finding
         # supplies no direction).
-        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, but NONE "
+        cause = (f"{held}, but NONE "
                  f"COUNTS: none states a value, and every finding is skimmed (owing a "
                  f"dedicated reading) or reports an absence, so none supplies direction")
         remedy = (f"if a finding was skimmed ({', '.join(det['skimmed_finding_refs']) or 'none'}), "
@@ -1842,22 +1838,21 @@ def gap_account(det):
         # source holding an extraction has been superseded the two disagree, and the text named the
         # tier gate for a supersession, sending the next session to re-read a tier ladder when what
         # it needs is the replacement source.
-        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, "
+        cause = (f"{held}, "
                  f"but EVERY source holding one has been SUPERSEDED "
                  f"(evidence_sources.superseded_by_ref_id is set) and a "
                  f"superseded source is not gathered")
         remedy = ("the reading exists; the document behind it was replaced. "
                   "Re-extract the same parameter from the superseding source")
     elif det_at == 0:
-        cause = (f"{det_x} extraction(s) exist for parameter {parameter_id}, but none "
+        cause = (f"{held}, but none "
                  f"supplies a value or a direction: each that is gathered is a condition, an "
                  f"ungraded row, or a skimmed value (not publishable), and no source is left to "
                  f"anchor")
         remedy = ("read the parameter for a stated value: `db.py add-extraction`; a skimmed "
                   f"value row owes a dedicated reading ({scan})")
     else:
-        cause = (f"{det_x} extraction(s) from {det_at} source(s) exist for "
-                 f"parameter {parameter_id}, but none of those sources "
+        cause = (f"{held}, from {det_at} source(s), but none of those sources "
                  f"qualified to anchor — disqualified, or tier not derivable "
                  f"from their own (evidence_type, scope)")
         remedy = ("the evidence has been read; what is missing is evidence "
@@ -1869,6 +1864,9 @@ def gap_account(det):
         cause += (f". {n_superseded} of the {det_x} belong to a SUPERSEDED source, which is "
                   f"not gathered")
         remedy += "; re-extract those from the superseding source"
+    if outside:
+        cause += (f". {outside} further extraction(s) of parameter {parameter_id} lie outside this "
+                  f"lens and are not counted here")
     if det.get("accessibility_direction") is None:
         # A cell with no direction cannot select a value whatever its evidence; compose_value
         # says so only once links exist, so a pending cell's gap was silent on it
@@ -1979,6 +1977,15 @@ def validate_lens(conn, lens):
             continue
         if not conn.execute(f"SELECT 1 FROM {table} WHERE {key}=?", (code,)).fetchone():
             raise Refusal(f"{col} {code!r} is not a live {key} in {table}")
+        # LIVE means not retired (T-019): a registry that carries a status says which of its codes are
+        # retired, as `db.py add-lens-link` already refuses a deprecated identity, so a retired code
+        # gets no new cell either. A registry with no status column has nothing to read.
+        if _has_column(conn, table, "status"):
+            status = conn.execute(f"SELECT status FROM {table} WHERE {key}=?", (code,)).fetchone()[0]
+            if status != "active":
+                raise Refusal(f"{col} {code!r} is {status} in {table}: a determination is not newly "
+                              f"stated in a retired code; use the live code that replaced it. "
+                              f"Nothing was written.")
 
 
 def validate_cell_undetermined(conn, parameter_id, lens):
@@ -2362,7 +2369,8 @@ def main():
                         "n_findings_left_out",
                         "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
-                        "n_extractions", "unkeyed_models", "non_anchoring_on_tier",
+                        "n_extractions_in_lens", "n_extractions_outside_lens", "unkeyed_models",
+                        "non_anchoring_on_tier",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "specification_id": specification_id,
@@ -2386,7 +2394,7 @@ def main():
             json.dump(report, f, indent=1)
 
     for r in report:
-        # `sources=` and `extractions=` are printed because the 1:N fan-out is
+        # `sources=` and `extractions_in_lens=` are printed because the 1:N fan-out is
         # invisible otherwise: 2 sources / 9 extractions and 9 sources / 9
         # extractions are very different evidence bases and the old line showed
         # neither. `nonanchor=` names how many were excluded by the tier gate, so a
@@ -2397,7 +2405,8 @@ def main():
         print(f"param {r['parameter_id']}×{_lenses:<8} {r['state']:<12} "
               f"basis={r['tier_basis'] or '-':<32} scale={r['design_scale']:<10} "
               f"refs={len(r['governing_refs'])} sources={r['n_sources']} "
-              f"extractions={r['n_extractions']} "
+              f"extractions_in_lens={r['n_extractions_in_lens']} "
+              f"outside_lens={r['n_extractions_outside_lens']} "
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
               f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")

@@ -35,7 +35,8 @@ which is about the book and not the apparatus):
 
   6. A STORED ANSWER THAT THE ENGINE NO LONGER GIVES. The marker (and the value, the state) is a
      cache over inputs `derivation_sha` does not hash: a source's verification and tier, a row's
-     grading and comparator, a `confirms` edge. `db.py` refuses the routes it knows; a data
+     grading and comparator, a `confirms` edge. (A lens link added or retired does move the sha, as
+     each figure's in-lens state is hashed, so that is reported here too.) `db.py` refuses the routes it knows; a data
      migration, the verification cron or a route nobody has thought of does not pass through it,
      and K01 and K02 verify the stored junction, not these. The book would show a ● over a source
      since demoted, or an interval composed from a comparator since corrected. This re-runs the
@@ -77,6 +78,18 @@ VALUE_PATHS = ("dual", "population_only", "function_only")
 def _table(con, name):
     return con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",
                        (name,)).fetchone() is not None
+
+
+def _engine_pending(con, s):
+    """A `pending` row that the engine could have written: it carries a rule_version (the engine stamps
+    one) and at least one figure of its parameter is stated in its lens (`assess_cell.count_extractions`,
+    the engine's own question: a cell no figure is stated in is refused, OD-08). Such a row has no
+    answer and claims no path (T-019); any other pending row keeps the note a missing path always gave."""
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "assess"))
+    import assess_cell
+    lens = {c: s.get(c) for c in assess_cell.LENS_ORDER}
+    return bool(s.get("rule_version")) and any(lens.values()) \
+        and assess_cell.count_extractions(con, s["parameter_id"], lens) > 0
 
 
 def main(argv=None):
@@ -153,11 +166,14 @@ def main(argv=None):
 
         # --- 2 + 3. THE SINGLE-PATH OBLIGATION, AND THE ANCHOR THAT MUST ANCHOR ------
         paths = s.get("derivation_paths")
-        if paths is None and s["state"] == "pending":
-            pass  # a pending cell has no answer and claims no path (T-019)
+        if paths is None and s["state"] == "pending" and _engine_pending(con, s):
+            pass  # an engine-written pending cell has no answer and claims no path (T-019)
         elif paths is None:
             notes.append(f"specification {sid}: no derivation_paths recorded — written "
-                         f"before migration 080, or by a route that skips the engine")
+                         f"before migration 080, or by a route that skips the engine"
+                         + ("; a pending row that is not engine-written, or whose lens no live-linked "
+                            "figure of the parameter carries (the engine would refuse it)"
+                            if s["state"] == "pending" else ""))
         elif paths not in VALUE_PATHS:
             fails.append(f"specification {sid}: derivation_paths={paths!r} is outside the "
                          f"ruled vocabulary {VALUE_PATHS}")
@@ -239,9 +255,9 @@ def main(argv=None):
     eng = sqlite3.connect(f"file:{args.db}?mode=ro", uri=True)
     for sid, diff in assess_cell.stale_determinations(eng) if specs else []:
         fails.append(f"specification {sid}: the engine now gives a different {', '.join(diff)}. "
-                     f"A source's verification or tier, a row's grading or comparator, or a "
-                     f"`confirms` edge moved after the answer was written; retire the "
-                     f"specification and re-determine.")
+                     f"A source's verification or tier, a row's grading or comparator, a "
+                     f"`confirms` edge, or a lens link added to or retired from a figure moved "
+                     f"after the answer was written; retire the specification and re-determine.")
     eng.close()
 
     print("=" * 70)

@@ -96,6 +96,8 @@ os.environ["GUIDEBOOK_DB_PATH"] = DB
 os.environ["GUIDEBOOK_RETRIEVAL_LOG"] = FARM
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "scripts" / "research"))
+sys.path.insert(0, str(REPO))
+from schemas.enums import EvidenceMarker  # noqa: E402
 import db        # noqa: E402
 import dbcore    # noqa: E402
 import retrieval_log  # noqa: E402
@@ -1598,6 +1600,36 @@ else:
                f"param {P_NODIR}×{CELL_IDENT}/" in r.stdout, r.stdout[:120])
         record("E03", "the report carries direction_ref_id beside the direction",
                "direction_ref_id" in rep, list(rep)[:5])
+        # T-019: the handshake audit exempts an ENGINE-written pending cell from the missing-path note (it has no
+        # answer and claims no path) and keeps the note for a pending row the engine would not have written.
+        with scratch() as c:
+            path = os.environ["GUIDEBOOK_DB_PATH"]
+            sid = c.execute("SELECT MAX(specification_id) FROM specifications WHERE parameter_id=? AND "
+                            "retired_at IS NULL", (P_NODIR,)).fetchone()[0]
+            audit = lambda: subprocess.run(  # noqa: E731
+                [sys.executable, str(REPO / "scripts/audit/derivation_handshake_integrity.py"), "--db", path],
+                capture_output=True, text=True, env=dict(os.environ)).stdout
+            noted = lambda: f"specification {sid}: no derivation_paths recorded" in audit()  # noqa: E731
+            record("F5-a", "an engine-written pending cell (rule_version set, a figure stated in its lens) is "
+                           "not noted for its missing path", sid is not None and not noted())
+            # HAND: the row as a route that skips the engine would leave it.
+            engine_rv = c.execute("SELECT rule_version FROM specifications WHERE specification_id=?", (sid,)).fetchone()[0]
+            c.execute("UPDATE specifications SET rule_version=NULL WHERE specification_id=?", (sid,))
+            c.commit()
+            record("F5-b", "...a pending row with no rule_version is noted", noted())
+            other = scalar("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code NOT IN "
+                           "(SELECT l.identity_code FROM v_live_lens_links l JOIN source_value_extractions x "
+                           "USING (extraction_id) WHERE x.parameter_id=? AND l.identity_code IS NOT NULL) "
+                           "ORDER BY 1 LIMIT 1", P_NODIR)
+            c.execute("UPDATE specifications SET rule_version=?, identity_code=? WHERE specification_id=?",
+                      (engine_rv, other, sid))
+            c.commit()
+            record("F5-c", "...and so is a pending row in a lens no live-linked figure of its parameter carries "
+                           "(the engine would refuse it)", other is not None and noted())
+            c.execute("UPDATE specifications SET identity_code=?, state='provisional', marker=? WHERE "
+                      "specification_id=?", (CELL_IDENT, EvidenceMarker.WEAK.value, sid))
+            c.commit()
+            record("F5-d", "...and a hand-written `provisional` row with no derivation_paths is still noted", noted())
     else:
         for t_ in ("E01", "E02", "E03"):
             skip(t_, "no active direction-less parameter holds an extraction")
