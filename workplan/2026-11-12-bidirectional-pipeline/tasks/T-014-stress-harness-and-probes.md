@@ -156,6 +156,8 @@ Each harness run takes about a minute; `stress_run.py` takes longer. Run them in
 
 **Writing the test.** This task writes no test file: its red tests are the rebuild pair of step 1 and the runs of step 2. Never type into a script or probe an id, a code or a count the database can derive: choose every probe by query (section 4 item 1c and 1e show the queries). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason: in C1, `guards.control-exact` must be `rc 0`; if it is refused, read why and stop if the derived lens is refused for a reason of its own (section 9).
 
+**Known limit of the diff (repair pass 2026-11-13).** A step's `changed` field is per-table ROW COUNTS, so an UPDATE or a wrong column value is invisible to `stress_diff.py` unless the step's stdout or a later step echoes it (CLAUDE.md rule 3 names the same hole in `migration_reproducibility`). A content digest was not added: it would have to mask the time-varying values in the rows, which is the normalisation the tool keeps to named tokens, and it would make every A-against-C comparison differ. `stress_diff.py` exits 3 and prints `NOTHING-EXAMINED <part>` when a part ran no command or its log is cut; `batches` needs `stress_run.py --topics acoustics,reach` run first.
+
 **Fixtures.** Anything a test or probe writes goes to a copy, is labelled `TASK-FIXTURE`, and never reaches `data/guidebook.db`.
 
 **Step 3, after the change: the after-run.** The same block (cache deletion, loop and selftest) with `after-` in place of `before-`. Then compare, check by check: `diff <(grep -E '\[✗\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/before-$c.txt") <(grep -E '\[✗\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/after-$c.txt")`. No failing case may appear that was not failing before; the `EXAMINED:` number may only change by the cases you added.
@@ -210,7 +212,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
 - the set-up's `BASE=` line prints an empty value;
-- in section 6 step 2, B1 and B2 differ in any field other than `real.migrate-rebuild [stderr]`, or C1 and C2 differ in any field, or A1 and C1 differ in an `rc` that section 4 item 1 does not account for: report the field; do not hide it by normalising more (`stress_diff.py` has no option to). A1 and A2 differing in `real.*` is the expected red, not a stop.
+- in section 6 step 2, B1 and B2 differ in any field other than `real.migrate-rebuild [stderr]`, or C1 and C2 differ in any field, or A1 and C1 differ in an `rc` that section 4 item 1 does not account for: report the field; do not hide it by normalising more (`stress_diff.py` has no option to). A1 and A2 differing in `real.*` is the expected red, not a stop (and, having no `batches` subject yet, they also give exit 3 for that part). For B and C, `stress_diff.py` exit 3 (`NOTHING-EXAMINED`) is a stop.
 
 ## 10. Rollback
 
