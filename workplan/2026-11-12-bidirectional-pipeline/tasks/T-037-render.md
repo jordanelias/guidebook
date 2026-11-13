@@ -160,7 +160,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
 - the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
-- OR-14b (whether an element page is derived when read or written by the specifications pass) is unanswered in the owner queue: write no element page and say so in the pull request (OPEN-ITEMS-PLAN.md, R1);
+- an element page is wanted: the owner answered OR-14b on 2026-11-13 ("Written by the pass"), so the page reads the stored element-level determination that T-060 builds and is not derived by this task. Build no element page until T-060 has merged, and say so in the pull request;
 
 ## 10. Rollback
 

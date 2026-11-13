@@ -128,6 +128,9 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | [T-114](tasks/T-114-retire-move-ves-to-needs.md) | Retire MOVE and VES to the access needs that carry them | research | 3 | RESEARCH | Sonnet | T-054 merged | none outstanding (OD-37 answered) | no |
 | [T-116](tasks/T-116-upl-for-upper-limb.md) | Hold the upper-limb population as UPL, and retire LMB to it | research | 3 | RESEARCH | Sonnet | T-025, T-054 merged | none outstanding (OI-13 answered, eighth and ninth sets; `UPL`'s wording and category are proposals the owner confirms) | no |
 | [T-058](tasks/T-058-upl-prose-callers.md) | UPL reinstated for upper limb: the retired crosswalk and the prose that names LMB or UPL | 3 | 0-1 | TOOLING | Sonnet | T-116 merged | none outstanding (OI-13 answered) | no |
+| [T-057](tasks/T-057-base-coverage-view.md) | The base coverage view: one state per concept and in-scope pair | 3 | 2 | TOOLING | Sonnet | T-026, T-028 merged | none (the owner's 2026-11-06 acceptance test, AT-23) | no |
+| [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragility note) | 1 | 2 | TOOLING | NOT FOR SONNET | T-016, T-019 merged | none in the register (OR-4, OR-6, OR-6b, OR-6c answered; OR-5b's edges open and held out of this task) | no |
+| [T-060](tasks/T-060-element-determination.md) | The specifications pass writes an element-level determination (OR-14b) | 5 | 2 | TOOLING | NOT FOR SONNET | T-019, T-029 merged; design file first | none (OR-14b answered 2026-11-13) | no |
 | [T-115](tasks/T-115-retag-all-rows.md) | Re-tag the figures filed under ALL by their heading's group, then retire ALL | research | 3 | RESEARCH | NOT FOR SONNET | T-018, T-056 merged | none outstanding (OD-31 answered) | no |
 
 ## 4. Wave 0: what can start now
@@ -179,11 +182,11 @@ One link on it is not Sonnet's to start: T-102 is an Opus-class session. Its des
 
 | Wave | Purpose | Tasks | Order inside the wave |
 |---|---|---|---|
-| 1 | the lens chain and the parameter kind | [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-020](tasks/T-020-quantity-kind.md) | Serial: T-016, T-017, T-018, T-019. T-020 beside them (OD-24 resolved under delegation). |
+| 1 | the lens chain and the parameter kind | [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-059](tasks/T-059-wp-t4-agreement.md), [T-020](tasks/T-020-quantity-kind.md) | Serial: T-016, T-017, T-018, T-019, T-059. T-020 beside them (OD-24 resolved under delegation). |
 | 2 | carriers for going back, and for translation | [T-021](tasks/T-021-cell-question-gate.md), [T-022](tasks/T-022-contract-re-entry.md), [T-023](tasks/T-023-ledger-relayed-statements.md), [T-048](tasks/T-048-root-registry-writer.md), [T-049](tasks/T-049-translation-home.md), [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | T-048 any time; T-049 after T-008; T-050 after T-006; T-021 after T-019; T-022 after its three; T-023 any time (OD-28 answered). |
-| 3 | a base that is data | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-027](tasks/T-027-source-identity-edition.md), [T-028](tasks/T-028-concept-identity.md), [T-047](tasks/T-047-add-by-data-test.md) | T-024 then T-025; T-027 any time; T-028's one-page design first, then T-026, then T-028's build; T-047 last. |
+| 3 | a base that is data | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-027](tasks/T-027-source-identity-edition.md), [T-028](tasks/T-028-concept-identity.md), [T-047](tasks/T-047-add-by-data-test.md), [T-057](tasks/T-057-base-coverage-view.md) | T-024 then T-025; T-027 any time; T-028's one-page design first, then T-026, then T-028's build; T-047 last. |
 | 4 | reading once, abstraction, synthesis | [T-029](tasks/T-029-term-relations.md), [T-030](tasks/T-030-units-as-data.md), [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md), [T-034](tasks/T-034-cell-status-verb.md), [T-035](tasks/T-035-skills-repair.md), [T-053](tasks/T-053-engine-conflict-between-groups.md) | T-034 after T-013; T-035 any time; T-029 after T-020; T-030 and T-032 after their dependencies (their decisions are delegated); T-031 after T-019 (OD-23 answered); T-033 after T-029 and T-030. T-053 after T-032 (OD-36 answered). |
-| 5 | render and the gate over it | [T-036](tasks/T-036-jurisdiction-comparison-view.md), [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-039](tasks/T-039-owner-edits.md), [T-040](tasks/T-040-deletion-candidates-sweep.md) | T-036 after T-024 and T-101 (OD-04 answered); T-037 after its four dependencies; T-038 after T-037; T-039; T-040. |
+| 5 | render and the gate over it | [T-036](tasks/T-036-jurisdiction-comparison-view.md), [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-039](tasks/T-039-owner-edits.md), [T-040](tasks/T-040-deletion-candidates-sweep.md), [T-060](tasks/T-060-element-determination.md) | T-036 after T-024 and T-101 (OD-04 answered); T-037 after its four dependencies; T-038 after T-037; T-039; T-040. |
 | research | rows, each in its own pull request | [T-101](tasks/T-101-scope-fill.md), [T-102](tasks/T-102-mobility-split.md), [T-103](tasks/T-103-medical-lens.md), [T-104](tasks/T-104-verify-governing-sources.md), [T-105](tasks/T-105-read-held-sources.md), [T-106](tasks/T-106-retag-lenses.md), [T-107](tasks/T-107-attest-forms.md), [T-108](tasks/T-108-unit-condition-repair.md), [T-109](tasks/T-109-parameter-kinds-data.md), [T-110](tasks/T-110-first-determinations.md), [T-111](tasks/T-111-as-written-wording-for-stored-rows.md), [T-112](tasks/T-112-translate-held-text.md), [T-113](tasks/T-113-file-sub-national-instruments.md) | T-104 is ungated; T-111 follows T-008 and T-108 follows T-016; the rest wait for tooling, an answer, or an Opus-class session. T-113 follows T-024. |
 
 **Dependency list** (a task on the left needs every task on the right merged; generated from the task files):
@@ -228,10 +231,10 @@ T-102 <- T-018, T-025, T-054, T-055; the design `tasks/T-102-design.md`, its cod
 T-103 <- (no task)   [owner: OD-15, answered]
 T-105 <- T-008, T-009, T-016, T-031   [delegated: OD-05; T-031 hard since OD-23 chose the inventory]
 T-106 <- T-019   [delegated: OD-06]
-T-107 <- T-026, T-028
+T-107 <- T-026, T-028, T-057
 T-108 <- T-008, T-016
 T-109 <- T-020   [delegated: OD-24]
-T-110 <- T-019, T-102, T-104; the owner's confirmation of the T-102 codes (fifth set, in the ledger); the blocking battery green on the scratch copy; an Opus-class session
+T-110 <- T-019, T-059, T-102, T-104; the owner's confirmation of the T-102 codes (fifth set, in the ledger); the blocking battery green on the scratch copy; an Opus-class session
 T-111 <- T-008
 T-112 <- T-049   [delegated: OD-02, OD-30]
 T-113 <- T-024   [delegated: OD-01; owner: OD-04, answered]
@@ -239,6 +242,9 @@ T-114 <- T-054   [owner: OD-37, answered]
 T-115 <- T-018, T-056   [owner: OD-31, answered]
 T-116 <- T-025, T-054   [OI-13, answered]
 T-058 <- T-116   [OI-13, answered]
+T-057 <- T-026, T-028
+T-059 <- T-016, T-019
+T-060 <- T-019, T-029; the design `tasks/T-060-design.md`   [owner: OR-14b, answered 2026-11-13]
 ```
 
 ## 6. Stop points
@@ -905,3 +911,33 @@ for n in $(grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipelin
 **Fifth set (2026-11-12).** The owner confirmed T-102's codes and edges as proposed (OD-14: `WHEEL`, `PROSTH`, `WALKAID` under `MOB`; `AMB` not minted), deferred OD-17 to after T-002 and T-022 merge (status `DEFERRED BY THE OWNER`), and answered two new decisions entered with their answers: OD-38 (the first English name recorded is shown until a named judge picks with `rename-term --from-form`, the pick recorded with its reason) and OD-39 (the 2026-11-06 link-table ruling supersedes the 2026-08-28 clause). Folded: T-102's report to the owner is discharged (item 2; after-test (2)); T-110 reads the confirmation; T-028 gates on OD-38 and records the pick's judge and reason in typed columns; T-018 gates on OD-39 and records the supersession in prose, because the audit cannot anchor a machine pair on a target inside the ledger. The children's ICF crossings are not named by the answer line and are left for the owner's explicit yes. What remains open in the plan as a whole, by class, with a resolution plan: `OPEN-ITEMS-PLAN.md`.
 
 **OI-13 (2026-11-12, sixth to ninth sets).** The owner answered "SCI and LMB go under MOB" and then clarified three times: `SCI` is basically `WHEEL`; `LMB` becomes `UPL`, upper limb, and "doesnt concern mobility"; the lower-limb child is `LLD`, "people with lower-limb differences", replacing `PROSTH`. Folded: the family is `MOB` with `WHEEL`, `LLD`, `WALKAID`; T-054 gains the identity successor (one exactly-one CHECK over the successor columns) and in-place retirement of crossing rows, so `SCI` and `LMB` can be retired once their rows are carried; T-102 retires `SCI` to `WHEEL` (design §6a) and mints `LLD`; two new tasks hold `UPL`: T-116 (research: mint `UPL`, place `LMB`'s crossings, retire `LMB`) and T-058 (tooling: the DR-2026-07-23 crosswalk back-pointer, the retired-vocabulary record, prose callers); T-025's amend takes description and category; T-055 counts a figure once at a parent. The fold is `FOLD-LOG.md` §9; the open edges are in `OPEN-ITEMS-PLAN.md`.
+
+**The prior workplan mapped (OI-09, 2026-11-13).** Every id of `workplan/2026-10-23-pipeline-resolution-workplan.md` (`grep -n -E '^\*\*(T-[0-9]|H-0)|^\| D-[0-9]|^\| S-1' <that file>`) against this plan. "Read" means the task file's own text or Traces cell was read; "title only" means it was matched on its title and not read to the line, so the match is a hypothesis. The owner's ruling that bears on each is the `OR-` line in the ledger (`grep -n -E '^OR-[0-9]+b?:' references/project-standards.md`).
+
+| Prior id | What it was | Where it is now | Basis |
+|---|---|---|---|
+| T-1a | notation arithmetic to one home; the writer refuses unreadable figures | T-016 | read |
+| T-1b step 8 | `amend-extraction` widened to unit, value and NULL setting (OR-3: "Yes, reformat in place") | **no task** | ruled yes; unmapped |
+| T-1b step 9 | the length family, `RULE_VERSION` bump (OR-10: "Yes, convert and show both") | **no task** | ruled yes; unmapped |
+| T-1b step 10 | the `verified` gate: a full-scope scan (OR-11a: "Yes, require a full-scope scan") | **no task** | ruled yes; unmapped |
+| T-2 | conditions become branches | T-017 | read |
+| T-3 | the lens gather | T-019 (and T-018) | read |
+| T-4 steps 1, 2, 4 | exclusion causes, recorded divergence, fragility note | T-059 | authored 2026-11-13 |
+| T-4 step 3 | the Co-1 dimensional boundary (OR-5) | **no task**: held on OR-5b's three open edges (ledger, tenth set) | by decision |
+| T-5 | render | T-037 (replaced) | as the workplan says |
+| T-6a | language case fold | T-015 | read (Traces) |
+| T-6b | search terms from the alias table, `jurisdiction_buckets`, `v_coverage_parameter_via_admission` | T-026 covers the terms half (the search-to-form junction); the buckets and the view have **no task** | title only; OR-8 and OR-12 ruled |
+| T-7 | element pointer, derived at read | replaced by T-060 (stored, OR-14b) | by decision |
+| T-8 | `add-root` writer; `convergent` needs two distinct roots | T-048 builds the writer; the distinct-roots condition is **not in it** | read (T-048 has no "distinct") |
+| D-1 | repair unreadable and prose-unit rows | T-108 | read (Traces) |
+| D-2 | fill a NULL lens only where a quote names the users | T-106 | read (Traces) |
+| D-3 | the scan contract exercised | T-105 | title only; OR-16 and OR-25 ruled |
+| D-4 | promote adjudicated non-English observations to aliases | **no task** (T-107 attests forms; T-112 translates text) | title only; OR-17 ruled |
+| D-5 | blind double extraction (measurement) | **no task** | OR-15 and OR-18 ruled |
+| D-6 | element pointers (data) | after T-060 | by decision |
+| D-7 | re-grade NULL and untraced roots | **no task** | OR-19 and OR-20 ruled |
+| D-8 | seed quantities from observed phrases | **no task** (T-109 gives the live parameters their kind) | title only; OR-13 ruled |
+| S-1 | the engine over every parameter, rendered | T-110 (then T-037) | read |
+
+Unmapped after this pass (the count is the rows above that say **no task**): they are owed tasks or declines in the owner's words, and are filed as OI-52 in `OPEN-ITEMS-PLAN.md`. None is a decline: every one has a ruling that says yes or gives a rule.
+
