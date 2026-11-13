@@ -336,13 +336,13 @@ def _publishable_clause(conn, alias):
             f"({','.join('?' * len(NOT_PUBLISHABLE_METHODS))})", NOT_PUBLISHABLE_METHODS)
 
 
-#: Which figure_role values supply a value to a determination. ONE HOME (migration 077).
-#: `gather_sources` filters on it, `gather_extraction_links` grades on it, and K01
-#: recomputes the sha from the links this produces -- so the three cannot disagree.
-#: Before 077 the predicate lived only inside gather_sources' SQL while the sha hashed an
-#: UNFILTERED count, which is how re-grading a row could flip a cell from `stated` to
-#: `pending` without moving its attestation.
-VALUE_SUPPLYING_ROLES = ("claim", "derived")
+#: Which figure_role values supply a value to a determination: `dbcore.VALUE_SUPPLYING_ROLES` (ONE HOME,
+#: migration 077; aliased here, so `assess_cell.VALUE_SUPPLYING_ROLES` stays valid). `gather_sources` filters on it,
+#: `gather_extraction_links` grades on it, and K01 recomputes the sha from the links this produces -- so the
+#: three cannot disagree. Before 077 the predicate lived only inside gather_sources' SQL while the sha hashed an
+#: UNFILTERED count, which is how re-grading a row could flip a cell from `stated` to `pending` without moving
+#: its attestation.
+VALUE_SUPPLYING_ROLES = dbcore.VALUE_SUPPLYING_ROLES
 CONDITIONING_ROLES = ("condition",)
 #: Rows that report something ABOUT the parameter without asserting a value for it.
 #: They supply DIRECTION, never value (owner ruling 2026-09-13), and since the owner
@@ -495,8 +495,8 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
 
 # The notation arithmetic lives in dbcore, so the writer that refuses an unreadable figure and the
 # engine that reads it are one definition. Names are imported back so the engine's names stay valid.
-from dbcore import (NOTATION_FAMILIES, _CONVERTIBLE, notation_family,  # noqa: E402,F401 -- one home (T-016)
-                    to_canonical, from_canonical, bound_on_scale)
+from dbcore import (NOTATION_FAMILIES, notation_family,  # noqa: E402 -- one home (T-016)
+                    from_canonical, bound_on_scale)
 
 
 def derivation_handshake(conn, parameter_id, lens, sources):

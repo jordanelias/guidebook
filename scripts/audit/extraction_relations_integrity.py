@@ -142,7 +142,8 @@ def main() -> int:
     #
     # TOLERANCE MATCHES THE WRITER'S, AND MUST. `db.py _refuse_derived_mismatch` (add-extraction,
     # relate-extraction and derive-extraction all reach it) accepts a derived figure within 1e-9 of
-    # base+delta (`abs(recomputed - stored) > 1e-9`), reading this same view. This check compared
+    # base+delta (`abs(recomputed - stored) > 1e-9`) on EVERY row of this same view (one per base x delta pair),
+    # amend-extraction to `derived` included. This check compared
     # with SQL `<>`, i.e. exactly. Binary floating point
     # makes those two rules disagree on ordinary decimals: 0.1 + 0.2 = 0.30000000000000004,
     # so a row the sanctioned writer had just accepted turned this BLOCKING gate red
