@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 04:10 UTC from the 73 task files at commit 1eafd5a by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-13 04:18 UTC from the 73 task files at commit 5b931cb by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -29,7 +29,7 @@ _Generated 2026-11-13 04:10 UTC from the 73 task files at commit 1eafd5a by `scr
 
 Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | wc -l`, and the generator's own output.
 
-**Longest dependency chain (8 tasks):** T-014 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
+**Longest dependency chain (8 tasks):** T-008 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
 
 ## Batch 1
 
@@ -113,11 +113,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 3
 
-**Entry:** merged and green on `$BASE`: T-008, T-016, T-020, T-025, T-026, T-028, T-049, T-054.
+**Entry:** merged and green on `$BASE`: T-008, T-014, T-016, T-020, T-025, T-026, T-028, T-049, T-054.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-017](tasks/T-017-wp-t2-conditions.md) | The prior workplan's T-2: conditions become branches | 1 (chain) | TOOLING | READY | yes | T-016 | not piloted |
+| [T-017](tasks/T-017-wp-t2-conditions.md) | The prior workplan's T-2: conditions become branches | 1 (chain) | TOOLING | READY | yes | T-008, T-014, T-016 | piloted |
 | [T-029](tasks/T-029-term-relations.md) | Typed pointers between terms | 4 | TOOLING | READY | yes | T-020 | not piloted |
 | [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | TOOLING | READY | yes | T-016, T-020 | not piloted |
 | [T-057](tasks/T-057-base-coverage-view.md) | The base coverage view: one state per concept and in-scope pair | 3 | TOOLING | READY | after T-028 | T-026, T-028 | not piloted |
