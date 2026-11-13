@@ -1,0 +1,6 @@
+# T-102 pilot: no patch.
+# The partial dry pilot made no tooling change and committed nothing of its own in the clone.
+# Rows were written only on a scratch copy (/tmp/guidebook-t-102/s.db, since deleted) and the emitted
+# scratch migration was deleted after its rebuild failed. The emitter defect found (INSERT-before-UPDATE
+# against ux_extraction_lens_live) is tooling for a separate PR (CLAUDE.md rule 10); see T-102-report.md,
+# Task-file defects item 2.
