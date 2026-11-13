@@ -937,6 +937,19 @@ try:
     record("U08", "resolve-follow-up closes it; a second resolution is refused; a new "
            "follow-up may then be opened", u8.get("resolved") is True
            and msg and "was resolved by" in msg and u9.get("follow_up_id"), f"{u8} {msg} {u9}")
+    # T-012: an absence finding owes a tested value; a skimmed figure owes no follow-up row
+    # (extraction_method = 'skim' already holds that debt, so its reason is not in the CHECK).
+    ABS = "absence-needs-tested-value"
+    t1 = attempt(raise_fu, E_FULL, ABS, "fixture: tested value still to find", S)
+    t1_again = refusal(raise_fu, E_FULL, ABS, "again", S)
+    t1_res = attempt(resolve_fu, t1.get("follow_up_id"), "fixture: tested value found", S)
+    record("T012-01", "raise-follow-up writes an open follow-up for an absence finding "
+           "owing a tested value; a second open one is refused; resolve-follow-up closes it",
+           t1.get("follow_up_id") and t1_again and "already has open" in t1_again
+           and t1_res.get("resolved") is True, f"{t1} {t1_again} {t1_res}")
+    expect_refusal("T012-02", "raise-follow-up refuses a skimmed-figure reason: that debt "
+                   "is extraction_method = 'skim', not a second home in a follow-up row",
+                   "CHECK", raise_fu, E_ONLY_SKIM, "skimmed-needs-full-read", "w", S)
 
     # ── A: the observation-quote backstop can go red ─────────────────────────────────
     a1 = run_audit("observation_verbatim_audit.py")
