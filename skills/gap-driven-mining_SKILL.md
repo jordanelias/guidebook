@@ -239,6 +239,8 @@ python3 scripts/db.py add-gap-mining \
     --session {SESSION}
 ```
 
+Name the gap on the search itself as well: pass `python3 scripts/db.py log-search --gap-id {GAP-NNN}` for each search run to close a gap (`search_executions.gap_id` is the pointer from a search to its gap; `gap_mining` records the pass), and give `add-gap` its subject flags (`--parameter`, `--identity`, `--icf`, `--needs`, `--medical`, `--jurisdiction`, `--language`) for a gap that has no cell. A gap the assessment engine filed for a cell is read through `v_gap_subject`, never retyped.
+
 The `candidate-dois` field is the rule #10 gate: candidates returned by the search but not yet verified live as DOIs only; they are NOT auto-INSERTed to `evidence_sources`. A subsequent verification pass (separate session) promotes them. Mirrors `supersession_check.superseding_dois`.
 
 ### 4.3 Closure workflow (when outcome = closure_evidence_found)

@@ -181,28 +181,16 @@ ORDER BY c.confidence DESC
 
 ### 4.3 gaps
 
-```sql
-CREATE TABLE gaps (
-    gap_id              TEXT PRIMARY KEY,
-    category            TEXT NOT NULL
-                        CHECK(category IN (
-                            'RP','SW','CR','ST','MX','CD','EC','EG'
-                        )),
-    priority            TEXT NOT NULL CHECK(priority IN ('P1','P2','P3')),
-    status              TEXT NOT NULL
-                        CHECK(status LIKE 'OPEN%' OR status LIKE 'CLOSED%'),
-    skill               TEXT,
-    section             TEXT,
-    description         TEXT NOT NULL,
-    -- audit
-    created_at          TEXT NOT NULL,
-    created_by_session  TEXT NOT NULL,
-    updated_at          TEXT NOT NULL,
-    updated_by_session  TEXT NOT NULL
-);
+The 2026-05-05 `CREATE TABLE gaps` that stood here was already stale and is not restated (rule 7:
+derive, do not copy). The live columns, the `status` CHECK and the indexes are one query away:
 
-CREATE INDEX idx_gap_priority_status ON gaps(priority, status);
+```python
+print([r[1] for r in con.execute("PRAGMA table_info(gaps)")])
+print([r[0] for r in con.execute("SELECT sql FROM sqlite_master WHERE tbl_name='gaps'")])
 ```
+
+A gap's subject (parameter, lens, jurisdiction, language) is read from the view `v_gap_subject`, which
+answers from the gap's own columns or, for an engine-made gap, from its cell.
 
 **Session-start query:**
 ```sql

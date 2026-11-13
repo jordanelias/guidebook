@@ -173,6 +173,7 @@ database:
   - v_determination_provenance
   - v_divergence
   - v_evidence_authors
+  - v_gap_subject
   - v_item_provenance
   - v_open_determination_gates
   - v_pending
@@ -607,12 +608,14 @@ writers:
     - terms
     scripts/tests/test_run_pipeline_refusals.py:
     - base_parameters
+    - base_taxonomy_medical
     - evidence_source_authors
     - evidence_sources
     - lang_jur_map
     - slugs
     - source_scans
     - source_value_extractions
+    - specifications
     scripts/tests/test_scan_contract.py:
     - base_parameters
     - evidence_sources

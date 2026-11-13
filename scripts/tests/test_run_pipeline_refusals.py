@@ -1607,7 +1607,7 @@ def se_gap(c_, exec_id):
 
 
 if None in (A_PAR, IDENT, ICF, A_NEED, LANG, JUR):
-    skip("T013-02..T013-11", "a registry or the research-scope map is empty")
+    skip("T013-02..T013-22", "a registry or the research-scope map is empty")
 else:
     flags = ["--parameter", str(A_PAR), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED,
              "--jurisdiction", JUR, "--language", LANG.lower()]
@@ -1617,7 +1617,7 @@ else:
         flags += ["--medical", A_MED]
         want["medical_code"] = A_MED
     else:
-        skip("T013-03/medical", "base_taxonomy_medical holds no row, so --medical has no code to store")
+        skip("T013-03/medical", "base_taxonomy_medical holds no row, so T013-02 cannot store a live --medical code (T013-22 builds one on its own copy)")
     with scratch() as c:
         before = n_gaps(c)
         r = gap_cli(*flags)
@@ -1709,9 +1709,122 @@ else:
                    r.returncode == 0 and rep.get("state") == "pending" and cell is not None and g is not None
                    and tuple(cell)[:4] == (P_ENG, IDENT, ICF, A_NEED) and all(v_ is None for v_ in tuple(g)),
                    ((r.stdout + r.stderr)[-250:], cell and tuple(cell), g and tuple(g)))
-            pend = c.execute("SELECT parameter_id FROM v_pending WHERE gap_register_id=?", (rep.get("gap_register_id") or "",)).fetchone()
-            record("T013-11", "...and v_pending, the cross-stage view, gives that gap its parameter by the join",
-                   pend is not None and pend[0] == P_ENG, pend)
+            gid_e = rep.get("gap_register_id") or ""
+            try:
+                via = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, subject_home FROM v_gap_subject "
+                                "WHERE gap_id=?", (gid_e,)).fetchone()
+            except sqlite3.OperationalError as exc:
+                via = exc
+            record("T013-11", "...and v_gap_subject, the cross-stage view, gives that gap its parameter and lenses from the cell",
+                   isinstance(via, sqlite3.Row) and tuple(via) == (P_ENG, IDENT, ICF, A_NEED, "specifications"), via)
+
+            # (add-gap A) the cell is live: the subject is held there, so a typed gap for it is the second home.
+            gap_cli_ = lambda *a: cli("add-gap", "--category", "EG", "--priority", "P3", "--description",  # noqa: E731
+                                      "TASK-FIXTURE gap", "--session", S, *a)
+            subj_flags = ["--parameter", str(P_ENG), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED]
+            g_before = c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
+            ra = gap_cli_(*subj_flags)
+            spec_id = c.execute("SELECT specification_id FROM specifications WHERE gap_register_id=?", (gid_e,)).fetchone()
+            record("T013-13", "add-gap for a subject whose live cell exists is refused, naming the specification and the "
+                              "cell's own gap, and writes no row",
+                   ra.returncode != 0 and spec_id is not None and f"specification {spec_id[0]}" in ra.stderr + ra.stdout
+                   and gid_e in ra.stderr + ra.stdout and c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0] == g_before,
+                   (ra.stderr + ra.stdout)[-300:])
+
+            # THE LIVE SHAPE: an OPEN gap whose cell was retired. v_pending (live pending cells only) is empty for it.
+            # HAND: retire the cell, as the three live engine gaps' cells are.
+            c.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, retirement_reason=? "
+                      "WHERE gap_register_id=?", (STAMP, S, "TASK-FIXTURE retired cell", gid_e))
+            c.commit()
+            in_pending = c.execute("SELECT COUNT(*) FROM v_pending WHERE gap_register_id=?", (gid_e,)).fetchone()[0]
+            shown = {g_["gap_id"]: g_ for g_ in ok(db.get_open_gaps)[0] or []}.get(gid_e, {})
+            record("T013-14", "an OPEN gap whose cell is retired is not in v_pending, and db.py gaps still gives its parameter "
+                              "and lenses (read from the cell through v_gap_subject) and the home it came from",
+                   in_pending == 0 and (shown.get("parameter_id"), shown.get("identity_code"), shown.get("icf_code"),
+                                        shown.get("needs_code"), shown.get("subject_home")) == (P_ENG, IDENT, ICF, A_NEED, "specifications")
+                   and "description" in shown and "status" in shown,
+                   (in_pending, {k_: shown.get(k_) for k_ in ("parameter_id", "identity_code", "subject_home")}))
+            # (add-gap A, the legitimate shape) a retired cell holds nothing: the subject may be typed.
+            rr = gap_cli_(*subj_flags)
+            record("T013-15", "...and once that cell is retired the same subject may be typed on a cell-less gap",
+                   rr.returncode == 0, (rr.stderr + rr.stdout)[-300:])
+            # A search for the engine gap must agree with the cell's subject (its subject comes from v_gap_subject).
+            other_p = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? "
+                             "ORDER BY 1 LIMIT 1", P_ENG)
+            base_ls = ["log-search", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
+                       "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S]
+            r1 = cli(*base_ls, "--parameter", str(other_p), "--gap-id", gid_e)
+            r2 = cli(*base_ls, "--parameter", str(P_ENG), "--identity", IDENT, "--gap-id", gid_e)
+            record("T013-16", "log-search --gap-id of an engine gap refuses a search for another parameter (naming both) and "
+                              "accepts a search that agrees with the cell",
+                   r1.returncode != 0 and str(other_p) in r1.stderr and str(P_ENG) in r1.stderr and gid_e in r1.stderr
+                   and r2.returncode == 0, ((r1.stderr)[-250:], r2.stderr[-200:]))
+
+    # A typed (cell-less) gap: a search must agree with it, and the gap must be open; an identical open gap is refused.
+    O_PAR = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? ORDER BY 1 LIMIT 1", A_PAR)
+    O_IDENT = scalar("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>? ORDER BY 1 LIMIT 1", IDENT)
+    O_LANG = scalar("SELECT language FROM lang_jur_map WHERE language<>? ORDER BY 1 LIMIT 1", LANG)
+    O_JUR = next((r_[0] for r_ in q("SELECT DISTINCT jurisdiction FROM lang_jur_map WHERE jurisdiction IS NOT NULL "
+                                    "AND jurisdiction<>? ORDER BY 1", JUR)
+                  if refusal(dbcore.check_jurisdiction, r_[0], "T013") is None), None)    # one the enum declares
+    CLOSED = scalar("SELECT gap_id FROM gaps WHERE status LIKE 'CLOSED%' ORDER BY gap_id LIMIT 1")
+    CLOSED_STATUS = scalar("SELECT status FROM gaps WHERE gap_id=?", CLOSED)
+    if None in (O_PAR, O_IDENT, O_LANG, O_JUR, CLOSED):
+        skip("T013-17..T013-20", "no second parameter, identity, language or jurisdiction, or no closed gap, to contradict with")
+    else:
+        with scratch() as c:
+            typed = ["--parameter", str(A_PAR), "--identity", IDENT, "--jurisdiction", JUR, "--language", LANG]
+            ga = json.loads(cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE typed gap",
+                                "--session", S, *typed).stdout or "{}").get("gap_id")
+            ls_ = lambda gap, **o: cli(*(  # noqa: E731
+                ["log-search", "--query-text", "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
+                 "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S, "--gap-id", gap]
+                + [x for k_, v_ in {"--parameter": str(A_PAR), "--identity": IDENT, "--jurisdiction": JUR,
+                                    "--language": LANG, **o}.items() if v_ is not None for x in (k_, v_)]))
+            for tid, flag, other, col in (("a", "--parameter", str(O_PAR), "parameter_id"), ("b", "--identity", O_IDENT, "identity_code"),
+                                          ("c", "--jurisdiction", O_JUR, "jurisdiction"), ("d", "--language", O_LANG, "language")):
+                n0 = n_se(c)
+                rx = ls_(ga or "NO-GAP", **{flag: other})
+                record(f"T013-17{tid}", f"log-search {flag} {other!r} with --gap-id of a gap typed otherwise is refused naming "
+                                        f"{col} and both values, and writes no row",
+                       ga is not None and rx.returncode != 0 and col in rx.stderr and ga in rx.stderr and other in rx.stderr
+                       and n_se(c) == n0, (rx.stderr + rx.stdout)[-300:])
+            n0 = n_se(c)
+            rok = ls_(ga or "NO-GAP")
+            rnone = ls_(ga or "NO-GAP", **{"--identity": None, "--jurisdiction": None})
+            record("T013-18", "...while a search that agrees with the gap, or sets fewer subject flags than it, is accepted",
+                   ga is not None and rok.returncode == 0 and rnone.returncode == 0 and n_se(c) == n0 + 2,
+                   (rok.stderr + rnone.stderr)[-250:])
+            n0 = n_se(c)
+            rc_ = ls_(CLOSED, **{"--identity": None, "--jurisdiction": None})
+            record("T013-19", "log-search --gap-id of a closed gap is refused naming the id and its status, and writes no row",
+                   rc_.returncode != 0 and CLOSED in rc_.stderr and CLOSED_STATUS in rc_.stderr and n_se(c) == n0,
+                   (rc_.stderr + rc_.stdout)[-250:])
+            # (add-gap B) an identical OPEN typed gap is refused; once it is closed the subject may be filed again.
+            g0 = c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
+            rd = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE twin", "--session", S, *typed)
+            record("T013-20", "add-gap of a subject an OPEN gap already names exactly is refused, naming that gap, and writes no row",
+                   ga is not None and rd.returncode != 0 and ga in rd.stderr + rd.stdout
+                   and c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0] == g0, (rd.stderr + rd.stdout)[-300:])
+            cg = cli("close-gap", "--gap-id", ga or "NO-GAP", "--status", CLOSED_STATUS, "--session", S)
+            re_ = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE twin", "--session", S, *typed)
+            record("T013-21", "...and once the first is closed the same subject may be filed again",
+                   cg.returncode == 0 and re_.returncode == 0, (cg.stderr + re_.stderr)[-250:])
+
+        # medical_code: the live registry is empty, so the positive path is built on this scratch copy only.
+        with scratch() as c:
+            c.execute("INSERT INTO base_taxonomy_medical (medical_code, display_name, status, notes) "
+                      "VALUES ('MD-TASK-FIXTURE', 'TASK-FIXTURE condition', 'active', 'TASK-FIXTURE')")
+            c.commit()
+            rm_ = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE medical", "--session", S,
+                      "--medical", "MD-TASK-FIXTURE")
+            gm = json.loads(rm_.stdout or "{}").get("gap_id")
+            held_m = c.execute("SELECT medical_code FROM gaps WHERE gap_id=?", (gm,)).fetchone() if gm else None
+            rm2 = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE medical", "--session", S,
+                      "--medical", "MD-TASK-FIXTURE-NO-SUCH")
+            record("T013-22", "add-gap --medical stores a code the registry holds (TASK-FIXTURE row on this copy) and refuses one it does not",
+                   held_m is not None and held_m[0] == "MD-TASK-FIXTURE" and rm2.returncode != 0 and "medical_code" in rm2.stderr,
+                   (rm_.stderr + rm2.stderr)[-250:])
 
 h_ls, h_ag = cli("log-search", "--help").stdout, cli("add-gap", "--help").stdout
 record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the seven subject flags",
