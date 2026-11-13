@@ -274,22 +274,30 @@ def next_gap_id() -> str:
     return f"GAP-{int(row['gap_id'].split('-')[1]) + 1:03d}"
 
 
-def _check_language(conn, language: str) -> None:
-    """Refuse a language `lang_jur_map` does not hold (the 19-language doctrine; a new language is
-    a doctrine change, owner question 5). One home for `log-search` and `add-gap`."""
+# The open half of gaps.status. The column's CHECK is `status LIKE 'OPEN%' OR status LIKE 'CLOSED%'`, a
+# prefix pair with no IN list, so `dbcore.check_values` reads nothing from it; this is that CHECK's own
+# predicate, and it is the one `get_open_gaps` and `bootstrap.sh` already use.
+_OPEN_GAP = "status LIKE 'OPEN%'"
+
+
+def _check_language(conn, language: str, noun: str) -> None:
+    """Refuse a language `lang_jur_map` does not hold; a new language is a doctrine change, not a
+    flag. One home for `log-search` and `add-gap`; `noun` names the record the refusal is about."""
     _langs = dbcore.live_vocab(conn, "lang_jur_map", "language")
     if _langs and language not in _langs:
         raise Refusal(
             f"--language {language!r} is not a language lang_jur_map holds "
             f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
-            f"languages (rule 8); a language is added there, not at the search.")
+            f"languages (rule 8); a language is added there, not at the {noun}.")
 
 
 def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
     """Insert a gap. A gap that has NO cell may name what it is a gap in (parameter, the four lens
     codes, jurisdiction, language); each is refused by name before any row is written, the way
     `log_search` refuses its own. A gap the assessment engine files for a pending cell names none of
-    these: its cell already holds them, reached through `specifications.gap_register_id` (rule 5)."""
+    these: its cell already holds them, reached through the join `specifications.gap_register_id`
+    (including a retired cell), which `v_gap_subject` does; not through `v_pending`. So a subject whose
+    live cell exists is refused here (the cell holds it; rule 5), and so is an identical open gap."""
     row = {**data, **audit(session)}
     if row.get("language") is not None:
         row["language"] = row["language"].strip().upper()
@@ -298,7 +306,31 @@ def insert_gap(data: dict, session: str, dry_run: bool = False) -> str:
         for col in ("parameter_id", *_LENS_COLUMNS):
             dbcore.fk_declared(conn, "gaps", col, row.get(col), f"add-gap {col}")
         if row.get("language") is not None:
-            _check_language(conn, row["language"])
+            _check_language(conn, row["language"], "gap")
+        subject = {c: row.get(c) for c in ("parameter_id", *_LENS_COLUMNS, "jurisdiction", "language")}
+        if row.get("parameter_id") is not None:
+            cell = conn.execute(
+                "SELECT specification_id, gap_register_id, state FROM specifications WHERE retired_at IS NULL "
+                "AND parameter_id=? AND identity_code IS ? AND icf_code IS ? AND needs_code IS ? "
+                "AND medical_code IS ? ORDER BY specification_id LIMIT 1",
+                [row["parameter_id"], *(row.get(c) for c in _LENS_COLUMNS)]).fetchone()
+            if cell:
+                raise Refusal(
+                    f"add-gap: parameter {row['parameter_id']} with this lens is already a cell "
+                    f"(specification {cell[0]}, state {cell[2]}), and the cell holds that subject. A gap "
+                    f"for it is the cell's own gap ({cell[1] or 'none filed: the cell is not pending'}), "
+                    f"reached through specifications.gap_register_id; typing it again here would store "
+                    f"the fact twice (rule 5). Nothing was written.")
+        if any(v is not None for v in subject.values()):
+            twin = conn.execute(
+                f"SELECT gap_id FROM gaps WHERE {_OPEN_GAP} AND " +
+                " AND ".join(f"{c} IS ?" for c in subject) + " ORDER BY gap_id LIMIT 1",
+                list(subject.values())).fetchone()
+            if twin:
+                raise Refusal(
+                    f"add-gap: open gap {twin[0]} already names exactly this subject "
+                    f"({', '.join(f'{k}={v}' for k, v in subject.items() if v is not None)}). Amend or "
+                    f"close that gap rather than filing it twice. Nothing was written.")
         cols = ", ".join(row)
         ph = ", ".join(["?"] * len(row))
         conn.execute(
@@ -900,7 +932,20 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
         # reported by `_in_research_scope`, and a real search outside it is logged and
         # visible, never refused (R8; the pair refusal made ISO, INT and UN searches
         # unloggable, R2-2).
-        _check_language(conn, language)
+        _check_language(conn, language, "search")
+        if gap_id is not None:
+            # A search for a gap says the same thing about its subject the gap does, and the gap is open.
+            # The gap's subject comes from v_gap_subject (its own columns, else its cell, retired or not).
+            st = conn.execute("SELECT status FROM gaps WHERE gap_id=?", (gap_id,)).fetchone()[0]
+            if not conn.execute(f"SELECT 1 FROM gaps WHERE gap_id=? AND {_OPEN_GAP}", (gap_id,)).fetchone():
+                raise Refusal(f"--gap-id {gap_id} is {st}, not open. A search is run to close a gap that "
+                              f"still stands; log it without --gap-id, or reopen the question as a new gap.")
+            sub = conn.execute("SELECT * FROM v_gap_subject WHERE gap_id=?", (gap_id,)).fetchone()
+            for col in ("parameter_id", *_LENS_COLUMNS, "jurisdiction", "language"):
+                if row[col] is not None and sub[col] is not None and row[col] != sub[col]:
+                    raise Refusal(f"--gap-id {gap_id} is a gap in {col} {sub[col]!r} (subject from "
+                                  f"{sub['subject_home']}), but this search is for {col} {row[col]!r}. A search "
+                                  f"names the gap it was run to close; fix the flag or the gap. Nothing was written.")
         if mined_ref_id and not conn.execute(
                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
@@ -971,14 +1016,18 @@ def next_term_id() -> str:
 
 
 def get_open_gaps(priority: str = None) -> list[dict]:
-    q = "SELECT * FROM gaps WHERE status LIKE 'OPEN%'"
+    q = f"SELECT * FROM gaps WHERE {_OPEN_GAP}"
     params = []
     if priority:
         q += " AND priority=?"
         params.append(priority)
     q += " ORDER BY priority, gap_id"
     with connect(readonly=True) as conn:
-        return [dict(r) for r in conn.execute(q, params).fetchall()]
+        rows = [dict(r) for r in conn.execute(q, params).fetchall()]
+        # The subject is read from v_gap_subject, not from the gap's own columns: an engine-made gap
+        # keeps those NULL and its subject lives in its cell (rule 5), retired or not.
+        subject = {r["gap_id"]: dict(r) for r in conn.execute("SELECT * FROM v_gap_subject")}
+    return [{**r, **subject[r["gap_id"]]} for r in rows]
 
 
 def get_connections(status: str = None, confidence: str = None,
@@ -2012,7 +2061,11 @@ def main():
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
     p_rfu.add_argument("--extraction-id", dest="extraction_id", type=int, required=True)
     p_rfu.add_argument("--reason", required=True,
-                       choices=dbcore.schema_choices("extraction_follow_ups", "reason"))
+                       choices=dbcore.schema_choices("extraction_follow_ups", "reason"),
+                       help="why; a cross-slug figure takes the reason that says so (owner D1); "
+                            f"'{dbcore.ABSENCE_FOLLOW_UP_REASON}' is only for an extraction "
+                            "with claim_type='absent' whose tested value is still to be "
+                            "found by backward citation mining and context (owner OR-22)")
     p_rfu.add_argument("--warrant", required=True,
                        help="what a reviewer should re-check, and why")
     p_rfu.add_argument("--session", required=True)
@@ -8046,8 +8099,15 @@ def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
     most whole-code figures are "from another slug", so tag only what a reviewer should
     re-check against the parameter's own literature, and say why.
 
+    The second reason, `absence-needs-tested-value` (migration 128, owner OR-22), is for an
+    absence finding (`claim_type = 'absent'`): it reports no change, and the value it tested
+    is still to be found by backward citation mining of the study and by contextual clues.
+    The follow-up row is the carrier of that debt; OR-22 says to mine, not that a row is
+    required.
+
     REFUSES: a reason outside the column's CHECK; a blank warrant; an unknown extraction;
-    a second OPEN follow-up for the same (extraction, reason), naming the open one.
+    `absence-needs-tested-value` on an extraction whose claim_type is not 'absent'; a second
+    OPEN follow-up for the same (extraction, reason), naming the open one.
     """
     warrant = (warrant or "").strip()
     if not warrant:
@@ -8056,10 +8116,15 @@ def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "extraction_follow_ups", "reason", reason,
                               "raise-follow-up --reason")
-        if not dbcore.exists(conn, "source_value_extractions", "extraction_id",
-                             extraction_id):
+        found = conn.execute("SELECT claim_type FROM source_value_extractions "
+                             "WHERE extraction_id = ?", (extraction_id,)).fetchone()
+        if found is None:
             raise Refusal(f"raise-follow-up: extraction {extraction_id}: no such "
                           f"extraction.")
+        if reason == dbcore.ABSENCE_FOLLOW_UP_REASON and found[0] != "absent":
+            raise Refusal(f"raise-follow-up: --reason {reason} is for an absence finding "
+                          f"(claim_type 'absent'); extraction {extraction_id} has claim_type "
+                          f"{found[0]!r}. Nothing was written.")
         prior = conn.execute(
             "SELECT follow_up_id, raised_by_session FROM extraction_follow_ups "
             "WHERE extraction_id = ? AND reason = ? AND resolved_at IS NULL",
@@ -8659,20 +8724,29 @@ def _require_stated_numbers(text, claimed_value, claim_type, value_as_written, f
     (c) any other claimed number equals a number the quote states (operands and pieces count).
     (d) a number matched only by an AMBIGUOUS quote token, or by nothing, is not stated as a
         numeral. The row is then accepted only with `value_as_written`: the source's own wording of
-        the figure ("vijf procent", "viisi prosenttia", "1,200"), which must occur in the quote
-        under the quote's own normalisation and must not state a different figure (every number in
-        it must be ambiguous and have a claimed number among its readings). When every claimed
+        the figure ("vijf procent", "viisi prosenttia", "1,200"), which must be a literal span of
+        the quote (`wording in text`: punctuation, case and spacing as they stand, because a
+        normalisation that deletes separators lets `1,200` pass under `120.0` or `12,00`) and
+        must not state a different figure (every number in it, CJK numerals converted as the quote's
+        are, must be ambiguous and have a claimed number among its readings). When every claimed
         number is stated, `value_as_written` is refused: the column is not for copying numerals.
 
     A claim of a QUANTITY type (`dbcore.QUANTITY_CLAIM_TYPES`; none given counts as one) that holds
     no number at all is refused, and the message says where the numeral and the wording go.
 
-    KNOWN AND ACCEPTED, because no table of number words is kept to check them: a plain `12` is
-    stated by "1:12"; a ratio written in words is matched by its operands only; and a wording that
-    contains no numeral is not checked for meaning, so `9999` with `value_as_written` "higher" under
-    "no higher than 1.2 m" is accepted. That the wording means that number is the extractor's
+    KNOWN AND ACCEPTED, because no table of number words is kept to check them (CLAUDE.md rule 8):
+    a plain `12` is stated by "1:12"; a ratio written in words is matched by its operands only; and
+    A WORDING THAT CONTAINS NO NUMERAL IS NOT CHECKED FOR MEANING. It must be a literal span of the
+    quote, nothing more, so ANY WORD OR LETTER OF THE QUOTE DEFEATS THE GUARD: `12` under "no higher
+    than 1.2 m" is accepted with the wording "higher", or "m", or "e". The tests show one such case
+    per headline refusal (T008-RES). That the wording means the claimed number is the extractor's
     judgment, recorded by the column and the row's session; the adversarial pass and a reviewer
-    check it. Not read: signs, units, Swiss apostrophe grouping (1'200).
+    check it. No length or word rule is added: a one-character wording (五) can be legitimate.
+    Not read, so no route (stop and report, per the task file): signs, units, fractions, mixed
+    numbers, powers of ten, an Arabic decimal separator, a leading comma decimal, a worded ratio's
+    meaning. Inherent ambiguity is resolved by letting a token match either reading
+    (`retrieval_log.number_tokens`). `amend-extraction` cannot clear a wording (a blank --value is
+    refused), and an exempt row's wording is stored unchecked on insert but checked on amend.
     """
     rl = _retrieval_log()
     claimed = str(claimed_value).strip() if claimed_value is not None else ""
@@ -8736,17 +8810,18 @@ def _require_stated_numbers(text, claimed_value, claim_type, value_as_written, f
             f"with an ambiguous mark, enter the numeral in --claimed-value and the source's own "
             f"wording in --value-as-written; otherwise quote the sentence that states it. "
             f"Nothing was written.")
-    if not rl.normalise_quote(wording) or not rl.phrase_in_quote(wording, text):
+    if wording not in text:
         raise Refusal(
-            f"{context}: --value-as-written {wording!r} does not occur in {field}. It is the span "
-            f"of the verified quote that the numeral translates. Nothing was written.")
+            f"{context}: --value-as-written {wording!r} is not a literal span of {field} "
+            f"(punctuation, case and spacing as they stand). It is the span of the verified "
+            f"quote that the numeral translates. Nothing was written.")
     pool = set()
     for k, r, _ in claim:
         reading = next(iter(r))
         pool.add(reading)
         if k == "ratio":
             pool.update(reading)
-    for _, readings, _ in rl.number_tokens(wording):
+    for _, readings, _ in rl.number_tokens(_cjk_to_arabic(wording)):
         if len(readings) == 1 or not readings & pool:
             raise Refusal(
                 f"{context}: --value-as-written {wording!r} states a figure of its own "

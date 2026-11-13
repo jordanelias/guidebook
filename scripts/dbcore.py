@@ -398,6 +398,13 @@ def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
 #: engine, extraction_follow_up_audit and test_db_integrity K02 all read this one tuple.
 NOT_PUBLISHABLE_METHODS = ("skim",)
 
+#: The `extraction_follow_ups.reason` that means "an absence finding (claim_type = 'absent')
+#: whose tested value is still to be found by backward citation mining and context" (owner
+#: OR-22, 2026-10-29). A NAME for one declared value, not a list: db.py raise-follow-up
+#: refuses it on a row of any other claim_type, and extraction_follow_up_audit lists it, and
+#: both stop (the audit exits 2) if the column's own CHECK no longer declares it.
+ABSENCE_FOLLOW_UP_REASON = "absence-needs-tested-value"
+
 #: What `assess_cell` reads of a source (`_gather` builds its SELECT from this tuple) and what
 #: of an extraction row it grades by or composes a value from. A determination's stored answer
 #: is a cache over these, so `db.py` refuses to change one of them on a source or a row a LIVE
