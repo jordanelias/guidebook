@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 03:37 UTC from the 73 task files at commit eb17fbd by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-13 04:00 UTC from the 73 task files at commit 2bd86a2 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -19,7 +19,7 @@ _Generated 2026-11-13 03:37 UTC from the 73 task files at commit eb17fbd by `scr
 | Batch | Tasks | READY | OWNER-blocked (a gate CLOSED) | DESIGN file missing | NOT FOR SONNET | Tooling / research | Lanes |
 |---|---|---|---|---|---|---|---|
 | 1 | 27 | 26 | 0 | 0 | 1 | 25 / 2 | 10 |
-| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 7 |
+| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 6 |
 | 3 | 9 | 8 | 0 | 0 | 1 | 4 / 5 | 8 |
 | 4 | 7 | 5 | 0 | 0 | 2 | 6 / 1 | 5 |
 | 5 | 4 | 2 | 0 | 0 | 2 | 3 / 1 | 4 |
@@ -82,19 +82,19 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 2
 
-**Entry:** merged and green on `$BASE`: T-002, T-006, T-008, T-010, T-012, T-013, T-014, T-024, T-026, T-054.
+**Entry:** merged and green on `$BASE`: T-002, T-006, T-008, T-010, T-012, T-013, T-014, T-024, T-026, T-051, T-054.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
 | [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses pr | 1 (chain, first) | TOOLING | READY | yes | T-008 | not piloted |
-| [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | TOOLING | READY | yes | T-010 | not piloted |
+| [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | TOOLING | READY | yes | T-010 | piloted |
 | [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | TOOLING | READY | yes | T-002, T-012, T-013 | not piloted |
-| [T-025](tasks/T-025-base-writers.md) | Writers for the base tables a ruled task must write | 3 | TOOLING | READY | yes | T-024 | not piloted |
-| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 3 | TOOLING | NOT FOR SONNET | no | T-026 | not piloted |
+| [T-025](tasks/T-025-base-writers.md) | Writers for the base tables a ruled task must write | 3 | TOOLING | READY | yes | T-024 | piloted |
+| [T-028](tasks/T-028-concept-identity.md) | A concept that is not an English string | 3 | TOOLING | NOT FOR SONNET | no | T-026 | piloted |
 | [T-034](tasks/T-034-cell-status-verb.md) | One read-only answer for a cell at every stage | 4 | TOOLING | READY | yes | T-013 | not piloted |
 | [T-041](tasks/T-041-one-home-for-helpers.md) | One home for helpers defined twice | 0 (now) | TOOLING | READY | yes | T-014 | not piloted |
 | [T-043](tasks/T-043-refusals-name-next-action.md) | Every refusal says what to do next | 0 (now) | TOOLING | READY | yes | T-014 | not piloted |
-| [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | TOOLING | READY | yes | T-008 | not piloted |
+| [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | TOOLING | READY | yes | T-008, T-051 | piloted |
 | [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | Admission edges and connections retire in place instead of being deleted | 2 | TOOLING | READY | yes | T-006 | not piloted |
 | [T-056](tasks/T-056-all-leaves-identity-lens.md) | ALL leaves the identity lens: universal is stated once, by design_scale | 2 | TOOLING | READY | yes | T-054 | not piloted |
 | [T-111](tasks/T-111-as-written-wording-for-stored-rows.md) | Bring the two stored spelled-out figures into line | research | RESEARCH | READY | yes | T-008 | not piloted |
@@ -104,12 +104,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
 - Lane 2.1: T-016
-- Lane 2.2: T-020 → T-022 → T-028 → T-041 → T-043 → T-049 → T-050 → T-056 — sequenced by a soft dependency or a chain of shared files
-- Lane 2.3: T-025
-- Lane 2.4: T-034
-- Lane 2.5: T-111
-- Lane 2.6: T-113
-- Lane 2.7: T-114
+- Lane 2.2: T-020 → T-022 → T-025 → T-028 → T-041 → T-043 → T-049 → T-050 → T-056 — sequenced by a soft dependency or a chain of shared files
+- Lane 2.3: T-034
+- Lane 2.4: T-111
+- Lane 2.5: T-113
+- Lane 2.6: T-114
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028.
 
