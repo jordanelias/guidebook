@@ -365,6 +365,10 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+#: The two `term_aliases.attestation` values that say a source uses the form (migration 130).
+#: The other three (owner_supplied, model_seed, unrecorded) are seeds or unknowns: search aids.
+ATTESTED_FORMS = ("instrument", "other_source")
+
 #: The ledger's own convention for an entry that is NOT the owner's words: a heading that
 #: begins "Delegated resolution" (an Opus-class model resolving a register decision under the
 #: owner's delegation of 2026-11-12). A typed prefix of the ledger, not a vocabulary list.

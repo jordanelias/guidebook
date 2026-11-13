@@ -119,6 +119,7 @@ tables:
   search_admissions: research
   search_candidates: research
   search_execution_artefacts: research
+  search_execution_forms: research
   search_executions: research
   slugs: base
   source_locators: research

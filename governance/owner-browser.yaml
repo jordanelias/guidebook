@@ -76,6 +76,7 @@ glossary:
   search_admissions: "Joins each search to the sources it led to admitting."
   search_candidates: "Candidate sources a search turned up, and what became of each."
   search_execution_artefacts: "Pointers to the saved files behind each search, such as the retrieved pages."
+  search_execution_forms: "Joins each search to the vocabulary forms it fired, so a search run on a model-made word can be told from one run on a word an instrument uses."
   search_executions: "One logged search: the query as typed, where it ran, how many results came back and how many were admitted. Empty searches are kept."
   slugs: "The research topics that searches are organised under."
   source_locators: "Where each known source can be found (DOI, URL, PMID, ISBN, standard number), including leads not yet admitted."

@@ -30,6 +30,12 @@ there is a defined route out of MODEL-GENERATED rather than a permanent label:
 It also reports languages that lang_jur_map requires but for which no alias
 exists at all — those cannot be searched, whatever the coverage tables say.
 
+It also READS (does not fail) the forms each completed zero-result search fired
+(search_execution_forms, T-026): the sixth statement calls a zero-result search on a word no
+instrument uses "an empty search on an invented word", and a search that fired no attested
+form is that shape. Recording the forms is opt-in (log-search --form-id), so a search that
+omitted it is not detectable here and reads as "no form recorded".
+
 Read-only. Exit 1 on an unmarked post-cutoff alias; exit 0 otherwise.
 """
 import os
@@ -55,9 +61,21 @@ PROVENANCE_MARKERS = ("model-generated", "curated", "repo shorthand",
                       "source-attested") + VERIFIED_MARKERS
 
 
-def classify(notes, observation_id=None):
-    """Attestation is the pointer to an observation (migration 125), not a substring of the
-    notes: a row whose free text merely says "source-attested" is not attested."""
+def classify(notes, observation_id=None, attestation="unrecorded"):
+    """The typed `attestation` column (migration 130) is read first: instrument and
+    other_source are SOURCE-ATTESTED, model_seed is MODEL-GENERATED, owner_supplied is
+    OWNER-SUPPLIED. Only an `unrecorded` row falls back to the notes markers below, so the
+    curated, repo-shorthand and VERIFIED-* classes survive until T-107 re-attests them.
+
+    The fallback keeps the older rule: attestation is the pointer to an observation (migration
+    125), not a substring of the notes; a row whose free text merely says "source-attested" is
+    not attested."""
+    if attestation in ("instrument", "other_source"):
+        return "SOURCE-ATTESTED"
+    if attestation == "model_seed":
+        return "MODEL-GENERATED"
+    if attestation == "owner_supplied":
+        return "OWNER-SUPPLIED"
     n = notes or ""
     for m in VERIFIED_MARKERS:
         if m in n:
@@ -88,13 +106,14 @@ def main():
     con.row_factory = sqlite3.Row
 
     rows = con.execute(
-        "SELECT term_id, alias, language, notes, created_by_session, observation_id FROM term_aliases"
+        "SELECT term_id, alias, language, notes, created_by_session, observation_id, attestation "
+        "FROM term_aliases"
     ).fetchall()
 
     by_lang = {}
     offenders = []
     for r in rows:
-        cls = classify(r["notes"], r["observation_id"])
+        cls = classify(r["notes"], r["observation_id"], r["attestation"])
         d = by_lang.setdefault(r["language"], {})
         d[cls] = d.get(cls, 0) + 1
         if cls == "UNKNOWN" and session_date(r["created_by_session"]) >= CUTOFF_SESSION_DATE:
@@ -105,10 +124,24 @@ def main():
     print("=" * 74)
     print(f"database: {DB_PATH}")
     print(f"aliases:  {len(rows)}")
-    print(f"EXAMINED: {len(rows)}\n")
+    # Completed (not deferred) searches that found nothing, and the forms each recorded firing.
+    try:
+        zero = con.execute(
+            "SELECT s.exec_id, s.language, COUNT(f.exec_id) AS forms, "
+            "COALESCE(SUM(a.attestation IN ('instrument','other_source')), 0) AS attested "
+            "FROM search_executions s "
+            "LEFT JOIN search_execution_forms f ON f.exec_id = s.exec_id "
+            "LEFT JOIN term_aliases a ON a.term_id = f.term_id AND a.alias = f.alias "
+            "AND a.language = f.language "
+            "WHERE s.results_found = 0 AND s.deferred_reason IS NULL "
+            "GROUP BY s.exec_id ORDER BY s.exec_id").fetchall()
+    except sqlite3.OperationalError:
+        zero = []
+    print(f"zero-result searches: {len(zero)}")
+    print(f"EXAMINED: {len(rows) + len(zero)}\n")
 
     hdr = (f"{'lang':<6}{'total':>7}{'verified':>10}{'attested':>10}{'model-gen':>11}"
-           f"{'curated':>9}{'code':>6}{'UNKNOWN':>9}")
+           f"{'owner':>7}{'curated':>9}{'code':>6}{'UNKNOWN':>9}")
     print(hdr)
     print("-" * len(hdr))
     tot_unknown = tot_verified = 0
@@ -120,12 +153,13 @@ def main():
         tot_unknown += unk
         tot_verified += ver
         print(f"{lang:<6}{tot:>7}{ver:>10}{d.get('SOURCE-ATTESTED',0):>10}"
-              f"{d.get('MODEL-GENERATED',0):>11}"
+              f"{d.get('MODEL-GENERATED',0):>11}{d.get('OWNER-SUPPLIED',0):>7}"
               f"{d.get('CURATED-EN',0):>9}{d.get('PROJECT-CODE',0):>6}{unk:>9}")
     print("-" * len(hdr))
     print(f"{'all':<6}{len(rows):>7}{tot_verified:>10}"
           f"{sum(d.get('SOURCE-ATTESTED',0) for d in by_lang.values()):>10}"
           f"{sum(d.get('MODEL-GENERATED',0) for d in by_lang.values()):>11}"
+          f"{sum(d.get('OWNER-SUPPLIED',0) for d in by_lang.values()):>7}"
           f"{sum(d.get('CURATED-EN',0) for d in by_lang.values()):>9}"
           f"{sum(d.get('PROJECT-CODE',0) for d in by_lang.values()):>6}{tot_unknown:>9}")
 
@@ -141,6 +175,14 @@ def main():
         print("  lang_jur_map requires these; a per-language query builder cannot emit a")
         print("  query without vocabulary, so their search coverage is structurally zero.")
         print("  Build from published glossaries (references/native-alias-verification.md).")
+
+    print(f"\nZERO-RESULT SEARCHES AND THE FORMS THEY FIRED (read, not failed): {len(zero)} search(es)")
+    print("  A zero-result search with no attested form is 'an empty search on an invented word'.")
+    print("  Omitting --form-id is not detectable (the junction is opt-in): 'no form recorded'")
+    print("  means none was named, not that none was fired.")
+    for exec_id, lang, forms, attested in zero:
+        print(f"  exec {exec_id} ({lang}): {forms} form(s) recorded, {attested} attested"
+              + ("" if attested else "  <- no attested form"))
 
     if tot_verified == 0:
         print(f"\nNOTE: no alias has reached {'/'.join(VERIFIED_MARKERS)} yet.")
@@ -159,7 +201,8 @@ def main():
                   f"({r['created_by_session']})")
         if len(offenders) > 20:
             print(f"  ... and {len(offenders) - 20} more")
-        print(f"\n  Record one of: {', '.join(PROVENANCE_MARKERS)} in term_aliases.notes.")
+        print("\n  Record the form's attestation (db.py add-alias: an observation, a locator or --seed),")
+        print(f"  or, for a row not yet re-attested, one of: {', '.join(PROVENANCE_MARKERS)} in term_aliases.notes.")
         return 1
 
     print(f"\nRESULTS: all post-{CUTOFF_SESSION_DATE} aliases carry provenance")
