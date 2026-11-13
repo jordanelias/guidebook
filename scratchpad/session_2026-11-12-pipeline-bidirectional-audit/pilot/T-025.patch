@@ -1,0 +1,439 @@
+From 6c38acdbcb4ed6803fb9b014475f3cfa599c6551 Mon Sep 17 00:00:00 2001
+From: pilot <p@x>
+Date: Fri, 13 Nov 2026 03:42:11 +0000
+Subject: [PATCH] governance: add writers for language-jurisdiction pairs and
+ identity codes [2026-11-13 03:42]
+
+pilot commit: add-lang-jur-pair, set-pair-scope, add-identity, amend-identity; T025-01..11
+---
+ governance/context-map.yaml            |   4 +
+ scripts/db.py                          | 205 ++++++++++++++++++++++++-
+ scripts/tests/test_db_amend_writers.py | 106 +++++++++++++
+ skills/run-pipeline_SKILL.md           |   6 +-
+ 4 files changed, 317 insertions(+), 4 deletions(-)
+
+diff --git a/governance/context-map.yaml b/governance/context-map.yaml
+index 158fb44..8436c5c 100644
+--- a/governance/context-map.yaml
++++ b/governance/context-map.yaml
+@@ -523,6 +523,7 @@ writers:
+     - base_icf
+     - base_jurisdictions
+     - base_parameters
++    - base_taxonomy_identity
+     - base_taxonomy_medical
+     - case_studies
+     - citation_mining
+@@ -541,6 +542,7 @@ writers:
+     - icf_medical_map
+     - identity_icf_map
+     - identity_medical_map
++    - lang_jur_map
+     - observed_terms
+     - parameter_declinations
+     - research_code_leads
+@@ -581,7 +583,9 @@ writers:
+     scripts/tests/test_db_amend_writers.py:
+     - adversarial_findings
+     - adversarial_passes
++    - base_taxonomy_identity
+     - evidence_sources
++    - lang_jur_map
+     - research_code_leads
+     - search_executions
+     - source_scans
+diff --git a/scripts/db.py b/scripts/db.py
+index 803d49f..0280ba8 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -886,7 +886,7 @@ def log_search(slug: str, language: str, query_text: str, engine: str,
+             raise Refusal(
+                 f"--language {language!r} is not a language lang_jur_map holds "
+                 f"({', '.join(sorted(_langs))}). The map is the vocabulary of research "
+-                f"languages (rule 8); a language is added there, not at the search.")
++                f"languages (rule 8); a language is added there with `db.py add-lang-jur-pair`, not at the search.")
+         if mined_ref_id and not conn.execute(
+                 "SELECT 1 FROM evidence_sources WHERE ref_id=?", [mined_ref_id]).fetchone():
+             # Named, not a bare FOREIGN KEY constraint failed -- same discipline as
+@@ -1986,6 +1986,56 @@ def main():
+     p_aj.add_argument("--session", required=True)
+     p_aj.add_argument("--dry-run", action="store_true")
+ 
++    p_alj = sub.add_parser("add-lang-jur-pair",
++                           help="Add a (language, jurisdiction) pair to lang_jur_map, the research scope, "
++                                "pointing at the ledger quote that records the owner's scope decision")
++    p_alj.add_argument("--language", required=True, help="two-letter upper-case code; a language the map "
++                                                         "does not yet hold is reported as new_language")
++    p_alj.add_argument("--jurisdiction", required=True, help="a code base_jurisdictions declares")
++    p_alj.add_argument("--role", required=True, choices=dbcore.schema_choices("lang_jur_map", "role"))
++    p_alj.add_argument("--notes")
++    p_alj.add_argument("--ledger-pointer", dest="ledger_pointer", required=True,
++                       help="a quote found exactly once in references/project-standards.md")
++    p_alj.add_argument("--session", required=True)
++    p_alj.add_argument("--dry-run", action="store_true")
++
++    p_sps = sub.add_parser("set-pair-scope",
++                           help="Record a held lang_jur_map pair as in-scope or scoped-out, printing the value replaced")
++    p_sps.add_argument("--language", required=True)
++    p_sps.add_argument("--jurisdiction", required=True)
++    p_sps.add_argument("--scope-status", dest="scope_status", required=True,
++                       choices=dbcore.schema_choices("lang_jur_map", "scope_status"))
++    p_sps.add_argument("--ledger-pointer", dest="ledger_pointer", required=True,
++                       help="a quote found exactly once in references/project-standards.md")
++    p_sps.add_argument("--reason", required=True)
++    p_sps.add_argument("--session", required=True)
++    p_sps.add_argument("--dry-run", action="store_true")
++
++    p_aid = sub.add_parser("add-identity",
++                           help="Add a code to base_taxonomy_identity, pointing at the ledger quote that records the ruling")
++    p_aid.add_argument("--code", required=True)
++    p_aid.add_argument("--display-name", dest="display_name", required=True)
++    p_aid.add_argument("--category", required=True,
++                       choices=dbcore.schema_choices("base_taxonomy_identity", "category"))
++    p_aid.add_argument("--description", required=True)
++    p_aid.add_argument("--parent", help="a held ACTIVE identity code this one sits under")
++    p_aid.add_argument("--ledger-pointer", dest="ledger_pointer", required=True,
++                       help="a quote found exactly once in references/project-standards.md")
++    p_aid.add_argument("--session", required=True)
++    p_aid.add_argument("--dry-run", action="store_true")
++
++    p_amid = sub.add_parser("amend-identity",
++                            help="Correct an identity code's display name, description or category, printing each value replaced")
++    p_amid.add_argument("--code", required=True)
++    p_amid.add_argument("--display-name", dest="display_name")
++    p_amid.add_argument("--description")
++    p_amid.add_argument("--category", choices=dbcore.schema_choices("base_taxonomy_identity", "category"))
++    p_amid.add_argument("--ledger-pointer", dest="ledger_pointer", required=True,
++                        help="a quote found exactly once in references/project-standards.md")
++    p_amid.add_argument("--reason", required=True)
++    p_amid.add_argument("--session", required=True)
++    p_amid.add_argument("--dry-run", action="store_true")
++
+     p_rfu = sub.add_parser("raise-follow-up",
+                            help="Tag an extraction for a reviewer to re-check "
+                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
+@@ -3244,6 +3294,24 @@ def main():
+         _emit(add_jurisdiction(args.code, args.kind, args.approval_ref, session=args.session,
+                                parent=args.parent, dry_run=args.dry_run))
+ 
++    elif args.command == "add-lang-jur-pair":
++        _emit(add_lang_jur_pair(args.language, args.jurisdiction, args.role, args.ledger_pointer,
++                                session=args.session, notes=args.notes, dry_run=args.dry_run))
++
++    elif args.command == "set-pair-scope":
++        _emit(set_pair_scope(args.language, args.jurisdiction, args.scope_status, args.ledger_pointer,
++                             args.reason, session=args.session, dry_run=args.dry_run))
++
++    elif args.command == "add-identity":
++        _emit(add_identity(args.code, args.display_name, args.category, args.description,
++                           args.ledger_pointer, session=args.session, parent=args.parent,
++                           dry_run=args.dry_run))
++
++    elif args.command == "amend-identity":
++        _emit(amend_identity(args.code, args.ledger_pointer, args.reason, session=args.session,
++                             display_name=args.display_name, description=args.description,
++                             category=args.category, dry_run=args.dry_run))
++
+     elif args.command == "raise-follow-up":
+         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
+                               session=args.session, dry_run=args.dry_run))
+@@ -7838,6 +7906,141 @@ def add_jurisdiction(code: str, kind: str, approval_ref: str, session: str,
+         return {"jurisdiction_code": code, "kind": kind, "parent_code": parent, "dry_run": dry_run}
+ 
+ 
++def _pair_row(conn, language, jurisdiction, verb):
++    """The lang_jur_map row for (language, jurisdiction), or a Refusal naming `verb`."""
++    row = conn.execute("SELECT role, scope_status FROM lang_jur_map WHERE language=? AND jurisdiction=?",
++                       (language, jurisdiction)).fetchone()
++    if row is None:
++        raise Refusal(f"{verb}: ({language!r}, {jurisdiction!r}) is not a pair lang_jur_map holds. "
++                      f"Add it with `db.py add-lang-jur-pair` first. Nothing was written.")
++    return row
++
++
++def add_lang_jur_pair(language: str, jurisdiction: str, role: str, ledger_pointer: str, session: str,
++                      notes: str = None, dry_run: bool = False):
++    """Add one (language, jurisdiction) pair to `lang_jur_map`, the table `v_research_scope` reads as
++    what the research scope owes. Which languages and countries are searched is the owner's scope
++    (a new language is a doctrine change, owner question 5), so every pair needs `--ledger-pointer`:
++    a quote found exactly once in the ledger. REFUSES: a blank or non-upper-case language; a
++    jurisdiction `base_jurisdictions` does not declare (`dbcore.check_jurisdiction`; admit it with
++    `add-jurisdiction` first); a role outside the column's CHECK; a pair already held (a pair's role is
++    never rewritten here); a ledger quote not found exactly once. The new pair is owed (scope_status NULL);
++    `set-pair-scope` records `scoped-out`. The result says when the language is new to the map."""
++    language, jurisdiction = (language or "").strip(), (jurisdiction or "").strip()
++    if not language or language != language.upper():
++        raise Refusal(f"add-lang-jur-pair: --language {language!r} must be non-blank and upper case.")
++    if not jurisdiction:
++        raise Refusal("add-lang-jur-pair: --jurisdiction is required.")
++    dbcore.require_ledger_quote_once((ledger_pointer or "").strip(), "add-lang-jur-pair: --ledger-pointer",
++                                     "Record the owner's scope decision in references/project-standards.md first (CLAUDE.md rule 0).")
++    dbcore.check_jurisdiction(jurisdiction, "add-lang-jur-pair --jurisdiction")
++    with connect(dry_run) as conn:
++        dbcore.check_declared(conn, "lang_jur_map", "role", role, "add-lang-jur-pair --role")
++        if conn.execute("SELECT 1 FROM lang_jur_map WHERE language=? AND jurisdiction=?",
++                        (language, jurisdiction)).fetchone():
++            raise Refusal(f"add-lang-jur-pair: ({language!r}, {jurisdiction!r}) is already held. Nothing was written.")
++        new_language = not dbcore.exists(conn, "lang_jur_map", "language", language)
++        row = {"language": language, "jurisdiction": jurisdiction, "role": role,
++               "notes": (notes or "").strip() or None}
++        row.update(dbcore.stamp_for(conn, "lang_jur_map", session))
++        conn.execute(f"INSERT INTO lang_jur_map ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
++                     list(row.values()))
++        return {"language": language, "jurisdiction": jurisdiction, "role": role,
++                "new_language": new_language, "dry_run": dry_run}
++
++
++def set_pair_scope(language: str, jurisdiction: str, scope_status: str, ledger_pointer: str, reason: str,
++                   session: str, dry_run: bool = False):
++    """Record whether a held `lang_jur_map` pair is owed (`in-scope`) or `scoped-out`, printing the value it
++    replaces. The table keeps no history column, so the replaced value, the reason and the ledger pointer are
++    in this result and in the pull request. REFUSES: a pair not held; a value outside the column's CHECK;
++    a value the pair already has; a blank --reason; a ledger quote not found exactly once."""
++    language, jurisdiction = (language or "").strip(), (jurisdiction or "").strip()
++    reason = dbcore.require_reason(reason, "set-pair-scope")
++    dbcore.require_ledger_quote_once((ledger_pointer or "").strip(), "set-pair-scope: --ledger-pointer",
++                                     "Record the owner's scope decision in references/project-standards.md first (CLAUDE.md rule 0).")
++    with connect(dry_run) as conn:
++        dbcore.check_declared(conn, "lang_jur_map", "scope_status", scope_status, "set-pair-scope --scope-status")
++        was = _pair_row(conn, language, jurisdiction, "set-pair-scope")["scope_status"]
++        if was == scope_status:
++            raise Refusal(f"set-pair-scope: ({language!r}, {jurisdiction!r}) is already {scope_status!r}. "
++                          f"Nothing was written.")
++        conn.execute("UPDATE lang_jur_map SET scope_status=? WHERE language=? AND jurisdiction=?",
++                     (scope_status, language, jurisdiction))
++        return {"language": language, "jurisdiction": jurisdiction, "scope_status": scope_status,
++                "scope_status_was": was, "reason": reason, "dry_run": dry_run}
++
++
++def add_identity(code: str, display_name: str, category: str, description: str, ledger_pointer: str,
++                 session: str, parent: str = None, dry_run: bool = False):
++    """Add one code to `base_taxonomy_identity`, the identity lens every determination and search points at.
++    The code's name and place in the taxonomy are population taxonomy (the owner's), so `--ledger-pointer`
++    is a quote found exactly once in the ledger. REFUSES: a blank or non-upper-case code, or one held; a blank
++    name or description; a category outside the column's CHECK; a --parent that is not a held ACTIVE code;
++    a ledger quote not found exactly once. No provenance column exists: the provenance is the ledger entry the
++    quote points at (T-102-design section 12)."""
++    code, display_name, description = (code or "").strip(), (display_name or "").strip(), (description or "").strip()
++    parent = (parent or "").strip() or None
++    if not code or code != code.upper() or " " in code:
++        raise Refusal(f"add-identity: --code {code!r} must be non-blank, upper case, without spaces.")
++    if not display_name or not description:
++        raise Refusal("add-identity: --display-name and --description are required and may not be blank.")
++    dbcore.require_ledger_quote_once((ledger_pointer or "").strip(), "add-identity: --ledger-pointer",
++                                     "Record the owner's ruling in references/project-standards.md first (CLAUDE.md rule 0).")
++    with connect(dry_run) as conn:
++        dbcore.check_declared(conn, "base_taxonomy_identity", "category", category, "add-identity --category")
++        if dbcore.exists(conn, "base_taxonomy_identity", "identity_code", code):
++            raise Refusal(f"add-identity: {code!r} is already held. Nothing was written.")
++        if parent is not None:
++            held = conn.execute("SELECT status FROM base_taxonomy_identity WHERE identity_code=?", (parent,)).fetchone()
++            if held is None or held["status"] != "active":
++                raise Refusal(f"add-identity: --parent {parent!r} is not a held active identity code. "
++                              f"Nothing was written.")
++        row = {"identity_code": code, "display_name": display_name, "category": category,
++               "description": description, "parent_code": parent}
++        row.update(dbcore.stamp_for(conn, "base_taxonomy_identity", session))
++        row.update({k: v for k, v in dbcore.upd(session).items() if k == "updated_at"})
++        conn.execute(f"INSERT INTO base_taxonomy_identity ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
++                     list(row.values()))
++        return {"identity_code": code, "parent_code": parent, "dry_run": dry_run}
++
++
++_AMENDABLE_IDENTITY_FIELDS = ("display_name", "description", "category")
++
++
++def amend_identity(code: str, ledger_pointer: str, reason: str, session: str, display_name: str = None,
++                   description: str = None, category: str = None, dry_run: bool = False):
++    """Correct the display name, description or category of a held identity code, printing each value it
++    replaces (the table keeps no history column; the result and the ledger entry the pointer names are the
++    record). The code is never renamed. REFUSES: no field given; a blank value; a category outside the
++    column's CHECK; a code not held; a value equal to the held one (reported as unchanged, nothing written
++    when every given field is unchanged); a blank --reason; a ledger quote not found exactly once."""
++    given = {k: (v or "").strip() for k, v in (("display_name", display_name), ("description", description),
++                                              ("category", category)) if v is not None}
++    if not given:
++        raise Refusal(f"amend-identity: give at least one of {list(_AMENDABLE_IDENTITY_FIELDS)}.")
++    if not all(given.values()):
++        raise Refusal("amend-identity: a given value may not be blank.")
++    reason = dbcore.require_reason(reason, "amend-identity")
++    dbcore.require_ledger_quote_once((ledger_pointer or "").strip(), "amend-identity: --ledger-pointer",
++                                     "Record the owner's ruling in references/project-standards.md first (CLAUDE.md rule 0).")
++    with connect(dry_run) as conn:
++        held = conn.execute("SELECT display_name, description, category FROM base_taxonomy_identity "
++                            "WHERE identity_code=?", (code,)).fetchone()
++        if held is None:
++            raise Refusal(f"amend-identity: {code!r} is not a held identity code.")
++        if "category" in given:
++            dbcore.check_declared(conn, "base_taxonomy_identity", "category", given["category"],
++                                  "amend-identity --category")
++        changes = {k: v for k, v in given.items() if held[k] != v}
++        if changes:
++            stamp = dbcore.upd(session)
++            conn.execute("UPDATE base_taxonomy_identity SET " + ", ".join(f"{k}=?" for k in changes) +
++                         ", updated_at=? WHERE identity_code=?", [*changes.values(), stamp["updated_at"], code])
++        return {"identity_code": code, "changed": bool(changes), "reason": reason,
++                "replaced": {k: held[k] for k in changes}, "now": changes, "dry_run": dry_run}
++
++
+ def record_scan(data: dict, session: str, dry_run: bool = False):
+     """Record one READING of one source against the parameter list (migration 103).
+ 
+diff --git a/scripts/tests/test_db_amend_writers.py b/scripts/tests/test_db_amend_writers.py
+index 36d6272..c11a3c5 100644
+--- a/scripts/tests/test_db_amend_writers.py
++++ b/scripts/tests/test_db_amend_writers.py
+@@ -74,6 +74,7 @@ writer can make are set by SQL on the copy, and each says why at the point it is
+ Nothing depends on a hard-coded live id: the slugs, source, population and term used are
+ read from the copy.
+ """
++import importlib
+ import json
+ import os
+ import pathlib
+@@ -1622,6 +1623,111 @@ try:
+            msg is not None and out and q("SELECT jurisdiction FROM source_value_extractions WHERE extraction_id=?",
+                                          EX[0])[0][0] == NEW_J, f"refusal={msg!r} out={out!r}")
+ 
++
++    # ── T025: the pair and identity registries have writers that refuse, and the captured set reaches them ──────
++    # Every probe is chosen by query; fixtures are made on this COPY only (TASK-FIXTURE; the canonical database
++    # is never opened for writing). Each refusal case asserts a "REFUSING:" line, so an absent verb (an argparse
++    # error) can never pass as a refusal. QUOTE is a ledger line found exactly once, by the helper the verbs use.
++    with sqlite3.connect(f"file:{DB}?mode=ro", uri=True) as _c:
++        CAPTURED = set(dbcore.writable_tables(_c))
++    _lines = [ln.strip() for ln in dbcore.LEDGER_PATH.read_text(encoding="utf-8").splitlines() if len(ln.strip()) > 50]
++    QUOTE = next((ln[:60] for ln in reversed(_lines) if dbcore.ledger_quote_count(ln[:60]) == 1), None)
++    PAIR = next(iter(q("SELECT l.language, j.jurisdiction_code FROM (SELECT DISTINCT language FROM lang_jur_map) l "
++                       "CROSS JOIN base_jurisdictions j WHERE j.kind='country' AND NOT EXISTS (SELECT 1 FROM lang_jur_map m "
++                       "WHERE m.language=l.language AND m.jurisdiction=j.jurisdiction_code) ORDER BY 2, 1")), None)
++    ACTIVE_ID = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code LIMIT 1")[0][0]
++    ID_NEW = ACTIVE_ID + "TWENTYFIVE"                    # derived from a held code, so it cannot be held
++    ID_CAT, ID_CAT2 = [r[0] for r in q("SELECT DISTINCT category FROM base_taxonomy_identity WHERE category IS NOT NULL "
++                                       "ORDER BY 1 LIMIT 2")]
++    record("T025-01", "the tables are in the captured set; a unique ledger quote and an unheld declared pair exist",
++           {"lang_jur_map", "base_taxonomy_identity"} <= CAPTURED and QUOTE and PAIR and ID_NEW not in
++           {r[0] for r in q("SELECT identity_code FROM base_taxonomy_identity")} and UNDECLARED not in DECLARED,
++           f"captured_has={sorted({'lang_jur_map','base_taxonomy_identity'} & CAPTURED)} quote={QUOTE!r} pair={PAIR}")
++    T_L, T_J = PAIR
++    pair_args = ("--language", T_L, "--jurisdiction", T_J, "--role", "SECONDARY", "--session", S)
++    n0 = counts("lang_jur_map", "base_taxonomy_identity")
++    r1 = run_cli("add-lang-jur-pair", *pair_args, "--ledger-pointer", "no such sentence in the ledger " + T_J)
++    r2 = run_cli("add-lang-jur-pair", "--language", T_L, "--jurisdiction", UNDECLARED, "--role", "SECONDARY",
++                 "--session", S, "--ledger-pointer", QUOTE)
++    r3 = run_cli("add-lang-jur-pair", "--language", T_L.lower(), "--jurisdiction", T_J, "--role", "SECONDARY",
++                 "--session", S, "--ledger-pointer", QUOTE)
++    record("T025-02", "add-lang-jur-pair refuses an unfound ledger quote, an undeclared jurisdiction and a lower-case language, writing nothing",
++           all(r.returncode == 1 and r.stderr.startswith("REFUSING:") for r in (r1, r2, r3)) and counts("lang_jur_map", "base_taxonomy_identity") == n0,
++           f"{[(r.returncode, r.stderr[-120:]) for r in (r1, r2, r3)]}")
++    r = run_cli("add-lang-jur-pair", *pair_args, "--ledger-pointer", QUOTE, "--notes", "TASK-FIXTURE T025")
++    held = q("SELECT role, scope_status, notes, created_by_session FROM lang_jur_map WHERE language=? AND jurisdiction=?", T_L, T_J)
++    record("T025-03", "with a ledger quote the verb adds the pair, owed (scope_status NULL), and the language is not reported new",
++           r.returncode == 0 and held == [("SECONDARY", None, "TASK-FIXTURE T025", S)] and '"new_language": false' in r.stdout,
++           f"rc={r.returncode} {r.stdout[-200:]!r} {r.stderr[-200:]!r} {held}")
++    r = run_cli("add-lang-jur-pair", *pair_args, "--ledger-pointer", QUOTE)
++    record("T025-04", "the same pair again is refused (the role of a held pair is never rewritten here)",
++           r.returncode == 1 and r.stderr.startswith("REFUSING:") and "already held" in r.stderr, f"{r.stderr[-200:]!r}")
++    out_dir = os.path.join(TMP, "capture-t025.sql")
++    sys.path.insert(0, str(REPO / "scripts" / "research"))
++    emit_t = importlib.import_module("emit_batch_sql")
++    try:
++        emit_t.emit(DB, str(REPO / "data" / "guidebook.db"), out_dir)
++        cap = open(out_dir, encoding="utf-8").read()
++    except SystemExit as exc:
++        cap = f"emit refused: {exc}"
++    record("T025-05", "emit_batch_sql output carries the added pair (the write can be shipped)",
++           any(ln.startswith('INSERT INTO "lang_jur_map"') and f"'{T_L}'" in ln and f"'{T_J}'" in ln for ln in cap.splitlines()),
++           cap[-300:])
++    owed = lambda: q("SELECT 1 FROM v_research_scope WHERE language=? AND jurisdiction=?", T_L, T_J)  # noqa: E731
++    sp = ("set-pair-scope", "--language", T_L, "--jurisdiction", T_J, "--ledger-pointer", QUOTE, "--session", S)
++    r_bad = run_cli(*sp, "--scope-status", "scoped-out")                                  # no --reason: argparse error
++    r_nopair = run_cli("set-pair-scope", "--language", T_L, "--jurisdiction", UNDECLARED, "--scope-status", "scoped-out",
++                       "--ledger-pointer", QUOTE, "--reason", "fixture", "--session", S)
++    was_owed = bool(owed())
++    r_out = run_cli(*sp, "--scope-status", "scoped-out", "--reason", "TASK-FIXTURE T025")
++    gone = not owed()
++    r_same = run_cli(*sp, "--scope-status", "scoped-out", "--reason", "TASK-FIXTURE T025")
++    record("T025-06", "set-pair-scope refuses a pair not held and a repeat, prints the value it replaced, and the pair leaves v_research_scope",
++           r_nopair.returncode == 1 and r_nopair.stderr.startswith("REFUSING:") and r_bad.returncode != 0 and was_owed
++           and r_out.returncode == 0 and '"scope_status_was": null' in r_out.stdout and gone
++           and r_same.returncode == 1 and r_same.stderr.startswith("REFUSING:"),
++           f"{r_nopair.stderr[-150:]!r} {r_out.stdout[-250:]!r} {r_same.stderr[-150:]!r} was_owed={was_owed} gone={gone}")
++
++    ia = ("add-identity", "--code", ID_NEW, "--display-name", "TASK-FIXTURE T025 name", "--category", ID_CAT,
++          "--description", "TASK-FIXTURE T025 description", "--session", S)
++    n1 = counts("base_taxonomy_identity")
++    ra = run_cli(*ia, "--ledger-pointer", "no such sentence in the ledger " + ID_NEW)
++    rb = run_cli(*ia, "--ledger-pointer", QUOTE, "--parent", "NOT-A-CODE")
++    rc_ = run_cli(*ia[:2], ACTIVE_ID, *ia[3:], "--ledger-pointer", QUOTE)                  # a held code
++    record("T025-07", "add-identity refuses an unfound ledger quote, a parent not held and a code already held, writing nothing",
++           all(r.returncode == 1 and r.stderr.startswith("REFUSING:") for r in (ra, rb, rc_)) and counts("base_taxonomy_identity") == n1,
++           f"{[(r.returncode, r.stderr[-120:]) for r in (ra, rb, rc_)]}")
++    r = run_cli(*ia, "--ledger-pointer", QUOTE, "--parent", ACTIVE_ID)
++    row = q("SELECT display_name, category, parent_code, status, is_compound FROM base_taxonomy_identity WHERE identity_code=?", ID_NEW)
++    record("T025-08", "with a ledger quote and an active parent add-identity adds the code, active, under the parent",
++           r.returncode == 0 and row == [("TASK-FIXTURE T025 name", ID_CAT, ACTIVE_ID, "active", 0)], f"{r.stderr[-200:]!r} {row}")
++    w("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?", ID_NEW)   # a state no writer makes
++    rd = run_cli("add-identity", "--code", ID_NEW + "X", "--display-name", "TASK-FIXTURE", "--category", ID_CAT,
++                 "--description", "TASK-FIXTURE", "--parent", ID_NEW, "--ledger-pointer", QUOTE, "--session", S)
++    w("UPDATE base_taxonomy_identity SET status='active' WHERE identity_code=?", ID_NEW)
++    record("T025-09", "add-identity refuses a deprecated parent", rd.returncode == 1 and rd.stderr.startswith("REFUSING:")
++           and "active" in rd.stderr, f"{rd.stderr[-200:]!r}")
++    am = ("amend-identity", "--code", ID_NEW, "--ledger-pointer", QUOTE, "--session", S)
++    r_nofield = run_cli(*am, "--reason", "fixture")
++    r_noreason = run_cli(*am, "--display-name", "TASK-FIXTURE T025 renamed", "--reason", " ")
++    r_ok = run_cli(*am, "--display-name", "TASK-FIXTURE T025 renamed", "--category", ID_CAT2,
++                   "--description", "TASK-FIXTURE T025 redescribed", "--reason", "TASK-FIXTURE T025")
++    now_ = q("SELECT display_name, category, description FROM base_taxonomy_identity WHERE identity_code=?", ID_NEW)
++    r_again = run_cli(*am, "--display-name", "TASK-FIXTURE T025 renamed", "--reason", "TASK-FIXTURE T025")
++    record("T025-10", "amend-identity refuses no field and a blank reason; one call corrects name, category and description and prints each replaced value",
++           all(r.returncode == 1 and r.stderr.startswith("REFUSING:") for r in (r_nofield, r_noreason))
++           and r_ok.returncode == 0 and now_ == [("TASK-FIXTURE T025 renamed", ID_CAT2, "TASK-FIXTURE T025 redescribed")]
++           and "TASK-FIXTURE T025 name" in r_ok.stdout and "TASK-FIXTURE T025 description" in r_ok.stdout and ID_CAT in r_ok.stdout
++           and r_again.returncode == 0 and '"changed": false' in r_again.stdout,
++           f"{r_nofield.stderr[-100:]!r} {r_noreason.stderr[-100:]!r} {r_ok.stdout[-300:]!r} {now_} {r_again.stdout[-100:]!r}")
++    try:
++        emit_t.emit(DB, str(REPO / "data" / "guidebook.db"), out_dir)
++        cap = open(out_dir, encoding="utf-8").read()
++    except SystemExit as exc:
++        cap = f"emit refused: {exc}"
++    record("T025-11", "emit_batch_sql output carries the added identity code",
++           any(ln.startswith('INSERT INTO "base_taxonomy_identity"') and f"'{ID_NEW}'" in ln for ln in cap.splitlines()), cap[-300:])
++
+     # J13: conflicts.pop_a / pop_b are foreign keys into the identity lens (migration 121; the item_code
+     # column this once guarded is gone). A code the lens lacks is refused by name; the control is the same
+     # row with two live codes, because a refusal that also refused that would prove nothing.
+diff --git a/skills/run-pipeline_SKILL.md b/skills/run-pipeline_SKILL.md
+index fef054f..f2a1460 100644
+--- a/skills/run-pipeline_SKILL.md
++++ b/skills/run-pipeline_SKILL.md
+@@ -40,7 +40,7 @@ associated language**, a `lang_jur_map` row). In scope: P1+P2+P3 (ledger 2026-10
+ `workplan/2026-10-30-ramp-spec-pages/HANDOFF.md` §3); Arabic, Bengali, Hindi and Swahili are scoped out for now. What
+ is owed has one home, the view `v_research_scope`: every `lang_jur_map` row not recorded `scoped-out` in `scope_status`
+ (column added by migration 122; the view by migration 123); a NULL is owed, so an unrecorded scope never shrinks the requirement, and the fill of the column is a
+-data PR. `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
++data PR written with `db.py set-pair-scope` (a pair is added with `db.py add-lang-jur-pair`; both need a `--ledger-pointer`, a quote found once in the ledger). `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
+ `[language, jurisdiction]` pairs still owed), searches_outside_scope (logged searches whose pair is not owed) and
+ jurisdictions_unreachable (owed rows whose jurisdiction `base_jurisdictions` does not declare: a search there cannot be logged, so
+ they stay unsearched; a search filed under a sub-national code counts toward its parent country, owner OD-04, and a new code is admitted with `db.py add-jurisdiction`). `complete` is false while anything owed is unsearched or refused by the declared vocabulary,
+@@ -52,7 +52,7 @@ editions only.** T4–T6 values are accepted as baselines; do not trace their hi
+ ## 1. base — read before touching a source
+ The catalogue every source is read against: `base_parameters` + `terms`/`term_aliases`, the lenses
+ (`base_taxonomy_identity`, `access_needs`, `base_icf`, `base_taxonomy_medical` — empty until its owed rows land),
+-`slugs`, `lang_jur_map`. Codes AND names; no bare axis codes or population umbrellas.
++`slugs`, `lang_jur_map`. A lens code is added with `db.py add-identity` and corrected with `db.py amend-identity`, each pointing at a ledger quote. Codes AND names; no bare axis codes or population umbrellas.
+ - **Equivalence before minting.** Search terms and aliases first. A phrase a source uses for a term we hold is an
+   alias, reached only through the chain `observe-term` (its `--context-quote` must be found byte-for-byte in a file
+   saved for the source: a `scripts/research/full_text.py` derivation or the fetched page) → `adjudicate-term
+@@ -86,7 +86,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
+   (R8). A search names what it looked for (`--slug`, `--parameter` or `--mined-ref-id`); `--slug` must exist and
+   `--parameter` must be active. `--language` is a two-letter code from `lang_jur_map` (derive: `SELECT DISTINCT
+   language FROM lang_jur_map`), folded to upper case on write, and a language the map does not hold is refused (the map is the vocabulary of research
+-  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `base_jurisdictions`
++  languages; a new one is a doctrine change, owner question 5, added with `db.py add-lang-jur-pair --ledger-pointer`); `--jurisdiction` is a code `base_jurisdictions`
+   declares. The pair is not checked: a search in any declared jurisdiction is logged, and the result's
+   in_research_scope says whether the pair counts toward what `coverage` owes (`v_research_scope`). A search outside it
+   is counted apart (searches_outside_scope), never refused (R8). `--result-artefact retrieval-log/<session>/<file>`
+-- 
+2.43.0
+
