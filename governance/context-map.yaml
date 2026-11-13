@@ -611,6 +611,7 @@ writers:
     - adversarial_passes
     - base_jurisdictions
     - evidence_sources
+    - extraction_relations
     - research_code_leads
     - search_executions
     - source_scans

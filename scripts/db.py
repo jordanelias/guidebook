@@ -9300,6 +9300,30 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                 f"that explicit, or point at a same-source row.")
         if relation == "confirms":
             _refuse_live_confirmation(conn, context, to_extraction)
+        if relation == "condition_on":
+            # The edge points FROM the claim that holds only under the condition TO the condition
+            # (assess_cell.compose_value). Both refusals are about what that direction does to a
+            # headline: an edge ARRIVING at a claim conditions nothing, so a pair filed both ways
+            # would take both claims out of it.
+            if conn.execute(
+                    "SELECT 1 FROM extraction_relations WHERE relation = 'condition_on' "
+                    "AND from_extraction_id = ? AND to_extraction_id = ?",
+                    (to_extraction, from_id)).fetchone():
+                raise Refusal(
+                    f"{context}: extraction {to_extraction} already has a condition_on edge TO "
+                    f"{from_id}; this one, FROM {from_id} TO {to_extraction}, would make each the "
+                    f"condition of the other and take both claims out of any headline. --from is "
+                    f"the claim that holds only under the condition, --to is the condition. "
+                    f"Nothing was written.")
+            if dbcore.live_determinations_linked(conn, from_id, governing_only=True) \
+                    and not conn.execute(
+                        "SELECT 1 FROM extraction_relations WHERE relation = 'condition_on' "
+                        "AND from_extraction_id = ?", (from_id,)).fetchone():
+                raise Refusal(
+                    f"{context}: extraction {from_id} governs a live determination; a condition_on "
+                    f"edge from it would move it out of that headline without re-deciding it. "
+                    f"Retire the specification first (db.py retire-specification), add the edge, "
+                    f"re-determine. Nothing was written.")
         if to_kind is not None:
             raise Refusal(
                 f"{context}: --to-kind is meaningless with --to-extraction -- a row "

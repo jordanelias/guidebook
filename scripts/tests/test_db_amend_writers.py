@@ -1834,6 +1834,92 @@ try:
                f"{msg_np!r}")
         record("G10", "while regrading is still refused for it (any live determination)",
                "live determination" in (amend(GOV_X) or ""))
+        # T-017: a condition_on edge FROM a governing row would move it out of its live headline
+        # (assess_cell.compose_value), so it is refused like a regrade -- unless that row is already a
+        # branch, when the headline does not move. The edge runs FROM the conditioned claim TO the
+        # condition, so the reverse of an existing pair is refused too (each would condition the
+        # other). The relaxation shape, an edge from a condition row TO a governing one, changes what
+        # a render shows and not the stored answer, so it is not refused. Rows are chosen by query;
+        # the quotes are real: GOV_T, a governing row of the live determination, borrows the quote of
+        # an edge it already carries (it passes the verbatim floor), and a condition row likewise.
+        GOV_T, GOV_QUOTE = next(((x, qt) for x, qt in q(
+            "SELECT r.from_extraction_id, r.quote FROM extraction_relations r JOIN "
+            "specification_extraction_links l ON l.extraction_id = r.from_extraction_id AND "
+            "l.specification_id = ? AND l.role = 'governing' WHERE r.quote IS NOT NULL AND "
+            "r.from_extraction_id NOT IN (SELECT from_extraction_id FROM extraction_relations WHERE "
+            "relation = 'condition_on') ORDER BY r.relation_id", SPEC_G)), (None, None))
+        cond = [c for (c,) in q(
+            "SELECT extraction_id FROM source_value_extractions WHERE figure_role='condition' "
+            "AND extraction_id <> ? AND extraction_id NOT IN (SELECT from_extraction_id FROM "
+            "extraction_relations WHERE relation='condition_on' AND to_extraction_id=?) ORDER BY 1",
+            GOV_T, GOV_T)]
+        COND_TO, COND_TO2 = (cond + [None, None])[:2]
+        COND_FROM, COND_QUOTE = next(((c, qt) for c, qt in q(
+            "SELECT r.from_extraction_id, r.quote FROM extraction_relations r JOIN "
+            "source_value_extractions x ON x.extraction_id = r.from_extraction_id WHERE "
+            "r.relation='condition_on' AND x.figure_role='condition' AND r.quote IS NOT NULL "
+            "ORDER BY 1") if linked(c, governing_only=True) == [] and c != GOV_X), (None, None))
+        cedge = dict(stated="named", quote=GOV_QUOTE,
+                     cross_source_reason="fixture: the target is chosen by query, not by source")
+        n_rel = counts("extraction_relations")
+        msg_c5 = refusal(db.relate_extraction, GOV_T, "condition_on", S,
+                         **dict(cedge, to_extraction=COND_TO)) if COND_TO and GOV_QUOTE else None
+        record("T017-B5", "relate-extraction refuses a condition_on edge FROM a governing row of a "
+               "live determination that has none yet, naming it and retire-specification, and (a "
+               "real run, not a dry one) writes nothing",
+               COND_TO is not None and msg_c5 and "governs a live determination" in msg_c5
+               and "retire-specification" in msg_c5 and counts("extraction_relations") == n_rel,
+               f"from={GOV_T} to={COND_TO} {msg_c5!r}")
+        got_c6 = None
+        if COND_FROM:
+            try:
+                got_c6 = db.relate_extraction(COND_FROM, "condition_on", S, dry_run=True,
+                                              **dict(cedge, to_extraction=GOV_T, quote=COND_QUOTE))
+            except Refusal as exc:
+                got_c6 = str(exc)
+        record("T017-B6", "...but the same edge from a condition row to that governing row is accepted",
+               COND_FROM is not None and isinstance(got_c6, dict), f"from={COND_FROM} {got_c6!r}")
+        # A row that already has a condition_on edge is a branch: a second edge moves no headline.
+        got_c7 = None
+        if COND_TO and COND_TO2 and GOV_QUOTE:
+            w("INSERT INTO extraction_relations (from_extraction_id, relation, to_extraction_id, stated, "
+              "quote, created_at, created_by_session) VALUES (?, 'condition_on', ?, 'named', ?, 't', ?)",
+              GOV_T, COND_TO, GOV_QUOTE, S)
+            try:
+                got_c7 = db.relate_extraction(GOV_T, "condition_on", S, dry_run=True,
+                                              **dict(cedge, to_extraction=COND_TO2))
+            except Refusal as exc:
+                got_c7 = str(exc)
+            w("DELETE FROM extraction_relations WHERE from_extraction_id=? AND to_extraction_id=? "
+              "AND relation='condition_on'", GOV_T, COND_TO)
+        record("T017-B6b", "...and a governing row that already carries a condition_on edge may take another "
+               "(it is already a branch, so the headline does not move)",
+               COND_TO2 is not None and isinstance(got_c7, dict), f"to={COND_TO2} {got_c7!r}")
+        # The other relations are not this refusal's: `exceeds` from the same governing row.
+        got_c8 = None
+        if COND_TO and GOV_QUOTE:
+            try:
+                got_c8 = db.relate_extraction(GOV_T, "exceeds", S, dry_run=True,
+                                              **dict(cedge, to_extraction=COND_TO))
+            except Refusal as exc:
+                got_c8 = str(exc)
+        record("T017-B6c", "...and only a condition_on edge is refused: an exceeds edge from a governing row "
+               "is accepted", COND_TO is not None and isinstance(got_c8, dict), f"to={COND_TO} {got_c8!r}")
+        # The reverse of an existing pair: each claim would be the other's condition, and both would
+        # leave any headline. A live pair is chosen whose target carries a quote of its own.
+        pair = next(((a, b, qt) for a, b, qt in q(
+            "SELECT r.from_extraction_id, r.to_extraction_id, (SELECT r2.quote FROM extraction_relations "
+            "r2 WHERE r2.from_extraction_id = r.to_extraction_id AND r2.quote IS NOT NULL LIMIT 1) "
+            "FROM extraction_relations r WHERE r.relation='condition_on' AND r.to_extraction_id IS NOT NULL "
+            "ORDER BY r.relation_id") if qt and linked(b, governing_only=True) == []), None)
+        n_rel = counts("extraction_relations")
+        msg_c9 = refusal(db.relate_extraction, pair[1], "condition_on", S,
+                         **dict(cedge, to_extraction=pair[0], quote=pair[2])) if pair else None
+        record("T017-B6d", "relate-extraction refuses the reverse of an existing condition_on pair, naming "
+               "the direction, and (a real run) writes nothing",
+               pair is not None and msg_c9 and "condition of the other" in msg_c9
+               and "--from is the claim that holds only under the condition" in msg_c9
+               and counts("extraction_relations") == n_rel, f"pair={pair and pair[:2]} {msg_c9!r}")
         # Source-level and comparator guards: the other columns the engine reads. The marker and
         # the interval are caches over them, so a change under a live determination is refused.
         ref_gov = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]

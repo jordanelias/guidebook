@@ -1014,6 +1014,99 @@ def main():
     expect("COMPOSE: a claim stating no number is REPORTED, not silently dropped",
            d["value_note"] and "2 of 3" in d["value_note"], str(d["value_note"]))
 
+    # T-017 (OR-2): a governing claim with an outgoing `condition_on` edge is a branch, never the
+    # headline. Each row is (value, unit, comparator, conditioned?); a conditioned row gets an edge to
+    # a `condition` row of ANOTHER parameter, the shape the live edges have. `reverse` points the edge
+    # the other way, the relaxation shape: an edge arriving at a row conditions nothing. `relation`
+    # is the edge's type (a governing row's `exceeds` edge is not a condition); `qualitative` lists
+    # values whose claim is stored as a qualitative statement, which states no number.
+    # Tier 1 clinical, so a single source can state the cell (two tier-6 rows leave it pending).
+    def _t017_cell(rows, direction="lower_is_better", reverse=False, relation="condition_on",
+                   qualitative=()):
+        c = synth_db([{"tier": 1, "evidence_type": "clinical", "claimed_value": v,
+                       "claimed_unit": u, "comparator": k} for v, u, k, _c in rows],
+                     direction=direction)
+        for v in qualitative:
+            c.execute("UPDATE source_value_extractions SET claim_type = 'qualitative' "
+                      "WHERE claimed_value = ?", (v,))
+        c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
+                        "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
+                        "to_extraction_id INT, to_label TEXT, input_role TEXT)")
+        for v, _u, _k, cond in rows:
+            if not cond:
+                continue
+            gid, ref = c.execute("SELECT extraction_id, ref_id FROM source_value_extractions "
+                                 "WHERE claimed_value = ?", (v,)).fetchone()
+            cid = c.execute("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+                            "claim_type, claimed_value, claimed_unit, figure_role, comparator) "
+                            "VALUES (?, 'syn-slug', 2, 'numerical', '0.5', 'm', 'condition', '>')",
+                            (ref,)).lastrowid
+            c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
+                      "to_extraction_id) VALUES (?, ?, ?)",
+                      (cid, relation, gid) if reverse else (gid, relation, cid))
+        return determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "t017")
+    R = "rise:run ratio"
+    _b1 = [("1:12", R, "<=", False), ("1:20", R, "<=", True)]
+    d = _t017_cell(_b1)
+    expect("T017-B1: a conditioned claim is a branch: the headline is the unconditioned 1:12, not the "
+           "gentler conditioned 1:20, and the note counts the branch",
+           d["value_max"] is not None and abs(d["value_max"] - 100 / 12) < 1e-9
+           and "1 conditioned claim(s)" in (d["value_note"] or ""),
+           f"max={d['value_max']} note={d['value_note']!r}")
+    d = _t017_cell([(v, R, "<=", True) for v in ("1:6", "1:10", "1:12", "1:16", "1:20")])
+    expect("T017-B2: every claim conditioned: the headline is EMPTY and the note says piecewise only",
+           d["value_max"] is None and (d["value_note"] or "").startswith("piecewise only"),
+           f"max={d['value_max']} note={d['value_note']!r}")
+    d = _t017_cell([(v, u, k, False) for v, u, k, _c in _b1])
+    expect("T017-B3: control, no edge: the same two rows compose as before (the lowest ceiling, 5.0)",
+           d["value_max"] == 5.0 and "conditioned" not in (d["value_note"] or ""),
+           f"max={d['value_max']} note={d['value_note']!r}")
+    d = _t017_cell(_b1, reverse=True)
+    expect("T017-B3b: an edge ARRIVING at a claim conditions nothing (the relaxation shape): 5.0, "
+           "no branch counted",
+           d["value_max"] == 5.0 and "conditioned" not in (d["value_note"] or ""),
+           f"max={d['value_max']} note={d['value_note']!r}")
+    d = _t017_cell([("1200", "mm", ">=", False), ("1500", "mm", ">=", True)], direction="higher_is_better")
+    expect("T017-B4: under higher_is_better the conditioned 1500 would be the most accommodating; "
+           "the headline is the unconditioned 1200",
+           d["value_min"] == 1200.0 and "1 conditioned claim(s)" in (d["value_note"] or ""),
+           f"min={d['value_min']} note={d['value_note']!r}")
+    d = _t017_cell([("600", "cm", "<=", False), ("9", "m", "<=", False), ("10", "m", "<=", True)])
+    expect("T017-B7: a decline over the headline still says how many claims are branches",
+           d["value_max"] is None and "different units" in (d["value_note"] or "")
+           and "1 conditioned claim(s)" in (d["value_note"] or ""),
+           f"max={d['value_max']} note={d['value_note']!r}")
+    expect("T017-B7b: ...and names its denominator: the units note is about the UNCONDITIONED claims",
+           "unconditioned governing claims are stated in different units" in (d["value_note"] or ""),
+           f"note={d['value_note']!r}")
+    d = _t017_cell([("1:12", R, "<=", False), ("as gentle as practicable", R, None, False),
+                    ("1:20", R, "<=", True)], qualitative=("as gentle as practicable",))
+    expect("T017-B8: a composed note counts the headline subset against UNCONDITIONED governing claims, "
+           "not against every governing claim",
+           "composed from 1 of 2 unconditioned governing claims" in (d["value_note"] or "")
+           and "1 conditioned claim(s)" in (d["value_note"] or ""),
+           f"note={d['value_note']!r}")
+    d = _t017_cell([("as gentle as practicable", R, None, False), ("1:20", R, "<=", True)],
+                   qualitative=("as gentle as practicable",))
+    expect("T017-B8b: ...and the no-number decline names the unconditioned claims it read",
+           (d["value_note"] or "").startswith("no unconditioned governing claim states a numeric value")
+           and "1 conditioned claim(s)" in (d["value_note"] or ""), f"note={d['value_note']!r}")
+    d0 = _t017_cell([(v, u, k, False) for v, u, k, _c in _b1])
+    d1 = _t017_cell(_b1)
+    d2 = _t017_cell(_b1, reverse=True)
+    expect("T017-B10: the derivation sha carries the conditioned set: the same links with a condition_on "
+           "edge FROM a governing row hash differently, so a stored determination goes stale when one is filed",
+           d0["derivation_sha"] != d1["derivation_sha"],
+           f"{d0['derivation_sha'][:12]} {d1['derivation_sha'][:12]}")
+    expect("T017-B10b: ...and an edge ARRIVING at a claim, which changes no answer, does not move it",
+           d0["derivation_sha"] == d2["derivation_sha"],
+           f"{d0['derivation_sha'][:12]} {d2['derivation_sha'][:12]}")
+    d = _t017_cell(_b1, relation="exceeds")
+    expect("T017-B9: only a condition_on edge makes a branch: an `exceeds` edge from a governing row "
+           "leaves it in the headline (5.0, no branch counted)",
+           d["value_max"] == 5.0 and "conditioned" not in (d["value_note"] or ""),
+           f"max={d['value_max']} note={d['value_note']!r}")
+
     # band() and floor_mean(): tier-system section 5, and the owner's five rows of 2026-09-13.
     from schemas.enums import EvidenceMarker as M  # noqa: E402
     from schemas.tier_derivation import band, floor_mean  # noqa: E402

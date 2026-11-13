@@ -47,6 +47,11 @@ DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 #: the open one. A bump of RULE_VERSION that leaves the payload alone then needs no edit here.
 LEGACY_SHA_VERSIONS = ("pilot-2",)
 LEGACY_SHA_SQL = ", ".join(map(repr, LEGACY_SHA_VERSIONS))
+#: The link-set versions written before pilot-5 added the `|branches:` term (the governing claims
+#: with an outgoing `condition_on` edge). Closed, like the set above: a row stamped with one of
+#: these verifies without the term, whatever edges were filed since, because that engine did not
+#: read them; every later version is hashed with it. Unlike the set above they stay in K02's scope.
+PRE_BRANCH_SHA_VERSIONS = ("pilot-3", "pilot-4")
 
 results = []
 
@@ -1077,6 +1082,17 @@ def run_checks(db_path):
                 "SELECT role, extraction_id FROM specification_extraction_links "
                 "WHERE specification_id = ?", (cid,)).fetchall()
             body = "|".join(sorted(f"{r[0]}:{r[1]}" for r in links))
+            # pilot-5 on: the governing claims that hold only under a condition, an outgoing
+            # `condition_on` edge each (assess_cell.conditioned_governing), hashed only when any.
+            # Recomputed from the edge table, the one home of that fact, so an edge filed after
+            # the determination goes stale here instead of silently changing what it would say.
+            gov_ids = {r[1] for r in links if r[0] == "governing"}
+            branches = sorted({e[0] for e in conn.execute(
+                "SELECT from_extraction_id FROM extraction_relations "
+                "WHERE relation = 'condition_on'")} & gov_ids) \
+                if rv not in PRE_BRANCH_SHA_VERSIONS else []
+            if branches:
+                body += "|branches:" + ",".join(map(str, branches))
         else:
             # pilot-2 and earlier: governing ref list + an UNFILTERED count of the
             # parameter's extractions. The count could not see a re-grading, which

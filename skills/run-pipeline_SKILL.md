@@ -194,7 +194,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   with a text layer) and no page render is persisted (`scripts/research/page_image.py`; the refusal names the files and the
   verb), and `observe-term --verbatim-exempt` is refused on the same ground; a `--claimed-unit` holding `;` or `,`, a comparator symbol, a number standing alone,
   `min`/`max` beside other words, or a parenthesis other than a one-capital suffix such as `dB(A)` (a number goes in
-  `--claimed-value`, a condition in its own row with `--relation condition_on`, applicability in `--setting`; a
+  `--claimed-value`, a condition in its own row with `--relation condition_on` filed `--from` the claim that holds only under it and `--to` the condition, applicability in `--setting`; a
   sentence-like unit with none of those shapes passes until units are data, T-030); a quantity figure the engine
   cannot place on a scale (`8.33%`, `1/12`, `12:1`, `1 in 12`, a decimal comma, a non-ASCII digit, a bare number under
   `rise:run ratio`, `a:b` under another unit; the refusal names the fix); a value-supplying numerical row with no
@@ -227,7 +227,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross
-  parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`), and as a `connections` row
+  parameters (`derive-extraction`, `relate-extraction` with `condition_on` / `derived_from`; a `condition_on` edge runs `--from` the claim that holds only under the condition, `--to` the condition, and an edge arriving at a claim conditions nothing; the writer refuses the reverse of an existing pair, and an edge from a row that governs a live determination and has no such edge yet), and as a `connections` row
   (`connection-discovery`) for the narrative: its targets are typed flags (`--parameter`, `--target-slug`,
   `--identity`, `--extraction`, `--methodology`); four are foreign keys, `--methodology` is a name with no table. The
   id is computed (omit `--con-id`); the type sets the arity the writer holds (`CROSS-PARAMETER` and
@@ -260,7 +260,12 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   GAP, never a hand edit. A re-run for the same cell is refused: `retire-specification` first.
   1. Name the **most accommodating** value found in practice, read by the parameter's direction. `contested` means no
      single value: show the spread with each population's direction. Frequency is never evidence; the steepest value a
-     code allows is never highlighted. A cell with no direction stays `pending` and names `set-parameter-direction` in
+     code allows is never highlighted. The engine takes the headline from the governing claims with no outgoing
+     `condition_on` edge and lists the rest as branches (OR-2, 2026-10-29): it is empty ("piecewise only") when every
+     governing claim is conditioned, so a gentler value that holds only under a condition is a branch and may be the
+     gentlest value found yet not the headline. Whether that sits with "the gentlest value is the gentlest value" and
+     "never by highlighting the steepest code value" (2026-10-30) is an open owner question (OI-55 (9)): read the
+     headline and the branches together and flag a case where they pull apart, do not rule on it. A cell with no direction stays `pending` and names `set-parameter-direction` in
      its gap. A parameter whose direction stands with no source (history from before the source rule; derive it as in
      stage 1) is read by that direction, and the report's `direction_ref_id` is NULL for it; whether that is
      backfilled is open owner question 7 of the 2026-11-06 round-3 adjudication.
