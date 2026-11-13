@@ -66,6 +66,7 @@ import tempfile
 import unicodedata
 import urllib.parse
 from datetime import datetime, timezone
+from decimal import Decimal
 from pathlib import Path
 
 
@@ -642,6 +643,81 @@ def normalise_quote(text):
     s = unicodedata.normalize("NFKD", s)
     s = "".join(ch for ch in s if not unicodedata.combining(ch))
     return "".join(ch for ch in s if ch.isalnum())
+
+
+# One head (a plain digit run, or 1-3 digits grouped by spaces in threes), then any decimal/grouping tail.
+_NUM_RUN = re.compile(r"(\d{1,3}(?: \d{3})+(?!\d)|\d+)((?:[.,]\d+)*)")
+_RATIO_MARK = ":/\u2236"                    # NFKC leaves U+2236 (the ratio sign) alone
+
+
+def _read_run(head, tail):
+    """The readings of one number as written: a list of frozensets of Decimal, normally one.
+
+    A decimal point or comma (`1.2`, `1,2`); thousands grouped by space, point or comma (`1 200`,
+    `1.234,56`, `1,234.56`), or Indian (`1,50,000`). A single group of exactly three digits after
+    one mark (`1.200`, `1,200`) is AMBIGUOUS and carries both readings. A run that is none of
+    these (`1.2.3`, `10,15,20`) is not one number: each group is its own number. No sign, no unit.
+    """
+    h = head.replace(" ", "")
+    groups = re.findall(r"([.,])(\d+)", tail)
+    if not groups:
+        return [frozenset({Decimal(h)})]
+    lead = len(h) <= 3 and not h.startswith("0") and " " not in head
+    if len(groups) == 1:
+        d = groups[0][1]
+        readings = {Decimal(h + "." + d)}
+        if len(d) == 3 and lead:
+            readings.add(Decimal(h + d))
+        return [frozenset(readings)]
+    decimal = None
+    if groups[-1][0] != groups[0][0]:                     # `1.234,56`: the last mark is the decimal
+        decimal = groups.pop()[1]
+    lens = [len(d) for _, d in groups]
+    if lead and len({s for s, _ in groups}) == 1 and (
+            all(n == 3 for n in lens)
+            or (len(h) <= 2 and groups[0][0] == "," and lens[-1] == 3 and all(n == 2 for n in lens[:-1]))):
+        return [frozenset({Decimal(h + "".join(d for _, d in groups) + ("." + decimal if decimal else ""))})]
+    return [frozenset({Decimal(x)}) for x in [h] + re.findall(r"\d+", tail)]
+
+
+def number_tokens(text, quote_side=False):
+    """The numbers `text` states, read BEFORE punctuation is removed: [(kind, readings, whole)].
+
+    `kind` is "num" (readings: frozenset of Decimal) or "ratio" (frozenset of (Decimal, Decimal),
+    from a symbol ratio of exactly two numbers: `1:12`, `1/12`, `1\u22361`). More than one reading
+    means the token is ambiguous. `whole` is False for a token that is only part of another:
+    emitted when `quote_side` is true, because a quote that says `AS 1428.1:2021` states 1428.1
+    and 2021, and a table cell `800 750` states 800 and 750; the claimed value is read with
+    `quote_side` false and states only what it says. This function names no word of any language;
+    CJK numerals are converted by the caller before it reads a quote (`db._cjk_to_arabic`).
+    """
+    s = unicodedata.normalize("NFKC", _TAG.sub(" ", text or ""))
+    out, pos = [], 0
+    while True:
+        m = _NUM_RUN.search(s, pos)
+        if not m:
+            return out
+        runs = [m]
+        while (runs[-1].end() + 1 < len(s) and s[runs[-1].end()] in _RATIO_MARK
+               and (n := _NUM_RUN.match(s, runs[-1].end() + 1))):
+            runs.append(n)
+        pos = runs[-1].end()
+        read = [_read_run(r.group(1), r.group(2)) for r in runs]
+        pieces = [[frozenset({Decimal(g)}) for g in r.group(1).split(" ")]
+                  if quote_side and " " in r.group(1) else [] for r in runs]
+        if len(runs) == 2 and all(len(x) == 1 for x in read):
+            a, b = read[0][0], read[1][0]
+            out.append(("ratio", frozenset((x, y) for x in a for y in b), True))
+            if quote_side:
+                out += [("num", t, False) for t in [a, b, *pieces[0], *pieces[1]]]
+                # A table row `5 m 1:15 333 mm` groups the 333 with the 15: the ratio is also read with
+                # the piece that touches the mark (a space-grouped operand is only a candidate grouping).
+                la, fb = (pieces[0][-1:] or [a])[0], (pieces[1][:1] or [b])[0]
+                out += [("ratio", frozenset({(next(iter(x)), next(iter(y)))}), True)
+                        for x, y in {(la, b), (a, fb), (la, fb)} - {(a, b)}]
+            continue
+        for r, tokens, ps in zip(runs, read, pieces):
+            out += [("num", t, True) for t in tokens] + [("num", t, False) for t in ps]
 
 
 _XMLDECL_RE = re.compile(rb"""<\?xml[^>]{0,200}?encoding\s*=\s*["']([A-Za-z0-9_.:\-]+)["']""",

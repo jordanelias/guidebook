@@ -175,7 +175,9 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
 crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
 - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
   figure: parameter, at least one lens column (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
-  is stated in at least one lens, D-0182), value and unit, `--claim-text` verbatim, locator, `--figure-role`,
+  is stated in at least one lens, D-0182), value and unit (a number the source writes in words, or with an ambiguous
+  mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`), `--claim-text`
+  verbatim, locator, `--figure-role`,
   `--claim-type`, and `--relation` (**required**; `none` for an absolute figure). `add-extraction --help` prints every
   vocabulary, each read from its own column: `claim_type`, `extraction_method`, `extraction_status`, `root_type`,
   `measurement_paradigm`, `device_class`, `figure_role` and `comparator` of `source_value_extractions`; `relation`,
