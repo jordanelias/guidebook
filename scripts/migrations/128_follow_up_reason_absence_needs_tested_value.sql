@@ -3,27 +3,53 @@
 -- `absence-needs-tested-value`. Tooling (IMP-13, workplan T-012); no research rows.
 --
 -- SUPERSEDES migration 105's sentence "THE REASON VOCABULARY HAS ONE VALUE, deliberately"
--- (105 is immutable and is not edited). 105's next sentence still holds: a skimmed figure
--- needs no follow-up row, because the typed column source_value_extractions.extraction_method
--- = 'skim' already says it and the determination engine names it as owing a dedicated
--- reading (scripts/assess/assess_cell.py). A follow-up row for it would be a second home of
--- the same fact (CLAUDE.md rules 5 and 8) that stayed open after the column was amended.
--- No `skimmed-needs-full-read` value is added, and none is named for `provisional`
--- (OD-10: provisional is the cell's computed strength, not a follow-up).
+-- (105 is immutable and is not edited).
+--
+-- WHAT THE NEW VALUE RESTS ON. Owner ruling OR-22 (references/project-standards.md, "Owner
+-- rulings 2026-10-29 (third)"): a study whose rows are all absence findings confirms the value
+-- it tested, provided that value can be found "by backward citation mining of the study and
+-- by contextual clues"; if it cannot be found the source has no value. OR-22 says to MINE. It
+-- does not say a database row is required: this follow-up row is the carrier of the debt
+-- (REQ-039, IMP-13), a choice made here, so that the work owed on an absence finding cannot be
+-- forgotten and the finding later treated as read.
 --
 -- WHAT THE NEW VALUE RECORDS. A finding with claim_type = 'absent' that reports no change,
--- whose tested value backward citation mining and context are still to find (REQ-039).
--- claim_type = 'absent' also covers rows with no stated value for other reasons (a
--- checklist question, a qualitative requirement), so "this one owes a tested value" is a
--- judgement with a warrant, which is what a follow-up row records.
+-- whose tested value backward citation mining and context are still to find. claim_type =
+-- 'absent' also covers rows with no stated value for other reasons (a checklist question, a
+-- qualitative requirement), so "this one owes a tested value" is a judgement with a warrant,
+-- which is what a follow-up row records. db.py raise-follow-up refuses the reason on a row of
+-- any other claim_type.
+--
+-- WHY NO `skimmed-needs-full-read` VALUE. The typed column
+-- source_value_extractions.extraction_method = 'skim' already holds the debt for EVERY
+-- skimmed row; a follow-up row for it would be a second home of the same fact (CLAUDE.md
+-- rules 5 and 8) that stayed open after the column was amended. What the engine DOES with that
+-- column is uneven, and this migration does not claim otherwise: scripts/assess/assess_cell.py
+-- names a skimmed FINDING row as owing a dedicated reading; a skimmed claim row is named only
+-- in the pending-cell branch; a skimmed condition row gets no reason from the engine at all.
+-- The basis for "no row for a skimmed figure" is the assistant's reading, marked [ASSUMPTION:
+-- "cue tools" means the engine's report names the tool for the owed pass; no row is written]
+-- in the ledger (references/project-standards.md, the entry whose ACTION (4) says not to treat
+-- the readings marked ASSUMPTION as ruled). It is NOT a ruling. It is supported, not settled,
+-- by OD-10 ("provisional means strength of evidence; a re-read owed is a reading's own
+-- status": grep -n 'a re-read owed is a reading' references/project-standards.md). Nothing is
+-- named for `provisional` either: that is the cell's computed strength, not a follow-up.
+-- 105's sentence that a skimmed figure needs no follow-up row is therefore carried forward as
+-- that reading, not as a standing rule.
 --
 -- WRITERS: db.py raise-follow-up / resolve-follow-up (the --reason choices are read from
 -- this CHECK). READER: scripts/audit/extraction_follow_up_audit.py. STAGE: judgment.
 --
 -- SQLite cannot change a CHECK in place: create, copy, drop, rename. The table is
 -- AUTOINCREMENT and DROP TABLE deletes its sqlite_sequence row, so the floor is captured
--- first and restored as a maximum afterwards (as migration 114 does). The one index on the
--- table is recreated exactly as 105 declares it; no view or trigger names the table.
+-- first and restored as a maximum afterwards (as migration 114 does). Where the table holds
+-- no row, nothing is captured, but the database still gains a sqlite_sequence row for it,
+-- (extraction_follow_ups, 0), made by the copy; a table that never held a row had none
+-- before, and 0 is what an unwritten AUTOINCREMENT table means. The one index on the table
+-- is recreated exactly as 105 declares it; no view or trigger names the table.
+-- Two harmless effects of the rename: the stored CREATE statement names the table in
+-- quotes ("extraction_follow_ups"), and the table and its index sit at the end of
+-- sqlite_master, in a different order from a database that never ran this migration.
 
 CREATE TEMP TABLE _128_seq AS SELECT name, seq FROM sqlite_sequence WHERE name = 'extraction_follow_ups';
 

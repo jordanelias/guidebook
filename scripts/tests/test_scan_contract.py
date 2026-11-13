@@ -939,15 +939,49 @@ try:
            and msg and "was resolved by" in msg and u9.get("follow_up_id"), f"{u8} {msg} {u9}")
     # T-012: an absence finding owes a tested value; a skimmed figure owes no follow-up row
     # (extraction_method = 'skim' already holds that debt, so its reason is not in the CHECK).
-    ABS = "absence-needs-tested-value"
-    t1 = attempt(raise_fu, E_FULL, ABS, "fixture: tested value still to find", S)
-    t1_again = refusal(raise_fu, E_FULL, ABS, "again", S)
+    ABS = dbcore.ABSENCE_FOLLOW_UP_REASON
+    E_ABS = x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+              "identity_code, claim_type, claim_text, extraction_method, created_at, "
+              "updated_at, figure_role) VALUES (?, ?, ?, ?, 'absent', 'fixture', "
+              "'full-read', 't', 't', 'finding')", REF_A, SLUG_A, PE, POP)  # a row no writer here makes
+    t0 = refusal(raise_fu, E_FULL, ABS, "fixture: not an absence", S)
+    t1 = attempt(raise_fu, E_ABS, ABS, "fixture: tested value still to find", S)
+    t1_again = refusal(raise_fu, E_ABS, ABS, "again", S)
+    # The audit lists it and counts it though the only link to it is `excluded`.
+    LIVE2 = x("INSERT INTO specifications (parameter_id, identity_code, state, created_at, "
+              "created_by_session) VALUES (?, ?, 'pending', 't', ?)", PE, POP, S)
+    x("INSERT INTO specification_extraction_links (specification_id, extraction_id, role, "
+      "exclusion_reason, created_at, created_by_session) VALUES (?, ?, 'excluded', "
+      "'fixture: a finding supplies no value', 't', ?)", LIVE2, E_ABS, S)
+    fa4 = run_audit("extraction_follow_up_audit.py")
+    x("DELETE FROM specification_extraction_links WHERE specification_id=?", LIVE2)
+    x("UPDATE specifications SET retired_at='t', retired_by_session=?, "
+      "retirement_reason='fixture done' WHERE specification_id=?", S, LIVE2)
     t1_res = attempt(resolve_fu, t1.get("follow_up_id"), "fixture: tested value found", S)
     record("T012-01", "raise-follow-up writes an open follow-up for an absence finding "
            "owing a tested value; a second open one is refused; resolve-follow-up closes it",
            t1.get("follow_up_id") and t1_again and "already has open" in t1_again
            and t1_res.get("resolved") is True, f"{t1} {t1_again} {t1_res}")
-    expect_refusal("T012-02", "raise-follow-up refuses a skimmed-figure reason: that debt "
+    record("T012-02", "raise-follow-up refuses the absence reason on a row whose claim_type is "
+           "not 'absent', naming the claim_type and the extraction",
+           t0 and "'numerical'" in t0 and f"extraction {E_FULL}" in t0, t0)
+    record("T012-03", "the follow-up audit LISTS an open absence follow-up whose only link is "
+           "`excluded`, with its claim_type and the determination reaching it, counts it in "
+           "EXAMINED, and does not fail it",
+           fa4.returncode == 0 and f"follow-up {t1.get('follow_up_id')}: extraction {E_ABS}"
+           in fa4.stdout and "claim_type=absent" in fa4.stdout
+           and f"{LIVE2} as excluded" in fa4.stdout
+           and "1 open absence follow-up(s)" in fa4.stdout, fa4.stdout[-700:] + fa4.stderr)
+    con = sqlite3.connect(DB)
+    try:
+        reasons = dbcore.check_values(con, "extraction_follow_ups", "reason")
+    finally:
+        con.close()
+    record("T012-04", "the column's CHECK admits exactly the cross-slug reason and the absence "
+           "reason: any other extra value (a skimmed-figure reason among them) turns this red",
+           reasons == {"read-outside-admitting-purpose", "absence-needs-tested-value"},
+           reasons)
+    expect_refusal("T012-05", "raise-follow-up refuses a skimmed-figure reason: that debt "
                    "is extraction_method = 'skim', not a second home in a follow-up row",
                    "CHECK", raise_fu, E_ONLY_SKIM, "skimmed-needs-full-read", "w", S)
 

@@ -194,7 +194,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
 - `relate-extraction` for comparators (`--cross-source <reason>` makes a condition drawn from another document an
   explicit synthesis act; the quote verifies the from-source only), `derive-extraction` for computed figures,
   `raise-follow-up` for doubtful rows — its `--reason` vocabulary is `extraction_follow_ups.reason` (`raise-follow-up
-  --help` prints it; a doubt it cannot name is a GAP until the owner extends it).
+  --help` prints it, and says what each means: `absence-needs-tested-value` is only for a `claim_type='absent'` extraction whose tested value is still to find by backward citation mining; a doubt it cannot name is a GAP until the owner extends it).
 - `add-population-match` grades **identity only** (R13; children, general population, no participants are PROXY); ICF
   and access-need attribution live on the extraction's lens columns. A second grade for the same source and
   population is a contest, written with a NOTE, never refused (CLAUDE.md §4).
