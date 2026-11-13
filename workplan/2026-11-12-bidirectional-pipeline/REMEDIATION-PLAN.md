@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 05:03 UTC from the 73 task files at commit fa313c4 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-13 05:18 UTC from the 73 task files at commit 91db4e4 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -23,13 +23,13 @@ _Generated 2026-11-13 05:03 UTC from the 73 task files at commit fa313c4 by `scr
 | 3 | 9 | 8 | 0 | 0 | 1 | 4 / 5 | 8 |
 | 4 | 7 | 5 | 0 | 0 | 2 | 6 / 1 | 5 |
 | 5 | 4 | 2 | 0 | 0 | 2 | 3 / 1 | 4 |
-| 6 | 7 | 2 | 0 | 1 | 5 | 6 / 1 | 5 |
+| 6 | 7 | 2 | 0 | 1 | 5 | 6 / 1 | 4 |
 | 7 | 4 | 1 | 0 | 0 | 3 | 2 / 2 | 4 |
 | 8 | 1 | 0 | 0 | 0 | 1 | 0 / 1 | 1 |
 
 Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | wc -l`, and the generator's own output.
 
-**Longest dependency chain (8 tasks):** T-008 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
+**Longest dependency chain (8 tasks):** T-014 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
 
 ## Batch 1
 
@@ -186,25 +186,24 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 ## Batch 6
 
-**Entry:** merged and green on `$BASE`: T-016, T-019, T-029, T-032, T-036, T-049.
+**Entry:** merged and green on `$BASE`: T-016, T-018, T-019, T-029, T-032, T-036, T-049.
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
 | [T-021](tasks/T-021-cell-question-gate.md) | A question about a published cell can be recorded and flags the cell | 2 | TOOLING | READY | yes | T-019 | not piloted |
 | [T-031](tasks/T-031-clause-unit-and-open-pass.md) | The clause as a unit, the open pass, and catalogue growth | 4 | TOOLING | NOT FOR SONNET | no | T-019 | not piloted |
 | [T-037](tasks/T-037-render.md) | Render from the database | 5 | TOOLING | NOT FOR SONNET | no | T-019, T-032, T-036, T-049 | not piloted |
-| [T-055](tasks/T-055-mobility-family-tooling.md) | Tooling for the mobility family: the devices it needs, and a parent's determination that g | 4 | TOOLING | READY | yes | T-019 | not piloted |
+| [T-055](tasks/T-055-mobility-family-tooling.md) | Tooling for the mobility family: the devices it needs, and a parent's determination that g | 4 | TOOLING | READY | yes | T-018, T-019 | piloted |
 | [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragi | 1 (chain, after T-019) | TOOLING | NOT FOR SONNET | no | T-016, T-019 | not piloted |
 | [T-060](tasks/T-060-element-determination.md) | The specifications pass writes an element-level determination (OR-14b) | 5 (after T-029 and T-019) | TOOLING | DESIGN: T-060-design.md; NOT FOR SONNET | no | T-019, T-029 | not piloted |
 | [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | research | RESEARCH | NOT FOR SONNET | no | T-019 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
-- Lane 6.1: T-021 → T-031 — share `governance/context-map.yaml`
+- Lane 6.1: T-021 → T-031 → T-055 → T-059 — sequenced by a soft dependency or a chain of shared files
 - Lane 6.2: T-037
-- Lane 6.3: T-055 → T-059 — share `scripts/assess/assess_cell.py`
-- Lane 6.4: T-060
-- Lane 6.5: T-106
+- Lane 6.3: T-060
+- Lane 6.4: T-106
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-031, T-037, T-059, T-060, T-106; a design file missing: T-060 (T-060-design.md).
 
