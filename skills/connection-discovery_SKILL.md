@@ -28,7 +28,11 @@ no table, so it is free text. The connection id is computed by the writer, never
 - **A typed edge between two extractions** is the strongest link: `extraction_relations` (`condition_on`,
   `derived_from`, `delta_over`, `insufficient`, …) points from one figure to another row and can cross
   parameters; across two *sources* it needs `--cross-source <reason>` or the writer refuses. When one parameter's figure is computed from or conditioned on another's, file the edge
-  (`derive-extraction`, `relate-extraction`); a `connections` row alone cannot be joined.
+  (`derive-extraction`, `relate-extraction`); a `connections` row alone cannot be joined. A `condition_on` edge runs
+  `--from` the claim that holds only under the condition `--to` the condition row (the engine sets a governing claim
+  with such an outgoing edge beside the headline as a branch; an edge arriving at a claim conditions nothing). The
+  writer refuses the reverse of an existing pair, and an edge from a row that governs a live determination and has no
+  such edge yet (retire the specification first).
 - **A `connections` row** is the narrative index of a relationship. Its targets are typed rows in
   `connection_targets` (`parameter_id`, `slug`, `identity_code`, `extraction_id`, `methodology`; exactly one set per
   row), so a renamed or merged parameter cannot orphan a link and every target joins.
@@ -65,7 +69,7 @@ an existing one is a duplicate: `add-connection` refuses it, naming the existing
 
 ## Step 1 — Read, by mode
 Read the live determination and every extraction for the parameter in full; for `evidence`, also open gaps
-(`db.py gaps --status OPEN`) and PENDING connections. For each extraction note its lens columns, so a population effect
+(`db.py gaps --status OPEN`) and PENDING connections. For each extraction note its live lens links (`v_live_lens_links`: the figure's own four lens columns are held NULL), so a population effect
 on a shared parameter is visible. For `external`, take T1–T2 sources from `evidence_sources`, follow forward citations,
 log mining with `db.py log-mining`; a cross-slug citation is a cross-parameter candidate.
 

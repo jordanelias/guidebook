@@ -60,6 +60,7 @@ glossary:
   evidence_sources: "Every source the project has admitted (paper, standard or report) with its tier, whether it could be retrieved, and how it was verified."
   external_root_registry: "Original studies that several sources merely repeat, so a repeated figure is not counted as independent."
   extraction_follow_ups: "A note that a figure read from a source needs another pass, with the reason."
+  extraction_lens_links: "Which groups, functions and needs a figure read from a source is stated for: one row for each code, with the words that warrant it. A link can be retired, never the last one."
   extraction_relations: "How one extracted figure relates to another: confirms, qualifies, derived from, and so on."
   gap_mining: "Records of searches run specifically to close a recorded gap."
   gaps: "Known weaknesses in the evidence: what is missing, how much it matters, and whether it is still open."
@@ -76,12 +77,13 @@ glossary:
   search_admissions: "Joins each search to the sources it led to admitting."
   search_candidates: "Candidate sources a search turned up, and what became of each."
   search_execution_artefacts: "Pointers to the saved files behind each search, such as the retrieved pages."
+  search_execution_forms: "Joins each search to the vocabulary forms it fired, so a search run on a model-made word can be told from one run on a word an instrument uses."
   search_executions: "One logged search: the query as typed, where it ran, how many results came back and how many were admitted. Empty searches are kept."
   slugs: "The research topics that searches are organised under."
   source_locators: "Where each known source can be found (DOI, URL, PMID, ISBN, standard number), including leads not yet admitted."
   source_scans: "A record that a source was read in full against the parameter list, and how much of it was read."
   source_slug_links: "Which sources were admitted under which research topics."
-  source_value_extractions: "A figure or finding read out of a source, with its quote, the parameter and groups it concerns, and how it was read. The raw material of every determination."
+  source_value_extractions: "A figure or finding read out of a source, with its quote, the parameter it concerns and how it was read; the groups it concerns are its lens links. The raw material of every determination."
   specification_extraction_links: "Which extracted figures a determination used, and why each unused one did not govern."
   specification_source_links: "Which sources a determination rests on, and in what role."
   specifications: "The determinations: for one parameter and one lens, the answer, its evidence marker and its state. Computed by the engine, never typed."
@@ -162,7 +164,7 @@ decisions:
     question: "A figure holds one code for each model, yet a fact can concern several codes of one model, such as two ICF codes. How should figures and determinations carry them?"
     why_yours: "Your answer to OR-1 requires every relevant model to be filled out, and the present columns cannot hold more than one code per model. The choice changes the schema."
     context: |-
-      Each figure read from a source has four lens columns: identity group, ICF code, access need and medical condition. Each holds one code. A determination has the same four columns and can already fill several at once, for example identity MOB together with the ICF code d450.
+      Each figure read from a source had four lens columns: identity group, ICF code, access need and medical condition. Each held one code. (Since migration 131 they are held empty and a figure's codes are rows of the lens link table; this question is what led to it.) A determination has the same four columns and can already fill several at once, for example identity MOB together with the ICF code d450.
 
       Your answer to OR-1 says a determination should carry every relevant model. The crossing maps show that one identity group relates to several ICF codes: wheelchair users (MOB) map to d410, d420, d450, d455, d460, d465 and more, among them d450 Walking and d465 Moving around using equipment. A single figure about wheelchair users cannot name all of them in its one ICF column.
 

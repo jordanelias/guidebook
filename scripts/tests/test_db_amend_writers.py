@@ -77,6 +77,7 @@ read from the copy.
 import json
 import os
 import pathlib
+import re
 import shutil
 import sqlite3
 import subprocess
@@ -753,6 +754,7 @@ try:
         X_PAYLOAD = {"ref_id": XD, "parameter_id": PID and PID[0],
                      "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
                      "claim_text": "fixture: the source states nothing for this parameter",
+                     "lens_basis": "named_in_text", "lens_basis_text": "states nothing",
                      "extraction_method": "skim"}
         # No artefact carries a fixture's words; the exemption is the writer's own path
         # for that, and it is ledgered on the row.
@@ -1434,17 +1436,16 @@ try:
                    captured[-400:])
 
     # ── J: the declared jurisdiction vocabulary, refused at write time ─────────────
-    # I7. Every value used here is either read from the enum / the audit or is one no
+    # I7. Every value used here is either read from base_jurisdictions / the audit or is one no
     # vocabulary could ever declare ('XX'). The gated tables are DERIVED the way the
     # audit derives them, from its own exclusion sets, so the writers' refusal and the
     # blocking check cannot drift apart unseen.
     import importlib.util                                           # noqa: E402
-    from schemas.enums import JurisdictionCode                      # noqa: E402
     _spec = importlib.util.spec_from_file_location(
         "_jdv", REPO / "scripts" / "audit" / "jurisdiction_db_vocabulary.py")
     jdv = importlib.util.module_from_spec(_spec)
     _spec.loader.exec_module(jdv)
-    DECLARED = {m.value for m in JurisdictionCode}
+    DECLARED = getattr(dbcore, "declared_jurisdictions", set)()     # empty on a tree without the registry
     REJECTED = jdv.rejected_spellings()
     check_jur = getattr(dbcore, "check_jurisdiction", None)
     UNDECLARED = "XX"
@@ -1464,10 +1465,10 @@ try:
     RJ = next_ref()
     before = counts(*J_TABLES)
     r = add_source(RJ, "--jurisdiction", UNDECLARED)
-    record("J01", "add-source --jurisdiction XX refuses, names JurisdictionCode and the "
+    record("J01", "add-source --jurisdiction XX refuses, names base_jurisdictions and the "
            "audit, and writes nothing",
            r.returncode == 1 and r.stderr.startswith("REFUSING:")
-           and "JurisdictionCode" in r.stderr and "jurisdiction_db_vocabulary" in r.stderr
+           and "base_jurisdictions" in r.stderr and "jurisdiction_db_vocabulary" in r.stderr
            and counts(*J_TABLES) == before and jur_of(RJ) == "<no row>",
            f"rc={r.returncode} {r.stderr[-300:]!r} {before} -> {counts(*J_TABLES)}")
     r = add_source(RJ, "--jurisdiction", BAD)
@@ -1488,9 +1489,9 @@ try:
     msg = refusal(db.log_search, A, "en", "fixture query", "fixture-engine", "keyword", S,
                   jurisdiction=UNDECLARED, prior_expectation="fixture: expect nothing")
     record("J05", "log-search refuses an undeclared jurisdiction before it writes",
-           msg and "JurisdictionCode" in msg and counts("search_executions") == n_exec,
+           msg and "base_jurisdictions" in msg and counts("search_executions") == n_exec,
            f"got {msg!r}")
-    ES_LIKE = sorted(DECLARED)[0]
+    ES_LIKE = (sorted(DECLARED) or ["XX"])[0]
     msg = refusal(db.insert_code_lead, {"jurisdiction": ES_LIKE.lower(),
                                         "standard_name": "Fixture lead J06",
                                         "status": "REFERENCE-ONLY"}, S)
@@ -1502,10 +1503,10 @@ try:
     msg = refusal(db.insert_extraction, {"ref_id": REF, "parameter_id": 1,
                                          "jurisdiction": UNDECLARED}, S)
     record("J07", "add-extraction refuses an undeclared jurisdiction (by the vocabulary, "
-           "before any other check)", msg and "JurisdictionCode" in msg, f"got {msg!r}")
+           "before any other check)", msg and "base_jurisdictions" in msg, f"got {msg!r}")
     msg = refusal(db.amend_source, RJ, "jurisdiction", UNDECLARED, "fixture: wrong code", S)
     record("J08", "amend-source --field jurisdiction refuses an undeclared code",
-           msg and "JurisdictionCode" in msg and jur_of(RJ) == NEW, f"got {msg!r}")
+           msg and "base_jurisdictions" in msg and jur_of(RJ) == NEW, f"got {msg!r}")
     OTHER_NEW = next((c for c in ("FI", "UG", "UN", "PT") if c in DECLARED and c != NEW),
                      None)
     out, msg = None, None
@@ -1518,7 +1519,7 @@ try:
     msg = refusal(db.insert_economics_entry, {"entry_id": "FIXTURE-J10",
                                               "jurisdiction": "MULTI"}, S)
     record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) by the "
-           "vocabulary", msg and "JurisdictionCode" in msg, f"got {msg!r}")
+           "vocabulary", msg and "base_jurisdictions" in msg, f"got {msg!r}")
 
     # Mirror, not stricter: every value LIVE in a table the audit gates passes the
     # writers' refusal, so a real batch writing UK, EU, ISO, INT ... is never blocked by
@@ -1726,7 +1727,8 @@ try:
     readable(ref_p)
     X_P = {"ref_id": ref_p, "parameter_id": PARAM, "identity_code": lens_live["--identity"],
            "claim_type": "absent", "figure_role": "finding",
-           "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim"}
+           "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim",
+           "lens_basis": "named_in_text", "lens_basis_text": "states nothing"}
     try:
         got = db.insert_extraction(dict(X_P), S, relations=[], verbatim_exempt=X_EXEMPT)
     except Exception as exc:  # noqa: BLE001 -- recorded red below
@@ -1742,6 +1744,333 @@ try:
     record("V02", "an unregistered root_id is refused naming the registry, and a payload naming a slug is refused",
            msg_root and "external_root_registry" in msg_root and msg_slug and "slug" in msg_slug
            and counts("source_value_extractions") == n_sve, f"root={msg_root!r} slug={msg_slug!r}")
+
+    # ── T018: several codes of one model on a figure, by a link table (OR-1c) ─────────────────────
+    # Every probe is chosen by query on the copy; every fixture row says TASK-FIXTURE. Every read of
+    # the new table or view is guarded, so on a database without them a case records [✗] with the
+    # reason and the later cases still run.
+    def t018_read(sql, *params):
+        try:
+            return q(sql, *params), ""
+        except sqlite3.Error as exc:
+            return None, f"{exc.__class__.__name__}: {exc}"
+
+    def t018_live(extraction_id):
+        rows, err = t018_read("SELECT identity_code, icf_code, needs_code, medical_code, basis FROM "
+                              "v_live_lens_links WHERE extraction_id=? ORDER BY link_id", extraction_id)
+        return rows, err
+
+    T18_D1, T18_D2 = [c for (c,) in q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' "
+                                      "ORDER BY icf_code LIMIT 2")]
+    T18_TEXT = "TASK-FIXTURE T018: the source names two functions on one figure"
+    T18_FLAGS = ("--claim-type", "absent", "--figure-role", "finding", "--relation", "none",
+                 "--extraction-method", "skim", "--verbatim-exempt", "TASK-FIXTURE: no artefact carries it",
+                 "--session", S)
+
+    def t018_cmd(ref, label, *lens_and_extra):
+        return ("add-extraction", "--ref-id", ref, "--parameter-id", str(PARAM), *lens_and_extra,
+                "--claim-text", f"{T18_TEXT} ({label})", *T18_FLAGS)
+
+    def t018_add(label, *lens_and_extra):
+        ref, _ = add_o(f"T018 {label}", "--evidence-type", "grey")
+        readable(ref)
+        r = run_cli(*t018_cmd(ref, label, *lens_and_extra))
+        got = q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", ref)
+        return r, (got[0][0] if got else None)
+
+    # T018-01 (AT-32, first half): one figure, two ICF codes, two links.
+    r01, fig01 = t018_add("two icf", "--icf", T18_D1, "--icf", T18_D2, "--lens-basis", "named_in_text",
+                          "--lens-basis-text", "TASK-FIXTURE")
+    live01, err01 = t018_live(fig01) if fig01 else (None, "no figure was written")
+    cols01 = q("SELECT identity_code, icf_code, needs_code, medical_code FROM source_value_extractions "
+               "WHERE extraction_id=?", fig01) if fig01 else None
+    record("T018-01", "one figure with two ICF codes is stored once with two live links, and its own lens columns stay NULL",
+           r01.returncode == 0 and live01 is not None
+           and sorted((x[1], x[4]) for x in live01) == sorted([(T18_D1, "named_in_text"), (T18_D2, "named_in_text")])
+           and cols01 == [(None, None, None, None)],
+           f"rc={r01.returncode} {(r01.stdout + r01.stderr)[-250:]!r} links={live01} {err01} cols={cols01}")
+
+    # A figure with exactly one link, for T018-02 and -03.
+    r_b, fig_b = t018_add("one identity", "--identity", POP, "--lens-basis", "named_in_text",
+                          "--lens-basis-text", "TASK-FIXTURE")
+    only, err_b = t018_live(fig_b) if fig_b else (None, "no figure was written")
+    only_id = t018_read("SELECT link_id FROM v_live_lens_links WHERE extraction_id=?", fig_b)[0] if fig_b else None
+    n_links = t018_read("SELECT COUNT(*) FROM extraction_lens_links")[0]
+    r02 = run_cli("retire-lens-link", "--link-id", str(only_id[0][0] if only_id else 0),
+                  "--reason", "TASK-FIXTURE: retiring a figure's last link", "--session", S)
+    out02 = r02.stdout + r02.stderr
+    record("T018-02", "retire-lens-link refuses a figure's last live link, names add-lens-link, and writes nothing",
+           r02.returncode != 0 and "add-lens-link" in out02 and only is not None and len(only) == 1
+           and t018_read("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?", fig_b)[0] == [(1,)]
+           and t018_read("SELECT COUNT(*) FROM extraction_lens_links")[0] == n_links,
+           f"rc={r02.returncode} {out02[-250:]!r} probe={only} {err_b}")
+
+    # T018-03: a warrant that is nowhere in the figure's words is refused, naming where it looked.
+    r03 = run_cli("add-lens-link", "--extraction-id", str(fig_b or 0), "--icf", T18_D2,
+                  "--basis", "named_in_text", "--basis-text", "zq-not-in-the-figure-xq", "--session", S)
+    out03 = r03.stdout + r03.stderr
+    record("T018-03", "add-lens-link refuses a --basis-text found in neither the figure's words nor its source's file, and says where it looked",
+           r03.returncode != 0 and "claim_text" in out03 and "zq-not-in-the-figure-xq" in out03
+           and t018_read("SELECT COUNT(*) FROM extraction_lens_links")[0] == n_links,
+           f"rc={r03.returncode} {out03[-300:]!r}")
+
+    # T018-04 / T018-08: a judged link replaces a carried one in one call, and the captured batch replays.
+    probe04, err04 = t018_read(
+        "SELECT k.link_id, k.extraction_id, k.identity_code, x.claim_text FROM v_live_lens_links k "
+        "JOIN source_value_extractions x ON x.extraction_id = k.extraction_id "
+        "JOIN base_taxonomy_identity i ON i.identity_code = k.identity_code AND i.status = 'active' "
+        "WHERE k.basis = 'carried' AND TRIM(COALESCE(x.claim_text, '')) <> '' ORDER BY k.link_id LIMIT 1")
+    base_copy = os.path.join(TMP, "t018-base.db")
+    shutil.copy(DB, base_copy)
+    if probe04:
+        l04, fig04, code04, ct04 = probe04[0]
+        word04 = max(re.findall(r"\w+", ct04), key=len)
+        r04 = run_cli("add-lens-link", "--extraction-id", str(fig04), "--identity", code04,
+                      "--basis", "named_in_text", "--basis-text", word04, "--session", S)
+        rows04, e04 = t018_read("SELECT link_id, basis, basis_text FROM v_live_lens_links "
+                                "WHERE extraction_id=? AND identity_code=?", fig04, code04)
+        old04, e04b = t018_read("SELECT retired_at IS NOT NULL, retirement_reason FROM extraction_lens_links "
+                                "WHERE link_id=?", l04)
+        new_id = rows04[0][0] if rows04 else None
+        ok04 = (r04.returncode == 0 and rows04 is not None and len(rows04) == 1
+                and rows04[0][1:] == ("named_in_text", word04) and old04 is not None
+                and old04[0][0] == 1 and old04[0][1] == f"superseded by judged link {new_id}")
+        detail04 = f"rc={r04.returncode} {(r04.stdout + r04.stderr)[-250:]!r} live={rows04} {e04} old={old04} {e04b}"
+    else:
+        ok04, detail04 = False, f"no carried identity link to probe (v_live_lens_links: {err04 or 'empty'})"
+    record("T018-04", "add-lens-link on a code that has a carried link retires it ('superseded by judged link <id>') and leaves one live link",
+           ok04, detail04)
+
+    # T018-08: the capture replays. emit_mod is imported where case M03 reads the lens columns.
+    sql08 = os.path.join(TMP, "t018-replay.sql")
+    try:
+        emit_mod.emit(DB, base_copy, sql08, replay_path=base_copy)
+        replay_copy = os.path.join(TMP, "t018-replayed.db")
+        shutil.copy(base_copy, replay_copy)
+        import migrate_db                                            # noqa: E402
+        con08 = sqlite3.connect(replay_copy, isolation_level=None)
+        try:
+            migrate_db._apply_atomically(con08, migrate_db._split_statements(open(sql08, encoding="utf-8").read()),
+                                         label="T018-08 replay")
+        finally:
+            con08.close()
+        want = q("SELECT * FROM extraction_lens_links ORDER BY link_id")
+        got = sqlite3.connect(replay_copy).execute("SELECT * FROM extraction_lens_links ORDER BY link_id").fetchall()
+        ok08, detail08 = bool(probe04) and want == got and len(want) > 0, f"scratch {len(want)} rows, replay {len(got)} rows"
+    except BaseException as exc:  # noqa: BLE001 -- SystemExit from emit, IntegrityError from the replay
+        ok08, detail08 = False, f"{exc.__class__.__name__}: {exc}"
+    record("T018-08", "the captured batch replays: applying emit_batch_sql's output to the base reproduces extraction_lens_links row for row",
+           ok08, detail08)
+
+    # T018-07: the figure's own lens columns are a dead home: a hand-written INSERT naming one is refused.
+    con07 = sqlite3.connect(DB)
+    try:
+        con07.execute("INSERT INTO source_value_extractions (ref_id, parameter_id, identity_code, claim_type, "
+                      "extraction_method, created_at, updated_at) VALUES (?, ?, ?, 'absent', 'skim', 't', 't')",
+                      (REF, PARAM, POP))
+        out07 = None
+    except sqlite3.IntegrityError as exc:
+        out07 = str(exc)
+    finally:
+        con07.rollback()
+        con07.close()
+    record("T018-07", "a hand-written INSERT into source_value_extractions that names a lens column is refused by the table's CHECK",
+           out07 is not None and "CHECK constraint failed" in out07, f"got {out07!r}")
+
+    # ── T018, continued: each refusal of the link writers fires, and the legitimate shape still passes ──
+    # A figure with one identity link (fig_b) and one with two ICF links (fig01) exist from above.
+    def out_of(r):
+        return r.stdout + r.stderr
+
+    def n_figures():
+        return counts("source_value_extractions")[0]
+
+    def n_links_now():
+        rows, _ = t018_read("SELECT COUNT(*) FROM extraction_lens_links")
+        return rows[0][0] if rows else -1
+
+    BASIS = ("--lens-basis", "named_in_text", "--lens-basis-text", "TASK-FIXTURE")
+    ref09, _ = add_o("T018 refusals", "--evidence-type", "grey")
+    readable(ref09)
+
+    # T018-09: a figure with no lens at all is refused (D-0182), whatever else is right with it.
+    nf, nl = n_figures(), n_links_now()
+    r09 = run_cli(*t018_cmd(ref09, "no lens", *BASIS))
+    record("T018-09", "add-extraction with no lens flag is refused in the D-0182 words, and writes no figure and no link",
+           r09.returncode != 0 and "at least one lens" in out_of(r09) and n_figures() == nf and n_links_now() == nl,
+           f"rc={r09.returncode} {out_of(r09)[-250:]!r}")
+
+    # T018-10: one code twice in a call is refused by name, before any write.
+    r10 = run_cli(*t018_cmd(ref09, "twice", "--icf", T18_D1, "--icf", T18_D1, *BASIS))
+    record("T018-10", "add-extraction with one code repeated in a call is refused ('more than once') and writes nothing",
+           r10.returncode != 0 and "more than once" in out_of(r10) and n_figures() == nf and n_links_now() == nl,
+           f"rc={r10.returncode} {out_of(r10)[-250:]!r}")
+
+    # T018-11: a blank warrant, and a code the registry does not hold, are each refused in words.
+    r11a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "   ", "--session", S)
+    r11b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", "NOT-A-CODE", "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    medical_rows = q("SELECT COUNT(*) FROM base_taxonomy_medical")[0][0]
+    r11c = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--medical", "NOT-A-CODE", "--basis",
+                   "named_in_text", "--basis-text", "TASK-FIXTURE", "--session", S)
+    record("T018-11", "add-lens-link refuses a blank --basis-text, an unknown code and (derived) an empty registry, each in words",
+           r11a.returncode != 0 and "blank" in out_of(r11a)
+           and r11b.returncode != 0 and "is not a live icf_code" in out_of(r11b)
+           and r11c.returncode != 0 and ("holds no rows" if medical_rows == 0 else "is not a live") in out_of(r11c)
+           and n_links_now() == nl,
+           f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r} | {out_of(r11c)[-120:]!r}")
+
+    # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
+    (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
+               "ORDER BY identity_code LIMIT 1", POP)[0]
+    w("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?", dep)
+    try:
+        r12a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--identity", dep, "--basis", "named_in_text",
+                       "--basis-text", "TASK-FIXTURE", "--session", S)
+        r12b = run_cli(*t018_cmd(ref09, "deprecated", "--identity", dep, *BASIS))
+    finally:
+        w("UPDATE base_taxonomy_identity SET status='active' WHERE identity_code=?", dep)
+    record("T018-12", "add-lens-link and add-extraction refuse a deprecated identity code and write nothing",
+           r12a.returncode != 0 and "deprecated" in out_of(r12a) and r12b.returncode != 0 and "deprecated" in out_of(r12b)
+           and n_figures() == nf and n_links_now() == nl, f"{out_of(r12a)[-160:]!r} | {out_of(r12b)[-160:]!r}")
+
+    # T018-13: add-lens-link names exactly one code and an existing figure.
+    r13a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    r13b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--identity", POP, "--basis",
+                   "named_in_text", "--basis-text", "TASK-FIXTURE", "--session", S)
+    r13c = run_cli("add-lens-link", "--extraction-id", "0", "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    record("T018-13", "add-lens-link refuses no code, two codes, and a figure that does not exist",
+           r13a.returncode != 0 and "exactly one" in out_of(r13a) and r13b.returncode != 0 and "exactly one" in out_of(r13b)
+           and r13c.returncode != 0 and "no such figure" in out_of(r13c) and n_links_now() == nl,
+           f"{out_of(r13a)[-100:]!r} | {out_of(r13b)[-100:]!r} | {out_of(r13c)[-100:]!r}")
+
+    # T018-14: the basis vocabulary is the column's CHECK minus `carried`, at the parser and in the writer.
+    r14a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "carried",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    r14b = refusal(db.add_lens_link, fig_b, S, icf=T18_D2, basis="carried", basis_text="TASK-FIXTURE")
+    r14c = refusal(db.add_lens_link, fig_b, S, icf=T18_D2, basis="not-a-basis", basis_text="TASK-FIXTURE")
+    record("T018-14", "'carried' is refused as a basis by the parser and by the writer, as is a value outside the CHECK",
+           r14a.returncode != 0 and "invalid choice" in out_of(r14a)
+           and r14b and "a lens link needs" in r14b and r14c and "a lens link needs" in r14c and n_links_now() == nl,
+           f"{out_of(r14a)[-120:]!r} | {r14b!r} | {r14c!r}")
+
+    # T018-15: a second judged link for a code is refused (only a carried one is replaced); then it is the live one.
+    r15a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    n_after_first = n_links_now()
+    r15b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    record("T018-15", "add-lens-link writes a new code's link, and refuses the same code again naming the live link",
+           r15a.returncode == 0 and n_after_first == nl + 1 and r15b.returncode != 0
+           and "already holds a live" in out_of(r15b) and n_links_now() == n_after_first,
+           f"{out_of(r15a)[-160:]!r} | {out_of(r15b)[-200:]!r}")
+
+    # T018-16: retire-lens-link, link by link, on fig01 (two live links).
+    l01 = [r[0] for r in q("SELECT link_id FROM v_live_lens_links WHERE extraction_id=? ORDER BY link_id", fig01)] if fig01 else []
+    if len(l01) == 2:
+        rb = run_cli("retire-lens-link", "--link-id", str(l01[0]), "--reason", "   ", "--session", S)
+        r1 = run_cli("retire-lens-link", "--link-id", str(l01[0]), "--reason", "TASK-FIXTURE: retire the first", "--session", S)
+        r1b = run_cli("retire-lens-link", "--link-id", str(l01[0]), "--reason", "TASK-FIXTURE: again", "--session", S)
+        r2 = run_cli("retire-lens-link", "--link-id", str(l01[1]), "--reason", "TASK-FIXTURE: the last", "--session", S)
+        r0 = run_cli("retire-lens-link", "--link-id", "0", "--reason", "TASK-FIXTURE: none", "--session", S)
+        live01 = q("SELECT link_id FROM v_live_lens_links WHERE extraction_id=?", fig01)
+        total01 = q("SELECT COUNT(*) FROM extraction_lens_links WHERE extraction_id=?", fig01)[0][0]
+        ok16 = (rb.returncode != 0 and "blank" in out_of(rb) and r1.returncode == 0
+                and r1b.returncode != 0 and "was retired" in out_of(r1b)
+                and r2.returncode != 0 and "last live link" in out_of(r2)
+                and r0.returncode != 0 and "no such link" in out_of(r0)
+                and live01 == [(l01[1],)] and total01 == 2)
+        detail16 = f"{[out_of(x)[-90:] for x in (rb, r1, r1b, r2, r0)]} live={live01} total={total01}"
+    else:
+        ok16, detail16 = False, f"no figure with two live links to retire from: {l01}"
+    record("T018-16", "retire-lens-link refuses a blank reason, an already-retired link, no such link and the last LIVE link "
+           "(counted over live links, though the figure holds two rows)", ok16, detail16)
+
+    # T018-17: the warrant is looked for where its basis says, on word boundaries.
+    ref17, _ = add_o("T018 warrants", "--evidence-type", "grey")
+    readable(ref17)
+    HEAD = "TASK-FIXTURE Heading Alpha"
+    r17 = run_cli(*t018_cmd(ref17, "warrants - dash", "--identity", POP, *BASIS, "--source-section", HEAD))
+    fig17 = (q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", ref17) or [(None,)])[0][0]
+    needs17 = q("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")[0][0]
+
+    def link17(code_flag, code, basis, text):
+        return run_cli("add-lens-link", "--extraction-id", str(fig17), code_flag, code, "--basis", basis,
+                       "--basis-text", text, "--session", S)
+    n17 = n_links_now()
+    refused17 = {
+        "a heading basis, words only in the claim text": link17("--icf", T18_D1, "heading", "two functions"),
+        "a named_in_text basis, words only in the heading": link17("--icf", T18_D1, "named_in_text", "Heading Alpha"),
+        "a study_participants basis, words only in the claim text": link17("--icf", T18_D1, "study_participants", "two functions"),
+        "a one-letter warrant": link17("--icf", T18_D1, "named_in_text", "e"),
+        "a warrant with no letter or digit": link17("--icf", T18_D1, "named_in_text", "."),
+        "a warrant with no letter or digit that the text does hold": link17("--icf", T18_D1, "named_in_text", "-"),
+        "the front of a word": link17("--icf", T18_D1, "named_in_text", "function"),
+        "the middle of a word": link17("--icf", T18_D1, "named_in_text", "unction"),
+    }
+    missed17 = [k for k, v in refused17.items() if v.returncode == 0]
+    nothing17 = n_links_now() == n17
+    ok_head = link17("--icf", T18_D1, "heading", "Heading Alpha")
+    ok_text = link17("--icf", T18_D2, "named_in_text", "two functions")
+    record("T018-17", "a warrant is looked for where its basis says and on word boundaries; each wrong place and each fragment is refused, "
+           "and the right one lands",
+           r17.returncode == 0 and fig17 and not missed17 and nothing17 and ok_head.returncode == 0 and ok_text.returncode == 0,
+           f"create={out_of(r17)[-150:]!r} not refused: {missed17} wrote_nothing={nothing17} head={out_of(ok_head)[-150:]!r} "
+           f"text={out_of(ok_text)[-150:]!r}")
+
+    # T018-18: study_participants reads the graded study population; the saved-file route is consulted for named_in_text.
+    grade = sorted(dbcore.check_values(sqlite3.connect(DB), "evidence_population_match", "match_grade"))[0]
+    w("INSERT INTO evidence_population_match (match_id, source_ref, target_population, study_population, match_grade, "
+      "created_at, created_by_session, ref_id) VALUES (?, ?, ?, ?, ?, 't', ?, ?)",
+      f"TASK-FIXTURE-{ref17}", ref17, POP, "TASK-FIXTURE participants Zeta", grade, S, ref17)
+    r18a = link17("--needs", needs17, "study_participants", "participants Zeta")
+    r18b = link17("--medical", "NOT-A-CODE", "study_participants", "participants Zeta")
+    PHRASE = "TASK-FIXTURE phrase only in a saved file"
+    (T18_D3,) = q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' ORDER BY icf_code LIMIT 1 OFFSET 2")[0]
+    rl = db._retrieval_log()
+    _real = rl.locate_quote
+
+    def via(kind):
+        """add-lens-link in process, with the quote verifier answering `kind` for the phrase (no artefact is saved for a fixture)."""
+        rl.locate_quote = lambda quote, ref_id=None, session=None: (kind, "TASK-FIXTURE verdict")
+        try:
+            try:
+                return db.add_lens_link(fig17, S, icf=T18_D3, basis="named_in_text", basis_text=PHRASE, dry_run=True)
+            except Refusal as exc:
+                return {"refused": str(exc)}
+            except Exception as exc:  # noqa: BLE001 -- recorded red below
+                return {"error": f"{exc.__class__.__name__}: {exc}"}
+        finally:
+            rl.locate_quote = _real
+    scoped, unscoped, missing = via("scoped"), via("unscoped"), via("missing")
+    record("T018-18", "study_participants is found in the graded study_population, and named_in_text accepts a SCOPED hit in the source's saved "
+           "file and refuses an unscoped or missing one",
+           r18a.returncode == 0 and r18b.returncode != 0
+           and scoped.get("link_id") and scoped.get("dry_run") is True
+           and "is not, on word boundaries" in unscoped.get("refused", "")
+           and "is not, on word boundaries" in missing.get("refused", ""),
+           f"{out_of(r18a)[-150:]!r} | {out_of(r18b)[-100:]!r} | {scoped!r} | {unscoped!r} | {missing!r}")
+
+    # T018-19: the lens is not part of a figure's identity: the same reading in another code is add-lens-link, never a second figure.
+    ref19, _ = add_o("T018 identical", "--evidence-type", "grey")
+    readable(ref19)
+    first19 = run_cli(*t018_cmd(ref19, "same reading", "--icf", T18_D1, *BASIS))
+    nf19 = n_figures()
+    again19 = run_cli(*t018_cmd(ref19, "same reading", "--icf", T18_D2, *BASIS))
+    other19 = run_cli(*t018_cmd(ref19, "another reading", "--icf", T18_D1, *BASIS))
+    record("T018-19", "the same row in another lens code is refused naming add-lens-link; a different row for the same source is accepted",
+           first19.returncode == 0 and again19.returncode != 0 and "add-lens-link" in out_of(again19)
+           and n_figures() == nf19 + 1 and other19.returncode == 0,
+           f"{out_of(first19)[-100:]!r} | {out_of(again19)[-200:]!r} | {out_of(other19)[-100:]!r} figures {nf19} -> {n_figures()}")
+
+    # T018-20: a lens code that is not text is a Refusal, not a TypeError.
+    r20a = refusal(db.insert_extraction, {"ref_id": REF, "parameter_id": PARAM, "identity_code": 5}, S, relations=[])
+    r20b = refusal(db.add_lens_link, fig_b, S, icf=["d1"], basis="named_in_text", basis_text="TASK-FIXTURE")
+    record("T018-20", "a lens code that is not text is refused in words by both writers",
+           r20a and "is text" in r20a and r20b and "as text" in r20b, f"{r20a!r} | {r20b!r}")
 
     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
     # determination is governed by is refused (dbcore.live_determinations_linked), through both
@@ -1835,6 +2164,92 @@ try:
                f"{msg_np!r}")
         record("G10", "while regrading is still refused for it (any live determination)",
                "live determination" in (amend(GOV_X) or ""))
+        # T-017: a condition_on edge FROM a governing row would move it out of its live headline
+        # (assess_cell.compose_value), so it is refused like a regrade -- unless that row is already a
+        # branch, when the headline does not move. The edge runs FROM the conditioned claim TO the
+        # condition, so the reverse of an existing pair is refused too (each would condition the
+        # other). The relaxation shape, an edge from a condition row TO a governing one, changes what
+        # a render shows and not the stored answer, so it is not refused. Rows are chosen by query;
+        # the quotes are real: GOV_T, a governing row of the live determination, borrows the quote of
+        # an edge it already carries (it passes the verbatim floor), and a condition row likewise.
+        GOV_T, GOV_QUOTE = next(((x, qt) for x, qt in q(
+            "SELECT r.from_extraction_id, r.quote FROM extraction_relations r JOIN "
+            "specification_extraction_links l ON l.extraction_id = r.from_extraction_id AND "
+            "l.specification_id = ? AND l.role = 'governing' WHERE r.quote IS NOT NULL AND "
+            "r.from_extraction_id NOT IN (SELECT from_extraction_id FROM extraction_relations WHERE "
+            "relation = 'condition_on') ORDER BY r.relation_id", SPEC_G)), (None, None))
+        cond = [c for (c,) in q(
+            "SELECT extraction_id FROM source_value_extractions WHERE figure_role='condition' "
+            "AND extraction_id <> ? AND extraction_id NOT IN (SELECT from_extraction_id FROM "
+            "extraction_relations WHERE relation='condition_on' AND to_extraction_id=?) ORDER BY 1",
+            GOV_T, GOV_T)]
+        COND_TO, COND_TO2 = (cond + [None, None])[:2]
+        COND_FROM, COND_QUOTE = next(((c, qt) for c, qt in q(
+            "SELECT r.from_extraction_id, r.quote FROM extraction_relations r JOIN "
+            "source_value_extractions x ON x.extraction_id = r.from_extraction_id WHERE "
+            "r.relation='condition_on' AND x.figure_role='condition' AND r.quote IS NOT NULL "
+            "ORDER BY 1") if linked(c, governing_only=True) == [] and c != GOV_X), (None, None))
+        cedge = dict(stated="named", quote=GOV_QUOTE,
+                     cross_source_reason="fixture: the target is chosen by query, not by source")
+        n_rel = counts("extraction_relations")
+        msg_c5 = refusal(db.relate_extraction, GOV_T, "condition_on", S,
+                         **dict(cedge, to_extraction=COND_TO)) if COND_TO and GOV_QUOTE else None
+        record("T017-B5", "relate-extraction refuses a condition_on edge FROM a governing row of a "
+               "live determination that has none yet, naming it and retire-specification, and (a "
+               "real run, not a dry one) writes nothing",
+               COND_TO is not None and msg_c5 and "governs a live determination" in msg_c5
+               and "retire-specification" in msg_c5 and counts("extraction_relations") == n_rel,
+               f"from={GOV_T} to={COND_TO} {msg_c5!r}")
+        got_c6 = None
+        if COND_FROM:
+            try:
+                got_c6 = db.relate_extraction(COND_FROM, "condition_on", S, dry_run=True,
+                                              **dict(cedge, to_extraction=GOV_T, quote=COND_QUOTE))
+            except Refusal as exc:
+                got_c6 = str(exc)
+        record("T017-B6", "...but the same edge from a condition row to that governing row is accepted",
+               COND_FROM is not None and isinstance(got_c6, dict), f"from={COND_FROM} {got_c6!r}")
+        # A row that already has a condition_on edge is a branch: a second edge moves no headline.
+        got_c7 = None
+        if COND_TO and COND_TO2 and GOV_QUOTE:
+            w("INSERT INTO extraction_relations (from_extraction_id, relation, to_extraction_id, stated, "
+              "quote, created_at, created_by_session) VALUES (?, 'condition_on', ?, 'named', ?, 't', ?)",
+              GOV_T, COND_TO, GOV_QUOTE, S)
+            try:
+                got_c7 = db.relate_extraction(GOV_T, "condition_on", S, dry_run=True,
+                                              **dict(cedge, to_extraction=COND_TO2))
+            except Refusal as exc:
+                got_c7 = str(exc)
+            w("DELETE FROM extraction_relations WHERE from_extraction_id=? AND to_extraction_id=? "
+              "AND relation='condition_on'", GOV_T, COND_TO)
+        record("T017-B6b", "...and a governing row that already carries a condition_on edge may take another "
+               "(it is already a branch, so the headline does not move)",
+               COND_TO2 is not None and isinstance(got_c7, dict), f"to={COND_TO2} {got_c7!r}")
+        # The other relations are not this refusal's: `exceeds` from the same governing row.
+        got_c8 = None
+        if COND_TO and GOV_QUOTE:
+            try:
+                got_c8 = db.relate_extraction(GOV_T, "exceeds", S, dry_run=True,
+                                              **dict(cedge, to_extraction=COND_TO))
+            except Refusal as exc:
+                got_c8 = str(exc)
+        record("T017-B6c", "...and only a condition_on edge is refused: an exceeds edge from a governing row "
+               "is accepted", COND_TO is not None and isinstance(got_c8, dict), f"to={COND_TO} {got_c8!r}")
+        # The reverse of an existing pair: each claim would be the other's condition, and both would
+        # leave any headline. A live pair is chosen whose target carries a quote of its own.
+        pair = next(((a, b, qt) for a, b, qt in q(
+            "SELECT r.from_extraction_id, r.to_extraction_id, (SELECT r2.quote FROM extraction_relations "
+            "r2 WHERE r2.from_extraction_id = r.to_extraction_id AND r2.quote IS NOT NULL LIMIT 1) "
+            "FROM extraction_relations r WHERE r.relation='condition_on' AND r.to_extraction_id IS NOT NULL "
+            "ORDER BY r.relation_id") if qt and linked(b, governing_only=True) == []), None)
+        n_rel = counts("extraction_relations")
+        msg_c9 = refusal(db.relate_extraction, pair[1], "condition_on", S,
+                         **dict(cedge, to_extraction=pair[0], quote=pair[2])) if pair else None
+        record("T017-B6d", "relate-extraction refuses the reverse of an existing condition_on pair, naming "
+               "the direction, and (a real run) writes nothing",
+               pair is not None and msg_c9 and "condition of the other" in msg_c9
+               and "--from is the claim that holds only under the condition" in msg_c9
+               and counts("extraction_relations") == n_rel, f"pair={pair and pair[:2]} {msg_c9!r}")
         # Source-level and comparator guards: the other columns the engine reads. The marker and
         # the interval are caches over them, so a change under a live determination is refused.
         ref_gov = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]
@@ -1895,6 +2310,269 @@ try:
                linked(GOV_X) == [])
         record("G12", "and the remedy works: amend-extraction no longer refuses on that ground",
                "live determination" not in (amend(GOV_X) or ""))
+    # ── T024: jurisdictions are rows of base_jurisdictions, admitted by a verb ──────────────
+    # IMP-17. The declared vocabulary used to be an enum in code, so admitting a jurisdiction
+    # meant editing a file and the pairs lang_jur_map owes named codes the writers refused.
+    # Every probe is chosen by query. A refusal case asserts the message names its ground (and
+    # the CLI cases that the stderr starts REFUSING:), so that an absent verb or flag cannot
+    # pass as a refusal. On a tree without the registry each case RECORDS a red line instead
+    # of crashing (the ids are read from this file, so a new case is covered the day it is added).
+    import contextlib                                                      # noqa: E402
+    import io                                                              # noqa: E402
+    import re as _re24                                                     # noqa: E402
+    T024_READY = (hasattr(dbcore, "declared_jurisdictions") and hasattr(db, "add_jurisdiction")
+                  and bool(q("SELECT 1 FROM sqlite_master WHERE name='base_jurisdictions'")))
+    if not T024_READY:
+        for tid in sorted(set(_re24.findall(r'"(T024-\d\d)"', pathlib.Path(__file__).read_text(
+                encoding="utf-8")))):
+            record(tid, "the registry exists (base_jurisdictions, dbcore.declared_jurisdictions, "
+                   "db.add_jurisdiction)", False, "absent in this tree")
+    else:
+        DECL0 = dbcore.declared_jurisdictions()
+        MAP24 = sorted({j for (j,) in q("SELECT DISTINCT jurisdiction FROM lang_jur_map")})
+        UNHELD = [j for j in MAP24 if j not in DECL0]
+        ADM, OTHER = (UNHELD + [None, None])[:2]
+        HELD24 = sorted(DECL0)[0]
+        META = next((c for (c,) in q("SELECT jurisdiction_code FROM base_jurisdictions "
+                                     "WHERE kind='meta' ORDER BY 1")), None)
+        PAIR24 = q("SELECT p.slug, p.language, p.jurisdiction FROM v_coverage_priority p "
+                   "JOIN base_jurisdictions b ON b.jurisdiction_code = p.jurisdiction "
+                   "WHERE b.kind='country' ORDER BY p.slug, p.jurisdiction, p.language LIMIT 1")
+        # A real dated, non-delegated heading found once that does not name ADM: for the CLI cases,
+        # which read the real ledger (a subprocess cannot be given the fixture ledger below).
+        REAL_H = next((l[3:].strip() for l in reversed(
+            (REPO / "references" / "project-standards.md").read_text(encoding="utf-8").splitlines())
+            if l.startswith("## ") and _re24.search(r"\d{4}-\d{2}-\d{2}", l)
+            and not l[3:].startswith(dbcore.LEDGER_DELEGATED_PREFIX)
+            and dbcore.ledger_heading_count(l[3:].strip()) == 1
+            and ADM and not dbcore.ledger_entry_names(l[3:].strip(), ADM)), None)
+        record("T024-00", "the probes exist: two owed codes the vocabulary refused, a real ledger "
+               "heading, a meta code, an owed unsearched pair of a held country",
+               bool(ADM and OTHER and REAL_H and META and PAIR24),
+               f"adm={ADM} other={OTHER} real={REAL_H!r} meta={META} pair={PAIR24}")
+        SLUG24, LANG24, COUNTRY24 = PAIR24[0]
+        SUB24, DASHED = COUNTRY24 + "-T024", COUNTRY24 + "-ZZ"
+        # THE FIXTURE LEDGER. The verb reads dbcore.LEDGER_PATH; the in-process cases swap it for
+        # this file, whose entries stand for the owner's words (TASK-FIXTURE) and for the kinds of
+        # entry that must NOT admit a code.
+        H_OK = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 admits some codes"
+        H_NONAME = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 says nothing of any code"
+        H_DELEG = "Delegated resolution 2026-11-13 — TASK-FIXTURE T024 names a code"
+        H_DUP = "Owner ruling 2026-11-13 — TASK-FIXTURE T024 heading found twice"
+        named = " ".join([ADM, OTHER, SUB24, DASHED, META + "-T024", ADM + "-T024", COUNTRY24])
+        FIXL = pathlib.Path(TMP) / "ledger-t024.md"
+        FIXL.write_text(
+            f"## {H_OK}\nThe owner admits {ADM}, {SUB24} and {HELD24}, and the fixture codes "
+            f"{DASHED} {META}-T024 {ADM}-T024.\n\n## {H_NONAME}\nNothing about jurisdictions.\n\n"
+            f"## {H_DELEG}\n{named}\n\n## {H_DUP}\n{named}\n\n## {H_DUP}\n{named}\n",
+            encoding="utf-8")
+        REAL_LEDGER, dbcore.LEDGER_PATH = dbcore.LEDGER_PATH, FIXL
+        n_jur = lambda: q("SELECT COUNT(*) FROM base_jurisdictions")[0][0]      # noqa: E731
+        N0 = n_jur()
+
+        def verb(code, kind, parent=None, ref=H_OK, session=S, dry=False):
+            return refusal(db.add_jurisdiction, code, kind, parent, ref, session, dry_run=dry)
+
+        def refused(msg, *needles):
+            return msg is not None and n_jur() == N0 and all(n in msg for n in needles)
+
+        try:
+            record("T024-01", "refuses an --approval-ref with no date",
+                   refused(verb(ADM, "country", ref="no date here"), "no date"))
+            record("T024-02", "...one that is the heading of no ledger entry",
+                   refused(verb(ADM, "country", ref="2000-01-01 an entry not in the ledger"),
+                           "0 ledger entries"))
+            record("T024-03", "...one found more than once",
+                   refused(verb(ADM, "country", ref=H_DUP), "2 ledger entries"))
+            record("T024-04", "...one whose entry says nothing of the code",
+                   refused(verb(ADM, "country", ref=H_NONAME), "does not name"))
+            record("T024-05", "...and one whose entry names ANOTHER code than the one admitted",
+                   refused(verb(OTHER, "country", ref=H_OK), "does not name"))
+            record("T024-06", "...and a delegated resolution, which is a model's and not the "
+                   "owner's words, even when it names the code",
+                   refused(verb(ADM, "country", ref=H_DELEG), "delegated"))
+            record("T024-07", "refuses a code already held",
+                   refused(verb(HELD24, "country", ref=H_OK), "already held"))
+            record("T024-08", "refuses a GB-prefixed code",
+                   refused(verb(BAD, "country"), "GB"))
+            shapes = [ADM.lower(), ADM[0] + " " + ADM[1:], "-", "123", ADM + "-", "-" + ADM,
+                      ADM + "-A-B", ADM + "_X", COUNTRY24 + "-"]
+            bad = [c for c in shapes if not refused(verb(c, "country"), "must be upper-case")]
+            record("T024-09", "refuses a code that is not upper-case letters and digits, a letter "
+                   "first, with at most one dash followed by a subdivision",
+                   not bad, f"accepted {bad}")
+            record("T024-10", "refuses a dash in a country or meta code",
+                   refused(verb(DASHED, "country"), "dash belongs")
+                   and refused(verb(META + "-T024", "meta"), "dash belongs"))
+            record("T024-11", "refuses a --kind outside the column's CHECK, naming the kinds",
+                   refused(verb(ADM, "region"), "sub-national"))
+            record("T024-12", "refuses a parent on a row that is not sub-national",
+                   refused(verb(ADM, "country", COUNTRY24), "sub-national"))
+            record("T024-13", "refuses a sub-national row with no parent",
+                   refused(verb(SUB24, "sub-national"), "--parent"))
+            record("T024-14", "refuses a parent that is held but not a country, and one not held",
+                   refused(verb(META + "-T024", "sub-national", META), "country")
+                   and refused(verb(ADM + "-T024", "sub-national", ADM), "country"))
+            record("T024-15", "refuses a sub-national code that does not start '<parent>-'",
+                   refused(verb(ADM, "sub-national", COUNTRY24), f"{COUNTRY24}-"))
+            record("T024-16", "refuses a blank --session",
+                   refused(verb(ADM, "country", session=" "), "--session"))
+
+            # --dry-run writes nothing; the CLI is wired to the same function.
+            dry = db.add_jurisdiction(ADM, "country", None, H_OK, S, dry_run=True)
+            record("T024-17", "--dry-run reports the row and leaves the table as it was",
+                   dry.get("dry_run") is True and n_jur() == N0
+                   and not q("SELECT 1 FROM base_jurisdictions WHERE jurisdiction_code=?", ADM),
+                   f"{dry} {n_jur()} vs {N0}")
+            r = run_cli("add-jurisdiction", "--code", ADM, "--kind", "country", "--session", S)
+            record("T024-18", "a missing --approval-ref is argparse's usage error (rc 2): the flag "
+                   "is required, so it can never be a REFUSING line",
+                   r.returncode == 2 and "--approval-ref" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
+            r = run_cli("add-jurisdiction", "--code", ADM, "--kind", "country",
+                        "--approval-ref", REAL_H, "--session", S)
+            record("T024-19", "the CLI reaches the verb: a real dated ledger entry that does not "
+                   "name the code is REFUSING, and nothing is written",
+                   r.returncode == 1 and r.stderr.startswith("REFUSING:") and "does not name" in r.stderr
+                   and n_jur() == N0, f"rc={r.returncode} {r.stderr[-200:]!r}")
+
+            # Admission: no file is edited, and every reader sees the code.
+            cov0 = db.get_coverage_completeness(SLUG24)
+            before_ok = refusal(dbcore.check_jurisdiction, ADM, "T024") is not None
+            out = db.add_jurisdiction(ADM, "country", None, H_OK, S)
+            row = q("SELECT kind, parent_code, admission_ref, created_by_session "
+                    "FROM base_jurisdictions WHERE jurisdiction_code=?", ADM)
+            record("T024-20", "add-jurisdiction admits the probe as a country with the pointer "
+                   "stored and the session", row == [("country", None, H_OK, S)], f"{out} {row}")
+            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+                         "fixture T024: a search in an admitted code", "--engine", "manual",
+                         "--depth-method", "scoping", "--session", S, "--prior-expectation",
+                         "fixture prior, written before the call", "--jurisdiction", ADM)
+            cov1 = db.get_coverage_completeness(SLUG24)
+            record("T024-21", "...then check_jurisdiction accepts it and log-search --jurisdiction "
+                   "logs it",
+                   before_ok and refusal(dbcore.check_jurisdiction, ADM, "T024") is None
+                   and ls.returncode == 0
+                   and q("SELECT COUNT(*) FROM search_executions WHERE jurisdiction=?", ADM)[0][0] >= 1,
+                   f"before_refused={before_ok} log-search rc={ls.returncode} {ls.stderr[-200:]!r}")
+            record("T024-22", "...and the code leaves jurisdictions_unreachable of coverage",
+                   ADM in cov0["jurisdictions_unreachable"]
+                   and ADM not in cov1["jurisdictions_unreachable"],
+                   f"{cov0['jurisdictions_unreachable']} -> {cov1['jurisdictions_unreachable']}")
+
+            # Roll-up (OD-04): a search under a sub-national code counts toward its country.
+            pre = db.get_coverage_completeness(SLUG24)
+            db.add_jurisdiction(SUB24, "sub-national", COUNTRY24, H_OK, S)
+            ls = run_cli("log-search", "--slug", SLUG24, "--language", LANG24, "--query-text",
+                         "fixture T024: a search in a sub-national code", "--engine", "manual",
+                         "--depth-method", "scoping", "--session", S, "--prior-expectation",
+                         "fixture prior, written before the call", "--jurisdiction", SUB24)
+            post = db.get_coverage_completeness(SLUG24)
+            pair_open = lambda: q("SELECT 1 FROM v_coverage_priority WHERE slug=? AND language=? "   # noqa: E731
+                                  "AND jurisdiction=?", SLUG24, LANG24, COUNTRY24)
+            record("T024-23", "a search logged under a sub-national code raises pairs_searched by "
+                   "one and removes the pair from v_coverage_priority",
+                   ls.returncode == 0 and post["pairs_searched"] == pre["pairs_searched"] + 1
+                   and not pair_open()
+                   and [LANG24, COUNTRY24] in [list(x) for x in pre["pairs_unsearched"]],
+                   f"log rc={ls.returncode} {ls.stderr[-150:]!r} searched "
+                   f"{pre['pairs_searched']} -> {post['pairs_searched']} open={pair_open()}")
+            record("T024-24", "...it appears under the country in v_coverage_jurisdiction, and "
+                   "_in_research_scope is true for the sub-national code",
+                   bool(q("SELECT 1 FROM v_coverage_jurisdiction WHERE slug=? AND jurisdiction=?",
+                          SLUG24, COUNTRY24))
+                   and not q("SELECT 1 FROM v_coverage_jurisdiction WHERE jurisdiction=?", SUB24)
+                   and db._in_research_scope(LANG24, SUB24) is True,
+                   f"scope={db._in_research_scope(LANG24, SUB24)}")
+
+            # amend-extraction --field jurisdiction (item 4)
+            X24 = q("SELECT extraction_id FROM source_value_extractions ORDER BY extraction_id "
+                    "LIMIT 1")[0][0]
+            NOT_HELD = next((j for j in MAP24 if j not in dbcore.declared_jurisdictions()), None)
+            ax = lambda v: run_cli("amend-extraction", "--extraction-id", str(X24), "--field",     # noqa: E731
+                                   "jurisdiction", "--value", v, "--reason", "fixture T024",
+                                   "--session", S)
+            r_ok, r_bad = ax(HELD24), ax(NOT_HELD or "ZZ")
+            record("T024-25", "amend-extraction --field jurisdiction accepts a held code",
+                   r_ok.returncode == 0 and q("SELECT jurisdiction FROM source_value_extractions "
+                                              "WHERE extraction_id=?", X24)[0][0] == HELD24,
+                   f"rc={r_ok.returncode} {r_ok.stderr[-200:]!r}")
+            record("T024-26", "...and refuses a code not held",
+                   r_bad.returncode != 0 and r_bad.stderr.startswith("REFUSING:")
+                   and q("SELECT jurisdiction FROM source_value_extractions WHERE extraction_id=?",
+                         X24)[0][0] == HELD24, f"rc={r_bad.returncode} {r_bad.stderr[-200:]!r}")
+
+            # The table's own CHECKs hold the shapes for a row written any other way.
+            def raw_insert(code, kind, parent=None, ref=None, session=None):
+                con = sqlite3.connect(DB)
+                try:
+                    con.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, "
+                                "parent_code, admission_ref, created_by_session) "
+                                "VALUES (?,?,?,?,?)", (code, kind, parent, ref, session))
+                    return None
+                except sqlite3.IntegrityError as exc:
+                    return str(exc)
+                finally:
+                    con.rollback()
+                    con.close()
+            ctrl = raw_insert(COUNTRY24 + "-CTRL", "sub-national", COUNTRY24)
+            hurt = {
+                "a dash in a country": raw_insert(DASHED + "X", "country"),
+                "a sub-national code with no dash": raw_insert(ADM + "S", "sub-national", COUNTRY24),
+                "a sub-national code not starting with its parent": raw_insert(
+                    ADM + "-Q", "sub-national", COUNTRY24),
+                "an empty subdivision": raw_insert(COUNTRY24 + "-", "sub-national", COUNTRY24),
+                "a second dash": raw_insert(COUNTRY24 + "-A-B", "sub-national", COUNTRY24),
+                "a parent on a country": raw_insert(ADM + "P", "country", COUNTRY24),
+                "no parent on a sub-national": raw_insert(COUNTRY24 + "-NP", "sub-national"),
+                "lower case": raw_insert(ADM.lower() + "L", "country"),
+                "a digit first": raw_insert("1" + ADM, "country"),
+                "a space": raw_insert(ADM + " S", "country"),
+                "a GB prefix": raw_insert(BAD + "X", "country"),
+            }
+            missed = [k for k, v in hurt.items() if not (v and "CHECK constraint failed" in v)]
+            record("T024-27", "the table's CHECKs refuse each malformed row and accept a well-formed "
+                   "sub-national one",
+                   ctrl is None and not missed, f"control={ctrl!r} not refused: {missed}")
+
+            # At rest: the blocking audit re-checks every pointer (it reads dbcore.LEDGER_PATH, the
+            # fixture here) and flags a row that landed without one.
+            def audit(*rows):
+                path = os.path.join(TMP, "audit-t024.db")
+                shutil.copy(REPO / "data" / "guidebook.db", path)
+                con = sqlite3.connect(path)
+                for r_ in rows:
+                    con.execute("INSERT INTO base_jurisdictions (jurisdiction_code, kind, "
+                                "admission_ref, created_by_session) VALUES (?,?,?,?)", r_)
+                con.commit()
+                con.close()
+                saved = os.environ["GUIDEBOOK_DB_PATH"]
+                os.environ["GUIDEBOOK_DB_PATH"] = path
+                jdv.DEFAULT_DB = pathlib.Path(path)
+                buf = io.StringIO()
+                try:
+                    with contextlib.redirect_stdout(buf):
+                        rc = jdv.main()
+                finally:
+                    os.environ["GUIDEBOOK_DB_PATH"] = saved
+                return rc, buf.getvalue()
+            rc0, out0 = audit()
+            rc1, out1 = audit((ADM, "country", H_OK, S))
+            record("T024-28", "the audit passes the seed alone and a row whose pointer is found once "
+                   "and whose entry names the code", rc0 == 0 and rc1 == 0, f"{rc0} {rc1} {out1[-300:]}")
+            rc2, out2 = audit((ADM, "country", None, S))
+            record("T024-29", "...flags a row that landed with a session and no admission_ref",
+                   rc2 == 1 and "landed without an approval" in out2, f"{rc2} {out2[-300:]}")
+            rc3, out3 = audit((ADM, "country", "2000-01-01 an entry not in the ledger", S))
+            record("T024-30", "...flags a pointer no ledger heading answers",
+                   rc3 == 1 and "0 ledger entries" in out3, f"{rc3} {out3[-300:]}")
+            rc4, out4 = audit((ADM, "country", H_NONAME, S))
+            record("T024-31", "...flags an entry that does not name the code",
+                   rc4 == 1 and "does not name" in out4, f"{rc4} {out4[-300:]}")
+            rc5, out5 = audit((ADM, "country", H_DELEG, S))
+            record("T024-32", "...and a pointer to a delegated resolution",
+                   rc5 == 1 and "delegated resolution" in out5, f"{rc5} {out5[-300:]}")
+        finally:
+            dbcore.LEDGER_PATH = REAL_LEDGER
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

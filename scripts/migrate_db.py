@@ -172,7 +172,7 @@ def _apply_atomically(conn, statements, *, label, ledger=None, user_version=None
                 conn.execute("ROLLBACK")
                 print(f"    ERROR: {len(new)} new FK violations after {label} "
                       f"— ROLLED BACK, nothing committed", file=sys.stderr)
-                for v in list(new)[:5]:
+                for v in sorted(new, key=repr)[:5]:
                     print(f"      {v}", file=sys.stderr)
                 raise sqlite3.IntegrityError(f"{len(new)} new FK violations in {label}")
             if user_version is not None:
@@ -191,7 +191,7 @@ def _apply_atomically(conn, statements, *, label, ledger=None, user_version=None
                          else "WARNING (advisory)")
             print(f"    {label_txt}: {len(new)} FK violations after {label}",
                   file=sys.stderr)
-            for v in list(new)[:5]:
+            for v in sorted(new, key=repr)[:5]:
                 print(f"      {v}", file=sys.stderr)
         return new
     finally:

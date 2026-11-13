@@ -202,7 +202,8 @@ machines:
     via: "db.py add-extraction"
     guards:
       - "the source is admitted and not a tombstone"
-      - "parameter_id required, parameter exists and is ACTIVE; at least one lens column, and that lens code must exist in its registry table"
+      - "parameter_id required, parameter exists and is ACTIVE; at least one lens code (each lens flag repeats; one live link per code is written to extraction_lens_links, the figure's own lens columns stay NULL), every code must exist in its registry table and an identity code must not be deprecated; --lens-basis and --lens-basis-text name the warrant, found on word boundaries where the basis says"
+      - "a figure is never copied: the same row in another lens code is refused, naming add-lens-link"
       - "a claim_text is required; claim_type 'absent' carries no value and must be figure_role 'finding'"
       - "a value from a tier >= 4 source needs a structured locator or [UNVERIFIED-QUANT]"
       - "figure_role is required; --relation is required ('none' or edges); 'derived' needs a derived_from base edge"
@@ -216,7 +217,7 @@ machines:
       - {file: scripts/db.py, func: insert_extraction, needle: "R3: \\{ref\\} is tier"}
   - id: M04.t2
     from: "any"
-    to: "any (extraction_method, extraction_status, figure_role, comparator, root_type, root_ref_id only)"
+    to: "any (extraction_method, extraction_status, figure_role, comparator, root_type, root_ref_id, value_as_written only)"
     via: "db.py amend-extraction"
     guards: ["a changed claimed_value or claim_text is NOT amendable: it is a second row and a contest (D-0168)"]
     evidence:
@@ -228,6 +229,24 @@ machines:
     guards: ["the base figure must already be extracted (add-extraction first); a derived row without a base is refused"]
     evidence:
       - {file: scripts/db.py, func: derive_extraction, needle: "extract the base figure first with add-extraction"}
+  - id: M04.t4
+    from: "a figure with a live link for a code, or none"
+    to: "the figure with one more live link (a carried link for the same code is retired in the same transaction)"
+    via: "db.py add-lens-link"
+    guards:
+      - "exactly one code; the figure exists; the code is in its registry and not a deprecated identity"
+      - "a basis from extraction_lens_links.basis's own CHECK (never 'carried') and warrant words found on word boundaries in the place the basis names"
+      - "a live judged link for the same code is refused; only a carried one is replaced"
+    evidence:
+      - {file: scripts/db.py, func: add_lens_link, needle: "name exactly one code"}
+      - {file: scripts/db.py, func: add_lens_link, needle: "already holds a live"}
+  - id: M04.t5
+    from: "a live lens link"
+    to: "the link retired in place (retired_at, retired_by_session, retirement_reason)"
+    via: "db.py retire-lens-link"
+    guards: ["the figure's last live link is refused: add the replacing link first (a figure with no lens is a value about nobody, D-0182)"]
+    evidence:
+      - {file: scripts/db.py, func: retire_lens_link, needle: "last live link"}
   unreachable_note: "No verb deletes an extraction. Which of reviewed / verified / contradicted / absent-confirmed may set a published value is OPEN (LED-202)."
   probe: P-V2
 

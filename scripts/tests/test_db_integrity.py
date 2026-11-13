@@ -47,6 +47,16 @@ DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 #: the open one. A bump of RULE_VERSION that leaves the payload alone then needs no edit here.
 LEGACY_SHA_VERSIONS = ("pilot-2",)
 LEGACY_SHA_SQL = ", ".join(map(repr, LEGACY_SHA_VERSIONS))
+#: The link-set labels whose derivation_sha hashed the cell's COALESCE lens key alone. History, so it
+#: cannot grow: every later label hashes all four lens codes (T-019). Derived with git log -p
+#: -G'^RULE_VERSION = ' (not -S, which misses a changed label) plus the stored labels, minus
+#: LEGACY_SHA_VERSIONS.
+COALESCE_LENS_SHA_VERSIONS = ("pilot-3", "pilot-4", "pilot-5")
+#: The link-set versions written before pilot-5 added the `|branches:` term (the governing claims
+#: with an outgoing `condition_on` edge). Closed, like the set above: a row stamped with one of
+#: these verifies without the term, whatever edges were filed since, because that engine did not
+#: read them; every later version is hashed with it. Unlike the set above they stay in K02's scope.
+PRE_BRANCH_SHA_VERSIONS = ("pilot-3", "pilot-4")
 
 results = []
 
@@ -903,6 +913,23 @@ def run_checks(db_path):
            subject=subj("SELECT COUNT(*) FROM evidence_source_authors "
                         "WHERE COALESCE(orcid,'') <> ''"))
 
+    # T018-05: D-0182 ("a figure carries at least one lens") moved off the figure's CHECK when
+    # migration 131 inverted it (OR-1c), so the schema no longer holds it; the writers refuse a
+    # figure with no live link and this case is the floor under a hand-written INSERT that does not.
+    # Guarded: on a database without the view the case is RED with the reason, never an exception
+    # that hides every later case.
+    try:
+        no_lens = conn.execute(
+            "SELECT COUNT(*) FROM source_value_extractions x WHERE NOT EXISTS "
+            "(SELECT 1 FROM v_live_lens_links k WHERE k.extraction_id = x.extraction_id)").fetchone()[0]
+        t018_err = ""
+    except sqlite3.Error as exc:
+        no_lens, t018_err = -1, f"v_live_lens_links cannot be read: {exc}"
+    record("T018-05", "every figure has at least one live lens link (D-0182, held by v_live_lens_links)",
+           no_lens == 0,
+           t018_err or f"{no_lens} figure(s) with no live lens link: add-lens-link, then retire-lens-link",
+           subject=subj("SELECT COUNT(*) FROM source_value_extractions"))
+
     # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
     # Two edges on the walk are being migrated out of JSON TEXT columns and into
     # foreign-keyed junction tables (migrations 044 and 050). Until the columns
@@ -1054,10 +1081,9 @@ def run_checks(db_path):
     # evidence-architecture §10 means -- "same evidence + same rule_version => same
     # state + same derivation_sha" -- and the remedy is the same as for every other
     # K01 failure: re-run the engine and restamp.
-    for cid, pid, lens, gr, rv, sha_rec in conn.execute(
-            "SELECT specification_id, parameter_id, "
-            "COALESCE(identity_code, icf_code, needs_code, medical_code), "
-            "governing_refs, rule_version, derivation_sha FROM specifications "
+    for cid, pid, *lens4, gr, rv, sha_rec in conn.execute(
+            "SELECT specification_id, parameter_id, identity_code, icf_code, needs_code, "
+            "medical_code, governing_refs, rule_version, derivation_sha FROM specifications "
             "WHERE retired_at IS NULL"):
         if not sha_rec or not rv:
             unattested += 1
@@ -1074,9 +1100,36 @@ def run_checks(db_path):
             # ONE home of that fact (pre-077 it was not stored at all, which is
             # why the old payload had to approximate it with a count).
             links = conn.execute(
-                "SELECT role, extraction_id FROM specification_extraction_links "
+                "SELECT role, extraction_id, exclusion_reason FROM specification_extraction_links "
                 "WHERE specification_id = ?", (cid,)).fetchall()
-            body = "|".join(sorted(f"{r[0]}:{r[1]}" for r in links))
+            if rv in COALESCE_LENS_SHA_VERSIONS:
+                body = "|".join(sorted(f"{r[0]}:{r[1]}" for r in links))
+            else:
+                # pilot-6 on: each figure's in-lens state for the cell is part of the hash, derived
+                # here from the live lens links (never from the stored reason), and the stored reason
+                # must agree with it. A lens link added or retired under a live determination moves
+                # it even when the figure's role stays `excluded`.
+                states = {}
+                for r in links:
+                    states[r[1]] = all(conn.execute(
+                        f"SELECT 1 FROM v_live_lens_links WHERE extraction_id = ? AND {col} = ?",
+                        (r[1], code)).fetchone() for col, code in zip(
+                            ("identity_code", "icf_code", "needs_code", "medical_code"), lens4) if code)
+                    if states[r[1]] == (r[2] or "").startswith("not stated in this cell's lens ("):
+                        stale.append(f"{cid} (param {pid}, {rv}): the stored lens reason of "
+                                     f"extraction {r[1]} disagrees with its live lens links")
+                body = "|".join(sorted(f"{r[0]}:{r[1]}" + ("" if states[r[1]] else ":out") for r in links))
+            # pilot-5 on: the governing claims that hold only under a condition, an outgoing
+            # `condition_on` edge each (assess_cell.conditioned_governing), hashed only when any.
+            # Recomputed from the edge table, the one home of that fact, so an edge filed after
+            # the determination goes stale here instead of silently changing what it would say.
+            gov_ids = {r[1] for r in links if r[0] == "governing"}
+            branches = sorted({e[0] for e in conn.execute(
+                "SELECT from_extraction_id FROM extraction_relations "
+                "WHERE relation = 'condition_on'")} & gov_ids) \
+                if rv not in PRE_BRANCH_SHA_VERSIONS else []
+            if branches:
+                body += "|branches:" + ",".join(map(str, branches))
         else:
             # pilot-2 and earlier: governing ref list + an UNFILTERED count of the
             # parameter's extractions. The count could not see a re-grading, which
@@ -1085,9 +1138,13 @@ def run_checks(db_path):
             n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
                                "WHERE parameter_id = ?", (pid,)).fetchone()[0]
             body = "|".join(refs) + f"|x{n_x}"
+        # The lens term: the COALESCE key for the labels that hashed it, all four codes from pilot-6 on.
+        lens = (next((c for c in lens4 if c), None)
+                if rv in LEGACY_SHA_VERSIONS + COALESCE_LENS_SHA_VERSIONS
+                else "|".join(c or "" for c in lens4))
         payload = f"{pid}|{lens}|" + body + "::" + rv
         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
-            stale.append(f"{cid} (param {pid}×{lens}, {rv})")
+            stale.append(f"{cid} (param {pid}×{next((c for c in lens4 if c), None)}, {rv})")
     record("K01", "every recorded derivation_sha verifies against its own row",
            not stale,
            f"{len(stale)} stale: {', '.join(stale)} — the row, or the evidence read "

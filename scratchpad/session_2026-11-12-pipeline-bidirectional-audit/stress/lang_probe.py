@@ -3,14 +3,13 @@
 Usage: python3 -I lang_probe.py '<json {label: string}>'
 Loads the repo's functions by path and applies them to the given strings:
   - research/retrieval_log.normalise_quote   (quote verification)
-  - dbcore.normalise_quote_text              (the dbcore copy)
   - db._name_tokens / db._VALUE_BEARING_NAME (term-name screens)
 Reports normalised form, token set, whether a value-bearing screen fires, and
 any set of DIFFERENT input strings that normalise to the SAME text (a collision).
 """
 import importlib.util, json, sys
 from pathlib import Path
-R = Path("/home/user/guidebook/scripts")
+R = Path(__file__).resolve().parents[3] / "scripts"  # the scripts live inside the checkout they test
 sys.path.insert(0, str(R))
 
 def load(name, rel):
@@ -21,7 +20,7 @@ def load(name, rel):
 
 out = {"errors": {}}
 mods = {}
-for n, rel in (("rl", "research/retrieval_log.py"), ("dbcore", "dbcore.py"), ("dbmod", "db.py")):
+for n, rel in (("rl", "research/retrieval_log.py"), ("dbmod", "db.py")):
     try:
         mods[n] = load(n, rel)
     except BaseException as e:  # noqa
@@ -30,7 +29,7 @@ strings = json.loads(sys.argv[1])
 res = {}
 for label, s in strings.items():
     r = {"input": s}
-    for fn, key in ((("rl", "normalise_quote"), "rl.normalise_quote"), (("dbcore", "normalise_quote_text"), "dbcore.normalise_quote_text")):
+    for fn, key in ((("rl", "normalise_quote"), "rl.normalise_quote"),):
         try:
             r[key] = getattr(mods[fn[0]], fn[1])(s)
         except BaseException as e:  # noqa
@@ -45,7 +44,7 @@ for label, s in strings.items():
         r["db._VALUE_BEARING_NAME_fires"] = f"ERROR {e!r}"
     res[label] = r
 out["per_string"] = res
-for key in ("rl.normalise_quote", "dbcore.normalise_quote_text"):
+for key in ("rl.normalise_quote",):
     g = {}
     for label, r in res.items():
         v = r.get(key)

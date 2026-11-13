@@ -40,6 +40,7 @@ import re
 import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from fractions import Fraction
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -365,6 +366,39 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+#: The two `term_aliases.attestation` values that say a source uses the form (migration 130).
+#: The other three (owner_supplied, model_seed, unrecorded) are seeds or unknowns: search aids.
+ATTESTED_FORMS = ("instrument", "other_source")
+
+#: The ledger's own convention for an entry that is NOT the owner's words: a heading that
+#: begins "Delegated resolution" (an Opus-class model resolving a register decision under the
+#: owner's delegation of 2026-11-12). A typed prefix of the ledger, not a vocabulary list.
+LEDGER_DELEGATED_PREFIX = "Delegated resolution"
+
+
+def ledger_entry_names(heading: str, token: str) -> bool:
+    """Does the ledger entry under `## <heading>` name `token` as a whole token?
+
+    The entry is the text from its heading to the next `## ` heading. A whole token is the
+    string not touched on either side by a letter, digit or dash, so `US` is not found in
+    `US-CA` or `USA`, and a code is not found inside a longer word. Case-sensitive: codes
+    are upper case. A heading found other than once names nothing (False).
+    """
+    want = normalise_quote_text(heading)
+    lines = LEDGER_PATH.read_text(encoding="utf-8").splitlines()
+    starts = [i for i, l in enumerate(lines)
+              if l.startswith("## ") and normalise_quote_text(l[3:]) == want]
+    if len(starts) != 1:
+        return False
+    body = []
+    for l in lines[starts[0] + 1:]:
+        if l.startswith("## "):
+            break
+        body.append(l)
+    return re.search(r"(?<![A-Za-z0-9-])%s(?![A-Za-z0-9-])" % re.escape(token),
+                     "\n".join(body)) is not None
+
+
 def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
     """Refuse unless `quote` is in the ledger exactly once -- tied to one recorded ruling.
 
@@ -398,6 +432,13 @@ def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
 #: engine, extraction_follow_up_audit and test_db_integrity K02 all read this one tuple.
 NOT_PUBLISHABLE_METHODS = ("skim",)
 
+#: The `extraction_follow_ups.reason` that means "an absence finding (claim_type = 'absent')
+#: whose tested value is still to be found by backward citation mining and context" (owner
+#: OR-22, 2026-10-29). A NAME for one declared value, not a list: db.py raise-follow-up
+#: refuses it on a row of any other claim_type, and extraction_follow_up_audit lists it, and
+#: both stop (the audit exits 2) if the column's own CHECK no longer declares it.
+ABSENCE_FOLLOW_UP_REASON = "absence-needs-tested-value"
+
 #: What `assess_cell` reads of a source (`_gather` builds its SELECT from this tuple) and what
 #: of an extraction row it grades by or composes a value from. A determination's stored answer
 #: is a cache over these, so `db.py` refuses to change one of them on a source or a row a LIVE
@@ -407,6 +448,256 @@ ENGINE_SOURCE_COLUMNS = ("tier", "evidence_type", "co1_source_type", "verificati
                          "verification_disposition", "scope", "jurisdiction")
 ENGINE_EXTRACTION_COLUMNS = ("figure_role", "claim_type", "extraction_method", "claimed_value",
                              "claimed_unit", "comparator")
+
+#: The `source_value_extractions.claim_type` values that state a QUANTITY, so a `claimed_value` of
+#: that type must contain a number. A JUDGED rule, not a derived one: no CHECK says which claim
+#: types are quantities (a test holds every member inside the column's own vocabulary, so a
+#: renamed type cannot leave this behind). Read by `db._require_stated_numbers`.
+QUANTITY_CLAIM_TYPES = ("numerical", "range")
+
+
+#: NOTATIONS OF ONE QUANTITY, and the arithmetic that relates them. Owner ruling
+#: 2026-09-17: "Present both -- don't choose between ratio or percentage."
+#:
+#: THIS IS A DEFINITION, NOT A CURATED FACT, which is why it is a literal here and
+#: not derived from the corpus (CLAUDE.md rule 8 asks for derivation of facts the
+#: machine can compute; the relation between `1:20` and `5 %` is mathematics and
+#: there is nothing in the database to read it off).
+#:
+#: A FAMILY IS NOT A UNIT. Members are two ways of WRITING one dimensionless
+#: quantity. Millimetres and degrees are different units, and the ruling says so in
+#: its own ACTION (4): composing across THEM stays refused. Adding a member here is
+#: a claim that two notations denote the same quantity exactly, which is a
+#: mathematical claim and should be made deliberately.
+NOTATION_FAMILIES = {
+    "gradient": ("%", "rise:run ratio"),
+}
+#: Every family member MUST appear here, and the guard below refuses one that does
+#: not. Without it, adding a notation to the tuple above and forgetting the
+#: arithmetic makes `to_canonical` fall through to `Fraction(text)` and read the
+#: number AS IF it were already canonical -- `5` degrees silently becoming `5 %`.
+#: That is the shape a reviewer of the 2026-09-17 ruling flagged: `degrees` is the
+#: ARCTANGENT of the ratio, not a rescaling of it, so it is not a notation of this
+#: quantity at all and belongs to a family of its own or to none. Membership is a
+#: mathematical claim; this makes forgetting to back it up an error rather than a
+#: wrong answer.
+_CONVERTIBLE = {"%", "rise:run ratio"}
+_RATIO_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)\s*$")
+
+
+def notation_family(unit):
+    """Which family a stated unit belongs to, or None if it stands alone."""
+    for fam, members in NOTATION_FAMILIES.items():
+        if (unit or "").strip() in members:
+            return fam
+    return None
+
+
+def to_canonical(raw, unit):
+    """One stated value -> an exact Fraction on its family's canonical scale.
+
+    The canonical scale is the family's FIRST member -- percent for gradient -- and
+    the conversion is exact because it is done in Fraction, never float: `1:12` is
+    100/12, which is 8.333... and is never rounded here. Rounding happens once, at
+    render, and is marked inexact when it happens.
+    """
+    txt = (raw or "").strip()
+    if not txt:
+        return None
+    fam = notation_family(unit)
+    if fam and (unit or "").strip() not in _CONVERTIBLE:
+        raise NotImplementedError(
+            "%r is listed in NOTATION_FAMILIES[%r] but no conversion is defined for "
+            "it. A family member is a claim that two notations denote ONE quantity "
+            "exactly; back it with arithmetic in to_canonical/from_canonical, or "
+            "remove it. Falling through here would read the number as if it were "
+            "already canonical." % (unit, fam))
+    m = _RATIO_RE.match(txt)
+    if m and fam:
+        rise, run = Fraction(m.group(1)), Fraction(m.group(2))
+        if run == 0:
+            return None
+        return rise / run * 100                      # rise:run -> percent, exactly
+    try:
+        return Fraction(txt)
+    except (TypeError, ValueError):
+        return None
+
+
+def from_canonical(value, notation):
+    """A canonical Fraction -> (text, exact) in one notation of its family.
+
+    `exact` is False when the notation cannot hold the value without rounding --
+    8.333...% is the case this project actually has -- and the caller MARKS it,
+    because ACTION (3) of the ruling forbids a rounded figure standing where a
+    source's own figure would.
+    """
+    if value is None:
+        return None, True
+    if notation == "%":
+        as_float = float(value)
+        text = ("%g" % as_float)
+        return text, Fraction(text) == value
+    if notation not in _CONVERTIBLE:
+        raise NotImplementedError(
+            "no rendering defined for notation %r; see _CONVERTIBLE" % (notation,))
+    if notation == "rise:run ratio":
+        if value == 0:
+            return "0", True
+        run = Fraction(100) / value                  # percent -> 1:n, exactly
+        text = "1:%g" % float(run)
+        return text, Fraction(1, 1) / Fraction(text.split(":")[1]) * 100 == value
+    return None, True
+
+
+def bound_on_scale(claimed_value, unit, comparator, claim_type):
+    """One governing claim -> (lo, hi) as exact Fractions on its family's scale.
+
+    THE COMPARATOR IS THE BOUND, which is why migration 075 added it: "more than thirty
+    centimetres" stored as a bare 30 turns a floor into a point, and a determination built
+    from points has quietly dropped every inequality its sources stated.
+
+      =, approx, or no comparator on a numerical claim -> a point:   (v, v)
+      >=, >                                            -> a floor:   (v, None)
+      <=, <                                            -> a ceiling: (None, v)
+      between, or a range claim written "a to b"       -> (a, b)
+
+    A bare number is read as a point, so a ceiling stored without `<=` contributes a floor as
+    well; the writer therefore refuses a value-supplying numerical row with no comparator.
+    STRICTNESS IS NOT MODELLED, deliberately: `>` and `>=` both land as (v, None), because the
+    columns carry no open/closed flag and no render surface could show one.
+
+    The NUMBER goes through `to_canonical`, so `1:20` and `5 %` land on one scale and can be
+    compared: this answers "where does this claim sit relative to one written the other way"
+    (owner ruling 2026-09-17). Returns None when the figure cannot be placed on a scale.
+    """
+    raw = (claimed_value or "").strip()
+    if not raw:
+        return None
+    cmp_ = (comparator or "").strip()
+    if cmp_ == "between" or claim_type == "range":
+        parts = re.split(r"\s+to\s+", raw)
+        if len(parts) == 2:
+            lo, hi = to_canonical(parts[0], unit), to_canonical(parts[1], unit)
+            if lo is not None and hi is not None:
+                return (min(lo, hi), max(lo, hi))
+        return None
+    v = to_canonical(raw, unit)
+    if v is None:
+        return None
+    if cmp_ in (">=", ">"):
+        return (v, None)
+    if cmp_ in ("<=", "<"):
+        return (None, v)
+    return (v, v)
+
+
+#: A name or a unit may not state its own answer: digits, comparator symbols, min/max words. Moved here
+#: from `db.py` (which keeps `_VALUE_BEARING = dbcore.VALUE_BEARING`): one definition for both screens.
+VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
+
+#: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
+#: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
+#: on it, K01 recomputes the sha from the links this produces, and the writers read it for the comparator rule.
+VALUE_SUPPLYING_ROLES = ("claim", "derived")
+
+
+def comparator_refusal(figure_role, claim_type, comparator):
+    """The sentence that refuses a value-supplying numerical row with no comparator, else None. One definition
+    for `add-extraction` and for `amend-extraction --field figure_role` (a `finding` row amended to `claim`)."""
+    if figure_role in VALUE_SUPPLYING_ROLES and claim_type == "numerical" and not comparator:
+        return ("a value-supplying numerical row needs --comparator ('=' for a point); a bare number is "
+                "read as a point and adds a floor as well as a ceiling")
+    return None
+
+
+def ratio_notation(unit):
+    """True when `unit` is a family member whose figures are written `a:b` -- derived from the family's own
+    arithmetic (`from_canonical` renders it with a colon), so no unit is named here."""
+    return notation_family(unit) is not None and ":" in from_canonical(Fraction(1), (unit or "").strip())[0]
+
+
+def _ratio_unit():
+    """The family member whose figures are written `a:b`."""
+    return next(m for fam in NOTATION_FAMILIES.values() for m in fam if ratio_notation(m))
+
+
+def unit_refusal(unit):
+    """The sentence that refuses a `claimed_unit` that is not a bare scale, else None. `dB(A)`, `cd/m2`, `m/min`
+    and `min` pass.
+
+    STRUCTURAL TESTS ONLY (rules 7a and 8: no word list). A unit is refused for: a clause separator (`;` or `,`);
+    a comparator symbol; a token that is a number standing alone (`per 100 m`: a number in a unit is a quantity
+    or a condition, and belongs in `--claimed-value` or its own row); `min`/`max` (or minimum/maximum) as one
+    word among others (`ratio max`; the word alone, or inside `m/min`, is a unit); a parenthesis other than a
+    one-capital weighting suffix (`dB(A)`, `dB (A)`).
+
+    THE RESIDUAL, plainly: a sentence-like unit with none of these passes (`ratio where steep`). Telling a unit
+    from a sentence by its words needs a table of units; T-030 makes units data, and this screen then asks that
+    table instead of the shape."""
+    u = (unit or "").strip()
+    if not u:
+        return None
+    words = u.split()
+    # comparator symbols are VALUE_BEARING's own: search what is left once letters and digits are removed
+    symbol = VALUE_BEARING.search(re.sub(r"[0-9A-Za-z]", "", u))
+    if (re.search(r"[;,]", u) or symbol
+            or any(re.fullmatch(r"\d+(?:[.,]\d+)?", w) for w in words)
+            or (len(words) > 1 and any(VALUE_BEARING.fullmatch(w) for w in words))
+            or ("(" in u and not re.fullmatch(r"[A-Za-z]+\s?\([A-Z]\)", u))):
+        return ("a unit names the scale only. Put a number in `--claimed-value`; put a condition in its own row "
+                "(`add-extraction --figure-role condition` on the parameter it measures) joined by `--relation "
+                "condition_on`; put applicability (new build, alteration, building type) in `--setting`; put "
+                "commentary in `--notes`")
+    return None
+
+
+def figure_refusal(value, unit, comparator, claim_type):
+    """The sentence that refuses a quantity figure the engine cannot read, else None.
+
+    None when `claim_type` is not in `QUANTITY_CLAIM_TYPES`. Otherwise None only when `bound_on_scale` reads
+    the figure AND it is none of: a non-ASCII digit; a slash fraction under a family unit or no unit
+    (`bound_on_scale` reads `1/12` as 0.083 %, so that is tested first); under a ratio-notation unit, a figure
+    that is not `a:b` (a bare `12` is read as 12 %); an inverted gradient ratio (`12:1`, in either end of a range).
+    """
+    if claim_type not in QUANTITY_CLAIM_TYPES:
+        return None
+    v, u = (value or "").strip(), (unit or "").strip()
+    family = notation_family(u)
+    if any(ch.isdecimal() and not ch.isascii() for ch in v):
+        return "write ASCII digits (0-9): a full-width or other-script digit is not read"
+    if re.search(r"\d\s*/\s*\d", v) and (family or not u):
+        return ("write a gradient ratio as rise:run (1:12), not 1/12, which the engine reads as a fraction "
+                "of the unit (0.083 %)")
+    if bound_on_scale(v, u, comparator, claim_type) is None:
+        if re.search(r"\d\s*%", v):
+            return f"write the number ({v.replace('%', '').strip()}) and put % in --claimed-unit"
+        if re.search(r"\d\s+in\s+\d", v):
+            return f"write '1 in 12' as 1:12 with --claimed-unit {_ratio_unit()!r}"
+        if re.search(r"\d,\d", v):
+            return "write a decimal comma as a point (30,0 -> 30.0); the digits stay the same"
+        if ":" in v and not family:
+            return (f"the engine reads an a:b figure only under {_ratio_unit()!r} (rise over HORIZONTAL run, a "
+                    f"gradient). For another ratio, write the single number when the second term is 1 "
+                    f"(4.5:1 -> 4.5, the ratio's name in the unit, e.g. 'contrast ratio'); otherwise put "
+                    f"each term in its own row")
+        if claim_type == "range":
+            return "write a range as 'a to b' (e.g. '0 to 4.8')"
+        if not re.search(r"\d", v):
+            return ("a number written in words is entered as a numeral and unit, with the source's "
+                    "wording in --value-as-written")
+        return f"{v!r} with unit {u!r} cannot be placed on any scale"
+    if ratio_notation(u):
+        for part in re.split(r"\s+to\s+", v):
+            if not _RATIO_RE.match(part):
+                return (f"under {u!r} write the figure as a:b (1:12): a bare number is read on the scale of "
+                        f"{NOTATION_FAMILIES[family][0]!r}. For a figure the source states in "
+                        f"{NOTATION_FAMILIES[family][0]!r}, use that unit")
+            rise, run = (Fraction(x) for x in part.split(":", 1))
+            if rise > run:
+                return ("an inverted ratio (rise larger than run): write 1:12, and record the "
+                        "source's order in --notes")
+    return None
 
 
 def validate_cols(data_keys, whitelist: frozenset, context: str):
@@ -930,32 +1221,51 @@ def check_vocab(conn, table: str, column: str, value, context: str):
         )
 
 
+def declared_jurisdictions() -> set:
+    """The codes `base_jurisdictions` holds: the one declared jurisdiction vocabulary.
+
+    Read through its own read-only connection on GUIDEBOOK_DB_PATH (the canonical file when
+    unset), so no writer's call site threads a connection through. A database below
+    the migration that creates the table has no such table, and that is a Refusal, never an empty set: an empty
+    vocabulary would refuse every code or (read the other way) admit every one, and either
+    reading hides that the migrations were not applied. No caller catches it into a pass.
+    """
+    conn = _cached_ro_conn()
+    try:
+        if conn is None:
+            raise sqlite3.OperationalError("cannot open %s" % db_path())
+        return {r[0] for r in conn.execute("SELECT jurisdiction_code FROM base_jurisdictions")}
+    except sqlite3.Error as exc:
+        raise Refusal(
+            "the declared jurisdiction vocabulary is the table base_jurisdictions, which "
+            "could not be read from %s (%s). Apply the migrations with "
+            "`python3 scripts/migrate_db.py`. Nothing was written." % (db_path(), exc))
+
+
 def jurisdiction_declared(value) -> bool:
-    """Is `value` a code `schemas.enums.JurisdictionCode` declares? The same vocabulary
+    """Is `value` a code `base_jurisdictions` holds? The same vocabulary
     `check_jurisdiction` refuses against, read without refusing, for a reader that needs
     to name the rows of another home (lang_jur_map) the declared vocabulary does not
     admit -- `db.py coverage` reports those rather than counting them as owed."""
-    import sys as _sys
-    if str(REPO_ROOT) not in _sys.path:
-        _sys.path.insert(0, str(REPO_ROOT))
-    from schemas.enums import JurisdictionCode
-    return value in {e.value for e in JurisdictionCode}
+    return value in declared_jurisdictions()
 
 
 def check_jurisdiction(value, context: str):
-    """Refuse a jurisdiction code `schemas.enums.JurisdictionCode` does not declare (I7).
+    """Refuse a jurisdiction code `base_jurisdictions` does not hold (I7).
 
-    WHY NOT check_declared. No `jurisdiction` column carries a CHECK, so the schema
-    declares nothing for check_declared to read, and check_vocab's live-rows fallback
-    would admit any value already written -- including the undeclared ones this exists to
-    stop. The declared vocabulary is the enum, and the blocking gate that enforces it on
-    the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the same enum. This
-    is that gate moved to the moment of writing: before it, every writer accepted any
-    string and the audit found it after it landed.
+    WHY NOT check_declared. No `jurisdiction` column carries a CHECK or a foreign key, so
+    the schema declares nothing for check_declared to read, and check_vocab's live-rows
+    fallback would admit any value already written -- including the undeclared ones this
+    exists to stop. The declared vocabulary is the table, and the blocking gate that
+    enforces it on the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the
+    same table through `declared_jurisdictions()`. This is that gate moved to the moment of
+    writing: before it, every writer accepted any string and the audit found it after it
+    landed.
 
-    ONE HOME FOR EACH HALF. The members come from the enum and the rejected spellings
+    ONE HOME FOR EACH HALF. The members come from the table and the rejected spellings
     (GB -> UK) from `rejected_spellings()` in the audit, which parses them out of
-    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8).
+    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8). A code is
+    admitted with `db.py add-jurisdiction`, not by editing a file.
 
     WHICH WRITERS CALL IT mirrors which tables the audit FAILS on: every table with a
     `jurisdiction` column except those in the audit's EXEMPT, CANDIDATE_TABLES and
@@ -974,12 +1284,7 @@ def check_jurisdiction(value, context: str):
     """
     if value is None:
         return
-    import sys as _sys
-    if str(REPO_ROOT) not in _sys.path:
-        _sys.path.insert(0, str(REPO_ROOT))
-    from schemas.enums import JurisdictionCode
-
-    declared = {e.value for e in JurisdictionCode}
+    declared = declared_jurisdictions()
     if value in declared:
         return
     # Loaded by path, not by putting scripts/audit on sys.path: that directory holds
@@ -1007,16 +1312,17 @@ def check_jurisdiction(value, context: str):
         good = folded if folded in declared else rejected[folded]
         raise Refusal(
             "%s: jurisdiction %r is not a declared spelling; write %r. Codes are stored "
-            "exactly as schemas/enums.py JurisdictionCode declares them and compared "
+            "exactly as base_jurisdictions holds them and compared "
             "exactly (by %s, and by add-code-lead's duplicate check), so a case or "
             "spacing variant would be a second spelling of one jurisdiction. "
             "Nothing was written." % (context, value, good, gate))
     raise Refusal(
-        "%s: jurisdiction %r is not declared by schemas/enums.py JurisdictionCode, the "
+        "%s: jurisdiction %r is not held by base_jurisdictions, the "
         "vocabulary the blocking check %s gates the database against. Declared: %s. If "
         "it is a real jurisdiction the project now holds evidence for, admitting it is "
-        "an owner decision recorded in the enum, with its ruling, in a tooling PR "
-        "(CLAUDE.md rule 10); if it is not, the value is mis-filed. Nothing was written."
+        "an owner decision: record it in references/project-standards.md, then "
+        "`db.py add-jurisdiction --approval-ref <that heading>`; if it is not, the value "
+        "is mis-filed. Nothing was written."
         % (context, value, gate, sorted(declared)))
 
 
@@ -1165,8 +1471,12 @@ def live_determinations_linked(conn, extraction_id, *, governing_only=False, pro
     (`specification_extraction_links`), as sorted specification ids. Empty when none does.
 
     The row-level counterpart of `determinations_resting_on`, which answers for a source. Every
-    extraction of a parameter is linked, graded by the part it played, when a determination is
-    written, so "linked" means "read for this answer". `governing_only` narrows it to the rows
+    extraction of a parameter is linked when a determination is written, graded by the part it
+    played; a figure whose live lens links do not carry every code the cell states is linked
+    `excluded` with the reason "not stated in this cell's lens (...)" (T-019, so that K02 holds). So
+    "linked" means "an extraction of this parameter", NOT "read for this answer": a figure added to
+    or amended under the parameter later is linked to every live cell of it, in or out of its lens.
+    `governing_only` narrows it to the rows
     that supplied the value; `proxy_only` to determinations that rest on a proxy inference, the
     only ones whose marker reads `confirms` edges. LIVE means `retired_at IS NULL`, as there.
     """
@@ -1300,21 +1610,18 @@ def _selftest() -> int:
     check("REF_ID_SHAPE refuses a per-slug local label",
           not REF_ID_SHAPE.fullmatch("RAP-04"))
 
-    # check_jurisdiction (I7): every declared member passes, read from the enum rather
-    # than typed here; the ruled rejected spelling refuses naming its replacement.
-    import sys as _sys
-    _sys.path.insert(0, str(REPO_ROOT))
-    from schemas.enums import JurisdictionCode as _J
-
+    # check_jurisdiction (I7): every declared member passes, read from base_jurisdictions
+    # rather than typed here; the ruled rejected spelling refuses naming its replacement.
     def _jur_refusal(v):
         try:
             check_jurisdiction(v, "selftest")
         except Refusal as exc:
             return str(exc)
         return None
-    _bad = [m.value for m in _J if _jur_refusal(m.value)]
-    check("check_jurisdiction admits every JurisdictionCode member, and NULL",
-          not _bad and _jur_refusal(None) is None, "refused %s" % _bad)
+    _declared = declared_jurisdictions()
+    _bad = [v for v in sorted(_declared) if _jur_refusal(v)]
+    check("check_jurisdiction admits every base_jurisdictions member, and NULL",
+          bool(_declared) and not _bad and _jur_refusal(None) is None, "refused %s" % _bad)
     _gb = _jur_refusal("GB")
     check("check_jurisdiction refuses GB and names UK", bool(_gb) and "'UK'" in _gb,
           "got %r" % _gb)
