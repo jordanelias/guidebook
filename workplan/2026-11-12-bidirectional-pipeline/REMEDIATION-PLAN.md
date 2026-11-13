@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 02:40 UTC from the 73 task files at commit 564c9a2 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-13 03:31 UTC from the 73 task files at commit 5d3f712 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -18,12 +18,12 @@ _Generated 2026-11-13 02:40 UTC from the 73 task files at commit 564c9a2 by `scr
 
 | Batch | Tasks | READY | OWNER-blocked (a gate CLOSED) | DESIGN file missing | NOT FOR SONNET | Tooling / research | Lanes |
 |---|---|---|---|---|---|---|---|
-| 1 | 27 | 26 | 0 | 0 | 1 | 25 / 2 | 13 |
-| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 9 |
-| 3 | 9 | 8 | 0 | 0 | 1 | 4 / 5 | 9 |
-| 4 | 7 | 5 | 0 | 0 | 2 | 6 / 1 | 7 |
+| 1 | 27 | 26 | 0 | 0 | 1 | 25 / 2 | 10 |
+| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 7 |
+| 3 | 9 | 8 | 0 | 0 | 1 | 4 / 5 | 8 |
+| 4 | 7 | 5 | 0 | 0 | 2 | 6 / 1 | 5 |
 | 5 | 4 | 2 | 0 | 0 | 2 | 3 / 1 | 4 |
-| 6 | 7 | 2 | 0 | 1 | 5 | 6 / 1 | 6 |
+| 6 | 7 | 2 | 0 | 1 | 5 | 6 / 1 | 5 |
 | 7 | 4 | 1 | 0 | 0 | 3 | 2 / 2 | 4 |
 | 8 | 1 | 0 | 0 | 0 | 1 | 0 / 1 | 1 |
 
@@ -48,12 +48,12 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-009](tasks/T-009-script-aware-guards.md) | Quote and name guards that work outside Latin script | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-010](tasks/T-010-add-parameter-domain-refusal.md) | `add-parameter` refuses a term that is not a design quantity (first step) | 0 (now) | TOOLING | READY | yes | — | piloted |
 | [T-011](tasks/T-011-supersession-pointer.md) | Re-determining a cell points the retired row at its successor | 0 (now) | TOOLING | READY | yes | — | not piloted |
-| [T-012](tasks/T-012-follow-up-reasons.md) | Follow-up reasons for a skimmed figure and an absence finding | 0 (now) | TOOLING | READY | yes | — | not piloted |
-| [T-013](tasks/T-013-typed-gaps.md) | A gap says what it is a gap in, and a search says which gap caused it | 0 (now) | TOOLING | READY | yes | — | not piloted |
+| [T-012](tasks/T-012-follow-up-reasons.md) | Follow-up reasons for a skimmed figure and an absence finding | 0 (now) | TOOLING | READY | yes | — | piloted |
+| [T-013](tasks/T-013-typed-gaps.md) | A gap says what it is a gap in, and a search says which gap caused it | 0 (now) | TOOLING | READY | yes | — | piloted |
 | [T-014](tasks/T-014-stress-harness-and-probes.md) | Keep the stress scripts as a characterisation harness and their probes as tests | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-015](tasks/T-015-language-fold.md) | Language codes folded at the writers and in the coverage views | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-023](tasks/T-023-ledger-relayed-statements.md) | Enter the relayed statements of 2026-10-12 in the ledger | 2 | TOOLING | READY | yes | — | not piloted |
-| [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | TOOLING | READY | yes | — | not piloted |
+| [T-024](tasks/T-024-jurisdiction-registry.md) | Jurisdictions in a table the writers read | 3 | TOOLING | READY | yes | — | piloted |
 | [T-026](tasks/T-026-alias-attestation.md) | A form says how it is attested, and a search says which forms it used | 3 | TOOLING | READY | yes | — | not piloted |
 | [T-027](tasks/T-027-source-identity-edition.md) | The source's own title, edition and currency can be written | 3 | TOOLING | READY | yes | — | not piloted |
 | [T-035](tasks/T-035-skills-repair.md) | Skills that describe the database that exists | 4 | TOOLING | READY | yes | — | not piloted |
@@ -67,19 +67,16 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
-- Lane 1.1: T-001 → T-002 → T-003 → T-004 → T-006 → T-007 → T-008 → T-009 → T-010 → T-011 → T-013 → T-024 → T-042 → T-051 → T-054 — sequenced by a soft dependency or a chain of shared files
+- Lane 1.1: T-001 → T-002 → T-003 → T-004 → T-006 → T-007 → T-008 → T-009 → T-010 → T-011 → T-012 → T-013 → T-015 → T-024 → T-026 → T-042 → T-051 → T-054 — sequenced by a soft dependency or a chain of shared files
 - Lane 1.2: T-005
-- Lane 1.3: T-012
-- Lane 1.4: T-014
-- Lane 1.5: T-015
-- Lane 1.6: T-023
-- Lane 1.7: T-026
-- Lane 1.8: T-027
-- Lane 1.9: T-035
-- Lane 1.10: T-048
-- Lane 1.11: T-052
-- Lane 1.12: T-103
-- Lane 1.13: T-104
+- Lane 1.3: T-014
+- Lane 1.4: T-023
+- Lane 1.5: T-027
+- Lane 1.6: T-035
+- Lane 1.7: T-048
+- Lane 1.8: T-052
+- Lane 1.9: T-103
+- Lane 1.10: T-104
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-103.
 
@@ -107,14 +104,12 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
 - Lane 2.1: T-016
-- Lane 2.2: T-020
-- Lane 2.3: T-022 → T-041 → T-043 → T-049 → T-050 → T-056 — sequenced by a soft dependency or a chain of shared files
-- Lane 2.4: T-025
-- Lane 2.5: T-028
-- Lane 2.6: T-034
-- Lane 2.7: T-111
-- Lane 2.8: T-113
-- Lane 2.9: T-114
+- Lane 2.2: T-020 → T-022 → T-028 → T-041 → T-043 → T-049 → T-050 → T-056 — sequenced by a soft dependency or a chain of shared files
+- Lane 2.3: T-025
+- Lane 2.4: T-034
+- Lane 2.5: T-111
+- Lane 2.6: T-113
+- Lane 2.7: T-114
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028.
 
@@ -137,14 +132,13 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
 - Lane 3.1: T-017
-- Lane 3.2: T-029
-- Lane 3.3: T-030
-- Lane 3.4: T-057
-- Lane 3.5: T-101
-- Lane 3.6: T-108
-- Lane 3.7: T-109
-- Lane 3.8: T-112
-- Lane 3.9: T-116
+- Lane 3.2: T-029 → T-030 — share `governance/context-map.yaml`
+- Lane 3.3: T-057
+- Lane 3.4: T-101
+- Lane 3.5: T-108
+- Lane 3.6: T-109
+- Lane 3.7: T-112
+- Lane 3.8: T-116
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-109.
 
@@ -164,13 +158,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
-- Lane 4.1: T-018
-- Lane 4.2: T-032
-- Lane 4.3: T-033
-- Lane 4.4: T-036
-- Lane 4.5: T-047
-- Lane 4.6: T-058
-- Lane 4.7: T-107
+- Lane 4.1: T-018 → T-032 → T-036 — share `governance/context-map.yaml`
+- Lane 4.2: T-033
+- Lane 4.3: T-047
+- Lane 4.4: T-058
+- Lane 4.5: T-107
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-032, T-107.
 
@@ -210,12 +202,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
-- Lane 6.1: T-021
-- Lane 6.2: T-031
-- Lane 6.3: T-037
-- Lane 6.4: T-055 → T-059 — share `scripts/assess/assess_cell.py`
-- Lane 6.5: T-060
-- Lane 6.6: T-106
+- Lane 6.1: T-021 → T-031 — share `governance/context-map.yaml`
+- Lane 6.2: T-037
+- Lane 6.3: T-055 → T-059 — share `scripts/assess/assess_cell.py`
+- Lane 6.4: T-060
+- Lane 6.5: T-106
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-031, T-037, T-059, T-060, T-106; a design file missing: T-060 (T-060-design.md).
 
