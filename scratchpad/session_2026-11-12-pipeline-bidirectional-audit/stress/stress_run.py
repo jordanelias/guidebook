@@ -437,12 +437,21 @@ def pass6_determinism(R, T):
 
 
 def pass5_adversarial(R, T):
-    R.dbpy("adversarial.retire-parameter-with-extractions", "retire a parameter that has extractions: expect refusal or cascade", "retire-parameter", "--parameter-id", "3",
-           "--reason", "STRESS-FIXTURE", "--session", R.sess)
-    R.sql("adversarial.post-retire-state", "what did the retire do to extractions/specifications?",
-          "select (select count(*) from source_value_extractions where parameter_id=3), (select status from base_parameters where parameter_id=3)")
-    R.dbpy("adversarial.number-in-words-claim", "an extraction whose number is written in words", "add-extraction", "--ref-id",
-           rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0], "--parameter-id", "9", "--claim-type", "numerical",
+    # a parameter that has extractions and no open gate, so the retire meets its own rule, not the gate's
+    tgt = rows(R.db, "select p.parameter_id from base_parameters p where p.status='active' and exists (select 1 from source_value_extractions e where e.parameter_id=p.parameter_id) "
+               "and not exists (select 1 from determination_gates g where g.parameter_id=p.parameter_id and g.resolved_at is null) order by p.parameter_id limit 1")
+    if tgt:
+        tgt = tgt[0][0]
+        rc, _, _ = R.dbpy("adversarial.retire-parameter-with-extractions", "retire a parameter that has extractions and no open gate: expect refusal or cascade", "retire-parameter", "--parameter-id", str(tgt),
+                          "--reason", "STRESS-FIXTURE", "--session", R.sess)
+        st = rows(R.db, "select (select count(*) from source_value_extractions where parameter_id=?), (select status from base_parameters where parameter_id=?)", (tgt, tgt))[0]
+        R.note("adversarial.post-retire-state", "the state agrees with the retire's outcome: rc 0 -> retired, refused -> active; extractions kept either way",
+               {"parameter_id": tgt, "retire_rc": rc, "extractions": st[0], "status": st[1], "consistent": (rc == 0) == (st[1] == "retired")})
+    else:
+        R.note("adversarial.skip-retire", "an active parameter with extractions and no open gate exists", {})
+    ref = rows(R.db, "select ref_id from source_value_extractions order by extraction_id limit 1")[0][0]
+    par = rows(R.db, "select l.parameter_id from v_scan_ledger l join base_parameters p using(parameter_id) where l.ref_id=? and l.status='NOT-READ' and p.status='active' order by 1 limit 1", (ref,))
+    R.dbpy("adversarial.number-in-words-claim", "an extraction whose number is written in words", "add-extraction", "--ref-id", ref, "--parameter-id", str(par[0][0] if par else 0), "--claim-type", "numerical",
            "--claimed-value", "sixty", "--claimed-unit", "cm", "--claim-text", T["strings"].get("number-in-words", "STRESS-FIXTURE"), "--extraction-method", "skim", "--identity", "ALL", "--figure-role", "claim", "--relation", "none", "--session", R.sess)
 
 

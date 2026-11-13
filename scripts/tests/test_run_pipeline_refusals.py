@@ -1607,7 +1607,7 @@ def se_gap(c_, exec_id):
 
 
 if None in (A_PAR, IDENT, ICF, A_NEED, LANG, JUR):
-    skip("T013-02..T013-11", "a registry or the research-scope map is empty")
+    skip("T013-02..T013-22", "a registry or the research-scope map is empty")
 else:
     flags = ["--parameter", str(A_PAR), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED,
              "--jurisdiction", JUR, "--language", LANG.lower()]
@@ -1617,7 +1617,7 @@ else:
         flags += ["--medical", A_MED]
         want["medical_code"] = A_MED
     else:
-        skip("T013-03/medical", "base_taxonomy_medical holds no row, so --medical has no code to store")
+        skip("T013-03/medical", "base_taxonomy_medical holds no row, so T013-02 cannot store a live --medical code (T013-22 builds one on its own copy)")
     with scratch() as c:
         before = n_gaps(c)
         r = gap_cli(*flags)
@@ -1709,9 +1709,122 @@ else:
                    r.returncode == 0 and rep.get("state") == "pending" and cell is not None and g is not None
                    and tuple(cell)[:4] == (P_ENG, IDENT, ICF, A_NEED) and all(v_ is None for v_ in tuple(g)),
                    ((r.stdout + r.stderr)[-250:], cell and tuple(cell), g and tuple(g)))
-            pend = c.execute("SELECT parameter_id FROM v_pending WHERE gap_register_id=?", (rep.get("gap_register_id") or "",)).fetchone()
-            record("T013-11", "...and v_pending, the cross-stage view, gives that gap its parameter by the join",
-                   pend is not None and pend[0] == P_ENG, pend)
+            gid_e = rep.get("gap_register_id") or ""
+            try:
+                via = c.execute("SELECT parameter_id, identity_code, icf_code, needs_code, subject_home FROM v_gap_subject "
+                                "WHERE gap_id=?", (gid_e,)).fetchone()
+            except sqlite3.OperationalError as exc:
+                via = exc
+            record("T013-11", "...and v_gap_subject, the cross-stage view, gives that gap its parameter and lenses from the cell",
+                   isinstance(via, sqlite3.Row) and tuple(via) == (P_ENG, IDENT, ICF, A_NEED, "specifications"), via)
+
+            # (add-gap A) the cell is live: the subject is held there, so a typed gap for it is the second home.
+            gap_cli_ = lambda *a: cli("add-gap", "--category", "EG", "--priority", "P3", "--description",  # noqa: E731
+                                      "TASK-FIXTURE gap", "--session", S, *a)
+            subj_flags = ["--parameter", str(P_ENG), "--identity", IDENT, "--icf", ICF, "--needs", A_NEED]
+            g_before = c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
+            ra = gap_cli_(*subj_flags)
+            spec_id = c.execute("SELECT specification_id FROM specifications WHERE gap_register_id=?", (gid_e,)).fetchone()
+            record("T013-13", "add-gap for a subject whose live cell exists is refused, naming the specification and the "
+                              "cell's own gap, and writes no row",
+                   ra.returncode != 0 and spec_id is not None and f"specification {spec_id[0]}" in ra.stderr + ra.stdout
+                   and gid_e in ra.stderr + ra.stdout and c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0] == g_before,
+                   (ra.stderr + ra.stdout)[-300:])
+
+            # THE LIVE SHAPE: an OPEN gap whose cell was retired. v_pending (live pending cells only) is empty for it.
+            # HAND: retire the cell, as the three live engine gaps' cells are.
+            c.execute("UPDATE specifications SET retired_at=?, retired_by_session=?, retirement_reason=? "
+                      "WHERE gap_register_id=?", (STAMP, S, "TASK-FIXTURE retired cell", gid_e))
+            c.commit()
+            in_pending = c.execute("SELECT COUNT(*) FROM v_pending WHERE gap_register_id=?", (gid_e,)).fetchone()[0]
+            shown = {g_["gap_id"]: g_ for g_ in ok(db.get_open_gaps)[0] or []}.get(gid_e, {})
+            record("T013-14", "an OPEN gap whose cell is retired is not in v_pending, and db.py gaps still gives its parameter "
+                              "and lenses (read from the cell through v_gap_subject) and the home it came from",
+                   in_pending == 0 and (shown.get("parameter_id"), shown.get("identity_code"), shown.get("icf_code"),
+                                        shown.get("needs_code"), shown.get("subject_home")) == (P_ENG, IDENT, ICF, A_NEED, "specifications")
+                   and "description" in shown and "status" in shown,
+                   (in_pending, {k_: shown.get(k_) for k_ in ("parameter_id", "identity_code", "subject_home")}))
+            # (add-gap A, the legitimate shape) a retired cell holds nothing: the subject may be typed.
+            rr = gap_cli_(*subj_flags)
+            record("T013-15", "...and once that cell is retired the same subject may be typed on a cell-less gap",
+                   rr.returncode == 0, (rr.stderr + rr.stdout)[-300:])
+            # A search for the engine gap must agree with the cell's subject (its subject comes from v_gap_subject).
+            other_p = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? "
+                             "ORDER BY 1 LIMIT 1", P_ENG)
+            base_ls = ["log-search", "--language", LANG, "--query-text", "TASK-FIXTURE probe", "--engine", "manual",
+                       "--depth-method", "scoping", "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S]
+            r1 = cli(*base_ls, "--parameter", str(other_p), "--gap-id", gid_e)
+            r2 = cli(*base_ls, "--parameter", str(P_ENG), "--identity", IDENT, "--gap-id", gid_e)
+            record("T013-16", "log-search --gap-id of an engine gap refuses a search for another parameter (naming both) and "
+                              "accepts a search that agrees with the cell",
+                   r1.returncode != 0 and str(other_p) in r1.stderr and str(P_ENG) in r1.stderr and gid_e in r1.stderr
+                   and r2.returncode == 0, ((r1.stderr)[-250:], r2.stderr[-200:]))
+
+    # A typed (cell-less) gap: a search must agree with it, and the gap must be open; an identical open gap is refused.
+    O_PAR = scalar("SELECT parameter_id FROM base_parameters WHERE status='active' AND parameter_id<>? ORDER BY 1 LIMIT 1", A_PAR)
+    O_IDENT = scalar("SELECT identity_code FROM base_taxonomy_identity WHERE identity_code<>? ORDER BY 1 LIMIT 1", IDENT)
+    O_LANG = scalar("SELECT language FROM lang_jur_map WHERE language<>? ORDER BY 1 LIMIT 1", LANG)
+    O_JUR = next((r_[0] for r_ in q("SELECT DISTINCT jurisdiction FROM lang_jur_map WHERE jurisdiction IS NOT NULL "
+                                    "AND jurisdiction<>? ORDER BY 1", JUR)
+                  if refusal(dbcore.check_jurisdiction, r_[0], "T013") is None), None)    # one the enum declares
+    CLOSED = scalar("SELECT gap_id FROM gaps WHERE status LIKE 'CLOSED%' ORDER BY gap_id LIMIT 1")
+    CLOSED_STATUS = scalar("SELECT status FROM gaps WHERE gap_id=?", CLOSED)
+    if None in (O_PAR, O_IDENT, O_LANG, O_JUR, CLOSED):
+        skip("T013-17..T013-20", "no second parameter, identity, language or jurisdiction, or no closed gap, to contradict with")
+    else:
+        with scratch() as c:
+            typed = ["--parameter", str(A_PAR), "--identity", IDENT, "--jurisdiction", JUR, "--language", LANG]
+            ga = json.loads(cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE typed gap",
+                                "--session", S, *typed).stdout or "{}").get("gap_id")
+            ls_ = lambda gap, **o: cli(*(  # noqa: E731
+                ["log-search", "--query-text", "TASK-FIXTURE probe", "--engine", "manual", "--depth-method", "scoping",
+                 "--prior-expectation", "TASK-FIXTURE: none expected", "--session", S, "--gap-id", gap]
+                + [x for k_, v_ in {"--parameter": str(A_PAR), "--identity": IDENT, "--jurisdiction": JUR,
+                                    "--language": LANG, **o}.items() if v_ is not None for x in (k_, v_)]))
+            for tid, flag, other, col in (("a", "--parameter", str(O_PAR), "parameter_id"), ("b", "--identity", O_IDENT, "identity_code"),
+                                          ("c", "--jurisdiction", O_JUR, "jurisdiction"), ("d", "--language", O_LANG, "language")):
+                n0 = n_se(c)
+                rx = ls_(ga or "NO-GAP", **{flag: other})
+                record(f"T013-17{tid}", f"log-search {flag} {other!r} with --gap-id of a gap typed otherwise is refused naming "
+                                        f"{col} and both values, and writes no row",
+                       ga is not None and rx.returncode != 0 and col in rx.stderr and ga in rx.stderr and other in rx.stderr
+                       and n_se(c) == n0, (rx.stderr + rx.stdout)[-300:])
+            n0 = n_se(c)
+            rok = ls_(ga or "NO-GAP")
+            rnone = ls_(ga or "NO-GAP", **{"--identity": None, "--jurisdiction": None})
+            record("T013-18", "...while a search that agrees with the gap, or sets fewer subject flags than it, is accepted",
+                   ga is not None and rok.returncode == 0 and rnone.returncode == 0 and n_se(c) == n0 + 2,
+                   (rok.stderr + rnone.stderr)[-250:])
+            n0 = n_se(c)
+            rc_ = ls_(CLOSED, **{"--identity": None, "--jurisdiction": None})
+            record("T013-19", "log-search --gap-id of a closed gap is refused naming the id and its status, and writes no row",
+                   rc_.returncode != 0 and CLOSED in rc_.stderr and CLOSED_STATUS in rc_.stderr and n_se(c) == n0,
+                   (rc_.stderr + rc_.stdout)[-250:])
+            # (add-gap B) an identical OPEN typed gap is refused; once it is closed the subject may be filed again.
+            g0 = c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0]
+            rd = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE twin", "--session", S, *typed)
+            record("T013-20", "add-gap of a subject an OPEN gap already names exactly is refused, naming that gap, and writes no row",
+                   ga is not None and rd.returncode != 0 and ga in rd.stderr + rd.stdout
+                   and c.execute("SELECT COUNT(*) FROM gaps").fetchone()[0] == g0, (rd.stderr + rd.stdout)[-300:])
+            cg = cli("close-gap", "--gap-id", ga or "NO-GAP", "--status", CLOSED_STATUS, "--session", S)
+            re_ = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE twin", "--session", S, *typed)
+            record("T013-21", "...and once the first is closed the same subject may be filed again",
+                   cg.returncode == 0 and re_.returncode == 0, (cg.stderr + re_.stderr)[-250:])
+
+        # medical_code: the live registry is empty, so the positive path is built on this scratch copy only.
+        with scratch() as c:
+            c.execute("INSERT INTO base_taxonomy_medical (medical_code, display_name, status, notes) "
+                      "VALUES ('MD-TASK-FIXTURE', 'TASK-FIXTURE condition', 'active', 'TASK-FIXTURE')")
+            c.commit()
+            rm_ = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE medical", "--session", S,
+                      "--medical", "MD-TASK-FIXTURE")
+            gm = json.loads(rm_.stdout or "{}").get("gap_id")
+            held_m = c.execute("SELECT medical_code FROM gaps WHERE gap_id=?", (gm,)).fetchone() if gm else None
+            rm2 = cli("add-gap", "--category", "EG", "--priority", "P3", "--description", "TASK-FIXTURE medical", "--session", S,
+                      "--medical", "MD-TASK-FIXTURE-NO-SUCH")
+            record("T013-22", "add-gap --medical stores a code the registry holds (TASK-FIXTURE row on this copy) and refuses one it does not",
+                   held_m is not None and held_m[0] == "MD-TASK-FIXTURE" and rm2.returncode != 0 and "medical_code" in rm2.stderr,
+                   (rm_.stderr + rm2.stderr)[-250:])
 
 h_ls, h_ag = cli("log-search", "--help").stdout, cli("add-gap", "--help").stdout
 record("T013-12", "log-search --help lists --gap-id; add-gap --help lists the seven subject flags",
@@ -1879,6 +1992,11 @@ Q = {"dec": "The ramp is to be no higher than 1.2 m.", "time": "The signal stays
      "comma": "The length is 1,2 m between the rails.", "thou": "The clearance is 1,200 mm above the floor.",
      "indian": "The area is 1,50,000 square metres.", "eu": "The fee is 1.234,56 euros.", "table": "Rows: 800 750",
      "tab": "Table 2 Not exceeding 5 m 1:15 333 mm Not exceeding 2 m 1:12 166 mm",
+     "w1200": "The width is 120.0 mm.", "h": "A height of 12,00 m.", "cl": "See clause 1.2 (00) for this.",
+     "rooms": "Rooms 1, 200 mm apart.", "lead": "A lip of .5 in.", "lead2": "A width of 12 mm.", "lead3": "A lip of 5 in.",
+     "sp20": "A ramp is not steeper than 1 : 20 where the run exceeds 12 m.", "z": "The scale is 5 000:1 200 here.",
+     "fn": "The clear width is 1200\u00b9 mm.", "apos": "The width is 1'200 mm.", "apos2": "The width is 1\u2019200 mm.",
+     "list": "Widths of 100,200,300 mm are offered.",
      "nl": "Een hellingbaan krijgt vijf procent bij niveauverschillen van 50 cm of groter.",
      "fi": "Luiskan kaltevuus saa olla enintään viisi prosenttia."}
 with scratch() as c:
@@ -1941,6 +2059,44 @@ with scratch() as c:
         ("37", "1.2 with the wording '1,200' under '1,200 mm'", "thou", "1.2", "1,200"),
         ("38", "9999 with the wording 'higher' (known residual: a wording with no numeral is the extractor's judgment)", "dec", "9999", "higher"),
     ]
+    for n, name, q_, cv, w in [
+            ("50", "1200 with '1,200' under '120.0 mm' (a decimal shift: the wording is not in the quote)", "w1200", "1200", "1,200"),
+            ("51", "1.2 with '1,200' under '120.0 mm'", "w1200", "1.2", "1,200"),
+            ("52", "1200 with '1,200' under '12,00 m'", "h", "1200", "1,200"),
+            ("53", "1200 with '1,200' under 'clause 1.2 (00)'", "cl", "1200", "1,200"),
+            ("54", "1.2 with '1,200' under 'rooms 1, 200 mm apart'", "rooms", "1.2", "1,200"),
+            ("55", ".12 under '12 mm' (a leading-dot decimal is a decimal)", "lead2", ".12", None),
+            ("56", ".5 under '5 in'", "lead3", ".5", None), ("57", "5 under 'a lip of .5 in'", "lead", "5", None),
+            ("58", "1:20 under the kanji sentence for 1:12 with the kanji wording of 1:12", "kanji", "1:20", "十二分の一"),
+            ("59", "99 under the kanji sentence with the wording 十二", "kanji", "99", "十二"),
+            ("60", "1:12 under '1 : 20 where the run exceeds 12 m' (a spaced colon is still a ratio)", "sp20", "1:12", None),
+            ("61", "0 under '5 000:1 200' (the padded piece 000 is not a number)", "z", "0", None),
+            ("62", "0:1 under '5 000:1 200'", "z", "0:1", None)]:
+        r = rv(q_, cv, w)
+        record(f"T008-{n}", f"refused: {name}", r is not None and "Nothing was written" in r, r)
+    for n, name, q_, cv, w in [
+            ("63", "0.5 under 'a lip of .5 in'", "lead", "0.5", None),
+            ("64", "1200 under '1200\u00b9 mm' (a footnote mark is not a digit)", "fn", "1200", None),
+            ("65", "1200 under \"1'200 mm\" (apostrophe grouping)", "apos", "1200", None),
+            ("66", "1200 under '1\u2019200 mm'", "apos2", "1200", None),
+            ("67", "200 under '100,200,300 mm' (comma groups are numbers as well)", "list", "200", None),
+            ("68", "1:20 under '1 : 20'", "sp20", "1:20", None)]:
+        res, err = ok(db._require_verbatim, Q[q_], t8, "--claim-text", "T008", claimed_value=cv, value_as_written=w,
+                      claim_type="numerical")
+        record(f"T008-{n}", f"accepted: {name}", err is None, err)
+    # THE RESIDUAL, shown plainly: a wording with no numeral is not checked for meaning (rule 8: no word list),
+    # so one word of the quote (the longest, derived) defeats the guard for each headline refusal above, and so
+    # does one letter. A reviewer and the adversarial pass are the check; these cases are accepted ON PURPOSE.
+    for n, q_, cv in [("01", "dec", "12"), ("02", "time", "0.6"), ("03", "ratio", "1:1"), ("04", "ratio", "112"),
+                      ("05", "space", "120.0"), ("06", "in", "1:8"), ("07", "r20", "1:12"), ("08", "w1200", "1200")]:
+        word = max(re.findall(r"[^\W\d_]+", Q[q_]), key=len)
+        res, err = ok(db._require_verbatim, Q[q_], t8, "--claim-text", "T008", claimed_value=cv, value_as_written=word,
+                      claim_type="numerical")
+        record(f"T008-RES-{n}", f"RESIDUAL (accepted on purpose): {cv} under {Q[q_]!r} with the wording {word!r}", err is None, err)
+    res, err = ok(db._require_verbatim, Q["dec"], t8, "--claim-text", "T008", claimed_value="12", value_as_written="m",
+                  claim_type="numerical")
+    record("T008-RES-09", "RESIDUAL (accepted on purpose): 12 under 'no higher than 1.2 m' with the one-letter wording 'm'",
+           err is None, err)
     for n, name, q_, cv, w in accepted:
         res, err = ok(db._require_verbatim, Q[q_], t8, "--claim-text", "T008", claimed_value=cv, value_as_written=w,
                       claim_type="numerical")
@@ -1964,7 +2120,11 @@ with scratch() as c:
     hand("UPDATE source_value_extractions SET value_as_written=NULL WHERE ref_id=?", t8)     # HAND: a row written before the column
     eid = c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", (t8,)).fetchone()[0]
     r = refusal(db.amend_extraction, eid, "value_as_written", "vijftien procent", "probe", session=S, dry_run=True)
-    record("T008-44", "amend-extraction refuses a wording that is not in the stored quote", r is not None, r)
+    record("T008-44", "amend-extraction refuses a wording that is not in the stored quote",
+           r is not None and "literal span" in r, r)
+    r = refusal(db.amend_extraction, eid, "value_as_written", "Vijf  PROCENT", "probe", session=S, dry_run=True)
+    record("T008-49", "...and a wording that is the quote's words in other case or spacing (a literal span only)",
+           r is not None and "literal span" in r, r)
     res, err = ok(db.amend_extraction, eid, "value_as_written", "vijf procent", "T-008 probe", session=S, dry_run=False)
     got = c.execute("SELECT value_as_written, claimed_value FROM source_value_extractions WHERE extraction_id=?", (eid,)).fetchone()
     record("T008-45", "amend-extraction sets the wording on a stored row and leaves its figure alone",
@@ -1976,7 +2136,8 @@ with scratch() as c:
                                     loc_section="T8"), S, dry_run=False, relations=[])
     eid2 = c.execute("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", (ref2,)).fetchone()[0]
     r = refusal(db.amend_extraction, eid2, "value_as_written", "1 200", "probe", session=S, dry_run=True)
-    record("T008-46", "amend-extraction refuses a wording on a row whose quote states the number as a numeral", r is not None, r)
+    record("T008-46", "amend-extraction refuses a wording on a row whose quote states the number as a numeral",
+           r is not None and "states every claimed number" in r, r)
     h = cli("add-extraction", "--help")
     record("T008-47", "add-extraction takes --value-as-written", "--value-as-written" in h.stdout, h.stdout[-200:])
 
