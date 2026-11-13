@@ -77,6 +77,7 @@ read from the copy.
 import json
 import os
 import pathlib
+import re
 import shutil
 import sqlite3
 import subprocess
@@ -1766,11 +1767,14 @@ try:
                  "--extraction-method", "skim", "--verbatim-exempt", "TASK-FIXTURE: no artefact carries it",
                  "--session", S)
 
-    def t018_add(label, *lens):
+    def t018_cmd(ref, label, *lens_and_extra):
+        return ("add-extraction", "--ref-id", ref, "--parameter-id", str(PARAM), *lens_and_extra,
+                "--claim-text", f"{T18_TEXT} ({label})", *T18_FLAGS)
+
+    def t018_add(label, *lens_and_extra):
         ref, _ = add_o(f"T018 {label}", "--evidence-type", "grey")
         readable(ref)
-        r = run_cli("add-extraction", "--ref-id", ref, "--parameter-id", str(PARAM), *lens,
-                    "--claim-text", f"{T18_TEXT} ({label})", *T18_FLAGS)
+        r = run_cli(*t018_cmd(ref, label, *lens_and_extra))
         got = q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", ref)
         return r, (got[0][0] if got else None)
 
@@ -1820,7 +1824,7 @@ try:
     shutil.copy(DB, base_copy)
     if probe04:
         l04, fig04, code04, ct04 = probe04[0]
-        word04 = max(ct04.split(), key=len)
+        word04 = max(re.findall(r"\w+", ct04), key=len)
         r04 = run_cli("add-lens-link", "--extraction-id", str(fig04), "--identity", code04,
                       "--basis", "named_in_text", "--basis-text", word04, "--session", S)
         rows04, e04 = t018_read("SELECT link_id, basis, basis_text FROM v_live_lens_links "
@@ -1872,6 +1876,201 @@ try:
         con07.close()
     record("T018-07", "a hand-written INSERT into source_value_extractions that names a lens column is refused by the table's CHECK",
            out07 is not None and "CHECK constraint failed" in out07, f"got {out07!r}")
+
+    # ── T018, continued: each refusal of the link writers fires, and the legitimate shape still passes ──
+    # A figure with one identity link (fig_b) and one with two ICF links (fig01) exist from above.
+    def out_of(r):
+        return r.stdout + r.stderr
+
+    def n_figures():
+        return counts("source_value_extractions")[0]
+
+    def n_links_now():
+        rows, _ = t018_read("SELECT COUNT(*) FROM extraction_lens_links")
+        return rows[0][0] if rows else -1
+
+    BASIS = ("--lens-basis", "named_in_text", "--lens-basis-text", "TASK-FIXTURE")
+    ref09, _ = add_o("T018 refusals", "--evidence-type", "grey")
+    readable(ref09)
+
+    # T018-09: a figure with no lens at all is refused (D-0182), whatever else is right with it.
+    nf, nl = n_figures(), n_links_now()
+    r09 = run_cli(*t018_cmd(ref09, "no lens", *BASIS))
+    record("T018-09", "add-extraction with no lens flag is refused in the D-0182 words, and writes no figure and no link",
+           r09.returncode != 0 and "at least one lens" in out_of(r09) and n_figures() == nf and n_links_now() == nl,
+           f"rc={r09.returncode} {out_of(r09)[-250:]!r}")
+
+    # T018-10: one code twice in a call is refused by name, before any write.
+    r10 = run_cli(*t018_cmd(ref09, "twice", "--icf", T18_D1, "--icf", T18_D1, *BASIS))
+    record("T018-10", "add-extraction with one code repeated in a call is refused ('more than once') and writes nothing",
+           r10.returncode != 0 and "more than once" in out_of(r10) and n_figures() == nf and n_links_now() == nl,
+           f"rc={r10.returncode} {out_of(r10)[-250:]!r}")
+
+    # T018-11: a blank warrant, and a code the registry does not hold, are each refused in words.
+    r11a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "   ", "--session", S)
+    r11b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", "NOT-A-CODE", "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    medical_rows = q("SELECT COUNT(*) FROM base_taxonomy_medical")[0][0]
+    r11c = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--medical", "NOT-A-CODE", "--basis",
+                   "named_in_text", "--basis-text", "TASK-FIXTURE", "--session", S)
+    record("T018-11", "add-lens-link refuses a blank --basis-text, an unknown code and (derived) an empty registry, each in words",
+           r11a.returncode != 0 and "blank" in out_of(r11a)
+           and r11b.returncode != 0 and "is not a live icf_code" in out_of(r11b)
+           and r11c.returncode != 0 and ("holds no rows" if medical_rows == 0 else "is not a live") in out_of(r11c)
+           and n_links_now() == nl,
+           f"{out_of(r11a)[-120:]!r} | {out_of(r11b)[-120:]!r} | {out_of(r11c)[-120:]!r}")
+
+    # T018-12: a retired identity is not newly used, by either writer. The state is set by SQL on the copy and undone.
+    (dep,) = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' AND identity_code NOT IN ('ALL', ?) "
+               "ORDER BY identity_code LIMIT 1", POP)[0]
+    w("UPDATE base_taxonomy_identity SET status='deprecated' WHERE identity_code=?", dep)
+    try:
+        r12a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--identity", dep, "--basis", "named_in_text",
+                       "--basis-text", "TASK-FIXTURE", "--session", S)
+        r12b = run_cli(*t018_cmd(ref09, "deprecated", "--identity", dep, *BASIS))
+    finally:
+        w("UPDATE base_taxonomy_identity SET status='active' WHERE identity_code=?", dep)
+    record("T018-12", "add-lens-link and add-extraction refuse a deprecated identity code and write nothing",
+           r12a.returncode != 0 and "deprecated" in out_of(r12a) and r12b.returncode != 0 and "deprecated" in out_of(r12b)
+           and n_figures() == nf and n_links_now() == nl, f"{out_of(r12a)[-160:]!r} | {out_of(r12b)[-160:]!r}")
+
+    # T018-13: add-lens-link names exactly one code and an existing figure.
+    r13a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    r13b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--identity", POP, "--basis",
+                   "named_in_text", "--basis-text", "TASK-FIXTURE", "--session", S)
+    r13c = run_cli("add-lens-link", "--extraction-id", "0", "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    record("T018-13", "add-lens-link refuses no code, two codes, and a figure that does not exist",
+           r13a.returncode != 0 and "exactly one" in out_of(r13a) and r13b.returncode != 0 and "exactly one" in out_of(r13b)
+           and r13c.returncode != 0 and "no such figure" in out_of(r13c) and n_links_now() == nl,
+           f"{out_of(r13a)[-100:]!r} | {out_of(r13b)[-100:]!r} | {out_of(r13c)[-100:]!r}")
+
+    # T018-14: the basis vocabulary is the column's CHECK minus `carried`, at the parser and in the writer.
+    r14a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "carried",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    r14b = refusal(db.add_lens_link, fig_b, S, icf=T18_D2, basis="carried", basis_text="TASK-FIXTURE")
+    r14c = refusal(db.add_lens_link, fig_b, S, icf=T18_D2, basis="not-a-basis", basis_text="TASK-FIXTURE")
+    record("T018-14", "'carried' is refused as a basis by the parser and by the writer, as is a value outside the CHECK",
+           r14a.returncode != 0 and "invalid choice" in out_of(r14a)
+           and r14b and "a lens link needs" in r14b and r14c and "a lens link needs" in r14c and n_links_now() == nl,
+           f"{out_of(r14a)[-120:]!r} | {r14b!r} | {r14c!r}")
+
+    # T018-15: a second judged link for a code is refused (only a carried one is replaced); then it is the live one.
+    r15a = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    n_after_first = n_links_now()
+    r15b = run_cli("add-lens-link", "--extraction-id", str(fig_b), "--icf", T18_D2, "--basis", "named_in_text",
+                   "--basis-text", "TASK-FIXTURE", "--session", S)
+    record("T018-15", "add-lens-link writes a new code's link, and refuses the same code again naming the live link",
+           r15a.returncode == 0 and n_after_first == nl + 1 and r15b.returncode != 0
+           and "already holds a live" in out_of(r15b) and n_links_now() == n_after_first,
+           f"{out_of(r15a)[-160:]!r} | {out_of(r15b)[-200:]!r}")
+
+    # T018-16: retire-lens-link, link by link, on fig01 (two live links).
+    l01 = [r[0] for r in q("SELECT link_id FROM v_live_lens_links WHERE extraction_id=? ORDER BY link_id", fig01)] if fig01 else []
+    if len(l01) == 2:
+        rb = run_cli("retire-lens-link", "--link-id", str(l01[0]), "--reason", "   ", "--session", S)
+        r1 = run_cli("retire-lens-link", "--link-id", str(l01[0]), "--reason", "TASK-FIXTURE: retire the first", "--session", S)
+        r1b = run_cli("retire-lens-link", "--link-id", str(l01[0]), "--reason", "TASK-FIXTURE: again", "--session", S)
+        r2 = run_cli("retire-lens-link", "--link-id", str(l01[1]), "--reason", "TASK-FIXTURE: the last", "--session", S)
+        r0 = run_cli("retire-lens-link", "--link-id", "0", "--reason", "TASK-FIXTURE: none", "--session", S)
+        live01 = q("SELECT link_id FROM v_live_lens_links WHERE extraction_id=?", fig01)
+        total01 = q("SELECT COUNT(*) FROM extraction_lens_links WHERE extraction_id=?", fig01)[0][0]
+        ok16 = (rb.returncode != 0 and "blank" in out_of(rb) and r1.returncode == 0
+                and r1b.returncode != 0 and "was retired" in out_of(r1b)
+                and r2.returncode != 0 and "last live link" in out_of(r2)
+                and r0.returncode != 0 and "no such link" in out_of(r0)
+                and live01 == [(l01[1],)] and total01 == 2)
+        detail16 = f"{[out_of(x)[-90:] for x in (rb, r1, r1b, r2, r0)]} live={live01} total={total01}"
+    else:
+        ok16, detail16 = False, f"no figure with two live links to retire from: {l01}"
+    record("T018-16", "retire-lens-link refuses a blank reason, an already-retired link, no such link and the last LIVE link "
+           "(counted over live links, though the figure holds two rows)", ok16, detail16)
+
+    # T018-17: the warrant is looked for where its basis says, on word boundaries.
+    ref17, _ = add_o("T018 warrants", "--evidence-type", "grey")
+    readable(ref17)
+    HEAD = "TASK-FIXTURE Heading Alpha"
+    r17 = run_cli(*t018_cmd(ref17, "warrants - dash", "--identity", POP, *BASIS, "--source-section", HEAD))
+    fig17 = (q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", ref17) or [(None,)])[0][0]
+    needs17 = q("SELECT need_code FROM access_needs ORDER BY need_code LIMIT 1")[0][0]
+
+    def link17(code_flag, code, basis, text):
+        return run_cli("add-lens-link", "--extraction-id", str(fig17), code_flag, code, "--basis", basis,
+                       "--basis-text", text, "--session", S)
+    n17 = n_links_now()
+    refused17 = {
+        "a heading basis, words only in the claim text": link17("--icf", T18_D1, "heading", "two functions"),
+        "a named_in_text basis, words only in the heading": link17("--icf", T18_D1, "named_in_text", "Heading Alpha"),
+        "a study_participants basis, words only in the claim text": link17("--icf", T18_D1, "study_participants", "two functions"),
+        "a one-letter warrant": link17("--icf", T18_D1, "named_in_text", "e"),
+        "a warrant with no letter or digit": link17("--icf", T18_D1, "named_in_text", "."),
+        "a warrant with no letter or digit that the text does hold": link17("--icf", T18_D1, "named_in_text", "-"),
+        "the front of a word": link17("--icf", T18_D1, "named_in_text", "function"),
+        "the middle of a word": link17("--icf", T18_D1, "named_in_text", "unction"),
+    }
+    missed17 = [k for k, v in refused17.items() if v.returncode == 0]
+    nothing17 = n_links_now() == n17
+    ok_head = link17("--icf", T18_D1, "heading", "Heading Alpha")
+    ok_text = link17("--icf", T18_D2, "named_in_text", "two functions")
+    record("T018-17", "a warrant is looked for where its basis says and on word boundaries; each wrong place and each fragment is refused, "
+           "and the right one lands",
+           r17.returncode == 0 and fig17 and not missed17 and nothing17 and ok_head.returncode == 0 and ok_text.returncode == 0,
+           f"create={out_of(r17)[-150:]!r} not refused: {missed17} wrote_nothing={nothing17} head={out_of(ok_head)[-150:]!r} "
+           f"text={out_of(ok_text)[-150:]!r}")
+
+    # T018-18: study_participants reads the graded study population; the saved-file route is consulted for named_in_text.
+    grade = sorted(dbcore.check_values(sqlite3.connect(DB), "evidence_population_match", "match_grade"))[0]
+    w("INSERT INTO evidence_population_match (match_id, source_ref, target_population, study_population, match_grade, "
+      "created_at, created_by_session, ref_id) VALUES (?, ?, ?, ?, ?, 't', ?, ?)",
+      f"TASK-FIXTURE-{ref17}", ref17, POP, "TASK-FIXTURE participants Zeta", grade, S, ref17)
+    r18a = link17("--needs", needs17, "study_participants", "participants Zeta")
+    r18b = link17("--medical", "NOT-A-CODE", "study_participants", "participants Zeta")
+    PHRASE = "TASK-FIXTURE phrase only in a saved file"
+    (T18_D3,) = q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' ORDER BY icf_code LIMIT 1 OFFSET 2")[0]
+    rl = db._retrieval_log()
+    _real = rl.locate_quote
+
+    def via(kind):
+        """add-lens-link in process, with the quote verifier answering `kind` for the phrase (no artefact is saved for a fixture)."""
+        rl.locate_quote = lambda quote, ref_id=None, session=None: (kind, "TASK-FIXTURE verdict")
+        try:
+            try:
+                return db.add_lens_link(fig17, S, icf=T18_D3, basis="named_in_text", basis_text=PHRASE, dry_run=True)
+            except Refusal as exc:
+                return {"refused": str(exc)}
+            except Exception as exc:  # noqa: BLE001 -- recorded red below
+                return {"error": f"{exc.__class__.__name__}: {exc}"}
+        finally:
+            rl.locate_quote = _real
+    scoped, unscoped, missing = via("scoped"), via("unscoped"), via("missing")
+    record("T018-18", "study_participants is found in the graded study_population, and named_in_text accepts a SCOPED hit in the source's saved "
+           "file and refuses an unscoped or missing one",
+           r18a.returncode == 0 and r18b.returncode != 0
+           and scoped.get("link_id") and scoped.get("dry_run") is True
+           and "is not, on word boundaries" in unscoped.get("refused", "")
+           and "is not, on word boundaries" in missing.get("refused", ""),
+           f"{out_of(r18a)[-150:]!r} | {out_of(r18b)[-100:]!r} | {scoped!r} | {unscoped!r} | {missing!r}")
+
+    # T018-19: the lens is not part of a figure's identity: the same reading in another code is add-lens-link, never a second figure.
+    ref19, _ = add_o("T018 identical", "--evidence-type", "grey")
+    readable(ref19)
+    first19 = run_cli(*t018_cmd(ref19, "same reading", "--icf", T18_D1, *BASIS))
+    nf19 = n_figures()
+    again19 = run_cli(*t018_cmd(ref19, "same reading", "--icf", T18_D2, *BASIS))
+    other19 = run_cli(*t018_cmd(ref19, "another reading", "--icf", T18_D1, *BASIS))
+    record("T018-19", "the same row in another lens code is refused naming add-lens-link; a different row for the same source is accepted",
+           first19.returncode == 0 and again19.returncode != 0 and "add-lens-link" in out_of(again19)
+           and n_figures() == nf19 + 1 and other19.returncode == 0,
+           f"{out_of(first19)[-100:]!r} | {out_of(again19)[-200:]!r} | {out_of(other19)[-100:]!r} figures {nf19} -> {n_figures()}")
+
+    # T018-20: a lens code that is not text is a Refusal, not a TypeError.
+    r20a = refusal(db.insert_extraction, {"ref_id": REF, "parameter_id": PARAM, "identity_code": 5}, S, relations=[])
+    r20b = refusal(db.add_lens_link, fig_b, S, icf=["d1"], basis="named_in_text", basis_text="TASK-FIXTURE")
+    record("T018-20", "a lens code that is not text is refused in words by both writers",
+           r20a and "is text" in r20a and r20b and "as text" in r20b, f"{r20a!r} | {r20b!r}")
 
     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
     # determination is governed by is refused (dbcore.live_determinations_linked), through both

@@ -69,7 +69,7 @@ an existing one is a duplicate: `add-connection` refuses it, naming the existing
 
 ## Step 1 — Read, by mode
 Read the live determination and every extraction for the parameter in full; for `evidence`, also open gaps
-(`db.py gaps --status OPEN`) and PENDING connections. For each extraction note its lens columns, so a population effect
+(`db.py gaps --status OPEN`) and PENDING connections. For each extraction note its live lens links (`v_live_lens_links`: the figure's own four lens columns are held NULL), so a population effect
 on a shared parameter is visible. For `external`, take T1–T2 sources from `evidence_sources`, follow forward citations,
 log mining with `db.py log-mining`; a cross-slug citation is a cross-parameter candidate.
 

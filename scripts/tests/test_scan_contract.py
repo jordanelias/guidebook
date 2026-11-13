@@ -851,7 +851,7 @@ try:
         out = attempt(db.insert_extraction,
                       {"ref_id": ref, "parameter_id": PE,
                        "identity_code": POP, "claim_type": "numerical",
-                       "lens_basis": "named_in_text", "lens_basis_text": text.split()[0],
+                       "lens_basis": "named_in_text", "lens_basis_text": re.findall(r"\w+", text)[0],
                        "claimed_value": value, "claimed_unit": "mm", "comparator": "<=",
                        "figure_role": "claim", "extraction_method": method,
                        "claim_text": text,

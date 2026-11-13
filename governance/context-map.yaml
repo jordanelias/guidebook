@@ -626,6 +626,8 @@ writers:
     - adversarial_findings
     - adversarial_passes
     - base_jurisdictions
+    - base_taxonomy_identity
+    - evidence_population_match
     - evidence_sources
     - extraction_relations
     - research_code_leads

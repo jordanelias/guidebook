@@ -9589,11 +9589,28 @@ def _lens_basis_choices():
     return [v for v in (dbcore.schema_choices("extraction_lens_links", "basis") or []) if v != "carried"] or None
 
 
-def _require_lens_warrant(conn, basis, basis_text, ref_id, words, context):
+def _as_whole_words(text: str, field) -> bool:
+    """`text` occurs in `field` on word boundaries, ignoring case (`e` is not in `the`)."""
+    return bool(field) and re.search(r"(?<!\w)" + re.escape(text.lower()) + r"(?!\w)", field.lower()) is not None
+
+
+def _saved_text_has(text: str, ref_id: str) -> bool:
+    """`text` is in a file saved FOR `ref_id` (a scoped hit; a hit in another source's file proves nothing)."""
+    return _retrieval_log().locate_quote(text, ref_id=ref_id)[0] == "scoped"
+
+
+def _require_lens_warrant(conn, basis, basis_text, ref_id, claim_text, source_section, context):
     """A link's warrant: a basis from the column's own CHECK (not `carried`) and the exact words that warrant it,
-    found, case-insensitively, in the figure's own words (`words`: its claim_text, source_section and
-    root_population_note), in a file saved for its source (`_verbatim`), or, for `study_participants`, in a
-    study_population graded for the source (evidence_population_match.source_ref). Returns the stripped text."""
+    which must be found on word boundaries, in the place the basis names:
+
+      named_in_text       the figure's claim_text, or a file saved for its source (D-2: its own words name the users);
+      heading             the figure's source_section, its own heading (OD-31);
+      study_participants  the study_population of an evidence_population_match row for the source (2026-08-25).
+
+    Returns the stripped text. WHAT THIS DOES NOT CHECK: that the words name the lens code itself. The registries
+    do not hold a name for every code (about half the ICF d-codes have no title, access_needs has no name column,
+    base_taxonomy_medical is empty), so a name test cannot be derived for them; whether the words name the group
+    is the judge's (D-2) and the recorded warrant is what a later reader audits."""
     allowed = set(_lens_basis_choices() or ())
     if basis not in allowed:
         raise Refusal(
@@ -9604,29 +9621,26 @@ def _require_lens_warrant(conn, basis, basis_text, ref_id, words, context):
         raise Refusal(
             f"{context}: the warrant's words are blank. Give --lens-basis-text / --basis-text: the exact words "
             f"of the figure, its heading or its study's participants that name the group. Nothing was written.")
-    low = text.lower()
-    if any(low in (w or "").lower() for w in words):
-        return text
-    where = ["the figure's claim_text, source_section and root_population_note"]
-    if _verbatim(text, ref_id)[0]:
-        return text
-    where.append(f"a file saved for {ref_id}")
-    if basis == "study_participants":
-        if any(low in (r[0] or "").lower() for r in conn.execute(
-                "SELECT study_population FROM evidence_population_match WHERE source_ref=?", (ref_id,))):
-            return text
-        where.append(f"the study_population of an evidence_population_match row for {ref_id}")
-    raise Refusal(
-        f"{context}: the warrant {text!r} is not in {'; nor in '.join(where)}. A link rests on words the source "
-        f"holds, never on memory (CLAUDE.md 5(c)). Quote the figure's own words, or the heading or participant "
-        f"description that names the group. Nothing was written.")
-
-
-def _live_links(conn, extraction_id: int) -> set:
-    """The figure's live links as {(lens column, code)}: the one read of its lens."""
-    return {(c, r[c]) for r in conn.execute(
-        "SELECT * FROM v_live_lens_links WHERE extraction_id=?", (extraction_id,))
-        for c in _LENS_COLUMNS if r[c] is not None}
+    if not re.search(r"\w", text):
+        raise Refusal(f"{context}: the warrant {text!r} holds no letter or digit, so it names no one. "
+                      f"Nothing was written.")
+    if basis == "named_in_text":
+        where = f"the figure's claim_text, or a file saved for {ref_id}"
+        found = _as_whole_words(text, claim_text) or _saved_text_has(text, ref_id)
+    elif basis == "heading":
+        where = "the figure's source_section (its heading)"
+        found = _as_whole_words(text, source_section)
+    else:
+        where = f"the study_population of an evidence_population_match row for {ref_id}"
+        found = any(_as_whole_words(text, r[0]) for r in conn.execute(
+            "SELECT study_population FROM evidence_population_match WHERE source_ref=?", (ref_id,)))
+    if not found:
+        raise Refusal(
+            f"{context}: the warrant {text!r} (basis {basis}) is not, on word boundaries, in {where}. A link "
+            f"rests on words the source holds, never on memory (CLAUDE.md 5(c)); a basis names where to look: "
+            f"named_in_text the claim text or the source's saved file, heading the source_section, "
+            f"study_participants the graded study_population. Nothing was written.")
+    return text
 
 
 def _write_lens_link(conn, extraction_id: int, col: str, code: str, basis: str, basis_text, session: str) -> int:
@@ -9760,8 +9774,11 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
     lens = {}
     for col in _LENS_COLUMNS:
         given = data.pop(col, None)
-        given = [given] if isinstance(given, str) else list(given or ())
-        lens[col] = [str(c).strip() for c in given if c is not None and str(c).strip()]
+        given = [given] if isinstance(given, str) else given
+        if given is not None and (not isinstance(given, (list, tuple)) or not all(
+                c is None or isinstance(c, str) for c in given)):
+            raise Refusal(f"{col}: a code is text, or a list of text codes; got {given!r}. Nothing was written.")
+        lens[col] = [c.strip() for c in (given or ()) if c is not None and c.strip()]
     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
     dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
     row = {k: v for k, v in data.items() if v is not None}
@@ -9897,8 +9914,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
 
         # THE LENS WARRANT: the words that name the group are the figure's own (or its source's).
         lens_basis_text = _require_lens_warrant(
-            conn, lens_basis, lens_basis_text, ref,
-            (row.get("claim_text"), row.get("source_section"), row.get("root_population_note")),
+            conn, lens_basis, lens_basis_text, ref, row.get("claim_text"), row.get("source_section"),
             "add-extraction")
 
         # THE STRUCTURED LOCATOR, for the regulatory stratum only (added 2026-09-20).
@@ -10041,17 +10057,19 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         _keyed = ("claimed_value", "claimed_unit", "source_section", "loc_section", "loc_clause")
         _preds = [f'"{c}" IS ?' for c in _same_cols] + [f'"{c}" IS NULL' for c in _keyed
                                                         if c not in row]
-        # "Same lenses" is the set of live links: the figure's own lens columns are held NULL.
-        _want = {(c, code) for c, codes in lens.items() for code in codes}
-        _dup = next(((d[0],) for d in conn.execute(
-            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds),
-            [row[c] for c in _same_cols]) if _live_links(conn, d[0]) == _want), None)
+        # THE LENS IS NOT PART OF THE ROW'S IDENTITY (migration 131): a figure is written once and stated in
+        # each group by a link, so the same reading in another group is `add-lens-link`, never a second figure
+        # (a second copy would count the one reading twice).
+        _dup = conn.execute(
+            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds)
+            + " LIMIT 1", [row[c] for c in _same_cols]).fetchone()
         if _dup:
             raise Refusal(
                 f"add-extraction: extraction {_dup[0]} already carries this exact row "
-                f"({ref}, parameter {pid}, same lenses, claim, value, text and locator). A "
-                f"byte-identical copy is not a second reading; a divergent one is "
-                f"(D-0168). Nothing was written.")
+                f"({ref}, parameter {pid}, claim, value, text and locator; the lens is not part of a "
+                f"figure's identity). A byte-identical copy is not a second reading; a divergent one is "
+                f"(D-0168). To state the same figure in another lens code use: db.py add-lens-link "
+                f"--extraction-id {_dup[0]} ... Nothing was written.")
 
         # DELIBERATELY NOT REFUSED — see the docstring. Noted so the fan-out is
         # visible in the session log rather than silent.
@@ -10121,16 +10139,17 @@ def add_lens_link(extraction_id: int, session: str, *, identity: str = None, icf
         raise Refusal(f"add-lens-link: name exactly one code, with one of --identity / --icf / --needs / "
                       f"--medical (got {len(given)}). Repeat the verb for each code. Nothing was written.")
     ((col, code),) = given.items()
+    if not isinstance(code, str):
+        raise Refusal(f"add-lens-link: {col} must be one code as text, got {code!r}. Nothing was written.")
     with dbcore.connect(dry_run) as conn:
         fig = conn.execute(
-            "SELECT ref_id, claim_text, source_section, root_population_note "
+            "SELECT ref_id, claim_text, source_section "
             "FROM source_value_extractions WHERE extraction_id=?", (extraction_id,)).fetchone()
         if fig is None:
             raise Refusal(f"add-lens-link: extraction {extraction_id}: no such figure. Nothing was written.")
         _require_lens_code(conn, col, code)
-        text = _require_lens_warrant(
-            conn, basis, basis_text, fig["ref_id"],
-            (fig["claim_text"], fig["source_section"], fig["root_population_note"]), "add-lens-link")
+        text = _require_lens_warrant(conn, basis, basis_text, fig["ref_id"], fig["claim_text"],
+                                     fig["source_section"], "add-lens-link")
         held = conn.execute(
             f"SELECT link_id, basis FROM extraction_lens_links WHERE extraction_id=? AND {col}=? "
             f"AND retired_at IS NULL", (extraction_id, code)).fetchone()

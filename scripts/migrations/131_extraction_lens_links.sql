@@ -134,17 +134,12 @@ CREATE TABLE "_131_new_source_value_extractions" (
   -- it in the change that gives it a reader.
   parameter_id           INTEGER NOT NULL REFERENCES base_parameters(parameter_id),
 
-  -- THE FOUR LENSES (owner 2026-08-28; CHECK relaxed by D-0182). Real typed FKs, one per
-  -- lens, nothing polymorphic. They replace `population_code` (retired by that ruling's
-  -- own ACTION) and `population_label`, the free-text companion that had no registry at
-  -- all -- retiring the typed column while keeping the untyped one beside it would keep
-  -- the exact defect the ruling was issued against.
-  --
-  -- `base_taxonomy_medical` holds 0 rows today, so a NON-NULL medical_code is
-  -- unwritable until it is seeded. That is the CLAUDE.md §4 trap, and it is harmless in
-  -- this shape precisely because the column is nullable and the CHECK is "at least one":
-  -- the table stays writable through any of the other three. `specifications` carries the
-  -- identical arrangement from 071.
+  -- THE FOUR LENSES: HISTORY since migration 131 (OR-1c). A figure's lens is a set of rows in
+  -- extraction_lens_links, read through v_live_lens_links; these four columns are held NULL by the CHECK
+  -- at the foot of this table and are never written again. They are kept because committed data
+  -- migrations INSERT them (CLAUDE.md rule 5: a column a committed data migration INSERTs can never be
+  -- dropped). Until 131 they were real typed FKs, one per lens (owner 2026-08-28, replacing
+  -- `population_code` and the free-text `population_label`), under D-0182's "at least one" CHECK.
   identity_code          TEXT REFERENCES "base_taxonomy_identity"(identity_code),
   icf_code               TEXT REFERENCES base_icf(icf_code),
   needs_code             TEXT REFERENCES access_needs(need_code),
@@ -234,7 +229,7 @@ CREATE TABLE "_131_new_source_value_extractions" (
   -- HISTORY, retired by migration 131: a figure's lens lives in extraction_lens_links (OR-1c,
   -- owner 2026-11-06). The four columns are kept because committed data migrations INSERT them (rule 5:
   -- a column a committed data migration INSERTs can never be dropped) and are held NULL here; never
-  -- written again. D-0182 ("a figure carries at least one lens") moved to the writers and to the
+  -- written again. D-0182 (a link must be tied to at least one lens) moved to the writers and to the
   -- blocking test_db_integrity case that reads v_live_lens_links.
   CHECK (COALESCE(identity_code, icf_code, needs_code, medical_code) IS NULL)
 );

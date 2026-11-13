@@ -60,7 +60,7 @@ From the input (determination, room type, or explicit domain list):
 For each active domain, search in this order:
 
 **Priority 1 — Existing project evidence:**
-- the parameter's extractions and live determination (`source_value_extractions`, `specifications`), read per lens column
+- the parameter's extractions and live determination (`source_value_extractions`, `specifications`), read per lens code: a figure's from `v_live_lens_links`, a determination's from its own lens columns
 - SQLite `connections` table for PENDING connections: `python3 scripts/db.py connections --status PENDING`
 
 **Priority 2 — Aged care / dementia facility POEs:**

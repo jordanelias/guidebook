@@ -335,13 +335,13 @@ def extraction(ref, pid, **over):
     # A figure's lens is a set of links since migration 131 (OR-1c); their warrant travels in the payload
     # (lens_basis, lens_basis_text), and the words must be the figure's own: the first word of its claim text.
     base.setdefault("lens_basis", "named_in_text")
-    base.setdefault("lens_basis_text", next(iter(str(base.get("claim_text") or "").split()), ""))
+    base.setdefault("lens_basis_text", next(iter(re.findall(r"\w+", str(base.get("claim_text") or ""))), ""))
     return base
 
 
 def lens_of(text):
     """The warrant keyword arguments of derive_extraction for a claim text: the text's own first word."""
-    return {"lens_basis": "named_in_text", "lens_basis_text": text.split()[0]}
+    return {"lens_basis": "named_in_text", "lens_basis_text": re.findall(r"\w+", text)[0]}
 
 
 def _live_full():
