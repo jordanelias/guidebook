@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 04:00 UTC from the 73 task files at commit 2bd86a2 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-13 04:01 UTC from the 73 task files at commit 251fafe by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -29,7 +29,7 @@ _Generated 2026-11-13 04:00 UTC from the 73 task files at commit 2bd86a2 by `scr
 
 Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md | wc -l`, and the generator's own output.
 
-**Longest dependency chain (8 tasks):** T-008 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
+**Longest dependency chain (8 tasks):** T-014 (READY) → T-016 (READY) → T-017 (READY) → T-018 (READY) → T-019 (READY) → T-055 (READY) → T-102 (NOT FOR SONNET) → T-110 (NOT FOR SONNET).
 
 ## Batch 1
 
@@ -86,7 +86,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
-| [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses pr | 1 (chain, first) | TOOLING | READY | yes | T-008 | not piloted |
+| [T-016](tasks/T-016-wp-t1a-reading.md) | The prior workplan's T-1a: reading (notation arithmetic to one home; the writer refuses pr | 1 (chain, first) | TOOLING | READY | yes | T-008, T-014 | piloted |
 | [T-020](tasks/T-020-quantity-kind.md) | A parameter states what kind of quantity it is | 1 | TOOLING | READY | yes | T-010 | piloted |
 | [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | TOOLING | READY | yes | T-002, T-012, T-013 | not piloted |
 | [T-025](tasks/T-025-base-writers.md) | Writers for the base tables a ruled task must write | 3 | TOOLING | READY | yes | T-024 | piloted |

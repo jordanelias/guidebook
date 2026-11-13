@@ -2,7 +2,7 @@
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Evidence base: `workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md`, as corrected by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/fa-corrections-for-suite.md` (where they differ, the corrections govern). Every number in this file was read on 2026-11-12 and is given with the command that produces it: re-run the command; do not trust the number._
 
-**Pilot status.** Not piloted. Three tasks of this plan were executed in scratch clones (T-006, T-008, T-010) and the defects they showed in the task files were corrected in every file by one generator; this file's own steps have not been executed by anyone. Its evidence command was run on 2026-11-12 and printed what section 3 states. Expect to find a defect in this file, and report it rather than work around it.
+**Pilot status.** **Piloted** 2026-11-13: report `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-016-report.md`, patch `.../T-016.patch` (stacked on the T-008 re-pilot); defects folded. Expect to find a defect in this file, and report it rather than work around it.
 
 ## 1. Identity
 
@@ -19,7 +19,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-008 merged (it changes the same writer, and it built what replaces this task's numeral gloss). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Tasks that must be merged to the integration base first:** T-008 and T-014 merged (T-008 changes the same writer, built what replaces this task's numeral gloss and declared `dbcore.QUANTITY_CLAIM_TYPES`; T-014 makes the stress harness that section 6 runs before and after). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
 - **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
 - **Tests that must be red (or green) before you start:** T-1a's done-when unmet: `grep -rn "def parse_bound" scripts` returns a line. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
