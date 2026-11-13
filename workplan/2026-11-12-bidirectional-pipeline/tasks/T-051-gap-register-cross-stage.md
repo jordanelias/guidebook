@@ -63,7 +63,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 1. `governance/stage-map.yaml`: `gaps` takes the value `cross-stage` (the delegated resolution of OD-11), and its `disputed:` note is replaced by one line pointing at the ledger (`grep -n -F "Delegated resolution 2026-11-12 — OD-11" references/project-standards.md`). Add no column to `gaps`: the stage that raised a gap is added when a reader needs it, not before (ledger, status lines of 2026-11-12).
 2. Readers of the map. `workplan/pipeline-state-graph/walkability.py` maps a table to the value the map gives it and refuses to walk only through `base`, `infrastructure` and `UNMAPPED` (`grep -n NOWALK workplan/pipeline-state-graph/walkability.py`), so `cross-stage` stays walkable: prove it by the before-and-after run of section 6, which must show no pair losing a path. `scripts/generate/owner_browser_build.py` orders stages (`grep -n stage_order scripts/generate/owner_browser_build.py`): a value it does not know is a caller; place `cross-stage` beside `infrastructure` in one line, or stop. `skills/run-pipeline_SKILL.md` names the map: correct any sentence that says gaps are synthesis's.
 
-**What reads what this task adds or changes:** `walkability.py`; `owner_browser_build.py` and the owner's page; `skills/run-pipeline_SKILL.md`.
+**What reads what this task adds or changes:** `walkability.py`; `owner_browser_build.py` and the owner's page; `skills/run-pipeline_SKILL.md`. T-049 depends on this task: it adds a second `cross-stage` table, `translations`, and reads the value this task gives `gaps` before writing it (T-049 sections 2 and 4).
 
 **No schema migration.** This task changes no table; the pull request contains no file under `scripts/migrations/`.
 

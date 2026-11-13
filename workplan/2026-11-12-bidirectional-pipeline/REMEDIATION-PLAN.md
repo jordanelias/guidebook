@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 04:01 UTC from the 73 task files at commit 251fafe by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-13 04:10 UTC from the 73 task files at commit 1eafd5a by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -19,7 +19,7 @@ _Generated 2026-11-13 04:01 UTC from the 73 task files at commit 251fafe by `scr
 | Batch | Tasks | READY | OWNER-blocked (a gate CLOSED) | DESIGN file missing | NOT FOR SONNET | Tooling / research | Lanes |
 |---|---|---|---|---|---|---|---|
 | 1 | 27 | 26 | 0 | 0 | 1 | 25 / 2 | 10 |
-| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 6 |
+| 2 | 14 | 13 | 0 | 0 | 1 | 11 / 3 | 5 |
 | 3 | 9 | 8 | 0 | 0 | 1 | 4 / 5 | 8 |
 | 4 | 7 | 5 | 0 | 0 | 2 | 6 / 1 | 5 |
 | 5 | 4 | 2 | 0 | 0 | 2 | 3 / 1 | 4 |
@@ -103,12 +103,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
-- Lane 2.1: T-016
-- Lane 2.2: T-020 → T-022 → T-025 → T-028 → T-041 → T-043 → T-049 → T-050 → T-056 — sequenced by a soft dependency or a chain of shared files
-- Lane 2.3: T-034
-- Lane 2.4: T-111
-- Lane 2.5: T-113
-- Lane 2.6: T-114
+- Lane 2.1: T-016 → T-020 → T-022 → T-025 → T-028 → T-041 → T-043 → T-049 → T-050 → T-056 — sequenced by a soft dependency or a chain of shared files
+- Lane 2.2: T-034
+- Lane 2.3: T-111
+- Lane 2.4: T-113
+- Lane 2.5: T-114
 
 **Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028.
 
