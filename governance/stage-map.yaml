@@ -83,6 +83,7 @@ tables:
   adversarial_findings: infrastructure
   adversarial_passes: infrastructure
   base_icf: base
+  base_jurisdictions: base
   base_parameters: base
   base_taxonomy_identity: base
   base_taxonomy_medical: base

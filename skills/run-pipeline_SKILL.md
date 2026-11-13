@@ -42,7 +42,7 @@ is owed has one home, the view `v_research_scope`: every `lang_jur_map` row not 
 (column added by migration 122; the view by migration 123); a NULL is owed, so an unrecorded scope never shrinks the requirement, and the fill of the column is a
 data PR. `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
 `[language, jurisdiction]` pairs still owed), searches_outside_scope (logged searches whose pair is not owed) and
-jurisdictions_unreachable (owed rows `schemas.enums.JurisdictionCode` refuses: a search there cannot be logged, so
+jurisdictions_unreachable (owed rows `base_jurisdictions` does not hold: a search there cannot be logged, so
 they stay unsearched). `complete` is false while anything owed is unsearched or refused by the declared vocabulary,
 and false over an empty requirement (open owner question 5 of the 2026-11-06 round-3 adjudication,
 `workplan/2026-11-06-run-pipeline-round-3-adjudication.md`). For a slug whose slug_status is neither `ACTIVE` nor
@@ -86,8 +86,8 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
   (R8). A search names what it looked for (`--slug`, `--parameter` or `--mined-ref-id`); `--slug` must exist and
   `--parameter` must be active. `--language` is a two-letter code from `lang_jur_map` (derive: `SELECT DISTINCT
   language FROM lang_jur_map`), folded to upper case on write, and a language the map does not hold is refused (the map is the vocabulary of research
-  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `schemas.enums.JurisdictionCode`
-  declares. The pair is not checked: a search in any declared jurisdiction is logged, and the result's
+  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `base_jurisdictions`
+  holds (a sub-national code counts toward its parent country in `coverage`; admit one with `add-jurisdiction`). The pair is not checked: a search in any declared jurisdiction is logged, and the result's
   in_research_scope says whether the pair counts toward what `coverage` owes (`v_research_scope`). A search outside it
   is counted apart (searches_outside_scope), never refused (R8). `--result-artefact retrieval-log/<session>/<file>`
   (repeatable) links a persisted payload whose URL carries the query's host and identifying value; the path is the

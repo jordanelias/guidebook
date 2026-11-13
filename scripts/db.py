@@ -683,11 +683,13 @@ def _link_result_artefacts(conn, exec_id, artefacts, *, mined_ref_id, query_text
 def _in_research_scope(language: str, jurisdiction: str = None) -> bool:
     """Does this (language, jurisdiction) pair count toward what the research scope owes?
     Reads v_research_scope, the one home of "owed"; a search with no jurisdiction names no
-    pair, so it counts toward none."""
+    pair, so it counts toward none. A sub-national jurisdiction counts toward its parent
+    country (OD-04), so it is looked up as that country."""
     with connect(readonly=True) as conn:
         return bool(jurisdiction) and conn.execute(
-            "SELECT 1 FROM v_research_scope WHERE language=? AND jurisdiction=?",
-            [(language or "").strip().upper(), jurisdiction]).fetchone() is not None
+            "SELECT 1 FROM v_research_scope WHERE language=? AND jurisdiction="
+            "COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code=?), ?)",
+            [(language or "").strip().upper(), jurisdiction, jurisdiction]).fetchone() is not None
 
 
 def log_search(slug: str, language: str, query_text: str, engine: str,
@@ -1070,8 +1072,10 @@ def get_coverage_completeness(slug: str) -> dict:
             raise Refusal(f"coverage: {slug!r} is not in slugs. Nothing to report.")
         _slug = conn.execute("SELECT status, merged_into FROM slugs WHERE slug=?", [slug]).fetchone()
         jur = conn.execute(
-            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
-            "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
+            "SELECT COUNT(DISTINCT COALESCE(b.parent_code, se.jurisdiction)) AS n "
+            "FROM search_executions se LEFT JOIN base_jurisdictions b "
+            "ON b.jurisdiction_code = se.jurisdiction "
+            "WHERE se.slug=? AND se.jurisdiction IS NOT NULL AND se.deferred_reason IS NULL",
             [slug]).fetchone()["n"]
         deferred = conn.execute(
             "SELECT COUNT(*) AS n FROM search_executions "
@@ -1084,7 +1088,7 @@ def get_coverage_completeness(slug: str) -> dict:
         # requirement and the slug read required 0/0, complete true (R2-1). Derive today's
         # figure, never quote it: SELECT COUNT(*) FROM v_research_scope.
         #
-        # A map jurisdiction the declared vocabulary (schemas.enums.JurisdictionCode, I7)
+        # A map jurisdiction the declared vocabulary (base_jurisdictions, I7)
         # refuses can never be logged, so it stays owed -- hence unsearched, hence `complete`
         # stays false -- and is NAMED so the two homes' disagreement is visible (owner question 5).
         # `complete` also needs a non-empty requirement: an empty one examined nothing.
@@ -1099,13 +1103,17 @@ def get_coverage_completeness(slug: str) -> dict:
         # Same anti-join as the view (a logged row, deferred or not, names the pair).
         searched = conn.execute(
             "SELECT COUNT(*) AS n FROM v_research_scope v WHERE EXISTS (SELECT 1 FROM "
-            "search_executions se WHERE se.slug=? AND se.jurisdiction = v.jurisdiction "
+            "search_executions se LEFT JOIN base_jurisdictions b "
+            "ON b.jurisdiction_code = se.jurisdiction WHERE se.slug=? "
+            "AND COALESCE(b.parent_code, se.jurisdiction) = v.jurisdiction "
             "AND UPPER(se.language) = v.language)", [slug]).fetchone()["n"]
         # A search is a search whatever its spelling: the log holds `en` beside `EN`.
         outside = conn.execute(
-            "SELECT COUNT(*) AS n FROM search_executions se WHERE se.slug=? "
+            "SELECT COUNT(*) AS n FROM search_executions se LEFT JOIN base_jurisdictions b "
+            "ON b.jurisdiction_code = se.jurisdiction WHERE se.slug=? "
             "AND se.deferred_reason IS NULL AND NOT EXISTS (SELECT 1 FROM v_research_scope v "
-            "WHERE v.jurisdiction = se.jurisdiction AND v.language = UPPER(se.language))",
+            "WHERE v.jurisdiction = COALESCE(b.parent_code, se.jurisdiction) "
+            "AND v.language = UPPER(se.language))",
             [slug]).fetchone()["n"]
         lang = conn.execute(
             "SELECT COUNT(DISTINCT UPPER(language)) AS n FROM search_executions "
@@ -1123,7 +1131,7 @@ def get_coverage_completeness(slug: str) -> dict:
         "searches_outside_scope": outside,
         "searches_deferred_with_reason": deferred,
         "jurisdictions_unreachable": unreachable,
-        **({"unreachable_note": "owed by lang_jur_map, refused by schemas.enums.JurisdictionCode: "
+        **({"unreachable_note": "owed by lang_jur_map, not held by base_jurisdictions: "
             "owner question 5 of the 2026-11-06 round-3 adjudication"} if unreachable else {}),
         # A slug outside ACTIVE/STUB owes nothing (R3-17): the survivor owes it. Without these
         # keys a MERGED slug read "70 pairs required, 0 searched" -- debt no search can pay.
@@ -1981,6 +1989,23 @@ def main():
                             "references/project-standards.md")
     p_mtc.add_argument("--session", required=True)
     p_mtc.add_argument("--dry-run", action="store_true")
+
+    p_aj = sub.add_parser("add-jurisdiction",
+                          help="Admit a jurisdiction code to base_jurisdictions, pointing at the "
+                               "ledger entry that records the owner's approval")
+    p_aj.add_argument("--code", required=True,
+                      help="upper case; not GB-prefixed (UK is the project's code). A "
+                           "sub-national code is <parent>-<subdivision>")
+    p_aj.add_argument("--kind", required=True,
+                      help="a value of base_jurisdictions.kind's own CHECK")
+    p_aj.add_argument("--parent",
+                      help="the held country a sub-national code counts toward; given for "
+                           "that kind only")
+    p_aj.add_argument("--approval-ref", dest="approval_ref", required=True,
+                      help="the dated `## ` heading of the ledger entry that records the "
+                           "approval, found exactly once in references/project-standards.md")
+    p_aj.add_argument("--session", required=True)
+    p_aj.add_argument("--dry-run", action="store_true")
 
     p_rfu = sub.add_parser("raise-follow-up",
                            help="Tag an extraction for a reviewer to re-check "
@@ -3259,6 +3284,10 @@ def main():
             args.catalogue, args.entry_ref, args.canonical_en, args.definition,
             args.approval_ref, session=args.session,
             domain=args.domain, scope_note=args.scope_note, dry_run=args.dry_run))
+
+    elif args.command == "add-jurisdiction":
+        _emit(add_jurisdiction(args.code, args.kind, args.parent, args.approval_ref,
+                               session=args.session, dry_run=args.dry_run))
 
     elif args.command == "raise-follow-up":
         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
@@ -7804,6 +7833,69 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
                 "entry": resolved, "dry_run": dry_run}
 
 
+def add_jurisdiction(code: str, kind: str, parent: str, approval_ref: str,
+                     session: str, dry_run: bool = False):
+    """Admit a jurisdiction code to `base_jurisdictions`, the vocabulary every writer of a
+    `jurisdiction` column reads (dbcore.check_jurisdiction), on a recorded approval.
+
+    Admitting a code converts a candidate jurisdiction into a declared one, which is a
+    decision on research scope and the owner's. The pointer is the dated `## ` heading of
+    the ledger entry that records it, found exactly once in references/project-standards.md
+    -- the same limit as mint-term-from-catalogue: it proves a unique dated entry exists,
+    not that the entry approves this code, and the operator answers for the match.
+
+    A sub-national code names a held `country` as its parent and is written
+    `<parent>-<subdivision>`; coverage counts a search under it toward that country
+    (OD-04). The kinds are read from the column's own CHECK.
+    """
+    code = (code or "").strip()
+    approval_ref = re.sub(r"^##\s+", "", (approval_ref or "").strip())
+    if not (session or "").strip():
+        raise Refusal("add-jurisdiction: --session is required and may not be blank.")
+    if not code or code != code.upper() or code.startswith("GB"):
+        raise Refusal(
+            f"add-jurisdiction: --code {code!r} must be non-blank upper case and must not "
+            f"start 'GB' (the project writes UK for the United Kingdom, "
+            f"governance/jurisdiction-philosophy.md section 3.3).")
+    if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
+        raise Refusal(f"add-jurisdiction: --approval-ref {approval_ref!r} carries no date. "
+                      f"Give the dated `## ` heading of the approving ledger entry.")
+    n = dbcore.ledger_heading_count(approval_ref)
+    if n != 1:
+        raise Refusal(
+            f"add-jurisdiction: --approval-ref {approval_ref!r} is the heading of {n} ledger "
+            f"entries; it must be exactly one. Record the approving words in a dated entry "
+            f"of references/project-standards.md first (CLAUDE.md rule 0), then give that "
+            f"entry's `## ` heading as written.")
+    with connect(dry_run) as conn:
+        if dbcore.exists(conn, "base_jurisdictions", "jurisdiction_code", code):
+            raise Refusal(f"add-jurisdiction: {code!r} is already held. Nothing was written.")
+        dbcore.check_declared(conn, "base_jurisdictions", "kind", kind,
+                              "add-jurisdiction --kind")
+        if kind == "sub-national":
+            if not parent:
+                raise Refusal(f"add-jurisdiction: a sub-national code needs --parent, the "
+                              f"held country it counts toward.")
+            held = conn.execute("SELECT kind FROM base_jurisdictions WHERE jurisdiction_code=?",
+                                (parent,)).fetchone()
+            if held is None or held[0] != "country":
+                raise Refusal(f"add-jurisdiction: --parent {parent!r} is not a held row of "
+                              f"kind 'country' ({'not held' if held is None else held[0]}).")
+            if not code.startswith(parent + "-"):
+                raise Refusal(f"add-jurisdiction: a sub-national code starts '{parent}-' "
+                              f"(ISO 3166-2 beside its parent); {code!r} does not.")
+        elif parent:
+            raise Refusal(f"add-jurisdiction: --parent is for kind 'sub-national' only; "
+                          f"{kind!r} has none.")
+        row = {"jurisdiction_code": code, "kind": kind, "parent_code": parent or None,
+               "admission_ref": approval_ref}
+        row.update(dbcore.stamp_for(conn, "base_jurisdictions", session))
+        conn.execute(f"INSERT INTO base_jurisdictions ({','.join(row)}) "
+                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+        return {"jurisdiction_code": code, "kind": kind, "parent_code": parent or None,
+                "admission_ref": approval_ref, "dry_run": dry_run}
+
+
 def record_scan(data: dict, session: str, dry_run: bool = False):
     """Record one READING of one source against the parameter list (migration 103).
 
@@ -9587,9 +9679,13 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
 # this, filters on root_id IS NOT NULL, so a row that leaves root_id null is not examined
 # at all. The vocabulary already carried the right value, 'untraced'. Gated below by the
 # column's own CHECK, so this widens WHO may correct it, not WHAT to.
+# jurisdiction ADDED 2026-11-13 (T-024): the four sub-national instruments are re-filed under
+# their sub-national codes (T-113), and amend-source already corrects the source's own
+# jurisdiction. Gated by dbcore.check_jurisdiction, so it widens WHO, not WHAT to.
 _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
                                    "extraction_method", "extraction_status",
-                                   "root_type", "root_ref_id", "value_as_written"})
+                                   "root_type", "root_ref_id", "value_as_written",
+                                   "jurisdiction"})
 
 
 def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
@@ -9637,6 +9733,10 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                            f"amend-extraction --field {field}")
         dbcore.check_declared(conn, "source_value_extractions", field, value,
                               "amend-extraction")
+        if field == "jurisdiction":
+            # No CHECK or FK on the column; the declared vocabulary is base_jurisdictions (I7),
+            # checked exactly as amend-source --field jurisdiction checks it.
+            dbcore.check_jurisdiction(value, "amend-extraction --field jurisdiction")
 
         old = row[field]
         if field == "value_as_written":

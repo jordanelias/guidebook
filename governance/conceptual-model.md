@@ -174,7 +174,7 @@ evidence_type: EvidenceType   # members: schemas/enums.py
 |---|---|
 | schemas/enums.py — EvidenceTier (1–6 per T-03) | ✓ |
 | schemas/enums.py — EvidenceType (per T-03) | ✓ |
-| schemas/enums.py — JurisdictionCode (count the members, never quote them: `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"`) | ✓ |
+| `base_jurisdictions` — the declared jurisdiction vocabulary (a table since migration 129; count the rows, never quote them: `SELECT COUNT(*) FROM base_jurisdictions`) | ✓ |
 | schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
 | schemas/evidence_source.py (531 records) | ✓ |
 | scripts/validate_schema.py (6 entity types + cross-check) | ✓ |
