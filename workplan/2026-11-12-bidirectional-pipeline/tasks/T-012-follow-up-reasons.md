@@ -104,12 +104,33 @@ Every test file in that list is run before and after the change (section 6): a t
 
 ```
 CHECKS="test_run_pipeline_refusals test_db_amend_writers test_scan_contract test_author_presence test_search_log_completeness test_assess_cell_pilot test_validate_evidence_state_2_4 extraction_follow_up_audit migration_reproducibility schema_reference_audit test_db_integrity column_vocabulary_audit"
-for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(next(x['cmd'] for x in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if x['id']==sys.argv[1])))" $c); $cmd > "$SCRATCH/before-$c.txt" 2>&1; echo "$c rc=$? | $(grep -E 'EXAMINED|RESULTS|FAILED|VERDICT' "$SCRATCH/before-$c.txt" | tr '\n' ' ' | cut -c1-200)"; done
+for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(next(x['cmd'] for x in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if x['id']==sys.argv[1])))" $c); $cmd > "$SCRATCH/before-$c.txt" 2>&1; echo "$c rc=$? | $(grep -E '^ *(EXAMINED:|RESULTS|FAILED|VERDICT|ALL PASS|FAILURES|PASS: all|FAIL: )' "$SCRATCH/before-$c.txt" | tr '\n' ' ' | cut -c1-200)"; done
 ```
 
-Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
+Each line shows the check's subject (`EXAMINED:`). The pattern is anchored at the start of a line: `test_author_presence` names `EXAMINED` inside its case titles, and an unanchored pattern fills the 200 characters with those and hides its summary `EXAMINED: … assertion(s)` line. A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request. Two exceptions print no `EXAMINED:` line by design and are read by their case count instead: `test_assess_cell_pilot` (`grep -cE '^ +(PASS|FAIL): ' "$SCRATCH/before-test_assess_cell_pilot.txt"`, ending `PASS: all pilot-engine branch tests`) and `test_validate_evidence_state_2_4` (`grep -cE '^ +\[(PASS|FAIL)\] ' "$SCRATCH/before-test_validate_evidence_state_2_4.txt"`, ending `ALL PASS  (0 failed)`); report those counts as their subject. `extraction_follow_up_audit` prints `EXAMINED: 0` today (no follow-up raised, no live determination): it is vacuous before and after, and the new test case, not the audit, is what proves this change (pilot 2026-11-13).
 
-**Step 2: red before, green after.** Before: `GUIDEBOOK_DB_PATH="$SCRATCH/t.db" python3 scripts/db.py raise-follow-up --extraction-id 11 --reason skimmed-needs-full-read --warrant 'TASK-FIXTURE' --session session_task-probe` is refused. After (on a copy of the migrated database): it writes a row, and `resolve-follow-up` closes it.
+**Step 2: red before, green after.** The probe is an absence finding chosen by query, never a typed id:
+
+```
+export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-012"
+EID=$(python3 -I -c "import sqlite3;c=sqlite3.connect('file:$SCRATCH/t.db?mode=ro',uri=True);print(c.execute(\"select min(extraction_id) from source_value_extractions where claim_type='absent'\").fetchone()[0])"); echo "EID=$EID"
+GUIDEBOOK_DB_PATH="$SCRATCH/t.db" python3 scripts/db.py raise-follow-up --extraction-id "$EID" --reason absence-needs-tested-value --warrant 'TASK-FIXTURE' --session session_task-probe; echo "rc=$?"
+```
+
+Do not pipe the `db.py` call, or `rc=` reports the pipe. **Before:** `rc=2` and argparse's `invalid choice: 'absence-needs-tested-value' (choose from 'read-outside-admitting-purpose')` on stderr. That is the expected refusal: the `--reason` choices are read from the CHECK, so argparse refuses before the writer's own `Refusal` is reached; it is a usage error, not a `Refusal:` message, and that difference is not a defect. **After** (on a fresh copy of the migrated database, `cp data/guidebook.db "$SCRATCH/t2.db"` once the migration is applied, and `GUIDEBOOK_DB_PATH="$SCRATCH/t2.db"` on both calls): `rc=0` with a `follow_up_id`, and `db.py resolve-follow-up --follow-up-id <that id> --resolution 'TASK-FIXTURE' --session session_task-probe` closes it (`rc=0`). The same call with `--reason skimmed-needs-full-read` is refused before and after (section 4, item 1).
+
+**The cases to add** to `scripts/tests/test_scan_contract.py`, after U08, reusing its `raise_fu`, `resolve_fu`, `refusal`, `attempt` and `record` helpers (the file copies `data/guidebook.db`, so the cases are red until the migration is applied to your working copy of it):
+- `T012-01`: `raise_follow_up` with `absence-needs-tested-value` on an extraction the test selects by query (`claim_type = 'absent'`; if none, the file's `SKIPPED-NO-FIXTURE` line) writes an open follow-up; a second open one with the same reason is refused (`already has open`); `resolve_follow_up` closes it. Red before the migration, green after.
+- `T012-02`, the red test for item 1's choice: `raise_follow_up` with `skimmed-needs-full-read` on the fixture's skimmed extraction (`E_ONLY_SKIM`) is refused with `CHECK`. It is green before and after the change, so show it can fail on a seeded defect. The test always copies `<repository>/data/guidebook.db` (it sets `GUIDEBOOK_DB_PATH` itself), so seed a scratch worktree, never the canonical file:
+
+```
+export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-012"
+git worktree add --detach "$SCRATCH/seed" HEAD && cp scripts/tests/test_scan_contract.py "$SCRATCH/seed/scripts/tests/" && cp "$SCRATCH/t.db" "$SCRATCH/seed/data/guidebook.db"
+sed "s/'absence-needs-tested-value'/'absence-needs-tested-value', 'skimmed-needs-full-read'/" scripts/migrations/NNN_<slug>.sql > "$SCRATCH/seeded.sql"   # your migration, CHECK widened by the rejected value
+python3 -I -c "import sqlite3,sys;c=sqlite3.connect(sys.argv[1]);c.executescript(open(sys.argv[2]).read());c.close()" "$SCRATCH/seed/data/guidebook.db" "$SCRATCH/seeded.sql"
+(cd "$SCRATCH/seed" && python3 scripts/tests/test_scan_contract.py) | grep -F 'T012-02'   # must show ✗
+git worktree remove --force "$SCRATCH/seed"
+```
 
 **Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T012-01`, `T012-02`, …) and confirm the prefix is free first (`grep -c '"T012-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
 
