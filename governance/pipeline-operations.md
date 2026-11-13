@@ -106,8 +106,8 @@ column so it can be counted, joined and checked.
 dedicated table with the pointers that make it traceable, alongside the typed value it
 accompanies. `source_value_extractions` is the model: `claimed_value` and `claimed_unit` are
 typed, `claim_text` is the verbatim quote, `source_section` and the 16 `loc_*` columns are the
-locator, and `ref_id`, `slug`, `parameter_id`, the four lens columns and `promoted_to_rdc_id`
-carry the trace. *(This named `population_code` until 2026-09-10; migration 073 retired it in
+locator, and `ref_id`, `slug`, `parameter_id`, `promoted_to_rdc_id` and the figure's lens links
+(`extraction_lens_links`, read through `v_live_lens_links`; the four lens columns on the figure itself are held NULL since migration 131) carry the trace. *(This named `population_code` until 2026-09-10; migration 073 retired it in
 favour of the four lens columns, under the 2026-08-28 owner ruling.)*
 
 What is forbidden is a **state written as prose in a value column**. This is not hypothetical:

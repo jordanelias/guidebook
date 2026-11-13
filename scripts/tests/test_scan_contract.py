@@ -148,6 +148,18 @@ def x(sql, *params):
         con.close()
 
 
+def xfig(sql, *params):
+    """`x` for a raw figure (an INSERT into source_value_extractions) and its lens. The figure is written
+    without lens columns, which the table's CHECK holds NULL since migration 131 (OR-1c); one `carried`
+    link follows, as a fixture standing for a pre-existing figure. Returns the extraction_id."""
+    eid = x(sql, *params)
+    if eid is not None:
+        x("INSERT INTO extraction_lens_links (extraction_id, identity_code, basis, created_at, "
+          "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'carried', 't', ?, 't', ?)",
+          eid, POP, S, S)
+    return eid
+
+
 def run(*argv, script="db.py"):
     return subprocess.run([sys.executable, str(REPO / "scripts" / script), *argv],
                           env=ENV, capture_output=True, text=True)
@@ -415,10 +427,10 @@ try:
     record("S14", "scan_debt is red while pairs are NOT-READ, and lists the parameter",
            d1.returncode == 1 and f"parameter {late} " in d1.stdout and "EXAMINED:" in d1.stdout,
            d1.stdout[-600:] + d1.stderr)
-    x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, identity_code, "
-      "claim_type, claim_text, extraction_method, created_at, updated_at, figure_role) "
-      "VALUES (?, ?, ?, ?, 'absent', 'fixture', 'full-read', 't', 't', 'finding')",
-      REF_B, SLUG_A, late, POP)    # an `absent` row, the positive statement of absence
+    xfig("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+         "claim_type, claim_text, extraction_method, created_at, updated_at, figure_role) "
+         "VALUES (?, ?, ?, 'absent', 'fixture', 'full-read', 't', 't', 'finding')",
+         REF_B, SLUG_A, late)    # an `absent` row, the positive statement of absence
     record("S15", "an 'absent' extraction reads STATED-ABSENT, beating any reading",
            ledger(REF_B, late) == ("STATED-ABSENT", None), ledger(REF_B, late))
     record("S16", "every refused reading wrote nothing (S01-S05, S07, S08)",
@@ -443,11 +455,11 @@ try:
                    "retire-specification",
                    "retire-specification", retire, P["E"], "fixture", S)
     # An extraction with a measured root on P[R], so v_value_independence lists it.
-    x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, identity_code, "
-      "claim_type, claimed_value, claim_text, extraction_method, created_at, updated_at, "
-      "figure_role, root_type, root_ref_id) VALUES (?, ?, ?, ?, 'numerical', '1', "
-      "'fixture 1', 'full-read', 't', 't', 'claim', 'measurement_primary', ?)",
-      REF_A, SLUG_A, P["R"], POP, REF_A)   # fixture evidence for the reader sweep (Q9)
+    xfig("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+         "claim_type, claimed_value, claim_text, extraction_method, created_at, updated_at, "
+         "figure_role, root_type, root_ref_id) VALUES (?, ?, ?, 'numerical', '1', "
+         "'fixture 1', 'full-read', 't', 't', 'claim', 'measurement_primary', ?)",
+         REF_A, SLUG_A, P["R"], REF_A)   # fixture evidence for the reader sweep (Q9)
     listed_before = bool(q("SELECT 1 FROM v_value_independence WHERE parameter_id=?", P["R"]))
     r4 = attempt(retire, P["R"], "fixture: not a design quantity after all", S)
     row = q("SELECT status, notes FROM base_parameters WHERE parameter_id=?", P["R"])[0]
@@ -468,6 +480,7 @@ try:
                    "retired", fn("insert_extraction"),
                          {"ref_id": REF_A, "parameter_id": P["R"],
                           "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
+                          "lens_basis": "named_in_text", "lens_basis_text": "fixture",
                           "claim_text": "fixture", "extraction_method": "full-read"}, S,
                          relations=[], verbatim_exempt="fixture")
 
@@ -479,10 +492,10 @@ try:
     expect_refusal("L10", "merge-parameter refuses while either side has a live determination",
                    "LIVE determination", merge, P["E"], P["A"], "x", S)
     attempt(merge, P["C"], P["A"], "fixture: one quantity", S)
-    XA = x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
-           "identity_code, claim_type, claim_text, extraction_method, created_at, "
-           "updated_at, figure_role) VALUES (?, ?, ?, ?, 'absent', 'fixture', 'full-read', "
-           "'t', 't', 'finding')", REF_A, SLUG_A, P["A"], POP)   # a row to re-point
+    XA = xfig("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+              "claim_type, claim_text, extraction_method, created_at, "
+              "updated_at, figure_role) VALUES (?, ?, ?, 'absent', 'fixture', 'full-read', "
+              "'t', 't', 'finding')", REF_A, SLUG_A, P["A"])   # a row to re-point
     TS = attempt(scan, sc(mode="targeted", target_parameter_id=P["A"]), S).get("scan_id")
     # History on P[A]: a RETIRED determination and a RESOLVED gate, neither writable here
     # without the engine and an audit, set by SQL so the merge can be seen to keep them.
@@ -834,12 +847,14 @@ try:
         """A claim row. REF_A holds a derived text (section F), so its claims must quote it
         -- the page marker carries the digits -- and the exemption is kept only for REF_S,
         for which no decodable body is indexed."""
+        text = quote or f"fixture: shall not exceed {value} mm"
         out = attempt(db.insert_extraction,
                       {"ref_id": ref, "parameter_id": PE,
                        "identity_code": POP, "claim_type": "numerical",
+                       "lens_basis": "named_in_text", "lens_basis_text": re.findall(r"\w+", text)[0],
                        "claimed_value": value, "claimed_unit": "mm", "comparator": "<=",
                        "figure_role": "claim", "extraction_method": method,
-                       "claim_text": quote or f"fixture: shall not exceed {value} mm",
+                       "claim_text": text,
                        "loc_section": f"fixture {method}"},
                       S, relations=[],
                       verbatim_exempt=None if quote else "fixture: no artefact")
@@ -942,10 +957,10 @@ try:
     # T-012: an absence finding owes a tested value; a skimmed figure owes no follow-up row
     # (extraction_method = 'skim' already holds that debt, so its reason is not in the CHECK).
     ABS = dbcore.ABSENCE_FOLLOW_UP_REASON
-    E_ABS = x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
-              "identity_code, claim_type, claim_text, extraction_method, created_at, "
-              "updated_at, figure_role) VALUES (?, ?, ?, ?, 'absent', 'fixture', "
-              "'full-read', 't', 't', 'finding')", REF_A, SLUG_A, PE, POP)  # a row no writer here makes
+    E_ABS = xfig("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+                 "claim_type, claim_text, extraction_method, created_at, "
+                 "updated_at, figure_role) VALUES (?, ?, ?, 'absent', 'fixture', "
+                 "'full-read', 't', 't', 'finding')", REF_A, SLUG_A, PE)  # a row no writer here makes
     t0 = refusal(raise_fu, E_FULL, ABS, "fixture: not an absence", S)
     t1 = attempt(raise_fu, E_ABS, ABS, "fixture: tested value still to find", S)
     t1_again = refusal(raise_fu, E_ABS, ABS, "again", S)
