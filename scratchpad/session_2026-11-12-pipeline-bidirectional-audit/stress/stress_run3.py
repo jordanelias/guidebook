@@ -2,9 +2,13 @@
 """Stress script, round 3: DEPTH. Fixes the round-1/2 script faults the audit named (hs-stress-audit.md §4, W-1..W-11) and
 runs its seven further scenarios on a REAL held source (REF-00139): read to the end, evidenced cells across lenses with the
 gates, the write path with a determination compared by content, parallel batches at capture, the fidelity guards through
-the writers, the parameter life cycle, and backward/re-entry in rows. Plus every registry battery run correctly.
+the writers, the parameter life cycle, and backward/re-entry in rows.
 
     python3 -I stress_run3.py --out DIR [--parts real,guards,batches,lifecycle,reentry,batteries,probes]
+
+Precondition of the `batches` part: `stress_run.py --topics acoustics,reach --out DIR` has run (it leaves the two topic
+databases under <tmp>/guidebook-stress); without it the part raises and the run exits 1. `batteries` is callable by
+name only (it runs `run_checks.py --battery <b> --all`).
 
 Scratch copies only; the canonical DB is never written (hash recorded around every step). It does not judge.
 Faults it corrects: the observed phrase is a CONTIGUOUS bigram of the quote; every extraction carries a locator;
@@ -175,7 +179,9 @@ def part_batches(out):
     a, b = SCRATCH / "acoustics" / "topic.db", SCRATCH / "reach" / "topic.db"
     if not (a.exists() and b.exists()):
         R.note("batches.skip", "round-1 scratch DBs present", {"missing": [str(p) for p in (a, b) if not p.exists()]})
-        return finish_(R)
+        # no scenarios.tsv is written: the part did not finish, and stress_diff.py reports it rather than comparing two empty parts
+        raise RuntimeError("batches precondition unmet: run stress_run.py --topics acoustics,reach --out DIR first (it leaves <tmp>/guidebook-stress/{acoustics,reach}/topic.db); missing: "
+                           + ", ".join(str(p) for p in (a, b) if not p.exists()))
     canon_a = R.scratch / "canon-with-A.db"
     shutil.copyfile(CANON, canon_a)
     R.step("batches.capture-A", "capture batch A against canonical", [PY, "-I", "scripts/research/emit_batch_sql.py", "--scratch", str(a), "--canonical", str(CANON), "--out", str(R.scratch / "A.sql")], db=canon_a)
@@ -233,12 +239,16 @@ def part_reentry(out):
     R.step("reentry.assess-1", "determine", [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(R.db), "--emit-sql", str(R.scratch / "a1.sql"), "--parameter-id", str(ex[1]), "--slug", SLUG,
            "--identity", "MOB", "--session", S, "--stamp", "2026-11-12 00:00:00"])
     spec = rows(R.db, "select max(specification_id) from specifications")[0][0]
-    c = ctx(R.db)
+    gate = None
     for v in ("raise-determination-gate", "resolve-determination-gate", "raise-follow-up", "resolve-follow-up"):
         args, _ = build_args(v, ctx(R.db), S)
         if v == "raise-determination-gate":
             args += ["--trigger-ref-id", REF]  # the pointer: tier and evidence type are read from the held source
-        R.dbpy(f"reentry.{v}", f"{v} on the live determination's data", v, *args)
+        if v == "resolve-determination-gate" and gate:
+            args[args.index("--gate-id") + 1] = str(gate)  # resolve the gate the raise created, not a pre-existing one
+        rc, _, _ = R.dbpy(f"reentry.{v}", f"{v} on the live determination's data", v, *args)
+        if v == "raise-determination-gate" and rc == 0:
+            gate = rows(R.db, "select max(gate_id) from determination_gates")[0][0]
     R.dbpy("reentry.retire-specification", "retire the determination in place", "retire-specification", "--specification-id", str(spec), "--reason", "STRESS-FIXTURE re-entry", "--session", S)
     R.step("reentry.assess-2-same-cell", "re-determine the same cell after retirement: allowed, and does the new row point back at the retired one?", [PY, "-I", "scripts/assess/assess_cell.py", "--db", str(R.db),
            "--emit-sql", str(R.scratch / "a2.sql"), "--parameter-id", str(ex[1]), "--slug", SLUG, "--identity", "MOB", "--session", S, "--stamp", "2026-11-12 00:00:01"])
@@ -276,6 +286,7 @@ def main():
     ap.add_argument("--parts", default="probes,real,guards,batches,lifecycle,reentry")  # batteries is callable by name; it runs run_checks.py --all
     a = ap.parse_args()
     s0 = sha(CANON)
+    failed = []
     fns = {"real": part_real, "guards": part_guards, "batches": part_batches, "lifecycle": part_lifecycle, "reentry": part_reentry, "batteries": part_batteries, "probes": part_probes}
     for p in a.parts.split(","):
         try:
@@ -283,7 +294,11 @@ def main():
         except Exception:
             import traceback
             print("PART FAILED", p, traceback.format_exc())
+            failed.append(p)
     print("canonical sha256 before/after:", s0, sha(CANON), "UNCHANGED" if s0 == sha(CANON) else "!!! MOVED !!!")
+    if failed:
+        print("PARTS FAILED:", ",".join(failed))
+        sys.exit(1)
 
 
 if __name__ == "__main__":
