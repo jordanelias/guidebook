@@ -182,7 +182,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 ## 5. Caller sweep
 
-Names to sweep: `parse_bound`, `NOTATION_FAMILIES`, `derive_extraction`, `numeral-gloss`
+Names to sweep: `parse_bound`, `NOTATION_FAMILIES`, `derive_extraction`, `numeral-gloss`, `insert_extraction`, `add-extraction`, `derive-extraction`, `_VALUE_BEARING`, `bound_on_scale`, `to_canonical`, `from_canonical`, `notation_family`, `_CONVERTIBLE`, `v_derived_figure_check`. The first four alone miss every caller the pilot found: a new refusal in `insert_extraction` changes the truth of everything that writes through it.
 
 **What a caller is.** A hit is a *caller* when its behaviour or its truth changes with this task: code that calls or imports the name; a test that exercises the behaviour you are changing, even if it asserts nothing about it; a view, trigger or index; a registry `cmd` or `basis`; a skill, command or governance sentence that states the behaviour being changed. A hit that stays true after your change is a *mention* and needs nothing. **Fixing a caller the sweep finds is in scope** (CLAUDE.md rule 4): make the fix in this pull request and list it there.
 
@@ -197,12 +197,20 @@ git grep -n -F -e "$N" -- governance architecture CLAUDE.md references workplan/
 ```
 If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) before your change and after it, and report the difference. It is red on the base: its failure count there is the base state, not yours; only a count above your before-run is yours. An object that returns 0 rows is unproven, not clean.
 
-**Hits when this file was written** (2026-11-12, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
+**One exception to the exclusions:** `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/` is not a frozen record once T-014 has merged; it is the live harness section 6 runs. Sweep its scripts too: `git grep -n -F -e 'add-extraction' -- 'scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/*.py'`. On 2026-11-13: `stress_run3.py` (`add_ext` and the quote-variant call: callers, section 4 item 8); `stress_run.py` (three probes written to be refused by a check that runs before the new ones: mentions) and `stress_run2.py` (one step; not part of the harness section 6 runs: a mention).
+
+**Hits when this file was written** (2026-11-12 for the first four names, 2026-11-13 for the rest, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
 
 - `parse_bound`: code and skills: `scripts/assess/assess_cell.py`. Prose: none.
-- `NOTATION_FAMILIES`: code and skills: `scripts/assess/assess_cell.py`, `scripts/tests/test_assess_cell_pilot.py`. Prose: none.
-- `derive_extraction`: code and skills: `scripts/audit/extraction_relations_integrity.py`, `scripts/db.py`. Prose: `workplan/pipeline-state-graph/machines.yaml`.
+- `NOTATION_FAMILIES`: code and skills: `scripts/assess/assess_cell.py`, `scripts/tests/test_assess_cell_pilot.py` (a caller: it patches the dict; section 4 item 1). Prose: none.
+- `derive_extraction`: code and skills: `scripts/audit/extraction_relations_integrity.py` (a caller by truth: a comment quotes the deleted comparison; section 4 item 8), `scripts/db.py`. Prose: `workplan/pipeline-state-graph/machines.yaml` (a needle; kept, a mention).
 - `numeral-gloss`: no file. The name does not exist yet, or lives only in the excluded paths.
+- `insert_extraction`: code: `scripts/db.py`, `scripts/tests/test_db_amend_writers.py` (no numerical write without a comparator; a mention: the pilot saw it unchanged), `scripts/tests/test_run_pipeline_refusals.py` (a caller: the `extraction()` fixture; section 4 item 8), `scripts/tests/test_scan_contract.py` (its `claim()` already passes a comparator; a mention). Prose: `workplan/pipeline-state-graph/machines.yaml`.
+- `add-extraction`: code and skills: `.claude/settings.json`, `scripts/assess/assess_cell.py`, `scripts/audit/observation_verbatim_audit.py`, `scripts/audit/research_batch_dod.py`, `scripts/audit/verified_scan_integrity.py`, `scripts/db.py`, the three test files above, `skills/gap-driven-mining_SKILL.md`, `skills/run-pipeline_SKILL.md` (a caller: it lists what the writer refuses; section 4 item 8). Prose: `governance/check-registry.yaml`, `governance/pipeline-contract.yaml`, `governance/pipeline-operations.md`, `governance/research-contract.yaml`, `workplan/pipeline-state-graph/machines.yaml`. A sentence that lists what `add-extraction` requires or refuses is a caller; a sentence that only names the verb is a mention. Harness: `stress_run3.py` (a caller; section 4 item 8).
+- `derive-extraction`: code and skills: `scripts/audit/extraction_relations_integrity.py`, `scripts/db.py`, `skills/connection-discovery_SKILL.md`, `skills/run-pipeline_SKILL.md`. Prose: `governance/check-registry.yaml`, `workplan/pipeline-state-graph/machines.yaml`. The skill sentences that offer the verb for computed figures were already false before this task (section 4 item 7); they are mentions here and belong to the task that repairs the verb.
+- `_VALUE_BEARING`: code: `scripts/audit/medical_lens_integrity.py`, `scripts/tests/test_scan_contract.py` (both read `db._VALUE_BEARING`; the alias keeps them), `scripts/audit/research_batch_dod.py` (comment), `scripts/tests/test_run_pipeline_refusals.py` and `scripts/validate_parameters.py` (they read `_VALUE_BEARING_NAME`, which stays in `db.py`). Prose: none.
+- `bound_on_scale`, `notation_family`, `_CONVERTIBLE`: `scripts/assess/assess_cell.py` only. `to_canonical`: also `scripts/tests/test_assess_cell_pilot.py`. `from_canonical`: also `scripts/audit/graph/build.py`, whose hit is `_assert_distinct_from_canonical`, a different name (a mention). Prose: none.
+- `v_derived_figure_check`: code: `scripts/audit/extraction_relations_integrity.py`, `scripts/db.py`. Prose: `governance/context-map.yaml`, `governance/pipeline-contract.yaml` (mentions). `sqlite_master`: the view's own definition.
 
 Every test file in that list is run before and after the change (section 6): a test that calls what you change is a caller even when it asserts nothing about it.
 
@@ -215,9 +223,66 @@ CHECKS="test_assess_cell_pilot extraction_relations_integrity test_run_pipeline_
 for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(next(x['cmd'] for x in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if x['id']==sys.argv[1])))" $c); $cmd > "$SCRATCH/before-$c.txt" 2>&1; echo "$c rc=$? | $(grep -E 'EXAMINED|RESULTS|FAILED|VERDICT' "$SCRATCH/before-$c.txt" | tr '\n' ' ' | cut -c1-200)"; done
 ```
 
-Each line shows the check's subject (`EXAMINED:`). A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
+Each line shows the check's subject (`EXAMINED:`), except two that never print one: `test_assess_cell_pilot` (count its `PASS:` lines: `grep -c '^ *PASS:' "$SCRATCH/before-test_assess_cell_pilot.txt"`) and `test_validate_evidence_state_2_4` (it prints `ALL PASS (0 failed)` and `[PASS]` lines); report those counts as their subject. `extraction_relations_integrity` examines rows but no derived row exists (`SELECT COUNT(*) FROM v_derived_figure_check`), so it cannot go red on section 4 item 6: the tests do that. A check that is red here was red before you touched anything (on 2026-11-12 `test_scan_contract` failed two cases, G01 and G02, and `retired_vocabulary` reported occurrences): record it and carry on. A check that prints no `EXAMINED:` line, or `EXAMINED: 0`, examined nothing: say so in the pull request.
 
-**Step 2: red before, green after.** The workplan's done-when, each line run and shown. Plus the stress harness of T-014 before and after: the only differing steps are the ones T-1a intends (`guards.unit-in-prose` now refused).
+**Step 2: red before, green after.** Done when every item below is run and shown in the pull request. Begin each block with the `BASE=` and `export SCRATCH=` lines, and `ST=scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress`.
+
+*2a. The engine's reader, before any edit.* Two probe scripts from the 2026-10-22 report record what the engine reads; the move must not change a byte of their output. Extract them into `$SCRATCH` (not the repository) and run them:
+```
+R=scratchpad/session_2026-10-22-pipeline-stress-test/resolution-report-2026-10-22.md
+for f in fixtures_g1_g13 notation_probe; do awk -v h="# $f.py" 'index($0,h)==1{p=1} p&&/^```/{exit} p' "$R" > "$SCRATCH/$f.py"; python3 -I "$SCRATCH/$f.py" "$PWD" > "$SCRATCH/$f-before.txt" 2>&1; wc -l < "$SCRATCH/$f-before.txt"; done
+```
+Each prints a non-zero line count (13 and 15 on 2026-11-13). Do not edit either script: `notation_probe.py` imports `bound_on_scale` from `assess_cell`, which still exports it after section 4 item 1. After the change, the same loop with `-after` and `cmp "$SCRATCH/$f-before.txt" "$SCRATCH/$f-after.txt"` for each: identical.
+
+*2b. The stress harness, before.* Make the `stress_run3.py` repair of section 4 item 8 first (it changes the probes' arguments, so it must be in both runs), then, on the unchanged writer: `python3 -I $ST/stress_run3.py --out "$SCRATCH/H-before" --parts guards` (about a minute; its last line must read `UNCHANGED`). Read `guards.control-exact` in `$SCRATCH/H-before/guards/log.jsonl`: rc 0. After the change, the same to `$SCRATCH/H-after`, then `python3 -I $ST/stress_diff.py "$SCRATCH/H-before" "$SCRATCH/H-after"`. Expected: `guards.unit-in-prose` differs (accepted before, refused after by the unit screen) and `guards.control-exact` does not. Any other differing step must print one of section 4's refusal sentences (unit, figure, comparator) on an input that refusal is meant for (for example `guards.fullwidth-digits`, if T-008 accepted it: a full-width colon is not a ratio the engine reads); list each in the pull request. Any other difference is a stop (section 9).
+
+*2c. The tests, written before the change and run on the unchanged writer.* Chosen (pilot 2026-11-13): the cases go in `scripts/tests/test_run_pipeline_refusals.py`, as a new section at the end before `finish()`, headed `print("Section T016: ...")`, not in `test_db_amend_writers.py` (whose `N01` to `N05` collide and which has no verified-source fixture). Confirm the prefix is free: `grep -c '"T016-' scripts/tests/test_run_pipeline_refusals.py` prints 0. Use the file's own helpers: inside `with scratch() as c:`, `ref = new_source(verified=True)`, `held_text(ref, "\n".join(sentences))`, `hand_scan(c, ref, "full")`, `pid = P_ACTIVE[0]`; build each row with `extraction(ref, pid, claim_text=<its sentence>, claimed_value=..., claimed_unit=..., comparator=...)`; call `refusal(db.insert_extraction, row, session=S, dry_run=True, relations=[])` for a refusal (its text, or None) and `ok(...)` for an acceptance (`(result, error)`); `record(tid, name, passed, details)`. Make the `extraction()` fixture change of section 4 item 8 in the same edit. The fixture sentences are test text, written in the case, one per case, each holding the figure it claims (for example "A ramp gradient of 8.33% is the greatest permitted.", "The fall is 1/12 over the run.", "A slope of 12:1 is shown on the drawing.", "Ramps are to be not steeper than 1:12 along the run.", "Where the height difference is at most 0.05 m a ramp is to be not steeper than 1:12.", "The surface is to be slip-resistant when wet.", "The first flight rises 5.5 percent.", "The second flight rises 9.25 percent.", "The combined rise is 14.75 percent.", "The combined rise is 99 percent.").
+
+| id | call | input (value / unit / comparator) | expected after the change | on unchanged code |
+|---|---|---|---|---|
+| T016-N1 | `insert_extraction`, dry run | `8.33%` / `%` / `<=` | refused; text contains `put % in --claimed-unit` | red (accepted) |
+| T016-N2 | same | `1/12` / `rise:run ratio` / `<=` | refused; `not 1/12` | red |
+| T016-N3 | same | `12:1` / `rise:run ratio` / `<=` | refused; `inverted` | red |
+| T016-N3b | `ok(lambda: dbcore.figure_refusal(...))` | `1:6 to 14:1` / `rise:run ratio` / `between`, claim type `range` | the returned text contains `inverted` | red (no function) |
+| T016-N4 | `insert_extraction`, dry run | `1:12` / `rise:run ratio (maximum) where the height difference is <= 0.05 m` / `<=` | refused; `condition_on` | red |
+| T016-N4b | same | `1:12` / `rise:run ratio max` / `<=` (the value-bearing screen alone) | refused; `condition_on` | red |
+| T016-N4c | same | `1:12` / `rise:run ratio unless steep` / `<=` (the condition words alone) | refused; `condition_on` | red |
+| T016-N4e | same | `1:12` / `ratio (new build)` / `<=` (the parenthesis rule alone) | refused; `condition_on` | red |
+| T016-N5 | same | `1:12` / `ratio` / `<=` | refused; `rise:run ratio` | red |
+| T016-N6 | same | `1:12` / `rise:run ratio` / none | refused; `--comparator` | red |
+| T016-N7 | same, `ok` | `1:12` / `rise:run ratio` / `<=` | accepted (control) | green |
+| T016-N7b | same, `ok` | a `qualitative` claim, value `slip-resistant`, unit None, comparator None | accepted (control) | green |
+| T016-N7c | `ok(lambda: dbcore.figure_refusal(...))` | `1:6 to 1:14` / `rise:run ratio` / `between`, `range` | returns None with no exception (the report's sketch raised `ValueError` here) | red (no function) |
+| T016-N8 | `ok(lambda: dbcore.figure_refusal(...))` | the `claimed_value` of the first quantity-type row whose value has no digit, derived by query (`SELECT claimed_value FROM source_value_extractions WHERE claim_type IN (SELECT value FROM json_each(?)) AND claimed_value NOT GLOB '*[0-9]*' ORDER BY extraction_id LIMIT 1` with `json.dumps(list(dbcore.QUANTITY_CLAIM_TYPES))`) / `%` / `<=` / `numerical` | the returned text contains `--value-as-written`; `skip(...)` if the query returns no row | red (no function) |
+| T016-N9 | `insert_extraction`, written (not dry run) | base `5.5` and delta `9.25` (`%`, `=`) written first through `insert_extraction`; then a `derived` row `99` / `%` / `=` with `relations=` two `derived_from` edges (`input_role` `base` and `delta`, `stated` `named`, each edge's `quote` its target's sentence) | refused; `disagrees`; the counts of `source_value_extractions` and `extraction_relations` on the scratch copy are unchanged | red (accepted) |
+| T016-N10 | same, dry run, `ok` | the same derived row with `14.75` | accepted (control) | green |
+| T016-N11 | `db.derive_extraction` through a SHIM | base and delta of N9, `claimed_value="99"`, `comparator="="`, `claim_text` the "99" sentence, `identity=IDENT` | refused; text contains `disagrees with its own base + delta`; counts unchanged | red (the old check's text differs) |
+| T016-N11a | same SHIM, `ok` | the same with no `claimed_value` and the "14.75" sentence | accepted; the stored `claimed_value` is `14.75` | green |
+| T016-N11c | `db.derive_extraction`, no shim | the N11a call | refused; text starts with `R3:` (the known defect of section 4 item 7; this case goes red when the verb is repaired, and that repair removes the shim) | green |
+| T016-N11b | `db.relate_extraction` | a `derived` row `99` written with its `base` edge only, then `relate_extraction(row, "derived_from", S, to_extraction=delta, stated="named", quote=<delta sentence>, input_role="delta")` | refused; `disagrees`; counts unchanged | red (accepted) |
+
+The SHIM, stated in a comment beside it: `derive_extraction` passes no locator (section 4 item 7), so for N11 and N11a only, replace `db.insert_extraction` with a wrapper that adds `"source_section": "section 3"` to the row, and restore it straight after (`_insert = db.insert_extraction; db.insert_extraction = lambda data, *a, **k: _insert({**data, "source_section": "section 3"}, *a, **k)`, then `db.insert_extraction = _insert`, in a `try`/`finally`).
+
+In `scripts/tests/test_assess_cell_pilot.py`, after the block that patches `NOTATION_FAMILIES`, assert `dbcore.bound_on_scale` exactly, with `expect(...)`: `("1:12", "rise:run ratio", "<=", "numerical")` gives `(None, Fraction(25, 3))`; `("8.33", "%", "<=", "numerical")` gives `(None, Fraction("8.33"))`; `("1:20", "rise:run ratio", ">=", "numerical")` gives `(Fraction(5), None)`; `("0 to 4.8", "%", "between", "range")` gives `(Fraction(0), Fraction("4.8"))`; `("1/12", "rise:run ratio", "<=", "numerical")` gives `(None, Fraction(1, 12))` (the reader still reads it; the writer refuses it); `("8.33%", "%", "<=", "numerical")` gives `None`. Red on unchanged code (no `dbcore.bound_on_scale`).
+
+Run both files on the unchanged writer: the cases marked red above are red and the controls green. Then make the change and run them again: every case green, and T-008's cases (among them the two that write the Finnish sentence) still green.
+
+*2d. The mutations.* Each must be KILLED. Write a harness to `$SCRATCH/t016-mutations.py` (not in the repository): a list of `(name, path, old, new, test)`; for each, read the file, `assert text.count(old) == 1` (if not, lengthen `old` with its neighbouring text), write the edit, run `python3 <test>` from the repository root, print `KILLED` when the exit code is not 0 and `SURVIVED` otherwise, and restore the file in a `finally`. The test for every row is `scripts/tests/test_run_pipeline_refusals.py` (about 40 s a run).
+
+| id | path | old → new | killed by |
+|---|---|---|---|
+| M1 | `scripts/dbcore.py` | `if (VALUE_BEARING.search(u) or` → `if (False or` | T016-N4b |
+| M2 | `scripts/db.py` | `and not row.get("comparator"):` → `and False:` | T016-N6 |
+| M3 | `scripts/dbcore.py` | in `figure_refusal`, `if claim_type not in QUANTITY_CLAIM_TYPES:` → `if True:` | T016-N1, N2, N3, N5 |
+| M4 | `scripts/db.py` | in `_refuse_derived_mismatch`, `> 1e-9:` → `> 1e9:` | T016-N9, N11 |
+| M5 | `scripts/dbcore.py` | `if "/" in v and notation_family(u):` → `if False:` | T016-N2 |
+| M6 | `scripts/dbcore.py` | `if rise > run:` → `if False:` | T016-N3, N3b |
+| M7 | `scripts/db.py` | `_refuse_derived_mismatch(conn, from_extraction, "relate-extraction")` → `pass` | T016-N11b |
+| M8 | `scripts/dbcore.py` | `for part in re.split(r"\s+to\s+", v):` → `for part in [v]:` | T016-N7c |
+
+The harness prints KILLED eight times. (The report's M5 and M6 targeted the numeral gloss and OR-3, which this task does not build; its M1 survived on N4, whose unit trips all three screens at once, which is why N4b, N4c and N4e test one screen each.)
+
+*2e. The rest.* `grep -rn "def parse_bound" scripts` prints nothing. `python3 scripts/audit/extraction_relations_integrity.py` prints `VERDICT: CLEAN` (see step 1 on what it cannot see). `python3 workplan/pipeline-state-graph/build_graph.py --check` before and after, compared as section 5 says (the pilot saw identical output).
 
 **Writing the test.** Take case ids that cannot collide: prefix them with this task's number (`T016-01`, `T016-02`, …) and confirm the prefix is free first (`grep -c '"T016-' <the test file>` prints 0). Never type into a test an id, a code or a count the database can derive: choose every probe by query (for example the first term of a domain that is not yet a parameter, is not declined in `parameter_declinations` with `revoked_at IS NULL`, and whose name carries no digit). A probe for "the legitimate case still works" must be one that no *other* refusal stops, or it fails for the wrong reason. Where the live data offers no such row, build it on the test's own scratch copy or print the file's `SKIPPED-NO-FIXTURE` line, as the file's existing cases do. A new test must be able to fail: show it red on the unchanged code, or on a seeded defect that you then remove.
 
@@ -271,8 +336,9 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
-- The workplan text and the code disagree about what exists: stop and report; do not reinterpret the plan.
-- Any other step of T-1a depends on the numeral gloss in a way the three points above do not cover.
+- The code and section 4 disagree about what exists (a symbol it locates is missing, appears twice, or does something other than section 4 says): stop and report; do not reinterpret the plan. **Not a stop:** `derive-extraction` refused by R3's locator refusal. That is the known pre-existing defect of section 4 item 7, and the test of section 6 (`T016-N11c`) asserts it.
+- In section 6 step 2b, `guards.control-exact` is refused in the before-run, or the after-run differs in a step section 6 does not account for.
+- A mutation of section 6 step 2d survives after one honest attempt to make its case reach the code it targets.
 
 ## 10. Rollback
 
