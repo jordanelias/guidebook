@@ -55,13 +55,128 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Execute T-1a as written in `workplan/2026-10-23-pipeline-resolution-workplan.md` and the report section it cites (`scratchpad/session_2026-10-22-pipeline-stress-test/resolution-report-2026-10-22.md`, T-1 steps 1 to 7), with its tests (N1 to N11, M1 to M5), **except for the three points below**, where a later owner statement governs (CLAUDE.md rule 0).
-2. **Skip step 6, the numeral gloss.** The owner ruled on 2026-11-12 that a number written in words is entered as a numeral and unit, with the source's wording in a column of its own (`grep -n -F "just translate these into numbers/units" references/project-standards.md`). T-008 built that: `--value-as-written` and the column `value_as_written`. Add no `--numeral-gloss` argument and write no `NUMERAL-GLOSS:` text into `notes` (a marker in a note is two facts in one cell, which the owner's schema ruling of 2026-11-06 forbids).
-3. **In step 3**, the sentence `figure_refusal` returns for a value with no digit names `--value-as-written`, not `--numeral-gloss`. Where the step writes the claim types `numerical` and `range`, read `dbcore.QUANTITY_CLAIM_TYPES` (declared by T-008); do not type the pair again.
-4. **Test N8 is restated:** the quote of extraction 80, with value `5`, unit `%` and no `value_as_written`, is refused; with `--value-as-written 'viisi prosenttia'` it is accepted and the column holds that wording. Derive the quote from the row; do not retype it.
-5. It deletes code (`parse_bound`, the duplicate arithmetic in `derive_extraction`): the code-size line must show it.
+**This section is the whole change; you do not need to open anything else to execute it.** It was extracted from T-1a in `workplan/2026-10-23-pipeline-resolution-workplan.md` and from the T-1 section of `scratchpad/session_2026-10-22-pipeline-stress-test/resolution-report-2026-10-22.md` (steps 1 to 5 and 7), with the pilot's corrections. If you do open that report, these parts of it **do not apply** and this file overrides them: its common protocol (§3.0, P-1 to P-10: a branch from `origin/main`, writing `scratchpad/CURRENT`, the attribution lines and session link it prints, its pull-request steps, the gate `run_checks.py --changed-from origin/main`, a mutation harness under `scratchpad/$STEM/`; sections 2, 6, 7 and 11 here govern those); T-1 steps 6 (the numeral gloss: see below), 8 (OR-3), 9 (OR-10) and 10 (OR-11a), which this task does not execute; its test location (`scripts/tests/test_db_amend_writers.py`, whose ids `N01` to `N05` already exist and which lacks the fixtures these cases need), its test rows N8, N8b and N12, its mutations M5 and M6, its "KILLED six times", its "`build_graph.py --check` reports 0 failures" (section 5 says how to read that check), the counts in its step 4, and its sentence "every live numerical claim already carries a comparator" (false: see item 5).
 
-**What reads what this task adds or changes:** `add-extraction`, `amend-extraction`, `derive-extraction`, the engine.
+**The numeral gloss is not built** (owner ruling of 2026-11-12, CLAUDE.md rule 0): a number written in words is entered as a numeral and unit, with the source's wording in a column of its own (`grep -n -F "just translate these into numbers/units" references/project-standards.md`). T-008 built that (`--value-as-written`, column `value_as_written`). Add no `--numeral-gloss` argument and write no `NUMERAL-GLOSS:` text into `notes` (a marker in a note is two facts in one cell, which the owner's schema ruling of 2026-11-06 forbids). Where the claim types `numerical` and `range` are meant, read `dbcore.QUANTITY_CLAIM_TYPES` (declared by T-008); never type the pair again. Locate code by symbol, never by line number.
+
+1. **Move the notation code to `scripts/dbcore.py`** (stdlib only).
+   - In `scripts/assess/assess_cell.py`, cut from the comment line `#: NOTATIONS OF ONE QUANTITY` through the end of `def bound_on_scale` (`grep -n "NOTATIONS OF ONE QUANTITY\|^def bound_on_scale\|^def parse_bound" scripts/assess/assess_cell.py`). The block holds `NOTATION_FAMILIES`, `_CONVERTIBLE`, `_RATIO_RE`, `notation_family`, `to_canonical`, `from_canonical` and `bound_on_scale`; `parse_bound`, which follows it, is deleted, not moved (item 2).
+   - Paste it into `scripts/dbcore.py` directly after `QUANTITY_CLAIM_TYPES` (`grep -n '^QUANTITY_CLAIM_TYPES' scripts/dbcore.py`), not after `ENGINE_EXTRACTION_COLUMNS`: item 4 uses that constant. Add `from fractions import Fraction` to dbcore's imports (`re` is already there).
+   - `bound_on_scale`'s docstring names `parse_bound` and says it "is left exactly as it was": rewrite those sentences so the docstring states, itself, what `parse_bound`'s said and is still true (the comparator IS the bound; a bare number is read as a point, so a ceiling stored without `<=` contributes a floor as well).
+   - In `assess_cell.py`, import the names back where the block was, so the engine's names stay valid for its importers:
+     ```python
+     # The notation arithmetic lives in dbcore, so the writer that refuses an unreadable figure and the
+     # engine that reads it are one definition. Names are imported back so the engine's names stay valid.
+     from dbcore import (NOTATION_FAMILIES, _CONVERTIBLE, notation_family,  # noqa: E402,F401 -- one home (T-016)
+                         to_canonical, from_canonical, bound_on_scale)
+     ```
+   - Then `grep -n 'Fraction' scripts/assess/assess_cell.py`: if only comments remain, delete `from fractions import Fraction` and the three-line `# EXACT, NEVER FLOAT` comment above it.
+   - In `scripts/tests/test_assess_cell_pilot.py`, the block that patches `_ac.NOTATION_FAMILIES["gradient"]` imports `dbcore as _ac` instead of `assess_cell as _ac` (the dict is shared, so both pass; the test names the home).
+2. **Delete `parse_bound`** (dead: `git grep -n 'parse_bound(' -- scripts schemas skills .claude` prints only its own `def`). In `compose_value`'s comment "`parse_bound`'s own docstring says the comparator IS the bound", write `dbcore.bound_on_scale` for `parse_bound`. Ledger lines that name it stay (append-only).
+3. **`dbcore.VALUE_BEARING` and `dbcore.unit_refusal`.** Move the regex `_VALUE_BEARING` out of `scripts/db.py` into dbcore and leave the alias `_VALUE_BEARING = dbcore.VALUE_BEARING` in `db.py`, so its importers keep working (`git grep -n '_VALUE_BEARING\b' -- scripts`: `scripts/audit/medical_lens_integrity.py` and `scripts/tests/test_scan_contract.py` read `db._VALUE_BEARING`). In dbcore, after the notation block:
+   ```python
+   #: A name or a unit may not state its own answer: digits, comparator symbols, min/max words. Moved here
+   #: from `db.py` (which keeps `_VALUE_BEARING = dbcore.VALUE_BEARING`): one definition for both screens.
+   VALUE_BEARING = re.compile(r"[0-9≥≤<>=]|\b(min|max|minimum|maximum)\b", re.I)
+
+
+   def unit_refusal(unit):
+       """The sentence that refuses a `claimed_unit` that is not a bare scale, else None. `dB(A)` passes."""
+       u = (unit or "").strip()
+       if not u:
+           return None
+       if (VALUE_BEARING.search(u) or re.search(r"[;,]|\b(where|if|unless|except|only|when)\b", u, re.I)
+               or ("(" in u and not re.fullmatch(r"[A-Za-z]+\([A-Z]\)", u))):
+           return ("a unit names the scale only. Put a condition in its own row (`add-extraction "
+                   "--figure-role condition` on the parameter it measures) joined by `--relation "
+                   "condition_on`; put applicability (new build, alteration, building type) in "
+                   "`--setting`; put commentary in `--notes`")
+       return None
+   ```
+   Copy the regex from `db.py` as it stands on `$BASE` if it differs from the line above; the alias must leave behaviour unchanged.
+4. **`dbcore.figure_refusal`.** After `unit_refusal`:
+   ```python
+   def figure_refusal(value, unit, comparator, claim_type):
+       """The sentence that refuses a quantity figure the engine cannot read, else None.
+
+       None when `claim_type` is not in `QUANTITY_CLAIM_TYPES`. Otherwise None only when `bound_on_scale`
+       reads the figure AND it is neither a slash ratio in a gradient unit (`bound_on_scale` reads `1/12`
+       as 0.083 %, so that is tested first) nor an inverted gradient ratio (`12:1`, in either end of a range).
+       """
+       if claim_type not in QUANTITY_CLAIM_TYPES:
+           return None
+       v, u = (value or "").strip(), (unit or "").strip()
+       if "/" in v and notation_family(u):
+           return "write a gradient ratio as rise:run (1:12), not 1/12, which reads as 0.083 %"
+       if bound_on_scale(v, u, comparator, claim_type) is None:
+           if re.search(r"\d\s*%", v):
+               return f"write the number ({v.replace('%', '').strip()}) and put % in --claimed-unit"
+           if re.search(r"\d\s+in\s+\d", v):
+               return "write '1 in 12' as 1:12 with --claimed-unit 'rise:run ratio'"
+           if re.search(r"\d,\d", v):
+               return "write a decimal comma as a point (30,0 -> 30.0); the digits stay the same"
+           if ":" in v and not notation_family(u):
+               return ("a ratio needs the unit 'rise:run ratio' -- if, and only if, the source measures "
+                       "rise over HORIZONTAL run; rise over slope length is a different unit")
+           if claim_type == "range":
+               return "write a range as 'a to b' (e.g. '0 to 4.8')"
+           if not re.search(r"\d", v):
+               return ("a number written in words is entered as a numeral and unit, with the source's "
+                       "wording in --value-as-written")
+           return f"{v!r} with unit {u!r} cannot be placed on any scale"
+       if notation_family(u):
+           for part in re.split(r"\s+to\s+", v):
+               if ":" in part:
+                   rise, run = (Fraction(x) for x in part.split(":", 1))
+                   if rise > run:
+                       return ("an inverted ratio (rise larger than run): write 1:12, and record the "
+                               "source's order in --notes")
+       return None
+   ```
+   Chosen (pilot 2026-11-13): the inverted-ratio test splits a range on ` to ` and tests each end. The report's sketch split the whole value on the first colon, so the live range `1:6 to 1:14` (`SELECT extraction_id FROM source_value_extractions WHERE claimed_value LIKE '%:% to %:%'`) raised `ValueError` (`Fraction('6 to 1:14')`) inside the writer; section 6 has the case that goes red on that sketch. The no-digit branch is reached only by a `--verbatim-exempt` row: on any other row T-008's number check in `_require_verbatim` refuses a value with no numeral first, so this branch is tested by a direct call (section 6, `T016-N8`).
+5. **Wire the refusals into `db.insert_extraction`**, directly after the `for col in _SVE_VOCAB_COLUMNS:` loop:
+   ```python
+   # --- the figure must be readable (T-016) ----------------------------------
+   # A unit that is a sentence and a value the engine cannot place on a scale are both left OUT of a
+   # determination's value without anyone being told; refuse them here, with the fix.
+   for _why in (dbcore.unit_refusal(row.get("claimed_unit")),
+                dbcore.figure_refusal(value, row.get("claimed_unit"), row.get("comparator"), claim_type)):
+       if _why:
+           raise Refusal(f"add-extraction: {_why}. Nothing was written.")
+   if figure_role in ("claim", "derived") and claim_type == "numerical" and not row.get("comparator"):
+       raise Refusal("add-extraction: a value-supplying numerical row needs --comparator ('=' for a "
+                     "point); a bare number is read as a point and adds a floor as well as a ceiling. "
+                     "Nothing was written.")
+   ```
+   These run after the quote, locator (R3) and T-008 number checks, which are unchanged. **Stored rows are history and are not touched:** two live value-supplying numerical rows carry no comparator (`SELECT extraction_id, claimed_value, claimed_unit FROM source_value_extractions WHERE figure_role IN ('claim','derived') AND claim_type='numerical' AND comparator IS NULL`), and the unit screen refuses some live units (run `dbcore.unit_refusal` over `SELECT claimed_unit, COUNT(*) FROM source_value_extractions GROUP BY 1` on a copy). The new refusals apply when a row is written; no stored row is re-valued, and the engine still reads those rows as before. Do not amend them here: that is research data (rule 10). List the two ids in the pull request as the research follow-up (`comparator` is already in `_AMENDABLE_SVE_FIELDS`, so `amend-extraction` can set it).
+6. **One home for derived arithmetic.** Chosen (pilot 2026-11-13): one helper in `scripts/db.py`, beside `_refuse_live_confirmation`:
+   ```python
+   def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
+       """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic.
+       Reads `v_derived_figure_check` inside the caller's transaction, so the raise rolls back the row and its
+       edges. Tolerance: `extraction_relations_integrity`'s EPSILON, which reads the same view afterwards. The
+       view joins on equal units and plain numerals, so a converted row is not compared (its
+       `--conversion-note` is its only record)."""
+       bad = conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
+                          (extraction_id,)).fetchone()
+       if bad and abs(bad["recomputed"] - bad["stored"]) > 1e-9:
+           raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
+                         f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
+                         f"defect this check exists to stop. Nothing was written.")
+   ```
+   - In `insert_extraction`, after the loop that writes the relation edges and before the `return`: `if figure_role == "derived": _refuse_derived_mismatch(conn, extraction_id, "add-extraction")`.
+   - In `relate_extraction`, after `_write_relation_edge(...)` inside the same `with`: `if row["figure_role"] == "derived" and relation == "derived_from": _refuse_derived_mismatch(conn, from_extraction, "relate-extraction")`.
+   - In `derive_extraction`, delete the `if claimed_value is not None:` block that compares `abs(cn - (bn + dn)) > 1e-9` and raises; keep the computation (`if claimed_value is None and bn is not None and dn is not None: claimed_value = _fmt_num(bn + dn)`, `elif claimed_value is None: raise Refusal(...)`), with a one-line comment that a supplied value is compared by `_refuse_derived_mismatch`. Keep the string "extract the base figure first with add-extraction" (`workplan/pipeline-state-graph/machines.yaml` uses it as a needle).
+   - A unit-converted derived row is no longer compared at write. That is not a weakened refusal: the deleted block compared raw numbers across units, so it refused a correct conversion (base and delta in m, stored in mm), and the integrity check already reports such rows as `UNCHECKED`. Say so in the pull request.
+7. **Known pre-existing defect, recorded and not fixed here: `derive-extraction` cannot write a row.** It passes no `source_section`, no `loc_*` column and no `notes` to `insert_extraction`, and has no flag for any of them, so every row it builds is refused by R3's locator refusal ("R3: this row states a value with no locator"), which has applied to every tier since 2026-11-06 (`git log --format='%h %ad %s' --date=short -S'EVERY TIER NEEDS A LOCATOR' -- scripts/db.py | tail -1`). No derived row exists (`SELECT COUNT(*) FROM source_value_extractions WHERE figure_role='derived'`). Chosen (pilot 2026-11-13): this task does not repair it. A repair is a new locator interface on the verb (`--source-section`, and from tier 4 the `loc_*` hierarchy with `--locator-scheme`), which is not part of T-1a and touches a parser T-018 also changes; it is filed as its own task. Consequence for this task: after item 6 a mismatched `--claimed-value` on `derive-extraction` is still refused, but by R3, before the arithmetic is reached. The test reaches the shared check through the verb with a stated shim and also asserts the R3 refusal, so the case turns red the day the verb is repaired (section 6, `T016-N11` to `N11c`). Say so in the pull request.
+8. **Callers repaired in this pull request** (section 5 finds them; each is listed in the pull request):
+   - `scripts/tests/test_run_pipeline_refusals.py`: the fixture `extraction()` writes a `numerical` `claim` row with no comparator; add `"comparator": "="` to its base dict. Without it, five existing cases (`V04`, `X02`, `L02`, `L03`, and T-008's case that writes the Finnish sentence) go red after item 5 and the next T-008 case ends the run with an uncaught `Refusal` (pilot 2026-11-13).
+   - `scripts/tests/test_assess_cell_pilot.py`: item 1's import.
+   - `scripts/audit/extraction_relations_integrity.py`: the comment headed "TOLERANCE MATCHES THE WRITER'S" quotes the deleted `derive_extraction` comparison; reword it to name `db.py _refuse_derived_mismatch` (add-extraction, relate-extraction, derive-extraction) and `abs(recomputed - stored) > 1e-9`.
+   - `skills/run-pipeline_SKILL.md`: in the `add-extraction` bullet, after "value and unit", add "`--comparator` for a numerical figure (`=` for a point)", and append to its "**The writer refuses:**" list: a `--claimed-unit` that is a sentence rather than a scale (the condition is its own row, `--relation condition_on`; applicability is `--setting`); a quantity figure the engine cannot place on a scale (`8.33%`, `1/12`, `12:1`, `1 in 12`, a decimal comma; the refusal names the fix); a value-supplying numerical row with no `--comparator`; a `derived` figure that disagrees with its own base + delta. `python3 scripts/audit/skill_vocabulary_audit.py` must be no worse after.
+   - The stress harness of T-014, `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/stress_run3.py` (a live harness since T-014, so a caller despite its path): its `add_ext` and its quote-variant `add-extraction` call pass no `--comparator`, so after item 5 every probe that was accepted would be refused for the comparator, the wrong reason. Make `anchor()` select `comparator` as an eighth column, unpack it in `add_ext`, and pass `*(("--comparator", c) if c else ())` with `c` the anchor row's own comparator in both places. Do this **before** the harness's before-run (section 6), so the two runs differ only by the writer.
+
+**What reads what this task adds or changes:** `add-extraction` and `derive-extraction` (through `insert_extraction`), `relate-extraction`, the engine (`assess_cell.py`, which imports the notation names back), `medical_lens_integrity.py` and `test_scan_contract.py` (through the `_VALUE_BEARING` alias). `amend-extraction` is not changed. It deletes code (`parse_bound`, the duplicate arithmetic in `derive_extraction`, the engine's own copy of the notation block, now moved): the code-size line must show it.
 
 **Code size.** Report in the pull request the output of `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'` (run it after `git add`, so new files count), and for anything added name what reads it and what existing code it replaces or makes deletable. The base is the point where your branch left `$BASE`, not `origin/main` by name.
 

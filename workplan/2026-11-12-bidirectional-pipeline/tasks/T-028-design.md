@@ -2,7 +2,7 @@
 
 _Written 2026-11-12 by an Opus-class designer under the owner's instruction "Opus to write design files that must be written first", on the delegated resolution of OD-03. Plan document: it changes no script, schema, row or ruling. Every count is given as the command that produces it; re-run it. SQL marked **sketch** is a shape, not a file to paste unread. Canadian English._
 
-_Revised 2026-11-13, after the T-028 pilot (`scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-028-report.md`) and the fold of T-026: no pointer reaches `term_aliases` by `rowid` (SQLite cannot declare a foreign key on one and `emit_batch_sql.py` does not carry implicit rowids), so T-026's junction is keyed and T-028 remaps it by key to `form_id`; `attestation` keeps T-026's `DEFAULT`; the judge, reason and former label of every label set by judgment get one typed home, `term_label_picks`, which also holds the base route's rationale; the refusals of `rename-term` and `mint-term-from-catalogue` are kept, and one cross-language question is left to the owner; `label_is_instrument_term` is renamed `label_is_attested_form`. Where the 2026-11-12 text and this revision differ, the revision governs._
+_Revised 2026-11-13, after the T-028 pilot (`scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-028-report.md`) and the fold of T-026: no pointer reaches `term_aliases` by `rowid` (SQLite cannot declare a foreign key on one and `emit_batch_sql.py` does not carry implicit rowids), so T-026's junction is keyed and T-028 remaps it by key to `form_id`; `attestation` keeps T-026's `DEFAULT`; the judge, reason and former label of every label set by judgment get one typed home, `term_label_picks`, which also holds the base route's rationale; the refusals of `rename-term` and `mint-term-from-catalogue` are kept, and one cross-language question is left to the owner; `label_is_attested_form` is renamed `label_is_attested_form`. Where the 2026-11-12 text and this revision differ, the revision governs._
 
 ## 0. Verdict
 
@@ -19,7 +19,7 @@ _Revised 2026-11-13, after the T-028 pilot (`scratchpad/session_2026-11-12-pipel
 | OD-03 (delegated), `grep -n -F 'OD-03: forms table' references/project-standards.md` | identity is the neutral id; names are rows of one forms table, one row per occurrence with language, jurisdiction, source; `canonical_en` our label, never a form; label basis derived; display by E1; a stored choice only where no derivation decides | sections 3, 6, 7 |
 | Sixth statement 2026-11-06, `grep -n -F 'a concept is an equivalence class of forms' references/project-standards.md` | equivalence class; usage type and attestation per form; disfavoured forms kept; conflation recorded per occurrence, not resolved | member rows; `usage_type`; T-026's `attestation`; conflation derived (section 5) |
 | Seventh statement 2026-11-06, `grep -n -F 'base grounds itself' references/project-standards.md` | a base form carries its own source columns (URL, page, line), not an `evidence_sources` row | T-026's locator columns; `add-term` base route (section 8) |
-| Eighth statement 2026-11-06, `grep -n -F 'English labels are allowed on non-English-origin concepts' references/project-standards.md` | an English label allowed, marked as ours; the instrument's phrase kept as a form; no English form until an English-jurisdiction source uses one; no column read, matched or ranked first | `canonical_en` as label; `v_term_names.label_is_instrument_term`; screens per language (section 8) |
+| Eighth statement 2026-11-06, `grep -n -F 'English labels are allowed on non-English-origin concepts' references/project-standards.md` | an English label allowed, marked as ours; the instrument's phrase kept as a form; no English form until an English-jurisdiction source uses one; no column read, matched or ranked first | `canonical_en` as label; `v_term_names.label_is_attested_form`; screens per language (section 8) |
 | E1 and E4, `grep -n -E '^\| E1 |^\| E4 ' references/project-standards.md` | E1: named by the instrument's own phrase until an English-language instrument of a P1+P2+P3 jurisdiction names it. E4: model-generated and unrecorded aliases stay as flagged search aids, never vocabulary, never deleted | `v_term_names` rules (section 7); screens read attested forms only (section 8) |
 | CLAUDE.md rule 5 and the 2026-11-06 schema-shape statement | one home per fact; one value per cell | one forms table; `usage_type` and `attestation` in their own cells; legacy `alias_type` values frozen (section 5) |
 
@@ -34,7 +34,7 @@ _Revised 2026-11-13, after the T-028 pilot (`scratchpad/session_2026-11-12-pipel
 ```sql
 -- sketch: term_aliases after T-028's rebuild. Columns marked (T-026) are added by T-026 first.
 CREATE TABLE term_aliases (
-    form_id             INTEGER PRIMARY KEY AUTOINCREMENT,   -- = the old rowid (pointers made by rowid still resolve)
+    form_id             INTEGER PRIMARY KEY AUTOINCREMENT,   -- assigned once, in the migration, from the old rowid; nothing stored points by rowid
     term_id             TEXT NOT NULL REFERENCES terms(term_id),
     alias               TEXT NOT NULL,                       -- the form, verbatim
     language            TEXT NOT NULL DEFAULT 'EN',
@@ -43,8 +43,8 @@ CREATE TABLE term_aliases (
     jurisdiction        TEXT,
     notes               TEXT,
     observation_id      INTEGER REFERENCES observed_terms(observation_id),
-    attestation         TEXT NOT NULL CHECK (attestation IN
-                            ('instrument','other_source','owner_supplied','model_seed','unrecorded')),  -- (T-026)
+    attestation         TEXT NOT NULL DEFAULT 'unrecorded' CHECK (attestation IN
+                            ('instrument','other_source','owner_supplied','model_seed','unrecorded')),  -- (T-026; the DEFAULT is kept)
     source_url          TEXT CHECK (source_url IS NULL OR source_url GLOB 'http*://*'),             -- (T-026)
     source_page         TEXT,                                                                       -- (T-026)
     source_line         INTEGER CHECK (source_line IS NULL OR source_line > 0),                    -- (T-026)
@@ -69,17 +69,45 @@ CREATE UNIQUE INDEX ux_term_aliases_occurrence ON term_aliases
      COALESCE(source_line, 0));
 CREATE INDEX idx_ta_alias    ON term_aliases(alias);      -- recreated (exists today)
 CREATE INDEX idx_ta_language ON term_aliases(language);   -- recreated (exists today)
+
+-- T-026's junction, remapped by key to form_id (section 10, step 3).
+CREATE TABLE search_execution_forms (
+    exec_id            INTEGER NOT NULL REFERENCES search_executions(exec_id),
+    form_id            INTEGER NOT NULL REFERENCES term_aliases(form_id),
+    created_at         TEXT NOT NULL,
+    created_by_session TEXT NOT NULL,
+    PRIMARY KEY (exec_id, form_id)
+);
+
+-- The one home of the judge and reason of a label set by judgment (OD-38), and of the label it replaced.
+CREATE TABLE term_label_picks (
+    pick_id             INTEGER PRIMARY KEY,
+    term_id             TEXT NOT NULL REFERENCES terms(term_id),
+    former_label        TEXT,                                 -- the label replaced; NULL only for a mint by add-term --first-form
+    form_id             INTEGER REFERENCES term_aliases(form_id),          -- rename-term --from-form, or a mint's first form
+    observation_id      INTEGER REFERENCES observed_terms(observation_id), -- rename-term --from-observation
+    ruling_quote        TEXT,                                               -- rename-term --ruling-quote (found once in the ledger)
+    judge               TEXT NOT NULL,                        -- who picked
+    reason              TEXT NOT NULL,                        -- why (add-term --first-form: its --rationale)
+    created_at          TEXT NOT NULL,
+    created_by_session  TEXT NOT NULL,                        -- with whatever else dbcore.stamp_for fills
+    CHECK ((form_id IS NOT NULL) + (observation_id IS NOT NULL) + (ruling_quote IS NOT NULL) = 1),
+    CHECK (former_label IS NOT NULL OR form_id IS NOT NULL)
+);
 ```
+
+`term_label_picks` stores no route (derived from which pointer is set, rule 8) and no new label (it is `terms.canonical_en`; the pick reaches it by `term_id`, rule 5). The label a term carried between two picks is the `former_label` of the later one, or `canonical_en` after the last. A mint by `add-term --from-observation` writes no row: its warrant is its `term_adjudications` row. A catalogue mint writes none: its warrant is the catalogue columns on `terms`. Columns on `terms` for the judge and reason were rejected (section 15, G).
 
 `usage_type` is nullable: NULL means "not yet typed", which is the truth for every existing row; it is typed by judgment when a row is next touched (T-107), never guessed by the migration. The five values are the sixth statement's list, in the column's own CHECK (read by `dbcore.check_values`, never retyped).
 
-## 4. What T-026 builds on this table (names fixed here; T-026 executes them)
+## 4. What T-026 builds on this table (as folded 2026-11-13; T-026's section 4 governs its own details)
 
-- `attestation TEXT NOT NULL` with the five-value CHECK above (the sixth statement's four kinds plus `unrecorded`): `instrument` (a code, standard or statute uses the form), `other_source` (any other source uses it: signage manual, public-body or advocacy guidance, a study, a glossary), `owner_supplied` (a seed the owner gave), `model_seed` (a model generated it), `unrecorded` (no provenance). `instrument` and `other_source` are attestations; the other three are seeds or unknowns and are **search aids only** (E4).
-- `source_url`, `source_page`, `source_line`, `source_clause`, and the two CHECKs of section 3.
-- **Mechanical fill**, from what the row already says, with no judgment: `observation_id` set → `other_source` (an admitted source used the phrase; whether it is an instrument is a judgment left to T-107); notes carrying a `VERIFIED-GLOSSARY` or `VERIFIED-CROSS` marker → `other_source`; `model-generated` → `model_seed`; anything else, including `curated`, `repo shorthand`, `VERIFIED-NATIVE` and NULL notes → `unrecorded`. The markers are the ones `classify()` in `scripts/audit/alias_provenance_audit.py` reads; reuse that function's precedence. (The other_source rows carry no URL, so the first CHECK admits them through `observation_id` or, for the glossary markers, not at all: if `select count(*) from term_aliases where notes like '%VERIFIED-GLOSSARY%' or notes like '%VERIFIED-CROSS%'` is not 0 at execution, those rows go to `unrecorded` and are listed in T-026's pull request for T-107 to re-attest with a locator.)
-- `add-alias` gains the base route of the seventh statement: `--source-url --source-page --source-line --source-clause --attestation instrument|other_source` as an alternative to `--observation-id`, and `--seed owner_supplied|model_seed` for a flagged seed with no locator.
-- The search-forms junction (T-026 item 1) points at `term_aliases.form_id` once T-028 has run; until then at `rowid`, which T-028 preserves as `form_id`.
+- `attestation TEXT NOT NULL DEFAULT 'unrecorded'` with the five-value CHECK above (the sixth statement's four kinds plus `unrecorded`): `instrument` (a code, standard or statute uses the form), `other_source` (any other source uses it: signage manual, public-body or advocacy guidance, a study, a glossary), `owner_supplied` (a seed the owner gave), `model_seed` (a model generated it), `unrecorded` (no provenance). `instrument` and `other_source` are attestations; the other three are seeds or unknowns and are **search aids only** (E4). The `DEFAULT` is required by `ADD COLUMN ... NOT NULL`, and T-028's rebuild keeps it (section 10, step 2).
+- `source_url`, `source_page`, `source_line`, `source_clause`, and the two cross-column CHECKs of section 3, in DDL.
+- **Mechanical fill**, from what the row already says, in `classify()`'s precedence (`scripts/audit/alias_provenance_audit.py`), by `INSTR`: `VERIFIED-GLOSSARY`, `VERIFIED-CROSS` and `VERIFIED-NATIVE` → `unrecorded` (they carry no observation and no locator, so the first CHECK would refuse `other_source`; the condition this page set on 2026-11-12 came true, and T-026 lists those rows for T-107 to re-attest with a locator); `observation_id` set → `other_source`; `model-generated` → `model_seed`; anything else → `unrecorded`. Never `instrument` by inference.
+- `add-alias` gains the base route of the seventh statement (`--alias --language --jurisdiction --source-url (--source-page | --source-clause) [--source-line] --attestation instrument|other_source`, the pair checked against `lang_jur_map`) and a seed route (`--seed owner_supplied|model_seed`). The base route's warrant is its locator and its judge is `created_by_session`: no rationale column. The observation route writes `other_source` unless `--attestation instrument` is given.
+- `alias_provenance_audit` reads `attestation` first and falls back to the notes markers for `unrecorded` rows only, so the curated, repo-shorthand and `VERIFIED-*` classes survive until T-107 re-attests them. T-028 changes nothing in it: it already counts per row, which is per `form_id`.
+- **The search-forms junction, `search_execution_forms`**, points at a form by `term_aliases`' present key `(term_id, alias, language)` with a real foreign key, not by `rowid`: SQLite cannot declare a foreign key on a rowid (measured: `foreign key mismatch`), and `scripts/research/emit_batch_sql.py` diffs a table by its declared key and emits rows without their implicit rowids (`grep -n 'implicit rowids' scripts/research/emit_batch_sql.py`), so a rowid captured on a scratch copy can name another row in the canonical database. `log-search --form-id N` takes a rowid as input only and stores the key. T-028 remaps the junction by that key to `form_id` (section 10, step 3).
 
 **Why the occurrence grain is T-028's and not T-026's:** T-026 adds columns by `ALTER TABLE` and needs no rebuild; the grain needs one. Until T-028 merges, a second occurrence of a form a term already holds in that language cannot be stored, so **T-107 (attest forms) now waits for T-028** (its task file is corrected in the same pass).
 
@@ -92,9 +120,9 @@ CREATE INDEX idx_ta_language ON term_aliases(language);   -- recreated (exists t
 ## 6. `canonical_en`
 
 - **Kept, `NOT NULL`, meaning "our English descriptive label".** Six committed data migrations INSERT `terms.canonical_en` (`git grep -l canonical_en -- 'scripts/migrations/data_*' | wc -l`) and six views read it as a parameter's name (`select name from sqlite_master where type='view' and sql like '%canonical_en%'`); every one keeps working because the column keeps its meaning: a label to show and to search our own registry by. Relaxing `NOT NULL` would rebuild `terms` for no gain once English labels are allowed (eighth statement).
-- **Never a form.** No writer copies `canonical_en` into `term_aliases`. `rename-term` stops doing so (it wrote the old label as `DEPRECATED`); the former label stays recorded once, in the `scope_note` trailer `rename-term` already writes.
-- **Marked as ours by derivation, not a column** (OD-03: "add no label-kind column"): `v_term_names.label_is_instrument_term` is 1 exactly when an attested member form of the same concept has the label's text. Otherwise the label is ours.
-- **The 94 terms** (`select count(*) from terms`) are unchanged; every one derives `label_is_instrument_term = 0` today, because no row is attested yet (`select count(*) from term_aliases where observation_id is not null` prints 0, and T-026's fill adds no locator).
+- **Never a form.** No writer copies `canonical_en` into `term_aliases`. `rename-term` stops doing so (it wrote the old label as `DEPRECATED`); the former label is recorded once, in `term_label_picks.former_label` (section 3). **Corrected 2026-11-13:** this page first kept it in the `AMENDED` trailer `rename-term` writes on `scope_note`, which the 2026-11-06 schema-shape statement forbids (a correction appended to a note); no route of `rename-term` writes that trailer now, and existing trailers are not rewritten.
+- **Marked as ours by derivation, not a column** (OD-03: "add no label-kind column"): `v_term_names.label_is_attested_form` is 1 exactly when an attested member form (`instrument` or `other_source`) of the same concept has the label's text. (Named `label_is_instrument_term` until 2026-11-13; it was never restricted to instruments.) Otherwise the label is ours.
+- **The 94 terms** (`select count(*) from terms`) are unchanged; every one derives `label_is_attested_form = 0` today, because no row is attested yet (`select count(*) from term_aliases where observation_id is not null` prints 0, and T-026's fill adds no locator).
 - The rule that a label must sit inside an observed phrase (the owner's 2026-09-09 rule, kept 2026-10-09) **still binds when the first form is English**; it is lifted only for a concept whose first form is not English, where the eighth statement allows an English descriptive label.
 
 ## 7. The name shown: `v_term_names` (E1 derived; sketch)
@@ -123,7 +151,7 @@ pick AS (
 SELECT p.term_id,
        p.canonical_en AS label,
        EXISTS (SELECT 1 FROM attested a WHERE a.term_id = p.term_id
-                 AND lower(a.alias) = lower(p.canonical_en)) AS label_is_instrument_term,
+                 AND lower(a.alias) = lower(p.canonical_en)) AS label_is_attested_form,
        CASE WHEN p.en_label_form IS NOT NULL THEN 'english_instrument_label'
             WHEN p.en_first_form IS NOT NULL THEN 'english_instrument_form'
             WHEN p.origin_form   IS NOT NULL THEN 'origin_instrument_form'
@@ -141,7 +169,7 @@ SELECT p.term_id,
 
 **The rules, in order (E1, with the stored choice):**
 1. Our label equals an English form an instrument of an owed English-language jurisdiction uses → show it (`english_instrument_label`). This is also how the stored, warranted choice works: `rename-term --from-form <form_id>` sets the label to one attested form (section 8).
-2. Else an English instrument form of such a jurisdiction exists → show the first recorded of them (`english_instrument_form`). **[ANSWERED 2026-11-12, fifth set, OD-38: "First recorded, until a named judge picks; the pick is recorded with its reason".]** The pick is `rename-term --from-form` with a named judge and a reason, both in typed columns (section 8, corrected). **Arbitrary when there are several** (for example two English-language codes naming one concept differently); the remedy is rule 1 via `rename-term`, and `select term_id from v_term_names v where display_basis='english_instrument_form' and (select count(distinct lower(alias)) from term_aliases a where a.term_id=v.term_id and upper(a.language)='EN' and a.attestation='instrument') > 1` lists the concepts owed that choice.
+2. Else an English instrument form of such a jurisdiction exists → show the first recorded of them (`english_instrument_form`). **[ANSWERED 2026-11-12, fifth set, OD-38: "First recorded, until a named judge picks; the pick is recorded with its reason".]** The pick is `rename-term --from-form` with a named judge and a reason, in `term_label_picks` (sections 3 and 8). **Arbitrary when there are several** (for example two English-language codes naming one concept differently); the remedy is rule 1 via `rename-term`, and `select term_id from v_term_names v where display_basis='english_instrument_form' and (select count(distinct lower(alias)) from term_aliases a where a.term_id=v.term_id and upper(a.language)='EN' and a.attestation='instrument') > 1` lists the concepts owed that choice.
 3. Else an instrument form in any language exists → show the origin instrument's phrase, in its own language (`origin_instrument_form`): E1 proper.
 4. Else → show our label (`label_ours`), which a page marks as ours.
 
@@ -211,7 +239,7 @@ Proof: `migrate_db.py --rebuild` exits 0; `migration_reproducibility.py --deep` 
 
 | Id | File | Test | Expected today (red) | After |
 |---|---|---|---|---|
-| T028-01 (AT-25) | `scripts/tests/test_scan_contract.py` | on a scratch copy, `add-term --first-form` with a form in the first non-EN language of `lang_jur_map` (by query) and its paired jurisdiction, a URL and clause, `--attestation instrument`, and an English descriptive label; then reads `v_term_names` | `add-term: error: the following arguments are required: --from-observation` | one term; one member row in that language; `label_is_instrument_term = 0`; `display_basis = 'origin_instrument_form'`; no attested EN row for the term |
+| T028-01 (AT-25) | `scripts/tests/test_scan_contract.py` | on a scratch copy, `add-term --first-form` with a form in the first non-EN language of `lang_jur_map` (by query) and its paired jurisdiction, a URL and clause, `--attestation instrument`, and an English descriptive label; then reads `v_term_names` | `add-term: error: the following arguments are required: --from-observation` | one term; one member row in that language; `label_is_attested_form = 0`; `display_basis = 'origin_instrument_form'`; no attested EN row for the term |
 | T028-02 (C-04) | same | `add-term --from-observation` on a fixture observation whose language is not EN, with an English label not inside the phrase | refused: `--canonical-en '...' is not inside the observed phrase` | accepted; the observation's phrase is the first member row |
 | T028-03 | same | the same form text attested in two jurisdictions for one term (two `add-alias` base-route calls) | refused or promoted in place by the `(term_id, alias, language)` key | two rows, two `form_id`s |
 | T028-04 | same | `rename-term --from-form <id>` | `unrecognized arguments: --from-form`; and the old label is written as a `DEPRECATED` alias | label changed; `display_basis = 'english_instrument_label'` when that form is an EN instrument form; no alias row written |
