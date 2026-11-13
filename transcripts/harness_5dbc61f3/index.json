@@ -107,21 +107,21 @@
   {
     "started": "2026-11-13T03:28:15",
     "role": "other",
-    "bytes": 1028631,
+    "bytes": 1046142,
     "agent_id_prefix": "a5c4e883",
     "file": "2026-11-13T03-28-15_other_a5c4e883.jsonl"
   },
   {
     "started": "2026-11-13T03:28:15",
     "role": "other",
-    "bytes": 1042016,
+    "bytes": 1068527,
     "agent_id_prefix": "a5d04b4a",
     "file": "2026-11-13T03-28-15_other_a5d04b4a.jsonl"
   },
   {
     "started": "2026-11-13T03:28:15",
     "role": "other",
-    "bytes": 902112,
+    "bytes": 910872,
     "agent_id_prefix": "a8821c0e",
     "file": "2026-11-13T03-28-15_other_a8821c0e.jsonl"
   },
