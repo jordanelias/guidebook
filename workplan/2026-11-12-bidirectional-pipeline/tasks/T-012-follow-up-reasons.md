@@ -39,7 +39,7 @@ export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-012" && mkdir -p "$SCRATCH" && cp da
 
 ## 3. The problem, in the guidebook's terms
 
-The owner ruled that a skimmed finding cues a dedicated reading and that a study reporting no change sends work back to find the values it tested. Neither debt can be recorded, so a skimmed or doubtful figure is forgotten and later treated as read.
+The owner ruled that a skimmed finding cues a dedicated reading and that a study reporting no change sends work back to find the values it tested. The first debt is already recorded, by `extraction_method = 'skim'`, and the engine names it (section 4, item 1). The second cannot be recorded: a no-change finding whose tested value is still unknown has no carrier, so the work owed on it is forgotten and the finding is later treated as read.
 
 **Evidence command** (run from the repository root, after the set-up block so that `$SCRATCH` exists; it reads the canonical database read-only or works on a copy):
 
@@ -120,7 +120,7 @@ GUIDEBOOK_DB_PATH="$SCRATCH/t.db" python3 scripts/db.py raise-follow-up --extrac
 Do not pipe the `db.py` call, or `rc=` reports the pipe. **Before:** `rc=2` and argparse's `invalid choice: 'absence-needs-tested-value' (choose from 'read-outside-admitting-purpose')` on stderr. That is the expected refusal: the `--reason` choices are read from the CHECK, so argparse refuses before the writer's own `Refusal` is reached; it is a usage error, not a `Refusal:` message, and that difference is not a defect. **After** (on a fresh copy of the migrated database, `cp data/guidebook.db "$SCRATCH/t2.db"` once the migration is applied, and `GUIDEBOOK_DB_PATH="$SCRATCH/t2.db"` on both calls): `rc=0` with a `follow_up_id`, and `db.py resolve-follow-up --follow-up-id <that id> --resolution 'TASK-FIXTURE' --session session_task-probe` closes it (`rc=0`). The same call with `--reason skimmed-needs-full-read` is refused before and after (section 4, item 1).
 
 **The cases to add** to `scripts/tests/test_scan_contract.py`, after U08, reusing its `raise_fu`, `resolve_fu`, `refusal`, `attempt` and `record` helpers (the file copies `data/guidebook.db`, so the cases are red until the migration is applied to your working copy of it):
-- `T012-01`: `raise_follow_up` with `absence-needs-tested-value` on an extraction the test selects by query (`claim_type = 'absent'`; if none, the file's `SKIPPED-NO-FIXTURE` line) writes an open follow-up; a second open one with the same reason is refused (`already has open`); `resolve_follow_up` closes it. Red before the migration, green after.
+- `T012-01`: `raise_follow_up` with `absence-needs-tested-value` on the fixture extraction the U cases use (`E_FULL`, which the test writes itself; the writer does not read `claim_type`, and this task adds no refusal that would) writes an open follow-up; a second open one with the same reason is refused (`already has open`); `resolve_follow_up` closes it. Red before the migration, green after.
 - `T012-02`, the red test for item 1's choice: `raise_follow_up` with `skimmed-needs-full-read` on the fixture's skimmed extraction (`E_ONLY_SKIM`) is refused with `CHECK`. It is green before and after the change, so show it can fail on a seeded defect. The test always copies `<repository>/data/guidebook.db` (it sets `GUIDEBOOK_DB_PATH` itself), so seed a scratch worktree, never the canonical file:
 
 ```
@@ -136,7 +136,7 @@ git worktree remove --force "$SCRATCH/seed"
 
 **Fixtures.** Anything a test or probe writes goes to a copy, is labelled `TASK-FIXTURE`, and never reaches `data/guidebook.db`.
 
-**Step 3, after the change: the after-run.** The same loop with `after-` in place of `before-`. Then compare, check by check: `diff <(grep -E '\[✗\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/before-$c.txt") <(grep -E '\[✗\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/after-$c.txt")`. No failing case may appear that was not failing before; the `EXAMINED:` number may only change by the cases you added.
+**Step 3, after the change: the after-run.** The same loop with `after-` in place of `before-`. Then compare, check by check: `for c in $CHECKS; do echo "== $c"; diff <(grep -E '\[✗\]|\[FAIL\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/before-$c.txt") <(grep -E '\[✗\]|\[FAIL\]|^ *FAIL|^FAILED|VERDICT: FAIL' "$SCRATCH/after-$c.txt"); done` (begin the block with the `SCRATCH` and `CHECKS` lines; `\[FAIL\]` is `test_validate_evidence_state_2_4`'s form). No failing case may appear that was not failing before; the `EXAMINED:` number (or, for the two tests above, the case count) may only change by the cases you added: `test_scan_contract` by two.
 
 **Step 4: the gate, once.**
 
@@ -149,13 +149,24 @@ scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "
 - **The gate takes longer than two minutes** (pilots measured over 2 in a clone). Run it in the background with a long timeout and read `$SCRATCH/gate.txt` when it ends; do not re-run it because the first call timed out.
 - **`research_tooling_separation` reads `origin/main`, not `$BASE`** (its registered `cmd` takes no `--base`), so on any other base it can FAIL on paths you never touched (pilots: 737 paths against 6). Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, report that result, and treat a gate FAIL that disappears with `--base` as not yours.
 - **A check that was already red before your change** (the before-run shows it) tells you nothing about your diff: name it in the pull request with its before and after lines, and move on.
+- **An advisory FAIL in `gate.txt` on a check that is not in the before-run list** must be shown to be the base's, not yours, by running that check's registry `cmd` once on an unchanged worktree of the base and comparing (the pilot met several, all pre-existing: `scan_debt`, `verified_scan_integrity`, `research_protocol_audit`, `metadata_integrity_audit`, `validate_schema_cross_check`, `retired_vocabulary`, `research_dod`, `skill_vocabulary_audit`, `search_log_completeness`; re-derive, do not trust the list):
+
+```
+export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-012"
+if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi
+git worktree add --detach "$SCRATCH/base" "$(git merge-base HEAD "$BASE")"
+c=<check id>; cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(next(x['cmd'] for x in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if x['id']==sys.argv[1])))" $c)
+(cd "$SCRATCH/base" && $cmd) > "$SCRATCH/base-$c.txt" 2>&1; echo "base rc=$?"; $cmd > "$SCRATCH/mine-$c.txt" 2>&1; echo "mine rc=$?"; diff "$SCRATCH/base-$c.txt" "$SCRATCH/mine-$c.txt" | head -20
+git worktree remove --force "$SCRATCH/base"                 # when every such check is compared
+```
+  Same rc and the same failing lines: not yours; name it in the pull request. `search_log_completeness` can fail in the gate on WebSearch ledger lines of the running session and pass standalone (pilot 2026-11-13): that is the session's own search log, not this diff.
 
 ## 7. Commit
 
 Commit **after** the gate of section 6 is clean.
 ```
 git add -A . ':!transcripts' ':!*commands.jsonl'      # add the two append-only logs only at a natural break (CLAUDE.md rule 6)
-git commit -m "governance: widen extraction follow-up reasons for skimmed and absence findings [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the callers the sweep found and what was done to each>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
+git commit -m "governance: widen extraction follow-up reasons for an absence finding [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: what changed, the evidence commands and their output, the callers the sweep found and what was done to each>" -m "<the attribution trailers your own session instructions give: a Co-Authored-By line and a Claude-Session line>"
 ```
 The format is `{skill-name}: {action} [YYYY-MM-DD HH:MM]`, timestamp last, taken from `date -u`. Do not copy trailers from this file; use the ones your session was given.
 
@@ -181,7 +192,9 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - the sweep of section 5 finds a caller (as defined there) that you cannot repair without adding something section 4 does not name. A caller you can repair is repaired and listed; a mention is left;
 - a check or test that was green in the before-run is red in the after-run, at any level (the test files are registered as advisory, so the gate will not stop you: the before-and-after comparison is what does);
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
-- you would have to guess a value, a vocabulary term, a name or an owner's intent.
+- you would have to guess a value, a vocabulary term, a name or an owner's intent;
+- an owner entry later than 2026-11-12 asks for a follow-up row on a skimmed figure (`grep -n -F -e "skimmed-needs-full-read" -e "skimmed figure" references/project-standards.md`, read every hit dated after 2026-11-12): that ruling supersedes section 4 item 1's choice (CLAUDE.md rule 0), and adding the value is then the owner's word to carry out, not a design to re-argue;
+- `git grep -l extraction_follow_ups -- 'scripts/migrations/data_*'` prints a file (the migration would then need an `AFTER_DATA` marker this file does not specify).
 
 ## 10. Rollback
 

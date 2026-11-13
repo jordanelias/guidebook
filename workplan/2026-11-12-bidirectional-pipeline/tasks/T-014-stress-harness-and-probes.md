@@ -2,7 +2,7 @@
 
 _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Evidence base: `workplan/2026-11-12-bidirectional-pipeline/01-handshake-ledger.md`, as corrected by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/fa-corrections-for-suite.md` (where they differ, the corrections govern). Every number in this file was read on 2026-11-12 and is given with the command that produces it: re-run the command; do not trust the number._
 
-**Pilot status.** Not piloted. Three tasks of this plan were executed in scratch clones (T-006, T-008, T-010) and the defects they showed in the task files were corrected in every file by one generator; this file's own steps have not been executed by anyone. Its evidence command was run on 2026-11-12 and printed what section 3 states. Expect to find a defect in this file, and report it rather than work around it.
+**Pilot status.** **Piloted** 2026-11-13 (dry pilot; behaviour preservation not shown, see the report): report `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/T-014-report.md`, patch `.../T-014.patch`; defects folded. Expect to find a defect in this file, and report it rather than work around it.
 
 ## 1. Identity
 
@@ -18,7 +18,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 ## 2. Preconditions
 
-- **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
+- **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is whichever remote branch carries the newest commit to `workplan/2026-11-12-bidirectional-pipeline/`. The `BASE=` line of the set-up block derives it (it names no branch, so a renamed or deleted workplan branch cannot make it fall silently to a stale `origin/main`; the pilot of 2026-11-13 met exactly that with the earlier line). Every command in this file uses `$BASE`, never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change. If the line prints an empty `BASE=`, stop (section 9).
 - **Tasks that must be merged to the integration base first:** none. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
 - **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
 - **Tests that must be red (or green) before you start:** none (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
@@ -28,7 +28,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
-if git rev-parse -q --verify origin/ccr-408aaa9b-z3e4s0 >/dev/null && ! git diff --quiet origin/main origin/ccr-408aaa9b-z3e4s0 -- workplan/2026-11-12-bidirectional-pipeline; then BASE=origin/ccr-408aaa9b-z3e4s0; else BASE=origin/main; fi; echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-014-stress-harness-and-probes "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-014" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
@@ -44,10 +44,11 @@ Three rounds of stress scripts found defects no check finds, and they are the on
 **Evidence command** (run from the repository root, after the set-up block so that `$SCRATCH` exists; it reads the canonical database read-only or works on a copy):
 
 ```
-ls scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/*.py; sed -n '/^## 4\./,/^## 5\./p' scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-stress-audit.md | head -20
+ls scratchpad/session_2026-11-12-pipeline-bidirectional-audit/stress/*.py; A=scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-stress-audit.md; sed -n '/^## 4\./,/^## 5\./p' "$A" | head -20; sed -n '/^### 7\.4/,/^## 8\./p' "$A"
+grep -n 'list(new)\[:5\]' scripts/migrate_db.py
 ```
 
-**Expected output today:** Five scripts; the audit lists their faults (W-1 to W-11 and §7.4).
+**Expected output today:** Five scripts (`lang_probe.py`, `run_logged.py`, `stress_run.py`, `stress_run2.py`, `stress_run3.py`); the audit's section 4 table (W-1 to W-11) and its §7.4 paragraph (the reused clone, the guard probes without a locator, `raise-determination-gate` without its trigger, the merge probe on a parameter with an open gate); and two lines of `scripts/migrate_db.py`, both inside `_apply_atomically`, that print the first five items of a set (the source of the one difference two repaired runs still show; section 4 item 3).
 
 If the output differs, the ground has moved: stop (section 9). Ids that appear in this command are probes read on 2026-11-12; where the command derives an id by query, that is deliberate, and a test you write must do the same (section 6).
 
