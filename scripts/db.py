@@ -2036,7 +2036,11 @@ def main():
                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
     p_rfu.add_argument("--extraction-id", dest="extraction_id", type=int, required=True)
     p_rfu.add_argument("--reason", required=True,
-                       choices=dbcore.schema_choices("extraction_follow_ups", "reason"))
+                       choices=dbcore.schema_choices("extraction_follow_ups", "reason"),
+                       help="why; a cross-slug figure takes the reason that says so (owner D1); "
+                            f"'{dbcore.ABSENCE_FOLLOW_UP_REASON}' is only for an extraction "
+                            "with claim_type='absent' whose tested value is still to be "
+                            "found by backward citation mining and context (owner OR-22)")
     p_rfu.add_argument("--warrant", required=True,
                        help="what a reviewer should re-check, and why")
     p_rfu.add_argument("--session", required=True)
@@ -8003,8 +8007,15 @@ def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
     most whole-code figures are "from another slug", so tag only what a reviewer should
     re-check against the parameter's own literature, and say why.
 
+    The second reason, `absence-needs-tested-value` (migration 128, owner OR-22), is for an
+    absence finding (`claim_type = 'absent'`): it reports no change, and the value it tested
+    is still to be found by backward citation mining of the study and by contextual clues.
+    The follow-up row is the carrier of that debt; OR-22 says to mine, not that a row is
+    required.
+
     REFUSES: a reason outside the column's CHECK; a blank warrant; an unknown extraction;
-    a second OPEN follow-up for the same (extraction, reason), naming the open one.
+    `absence-needs-tested-value` on an extraction whose claim_type is not 'absent'; a second
+    OPEN follow-up for the same (extraction, reason), naming the open one.
     """
     warrant = (warrant or "").strip()
     if not warrant:
@@ -8013,10 +8024,15 @@ def raise_follow_up(extraction_id: int, reason: str, warrant: str, session: str,
     with connect(dry_run) as conn:
         dbcore.check_declared(conn, "extraction_follow_ups", "reason", reason,
                               "raise-follow-up --reason")
-        if not dbcore.exists(conn, "source_value_extractions", "extraction_id",
-                             extraction_id):
+        found = conn.execute("SELECT claim_type FROM source_value_extractions "
+                             "WHERE extraction_id = ?", (extraction_id,)).fetchone()
+        if found is None:
             raise Refusal(f"raise-follow-up: extraction {extraction_id}: no such "
                           f"extraction.")
+        if reason == dbcore.ABSENCE_FOLLOW_UP_REASON and found[0] != "absent":
+            raise Refusal(f"raise-follow-up: --reason {reason} is for an absence finding "
+                          f"(claim_type 'absent'); extraction {extraction_id} has claim_type "
+                          f"{found[0]!r}. Nothing was written.")
         prior = conn.execute(
             "SELECT follow_up_id, raised_by_session FROM extraction_follow_ups "
             "WHERE extraction_id = ? AND reason = ? AND resolved_at IS NULL",
