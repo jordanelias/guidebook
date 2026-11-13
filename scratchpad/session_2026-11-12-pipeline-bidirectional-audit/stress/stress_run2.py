@@ -4,7 +4,7 @@ battery, and a real-source chain through the verbs round 1 never reached (citati
 gates, supersession, cross-referencing, economics, case studies, amendments, merge/decline), all on scratch copies,
 all logged with the round-1 harness (stress_run.Run): argv, rc, full stdout/stderr, row deltas, canonical hash.
 
-    python3 -I stress_run2.py [--out DIR] [--parts sweep,tools,chain]
+    python3 -I stress_run2.py --out DIR [--parts sweep,tools,chain]
 
 It does not judge. Arguments are built mechanically from each verb's own usage text (required options only) and
 real values read from the DB, so a refusal here is as likely to be a semantic refusal (right or wrong) as a script
@@ -203,7 +203,7 @@ def finish_(R):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=str(HERE / "results2"))
+    ap.add_argument("--out", required=True)  # no default: Run() empties each log.jsonl it opens, and RETAINED.md keeps those logs
     ap.add_argument("--parts", default="sweep,chain,tools")
     a = ap.parse_args()
     s0 = sha(CANON)
