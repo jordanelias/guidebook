@@ -617,6 +617,7 @@ writers:
     - base_parameters
     - determination_gates
     - evidence_sources
+    - extraction_lens_links
     - extraction_relations
     - identity_icf_map
     - source_slug_links

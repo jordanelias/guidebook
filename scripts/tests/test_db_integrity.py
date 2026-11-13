@@ -47,6 +47,11 @@ DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
 #: the open one. A bump of RULE_VERSION that leaves the payload alone then needs no edit here.
 LEGACY_SHA_VERSIONS = ("pilot-2",)
 LEGACY_SHA_SQL = ", ".join(map(repr, LEGACY_SHA_VERSIONS))
+#: The link-set labels whose derivation_sha hashed the cell's COALESCE lens key alone. History, so it
+#: cannot grow: every later label hashes all four lens codes (T-019). Derived with git log -p
+#: -G'^RULE_VERSION = ' (not -S, which misses a changed label) plus the stored labels, minus
+#: LEGACY_SHA_VERSIONS.
+COALESCE_LENS_SHA_VERSIONS = ("pilot-3", "pilot-4", "pilot-5")
 #: The link-set versions written before pilot-5 added the `|branches:` term (the governing claims
 #: with an outgoing `condition_on` edge). Closed, like the set above: a row stamped with one of
 #: these verifies without the term, whatever edges were filed since, because that engine did not
@@ -1076,10 +1081,9 @@ def run_checks(db_path):
     # evidence-architecture §10 means -- "same evidence + same rule_version => same
     # state + same derivation_sha" -- and the remedy is the same as for every other
     # K01 failure: re-run the engine and restamp.
-    for cid, pid, lens, gr, rv, sha_rec in conn.execute(
-            "SELECT specification_id, parameter_id, "
-            "COALESCE(identity_code, icf_code, needs_code, medical_code), "
-            "governing_refs, rule_version, derivation_sha FROM specifications "
+    for cid, pid, *lens4, gr, rv, sha_rec in conn.execute(
+            "SELECT specification_id, parameter_id, identity_code, icf_code, needs_code, "
+            "medical_code, governing_refs, rule_version, derivation_sha FROM specifications "
             "WHERE retired_at IS NULL"):
         if not sha_rec or not rv:
             unattested += 1
@@ -1118,9 +1122,13 @@ def run_checks(db_path):
             n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
                                "WHERE parameter_id = ?", (pid,)).fetchone()[0]
             body = "|".join(refs) + f"|x{n_x}"
+        # The lens term: the COALESCE key for the labels that hashed it, all four codes from pilot-6 on.
+        lens = (next((c for c in lens4 if c), None)
+                if rv in LEGACY_SHA_VERSIONS + COALESCE_LENS_SHA_VERSIONS
+                else "|".join(c or "" for c in lens4))
         payload = f"{pid}|{lens}|" + body + "::" + rv
         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
-            stale.append(f"{cid} (param {pid}×{lens}, {rv})")
+            stale.append(f"{cid} (param {pid}×{next((c for c in lens4 if c), None)}, {rv})")
     record("K01", "every recorded derivation_sha verifies against its own row",
            not stale,
            f"{len(stale)} stale: {', '.join(stale)} — the row, or the evidence read "

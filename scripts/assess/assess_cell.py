@@ -78,6 +78,8 @@ Module roster (PILOT-MANIFEST.md §4 — no silent omissions):
                               and the reason is not emptiness: no value-directness
                               grading rule exists in this repository and inventing
                               one is stop condition 4 (G2; never silently EXACT)
+  v_live_lens_links           which lens codes a figure is stated in (T-018); a figure reaches
+                              a cell only through the codes written there (T-019, _lens_clause)
   (lens codes are validated against their own live base tables)
 
 G-fixes (evidence-architecture.md §4, DR-2026-07-12-evidence-architecture-unification):
@@ -123,7 +125,11 @@ from schemas.evidence_state import (  # noqa: E402
     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
 )
 
-RULE_VERSION = "pilot-5"  # pilot-5 (T-017, prior workplan T-2): conditioned governing claims are branches, not the
+RULE_VERSION = "pilot-6"  # pilot-6 (T-019, prior workplan T-3): a figure reaches a cell only through the live lens
+#   links written on it (_lens_clause), and derivation_sha hashes all four lens codes of the cell. The
+#   payload changed: test_db_integrity K01 keeps the earlier link-set labels on the COALESCE key
+#   (COALESCE_LENS_SHA_VERSIONS).
+#   pilot-5 (T-017, prior workplan T-2): conditioned governing claims are branches, not the
 #   headline (OR-2). The sha payload gains one term, `|branches:<ids>`, only when a governing claim
 #   has an outgoing `condition_on` edge (`sha()`), so an edge filed after a determination moves the
 #   sha; the payload of a cell with no such claim is the pilot-4 payload, bar the label. K01
@@ -233,6 +239,24 @@ def lens_key(lens):
     return None
 
 
+def _lens_clause(lens, alias):
+    """`AND <every lens the cell states is among the figure's live links>` and its parameters.
+
+    A figure reaches a cell when, for each lens the cell states, it has a live link carrying that
+    code; a lens the cell leaves NULL imposes nothing (T-018 design section 4). Read from
+    `v_live_lens_links`, never from the retired lens columns of `source_value_extractions`, and
+    never through a crossing map (D-0184): a figure tagged for another group, or for everyone,
+    does not reach a cell that does not state that tag (OR-1b). A cell stating no lens would
+    impose nothing and gather by parameter alone, which is the defect this closes, so it is refused."""
+    parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
+              f"k.extraction_id = {alias}.extraction_id AND k.{c} = ?)", lens[c])
+             for c in LENS_ORDER if lens.get(c)]
+    if not parts:
+        raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
+                      "select evidence by parameter alone")
+    return "AND " + " AND ".join(p for p, _ in parts), tuple(v for _, v in parts)
+
+
 def _gather(conn, join, where, params):
     """The distinct sources, not superseded, behind the extraction rows (alias `x`) of one
     parameter that `where` selects, as the dicts `assess_source` takes: `ref_id` and
@@ -253,7 +277,7 @@ def _gather(conn, join, where, params):
                 f"ORDER BY e.ref_id", params)]
 
 
-def gather_sources(conn, parameter_id):
+def gather_sources(conn, parameter_id, lens):
     """The sources holding an EXTRACTION FOR THIS PARAMETER. Not the slug's sources.
 
     THE DEFECT THIS CLOSES, measured 2026-09-10. This function took a `slug` and
@@ -317,8 +341,9 @@ def gather_sources(conn, parameter_id):
     # the reason. Fixture tolerance as above: a synthetic table without the column has no
     # skimmed rows to leave out.
     skim, skim_params = _publishable_clause(conn, "x")
-    return _gather(conn, "", f"x.figure_role IN ('claim', 'derived') {skim}",
-                   (parameter_id, *skim_params))
+    lens_sql, lens_vals = _lens_clause(lens, "x")
+    return _gather(conn, "", f"x.figure_role IN ('claim', 'derived') {skim} {lens_sql}",
+                   (parameter_id, *skim_params, *lens_vals))
 
 
 def _has_column(conn, table, column):
@@ -354,7 +379,7 @@ CONDITIONING_ROLES = ("condition",)
 DIRECTION_SUPPLYING_ROLES = ("finding",)
 
 
-def gather_findings(conn, parameter_id):
+def gather_findings(conn, parameter_id, lens):
     """The sources holding a FINDING for this parameter. Direction, never value.
 
     WHY THIS EXISTS, and it is not symmetry with `gather_sources`. Owner statement
@@ -385,32 +410,35 @@ def gather_findings(conn, parameter_id):
     # and found nothing says nothing about which end of a permitted range the evidence favours.
     # Left out, never silently: `gather_extraction_links` says why on each such row.
     skim, skim_params = _publishable_clause(conn, "x")
+    lens_sql, lens_vals = _lens_clause(lens, "x")
     return _gather(
         conn, "",
         f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) "
-        f"AND x.claim_type <> 'absent' {skim}",
-        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params))
+        f"AND x.claim_type <> 'absent' {skim} {lens_sql}",
+        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals))
 
 
-def gather_confirmers(conn, parameter_id):
+def gather_confirmers(conn, parameter_id, lens):
     """The sources holding a finding row of this parameter that originates a `confirms` edge to
     another row of it. Read apart from `gather_findings`, because confirming is not direction:
     an `absent` row supplies none, yet the edge it carries is the claim that confirms a code (a
     study that tested the existing value and found no case to change it, owner 2026-10-21,
-    REF-00980). A skimmed row still confirms nothing."""
+    REF-00980). A skimmed row still confirms nothing. The lens clause applies to the finding row `x`
+    that is gathered; the confirmed row `t` reaches the cell, or not, through `gather_sources`."""
     if not _table_exists(conn, "extraction_relations"):
         return []
     skim, skim_params = _publishable_clause(conn, "x")
+    lens_sql, lens_vals = _lens_clause(lens, "x")
     return _gather(
         conn,
         "JOIN extraction_relations r ON r.from_extraction_id = x.extraction_id "
         "AND r.relation = 'confirms' JOIN source_value_extractions t "
         "ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id",
-        f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim}",
-        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params))
+        f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim} {lens_sql}",
+        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals))
 
 
-def gather_extraction_links(conn, parameter_id, governing_refs):
+def gather_extraction_links(conn, parameter_id, governing_refs, lens):
     """Every extraction for this parameter, graded by the part it played.
 
     THE BACKWARD WALK STARTS HERE (migration 077). `gather_sources` returns SOURCES and
@@ -430,7 +458,11 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
       excluded      everything else, with a MANDATORY reason. This is the row that makes
                     a `pending` cell legible: "examined, and here is why it did not
                     answer" reads differently from silence, and the two were previously
-                    indistinguishable to everything except a hash collision.
+                    indistinguishable to everything except a hash collision. A figure whose
+                    live lens links do not carry every code the cell states (T-019) is
+                    `excluded` first, with that reason: it is LINKED, never dropped, because
+                    K02 requires the junction to hold every extraction of the parameter, and
+                    it is gathered nowhere (`_lens_clause`).
 
     Two facts ride along on each dict, beside the role, for the caller to report: `superseded`
     (the row's source has been replaced, so it is not gathered) and, on a `finding` row only,
@@ -453,10 +485,21 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
         "LEFT JOIN evidence_sources e ON e.ref_id = x.ref_id "
         "WHERE x.parameter_id = ? ORDER BY x.extraction_id", (parameter_id,)).fetchall()
     gov = set(governing_refs or ())
+    lens_sql, lens_vals = _lens_clause(lens, "x")
+    in_lens = {r[0] for r in conn.execute(
+        f"SELECT x.extraction_id FROM source_value_extractions x WHERE x.parameter_id = ? {lens_sql}",
+        (parameter_id, *lens_vals))}
+    cell = ", ".join(f"{c}={lens[c]}" for c in LENS_ORDER if lens.get(c))
     out = []
     for eid, ref, frole, ctype, method, superseded in rows:
         left_out = None
-        if frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
+        if eid not in in_lens:
+            # BEFORE every other branch: a figure the cell's lens does not reach played no part in it.
+            role, why = "excluded", (
+                f"not stated in this cell's lens ({cell}): no live lens link of this figure carries "
+                f"every code the cell states; a figure reaches a cell only through the lens codes "
+                f"written on it")
+        elif frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
             # Checked BEFORE the governing branch: a skimmed row is left out even when its
             # source governs through another, fully read row (owner 2026-10-09).
             role, why = "excluded", (
@@ -492,7 +535,7 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
                             "confirm through a `confirms` edge)")
         out.append({"extraction_id": eid, "ref_id": ref, "figure_role": frole,
                     "role": role, "exclusion_reason": why, "superseded": bool(superseded),
-                    "left_out": left_out})
+                    "left_out": left_out, "in_lens": eid in in_lens})
     return out
 
 
@@ -874,16 +917,28 @@ def link_payload(links):
     return "|".join(sorted(f"{l['role']}:{l['extraction_id']}" for l in links))
 
 
-def count_extractions(conn, parameter_id):
-    """How many extraction rows this parameter holds, across all sources.
+def count_extractions(conn, parameter_id, lens):
+    """How many extraction rows of this parameter are stated in the cell's lens (`_lens_clause`),
+    across all sources.
 
     Reported alongside the source count so a reader can see the 1:N fan-out rather
     than infer it: 2 sources and 9 extractions is a normal, ruled shape (D-0168), and
     a report showing only "2 sources" hides which of the two carried the clauses.
     """
+    lens_sql, lens_vals = _lens_clause(lens, "x")
     return conn.execute(
-        "SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?",
-        (parameter_id,)).fetchone()[0]
+        f"SELECT COUNT(*) FROM source_value_extractions x WHERE x.parameter_id = ? {lens_sql}",
+        (parameter_id, *lens_vals)).fetchone()[0]
+
+
+def unkeyed_models(conn, lens, links):
+    """The lens columns this cell's key leaves NULL but that some governing figure's live links
+    carry, in LENS_ORDER: reported, never acted on. Several codes of one model are several cells."""
+    gov = [l["extraction_id"] for l in links if l["role"] == "governing"]
+    marks = ",".join("?" * len(gov))
+    return [c for c in LENS_ORDER if gov and not lens.get(c) and conn.execute(
+        f"SELECT 1 FROM v_live_lens_links WHERE extraction_id IN ({marks}) "
+        f"AND {c} IS NOT NULL LIMIT 1", gov).fetchone()]
 
 
 def population_match(conn, ref_id, population):
@@ -1099,8 +1154,9 @@ def sha(parameter_id, lens, links, conditioned=()):
     The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies
     a stored sha, and K01 was re-keyed to (parameter_id × lens) by migration 071. Two
     implementations of one hash that disagree is a hash that attests nothing, so this
-    one and K01's move together or not at all. `lens` is the COALESCE value, not the
-    whole dict — see lens_key(). `conditioned` (pilot-5) is `conditioned_governing()`, hashed as a
+    one and K01's move together or not at all. `lens` is the four-code dict from pilot-6 on, hashed
+    as all four codes in LENS_ORDER; the earlier link-set labels hashed the COALESCE key
+    (`lens_key()`), which K01 keeps for them (COALESCE_LENS_SHA_VERSIONS). `conditioned` (pilot-5) is `conditioned_governing()`, hashed as a
     `|branches:` term only when non-empty; K01 recomputes it from `extraction_relations`.
 
     WHY `n_extractions` IS IN THE PAYLOAD (added 2026-09-10). Without it, two
@@ -1141,7 +1197,8 @@ def sha(parameter_id, lens, links, conditioned=()):
     # `extraction_relations`, which the sha does not otherwise read, and an edge filed after the
     # determination would change the answer with nothing going red.
     branches = ("|branches:" + ",".join(map(str, sorted(conditioned)))) if conditioned else ""
-    payload = f"{parameter_id}|{lens}|" + link_payload(links) + branches + "::" + RULE_VERSION
+    payload = (f"{parameter_id}|{'|'.join(lens.get(c) or '' for c in LENS_ORDER)}|"
+               + link_payload(links) + branches + "::" + RULE_VERSION)
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -1205,8 +1262,21 @@ def determine(conn, parameter_id, lens, slug, note):
     # THE SUBJECT, not the topic. Sources are gathered by the extractions they hold
     # for THIS parameter (B4c); `slug` no longer selects evidence and is carried only
     # as the topic the determination was recorded under.
-    sources = gather_sources(conn, parameter_id)
-    n_extractions = count_extractions(conn, parameter_id)
+    #
+    # THE ABSENT CELL HAS NO ROW (OD-08, delegated resolution 2026-11-12; T-019). When no figure of the
+    # parameter is stated in this lens there is nothing to determine, and a row ("pending, with a gap")
+    # would claim a determination for a group nobody has evidence for. The refusal lives here, not in
+    # `main`, so every caller sees it. The engine cannot judge whether the lens is relevant to the
+    # parameter, so the gap is the judgment session's to raise.
+    n_extractions = count_extractions(conn, parameter_id, lens)
+    if n_extractions == 0:
+        raise Refusal(
+            f"no figure of parameter {parameter_id} is stated in this lens "
+            f"({', '.join(f'{c}={lens[c]}' for c in LENS_ORDER if lens.get(c))}): the cell has no "
+            f"row. If the lens is relevant to the parameter, record the absence as a gap at "
+            f"judgment (db.py add-gap, naming the parameter and the lens); a figure is "
+            f"given a lens only with warrant (db.py add-lens-link). Nothing was written.")
+    sources = gather_sources(conn, parameter_id, lens)
     recs = [assess_source(conn, s, SCALE_POPULATION, identity) for s in sources]
     b = classify(recs)
     # THE DIRECTION SET (owner 2026-09-16, ACTION 2). Sources holding a `finding` for
@@ -1214,7 +1284,7 @@ def determine(conn, parameter_id, lens, slug, note):
     # exactly the same gates as the value-supplying set -- tier consistency,
     # disqualification, population directness -- because a finding that cannot anchor
     # for one of those reasons cannot carry a proxy inference either.
-    finding_sources = gather_findings(conn, parameter_id)
+    finding_sources = gather_findings(conn, parameter_id, lens)
     finding_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
                     for s in finding_sources]
     fb = classify(finding_recs)
@@ -1222,7 +1292,7 @@ def determine(conn, parameter_id, lens, slug, note):
     # THE CONFIRMING SET. Which sources raise a proxy answer's marker is read on its own, not off
     # the direction set: an `absent` finding supplies no direction and still confirms a code.
     confirmer_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
-                      for s in gather_confirmers(conn, parameter_id)]
+                      for s in gather_confirmers(conn, parameter_id, lens)]
     confirmer_anchors = _anchors_of(classify(confirmer_recs))
     # §2.8 verification-status machinery
     live = [r for r in recs if not _is_disqualified(r)]
@@ -1475,7 +1545,7 @@ def determine(conn, parameter_id, lens, slug, note):
     # applied" -- which is not knowable until those gates have run. Every extraction for
     # the parameter appears exactly once, so a `pending` cell carries the reasons it is
     # pending rather than leaving a reader to infer them from an absence.
-    links = gather_extraction_links(conn, parameter_id, governing)
+    links = gather_extraction_links(conn, parameter_id, governing, lens)
 
     # THE VALUE (078). Selected most-accommodatingly per the parameter's recorded
     # accessibility direction -- the ratified rule the engine has been unable to obey
@@ -1567,6 +1637,10 @@ def determine(conn, parameter_id, lens, slug, note):
                   "gate caps it at `provisional` until resolved. Resolve the gate to "
                   "restore the cell, never re-run the engine to route around it.")
 
+    # A PENDING CELL HAS NO ANSWER, so it derives nothing and claims no path (T-019, prior workplan T-3).
+    if state == "pending":
+        functional_basis = derivation_paths = derivation_rationale = cultural_claim_anchor = None
+
     # The finding and confirming sources are inputs of an answer that rests on the regulatory
     # stratum, so an unverified one is flagged too, whether or not it anchors: an unverified Co-1
     # finding is no anchor and supplies no direction, and that is the reason to say it exists.
@@ -1614,7 +1688,7 @@ def determine(conn, parameter_id, lens, slug, note):
         "skimmed_findings": [l["extraction_id"] for l in links if l["left_out"] == "skimmed"],
         "skimmed_finding_refs": sorted({l["ref_id"] for l in links if l["left_out"] == "skimmed"}),
         "n_findings_left_out": sum(1 for l in links if l["left_out"]),
-        "n_extractions_superseded": sum(1 for l in links if l["superseded"]),
+        "n_extractions_superseded": sum(1 for l in links if l["superseded"] and l["in_lens"]),
         # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
         # the skimmed value-supplying rows left out of what sets this cell's value.
         "excluded_not_publishable": [
@@ -1626,6 +1700,7 @@ def determine(conn, parameter_id, lens, slug, note):
         "accessibility_direction": _direction,
         "direction_ref_id": _direction_ref,
         "n_extractions": n_extractions,
+        "unkeyed_models": unkeyed_models(conn, lens, links),
         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
         "slug": slug, "note": note,
         "state": state, "design_scale": design_scale, "tier_basis": tier_basis,
@@ -1643,8 +1718,7 @@ def determine(conn, parameter_id, lens, slug, note):
         "has_unverified_sources": 1 if has_unverified else 0,
         "all_sources_disqualified": 1 if all_disqualified else 0,
         "falsification": falsification,
-        "derivation_sha": sha(parameter_id, lens_key(lens), links,
-                              conditioned_governing(conn, links)),
+        "derivation_sha": sha(parameter_id, lens, links, conditioned_governing(conn, links)),
         "functional_basis": functional_basis,
         "derivation_paths": derivation_paths,
         "derivation_rationale": derivation_rationale,
@@ -1693,7 +1767,12 @@ def stale_determinations(conn):
             f"SELECT {', '.join(cols)} FROM specifications WHERE retired_at IS NULL "
             f"AND rule_version = ? ORDER BY specification_id", (RULE_VERSION,)).fetchall():
         lens = dict(zip(LENS_ORDER, rest))
-        det = determine(conn, pid, lens, "", "recomputed")
+        try:
+            det = determine(conn, pid, lens, "", "recomputed")
+        except Refusal:
+            # The figures behind a stored cell can leave its lens when a link is retired.
+            out.append((sid, ["lens (no figure is stated in it now)"]))
+            continue
         diff = [f for f, was in zip(STORED_ANSWER, rest[len(LENS_ORDER):]) if det[f] != was]
         if diff:
             out.append((sid, diff))
@@ -1716,16 +1795,9 @@ def gap_account(det):
     det_x = det["n_extractions"]
     n_superseded = det["n_extractions_superseded"]
     scan = scan_command(parameter_id)
-    if det_x == 0:
-        cause = (f"no source holds an extraction for parameter "
-                 f"{parameter_id}: the parameter has never been read out of "
-                 f"a document")
-        remedy = ("read a source that is already admitted and record what it "
-                  "says: `db.py add-extraction`. This is NOT corpus-level "
-                  "absence of the topic — sources may be admitted and linked "
-                  "to the slug and still have been read for no parameter at "
-                  "all, so a new search is not the first move")
-    elif det_at == 0 and det["n_finding_sources"]:
+    # No zero-extraction branch: a cell no figure is stated in is refused in `determine` (OD-08, T-019)
+    # and never reaches a gap, so `det_x` is at least one here.
+    if det_at == 0 and det["n_finding_sources"]:
         # THE BATCH-08 CASE, AND THE BRANCH BELOW USED TO CLAIM IT WAS A
         # SUPERSESSION. `det_at` counts VALUE-SUPPLYING sources; a parameter
         # read only into `finding` rows has none, so it fell through to the
@@ -2043,7 +2115,8 @@ def main():
     ap.add_argument("--slug", required=True,
                     help="the topic this determination is recorded under. It does NOT "
                          "select evidence -- sources are gathered by the extractions "
-                         "they hold for --parameter-id.")
+                         "they hold for --parameter-id whose live lens links carry every "
+                         "lens code the cell states.")
     ap.add_argument("--identity", help="base_taxonomy_identity.identity_code")
     ap.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
     ap.add_argument("--needs", help="access_needs.need_code")
@@ -2289,7 +2362,7 @@ def main():
                         "n_findings_left_out",
                         "has_unverified_sources",
                         "all_sources_disqualified", "derivation_sha", "n_sources",
-                        "n_extractions", "non_anchoring_on_tier",
+                        "n_extractions", "unkeyed_models", "non_anchoring_on_tier",
                         "needs_population_assessment", "tier_inconsistent", "falsification")}
                       | {"convergence": det["convergence"], "confidence": det["confidence"],
                          "gap_register_id": gap_id, "specification_id": specification_id,
@@ -2328,6 +2401,9 @@ def main():
               f"nonanchor={len(r['non_anchoring_on_tier'])} "
               f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
+        if r["unkeyed_models"]:
+            print(f"    lens model(s) its governing figures also carry, which the cell key leaves "
+                  f"NULL: {', '.join(r['unkeyed_models'])}")
         if r["excluded_not_publishable"]:
             # Said on the line a reader sees, not only in the junction: a value composed
             # without figures the corpus holds must say which and why.

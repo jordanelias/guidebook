@@ -153,7 +153,9 @@ def main(argv=None):
 
         # --- 2 + 3. THE SINGLE-PATH OBLIGATION, AND THE ANCHOR THAT MUST ANCHOR ------
         paths = s.get("derivation_paths")
-        if paths is None:
+        if paths is None and s["state"] == "pending":
+            pass  # a pending cell has no answer and claims no path (T-019)
+        elif paths is None:
             notes.append(f"specification {sid}: no derivation_paths recorded — written "
                          f"before migration 080, or by a route that skips the engine")
         elif paths not in VALUE_PATHS:
