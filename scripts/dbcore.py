@@ -596,56 +596,107 @@ def bound_on_scale(claimed_value, unit, comparator, claim_type):
 #: from `db.py` (which keeps `_VALUE_BEARING = dbcore.VALUE_BEARING`): one definition for both screens.
 VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
 
+#: Which figure_role values supply a value to a determination. ONE HOME (migration 077; moved here from
+#: `assess_cell`, which imports it back): `gather_sources` filters on it, `gather_extraction_links` grades
+#: on it, K01 recomputes the sha from the links this produces, and the writers read it for the comparator rule.
+VALUE_SUPPLYING_ROLES = ("claim", "derived")
+
+
+def comparator_refusal(figure_role, claim_type, comparator):
+    """The sentence that refuses a value-supplying numerical row with no comparator, else None. One definition
+    for `add-extraction` and for `amend-extraction --field figure_role` (a `finding` row amended to `claim`)."""
+    if figure_role in VALUE_SUPPLYING_ROLES and claim_type == "numerical" and not comparator:
+        return ("a value-supplying numerical row needs --comparator ('=' for a point); a bare number is "
+                "read as a point and adds a floor as well as a ceiling")
+    return None
+
+
+def ratio_notation(unit):
+    """True when `unit` is a family member whose figures are written `a:b` -- derived from the family's own
+    arithmetic (`from_canonical` renders it with a colon), so no unit is named here."""
+    return notation_family(unit) is not None and ":" in from_canonical(Fraction(1), (unit or "").strip())[0]
+
+
+def _ratio_unit():
+    """The family member whose figures are written `a:b`."""
+    return next(m for fam in NOTATION_FAMILIES.values() for m in fam if ratio_notation(m))
+
 
 def unit_refusal(unit):
-    """The sentence that refuses a `claimed_unit` that is not a bare scale, else None. `dB(A)` passes."""
+    """The sentence that refuses a `claimed_unit` that is not a bare scale, else None. `dB(A)`, `cd/m2`, `m/min`
+    and `min` pass.
+
+    STRUCTURAL TESTS ONLY (rules 7a and 8: no word list). A unit is refused for: a clause separator (`;` or `,`);
+    a comparator symbol; a token that is a number standing alone (`per 100 m`: a number in a unit is a quantity
+    or a condition, and belongs in `--claimed-value` or its own row); `min`/`max` (or minimum/maximum) as one
+    word among others (`ratio max`; the word alone, or inside `m/min`, is a unit); a parenthesis other than a
+    one-capital weighting suffix (`dB(A)`, `dB (A)`).
+
+    THE RESIDUAL, plainly: a sentence-like unit with none of these passes (`ratio where steep`). Telling a unit
+    from a sentence by its words needs a table of units; T-030 makes units data, and this screen then asks that
+    table instead of the shape."""
     u = (unit or "").strip()
     if not u:
         return None
-    if (VALUE_BEARING.search(u) or re.search(r"[;,]|\b(where|if|unless|except|only|when)\b", u, re.I)
-            or ("(" in u and not re.fullmatch(r"[A-Za-z]+\([A-Z]\)", u))):
-        return ("a unit names the scale only. Put a condition in its own row (`add-extraction "
-                "--figure-role condition` on the parameter it measures) joined by `--relation "
-                "condition_on`; put applicability (new build, alteration, building type) in "
-                "`--setting`; put commentary in `--notes`")
+    words = u.split()
+    # comparator symbols are VALUE_BEARING's own: search what is left once letters and digits are removed
+    symbol = VALUE_BEARING.search(re.sub(r"[0-9A-Za-z]", "", u))
+    if (re.search(r"[;,]", u) or symbol
+            or any(re.fullmatch(r"\d+(?:[.,]\d+)?", w) for w in words)
+            or (len(words) > 1 and any(VALUE_BEARING.fullmatch(w) for w in words))
+            or ("(" in u and not re.fullmatch(r"[A-Za-z]+\s?\([A-Z]\)", u))):
+        return ("a unit names the scale only. Put a number in `--claimed-value`; put a condition in its own row "
+                "(`add-extraction --figure-role condition` on the parameter it measures) joined by `--relation "
+                "condition_on`; put applicability (new build, alteration, building type) in `--setting`; put "
+                "commentary in `--notes`")
     return None
 
 
 def figure_refusal(value, unit, comparator, claim_type):
     """The sentence that refuses a quantity figure the engine cannot read, else None.
 
-    None when `claim_type` is not in `QUANTITY_CLAIM_TYPES`. Otherwise None only when `bound_on_scale`
-    reads the figure AND it is neither a slash ratio in a gradient unit (`bound_on_scale` reads `1/12`
-    as 0.083 %, so that is tested first) nor an inverted gradient ratio (`12:1`, in either end of a range).
+    None when `claim_type` is not in `QUANTITY_CLAIM_TYPES`. Otherwise None only when `bound_on_scale` reads
+    the figure AND it is none of: a non-ASCII digit; a slash fraction under a family unit or no unit
+    (`bound_on_scale` reads `1/12` as 0.083 %, so that is tested first); under a ratio-notation unit, a figure
+    that is not `a:b` (a bare `12` is read as 12 %); an inverted gradient ratio (`12:1`, in either end of a range).
     """
     if claim_type not in QUANTITY_CLAIM_TYPES:
         return None
     v, u = (value or "").strip(), (unit or "").strip()
-    if "/" in v and notation_family(u):
-        return "write a gradient ratio as rise:run (1:12), not 1/12, which reads as 0.083 %"
+    family = notation_family(u)
+    if any(ch.isdecimal() and not ch.isascii() for ch in v):
+        return "write ASCII digits (0-9): a full-width or other-script digit is not read"
+    if re.search(r"\d\s*/\s*\d", v) and (family or not u):
+        return ("write a gradient ratio as rise:run (1:12), not 1/12, which the engine reads as a fraction "
+                "of the unit (0.083 %)")
     if bound_on_scale(v, u, comparator, claim_type) is None:
         if re.search(r"\d\s*%", v):
             return f"write the number ({v.replace('%', '').strip()}) and put % in --claimed-unit"
         if re.search(r"\d\s+in\s+\d", v):
-            return "write '1 in 12' as 1:12 with --claimed-unit 'rise:run ratio'"
+            return f"write '1 in 12' as 1:12 with --claimed-unit {_ratio_unit()!r}"
         if re.search(r"\d,\d", v):
             return "write a decimal comma as a point (30,0 -> 30.0); the digits stay the same"
-        if ":" in v and not notation_family(u):
-            return ("a ratio needs the unit 'rise:run ratio' -- if, and only if, the source measures "
-                    "rise over HORIZONTAL run; rise over slope length is a different unit")
+        if ":" in v and not family:
+            return (f"the engine reads an a:b figure only under {_ratio_unit()!r} (rise over HORIZONTAL run, a "
+                    f"gradient). For another ratio, write the single number when the second term is 1 "
+                    f"(4.5:1 -> 4.5, the ratio's name in the unit, e.g. 'contrast ratio'); otherwise put "
+                    f"each term in its own row")
         if claim_type == "range":
             return "write a range as 'a to b' (e.g. '0 to 4.8')"
         if not re.search(r"\d", v):
             return ("a number written in words is entered as a numeral and unit, with the source's "
                     "wording in --value-as-written")
         return f"{v!r} with unit {u!r} cannot be placed on any scale"
-    if notation_family(u):
+    if ratio_notation(u):
         for part in re.split(r"\s+to\s+", v):
-            if ":" in part:
-                rise, run = (Fraction(x) for x in part.split(":", 1))
-                if rise > run:
-                    return ("an inverted ratio (rise larger than run): write 1:12, and record the "
-                            "source's order in --notes")
+            if not _RATIO_RE.match(part):
+                return (f"under {u!r} write the figure as a:b (1:12): a bare number is read on the scale of "
+                        f"{NOTATION_FAMILIES[family][0]!r}. For a figure the source states in "
+                        f"{NOTATION_FAMILIES[family][0]!r}, use that unit")
+            rise, run = (Fraction(x) for x in part.split(":", 1))
+            if rise > run:
+                return ("an inverted ratio (rise larger than run): write 1:12, and record the "
+                        "source's order in --notes")
     return None
 
 

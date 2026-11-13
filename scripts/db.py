@@ -2359,8 +2359,10 @@ def main():
                            "design that caused incidents). Only with --figure-role finding.")
     p_ax.add_argument("--comparator",
                       help="Live vocabulary, read from the column's own CHECK "
-                           "('='/'<'/'<='/'>'/'>='/'between'/'approx'). Omit when "
-                           "the figure carries no stated arithmetic relation.")
+                           "('='/'<'/'<='/'>'/'>='/'between'/'approx'). REQUIRED for a "
+                           "value-supplying numerical row (--figure-role claim or derived; "
+                           "'=' for a point): the writer refuses it without one. Omit for a "
+                           "finding, a condition or a non-numerical claim.")
     p_ax.add_argument("--relation", action="append", dest="relations", required=True,
                       help="REQUIRED, repeatable -- one per comparator edge, aligned "
                            "by position with --to-extraction/--to-label/--to-kind/"
@@ -9211,17 +9213,24 @@ def _refuse_live_confirmation(conn, context, to_extraction):
 
 
 def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
-    """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic.
-    Reads `v_derived_figure_check` inside the caller's transaction, so the raise rolls back the row and its
-    edges. Tolerance: `extraction_relations_integrity`'s EPSILON, which reads the same view afterwards. The
-    view joins on equal units and plain numerals, so a converted row is not compared (its
-    `--conversion-note` is its only record)."""
-    bad = conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
-                       (extraction_id,)).fetchone()
-    if bad and abs(bad["recomputed"] - bad["stored"]) > 1e-9:
-        raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
-                      f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
-                      f"defect this check exists to stop. Nothing was written.")
+    """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic, run
+    by every writer that can complete a derived row (add-extraction, relate-extraction, amend-extraction to
+    `derived`; derive-extraction reaches it through add-extraction). It reads EVERY `v_derived_figure_check`
+    row of the extraction (one per base x delta pair) and refuses when any disagrees, which is
+    `extraction_relations_integrity`'s own rule, so that blocking check never fails a row a writer accepted.
+    The raise happens inside the caller's transaction, so it rolls back the row and its edges. Tolerance: that
+    check's EPSILON, so the writer accepts the 0.1 + 0.2 = 0.3 it also accepts.
+
+    WHAT IS NOT CHECKED: the view joins on equal units and plain numerals, so a row converted between units
+    (a derived figure in mm over a base in m) or whose base is a range is not compared; integrity reports it
+    UNCHECKED. `--conversion-note` exists only on `derive-extraction` (not on this path), so on this path such a
+    row carries no record of its conversion."""
+    for bad in conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
+                            (extraction_id,)).fetchall():
+        if abs(bad["recomputed"] - bad["stored"]) > 1e-9:
+            raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
+                          f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
+                          f"defect this check exists to stop. Nothing was written.")
 
 
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
@@ -9832,14 +9841,13 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
         # --- the figure must be readable (T-016) ----------------------------------
         # A unit that is a sentence and a value the engine cannot place on a scale are both left OUT of a
         # determination's value without anyone being told; refuse them here, with the fix.
+        # (The prefix names add-extraction also when derive-extraction reaches this writer: the writer is
+        # shared and its refusals carry one prefix; see derive_extraction's comment.)
         for _why in (dbcore.unit_refusal(row.get("claimed_unit")),
-                     dbcore.figure_refusal(value, row.get("claimed_unit"), row.get("comparator"), claim_type)):
+                     dbcore.figure_refusal(value, row.get("claimed_unit"), row.get("comparator"), claim_type),
+                     dbcore.comparator_refusal(figure_role, claim_type, row.get("comparator"))):
             if _why:
                 raise Refusal(f"add-extraction: {_why}. Nothing was written.")
-        if figure_role in ("claim", "derived") and claim_type == "numerical" and not row.get("comparator"):
-            raise Refusal("add-extraction: a value-supplying numerical row needs --comparator ('=' for a "
-                          "point); a bare number is read as a point and adds a floor as well as a ceiling. "
-                          "Nothing was written.")
 
         # --- the relation edges (migration 075's extraction_relations) --------
         # REQUIRED, and checked here rather than only at the parser so the PYTHON
@@ -10144,6 +10152,9 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
                         f"least one derived_from edge carrying input_role=base. "
                         f"extraction {extraction_id} has none -- add one with "
                         f"relate-extraction first.")
+            if _why := dbcore.comparator_refusal(value, row["claim_type"], row["comparator"]):
+                raise Refusal(f"amend-extraction: extraction {extraction_id}: {_why}. Set it first with "
+                              f"amend-extraction --field comparator. Nothing was written.")
             if value == "claim":
                 bad = conn.execute(
                     "SELECT relation FROM extraction_relations "
@@ -10205,6 +10216,10 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
             f"UPDATE source_value_extractions SET {field}=?, notes=?, "
             f"updated_at=?, updated_by_session=? WHERE extraction_id=?",
             (value, merged, stamp, session, extraction_id))
+        if field == "figure_role" and value == "derived":
+            # Checked on the UPDATED row, so the view sees it: a base edge alone is accepted above (the delta
+            # may come next), and relate-extraction runs this same check when the delta edge arrives.
+            _refuse_derived_mismatch(conn, extraction_id, "amend-extraction")
     return {"extraction_id": extraction_id, "field": field, "old": old, "new": value,
             "changed": True, "dry_run": dry_run}
 
@@ -10224,6 +10239,15 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
     called at all); the actual WRITE -- the row and both derived_from edges -- is
     the ONE transaction inside that single `insert_extraction` call, the same
     guarantee every other caller of it gets.
+
+    KNOWN DEFECT, recorded by T-016 and NOT repaired here: this verb cannot write a row. Three independent
+    blockers stand in front of `insert_extraction`'s arithmetic, each reached once the one before is cleared
+    (tests T016-N11c, N11d, N11e assert them, and go red when the verb is repaired):
+      1. it passes no locator (no `source_section`, no `loc_*`), so R3 refuses every row it builds;
+      2. a value-supplying numerical row needs `--comparator` and `p_dx` has no default for it;
+      3. its `claim_text` is "the analyst's computation statement" (see the edge comment below), which the
+         verbatim check refuses unless a source says it in those words.
+    The refusals reached through it carry the prefix `add-extraction:` (the writer is shared).
     """
     with dbcore.connect(dry_run, readonly=True) as conn:
         base_row = conn.execute(

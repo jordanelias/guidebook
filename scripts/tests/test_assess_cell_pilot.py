@@ -984,6 +984,11 @@ def main():
     finally:
         _ac.NOTATION_FAMILIES["gradient"] = _saved
 
+    # One definition of which roles supply a value: the engine's name is the same object as the writers' (dbcore).
+    import assess_cell as _engine
+    expect("VALUE_SUPPLYING_ROLES is one definition (the engine's name is dbcore's)",
+           _engine.VALUE_SUPPLYING_ROLES is _ac.VALUE_SUPPLYING_ROLES)
+
     # The reader the writer and the engine now share: exact Fractions on the family's scale (dbcore.bound_on_scale).
     from fractions import Fraction
     for _args, _want in [(("1:12", "rise:run ratio", "<=", "numerical"), (None, Fraction(25, 3))),
