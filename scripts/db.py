@@ -8567,20 +8567,29 @@ def _require_stated_numbers(text, claimed_value, claim_type, value_as_written, f
     (c) any other claimed number equals a number the quote states (operands and pieces count).
     (d) a number matched only by an AMBIGUOUS quote token, or by nothing, is not stated as a
         numeral. The row is then accepted only with `value_as_written`: the source's own wording of
-        the figure ("vijf procent", "viisi prosenttia", "1,200"), which must occur in the quote
-        under the quote's own normalisation and must not state a different figure (every number in
-        it must be ambiguous and have a claimed number among its readings). When every claimed
+        the figure ("vijf procent", "viisi prosenttia", "1,200"), which must be a literal span of
+        the quote (`wording in text`: punctuation, case and spacing as they stand, because a
+        normalisation that deletes separators lets `1,200` pass under `120.0` or `12,00`) and
+        must not state a different figure (every number in it, CJK numerals converted as the quote's
+        are, must be ambiguous and have a claimed number among its readings). When every claimed
         number is stated, `value_as_written` is refused: the column is not for copying numerals.
 
     A claim of a QUANTITY type (`dbcore.QUANTITY_CLAIM_TYPES`; none given counts as one) that holds
     no number at all is refused, and the message says where the numeral and the wording go.
 
-    KNOWN AND ACCEPTED, because no table of number words is kept to check them: a plain `12` is
-    stated by "1:12"; a ratio written in words is matched by its operands only; and a wording that
-    contains no numeral is not checked for meaning, so `9999` with `value_as_written` "higher" under
-    "no higher than 1.2 m" is accepted. That the wording means that number is the extractor's
+    KNOWN AND ACCEPTED, because no table of number words is kept to check them (CLAUDE.md rule 8):
+    a plain `12` is stated by "1:12"; a ratio written in words is matched by its operands only; and
+    A WORDING THAT CONTAINS NO NUMERAL IS NOT CHECKED FOR MEANING. It must be a literal span of the
+    quote, nothing more, so ANY WORD OR LETTER OF THE QUOTE DEFEATS THE GUARD: `12` under "no higher
+    than 1.2 m" is accepted with the wording "higher", or "m", or "e". The tests show one such case
+    per headline refusal (T008-RES). That the wording means the claimed number is the extractor's
     judgment, recorded by the column and the row's session; the adversarial pass and a reviewer
-    check it. Not read: signs, units, Swiss apostrophe grouping (1'200).
+    check it. No length or word rule is added: a one-character wording (五) can be legitimate.
+    Not read, so no route (stop and report, per the task file): signs, units, fractions, mixed
+    numbers, powers of ten, an Arabic decimal separator, a leading comma decimal, a worded ratio's
+    meaning. Inherent ambiguity is resolved by letting a token match either reading
+    (`retrieval_log.number_tokens`). `amend-extraction` cannot clear a wording (a blank --value is
+    refused), and an exempt row's wording is stored unchecked on insert but checked on amend.
     """
     rl = _retrieval_log()
     claimed = str(claimed_value).strip() if claimed_value is not None else ""
@@ -8644,17 +8653,18 @@ def _require_stated_numbers(text, claimed_value, claim_type, value_as_written, f
             f"with an ambiguous mark, enter the numeral in --claimed-value and the source's own "
             f"wording in --value-as-written; otherwise quote the sentence that states it. "
             f"Nothing was written.")
-    if not rl.normalise_quote(wording) or not rl.phrase_in_quote(wording, text):
+    if wording not in text:
         raise Refusal(
-            f"{context}: --value-as-written {wording!r} does not occur in {field}. It is the span "
-            f"of the verified quote that the numeral translates. Nothing was written.")
+            f"{context}: --value-as-written {wording!r} is not a literal span of {field} "
+            f"(punctuation, case and spacing as they stand). It is the span of the verified "
+            f"quote that the numeral translates. Nothing was written.")
     pool = set()
     for k, r, _ in claim:
         reading = next(iter(r))
         pool.add(reading)
         if k == "ratio":
             pool.update(reading)
-    for _, readings, _ in rl.number_tokens(wording):
+    for _, readings, _ in rl.number_tokens(_cjk_to_arabic(wording)):
         if len(readings) == 1 or not readings & pool:
             raise Refusal(
                 f"{context}: --value-as-written {wording!r} states a figure of its own "
