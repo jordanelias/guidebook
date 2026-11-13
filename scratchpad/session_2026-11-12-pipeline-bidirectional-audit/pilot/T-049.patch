@@ -1,0 +1,1303 @@
+From c31833f92bd72b6ed72703131603fbe42f7f65f1 Mon Sep 17 00:00:00 2001
+From: pilot <p@x>
+Date: Fri, 13 Nov 2026 03:47:55 +0000
+Subject: [PATCH] governance: add a typed home for translations attached by
+ pointer, with the default stage held as one rule [2026-11-13 03:47]
+
+Pilot commit (T-049, stacked on the T-008 re-pilot). Migration 127 adds translations and v_translations_current; db.py request-translation, record-translation, review-translation and translations --due-at; contract key translation.default_stage with its schema field; translation_pointer_audit and test_translations registered; stage-map, run-pipeline skill, retrieval_log _TITLE_COLS (pub_title_en reader retired) swept.
+---
+ data/guidebook.db                          | Bin 5197824 -> 5197824 bytes
+ governance/check-registry.yaml             |  27 ++
+ governance/context-map.yaml                |  30 +-
+ governance/pipeline-contract.yaml          |   6 +
+ governance/stage-map.yaml                  |  16 +
+ schemas/pipeline_contract.py               |  15 +-
+ scripts/audit/translation_pointer_audit.py |  72 +++++
+ scripts/db.py                              | 336 +++++++++++++++++++-
+ scripts/dbcore.py                          |  35 +++
+ scripts/migrations/127_translations.sql    |  78 +++++
+ scripts/research/retrieval_log.py          |  12 +-
+ scripts/tests/test_translations.py         | 344 +++++++++++++++++++++
+ skills/run-pipeline_SKILL.md               |   9 +
+ 13 files changed, 970 insertions(+), 10 deletions(-)
+ create mode 100644 scripts/audit/translation_pointer_audit.py
+ create mode 100644 scripts/migrations/127_translations.sql
+ create mode 100644 scripts/tests/test_translations.py
+
+diff --git a/data/guidebook.db b/data/guidebook.db
+index 9836481fc7c3e94d83264423fcf6883f3fbb4cd8..97eed87febb44468173c29e9ca57372a405e0995 100644
+GIT binary patch
+delta 3209
+zcma);UrbY19LI0Vr7h)8LH@}f*+B=ia$!vTGeD>Xsxpxhg!!<=dZkDC+q&LckcXuh
+zlIgZAkdW;p&TTA9X0k+$OSJL9gclR`uxxuX*~7N%#iuPJ*^_bZd;gqEThXk^r@i<5
+z{+;tXzu!4sTzg<&1S>TSR|P@*M-Xzp5d>kUAlN^`uL$_ZhKD4(TyLu@EWawWe)4^;
+z=dRG`sl79OugEsJy4$ni+FUvhrJRRLo1QD19viTO93X;R-~dkG0(rm<@<9P81Vuoz
+zEe0iE2Pg$)pd3_yO0W}Dfof0#YQZj02VMaL)Pvn%4|o+cfJV>+yub(cg67nwM=EOj
+zbfsDRS{yFEA`VNS1+;?KKpS`+>;vs!KR5smf<xd9(1Dx@l~{c%=m!bV0c=-lhdWcX
+z!(EU6x*-<(HUEb}_YHBlXMOJu`(wdz-XZ2*EvU)=!}YeS-1(#P181+}iQ`&sop@jD
+z&3Tj~+aJ3(wA6o_dUVlWY)_rN>0iTliGPPJb#2Z+m6sBU|7obE@GRm@3GQQ#Uu{!1
+znQxsS*yI$<gErBzH04Oqul!H)vA6cM)W3@VLtE<4TmA~$4RO&=Tz30)K|Eu>uIaDX
+zlS@5I)6Vja4%hoNbCYy_F097os4^p~ld-509#6#MG^%bt+BXsmj0VYD1Hsc|dkqpe
+z<vtZ04EBwZG`Hc&h(wfFB0f&TNmV{KL#@~G*i2$JYQ4r|^WkZ_V7)67^1cHHC8Eml
+z3seoy$k7W4`2v;P#Q5+aG!j<nB^7q6tR@r~n2U<V!_$*dgy#cEj6~&G%pgwRO;AOJ
+zsjP-!2e%}Wpynfw5T{y}pmc7*^prlrJ()VP>OMLWI%x&dQtCc^JU9|GCq@R6L&V#}
+zCqpAm5^3TNn|vfN)K8SeMH*LV#E8jN;R<Oa1E<K)*x(?mTbgoKHZ<68zNhCiO-o6C
+zwm&rYY&6h27}VxfXYDod>T66>M*w!mD^;)~jbZ@{-RvnVFn3K4!WJc|oc%WDbhEWx
+z-KCA`GM|t1kT##OF{Z%STXtEJ%C@Y$8N%(%%o<>Sf7i8355!GO!FD!Aon(e8sy9O!
+zLLccS2ltyZH0z0#jCGc=&%f|hvUkpO7Bpv-Sw<wDC$rR;9B`Jdu59F%5O20fYH8nD
+zku_-gVz#G^)$CcTRH&z9b^V9DJgX2{$+D|@we3M3Tkdt{vo9M(*HKHTRmzsnjJnZl
+zXo`-bmYaNhg&7UN>Z`iTwAspAvo%|TmlO$&SaoZOv|^o&Md*wkJr>h{wepNbw~M5;
+z!*+==dyZ*|Y2}MB2Q!jvt=8&E_VbvtN-Kl%hU|9Du;iV~0=>?1HXL*o<nbY@$8E4)
+zGwgWtnf=WI_q_VHMu;~{WHq0bspn<?CspZIdal;@NL9tpjcRGih_2~wKWkZKNlB`8
+z8a~2o9Zk!YCCRb6yx}O~YY4}wti)JzOM6wjsi}`dGn~Hg;9;Q(e`O8dH|<cfO5Qk@
+zn7r(&VNU|iqSeK_yV-ig=3>8$Ig41anp3Thv$M&ZEP<n=rG;pxHldd$6;;8HJg&|x
+zkXUq_5_N*|6PirO3OPq<l;EP8r*Rr#Ki&6M&RWHSgR^_9uFVGJb<G<B!R9AoR*BOH
+znZ$je`Iv-9Bj`n0QF&Av=_1islp^x^Se)u1lUpJ6qnfA0>KEg5&X#H0XHAD+ELs(L
+zjq8dW?$K@mv%Z_M&9w_mHxDI8_0vCF!SWw6<XKDR^_96`p6&SwB-T=i#qn$$C0$5&
+zghc5ajqAIC#d`G113KPNe@lCtPfJQ!#ei1&+=Fp2!2|Q$_g0+b!~FU*){(Z1bcO77
+z=<Bo;Q0jMX9jdN3b2fy<z9cfXD)Zvz8<6P~x4IP-_iCn4R=E++Xy5T*-wEDT#s!^W
+zzI8Hm>i-yYA$B*dP_!ZQj7CYyX1dWwM3EO1)aU~Hc)6#tly5`R)^Wpr|E#CX{PSbZ
+z<b^$(_GdwJ@KU|B2^#(Eb6<IO+YgR_0O$pMpdSRmQE&_#2Ls?uZ~_d1lc{I7hiq&A
+E0m;uu^8f$<
+
+delta 598
+zcmXxhJ!n%=6bJBoUvA#Z=X=j+qHSVLQ{!h6TjN)2>`iNIt=8u3I%IN)lZfC@<VoSa
+zb`e2Lpa^yl15S0&3xePx)XB9@MRX`GLcmhgg8v9!_;Js0{=+%PTX|=A@F<=4852Jl
+z3%p>A^)qHH;TQ1#aTNF44+i-_Jn6I2laE2?HOo7>SGV5Sy!JTftcA808fXf17rKt$
+zbvPIh00BWT!GaKkAp%i|K^$!8WnI_>3D^yLAPFhh3;UoC`XLP&*bf760J1O$IT(V2
+zkcUHX7>>YEI0nac*D2V;|7LAJt&cbKx9aS@SbM%u_VkTn`MIH}ps1**r09gAVMQZ~
+zPAV!ZI;H5eqBDxlDmtfVv_)f9vJX2bK@IN0D17iUG^R6je)C61xOLYTRDlZ}LF4Z`
+zqFQma$jY615etk37nym}6v4$<I{GzqJ(RRQSxeTW`P*C;-^HE4FZPA4GZtCvo#Ulm
+zccp9Sxp|r3dNUy(a^0Aypk7YNX1F6fnN5XxlQ}JC#C~g2{Byh!nKn0gQzK4XH*d?W
+qXfL^9v^*(%u_~bo6EF!Ep$3;=3Z~&Q%)k}63bSxci`BV5&;A1U1;qaV
+
+diff --git a/governance/check-registry.yaml b/governance/check-registry.yaml
+index 96b9fac..dc6d593 100644
+--- a/governance/check-registry.yaml
++++ b/governance/check-registry.yaml
+@@ -1308,6 +1308,33 @@ checks:
+     So 0 is now an UNWRITTEN VOCABULARY, not a measurement, and it is a floor-less state only
+     because the rows are owed rather than absent. RATCHET TO min_items: 1 in the same change that
+     writes the first medical row — rows are never deleted, so the floor holds once set.'
++- id: translation_pointer_audit
++  cmd:
++  - python3
++  - scripts/audit/translation_pointer_audit.py
++  battery: data
++  kinds:
++  - data
++  level: advisory
++  basis: unattributed
++  cost: fast
++  no_floor: 'vocabulary-owed — no translation has been recorded, so the subject is empty; translations are
++    OWED by the pipeline (owner, 2026-11-12: everything non-English is translated, by default at the stage
++    governance/pipeline-contract.yaml names), not removed. The first run that examines a row contradicts
++    this reason, which is the signal to ratchet to min_items 1.'
++- id: test_translations
++  cmd:
++  - python3
++  - scripts/tests/test_translations.py
++  battery: tests
++  kinds:
++  - tooling
++  - schema
++  level: advisory
++  basis: hygiene
++  cost: fast
++  no_floor: selftest — subject is its own fixtures (a temp copy of the DB written through db.py's translation
++    verbs, a temporary copy of the contract); a floor would count the wrong thing
+ quarantine:
+ - id: validate_db
+   cmd:
+diff --git a/governance/context-map.yaml b/governance/context-map.yaml
+index 8818a27..c5d4ec5 100644
+--- a/governance/context-map.yaml
++++ b/governance/context-map.yaml
+@@ -2,13 +2,13 @@ _README: GENERATED by scripts/generate/context_map.py. Do not edit -- regenerate
+   here is derived from the live repo at generation time. A stale entry is a bug in the generator or an
+   unregenerated commit, never something to patch by hand.
+ provenance:
+-  db_fingerprint: aaca0a8f8f30
++  db_fingerprint: fd43ecf739c1
+   generator: scripts/generate/context_map.py
+   freshness: established by `context_map.py --check`, not by a recorded sha
+ authority:
+   canonical_data_store: data/guidebook.db
+   schema_version_marker: PRAGMA user_version
+-  schema_version: 126
++  schema_version: 127
+   write_path: migrations only (scripts/emit_data_migration.py -> scripts/migrate_db.py)
+   note: Outer layers win unless an inner layer names an explicit override; code-enforced checks trump
+     text rules for the matching invariant. When two stores disagree the DB is canonical.
+@@ -159,6 +159,7 @@ database:
+     term_adjudications: 90
+     term_aliases: 2382
+     terms: 94
++    translations: 0
+     weighting_profile: 5
+   views:
+   - v_best_practice
+@@ -182,6 +183,7 @@ database:
+   - v_scan_ledger
+   - v_source_admission
+   - v_source_reach_all
++  - v_translations_current
+   - v_unregistered_roots
+   - v_value_independence
+   foreign_keys:
+@@ -402,6 +404,9 @@ database:
+       references: observed_terms.observation_id
+     - column: term_id
+       references: terms.term_id
++    translations:
++    - column: superseded_by_translation_id
++      references: translations.translation_id
+   empty_tables:
+   - base_taxonomy_medical
+   - case_studies
+@@ -415,6 +420,7 @@ database:
+   - identity_medical_map
+   - reasoning_doc_citations
+   - supersession_check
++  - translations
+   tables_written_by_migration_only:
+   - access_duration
+   - access_need_icf
+@@ -470,6 +476,7 @@ database:
+   - term_adjudications
+   - term_aliases
+   - terms
++  - translations
+   - weighting_profile
+   tables_with_no_writer_at_all:
+   - external_root_registry
+@@ -551,6 +558,7 @@ writers:
+     - term_adjudications
+     - term_aliases
+     - terms
++    - translations
+     scripts/dbcore.py:
+     - evidence_sources
+     - source_locators
+@@ -612,6 +620,9 @@ writers:
+     - specifications
+     - term_aliases
+     - terms
++    scripts/tests/test_translations.py:
++    - source_value_extractions
++    - translations
+     scripts/tests/test_validate_evidence_state_2_4.py:
+     - base_parameters
+     - base_taxonomy_identity
+@@ -1436,6 +1447,14 @@ checks:
+     - tooling
+     min_items: null
+     cmd: python3 scripts/tests/test_search_log_completeness.py
++  - id: test_translations
++    level: advisory
++    battery: tests
++    kinds:
++    - tooling
++    - schema
++    min_items: null
++    cmd: python3 scripts/tests/test_translations.py
+   - id: test_validate_evidence_state_2_4
+     level: advisory
+     battery: tests
+@@ -1445,6 +1464,13 @@ checks:
+     - schema
+     min_items: null
+     cmd: python3 scripts/tests/test_validate_evidence_state_2_4.py
++  - id: translation_pointer_audit
++    level: advisory
++    battery: data
++    kinds:
++    - data
++    min_items: null
++    cmd: python3 scripts/audit/translation_pointer_audit.py
+   - id: validate_parameters
+     level: advisory
+     battery: data
+diff --git a/governance/pipeline-contract.yaml b/governance/pipeline-contract.yaml
+index 0b45f9c..4a64936 100644
+--- a/governance/pipeline-contract.yaml
++++ b/governance/pipeline-contract.yaml
+@@ -334,3 +334,9 @@ cross_stage:
+     patched with hand SQL disguised as a schema fix.
+   references: 'DR-2026-09-26-recurring-defect-shapes-remediation.md section 6 (RC6); CLAUDE.md section 2'
+   check: scripts/audit/research_tooling_separation.py
++# THE DEFAULT STAGE FOR TRANSLATIONS, held once (T-049; owner, 2026-11-12: "we can set a rule for synthesis
++# to translate, which isn't hardcoding necessarily"). A translation request that names no due stage falls
++# due here, computed when read and never stored (db.py `translations --due-at`). schemas/pipeline_contract.py
++# validates that the value is one of the stage ids of `stages:` above. The target language has no default (OD-02).
++translation:
++  default_stage: synthesis
+diff --git a/governance/stage-map.yaml b/governance/stage-map.yaml
+index f46d060..94477ac 100644
+--- a/governance/stage-map.yaml
++++ b/governance/stage-map.yaml
+@@ -131,8 +131,16 @@ tables:
+   term_adjudications: judgment
+   term_aliases: base
+   terms: base
++  translations: synthesis
+   weighting_profile: render
+ 
++# 2026-11-13, T-049 (migration 127): `translations` is a CROSS-STAGE register, placed as `gaps` is: at
++# synthesis, the stage the owner named for translating ("probably at synthesis or whatever we need"), with
++# its `disputed:` entry below saying the placement is the nearest home and not the table's own. It points,
++# by (source_table, source_column, source_row_key), at a text cell of ANY stage, and any stage may request
++# one (`requested_at_stage`). JUDGED by the T-049 pilot executor (Sonnet-class) from the task file's
++# instruction "add it as the file treats the gap register"; adversarial_findings, which also points into
++# whichever stage a finding attacks, is placed `infrastructure` -- the owner may prefer that precedent.
+ # Where the repository contradicts ITSELF about a table's stage. The map still has
+ # to place these, and `tables:` above records where — but taking a side silently
+ # is curating a fact nothing can check, so both readings are kept with their
+@@ -149,3 +157,11 @@ disputed:
+     es synthesis as weighing, convergence and cross-slug findings, which a gap is none of. a
+     ssess_cell also writes it at specification. The honest answer is a cross-stage register 
+     with no single home.
++  translations: >-
++    A CROSS-STAGE REGISTER WITH NO SINGLE HOME, placed at synthesis as `gaps` is. Each row points at a text
++    cell of any stage (source_table, source_column, source_row_key) and may be requested by any stage
++    (requested_at_stage); the default stage a request falls due at is the rule `translation.default_stage`
++    in governance/pipeline-contract.yaml, read when listed and never stored. `adversarial_findings` is the
++    other table that points into whichever stage it attacks and is placed infrastructure; this map takes
++    the gap register's treatment because the T-049 task file names it. Not a source column: the original is
++    never touched.
+diff --git a/schemas/pipeline_contract.py b/schemas/pipeline_contract.py
+index 66f148f..8788413 100644
+--- a/schemas/pipeline_contract.py
++++ b/schemas/pipeline_contract.py
+@@ -7,7 +7,7 @@ extra='forbid', matching the repo's config-schema style. No DB coupling.
+ """
+ from typing import List, Literal, Optional
+ 
+-from pydantic import BaseModel, ConfigDict
++from pydantic import BaseModel, ConfigDict, model_validator
+ 
+ 
+ class Criterion(BaseModel):
+@@ -35,6 +35,11 @@ class CrossStageGate(BaseModel):
+     check: Optional[str] = None
+ 
+ 
++class Translation(BaseModel):
++    model_config = ConfigDict(extra="forbid")
++    default_stage: str   # the stage a translation request falls due at when it names none; one of `stages`
++
++
+ class PipelineContract(BaseModel):
+     model_config = ConfigDict(extra="forbid")
+     version: int
+@@ -44,9 +49,17 @@ class PipelineContract(BaseModel):
+     dr: str
+     enforcement_level: int
+     spine: str
++    translation: Optional[Translation] = None
+     stages: List[Stage]
+     cross_stage: List[CrossStageGate]
+ 
++    @model_validator(mode="after")
++    def _translation_stage_is_a_stage(self):
++        if self.translation and self.translation.default_stage not in {s.id for s in self.stages}:
++            raise ValueError(f"translation.default_stage {self.translation.default_stage!r} is not a "
++                             f"stage id of this contract: {[s.id for s in self.stages]}")
++        return self
++
+     def all_checks(self):
+         """Yield (location, criterion_id, check_path_or_None) across the whole contract."""
+         for st in self.stages:
+diff --git a/scripts/audit/translation_pointer_audit.py b/scripts/audit/translation_pointer_audit.py
+new file mode 100644
+index 0000000..360b24c
+--- /dev/null
++++ b/scripts/audit/translation_pointer_audit.py
+@@ -0,0 +1,72 @@
++#!/usr/bin/env python3
++"""
++scripts/audit/translation_pointer_audit.py -- every current translation still translates the cell it points at.
++
++WHAT WRONG THING REACHES THE GUIDEBOOK WITHOUT IT (T-049): a translation shown beside a quotation it no
++longer translates. SQLite cannot hold a foreign key to "any cell", so `translations.source_*` is a pointer
++nothing else enforces, and `source_sha256` is how a change to the original is seen.
++
++For every CURRENT translation (status translated or reviewed, not superseded) it checks that
++  * the pointer resolves to a text cell today (`dbcore.read_cell`, the rule the verbs use);
++  * the cell's hash is the one recorded when it was translated;
++  * the translation states the original's numbers and no others (`db.translation_number_gaps`, the rule
++    `db.py record-translation` applies at write time).
++Prints `EXAMINED: <n>`, the current translations. Zero until the first translation is recorded.
++
++Usage:  python3 scripts/audit/translation_pointer_audit.py
++Exit 0 every current translation holds; 1 one does not; 2 cannot run.
++"""
++import os
++import sqlite3
++import sys
++from pathlib import Path
++
++REPO = Path(__file__).resolve().parents[2]
++sys.path.insert(0, str(REPO / "scripts"))
++import dbcore                                                          # noqa: E402
++import db                                                              # noqa: E402
++
++DB_PATH = Path(os.environ.get("GUIDEBOOK_DB_PATH", REPO / "data" / "guidebook.db"))
++
++
++def main():
++    if not DB_PATH.exists():
++        print(f"translation_pointer_audit: no database at {DB_PATH}", file=sys.stderr)
++        return 2
++    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
++    conn.row_factory = sqlite3.Row
++    try:
++        if not conn.execute("SELECT 1 FROM sqlite_master WHERE name='translations'").fetchone():
++            print("translation_pointer_audit: translations is absent (pre-127 schema)", file=sys.stderr)
++            return 2
++        rows = conn.execute("SELECT * FROM translations WHERE status IN ('translated', 'reviewed') "
++                            "AND superseded_by_translation_id IS NULL ORDER BY translation_id").fetchall()
++        bad = []
++        for r in rows:
++            tid = r["translation_id"]
++            original, _, why = dbcore.read_cell(conn, r["source_table"], r["source_column"], r["source_row_key"])
++            if why:
++                bad.append(f"translation {tid}: the pointer does not resolve: {why}")
++            elif db.sha256_text(original) != r["source_sha256"]:
++                bad.append(f"translation {tid}: the original at {r['source_table']}.{r['source_column']} "
++                           f"[{r['source_row_key']}] has changed since it was translated")
++            else:
++                dropped, added = db.translation_number_gaps(original, r["translated_text"],
++                                                            db.translation_claimed_value(conn, r))
++                if dropped or added:
++                    bad.append(f"translation {tid}: numbers dropped {dropped or 'none'}, added {added or 'none'}")
++    finally:
++        conn.close()
++    print("translation_pointer_audit -- every current translation still translates the cell it points at")
++    print(f"EXAMINED: {len(rows)}")
++    for b in bad:
++        print(f"  FAIL: {b}")
++    if bad:
++        return 1
++    print("PASS: every current translation resolves, matches its cell's hash and keeps its numbers"
++          if rows else "PASS: no current translation yet")
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/scripts/db.py b/scripts/db.py
+index 3434fc1..03f55e6 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -32,6 +32,7 @@ CLI usage:
+     python3 scripts/db.py --help
+ """
+ 
++import hashlib
+ import json
+ import os
+ import re
+@@ -2835,6 +2836,63 @@ def main():
+     p_ung.add_argument("--include-recent", action="store_true",
+                        help="Include gaps with created_at within last 6 months (default: skip)")
+ 
++    # translations (T-049): a typed home for translations, attached by pointer
++    def _pointer_args(p, required):
++        p.add_argument("--source-table", required=required, help="The table of the cell to translate")
++        p.add_argument("--source-column", required=required, help="Its text column")
++        p.add_argument("--source-row-key", required=required,
++                       help="The row's primary key (its rowid where the table has no single-column key). "
++                            "The cell is READ by this verb and only its hash is stored; the original is "
++                            "never retyped and never touched")
++        p.add_argument("--target-language", required=required,
++                       help="A language lang_jur_map holds. No default (OD-02)")
++        p.add_argument("--stage", required=required,
++                       help="The pipeline stage making the request (a stage id of "
++                            "governance/pipeline-contract.yaml)")
++        p.add_argument("--due-stage",
++                       help="Override: the stage this request falls due at. Omit to let the contract's "
++                            "`translation.default_stage` rule decide when it is listed")
++
++    p_rqt = sub.add_parser("request-translation",
++                           help="Ask for a translation of one cell (a pointer, never a copy)")
++    _pointer_args(p_rqt, True)
++    p_rqt.add_argument("--session", required=True)
++    p_rqt.add_argument("--dry-run", action="store_true")
++
++    p_rct = sub.add_parser("record-translation",
++                           help="Record a translation of a requested cell; refused if it adds, drops or "
++                                "changes a number of the original")
++    p_rct.add_argument("--translation-id", type=int, help="The request to answer. Or give a pointer instead")
++    _pointer_args(p_rct, False)
++    p_rct.add_argument("--text", required=True, help="The translation")
++    p_rct.add_argument("--translator-kind", required=True,
++                       choices=dbcore.schema_choices("translations", "translator_kind"))
++    p_rct.add_argument("--translator-name", required=True,
++                       help="The model id, the tool and version, or the person")
++    p_rct.add_argument("--supersedes", type=int,
++                       help="A current translation this one corrects; it is retired in place")
++    p_rct.add_argument("--session", required=True)
++    p_rct.add_argument("--dry-run", action="store_true")
++
++    p_rvt = sub.add_parser("review-translation",
++                           help="Review a translation. One shown to a reader is reviewed by an Opus-class "
++                                "instance other than its translator (OD-30)")
++    p_rvt.add_argument("--translation-id", type=int, required=True)
++    p_rvt.add_argument("--verdict", required=True,
++                       help="reviewed (a reader may be shown it) or rejected (--reason required)")
++    p_rvt.add_argument("--reviewer-kind", required=True,
++                       choices=dbcore.schema_choices("translations", "reviewed_by_kind"))
++    p_rvt.add_argument("--reviewer-name", required=True,
++                       help="Who reviewed it; never the translator. Its class is recorded by name, not verified")
++    p_rvt.add_argument("--reason", help="REQUIRED to reject: why")
++    p_rvt.add_argument("--session", required=True)
++    p_rvt.add_argument("--dry-run", action="store_true")
++
++    p_trl = sub.add_parser("translations", help="List the translation requests due at a stage (read-only)")
++    p_trl.add_argument("--due-at", required=True,
++                       help="A stage id: lists open requests whose due stage is this one, by the row's "
++                            "override or else the contract's translation.default_stage rule")
++
+     args = parser.parse_args()
+ 
+     if not args.command:
+@@ -3720,6 +3778,27 @@ def main():
+         )
+         _emit(rows)
+ 
++    elif args.command == "request-translation":
++        _emit(request_translation(args.source_table, args.source_column, args.source_row_key,
++                                  args.target_language, args.stage, args.due_stage,
++                                  session=args.session, dry_run=args.dry_run))
++
++    elif args.command == "record-translation":
++        _emit(record_translation(args.text, args.translator_kind, args.translator_name,
++                                 translation_id=args.translation_id, source_table=args.source_table,
++                                 source_column=args.source_column, source_row_key=args.source_row_key,
++                                 target_language=args.target_language, stage=args.stage,
++                                 due_stage=args.due_stage, supersedes=args.supersedes,
++                                 session=args.session, dry_run=args.dry_run))
++
++    elif args.command == "review-translation":
++        _emit(review_translation(args.translation_id, args.verdict, args.reviewer_kind, args.reviewer_name,
++                                 args.reason, session=args.session, dry_run=args.dry_run))
++
++    elif args.command == "translations":
++        _emit(translations_due(args.due_at))
++
++
+ 
+ 
+ # --- Additional Python functions ---
+@@ -4170,8 +4249,7 @@ def _correctable():
+     Not a second list. `_BIBLIO_FIELDS` in retrieval_log is what --verify-authors can
+     actually prove against a payload, and this dict's contract is to be exactly that set
+     -- so it is that set, plus `pub_title`, which the verifier checks through `_TITLE_COLS`
+-    instead (a non-English source stores its native title in pub_title and the English in
+-    pub_title_en, so the verifier compares a SET of columns where this writer targets one).
++    instead (the verifier compares a SET of title columns where this writer targets one).
+     That exception is stated here rather than left implicit.
+     """
+     retrieval_log = _retrieval_log()
+@@ -10883,6 +10961,260 @@ def insert_locator(data: dict, session: str, dry_run: bool = False) -> str:
+     return ref
+ 
+ 
++# --- translations (T-049) ---------------------------------------------------------------------
++# A translation POINTS at the cell it translates (translations.source_*) and never replaces or copies
++# it; the original is untouched by construction. The default stage a request falls due at is a RULE held
++# once in governance/pipeline-contract.yaml (`translation.default_stage`), read through
++# `_translation_contract` and computed when listed, never stored and never written in this module.
++
++
++def _translation_contract(contract_path=None):
++    """The pipeline contract through its schema model: the one reader of the translation rule and of the stage ids."""
++    from schemas.pipeline_contract import PipelineContract
++    return PipelineContract.load(contract_path or dbcore.REPO_ROOT / "governance" / "pipeline-contract.yaml")
++
++
++def _translation_stage(contract, stage, flag):
++    ids = [s.id for s in contract.stages]
++    if stage not in ids:
++        raise Refusal(f"{flag} {stage!r} is not a stage id of governance/pipeline-contract.yaml "
++                      f"({', '.join(ids)}). Nothing was written.")
++    return stage
++
++
++def _cell_language(conn, table, key):
++    """The language the pointed row records, if it records one: its own lang_detected / language,
++    else its source's (ref_id -> evidence_sources.lang_detected). None when the row leads to none."""
++    cols = {c[1] for c in conn.execute('PRAGMA table_info("%s")' % table)}
++    k = dbcore.cell_key(conn, table)
++    for col in ("lang_detected", "language"):
++        if col in cols:
++            r = conn.execute('SELECT "%s" FROM "%s" WHERE %s = ?' % (col, table, k), (key,)).fetchone()
++            if r and r[0]:
++                return r[0]
++    if "ref_id" in cols and table != "evidence_sources":
++        r = conn.execute('SELECT lang_detected FROM evidence_sources WHERE ref_id = '
++                         '(SELECT ref_id FROM "%s" WHERE %s = ?)' % (table, k), (key,)).fetchone()
++        if r and r[0]:
++            return r[0]
++    return None
++
++
++def translation_number_gaps(original, translation, claimed_value=None):
++    """(dropped, added): the numbers `original` states that `translation` does not, and the numbers
++    `translation` states that neither `original` nor `claimed_value` does.
++
++    Numbers are READ (`retrieval_log.numbers_stated`, CJK numerals converted first), not matched as digit
++    runs, so 1,2 and 1.2 are one number and 12 does not occur in 1.2 (T-008). A ratio states both its
++    operands. `claimed_value` is passed only for the claim_text of a figure: it is the verified numeral of a
++    number the source writes in words. A repeated number need not be repeated; a token with two readings
++    (1.200) matches on either.
++    """
++    rl = _retrieval_log()
++
++    def nums(text):
++        return [r for k, r in rl.numbers_stated(_cjk_to_arabic(text or ""), quote=True) if k == "n"]
++
++    orig, trans, extra = nums(original), nums(translation), nums(claimed_value)
++    shown = lambda rs: sorted({"/".join(str(x) for x in r) for r in rs})
++    return (shown(r for r in orig if not any(set(r) & set(t) for t in trans)),
++            shown(r for r in trans if not any(set(r) & set(o) for o in orig + extra)))
++
++
++def translation_claimed_value(conn, translation):
++    """The verified claimed_value of the figure whose claim_text a translation translates, else None.
++    It is the numeral of a number the source writes in words, so the translation may state it."""
++    if (translation["source_table"], translation["source_column"]) != ("source_value_extractions", "claim_text"):
++        return None
++    r = conn.execute("SELECT claimed_value FROM source_value_extractions WHERE extraction_id=?",
++                     (translation["source_row_key"],)).fetchone()
++    return r[0] if r else None
++
++
++def sha256_text(text):
++    return hashlib.sha256(text.encode("utf-8")).hexdigest()
++
++
++def _open_translation_request(conn, table, column, key, language, stage, due_stage, contract, session,
++                              context, replacing=None):
++    """Validate a pointer against the live schema and open (or find) the request. Returns (id, created)."""
++    if table == "translations":
++        raise Refusal(f"{context}: a translation is not translated again; point at the original cell it "
++                      f"translates (a back-translation is not an original). Nothing was written.")
++    text, key, why = dbcore.read_cell(conn, table, column, key)
++    if why:
++        raise Refusal(f"{context}: the pointer does not resolve: {why}. Nothing was written.")
++    lang = (language or "").strip().upper()
++    held = dbcore.live_vocab(conn, "lang_jur_map", "language")
++    if held and lang not in held:
++        raise Refusal(f"{context}: --target-language {language!r} is not a language lang_jur_map holds "
++                      f"({', '.join(sorted(held))}). The map is the vocabulary of languages "
++                      f"(rule 8); a language is added there, not at the request. Nothing was written.")
++    src = _cell_language(conn, table, key)
++    if src and src.strip().upper() == lang:
++        raise Refusal(f"{context}: the pointed row is recorded in {src.strip().upper()}, the target language. "
++                      f"There is nothing to translate. Nothing was written.")
++    _translation_stage(contract, stage, "--stage")
++    if due_stage is not None:
++        _translation_stage(contract, due_stage, "--due-stage")
++    sha = sha256_text(text)
++    prior = conn.execute(
++        "SELECT translation_id, status FROM translations WHERE source_table=? AND source_column=? "
++        "AND source_row_key=? AND source_sha256=? AND target_language=? "
++        "AND superseded_by_translation_id IS NULL AND status IN ('requested', 'translated', 'reviewed') "
++        "AND translation_id IS NOT ?", (table, column, key, sha, lang, replacing)).fetchone()
++    if prior and prior[1] == "requested":
++        return prior[0], False
++    if prior:
++        raise Refusal(f"{context}: this cell is already translated into {lang} as translation {prior[0]} "
++                      f"({prior[1]}). A corrected translation is a new row that retires the old one: "
++                      f"record-translation --supersedes {prior[0]}. Nothing was written.")
++    row = {"source_table": table, "source_column": column, "source_row_key": key, "source_sha256": sha,
++           "target_language": lang, "status": "requested", "requested_at_stage": stage,
++           "due_stage": due_stage}
++    row.update(dbcore.stamp_for(conn, "translations", session))
++    cur = conn.execute(f"INSERT INTO translations ({','.join(row)}) VALUES ({','.join('?' * len(row))})",
++                       list(row.values()))
++    return cur.lastrowid, True
++
++
++def request_translation(source_table, source_column, source_row_key, target_language, stage,
++                        due_stage=None, *, session, dry_run=False, contract_path=None):
++    """Ask for a translation of one cell. The cell is read here and only its hash is stored."""
++    contract = _translation_contract(contract_path)
++    with connect(dry_run) as conn:
++        tid, created = _open_translation_request(conn, source_table, source_column, source_row_key,
++                                                 target_language, stage, due_stage, contract, session,
++                                                 "request-translation")
++    return {"translation_id": tid, "created": created, "status": "requested"}
++
++
++def record_translation(text, translator_kind, translator_name, *, translation_id=None, source_table=None,
++                       source_column=None, source_row_key=None, target_language=None, stage=None,
++                       due_stage=None, supersedes=None, session, dry_run=False, contract_path=None):
++    """Answer a request (by id), or open one and answer it in one call (by pointer). Refuses a
++    translation that adds, drops or changes a number of the original, and one of a cell changed since
++    the request. The original is never touched."""
++    ctx = "record-translation"
++    pointer = (source_table, source_column, source_row_key)
++    if translation_id is not None and any(p is not None for p in pointer + (target_language, stage, due_stage)):
++        raise Refusal(f"{ctx}: pass --translation-id OR a pointer (--source-table, --source-column, "
++                      f"--source-row-key, --target-language, --stage), never both. Nothing was written.")
++    if translation_id is None and (None in pointer or not target_language or not stage):
++        raise Refusal(f"{ctx}: pass --translation-id, or the whole pointer with --target-language and "
++                      f"--stage. Nothing was written.")
++    text = (text or "").strip()
++    name = (translator_name or "").strip()
++    if not text:
++        raise Refusal(f"{ctx}: --text is blank. Nothing was written.")
++    if not name:
++        raise Refusal(f"{ctx}: --translator-name is required: the model id, the tool and version, or the "
++                      f"person. Nothing was written.")
++    contract = _translation_contract(contract_path)
++    with connect(dry_run) as conn:
++        dbcore.check_declared(conn, "translations", "translator_kind", translator_kind, ctx)
++        old = None
++        if supersedes is not None:
++            old = conn.execute("SELECT * FROM translations WHERE translation_id=?", (supersedes,)).fetchone()
++            if not old or old["status"] not in ("translated", "reviewed") or old["superseded_by_translation_id"]:
++                raise Refusal(f"{ctx}: --supersedes {supersedes} is not a current translation (translated "
++                              f"or reviewed, not already retired). Nothing was written.")
++        if translation_id is None:
++            tid, _ = _open_translation_request(conn, source_table, source_column, source_row_key,
++                                               target_language, stage, due_stage, contract, session, ctx,
++                                               replacing=supersedes)
++        else:
++            tid = translation_id
++        req = conn.execute("SELECT * FROM translations WHERE translation_id=?", (tid,)).fetchone()
++        if not req:
++            raise Refusal(f"{ctx}: no translation request {tid}. Nothing was written.")
++        if req["status"] != "requested":
++            raise Refusal(f"{ctx}: translation {tid} is {req['status']}, not requested. A corrected "
++                          f"translation is a new row: record it against the pointer with --supersedes {tid}. "
++                          f"Nothing was written.")
++        if old and (old["source_table"], old["source_column"], old["source_row_key"], old["target_language"]) != (
++                req["source_table"], req["source_column"], req["source_row_key"], req["target_language"]):
++            raise Refusal(f"{ctx}: --supersedes {supersedes} translates a different cell or language. "
++                          f"Nothing was written.")
++        original, _, why = dbcore.read_cell(conn, req["source_table"], req["source_column"], req["source_row_key"])
++        if why:
++            raise Refusal(f"{ctx}: the pointer no longer resolves: {why}. Nothing was written.")
++        if sha256_text(original) != req["source_sha256"]:
++            raise Refusal(f"{ctx}: the original cell has changed since request {tid} was made (its hash no "
++                          f"longer matches). Request the translation again. Nothing was written.")
++        dropped, added = translation_number_gaps(original, text, translation_claimed_value(conn, req))
++        if dropped or added:
++            raise Refusal(f"{ctx}: the translation does not state the original's numbers. Dropped: "
++                          f"{dropped or 'none'}; added: {added or 'none'}. Every number the original states "
++                          f"as a numeral is stated in the translation, and every number the translation "
++                          f"states is the original's (or the figure's verified claimed_value). "
++                          f"Nothing was written.")
++        conn.execute("UPDATE translations SET translated_text=?, status='translated', translator_kind=?, "
++                     "translator_name=?, updated_at=?, updated_by_session=? WHERE translation_id=?",
++                     (text, translator_kind, name, dbcore.now(), session, tid))
++        if old:
++            conn.execute("UPDATE translations SET superseded_by_translation_id=?, updated_at=?, "
++                         "updated_by_session=? WHERE translation_id=?", (tid, dbcore.now(), session, supersedes))
++    return {"translation_id": tid, "status": "translated", "supersedes": supersedes}
++
++
++def review_translation(translation_id, verdict, reviewer_kind, reviewer_name, reason=None, *, session,
++                       dry_run=False):
++    """Review a translation: `reviewed` (a reader may be shown it) or `rejected` (with a reason). OD-30: a
++    translation shown to a reader is reviewed by an Opus-class instance other than its translator. The
++    database records the reviewer's name and cannot verify its class."""
++    ctx = "review-translation"
++    if verdict not in ("reviewed", "rejected"):
++        raise Refusal(f"{ctx}: --verdict is reviewed or rejected, not {verdict!r}. Nothing was written.")
++    name = (reviewer_name or "").strip()
++    reason = (reason or "").strip() or None
++    if not name:
++        raise Refusal(f"{ctx}: --reviewer-name is required: the model id, the tool or the person who "
++                      f"reviewed it. Nothing was written.")
++    if verdict == "rejected" and not reason:
++        raise Refusal(f"{ctx}: --reason is required to reject a translation. Nothing was written.")
++    with connect(dry_run) as conn:
++        dbcore.check_declared(conn, "translations", "reviewed_by_kind", reviewer_kind, ctx)
++        row = conn.execute("SELECT * FROM translations WHERE translation_id=?", (translation_id,)).fetchone()
++        if not row:
++            raise Refusal(f"{ctx}: no translation {translation_id}. Nothing was written.")
++        if row["status"] != "translated" or row["superseded_by_translation_id"]:
++            raise Refusal(f"{ctx}: translation {translation_id} is {row['status']}"
++                          f"{' and retired' if row['superseded_by_translation_id'] else ''}; only a "
++                          f"translated, current translation is reviewed. Nothing was written.")
++        if name.casefold() == row["translator_name"].casefold():
++            raise Refusal(f"{ctx}: the reviewer ({name}) is the translator. A translation shown to a reader "
++                          f"is reviewed by an Opus-class instance other than its translator (OD-30). "
++                          f"Nothing was written.")
++        if verdict == "reviewed":
++            original, _, why = dbcore.read_cell(conn, row["source_table"], row["source_column"], row["source_row_key"])
++            if why or sha256_text(original) != row["source_sha256"]:
++                raise Refusal(f"{ctx}: the original cell no longer matches the one translated "
++                              f"({why or 'its hash changed'}). Reject this translation and request it again. "
++                              f"Nothing was written.")
++        conn.execute("UPDATE translations SET status=?, reviewed_by_kind=?, reviewed_by_name=?, reviewed_at=?, "
++                     "review_reason=?, updated_at=?, updated_by_session=? WHERE translation_id=?",
++                     (verdict, reviewer_kind, name, dbcore.now(), reason, dbcore.now(), session, translation_id))
++    return {"translation_id": translation_id, "status": verdict}
++
++
++def translations_due(stage, contract_path=None):
++    """Open requests that fall due at `stage`: the row's own due_stage, else the contract's rule."""
++    contract = _translation_contract(contract_path)
++    _translation_stage(contract, stage, "--due-at")
++    if contract.translation is None:
++        raise Refusal("governance/pipeline-contract.yaml has no `translation:` rule, so no request has a "
++                      "default stage. Nothing was read.")
++    default = contract.translation.default_stage
++    with connect(readonly=True) as conn:
++        rows = conn.execute(
++            "SELECT translation_id, source_table, source_column, source_row_key, target_language, "
++            "requested_at_stage, due_stage FROM translations "
++            "WHERE status='requested' AND superseded_by_translation_id IS NULL ORDER BY translation_id").fetchall()
++    return [dict(r, due_stage=r["due_stage"] or default, due_by="row" if r["due_stage"] else "rule")
++            for r in rows if (r["due_stage"] or default) == stage]
++
++
+ if __name__ == "__main__":
+     # REFUSALS ARE MESSAGES, NOT STACK TRACES. This CLI's whole value is that it says no
+     # (CLAUDE.md §4), and its refusals are careful: they cite the ruling, name the remedy
+diff --git a/scripts/dbcore.py b/scripts/dbcore.py
+index 26f38ff..00741dd 100644
+--- a/scripts/dbcore.py
++++ b/scripts/dbcore.py
+@@ -596,6 +596,41 @@ def exists(conn, table: str, column: str, value) -> bool:
+     return row is not None
+ 
+ 
++def cell_key(conn, table: str) -> str:
++    """The SQL expression that keys a row of `table` for a translation pointer: its single-column
++    primary key, else `rowid`."""
++    pk = [c[1] for c in conn.execute('PRAGMA table_info("%s")' % table) if c[5]]
++    return '"%s"' % pk[0] if len(pk) == 1 else "rowid"
++
++
++def read_cell(conn, table: str, column: str, key):
++    """The text cell a pointer names: (text, key_as_text, None), or (None, None, why it is not one).
++
++    ONE RULE for resolving a translation's pointer (`translations.source_*`, T-049), read by the
++    three translation verbs and by translation_pointer_audit alike. `key` is the row's single-column
++    primary key as text, or its rowid where the table has no single-column key (`cell_key`); the key
++    returned is the stored one, so `019` and `19` name one row once. Nothing is listed: the table and
++    the column are looked up in the live schema, so any text cell of any table can be pointed at, and
++    the cell must be text and not blank.
++    """
++    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)).fetchone():
++        return None, None, f"{table!r} is not a table of this database"
++    if column not in {c[1] for c in conn.execute('PRAGMA table_info("%s")' % table)}:
++        return None, None, f"{table!r} has no column {column!r}"
++    k = cell_key(conn, table)
++    try:
++        row = conn.execute('SELECT typeof("%s"), "%s", %s FROM "%s" WHERE %s = ?' % (column, column, k, table, k),
++                           (key,)).fetchone()
++    except sqlite3.OperationalError as exc:
++        return None, None, f"{table!r} cannot be keyed by {k} ({exc})"
++    if row is None:
++        return None, None, f"{table!r} has no row {k} = {key!r}"
++    if row[0] != "text" or not row[1].strip():
++        return None, None, (f"{table}.{column} at {k} = {key!r} is "
++                            f"{'blank' if row[0] == 'text' else row[0]}, not text")
++    return row[1], str(row[2]), None
++
++
+ def live_vocab(conn, table: str, column: str) -> set:
+     """The set of values a column actually holds today.
+ 
+diff --git a/scripts/migrations/127_translations.sql b/scripts/migrations/127_translations.sql
+new file mode 100644
+index 0000000..a795ce5
+--- /dev/null
++++ b/scripts/migrations/127_translations.sql
+@@ -0,0 +1,78 @@
++-- 127_translations.sql
++-- SCHEMA migration -- a typed home for translations, attached by POINTER (T-049; owner statements
++-- 2026-11-12, "everything non-English be translated ... probably at synthesis or whatever we need").
++--
++-- THE POINTER. A translation names the cell it translates by (source_table, source_column,
++-- source_row_key) and never replaces or copies it. SQLite cannot hold a foreign key to "any cell",
++-- so `source_sha256` (the hash of the cell's text when it was translated; a hash is not a copy) lets a
++-- later change to the original be SEEN; scripts/audit/translation_pointer_audit.py reads it.
++-- `source_row_key` is the row's single-column primary key as text, or its rowid where the table has no
++-- single-column key (dbcore.read_cell is the one rule). There is no column that says "this is a
++-- translation": the table is the mark.
++--
++-- THE LIFECYCLE. requested -> translated -> reviewed | rejected. `translated_text` is NULL only while
++-- requested; the translator (kind and name) is required once past requested; the reviewer (kind, name,
++-- time) is required exactly when reviewed or rejected, and is never the translator (OD-30, resolved
++-- under delegation: a translation shown to a reader is reviewed by an Opus-class instance other than its
++-- translator; the database records the reviewer's name and cannot verify its class, and render shows only
++-- `reviewed` rows, T-037). A rejection carries its reason (`review_reason`). A corrected translation is a
++-- new row and the old one is retired in place (`superseded_by_translation_id`).
++-- `requested_at_stage` is the stage that asked; `due_stage` NULL means the rule in
++-- governance/pipeline-contract.yaml (`translation.default_stage`) decides, computed when read and never
++-- stored; a value is an explicit override for this row. Neither is a CHECK: the stage ids live in the
++-- contract, and the writers (db.py request-translation / record-translation / review-translation) validate
++-- them against it. The target language is validated by the writers against lang_jur_map (not a key there).
++--
++-- NOT the aliases typed TRANSLATION in term_aliases: those are generated search forms and stay where they are.
++-- STAGE: cross-stage (governance/stage-map.yaml). WRITERS: the three verbs above. READERS:
++-- v_translations_current (the only read surface), `db.py translations --due-at`, translation_pointer_audit.
++-- Nothing is backfilled; no committed data migration is added. The table and the view are new, so no existing view
++-- or index names it: `select type, name from sqlite_master where sql like '%translations%'`.
++
++CREATE TABLE translations (
++    translation_id               INTEGER PRIMARY KEY AUTOINCREMENT,
++    source_table                 TEXT NOT NULL CHECK (length(trim(source_table)) > 0),
++    source_column                TEXT NOT NULL CHECK (length(trim(source_column)) > 0),
++    source_row_key               TEXT NOT NULL CHECK (length(trim(source_row_key)) > 0),
++    source_sha256                TEXT NOT NULL CHECK (length(source_sha256) = 64),
++    target_language              TEXT NOT NULL CHECK (length(trim(target_language)) > 0),
++    translated_text              TEXT CHECK (translated_text IS NULL OR length(trim(translated_text)) > 0),
++    status                       TEXT NOT NULL DEFAULT 'requested'
++                                 CHECK (status IN ('requested', 'translated', 'reviewed', 'rejected')),
++    translator_kind              TEXT CHECK (translator_kind IS NULL OR translator_kind IN ('model', 'tool', 'person')),
++    translator_name              TEXT CHECK (translator_name IS NULL OR length(trim(translator_name)) > 0),
++    requested_at_stage           TEXT NOT NULL CHECK (length(trim(requested_at_stage)) > 0),
++    due_stage                    TEXT CHECK (due_stage IS NULL OR length(trim(due_stage)) > 0),
++    reviewed_by_kind             TEXT CHECK (reviewed_by_kind IS NULL OR reviewed_by_kind IN ('model', 'tool', 'person')),
++    reviewed_by_name             TEXT CHECK (reviewed_by_name IS NULL OR length(trim(reviewed_by_name)) > 0),
++    reviewed_at                  TEXT,
++    review_reason                TEXT CHECK (review_reason IS NULL OR length(trim(review_reason)) > 0),
++    superseded_by_translation_id INTEGER REFERENCES translations(translation_id),
++    created_at                   TEXT NOT NULL,
++    created_by_session           TEXT NOT NULL,
++    updated_at                   TEXT NOT NULL,
++    updated_by_session           TEXT NOT NULL,
++    -- text exists exactly once the request has been answered
++    CHECK ((status = 'requested') = (translated_text IS NULL)),
++    -- who translated it, required once past requested; none before
++    CHECK ((status = 'requested' AND translator_kind IS NULL AND translator_name IS NULL)
++        OR (status <> 'requested' AND translator_kind IS NOT NULL AND translator_name IS NOT NULL)),
++    -- who reviewed it, required exactly when reviewed or rejected; and never the translator (OD-30)
++    CHECK ((status IN ('reviewed', 'rejected')
++            AND reviewed_by_kind IS NOT NULL AND reviewed_by_name IS NOT NULL AND reviewed_at IS NOT NULL)
++        OR (status NOT IN ('reviewed', 'rejected')
++            AND reviewed_by_kind IS NULL AND reviewed_by_name IS NULL AND reviewed_at IS NULL)),
++    CHECK (reviewed_by_name IS NULL OR reviewed_by_name <> translator_name),
++    -- a rejection says why
++    CHECK (status <> 'rejected' OR review_reason IS NOT NULL),
++    CHECK (superseded_by_translation_id IS NULL OR superseded_by_translation_id <> translation_id)
++);
++
++CREATE VIEW v_translations_current AS
++SELECT translation_id, source_table, source_column, source_row_key, source_sha256, target_language,
++       translated_text, status, translator_kind, translator_name, requested_at_stage, due_stage,
++       reviewed_by_kind, reviewed_by_name, reviewed_at
++FROM translations
++WHERE status IN ('translated', 'reviewed') AND superseded_by_translation_id IS NULL;
++
++PRAGMA user_version = 127;
+diff --git a/scripts/research/retrieval_log.py b/scripts/research/retrieval_log.py
+index 716111e..2c7b7a5 100644
+--- a/scripts/research/retrieval_log.py
++++ b/scripts/research/retrieval_log.py
+@@ -575,10 +575,12 @@ _BIBLIO_FIELDS = (
+ PAYLOAD_FIELDS = _BIBLIO_FIELDS
+ 
+ # Columns any one of which may legitimately carry the payload's title. A
+-# non-English source stores its native title in `pub_title` and the English in
+-# `pub_title_en`, so a payload title matching EITHER is a match. Checked as a set,
+-# never as a single column, or every Japanese admission reads as a fabrication.
+-_TITLE_COLS = ("pub_title", "pub_title_en", "original_title", "chapter_title", "book_title")
++# non-English source stores its native title in `pub_title` (or `original_title`), so a payload title
++# matching ANY is a match. Checked as a set, never as a single column, or every Japanese admission
++# reads as a fabrication. `pub_title_en` was read here until T-049: a title's translation is now a
++# `translations` row that points at the title cell, and the earlier column is NULL for every source
++# (no writer; CLAUDE.md rule 5: writer, reader, then NULL forward).
++_TITLE_COLS = ("pub_title", "original_title", "chapter_title", "book_title")
+ 
+ 
+ 
+@@ -1806,7 +1808,7 @@ def _verify_presence(session, unparsed):
+     ASSERTED, and failed when absent from every one of the row's artefacts: each stored
+     PERSON's last_name (is_corporate=0), and the title's first segment -- from any of
+     _TITLE_COLS, checked as a set as the JSON path does, because a non-English source
+-    stores its native title in pub_title and the English beside it.
++    stores its native title in pub_title (or original_title).
+     REPORTED, never failed: a corporate_name that is absent. A corporate author is often
+     a gloss this project adds ('Republic of Korea' on a Korean statute), which is a
+     convention and not a fabrication.
+diff --git a/scripts/tests/test_translations.py b/scripts/tests/test_translations.py
+new file mode 100644
+index 0000000..325f97c
+--- /dev/null
++++ b/scripts/tests/test_translations.py
+@@ -0,0 +1,344 @@
++#!/usr/bin/env python3
++"""The typed home for translations (T-049): AT-107, AT-108, AT-109, proven to fire and to pass.
++
++WHAT REACHES THE GUIDEBOOK WITHOUT THESE CASES. A session that meets a Japanese or Dutch quotation either
++translates in its head and loses the translation, or writes an English paraphrase where the source's words
++should be and a later reader takes it for the source's. A translation that adds, drops or changes a figure
++passes every gate that asks only whether a translation EXISTS. A translation shown beside a quotation that
++has since changed. A stage name written into a verb's code, so that moving the default is a code change.
++
++AT-107  from the stage judgment, request and record a translation of a non-English figure's claim_text by the
++        verbs alone: the original cell is byte-identical, the current-translations view joins back to it by
++        its pointer, requested_at_stage is judgment, and no file under scripts/ or schemas/ is touched.
++AT-108  with the contract as committed a request with no --due-stage is listed at the contract's default
++        stage; with a temporary copy of the contract naming another stage it is listed there and not at
++        the first, with no file changed; no stage id is written as a literal inside the verbs.
++AT-109  a translation that changes a figure of the original is refused; one that drops a figure is refused;
++        one that keeps every figure is accepted; one of a quote that spells its number in words, stating the
++        numeral of the row's claimed_value, is accepted. A pointer to a table, column or row that does not
++        exist is refused; the original cannot be retyped; a cell changed since the request is refused;
++        review requires a reviewer other than the translator.
++
++Every probe is chosen by query. Anything written goes to a COPY of the database (marked TASK-FIXTURE); a
++state the verbs cannot build is made by SQL on the copy and marked HAND. A case needing a state the live data
++does not offer prints SKIPPED-NO-FIXTURE (counted apart), never silently passes.
++"""
++import ast
++import inspect
++import json
++import os
++import re
++import shutil
++import sqlite3
++import subprocess
++import sys
++import tempfile
++from pathlib import Path
++
++REPO = Path(__file__).resolve().parents[2]
++os.chdir(REPO)
++TMP = tempfile.mkdtemp(prefix="t049-translations-")
++DB = os.path.join(TMP, "guidebook.db")
++shutil.copy(REPO / "data" / "guidebook.db", DB)
++os.environ["GUIDEBOOK_DB_PATH"] = DB
++sys.path.insert(0, str(REPO / "scripts"))
++sys.path.insert(0, str(REPO))
++import db                                                              # noqa: E402
++import dbcore                                                          # noqa: E402
++from dbcore import Refusal                                             # noqa: E402
++from schemas.pipeline_contract import PipelineContract                 # noqa: E402
++
++S = "session_test-translations"
++results, skipped = [], []
++
++
++def record(tid, name, passed, details=""):
++    results.append(bool(passed))
++    print(f"  [{'✓' if passed else '✗'}] {tid}: {name}")
++    if details and not passed:
++        print(f"      {str(details)[:500]}")
++
++
++def skip(tid, why):
++    skipped.append(tid)
++    print(f"  [-] {tid}: SKIPPED-NO-FIXTURE: {why}")
++
++
++def refused(fn, *a, **k):
++    """The Refusal text if `fn` refuses, else None (any other exception is a defect and is printed)."""
++    try:
++        fn(*a, **k)
++    except Refusal as exc:
++        return str(exc)
++    except Exception as exc:  # noqa: BLE001
++        print(f"      DEFECT (not a refusal): {type(exc).__name__}: {exc}")
++    return None
++
++
++def refused_for(part, fn, *a, **k):
++    """True when `fn` refuses AND the refusal says `part`: refused for the reason under test, not another."""
++    return part in (refused(fn, *a, **k) or "\0")
++
++
++def cli(*args, env=None):
++    p = subprocess.run([sys.executable, "scripts/db.py", *args], capture_output=True, text=True,
++                       env={**os.environ, **(env or {})})
++    return p.returncode, p.stdout, p.stderr
++
++
++def finish():
++    print(f"\nEXAMINED: {len(results)} cases")
++    print(f"SKIPPED-NO-FIXTURE: {len(skipped)}")
++    ok = bool(results) and all(results)
++    if ok:
++        shutil.rmtree(TMP, ignore_errors=True)
++    else:
++        print(f"FAILED: {results.count(False)}   (scratch kept: {TMP})")
++    print("PASS" if ok else "FAIL")
++    sys.exit(0 if ok else 1)
++
++
++def tracked_state():
++    return subprocess.run(["git", "status", "--porcelain", "scripts", "schemas"], capture_output=True,
++                          text=True).stdout
++
++
++con = sqlite3.connect(DB)
++con.row_factory = sqlite3.Row
++q = lambda sql, *p: con.execute(sql, p).fetchall()  # noqa: E731
++
++# --- the schema and the verbs exist: absent, every case below is red by name ----------------------------
++have = q("SELECT count(*) FROM sqlite_master WHERE name IN ('translations', 'v_translations_current')")[0][0] == 2
++verbs = all(hasattr(db, f) for f in ("request_translation", "record_translation", "review_translation",
++                                     "translations_due"))
++record("T049-01", "the translations table, its current view and the four verbs exist", have and verbs,
++       f"table+view: {have}, verbs: {verbs}")
++if not (have and verbs):
++    finish()
++
++CONTRACT = PipelineContract.load(REPO / "governance" / "pipeline-contract.yaml")
++STAGES = [s.id for s in CONTRACT.stages]
++DEFAULT = CONTRACT.translation.default_stage if CONTRACT.translation else None
++record("T049-02", "the contract holds a translation rule naming one of its own stages", DEFAULT in STAGES, DEFAULT)
++
++# --- probes, chosen by query ------------------------------------------------------------------------------
++NUM = re.compile(r"\d+(?:[.,]\d+)?")
++TARGET = q("SELECT language FROM lang_jur_map GROUP BY language ORDER BY count(*) DESC, language LIMIT 1")[0][0]
++JUDGMENT = next((s for s in STAGES if s == "judgment"), None)
++FIG = [r for r in q(
++    "SELECT x.extraction_id AS id, x.claim_text AS text, x.claimed_value AS cv, upper(e.lang_detected) AS lang "
++    "FROM source_value_extractions x JOIN evidence_sources e USING (ref_id) "
++    "WHERE upper(coalesce(e.lang_detected, 'EN')) <> 'EN' AND upper(e.lang_detected) <> ? "
++    "AND x.claim_text IS NOT NULL ORDER BY x.extraction_id", TARGET)]
++# a figure whose numbers are plain integers, each once: so a changed or dropped one is unambiguous
++plain = next((r for r in FIG if (t := NUM.findall(r["text"])) and all(x.isdigit() for x in t)
++              and len(set(t)) == len(t) and not any(c in r["text"] for c in "０１２３４５６７８９〇一二三四五六七八九十")), None)
++words = next((r for r in FIG if r["cv"] and r["cv"].isdigit() and r["cv"] not in NUM.findall(r["text"])
++              and not re.search(r"[０-９〇一二三四五六七八九十]", r["text"])), None)
++
++
++def others_than(*langs):
++    """Languages lang_jur_map holds, other than these, in a stable order."""
++    marks = ",".join("?" * len(langs))
++    return [r[0] for r in q(f"SELECT DISTINCT language FROM lang_jur_map WHERE language NOT IN ({marks}) "
++                            f"ORDER BY language", *langs)]
++
++
++def pointer(r, column="claim_text"):
++    return ["--source-table", "source_value_extractions", "--source-column", column,
++            "--source-row-key", str(r["id"]), "--target-language", TARGET]
++
++
++def cell(r):
++    return q("SELECT claim_text FROM source_value_extractions WHERE extraction_id=?", r["id"])[0][0]
++
++
++# === AT-107 ===================================================================================================
++if not plain or not JUDGMENT:
++    skip("T049-10", f"no non-English figure with plain integers to translate (plain={bool(plain)}, "
++                    f"judgment stage={bool(JUDGMENT)})")
++else:
++    before_cell, before_tree = cell(plain), tracked_state()
++    text = "TASK-FIXTURE " + " ".join(NUM.findall(plain["text"]))
++    rc1, out1, err1 = cli("request-translation", *pointer(plain), "--stage", JUDGMENT, "--session", S)
++    tid = json.loads(out1)["translation_id"] if rc1 == 0 else None
++    rcl, outl, _ = cli("translations", "--due-at", DEFAULT)                              # AT-108, while it is open
++    listed_open = rcl == 0 and tid in [r["translation_id"] for r in json.loads(outl)]
++    rc2, out2, err2 = cli("record-translation", "--translation-id", str(tid), "--text", text,
++                          "--translator-kind", "model", "--translator-name", "test-translator", "--session", S)
++    record("T049-10", "AT-107 request and record by the verbs alone", rc1 == 0 and rc2 == 0, err1 + err2)
++    record("T049-11", "AT-107 the original cell is byte-identical", cell(plain) == before_cell)
++    joined = q("SELECT v.translation_id, v.translated_text FROM v_translations_current v "
++               "JOIN source_value_extractions x ON v.source_table='source_value_extractions' "
++               "AND v.source_column='claim_text' AND v.source_row_key=CAST(x.extraction_id AS TEXT) "
++               "WHERE x.extraction_id=? AND x.claim_text=?", plain["id"], before_cell)
++    record("T049-12", "AT-107 the current view joins back to that cell by its pointer",
++           [tuple(r) for r in joined] == [(tid, text)], joined)
++    record("T049-13", "AT-107 requested_at_stage is judgment",
++           q("SELECT requested_at_stage FROM translations WHERE translation_id=?", tid)[0][0] == JUDGMENT)
++    record("T049-14", "AT-107 no file under scripts/ or schemas/ was touched", tracked_state() == before_tree)
++
++    # === AT-108 =============================================================================================
++    record("T049-20", "AT-108 an unforced request is listed at the contract's default stage", listed_open)
++    # a request that is still open: the one above was answered, so open another on the same cell, in a third language
++    rq = json.loads(cli("request-translation", "--source-table", "source_value_extractions",
++                        "--source-column", "claim_text", "--source-row-key", str(plain["id"]),
++                        "--target-language", others_than(TARGET, plain["lang"])[0],
++                        "--stage", JUDGMENT, "--session", S)[1])
++    other = next(s for s in STAGES if s != DEFAULT)
++    alt = Path(TMP) / "contract-alt.yaml"
++    alt.write_text(re.sub(r"(?m)^(  default_stage: ).*$", rf"\g<1>{other}",
++                          (REPO / "governance" / "pipeline-contract.yaml").read_text(encoding="utf-8")))
++    tree = tracked_state()
++    at_default = [r["translation_id"] for r in db.translations_due(DEFAULT)]
++    at_alt = [r["translation_id"] for r in db.translations_due(other, contract_path=alt)]
++    still = [r["translation_id"] for r in db.translations_due(DEFAULT, contract_path=alt)]
++    record("T049-21", "AT-108 the open request is listed at the default stage",
++           rq["translation_id"] in at_default and rq["translation_id"] not in
++           [r["translation_id"] for r in db.translations_due(other)], at_default)
++    record("T049-22", "AT-108 a contract naming another stage moves it there and off the first",
++           rq["translation_id"] in at_alt and rq["translation_id"] not in still, (at_alt, still))
++    record("T049-23", "AT-108 moving the default changed no file under scripts/ or schemas/",
++           tracked_state() == tree)
++
++# no stage id is a literal inside the verbs: neither a string constant nor a word of a comment
++src = Path(db.__file__).read_text(encoding="utf-8")
++tree_ast = ast.parse(src)
++names = {"_translation_contract", "_translation_stage", "_cell_language", "translation_number_gaps",
++         "translation_claimed_value", "sha256_text", "_open_translation_request", "request_translation",
++         "record_translation", "review_translation", "translations_due"}
++fns = [n for n in tree_ast.body if isinstance(n, ast.FunctionDef) and n.name in names]
++stage_re = re.compile(r"\b(%s)\b" % "|".join(map(re.escape, STAGES)))
++lines = src.splitlines()
++hits = []
++for fn in fns:
++    doc = ast.get_docstring(fn, clean=False)
++    for i in range(fn.lineno, fn.end_lineno + 1):
++        code = lines[i - 1].split("#")[0] if "#" in lines[i - 1] and not lines[i - 1].lstrip().startswith("#") \
++            else lines[i - 1]
++        if stage_re.search(code) and not (doc and lines[i - 1].strip() in doc):
++            hits.append((fn.name, i, lines[i - 1].strip()[:80]))
++record("T049-24", "AT-108 no stage id is written as a literal inside the translation verbs",
++       len(fns) == len(names) and not hits, (len(fns), hits))
++
++# === AT-109 ===================================================================================================
++if not plain:
++    skip("T049-30", "no non-English figure with plain integers")
++else:
++    nums = NUM.findall(plain["text"])
++    changed = "TASK-FIXTURE " + " ".join([str(int(nums[0]) + 1000003)] + nums[1:])
++    dropped = "TASK-FIXTURE " + " ".join(nums[1:]) if len(nums) > 1 else "TASK-FIXTURE no figure at all"
++    kept = "TASK-FIXTURE " + " ".join(reversed(nums))
++    kw = dict(translator_kind="model", translator_name="test-translator", session=S)
++    LANG2, LANG3 = others_than(TARGET, plain["lang"])[1:3]       # AT-107 and AT-108 used the first two
++    ptr = dict(source_table="source_value_extractions", source_column="claim_text",
++               source_row_key=str(plain["id"]), target_language=LANG2, stage=JUDGMENT)
++    record("T049-30", "AT-109 a translation that changes a figure is refused",
++           refused_for("does not state the original's numbers", db.record_translation, changed, **ptr, **kw))
++    record("T049-31", "AT-109 a translation that drops a figure is refused",
++           refused_for("does not state the original's numbers", db.record_translation, dropped, **ptr, **kw))
++    r = db.record_translation(kept, **ptr, **kw)
++    record("T049-32", "AT-109 a translation that keeps every figure is accepted",
++           r["status"] == "translated", r)
++    record("T049-33", "AT-109 a pointer to a table that does not exist is refused",
++           refused_for("is not a table", db.request_translation, "no_such_table_t049", "claim_text", "1", TARGET, JUDGMENT, session=S))
++    record("T049-34", "AT-109 a pointer to a column that does not exist is refused",
++           refused_for("has no column", db.request_translation, "source_value_extractions", "no_such_column_t049", "1", TARGET,
++                   JUDGMENT, session=S))
++    record("T049-35", "AT-109 a pointer to a row that does not exist is refused",
++           refused_for("has no row", db.request_translation, "source_value_extractions", "claim_text", "-1", TARGET, JUDGMENT,
++                   session=S))
++    record("T049-36", "AT-109 a pointer to a cell that is not text is refused",
++           refused_for("not text", db.request_translation, "source_value_extractions", "extraction_id", str(plain["id"]), TARGET,
++                   JUDGMENT, session=S))
++    sigs = [set(inspect.signature(f).parameters) for f in (db.request_translation, db.record_translation,
++                                                           db.review_translation)]
++    helps = cli("record-translation", "--help")[1] + cli("request-translation", "--help")[1]
++    record("T049-37", "AT-109 the original cannot be retyped: no verb takes it",
++           not any({"original", "source_text", "original_text"} & s for s in sigs)
++           and "--original" not in helps and "--source-text" not in helps)
++    tid = r["translation_id"]
++    record("T049-38", "AT-109 review requires a reviewer",
++           refused_for("--reviewer-name is required", db.review_translation, tid, "reviewed", "model", "", session=S))
++    record("T049-39", "AT-109 the reviewer is never the translator",
++           refused_for("is the translator", db.review_translation, tid, "reviewed", "model", "test-translator", session=S))
++    record("T049-40", "AT-109 a rejection needs its reason",
++           refused_for("--reason is required", db.review_translation, tid, "rejected", "model", "test-reviewer", session=S))
++    ok = db.review_translation(tid, "reviewed", "model", "test-reviewer", session=S)
++    record("T049-41", "AT-109 a different reviewer reviews it", ok["status"] == "reviewed", ok)
++    # retire it in place by a corrected translation
++    fixed = db.record_translation("TASK-FIXTURE " + " ".join(nums), **ptr, **kw, supersedes=tid)
++    cur = [r[0] for r in q("SELECT translation_id FROM v_translations_current WHERE source_row_key=? "
++                           "AND target_language=?", str(plain["id"]), LANG2)]
++    record("T049-42", "a corrected translation is a new row and the old one leaves the current view",
++           cur == [fixed["translation_id"]], cur)
++    record("T049-43", "a cell translated once is not requested again (the correction names what it retires)",
++           refused_for("already translated", db.request_translation, *ptr.values(), session=S))
++
++    # a cell changed since the request: HAND, on a second copy
++    HAND = os.path.join(TMP, "hand.db")
++    shutil.copy(DB, HAND)
++    os.environ["GUIDEBOOK_DB_PATH"] = HAND
++    try:
++        rq = db.request_translation("source_value_extractions", "claim_text", str(plain["id"]), LANG3,
++                                    JUDGMENT, session=S)
++        h = sqlite3.connect(HAND)
++        h.execute("UPDATE source_value_extractions SET claim_text = claim_text || ' TASK-FIXTURE' "
++                  "WHERE extraction_id=?", (plain["id"],))       # HAND
++        h.commit()
++        h.close()
++        record("T049-44", "AT-109 recording against a cell changed since the request is refused",
++               refused_for("has changed since", db.record_translation, "TASK-FIXTURE " + " ".join(nums),
++                           translation_id=rq["translation_id"], **kw))
++        # the audit goes red on a current translation whose original has since changed (a seeded defect)
++        h = sqlite3.connect(HAND)
++        h.execute("UPDATE translations SET status='translated', translator_kind='model', translator_name='x', "
++                  "translated_text='TASK-FIXTURE' WHERE translation_id=?", (rq["translation_id"],))    # HAND
++        h.commit()
++        h.close()
++        p = subprocess.run([sys.executable, "scripts/audit/translation_pointer_audit.py"], capture_output=True,
++                           text=True, env={**os.environ, "GUIDEBOOK_DB_PATH": HAND})
++        record("T049-45", "translation_pointer_audit goes red on a stale pointer (a seeded defect)",
++               p.returncode == 1 and "has changed since" in p.stdout, p.stdout + p.stderr)
++    finally:
++        os.environ["GUIDEBOOK_DB_PATH"] = DB
++
++# a quote that spells its number in words: the numeral of the row's claimed_value may be stated
++if not words:
++    skip("T049-50", "no non-English figure whose claimed_value is not stated as a numeral in its quote")
++else:
++    others = NUM.findall(words["text"])
++    kw = dict(translator_kind="model", translator_name="test-translator", session=S)
++    ptr = dict(source_table="source_value_extractions", source_column="claim_text",
++               source_row_key=str(words["id"]), target_language=TARGET, stage=JUDGMENT)
++    w = db.record_translation("TASK-FIXTURE " + " ".join([words["cv"]] + others), **ptr, **kw)
++    record("T049-50", "AT-109 a number spelled in words is accepted when the translation states the numeral "
++                      "of the row's claimed_value", w["status"] == "translated", w)
++    record("T049-51", "AT-109 a number that is neither the quote's nor the claimed_value is still refused",
++           refused_for("does not state", db.record_translation,
++                       "TASK-FIXTURE " + " ".join([str(int(words["cv"]) + 1000003)] + others),
++                   **{**ptr, "target_language": others_than(TARGET, words["lang"])[0]},
++                   **kw))
++
++# the schema's own CHECKs, and the capture set
++bad = sqlite3.connect(DB)
++try:
++    bad.execute("INSERT INTO translations (source_table, source_column, source_row_key, source_sha256, "
++                "target_language, status, translated_text, translator_kind, translator_name, requested_at_stage, "
++                "reviewed_by_kind, reviewed_by_name, reviewed_at, created_at, created_by_session, updated_at, "
++                "updated_by_session) VALUES ('t','c','1',?, 'EN','reviewed','x','model','same',?, 'model','same',"
++                "'now','now',?, 'now',?)", ("0" * 64, STAGES[0], S, S))
++    reviewer_check = False
++except sqlite3.IntegrityError:
++    reviewer_check = True
++bad.close()
++record("T049-60", "the schema itself refuses a reviewer who is the translator", reviewer_check)
++record("T049-61", "translations is in the captured set the writers derive",
++       "translations" in dbcore.writable_tables(con))
++audit = subprocess.run([sys.executable, "scripts/audit/translation_pointer_audit.py"], capture_output=True,
++                       text=True, env={**os.environ, "GUIDEBOOK_DB_PATH": DB})
++n_current = q("SELECT count(*) FROM v_translations_current")[0][0]
++record("T049-62", "translation_pointer_audit passes, its EXAMINED equal to the current translations",
++       audit.returncode == 0 and f"EXAMINED: {n_current}" in audit.stdout and n_current > 0,
++       audit.stdout + audit.stderr)
++finish()
+diff --git a/skills/run-pipeline_SKILL.md b/skills/run-pipeline_SKILL.md
+index 3c70b3b..4bf2081 100644
+--- a/skills/run-pipeline_SKILL.md
++++ b/skills/run-pipeline_SKILL.md
+@@ -167,6 +167,12 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
+   `add-source --slug` leaves it empty, this fills it once and refuses to overwrite grounds). Debt:
+   `scripts/audit/scan_debt.py`, `v_scan_ledger`.
+ - Economics and case studies go in their tables (R12).
++- **Text you cannot read** (a quotation, a term or a title in another language): `request-translation --source-table
++  … --source-column … --source-row-key … --target-language … --stage <this stage>` points at the cell, then
++  `record-translation` files the translation in `translations`; it is refused if it adds, drops or changes a number of
++  the original. Never write a paraphrase into a source column, and never retype the original: a translation is a row
++  that points at the cell (`--target-language` has no default, OD-02; one shown to a reader is reviewed by an Opus-class
++  instance other than its translator with `review-translation`, OD-30).
+ - Checks: `scripts/audit/metadata_integrity_audit.py`, `scripts/audit/provenance_artefact_audit.py`,
+   `scripts/audit/observation_verbatim_audit.py`.
+ 
+@@ -211,6 +217,9 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
+   NO-COVERING-READING.
+ 
+ ## 5. synthesis — read rows against each other
++- Translations due here are listed by `db.py translations --due-at synthesis` (the default stage is the contract's
++  translation rule, held once in `governance/pipeline-contract.yaml`; a request may carry its own `--due-stage`). Read
++  them through `v_translations_current`, never as a source column.
+ - For each parameter cluster ask which **other** parameters, populations or equipment change it (swept-path figures for
+   different wheelchairs set different turning spaces, corridor widths, door approaches). File each dependency as a
+   **typed edge between extractions** where one figure is computed from or conditioned on another, which may cross
+-- 
+2.43.0
+

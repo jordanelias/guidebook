@@ -41,7 +41,7 @@ The seven further suite documents first planned are not written; the owner dropp
 
 ## 2. How to execute
 
-0. **Merge this workplan first.** The task files assume the workplan is on the branch a task starts from. Until its pull request is merged to `main`, the integration base is the workplan branch (`origin/ccr-408aaa9b-z3e4s0`); every task file sets `$BASE` by one line that tests which of the two holds the workplan, and gates and measures against it. A task started from a `main` that lacks the workplan would diff the whole workplan: the pilots showed it.
+0. **Merge this workplan first.** The task files assume the workplan is on the branch a task starts from. Until its pull request is merged to `main`, the integration base is whichever remote branch carries the newest commit to this folder; every task file sets `$BASE` by one line that names no branch (`origin/main` when `main` contains that commit, otherwise the first remote branch that does), and gates and measures against it. A task started from a `main` that lacks the workplan would diff the whole workplan: the pilots showed it.
 1. **One task, one session, one pull request.** Pick the next task by section 4 or 5. Open its file. Read `CLAUDE.md`. Do exactly what the file says, in its order: preconditions, evidence, change, sweep, verification, commit, adversarial pass, pull request last.
 2. **One pull request merges at a time** (the prior workplan's rule WR-1: `grep -n "WR-1" workplan/2026-10-23-pipeline-resolution-workplan.md`). Branches may be prepared side by side; each later one takes the merged predecessor with `git merge origin/main` and derives its migration number again. Merging is the owner's act unless the owner has said otherwise; an executor does not merge its own pull request and does not watch it (CLAUDE.md rule 9).
 3. **Tooling before research, never together** (CLAUDE.md rule 10). A research task starts only when the tooling it names is on `main`.
@@ -128,6 +128,9 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | [T-114](tasks/T-114-retire-move-ves-to-needs.md) | Retire MOVE and VES to the access needs that carry them | research | 3 | RESEARCH | Sonnet | T-054 merged | none outstanding (OD-37 answered) | no |
 | [T-116](tasks/T-116-upl-for-upper-limb.md) | Hold the upper-limb population as UPL, and retire LMB to it | research | 3 | RESEARCH | Sonnet | T-025, T-054 merged | none outstanding (OI-13 answered, eighth and ninth sets; `UPL`'s wording and category are proposals the owner confirms) | no |
 | [T-058](tasks/T-058-upl-prose-callers.md) | UPL reinstated for upper limb: the retired crosswalk and the prose that names LMB or UPL | 3 | 0-1 | TOOLING | Sonnet | T-116 merged | none outstanding (OI-13 answered) | no |
+| [T-057](tasks/T-057-base-coverage-view.md) | The base coverage view: one state per concept and in-scope pair | 3 | 2 | TOOLING | Sonnet | T-026, T-028 merged | none (the owner's 2026-11-06 acceptance test, AT-23) | no |
+| [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragility note) | 1 | 2 | TOOLING | NOT FOR SONNET | T-016, T-019 merged | none in the register (OR-4, OR-6, OR-6b, OR-6c answered; OR-5b's edges open and held out of this task) | no |
+| [T-060](tasks/T-060-element-determination.md) | The specifications pass writes an element-level determination (OR-14b) | 5 | 2 | TOOLING | NOT FOR SONNET | T-019, T-029 merged; design file first | none (OR-14b answered 2026-11-13) | no |
 | [T-115](tasks/T-115-retag-all-rows.md) | Re-tag the figures filed under ALL by their heading's group, then retire ALL | research | 3 | RESEARCH | NOT FOR SONNET | T-018, T-056 merged | none outstanding (OD-31 answered) | no |
 
 ## 4. Wave 0: what can start now
@@ -167,7 +170,7 @@ Generated from the task files; regenerate the same view with `grep -h -E "^\| (T
 | Layer 0 text | T-001, T-002, T-042, T-003 | `CLAUDE.md`, `governance/pipeline-contract.yaml`, `governance/check-registry.yaml` |
 | Independent | T-004, T-005, T-014, T-051, T-052 | nothing with the others |
 
-**Also free of any precondition, placed later only for order:** [T-027](tasks/T-027-source-identity-edition.md) (tooling), [T-035](tasks/T-035-skills-repair.md) (tooling), [T-048](tasks/T-048-root-registry-writer.md) (tooling), [T-104](tasks/T-104-verify-governing-sources.md) (research). Any of them may be pulled forward. ([T-026](tasks/T-026-alias-attestation.md) was in this list until the twelfth-instruction pass: it now waits for T-028's one-page forms-home design, so that a form has one home.) By command (it still lists T-026, whose design-file stop the command cannot see; `REMEDIATION-PLAN.md` shows it as `DESIGN:`): `grep -L "Owner decisions that must be answered first" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md | xargs grep -l "merged to .main. first:\*\* none" | xargs grep -L "NOT FOR SONNET"`.
+**Also free of any precondition, placed later only for order:** [T-027](tasks/T-027-source-identity-edition.md) (tooling), [T-035](tasks/T-035-skills-repair.md) (tooling), [T-048](tasks/T-048-root-registry-writer.md) (tooling), [T-104](tasks/T-104-verify-governing-sources.md) (research). Any of them may be pulled forward. ([T-026](tasks/T-026-alias-attestation.md) is READY: T-028's one-page forms-home design, `tasks/T-028-design.md`, exists, so a form has one home.) By command (`REMEDIATION-PLAN.md` agrees; trust the command over this list): `grep -L "Owner decisions that must be answered first" workplan/2026-11-12-bidirectional-pipeline/tasks/T-*.md | xargs grep -l "merged to .main. first:\*\* none" | xargs grep -L "NOT FOR SONNET"`.
 
 ## 5. Later waves, the dependency graph and the critical path
 
@@ -179,11 +182,11 @@ One link on it is not Sonnet's to start: T-102 is an Opus-class session. Its des
 
 | Wave | Purpose | Tasks | Order inside the wave |
 |---|---|---|---|
-| 1 | the lens chain and the parameter kind | [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-020](tasks/T-020-quantity-kind.md) | Serial: T-016, T-017, T-018, T-019. T-020 beside them (OD-24 resolved under delegation). |
+| 1 | the lens chain and the parameter kind | [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-059](tasks/T-059-wp-t4-agreement.md), [T-020](tasks/T-020-quantity-kind.md) | Serial: T-016, T-017, T-018, T-019, T-059. T-020 beside them (OD-24 resolved under delegation). |
 | 2 | carriers for going back, and for translation | [T-021](tasks/T-021-cell-question-gate.md), [T-022](tasks/T-022-contract-re-entry.md), [T-023](tasks/T-023-ledger-relayed-statements.md), [T-048](tasks/T-048-root-registry-writer.md), [T-049](tasks/T-049-translation-home.md), [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | T-048 any time; T-049 after T-008; T-050 after T-006; T-021 after T-019; T-022 after its three; T-023 any time (OD-28 answered). |
-| 3 | a base that is data | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-027](tasks/T-027-source-identity-edition.md), [T-028](tasks/T-028-concept-identity.md), [T-047](tasks/T-047-add-by-data-test.md) | T-024 then T-025; T-027 any time; T-028's one-page design first, then T-026, then T-028's build; T-047 last. |
+| 3 | a base that is data | [T-024](tasks/T-024-jurisdiction-registry.md), [T-025](tasks/T-025-base-writers.md), [T-026](tasks/T-026-alias-attestation.md), [T-027](tasks/T-027-source-identity-edition.md), [T-028](tasks/T-028-concept-identity.md), [T-047](tasks/T-047-add-by-data-test.md), [T-057](tasks/T-057-base-coverage-view.md) | T-024 then T-025; T-027 any time; T-028's one-page design first, then T-026, then T-028's build; T-047 last. |
 | 4 | reading once, abstraction, synthesis | [T-029](tasks/T-029-term-relations.md), [T-030](tasks/T-030-units-as-data.md), [T-031](tasks/T-031-clause-unit-and-open-pass.md), [T-032](tasks/T-032-synthesis-relations.md), [T-033](tasks/T-033-synthesis-candidates.md), [T-034](tasks/T-034-cell-status-verb.md), [T-035](tasks/T-035-skills-repair.md), [T-053](tasks/T-053-engine-conflict-between-groups.md) | T-034 after T-013; T-035 any time; T-029 after T-020; T-030 and T-032 after their dependencies (their decisions are delegated); T-031 after T-019 (OD-23 answered); T-033 after T-029 and T-030. T-053 after T-032 (OD-36 answered). |
-| 5 | render and the gate over it | [T-036](tasks/T-036-jurisdiction-comparison-view.md), [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-039](tasks/T-039-owner-edits.md), [T-040](tasks/T-040-deletion-candidates-sweep.md) | T-036 after T-024 and T-101 (OD-04 answered); T-037 after its four dependencies; T-038 after T-037; T-039; T-040. |
+| 5 | render and the gate over it | [T-036](tasks/T-036-jurisdiction-comparison-view.md), [T-037](tasks/T-037-render.md), [T-038](tasks/T-038-stage-pair-gate.md), [T-039](tasks/T-039-owner-edits.md), [T-040](tasks/T-040-deletion-candidates-sweep.md), [T-060](tasks/T-060-element-determination.md) | T-036 after T-024 and T-101 (OD-04 answered); T-037 after its four dependencies; T-038 after T-037; T-039; T-040. |
 | research | rows, each in its own pull request | [T-101](tasks/T-101-scope-fill.md), [T-102](tasks/T-102-mobility-split.md), [T-103](tasks/T-103-medical-lens.md), [T-104](tasks/T-104-verify-governing-sources.md), [T-105](tasks/T-105-read-held-sources.md), [T-106](tasks/T-106-retag-lenses.md), [T-107](tasks/T-107-attest-forms.md), [T-108](tasks/T-108-unit-condition-repair.md), [T-109](tasks/T-109-parameter-kinds-data.md), [T-110](tasks/T-110-first-determinations.md), [T-111](tasks/T-111-as-written-wording-for-stored-rows.md), [T-112](tasks/T-112-translate-held-text.md), [T-113](tasks/T-113-file-sub-national-instruments.md) | T-104 is ungated; T-111 follows T-008 and T-108 follows T-016; the rest wait for tooling, an answer, or an Opus-class session. T-113 follows T-024. |
 
 **Dependency list** (a task on the left needs every task on the right merged; generated from the task files):
@@ -228,10 +231,10 @@ T-102 <- T-018, T-025, T-054, T-055; the design `tasks/T-102-design.md`, its cod
 T-103 <- (no task)   [owner: OD-15, answered]
 T-105 <- T-008, T-009, T-016, T-031   [delegated: OD-05; T-031 hard since OD-23 chose the inventory]
 T-106 <- T-019   [delegated: OD-06]
-T-107 <- T-026, T-028
+T-107 <- T-026, T-028, T-057
 T-108 <- T-008, T-016
 T-109 <- T-020   [delegated: OD-24]
-T-110 <- T-019, T-102, T-104; the owner's confirmation of the T-102 codes (fifth set, in the ledger); the blocking battery green on the scratch copy; an Opus-class session
+T-110 <- T-019, T-059, T-102, T-104; the owner's confirmation of the T-102 codes (fifth set, in the ledger); the blocking battery green on the scratch copy; an Opus-class session
 T-111 <- T-008
 T-112 <- T-049   [delegated: OD-02, OD-30]
 T-113 <- T-024   [delegated: OD-01; owner: OD-04, answered]
@@ -239,6 +242,9 @@ T-114 <- T-054   [owner: OD-37, answered]
 T-115 <- T-018, T-056   [owner: OD-31, answered]
 T-116 <- T-025, T-054   [OI-13, answered]
 T-058 <- T-116   [OI-13, answered]
+T-057 <- T-026, T-028
+T-059 <- T-016, T-019
+T-060 <- T-019, T-029; the design `tasks/T-060-design.md`   [owner: OR-14b, answered 2026-11-13]
 ```
 
 ## 6. Stop points
@@ -873,7 +879,7 @@ A line whose command a task changes (a renamed verb, a moved test) is updated in
 | T-006: the function to copy from, the test file, how to build the positive case, a worked `add-connection`, the check to read | mechanical | written into the file | `tasks/T-006-delete-connection-refusal.md` |
 | T-010: two real callers missed (a test fixture that turned red; a stale comment) | mechanical | named as callers in the file | `tasks/T-010-add-parameter-domain-refusal.md` section 5 |
 | T-010: the refusal could not say what to do with a quantity filed under the wrong domain, because no verb corrects a domain | judgment | `domain` becomes amendable through `amend-term`, with a guard; the refusal names both next actions. Reason: a refusal with no route is a dead end, and one tuple member closes it | T-010 item 3 |
-| T-010: the refused domains are a constant, `dbcore.NON_QUANTITY_DOMAINS` | judgment | kept, as a rule declared once with its warrant in its comment (the owner's tenth statement allows that), tested for staleness, and deleted by T-020 when a parameter states its quantity kind. Reason: which domains name a lens or a body of law cannot be computed; it is judged, so it is named and held in one place, and it must not outlive the column that replaces it | T-010 item 1; T-020 item 2 |
+| T-010: the refused domains are a constant, `dbcore.NON_QUANTITY_DOMAINS` | judgment | kept, as a rule declared once with its warrant in its comment (the owner's tenth statement allows that), tested for staleness, and kept by T-020 beside the quantity kind (corrected 2026-11-13: the folded T-020 keeps it, because the domain is a fact of the term and the kind a fact of the parameter, and without it a lens or legal term becomes promotable). Reason: which domains name a lens or a body of law cannot be computed; it is judged, so it is named and held in one place | T-010 item 1; T-020 item 2 |
 | T-008: a figure written in words became unfilable | owner ruling | the owner ruled: enter the numeral and unit; the wording may be kept in its own column. T-008 adds `value_as_written`; the prior workplan's numeral gloss is superseded and removed from T-016 | T-008; T-016; T-111 |
 | T-008: two stored rows the new check would refuse | judgment | history stands: the check applies when a row is written. Extraction 30 holds a numeral and gets its wording filled in. Extraction 80 holds words as its value, so it is not amended: a second row carries the numeral. Both in a research task | `tasks/T-111-as-written-wording-for-stored-rows.md` |
 | T-008: which claim types state a quantity was typed inline | judgment | one declared rule, `dbcore.QUANTITY_CLAIM_TYPES`, tested against the column's CHECK and read by T-016 too. Reason: the CHECK cannot say which of its values are quantities | T-008 item 5 |
@@ -905,3 +911,42 @@ for n in $(grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipelin
 **Fifth set (2026-11-12).** The owner confirmed T-102's codes and edges as proposed (OD-14: `WHEEL`, `PROSTH`, `WALKAID` under `MOB`; `AMB` not minted), deferred OD-17 to after T-002 and T-022 merge (status `DEFERRED BY THE OWNER`), and answered two new decisions entered with their answers: OD-38 (the first English name recorded is shown until a named judge picks with `rename-term --from-form`, the pick recorded with its reason) and OD-39 (the 2026-11-06 link-table ruling supersedes the 2026-08-28 clause). Folded: T-102's report to the owner is discharged (item 2; after-test (2)); T-110 reads the confirmation; T-028 gates on OD-38 and records the pick's judge and reason in typed columns; T-018 gates on OD-39 and records the supersession in prose, because the audit cannot anchor a machine pair on a target inside the ledger. The children's ICF crossings are not named by the answer line and are left for the owner's explicit yes. What remains open in the plan as a whole, by class, with a resolution plan: `OPEN-ITEMS-PLAN.md`.
 
 **OI-13 (2026-11-12, sixth to ninth sets).** The owner answered "SCI and LMB go under MOB" and then clarified three times: `SCI` is basically `WHEEL`; `LMB` becomes `UPL`, upper limb, and "doesnt concern mobility"; the lower-limb child is `LLD`, "people with lower-limb differences", replacing `PROSTH`. Folded: the family is `MOB` with `WHEEL`, `LLD`, `WALKAID`; T-054 gains the identity successor (one exactly-one CHECK over the successor columns) and in-place retirement of crossing rows, so `SCI` and `LMB` can be retired once their rows are carried; T-102 retires `SCI` to `WHEEL` (design §6a) and mints `LLD`; two new tasks hold `UPL`: T-116 (research: mint `UPL`, place `LMB`'s crossings, retire `LMB`) and T-058 (tooling: the DR-2026-07-23 crosswalk back-pointer, the retired-vocabulary record, prose callers); T-025's amend takes description and category; T-055 counts a figure once at a parent. The fold is `FOLD-LOG.md` §9; the open edges are in `OPEN-ITEMS-PLAN.md`.
+
+**The prior workplan mapped (OI-09, 2026-11-13).** Every id of `workplan/2026-10-23-pipeline-resolution-workplan.md` (`grep -n -E '^\*\*(T-[0-9]|H-0)|^\| D-[0-9]|^\| S-1' <that file>`) against this plan. "Read" means the task file's own text or Traces cell was read; "title only" means it was matched on its title and not read to the line, so the match is a hypothesis. The owner's ruling that bears on each is the `OR-` line in the ledger (`grep -n -E '^OR-[0-9]+b?:' references/project-standards.md`).
+
+| Prior id | What it was | Where it is now | Basis |
+|---|---|---|---|
+| T-1a | notation arithmetic to one home; the writer refuses unreadable figures | T-016 | read |
+| T-1b step 8 | `amend-extraction` widened to unit, value and NULL setting (OR-3: "Yes, reformat in place") | **no task** | ruled yes; unmapped |
+| T-1b step 9 | the length family, `RULE_VERSION` bump (OR-10: "Yes, convert and show both") | **no task** | ruled yes; unmapped |
+| T-1b step 10 | the `verified` gate: a full-scope scan (OR-11a: "Yes, require a full-scope scan") | **no task** | ruled yes; unmapped |
+| T-2 | conditions become branches | T-017 | read |
+| T-3 | the lens gather | T-019 (and T-018) | read |
+| T-4 steps 1, 2, 4 | exclusion causes, recorded divergence, fragility note | T-059 | authored 2026-11-13 |
+| T-4 step 3 | the Co-1 dimensional boundary (OR-5) | **no task**: held on OR-5b's three open edges (ledger, tenth set) | by decision |
+| T-5 | render | T-037 (replaced) | as the workplan says |
+| T-6a | language case fold | T-015 | read (Traces) |
+| T-6b | search terms from the alias table, `jurisdiction_buckets`, `v_coverage_parameter_via_admission` | T-026 covers the terms half (the search-to-form junction); the buckets and the view have **no task** | title only; OR-8 and OR-12 ruled |
+| T-7 | element pointer, derived at read | replaced by T-060 (stored, OR-14b) | by decision |
+| T-8 | `add-root` writer; `convergent` needs two distinct roots | T-048 builds the writer; the distinct-roots condition is **not in it** | read (T-048 has no "distinct") |
+| D-1 | repair unreadable and prose-unit rows | T-108 | read (Traces) |
+| D-2 | fill a NULL lens only where a quote names the users | T-106 | read (Traces) |
+| D-3 | the scan contract exercised | T-105 | title only; OR-16 and OR-25 ruled |
+| D-4 | promote adjudicated non-English observations to aliases | **no task** (T-107 attests forms; T-112 translates text) | title only; OR-17 ruled |
+| D-5 | blind double extraction (measurement) | **no task** | OR-15 and OR-18 ruled |
+| D-6 | element pointers (data) | after T-060 | by decision |
+| D-7 | re-grade NULL and untraced roots | **no task** | OR-19 and OR-20 ruled |
+| D-8 | seed quantities from observed phrases | **no task** (T-109 gives the live parameters their kind) | title only; OR-13 ruled |
+| S-1 | the engine over every parameter, rendered | T-110 (then T-037) | read |
+
+Unmapped after this pass (the count is the rows above that say **no task**): they are owed tasks or declines in the owner's words, and are filed as OI-52 in `OPEN-ITEMS-PLAN.md`. None is a decline: every one has a ruling that says yes or gives a rule.
+
+**Pilot results, second round (2026-11-13).** The staged pilots of `OPEN-ITEMS-PLAN.md` section 4 were run (R2 first, then P0 to P7) as Sonnet-class dry pilots in scratch clones, Opus-class for T-028 and T-102; reports and patches are in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/pilot/` (`PILOT-BRIEF.md` is the brief every executor got). Which task files now read as piloted: `grep -l '^\*\*Pilot status.\*\* \*\*Piloted' workplan/2026-11-12-bidirectional-pipeline/tasks/T-[0-9]*-*.md`. Departures from the plan, and what the pilots showed:
+
+- **T-014 was a dry pilot, not a real execution**, so no pull request would be opened for the owner to merge. Its behaviour-preservation claim is therefore unproven (the stress scripts hard-code the repository root; T-014's fold makes it derived).
+- **T-102 was a partial pilot** (the carry and the emit-and-replay on a sample); the final `SCI` retirement was not reached because T-054 is not in the stack.
+- **Every pilot found defects in its task file**; none was an executor's error. The most common were (by how many files they touched): the generated `governance/context-map.yaml` going stale after a migration; `research_tooling_separation` reading `origin/main` and not `$BASE`; objects a section 4 requires but does not name while section 8 forbids unnamed objects; sweeps that match names and miss behaviour; "thin pointer" task files (T-016, T-017, T-019) that were not self-contained and whose cited report's protocol contradicted them. Cross-cutting fixes went into every file by script; per-task fixes by one Opus-class fold per file, each recording design choices as "Chosen (pilot 2026-11-13)".
+- **Design faults the pilots found, now corrected in the files:** `--value-as-written` as a free pass (T-008); a junction by rowid that cannot be a foreign key (T-026, T-028 design, T-049); a quantity kind that anything could be minted under (T-020); a foreign key "only for codes present" that SQL cannot do (T-024); a done-when whose premise was false in the data (T-017: parameter 12 carries condition edges); the emitter replaying an INSERT before the UPDATE it depends on (T-018, which blocks T-102 and every carry-by-replace task until it merges).
+- **Pilot patches are provisional.** The patches were made from the unfolded files; their real executions will differ. A stacked pilot's result is provisional on its predecessors (`OPEN-ITEMS-PLAN.md` section 4).
+- **Environment faults met:** the local `main` ref was stale (a clone's `origin/main` is old), so every pilot took the branch tip as its base; the container disk filled once (pilot clones removed afterwards; reports and patches are kept in the repository).
+

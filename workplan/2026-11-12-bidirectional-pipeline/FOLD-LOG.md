@@ -25,6 +25,7 @@ _Written 2026-11-12 (UTC) by the Opus-class model that wrote the delegated resol
 - `T-006`: its note on OD-29 now points at T-050.
 - `T-019`: OD-08 gate; item 4 removes the path that kept a `pending` row for a lens no figure carries; the gap is raised at judgment.
 - `T-020`: OD-24 gate; kinds become rows of a table with an add-kind verb (not a CHECK list); no element column; the T-010 stop-gap is still deleted here; red test extended to adding a kind by data.
+  - **[Correction 2026-11-13]** The T-010 stop-gap is no longer deleted by T-020: the folded `tasks/T-020-quantity-kind.md` (section 4 item 2, chosen at the pilot of 2026-11-13) keeps `dbcore.NON_QUANTITY_DOMAINS` and its refusal, because with the kind in place a lens or legal term would otherwise become promotable, and section 8 of that file forbids weakening a refusal. The line above records what this pass wrote on 2026-11-12 and is left as written.
 - `T-021`: OD-21 gate; "only on yes" removed; no invented tier for a reader's question.
 - `T-022`: OD-18 and OD-08 gates; the edges written with the five corrections; B11 a follow-up row while OD-10 is the owner's.
 - `T-023`, `T-031`, `T-101`, `T-103`: their reserved-decision check reads the status line and requires `ANSWERED BY THE OWNER`; T-101 also asks the owner whether a sub-national jurisdiction owes coverage (the OD-01 correction refers it to OD-04).
@@ -257,3 +258,15 @@ _Plan documents and the session generator only; the four ledger entries were app
 - **Every `SCI` figure names "wheelchair users with cervical cord injury"**, so the retirement to `WHEEL` moves no figure against its words; the `SCI` grade's participants are wheelchair users, so it is re-graded against `WHEEL` once (not fanned out).
 - **The identity category CHECK has no value for a physical group outside mobility**; `UPL` is proposed under `general`, and the owner confirms (OI-49).
 
+
+## 10. The tenth-set fold (OR-5b, OR-6c, OR-22b, OR-23b, OR-14b, OR-25, OT-2, OI-14, OI-03, OI-48 to OI-50), 2026-11-13
+
+Record: the ledger entry `grep -n -F "Owner answers 2026-11-13 (tenth set)" references/project-standards.md`. Changed:
+
+- **R0 finish (PR 220):** the `$BASE` line in every task file, the stops in T-110, T-037 and T-105, workplan §4's T-026 note. Then replaced where this set answers them: T-110's stop now holds only the cells a Co-1 figure would set; T-037's stop reads T-060; T-105's stop is deleted (OR-25 answered).
+- **New tasks:** T-057 (the base coverage view, AT-23; OI-17), T-059 (the prior workplan's T-4, steps 1, 2 and 4), T-060 (the stored element-level determination, OR-14b; its design file is a stop). T-107 and T-110 gained T-057 and T-059 as dependencies.
+- **T-059 does not do the report's step 3.** The step as written removes every Co-1 row from the numeric bound; the owner's OR-5 ruling lets a sound Co-1 figure set a value, and OR-5b's test has three open edges (OI-51). Step 3 is held, not declined.
+- **T-102, T-116:** the children's ICF crossings and the wording of `UPL` and `LLD` changed from proposed to confirmed (OI-03, OI-49, OI-50).
+- **The prior workplan mapped** (workplan, last section): eight rows have a ruling and no task (OI-52). That is a larger gap than the open-items plan expected (it expected T-4 and T-1b); it was found by reading each target task, not by title.
+
+What could not be resolved here: OI-51 (OR-5b's edges; the owner's "academic rigour re PubMed" collides with the research contract's R5); OI-52; OI-53 (T-060's design); OI-54 (five owner-queue prompts never listed in the plan). The owner-queue `answered` marks (T-003) are not made: they are T-003's own pull request.

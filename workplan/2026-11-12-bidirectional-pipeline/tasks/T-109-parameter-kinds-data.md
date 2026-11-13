@@ -22,6 +22,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
 - **Tasks that must be merged to the integration base first:** T-020 merged. Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **A writer for the two cells on a held parameter** (added 2026-11-13 from the folded T-020). After T-020 each parameter carries `quantity_kind` and its warrant `quantity_kind_observation_id` (an `observed_terms` row whose `context_quote` states a value); T-020 builds both columns and enforces them in `add-parameter` for new parameters only (its section 4, items 1a and 3). Confirm on `$BASE` that a `db.py` verb sets both on an existing parameter with `add-parameter`'s refusals (`git grep -n -e 'quantity-kind-observation-id' -- scripts/db.py` names every verb taking the flag). If only `add-parameter` takes it, stop (section 9): the cells are never written by hand SQL (CLAUDE.md §4 and rule 10).
 - **Owner decisions:** none outstanding. The decisions this task needed are resolved under delegation (next bullet); none is still the owner's.
 - **Delegated resolutions this task rests on.** OD-24: a parameter is one measured quantity; its kind is a row of the kinds table T-020 builds, extended by data with a warrant. Each is a resolution by an Opus-class model under the owner's delegation of 2026-11-12: not the owner's words, reversible by the owner, and read only through the ledger's gate (`grep -n -F "Convention 2026-11-12 — how a delegated resolution" references/project-standards.md`). Run it before you start and again before you open the pull request; if any line prints CLOSED, stop and report: a CLOSED gate is a stop like those of section 9.
 ```
@@ -35,7 +36,7 @@ for n in OD-24; do gate $n; done
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-109-parameter-kinds-data "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-109" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -74,6 +75,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. One table, proposed with warrants, approved by the owner, entered by migration. The kinds are the rows of T-020's table (seeded from the delegated resolution of OD-24); a parameter that fits none is reported, and a new kind is proposed with its warrant for the add-kind verb, never typed into a cell.
+2. **Each live parameter's kind carries its warrant** (folded T-020, section 4 item 1a). Before recording a kind, find in a held source a passage that states a value of that parameter with its unit, and record it with `db.py observe-term --ref-id R --surface-form "<the phrase as the source writes it>" --language L --locator "<where>" --context-quote "<the sentence, verbatim>" --session "$STEM"` (the quote must hold a digit, or T-020's writer refuses it as a warrant). Then record the kind with that `observation_id`. A parameter for which no held source states a value is reported with the searches made, not given a kind without a warrant.
 
 **What reads what this task adds or changes:** T-030
 
@@ -92,14 +94,14 @@ Structures this task touches, for orientation: `quantity_kind`. The ledger (`ref
 
 ## 6. Verification
 
-**Red before, green after.** No active parameter has a NULL kind.
+**Red before, green after.** No active parameter has a NULL `quantity_kind` or a NULL `quantity_kind_observation_id`, and each observation's `context_quote` holds a digit.
 
 **Fixtures.** Probes run on `$SCRATCH/t.db`; the batch's own rows are written on `$SCRATCH/s.db` and reach `data/guidebook.db` only through the write path of section 2.
 
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```

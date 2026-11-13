@@ -1,0 +1,178 @@
+From cf7d474adcad313a7580f074f1a9e945e4b94d4b Mon Sep 17 00:00:00 2001
+From: pilot <p@x>
+Date: Fri, 13 Nov 2026 04:06:19 +0000
+Subject: [PATCH] governance: execute workplan T-2 conditions [2026-11-13
+ 04:06]
+
+A governing claim with an outgoing condition_on edge is a branch beside the headline (OR-2); an empty headline when all are conditioned; condition_on from a governing row of a live determination is refused. RULE_VERSION pilot-5. Pilot commit.
+---
+ scripts/assess/assess_cell.py           | 20 ++++++++++-
+ scripts/db.py                           |  7 ++++
+ scripts/tests/test_assess_cell_pilot.py | 44 +++++++++++++++++++++++++
+ scripts/tests/test_db_amend_writers.py  | 32 ++++++++++++++++++
+ 4 files changed, 102 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/assess/assess_cell.py b/scripts/assess/assess_cell.py
+index 732ed33..d8c2d2c 100644
+--- a/scripts/assess/assess_cell.py
++++ b/scripts/assess/assess_cell.py
+@@ -123,7 +123,9 @@ from schemas.evidence_state import (  # noqa: E402
+     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
+ )
+ 
+-RULE_VERSION = "pilot-4"  # pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
++RULE_VERSION = "pilot-5"  # pilot-5 (T-2): conditioned governing claims are branches, not the
++#   headline. Payload format unchanged; K01/K02 read this label as a link-set version.
++#   pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
+ #   marker, and the rules for which findings count, who may confirm and what a marker needs changed
+ #   (references/project-standards.md, "Owner statements 2026-10-21"). The sha payload is
+ #   UNCHANGED from pilot-3, so K01 and K02 read both labels. Rows labelled pilot-3 were written
+@@ -674,6 +676,19 @@ def compose_value(conn, links, direction):
+         return None, None, None, None, None    # `pending` already says this
+ 
+     ids = [l["extraction_id"] for l in gov]
++    # T-2 / OR-2: a governing claim with an outgoing `condition_on` edge holds only under that
++    # condition, so it is a branch beside the headline, never part of it. The edge points FROM the
++    # conditioned claim TO what it depends on; an edge arriving at a row conditions nothing (K-11).
++    conditioned = set()
++    if _table_exists(conn, "extraction_relations"):
++        conditioned = {r[0] for r in conn.execute(
++            "SELECT DISTINCT from_extraction_id FROM extraction_relations WHERE relation = "
++            "'condition_on' AND from_extraction_id IN (%s)" % ",".join("?" * len(ids)), ids)}
++    headline = [i for i in ids if i not in conditioned]
++    if not headline:                                   # OR-2: an empty headline, the branches are the answer
++        return None, None, None, (f"piecewise only: all {len(ids)} governing claim(s) are conditioned "
++                                  f"(condition_on); the branches are the answer"), None
++    ids = headline
+     # Same fixture tolerance as the direction lookup: the pilot test builds a synthetic
+     # source_value_extractions with only the columns its own assertions need. A fixture
+     # that cannot state a value is a fixture with no value to compose, which is a true
+@@ -802,6 +817,9 @@ def compose_value(conn, links, direction):
+                 "value presented in %d notations of one quantity (owner ruling "
+                 "2026-09-17: present both, never choose)" % len(notations))
+ 
++    if conditioned:
++        caveat = ((caveat + "; ") if caveat else "") + (
++            f"{len(conditioned)} conditioned claim(s) are branches, not the headline")
+     return (float(vmin) if vmin is not None else None,
+             float(vmax) if vmax is not None else None,
+             unit, caveat, notations)
+diff --git a/scripts/db.py b/scripts/db.py
+index 9e7d0c5..6e20c41 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -8795,6 +8795,13 @@ def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
+                 f"that explicit, or point at a same-source row.")
+         if relation == "confirms":
+             _refuse_live_confirmation(conn, context, to_extraction)
++        if relation == "condition_on" and dbcore.live_determinations_linked(
++                conn, from_id, governing_only=True):
++            raise Refusal(
++                f"{context}: extraction {from_id} governs a live determination; a condition_on edge "
++                f"from it would move it out of that headline without re-deciding it. Retire the "
++                f"specification first (db.py retire-specification), add the edge, re-determine. "
++                f"Nothing was written.")
+         if to_kind is not None:
+             raise Refusal(
+                 f"{context}: --to-kind is meaningless with --to-extraction -- a row "
+diff --git a/scripts/tests/test_assess_cell_pilot.py b/scripts/tests/test_assess_cell_pilot.py
+index 59042c5..29cbcc6 100644
+--- a/scripts/tests/test_assess_cell_pilot.py
++++ b/scripts/tests/test_assess_cell_pilot.py
+@@ -984,6 +984,50 @@ def main():
+     expect("COMPOSE: a claim stating no number is REPORTED, not silently dropped",
+            d["value_note"] and "2 of 3" in d["value_note"], str(d["value_note"]))
+ 
++    # T-2 (OR-2): a governing claim with an outgoing `condition_on` edge is a branch, never the
++    # headline. Each fixture row is (value, conditioned?); a conditioned row gets an edge to a
++    # `condition` row of ANOTHER parameter, the shape the live edges have. The edge points FROM the
++    # conditioned claim (K-11): an edge arriving at a row conditions nothing.
++    def _t017_cell(rows, reverse=False):
++        c = synth_db([{"tier": 1, "evidence_type": "clinical",
++                       "claimed_value": v, "claimed_unit": "rise:run ratio", "comparator": "<="}
++                      for i, (v, _cond) in enumerate(rows)], direction="lower_is_better")
++        c.executescript("CREATE TABLE extraction_relations (relation_id INTEGER PRIMARY KEY "
++                        "AUTOINCREMENT, from_extraction_id INT, relation TEXT, "
++                        "to_extraction_id INT, to_label TEXT, input_role TEXT)")
++        for v, cond in rows:
++            if not cond:
++                continue
++            gid, ref = c.execute("SELECT extraction_id, ref_id FROM source_value_extractions "
++                                 "WHERE claimed_value = ?", (v,)).fetchone()
++            cid = c.execute("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
++                            "claim_type, claimed_value, claimed_unit, figure_role, comparator) "
++                            "VALUES (?, 'syn-slug', 2, 'numerical', '0.5', 'm', 'condition', '>')",
++                            (ref,)).lastrowid
++            c.execute("INSERT INTO extraction_relations (from_extraction_id, relation, "
++                      "to_extraction_id) VALUES (?, 'condition_on', ?)",
++                      (cid, gid) if reverse else (gid, cid))
++        return determine(c, 1, {"identity_code": "MOB"}, "syn-slug", "t017")
++
++    d = _t017_cell([("1:12", False), ("1:20", True)])
++    expect("T017-B1: the conditioned 1:20 is a branch; the headline is the unconditioned 1:12",
++           d["value_max"] is not None and abs(d["value_max"] - 100 / 12) < 1e-9
++           and "1 conditioned claim(s)" in (d["value_note"] or ""), f"{d['value_max']} {d['value_note']}")
++    d = _t017_cell([(v, True) for v in ("1:6", "1:10", "1:12", "1:16", "1:20")])
++    expect("T017-B2: every governing claim conditioned => no headline, 'piecewise only'",
++           d["value_max"] is None and (d["value_note"] or "").startswith("piecewise only"),
++           f"{d['value_max']} {d['value_note']}")
++    d = _t017_cell([("1:12", False), ("1:20", False)])
++    expect("T017-B3: no edges (control) => today's most-accommodating 1:20, 5.0, no branch note",
++           d["value_max"] == 5.0 and "conditioned" not in (d["value_note"] or ""), str(d["value_max"]))
++    d = _t017_cell([("1:15", False), ("1:12", True)])
++    expect("T017-B4: a looser conditioned claim leaves the headline 1:15 and is named as 1 branch",
++           d["value_max"] is not None and abs(d["value_max"] - 100 / 15) < 1e-9
++           and "1 conditioned claim(s)" in (d["value_note"] or ""), f"{d['value_max']} {d['value_note']}")
++    d = _t017_cell([("1:12", False), ("1:20", True)], reverse=True)
++    expect("T017-B3b: an edge ARRIVING at a governing row conditions nothing (K-11)",
++           d["value_max"] == 5.0 and "conditioned" not in (d["value_note"] or ""), str(d["value_max"]))
++
+     # band() and floor_mean(): tier-system section 5, and the owner's five rows of 2026-09-13.
+     from schemas.enums import EvidenceMarker as M  # noqa: E402
+     from schemas.tier_derivation import band, floor_mean  # noqa: E402
+diff --git a/scripts/tests/test_db_amend_writers.py b/scripts/tests/test_db_amend_writers.py
+index 558d1ff..ff53fc2 100644
+--- a/scripts/tests/test_db_amend_writers.py
++++ b/scripts/tests/test_db_amend_writers.py
+@@ -1835,6 +1835,38 @@ try:
+                f"{msg_np!r}")
+         record("G10", "while regrading is still refused for it (any live determination)",
+                "live determination" in (amend(GOV_X) or ""))
++        # T-2: a condition_on edge FROM a governing row would move it out of its live headline
++        # (assess_cell.compose_value), so it is refused like a regrade; the relaxation shape, an
++        # edge from a condition row TO a governing one, changes what a render shows and not the
++        # stored answer, so it is not. Rows are chosen by query; the target is any condition row.
++        cond = q("SELECT extraction_id FROM source_value_extractions WHERE figure_role='condition' "
++                 "ORDER BY 1")
++        COND_TO = next((c for (c,) in cond if c != GOV_X), None)
++        # the accepted edge must pass the verbatim floor, so it borrows the quote of an edge a
++        # condition row already carries in the database
++        COND_FROM, COND_QUOTE = next(((c, qt) for c, qt in q(
++            "SELECT r.from_extraction_id, r.quote FROM extraction_relations r JOIN "
++            "source_value_extractions x ON x.extraction_id = r.from_extraction_id WHERE "
++            "r.relation='condition_on' AND x.figure_role='condition' AND r.quote IS NOT NULL "
++            "ORDER BY 1") if linked(c, governing_only=True) == [] and c != GOV_X), (None, None))
++        cedge = dict(stated="named", quote="fixture quote", dry_run=True,
++                     cross_source_reason="fixture: the target is chosen by query, not by source")
++        n_rel = counts("extraction_relations")
++        msg_c5 = refusal(db.relate_extraction, GOV_X, "condition_on", S,
++                         **dict(cedge, to_extraction=COND_TO)) if COND_TO else None
++        record("T017-B5", "relate-extraction refuses a condition_on edge FROM a governing row of a "
++               "live determination, naming it and retire-specification, and writes nothing",
++               COND_TO is not None and msg_c5 and "governs a live determination" in msg_c5 and "retire-specification" in msg_c5 and counts("extraction_relations") == n_rel,
++               f"to={COND_TO} {msg_c5!r}")
++        got_c6 = None
++        if COND_FROM:
++            try:
++                got_c6 = db.relate_extraction(COND_FROM, "condition_on", S,
++                                              **dict(cedge, to_extraction=GOV_X, quote=COND_QUOTE))
++            except Refusal as exc:
++                got_c6 = str(exc)
++        record("T017-B6", "...but the same edge from a condition row to that governing row is accepted",
++               COND_FROM is not None and isinstance(got_c6, dict), f"from={COND_FROM} {got_c6!r}")
+         # Source-level and comparator guards: the other columns the engine reads. The marker and
+         # the interval are caches over them, so a change under a live determination is refused.
+         ref_gov = q("SELECT ref_id FROM source_value_extractions WHERE extraction_id=?", GOV_X)[0][0]
+-- 
+2.43.0
+

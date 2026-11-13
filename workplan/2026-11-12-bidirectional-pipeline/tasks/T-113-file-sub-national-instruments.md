@@ -33,7 +33,7 @@ for n in OD-01 OD-04; do gate $n; done
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-113-file-sub-national-instruments "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-113" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -71,7 +71,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. Add each sub-national code through T-024's verb, with its parent and the approval pointer `references/project-standards.md` :: "Correction 2026-11-12 — to the delegated resolution of OD-01". Spell by ISO 3166-2 except under the project's `UK` convention (England's code takes the `UK` prefix, never `GB`). Derive each code from the source's own statement of where it applies, quoted in the pull request with its locator; type no code you cannot quote a source for.
+1. Add each sub-national code through T-024's verb, `add-jurisdiction --code C --kind sub-national --parent P --approval-ref "Correction 2026-11-12 — to the delegated resolution of OD-01, jurisdiction in a determination" --session "$STEM"`. The `--approval-ref` is that entry's full `## ` heading, which the verb requires to be found exactly once; confirm it first (`git grep -c -F "<heading>" references/project-standards.md` prints 1). Spell by ISO 3166-2 except under the project's `UK` convention (England's code takes the `UK` prefix, never `GB`). Derive each code from the source's own statement of where it applies, quoted in the pull request with its locator; type no code you cannot quote a source for.
 2. Re-file `evidence_sources.jurisdiction` of the four with `amend-source --field jurisdiction` (accepted today: `jurisdiction` is in `_AMENDABLE` in `scripts/db.py`, checked by `check_jurisdiction`), and their extraction rows with `amend-extraction --field jurisdiction`, which exists only once T-024 item 4 has merged (read 2026-11-12: `_AMENDABLE_SVE_FIELDS` lacks `jurisdiction`), each with a reason quoting the source's statement. If either verb refuses the field or the sub-national code, stop: that is a writer gap, filed and fixed in its own tooling pull request (CLAUDE.md rule 10), never hand SQL.
 3. Coverage is settled by the owner's answer to OD-04 (2026-11-12): a sub-national instrument counts toward its country and owes no coverage alone (`grep -n -F "sub-national: counts toward its country" references/project-standards.md`). Write no `lang_jur_map` pair for a sub-national code. Append to GAP-077 with `amend-gap --append-note` that the four were re-filed under sub-national codes; close it only if its own text asks nothing further.
 
@@ -99,7 +99,7 @@ Structures this task touches, for orientation: `REF-00992`, `REF-00995`, `REF-01
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```

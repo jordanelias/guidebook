@@ -1,0 +1,869 @@
+From a8cccd74faec3f6c18030fa76c57412d6b17dc90 Mon Sep 17 00:00:00 2001
+From: pilot <p@p>
+Date: Fri, 13 Nov 2026 04:51:48 +0000
+Subject: [PATCH] governance: execute workplan T-3 lens routing with its
+ wrong-lens fixture [2026-11-13 04:51]
+
+Pilot commit (T-019, stacked on T-008 repilot, T-016, T-017, T-018). A figure reaches a cell only through the live lens links written on it; derivation_sha hashes all four lens codes (pilot-6); a lens no figure of the parameter carries has no cell (OD-08); a pending cell claims no derivation path.
+---
+ governance/context-map.yaml                   |   2 +
+ scripts/assess/assess_cell.py                 | 154 ++++++++----
+ .../audit/derivation_handshake_integrity.py   |   4 +-
+ scripts/tests/test_assess_cell_pilot.py       | 220 ++++++++++++++++--
+ scripts/tests/test_db_integrity.py            |  16 +-
+ scripts/tests/test_run_pipeline_refusals.py   |  20 +-
+ scripts/tests/test_scan_contract.py           |   9 +-
+ skills/run-pipeline_SKILL.md                  |   6 +-
+ 8 files changed, 352 insertions(+), 79 deletions(-)
+
+diff --git a/governance/context-map.yaml b/governance/context-map.yaml
+index faa55a5..2035288 100644
+--- a/governance/context-map.yaml
++++ b/governance/context-map.yaml
+@@ -582,6 +582,7 @@ writers:
+     - base_parameters
+     - determination_gates
+     - evidence_sources
++    - extraction_lens_links
+     - extraction_relations
+     - identity_icf_map
+     - source_slug_links
+@@ -611,6 +612,7 @@ writers:
+     - base_parameters
+     - evidence_source_authors
+     - evidence_sources
++    - extraction_lens_links
+     - lang_jur_map
+     - slugs
+     - source_scans
+diff --git a/scripts/assess/assess_cell.py b/scripts/assess/assess_cell.py
+index d8c2d2c..b1495b0 100644
+--- a/scripts/assess/assess_cell.py
++++ b/scripts/assess/assess_cell.py
+@@ -123,7 +123,10 @@ from schemas.evidence_state import (  # noqa: E402
+     ConvergenceAssessment, EvidenceStateRecord, ProvisionalConfidenceFlag,
+ )
+ 
+-RULE_VERSION = "pilot-5"  # pilot-5 (T-2): conditioned governing claims are branches, not the
++RULE_VERSION = "pilot-6"  # pilot-6 (T-3): a figure reaches a cell only through the live lens links
++#   written on it (`_lens_clause`), and `derivation_sha` hashes all four lens codes of the cell
++#   (the payload format changed: test_db_integrity K01 keeps pilot-3..5 on the COALESCE key).
++#   pilot-5 (T-2): conditioned governing claims are branches, not the
+ #   headline. Payload format unchanged; K01/K02 read this label as a link-set version.
+ #   pilot-4 (2026-10-21, owner: "pilot 4 I guess"): the engine writes a
+ #   marker, and the rules for which findings count, who may confirm and what a marker needs changed
+@@ -230,6 +233,24 @@ def lens_key(lens):
+     return None
+ 
+ 
++def _lens_clause(lens, alias):
++    """`AND <every lens the cell states is among the figure's live links>` and its parameters.
++
++    A figure reaches a cell when, for each lens the cell states, it has a live link carrying that
++    code; a lens the cell leaves NULL imposes nothing (T-018 design section 4). Read from
++    `v_live_lens_links`, never from the retired lens columns of `source_value_extractions`, and
++    never through a crossing map: a figure tagged for another group, or for everyone, does not
++    reach a cell that does not state that tag. A cell stating no lens would impose nothing and
++    gather by parameter alone, which is the defect this closes, so it is refused."""
++    parts = [(f"EXISTS (SELECT 1 FROM v_live_lens_links k WHERE "
++              f"k.extraction_id = {alias}.extraction_id AND k.{c} = ?)", lens[c])
++             for c in LENS_ORDER if lens.get(c)]
++    if not parts:
++        raise Refusal("a cell states at least one lens (D-0182); gathering without one would "
++                      "select evidence by parameter alone")
++    return "AND " + " AND ".join(p for p, _ in parts), tuple(v for _, v in parts)
++
++
+ def _gather(conn, join, where, params):
+     """The distinct sources, not superseded, behind the extraction rows (alias `x`) of one
+     parameter that `where` selects, as the dicts `assess_source` takes: `ref_id` and
+@@ -250,8 +271,9 @@ def _gather(conn, join, where, params):
+                 f"ORDER BY e.ref_id", params)]
+ 
+ 
+-def gather_sources(conn, parameter_id):
+-    """The sources holding an EXTRACTION FOR THIS PARAMETER. Not the slug's sources.
++def gather_sources(conn, parameter_id, lens):
++    """The sources holding an EXTRACTION FOR THIS PARAMETER in this cell's lens (`_lens_clause`).
++    Not the slug's sources.
+ 
+     THE DEFECT THIS CLOSES, measured 2026-09-10. This function took a `slug` and
+     joined `source_slug_links`, so the governing set was "everything admitted to this
+@@ -314,8 +336,9 @@ def gather_sources(conn, parameter_id):
+     # the reason. Fixture tolerance as above: a synthetic table without the column has no
+     # skimmed rows to leave out.
+     skim, skim_params = _publishable_clause(conn, "x")
+-    return _gather(conn, "", f"x.figure_role IN ('claim', 'derived') {skim}",
+-                   (parameter_id, *skim_params))
++    lens_sql, lens_vals = _lens_clause(lens, "x")
++    return _gather(conn, "", f"x.figure_role IN ('claim', 'derived') {skim} {lens_sql}",
++                   (parameter_id, *skim_params, *lens_vals))
+ 
+ 
+ def _has_column(conn, table, column):
+@@ -351,7 +374,7 @@ CONDITIONING_ROLES = ("condition",)
+ DIRECTION_SUPPLYING_ROLES = ("finding",)
+ 
+ 
+-def gather_findings(conn, parameter_id):
++def gather_findings(conn, parameter_id, lens):
+     """The sources holding a FINDING for this parameter. Direction, never value.
+ 
+     WHY THIS EXISTS, and it is not symmetry with `gather_sources`. Owner statement
+@@ -382,14 +405,15 @@ def gather_findings(conn, parameter_id):
+     # and found nothing says nothing about which end of a permitted range the evidence favours.
+     # Left out, never silently: `gather_extraction_links` says why on each such row.
+     skim, skim_params = _publishable_clause(conn, "x")
++    lens_sql, lens_vals = _lens_clause(lens, "x")
+     return _gather(
+         conn, "",
+         f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) "
+-        f"AND x.claim_type <> 'absent' {skim}",
+-        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params))
++        f"AND x.claim_type <> 'absent' {skim} {lens_sql}",
++        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals))
+ 
+ 
+-def gather_confirmers(conn, parameter_id):
++def gather_confirmers(conn, parameter_id, lens):
+     """The sources holding a finding row of this parameter that originates a `confirms` edge to
+     another row of it. Read apart from `gather_findings`, because confirming is not direction:
+     an `absent` row supplies none, yet the edge it carries is the claim that confirms a code (a
+@@ -398,16 +422,17 @@ def gather_confirmers(conn, parameter_id):
+     if not _table_exists(conn, "extraction_relations"):
+         return []
+     skim, skim_params = _publishable_clause(conn, "x")
++    lens_sql, lens_vals = _lens_clause(lens, "x")
+     return _gather(
+         conn,
+         "JOIN extraction_relations r ON r.from_extraction_id = x.extraction_id "
+         "AND r.relation = 'confirms' JOIN source_value_extractions t "
+         "ON t.extraction_id = r.to_extraction_id AND t.parameter_id = x.parameter_id",
+-        f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim}",
+-        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params))
++        f"x.figure_role IN ({','.join('?' * len(DIRECTION_SUPPLYING_ROLES))}) {skim} {lens_sql}",
++        (parameter_id, *DIRECTION_SUPPLYING_ROLES, *skim_params, *lens_vals))
+ 
+ 
+-def gather_extraction_links(conn, parameter_id, governing_refs):
++def gather_extraction_links(conn, parameter_id, governing_refs, lens):
+     """Every extraction for this parameter, graded by the part it played.
+ 
+     THE BACKWARD WALK STARTS HERE (migration 077). `gather_sources` returns SOURCES and
+@@ -424,7 +449,10 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
+                     governing set this determination actually used.
+       conditioning  figure_role='condition'. Qualifies a governing row. Carried onto the
+                     determination so a slope arrives with its run length attached.
+-      excluded      everything else, with a MANDATORY reason. This is the row that makes
++      excluded      everything else, with a MANDATORY reason. A figure the cell's lens does not
++                    reach (`_lens_clause`) is excluded FIRST, with that reason: it is still linked,
++                    because K02 requires the junction to account for every extraction of the
++                    parameter, and it is never gathered. This is the row that makes
+                     a `pending` cell legible: "examined, and here is why it did not
+                     answer" reads differently from silence, and the two were previously
+                     indistinguishable to everything except a hash collision.
+@@ -450,10 +478,20 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
+         "LEFT JOIN evidence_sources e ON e.ref_id = x.ref_id "
+         "WHERE x.parameter_id = ? ORDER BY x.extraction_id", (parameter_id,)).fetchall()
+     gov = set(governing_refs or ())
++    lens_sql, lens_vals = _lens_clause(lens, "x")
++    in_lens = {r[0] for r in conn.execute(
++        f"SELECT x.extraction_id FROM source_value_extractions x WHERE x.parameter_id = ? "
++        f"{lens_sql}", (parameter_id, *lens_vals))}
++    cell = ", ".join(f"{c}={lens[c]}" for c in LENS_ORDER if lens.get(c))
+     out = []
+     for eid, ref, frole, ctype, method, superseded in rows:
+         left_out = None
+-        if frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
++        if eid not in in_lens:
++            role, why = "excluded", (
++                f"not stated in this cell's lens ({cell}): no live lens link of this figure "
++                f"carries every code the cell states; a figure reaches a cell only through the "
++                f"lens codes written on it")
++        elif frole in VALUE_SUPPLYING_ROLES and method in NOT_PUBLISHABLE_METHODS:
+             # Checked BEFORE the governing branch: a skimmed row is left out even when its
+             # source governs through another, fully read row (owner 2026-10-09).
+             role, why = "excluded", (
+@@ -489,7 +527,7 @@ def gather_extraction_links(conn, parameter_id, governing_refs):
+                             "confirm through a `confirms` edge)")
+         out.append({"extraction_id": eid, "ref_id": ref, "figure_role": frole,
+                     "role": role, "exclusion_reason": why, "superseded": bool(superseded),
+-                    "left_out": left_out})
++                    "left_out": left_out, "in_lens": eid in in_lens})
+     return out
+ 
+ 
+@@ -841,16 +879,27 @@ def link_payload(links):
+     return "|".join(sorted(f"{l['role']}:{l['extraction_id']}" for l in links))
+ 
+ 
+-def count_extractions(conn, parameter_id):
+-    """How many extraction rows this parameter holds, across all sources.
++def count_extractions(conn, parameter_id, lens):
++    """How many extraction rows this parameter holds in this cell's lens, across all sources.
+ 
+     Reported alongside the source count so a reader can see the 1:N fan-out rather
+     than infer it: 2 sources and 9 extractions is a normal, ruled shape (D-0168), and
+     a report showing only "2 sources" hides which of the two carried the clauses.
+     """
++    lens_sql, lens_vals = _lens_clause(lens, "x")
+     return conn.execute(
+-        "SELECT COUNT(*) FROM source_value_extractions WHERE parameter_id = ?",
+-        (parameter_id,)).fetchone()[0]
++        f"SELECT COUNT(*) FROM source_value_extractions x WHERE x.parameter_id = ? {lens_sql}",
++        (parameter_id, *lens_vals)).fetchone()[0]
++
++
++def unkeyed_models(conn, lens, links):
++    """The lens columns this cell's key leaves NULL but that some governing figure's live links
++    carry, in LENS_ORDER: reported, never acted on. Several codes of one model are several cells."""
++    gov = [l["extraction_id"] for l in links if l["role"] == "governing"]
++    marks = ",".join("?" * len(gov))
++    return [c for c in LENS_ORDER if gov and not lens.get(c) and conn.execute(
++        f"SELECT 1 FROM v_live_lens_links WHERE extraction_id IN ({marks}) "
++        f"AND {c} IS NOT NULL LIMIT 1", gov).fetchone()]
+ 
+ 
+ def population_match(conn, ref_id, population):
+@@ -1044,7 +1093,7 @@ def regulatory_richness(t45, t6):
+     return False, "below §2.3 richness"
+ 
+ 
+-def sha(parameter_id, lens, links):
++def sha(parameter_id, lens, links):  # lens: the four-code dict
+     """Cell-scoped derivation sha: identity + governing set + EVIDENCE READ + rule
+     version, so pending cells do not all share one constant hash (staleness stays
+     checkable).
+@@ -1052,8 +1101,9 @@ def sha(parameter_id, lens, links):
+     The payload is byte-for-byte what test_db_integrity K01 recomputes when it verifies
+     a stored sha, and K01 was re-keyed to (parameter_id × lens) by migration 071. Two
+     implementations of one hash that disagree is a hash that attests nothing, so this
+-    one and K01's move together or not at all. `lens` is the COALESCE value, not the
+-    whole dict — see lens_key().
++    one and K01's move together or not at all. `lens` is the whole four-code dict since
++    pilot-6 (T-3): (MOB) and (MOB, d450) are different cells and hash differently; pilot-3 to
++    pilot-5 hashed the COALESCE key alone, which K01 keeps for those labels.
+ 
+     WHY `n_extractions` IS IN THE PAYLOAD (added 2026-09-10). Without it, two
+     materially different cells hash IDENTICALLY, because both have an empty governing
+@@ -1088,7 +1138,8 @@ def sha(parameter_id, lens, links):
+     same rule_version ⇒ same state + same derivation_sha". A determination stamped
+     before an extraction arrived IS stale, and K01 saying so is the check working.
+     """
+-    payload = f"{parameter_id}|{lens}|" + link_payload(links) + "::" + RULE_VERSION
++    payload = (f"{parameter_id}|{'|'.join(lens.get(c) or '' for c in LENS_ORDER)}|"
++               + link_payload(links) + "::" + RULE_VERSION)
+     return hashlib.sha256(payload.encode()).hexdigest()
+ 
+ 
+@@ -1152,8 +1203,18 @@ def determine(conn, parameter_id, lens, slug, note):
+     # THE SUBJECT, not the topic. Sources are gathered by the extractions they hold
+     # for THIS parameter (B4c); `slug` no longer selects evidence and is carried only
+     # as the topic the determination was recorded under.
+-    sources = gather_sources(conn, parameter_id)
+-    n_extractions = count_extractions(conn, parameter_id)
++    n_extractions = count_extractions(conn, parameter_id, lens)
++    if not n_extractions:
++        # OD-08 (delegated, T-019): an absent cell has no row. No figure of this parameter is
++        # stated in this lens, so there is nothing to determine and nothing to record as pending;
++        # relevance without a figure is a gap raised at judgment (`add-gap`), never by the engine.
++        raise Refusal(
++            f"no figure of parameter {parameter_id} is stated in this lens "
++            f"({', '.join(f'{c}={lens[c]}' for c in LENS_ORDER if lens.get(c))}): the cell has no "
++            f"row. If the lens is relevant to the parameter, record the absence as a gap at "
++            f"judgment (db.py add-gap, naming the parameter and the lens); a figure is "
++            f"given a lens only with warrant (db.py add-lens-link). Nothing was written.")
++    sources = gather_sources(conn, parameter_id, lens)
+     recs = [assess_source(conn, s, SCALE_POPULATION, identity) for s in sources]
+     b = classify(recs)
+     # THE DIRECTION SET (owner 2026-09-16, ACTION 2). Sources holding a `finding` for
+@@ -1161,7 +1222,7 @@ def determine(conn, parameter_id, lens, slug, note):
+     # exactly the same gates as the value-supplying set -- tier consistency,
+     # disqualification, population directness -- because a finding that cannot anchor
+     # for one of those reasons cannot carry a proxy inference either.
+-    finding_sources = gather_findings(conn, parameter_id)
++    finding_sources = gather_findings(conn, parameter_id, lens)
+     finding_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
+                     for s in finding_sources]
+     fb = classify(finding_recs)
+@@ -1169,7 +1230,7 @@ def determine(conn, parameter_id, lens, slug, note):
+     # THE CONFIRMING SET. Which sources raise a proxy answer's marker is read on its own, not off
+     # the direction set: an `absent` finding supplies no direction and still confirms a code.
+     confirmer_recs = [assess_source(conn, s, SCALE_POPULATION, identity)
+-                      for s in gather_confirmers(conn, parameter_id)]
++                      for s in gather_confirmers(conn, parameter_id, lens)]
+     confirmer_anchors = _anchors_of(classify(confirmer_recs))
+     # §2.8 verification-status machinery
+     live = [r for r in recs if not _is_disqualified(r)]
+@@ -1422,7 +1483,7 @@ def determine(conn, parameter_id, lens, slug, note):
+     # applied" -- which is not knowable until those gates have run. Every extraction for
+     # the parameter appears exactly once, so a `pending` cell carries the reasons it is
+     # pending rather than leaving a reader to infer them from an absence.
+-    links = gather_extraction_links(conn, parameter_id, governing)
++    links = gather_extraction_links(conn, parameter_id, governing, lens)
+ 
+     # THE VALUE (078). Selected most-accommodatingly per the parameter's recorded
+     # accessibility direction -- the ratified rule the engine has been unable to obey
+@@ -1514,6 +1575,12 @@ def determine(conn, parameter_id, lens, slug, note):
+                   "gate caps it at `provisional` until resolved. Resolve the gate to "
+                   "restore the cell, never re-run the engine to route around it.")
+ 
++    # A PENDING CELL HAS NO ANSWER, so it derives nothing and claims no path (T-019): the
++    # function path an identity's map characterises is not the basis of a value that was not
++    # reached. After the H4 cap, which only ever moves a `stated` cell.
++    if state == "pending":
++        functional_basis = derivation_paths = derivation_rationale = cultural_claim_anchor = None
++
+     # The finding and confirming sources are inputs of an answer that rests on the regulatory
+     # stratum, so an unverified one is flagged too, whether or not it anchors: an unverified Co-1
+     # finding is no anchor and supplies no direction, and that is the reason to say it exists.
+@@ -1559,7 +1626,7 @@ def determine(conn, parameter_id, lens, slug, note):
+         "skimmed_findings": [l["extraction_id"] for l in links if l["left_out"] == "skimmed"],
+         "skimmed_finding_refs": sorted({l["ref_id"] for l in links if l["left_out"] == "skimmed"}),
+         "n_findings_left_out": sum(1 for l in links if l["left_out"]),
+-        "n_extractions_superseded": sum(1 for l in links if l["superseded"]),
++        "n_extractions_superseded": sum(1 for l in links if l["superseded"] and l["in_lens"]),
+         # THE EXCLUSION, STATED (owner 2026-10-09, "skimmed values are not publishable"):
+         # the skimmed value-supplying rows left out of what sets this cell's value.
+         "excluded_not_publishable": [
+@@ -1571,6 +1638,9 @@ def determine(conn, parameter_id, lens, slug, note):
+         "accessibility_direction": _direction,
+         "direction_ref_id": _direction_ref,
+         "n_extractions": n_extractions,
++        # AT-32, second half: the lens models the governing figures carry that this cell's key
++        # leaves NULL, read from their live links (T-018 design section 4).
++        "unkeyed_models": unkeyed_models(conn, lens, links),
+         "parameter_id": parameter_id, "lens": dict(lens), "lens_key": lens_key(lens),
+         "slug": slug, "note": note,
+         "state": state, "design_scale": design_scale, "tier_basis": tier_basis,
+@@ -1588,7 +1658,7 @@ def determine(conn, parameter_id, lens, slug, note):
+         "has_unverified_sources": 1 if has_unverified else 0,
+         "all_sources_disqualified": 1 if all_disqualified else 0,
+         "falsification": falsification,
+-        "derivation_sha": sha(parameter_id, lens_key(lens), links),
++        "derivation_sha": sha(parameter_id, lens, links),
+         "functional_basis": functional_basis,
+         "derivation_paths": derivation_paths,
+         "derivation_rationale": derivation_rationale,
+@@ -1634,7 +1704,11 @@ def stale_determinations(conn):
+             f"SELECT {', '.join(cols)} FROM specifications WHERE retired_at IS NULL "
+             f"AND rule_version = ? ORDER BY specification_id", (RULE_VERSION,)).fetchall():
+         lens = dict(zip(LENS_ORDER, rest))
+-        det = determine(conn, pid, lens, "", "recomputed")
++        try:
++            det = determine(conn, pid, lens, "", "recomputed")
++        except Refusal:                      # the figures behind the cell have since left its lens
++            out.append((sid, ["lens (no figure is stated in it now)"]))
++            continue
+         diff = [f for f, was in zip(STORED_ANSWER, rest[len(LENS_ORDER):]) if det[f] != was]
+         if diff:
+             out.append((sid, diff))
+@@ -1657,16 +1731,9 @@ def gap_account(det):
+     det_x = det["n_extractions"]
+     n_superseded = det["n_extractions_superseded"]
+     scan = scan_command(parameter_id)
+-    if det_x == 0:
+-        cause = (f"no source holds an extraction for parameter "
+-                 f"{parameter_id}: the parameter has never been read out of "
+-                 f"a document")
+-        remedy = ("read a source that is already admitted and record what it "
+-                  "says: `db.py add-extraction`. This is NOT corpus-level "
+-                  "absence of the topic — sources may be admitted and linked "
+-                  "to the slug and still have been read for no parameter at "
+-                  "all, so a new search is not the first move")
+-    elif det_at == 0 and det["n_finding_sources"]:
++    # No `det_x == 0` branch: a cell no figure is stated in is refused by `determine` (OD-08) and
++    # never reaches a gap.
++    if det_at == 0 and det["n_finding_sources"]:
+         # THE BATCH-08 CASE, AND THE BRANCH BELOW USED TO CLAIM IT WAS A
+         # SUPERSESSION. `det_at` counts VALUE-SUPPLYING sources; a parameter
+         # read only into `finding` rows has none, so it fell through to the
+@@ -2230,7 +2297,7 @@ def main():
+                         "n_findings_left_out",
+                         "has_unverified_sources",
+                         "all_sources_disqualified", "derivation_sha", "n_sources",
+-                        "n_extractions", "non_anchoring_on_tier",
++                        "n_extractions", "unkeyed_models", "non_anchoring_on_tier",
+                         "needs_population_assessment", "tier_inconsistent", "falsification")}
+                       | {"convergence": det["convergence"], "confidence": det["confidence"],
+                          "gap_register_id": gap_id, "specification_id": specification_id,
+@@ -2269,6 +2336,9 @@ def main():
+               f"nonanchor={len(r['non_anchoring_on_tier'])} "
+               f"rso={r['regulatory_stratum_only']} marker={r['marker'] or '-'} "
+               f"cfo={r['code_floor_only']} sha={r['derivation_sha'][:12]}")
++        if r["unkeyed_models"]:
++            print(f"    lens model(s) its governing figures also carry, which the cell key leaves "
++                  f"NULL: {', '.join(r['unkeyed_models'])}")
+         if r["excluded_not_publishable"]:
+             # Said on the line a reader sees, not only in the junction: a value composed
+             # without figures the corpus holds must say which and why.
+diff --git a/scripts/audit/derivation_handshake_integrity.py b/scripts/audit/derivation_handshake_integrity.py
+index 4b4ef39..b873375 100644
+--- a/scripts/audit/derivation_handshake_integrity.py
++++ b/scripts/audit/derivation_handshake_integrity.py
+@@ -153,7 +153,9 @@ def main(argv=None):
+ 
+         # --- 2 + 3. THE SINGLE-PATH OBLIGATION, AND THE ANCHOR THAT MUST ANCHOR ------
+         paths = s.get("derivation_paths")
+-        if paths is None:
++        if paths is None and s["state"] == "pending":
++            pass                               # a pending cell has no answer and claims no path (T-019)
++        elif paths is None:
+             notes.append(f"specification {sid}: no derivation_paths recorded — written "
+                          f"before migration 080, or by a route that skips the engine")
+         elif paths not in VALUE_PATHS:
+diff --git a/scripts/tests/test_assess_cell_pilot.py b/scripts/tests/test_assess_cell_pilot.py
+index 29cbcc6..6caef4d 100644
+--- a/scripts/tests/test_assess_cell_pilot.py
++++ b/scripts/tests/test_assess_cell_pilot.py
+@@ -28,7 +28,7 @@ sys.path.insert(0, REPO_ROOT)
+ sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "assess"))
+ 
+ from assess_cell import (  # noqa: E402
+-    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, determine, gap_account,
++    NOT_PUBLISHABLE_METHODS, RULE_VERSION, STORED_ANSWER, Refusal, determine, gap_account,
+     scan_command, stale_determinations)
+ from schemas.enums import EvidenceMarker  # noqa: E402
+ from schemas.evidence_state import ConvergenceAssessment, EvidenceStateRecord  # noqa: E402
+@@ -57,7 +57,7 @@ def _default_scope(evidence_type, tier):
+ 
+ 
+ def synth_db(sources, parameter_id=1, extractions_per_source=1,
+-             icf_links=(), gates=(), direction=None):
++             icf_links=(), gates=(), direction=None, row_lens=({"identity_code": "MOB"},)):
+     """Minimal in-memory schema for determine(): evidence_sources +
+     source_value_extractions + evidence_population_match.
+ 
+@@ -72,6 +72,11 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
+     DISTINCT in gather_sources, a code document's clauses would corroborate
+     themselves.
+ 
++    LENS (T-019). A figure reaches a cell only through its live lens links, so every extraction
++    row gets one `extraction_lens_links` row per entry of its source's `lenses` (default
++    `row_lens`: tagged MOB, the lens most cells below are stated in). The four lens columns of
++    `source_value_extractions` stay NULL, as T-018 holds them on the real table: nothing reads them.
++
+     A source may carry `extraction_method` (the column exists only when some source does, as it
+     does not in the oldest fixtures) and `superseded_by_ref_id`.
+     """
+@@ -87,6 +92,13 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
+         identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
+         claim_type TEXT, claimed_value TEXT, claimed_unit TEXT,
+         figure_role TEXT, comparator TEXT);
++      CREATE TABLE extraction_lens_links (
++        link_id INTEGER PRIMARY KEY AUTOINCREMENT, extraction_id INT,
++        identity_code TEXT, icf_code TEXT, needs_code TEXT, medical_code TEXT,
++        retired_at TEXT);
++      CREATE VIEW v_live_lens_links AS
++        SELECT link_id, extraction_id, identity_code, icf_code, needs_code, medical_code
++          FROM extraction_lens_links WHERE retired_at IS NULL;
+       CREATE TABLE evidence_population_match (
+         match_id TEXT, ref_id TEXT, match_grade TEXT, target_population TEXT);
+       -- 080. CREATED UNCONDITIONALLY, EVEN EMPTY, for the reason this docstring
+@@ -142,7 +154,7 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
+                       s.get("jurisdiction"), s.get("superseded_by_ref_id")))
+         conn.execute("INSERT INTO source_slug_links VALUES (?, 'syn-slug')", (ref,))
+         for _ in range(s.get("extractions", extractions_per_source)):
+-            conn.execute(
++            xid = conn.execute(
+                 # figure_role='claim' because these fixtures exist to exercise the
+                 # TIER/GRAIN logic, and gather_sources now returns only rows that
+                 # supply a value (migration 075). A fixture row left ungraded would
+@@ -154,17 +166,22 @@ def synth_db(sources, parameter_id=1, extractions_per_source=1,
+                 # exercise the proxy branch -- a source that MEASURED the parameter
+                 # without stating a value for it (owner 2026-09-16).
+                 "INSERT INTO source_value_extractions "
+-                "(ref_id, slug, parameter_id, identity_code, claim_type, claimed_value, "
++                "(ref_id, slug, parameter_id, claim_type, claimed_value, "
+                 " claimed_unit, figure_role, comparator"
+                 + (", extraction_method" if has_method else "") + ") "
+-                "VALUES (?, 'syn-slug', ?, 'MOB', ?, ?, ?, ?, ?" + (", ?" if has_method else "") + ")",
++                "VALUES (?, 'syn-slug', ?, ?, ?, ?, ?, ?" + (", ?" if has_method else "") + ")",
+                 (ref, parameter_id,
+                  s.get("claim_type", "numerical"),
+                  s.get("claimed_value", "1"),
+                  s.get("claimed_unit"),
+                  s.get("figure_role", "claim"),
+                  s.get("comparator"),
+-                 *((s.get("extraction_method", "full"),) if has_method else ())))
++                 *((s.get("extraction_method", "full"),) if has_method else ()))).lastrowid
++            for lens_row in s.get("lenses", row_lens):
++                conn.execute("INSERT INTO extraction_lens_links (extraction_id, identity_code, "
++                             "icf_code, needs_code, medical_code) VALUES (?,?,?,?,?)",
++                             (xid, *(lens_row.get(c) for c in ("identity_code", "icf_code",
++                                                              "needs_code", "medical_code"))))
+     return conn
+ 
+ 
+@@ -197,7 +214,7 @@ def main():
+ 
+     # 3. T6-only, one jurisdiction x3 -> pending (jurisdiction distinctness)
+     d = determine(synth_db([{"tier": 6, "evidence_type": "code", "jurisdiction": "US"}
+-                            for _ in range(3)]),
++                            for _ in range(3)], row_lens=({"identity_code": "DEM"},)),
+                   1, {"identity_code": "DEM"}, "syn-slug", "t6-mono")
+     expect("T6-only(1 jur) => pending", d["state"] == "pending", d["state"])
+ 
+@@ -236,7 +253,8 @@ def main():
+ 
+     # 4. All sources disqualified -> pending + flag (§2.8)
+     d = determine(synth_db([{"tier": 1, "evidence_type": "clinical",
+-                             "verification_status": "UNVERIFIED-CLOSED"}]),
++                             "verification_status": "UNVERIFIED-CLOSED"}],
++                            row_lens=({"identity_code": "NEU"},)),
+                   1, {"identity_code": "NEU"}, "syn-slug", "disqualified")
+     expect("all-disqualified => pending", d["state"] == "pending", d["state"])
+     expect("all_sources_disqualified flag set", d["all_sources_disqualified"] == 1)
+@@ -244,7 +262,8 @@ def main():
+     # 5. UNVERIFIED present -> has_unverified_sources (§2.8)
+     d = determine(synth_db([{"tier": 2, "evidence_type": "sr_meta"},
+                             {"tier": 6, "evidence_type": "code",
+-                             "verification_status": "UNVERIFIED"}]),
++                             "verification_status": "UNVERIFIED"}],
++                            row_lens=({"identity_code": "DEM"},)),
+                   1, {"identity_code": "DEM"}, "syn-slug", "unverified-present")
+     expect("UNVERIFIED => has_unverified_sources=1", d["has_unverified_sources"] == 1)
+     expect("anchored despite unverified T6", d["state"] == "stated", d["state"])
+@@ -255,7 +274,8 @@ def main():
+     # alone has nothing to attribute a match row TO. G2 says that dimension is unassessed,
+     # not absent — it caps consolidation at DOWN-WEIGHTED and flags the source. The old
+     # engine could not reach this state at all, because population was mandatory.
+-    d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"}]),
++    d = determine(synth_db([{"tier": 1, "evidence_type": "clinical"}],
++                           row_lens=({"icf_code": "AX-AMB"},)),
+                   1, {"icf_code": "AX-AMB"}, "syn-slug", "lens without identity")
+     expect("no identity lens => every source needs population assessment (G2)",
+            d["needs_population_assessment"] == [r["ref_id"] for r in d["source_records"]],
+@@ -312,18 +332,17 @@ def main():
+     expect("B5a: it contributes no governing refs", d["governing_refs"] == [],
+            str(d["governing_refs"]))
+ 
+-    # B5a-2. A parameter with no extraction at all is `pending` with a gap, and the
+-    # gap says WHICH absence it is. The old gap text named a missing slug-link and
+-    # pointed at the item_bpc_links bridge — a sentence about a join the engine no
+-    # longer makes, into a table layer the owner emptied.
+-    d = determine(synth_db([]), 1, {"identity_code": "MOB"}, "syn-slug", "nothing extracted")
+-    expect("B5a: no extraction for the parameter => pending", d["state"] == "pending", d["state"])
+-    expect("B5a: pending cell needs a gap", d["gap_needed"] is True)
+-    expect("B5a: zero sources and zero extractions are reported",
+-           (d["n_sources"], d["n_extractions"]) == (0, 0),
+-           str((d["n_sources"], d["n_extractions"])))
+-    expect("B5a: an empty corpus is not 'all sources disqualified'",
+-           d["all_sources_disqualified"] == 0)
++    # B5a-2 (changed by T-019, OD-08). A parameter with no extraction in the cell's lens HAS NO
++    # CELL: before, it was `pending` with a gap naming "never read out of a document"; the engine
++    # now refuses and writes nothing, and the absence is a gap raised at judgment. A parameter
++    # that has figures but too little evidence keeps `pending` (the GAP cases below).
++    try:
++        determine(synth_db([]), 1, {"identity_code": "MOB"}, "syn-slug", "nothing extracted")
++        _refused = None
++    except Refusal as e:
++        _refused = str(e)
++    expect("B5a/OD-08: no figure of the parameter in the lens => refused, no pending row",
++           _refused is not None and "has no row" in _refused, str(_refused))
+ 
+     # 6. Model enforcement: not_applicable requires rationale.
+     #
+@@ -717,6 +736,9 @@ def main():
+                 "'finding',?)", (2 if confirmer == "other-parameter" else 1,
+                                  "absent" if confirmer.startswith("absent") else "qualitative",
+                                  _SKIM if confirmer in ("skimmed", "absent-skimmed") else "full")).lastrowid]
++            for _fid in from_ids:    # a confirming row reaches the cell by its lens like any other (T-019)
++                c.execute("INSERT INTO extraction_lens_links (extraction_id, identity_code) "
++                          "VALUES (?, 'MOB')", (_fid,))
+         code_rows = [r[0] for r in c.execute(
+             "SELECT extraction_id FROM source_value_extractions WHERE ref_id NOT LIKE 'REF-FIND%' "
+             "ORDER BY extraction_id")]
+@@ -1028,6 +1050,160 @@ def main():
+     expect("T017-B3b: an edge ARRIVING at a governing row conditions nothing (K-11)",
+            d["value_max"] == 5.0 and "conditioned" not in (d["value_note"] or ""), str(d["value_max"]))
+ 
++    # T-3 / T-019: a figure reaches a cell only through the live lens links written on it. Two
++    # figures of ONE parameter under two lens tags, with a direction: before, both governed every
++    # cell and the looser one set the value of both groups. Codes below are fixture labels (the
++    # engine's gather never reads a registry); the live-database cases at the end choose theirs by
++    # query.
++    def _t019(sources, lens, **kw):
++        return determine(synth_db(sources, direction="lower_is_better", **kw), 1, lens,
++                         "syn-slug", "t019")
++
++    def _fig(ref, value, *lenses):
++        return {"tier": 1, "evidence_type": "clinical", "ref_id": ref, "claimed_value": value,
++                "claimed_unit": "rise:run ratio", "comparator": "<=",
++                "lenses": [l if isinstance(l, dict) else {"identity_code": l} for l in lenses]}
++
++    _mob, _deaf = _fig("REF-T19-MOB", "1:12", "MOB"), _fig("REF-T19-DEAF", "1:20", "DEAF")
++    d = _t019([_mob, _deaf], {"identity_code": "MOB"})
++    expect("T019-01: the wrong-lens figure does not govern: cell MOB gathers the MOB figure only",
++           d["governing_refs"] == ["REF-T19-MOB"] and d["n_sources"] == 1,
++           f"{d['governing_refs']} {d['n_sources']}")
++    expect("T019-02: ...and the value is the MOB figure's 1:12, not the looser 1:20 of another group",
++           d["value_max"] is not None and abs(d["value_max"] - 100 / 12) < 1e-9, str(d["value_max"]))
++    _roles = {l["extraction_id"]: l["role"] for l in d["links"]}
++    expect("T019-03: the other group's figure is still LINKED (K02 accounts for every extraction), "
++           "excluded, with the lens as the reason",
++           sorted(_roles.values()) == ["excluded", "governing"]
++           and any("cell's lens" in (l["exclusion_reason"] or "") for l in d["links"] if l["role"] == "excluded"),
++           str(d["links"]))
++    d = _t019([_mob, _deaf], {"identity_code": "DEAF"})
++    expect("T019-04: cell DEAF gathers the DEAF figure only",
++           d["governing_refs"] == ["REF-T19-DEAF"], str(d["governing_refs"]))
++
++    _all = _fig("REF-T19-ALL", "1:15", "ALL")
++    expect("T019-05: a figure tagged for everyone reaches only a cell for everyone",
++           _t019([_mob, _all], {"identity_code": "MOB"})["governing_refs"] == ["REF-T19-MOB"]
++           and _t019([_mob, _all], {"identity_code": "ALL"})["governing_refs"] == ["REF-T19-ALL"])
++
++    _both = _fig("REF-T19-BOTH", "1:12", "MOB", {"icf_code": "d450"})   # one figure, two lens models
++    _only = _fig("REF-T19-ONLY", "1:20", "MOB")
++    _cells = {k: _t019([_both, _only], lens) for k, lens in (
++        ("MOB", {"identity_code": "MOB"}), ("d450", {"icf_code": "d450"}),
++        ("MOB+d450", {"identity_code": "MOB", "icf_code": "d450"}))}
++    expect("T019-06: a figure reaches a cell when every code the cell states is among its links; "
++           "a lens the cell leaves NULL imposes nothing",
++           [c["governing_refs"] for c in _cells.values()]
++           == [["REF-T19-BOTH", "REF-T19-ONLY"], ["REF-T19-BOTH"], ["REF-T19-BOTH"]],
++           str({k: c["governing_refs"] for k, c in _cells.items()}))
++    # ONE figure carrying both codes: the two cells gather the same links and share the COALESCE
++    # key (MOB), so the lens codes beyond the first are the only thing left to tell them apart.
++    _one = [_t019([_both], l) for l in ({"identity_code": "MOB"},
++                                        {"identity_code": "MOB", "icf_code": "d450"})]
++    expect("T019-07: (MOB) and (MOB, d450) over the same links differ in derivation_sha: every lens "
++           "code is hashed",
++           _one[0]["links"] == _one[1]["links"]
++           and _one[0]["derivation_sha"] != _one[1]["derivation_sha"])
++    expect("T019-08: the models its governing figures carry that the cell key leaves NULL are reported",
++           _cells["MOB"]["unkeyed_models"] == ["icf_code"] and _cells["MOB+d450"]["unkeyed_models"] == [],
++           str([c["unkeyed_models"] for c in _cells.values()]))
++
++    _c = synth_db([_mob], direction="lower_is_better")
++    _c.execute("UPDATE extraction_lens_links SET retired_at='2026-11-13'")
++    try:
++        determine(_c, 1, {"identity_code": "MOB"}, "syn-slug", "t019-retired")
++        _r = None
++    except Refusal as e:
++        _r = str(e)
++    expect("T019-09: a RETIRED link carries no lens (the view is the only read surface)",
++           _r is not None, str(_r))
++
++    try:
++        determine(synth_db([_mob]), 1, {"identity_code": "AUT"}, "syn-slug", "t019-absent")
++        _r = None
++    except Refusal as e:
++        _r = str(e)
++    expect("T019-10: a lens no figure of the parameter carries has no cell (OD-08): refused, "
++           "no pending row", _r is not None and "has no row" in _r, str(_r))
++    try:
++        determine(synth_db([_mob]), 1, {}, "syn-slug", "t019-nolens")
++        _r = None
++    except Refusal as e:
++        _r = str(e)
++    expect("T019-11: a cell stating no lens is refused rather than gathered by parameter alone",
++           _r is not None, str(_r))
++
++    d = determine(synth_db([{"tier": 3, "evidence_type": "grey"}], icf_links=MOB_LINK),
++                  1, {"identity_code": "MOB"}, "syn-slug", "t019-pending")
++    expect("T019-12: a pending cell that HAS figures keeps its state and claims no derivation path",
++           d["state"] == "pending" and (d["derivation_paths"], d["functional_basis"],
++                                         d["derivation_rationale"], d["cultural_claim_anchor"])
++           == (None, None, None, None), str((d["state"], d["derivation_paths"])))
++
++    # T019 on the LIVE database, read-only (`determine` writes nothing). Every probe is chosen by
++    # query from the figures' own live links, and the cases print SKIPPED-NO-FIXTURE when the
++    # database offers none: AT-50 (a cell links only figures that carry its code), AT-51 (a figure
++    # tagged for everyone reaches only a cell for everyone) and AT-52 (a registry lens no figure of
++    # the parameter carries has no row).
++    if os.path.exists(live_db) and any(
++            r[0] == "v_live_lens_links" for r in live.execute(
++                "SELECT name FROM sqlite_master WHERE type='view'")):
++        _pairs = live.execute(
++            "SELECT DISTINCT x.parameter_id, l.identity_code FROM source_value_extractions x "
++            "JOIN v_live_lens_links l USING (extraction_id) WHERE l.identity_code IS NOT NULL "
++            "ORDER BY 1, 2").fetchall()
++        _bad, _empty = [], 0
++        for _pid, _code in _pairs:
++            _d = determine(live, _pid, {"identity_code": _code}, "syn-slug", "t019-live")
++            _carried = {r[0] for r in live.execute(
++                "SELECT extraction_id FROM v_live_lens_links WHERE identity_code = ?", (_code,))}
++            _reach = [l["extraction_id"] for l in _d["links"] if l["in_lens"]]
++            _empty += not _reach
++            _bad += [(_pid, _code, e) for e in _reach if e not in _carried]
++        expect(f"T019-13: AT-50 over {len(_pairs)} live cells: every figure a cell reaches carries its "
++               f"identity code, and none of the cells is empty",
++               _pairs and not _bad and not _empty, f"{_bad[:3]} empty={_empty}")
++        _mix = [r[0] for r in live.execute(
++            "SELECT x.parameter_id FROM source_value_extractions x JOIN v_live_lens_links l "
++            "USING (extraction_id) GROUP BY 1 HAVING SUM(l.identity_code = 'ALL') > 0 AND "
++            "COUNT(DISTINCT l.identity_code) > 1 ORDER BY 1")]
++        if _mix:
++            _p = _mix[0]
++            _other = live.execute(
++                "SELECT l.identity_code FROM source_value_extractions x JOIN v_live_lens_links l "
++                "USING (extraction_id) WHERE x.parameter_id = ? AND l.identity_code <> 'ALL' "
++                "ORDER BY 1 LIMIT 1", (_p,)).fetchone()[0]
++            _all_ids = {r[0] for r in live.execute(
++                "SELECT extraction_id FROM v_live_lens_links WHERE identity_code = 'ALL'")}
++            _oth_ids = {r[0] for r in live.execute(
++                "SELECT extraction_id FROM v_live_lens_links WHERE identity_code = ?", (_other,))}
++            _reach = lambda c: {l["extraction_id"] for l in determine(
++                live, _p, {"identity_code": c}, "syn-slug", "t019-live")["links"] if l["in_lens"]}
++            expect(f"T019-14: AT-51 (parameter {_p}): the ALL cell reaches only ALL figures; the "
++                   f"{_other} cell reaches a figure tagged ALL only if it is also tagged {_other}",
++                   _reach("ALL") <= _all_ids and _reach(_other) <= _oth_ids,
++                   f"{sorted(_reach('ALL') - _all_ids)[:3]} {sorted(_reach(_other) - _oth_ids)[:3]}")
++        else:
++            print("  SKIPPED-NO-FIXTURE: T019-14 (no parameter carries both ALL and another group)")
++        _gap = live.execute(
++            "SELECT p, code FROM (SELECT DISTINCT x.parameter_id p FROM source_value_extractions x "
++            "JOIN v_live_lens_links USING (extraction_id)) CROSS JOIN (SELECT identity_code code "
++            "FROM base_taxonomy_identity) WHERE NOT EXISTS (SELECT 1 FROM source_value_extractions "
++            "y JOIN v_live_lens_links k USING (extraction_id) WHERE y.parameter_id = p AND "
++            "k.identity_code = code) ORDER BY 1, 2 LIMIT 1").fetchone()
++        if _gap:
++            try:
++                determine(live, _gap[0], {"identity_code": _gap[1]}, "syn-slug", "t019-live")
++                _r = None
++            except Refusal as e:
++                _r = str(e)
++            expect(f"T019-15: AT-52 (parameter {_gap[0]} x {_gap[1]}): a registry lens no figure of "
++                   f"the parameter carries writes no row", _r is not None and "has no row" in _r, str(_r))
++        else:
++            print("  SKIPPED-NO-FIXTURE: T019-15 (every registry identity is carried on every parameter)")
++    else:
++        print("  SKIPPED-NO-FIXTURE: T019-13..15 (no live database with v_live_lens_links)")
++
+     # band() and floor_mean(): tier-system section 5, and the owner's five rows of 2026-09-13.
+     from schemas.enums import EvidenceMarker as M  # noqa: E402
+     from schemas.tier_derivation import band, floor_mean  # noqa: E402
+diff --git a/scripts/tests/test_db_integrity.py b/scripts/tests/test_db_integrity.py
+index b7979cc..9b410a5 100644
+--- a/scripts/tests/test_db_integrity.py
++++ b/scripts/tests/test_db_integrity.py
+@@ -47,6 +47,12 @@ DB_PATH = os.environ.get("GUIDEBOOK_DB_PATH", "data/guidebook.db")
+ #: the open one. A bump of RULE_VERSION that leaves the payload alone then needs no edit here.
+ LEGACY_SHA_VERSIONS = ("pilot-2",)
+ LEGACY_SHA_SQL = ", ".join(map(repr, LEGACY_SHA_VERSIONS))
++#: The link-set labels whose `derivation_sha` hashed the cell's COALESCE lens key alone. History,
++#: so it cannot grow (T-019 bumped to the label that hashes all four lens codes): derive the set
++#: with `git log -p -G'^RULE_VERSION = ' -- scripts/assess/assess_cell.py` (-G, not -S: -S counts
++#: occurrences and a changed label does not change the count). Every label after it hashes the
++#: four-code tuple, so a later bump that leaves that payload alone needs no edit here.
++COALESCE_LENS_SHA_VERSIONS = ("pilot-3", "pilot-4", "pilot-5")
+ 
+ results = []
+ 
+@@ -1065,9 +1071,9 @@ def run_checks(db_path):
+     # evidence-architecture §10 means -- "same evidence + same rule_version => same
+     # state + same derivation_sha" -- and the remedy is the same as for every other
+     # K01 failure: re-run the engine and restamp.
+-    for cid, pid, lens, gr, rv, sha_rec in conn.execute(
++    for cid, pid, *lens4, gr, rv, sha_rec in conn.execute(
+             "SELECT specification_id, parameter_id, "
+-            "COALESCE(identity_code, icf_code, needs_code, medical_code), "
++            "identity_code, icf_code, needs_code, medical_code, "
+             "governing_refs, rule_version, derivation_sha FROM specifications "
+             "WHERE retired_at IS NULL"):
+         if not sha_rec or not rv:
+@@ -1096,9 +1102,13 @@ def run_checks(db_path):
+             n_x = conn.execute("SELECT COUNT(*) FROM source_value_extractions "
+                                "WHERE parameter_id = ?", (pid,)).fetchone()[0]
+             body = "|".join(refs) + f"|x{n_x}"
++        # The cell's lens as the label hashed it: the first code present for the closed set of
++        # earlier labels, all four codes for every later one (T-019).
++        lens = (next((c for c in lens4 if c), None) if rv in LEGACY_SHA_VERSIONS + COALESCE_LENS_SHA_VERSIONS
++                else "|".join(c or "" for c in lens4))
+         payload = f"{pid}|{lens}|" + body + "::" + rv
+         if _hashlib.sha256(payload.encode()).hexdigest() != sha_rec:
+-            stale.append(f"{cid} (param {pid}×{lens}, {rv})")
++            stale.append(f"{cid} (param {pid}×{next((c for c in lens4 if c), None)}, {rv})")
+     record("K01", "every recorded derivation_sha verifies against its own row",
+            not stale,
+            f"{len(stale)} stale: {', '.join(stale)} — the row, or the evidence read "
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index 6f49cd9..cab4cb5 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -1520,7 +1520,7 @@ STAMP = dbcore.now()                    # the shape every stored created_at has:
+ def assess(db_path, pid, slug, *extra, stamp=None, session=S):
+     return subprocess.run([sys.executable, str(REPO / "scripts/assess/assess_cell.py"), "--db", db_path,
+                            "--emit-sql", os.path.join(TMP, "a.sql"), "--parameter-id", str(pid),
+-                           "--slug", slug, "--identity", IDENT, "--icf", ICF, "--session", session,
++                           "--slug", slug, "--identity", CELL_IDENT, "--icf", ICF, "--session", session,
+                            "--stamp", stamp or STAMP, *extra],
+                           capture_output=True, text=True, env=dict(os.environ))
+ 
+@@ -1529,9 +1529,21 @@ P_NODIR = scalar("SELECT parameter_id FROM base_parameters WHERE status='active'
+                  "accessibility_direction IS NULL AND parameter_id IN (SELECT parameter_id FROM "
+                  "source_value_extractions) AND parameter_id<>? ORDER BY 1 LIMIT 1", P_FULL)
+ CELL_P = P_NODIR if P_NODIR is not None else P1
+-if ICF is None:
++# A figure reaches a cell only through the lens codes written on it (T-019), so the cell is keyed on
++# codes the parameter's own figures carry: the identity of one of its live links, chosen by query, and
++# the ICF code as a second link HAND-written on that figure (no live figure carries both lenses).
++_fig = q("SELECT l.extraction_id, l.identity_code FROM source_value_extractions x JOIN v_live_lens_links l "
++         "USING (extraction_id) WHERE x.parameter_id=? AND l.identity_code IS NOT NULL ORDER BY 1 LIMIT 1", CELL_P)
++CELL_IDENT = _fig[0][1] if _fig else None
++if ICF is not None and _fig:
++    with sqlite3.connect(DB) as _hc:
++        _hc.execute("INSERT INTO extraction_lens_links (extraction_id, icf_code, basis, basis_text, created_at, "
++                     "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'named_in_text', "
++                     "'TASK-FIXTURE: a figure stated in two lenses', ?, ?, ?, ?)",
++                     (_fig[0][0], ICF, STAMP, S, STAMP, S))
++if ICF is None or CELL_IDENT is None:
+     for t_ in ("E01-E03", "E05", "E06", "E11", "E12"):
+-        skip(t_, "the ICF registry is empty")
++        skip(t_, "the ICF registry is empty, or no figure of the cell's parameter has an identity link")
+ else:
+     # Before E01 writes that cell to the test copy, so the accepted call below is not a duplicate.
+     with scratch() as c:
+@@ -1569,7 +1581,7 @@ else:
+                r.returncode == 0 and gap and "set-parameter-direction" in gap[0][0],
+                (r.stdout + r.stderr)[-300:] if r.returncode else (gap[0][0][-200:] if gap else "no gap"))
+         record("E02", "the summary line prints every lens the cell was given",
+-               f"param {P_NODIR}×{IDENT}/" in r.stdout, r.stdout[:120])
++               f"param {P_NODIR}×{CELL_IDENT}/" in r.stdout, r.stdout[:120])
+         record("E03", "the report carries direction_ref_id beside the direction",
+                "direction_ref_id" in rep, list(rep)[:5])
+     else:
+diff --git a/scripts/tests/test_scan_contract.py b/scripts/tests/test_scan_contract.py
+index 82888be..8d3e204 100644
+--- a/scripts/tests/test_scan_contract.py
++++ b/scripts/tests/test_scan_contract.py
+@@ -875,13 +875,12 @@ try:
+                                    claim(REF_S, "1", "skim"))
+     con = sqlite3.connect(DB)
+     try:
+-        refs = [s["ref_id"] for s in ac.gather_sources(con, PE)]
+-        links = ac.gather_extraction_links(con, PE, [REF_A, REF_S])
++        lens = {"identity_code": POP, "icf_code": None, "needs_code": None, "medical_code": None}
++        refs = [s["ref_id"] for s in ac.gather_sources(con, PE, lens)]
++        links = ac.gather_extraction_links(con, PE, [REF_A, REF_S], lens)
+         by_id = {l["extraction_id"]: l for l in links}
+         vmin, vmax, unit, note, _n = ac.compose_value(con, links, "lower_is_better")
+-        det = ac.determine(con, PE, {"identity_code": POP, "icf_code": None,
+-                                     "needs_code": None, "medical_code": None},
+-                           SLUG_A, "fixture")
++        det = ac.determine(con, PE, lens, SLUG_A, "fixture")
+         check_vals = dbcore.check_values(con, "source_value_extractions",
+                                          "extraction_method")
+     finally:
+diff --git a/skills/run-pipeline_SKILL.md b/skills/run-pipeline_SKILL.md
+index 599af4b..ea2c161 100644
+--- a/skills/run-pipeline_SKILL.md
++++ b/skills/run-pipeline_SKILL.md
+@@ -250,8 +250,10 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
+   [--report-json <file>]` per cell on the scratch DB (it takes `--db`, not `GUIDEBOOK_DB_PATH`; it writes the convergence
+   row and the determination together; `--slug` names an existing topic, `SELECT slug FROM slugs`, and selects no
+   evidence, and a slug that does not exist is refused). **A cell** is a parameter × the lens codes given (`specifications`' unique
+-  row identity); today every lens of a parameter gathers the same extractions, and whether a lens should filter them
+-  is an open owner question. Do not hand-assign. Review its output against these tests; a failure is a gate or a
++  row identity); a figure reaches a cell only through the live lens links written on it
++  (`v_live_lens_links`): every lens the cell states must be among them, a lens it leaves NULL imposes nothing, and a
++  lens no figure of the parameter carries has no cell (the engine refuses and writes nothing; if the lens is relevant,
++  raise the gap at judgment with `add-gap`). Do not hand-assign. Review its output against these tests; a failure is a gate or a
+   GAP, never a hand edit. A re-run for the same cell is refused: `retire-specification` first.
+   1. Name the **most accommodating** value found in practice, read by the parameter's direction. `contested` means no
+      single value: show the spread with each population's direction. Frequency is never evidence; the steepest value a
+-- 
+2.43.0
+

@@ -35,7 +35,7 @@ for n in OD-02 OD-08 OD-12 OD-30 OD-33; do gate $n; done
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-037-render "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-037" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
@@ -64,7 +64,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 1. Design (from the draft contract `workplan/2026-10-30-ramp-spec-pages/RENDER-CONTRACT-parameters-3-and-12.md`, whose §8 position 5 records the critic's findings this design must meet), then build, to the delegated resolutions:
    - **OD-12.** Every sentence is assembled by templates held in one home from typed rows. Judged discussion is quoted by pointer from T-032's discussion rows and shown only when reviewed; otherwise the page says the discussion is unreviewed. No model is called at render. The render table is a build product **outside** `data/guidebook.db`, regenerated in full at each build and never committed (2026-08-27), each row carrying a hash of its inputs; one check, named and registered in this pull request, compares the deployed rows' hashes with their inputs now and reports stale rows — or the hash is not added (CLAUDE.md §8).
-   - **OD-02.** Pages in English. Every non-English quotation, term and clause is shown in its own language and script, first or beside, with our translation marked as a translation with its translator and review status; the original carries its language tag (WCAG 2.2, success criterion 3.1.2). The page language is a parameter: a test emits a page in a second language by data alone (a template set and a page-language value), with no code edit.
+   - **OD-02.** Pages in English. Every non-English quotation, term and clause is shown in its own language and script, first or beside, with our translation marked as a translation with its translator and review status; the original carries its language tag (WCAG 2.2, success criterion 3.1.2). The page language is a parameter: a test emits a page in a second language by data alone (a template set and a page-language value), with no code edit. Where a term's name is shown, render may read `term_label_picks` (T-028) to show why that name was chosen; it is not committed to.
    - **OD-30.** A translation is shown only if `v_translations_current` gives it status `reviewed` by a reviewer other than its translator; otherwise only the original is shown.
    - **OD-08.** A cell with no determination shows no row; the Gaps element states the gap with its link (T-013's typed gaps). Whether the cell is not relevant, not yet researched, or researched and empty is derived (T-034 where merged), never stored.
 2. The owner's standing requirements are not reopened: the audience and disability lenses with the filters first; in-scope jurisdictions only; WCAG 2.2 AA tested and recorded, never self-certified (ledger, 2026-10-30).
@@ -88,7 +88,7 @@ python3 -I -c "import sqlite3,sys;c=sqlite3.connect('file:data/guidebook.db?mode
 python3 -c "import yaml,sys;print([c['id'] for c in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if sys.argv[1] in str(c)])" "$N"   # the check registry
 git grep -n -F -e "$N" -- governance architecture CLAUDE.md references workplan/pipeline-state-graph/machines.yaml ':(exclude)references/project-standards.md' ':(exclude)references/search-log'   # prose and hand-written needles
 ```
-If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) and report its result. An object that returns 0 rows is unproven, not clean.
+If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) before your change and after it, and report the difference. It is red on the base: its failure count there is the base state, not yours; only a count above your before-run is yours. An object that returns 0 rows is unproven, not clean.
 
 **Hits when this file was written** (2026-11-12, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
 
@@ -118,11 +118,13 @@ Each line shows the check's subject (`EXAMINED:`). A check that is red here was 
 **Step 4: the gate, once.**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
 - **Run it once, when every edit is made, before the commit.** It compares your working tree (committed or not, untracked files included) with the point where your branch left `$BASE`, so it does not need a commit first. `preflight.sh` runs the registry selftest and then `run_checks.py --changed-from`: do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
 - **A passing check prints no `EXAMINED:` line in this output.** The subject of each check is read in the per-check runs above (`$SCRATCH/after-<check>.txt`), not here. In `gate.txt` read three things: the `RESULT` line; any check under `NOTHING-IN-SCOPE` (it has not passed: say so); any blocking `FAIL`.
+- **The gate takes several minutes.** Run it in the background with a long timeout and read `$SCRATCH/gate.txt` when it ends; do not re-run it because the first call timed out.
+- **`research_tooling_separation` reads `origin/main`, not `$BASE`** (its registered `cmd` takes no `--base`), so on any other base it can FAIL on paths you never touched (pilots saw far more paths than their diff touched). Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, report that result, and treat a gate FAIL that disappears with `--base` as not yours.
 - **A check that was already red before your change** (the before-run shows it) tells you nothing about your diff: name it in the pull request with its before and after lines, and move on.
 
 **The canonical database must not move:** `sha256sum data/guidebook.db` gives the value recorded in section 2.
@@ -160,6 +162,7 @@ Stop, change nothing further, and report (what you ran, what you saw, what you e
 - `sha256sum data/guidebook.db` changes when this task has no migration, or the rebuild does not reproduce the database when it has one;
 - you would have to guess a value, a vocabulary term, a name or an owner's intent.
 - the delegation gate of section 2 prints CLOSED for a decision this task rests on (the owner has reversed it, a correction has withdrawn it, or its independent check is not recorded); a delegated resolution is never the owner's words;
+- an element page is wanted: the owner answered OR-14b on 2026-11-13 ("Written by the pass"), so the page reads the stored element-level determination that T-060 builds and is not derived by this task. Build no element page until T-060 has merged, and say so in the pull request;
 
 ## 10. Rollback
 

@@ -33,7 +33,7 @@ for n in OD-11; do gate $n; done
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-051-gap-register-cross-stage "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-051" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
@@ -63,7 +63,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 1. `governance/stage-map.yaml`: `gaps` takes the value `cross-stage` (the delegated resolution of OD-11), and its `disputed:` note is replaced by one line pointing at the ledger (`grep -n -F "Delegated resolution 2026-11-12 — OD-11" references/project-standards.md`). Add no column to `gaps`: the stage that raised a gap is added when a reader needs it, not before (ledger, status lines of 2026-11-12).
 2. Readers of the map. `workplan/pipeline-state-graph/walkability.py` maps a table to the value the map gives it and refuses to walk only through `base`, `infrastructure` and `UNMAPPED` (`grep -n NOWALK workplan/pipeline-state-graph/walkability.py`), so `cross-stage` stays walkable: prove it by the before-and-after run of section 6, which must show no pair losing a path. `scripts/generate/owner_browser_build.py` orders stages (`grep -n stage_order scripts/generate/owner_browser_build.py`): a value it does not know is a caller; place `cross-stage` beside `infrastructure` in one line, or stop. `skills/run-pipeline_SKILL.md` names the map: correct any sentence that says gaps are synthesis's.
 
-**What reads what this task adds or changes:** `walkability.py`; `owner_browser_build.py` and the owner's page; `skills/run-pipeline_SKILL.md`.
+**What reads what this task adds or changes:** `walkability.py`; `owner_browser_build.py` and the owner's page; `skills/run-pipeline_SKILL.md`. T-049 depends on this task: it adds a second `cross-stage` table, `translations`, and reads the value this task gives `gaps` before writing it (T-049 sections 2 and 4).
 
 **No schema migration.** This task changes no table; the pull request contains no file under `scripts/migrations/`.
 
@@ -84,7 +84,7 @@ python3 -I -c "import sqlite3,sys;c=sqlite3.connect('file:data/guidebook.db?mode
 python3 -c "import yaml,sys;print([c['id'] for c in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if sys.argv[1] in str(c)])" "$N"   # the check registry
 git grep -n -F -e "$N" -- governance architecture CLAUDE.md references workplan/pipeline-state-graph/machines.yaml ':(exclude)references/project-standards.md' ':(exclude)references/search-log'   # prose and hand-written needles
 ```
-If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) and report its result. An object that returns 0 rows is unproven, not clean.
+If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) before your change and after it, and report the difference. It is red on the base: its failure count there is the base state, not yours; only a count above your before-run is yours. An object that returns 0 rows is unproven, not clean.
 
 **Hits when this file was written** (2026-11-12, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
 
@@ -115,11 +115,13 @@ Each line shows the check's subject (`EXAMINED:`). A check that is red here was 
 **Step 4: the gate, once.**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
 - **Run it once, when every edit is made, before the commit.** It compares your working tree (committed or not, untracked files included) with the point where your branch left `$BASE`, so it does not need a commit first. `preflight.sh` runs the registry selftest and then `run_checks.py --changed-from`: do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
 - **A passing check prints no `EXAMINED:` line in this output.** The subject of each check is read in the per-check runs above (`$SCRATCH/after-<check>.txt`), not here. In `gate.txt` read three things: the `RESULT` line; any check under `NOTHING-IN-SCOPE` (it has not passed: say so); any blocking `FAIL`.
+- **The gate takes several minutes.** Run it in the background with a long timeout and read `$SCRATCH/gate.txt` when it ends; do not re-run it because the first call timed out.
+- **`research_tooling_separation` reads `origin/main`, not `$BASE`** (its registered `cmd` takes no `--base`), so on any other base it can FAIL on paths you never touched (pilots saw far more paths than their diff touched). Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, report that result, and treat a gate FAIL that disappears with `--base` as not yours.
 - **A check that was already red before your change** (the before-run shows it) tells you nothing about your diff: name it in the pull request with its before and after lines, and move on.
 
 ## 7. Commit

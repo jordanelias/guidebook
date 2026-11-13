@@ -33,7 +33,7 @@ for n in OD-18 OD-08; do gate $n; done
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-022-contract-re-entry "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-022" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
@@ -60,7 +60,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. `schemas/pipeline_contract.py`: one optional list field per stage; `governance/pipeline-contract.yaml`: the ruled backward edges only (the audit's boundary table B7 to B14), each naming its carrier row (gap, follow-up, mined source). `pipeline_contract_audit.py` validates that each carrier table exists. Write the edges as the delegated resolution of OD-18 corrects them: the specification → research edge (B10) carries an open typed gap, never a `pending` row for a lens no figure carries (OD-08); the specification → evidence/judgment edge (B11) carries a skimmed or preliminary reading through a follow-up row, not the `provisional` state, until the owner answers OD-10 (referred back); no carrier records a downstream use on an upstream row.
+1. `schemas/pipeline_contract.py`: one optional list field per stage; `governance/pipeline-contract.yaml`: the ruled backward edges only (the audit's boundary table B7 to B14), each naming its carrier row (gap, follow-up, mined source, or the extraction's own method cell). `pipeline_contract_audit.py` validates that each carrier table exists. Write the edges as the delegated resolution of OD-18 corrects them: the specification → research edge (B10) carries an open typed gap, never a `pending` row for a lens no figure carries (OD-08); the specification → evidence/judgment edge (B11) carries a skimmed reading by the cell that already records it, `source_value_extractions.extraction_method = 'skim'`, which the engine reads and names as owing a dedicated reading, not by a follow-up row (corrected 2026-11-13: the folded T-012, section 4 item 1, adds no follow-up reason for a skimmed figure, because that would hold one debt in two homes) and not by the `provisional` state, until the owner answers OD-10 (referred back); no carrier records a downstream use on an upstream row.
 
 **What reads what this task adds or changes:** `pipeline_contract_audit`, `/run-pipeline`.
 
@@ -81,7 +81,7 @@ python3 -I -c "import sqlite3,sys;c=sqlite3.connect('file:data/guidebook.db?mode
 python3 -c "import yaml,sys;print([c['id'] for c in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if sys.argv[1] in str(c)])" "$N"   # the check registry
 git grep -n -F -e "$N" -- governance architecture CLAUDE.md references workplan/pipeline-state-graph/machines.yaml ':(exclude)references/project-standards.md' ':(exclude)references/search-log'   # prose and hand-written needles
 ```
-If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) and report its result. An object that returns 0 rows is unproven, not clean.
+If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) before your change and after it, and report the difference. It is red on the base: its failure count there is the base state, not yours; only a count above your before-run is yours. An object that returns 0 rows is unproven, not clean.
 
 **Hits when this file was written** (2026-11-12, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
 
@@ -111,11 +111,13 @@ Each line shows the check's subject (`EXAMINED:`). A check that is red here was 
 **Step 4: the gate, once.**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
 - **Run it once, when every edit is made, before the commit.** It compares your working tree (committed or not, untracked files included) with the point where your branch left `$BASE`, so it does not need a commit first. `preflight.sh` runs the registry selftest and then `run_checks.py --changed-from`: do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
 - **A passing check prints no `EXAMINED:` line in this output.** The subject of each check is read in the per-check runs above (`$SCRATCH/after-<check>.txt`), not here. In `gate.txt` read three things: the `RESULT` line; any check under `NOTHING-IN-SCOPE` (it has not passed: say so); any blocking `FAIL`.
+- **The gate takes several minutes.** Run it in the background with a long timeout and read `$SCRATCH/gate.txt` when it ends; do not re-run it because the first call timed out.
+- **`research_tooling_separation` reads `origin/main`, not `$BASE`** (its registered `cmd` takes no `--base`), so on any other base it can FAIL on paths you never touched (pilots saw far more paths than their diff touched). Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, report that result, and treat a gate FAIL that disappears with `--base` as not yours.
 - **A check that was already red before your change** (the before-run shows it) tells you nothing about your diff: name it in the pull request with its before and after lines, and move on.
 
 **The canonical database must not move:** `sha256sum data/guidebook.db` gives the value recorded in section 2.

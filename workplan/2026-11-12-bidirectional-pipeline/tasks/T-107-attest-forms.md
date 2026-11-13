@@ -21,7 +21,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 ## 2. Preconditions
 
 - **The integration base.** This workplan must be on the branch you start from. If the workplan's pull request is merged, that is `origin/main`. Until then it is the workplan branch, `origin/ccr-408aaa9b-z3e4s0` (if that name is gone: `git branch -r --contains "$(git log --all --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md)"`). Every command in this file uses `$BASE`, set by the first line of the set-up block, and never a literal `origin/main`: on a base that lacks the workplan, a diff against `origin/main` contains the whole workplan and every gate and count is about the wrong change.
-- **Tasks that must be merged to the integration base first:** T-026 merged; T-028 merged (its rebuild gives `term_aliases` one row per occurrence: before it, a second instrument or jurisdiction using a form the term already holds in that language cannot be stored; `T-028-design.md` section 4). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
+- **Tasks that must be merged to the integration base first:** T-057 merged (the base coverage view that acceptance test 23 reads); T-026 merged; T-028 merged (its rebuild gives `term_aliases` one row per occurrence: before it, a second instrument or jurisdiction using a form the term already holds in that language cannot be stored; `T-028-design.md` section 4). Check by running that task's own after-test (its section 6), or `git log "$BASE" --oneline | grep -F "<that task's commit subject>"`.
 - **Owner decisions:** none. This task rests on rulings already in the ledger or on no ruling at all.
 - **Tests that must be red (or green) before you start:** AT-23 red. (`AT-` numbers are the acceptance tests of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/hs-improvement-programme.md` §4, §7 and §9 and of `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/td-requirements-and-interface-spec.md`; the test this task must turn is restated in full in section 6, so you do not need to open either.)
 - **Set-up.**
@@ -30,7 +30,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-107-attest-forms "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-107" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -69,6 +69,10 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. Per the rulings of 2026-11-06 (sixth, seventh), writing each attested occurrence with `add-alias`'s base route or observation route as `T-028-design.md` sections 4 and 8 name them (one row per occurrence; the first located occurrence of a held seed's text promotes that seed in place), typing `usage_type` where the source shows it, and never presenting `canonical_en` as a form.
+2. **Inputs this task receives** (added 2026-11-13 from the folded T-026 and T-028; each is re-attested by item 1's routes, never by editing a cell):
+   - (a) The `VERIFIED-GLOSSARY`, `VERIFIED-CROSS` and `VERIFIED-NATIVE` rows that T-026's fill writes as `unrecorded` (they carry no observation and no locator). T-026's pull request lists them by command (its section 4 item 1); re-derive them on `$BASE`: `python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);[print(r) for r in c.execute(\"select form_id, term_id, alias, language from term_aliases where attestation='unrecorded' and (instr(notes,'VERIFIED-GLOSSARY')>0 or instr(notes,'VERIFIED-CROSS')>0 or instr(notes,'VERIFIED-NATIVE')>0) order by 2,3\")]"`.
+   - (b) Member rows that `add-term --from-observation` writes as `unrecorded` with their `observation_id` when the quote cannot be verified (T-028 section 4 item 1): each is promoted through `add-alias` once its quote is verified (`select form_id, term_id, alias, language, observation_id from term_aliases where attestation='unrecorded' and observation_id is not null`).
+   - (c) `usage_type`, NULL on every row after T-028's migration: typed by judgment as each row is touched, including the frozen legacy `DOMAIN` rows (`select form_id, term_id, alias, language, notes from term_aliases where alias_type='DOMAIN'`), whose `alias_type` stays as it is (`T-028-design.md` section 5).
 
 **What reads what this task adds or changes:** multilingual search
 
@@ -87,14 +91,14 @@ Structures this task touches, for orientation: `term_aliases`. The ledger (`refe
 
 ## 6. Verification
 
-**Red before, green after.** AT-23.
+**Red before, green after.** AT-23, read through the view T-057 builds.
 
 **Fixtures.** Probes run on `$SCRATCH/t.db`; the batch's own rows are written on `$SCRATCH/s.db` and reach `data/guidebook.db` only through the write path of section 2.
 
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```

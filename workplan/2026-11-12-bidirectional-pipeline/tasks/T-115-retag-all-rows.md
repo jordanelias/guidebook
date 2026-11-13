@@ -29,7 +29,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-115-retag-all-rows "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-115" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -68,7 +68,7 @@ Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule o
 
 1. Read each figure's clause and its heading in the source (the verified quote and locator; re-open the retained text where the quote does not show the heading). Tag it by the OD-31 rule: a heading that names a group gives that group (under a mobility heading, the parent `MOB` and no child, since no device is named; another group's heading, that group); a general disability heading, or none, gives **no identity**: fill its ICF and access-need lenses from the clause (link rows through T-018 where it serves several). Never `ALL`; never copy the figure.
 2. Move each row off `ALL` with T-018's verbs (`T-018-design.md` section 6): first `add-lens-link` for each code the row now carries (`--basis heading` with the heading's words, or `named_in_text` with the clause's), then `retire-lens-link` on its `ALL` link with the heading that decided it as the reason (the verb refuses to retire a figure's last live link, so the order is fixed). T-056 builds no lens writer (corrected 2026-11-12). A row whose clause supports no lens at all is reported, not forced, and keeps its `ALL` link, which then blocks step 3 until the owner rules on it.
-3. Then `retire-identity --code ALL --to-design-scale universal` with the ledger pointer to the OD-31 answer.
+3. Then `retire-identity --code ALL --to-design-scale universal` with `--approval-ref "Owner answers 2026-11-12 (fourth set) — OD-31 (a provision under a disability heading that names no one; ALL) and OD-36 (the harm ordering)"` (the full heading of the OD-31 answer, found exactly once).
 4. Determinations: none is keyed on `ALL` today (`select count(*) from specifications where identity_code='ALL'`); if one is by then, it is re-determined at `design_scale = 'universal'` by the engine, never edited.
 
 **What reads what this task adds or changes:** the engine's gather (the figures now reach the determinations of their group or lens); render; the coverage views.
@@ -95,7 +95,7 @@ Structures this task touches, for orientation: `ALL`, the figures re-tagged. The
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```

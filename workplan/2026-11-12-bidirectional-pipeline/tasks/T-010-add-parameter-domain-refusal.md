@@ -28,7 +28,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 cd /home/user/guidebook                                    # repository root; every command below runs from here
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"   # a red check without pydantic proves nothing
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-010-add-parameter-domain-refusal "$BASE"                               # real execution only; never commit on main (see below for a pilot)
 sha256sum data/guidebook.db                                # record it
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-010" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"   # all experiments run on this copy
@@ -57,12 +57,12 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. `scripts/dbcore.py`: one named rule, `NON_QUANTITY_DOMAINS`, a frozenset of the domains under which lenses, methods and bodies of law are filed: `functional_axis`, `population`, `medical`, `methodology`, `legal`, `economics`. Its comment says three things: that this is a judged rule declared once (the owner's tenth statement of 2026-11-12 allows a rule held in one stated place; `grep -n -F "isn't hardcoding necessarily" references/project-standards.md`); the two queries that justify it and the date they were run (the evidence command's second and third); and that it is a stop-gap which T-020 deletes when a parameter states its quantity kind. Nothing else in the tree types those domain names for this purpose.
+1. `scripts/dbcore.py`: one named rule, `NON_QUANTITY_DOMAINS`, a frozenset of the domains under which lenses, methods and bodies of law are filed: `functional_axis`, `population`, `medical`, `methodology`, `legal`, `economics`. Its comment says three things: that this is a judged rule declared once (the owner's tenth statement of 2026-11-12 allows a rule held in one stated place; `grep -n -F "isn't hardcoding necessarily" references/project-standards.md`); the two queries that justify it and the date they were run (the evidence command's second and third); and that it stays when T-020 gives each parameter a quantity kind (the domain is a fact of the term, the kind a fact of the parameter; folded T-020, section 4 item 2; corrected 2026-11-13, when this file still said T-020 would delete it). Nothing else in the tree types those domain names for this purpose.
 2. `scripts/db.py`, `insert_parameter` (`grep -n 'def insert_parameter' scripts/db.py`): read the term's `domain` with the term, and refuse when it is in the rule, before the declination test. Do not alter the text of the refusals already in the function: `workplan/pipeline-state-graph/machines.yaml` matches on three of them. The new message states the domain, prints the domains of the live parameters and the refused set (both read, not typed), says nothing was written, and **names the next action for both cases**: if the term is a lens, a method or a body of law, dispose of it truthfully with `db.py decline-parameter --term-id <id> --reason '<why it is not a design quantity>'`; if it is a quantity filed under the wrong domain, correct the domain with `db.py amend-term --term-id <id> --field domain --replacement <domain> --reason '<why>'` and promote it again. Update the `--term-id` help text of `add-parameter` to name the new refusal.
 3. `scripts/db.py`, `_AMENDABLE_TERM_FIELDS` (`grep -n '_AMENDABLE_TERM_FIELDS' scripts/db.py`): add `domain`, so that the second next action exists. `terms.domain` has no CHECK, so there is no vocabulary to read: the guard is that the replacement is a domain at least one other term already carries (`select 1 from terms where domain=?`), and the refusal for anything else lists those domains by query. `amend-term` already demands and records `--reason`. Without this field the refusal of item 2 would send a mis-filed quantity nowhere, which is a dead end (REQ-103).
-4. This is a stop-gap that needs no new vocabulary. The full rule (a parameter states its quantity kind) is T-020 and waits on OD-24; do not build it here. A term with no domain is not refused.
+4. This needs no new vocabulary. The quantity kind (a parameter states its kind) is T-020's, which keeps this refusal beside it; do not build it here. A term with no domain is not refused.
 
-**What reads what this task adds or changes:** `NON_QUANTITY_DOMAINS`: `insert_parameter`, the fixture filter in `scripts/tests/test_scan_contract.py`, the new tests; T-020 deletes it. The amendable `domain` field: `amend-term`; through it `add-parameter`.
+**What reads what this task adds or changes:** `NON_QUANTITY_DOMAINS`: `insert_parameter`, the fixture filter in `scripts/tests/test_scan_contract.py`, the new tests; T-020 keeps it (its section 4 item 2) and its free-term probes read it. The amendable `domain` field: `amend-term`; through it `add-parameter`.
 
 **Code size.** Report in the pull request the output of `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'` (run it after `git add`, so new files count), and for anything added name what reads it and what existing code it replaces or makes deletable. The base is the point where your branch left `$BASE`, not `origin/main` by name.
 
@@ -81,7 +81,7 @@ python3 -I -c "import sqlite3,sys;c=sqlite3.connect('file:data/guidebook.db?mode
 python3 -c "import yaml,sys;print([c['id'] for c in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if sys.argv[1] in str(c)])" "$N"   # the check registry
 git grep -n -F -e "$N" -- governance architecture CLAUDE.md references workplan/pipeline-state-graph/machines.yaml ':(exclude)references/project-standards.md' ':(exclude)references/search-log'   # prose and hand-written needles
 ```
-If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) and report its result. An object that returns 0 rows is unproven, not clean.
+If this task adds, renames or removes a verb, a table, a view or the text of a refusal, also run `python3 workplan/pipeline-state-graph/build_graph.py --check` (it writes nothing) before your change and after it, and report the difference. It is red on the base: its failure count there is the base state, not yours; only a count above your before-run is yours. An object that returns 0 rows is unproven, not clean.
 
 **Hits when this file was written** (2026-11-12, the two `git grep` lines above with `-l`; re-run them, a new file in your output is a hit to judge):
 
@@ -120,11 +120,13 @@ Each line shows the check's subject (`EXAMINED:`). A check that is red here was 
 **Step 4: the gate, once.**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
 - **Run it once, when every edit is made, before the commit.** It compares your working tree (committed or not, untracked files included) with the point where your branch left `$BASE`, so it does not need a commit first. `preflight.sh` runs the registry selftest and then `run_checks.py --changed-from`: do not run `run_checks.py` separately on the same diff, and never `--all`. Re-run it only if you change a file afterwards.
 - **A passing check prints no `EXAMINED:` line in this output.** The subject of each check is read in the per-check runs above (`$SCRATCH/after-<check>.txt`), not here. In `gate.txt` read three things: the `RESULT` line; any check under `NOTHING-IN-SCOPE` (it has not passed: say so); any blocking `FAIL`.
+- **The gate takes several minutes.** Run it in the background with a long timeout and read `$SCRATCH/gate.txt` when it ends; do not re-run it because the first call timed out.
+- **`research_tooling_separation` reads `origin/main`, not `$BASE`** (its registered `cmd` takes no `--base`), so on any other base it can FAIL on paths you never touched (pilots saw far more paths than their diff touched). Run it once by hand with the base: `python3 scripts/audit/research_tooling_separation.py --base "$BASE"`, report that result, and treat a gate FAIL that disappears with `--base` as not yours.
 - **A check that was already red before your change** (the before-run shows it) tells you nothing about your diff: name it in the pull request with its before and after lines, and move on.
 
 **The canonical database must not move:** `sha256sum data/guidebook.db` gives the value recorded in section 2.

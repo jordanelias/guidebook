@@ -1,0 +1,1088 @@
+From dad8e44668ced64058418e834b518b33ee2964f7 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 03:21:09 +0000
+Subject: [PATCH] governance: move the jurisdiction vocabulary from an enum to
+ a base table [2026-11-13 03:21]
+
+Pilot of T-024: base_jurisdictions (migration 126), check_jurisdiction reads it, JurisdictionCode deleted, add-jurisdiction verb, amend-extraction --field jurisdiction, coverage roll-up of a sub-national code to its parent.
+---
+ data/guidebook.db                             | Bin 5197824 -> 5197824 bytes
+ governance/conceptual-model.md                |   4 +-
+ governance/context-map.yaml                   |  12 +-
+ governance/jurisdiction-philosophy.md         |  12 +-
+ governance/stage-map.yaml                     |   1 +
+ schemas/enums.py                              |  97 -------------
+ schemas/evidence_source.py                    |   2 +-
+ schemas/temporal.py                           |   2 +-
+ scripts/audit/jurisdiction_db_vocabulary.py   |  18 ++-
+ scripts/db.py                                 |  98 +++++++++++--
+ scripts/dbcore.py                             |  65 +++++----
+ .../migrations/126_jurisdiction_registry.sql  | 133 ++++++++++++++++++
+ scripts/tests/test_db_amend_writers.py        |  91 ++++++++++--
+ scripts/tests/test_run_pipeline_refusals.py   |   3 +-
+ scripts/validate_jurisdiction.py              |   6 +-
+ skills/run-pipeline_SKILL.md                  |   6 +-
+ 16 files changed, 373 insertions(+), 177 deletions(-)
+ create mode 100644 scripts/migrations/126_jurisdiction_registry.sql
+
+diff --git a/data/guidebook.db b/data/guidebook.db
+index 62efdc3aa653000d7f466cc1c107a5a9287f9451..2657be4775d4e0bffa9e71be079fc7050e96e7ff 100644
+GIT binary patch
+delta 4451
+zcmeH}eQXow9mntdc8=ek7-RC{m^^_%Y)C?02ro@J$4)MZ6UTP_BHEx5ocKtbI!=fk
+zBD!j(GIjc<l`b8}0@A3uQEeT_RVO^DTD29e$;Q@FX;t^vAezv$ifW8z`-2L!-<|Eo
+zA-6xaZqokPNgsXhp6@;Py#1cvb0;tSOmY%9ZQ3?R5VF4!g!Cdo5ak3RnFo~tg^Prn
+zZ*tGpkeemOxmS;PsH^B6T0z&|zH(J3{Vdfs{|xF=f1cXIzc0O&IynC^GAX0{!`;+a
+zY6Z=$AQF%OQa}dC0R=z-N}vQ#0ct=4XaOC-*DVF~zy`noYy^zJCZG%`2P%L{zywqQ
+zW?(Z=4Pc-K*aB<?YJqLQcAyTh09IfJuoI{U8i2;^3fiT)^O{BGs#RYm&@y@-y@5_4
+z7ImXKq}2Uc_iNo-x>s~ly2o@aI)ipa`-%3a+H=}xv`=bjZMBxrENkA^yrDUzVKv>F
+zI*n3&Tm4)0<*fdW{IEJ{uBG%Qn4`Ku`^e->EHQmzA~HH1N<=1OL(MIF%v<wz&@X0J
+zZlUx>zIM<(!6rg$tJV~%_KQ_DW8O~kb$dkp>U?#-xV^bxGorQ4dD|NhwX5=W(mg2Z
+zoASQfBWhO`Y?r8AQLx3kUY@u6eIrS+IWH^t;zQe%xBI-JjT`f}Q*`8}jg&!HF{j@H
+zOO{-_W+p?ybqCfj=!U|V-J%Wa3$}Q-OAB^aQSIbvq@ldu>nrkCZC&2(7Pqwp+bLGN
+zQj?EUCb)K3Nj}Ea`MQi~jGI*jTYNQ3@^+Vam@5mm=&U5oRNn6tpHxM`?iCxCSzfTk
+zcdsmOJH#hVN)6^VzeBWhW=WxX@sh1B37NO;L9xE2OPkWA%~wiWWIuP+A}ImM`U`X$
+z-9mprpQ7vNSCGcuML$88&_(n;bQZmeUPLMM4HQRFNNtDFLF7eF<Us9cH)=rJQ8g+@
+zdZa>9K5@OHODd##a?oDOOVGbn5cd{A`fCK~!Myl;ss&*-^WqJdd2tU`3F0vc;;Iy+
+zr-GM$U%4Pm883a_O}sb*MoMZRVb5$7)E!6~gmU)=K^VOtU8TJA`VcSOKAj*=EiX(^
+zBZyxuNRNt_uKp517$q;AZc30|g&=l0FAkqf5JoCUmqaerm)L{aIr3%;&<gAZ+JHU4
+zUSMCAyt!X7MV4_&?;}Ixt+_GpBS1UwXm-qd;QU{t3i3#nDz)81Z<1cRqk`%uD9JpD
+zUeJA6@=i&c@*~CLl6mTRaxq)l(RZ2TPS=pvvir}|zm#&1e?Wf$hccPsJd5=H?A-;r
+zo6LT=MDL;AlwF{)k|fSbh_kA@oaQwBa(1DEK8hq^;>vYe*0BRg?-3f4`j5&(N+b0V
+z^#bKke5qJaG|8{Y1G3L#aj?Hl{GK3GOZ+Jx&fd6a8<S>_T(Vt|WEYOx#!Ip?Y`gEN
+zB143XtR%>B?IKyJ`b7CDRR%@EMRNL+_WRPV)KlDp<F=~$;ZU3%8lRbt#KVyh{!oh#
+zHLov|HY#oqC0X`$+tYFc{|kSojIFK8m*dAH>@4^C8QQ>^=4pej)5oM9O~okVu3gIX
+zPVV}5Y0r~vV>~)DT8}$Db{FICWGutujZ>j%HkKF~nGCb_IL<Z}w{OLEKQ1m1-bjR|
+zN7=+sBEnABt8nguirg_p|0XGa6I`J82{+3h&~3pui(O220QY&EZoGatcz7Ipz!+cC
+zvd|xV;NcFb4)!uW21>a*uhHe)jRo3(QctHQC}VrOat;Yo@Qb}|W!$kvx_kG(GhFW7
+zMY^fbc{8V6qP4=4afzlSFgD*3-T7Z0l17VLo{OcTl(C^f`I3RVJ!ShoH-F6bn6w>-
+zxPiB9mB~g`Lj$(s_{?xaOh|E|DCSoXN8)&LmJQ=j97hsyoLgM5gr6mBSwH=2*Wc6C
+z(6rmyjt87>%k*TFwZaGaro2AqfZg{5o*iRjI21FTz>`ODVvNP`Qj`rh%uK=EEVLPK
+z<lg(SZJ%VKk$d|GdkwaS18ic=DvQJy-||Fbu5G)Y(_XSw9L5u0BZAhpsKU7j`f3M2
+zM?a3+tVtE_@p*z??05n<*W;E`ZK-jpthrh8yde=9j<V|~ZheWAggs{uFgRd$xEQfe
+zw+P#%cthpl9OL=lT`irj`LKd}#X(Vr*1vH82fbd#XIbaK6uP_C?9tpO-JSq;Ir|x0
+z*W=h$XU%QYry?<~W>>wDyBVZZT;{x$YJ#FLhK*^d%LhqaJ+3Q`EB=}P4XLvVADKt*
+zZRe79O5R%BmAFX9a!rQ96OnkF|3RN-k8;a9WW8L+bF`d0d3mq0RcQRcL+x2%+gpmV
+z5_bAAKN@$?<+56{50W+oR?8I65;}>-p*o`A^iy3g@yYv7ax`}+H6^6OZ-v&T!|Zp?
+z&<{v%!w+rCLtm}E#m~5y&Om;b<mRp0=NS-Nx?I>4kNKaZC@c5ZL)Nm=hchWxbB4y;
+zmLJ)+sZ)njlaz7iPGx$QyT3p?lZ8A5bzs~fm~D1?C=&j<c{&=3jn0Hd+2SM}2}81v
+zBu)sO7qWR|r0wYHQ;cQ9@zuu(7EYp2G*?i__5R?1C6|FWbH6!9YbCh{Blr0^x_;n4
+zn(n!Z^K`ZP|L54her*3QoMRH)lFr!DnT~YEp3XSZna*^kE1hA|neKF^C!Og{XPoIw
+SUpmvD&bZQ<fr}aUg?|7xafhV<
+
+delta 1917
+zcmeIxe@q)y902h5+UrjWSAljvaQfJsQr1ENLD<|qeh8ZkMzhU`aS1)?LCe}6++9Vs
+z8Q5wL7KzT0@C<6?k7XERmNO(=Vqzp&CMG7^{7d(bvKX^uiP1RxhsDJ2F;SBx#(zz`
+z+^5amy?fsu@7=`wr?v@jzHFC{5cexW_Dcw%?FiYX;GYAV2S$i33m#$%=x@b)Twn56
+z_;r5m<E1M__8;>#GpG5^f*<k?)@b{keErN<e3?6LUHp<inqT85*LVzUzz#Uz08Zcn
+zZr}l4Pyl?O5EKFHT|amT6oV2_3IZSqwt%f*8`uuYz{6k%cmzBO2q*_T!7lI^*bN>B
+zPk;&#0+nD72!jZyGS~QO-_O`<;u|~d{z=Xs1vLwtzjk?%i~q(?;?-JE2c87=paDDu
+z8cn>~<Q&G^m^-$&597&XY%kaco;H)Q{qO$d#b^$}xrpl6nQ}aB&dt-?4s-l-VcfG6
+z6L52Z)j-cxIDJjbw=7JX=gYBZE6`uc*SP|9b$B|%-t*H+j2OL4x0v7h>1|w^7PEtW
+zLph}{BMy`FP=>(4ZWhxzry`ByQVJ_7p(~ZDRAmj!iGvc^Zw>qN(o0AP>Eitm?&*vP
+zAu4SDZrad4PkT0$uXP2gtKF|TSocS?rzD*l3=_yTr6yAST1w7_347svp_<(trD1k!
+zRyfYCy+S?a6caiyZZu~u2v_a41X`LGI1+R@doh2m=$>cMQ}4d+I^^tigz<{$Z|=N|
+ztyaBb_naBd*KD+kiL*lZk4CYJv%&|gcUHK|ogL3dSq~GMtPWOlRz7TWj7F{4JJ`w?
+zEo5JhQGsneNn2Tv2@&7lvo){1Ei||mxEn&V-ELD%SF^CrFJMAr5m-8(V+uJ3oSb9I
+zS61-7`$c!ab=`H&)#|+Goa63rs(l^ZLf;_d{lZ%Q4@;f-q!V64NDt%(U4cl%{kq6j
+zPtuF*%qe<oyo$7t!_Ref5w%|)mikmp)N(3GsYD)?5+oAwMj}Mal3Z4i`eh{n_cjKS
+ztn{*^5H+c!vL{rcB_(oyA4nM~tC0#hOKPLF4Uw9fNVI`uMCC*(J4goPoI*A?h)UvW
+z|2PCqMC6<nCuwOwBi5{AR!kYDREQ#vZe$mR91<knFT-QlTX6^`CN?7`NVGZ{CjD||
+zI4x-s(UhDNsv^fAr-4*DP2_<GiW5mf)I^d=9UoLgYlm!<IiNvEc{B^ZBRNU6?vwg`
+zP`j2&TP0>6s1y2Rl|Gu3(-KrU9EK`X6|O}MddNOIMT1-w%+01x(?%xl=7M{|P*hri
+z&!OW;PxnSMHa{ybdH!Jgk#^G7)6&&`w5`2@z4<B)nd>F=4Q$3+gko&Y1?iAyft#Qt
+z=)psXpXF<cJ}HV7-YkrJ4>-TWLnf?w44XqEH0Llc_-WE!@c+91wW<GO>ppMO4XPW>
+qy3wK=t-8^s8_(!QyKZ#o#sS?ps2k7fMyGBZ(v2?N=)Pnep8p*b@smCP
+
+diff --git a/governance/conceptual-model.md b/governance/conceptual-model.md
+index 3525bf0..5b3b3d0 100644
+--- a/governance/conceptual-model.md
++++ b/governance/conceptual-model.md
+@@ -34,7 +34,7 @@
+ |---|---|---|---|
+ | ENT-11 | **Population** | DONE (enum) | — |
+ | ENT-12 | **Sub-population** | Deferred | A7 |
+-| ENT-13 | **Jurisdiction** | DONE (enum) | — |
++| ENT-13 | **Jurisdiction** | DONE (base_jurisdictions) | — |
+ | ENT-14 | **Audience** | Deferred | A4 |
+ | ENT-15 | **Co-1 Collaborator** | Deferred | Post-launch |
+ | ENT-16 | **Building Type** | Deferred | A6 |
+@@ -174,7 +174,7 @@ evidence_type: EvidenceType   # members: schemas/enums.py
+ |---|---|
+ | schemas/enums.py — EvidenceTier (1–6 per T-03) | ✓ |
+ | schemas/enums.py — EvidenceType (per T-03) | ✓ |
+-| schemas/enums.py — JurisdictionCode (count the members, never quote them: `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"`) | ✓ |
++| base_jurisdictions (count the rows, never quote them: `select count(*) from base_jurisdictions`) | ✓ |
+ | schemas/enums.py — DesignStage, ProjectType (cross-cutting) | ✓ |
+ | schemas/evidence_source.py (531 records) | ✓ |
+ | scripts/validate_schema.py (6 entity types + cross-check) | ✓ |
+diff --git a/governance/context-map.yaml b/governance/context-map.yaml
+index 96f2b4b..158fb44 100644
+--- a/governance/context-map.yaml
++++ b/governance/context-map.yaml
+@@ -2,13 +2,13 @@ _README: GENERATED by scripts/generate/context_map.py. Do not edit -- regenerate
+   here is derived from the live repo at generation time. A stale entry is a bug in the generator or an
+   unregenerated commit, never something to patch by hand.
+ provenance:
+-  db_fingerprint: 5b118529422a
++  db_fingerprint: c15f906daff9
+   generator: scripts/generate/context_map.py
+   freshness: established by `context_map.py --check`, not by a recorded sha
+ authority:
+   canonical_data_store: data/guidebook.db
+   schema_version_marker: PRAGMA user_version
+-  schema_version: 125
++  schema_version: 126
+   write_path: migrations only (scripts/emit_data_migration.py -> scripts/migrate_db.py)
+   note: Outer layers win unless an inner layer names an explicit override; code-enforced checks trump
+     text rules for the matching invariant. When two stores disagree the DB is canonical.
+@@ -111,6 +111,7 @@ database:
+     adversarial_findings: 193
+     adversarial_passes: 9
+     base_icf: 72
++    base_jurisdictions: 36
+     base_parameters: 10
+     base_taxonomy_identity: 23
+     base_taxonomy_medical: 0
+@@ -193,6 +194,9 @@ database:
+     adversarial_findings:
+     - column: pass_id
+       references: adversarial_passes.pass_id
++    base_jurisdictions:
++    - column: parent_code
++      references: base_jurisdictions.jurisdiction_code
+     base_parameters:
+     - column: direction_ref_id
+       references: evidence_sources.ref_id
+@@ -427,6 +431,7 @@ database:
+   - adversarial_findings
+   - adversarial_passes
+   - base_icf
++  - base_jurisdictions
+   - base_parameters
+   - base_taxonomy_identity
+   - base_taxonomy_medical
+@@ -516,6 +521,7 @@ writers:
+     - adversarial_findings
+     - adversarial_passes
+     - base_icf
++    - base_jurisdictions
+     - base_parameters
+     - base_taxonomy_medical
+     - case_studies
+@@ -655,6 +661,8 @@ writers:
+     - data_20261106045707_2026-11-06-pipeline-batch-2.sql
+     base_icf:
+     - 081_icf_registry.sql
++    base_jurisdictions:
++    - 126_jurisdiction_registry.sql
+     base_parameters:
+     - data_20260911045445_2026-09-10-research-batch-06-circulation-geometry.sql
+     - data_20260913010854_2026-09-13-research-batch-07-corridor-width.sql
+diff --git a/governance/jurisdiction-philosophy.md b/governance/jurisdiction-philosophy.md
+index f057cba..07dabc5 100644
+--- a/governance/jurisdiction-philosophy.md
++++ b/governance/jurisdiction-philosophy.md
+@@ -2,7 +2,7 @@
+ **Status:** CANONICAL — A8 Session 1
+ **Phase:** Stage A Phase 8 — Jurisdiction philosophy
+ **Created:** 2026-04-29 19:30 UTC
+-**Doctrinal basis:** project-standards Core Doctrine (L20–21) · jurisdiction-tracker SKILL.md · `schemas/enums.py` JurisdictionCode · project-standards L121
++**Doctrinal basis:** project-standards Core Doctrine (L20–21) · jurisdiction-tracker SKILL.md · `base_jurisdictions` (the declared jurisdiction codes) · project-standards L121
+ 
+ ---
+ 
+@@ -10,7 +10,7 @@
+ 
+ ### 1.1 Canonical jurisdictions
+ 
+-The guidebook's evidence base covers 24 countries plus 2 meta-jurisdictions. This list was confirmed at A3. `schemas/enums.py` JurisdictionCode declares a superset (codes admitted by later owner rulings, and further meta-codes); derive its members with `python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)), sorted(m.value for m in J))"`.
++The guidebook's evidence base covers 24 countries plus 2 meta-jurisdictions. This list was confirmed at A3. The table `base_jurisdictions` declares a superset (codes admitted by later owner rulings, and further meta-codes); derive its members with `select jurisdiction_code, kind, parent_code from base_jurisdictions`. A code is admitted with `db.py add-jurisdiction`, which needs the dated ledger heading that records the admission.
+ 
+ | Code | Country | Region | Selection rationale |
+ |---|---|---|---|
+@@ -113,7 +113,7 @@ The jurisdiction-tracker skill (run once per edition) performs the currency chec
+ 
+ ### 3.3 UK convention
+ 
+-The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is documented in the JurisdictionCode enum docstring and enforced by two checks: `validate_jurisdiction.py` over the standards-registry and source YAML, and `scripts/audit/jurisdiction_db_vocabulary.py` over the DATABASE.
++The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project convention. This is documented here and in `check_jurisdiction`, and enforced by two checks: `validate_jurisdiction.py` over the standards-registry and source YAML, and `scripts/audit/jurisdiction_db_vocabulary.py` over the DATABASE.
+ 
+ *(Corrected 2026-09-18. This sentence previously said "enforced by the validator", singular, and that was false of the database: `validate_jurisdiction.py` globs files and never reads a table, so it passed with 0 errors while 27 rows across five tables held the rejected `GB` code — two of them written the same day. A rule stated at ERROR level with no gate on the data is a rule the corpus can violate silently, and this document asserting enforcement is what made it invisible. The second check closes that, derives its tables from the live schema, and parses the rejected spellings out of the table below rather than carrying its own copy.)*
+ 
+@@ -125,12 +125,12 @@ The project uses `UK` instead of `GB` (ISO 3166-1 alpha-2) per project conventio
+ 
+ | Check | Severity | Description |
+ |---|---|---|
+-| Valid code | ERROR | Every jurisdiction code resolves to JurisdictionCode enum |
++| Valid code | ERROR | Every jurisdiction code resolves to a `base_jurisdictions` row |
+ | UK not GB | ERROR | `GB` appearing as a jurisdiction code is rejected; must be `UK` |
+ | Standards-registry format | ERROR | Each entry in standards-registry.md has all required fields |
+ | Standards-registry status | WARNING | SUPERSEDED entries flagged for author action |
+ | BPC jurisdiction coverage | WARNING | BPC files with <24 jurisdiction records flagged |
+-| Source-jurisdiction consistency | WARNING | EvidenceSource.jurisdiction resolves to JurisdictionCode or is null |
++| Source-jurisdiction consistency | WARNING | EvidenceSource.jurisdiction resolves to a `base_jurisdictions` row or is null |
+ 
+ ### 4.2 convert_jurisdictions.py scope
+ 
+@@ -156,7 +156,7 @@ Validates output from the jurisdiction-tracker skill before it is committed to s
+ | Required fields | ERROR | Each entry has jurisdiction, standard_cited, current_version, status, last_checked |
+ | Status enum | ERROR | Status is one of CURRENT, UPDATED, SUPERSEDED, WITHDRAWN |
+ | Date format | ERROR | last_checked matches YYYY-MM-DD HH:MM |
+-| Jurisdiction code | ERROR | jurisdiction resolves to JurisdictionCode enum or is a full country name mappable to a code |
++| Jurisdiction code | ERROR | jurisdiction resolves to a `base_jurisdictions` row or is a full country name mappable to a code |
+ | Duplicate detection | WARNING | Same jurisdiction-standard pair appearing twice with different statuses |
+ 
+ ---
+diff --git a/governance/stage-map.yaml b/governance/stage-map.yaml
+index f46d060..79cb0ca 100644
+--- a/governance/stage-map.yaml
++++ b/governance/stage-map.yaml
+@@ -83,6 +83,7 @@ tables:
+   adversarial_findings: infrastructure
+   adversarial_passes: infrastructure
+   base_icf: base
++  base_jurisdictions: base
+   base_parameters: base
+   base_taxonomy_identity: base
+   base_taxonomy_medical: base
+diff --git a/schemas/enums.py b/schemas/enums.py
+index c977b36..15684d9 100644
+--- a/schemas/enums.py
++++ b/schemas/enums.py
+@@ -82,103 +82,6 @@ class ItemAssignmentStatus(str, Enum):
+     CROSS_CUTTING = "CROSS_CUTTING"
+ 
+ 
+-class JurisdictionCode(str, Enum):
+-    """Canonical jurisdiction codes.
+-
+-    The original 24 per jurisdiction-tracker §4.7.3, plus meta-codes, plus those
+-    admitted 2026-09-18 and 2026-10-01 (below). ISO 3166-1 alpha-2 where possible.
+-    Count the members rather than trusting a number typed anywhere (CLAUDE.md rule 7a):
+-
+-        python3 -c "import sys; sys.path.insert(0,'.'); from schemas.enums import JurisdictionCode as J; print(len(list(J)))"
+-
+-    WRITERS REFUSE WHAT THIS DOES NOT DECLARE (2026-10-01). `dbcore.check_jurisdiction`
+-    reads this enum and is called by every `db.py` writer of a table the audit below
+-    gates, so an undeclared code is refused at write time rather than found after it
+-    lands. Before that the writers checked nothing, and `PT` reached a research
+-    batch's rows before any gate saw it.
+-
+-    UK, NOT GB. `governance/jurisdiction-philosophy.md` rules GB rejected at
+-    ERROR level, and as of 2026-09-18 that is enforced on the DATABASE by
+-    `scripts/audit/jurisdiction_db_vocabulary.py` -- previously only on files,
+-    which is how 27 GB rows across five tables went unnoticed.
+-
+-    DO NOT ADD A CODE BECAUSE IT APPEARS IN A TABLE. Derive what is live before
+-    proposing one, and note WHICH tables carry it:
+-
+-        select jurisdiction, count(*) from evidence_sources group by 1;
+-
+-    The 2026-09-18 five were admitted because they appear in the CORPUS tables --
+-    evidence_sources, source_value_extractions, search_executions,
+-    research_code_leads. Roughly twenty further ISO codes are live in
+-    `lang_jur_map`, which is a language-to-jurisdiction reference map of places
+-    the project MAY expand into, not evidence it holds; those are the "Phase 3
+-    expansion" `validate_jurisdiction.py` warns about and they are deliberately
+-    NOT admitted here. Admitting a code silently converts a candidate
+-    jurisdiction into a declared one.
+-    """
+-
+-    # Core 24 jurisdictions (alphabetical)
+-    AU = "AU"   # Australia
+-    BD = "BD"   # Bangladesh
+-    BR = "BR"   # Brazil
+-    CA = "CA"   # Canada
+-    CH = "CH"   # Switzerland
+-    CN = "CN"   # China
+-    DE = "DE"   # Germany
+-    DK = "DK"   # Denmark
+-    EG = "EG"   # Egypt
+-    FR = "FR"   # France
+-    ID = "ID"   # Indonesia
+-    IE = "IE"   # Ireland
+-    IN = "IN"   # India
+-    JP = "JP"   # Japan
+-    KE = "KE"   # Kenya
+-    KR = "KR"   # South Korea
+-    NG = "NG"   # Nigeria
+-    NL = "NL"   # Netherlands
+-    NO = "NO"   # Norway
+-    NZ = "NZ"   # New Zealand
+-    SE = "SE"   # Sweden
+-    SG = "SG"   # Singapore
+-    UK = "UK"   # United Kingdom (project convention, not GB)
+-    US = "US"   # United States
+-    ZA = "ZA"   # South Africa
+-
+-    # Admitted 2026-09-18 (owner ruling). Each was already live in the corpus
+-    # tables while absent from this enum, so the declared vocabulary could not be
+-    # used to gate the column it describes.
+-    BE = "BE"   # Belgium -- REF-00995 (Flemish decree), REF-00996 (Handboek Toegankelijkheid)
+-    ES = "ES"   # Spain -- search_executions (CTE DB-SUA line of enquiry)
+-    HR = "HR"   # Croatia -- REF-01001 (Lepoglavec 2023)
+-    IT = "IT"   # Italy -- search_executions
+-
+-    # Admitted 2026-10-01, executing the owner ruling of 2026-09-28 ("jurisdiction
+-    # scope: buckets 1-2 exhausted before reaching further", references/
+-    # project-standards.md). PT and FI are named Bucket-2 members and UN a Bucket-1
+-    # member of that ruling, which calls UN's absence from this enum "a tooling gap
+-    # (rule 10: fix in its own PR)". Where each is live:
+-    #     select jurisdiction, count(*) from <table> where jurisdiction in
+-    #         ('PT','FI','UN','UG') group by 1;
+-    PT = "PT"   # Portugal -- Bucket 2
+-    FI = "FI"   # Finland -- Bucket 2
+-    UN = "UN"   # United Nations -- Bucket 1. A meta-code like ISO and EU, not a country.
+-    # UG is NOT in either bucket and is admitted by owner decision D2, approved 2026-10-01
+-    # (references/project-standards.md, grep "plan's decisions D1–D4 approved"): declared
+-    # for PR #165's rows, which are not unwound; outside research scope by the 2026-09-28
+-    # ruling. This enum is the declared vocabulary of rows held, not the canonical list --
+-    # so declaring UG licenses no further Ugandan research; the ruling, not this list,
+-    # sets research scope.
+-    UG = "UG"   # Uganda
+-
+-    # Meta-codes (not individual countries)
+-    ISO = "ISO"   # ISO international standards
+-    EU = "EU"     # European Union directives
+-    INT = "INT"   # International / no single jurisdiction. DISTINCT FROM ISO: ISO
+-    #               means an ISO-published standard, INT means the work spans
+-    #               jurisdictions without being one -- REF-00994 (IPC Accessibility
+-    #               Guide) and REF-00977 (a review searched across three databases).
+-
+-
+ class EvidenceMarker(str, Enum):
+     """The three bands of tier-system section 5, as the glyphs a determination carries.
+ 
+diff --git a/schemas/evidence_source.py b/schemas/evidence_source.py
+index c86ac92..33cccca 100644
+--- a/schemas/evidence_source.py
++++ b/schemas/evidence_source.py
+@@ -55,7 +55,7 @@ class EvidenceSource(GuidebookEntity):
+     evidence_type: EvidenceType = EvidenceType.UNKNOWN
+ 
+     # Jurisdiction
+-    jurisdiction: Optional[str] = None  # JurisdictionCode or "INT" for international
++    jurisdiction: Optional[str] = None  # a base_jurisdictions code, e.g. "INT" for international
+ 
+     # Cross-references
+     used_in_slugs: list[str] = []  # BPC slugs citing this source
+diff --git a/schemas/temporal.py b/schemas/temporal.py
+index da7149d..461d291 100644
+--- a/schemas/temporal.py
++++ b/schemas/temporal.py
+@@ -191,7 +191,7 @@ class StandardEdition(GuidebookEntity):
+     Edition: dated release of that family (e.g., 'AS 1428.1:2021').
+     """
+ 
+-    jurisdiction: str  # JurisdictionCode
++    jurisdiction: str  # a base_jurisdictions code
+     standard_family: str  # 'AS 1428.1'
+     edition: str  # 'AS 1428.1:2021'
+     publication_date: Optional[str] = None  # YYYY-MM-DD or YYYY-MM
+diff --git a/scripts/audit/jurisdiction_db_vocabulary.py b/scripts/audit/jurisdiction_db_vocabulary.py
+index 4d26129..320d3fc 100644
+--- a/scripts/audit/jurisdiction_db_vocabulary.py
++++ b/scripts/audit/jurisdiction_db_vocabulary.py
+@@ -38,8 +38,8 @@ EXEMPT = {"source_locators"}
+ # evidence for. lang_jur_map is a language-to-jurisdiction reference map covering
+ # roughly twenty further ISO codes the project may expand into -- the "Phase 3
+ # expansion" validate_jurisdiction.py warns about. Gating it against the declared
+-# enum would force every candidate to be admitted as a declared jurisdiction just
+-# to be listed as a possibility, which inverts what the enum is for.
++# table would force every candidate to be admitted as a declared jurisdiction just
++# to be listed as a possibility, which inverts what the declared table is for.
+ #
+ # This is an exemption list and rule 8 dislikes those. It is kept because the
+ # burden of proof sits on the exclusions: two tables, each with its reason stated
+@@ -104,11 +104,9 @@ def main() -> int:
+     # it describes and this half of the check would have failed on correct data.
+     declared, undeclared_note = set(), ""
+     try:
+-        sys.path.insert(0, str(REPO_ROOT))
+-        from schemas.enums import JurisdictionCode
+-        declared = {e.value for e in JurisdictionCode}
+-    except Exception as exc:                                    # pragma: no cover
+-        undeclared_note = f"  [SKIPPED] could not import JurisdictionCode: {exc}"
++        declared = {r[0] for r in conn.execute("SELECT jurisdiction_code FROM base_jurisdictions")}
++    except sqlite3.Error as exc:                                # pragma: no cover
++        undeclared_note = f"  [SKIPPED] could not read base_jurisdictions: {exc}"
+     if declared:
+         for t in tables:
+             if t in CANDIDATE_TABLES:
+@@ -120,13 +118,13 @@ def main() -> int:
+                 n = conn.execute(f'SELECT COUNT(*) FROM "{t}" WHERE jurisdiction = ?',
+                                  (v,)).fetchone()[0]
+                 msg = (f"  {t}.jurisdiction: {n} row(s) hold '{v}', which "
+-                       f"JurisdictionCode does not declare. Either it is a real "
+-                       f"jurisdiction the owner should admit to the enum, or it is "
++                       f"base_jurisdictions does not declare. Either it is a real "
++                       f"jurisdiction the owner should admit (db.py add-jurisdiction), or it is "
+                        f"not a jurisdiction at all and the value is mis-filed.")
+                 (reported if t in REPORT_ONLY else findings).append(msg)
+ 
+     print(f"Rejected spellings, read from {PHILOSOPHY.relative_to(REPO_ROOT)}: {bad_map}")
+-    print(f"Declared codes in JurisdictionCode: {len(declared)}")
++    print(f"Declared codes in base_jurisdictions: {len(declared)}")
+     print(f"Tables with a jurisdiction column (derived, {len(EXEMPT)} exempt, "
+           f"{len(CANDIDATE_TABLES)} candidate-only): {len(tables)}")
+     if undeclared_note:
+diff --git a/scripts/db.py b/scripts/db.py
+index 280a366..803d49f 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -658,14 +658,21 @@ def _link_result_artefacts(conn, exec_id, artefacts, *, mined_ref_id, query_text
+             [exec_id, artefact, session, ts])
+ 
+ 
++# A search's jurisdiction as COVERAGE counts it (OD-04): a sub-national code counts as its parent country.
++# Read `se.jurisdiction` through base_jurisdictions; the views of migration 126 spell the same join.
++_SE_JUR = ("COALESCE((SELECT parent_code FROM base_jurisdictions "
++           "WHERE jurisdiction_code = se.jurisdiction), se.jurisdiction)")
++
++
+ def _in_research_scope(language: str, jurisdiction: str = None) -> bool:
+     """Does this (language, jurisdiction) pair count toward what the research scope owes?
+     Reads v_research_scope, the one home of "owed"; a search with no jurisdiction names no
+     pair, so it counts toward none."""
+     with connect(readonly=True) as conn:
+         return bool(jurisdiction) and conn.execute(
+-            "SELECT 1 FROM v_research_scope WHERE language=? AND jurisdiction=?",
+-            [(language or "").strip().upper(), jurisdiction]).fetchone() is not None
++            "SELECT 1 FROM v_research_scope WHERE language=? AND jurisdiction="
++            "COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code=?), ?)",
++            [(language or "").strip().upper(), jurisdiction, jurisdiction]).fetchone() is not None
+ 
+ 
+ def log_search(slug: str, language: str, query_text: str, engine: str,
+@@ -1051,7 +1058,7 @@ def get_coverage_completeness(slug: str) -> dict:
+             raise Refusal(f"coverage: {slug!r} is not in slugs. Nothing to report.")
+         _slug = conn.execute("SELECT status, merged_into FROM slugs WHERE slug=?", [slug]).fetchone()
+         jur = conn.execute(
+-            "SELECT COUNT(DISTINCT jurisdiction) AS n FROM search_executions "
++            f"SELECT COUNT(DISTINCT {_SE_JUR}) AS n FROM search_executions se "
+             "WHERE slug=? AND jurisdiction IS NOT NULL AND deferred_reason IS NULL",
+             [slug]).fetchone()["n"]
+         deferred = conn.execute(
+@@ -1065,7 +1072,7 @@ def get_coverage_completeness(slug: str) -> dict:
+         # requirement and the slug read required 0/0, complete true (R2-1). Derive today's
+         # figure, never quote it: SELECT COUNT(*) FROM v_research_scope.
+         #
+-        # A map jurisdiction the declared vocabulary (schemas.enums.JurisdictionCode, I7)
++        # A map jurisdiction the declared vocabulary (base_jurisdictions, I7)
+         # refuses can never be logged, so it stays owed -- hence unsearched, hence `complete`
+         # stays false -- and is NAMED so the two homes' disagreement is visible (owner question 5).
+         # `complete` also needs a non-empty requirement: an empty one examined nothing.
+@@ -1080,13 +1087,13 @@ def get_coverage_completeness(slug: str) -> dict:
+         # Same anti-join as the view (a logged row, deferred or not, names the pair).
+         searched = conn.execute(
+             "SELECT COUNT(*) AS n FROM v_research_scope v WHERE EXISTS (SELECT 1 FROM "
+-            "search_executions se WHERE se.slug=? AND se.jurisdiction = v.jurisdiction "
++            f"search_executions se WHERE se.slug=? AND {_SE_JUR} = v.jurisdiction "
+             "AND UPPER(se.language) = v.language)", [slug]).fetchone()["n"]
+         # A search is a search whatever its spelling: the log holds `en` beside `EN`.
+         outside = conn.execute(
+             "SELECT COUNT(*) AS n FROM search_executions se WHERE se.slug=? "
+             "AND se.deferred_reason IS NULL AND NOT EXISTS (SELECT 1 FROM v_research_scope v "
+-            "WHERE v.jurisdiction = se.jurisdiction AND v.language = UPPER(se.language))",
++            f"WHERE v.jurisdiction = {_SE_JUR} AND v.language = UPPER(se.language))",
+             [slug]).fetchone()["n"]
+         lang = conn.execute(
+             "SELECT COUNT(DISTINCT UPPER(language)) AS n FROM search_executions "
+@@ -1104,7 +1111,7 @@ def get_coverage_completeness(slug: str) -> dict:
+         "searches_outside_scope": outside,
+         "searches_deferred_with_reason": deferred,
+         "jurisdictions_unreachable": unreachable,
+-        **({"unreachable_note": "owed by lang_jur_map, refused by schemas.enums.JurisdictionCode: "
++        **({"unreachable_note": "owed by lang_jur_map, refused by base_jurisdictions: "
+             "owner question 5 of the 2026-11-06 round-3 adjudication"} if unreachable else {}),
+         # A slug outside ACTIVE/STUB owes nothing (R3-17): the survivor owes it. Without these
+         # keys a MERGED slug read "70 pairs required, 0 searched" -- debt no search can pay.
+@@ -1963,6 +1970,22 @@ def main():
+     p_mtc.add_argument("--session", required=True)
+     p_mtc.add_argument("--dry-run", action="store_true")
+ 
++    p_aj = sub.add_parser("add-jurisdiction",
++                          help="Admit a jurisdiction code to base_jurisdictions, pointing at the "
++                               "ledger entry that records the admission (migration 126)")
++    p_aj.add_argument("--code", required=True,
++                      help="ISO 3166-1 alpha-2 for a country; ISO 3166-2 for a sub-national "
++                           "code, with the project's UK prefix (UK-ENG), never GB")
++    p_aj.add_argument("--kind", required=True,
++                      choices=dbcore.schema_choices("base_jurisdictions", "kind"))
++    p_aj.add_argument("--parent", help="the country a sub-national code belongs to (required "
++                                       "for, and only for, kind sub-national)")
++    p_aj.add_argument("--approval-ref", dest="approval_ref", required=True,
++                      help="the dated `## ` heading of the ledger entry that records the "
++                           "admission, found exactly once in references/project-standards.md")
++    p_aj.add_argument("--session", required=True)
++    p_aj.add_argument("--dry-run", action="store_true")
++
+     p_rfu = sub.add_parser("raise-follow-up",
+                            help="Tag an extraction for a reviewer to re-check "
+                                 "(extraction_follow_ups; owner D1, 2026-10-09)")
+@@ -3217,6 +3240,10 @@ def main():
+             args.approval_ref, session=args.session,
+             domain=args.domain, scope_note=args.scope_note, dry_run=args.dry_run))
+ 
++    elif args.command == "add-jurisdiction":
++        _emit(add_jurisdiction(args.code, args.kind, args.approval_ref, session=args.session,
++                               parent=args.parent, dry_run=args.dry_run))
++
+     elif args.command == "raise-follow-up":
+         _emit(raise_follow_up(args.extraction_id, args.reason, args.warrant,
+                               session=args.session, dry_run=args.dry_run))
+@@ -7760,6 +7787,57 @@ def mint_term_from_catalogue(catalogue: str, entry_ref: str, canonical_en: str,
+                 "entry": resolved, "dry_run": dry_run}
+ 
+ 
++def add_jurisdiction(code: str, kind: str, approval_ref: str, session: str,
++                     parent: str = None, dry_run: bool = False):
++    """Admit one jurisdiction code to `base_jurisdictions` (migration 126). Before it, a code was
++    admitted by editing an enum in code. REFUSES: a blank or non-upper-case code; a `GB`-prefixed one
++    (the project writes UK, governance/jurisdiction-philosophy.md 3.3); a code already held; a kind
++    outside the column's CHECK; a parent on a non-sub-national code, or none on a sub-national one;
++    a parent that is not a held country/meta code, or that the sub-national code does not start with
++    (ISO 3166-2: AU-NSW under AU); an --approval-ref that is not the dated `## ` heading of exactly
++    one ledger entry (the pattern mint-term-from-catalogue uses; the entry's content is not read)."""
++    code = (code or "").strip()
++    parent = (parent or "").strip() or None
++    approval_ref = re.sub(r"^##\s+", "", (approval_ref or "").strip())
++    if not code or code != code.upper():
++        raise Refusal(f"add-jurisdiction: --code {code!r} must be non-blank and upper case.")
++    if code.startswith("GB"):
++        raise Refusal(f"add-jurisdiction: --code {code!r} is GB-prefixed; the project writes UK "
++                      f"(governance/jurisdiction-philosophy.md 3.3), e.g. UK-ENG. Nothing was written.")
++    if not re.search(r"\d{4}-\d{2}-\d{2}", approval_ref):
++        raise Refusal(f"add-jurisdiction: --approval-ref {approval_ref!r} carries no date. Give the "
++                      f"dated `## ` heading of the ledger entry that records the admission.")
++    n = dbcore.ledger_heading_count(approval_ref)
++    if n != 1:
++        raise Refusal(
++            f"add-jurisdiction: --approval-ref {approval_ref!r} is the heading of {n} ledger entries; "
++            f"it must be exactly one. Record the admission in a dated entry of "
++            f"references/project-standards.md first (CLAUDE.md rule 0), then give its heading as written.")
++    with connect(dry_run) as conn:
++        dbcore.check_declared(conn, "base_jurisdictions", "kind", kind, "add-jurisdiction --kind")
++        if dbcore.exists(conn, "base_jurisdictions", "jurisdiction_code", code):
++            raise Refusal(f"add-jurisdiction: {code!r} is already declared. Nothing was written.")
++        if (kind == "sub-national") != (parent is not None):
++            raise Refusal("add-jurisdiction: --parent is required for kind sub-national and refused for "
++                          "any other kind. Nothing was written.")
++        if parent is not None:
++            held = conn.execute("SELECT kind FROM base_jurisdictions WHERE jurisdiction_code=?",
++                                (parent,)).fetchone()
++            if held is None or held["kind"] == "sub-national":
++                raise Refusal(f"add-jurisdiction: --parent {parent!r} is not a declared country code. "
++                              f"Nothing was written.")
++            if not code.startswith(parent + "-"):
++                raise Refusal(f"add-jurisdiction: a sub-national code under {parent!r} is written "
++                              f"'{parent}-XXX' (ISO 3166-2, UK prefix for the United Kingdom); got "
++                              f"{code!r}. Nothing was written.")
++        row = {"jurisdiction_code": code, "kind": kind, "parent_code": parent,
++               "admission_ref": approval_ref}
++        row.update(dbcore.stamp_for(conn, "base_jurisdictions", session))
++        conn.execute(f"INSERT INTO base_jurisdictions ({','.join(row)}) "
++                     f"VALUES ({','.join('?' * len(row))})", list(row.values()))
++        return {"jurisdiction_code": code, "kind": kind, "parent_code": parent, "dry_run": dry_run}
++
++
+ def record_scan(data: dict, session: str, dry_run: bool = False):
+     """Record one READING of one source against the parameter list (migration 103).
+ 
+@@ -9458,9 +9536,11 @@ def repoint_extraction_relation(from_extraction: int, relation: str,
+ # this, filters on root_id IS NOT NULL, so a row that leaves root_id null is not examined
+ # at all. The vocabulary already carried the right value, 'untraced'. Gated below by the
+ # column's own CHECK, so this widens WHO may correct it, not WHAT to.
++# jurisdiction ADDED (T-024): a held instrument filed under the wrong code (or a sub-national one,
++# once admitted) is re-filed row by row; gated by check_jurisdiction exactly as amend-source is.
+ _AMENDABLE_SVE_FIELDS = frozenset({"figure_role", "comparator",
+                                    "extraction_method", "extraction_status",
+-                                   "root_type", "root_ref_id"})
++                                   "root_type", "root_ref_id", "jurisdiction"})
+ 
+ 
+ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
+@@ -9504,6 +9584,8 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
+         # forbids and which this very commit had just criticised. fk_declared reads
+         # PRAGMA foreign_key_list, so it is a no-op where no FK is declared and covers
+         # every amendable reference the day one becomes amendable.
++        if field == "jurisdiction":
++            dbcore.check_jurisdiction(value, "amend-extraction --field jurisdiction")
+         dbcore.fk_declared(conn, "source_value_extractions", field, value,
+                            f"amend-extraction --field {field}")
+         dbcore.check_declared(conn, "source_value_extractions", field, value,
+diff --git a/scripts/dbcore.py b/scripts/dbcore.py
+index 5f671bf..839b8d7 100644
+--- a/scripts/dbcore.py
++++ b/scripts/dbcore.py
+@@ -930,32 +930,39 @@ def check_vocab(conn, table: str, column: str, value, context: str):
+         )
+ 
+ 
++def declared_jurisdictions(conn=None) -> set:
++    """The jurisdiction codes the project declares: every row of `base_jurisdictions`
++    (migration 126; before it, the members of an enum in code). Read from the table, never
++    listed here (rule 8). With no `conn` it reads the database `connect()` would open."""
++    if conn is None:
++        with connect(readonly=True) as c:
++            return declared_jurisdictions(c)
++    return {r[0] for r in conn.execute("SELECT jurisdiction_code FROM base_jurisdictions")}
++
++
+ def jurisdiction_declared(value) -> bool:
+-    """Is `value` a code `schemas.enums.JurisdictionCode` declares? The same vocabulary
++    """Is `value` a code `base_jurisdictions` declares? The same vocabulary
+     `check_jurisdiction` refuses against, read without refusing, for a reader that needs
+     to name the rows of another home (lang_jur_map) the declared vocabulary does not
+     admit -- `db.py coverage` reports those rather than counting them as owed."""
+-    import sys as _sys
+-    if str(REPO_ROOT) not in _sys.path:
+-        _sys.path.insert(0, str(REPO_ROOT))
+-    from schemas.enums import JurisdictionCode
+-    return value in {e.value for e in JurisdictionCode}
++    return value in declared_jurisdictions()
+ 
+ 
+ def check_jurisdiction(value, context: str):
+-    """Refuse a jurisdiction code `schemas.enums.JurisdictionCode` does not declare (I7).
+-
+-    WHY NOT check_declared. No `jurisdiction` column carries a CHECK, so the schema
+-    declares nothing for check_declared to read, and check_vocab's live-rows fallback
+-    would admit any value already written -- including the undeclared ones this exists to
+-    stop. The declared vocabulary is the enum, and the blocking gate that enforces it on
+-    the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the same enum. This
+-    is that gate moved to the moment of writing: before it, every writer accepted any
++    """Refuse a jurisdiction code `base_jurisdictions` does not declare (I7).
++
++    WHY NOT check_declared. No `jurisdiction` column carries a CHECK or a foreign key, so
++    the schema declares nothing for check_declared to read, and check_vocab's live-rows
++    fallback would admit any value already written -- including the undeclared ones this
++    exists to stop. The declared vocabulary is the table, and the blocking gate that enforces
++    it on the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the same table.
++    This is that gate moved to the moment of writing: before it, every writer accepted any
+     string and the audit found it after it landed.
+ 
+-    ONE HOME FOR EACH HALF. The members come from the enum and the rejected spellings
++    ONE HOME FOR EACH HALF. The members come from the table and the rejected spellings
+     (GB -> UK) from `rejected_spellings()` in the audit, which parses them out of
+-    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8).
++    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8). A code is
++    admitted by `db.py add-jurisdiction`, which needs a ledger pointer.
+ 
+     WHICH WRITERS CALL IT mirrors which tables the audit FAILS on: every table with a
+     `jurisdiction` column except those in the audit's EXEMPT, CANDIDATE_TABLES and
+@@ -974,12 +981,7 @@ def check_jurisdiction(value, context: str):
+     """
+     if value is None:
+         return
+-    import sys as _sys
+-    if str(REPO_ROOT) not in _sys.path:
+-        _sys.path.insert(0, str(REPO_ROOT))
+-    from schemas.enums import JurisdictionCode
+-
+-    declared = {e.value for e in JurisdictionCode}
++    declared = declared_jurisdictions()
+     if value in declared:
+         return
+     # Loaded by path, not by putting scripts/audit on sys.path: that directory holds
+@@ -1007,16 +1009,16 @@ def check_jurisdiction(value, context: str):
+         good = folded if folded in declared else rejected[folded]
+         raise Refusal(
+             "%s: jurisdiction %r is not a declared spelling; write %r. Codes are stored "
+-            "exactly as schemas/enums.py JurisdictionCode declares them and compared "
++            "exactly as base_jurisdictions declares them and compared "
+             "exactly (by %s, and by add-code-lead's duplicate check), so a case or "
+             "spacing variant would be a second spelling of one jurisdiction. "
+             "Nothing was written." % (context, value, good, gate))
+     raise Refusal(
+-        "%s: jurisdiction %r is not declared by schemas/enums.py JurisdictionCode, the "
++        "%s: jurisdiction %r is not declared by base_jurisdictions, the "
+         "vocabulary the blocking check %s gates the database against. Declared: %s. If "
+         "it is a real jurisdiction the project now holds evidence for, admitting it is "
+-        "an owner decision recorded in the enum, with its ruling, in a tooling PR "
+-        "(CLAUDE.md rule 10); if it is not, the value is mis-filed. Nothing was written."
++        "an owner decision: record it in the ledger, then `db.py add-jurisdiction` with "
++        "that entry's heading; if it is not, the value is mis-filed. Nothing was written."
+         % (context, value, gate, sorted(declared)))
+ 
+ 
+@@ -1300,11 +1302,8 @@ def _selftest() -> int:
+     check("REF_ID_SHAPE refuses a per-slug local label",
+           not REF_ID_SHAPE.fullmatch("RAP-04"))
+ 
+-    # check_jurisdiction (I7): every declared member passes, read from the enum rather
+-    # than typed here; the ruled rejected spelling refuses naming its replacement.
+-    import sys as _sys
+-    _sys.path.insert(0, str(REPO_ROOT))
+-    from schemas.enums import JurisdictionCode as _J
++    # check_jurisdiction (I7): every declared member passes, read from base_jurisdictions
++    # rather than typed here; the ruled rejected spelling refuses naming its replacement.
+ 
+     def _jur_refusal(v):
+         try:
+@@ -1312,8 +1311,8 @@ def _selftest() -> int:
+         except Refusal as exc:
+             return str(exc)
+         return None
+-    _bad = [m.value for m in _J if _jur_refusal(m.value)]
+-    check("check_jurisdiction admits every JurisdictionCode member, and NULL",
++    _bad = [v for v in sorted(declared_jurisdictions()) if _jur_refusal(v)]
++    check("check_jurisdiction admits every base_jurisdictions member, and NULL",
+           not _bad and _jur_refusal(None) is None, "refused %s" % _bad)
+     _gb = _jur_refusal("GB")
+     check("check_jurisdiction refuses GB and names UK", bool(_gb) and "'UK'" in _gb,
+diff --git a/scripts/migrations/126_jurisdiction_registry.sql b/scripts/migrations/126_jurisdiction_registry.sql
+new file mode 100644
+index 0000000..40e7676
+--- /dev/null
++++ b/scripts/migrations/126_jurisdiction_registry.sql
+@@ -0,0 +1,133 @@
++-- 126_jurisdiction_registry.sql
++-- SCHEMA migration -- the declared jurisdiction vocabulary moves from an enum in code to a base table.
++--
++-- Until now a jurisdiction was added by editing schemas/enums.py, so lang_jur_map (the places the
++-- research scope OWES a search for) named codes the writers refuse and coverage could never read
++-- complete. `dbcore.check_jurisdiction` now reads this table; `JurisdictionCode` is deleted.
++--
++-- SEEDED FROM THE ENUM'S MEMBERS EXACTLY, nothing admitted: `kind` is 'meta' for the four codes the enum
++-- itself calls meta-codes (ISO, EU, INT, UN) and 'country' for the rest; `admission_ref` is NULL for a seeded
++-- row (the enum's comments are its record). A later row is added only by `db.py add-jurisdiction`, which
++-- refuses without the dated ledger heading that records the admission.
++-- `parent_code` is set only for a sub-national code (ISO 3166-2; the UK prefix, never GB, per
++-- governance/jurisdiction-philosophy.md 3.3). Coverage reads it (owner OD-04, 2026-11-12: a sub-national
++-- instrument counts toward its country): the five views below map a code with a parent to its parent
++-- before counting. No row is sub-national today, so each view renders what it rendered before.
++--
++-- NO FOREIGN KEY ON lang_jur_map.jurisdiction: SQLite cannot put a foreign key on only some of a column's
++-- rows, and the codes lang_jur_map holds that this table lacks are listed by `db.py coverage`
++-- (jurisdictions_unreachable). Admitting them is the owner's.
++
++CREATE TABLE base_jurisdictions (
++    jurisdiction_code   TEXT PRIMARY KEY
++                        CHECK (jurisdiction_code = UPPER(jurisdiction_code) AND jurisdiction_code NOT LIKE 'GB%'),
++    kind                TEXT NOT NULL CHECK (kind IN ('country', 'sub-national', 'meta')),
++    parent_code         TEXT REFERENCES base_jurisdictions(jurisdiction_code),
++    admission_ref       TEXT,
++    created_at          TEXT,
++    created_by_session  TEXT,
++    CHECK ((kind = 'sub-national') = (parent_code IS NOT NULL))
++);
++
++INSERT INTO base_jurisdictions (jurisdiction_code, kind, created_by_session) VALUES
++    ('AU', 'country', 'migration_126'),
++    ('BD', 'country', 'migration_126'),
++    ('BE', 'country', 'migration_126'),
++    ('BR', 'country', 'migration_126'),
++    ('CA', 'country', 'migration_126'),
++    ('CH', 'country', 'migration_126'),
++    ('CN', 'country', 'migration_126'),
++    ('DE', 'country', 'migration_126'),
++    ('DK', 'country', 'migration_126'),
++    ('EG', 'country', 'migration_126'),
++    ('ES', 'country', 'migration_126'),
++    ('EU', 'meta', 'migration_126'),
++    ('FI', 'country', 'migration_126'),
++    ('FR', 'country', 'migration_126'),
++    ('HR', 'country', 'migration_126'),
++    ('ID', 'country', 'migration_126'),
++    ('IE', 'country', 'migration_126'),
++    ('IN', 'country', 'migration_126'),
++    ('INT', 'meta', 'migration_126'),
++    ('ISO', 'meta', 'migration_126'),
++    ('IT', 'country', 'migration_126'),
++    ('JP', 'country', 'migration_126'),
++    ('KE', 'country', 'migration_126'),
++    ('KR', 'country', 'migration_126'),
++    ('NG', 'country', 'migration_126'),
++    ('NL', 'country', 'migration_126'),
++    ('NO', 'country', 'migration_126'),
++    ('NZ', 'country', 'migration_126'),
++    ('PT', 'country', 'migration_126'),
++    ('SE', 'country', 'migration_126'),
++    ('SG', 'country', 'migration_126'),
++    ('UG', 'country', 'migration_126'),
++    ('UK', 'country', 'migration_126'),
++    ('UN', 'meta', 'migration_126'),
++    ('US', 'country', 'migration_126'),
++    ('ZA', 'country', 'migration_126');
++
++DROP VIEW v_research_scope;
++CREATE VIEW v_research_scope AS
++-- v_research_scope: the (language, jurisdiction) pairs the research scope OWES a search for.
++-- The ONE home of "what is owed": every lang_jur_map row not recorded `scoped-out`; a NULL scope_status is owed.
++-- A sub-national code is owed as its parent country (base_jurisdictions.parent_code, OD-04); MIN(role) is
++-- PRIMARY when any of the rolled-up rows is. Readers: v_coverage_priority, `db.py coverage`.
++SELECT m.language, COALESCE(bj.parent_code, m.jurisdiction) AS jurisdiction, MIN(m.role) AS role
++  FROM lang_jur_map m LEFT JOIN base_jurisdictions bj ON bj.jurisdiction_code = m.jurisdiction
++ WHERE COALESCE(m.scope_status, 'in-scope') <> 'scoped-out'
++ GROUP BY 1, 2;
++
++DROP VIEW v_coverage_jurisdiction;
++CREATE VIEW v_coverage_jurisdiction AS
++SELECT se.slug, COALESCE(bj.parent_code, se.jurisdiction) AS jurisdiction,
++       COUNT(*) AS searches, SUM(se.results_admitted) AS admitted,
++       MAX(se.depth_method='systematic') AS reached_systematic,
++       MAX(se.saturation_signal='saturated') AS saturated
++FROM search_executions se LEFT JOIN base_jurisdictions bj ON bj.jurisdiction_code = se.jurisdiction
++WHERE se.deferred_reason IS NULL
++GROUP BY 1, 2;
++
++DROP VIEW v_coverage_branch;
++CREATE VIEW v_coverage_branch AS
++SELECT se.slug, COALESCE(bj.parent_code, se.jurisdiction) AS jurisdiction, se.target_tier,
++       se.target_evidence_type, se.target_scope,
++       COUNT(*) AS targeted_searches, SUM(se.results_admitted) AS admitted
++FROM search_executions se LEFT JOIN base_jurisdictions bj ON bj.jurisdiction_code = se.jurisdiction
++WHERE se.deferred_reason IS NULL
++GROUP BY 1,2,3,4,5;
++
++DROP VIEW v_coverage_lens;
++CREATE VIEW v_coverage_lens AS
++SELECT se.slug, se.parameter_id, COALESCE(bj.parent_code, se.jurisdiction) AS jurisdiction, se.language,
++       se.identity_code, se.icf_code, se.needs_code, se.medical_code,
++       SUM(se.deferred_reason IS NULL) AS searches, SUM(se.deferred_reason IS NOT NULL) AS deferred
++FROM search_executions se LEFT JOIN base_jurisdictions bj ON bj.jurisdiction_code = se.jurisdiction
++GROUP BY 1, 2, 3, 4, 5, 6, 7, 8;
++
++DROP VIEW v_coverage_priority;
++CREATE VIEW v_coverage_priority AS
++SELECT
++    s.slug,
++    ljm.jurisdiction,
++    ljm.language,
++    ljm.role,
++    ( (CASE ljm.role WHEN 'PRIMARY' THEN 3 ELSE 1 END)
++      + (CASE WHEN (SELECT COUNT(*) FROM search_executions se2
++                    WHERE se2.slug = s.slug AND se2.deferred_reason IS NULL) = 0
++              THEN 2 ELSE 0 END)
++    ) AS priority_score,
++    (SELECT COUNT(*) FROM search_executions se3
++     WHERE se3.slug = s.slug AND se3.deferred_reason IS NULL) AS slug_searches
++FROM slugs s
++JOIN v_research_scope ljm        -- CROSS JOIN: every in-scope slug x every owed (lang,jur)
++WHERE s.status IN ('ACTIVE', 'STUB')
++  AND NOT EXISTS (
++      SELECT 1 FROM search_executions se
++      WHERE se.slug = s.slug
++        AND COALESCE((SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code = se.jurisdiction),
++                     se.jurisdiction) = ljm.jurisdiction
++        AND UPPER(se.language) = ljm.language
++  );
++
++PRAGMA user_version = 126;
+diff --git a/scripts/tests/test_db_amend_writers.py b/scripts/tests/test_db_amend_writers.py
+index 558d1ff..36d6272 100644
+--- a/scripts/tests/test_db_amend_writers.py
++++ b/scripts/tests/test_db_amend_writers.py
+@@ -1434,17 +1434,16 @@ try:
+                    captured[-400:])
+ 
+     # ── J: the declared jurisdiction vocabulary, refused at write time ─────────────
+-    # I7. Every value used here is either read from the enum / the audit or is one no
++    # I7. Every value used here is either read from base_jurisdictions / the audit or is one no
+     # vocabulary could ever declare ('XX'). The gated tables are DERIVED the way the
+     # audit derives them, from its own exclusion sets, so the writers' refusal and the
+     # blocking check cannot drift apart unseen.
+     import importlib.util                                           # noqa: E402
+-    from schemas.enums import JurisdictionCode                      # noqa: E402
+     _spec = importlib.util.spec_from_file_location(
+         "_jdv", REPO / "scripts" / "audit" / "jurisdiction_db_vocabulary.py")
+     jdv = importlib.util.module_from_spec(_spec)
+     _spec.loader.exec_module(jdv)
+-    DECLARED = {m.value for m in JurisdictionCode}
++    DECLARED = {r[0] for r in q("SELECT jurisdiction_code FROM base_jurisdictions")}
+     REJECTED = jdv.rejected_spellings()
+     check_jur = getattr(dbcore, "check_jurisdiction", None)
+     UNDECLARED = "XX"
+@@ -1464,10 +1463,10 @@ try:
+     RJ = next_ref()
+     before = counts(*J_TABLES)
+     r = add_source(RJ, "--jurisdiction", UNDECLARED)
+-    record("J01", "add-source --jurisdiction XX refuses, names JurisdictionCode and the "
++    record("J01", "add-source --jurisdiction XX refuses, names base_jurisdictions and the "
+            "audit, and writes nothing",
+            r.returncode == 1 and r.stderr.startswith("REFUSING:")
+-           and "JurisdictionCode" in r.stderr and "jurisdiction_db_vocabulary" in r.stderr
++           and "base_jurisdictions" in r.stderr and "jurisdiction_db_vocabulary" in r.stderr
+            and counts(*J_TABLES) == before and jur_of(RJ) == "<no row>",
+            f"rc={r.returncode} {r.stderr[-300:]!r} {before} -> {counts(*J_TABLES)}")
+     r = add_source(RJ, "--jurisdiction", BAD)
+@@ -1488,7 +1487,7 @@ try:
+     msg = refusal(db.log_search, A, "en", "fixture query", "fixture-engine", "keyword", S,
+                   jurisdiction=UNDECLARED, prior_expectation="fixture: expect nothing")
+     record("J05", "log-search refuses an undeclared jurisdiction before it writes",
+-           msg and "JurisdictionCode" in msg and counts("search_executions") == n_exec,
++           msg and "base_jurisdictions" in msg and counts("search_executions") == n_exec,
+            f"got {msg!r}")
+     ES_LIKE = sorted(DECLARED)[0]
+     msg = refusal(db.insert_code_lead, {"jurisdiction": ES_LIKE.lower(),
+@@ -1502,10 +1501,10 @@ try:
+     msg = refusal(db.insert_extraction, {"ref_id": REF, "parameter_id": 1,
+                                          "jurisdiction": UNDECLARED}, S)
+     record("J07", "add-extraction refuses an undeclared jurisdiction (by the vocabulary, "
+-           "before any other check)", msg and "JurisdictionCode" in msg, f"got {msg!r}")
++           "before any other check)", msg and "base_jurisdictions" in msg, f"got {msg!r}")
+     msg = refusal(db.amend_source, RJ, "jurisdiction", UNDECLARED, "fixture: wrong code", S)
+     record("J08", "amend-source --field jurisdiction refuses an undeclared code",
+-           msg and "JurisdictionCode" in msg and jur_of(RJ) == NEW, f"got {msg!r}")
++           msg and "base_jurisdictions" in msg and jur_of(RJ) == NEW, f"got {msg!r}")
+     OTHER_NEW = next((c for c in ("FI", "UG", "UN", "PT") if c in DECLARED and c != NEW),
+                      None)
+     out, msg = None, None
+@@ -1518,7 +1517,7 @@ try:
+     msg = refusal(db.insert_economics_entry, {"entry_id": "FIXTURE-J10",
+                                               "jurisdiction": "MULTI"}, S)
+     record("J10", "add-economics-entry refuses MULTI (its DDL comment's value) by the "
+-           "vocabulary", msg and "JurisdictionCode" in msg, f"got {msg!r}")
++           "vocabulary", msg and "base_jurisdictions" in msg, f"got {msg!r}")
+ 
+     # Mirror, not stricter: every value LIVE in a table the audit gates passes the
+     # writers' refusal, so a real batch writing UK, EU, ISO, INT ... is never blocked by
+@@ -1549,6 +1548,80 @@ try:
+     record("J12", "jurisdiction_db_vocabulary passes on the copy after the writers ran",
+            r.returncode == 0 and "VERDICT: PASS" in r.stdout, r.stdout[-400:])
+ 
++    # ── T024: a jurisdiction is admitted by a verb that points at the ledger, not by editing code ──────────
++    # Every probe is chosen by query. PROBE is a (language, code) pair lang_jur_map owes whose code the
++    # writers refuse today (so it is admitted below, on this COPY only: TASK-FIXTURE, the canonical database
++    # is untouched); APPROVAL is a dated ledger heading found exactly once. Written to be RED on the code
++    # before T-024: an absent verb is an argparse error, not a "REFUSING:" line, so no refusal case passes
++    # for the wrong reason.
++    import re as _re                                                 # noqa: E402
++    PROBE = next(((l, j) for l, j in q("SELECT language, jurisdiction FROM lang_jur_map ORDER BY 2, 1")
++                  if refusal(dbcore.check_jurisdiction, j, "T024-probe") is not None), None)
++    _heads = [h[3:].strip() for h in dbcore.LEDGER_PATH.read_text(encoding="utf-8").splitlines()
++              if h.startswith("## ")]
++    APPROVAL = next((h for h in reversed(_heads) if _re.search(r"\d{4}-\d{2}-\d{2}", h)
++                     and dbcore.ledger_heading_count(h) == 1), None)
++    record("T024-01", "a code the map owes and the writers refuse exists, and a unique dated ledger heading",
++           PROBE is not None and APPROVAL is not None, f"probe={PROBE} approval={APPROVAL!r}")
++    T_LANG, T_JUR = PROBE
++    git_state = lambda: subprocess.run(["git", "status", "--porcelain", "scripts", "schemas"],  # noqa: E731
++                                       cwd=REPO, capture_output=True, text=True).stdout
++    tree0 = git_state()
++
++    r = run_cli("add-jurisdiction", "--code", T_JUR, "--kind", "country", "--approval-ref",
++                "2000-01-01 no such ledger heading", "--session", S)
++    record("T024-02", "add-jurisdiction without a ledger heading found exactly once refuses and admits nothing",
++           r.returncode == 1 and r.stderr.startswith("REFUSING:")
++           and refusal(dbcore.check_jurisdiction, T_JUR, "T024-02") is not None,
++           f"rc={r.returncode} {r.stderr[-200:]!r}")
++    r = run_cli("add-jurisdiction", "--code", "GB-ENG", "--kind", "sub-national", "--parent", "UK",
++                "--approval-ref", APPROVAL, "--session", S)
++    record("T024-03", "a GB-prefixed code is refused and the refusal names UK",
++           r.returncode == 1 and r.stderr.startswith("REFUSING:") and "UK" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
++    r = run_cli("add-jurisdiction", "--code", T_JUR, "--kind", "country", "--approval-ref", APPROVAL, "--session", S)
++    record("T024-04", "with a ledger pointer the verb admits the code, and log-search --jurisdiction accepts it",
++           r.returncode == 0 and refusal(dbcore.check_jurisdiction, T_JUR, "T024-04") is None
++           and db.log_search(slug=A, language=T_LANG, query_text="TASK-FIXTURE T024-04", engine="manual",
++                             depth_method="scoping", session=S, jurisdiction=T_JUR,
++                             prior_expectation="fixture prior, written before the call"), f"rc={r.returncode} {r.stderr[-200:]!r}")
++    record("T024-05", "admitting a code touches no tracked file under scripts/ or schemas/", git_state() == tree0,
++           f"before={tree0!r} after={git_state()!r}")
++
++    SUB = f"{T_JUR}-T24"
++    r = run_cli("add-jurisdiction", "--code", SUB, "--kind", "sub-national", "--approval-ref", APPROVAL, "--session", S)
++    record("T024-06", "a sub-national code without a parent is refused",
++           r.returncode == 1 and r.stderr.startswith("REFUSING:") and "--parent" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
++    r = run_cli("add-jurisdiction", "--code", "T24-X", "--kind", "sub-national", "--parent", T_JUR,
++                "--approval-ref", APPROVAL, "--session", S)
++    record("T024-07", "a sub-national code not written under its parent is refused",
++           r.returncode == 1 and r.stderr.startswith("REFUSING:") and f"'{T_JUR}-XXX'" in r.stderr, f"rc={r.returncode} {r.stderr[-200:]!r}")
++    r = run_cli("add-jurisdiction", "--code", SUB, "--kind", "sub-national", "--parent", T_JUR,
++                "--approval-ref", APPROVAL, "--session", S)
++    ok_sub = r.returncode == 0
++    E_SUB = None
++    if ok_sub:
++        E_SUB = db.log_search(slug=B, language=T_LANG, query_text="TASK-FIXTURE T024-08", engine="manual",
++                              depth_method="scoping", session=S, jurisdiction=SUB,
++                              prior_expectation="fixture prior, written before the call")
++    covB = db.get_coverage_completeness(B) if ok_sub else {}
++    rolled = q("SELECT searches FROM v_coverage_jurisdiction WHERE slug=? AND jurisdiction=?", B, T_JUR) if ok_sub else []
++    own = q("SELECT 1 FROM v_coverage_jurisdiction WHERE slug=? AND jurisdiction=?", B, SUB) if ok_sub else [1]
++    record("T024-08", "a search filed under a sub-national code counts toward its parent country: the pair is searched, "
++           "in scope, and the coverage view rolls it up",
++           ok_sub and [T_LANG, T_JUR] not in covB.get("pairs_unsearched", [[T_LANG, T_JUR]])
++           and covB.get("searches_outside_scope") == 0 and rolled and rolled[0][0] >= 1 and not own,
++           f"rc={r.returncode} {r.stderr[-200:]!r} outside={covB.get('searches_outside_scope')} rolled={rolled} own={own}")
++    EX = q("SELECT extraction_id, jurisdiction FROM source_value_extractions ORDER BY extraction_id LIMIT 1")[0]
++    NEW_J = next(c for c in sorted(DECLARED) if c != EX[1])
++    msg = refusal(db.amend_extraction, EX[0], "jurisdiction", UNDECLARED, "fixture: wrong code", S)
++    try:
++        out = db.amend_extraction(EX[0], "jurisdiction", NEW_J, "fixture: re-filed", S)
++    except Exception as exc:  # noqa: BLE001 -- recorded red below
++        out = None
++    record("T024-09", "amend-extraction --field jurisdiction refuses an undeclared code and re-files a declared one",
++           msg is not None and out and q("SELECT jurisdiction FROM source_value_extractions WHERE extraction_id=?",
++                                         EX[0])[0][0] == NEW_J, f"refusal={msg!r} out={out!r}")
++
+     # J13: conflicts.pop_a / pop_b are foreign keys into the identity lens (migration 121; the item_code
+     # column this once guarded is gone). A code the lens lacks is refused by name; the control is the same
+     # row with two live codes, because a refusal that also refused that would prove nothing.
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index 276505f..7743d07 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -741,8 +741,7 @@ with scratch() as c:
+ # ─────────────────────────── Unit A2: research and synthesis writers ───────────────────────────
+ print("Section B/A13: log-search names what it searched, in the vocabulary the map holds")
+ sys.path.insert(0, str(REPO))
+-from schemas.enums import JurisdictionCode  # noqa: E402
+-ENUM = {e.value for e in JurisdictionCode}
++ENUM = {r[0] for r in q("SELECT jurisdiction_code FROM base_jurisdictions")}
+ # A pair the research scope owes (v_research_scope), and a language the map holds that the scope
+ # does not pair with that jurisdiction.
+ PAIR = next((r for r in q("SELECT language, jurisdiction FROM v_research_scope ORDER BY 1, 2")
+diff --git a/scripts/validate_jurisdiction.py b/scripts/validate_jurisdiction.py
+index 78d775f..a38fbdc 100644
+--- a/scripts/validate_jurisdiction.py
++++ b/scripts/validate_jurisdiction.py
+@@ -3,7 +3,7 @@
+ scripts/validate_jurisdiction.py — Validate jurisdiction codes and standards-registry.
+ 
+ Per governance/jurisdiction-philosophy.md (A8):
+-- All jurisdiction codes resolve to JurisdictionCode enum
++- All jurisdiction codes resolve to a base_jurisdictions row
+ - GB rejected (must be UK)
+ - Standards-registry entries have required fields and valid status
+ - BPC jurisdiction coverage tracked
+@@ -26,9 +26,9 @@ import yaml
+ 
+ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ 
+-from schemas.enums import JurisdictionCode
++import dbcore
+ 
+-VALID_CODES = {member.value for member in JurisdictionCode}
++VALID_CODES = dbcore.declared_jurisdictions()
+ VALID_STATUSES = {"CURRENT", "UPDATED", "SUPERSEDED", "WITHDRAWN"}
+ REQUIRED_REGISTRY_FIELDS = {
+     "jurisdiction", "standard_cited", "current_version",
+diff --git a/skills/run-pipeline_SKILL.md b/skills/run-pipeline_SKILL.md
+index 0172fdc..fef054f 100644
+--- a/skills/run-pipeline_SKILL.md
++++ b/skills/run-pipeline_SKILL.md
+@@ -42,8 +42,8 @@ is owed has one home, the view `v_research_scope`: every `lang_jur_map` row not
+ (column added by migration 122; the view by migration 123); a NULL is owed, so an unrecorded scope never shrinks the requirement, and the fill of the column is a
+ data PR. `db.py coverage --slug` reads it and reports slug_status and merged_into, pairs_required, pairs_searched, pairs_unsearched (the
+ `[language, jurisdiction]` pairs still owed), searches_outside_scope (logged searches whose pair is not owed) and
+-jurisdictions_unreachable (owed rows `schemas.enums.JurisdictionCode` refuses: a search there cannot be logged, so
+-they stay unsearched). `complete` is false while anything owed is unsearched or refused by the declared vocabulary,
++jurisdictions_unreachable (owed rows whose jurisdiction `base_jurisdictions` does not declare: a search there cannot be logged, so
++they stay unsearched; a search filed under a sub-national code counts toward its parent country, owner OD-04, and a new code is admitted with `db.py add-jurisdiction`). `complete` is false while anything owed is unsearched or refused by the declared vocabulary,
+ and false over an empty requirement (open owner question 5 of the 2026-11-06 round-3 adjudication,
+ `workplan/2026-11-06-run-pipeline-round-3-adjudication.md`). For a slug whose slug_status is neither `ACTIVE` nor
+ `STUB` it also reports owes_searches false: the slug named in merged_into owes them, so search there. **Current
+@@ -86,7 +86,7 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
+   (R8). A search names what it looked for (`--slug`, `--parameter` or `--mined-ref-id`); `--slug` must exist and
+   `--parameter` must be active. `--language` is a two-letter code from `lang_jur_map` (derive: `SELECT DISTINCT
+   language FROM lang_jur_map`), folded to upper case on write, and a language the map does not hold is refused (the map is the vocabulary of research
+-  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `schemas.enums.JurisdictionCode`
++  languages; a new one is a doctrine change, owner question 5); `--jurisdiction` is a code `base_jurisdictions`
+   declares. The pair is not checked: a search in any declared jurisdiction is logged, and the result's
+   in_research_scope says whether the pair counts toward what `coverage` owes (`v_research_scope`). A search outside it
+   is counted apart (searches_outside_scope), never refused (R8). `--result-artefact retrieval-log/<session>/<file>`
+-- 
+2.43.0
+

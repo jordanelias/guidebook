@@ -34,7 +34,7 @@ for n in OD-01; do gate $n; done
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-101-scope-fill "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-101" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -72,7 +72,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
-1. With the verb of T-025, set `scope_status` on every pair of `lang_jur_map` from the owner's answer to OD-04, and from nothing else; quote the answer's ledger line in the migration summary. The scope is these jurisdiction codes, exactly (P1, P2, P3 as the ledger records them): **US UK AU CA DE NO SE ISO EU · FR CH NL DK FI BE IE ES IT PT · JP SG NZ KR CN**. A pair whose `jurisdiction` is one of them is `in-scope`; every other pair is `scoped-out` (the CHECK's two values: `select sql from sqlite_master where name='lang_jur_map'`). This replaces buckets 1 and 2 of 2026-09-28 as the first floor (it adds BE, CH, CN, DK, IT and drops UN).
+1. With T-025's `set-pair-scope`, one call per pair (`set-pair-scope --language L --jurisdiction J --scope-status V --approval-ref "Owner answers 2026-11-12 — OD-04 (research scope), OD-23 (a later parameter reaching a source already read), OD-15 (the medical lens and the WHO licence), OD-19 (conflict between groups in the engine)" --session "$STEM"`), set `scope_status` on every pair of `lang_jur_map` from the owner's answer to OD-04, and from nothing else. The `--approval-ref` is the full heading of the entry that records that answer; confirm it is found exactly once before the first call (`git grep -c -F "<heading>" references/project-standards.md` prints 1). Quote the answer's ledger line in the migration summary. The scope is these jurisdiction codes, exactly (P1, P2, P3 as the ledger records them): **US UK AU CA DE NO SE ISO EU · FR CH NL DK FI BE IE ES IT PT · JP SG NZ KR CN**. A pair whose `jurisdiction` is one of them is `in-scope`; every other pair is `scoped-out` (the CHECK's two values: `select sql from sqlite_master where name='lang_jur_map'`). This replaces buckets 1 and 2 of 2026-09-28 as the first floor (it adds BE, CH, CN, DK, IT and drops UN).
 2. `UN` is out: it has no pair today; write none. `ISO` is in scope but has no pair (a standards body, not a language community): write none, and say so in the pull request; coverage of ISO instruments is read from the sources filed `ISO`, not from a pair.
 3. A sub-national instrument counts toward its country and owes no coverage alone: write no pair for a sub-national code (T-113 files them); the roll-up to the country is read through the parent by the coverage readers (T-024 item 5).
 4. Change no `role` and add or delete no pair: a pair the scope needs that `lang_jur_map` lacks (for example a second official language of an in-scope country) is reported, not written; adding one is a base-vocabulary act with its own warrant (2026-11-06 E7).
@@ -105,7 +105,7 @@ and `select scope_status, count(*) from lang_jur_map group by 1` is reported in 
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```

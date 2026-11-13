@@ -1,0 +1,1835 @@
+From 26c5b109f80b2181f7703bc87100170353dd5189 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 13 Nov 2026 04:31:21 +0000
+Subject: [PATCH] governance: add the lens link table for figures [2026-11-13
+ 04:31]
+
+Pilot commit: migration 127 extraction_lens_links + v_live_lens_links, add-lens-link/retire-lens-link, repeatable lens flags, tests T018-01..04,07 and G04.
+---
+ architecture/meta-scripts-spec.md             |   2 +-
+ data/guidebook.db                             | Bin 5197824 -> 5517312 bytes
+ governance/context-map.yaml                   |  22 +-
+ governance/stage-map.yaml                     |   1 +
+ references/project-standards.md               |  25 +
+ scripts/audit/research_batch_dod.py           |   5 +-
+ scripts/db.py                                 | 309 ++++++++++--
+ .../migrations/127_extraction_lens_links.sql  | 469 ++++++++++++++++++
+ scripts/tests/test_db_amend_writers.py        |  93 ++++
+ scripts/tests/test_db_integrity.py            |  11 +
+ scripts/tests/test_run_pipeline_refusals.py   |   9 +-
+ scripts/tests/test_scan_contract.py           |  36 +-
+ .../cross-population-conflict-mapper_SKILL.md |   2 +-
+ skills/run-pipeline_SKILL.md                  |   8 +-
+ workplan/pipeline-state-graph/machines.yaml   |   2 +-
+ 15 files changed, 928 insertions(+), 66 deletions(-)
+ create mode 100644 scripts/migrations/127_extraction_lens_links.sql
+
+diff --git a/architecture/meta-scripts-spec.md b/architecture/meta-scripts-spec.md
+index 30a409e..090c5fb 100644
+--- a/architecture/meta-scripts-spec.md
++++ b/architecture/meta-scripts-spec.md
+@@ -301,7 +301,7 @@ L1  schema, mirrors, contract, and the rules that govern every stage
+ | **L1.3b** | The refusal can actually read the vocabulary it enforces | Extract closed vocabularies from DDL with **both** forms — `CHECK (c IN (...))` and `CHECK (c IS NULL OR c IN (...))` — then call `dbcore.check_values()` for each and flag every column where the DDL has a vocabulary and `check_values()` returns `{}`. **16 of 108 today.** This is the edge that would have caught defect 1 from the refusal side | **v1** | **new, verified** |
+ | **L1.4** | A mirror exists per written table, is in `MODEL_TABLE_MAP`, and its fields match the live columns | `scripts/audit/validate_pydantic_schemas.py --strict` already does this and is **advisory and permanently red (243 findings)**, so the signal is buried. **v1 does not re-run it**: it runs it per-table for the 22 tables in `dbcore.WRITABLE_TABLES` only, and reports each table's delta separately. That converts one red wall into 22 independent verdicts, of which `evidence_sources` → missing `scope` is the one that matters | **v1** | **N3** |
+ | **L1.5** | A ratified rule has ONE executable home, and it is Layer 1 | Report-only heuristic: a file under a Layer 2 prefix (§7 L0.6) defining a function that returns a value drawn from a Layer 1 vocabulary, without importing the Layer 1 function of that name. Known pair: G2/G3/G6 in `scripts/assess/assess_cell.py::source_grain()` vs `schemas/directness.py:80,82`, which map `co1 → specific` and `standard_eb → code` unconditionally. Also flag `scripts/audit/matrix_consistency.py:19-30`, which compares code against a transcription **inside the check** and never opens the doctrine document | **v1, report-only** | **8** |
+-| **L1.6** | A table attaching a determination to a group of disabled people takes four lens columns and a COALESCE CHECK | `PRAGMA table_info` over every non-`base_*` table: presence of `population_code`/`population`/`target_population` **and** absence of all four of `identity_code/icf_code/needs_code/medical_code` → MISS. Exclude the base registries by name — `populations` and `population_axis_map` are the identity lens and a crossing map, and the ruling scopes to "after the base phase". **14 raw, 12 after the exclusion**; five of the twelve are the splinter tables D-0182 says are deleted, all at 0 rows. Assert the surviving CHECK is `COALESCE(...) IS NOT NULL`, **never** a sum `= 1` | **v1** | ruling unswept |
++| **L1.6** | A table attaching a determination to a group of disabled people takes four lens columns and a COALESCE CHECK | `PRAGMA table_info` over every non-`base_*` table: presence of `population_code`/`population`/`target_population` **and** absence of all four of `identity_code/icf_code/needs_code/medical_code` → MISS. Exclude the base registries by name — `populations` and `population_axis_map` are the identity lens and a crossing map, and the ruling scopes to "after the base phase". **14 raw, 12 after the exclusion**; five of the twelve are the splinter tables D-0182 says are deleted, all at 0 rows. Assert the surviving CHECK is `COALESCE(...) IS NOT NULL`, **never** a sum `= 1`, **except** the two tables that shape the figure's lens (migration 127, OR-1c): `extraction_lens_links` states exactly one lens per link row (a sum `= 1`), and `source_value_extractions` keeps its four columns NULL (`COALESCE(...) IS NULL`), its "at least one" held by the writers and integrity case G04 | **v1** | ruling unswept |
+ | **L1.7** | A NOT NULL foreign key into an emptied table is reported, and its ROOT named | The CLAUDE.md §4 snippet, plus a transitive collapse. **22 unwritable columns today, but only 4 roots**: `items` (10 columns), `case_studies` (4), `economics_entries` (2), `base_parameters` (1 → `specifications` → `specification_source_links`). Print roots first. Also print the softer class the snippet misses: **8 nullable FKs into empty tables** — `specifications.medical_code → base_taxonomy_medical` means that lens cannot be used even though the row can be written | **v1** | — |
+ | **L1.8** | Rule 5 — no fact has two stored homes | **v2.** Needs `governance/dual-homes.yaml` declaring each accepted dual home and the retirement plan for it, because "same column name in two tables" is not evidence of a copy — a pointer looks identical. v1 prints the raw signal as INFO only: identically-named non-key columns across tables in different stages, which today cannot be computed at all because stage attribution does not exist (§8) | **v2** | 1, 3-class |
+ | **L1.9** | A contract criterion names its OBJECT | **v2.** `schemas/pipeline_contract.py` is `extra="forbid"`, so an `object:` field must exist before anything can read it. This is the only route by which defect 6 — `basis: base/base-parameter-vocabulary` pointing at `items` while the layer is `base_parameters` — becomes mechanically checkable | **v2** | **6** |
+diff --git a/data/guidebook.db b/data/guidebook.db
+index 9836481fc7c3e94d83264423fcf6883f3fbb4cd8..5bf35b6e1bd3cb248476675177ca70f4bae87f26 100644
+GIT binary patch
+delta 36047
+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
+
+delta 5656
+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
+O!Ewu=Z!avnTJ}E_xea^(
+
+diff --git a/governance/context-map.yaml b/governance/context-map.yaml
+index 8818a27..faa55a5 100644
+--- a/governance/context-map.yaml
++++ b/governance/context-map.yaml
+@@ -2,13 +2,13 @@ _README: GENERATED by scripts/generate/context_map.py. Do not edit -- regenerate
+   here is derived from the live repo at generation time. A stale entry is a bug in the generator or an
+   unregenerated commit, never something to patch by hand.
+ provenance:
+-  db_fingerprint: aaca0a8f8f30
++  db_fingerprint: 85a92b582dfd
+   generator: scripts/generate/context_map.py
+   freshness: established by `context_map.py --check`, not by a recorded sha
+ authority:
+   canonical_data_store: data/guidebook.db
+   schema_version_marker: PRAGMA user_version
+-  schema_version: 126
++  schema_version: 127
+   write_path: migrations only (scripts/emit_data_migration.py -> scripts/migrate_db.py)
+   note: Outer layers win unless an inner layer names an explicit override; code-enforced checks trump
+     text rules for the matching invariant. When two stores disagree the DB is canonical.
+@@ -130,6 +130,7 @@ database:
+     evidence_sources: 59
+     external_root_registry: 0
+     extraction_follow_ups: 0
++    extraction_lens_links: 216
+     extraction_relations: 57
+     gap_mining: 0
+     gaps: 110
+@@ -174,6 +175,7 @@ database:
+   - v_divergence
+   - v_evidence_authors
+   - v_item_provenance
++  - v_live_lens_links
+   - v_open_determination_gates
+   - v_pending
+   - v_registry_duplicate_descriptions
+@@ -258,6 +260,17 @@ database:
+     extraction_follow_ups:
+     - column: extraction_id
+       references: source_value_extractions.extraction_id
++    extraction_lens_links:
++    - column: extraction_id
++      references: source_value_extractions.extraction_id
++    - column: icf_code
++      references: base_icf.icf_code
++    - column: identity_code
++      references: base_taxonomy_identity.identity_code
++    - column: medical_code
++      references: base_taxonomy_medical.medical_code
++    - column: needs_code
++      references: access_needs.need_code
+     extraction_relations:
+     - column: from_extraction_id
+       references: source_value_extractions.extraction_id
+@@ -444,6 +457,7 @@ database:
+   - evidence_source_authors
+   - evidence_sources
+   - extraction_follow_ups
++  - extraction_lens_links
+   - extraction_relations
+   - gap_mining
+   - gaps
+@@ -529,6 +543,7 @@ writers:
+     - evidence_source_authors
+     - evidence_sources
+     - extraction_follow_ups
++    - extraction_lens_links
+     - extraction_relations
+     - gap_mining
+     - gaps
+@@ -604,6 +619,7 @@ writers:
+     - base_parameters
+     - evidence_sources
+     - extraction_follow_ups
++    - extraction_lens_links
+     - observed_terms
+     - parameter_declinations
+     - source_scans
+@@ -795,6 +811,8 @@ writers:
+     - data_20261001034401_2026-10-01-research-batch-23.sql
+     - data_20261031052710_2026-10-30-ramp-spec-pages-rebuild.sql
+     - data_20261106043622_2026-11-06-pipeline-batch-2.sql
++    extraction_lens_links:
++    - 127_extraction_lens_links.sql
+     extraction_relations:
+     - data_20260913025258_2026-09-13-backfill-figure-roles.sql
+     - data_20260913030015_2026-09-13-redetermine-on-graded-figures.sql
+diff --git a/governance/stage-map.yaml b/governance/stage-map.yaml
+index f46d060..0917fde 100644
+--- a/governance/stage-map.yaml
++++ b/governance/stage-map.yaml
+@@ -102,6 +102,7 @@ tables:
+   evidence_sources: evidence
+   external_root_registry: evidence
+   extraction_follow_ups: judgment
++  extraction_lens_links: judgment
+   extraction_relations: judgment
+   gap_mining: research
+   gaps: synthesis
+diff --git a/references/project-standards.md b/references/project-standards.md
+index 26cd2f5..b37f923 100644
+--- a/references/project-standards.md
++++ b/references/project-standards.md
+@@ -6213,3 +6213,28 @@ OI-50 STATUS: ANSWERED BY THE OWNER
+ CONDITION: any session building the T-4 agreement task, writing a determination's marker or value, tagging or crossing a mobility figure, minting or rewording `UPL`, `LLD`, `WHEEL` or `WALKAID`, building an element page, batching a scan, or minting "barrier-free path of travel".
+ ACTION: (1) T-4: ask the three open edges of OR-5b first; build the divergence rule as OR-6c states it (higher tier states and the lower tier's dispute is noted; Co-1 and T1 are one rank, and a same-rank divergence waits for an Opus-class approach). (2) OR-22b: a floor claim confirmed by absence reads the confirming study's band. (3) OR-23b: a registry citation is a valid route for T4 to T6 only. (4) OR-14b: file the element-determination tooling task; T-037 builds no element page until it has merged. (5) OR-25: batch scans by source. (6) T-102 writes the OI-03 crossings; T-116 and T-025 use the OI-49 wording. (7) Treat the [ASSUMPTION] marks above as unratified, and the two [ASSUMPTION] marks of the eighth and ninth sets as ratified by OI-50. This supersedes, for the element case only, the R17 deferral of cross-parameter synthesis tables.
+ DATE: 2026-11-13 — owner answers (selected options, and typed words where quoted), above.
++
++---
++
++## A figure's lens codes are a link table — and the 2026-08-28 clause "Never a `population_*` link table" is superseded for that, and for that only
++
++The entry dated 2026-08-28 ends *"Four lens columns, one CHECK, real FKs. Never a `population_*` link
++table. Never two lenses in one row."* The owner ruled on 2026-11-06 (OR-1c) *"link table unless that is more
++prone to errors"* for a figure that concerns several codes of one model, and on 2026-11-12 (fifth set) answered
++OD-39: *"Yes, the 2026-11-06 ruling supersedes that clause."* Find the answer with
++`grep -n -F "OD-39: the 2026-11-06 link-table ruling supersedes" references/project-standards.md`.
++
++**What is superseded, on that clause only.** The words "Never a `population_*` link table" no longer bar a link
++table for a figure's lens codes. Migration 127 builds `extraction_lens_links` (one row per figure and code) and
++`v_live_lens_links` (the one read surface). **What stands, and is met:** four typed lens columns, each a real
++foreign key (now on the link row); "never two lenses in one row" (now true of every link row, by a CHECK that
++states exactly one); the lens names in the table's name (no `population`); `specifications` keeps its four columns
++as the cell key. The figure's own four columns are kept for replay, held NULL by CHECK, and never written again;
++D-0182's "at least one lens" moves to the writers and to integrity case G04.
++
++This is recorded in prose and not as a machine `SUPERSEDES`/`BY` pair, because `supersession_backpointer_audit`
++cannot anchor a target that is itself in the ledger (CLAUDE.md rule 0: naming it is the writer's).
++
++CONDITION: any session writing or reading a figure's lens, or building the gather that reaches a cell.
++ACTION: read a figure's lens from `v_live_lens_links`, never from the four columns on `source_value_extractions`; write it with `add-extraction` (repeat the lens flag) and `add-lens-link` / `retire-lens-link`.
++DATE: 2026-11-13 — pilot copy of the T-018 entry; OD-39 answered 2026-11-12.
+diff --git a/scripts/audit/research_batch_dod.py b/scripts/audit/research_batch_dod.py
+index 1fcf31e..bc70dac 100644
+--- a/scripts/audit/research_batch_dod.py
++++ b/scripts/audit/research_batch_dod.py
+@@ -1321,9 +1321,10 @@ def selftest():
+     # R3 is row-level since 2026-11-06: the uncited VALUE is an extraction of REF-ST1 with no
+     # loc_* pinpoint and no [UNVERIFIED-QUANT]. REF-ST1 alone (a code holding no row) must
+     # NOT fire -- that was the false positive the rewrite closed.
+-    cx.execute("INSERT INTO source_value_extractions (ref_id,parameter_id,identity_code,claim_type,"
++    # No lens column: a figure's lens is a link row now (OR-1c) and the column is held NULL by CHECK; R3 reads none.
++    cx.execute("INSERT INTO source_value_extractions (ref_id,parameter_id,claim_type,"
+                "claimed_value,claim_text,extraction_method,figure_role,created_at,"
+-               "created_by_session,updated_at) VALUES ('REF-ST1',1,'MOB','numerical','250',"
++               "created_by_session,updated_at) VALUES ('REF-ST1',1,'numerical','250',"
+                "'250 lbf','full-read','claim','t',?,'t')", (T,))
+     # R14 NEGATIVE CASE: a zero-yield search classed through the typed column and carrying no
+     # findings_note must not fire; only exec 3 (neither) does, so R14's count is asserted at 1.
+diff --git a/scripts/db.py b/scripts/db.py
+index 6e20c41..6e43c16 100644
+--- a/scripts/db.py
++++ b/scripts/db.py
+@@ -2115,10 +2115,20 @@ def main():
+                       help="base_parameters.parameter_id — THE SUBJECT (owner 2026-08-26)")
+     # The four lenses. At least one is required (D-0182); the CLI names them by lens
+     # rather than by column so the operator is choosing a LENS, not filling a field.
+-    p_ax.add_argument("--identity", help="base_taxonomy_identity.identity_code")
+-    p_ax.add_argument("--icf", help="base_icf.icf_code — a real ICF b/d code")
+-    p_ax.add_argument("--needs", help="access_needs.need_code")
+-    p_ax.add_argument("--medical", help="base_taxonomy_medical.medical_code")
++    # Each lens flag may be REPEATED: a figure that concerns two ICF codes is written once with two
++    # links (OR-1c, extraction_lens_links). --lens-basis / --lens-basis-text are the warrant for every
++    # link this call writes; a code with another warrant is added afterwards with add-lens-link.
++    p_ax.add_argument("--identity", action="append", help="base_taxonomy_identity.identity_code (repeatable)")
++    p_ax.add_argument("--icf", action="append", help="base_icf.icf_code — a real ICF b/d code (repeatable)")
++    p_ax.add_argument("--needs", action="append", help="access_needs.need_code (repeatable)")
++    p_ax.add_argument("--medical", action="append", help="base_taxonomy_medical.medical_code (repeatable)")
++    p_ax.add_argument("--lens-basis", dest="lens_basis", required=True, choices=_lens_basis_choices(),
++                      help="Why the figure is stated for these codes. Live vocabulary, read from the "
++                           "column's own CHECK.")
++    p_ax.add_argument("--lens-basis-text", dest="lens_basis_text", required=True,
++                      help="The exact words that warrant the links: found in the figure's own text, "
++                           "or a file saved for its source, or (study_participants) the source's "
++                           "recorded study population.")
+     p_ax.add_argument("--claim-type", dest="claim_type", required=True,
+                       choices=dbcore.schema_choices("source_value_extractions", "claim_type"),
+                       help="Live vocabulary, read from the column's own CHECK. "
+@@ -2333,10 +2343,12 @@ def main():
+                                "derived_from edges that prove it")
+     p_dx.add_argument("--ref-id", required=True)
+     p_dx.add_argument("--parameter-id", dest="parameter_id", type=int, required=True)
+-    p_dx.add_argument("--identity")
+-    p_dx.add_argument("--icf")
+-    p_dx.add_argument("--needs")
+-    p_dx.add_argument("--medical")
++    p_dx.add_argument("--identity", action="append")
++    p_dx.add_argument("--icf", action="append")
++    p_dx.add_argument("--needs", action="append")
++    p_dx.add_argument("--medical", action="append")
++    p_dx.add_argument("--lens-basis", dest="lens_basis", required=True, choices=_lens_basis_choices())
++    p_dx.add_argument("--lens-basis-text", dest="lens_basis_text", required=True)
+     p_dx.add_argument("--base", type=int, required=True,
+                       help="extraction_id of the base figure")
+     p_dx.add_argument("--delta", type=int, required=True,
+@@ -2354,6 +2366,27 @@ def main():
+     p_dx.add_argument("--session", required=True)
+     p_dx.add_argument("--dry-run", action="store_true")
+ 
++    p_all = sub.add_parser("add-lens-link",
++                           help="Add one lens code to an existing figure (OR-1c); the figure is "
++                                "not copied")
++    p_all.add_argument("--extraction-id", dest="extraction_id", type=int, required=True)
++    p_all.add_argument("--identity")
++    p_all.add_argument("--icf")
++    p_all.add_argument("--needs")
++    p_all.add_argument("--medical")
++    p_all.add_argument("--lens-basis", dest="lens_basis", required=True, choices=_lens_basis_choices())
++    p_all.add_argument("--lens-basis-text", dest="lens_basis_text", required=True,
++                       help="The exact words that warrant the link")
++    p_all.add_argument("--session", required=True)
++    p_all.add_argument("--dry-run", action="store_true")
++
++    p_rll = sub.add_parser("retire-lens-link",
++                           help="Retire one lens link in place (never the figure's last live link)")
++    p_rll.add_argument("--link-id", dest="link_id", type=int, required=True)
++    p_rll.add_argument("--reason", required=True)
++    p_rll.add_argument("--session", required=True)
++    p_rll.add_argument("--dry-run", action="store_true")
++
+     p_adj = sub.add_parser("adjudicate-term",
+                            help="Decide whether an observed phrase names our concept "
+                                 "(judgment stage, D-0173)")
+@@ -3293,7 +3326,8 @@ def main():
+                "locator_scheme": args.locator_scheme, "loc_note": args.loc_note,
+                "notes": args.notes,
+                "figure_role": args.figure_role, "comparator": args.comparator,
+-               "harm_finding": 1 if args.harm_finding else None}
++               "harm_finding": 1 if args.harm_finding else None,
++               "lens_basis": args.lens_basis, "lens_basis_text": args.lens_basis_text}
+         for _lvl in ("division", "part", "section", "subsection", "paragraph",
+                      "clause", "subclause"):
+             _ax[f"loc_{_lvl}"] = getattr(args, f"loc_{_lvl}")
+@@ -3351,7 +3385,22 @@ def main():
+             medical=args.medical, base=args.base, delta=args.delta,
+             claimed_value=args.claimed_value, claimed_unit=args.claimed_unit,
+             comparator=args.comparator, conversion_note=args.conversion_note,
+-            claim_text=args.claim_text, session=args.session, dry_run=args.dry_run))
++            claim_text=args.claim_text, session=args.session, dry_run=args.dry_run,
++            lens_basis=args.lens_basis, lens_basis_text=args.lens_basis_text))
++
++    elif args.command == "add-lens-link":
++        _alk = [(c, getattr(args, a)) for a, c in (("identity", "identity_code"), ("icf", "icf_code"),
++                                                   ("needs", "needs_code"), ("medical", "medical_code"))
++                if getattr(args, a)]
++        if len(_alk) != 1:
++            raise Refusal("add-lens-link: pass exactly one of --identity / --icf / --needs / --medical "
++                          "(one code per link; repeat the verb for another). Nothing was written.")
++        _emit(add_lens_link(args.extraction_id, _alk[0][0], _alk[0][1], args.lens_basis,
++                            args.lens_basis_text, session=args.session, dry_run=args.dry_run))
++
++    elif args.command == "retire-lens-link":
++        _emit(retire_lens_link(args.link_id, args.reason, session=args.session,
++                               dry_run=args.dry_run))
+ 
+     elif args.command == "adjudicate-term":
+         _emit(adjudicate_term(args.observation_id, args.outcome, args.rationale,
+@@ -8354,6 +8403,11 @@ def resolve_determination_gate(*, gate_id: int, rationale: str, session: str,
+ # vocabulary (CLAUDE.md §4). Mirrors assess_cell.LENS_COLUMNS deliberately — the
+ # extraction and the determination it feeds must name the lens the same way, or the
+ # hand-off needs a translation nobody wrote.
++def _lens_basis_choices():
++    """argparse choices for --lens-basis: the column's own CHECK, minus 'carried' (only migration 127 writes it)."""
++    return [b for b in (dbcore.schema_choices("extraction_lens_links", "basis") or []) if b != "carried"] or None
++
++
+ _LENS_COLUMNS = {
+     "identity_code": ("base_taxonomy_identity", "identity_code"),
+     # RE-POINTED 2026-09-13 by owner ruling ("keep the ICF lens, give it real ICF
+@@ -8992,6 +9046,12 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+                       relations: list = None, verbatim_exempt: str = None):
+     """Record ONE judgment item: what one source asserts for one parameter.
+ 
++    THE LENSES ARE LINKS (OR-1c, migration 127). `data` may carry each lens key as one code or a
++    list of codes, and must then carry `lens_basis` and `lens_basis_text` (not columns: the warrant
++    for every link this call writes). The figure row is written with the four lens columns NULL (a
++    CHECK holds them NULL) and ONE `extraction_lens_links` row per code lands in the same
++    transaction. See `_write_lens_link`.
++
+     THE WRITER THIS TABLE SHIPPED WITHOUT. `source_value_extractions` has existed
+     since migration 018 and `scripts/db.py` contained ZERO references to it —
+     measured 2026-09-10, `grep -c source_value_extractions scripts/db.py` -> 0. With
+@@ -9101,14 +9161,20 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+         "extraction_method", "extraction_status", "notes",
+         "figure_role", "comparator", "harm_finding",
+     })
++    data = dict(data)
++    lens_basis, lens_basis_text = data.pop("lens_basis", None), data.pop("lens_basis_text", None)
+     dbcore.validate_cols(data.keys(), _COLS, "insert_extraction")
+     dbcore.check_jurisdiction(data.get("jurisdiction"), "add-extraction --jurisdiction")
+     row = {k: v for k, v in data.items() if v is not None}
+ 
+-    # A BLANK IS NOT AN ABSENCE — normalise before anything reads these.
++    # A BLANK IS NOT AN ABSENCE — normalise before anything reads these. The lens keys leave
++    # `row` here: the figure carries no lens; its codes become links further down.
++    lens_pairs = []
+     for col in _LENS_COLUMNS:
+-        if col in row and not str(row[col]).strip():
+-            del row[col]
++        _v = row.pop(col, None)
++        for _code in (_v if isinstance(_v, (list, tuple)) else [_v]):
++            if _code is not None and str(_code).strip():
++                lens_pairs.append((col, str(_code).strip()))
+ 
+     with dbcore.connect(dry_run) as conn:
+         ref = dbcore.fold_ref(row.get("ref_id"))
+@@ -9191,26 +9257,17 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+             _require_full_scan_for_verified(conn, ref, pid, "add-extraction")
+ 
+         # --- the lenses ------------------------------------------------------
+-        if not any(row.get(c) for c in _LENS_COLUMNS):
++        if not lens_pairs:
+             raise Refusal(
+                 "an extraction must be stated in at least one lens (D-0182): pass one or "
+-                "more of --identity / --icf / --needs / --medical. A value attached to no "
+-                "lens is a value about nobody.")
+-        for col, (table, key) in _LENS_COLUMNS.items():
+-            code = row.get(col)
+-            if not code:
+-                continue
+-            if not dbcore.exists(conn, table, key, code):
+-                n = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
+-                if n == 0:
+-                    raise Refusal(
+-                        f"{col} {code!r}: the registry `{table}` holds no rows, so no code "
+-                        f"is valid in this lens yet and the INSERT would fail with "
+-                        f"`FOREIGN KEY constraint failed`. Seed the registry in a "
+-                        f"migration, or state the value in a lens that has one.")
+-                raise Refusal(
+-                    f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
+-                    f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
++                "more of --identity / --icf / --needs / --medical (each may be repeated). A "
++                "value attached to no lens is a value about nobody.")
++        _refuse_lens_codes(conn, lens_pairs, "add-extraction")
++        _refuse_lens_basis(conn, lens_basis, lens_basis_text, "add-extraction")
++        _refuse_unfound_basis_text(
++            conn, ref, lens_basis, lens_basis_text,
++            [row.get("claim_text"), row.get("source_section"), row.get("root_population_note")],
++            "add-extraction")
+ 
+         # --- the claim -------------------------------------------------------
+         claim_type = row.get("claim_type")
+@@ -9383,16 +9440,20 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+         # not compared: the same reading by a second session is still the same reading.
+         _same_cols = [c for c in row
+                       if c not in ("notes", "extraction_status", "extraction_method", "contested")]
+-        _keyed = ("identity_code", "icf_code", "needs_code", "medical_code", "claimed_value",
+-                  "claimed_unit", "source_section", "loc_section", "loc_clause")
++        _keyed = ("claimed_value", "claimed_unit", "source_section", "loc_section", "loc_clause")
+         _preds = [f'"{c}" IS ?' for c in _same_cols] + [f'"{c}" IS NULL' for c in _keyed
+                                                         if c not in row]
+-        _dup = conn.execute(
+-            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds)
+-            + " LIMIT 1", [row[c] for c in _same_cols]).fetchone()
++        # "Same lenses" is the set of LIVE links, since the figure itself carries none.
++        _new_lenses = set(lens_pairs)
++        _dup = next((d for (d,) in conn.execute(
++            "SELECT extraction_id FROM source_value_extractions WHERE " + " AND ".join(_preds),
++            [row[c] for c in _same_cols])
++            if {(col, code) for col in _LENS_COLUMNS for (code,) in conn.execute(
++                f'SELECT "{col}" FROM v_live_lens_links WHERE extraction_id=? '
++                f'AND "{col}" IS NOT NULL', (d,))} == _new_lenses), None)
+         if _dup:
+             raise Refusal(
+-                f"add-extraction: extraction {_dup[0]} already carries this exact row "
++                f"add-extraction: extraction {_dup} already carries this exact row "
+                 f"({ref}, parameter {pid}, same lenses, claim, value, text and locator). A "
+                 f"byte-identical copy is not a second reading; a divergent one is "
+                 f"(D-0168). Nothing was written.")
+@@ -9413,6 +9474,10 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+             f"INSERT INTO source_value_extractions ({','.join(row)}) "
+             f"VALUES ({','.join('?' * len(row))})", list(row.values()))
+         extraction_id = cur.lastrowid
++        lens_written = [
++            {"link_id": _write_lens_link(conn, extraction_id, col, code, lens_basis,
++                                         lens_basis_text, session),
++             "lens": col, "code": code} for col, code in lens_pairs]
+ 
+         # THE EDGES, IN THIS SAME TRANSACTION -- the `add-term` precedent (a term
+         # and its adjudication land together). `relations` is `[]` for the literal
+@@ -9436,7 +9501,7 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+             _refuse_derived_mismatch(conn, extraction_id, "add-extraction")
+ 
+         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
+-                "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
++                "lens": lens_written,
+                 "claim_type": claim_type, "claimed_value": value,
+                 "figure_role": figure_role, "comparator": row.get("comparator"),
+                 "relation_ids": relation_ids,
+@@ -9444,6 +9509,164 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
+                 "dry_run": dry_run}
+ 
+ 
++def _refuse_lens_codes(conn, pairs, who):
++    """Refuse a (lens column, code) list the registries cannot hold: a repeated code, a code
++    absent from its registry (or a registry with no rows at all, the CLAUDE.md 4 trap), and a
++    deprecated identity code. Shared by add-extraction and add-lens-link: one copy of the rule."""
++    if len(set(pairs)) != len(pairs):
++        raise Refusal(f"{who}: a lens code is repeated in this call. One link per figure and "
++                      f"code; pass each code once. Nothing was written.")
++    for col, code in pairs:
++        table, key = _LENS_COLUMNS[col]
++        if not dbcore.exists(conn, table, key, code):
++            n = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
++            if n == 0:
++                raise Refusal(
++                    f"{col} {code!r}: the registry `{table}` holds no rows, so no code "
++                    f"is valid in this lens yet and the INSERT would fail with "
++                    f"`FOREIGN KEY constraint failed`. Seed the registry in a "
++                    f"migration, or state the value in a lens that has one.")
++            raise Refusal(
++                f"{col} {code!r} is not a live {key} in `{table}`. The registry is the "
++                f"vocabulary (CLAUDE.md §4); it is not extended from the CLI.")
++        if col == "identity_code" and conn.execute(
++                "SELECT status FROM base_taxonomy_identity WHERE identity_code=?",
++                (code,)).fetchone()[0] == "deprecated":
++            raise Refusal(
++                f"{who}: identity_code {code!r} is deprecated. A figure is not newly stated "
++                f"in a retired group; use the live code that replaced it. Nothing was written.")
++
++
++def _refuse_lens_basis(conn, basis, text, who):
++    """A link carries its warrant: a basis from the column's own CHECK (never 'carried', which
++    only migration 127 writes) and the exact words relied on. Vocabulary derived (rule 8)."""
++    allowed = dbcore.check_values(conn, "extraction_lens_links", "basis") - {"carried"}
++    if basis not in allowed:
++        raise Refusal(
++            f"{who}: --lens-basis is required and must be one of {sorted(allowed)} "
++            f"(got {basis!r}). Say why this figure is stated for this group: its own words "
++            f"name the users, its heading names the group, or a study's participants are the "
++            f"group. Nothing was written.")
++    if not (text or "").strip():
++        raise Refusal(
++            f"{who}: --lens-basis-text is required and must not be blank: the exact words "
++            f"that warrant the link. Nothing was written.")
++
++
++def _refuse_unfound_basis_text(conn, ref, basis, text, figure_words, who):
++    """The warrant's words must be words this figure actually has: in its claim_text,
++    source_section or root_population_note; or in a file saved for its source; or, for
++    study_participants, in a study_population recorded for the source. Case-insensitive.
++    Refused naming everywhere it looked."""
++    def norm(x):
++        return " ".join(str(x).lower().split())
++    needle = norm(text)
++    if any(w and needle in norm(w) for w in figure_words):
++        return
++    kind, detail = _retrieval_log().locate_quote(text, ref_id=ref)
++    if kind == "scoped":
++        return
++    looked = ["the figure's claim_text, source_section and root_population_note",
++              f"the files saved for {ref} ({detail})"]
++    if basis == "study_participants":
++        if any(r[0] and needle in norm(r[0]) for r in conn.execute(
++                "SELECT study_population FROM evidence_population_match WHERE ref_id=?",
++                (ref,))):
++            return
++        looked.append(f"the study_population of {ref}'s evidence_population_match rows")
++    raise Refusal(
++        f"{who}: --lens-basis-text {text!r} was not found in " + "; ".join(looked) +
++        ". The warrant is the words relied on, so quote words the figure or its source "
++        "actually holds. Nothing was written.")
++
++
++def _write_lens_link(conn, extraction_id, col, code, basis, basis_text, session):
++    """INSERT one live link row; returns link_id. Callers have refused everything refusable."""
++    cur = conn.execute(
++        f"INSERT INTO extraction_lens_links (extraction_id, {col}, basis, basis_text, "
++        f"created_at, created_by_session, updated_at, updated_by_session) "
++        f"VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
++        (extraction_id, code, basis, basis_text.strip(),
++         *(dbcore.audit(session)[k] for k in ("created_at", "created_by_session",
++                                              "updated_at", "updated_by_session"))))
++    return cur.lastrowid
++
++
++def add_lens_link(extraction_id: int, lens: str, code: str, basis: str, basis_text: str,
++                  session: str, dry_run: bool = False):
++    """Add ONE lens code to an existing figure (OR-1c): the figure is written once and gains a link.
++
++    A live CARRIED link for the same figure and code (moved by migration 127, no judged warrant) is
++    retired in the same transaction with reason `superseded by judged link <id>`: a judged warrant
++    replaces a carried one in one act. A live JUDGED link for the same code is refused.
++    """
++    with dbcore.connect(dry_run) as conn:
++        fig = conn.execute(
++            "SELECT extraction_id, ref_id, claim_text, source_section, root_population_note "
++            "FROM source_value_extractions WHERE extraction_id=?", (extraction_id,)).fetchone()
++        if fig is None:
++            raise Refusal(f"add-lens-link: --extraction-id {extraction_id}: no such extraction.")
++        _refuse_lens_codes(conn, [(lens, code)], "add-lens-link")
++        _refuse_lens_basis(conn, basis, basis_text, "add-lens-link")
++        live = conn.execute(
++            f'SELECT link_id, basis FROM v_live_lens_links WHERE extraction_id=? AND "{lens}"=?',
++            (extraction_id, code)).fetchone()
++        if live and live["basis"] != "carried":
++            raise Refusal(
++                f"add-lens-link: extraction {extraction_id} already has a live {lens} link to "
++                f"{code!r} (link {live['link_id']}, basis {live['basis']}). To change its warrant, "
++                f"retire it with retire-lens-link and add the replacement. Nothing was written.")
++        _refuse_unfound_basis_text(
++            conn, fig["ref_id"], basis, basis_text,
++            [fig["claim_text"], fig["source_section"], fig["root_population_note"]],
++            "add-lens-link")
++        if live:   # a carried link: retire it first so the one-live-link index admits the judged one
++            _retire(conn, live["link_id"], "pending", session)
++        link_id = _write_lens_link(conn, extraction_id, lens, code, basis, basis_text, session)
++        replaced = None
++        if live:
++            replaced = live["link_id"]
++            conn.execute("UPDATE extraction_lens_links SET retirement_reason=? WHERE link_id=?",
++                         (f"superseded by judged link {link_id}", replaced))
++        return {"link_id": link_id, "extraction_id": extraction_id, "lens": lens, "code": code,
++                "basis": basis, "replaced_carried_link": replaced, "dry_run": dry_run}
++
++
++def _retire(conn, link_id, reason, session):
++    stamp = dbcore.upd(session)
++    conn.execute(
++        "UPDATE extraction_lens_links SET retired_at=?, retired_by_session=?, "
++        "retirement_reason=?, updated_at=?, updated_by_session=? WHERE link_id=?",
++        (stamp["updated_at"], stamp["updated_by_session"], reason,
++         stamp["updated_at"], stamp["updated_by_session"], link_id))
++
++
++def retire_lens_link(link_id: int, reason: str, session: str, dry_run: bool = False):
++    """Retire ONE link in place (OD-29). Refuses the figure's last live link: a figure with no
++    lens is a value about nobody (D-0182), so the replacing link is added first."""
++    reason = (reason or "").strip()
++    if not reason:
++        raise Refusal("retire-lens-link: --reason is required. A retirement that cannot say "
++                      "why cannot be contested.")
++    with dbcore.connect(dry_run) as conn:
++        link = conn.execute("SELECT * FROM extraction_lens_links WHERE link_id=?",
++                            (link_id,)).fetchone()
++        if link is None:
++            raise Refusal(f"retire-lens-link: --link-id {link_id}: no such link.")
++        if link["retired_at"] is not None:
++            raise Refusal(f"retire-lens-link: link {link_id} was already retired "
++                          f"({link['retired_at']}: {link['retirement_reason']}). Nothing was written.")
++        if conn.execute("SELECT COUNT(*) FROM v_live_lens_links WHERE extraction_id=?",
++                        (link["extraction_id"],)).fetchone()[0] <= 1:
++            raise Refusal(
++                f"retire-lens-link: link {link_id} is extraction {link['extraction_id']}'s last "
++                f"live link. Add the replacing link first with add-lens-link; a figure with no "
++                f"lens is a value about nobody (D-0182). Nothing was written.")
++        _retire(conn, link_id, reason, session)
++        return {"link_id": link_id, "extraction_id": link["extraction_id"],
++                "retirement_reason": reason, "dry_run": dry_run}
++
++
+ def relate_extraction(from_extraction: int, relation: str, session: str,
+                       dry_run: bool = False, to_extraction: int = None,
+                       to_label: str = None, to_kind: str = None, stated: str = None,
+@@ -9717,10 +9940,11 @@ def amend_extraction(extraction_id: int, field: str, value: str, reason: str,
+ 
+ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
+                       delta: int, claim_text: str, session: str,
+-                      dry_run: bool = False, identity: str = None, icf: str = None,
+-                      needs: str = None, medical: str = None,
++                      dry_run: bool = False, identity=None, icf=None,
++                      needs=None, medical=None,
+                       claimed_value: str = None, claimed_unit: str = None,
+-                      comparator: str = None, conversion_note: str = None):
++                      comparator: str = None, conversion_note: str = None,
++                      lens_basis: str = None, lens_basis_text: str = None):
+     """Write a figure_role='derived' row computed as base + delta, plus the two
+     derived_from edges `v_derived_figure_check` (migration 075) re-verifies it
+     against -- a derived figure is never a number trusted on faith.
+@@ -9794,7 +10018,8 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
+                 "claimed_value": claimed_value, "claimed_unit": unit,
+                 "claim_text": claim_text, "figure_role": "derived",
+                 "comparator": comparator, "extraction_method": "auto-mined",
+-                "root_type": "derived_calculation", "root_ref_id": base_row["ref_id"]}
++                "root_type": "derived_calculation", "root_ref_id": base_row["ref_id"],
++                "lens_basis": lens_basis, "lens_basis_text": lens_basis_text}
+         # EACH EDGE CARRIES ITS OWN TARGET'S QUOTE, not this row's claim_text.
+         # Corrected 2026-09-13 before first use. Every edge quote is checked as a
+         # byte-substring of a persisted retrieval artefact, and a derived row's
+diff --git a/scripts/migrations/127_extraction_lens_links.sql b/scripts/migrations/127_extraction_lens_links.sql
+new file mode 100644
+index 0000000..c4d8833
+--- /dev/null
++++ b/scripts/migrations/127_extraction_lens_links.sql
+@@ -0,0 +1,469 @@
++-- 127_extraction_lens_links.sql
++-- SCHEMA migration -- the lens link table for figures (OR-1c; design: workplan/2026-11-12-bidirectional-pipeline/tasks/T-018-design.md).
++--
++-- A figure that concerns two ICF codes, or two identity groups, was written twice or lost one. The owner ruled a link table
++-- ("link table unless that is more prone to errors", 2026-11-06; OD-39, 2026-11-12: it supersedes the 2026-08-28 clause "Never a
++-- population_* link table", for a figure's lens codes). This migration
++--   1. creates extraction_lens_links (one row per figure and lens code; four typed lens columns, exactly one per row; a typed
++--      warrant `basis` / `basis_text`; retire-in-place columns) and the one read surface v_live_lens_links;
++--   2. carries every non-NULL lens value of every figure into a 'carried' link, stamped with that figure's own created/updated pair;
++--   3. rebuilds source_value_extractions with the four lens columns kept, NULLed, and held NULL by CHECK (they are not dropped:
++--      committed data migrations INSERT them, rule 5), replacing the D-0182 "at least one" CHECK.
++-- Every other column, CHECK, default and comment, and every dependent index and view, is GENERATED from the live DDL, not retyped
++-- (migration 114's recipe): the views come down first because SQLite refuses a rename while a view is unresolvable; the
++-- AUTOINCREMENT floor is captured and restored as a maximum (migration 076).
++--
++-- ORDER: the carry reads the figures once, after every committed data migration has written theirs; the rebuilt table then
++-- holds NULL lens columns, so a data migration replayed after the carry would be refused by the new CHECK.
++-- AFTER_DATA: 20261106053823
++
++CREATE TEMP TABLE _127_seq AS SELECT name, seq FROM sqlite_sequence;
++
++
++CREATE TABLE extraction_lens_links (
++    link_id             INTEGER PRIMARY KEY AUTOINCREMENT,
++    extraction_id       INTEGER NOT NULL REFERENCES source_value_extractions(extraction_id),
++    -- THE FOUR LENSES, typed, one per row (2026-08-28 shape; "never two lenses in one row").
++    identity_code       TEXT REFERENCES base_taxonomy_identity(identity_code),
++    icf_code            TEXT REFERENCES base_icf(icf_code),
++    needs_code          TEXT REFERENCES access_needs(need_code),
++    medical_code        TEXT REFERENCES base_taxonomy_medical(medical_code),
++    -- THE WARRANT (rule 8: a judgment records its answer and its evidence in named columns).
++    --   named_in_text       the figure's own words name the users / function / need (D-2)
++    --   heading             the provision names no one; its heading names the group (OD-31)
++    --   study_participants  a study's own participants are this group (2026-08-25 grade rule)
++    --   carried             moved by migration from the retired column; no judged warrant yet
++    basis               TEXT NOT NULL CHECK (basis IN
++                            ('named_in_text', 'heading', 'study_participants', 'carried')),
++    basis_text          TEXT,          -- the exact words that warrant the link
++    retired_at          TEXT,
++    retired_by_session  TEXT,
++    retirement_reason   TEXT,
++    created_at          TEXT NOT NULL,
++    created_by_session  TEXT NOT NULL,
++    updated_at          TEXT NOT NULL,
++    updated_by_session  TEXT NOT NULL,
++    CHECK ((identity_code IS NOT NULL) + (icf_code IS NOT NULL)
++         + (needs_code IS NOT NULL) + (medical_code IS NOT NULL) = 1),
++    CHECK ((basis = 'carried') = (basis_text IS NULL)),
++    CHECK (basis_text IS NULL OR length(trim(basis_text)) > 0),
++    CHECK ((retired_at IS NULL) = (retired_by_session IS NULL)
++       AND (retired_at IS NULL) = (retirement_reason IS NULL))
++);
++-- One LIVE link per (figure, code). A retired link may repeat a live one (history).
++CREATE UNIQUE INDEX ux_extraction_lens_live ON extraction_lens_links
++    (extraction_id, COALESCE(identity_code, ''), COALESCE(icf_code, ''),
++     COALESCE(needs_code, ''), COALESCE(medical_code, ''))
++    WHERE retired_at IS NULL;
++CREATE INDEX ix_ell_extraction ON extraction_lens_links(extraction_id);
++CREATE INDEX ix_ell_identity   ON extraction_lens_links(identity_code) WHERE retired_at IS NULL;
++CREATE INDEX ix_ell_icf        ON extraction_lens_links(icf_code)      WHERE retired_at IS NULL;
++CREATE INDEX ix_ell_needs      ON extraction_lens_links(needs_code)    WHERE retired_at IS NULL;
++
++-- The carry: one 'carried' link per non-NULL lens value of every figure, stamped with the figure's own pair.
++
++INSERT INTO extraction_lens_links (extraction_id, identity_code, basis, created_at, created_by_session, updated_at, updated_by_session)
++  SELECT extraction_id, identity_code, 'carried', created_at, created_by_session,
++         COALESCE(updated_at, created_at), COALESCE(updated_by_session, created_by_session)
++    FROM source_value_extractions WHERE identity_code IS NOT NULL;
++
++INSERT INTO extraction_lens_links (extraction_id, icf_code, basis, created_at, created_by_session, updated_at, updated_by_session)
++  SELECT extraction_id, icf_code, 'carried', created_at, created_by_session,
++         COALESCE(updated_at, created_at), COALESCE(updated_by_session, created_by_session)
++    FROM source_value_extractions WHERE icf_code IS NOT NULL;
++
++INSERT INTO extraction_lens_links (extraction_id, needs_code, basis, created_at, created_by_session, updated_at, updated_by_session)
++  SELECT extraction_id, needs_code, 'carried', created_at, created_by_session,
++         COALESCE(updated_at, created_at), COALESCE(updated_by_session, created_by_session)
++    FROM source_value_extractions WHERE needs_code IS NOT NULL;
++
++INSERT INTO extraction_lens_links (extraction_id, medical_code, basis, created_at, created_by_session, updated_at, updated_by_session)
++  SELECT extraction_id, medical_code, 'carried', created_at, created_by_session,
++         COALESCE(updated_at, created_at), COALESCE(updated_by_session, created_by_session)
++    FROM source_value_extractions WHERE medical_code IS NOT NULL;
++
++
++-- The views that name the table come down for the rebuild.
++
++DROP VIEW "v_root_id_conflicts";
++DROP VIEW "v_derived_figure_check";
++DROP VIEW "v_value_independence";
++DROP VIEW "v_determination_provenance";
++DROP VIEW "v_unregistered_roots";
++DROP VIEW "v_scan_ledger";
++
++CREATE TABLE "_127_new_source_value_extractions" (
++  extraction_id          INTEGER PRIMARY KEY AUTOINCREMENT,
++
++  -- THE HAND-OFF KEY (D-0168; pinned by the blocking judgment_handoff_shape check):
++  -- NOT NULL, a real FK at the evidence item, and NO UNIQUE index over it anywhere.
++  ref_id                 TEXT NOT NULL REFERENCES evidence_sources(ref_id),
++
++  -- The slug this extraction was mined under: HISTORY. No writer sets it after migration 114 (the scan
++  -- contract, LED-195: a slug guides what is searched, not what is read from a source), so it is NULL on every
++  -- later row. The admission record is source_slug_links.
++  slug                   TEXT REFERENCES slugs(slug),
++
++  -- THE SUBJECT (owner 2026-08-26), now mandatory. Was nullable with `parameter` /
++  -- `parameter_canonical` beside it; a NOT NULL free-text parameter NAME sitting next to
++  -- a mandatory pointer at the registry that holds that same name is the dual home rule 5
++  -- forbids. The name is reached: base_parameters.term_id -> terms.canonical_en.
++  --
++  -- AND THE VERBATIM PHRASE IS NOT LOST WITH IT. `parameter` was documented (schemas/
++  -- source_value_extraction.py) as "the SOURCE's own phrase for what it measures,
++  -- verbatim and unjudged (R11/D-0173)". That fact already has a purpose-built home with
++  -- a live writer and 33 live rows: `observed_terms.surface_form`, whose own DDL comment
++  -- reads "The phrase EXACTLY as the source writes it. Not normalised, not translated,
++  -- not mapped. R11 forbids back-translation and this is where that starts" -- keyed
++  -- UNIQUE (ref_id, surface_form, language), with `locator` and `context_quote`, written
++  -- by `db.py observe-term` and adjudicated by `adjudicate-term` (migration 068, D-0173).
++  -- CLAUDE.md §6 orders exactly that split: "harvest concepts at evidence (db.py
++  -- observe-term, verbatim and unjudged), adjudicate at judgment." `parameter` was the
++  -- duplicate, and an UNREALISED one -- 0 rows, no writer, ever. Clause-level verbatim
++  -- survives here in `claim_text` ("exact source phrasing") plus `source_section` and the
++  -- 16 `loc_*` columns.
++  --
++  -- KNOWN RESIDUAL, stated rather than papered over: an extraction cannot say WHICH of
++  -- its source's observations it was read from. Closing that is an `observation_id`
++  -- pointer, and it is NOT added here because nothing would read it -- "an unread field,
++  -- an uncalled script and an unregistered check are the same defect" (CLAUDE.md §8). Add
++  -- it in the change that gives it a reader.
++  parameter_id           INTEGER NOT NULL REFERENCES base_parameters(parameter_id),
++
++  -- THE FOUR LENSES (owner 2026-08-28; CHECK relaxed by D-0182). Real typed FKs, one per
++  -- lens, nothing polymorphic. They replace `population_code` (retired by that ruling's
++  -- own ACTION) and `population_label`, the free-text companion that had no registry at
++  -- all -- retiring the typed column while keeping the untyped one beside it would keep
++  -- the exact defect the ruling was issued against.
++  --
++  -- `base_taxonomy_medical` holds 0 rows today, so a NON-NULL medical_code is
++  -- unwritable until it is seeded. That is the CLAUDE.md §4 trap, and it is harmless in
++  -- this shape precisely because the column is nullable and the CHECK is "at least one":
++  -- the table stays writable through any of the other three. `specifications` carries the
++  -- identical arrangement from 071.
++  identity_code          TEXT REFERENCES "base_taxonomy_identity"(identity_code),
++  icf_code               TEXT REFERENCES base_icf(icf_code),
++  needs_code             TEXT REFERENCES access_needs(need_code),
++  medical_code           TEXT REFERENCES base_taxonomy_medical(medical_code),
++
++  jurisdiction           TEXT,
++  setting                TEXT,
++
++  claim_type             TEXT NOT NULL
++                           CHECK (claim_type IN ('numerical','range','qualitative','framework','absent')),
++  claimed_value          TEXT,
++  claimed_unit           TEXT,
++  claim_text             TEXT,
++  source_section         TEXT,
++
++  -- Value genealogy / independence substrate (DR-2026-07-13 H1), carried across
++  -- unchanged. v_value_independence counts distinct roots over these.
++  root_id                TEXT REFERENCES external_root_registry(root_id),   -- registry-only (R24); an in-corpus root is root_ref_id
++  root_type              TEXT
++                           CHECK (root_type IN (
++                             'measurement_primary', 'participatory_finding',
++                             'committee_assertion', 'derived_calculation', 'untraced')),
++  root_ref_id            TEXT REFERENCES evidence_sources(ref_id),
++  echo_of                TEXT,
++  measurement_paradigm   TEXT
++                           CHECK (measurement_paradigm IN (
++                             'swept_path_dynamic', 'static_turning_circle', 'static_clearance',
++                             'anthropometric_percentile', 'instrumented_physical_measurement',
++                             'route_metric', 'field_observation', 'participatory_spatial',
++                             'stated_unmeasured')),
++  device_class           TEXT
++                           CHECK (device_class IN (
++                             'manual_self_propelled', 'manual_attendant', 'power_chair', 'scooter',
++                             'bariatric_manual', 'bariatric_power', 'walker_rollator',
++                             'mixed', 'not_device_scoped')),
++  root_population_note   TEXT,
++  root_classification_basis TEXT,
++  contested              INTEGER NOT NULL DEFAULT 0
++                           CHECK (contested IN (0, 1)),
++  file_anchor            TEXT,
++
++  -- Pinpoint locator hierarchy (migration 053), carried across unchanged. These are the
++  -- clause-level address that makes D-0168's 1:N fan-out legible: NBC 3.8's many clauses
++  -- are many rows, and these columns are what tells them apart.
++  locator_scheme         TEXT,
++  loc_division           TEXT,
++  loc_part               TEXT,
++  loc_section            TEXT,
++  loc_subsection         TEXT,
++  loc_paragraph          TEXT,
++  loc_clause             TEXT,
++  loc_subclause          TEXT,
++  loc_division_end       TEXT,
++  loc_part_end           TEXT,
++  loc_section_end        TEXT,
++  loc_subsection_end     TEXT,
++  loc_paragraph_end      TEXT,
++  loc_clause_end         TEXT,
++  loc_subclause_end      TEXT,
++  loc_note               TEXT,
++
++  extraction_method      TEXT NOT NULL
++                           CHECK (extraction_method IN ('skim','full-read','re-read','auto-mined')),
++  extraction_status      TEXT NOT NULL DEFAULT 'preliminary'
++                           CHECK (extraction_status IN ('preliminary','reviewed','verified','contradicted','absent-confirmed')),
++  promoted_to_rdc_id     TEXT REFERENCES reasoning_doc_citations(citation_id),
++  notes                  TEXT,
++
++  created_at             TEXT NOT NULL,
++  created_by_session     TEXT,
++  updated_at             TEXT NOT NULL,
++  updated_by_session     TEXT, figure_role TEXT
++  CHECK (figure_role IS NULL OR figure_role IN ('claim', 'finding', 'condition', 'derived')), comparator TEXT
++  CHECK (comparator IS NULL OR comparator IN ('=', '<', '<=', '>', '>=', 'between', 'approx')), harm_finding INTEGER NOT NULL DEFAULT 0
++  CHECK (harm_finding IN (0, 1))
++  CHECK (harm_finding = 0 OR figure_role = 'finding'), value_as_written TEXT
++  CHECK (value_as_written IS NULL OR length(trim(value_as_written)) > 0),
++
++  -- Carried across verbatim: if claim_type='absent', claimed_value must be NULL; if it
++  -- is anything else, claimed_value must be present. `db.py add-extraction` refuses both
++  -- violations in words BEFORE the INSERT, so an operator gets a sentence rather than
++  -- "CHECK constraint failed".
++  CHECK (
++    (claim_type =  'absent' AND claimed_value IS NULL) OR
++    (claim_type <> 'absent' AND claimed_value IS NOT NULL)
++  ),
++
++  -- HISTORY, retired by migration 127: a figure's lens lives in extraction_lens_links (OR-1c). The four
++  -- columns are kept because committed data migrations INSERT them (rule 5); never written again. D-0182
++  -- ("at least one lens") moved to the writers and the blocking integrity case.
++  CHECK (COALESCE(identity_code, icf_code, needs_code, medical_code) IS NULL)
++);
++
++INSERT INTO "_127_new_source_value_extractions" ("extraction_id", "ref_id", "slug", "parameter_id", "identity_code", "icf_code", "needs_code", "medical_code", "jurisdiction", "setting", "claim_type", "claimed_value", "claimed_unit", "claim_text", "source_section", "root_id", "root_type", "root_ref_id", "echo_of", "measurement_paradigm", "device_class", "root_population_note", "root_classification_basis", "contested", "file_anchor", "locator_scheme", "loc_division", "loc_part", "loc_section", "loc_subsection", "loc_paragraph", "loc_clause", "loc_subclause", "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end", "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note", "extraction_method", "extraction_status", "promoted_to_rdc_id", "notes", "created_at", "created_by_session", "updated_at", "updated_by_session", "figure_role", "comparator", "harm_finding", "value_as_written")
++  SELECT "extraction_id", "ref_id", "slug", "parameter_id", NULL, NULL, NULL, NULL, "jurisdiction", "setting", "claim_type", "claimed_value", "claimed_unit", "claim_text", "source_section", "root_id", "root_type", "root_ref_id", "echo_of", "measurement_paradigm", "device_class", "root_population_note", "root_classification_basis", "contested", "file_anchor", "locator_scheme", "loc_division", "loc_part", "loc_section", "loc_subsection", "loc_paragraph", "loc_clause", "loc_subclause", "loc_division_end", "loc_part_end", "loc_section_end", "loc_subsection_end", "loc_paragraph_end", "loc_clause_end", "loc_subclause_end", "loc_note", "extraction_method", "extraction_status", "promoted_to_rdc_id", "notes", "created_at", "created_by_session", "updated_at", "updated_by_session", "figure_role", "comparator", "harm_finding", "value_as_written"
++    FROM "source_value_extractions";
++DROP TABLE "source_value_extractions";
++ALTER TABLE "_127_new_source_value_extractions" RENAME TO "source_value_extractions";
++CREATE INDEX idx_sve_ref    ON source_value_extractions(ref_id);
++CREATE INDEX idx_sve_status ON source_value_extractions(extraction_status);
++CREATE INDEX ix_sve_locator ON source_value_extractions(loc_section, loc_clause);
++CREATE INDEX idx_sve_param_ref ON source_value_extractions(parameter_id, ref_id);
++
++INSERT INTO sqlite_sequence (name, seq)
++  SELECT s.name, s.seq FROM _127_seq s
++   WHERE s.name NOT IN (SELECT name FROM sqlite_sequence);
++UPDATE sqlite_sequence SET seq = MAX(seq,
++        (SELECT s.seq FROM _127_seq s WHERE s.name = sqlite_sequence.name))
++  WHERE name IN (SELECT name FROM _127_seq);
++DROP TABLE _127_seq;
++
++-- The views, recreated verbatim from their own stored SQL.
++CREATE VIEW v_root_id_conflicts AS
++    SELECT 'ref_id_has_multiple_root_ids' AS conflict_type,
++           root_ref_id AS conflict_key,
++           COUNT(DISTINCT root_id) AS distinct_count
++    FROM source_value_extractions
++    WHERE root_ref_id IS NOT NULL AND root_id IS NOT NULL
++    GROUP BY root_ref_id HAVING COUNT(DISTINCT root_id) > 1
++    UNION ALL
++    SELECT 'root_id_spans_multiple_ref_ids' AS conflict_type,
++           root_id AS conflict_key,
++           COUNT(DISTINCT root_ref_id) AS distinct_count
++    FROM source_value_extractions
++    WHERE root_ref_id IS NOT NULL AND root_id IS NOT NULL
++    GROUP BY root_id HAVING COUNT(DISTINCT root_ref_id) > 1;
++
++CREATE VIEW v_derived_figure_check AS
++SELECT
++    d.extraction_id                                              AS derived_id,
++    CAST(d.claimed_value AS REAL)                                 AS stored,
++    CAST(b.claimed_value AS REAL)                                 AS base_value,
++    CAST(e.claimed_value AS REAL)                                 AS delta_value,
++    CAST(b.claimed_value AS REAL) + CAST(e.claimed_value AS REAL) AS recomputed
++FROM source_value_extractions d
++JOIN extraction_relations rb
++  ON rb.from_extraction_id = d.extraction_id
++ AND rb.relation = 'derived_from'
++ AND rb.input_role = 'base'
++JOIN source_value_extractions b ON b.extraction_id = rb.to_extraction_id
++JOIN extraction_relations rd
++  ON rd.from_extraction_id = d.extraction_id
++ AND rd.relation = 'derived_from'
++ AND rd.input_role = 'delta'
++JOIN source_value_extractions e ON e.extraction_id = rd.to_extraction_id
++WHERE d.figure_role = 'derived'
++  AND d.claimed_value GLOB '*[0-9]*' AND d.claimed_value NOT GLOB '*[^0-9.eE+-]*'
++  AND b.claimed_value GLOB '*[0-9]*' AND b.claimed_value NOT GLOB '*[^0-9.eE+-]*'
++  AND e.claimed_value GLOB '*[0-9]*' AND e.claimed_value NOT GLOB '*[^0-9.eE+-]*'
++  AND d.claimed_unit = b.claimed_unit
++  AND d.claimed_unit = e.claimed_unit;
++
++CREATE VIEW v_value_independence AS
++    SELECT sve.parameter_id,
++           t.canonical_en AS parameter_label,
++           COUNT(DISTINCT COALESCE(sve.root_ref_id, sve.root_id)) AS independent_root_count
++    FROM source_value_extractions sve
++    JOIN base_parameters p ON p.parameter_id = sve.parameter_id
++    JOIN terms t           ON t.term_id      = p.term_id
++    WHERE sve.root_type IN ('measurement_primary', 'participatory_finding',
++                            'derived_calculation')
++      AND (sve.root_ref_id IS NOT NULL
++           OR sve.root_id IN (SELECT root_id FROM external_root_registry))
++      -- 104: active parameters only; a retired parameter's extractions are history.
++      AND p.status = 'active'
++    GROUP BY sve.parameter_id, t.canonical_en;
++
++CREATE VIEW v_determination_provenance AS
++SELECT s.specification_id,
++       s.parameter_id,
++       t.canonical_en                AS parameter_name,
++       s.state,
++       COALESCE(s.identity_code, s.icf_code, s.needs_code, s.medical_code) AS lens,
++       l.role,
++       l.exclusion_reason,
++       x.extraction_id,
++       x.figure_role,
++       x.comparator,
++       x.claimed_value,
++       x.claimed_unit,
++       x.claim_text,
++       x.ref_id,
++       e.tier,
++       e.evidence_type,
++       e.verification_status
++  FROM specifications s
++  JOIN specification_extraction_links l ON l.specification_id = s.specification_id
++  JOIN source_value_extractions       x ON x.extraction_id    = l.extraction_id
++  JOIN base_parameters                p ON p.parameter_id     = s.parameter_id
++                                       AND p.status             = 'active'
++  JOIN terms                          t ON t.term_id          = p.term_id
++  LEFT JOIN evidence_sources          e ON e.ref_id           = x.ref_id
++ WHERE s.retired_at IS NULL;
++
++CREATE VIEW v_unregistered_roots AS
++    SELECT sve.extraction_id,
++           sve.slug,
++           sve.parameter_id,
++           t.canonical_en AS parameter_label,
++           sve.root_id,
++           'unregistered' AS defect
++    FROM source_value_extractions sve
++    JOIN base_parameters p ON p.parameter_id = sve.parameter_id
++                           AND p.status = 'active'
++    JOIN terms t           ON t.term_id      = p.term_id
++    WHERE sve.root_id IS NOT NULL
++      AND sve.root_ref_id IS NULL
++      AND NOT EXISTS (
++          SELECT 1 FROM external_root_registry err
++          WHERE err.root_id = sve.root_id)
++
++    UNION ALL
++
++    SELECT sve.extraction_id,
++           sve.slug,
++           sve.parameter_id,
++           t.canonical_en AS parameter_label,
++           sve.root_id,
++           'rootless' AS defect
++    FROM source_value_extractions sve
++    JOIN base_parameters p ON p.parameter_id = sve.parameter_id
++                           AND p.status = 'active'
++    JOIN terms t           ON t.term_id      = p.term_id
++    WHERE sve.root_id IS NULL
++      AND sve.root_ref_id IS NULL
++      AND sve.root_type IS NOT NULL
++      AND sve.root_type NOT IN ('untraced', 'derived_calculation');
++
++CREATE VIEW v_scan_ledger AS
++-- v_scan_ledger: one row per (source in scope) x (active parameter).
++--
++--   source in scope   evidence_sources with superseded_by_ref_id IS NULL. A tombstone is
++--                     never read again; its replacement is.
++--   active parameter  base_parameters.status = 'active'. Retired and merged parameters
++--                     leave the ledger (their extractions stay, as history).
++--
++-- STATUS PRECEDENCE, first match wins:
++--   1 EXTRACTED          a non-absent extraction exists for the pair (any figure_role).
++--   2 STATED-ABSENT      only claim_type 'absent' extractions exist: the source addresses
++--                        the quantity and sets nothing -- a positive statement.
++--   3 READ-NOTHING-FOUND a FULL-scope reading covers the pair and found no row.
++--   4 BLOCKED            no full reading covers the pair AND the source carries an obstacle
++--                        processing_blocked_reason (below): the full text could not be
++--                        obtained or read, so the pair is not reading debt until a full
++--                        reading is recorded. Any partial / fragment / abstract reading of
++--                        the pair is still named in scan_id / text_scope / method.
++--   5 READ-PARTIAL       only partial / fragment / abstract readings cover it, and no
++--                        obstacle stands: the full text is obtainable and unread -- debt.
++--   6 NOT-READ           no reading covers it.
++-- WHY THIS ORDER (it is derived from what each fact proves; 122 ranked BLOCKED above every
++-- reading and 123 below every reading, both guesses): a FULL reading proves the obstacle
++-- gone, since the whole text was read, so 3 outranks 4. A partial, fragment or abstract
++-- reading proves nothing about the full text, so under a standing obstacle 4 outranks 5.
++-- A reading COVERS a pair when it is catalogue-mode with catalogue_version >= parameter_id
++-- (the parameter existed when the reading was made), or targeted at that parameter. Rows 1
++-- and 2 win over readings because a row written is stronger evidence than a reading
++-- recorded; 3 wins over the rest because a full reading supersedes a partial one.
++--
++-- THE BLOCKED CASE BELOW IS THE ONE HOME of "the text could not be obtained or read", and
++-- this header is the ONE HOME of the classification of every processing_blocked_reason
++-- value (evidence_sources CHECK, migration 091); each value appears here as a bare token
++-- under exactly one head, and a test derives the CHECK and fails on a value this header
++-- does not name. The writers and gates read this view's status, never the column. NOTHING
++-- CLEARS THE COLUMN: it is the retrieval record and stays as history; the ledger alone says
++-- whether a pair is still blocked.
++--   obstacle to the text (BLOCKED, above):  no-full-text, paywalled, language.
++--   copy of a typed fact (not an obstacle; the writers refuse it by pointer -- the judgement
++--     lives in db.py _BLOCK_REASON_COPIES): no-quantified-claims -> a recorded full reading;
++--     superseded -> superseded_by_ref_id.
++--   pending owner question 8 of the round-3 adjudication, treated as NULL (the source owes
++--     its reading): out-of-scope, tier-not-required (they say no text was unobtainable);
++--     no-doi, not-indexed (migration 091's comments describe discovery -- "no resolvable
++--     identifier for automated paths", "absent from the indexes the pipeline queries" --
++--     not an obstacle to a text in hand, and a URL-only report admitted without a DOI can
++--     be read).
++--
++-- scan_id / text_scope / method name the STRONGEST covering reading (full scope first,
++-- then full-read before pre-screen, then the latest), so a READ-NOTHING-FOUND resting on
++-- a pre-screen only is visible as such. NULL when no reading covers the pair.
++WITH pairs AS (
++    SELECT e.ref_id, p.parameter_id, e.processing_blocked_reason
++      FROM evidence_sources e
++     CROSS JOIN base_parameters p
++     WHERE e.superseded_by_ref_id IS NULL
++       AND p.status = 'active'
++),
++best AS (
++    SELECT pr.ref_id, pr.parameter_id, pr.processing_blocked_reason,
++           (SELECT s.scan_id FROM source_scans s
++             WHERE s.ref_id = pr.ref_id
++               AND ((s.mode = 'catalogue' AND s.catalogue_version >= pr.parameter_id)
++                 OR (s.mode = 'targeted' AND s.target_parameter_id = pr.parameter_id))
++             ORDER BY (s.text_scope = 'full') DESC, (s.method = 'full-read') DESC,
++                      s.scan_id DESC
++             LIMIT 1) AS scan_id
++      FROM pairs pr
++)
++SELECT b.ref_id,
++       b.parameter_id,
++       CASE
++         WHEN EXISTS (SELECT 1 FROM source_value_extractions x
++                       WHERE x.ref_id = b.ref_id AND x.parameter_id = b.parameter_id
++                         AND x.claim_type <> 'absent') THEN 'EXTRACTED'
++         WHEN EXISTS (SELECT 1 FROM source_value_extractions x
++                       WHERE x.ref_id = b.ref_id AND x.parameter_id = b.parameter_id
++                         AND x.claim_type = 'absent') THEN 'STATED-ABSENT'
++         WHEN s.text_scope = 'full' THEN 'READ-NOTHING-FOUND'
++         WHEN b.processing_blocked_reason IN
++              ('no-full-text', 'paywalled', 'language') THEN 'BLOCKED'
++         WHEN s.scan_id IS NOT NULL THEN 'READ-PARTIAL'
++         ELSE 'NOT-READ'
++       END AS status,
++       b.scan_id,
++       s.text_scope,
++       s.method
++  FROM best b
++  LEFT JOIN source_scans s ON s.scan_id = b.scan_id;
++
++-- The one read surface for a figure's lens (OD-29: every reader filters on the retired mark first).
++CREATE VIEW v_live_lens_links AS
++SELECT link_id, extraction_id, identity_code, icf_code, needs_code, medical_code,
++       basis, basis_text, created_at, created_by_session
++  FROM extraction_lens_links
++ WHERE retired_at IS NULL;
++
++PRAGMA user_version = 127;
+diff --git a/scripts/tests/test_db_amend_writers.py b/scripts/tests/test_db_amend_writers.py
+index ff53fc2..48fafc0 100644
+--- a/scripts/tests/test_db_amend_writers.py
++++ b/scripts/tests/test_db_amend_writers.py
+@@ -752,6 +752,7 @@ try:
+         readable(XD)
+         X_PAYLOAD = {"ref_id": XD, "parameter_id": PID and PID[0],
+                      "identity_code": POP, "claim_type": "absent", "figure_role": "finding",
++                     "lens_basis": "named_in_text", "lens_basis_text": "fixture",   # the link's warrant (OR-1c)
+                      "claim_text": "fixture: the source states nothing for this parameter",
+                      "extraction_method": "skim"}
+         # No artefact carries a fixture's words; the exemption is the writer's own path
+@@ -1726,6 +1727,7 @@ try:
+     readable(ref_p)
+     X_P = {"ref_id": ref_p, "parameter_id": PARAM, "identity_code": lens_live["--identity"],
+            "claim_type": "absent", "figure_role": "finding",
++           "lens_basis": "named_in_text", "lens_basis_text": "fixture",   # the link's warrant (OR-1c)
+            "claim_text": "fixture: the source states nothing for this parameter", "extraction_method": "skim"}
+     try:
+         got = db.insert_extraction(dict(X_P), S, relations=[], verbatim_exempt=X_EXEMPT)
+@@ -1743,6 +1745,97 @@ try:
+            msg_root and "external_root_registry" in msg_root and msg_slug and "slug" in msg_slug
+            and counts("source_value_extractions") == n_sve, f"root={msg_root!r} slug={msg_slug!r}")
+ 
++    # ── T018: a figure's lens is a link (OR-1c, migration 127) ─────────────────────────────────────────
++    # Several codes of one model on a figure: the figure is written once and gains one link per code.
++    # Probes are chosen by query on the copy; the fixture figure is made by the CLI so the repeated flags,
++    # the dispatch and the writer are all reached. Red on the unchanged code: argparse has no --lens-basis,
++    # no such table as extraction_lens_links, no such verbs, and the dead lens column is still writable.
++    ref_l, _ = add_o("T018 lens links", "--evidence-type", "grey")
++    readable(ref_l)
++    L_ICF = [r[0] for r in q("SELECT icf_code FROM base_icf WHERE icf_code LIKE 'd%' ORDER BY icf_code LIMIT 2")]
++    L_ID = q("SELECT identity_code FROM base_taxonomy_identity WHERE status='active' ORDER BY identity_code LIMIT 1")[0][0]
++    L_CLAIM = "TASK-FIXTURE the source states nothing for this parameter"
++    L_WORD = max(L_CLAIM.split(), key=len)
++
++    def t18_add(*lens, ref=None, text=None):
++        return run_cli("add-extraction", "--ref-id", ref or ref_l, "--parameter-id", str(PARAM), *lens,
++                       "--lens-basis", "named_in_text", "--lens-basis-text", text or L_WORD,
++                       "--claim-type", "absent", "--figure-role", "finding", "--relation", "none",
++                       "--claim-text", L_CLAIM, "--verbatim-exempt", "fixture: no artefact carries it",
++                       "--extraction-method", "skim", "--session", S)
++
++    def t18_links(eid):
++        if not q("SELECT 1 FROM sqlite_master WHERE name='v_live_lens_links'"):
++            return []          # the unchanged schema: no link table yet, which is what the case reports red
++        return q("SELECT link_id, icf_code, identity_code FROM v_live_lens_links WHERE extraction_id=? ORDER BY link_id", eid)
++
++    r1 = t18_add("--icf", L_ICF[0], "--icf", L_ICF[1])
++    fig1 = q("SELECT extraction_id, identity_code, icf_code, needs_code, medical_code FROM source_value_extractions "
++             "WHERE ref_id=? ORDER BY extraction_id DESC LIMIT 1", ref_l)
++    lk1 = t18_links(fig1[0][0]) if fig1 else []
++    record("T018-01", "add-extraction with two --icf codes stores ONE figure with TWO live links and the four lens "
++           "columns NULL (AT-32)",
++           r1.returncode == 0 and len(fig1) == 1 and fig1[0][1:] == (None, None, None, None)
++           and sorted(l[1] for l in lk1) == sorted(L_ICF)
++           and q("SELECT COUNT(*) FROM source_value_extractions WHERE ref_id=?", ref_l) == [(1,)],
++           f"rc={r1.returncode} {(r1.stdout + r1.stderr)[-300:]} fig={fig1} links={lk1}")
++
++    r1b = t18_add("--icf", L_ICF[0], "--icf", L_ICF[0])
++    record("T018-01a", "a repeated code in one call is refused, and nothing is written",
++           r1b.returncode != 0 and "repeated" in (r1b.stdout + r1b.stderr)
++           and q("SELECT COUNT(*) FROM source_value_extractions WHERE ref_id=?", ref_l) == [(1,)],
++           f"rc={r1b.returncode} {(r1b.stdout + r1b.stderr)[-200:]}")
++
++    ref_l2, _ = add_o("T018 one link", "--evidence-type", "grey")
++    readable(ref_l2)
++    r2a = t18_add("--identity", L_ID, ref=ref_l2)
++    fig2 = (q("SELECT extraction_id FROM source_value_extractions WHERE ref_id=?", ref_l2) or [(0,)])[0][0]
++    only = t18_links(fig2) if q("SELECT 1 FROM sqlite_master WHERE name='v_live_lens_links'") else []
++    r2 = run_cli("retire-lens-link", "--link-id", str(only[0][0] if only else 0), "--reason", "TASK-FIXTURE", "--session", S)
++    record("T018-02", "retire-lens-link refuses a figure's only live link, naming add-lens-link, and writes nothing",
++           r2a.returncode == 0 and len(only) == 1 and r2.returncode != 0 and "add-lens-link" in (r2.stdout + r2.stderr)
++           and t18_links(fig2) == only, f"{(r2a.stdout + r2a.stderr)[-200:]} {(r2.stdout + r2.stderr)[-200:]}")
++
++    def t18_n():
++        return counts("extraction_lens_links") if q("SELECT 1 FROM sqlite_master WHERE name='extraction_lens_links'") else (None,)
++    n_links = t18_n()
++    r3 = run_cli("add-lens-link", "--extraction-id", str(fig1[0][0] if fig1 else 0), "--identity", L_ID, "--lens-basis", "named_in_text",
++                 "--lens-basis-text", "TASK-FIXTURE words the figure never held", "--session", S)
++    record("T018-03", "add-lens-link refuses --lens-basis-text found nowhere in the figure's words or its source's "
++           "files, naming where it looked, and writes nothing",
++           r3.returncode != 0 and "claim_text" in (r3.stdout + r3.stderr) and "files saved for" in (r3.stdout + r3.stderr)
++           and n_links[0] is not None and t18_n() == n_links, f"rc={r3.returncode} {(r3.stdout + r3.stderr)[-300:]}")
++
++    carried = [] if not q("SELECT 1 FROM sqlite_master WHERE name='v_live_lens_links'") else q(
++                "SELECT k.link_id, k.extraction_id, k.identity_code, x.claim_text FROM v_live_lens_links k "
++                "JOIN source_value_extractions x USING (extraction_id) WHERE k.basis='carried' "
++                "AND k.identity_code IS NOT NULL AND length(trim(COALESCE(x.claim_text,''))) > 0 "
++                "ORDER BY k.link_id LIMIT 1")
++    if not q("SELECT 1 FROM sqlite_master WHERE name='v_live_lens_links'"):
++        record("T018-04", "add-lens-link replaces a carried link", False, "no v_live_lens_links: the link table is absent")
++    elif not carried:
++        print("      SKIPPED-NO-FIXTURE: T018-04 (no live carried identity link with a claim text on the copy)")
++    else:
++        c_link, c_eid, c_code, c_text = carried[0]
++        r4 = run_cli("add-lens-link", "--extraction-id", str(c_eid), "--identity", c_code, "--lens-basis", "named_in_text",
++                     "--lens-basis-text", max(c_text.split(), key=len), "--session", S)
++        live4 = q("SELECT link_id, basis FROM v_live_lens_links WHERE extraction_id=? AND identity_code=?", c_eid, c_code)
++        old4 = q("SELECT retirement_reason FROM extraction_lens_links WHERE link_id=?", c_link)
++        record("T018-04", "add-lens-link on a code with a carried link retires the carried link in the same act: one "
++               "live link, judged, reason 'superseded by judged link <id>'",
++               r4.returncode == 0 and len(live4) == 1 and live4[0][1] == "named_in_text"
++               and old4 == [(f"superseded by judged link {live4[0][0]}",)], f"{(r4.stdout + r4.stderr)[-300:]} {live4} {old4}")
++
++    try:
++        w("INSERT INTO source_value_extractions (ref_id, parameter_id, identity_code, claim_type, claim_text, "
++          "extraction_method, created_at, updated_at) VALUES (?, ?, ?, 'absent', 'TASK-FIXTURE', 'skim', 't', 't')",
++          ref_l, PARAM, L_ID)
++        err7 = None
++    except sqlite3.IntegrityError as exc:
++        err7 = str(exc)
++    record("T018-07", "a figure naming a lens column is refused by the schema: the dead home cannot be written",
++           err7 is not None and "CHECK constraint failed" in err7, f"got {err7!r}")
++
+     # G. THE MARKER IS A CACHE OVER `confirms` EDGES, so an edge aimed at a row a LIVE PROXY
+     # determination is governed by is refused (dbcore.live_determinations_linked), through both
+     # writers, and so is regrading a row in a live determination's provenance; neither is refused
+diff --git a/scripts/tests/test_db_integrity.py b/scripts/tests/test_db_integrity.py
+index e9396ef..b7979cc 100644
+--- a/scripts/tests/test_db_integrity.py
++++ b/scripts/tests/test_db_integrity.py
+@@ -903,6 +903,17 @@ def run_checks(db_path):
+            subject=subj("SELECT COUNT(*) FROM evidence_source_authors "
+                         "WHERE COALESCE(orcid,'') <> ''"))
+ 
++    # D-0182 moved from the figure's CHECK to the writers (migration 127, OR-1c): a figure's lens is a
++    # link row, and the schema cannot hold "at least one link" (SQLite has no deferred trigger), so this
++    # case is the floor under the writers. A hand INSERT that bypasses db.py fails here.
++    no_lens = [r[0] for r in conn.execute(
++        "SELECT x.extraction_id FROM source_value_extractions x "
++        "WHERE NOT EXISTS (SELECT 1 FROM v_live_lens_links k WHERE k.extraction_id = x.extraction_id) "
++        "ORDER BY 1 LIMIT 5")]
++    record("G04", "every figure carries at least one live lens link (D-0182, held here since the lens moved to links)",
++           not no_lens, f"figure(s) with no live lens link, first: {no_lens}" if no_lens else "",
++           subject=subj("SELECT COUNT(*) FROM source_value_extractions"))
++
+     # ── H: JSON-array ↔ junction parity ───────────────────────────────────────
+     # Two edges on the walk are being migrated out of JSON TEXT columns and into
+     # foreign-keyed junction tables (migrations 044 and 050). Until the columns
+diff --git a/scripts/tests/test_run_pipeline_refusals.py b/scripts/tests/test_run_pipeline_refusals.py
+index 833b473..6f49cd9 100644
+--- a/scripts/tests/test_run_pipeline_refusals.py
++++ b/scripts/tests/test_run_pipeline_refusals.py
+@@ -331,6 +331,9 @@ def extraction(ref, pid, **over):
+             "claim_text": QUOTE, "extraction_method": "full-read", "figure_role": "claim",
+             "source_section": "section 3", "loc_section": "3"}
+     base.update(over)
++    # The lens is a link now (OR-1c): its warrant is words the figure holds, here its own quote.
++    base.setdefault("lens_basis", "named_in_text")
++    base.setdefault("lens_basis_text", base["claim_text"])
+     return base
+ 
+ 
+@@ -1870,11 +1873,13 @@ with scratch() as c:
+     _insert = db.insert_extraction
+     db.insert_extraction = lambda data, *a, **k: _insert({**data, "source_section": "section 3"}, *a, **k)
+     r = refusal(db.derive_extraction, ref_id=t16ref, parameter_id=pid, base=base, delta=delta, claimed_value="99",
+-                comparator="=", claim_text=T16["bad"], session=S, identity=IDENT, dry_run=False)
++                comparator="=", claim_text=T16["bad"], session=S, identity=IDENT, dry_run=False,
++                lens_basis="named_in_text", lens_basis_text=T16["bad"])
+     record("T016-N11", "derive-extraction with a mismatched --claimed-value is refused, and writes nothing",
+            r and "base + delta" in r and n_rows() == before, r or n_rows())
+     res, err = ok(db.derive_extraction, ref_id=t16ref, parameter_id=pid, base=base, delta=delta, comparator="=",
+-                  claim_text=T16["ok"], session=S, identity=IDENT, dry_run=False)
++                  claim_text=T16["ok"], session=S, identity=IDENT, dry_run=False,
++                  lens_basis="named_in_text", lens_basis_text=T16["ok"])
+     record("T016-N11a", "derive-extraction computing the sum itself (control) is accepted and stores 14.75",
+            err is None and c1("SELECT claimed_value FROM source_value_extractions WHERE extraction_id=?",
+                                   res["extraction_id"]) == "14.75", err)
+diff --git a/scripts/tests/test_scan_contract.py b/scripts/tests/test_scan_contract.py
+index 2aa2171..82888be 100644
+--- a/scripts/tests/test_scan_contract.py
++++ b/scripts/tests/test_scan_contract.py
+@@ -131,6 +131,15 @@ def q(sql, *params):
+         con.close()
+ 
+ 
++def fig(extraction_id):
++    """Give a raw-SQL fixture figure its lens as a link (OR-1c): the figure's own lens columns are held
++    NULL by CHECK, so a figure written by SQL carries POP as a 'carried' link. Returns the id."""
++    x("INSERT INTO extraction_lens_links (extraction_id, identity_code, basis, created_at, "
++      "created_by_session, updated_at, updated_by_session) VALUES (?, ?, 'carried', 't', 't', 't', 't')",
++      extraction_id, POP)
++    return extraction_id
++
++
+ def x(sql, *params):
+     """A fixture write by SQL on the COPY, for a state no writer can make. Each call site
+     says why."""
+@@ -415,10 +424,10 @@ try:
+     record("S14", "scan_debt is red while pairs are NOT-READ, and lists the parameter",
+            d1.returncode == 1 and f"parameter {late} " in d1.stdout and "EXAMINED:" in d1.stdout,
+            d1.stdout[-600:] + d1.stderr)
+-    x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, identity_code, "
+-      "claim_type, claim_text, extraction_method, created_at, updated_at, figure_role) "
+-      "VALUES (?, ?, ?, ?, 'absent', 'fixture', 'full-read', 't', 't', 'finding')",
+-      REF_B, SLUG_A, late, POP)    # an `absent` row, the positive statement of absence
++    fig(x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
++          "claim_type, claim_text, extraction_method, created_at, updated_at, figure_role) "
++          "VALUES (?, ?, ?, 'absent', 'fixture', 'full-read', 't', 't', 'finding')",
++          REF_B, SLUG_A, late))    # an `absent` row, the positive statement of absence
+     record("S15", "an 'absent' extraction reads STATED-ABSENT, beating any reading",
+            ledger(REF_B, late) == ("STATED-ABSENT", None), ledger(REF_B, late))
+     record("S16", "every refused reading wrote nothing (S01-S05, S07, S08)",
+@@ -443,11 +452,11 @@ try:
+                    "retire-specification",
+                    "retire-specification", retire, P["E"], "fixture", S)
+     # An extraction with a measured root on P[R], so v_value_independence lists it.
+-    x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, identity_code, "
+-      "claim_type, claimed_value, claim_text, extraction_method, created_at, updated_at, "
+-      "figure_role, root_type, root_ref_id) VALUES (?, ?, ?, ?, 'numerical', '1', "
+-      "'fixture 1', 'full-read', 't', 't', 'claim', 'measurement_primary', ?)",
+-      REF_A, SLUG_A, P["R"], POP, REF_A)   # fixture evidence for the reader sweep (Q9)
++    fig(x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
++          "claim_type, claimed_value, claim_text, extraction_method, created_at, updated_at, "
++          "figure_role, root_type, root_ref_id) VALUES (?, ?, ?, 'numerical', '1', "
++          "'fixture 1', 'full-read', 't', 't', 'claim', 'measurement_primary', ?)",
++          REF_A, SLUG_A, P["R"], REF_A))   # fixture evidence for the reader sweep (Q9)
+     listed_before = bool(q("SELECT 1 FROM v_value_independence WHERE parameter_id=?", P["R"]))
+     r4 = attempt(retire, P["R"], "fixture: not a design quantity after all", S)
+     row = q("SELECT status, notes FROM base_parameters WHERE parameter_id=?", P["R"])[0]
+@@ -479,10 +488,10 @@ try:
+     expect_refusal("L10", "merge-parameter refuses while either side has a live determination",
+                    "LIVE determination", merge, P["E"], P["A"], "x", S)
+     attempt(merge, P["C"], P["A"], "fixture: one quantity", S)
+-    XA = x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
+-           "identity_code, claim_type, claim_text, extraction_method, created_at, "
+-           "updated_at, figure_role) VALUES (?, ?, ?, ?, 'absent', 'fixture', 'full-read', "
+-           "'t', 't', 'finding')", REF_A, SLUG_A, P["A"], POP)   # a row to re-point
++    XA = fig(x("INSERT INTO source_value_extractions (ref_id, slug, parameter_id, "
++               "claim_type, claim_text, extraction_method, created_at, updated_at, "
++               "figure_role) VALUES (?, ?, ?, 'absent', 'fixture', 'full-read', "
++               "'t', 't', 'finding')", REF_A, SLUG_A, P["A"]))   # a row to re-point
+     TS = attempt(scan, sc(mode="targeted", target_parameter_id=P["A"]), S).get("scan_id")
+     # History on P[A]: a RETIRED determination and a RESOLVED gate, neither writable here
+     # without the engine and an audit, set by SQL so the merge can be seen to keep them.
+@@ -835,6 +844,7 @@ try:
+         out = attempt(db.insert_extraction,
+                       {"ref_id": ref, "parameter_id": PE,
+                        "identity_code": POP, "claim_type": "numerical",
++                       "lens_basis": "named_in_text", "lens_basis_text": quote or "fixture",
+                        "claimed_value": value, "claimed_unit": "mm", "comparator": "<=",
+                        "figure_role": "claim", "extraction_method": method,
+                        "claim_text": quote or f"fixture: shall not exceed {value} mm",
+diff --git a/skills/cross-population-conflict-mapper_SKILL.md b/skills/cross-population-conflict-mapper_SKILL.md
+index b54d971..2762cc3 100644
+--- a/skills/cross-population-conflict-mapper_SKILL.md
++++ b/skills/cross-population-conflict-mapper_SKILL.md
+@@ -60,7 +60,7 @@ From the input (determination, room type, or explicit domain list):
+ For each active domain, search in this order:
+ 
+ **Priority 1 — Existing project evidence:**
+-- the parameter's extractions and live determination (`source_value_extractions`, `specifications`), read per lens column
++- the parameter's extractions and live determination (`source_value_extractions`, with each figure's lens read from `v_live_lens_links`; `specifications`, per lens column)
+ - SQLite `connections` table for PENDING connections: `python3 scripts/db.py connections --status PENDING`
+ 
+ **Priority 2 — Aged care / dementia facility POEs:**
+diff --git a/skills/run-pipeline_SKILL.md b/skills/run-pipeline_SKILL.md
+index f6cb458..599af4b 100644
+--- a/skills/run-pipeline_SKILL.md
++++ b/skills/run-pipeline_SKILL.md
+@@ -174,8 +174,12 @@ The catalogue every source is read against: `base_parameters` + `terms`/`term_al
+ *(Your "evidence stage" adjudication lives here: CLAUDE.md §6 records the owner's 2026-08-27 ruling that the lens
+ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map.yaml` change.)*
+ - `adjudicate-term` for every observed phrase (`NOT-OURS` and `DEFERRED` are answers). `add-extraction` per stated
+-  figure: parameter, at least one lens column (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
+-  is stated in at least one lens, D-0182), value and unit (a figure the source writes in words is entered as its numeral,
++  figure: parameter, at least one lens (`--identity`, `--icf` code and name, `--needs`, `--medical`; an extraction
++  is stated in at least one lens, D-0182). Each flag may be repeated: the figure is written once and each code becomes a
++  link (`extraction_lens_links`, read through `v_live_lens_links`), warranted by the required `--lens-basis` and
++  `--lens-basis-text` (the exact words relied on, found in the figure's text or its source's saved files). A code
++  with another warrant is added later with `add-lens-link`, and a link is retired with `retire-lens-link` (never a
++  figure's last one). The figure's own four lens columns are NULL. Value and unit (a figure the source writes in words is entered as its numeral,
+   with the source's own wording in `--value-as-written`), `--claim-text` verbatim, locator, `--figure-role`,
+   `--claim-type`, and `--relation` (**required**; `none` for an absolute figure). `add-extraction --help` prints every
+   vocabulary, each read from its own column: `claim_type`, `extraction_method`, `extraction_status`, `root_type`,
+diff --git a/workplan/pipeline-state-graph/machines.yaml b/workplan/pipeline-state-graph/machines.yaml
+index b3b1c46..35b77a2 100644
+--- a/workplan/pipeline-state-graph/machines.yaml
++++ b/workplan/pipeline-state-graph/machines.yaml
+@@ -202,7 +202,7 @@ machines:
+     via: "db.py add-extraction"
+     guards:
+       - "the source is admitted and not a tombstone"
+-      - "parameter_id required, parameter exists and is ACTIVE; at least one lens column, and that lens code must exist in its registry table"
++      - "parameter_id required, parameter exists and is ACTIVE; at least one lens (each flag repeatable), every code must exist in its registry table, and each lands as a link row (extraction_lens_links) warranted by --lens-basis / --lens-basis-text; the figure's own four lens columns stay NULL"
+       - "a claim_text is required; claim_type 'absent' carries no value and must be figure_role 'finding'"
+       - "a value from a tier >= 4 source needs a structured locator or [UNVERIFIED-QUANT]"
+       - "figure_role is required; --relation is required ('none' or edges); 'derived' needs a derived_from base edge"
+-- 
+2.43.0
+

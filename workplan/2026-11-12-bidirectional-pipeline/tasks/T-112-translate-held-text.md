@@ -33,7 +33,7 @@ for n in OD-02 OD-30; do gate $n; done
 cd /home/user/guidebook
 bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
 git fetch origin
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0); echo "BASE=$BASE"
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
 git switch -c task/t-112-translate-held-text "$BASE"
 STEM=session_$(date -u +%Y-%m-%d)-<slug>            # the session stem: bare in the database, with .md for emit_data_migration --session
 export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-112" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/s.db" && cp data/guidebook.db "$SCRATCH/t.db"   # s.db is the batch's working copy; t.db is for probes
@@ -72,7 +72,7 @@ If the output differs, the ground has moved: stop (section 9). Ids that appear i
 Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect.
 
 1. For the parameters about to be synthesised first (ramp gradient, then ramp run length), request and record a translation of each non-English `claim_text` with the verbs of T-049, from the stage the session is working in. The original is never edited. Each row records its translator. A figure in the translation must be the row's verified figure: the verb refuses otherwise.
-2. Do not translate a term into a new term, and do not write a translation into any column that holds a source's wording. Titles, observed phrases and clauses follow when a stage needs them; this batch does quotations.
+2. Do not translate a term into a new term, and do not write a translation into any column that holds a source's wording. Titles, observed phrases and clauses follow when a stage needs them; this batch does quotations. A form (a `term_aliases` row) cannot be translated until T-028 has merged: T-049's `request-translation` refuses a pointer into a table whose key is composite, and `term_aliases` is keyed `(term_id, alias, language)` until T-028 gives it `form_id` (T-049 section 4 item 6).
 3. **Who translates and who reviews (OD-30, resolved under delegation).** Record yourself as translator (`--translator-kind model --translator-name <your model id>`). Do not record a review verdict on your own translation: `review-translation --verdict reviewed` is a later Opus-class session's act, by an instance other than the translator. Target language English (OD-02), for display; synthesis may read these as aids.
 
 **What reads what this task adds or changes:** the synthesis discussion; render (reviewed translations only)
@@ -99,7 +99,7 @@ Structures this task touches, for orientation: `translations`. The ledger (`refe
 **The gates, once each:**
 
 ```
-BASE=$(git cat-file -e origin/main:workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md 2>/dev/null && echo origin/main || echo origin/ccr-408aaa9b-z3e4s0)
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
 python3 scripts/audit/research_batch_dod.py --session "$STEM" > "$SCRATCH/dod.txt" 2>&1; echo "rc=$?"; grep -E 'EXAMINED|BLOCKED|PASS|FAIL' "$SCRATCH/dod.txt" | tail -8   # the research gate
 scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
 ```
