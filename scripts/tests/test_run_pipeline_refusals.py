@@ -741,8 +741,7 @@ with scratch() as c:
 # ─────────────────────────── Unit A2: research and synthesis writers ───────────────────────────
 print("Section B/A13: log-search names what it searched, in the vocabulary the map holds")
 sys.path.insert(0, str(REPO))
-from schemas.enums import JurisdictionCode  # noqa: E402
-ENUM = {e.value for e in JurisdictionCode}
+ENUM = dbcore.declared_jurisdictions()    # the base_jurisdictions codes, on the fixture copy
 # A pair the research scope owes (v_research_scope), and a language the map holds that the scope
 # does not pair with that jurisdiction.
 PAIR = next((r for r in q("SELECT language, jurisdiction FROM v_research_scope ORDER BY 1, 2")

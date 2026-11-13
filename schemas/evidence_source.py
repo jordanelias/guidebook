@@ -55,7 +55,7 @@ class EvidenceSource(GuidebookEntity):
     evidence_type: EvidenceType = EvidenceType.UNKNOWN
 
     # Jurisdiction
-    jurisdiction: Optional[str] = None  # JurisdictionCode or "INT" for international
+    jurisdiction: Optional[str] = None  # a base_jurisdictions code, or "INT" for international
 
     # Cross-references
     used_in_slugs: list[str] = []  # BPC slugs citing this source

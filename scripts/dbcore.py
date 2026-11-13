@@ -365,6 +365,35 @@ def ledger_heading_count(heading: str) -> int:
                if l.startswith("## ") and normalise_quote_text(l[3:]) == want)
 
 
+#: The ledger's own convention for an entry that is NOT the owner's words: a heading that
+#: begins "Delegated resolution" (an Opus-class model resolving a register decision under the
+#: owner's delegation of 2026-11-12). A typed prefix of the ledger, not a vocabulary list.
+LEDGER_DELEGATED_PREFIX = "Delegated resolution"
+
+
+def ledger_entry_names(heading: str, token: str) -> bool:
+    """Does the ledger entry under `## <heading>` name `token` as a whole token?
+
+    The entry is the text from its heading to the next `## ` heading. A whole token is the
+    string not touched on either side by a letter, digit or dash, so `US` is not found in
+    `US-CA` or `USA`, and a code is not found inside a longer word. Case-sensitive: codes
+    are upper case. A heading found other than once names nothing (False).
+    """
+    want = normalise_quote_text(heading)
+    lines = LEDGER_PATH.read_text(encoding="utf-8").splitlines()
+    starts = [i for i, l in enumerate(lines)
+              if l.startswith("## ") and normalise_quote_text(l[3:]) == want]
+    if len(starts) != 1:
+        return False
+    body = []
+    for l in lines[starts[0] + 1:]:
+        if l.startswith("## "):
+            break
+        body.append(l)
+    return re.search(r"(?<![A-Za-z0-9-])%s(?![A-Za-z0-9-])" % re.escape(token),
+                     "\n".join(body)) is not None
+
+
 def require_ledger_quote_once(quote: str, subject: str, hint: str = "") -> None:
     """Refuse unless `quote` is in the ledger exactly once -- tied to one recorded ruling.
 
@@ -943,32 +972,51 @@ def check_vocab(conn, table: str, column: str, value, context: str):
         )
 
 
+def declared_jurisdictions() -> set:
+    """The codes `base_jurisdictions` holds: the one declared jurisdiction vocabulary.
+
+    Read through its own read-only connection on GUIDEBOOK_DB_PATH (the canonical file when
+    unset), so no writer's call site threads a connection through. A database below
+    the migration that creates the table has no such table, and that is a Refusal, never an empty set: an empty
+    vocabulary would refuse every code or (read the other way) admit every one, and either
+    reading hides that the migrations were not applied. No caller catches it into a pass.
+    """
+    conn = _cached_ro_conn()
+    try:
+        if conn is None:
+            raise sqlite3.OperationalError("cannot open %s" % db_path())
+        return {r[0] for r in conn.execute("SELECT jurisdiction_code FROM base_jurisdictions")}
+    except sqlite3.Error as exc:
+        raise Refusal(
+            "the declared jurisdiction vocabulary is the table base_jurisdictions, which "
+            "could not be read from %s (%s). Apply the migrations with "
+            "`python3 scripts/migrate_db.py`. Nothing was written." % (db_path(), exc))
+
+
 def jurisdiction_declared(value) -> bool:
-    """Is `value` a code `schemas.enums.JurisdictionCode` declares? The same vocabulary
+    """Is `value` a code `base_jurisdictions` holds? The same vocabulary
     `check_jurisdiction` refuses against, read without refusing, for a reader that needs
     to name the rows of another home (lang_jur_map) the declared vocabulary does not
     admit -- `db.py coverage` reports those rather than counting them as owed."""
-    import sys as _sys
-    if str(REPO_ROOT) not in _sys.path:
-        _sys.path.insert(0, str(REPO_ROOT))
-    from schemas.enums import JurisdictionCode
-    return value in {e.value for e in JurisdictionCode}
+    return value in declared_jurisdictions()
 
 
 def check_jurisdiction(value, context: str):
-    """Refuse a jurisdiction code `schemas.enums.JurisdictionCode` does not declare (I7).
+    """Refuse a jurisdiction code `base_jurisdictions` does not hold (I7).
 
-    WHY NOT check_declared. No `jurisdiction` column carries a CHECK, so the schema
-    declares nothing for check_declared to read, and check_vocab's live-rows fallback
-    would admit any value already written -- including the undeclared ones this exists to
-    stop. The declared vocabulary is the enum, and the blocking gate that enforces it on
-    the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the same enum. This
-    is that gate moved to the moment of writing: before it, every writer accepted any
-    string and the audit found it after it landed.
+    WHY NOT check_declared. No `jurisdiction` column carries a CHECK or a foreign key, so
+    the schema declares nothing for check_declared to read, and check_vocab's live-rows
+    fallback would admit any value already written -- including the undeclared ones this
+    exists to stop. The declared vocabulary is the table, and the blocking gate that
+    enforces it on the database, `scripts/audit/jurisdiction_db_vocabulary.py`, reads the
+    same table through `declared_jurisdictions()`. This is that gate moved to the moment of
+    writing: before it, every writer accepted any string and the audit found it after it
+    landed.
 
-    ONE HOME FOR EACH HALF. The members come from the enum and the rejected spellings
+    ONE HOME FOR EACH HALF. The members come from the table and the rejected spellings
     (GB -> UK) from `rejected_spellings()` in the audit, which parses them out of
-    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8).
+    governance/jurisdiction-philosophy.md. Neither is restated here (rule 8). A code is
+    admitted with `db.py add-jurisdiction`, not by editing a file.
 
     WHICH WRITERS CALL IT mirrors which tables the audit FAILS on: every table with a
     `jurisdiction` column except those in the audit's EXEMPT, CANDIDATE_TABLES and
@@ -987,12 +1035,7 @@ def check_jurisdiction(value, context: str):
     """
     if value is None:
         return
-    import sys as _sys
-    if str(REPO_ROOT) not in _sys.path:
-        _sys.path.insert(0, str(REPO_ROOT))
-    from schemas.enums import JurisdictionCode
-
-    declared = {e.value for e in JurisdictionCode}
+    declared = declared_jurisdictions()
     if value in declared:
         return
     # Loaded by path, not by putting scripts/audit on sys.path: that directory holds
@@ -1020,16 +1063,17 @@ def check_jurisdiction(value, context: str):
         good = folded if folded in declared else rejected[folded]
         raise Refusal(
             "%s: jurisdiction %r is not a declared spelling; write %r. Codes are stored "
-            "exactly as schemas/enums.py JurisdictionCode declares them and compared "
+            "exactly as base_jurisdictions holds them and compared "
             "exactly (by %s, and by add-code-lead's duplicate check), so a case or "
             "spacing variant would be a second spelling of one jurisdiction. "
             "Nothing was written." % (context, value, good, gate))
     raise Refusal(
-        "%s: jurisdiction %r is not declared by schemas/enums.py JurisdictionCode, the "
+        "%s: jurisdiction %r is not held by base_jurisdictions, the "
         "vocabulary the blocking check %s gates the database against. Declared: %s. If "
         "it is a real jurisdiction the project now holds evidence for, admitting it is "
-        "an owner decision recorded in the enum, with its ruling, in a tooling PR "
-        "(CLAUDE.md rule 10); if it is not, the value is mis-filed. Nothing was written."
+        "an owner decision: record it in references/project-standards.md, then "
+        "`db.py add-jurisdiction --approval-ref <that heading>`; if it is not, the value "
+        "is mis-filed. Nothing was written."
         % (context, value, gate, sorted(declared)))
 
 
@@ -1313,21 +1357,18 @@ def _selftest() -> int:
     check("REF_ID_SHAPE refuses a per-slug local label",
           not REF_ID_SHAPE.fullmatch("RAP-04"))
 
-    # check_jurisdiction (I7): every declared member passes, read from the enum rather
-    # than typed here; the ruled rejected spelling refuses naming its replacement.
-    import sys as _sys
-    _sys.path.insert(0, str(REPO_ROOT))
-    from schemas.enums import JurisdictionCode as _J
-
+    # check_jurisdiction (I7): every declared member passes, read from base_jurisdictions
+    # rather than typed here; the ruled rejected spelling refuses naming its replacement.
     def _jur_refusal(v):
         try:
             check_jurisdiction(v, "selftest")
         except Refusal as exc:
             return str(exc)
         return None
-    _bad = [m.value for m in _J if _jur_refusal(m.value)]
-    check("check_jurisdiction admits every JurisdictionCode member, and NULL",
-          not _bad and _jur_refusal(None) is None, "refused %s" % _bad)
+    _declared = declared_jurisdictions()
+    _bad = [v for v in sorted(_declared) if _jur_refusal(v)]
+    check("check_jurisdiction admits every base_jurisdictions member, and NULL",
+          bool(_declared) and not _bad and _jur_refusal(None) is None, "refused %s" % _bad)
     _gb = _jur_refusal("GB")
     check("check_jurisdiction refuses GB and names UK", bool(_gb) and "'UK'" in _gb,
           "got %r" % _gb)

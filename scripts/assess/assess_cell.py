@@ -1099,7 +1099,9 @@ def assess_source(conn, src, claim_scale, population):
         "tier_consistent": tier_ok,
         "verification_status": src["verification_status"],
         "verification_disposition": src.get("verification_disposition"),
-        "jurisdiction": src["jurisdiction"],  # richness §2.3 jurisdiction distinctness
+        # richness §2.3 jurisdiction distinctness, counted by COUNTRY (OD-04: a sub-national
+        # code counts toward its country, so US and US-CA are one jurisdiction, not two)
+        "jurisdiction": _country_of(conn, src["jurisdiction"]),
     }
 
 
@@ -1142,6 +1144,18 @@ def anchoring(recs):
 def _anchors_of(b):
     """The anchoring sources of the four strata that can anchor, from `classify`'s buckets."""
     return anchoring(b["t1"]) + anchoring(b["co1"]) + anchoring(b["t2"]) + anchoring(b["co2"])
+
+
+def _country_of(conn, code):
+    """The country a jurisdiction code counts toward: its `base_jurisdictions.parent_code`
+    when it has one (a sub-national code), else the code itself. Read from the table, never
+    split from the string; a database without the table, or a code the table lacks, is
+    returned unchanged."""
+    if not code or not _table_exists(conn, "base_jurisdictions"):
+        return code
+    row = conn.execute("SELECT parent_code FROM base_jurisdictions WHERE jurisdiction_code = ?",
+                       (code.strip().upper(),)).fetchone()
+    return row[0] if row and row[0] else code
 
 
 def _distinct_jurisdictions(recs):

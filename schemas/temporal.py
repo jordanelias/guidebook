@@ -191,7 +191,7 @@ class StandardEdition(GuidebookEntity):
     Edition: dated release of that family (e.g., 'AS 1428.1:2021').
     """
 
-    jurisdiction: str  # JurisdictionCode
+    jurisdiction: str  # a base_jurisdictions code
     standard_family: str  # 'AS 1428.1'
     edition: str  # 'AS 1428.1:2021'
     publication_date: Optional[str] = None  # YYYY-MM-DD or YYYY-MM
