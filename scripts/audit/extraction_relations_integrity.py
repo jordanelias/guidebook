@@ -140,9 +140,10 @@ def main() -> int:
     # --- 3. v_derived_figure_check: a derived value that disagrees with its --
     #        own recomputed inputs.
     #
-    # TOLERANCE MATCHES THE WRITER'S, AND MUST. `db.py derive_extraction` accepts a
-    # supplied --claimed-value within 1e-9 of base+delta (db.py: `abs(cn - (bn + dn))
-    # > 1e-9`). This check compared with SQL `<>`, i.e. exactly. Binary floating point
+    # TOLERANCE MATCHES THE WRITER'S, AND MUST. `db.py _refuse_derived_mismatch` (add-extraction,
+    # relate-extraction and derive-extraction all reach it) accepts a derived figure within 1e-9 of
+    # base+delta (`abs(recomputed - stored) > 1e-9`), reading this same view. This check compared
+    # with SQL `<>`, i.e. exactly. Binary floating point
     # makes those two rules disagree on ordinary decimals: 0.1 + 0.2 = 0.30000000000000004,
     # so a row the sanctioned writer had just accepted turned this BLOCKING gate red
     # with `stored=0.3, recomputed=0.30000000000000004`. A gate that fails what its own

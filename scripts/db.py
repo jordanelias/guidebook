@@ -6578,7 +6578,7 @@ def adjudicate_term(observation_id: int, outcome: str, rationale: str, session: 
 # refusal: `E-08 Corridor Clear Width (>=1200 mm Minimum)` biased every finding filed
 # into it, because the container announced the determination before the evidence did.
 # Measured 2026-09-09: no live terms.canonical_en contains any of these.
-_VALUE_BEARING = re.compile(r"[0-9\u2265\u2264<>=]|\b(min|max|minimum|maximum)\b", re.I)
+_VALUE_BEARING = dbcore.VALUE_BEARING          # one definition (T-016): the unit screen reads it too
 # Comparator WORDS are screened in NAMES only. A definition or description is ordinary
 # English ("rather than reflection"), so it keeps `_VALUE_BEARING` (digits, symbols, min/max)
 # and gains nothing; every NAME field uses `_VALUE_BEARING_NAME`.
@@ -9119,6 +9119,20 @@ def _refuse_live_confirmation(conn, context, to_extraction):
             f"then re-determine. Nothing was written.")
 
 
+def _refuse_derived_mismatch(conn, extraction_id: int, context: str):
+    """Refuse a derived figure that disagrees with its own base + delta: the ONE home of that arithmetic.
+    Reads `v_derived_figure_check` inside the caller's transaction, so the raise rolls back the row and its
+    edges. Tolerance: `extraction_relations_integrity`'s EPSILON, which reads the same view afterwards. The
+    view joins on equal units and plain numerals, so a converted row is not compared (its
+    `--conversion-note` is its only record)."""
+    bad = conn.execute("SELECT stored, recomputed FROM v_derived_figure_check WHERE derived_id = ?",
+                       (extraction_id,)).fetchone()
+    if bad and abs(bad["recomputed"] - bad["stored"]) > 1e-9:
+        raise Refusal(f"{context}: derived figure {bad['stored']} disagrees with its own base + delta "
+                      f"({bad['recomputed']}). A derived figure that contradicts its inputs is the "
+                      f"defect this check exists to stop. Nothing was written.")
+
+
 def _write_relation_edge(conn, *, from_id: int, from_ref_id: str,
                          from_figure_role, from_comparator,
                          relation: str, session: str, context: str,
@@ -9724,6 +9738,18 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 dbcore.check_declared(conn, "source_value_extractions", col,
                                       row[col], "insert_extraction")
 
+        # --- the figure must be readable (T-016) ----------------------------------
+        # A unit that is a sentence and a value the engine cannot place on a scale are both left OUT of a
+        # determination's value without anyone being told; refuse them here, with the fix.
+        for _why in (dbcore.unit_refusal(row.get("claimed_unit")),
+                     dbcore.figure_refusal(value, row.get("claimed_unit"), row.get("comparator"), claim_type)):
+            if _why:
+                raise Refusal(f"add-extraction: {_why}. Nothing was written.")
+        if figure_role in ("claim", "derived") and claim_type == "numerical" and not row.get("comparator"):
+            raise Refusal("add-extraction: a value-supplying numerical row needs --comparator ('=' for a "
+                          "point); a bare number is read as a point and adds a floor as well as a ceiling. "
+                          "Nothing was written.")
+
         # --- the relation edges (migration 075's extraction_relations) --------
         # REQUIRED, and checked here rather than only at the parser so the PYTHON
         # API path refuses too -- the same discipline --claim-text already gets.
@@ -9800,6 +9826,8 @@ def insert_extraction(data: dict, session: str, dry_run: bool = False,
                 input_role=edge.get("input_role"), notes=edge.get("notes"),
                 cross_source_reason=edge.get("cross_source_reason"),
                 session=session, context="add-extraction"))
+        if figure_role == "derived":
+            _refuse_derived_mismatch(conn, extraction_id, "add-extraction")
 
         return {"extraction_id": extraction_id, "ref_id": ref, "parameter_id": pid,
                 "lens": {c: row.get(c) for c in _LENS_COLUMNS if row.get(c)},
@@ -9838,6 +9866,8 @@ def relate_extraction(from_extraction: int, relation: str, session: str,
             to_kind=to_kind, stated=stated, quote=quote, input_role=input_role,
             notes=notes, cross_source_reason=cross_source_reason,
             session=session, context="relate-extraction")
+        if row["figure_role"] == "derived" and relation == "derived_from":
+            _refuse_derived_mismatch(conn, from_extraction, "relate-extraction")
     return {"relation_id": rid, "from_extraction_id": from_extraction,
             "relation": relation, "dry_run": dry_run}
 
@@ -10150,20 +10180,11 @@ def derive_extraction(*, ref_id: str, parameter_id: int, base: int,
             except (TypeError, ValueError):
                 return None
         bn, dn = _num(base_row["claimed_value"]), _num(delta_row["claimed_value"])
-        if claimed_value is not None:
-            cn = _num(claimed_value)
-            if bn is not None and dn is not None and cn is not None \
-                    and abs(cn - (bn + dn)) > 1e-9:
-                raise Refusal(
-                    f"derive-extraction: --claimed-value {claimed_value} does not "
-                    f"equal base + delta (base extraction {base} = {base_row['claimed_value']!r}, "
-                    f"delta extraction {delta} = {delta_row['claimed_value']!r}, sum "
-                    f"= {bn + dn}). A derived figure that disagrees with its own "
-                    f"inputs is the defect this verb exists to prevent. Nothing "
-                    f"was written.")
-        elif bn is not None and dn is not None:
+        # A supplied --claimed-value is compared with base + delta by `_refuse_derived_mismatch`
+        # (the one home of that arithmetic), inside `insert_extraction`'s transaction.
+        if claimed_value is None and bn is not None and dn is not None:
             claimed_value = _fmt_num(bn + dn)
-        else:
+        elif claimed_value is None:
             raise Refusal(
                 f"derive-extraction: --claimed-value is required when base or "
                 f"delta does not parse as a plain number (base extraction {base} "

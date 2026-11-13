@@ -970,7 +970,7 @@ def main():
     # were already canonical. `degrees` is the arctangent of the ratio, not a
     # rescaling, so adding it to the family by analogy would make 5 degrees read as
     # 5 % -- silently, and only in the composed value.
-    import assess_cell as _ac
+    import dbcore as _ac       # the notation arithmetic's one home (T-016); the engine imports its names back
     _saved = _ac.NOTATION_FAMILIES["gradient"]
     try:
         _ac.NOTATION_FAMILIES["gradient"] = _saved + ("degrees",)
@@ -983,6 +983,17 @@ def main():
                    True)
     finally:
         _ac.NOTATION_FAMILIES["gradient"] = _saved
+
+    # The reader the writer and the engine now share: exact Fractions on the family's scale (dbcore.bound_on_scale).
+    from fractions import Fraction
+    for _args, _want in [(("1:12", "rise:run ratio", "<=", "numerical"), (None, Fraction(25, 3))),
+                         (("8.33", "%", "<=", "numerical"), (None, Fraction("8.33"))),
+                         (("1:20", "rise:run ratio", ">=", "numerical"), (Fraction(5), None)),
+                         (("0 to 4.8", "%", "between", "range"), (Fraction(0), Fraction("4.8"))),
+                         (("1/12", "rise:run ratio", "<=", "numerical"), (None, Fraction(1, 12))),
+                         (("8.33%", "%", "<=", "numerical"), None)]:
+        _got = _ac.bound_on_scale(*_args)
+        expect(f"dbcore.bound_on_scale{_args} reads {_want}", _got == _want, str(_got))
 
     # And a claim with no number at all is still reported rather than dropped (086).
     d = determine(synth_db([

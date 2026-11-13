@@ -329,7 +329,7 @@ def extraction(ref, pid, **over):
     base = {"ref_id": ref, "parameter_id": pid, "identity_code": IDENT,
             "claim_type": "numerical", "claimed_value": VALUE, "claimed_unit": "mm",
             "claim_text": QUOTE, "extraction_method": "full-read", "figure_role": "claim",
-            "source_section": "section 3", "loc_section": "3"}
+            "source_section": "section 3", "loc_section": "3", "comparator": "="}
     base.update(over)
     return base
 
@@ -2139,6 +2139,112 @@ with scratch() as c:
            r is not None and "states every claimed number" in r, r)
     h = cli("add-extraction", "--help")
     record("T008-47", "add-extraction takes --value-as-written", "--value-as-written" in h.stdout, h.stdout[-200:])
+
+
+print("Section T016: the writer refuses a figure the engine cannot read, a unit that is a sentence, a numerical row with no comparator, and a derived figure that disagrees with its inputs")
+# The sentences are test text, one per case, each holding the figure it claims. Every case that expects a
+# refusal is one the writer accepted before T-016 (red on the unchanged code); N7, N7b and N10 are controls.
+T16 = {"pct": "A ramp gradient of 8.33% is the greatest permitted.", "slash": "The fall is 1/12 over the run.",
+       "inv": "A slope of 12:1 is shown on the drawing.", "ok": "Ramps are to be not steeper than 1:12 along the run.",
+       "cond": "Where the height difference is at most 0.05 m a ramp is to be not steeper than 1:12.",
+       "qual": "The surface is to be slip-resistant when wet.", "base": "The first flight rises 5.5 percent.",
+       "delta": "The second flight rises 9.25 percent.", "good": "The combined rise is 14.75 percent.",
+       "bad": "The combined rise is 99 percent.",
+       "bad2": "The total rise is 99 percent."}      # bad2: N11b's own row, so a writer that accepted N9 leaves no byte-identical copy
+RR = "rise:run ratio"
+with scratch() as c:
+    t16 = new_source(verified=True)
+    held_text(t16, "\n".join(T16.values()))
+    hand_scan(c, t16, "full")
+    pid = P_ACTIVE[0]
+    counts = lambda: (c.execute("SELECT COUNT(*) FROM source_value_extractions").fetchone()[0],
+                      c.execute("SELECT COUNT(*) FROM extraction_relations").fetchone()[0])
+
+    def w(sentence, value, unit, comparator, claim_type="numerical", **over):
+        """A dry-run write of one row through add-extraction's writer: (refusal text or None, error text or None)."""
+        row = extraction(t16, pid, claim_text=T16[sentence], claimed_value=value, claimed_unit=unit,
+                         comparator=comparator, claim_type=claim_type, **over)
+        return (refusal(db.insert_extraction, row, session=S, dry_run=True, relations=[]),
+                ok(db.insert_extraction, row, session=S, dry_run=True, relations=[])[1])
+
+    for tid, name, sentence, value, unit, cmp_, want in [
+            ("N1", "8.33% is refused and the message says to put % in --claimed-unit", "pct", "8.33%", "%", "<=", "put % in --claimed-unit"),
+            ("N2", "1/12 in a gradient unit is refused (it reads as 0.083 %)", "slash", "1/12", RR, "<=", "not 1/12"),
+            ("N3", "12:1 is an inverted ratio and is refused", "inv", "12:1", RR, "<=", "inverted"),
+            ("N4", "a unit that is a sentence is refused and the message names condition_on", "cond", "1:12",
+             RR + " (maximum) where the height difference is <= 0.05 m", "<=", "condition_on"),
+            ("N4b", "a unit holding a min/max word alone is refused", "ok", "1:12", RR + " max", "<=", "condition_on"),
+            ("N4c", "a unit holding a condition word alone is refused", "ok", "1:12", RR + " unless steep", "<=", "condition_on"),
+            ("N4e", "a unit holding a parenthesis alone is refused", "ok", "1:12", "ratio (new build)", "<=", "condition_on"),
+            ("N5", "a ratio under a unit that is not 'rise:run ratio' is refused", "ok", "1:12", "ratio", "<=", "rise:run ratio"),
+            ("N6", "a value-supplying numerical row with no comparator is refused", "ok", "1:12", RR, None, "--comparator")]:
+        r, err = w(sentence, value, unit, cmp_)
+        record(f"T016-{tid}", name, r is not None and want in r and "Nothing was written" in r, r or err)
+    r, err = w("ok", "1:12", RR, "<=")
+    record("T016-N7", "control: 1:12 in 'rise:run ratio' with a comparator is accepted", r is None and err is None, r or err)
+    r, err = w("qual", "slip-resistant", None, None, claim_type="qualitative")
+    record("T016-N7b", "control: a qualitative claim with no unit and no comparator is accepted", r is None and err is None, r or err)
+    # dbcore.figure_refusal directly: the cases the verb cannot reach (a range; a value with no digit) and the one the sketch raised on.
+    fr = lambda *a: ok(lambda: dbcore.figure_refusal(*a))
+    res, err = fr("1:6 to 14:1", RR, "between", "range")
+    record("T016-N3b", "a range with an inverted end (1:6 to 14:1) is refused", err is None and res and "inverted" in res, err or res)
+    res, err = fr("1:6 to 1:14", RR, "between", "range")
+    record("T016-N7c", "a range of two ratios (1:6 to 1:14) is read: None, and no exception", err is None and res is None, err or res)
+    nodigit = scalar("SELECT claimed_value FROM source_value_extractions WHERE claim_type IN (SELECT value FROM json_each(?)) "
+                     "AND claimed_value NOT GLOB '*[0-9]*' ORDER BY extraction_id LIMIT 1", json.dumps(list(dbcore.QUANTITY_CLAIM_TYPES)))
+    if nodigit is None:
+        skip("T016-N8", "no stored quantity row has a claimed_value with no digit")
+    else:
+        res, err = fr(nodigit, "%", "<=", "numerical")
+        record("T016-N8", "a value with no numeral is refused and the message names --value-as-written",
+               err is None and res and "--value-as-written" in res, err or res)
+
+    # THE DERIVED ARITHMETIC, one home (db._refuse_derived_mismatch). Base and delta are written for real on the scratch copy.
+    def numbered(sentence, value, **over):
+        return extraction(t16, pid, claim_text=T16[sentence], claimed_value=value, claimed_unit="%", comparator="=", **over)
+
+    base_id = db.insert_extraction(numbered("base", "5.5"), session=S, dry_run=False, relations=[])["extraction_id"]
+    delta_id = db.insert_extraction(numbered("delta", "9.25"), session=S, dry_run=False, relations=[])["extraction_id"]
+    edges = [{"relation": "derived_from", "to_extraction": base_id, "stated": "named", "quote": T16["base"], "input_role": "base"},
+             {"relation": "derived_from", "to_extraction": delta_id, "stated": "named", "quote": T16["delta"], "input_role": "delta"}]
+    derived = lambda sentence, value: numbered(sentence, value, figure_role="derived")
+    before = counts()
+    r = refusal(db.insert_extraction, derived("bad", "99"), session=S, dry_run=False, relations=edges)
+    record("T016-N9", "a derived 99 over 5.5 + 9.25 is refused at write and nothing is written",
+           r is not None and "disagrees" in r and counts() == before, (r, counts(), before))
+    res, err = ok(db.insert_extraction, derived("good", "14.75"), session=S, dry_run=True, relations=edges)
+    record("T016-N10", "control: a derived 14.75 over 5.5 + 9.25 is accepted", err is None, err)
+
+    # derive-extraction cannot write a row today: it passes no locator, so R3 refuses every row it builds (a known
+    # defect, section 4 item 7 of the task file, filed apart). The SHIM adds the locator for N11 and N11a only, to
+    # reach the shared arithmetic check through the verb; it is restored straight after, and N11c fails the day the
+    # verb is repaired (remove the shim then).
+    _insert = db.insert_extraction
+    db.insert_extraction = lambda data, *a, **k: _insert({**data, "source_section": "section 3"}, *a, **k)
+    try:
+        r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["bad"],
+                    session=S, identity=IDENT, claimed_value="99", comparator="=")
+        record("T016-N11", "derive-extraction with a wrong --claimed-value is refused by the shared check, nothing written",
+               r is not None and "disagrees with its own base + delta" in r and counts() == before, (r, counts(), before))
+        res, err = ok(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"],
+                      session=S, identity=IDENT, comparator="=")
+    finally:
+        db.insert_extraction = _insert
+    stored = c.execute("SELECT claimed_value FROM source_value_extractions WHERE extraction_id=?",
+                       ((res or {}).get("extraction_id"),)).fetchone()
+    record("T016-N11a", "derive-extraction with no --claimed-value computes and stores 14.75",
+           err is None and stored is not None and stored[0] == "14.75", err or stored)
+    r = refusal(db.derive_extraction, ref_id=t16, parameter_id=pid, base=base_id, delta=delta_id, claim_text=T16["good"],
+                session=S, identity=IDENT, comparator="=")
+    record("T016-N11c", "KNOWN DEFECT: derive-extraction with no shim is refused by R3's locator refusal (fails when the verb is repaired)",
+           r is not None and r.startswith("R3:"), r)
+    # relate-extraction: the second edge completes the pair, and the check runs then.
+    bad_id = db.insert_extraction(derived("bad2", "99"), session=S, dry_run=False, relations=edges[:1])["extraction_id"]
+    before = counts()
+    r = refusal(db.relate_extraction, bad_id, "derived_from", S, to_extraction=delta_id, stated="named",
+                quote=T16["delta"], input_role="delta")
+    record("T016-N11b", "relate-extraction refuses the delta edge that completes a derived 99 over 5.5 + 9.25, nothing written",
+           r is not None and "disagrees" in r and counts() == before, (r, counts(), before))
 
 
 finish()
