@@ -6995,3 +6995,23 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: as for the circles entries above.
 ACTION: as for the circles entries above.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — grey, thin and unverified sources are kept, and carry a triangle warning
+
+**Owner's words, quoted (typed):**
+
+> "what are grey or thin or unverified sources? let's return to keeping them but they get a triangle warning"
+
+**What the three are, from the record (not the owner's words).** *Grey*: T3 grey, grey-literature primary research, `evidence_type` `grey` (`governance/tier-system.md` §§1, 5). *Unverified*: a source that could not be retrieved, stored with `verification_status` `UNVERIFIED` (the owner's 2026-10-21 ruling in `tier-system.md` §5: it cannot be claimed as primary evidence or at a top tier). *Thin*: not a property of a source: the doctrine's `[THIN BASE]` flag marks a cell or population where the identified evidence is sparse (the IntD proxy is its worked case, `governance/armature_v4.md`); no column or check derives it today, so its definition is open. Derive the live counts: `select verification_status, count(*) from evidence_sources group by 1`, and the same on `evidence_type`.
+
+**Readings.** [ASSUMPTION: "keeping them" ends the question held after the proposal on the gloss of ○ (read that as option 2 of its three: they are admitted, and not excluded) — basis: "return to keeping them"]. [ASSUMPTION: the triangle is a warning shown beside the circle and does not replace it: the circle still follows the tier table of the entries above (a grey T3 source ◐, an unverified source the circle of its tier), and the triangle says the source is grey, unverified or thin — basis: the owner's earlier "the empty circle makes it clear that it's not academically or clinically derived", which gives the circle the derivation role and leaves the warning role to the triangle]. [ASSUMPTION: the triangle is derived, never stored beside its cause (rule 5, rule 8): grey from `evidence_type`, unverified from `verification_status`, thin from a rule not yet written — basis: CLAUDE.md rules 5 and 8].
+
+**What this does.** Records that such sources stay in the guidebook with a visible warning; ends the meaning "grey, thin or unverified" for ○ in the proposal on the gloss.
+
+**What it does not decide.** What counts as thin; whether an unverified source's circle is capped (the 2026-10-21 ruling says it cannot sit at a top tier); the triangle's glyph and where it is shown (a source, a figure, a cell); any edit to `band()`, `CLAUDE.md` §6, the governance files or the render, which are held with the circle table.
+
+CONDITION: any session rendering, deriving or auditing a marker, or admitting a grey, thin or unretrievable source.
+ACTION: admit such a source; do not exclude it; mark it with the warning once the rule is written; keep the circle by tier.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
