@@ -7077,3 +7077,21 @@ DATE: 2026-11-14 — owner correction (typed words, quoted above).
 CONDITION: any session deriving, rendering or auditing a marker.
 ACTION: ⚠ in place of the circle for a grey, thin or unverified basis; do not write both.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — thin means the evidence does not directly concern the people served and is conjecture
+
+**Owner's words, quoted (typed), answering the question left open in the entry on the triangle:**
+
+> "I think thin is when the evidence doesn't directly concern someone but is conjecture"
+
+**Readings.** [ASSUMPTION: a value is thin when what supports it was not gathered about the people or situation it is shown for (a proxy population, an extrapolation, an inference from another group) and the step across is conjecture, not a measurement or a finding — basis: the statement; it is the owner's working view ("I think")]. [ASSUMPTION: thin is read per value, not per source, and is derived from the records already kept for it: the study-versus-served population match (research contract R13; `db.py add-population-match`, graded PROXY where the study is of children, the general population or no participants) and `specifications.rests_on_proxy_inference` — basis: those are the existing records of an indirect basis; no new column]. [ASSUMPTION: a count of independent roots is not the test of thin: the reading offered earlier in the session (fewer than two roots) was the assistant's, not the owner's, and is withdrawn — basis: the statement names directness, not number of sources]. [ASSUMPTION: "conjecture" is read as the absence of a source's own finding for that group at that step, so that a value from a direct study of the people it concerns is not thin however few the studies — basis: the statement; whether an inference with a stated rationale (a clinician's argument, a derivation) counts as conjecture is held].
+
+**What this does.** Gives the triangle's third cause a definition (grey and unverified are the source's; thin is the basis's directness), with its derivation from records the project already keeps.
+
+**What it does not decide.** Whether any PROXY grade makes a value thin or only some grades; how a cell resting on a direct value and a proxy value is marked; any edit to `band()`, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session deriving, rendering or auditing the triangle.
+ACTION: derive thin from the population match and the proxy-inference record; do not count roots to decide it; do not store it beside them.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
