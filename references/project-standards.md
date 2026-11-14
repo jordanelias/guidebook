@@ -7516,3 +7516,17 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session recording a code extraction whose clause concerns a clearance.
 ACTION: as for mounting height: default to the wheelchair-user lens with its warrant; override where the clause names another group.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (sixteenth set, last) — the lens stays in the judgment stage
+
+**Owner's words, quoted (typed), answering the question whether "evidence stage" meant moving where code values are recorded or only when their lens is assigned:**
+
+> "yes lens in judgment"
+
+**Readings.** [ASSUMPTION: the lens tables and the lens assignment are in the judgment stage, as `governance/stage-map.yaml` places them; the owner's "that should be done in evidence stage" two messages earlier is read as the timing (assign the lens when the row is recorded, not in a later pass), not as moving the lens to the evidence stage; recording a code extraction is a judgment-stage step (`add-extraction`), so the lens is assigned in that call — basis: the statement, which answers the question as asked, and the stage map]. [ASSUMPTION: the supersession of the owner's ruling of 2026-08-27 (the crossing is judgment's output) recorded in the instruction of the sixteenth set does not occur: the crossing stays judgment's output, and only its timing for code values is "at recording" — basis: the statement].
+
+CONDITION: any session designing or running T-126 or T-127, or placing a lens in a stage.
+ACTION: the lens of a code value is assigned in the judgment stage, in the recording call; do not move the lens tables or the assignment to the evidence stage.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
