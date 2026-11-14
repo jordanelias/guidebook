@@ -7219,3 +7219,21 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session describing what a specification or a determination is or does.
 ACTION: describe a determination as identifying the ideal for a cell and its context and grading the evidence for it; do not describe it as the project deciding how to design.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — a stage's tools carry the stage's own name
+
+**Owner's words, quoted (typed), after the question of renaming "determine" to "specify":**
+
+> "the pipeline stage tools should match the actual name of the stage"
+
+**Readings.** [ASSUMPTION: a table, view, script, check or function that belongs to one pipeline stage is named with that stage's id (research, evidence, judgment, synthesis, specification, render; base for the vocabulary layer), and the stage's output is called by the stage's name, so the noun for what the specification stage writes is "specification", not "determination" — basis: the statement, with the spine's stage ids]. [ASSUMPTION: the three schema objects now named for a determination (`determination_gates`, `v_open_determination_gates`, `v_determination_provenance`) and the library function `determinations_resting_on` are the first mismatches; the sweep of the whole tool surface for others is not done here — basis: a search of `sqlite_master` and `scripts/` for the word; the stage of each object was not re-derived for this entry]. [ASSUMPTION: this is a naming rule and an instruction to bring the names into line, not an instruction to start renaming now: a rename of a schema object is a migration with a caller sweep (CLAUDE.md rule 4, a view is a caller, and prose callers are not gated) and ships apart from research rows (rule 10) — basis: the rules; the owner did not say when].
+
+**What this does.** Settles the word question raised by the previous exchange in favour of "specification" for the stage's output and tools; "specify" as a verb is not ruled, and the owner's definition of the act (to identify the ideal and grade its evidence) is unchanged.
+
+**What it does not decide.** The list of objects to rename, the sequence, whether the old names stay as aliases for a period, the verb used for the act, and the stage of any object whose stage is not obvious from its name (derive the assignment from `governance/stage-map.yaml` and `pipeline-contract.yaml`, not from the name).
+
+CONDITION: any session naming a new table, view, script, check or function, or describing a stage's output.
+ACTION: name a stage's tools and output with the stage's own id; do not coin a second word for the stage's product; do not rename existing objects until a tooling task is opened for it.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
