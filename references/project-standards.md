@@ -6860,3 +6860,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session describing what the guidebook does, or naming what a stage produces.
 ACTION: describe the project as gathering and showing; do not describe any stage as deciding how to design.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — where the only values are code, the code determines the best
+
+**Owner's words, quoted (typed):**
+
+> "if the only values are from code then code determines the ideal/best"
+
+**Readings.** [ASSUMPTION: for a cell whose identified values all come from the code stratum, the best (ideal, most accommodating) value is the most accommodating of those code values, for the parameter's direction; it is shown with its citation and marked as code-sourced — basis: the statement, with the entries of the same day on best, the four figures and transparency]. [ASSUMPTION: this is not the minimum, which stays the code stratum's lowest value (its own entry), and not the mode; where code values differ, the best is the one that best responds to the lens, the minimum is the lowest, the mode is where they come together — basis: best, most common and floor are three quantities]. [ASSUMPTION: this answers the question held after the sweep (whether a value resting on the code stratum alone may be named best): yes, with its source shown; it does not make agreement among codes the best, which stays the mode — basis: the statement and "convergence is not evidence of best practice"].
+
+**What this does.** Settles for the sweep that a passage naming the most accommodating code value best in a code-only cell, with its source, is not a conflict; a passage naming the code figure best because jurisdictions agree on it, or naming the floor best, remains one.
+
+**What it does not decide.** The marker or wording shown for a code-sourced best (the doctrine's weak band, ○, and "best practice as currently known" are the present wording; whether they stand is a separate question); the passages already flagged are not re-sorted by this entry.
+
+CONDITION: any session choosing, rendering or reviewing the best value of a cell whose identified values are all code values.
+ACTION: take the most accommodating code value for the parameter's direction as the best, show its code source with it, and keep the minimum and the mode as their own figures.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
