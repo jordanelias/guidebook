@@ -6826,3 +6826,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session computing, rendering or checking the minimum of a cell.
 ACTION: take the minimum from the code stratum when it holds a value for the cell; otherwise from the identified values and say so; leave the maximum, mode and median scopes to the owner.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the project is radically transparent: it shows every value and source and claims no authority over the design
+
+**Owner's words, quoted (typed):**
+
+> "remember our project is radically transparent, presents all values/approaches/data for comparative purposes, provides citations for values/approaches/data, does not claim with own authority that something is the correct way to design but instead simply showcases the best/ideal value/approach/datum for the parameter in whatever context it's in"
+
+**Readings.** [ASSUMPTION: this restates, in one sentence, the thinking-tool-not-authority doctrine already fixed in `CLAUDE.md` §9 and `governance/mission-and-epistemics.md`; it adds no new status and is a ruling only on how the best value is worded — basis: it names no change of mission, and the doctrine it echoes is already ratified]. [ASSUMPTION: "presents all values" means a cell shows every identified value, each with its citation, and the minimum, mode, median and maximum are summaries of that set, not a replacement for it — basis: "all values/approaches/data for comparative purposes" with the four-figure statement]. [ASSUMPTION: the best value is *showcased*, not *recommended*: the guidebook says it is the most accommodating identified value for the lens and context, with its citation, and does not say a design must or should use it — basis: "does not claim with own authority that something is the correct way to design"]. [ASSUMPTION: "approach" is held as a value-bearing item alongside a figure, so approaches (a method, a provision such as a hearing loop) are shown and cited as figures are — basis: "values/approaches/data" used three times; no schema consequence is drawn here].
+
+**What this does.** Fixes the wording test for the sweep's results: a passage conflicts if it claims authority for a design choice, hides a value from view, or presents a figure without a citation; it does not conflict merely for naming the most accommodating identified value best, provided the citation travels with it.
+
+**What it does not decide.** Whether a value resting on the code stratum alone may be showcased as best (the sweep's disputed Option A passages): this statement asks that every value be shown with its citation and says nothing on who may be named best by tier; the question is held.
+
+CONDITION: any session writing, rendering or reviewing a sentence that names a best, ideal or most accommodating value.
+ACTION: show the value with its citation and context; say it is the most accommodating identified value; do not say it is correct, required or recommended on the project's own authority.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
