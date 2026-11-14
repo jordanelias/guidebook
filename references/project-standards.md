@@ -6844,3 +6844,19 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session writing, rendering or reviewing a sentence that names a best, ideal or most accommodating value.
 ACTION: show the value with its citation and context; say it is the most accommodating identified value; do not say it is correct, required or recommended on the project's own authority.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — "we gather and show"
+
+**Owner's words, quoted (typed):**
+
+> "we gather and show"
+
+**Readings.** [ASSUMPTION: the project's two acts are gathering (research, evidence) and showing (render); the stages between them organise what was gathered and decide nothing about the design — basis: the statement, with "we are showing data, not determining" and the transparency statement of the same day]. [ASSUMPTION: this puts the specification stage's name, "determination", and the doctrine's "best-practice determination", in the same tension already recorded under the "showing data, not determining" entry; it is recorded, not resolved — basis: no instruction to rename the stage].
+
+**What it does not decide.** Anything about the stages' tables or the spine; the spine is checked and is changed only through the ledger.
+
+CONDITION: any session describing what the guidebook does, or naming what a stage produces.
+ACTION: describe the project as gathering and showing; do not describe any stage as deciding how to design.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
