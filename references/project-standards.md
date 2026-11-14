@@ -7029,3 +7029,17 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session rendering or describing the warning for a grey, thin or unverified source.
 ACTION: name the warning ⚠️; do not add another glyph for it.
 DATE: 2026-11-14 — owner statement (typed glyph, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the warning glyph is the plain Unicode character, not the emoji
+
+**Owner's words, quoted (typed):**
+
+> "except use the Unicode one"
+
+**Readings.** [ASSUMPTION: the glyph is U+26A0 WARNING SIGN written alone, in text presentation (⚠), the same kind of character as the circles ● ◐ ○; it is not the emoji form, which is U+26A0 followed by U+FE0F (VARIATION SELECTOR-16) and which the entry above carried — basis: the statement, against the glyph the owner typed before it; the pair of code points is the only difference between the two]. [CORRECTION: the entry above names the glyph as the emoji form; this entry replaces that glyph with U+26A0 alone; nothing else in it changes.]
+
+CONDITION: any session writing or rendering the warning for a grey, thin or unverified source.
+ACTION: write U+26A0 with no U+FE0F after it; if a renderer draws it as an emoji, say so and do not switch glyph.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
