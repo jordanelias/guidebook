@@ -7149,3 +7149,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session deciding whether a value is thin.
 ACTION: do not mark a value thin because it rests on a clinician's or an academic's derivation; do mark the project's own.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a value that mixes a source's finding with a project inference is a new proposed value and takes the triangle
+
+**Owner's words, quoted (typed), answering the question left open in the entry on the project's own inferences:**
+
+> "because if it mixes then it's a new value proposed for something so it's conjecture because we don't have authority"
+
+**Readings.** [ASSUMPTION: where a value rests on a source's finding together with an inference the project adds, the value is a new value proposed by the project, is conjecture, and takes ⚠ in place of the circle, whatever the circle of the finding it uses — basis: the statement]. [ASSUMPTION: the source's own finding, shown by itself as one of the values identified for the cell, keeps its circle and its citation; only the mixed value takes the triangle, so every value stays shown and cited — basis: the transparency statement of the same day ("presents all values ... provides citations")]. [ASSUMPTION: this is the same rule as the entry on the project's own inferences, stated for the mixed case, and it rests on the project having no authority to propose a design value — basis: "we don't have authority" with "does not claim with own authority"].
+
+**What this does.** Closes the mixed-cell question: a mix is the project's proposal, so ⚠.
+
+**What it does not decide.** How the engine tells that a value mixes a finding with an inference (which stage writes the flag, and which records show it); any edit to the marker code, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session writing a value that combines a finding with an inference.
+ACTION: show the findings with their circles; mark the combined value ⚠; do not give a mixed value the circle of its best source.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
