@@ -25,6 +25,7 @@ _One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self
 gate(){ s=$(grep -F "$1 STATUS:" references/project-standards.md | tail -1); c=$(grep -F "$1 CHECK:" references/project-standards.md | tail -1); case "$s" in *"ANSWERED BY THE OWNER"*) echo "$1 OPEN (owner)";; *"RESOLVED UNDER DELEGATION"*) case "$c" in *"not required"*|*confirmed*) echo "$1 OPEN (delegated; ${c#*CHECK: })";; *) echo "$1 CLOSED (check: ${c:-none})";; esac;; *) echo "$1 CLOSED (${s:-no status line})";; esac; }
 for n in OD-61; do gate $n; done
 ```
+  The gate reads the status class only, which was the same for the first OD-61 line (a withdrawal) and its correction (a yes); **the answer is the last answer line**: `grep -E '^OD-61:' references/project-standards.md | tail -1` must print `OD-61: yes, add \`references/bpc/\` to \`.ignore\``, else stop (`REMEDIATION-WORKPLAN.md` section 13, "What the gate reads").
 - **Delegated resolutions this task rests on:** none.
 - **Tests that must be red before you start:** `T121-01` (section 6).
 - **Set-up.**

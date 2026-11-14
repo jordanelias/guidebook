@@ -7361,3 +7361,75 @@ OD-61 STATUS: ANSWERED BY THE OWNER
 CONDITION: any session preparing or running T-121, or asking whether OD-61 is answered.
 ACTION: (1) The last OD-61 line wins: answered, yes. (2) T-121 is open: it adds `references/bpc/` to `.ignore` and says so in `CLAUDE.md` §7. (3) The withdrawal in the entry above is reversed.
 DATE: 2026-11-14 — owner correction (typed words, quoted above).
+
+---
+
+## Registration 2026-11-14 — OD-63 to OD-66: questions the adversarial pass on the remediation plan found the ledger leaves to the owner
+
+Recorded by the repair writer paired with four read-only auditors who attacked the remediation plan at commit b3d914f3 (`scratchpad/session_2026-11-13-edmonton-checklist-pass/sweep/adj/AUDIT-FINDINGS.md`; each finding was re-verified by command before anything was changed). **Not the owner's words.** Each question below is one the ledger's own entries hold open for the owner, or where two of the owner's entries pull against each other, and which the plan had either answered for the owner or not put to the owner at all. Each is registered under the next free register number (derive: `grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md | tail -1`, which printed OD-62 before this entry) and referred to the owner. **None is resolved under delegation:** OD-63 is reserved by the owner's own words ("leave the maximum, mode and median scopes to the owner"); OD-64 sets how an evidence tier is marked (evidence-tier definitions are always DG-NON: `grep -n -F 'Evidence-tier definitions' governance/decision-protocol.md`); OD-65 decides whether a value is shown as the best for a group its source did not address, beside OD-47, which is the owner's and open; OD-66 gathers the convergence questions the owner's convergence entry put to the owner ("What the statements do not decide" (1) and (4), and its ACTION (0) and (6)). Each recommendation is the repair writer's, not a decision. Register entries: `grep -n -E '^### OD-(63|64|65|66)' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`; plain questions: `OWNER-SHEET-PLAIN.md`, questions 14 to 17; prompts: `DECISION-CLOSURE.md` §4, prompts 25 to 28.
+
+- **OD-63: over which values are the maximum, the mode and the median taken?** The owner's answer on the minimum ("minimum is code stratum unless there is no code data") ends with the recorder's ACTION "leave the maximum, mode and median scopes to the owner" (`grep -n -F 'leave the maximum, mode and median scopes to the owner' references/project-standards.md`); the term-resolution plan and T-037 had called the mode's and the median's scope render's to settle, which the ledger outranks. Recommended: all identified values for the cell in its context (every stratum), each value cited and in accommodation order, because the owner's transparency entry has the four figures summarise every identified value ("presents all values … for comparative purposes"), and the maximum is the best, which may be a code value where research does not show worse results (the harm-test entry). Holds T-124 (the four figures at the specification stage).
+
+OD-63 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-64: a value from a T3 grey source: the half circle (◐) or the triangle (⚠)?** The circle table the owner applied with "od57 yes" raises T3 grey from ○ to ◐ (`grep -n -F '| T3 grey | ○ | ◐ | raised |' references/project-standards.md`); the owner's correction of the same day says "triangle instead if the value is coming from grey or unverified" (`grep -n -F 'triangle instead if the value is coming from grey or unverified' references/project-standards.md`). Applied together, every grey basis takes ⚠ and the ◐ for T3 grey can never be shown; T-117's test asserts ⚠ for T3 grey, so no test would catch the other reading. Recommended: ⚠, because the triangle correction is the later and more specific statement, and the ◐ row then states only what band T3 grey would carry were the triangle withdrawn. Holds T-117.
+
+OD-64 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-65: a code value with no lens of its own, beside research that matches the cell's lens: may it be selected as the best?** The term-resolution plan's risk 1 compares only lens-matched values and T-059's test T059-H4 expects such a code value "not selected, shown"; the owner's entry on lens and context says "a figure offered without either is incomplete, not wrong" (`grep -n -F 'a figure offered without either is incomplete, not wrong' references/project-standards.md`), and the harm test says "if no, code wins". Code values commonly carry no lens of their own: today they carry the identity code `ALL`, which OD-31 removes from the identity lens (`grep -n -F 'ALL leaves the identity lens' references/project-standards.md`), and OD-47 (what lens a clause naming no one carries) is open. Recommended: shown always; selected as the best only where no value whose lens matches the cell exists, because that keeps every value visible, never lets a figure no source stated for the group displace one that was, and does not hide a code value where it is all there is (the code-only entry). Holds T-059.
+
+OD-65 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-66: the convergence questions the owner's convergence entry left open, as one decision in four parts** (the precedent of OD-49's parts (a) and (b)): (a) is the 5% tolerance relative to the larger or the smaller of two values; (b) does one relative tolerance serve every quantity kind (5% of a 1:20 gradient and 5% of a 2 m width differ in practice); (c) are values grouped by **the same** (each bound within the tolerance) or by **consistent** (the claims can all hold); (d) Q-T068b: two clusters on differing floors that can all be met: `divergent`, or OR-6b's "not divergent, the spread printed in the note"? (`grep -n -F 'What the statements do not decide.** (1) Of the tolerance' references/project-standards.md`.) Recommended: (a) the larger, (b) one tolerance until the first live measurement T-068 prints shows a kind it misgroups, (c) the same, with consistency reported beside it, (d) OR-6b's treatment, with the investigation cue written, because each is the working reading T-068 already builds and the convergence entry's ACTION (6) adopts "until the owner says otherwise". Holds no task: T-068 builds each working reading, reversible, and lists the live cells each changes. `DECISION-CLOSURE.md` prompt 5 had told the owner that "values within 5% count as the same" as settled; it is corrected there.
+
+OD-66 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-63 to OD-66 are answered, or preparing T-059, T-068, T-117, T-124 or T-037.
+ACTION: (1) Treat OD-63 to OD-66 as the owner's, CLOSED by the gate. (2) Ask each in its plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`. (4) Do not resolve any of them under delegation. (5) T-068 builds OD-66's working readings and is not held by it; T-124, T-117 and T-059 are held by OD-63, OD-64 and OD-65 respectively.
+DATE: 2026-11-14 — registration and referral, not an owner statement.
+
+---
+
+## Owner answers 2026-11-14 (fifteenth set) — OD-63 to OD-66
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), in separate user messages after the registration of OD-63 to OD-66 was requested (server-clock times were not captured; derive them from the session transcript once preserved: `git grep -n -F "drop it down to 2%" -- transcripts`).
+
+The owner wrote:
+
+> "1. good point. all values when synthesizing and making determinations, but on the render page itself, we just have the minimum, mode, median and maximum colour coding the jurisdiction code bodies that we surveyed for comparison purposes"
+>
+> "2 triangle for all"
+>
+> "3 all code values will have a lens even if it's not explicitly stated. use contextual judgment"
+>
+> "4 okay. well, let's drop it down to 2% and apply everywhere"
+>
+> "2% is a tolerance. it applies to whatever is converging. I don't have to specify a minimum or maximum"
+>
+> "if values are drifting apart, then they aren't converging, and therefore they aren't being used to determine a commonality? what do you think the point of collecting data is?"
+
+**Readings, each marked.**
+
+- [ASSUMPTION: OD-63. The maximum, the mode and the median are taken over all identified values for the cell and its context when the project synthesises and makes a determination; the render page shows only the minimum, mode, median and maximum, as a colour code on the jurisdictional code bodies that were surveyed, for comparison. The determination therefore still draws on every value, and the render's four figures are a comparison aid over the surveyed code bodies — basis: the words].
+- [ASSUMPTION: OD-64. A value from a grey source takes the triangle in place of the circle, with no exception for T3 grey: the half circle the table gave T3 grey is not shown; "for all" is read as every grey basis, and the unverified and thin bases already named take it too — basis: "triangle for all", with the owner's correction of the same day].
+- [ASSUMPTION: OD-65. Every code value has a lens even where the code does not state one; the lens is assigned by contextual judgment (the judgment stage's lens links), as for any provision that names no group, so a code value without a lens is not a case selection has to handle; test T059-H4 (expecting such a value "not selected, shown") is moot; whether the judgment stage's assigned lens is shown as an assignment (a basis on the link) is not stated — basis: the words].
+- [ASSUMPTION: OD-66 (a) and (b). The convergence tolerance is 2% (replacing the 5% working view of the convergence entry), one tolerance applied everywhere, to every quantity kind; it is a band around whatever value is being converged on, and not a bound set against a stated minimum or maximum, so the question of whether it is relative to the larger or the smaller value does not arise; values that drift apart are not converging and are not grouped, and a chain of near neighbours does not link: the tolerance holds around the value, not between neighbours — basis: the words and the last two messages].
+- OD-66 (c) (grouping by "the same" or by "consistent") and (d) (Q-T068b, floors that can all be met) are **not answered**; OD-66 stays referred with those two parts open. It holds no task.
+
+**What the answers do.** OD-63 opens T-124's scope and shapes T-037's render (four figures colour-coding the surveyed code bodies); OD-64 opens T-117; OD-65 opens T-059; the 2% replaces the 5% in T-068. **What they do not decide.** How the colour code on the render is read by a reader whose access need is colour (a render question for T-037); OD-66 (c) and (d); how a code body with several values is shown.
+
+OD-63: all identified values when synthesising and determining; the render shows the minimum, mode, median and maximum as a colour code on the surveyed jurisdictional code bodies
+OD-63 STATUS: ANSWERED BY THE OWNER
+
+OD-64: triangle for every grey basis
+OD-64 STATUS: ANSWERED BY THE OWNER
+
+OD-65: every code value has a lens, assigned by contextual judgment where not stated
+OD-65 STATUS: ANSWERED BY THE OWNER
+
+OD-66 (a)(b): 2% tolerance, one tolerance everywhere, a band around the converging value, no chaining
+OD-66 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session preparing or running T-037, T-059, T-068, T-117 or T-124, or asking whether OD-63 to OD-66 are answered.
+ACTION: (1) OD-63, OD-64 and OD-65 are answered; read the gate lines. (2) T-068 uses 2% in one constant, applied around the converging value, no chaining; the 5% is withdrawn. (3) T-117 shows the triangle for every grey basis and no circle. (4) T-059 treats every code value as carrying a lens. (5) T-124 and T-037 follow OD-63. (6) OD-66 (c) and (d) remain with the owner.
+DATE: 2026-11-14 — owner answers (typed words, quoted above).

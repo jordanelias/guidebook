@@ -8,6 +8,8 @@ _**Updated 2026-11-14, later.** The plan written that day to settle "best practi
 
 _**Updated 2026-11-14, latest.** You answered questions 8 to 12 (OD-57 to OD-61); each is marked answered below with your words, and the question is kept as it was put. Your answers are in the ledger under "Owner answers 2026-11-14 (fourteenth set)", and question 12's under your correction of the same day. Two readings are the assistant's and yours to correct: under question 9, that a statement from lived-experience evidence counts too; under question 11, that your second line ("od60 yes") was a yes to answer A as the shape of the rewrite. **Still open:** question 13 (optional; nothing is renamed if you leave it), and questions 2, 3, 4, 5, 6 and 7 above._
 
+_**Updated 2026-11-14, last.** Four independent checks of the plan found four more questions your own rulings leave to you, or where two of your rulings pull against each other; they are questions 14 to 17 at the end (OD-63 to OD-66). None has been settled by an assistant. Questions 14, 15 and 16 each hold up work; question 17 holds nothing (the plan builds the recommended answer and changes it if you answer otherwise)._
+
 ---
 
 ## Four things to see first (answered 2026-11-14)
@@ -28,7 +30,7 @@ The independent check found four things you had not been shown. You answered all
 
 **4. Provisions such as hearing loops never get a value.** A settled decision (OD-53) lets a research pass mark things such as a hearing loop or a tactile walking surface as "not a measurement". That follows your rules: the book works out a value only for something measured, such as a length, a height or a contrast. But a provision whose question is whether it is there at all is then never given a value or a mark in the book. The gap falls mainly on people who are Deaf or hard of hearing and on blind people. It comes from the rule about what can be measured, not from the settled decision, and it has not been put to you before. *What you can do:* leave it as it stands (such provisions are discussed but get no value), or say you want provisions that are present or absent covered, and the options will be put to you.
 
-**You answered:** "hearing loops and other similar provisions should be included". **What was done:** such provisions (hearing loops, visual alarms, tactile walking surfaces, text telephones, tactile signs and the like) will be included with a value or mark of their own. A research pass no longer marks them "not a measurement". How they are included is a new decision, OD-56, with four options. Because it is about the machinery, an assistant will settle it on your earlier rulings and a second assistant will check it, as you allowed on 13 November; you can answer it yourself instead (`DECISION-CLOSURE.md` §4, prompt 18).
+**You answered:** "hearing loops and other similar provisions should be included". **What was done:** such provisions (hearing loops, visual alarms, tactile walking surfaces, text telephones, tactile signs and the like) are included. How was decision OD-56, and **you answered it yourself on 2026-11-14: "b"**. A provision is listed, by pointer, on the page of the element or room that should carry it, with the sources that say so; it is not a measurement and the book computes no value for it, and no assistant settled or checked it. *(Corrected 2026-11-14: this paragraph first said such provisions would get "a value or mark of their own" and that "an assistant will settle it"; your answer (b) replaced both.)* A research pass may still set such a term aside as "not a measurement", but only where it stays reachable as a provision from an element's page (`DECISION-CLOSURE.md` §4, prompt 18).
 
 ---
 
@@ -216,6 +218,63 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 **To answer:** "OD-62: A" or "OD-62: B", or leave it.
 
+
+---
+
+## 14. Over which values are the highest, most common and middle figures taken? (OD-63)
+
+**The situation.** You said the book shows four figures for each cell: minimum, mode (most common), median (middle) and maximum, and that the minimum comes from the codes unless there are none. You left the other three to yourself ("leave the maximum, mode and median scopes to the owner", in the ledger's words). The plan had wrongly left them to the page-building step.
+
+- **A. All the values found for that cell, of every kind of evidence.**
+- **B. Research only, using codes only where there is no research.** *What it means:* a code value more accommodating than every study could never be the maximum, though your harm test says "if no, code wins".
+- **C. Different for each figure** (say which).
+
+**Assistant's recommendation (not a ruling): A.** You said the book "presents all values … for comparative purposes", and the most accommodating value may be a code's.
+
+**To answer:** "OD-63: A", "B" or "C …". *This holds the work that computes the four figures, and the pages that show them.*
+
+---
+
+## 15. A value from grey literature: half circle or triangle? (OD-64)
+
+**The situation.** Your circle table, which you applied, gives grey literature the half circle (◐). Later the same day you said "triangle instead if the value is coming from grey or unverified". Taken together, a grey value always shows the triangle, so the half circle for grey can never appear.
+
+- **A. The triangle (⚠).** The half circle in the table then only says what grey would get without the warning.
+- **B. The half circle (◐).** Grey literature then no longer takes the triangle; only unretrieved and guessed values do.
+
+**Assistant's recommendation (not a ruling): A.** Your triangle statement came later and is about this exact case.
+
+**To answer:** "OD-64: A" or "OD-64: B". *This holds the work that applies the circles and the triangle, and through it the first published values.*
+
+---
+
+## 16. A code figure that names no group, beside research for that group: can it be shown as the best? (OD-65)
+
+**The situation.** Codes usually state a figure for everyone, without naming a group. The plan said such a figure is always shown but never chosen as the best when there is research for the group the cell is about. You said a figure without a group "is incomplete, not wrong", and "if no, code wins". You have not yet said what group such a figure carries (question 3 above, OD-47, still open).
+
+- **A. Shown, but never chosen as the best while research for the group exists.**
+- **B. Shown; chosen as the best only when nothing found is for the group.**
+- **C. Compared like any other value.** *What it means:* a general code figure could replace a figure measured for the group.
+
+**Assistant's recommendation (not a ruling): B.** Every value stays visible; a figure for the group is never pushed aside by one that was not for it; and a code figure is not hidden when it is all there is.
+
+**To answer:** "OD-65: A", "B" or "C". *This holds the work that chooses the best value, and through it most of what follows, including the first published values.*
+
+---
+
+## 17. Agreement: four details you left open (OD-66)
+
+**The situation.** You said values "within 5%, I think" count as the same, and that ranges count. You did not say: (a) 5% of the larger value or of the smaller; (b) whether 5% suits every kind of measurement (5% of a 1:20 slope and 5% of a 2 m width differ); (c) whether two values must be the same to group, or only able to both hold; (d) whether two groups of evidence on different minimums that can both be met (one at 1500 mm, one at 1800 mm) are called a disagreement, or left as your earlier answer says (not a disagreement, the spread printed). *(An earlier prompt told you "values within 5% count as the same" as if settled; these four details were not.)*
+
+- **(a)** larger · smaller
+- **(b)** one 5% for everything · different for some kinds (say which)
+- **(c)** the same · able to both hold
+- **(d)** as your earlier answer · a disagreement
+
+**Assistant's recommendation (not a ruling):** (a) larger; (b) one, until the first measurement on real data shows a kind it groups wrongly; (c) the same, with "able to both hold" shown beside it; (d) as your earlier answer, with the case flagged for a look.
+
+**To answer:** "OD-66: (a) larger, (b) one, (c) the same, (d) as before", or name the parts you want otherwise. *This holds nothing: the plan builds the recommendation and changes it if you answer otherwise.*
+
 ---
 
 _The nine decisions the assistant settled, for your information (one of them, OD-43, is now yours). Each was confirmed, with corrections, by the independent check. Any of them can be reversed with a line such as "OD-43: no, …":_
@@ -226,5 +285,5 @@ _The nine decisions the assistant settled, for your information (one of them, OD
 - **OD-45:** a search that a website blocked is recorded as not yet done and is owed again. It is never recorded as "nothing found".
 - **OD-49:** the type of building, whether the work is new or existing, and indoor or outdoor are each recorded on the figure and shown as separate cases of one value. Building types are named from the documents' own words, not invented. Your three building levels stand. (See the third of the four things above.) **Narrowed by you on 2026-11-14:** new or existing work is no longer recorded; the type of building and indoor or outdoor remain.
 - **OD-50:** any document the project admits, not only a code, may add a new measurement for the book to ask about. You still read each addition.
-- **OD-53:** a research pass may mark terms it meets as "not a measurement" (a thing such as a hearing loop, a word for a group or an activity, or a method), with a reason each, and never a measurement itself. The catalogue-wide pass reviews them. (See the fourth of the four things above.) **Changed by you on 2026-11-14:** a provision that is either there or not, such as a hearing loop, is no longer marked "not a measurement"; it is to be included (OD-56).
+- **OD-53:** a research pass may mark terms it meets as "not a measurement" (a thing such as a hearing loop, a word for a group or an activity, or a method), with a reason each, and never a measurement itself. The catalogue-wide pass reviews them. (See the fourth of the four things above.) **Changed by you on 2026-11-14:** a provision that is either there or not, such as a hearing loop, is included (OD-56, your answer "b"): it is listed on the page of the element that should carry it. It is still not a measurement, and a research pass may still say so, but never in a way that leaves it with no element page to be listed on. *(Corrected 2026-11-14: this line first said such a provision "is no longer marked 'not a measurement'", which your answer (b) does not say.)*
 - **OD-55:** this only arises if OD-41 is reversed. A replaced record is then kept but retired, never counted twice.
