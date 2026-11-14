@@ -7237,3 +7237,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session naming a new table, view, script, check or function, or describing a stage's output.
 ACTION: name a stage's tools and output with the stage's own id; do not coin a second word for the stage's product; do not rename existing objects until a tooling task is opened for it.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner instruction 2026-11-14 (last) — fold the term-resolution plan into the remediation plan; the newer plan wins where they conflict
+
+**Owner's words, quoted (typed):**
+
+> "and then we need to fold plan into remediation plan and ensure they are commensurate with this newest plan having priority in conflicts"
+
+**Readings.** [ASSUMPTION: "plan" is the unified resolution plan the Opus unifier produces from the seven adjudications of the best-practice sweeps (canonical definitions, amendments, supersession entries, tooling tasks, deletions, held questions, sequence), and "remediation plan" is `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md` with its task files, `OPEN-ITEMS-PLAN.md`, `DECISION-CLOSURE.md` and the generated `REMEDIATION-PLAN.md` — basis: the sequence of the session]. [ASSUMPTION: "commensurate" means the two agree: no task, dependency, decision or open item in the remediation plan contradicts the new plan, and the new plan's tasks appear in the remediation plan with numbers, dependencies and gates — basis: the word]. [ASSUMPTION: "priority in conflicts" is a precedence rule for the plans, below the owner's rulings in the ledger (CLAUDE.md rule 0, which no plan outranks): where a remediation-plan task or decision disagrees with the new plan, the remediation plan is changed to match and the supersession is recorded in the task file — basis: the statement and rule 0].
+
+**What this does.** Orders the integration after the unifier's plan, to be done by an integrator in the manner of the earlier integrations (ledger first, task files, the workplan, the generator, then the checks).
+
+**What it does not decide.** The content of the unified plan, which the unifier writes and which the owner has not yet read; the held questions in it.
+
+CONDITION: any session reading or editing the remediation plan or its task files.
+ACTION: where a remediation-plan statement conflicts with the unified term-resolution plan, follow the unified plan and name the supersession; where either conflicts with a ledger ruling, follow the ledger.
+DATE: 2026-11-14 — owner instruction (typed words, quoted above).
