@@ -7185,3 +7185,19 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session choosing the best value of a cell where a code value and a research value differ.
 ACTION: take the most accommodating value as the best; replace it only with a recorded finding of worse results for the same lens and context, and show both with their citations.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a cell resting on tier 4 only takes the half circle
+
+**Owner's words, quoted (typed), answering the question raised by the adjudication (does a T4-only basis take ○ or ◐):**
+
+> "T4 only half circle"
+
+**Readings.** [ASSUMPTION: a determination or cell whose basis is T4 sources only takes ◐, and one whose basis is T5 or T6 only takes ○, in line with the circles-by-tier proposal (● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6) — basis: the statement; the doctrine's present rule gives every T4–T6-only basis ○, so this answers the held question in favour of the proposal for T4]. [ASSUMPTION: where a cell's basis mixes tiers, the marker is still the floor of the mean of the governing sources' bands (the present `floor_mean` in `schemas/tier_derivation.py`), unchanged by this answer — basis: no statement on the mixed case]. [ASSUMPTION: the table is still not applied to `band()`, the governance files or CHECK 116 until the owner says so; this answer removes the T4 question from the held list and not the whole table — basis: the earlier entries hold the application].
+
+**What it does not decide.** The application of the table to code and documents; T3 clinical (● now, ◐ in the proposal) and T3 grey (○ now, ◐ in the proposal) are covered by the proposal and not re-asked here.
+
+CONDITION: any session deriving, rendering or auditing the marker of a code-only cell.
+ACTION: read a T4-only basis as ◐ and a T5- or T6-only basis as ○, when the table is applied; do not apply it before.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
