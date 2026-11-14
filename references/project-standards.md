@@ -7095,3 +7095,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session deriving, rendering or auditing the triangle.
 ACTION: derive thin from the population match and the proxy-inference record; do not count roots to decide it; do not store it beside them.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a clinician's vetted professional judgment is not thin
+
+**Owner's words, quoted (typed), answering the question left open in the entry on thin:**
+
+> "this is not thin. a clinician has rendered a professional judgment that has been vetted by colleagues based upon available information"
+
+**Readings.** [ASSUMPTION: an inference rendered as a professional judgment by a clinician, and vetted by colleagues on the information available, is not conjecture and so does not make a value thin — basis: the statement]. [ASSUMPTION: conjecture is then an inference that has not been rendered or vetted as a professional judgment: a transfer from a proxy group, or an extrapolation, with no professional judgment behind it — basis: the statement set against the earlier one on thin]. [ASSUMPTION: the owner answered for the clinician's argument; a derivation (an engineered or calculated figure with a stated rationale) was named in the same question and is not separately answered, so it is not read as covered — held]. [ASSUMPTION: the vetting is what separates the judgment from conjecture, so the record of it (the source is a professional-body guideline, a peer-reviewed clinical argument, or similar) is what the project would derive it from; a single clinician's unvetted opinion is not covered — basis: "vetted by colleagues"].
+
+**What this does.** Narrows the entry on thin: a vetted professional judgment is a direct basis. It sits in the evidence model where Co-2 (professional-body practice guidelines) and clinical peer-reviewed argument already sit, so no new category is drawn here.
+
+**What it does not decide.** How the vetting is recorded or derived; whether a derivation counts; the single unvetted opinion.
+
+CONDITION: any session deciding whether a value is thin.
+ACTION: do not mark a value thin because its basis is a vetted professional judgment; ask of an inference whether it was rendered and vetted as a judgment or is a bare transfer or extrapolation.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
