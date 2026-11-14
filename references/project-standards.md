@@ -6898,3 +6898,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session computing, rendering or checking the minimum, maximum, median or best of a cell.
 ACTION: order the identified values by the parameter's accessibility direction before taking any of the four; never take the numerically smallest value as the minimum without that order.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the marker, not the word, says how a best value is derived
+
+**Owner's words, quoted (typed):**
+
+> "that's why we have the circles: we can say something is best practice but the empty circle makes it clear that it's not academically or clinically derived"
+
+**Readings.** [ASSUMPTION: the evidence marker carries provenance, so the words "best practice" need not; a value named best practice from the code stratum alone is shown with the empty circle (○), which tells the reader it is not academically or clinically derived — basis: the statement, with "if the only values are from code then code determines the ideal/best"]. [ASSUMPTION: "the empty circle" is ○; the doctrine already renders a determination resting on T4–T6 alone as "○ weak, code-derived" (`governance/evidence-architecture.md` §§2.2, 5), while `CLAUDE.md` §6 glosses ◐ as "policy/standards only" and ○ as "grey, thin or unverified"; the two glosses are not reconciled here — basis: the passages named; flagged for the owner and not decided]. [ASSUMPTION: this makes the wording "best practice" with a ○ marker and a shown code source consistent with the definition; it does not make a ○ best practice equal to a ● one, since the marker is the difference — basis: the statement].
+
+**What this does.** For the sweep: a passage that names the most accommodating code value best practice, with the ○ marker or an equivalent statement of its code source, is not a conflict on that ground; one that names it best practice with no marker or source, or at ● strength, remains one. Together with the code-only entry this settles the Option A wording for the sweep's disputed passages in principle; the passages themselves are not yet re-sorted.
+
+**What it does not decide.** Which circle a code-only best carries where `CLAUDE.md` and the doctrine differ (○ or ◐); the marker rule for a best resting on research that is itself thin.
+
+CONDITION: any session writing, rendering or reviewing a best-practice sentence or its marker.
+ACTION: let the marker carry the provenance; do not drop the marker, and do not use ● for a value resting only on code.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
