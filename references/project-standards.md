@@ -7061,3 +7061,19 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session deriving, rendering or auditing a marker.
 ACTION: a figure whose governing source is grey or unverified carries ⚠ and no circle; do not write both.
 DATE: 2026-11-14 — owner correction (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — thin also takes the triangle
+
+**Owner's words, quoted (typed), completing the correction above:**
+
+> "thin too"
+
+**Readings.** [ASSUMPTION: a value whose basis is thin takes the ⚠ in place of the circle, as one from a grey or unverified source does — basis: the statement; this withdraws the reading in the entry above that thin was no longer a cause]. The causes of the triangle are then grey, thin and unverified, as the owner first named them. [ASSUMPTION: thin remains a property of a cell or population (the doctrine's `[THIN BASE]` flag), not of a source, so the triangle for thin attaches to the value and not to a source — basis: `governance/tier-system.md` §5 and `governance/armature_v4.md`].
+
+**What it does not decide.** What counts as thin (no column or check derives it; open); how a cell resting on grey, thin or unverified together with other sources is marked; any edit to `band()`, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session deriving, rendering or auditing a marker.
+ACTION: ⚠ in place of the circle for a grey, thin or unverified basis; do not write both.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
