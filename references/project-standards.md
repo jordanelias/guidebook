@@ -6696,3 +6696,133 @@ The owner wrote:
 CONDITION: any session building, reading, validating or rendering the convergence status, its rationale, or the sentence a convergent or divergent cell renders; selecting the best-practice value or the marker of a determination; or investigating a divergent parameter.
 ACTION: (0) T-068 groups intervals, not points (`bound_on_scale`), keeps both bounds, reports a range spanning two clusters, puts the grouping relation (the same against consistent) to the owner with the recorder's working reading, and tests the tolerance and the ranges at their edges (4.9% apart clusters; 5.1% apart does not; an exact match clusters; a stepped series 1:20, 1:16, 1:12 stays three clusters; a point inside a range is consistent with it; a point outside by more than 5% of the nearer bound is not; two overlapping ranges are consistent; 1000 and 1200 as points sit in two clusters while a 1000 to 1200 range is reported as spanning them) and lists, by command, the live cells where it changes a cluster against exact equality. (1) T-068 withdraws its carve-out for agreement among codes alone: such agreement is `convergent` where the other conditions hold (the same value or range; claims that can all hold). (2) Every convergent statement the engine writes carries the number of sources, the number of independent roots (from `v_value_independence_rows`, as T-068 builds it) and each converging source with its tier and band, derived from the sources already linked; no column and no score is added. (3) A convergence among codes alone is labelled most common practice with the code-derived flag (`regulatory_stratum_only`) and the convergence-not-evidence caveat; never best practice, never as raising confidence. (4) `convergent` asserts no higher confidence. (5) A convergent assessment changes neither the best-practice value nor the marker; no code path lets it today, and T-068's test guards that; the prose callers named above are swept by T-068. (6) T-068 builds the cluster step (values within the owner's working tolerance of 5%, relative to the larger value until the owner says otherwise, or overlapping ranges, on a common scale; values stored and shown exact; the tolerance in one home), writes `divergent` for two or more clusters where T-059's rule applies and an open gap row as the investigation cue in every case of two or more clusters, lists the divergent parameters as the investigation queue (`v_divergence`, `/batch-done`), and puts item (4) above to the owner. (7) T-068's caller sweep corrects `governance/evidence-methodology.md` (the `convergent`, `divergent` and `single_axis` definitions, the Co-1-C sentence and the `single_axis` Tier 4–6 voice row) with marked supersessions, the engine branch that hard-codes `single_axis` for a regulatory-only cell, and the validator's rule that `convergent` requires two or more axes (which counts only the clinical, Co-1 and Co-2 roles and so refuses two Tier 1 sources and any code-only agreement). (8) T-068's section "What the investigation looks at" is the specification of a read-only diagnostics reader; the task to build it is owed (`OPEN-ITEMS-PLAN.md` OI-57). (9) Read OD-43 through the gate; its status line is unchanged. (10) Treat every [ASSUMPTION] above as unratified.
 DATE: 2026-11-14 — owner statements (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 — what "best practice" is, and how the term is swept
+
+**Owner's words, quoted (typed, same day, in order):**
+
+> "best practice is the best/most forgiving/etc of all values/approaches for a given term" (2026-11-13, eleventh set)
+>
+> "but how many errors and issues are occurring because your understanding of best practice, which can be found all across our tools and doctrines etc, keeps understanding it as the most common figure"
+>
+> "I think we need to run this sweep carefully and comprehensively, which means we ensure that our grep etc is paired with a contextual reading of the term. The most accommodating value is one that has been identified in our research, which in turn means that it is based in the evidence that we have collected enough if the research source itself simply asserts the value"
+
+**Readings.** [ASSUMPTION: best practice is the most accommodating of the values our research has identified for a parameter; it is chosen from values already held as extractions, and is not computed outside them — basis: "identified in our research"]. [ASSUMPTION: a source that merely asserts a value is enough for that value to be eligible; the source's tier sets the marker and the weight, not eligibility — basis: "if the research source itself simply asserts the value"]. [ASSUMPTION: most common practice (convergence) and best practice are different quantities; the first counts values coming together, the second picks the most accommodating value — basis: the convergence statements of the same day].
+
+**What this does.** Orders a sweep of the live surface (`git grep -i -E 'best[ _-]?practice'`, excluding frozen records and data migrations), each hit paired with a reading of its paragraph and classified by sense, with a flag where the passage conflicts with the statement above. Method and results: `scratchpad/session_2026-11-13-edmonton-checklist-pass/sweep/`.
+
+**What it does not decide.** Whether the term is renamed (the owner asked on 2026-11-14 whether "ideal" would serve; not answered). Which passages are amended: that follows the sweep's list, each amendment through this ledger.
+
+CONDITION: any session reading, writing or rendering the phrase "best practice", the `best_practice_synthesis` table or the `v_best_practice` view.
+ACTION: read the phrase as the most accommodating identified value, never as the most common figure; where a passage says otherwise, name the conflict and do not copy the wording.
+DATE: 2026-11-14 — owner statements (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (later) — the most accommodating value is relative to the lens and the context
+
+**Owner's words, quoted (typed):**
+
+> "The most accommodating, then, is the one that best responds to an ICF/access need/identity within whatever context, and that means it is the ideal from what we have found"
+
+**Readings.** [ASSUMPTION: "most accommodating" is read per cell and per context, never as one figure for a parameter across every lens and circumstance — basis: "best responds to an ICF/access need/identity within whatever context"; the cell's key is already a parameter by at least one lens, and the circumstances (use, indoor/outdoor, new/existing, design scale) are the context]. [ASSUMPTION: "the ideal from what we have found" says the value is the ideal among the values our research has identified, not an ideal beyond them — basis: "from what we have found", with the statement above that it is identified in our research]. [ASSUMPTION: the sentence uses "ideal" as a description and does not answer the owner's own question of 2026-11-14 whether the term should be renamed "ideal" — basis: no instruction to rename; the question stands open].
+
+**What this does.** Adds to the sweep brief a fifth component of the definition (relative to lens and context) and a `TENSION` flag for any passage that gives one best-practice figure for a parameter with no lens or context.
+
+**What it does not decide.** The rename; and how a cell's context is stored (T-091's typed circumstances is the working home, not a ruling).
+
+CONDITION: any session choosing, rendering or reading a best-practice value for a cell.
+ACTION: a best-practice value belongs to a cell and its context; a figure offered without either is incomplete, not wrong.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (later still) — best practice, ideal and most accommodating are one definition
+
+**Owner's words, quoted (typed):**
+
+> "This means that my definition of best practice IS the same as ideal IS the same as most accommodating"
+
+**Readings.** [ASSUMPTION: the three terms name one quantity — the value, for a cell and its context, that best responds to the lens among the values our research has identified — basis: the owner's three-way "IS the same as"]. [ASSUMPTION: this makes any passage that ranks "ideal" and "best practice" as different rungs (the prose register's Ideal → Best Practice → Acceptable → Minimum, in `skills/prose-style-checker_SKILL.md`) a conflict with the owner's definition, to be amended through this ledger and not by a sweep — basis: the statement]. [ASSUMPTION: the owner's question of 2026-11-14 whether to use "ideal" instead of "best practice" is left open as to which word the project writes; it is no longer open as to meaning — basis: the statement says they are the same, and does not instruct a rename].
+
+**What this does.** Widens the sweep: a second pass reads "ideal" and "most accommodating" the same way as "best practice"; passages that treat the three as different are flagged.
+
+**What it does not decide.** Which one word the project writes; whether the prose register's four-rung sequence is kept, collapsed to three, or re-based; the rename of `best_practice_synthesis` and `v_best_practice`.
+
+CONDITION: any session reading or writing any of the three words as a value tier.
+ACTION: read the three as one; name a passage that ranks them apart; do not rewrite it without a ledger entry.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — three terms: best, most common and floor
+
+**Owner's words, quoted (typed):**
+
+> "we have best, most common, and floor"
+
+**Readings.** [ASSUMPTION: the three name three different quantities over the values our research has identified for a cell and its context — *best* (also written ideal, best practice, most accommodating: the value that best responds to the lens), *most common* (where values come together: convergence), *floor* (the code floor: the lowest value the regulatory stratum requires) — basis: the statement, with the earlier statements of the same day]. [ASSUMPTION: a passage using any one of the three words for another is a conflict, for example "best practice" for the code floor or for the most common figure — basis: the statement keeps them distinct]. [ASSUMPTION: this does not rank them by strength of evidence, which is the marker's job — basis: no such statement].
+
+**What this does.** Adds the sense `FLOOR` to the sweep (a passage using best practice for the floor, the minimum or the code baseline is a conflict); the three terms are the sweep's classification, derived from the owner's words and not coined.
+
+**What it does not decide.** Which of these the prose register's Acceptable and Minimum rungs correspond to; how `code_floor_only` and `v_best_practice` are named; any rename.
+
+CONDITION: any session writing a value tier in prose, a schema name, a render sentence or a check.
+ACTION: name which of the three a value is; do not use one word for another.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (after the three terms) — the guidebook shows data and does not determine; minimum is a fact, acceptable is a judgment
+
+**Owner's words, quoted (typed):**
+
+> "remember that we are showing data, not determining. the minimum is a factual data point. acceptable isn't relevant as that's a value judgment. our ideals are simply data points"
+
+**Readings.** [ASSUMPTION: the best (ideal), most common and floor values are each shown as a data point drawn from what the research identified; none is presented as a verdict on what a design should be — basis: "our ideals are simply data points"]. [ASSUMPTION: "minimum" is the floor, a stated figure, and carries no judgment — basis: "the minimum is a factual data point"]. [ASSUMPTION: "acceptable" is not a quantity the project holds, and the prose register's rung of that name has no place — basis: "acceptable isn't relevant as that's a value judgment"; this answers the question left open by the entry on the three terms for the prose register's Acceptable rung, and leaves its Ideal and Minimum rungs standing as the owner's best and floor]. [ASSUMPTION: "showing data, not determining" governs how a value is worded and presented; it is not read as retiring the specification stage's determination, which the owner ruled at element level (OD-56 (b)) — basis: no statement retiring it; the tension with the specification stage's name is recorded, not resolved].
+
+**What this does.** Adds to the sweep a flag: a passage that ranks "acceptable" as a tier, or presents best practice, the minimum or a convergent value as what a design must, should or may do rather than as a figure the research shows, is a conflict with this statement.
+
+**What it does not decide.** Whether "determination" as the specification stage's word is kept, nor how the render sentences are re-worded; those follow the sweep's list, each through this ledger.
+
+CONDITION: any session writing a value tier, a render sentence, a specification state or a check message.
+ACTION: show the value and what it rests on; do not say it is acceptable, adequate or required unless a source states a requirement, and then attribute it.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (after "acceptable") — the project holds four data points: minimum, mode, median, maximum
+
+**Owner's words, quoted (typed):**
+
+> "we just have minimum, mode, median, maximum"
+
+**Readings.** [ASSUMPTION: for a cell and its context the guidebook shows four descriptive figures over the values our research has identified: the minimum, the mode, the median and the maximum — basis: the statement, with "we are showing data, not determining"]. [ASSUMPTION: the earlier names map onto them: *floor* is the minimum; *most common* is the mode (the value or cluster where values come together, which T-068's cluster step finds); *best*, *ideal* and *most accommodating* is not a fifth figure but whichever end, minimum or maximum, is the more accommodating for that parameter, the direction being the one OD-24's split test already asks of each parameter (a wider doorway is more accommodating at the maximum, a lower operating force at the minimum) — basis: "best/most forgiving of all values" together with this statement; the median has no earlier name]. [ASSUMPTION: a figure that is an interval contributes both bounds to the minimum and the maximum, and the 5% tolerance of the earlier statement applies to the mode only — basis: the earlier statements on ranges and tolerance; not stated here].
+
+**What this does.** Replaces the sweep's three-way classification (best, most common, floor) with four named figures plus the accommodating direction, for the synthesis of its results; a passage that uses one of the four words for another, or that names a fifth tier, is a conflict.
+
+**What it does not decide.** Whether the minimum is taken over every identified value for the cell or only over the regulatory stratum (the code floor in the doctrine's sense); whether the median is shown wherever the mode is; how a cell with one value is shown (all four coincide); and the names of schema objects and render sentences, which follow the sweep's list through this ledger.
+
+CONDITION: any session choosing, computing, rendering or checking a value figure for a cell.
+ACTION: show the four figures as data with what each rests on; do not add a fifth tier or call any of them acceptable, required or recommended.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 — the minimum is the code stratum's lowest value, or the lowest identified value where there is no code data
+
+**Owner's words, quoted (typed), answering the question put after the four-figure statement:**
+
+> "minimum is code stratum unless there is no code data"
+
+**Readings.** [ASSUMPTION: "code stratum" is the regulatory stratum of the tier system (T4–T6, ruled as the code floor's home); the minimum of a cell is the lowest value any code in that stratum states for it — basis: the tier system's walled-off stratum and the doctrine's "Tier 6 codes are the compliance floor"]. [ASSUMPTION: where the cell has no code value, the minimum is the lowest value among the other identified values, and is shown as research-derived, never as a code floor — basis: "unless there is no code data"; the source stratum is a fact the reader needs and travels with the figure]. [ASSUMPTION: a research value lower than the code minimum is a value shown among the identified values; it does not replace the minimum — basis: the answer places the minimum in the code stratum when code data exist]. [ASSUMPTION: an interval or a floor-only code claim ("at least 1200") contributes its lower bound, and a ceiling-only claim ("at most 38 N") contributes nothing to the minimum of a parameter whose direction is a floor, using the bounds already read by `dbcore.bound_on_scale` — basis: the earlier statement on ranges; not stated here].
+
+**What this does.** Settles the scope of the minimum; so floor stays a figure distinct from the research values, and the sweep's `FLOOR` sense is the code stratum's lowest value, not the lowest of everything found.
+
+**What it does not decide.** The scope of the maximum, the mode and the median (all identified values, or only some stratum); how a cell with code data from several jurisdictions presents the lowest (one jurisdiction's figure or the set); whether a minimum drawn from research is marked differently from one drawn from code in the render.
+
+CONDITION: any session computing, rendering or checking the minimum of a cell.
+ACTION: take the minimum from the code stratum when it holds a value for the cell; otherwise from the identified values and say so; leave the maximum, mode and median scopes to the owner.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
