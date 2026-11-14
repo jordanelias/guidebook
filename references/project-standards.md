@@ -7201,3 +7201,21 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session deriving, rendering or auditing the marker of a code-only cell.
 ACTION: read a T4-only basis as ◐ and a T5- or T6-only basis as ○, when the table is applied; do not apply it before.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — what "determination" means
+
+**Owner's words, quoted (typed), on the tension the ledger recorded between "showing data, not determining" and the specification stage's word "determination":**
+
+> "determination means to determine the ideal within the context of all evidence factors and consequently what to choose and how to grade quality of evidence for it"
+
+**Readings.** [ASSUMPTION: a determination is the act of identifying the ideal (the best, the most accommodating identified value) for a cell and its context from all the evidence factors, and of choosing which value to showcase on that basis, together with grading the quality of the evidence behind it (the marker) — basis: the statement]. [ASSUMPTION: "what to choose" is the choice of which identified value is shown as the ideal; it is not a choice of how anyone should design, so a determination makes no claim of the project's own authority over a design — basis: the statement with the transparency and "we gather and show" entries of the same day]. [ASSUMPTION: the word "determination" for the specification stage, and "best-practice determination" in the doctrine, therefore stand; the tension recorded between them and "showing data, not determining" is resolved by this definition, in which "determining" is the choice of the ideal and the grading of its evidence, and not a verdict on a design — basis: the statement; the entry on "showing data, not determining" says it is not read as retiring the stage]. [ASSUMPTION: the evidence factors are those the pipeline already records (tier, directness, independence, direction, lens and context, harm findings); the entry names none — basis: none stated].
+
+**What this does.** Ends the held question of whether the specification stage's name, or the doctrine's phrase "best-practice determination", conflicts with "showing data, not determining": it does not.
+
+**What it does not decide.** The list of evidence factors; any renaming; the sweep's passages that use "determine" or "determination" as a verdict on a design (a passage saying a design must or should is still a verdict).
+
+CONDITION: any session describing what a specification or a determination is or does.
+ACTION: describe a determination as identifying the ideal for a cell and its context and grading the evidence for it; do not describe it as the project deciding how to design.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
