@@ -6878,3 +6878,23 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session choosing, rendering or reviewing the best value of a cell whose identified values are all code values.
 ACTION: take the most accommodating code value for the parameter's direction as the best, show its code source with it, and keep the minimum and the mode as their own figures.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the figures run in the parameter's accessibility direction; the minimum may be the highest number
+
+**Owner's words, quoted (typed):**
+
+> "remember that value direction of parameter matters. the minimum in some contexts may be the highest allowable number in absolute terms"
+
+**Readings.** [ASSUMPTION: the minimum and the maximum are ordered by accommodation, not by numeric size: the minimum is the least accommodating value the code stratum allows (for an operating force or a gradient, the highest number: "no more than 38 N"), the maximum is the most accommodating identified value (the lowest number for that force, the widest for a doorway) — basis: the statement; the parameter's `accessibility_direction` column (`higher_is_better` or the reverse) is the existing record of the direction, and `assess_cell.py` already selects the most accommodating value by it]. [ASSUMPTION: the best (ideal, most accommodating) figure is therefore the maximum in accommodation order, and the earlier reading that it is "whichever numeric end is more accommodating" is the same thing said in numeric terms — basis: the two statements together]. [ASSUMPTION: the mode and the median are taken over the values as ordered by accommodation, so the median is the middle value in that order — basis: the direction statement]. [ASSUMPTION: a parameter with no recorded direction, or one recorded as contested, gets no minimum or maximum, only the identified values, until a direction is recorded — basis: the engine's own refusal for the same case; not stated here].
+
+**[CORRECTION: the minimum's scope entry above — a ceiling-only code claim ("at most 38 N") contributes nothing to the minimum of a parameter whose direction is a floor.]** That reading counted the minimum numerically. Under this statement a ceiling-only code claim is the least accommodating allowed value of a lower-is-better parameter and is its minimum; a floor-only claim ("at least 1200") is the minimum of a higher-is-better parameter. The earlier entries are not edited; this one supersedes the reading.
+
+**What this does.** Fixes the order the four figures are read in; ties them to the recorded accessibility direction; withdraws the numeric reading of the minimum.
+
+**What it does not decide.** How a parameter whose direction depends on context is shown; whether the figures are labelled by accommodation or by their numeric names in the render.
+
+CONDITION: any session computing, rendering or checking the minimum, maximum, median or best of a cell.
+ACTION: order the identified values by the parameter's accessibility direction before taking any of the four; never take the numerically smallest value as the minimum without that order.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
