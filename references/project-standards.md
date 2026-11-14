@@ -7530,3 +7530,19 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session designing or running T-126 or T-127, or placing a lens in a stage.
 ACTION: the lens of a code value is assigned in the judgment stage, in the recording call; do not move the lens tables or the assignment to the evidence stage.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (sixteenth set, last) — populations are still coded, through the ICF and access-need lenses
+
+**Owner's words, quoted (typed):**
+
+> "but ICF and access needs are supposed to be mapped to populations too so populations still get coded as a result"
+
+**Readings.** [ASSUMPTION: a code value that carries an ICF code and an access need as its lens reaches the populations (identities) those codes map to; the identity is therefore coded by derivation through the existing mapping (`identity_icf_map`, derive the live rows with `select count(*) from identity_icf_map`), not written beside the ICF and access-need links; so OD-31 (a clause naming no group carries no identity of its own) stands, and the mounting-height and clearance defaults reach the wheelchair-user identity by the mapping from their ICF reach code and access need — basis: the statement, and rule 5 (point, do not copy)]. [ASSUMPTION: this settles the apparent clash between OD-31 and the worked defaults recorded by the integrator as conflict 25: there is no clash, since the identity follows the ICF and access-need links — basis: the statement]. [ASSUMPTION: the live mapping from access needs to identities was not found by name (`needs_code` has no `*_map` table among the tables listed by `sqlite_master`); whether it exists under another name, or the needs lens reaches populations only through the ICF mapping, is for T-126 to derive and report — basis: a search of `sqlite_master` for names with "map" or "lens"].
+
+**What it does not decide.** Whether an identity named by the clause itself is written as a link (it is, as before); the coverage of `identity_icf_map` (61 rows today) for the ICF codes the defaults use.
+
+CONDITION: any session assigning a lens to a code value, or reading the populations a code value serves.
+ACTION: write the ICF and access-need lens in the recording call; reach the populations through the mapping; do not store the derived identity beside them.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).

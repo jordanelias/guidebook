@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-14 20:20 UTC from the 114 task files (104 open, 10 merged) at commit dc9d211e by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-14 23:14 UTC from the 114 task files (104 open, 10 merged) at commit 567473d8 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -31,7 +31,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 **Merged** (a merge commit on HEAD names the task's branch, or a squash commit's subject begins `T-nnn:` or says `execute workplan T-nnn` and ends `(#N)`; out of the batches below, and a dependency on one is satisfied; re-derive: `git log --merges --format=%s HEAD | grep -o 'task/t-[0-9a-z-]*'` and `git log --no-merges --format=%s HEAD | grep -E '^T-[0-9]+:|execute workplan T-[0-9]+' | grep -E '\(#[0-9]+\)$'`): [T-008](tasks/T-008-claimed-number-check.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-013](tasks/T-013-typed-gaps.md), [T-014](tasks/T-014-stress-harness-and-probes.md), [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-024](tasks/T-024-jurisdiction-registry.md), [T-026](tasks/T-026-alias-attestation.md).
 
-**Longest dependency chain (8 tasks):** T-119 (NOT FOR SONNET) → T-120 (NOT FOR SONNET) → T-059 (NOT FOR SONNET) → T-068 (NOT FOR SONNET) → T-117 (NOT FOR SONNET) → T-122 (NOT FOR SONNET) → T-037 (NOT FOR SONNET) → T-038 (READY).
+**Longest dependency chain (8 tasks):** T-126 (NOT FOR SONNET) → T-127 (NOT FOR SONNET) → T-059 (NOT FOR SONNET) → T-068 (NOT FOR SONNET) → T-117 (NOT FOR SONNET) → T-122 (NOT FOR SONNET) → T-037 (NOT FOR SONNET) → T-038 (READY).
 
 ## Batch 1
 
