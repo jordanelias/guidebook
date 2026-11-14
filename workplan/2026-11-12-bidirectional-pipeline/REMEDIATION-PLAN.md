@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-13 23:12 UTC from the 103 task files (93 open, 10 merged) at commit 66a5ba8a by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-14 00:06 UTC from the 103 task files (93 open, 10 merged) at commit 0c24d61e by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -18,9 +18,9 @@ _Generated 2026-11-13 23:12 UTC from the 103 task files (93 open, 10 merged) at 
 
 | Batch | Tasks | READY | OWNER-blocked (a gate CLOSED) | DESIGN file missing | NOT FOR SONNET | Tooling / research | Lanes |
 |---|---|---|---|---|---|---|---|
-| 1 | 49 | 38 | 4 | 1 | 10 | 42 / 7 | 15 |
-| 2 | 21 | 10 | 6 | 0 | 8 | 9 / 12 | 13 |
-| 3 | 12 | 7 | 2 | 0 | 4 | 7 / 5 | 8 |
+| 1 | 49 | 40 | 1 | 1 | 9 | 42 / 7 | 15 |
+| 2 | 21 | 11 | 2 | 0 | 8 | 9 / 12 | 13 |
+| 3 | 12 | 8 | 0 | 0 | 4 | 7 / 5 | 8 |
 | 4 | 6 | 2 | 0 | 1 | 4 | 4 / 2 | 6 |
 | 5 | 3 | 1 | 0 | 0 | 2 | 3 / 0 | 3 |
 | 6 | 2 | 1 | 0 | 0 | 1 | 2 / 0 | 2 |
@@ -66,9 +66,9 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-055](tasks/T-055-mobility-family-tooling.md) | Tooling for the mobility family: the devices it needs, and a parent's determination that g | 4 | TOOLING | READY | yes | — | piloted |
 | [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragi | 1 (chain, after T-019) | TOOLING | NOT FOR SONNET | no | — | not piloted |
 | [T-061](tasks/T-061-amend-extraction-reformat.md) | `amend-extraction` reformats a figure's value, unit or empty setting in place (the prior w | 1 | TOOLING | READY | yes | — | not piloted |
-| [T-063](tasks/T-063-derive-extraction-repair.md) | `derive-extraction` can write a derived figure honestly | 2 | TOOLING | OWNER: OD-40 (no status line); NOT FOR SONNET | no | — | not piloted |
+| [T-063](tasks/T-063-derive-extraction-repair.md) | `derive-extraction` can write a derived figure honestly | 2 | TOOLING | READY | yes | — | not piloted |
 | [T-067](tasks/T-067-coverage-per-parameter-via-admission.md) | Coverage per parameter and in-scope pair, reached through admissions | 3 | TOOLING | READY | yes | — | not piloted |
-| [T-070](tasks/T-070-blind-double-extraction.md) | Blind double extraction: do two readers, and do model and effort, record the same rows? | research | RESEARCH | OWNER: OD-44 (no status line); NOT FOR SONNET | no | — | not piloted |
+| [T-070](tasks/T-070-blind-double-extraction.md) | Blind double extraction: do two readers, and do model and effort, record the same rows? | research | RESEARCH | OWNER: OD-44 (REFERRED BACK TO THE OWNER); NOT FOR SONNET | no | — | not piloted |
 | [T-073](tasks/T-073-fixture-ids-free-of-the-retrieval-log.md) | A fixture source never takes an id the retrieval log already holds | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-074](tasks/T-074-latest-adjudication-names-the-term.md) | An alias or a rename rests on the latest adjudication of its observation | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-075](tasks/T-075-gate-reports-its-subject-and-base.md) | The gate reports what each check examined, against the base it was given, and rebuilds whe | 0 (now) | TOOLING | READY | yes | — | not piloted |
@@ -76,11 +76,11 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-077](tasks/T-077-medical-only-determination-refused.md) | A determination keyed on a medical code alone is refused at write | 0 (now) | TOOLING | READY | yes | — | not piloted |
 | [T-078](tasks/T-078-figure-retires-in-place.md) | A figure retires in place | 2 | TOOLING | NOT FOR SONNET | no | — | not piloted |
 | [T-079](tasks/T-079-deferred-acts-with-age.md) | A deferred reading is recorded, and every deferred act lists with its age from one view | 2 | TOOLING | READY | yes | — | not piloted |
-| [T-080](tasks/T-080-zero-result-search-states-its-cause.md) | A zero-result search states its cause when it is logged | 2 | TOOLING | OWNER: OD-45 (no status line) | no | — | not piloted |
+| [T-080](tasks/T-080-zero-result-search-states-its-cause.md) | A zero-result search states its cause when it is logged | 2 | TOOLING | READY | yes | — | not piloted |
 | [T-082](tasks/T-082-comparator-on-two-stored-figures.md) | The two stored numerical claims with no comparator get one from their source | research | RESEARCH | NOT FOR SONNET | no | — | not piloted |
 | [T-088](tasks/T-088-refusal-capture-and-disposition.md) | A writer's refusal is kept, and every refusal a batch met is disposed | 2 | TOOLING | READY | yes | — | not piloted |
 | [T-090](tasks/T-090-coverage-reads-at-batch-done.md) | Every research batch reports which groups the catalogue can speak about | 2 | TOOLING | READY | yes | — | not piloted |
-| [T-091](tasks/T-091-typed-circumstance-carrier.md) | A figure's circumstance (building use, new or existing, interior or exterior) in typed cel | 4 | TOOLING | OWNER: OD-49 (no status line); DESIGN: T-091-design.md; NOT FOR SONNET | no | — | not piloted |
+| [T-091](tasks/T-091-typed-circumstance-carrier.md) | A figure's circumstance (building use, new or existing, interior or exterior) in typed cel | 4 | TOOLING | DESIGN: T-091-design.md; NOT FOR SONNET | no | — | not piloted |
 | [T-103](tasks/T-103-medical-lens.md) | Fill the medical lens by correspondence | research | RESEARCH | NOT FOR SONNET | no | — | not piloted |
 | [T-104](tasks/T-104-verify-governing-sources.md) | Verify the sources a first determination would rest on | research | RESEARCH | READY | yes | — | not piloted |
 | [T-106](tasks/T-106-retag-lenses.md) | Tag figures with every relevant model | research | RESEARCH | NOT FOR SONNET | no | — | not piloted |
@@ -105,7 +105,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 1.14: T-111
 - Lane 1.15: T-113
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028, T-031, T-059, T-063, T-070, T-078, T-082, T-091, T-103, T-106; a decision gate CLOSED: T-063 (OD-40), T-070 (OD-44), T-080 (OD-45), T-091 (OD-49); a design file missing: T-091 (T-091-design.md).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-028, T-031, T-059, T-070, T-078, T-082, T-091, T-103, T-106; a decision gate CLOSED: T-070 (OD-44); a design file missing: T-091 (T-091-design.md).
 
 ## Batch 2
 
@@ -117,17 +117,17 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-022](tasks/T-022-contract-re-entry.md) | Re-entry conditions in the pipeline contract | 2 | TOOLING | READY | yes | T-002 | not piloted |
 | [T-049](tasks/T-049-translation-home.md) | A typed home for translations, attached by pointer and callable from any stage | 2 | TOOLING | READY | yes | T-051 | piloted |
 | [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | Admission edges and connections retire in place instead of being deleted | 2 | TOOLING | READY | yes | T-006 | not piloted |
-| [T-056](tasks/T-056-all-leaves-identity-lens.md) | ALL leaves the identity lens: universal is stated once, by design_scale | 2 | TOOLING | OWNER: OD-48 (no status line) | no | T-054 | not piloted |
+| [T-056](tasks/T-056-all-leaves-identity-lens.md) | ALL leaves the identity lens: universal is stated once, by design_scale | 2 | TOOLING | OWNER: OD-48 (REFERRED BACK TO THE OWNER) | no | T-054 | not piloted |
 | [T-057](tasks/T-057-base-coverage-view.md) | The base coverage view: one state per concept and in-scope pair | 3 | TOOLING | READY | after T-028 | T-028 | not piloted |
-| [T-068](tasks/T-068-convergent-counts-roots.md) | A cell is convergent only on two or more independent roots | 2 | TOOLING | OWNER: OD-43 (no status line); NOT FOR SONNET | no | T-059 | not piloted |
+| [T-068](tasks/T-068-convergent-counts-roots.md) | A cell is convergent only on two or more independent roots | 2 | TOOLING | NOT FOR SONNET | no | T-059 | not piloted |
 | [T-069](tasks/T-069-promote-adjudicated-observations.md) | Promote the adjudicated non-English observations to forms of their terms | research | RESEARCH | NOT FOR SONNET | no | T-028 | not piloted |
 | [T-071](tasks/T-071-regrade-roots.md) | Give every value-supplying figure its root | research | RESEARCH | NOT FOR SONNET | no | T-048 | not piloted |
-| [T-081](tasks/T-081-classify-zero-result-searches.md) | Each stored zero-result search states its cause | research | RESEARCH | OWNER: OD-45 (no status line); NOT FOR SONNET | no | T-080 | not piloted |
-| [T-084](tasks/T-084-unregistered-map-codes.md) | The language-and-jurisdiction map names only declared jurisdictions | research | RESEARCH | OWNER: OD-46 (no status line) | no | T-025 | not piloted |
+| [T-081](tasks/T-081-classify-zero-result-searches.md) | Each stored zero-result search states its cause | research | RESEARCH | NOT FOR SONNET | no | T-080 | not piloted |
+| [T-084](tasks/T-084-unregistered-map-codes.md) | The language-and-jurisdiction map names only declared jurisdictions | research | RESEARCH | OWNER: OD-46 (REFERRED BACK TO THE OWNER) | no | T-025 | not piloted |
 | [T-087](tasks/T-087-edmonton-checklist-batch.md) | Ship the Edmonton checklist digest as a research batch | research | RESEARCH | NOT FOR SONNET | no | T-073 | not piloted |
 | [T-089](tasks/T-089-refusal-register-reader.md) | The refusal register: every captured refusal, its class, and what it cues | 2 | TOOLING | READY | yes | T-088 | not piloted |
-| [T-092](tasks/T-092-retag-circumstances.md) | Re-tag each stored figure's circumstance from its free-text setting | research | RESEARCH | OWNER: OD-49 (no status line); NOT FOR SONNET | no | T-091 | not piloted |
-| [T-093](tasks/T-093-ratio-unit-reformat-branch.md) | `amend-extraction` accepts `ratio` to `rise:run ratio` as a reformat, if the owner rules i | 1 | TOOLING | OWNER: OD-41 (no status line) | no | T-061 | not piloted |
+| [T-092](tasks/T-092-retag-circumstances.md) | Re-tag each stored figure's circumstance from its free-text setting | research | RESEARCH | NOT FOR SONNET | no | T-091 | not piloted |
+| [T-093](tasks/T-093-ratio-unit-reformat-branch.md) | `amend-extraction` accepts `ratio` to `rise:run ratio` as a reformat (OD-41, resolved unde | 1 | TOOLING | READY | yes | T-061 | not piloted |
 | [T-101](tasks/T-101-scope-fill.md) | Record the research scope on every pair | research | RESEARCH | READY | yes | T-025 | not piloted |
 | [T-102](tasks/T-102-mobility-split.md) | Decompose the mobility family by device, and carry the rows filed under MOB | research | RESEARCH | NOT FOR SONNET | no | T-025, T-054, T-055 | piloted |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | research | RESEARCH | NOT FOR SONNET | no | T-009, T-031 | not piloted |
@@ -151,7 +151,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 2.12: T-114
 - Lane 2.13: T-116
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-068, T-069, T-071, T-081, T-087, T-092, T-102, T-105; a decision gate CLOSED: T-056 (OD-48), T-068 (OD-43), T-081 (OD-45), T-084 (OD-46), T-092 (OD-49), T-093 (OD-41).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-068, T-069, T-071, T-081, T-087, T-092, T-102, T-105; a decision gate CLOSED: T-056 (OD-48), T-084 (OD-46).
 
 ## Batch 3
 
@@ -160,14 +160,14 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
 | [T-029](tasks/T-029-term-relations.md) | Typed pointers between terms | 4 | TOOLING | READY | yes | T-020 | not piloted |
-| [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | TOOLING | OWNER: OD-42 (no status line) | no | T-020 | not piloted |
+| [T-030](tasks/T-030-units-as-data.md) | Units and their exact conversions as rows | 4 | TOOLING | READY | yes | T-020 | not piloted |
 | [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | TOOLING | READY | yes | T-101 | not piloted |
 | [T-058](tasks/T-058-upl-prose-callers.md) | UPL reinstated for upper limb: the retired crosswalk and the prose that names LMB or UPL | 3 | TOOLING | READY | yes | T-116 | not piloted |
 | [T-062](tasks/T-062-verified-reading-blocking.md) | A `verified` figure with no full reading is refused at rest, not only at write (the prior  | 5 | TOOLING | READY | after T-031, T-105 | T-105 | not piloted |
 | [T-072](tasks/T-072-seed-quantities-from-codes.md) | Seed the list of quantities from the phrases the held codes use | research | RESEARCH | NOT FOR SONNET | no | T-020, T-028, T-101, T-105 | not piloted |
 | [T-083](tasks/T-083-set-kind-on-existing-parameter.md) | A verb sets the quantity kind and its warrant on an existing parameter | 1 | TOOLING | READY | yes | T-020 | not piloted |
 | [T-085](tasks/T-085-map-jurisdiction-foreign-key.md) | The map's jurisdiction column points at the registry | 3 | TOOLING | READY | after T-084 | T-084 | not piloted |
-| [T-086](tasks/T-086-bare-ratio-rows.md) | The stored gradients whose unit says only `ratio` | research | RESEARCH | OWNER: OD-41 (no status line); NOT FOR SONNET | no | T-061, T-093 | not piloted |
+| [T-086](tasks/T-086-bare-ratio-rows.md) | The stored gradients whose unit says only `ratio` | research | RESEARCH | NOT FOR SONNET | no | T-061, T-093 | not piloted |
 | [T-107](tasks/T-107-attest-forms.md) | Attest forms per language and jurisdiction from instruments | research | RESEARCH | NOT FOR SONNET | no | T-028, T-057 | not piloted |
 | [T-112](tasks/T-112-translate-held-text.md) | Translate the held non-English text that synthesis needs | research | RESEARCH | READY | yes | T-049 | not piloted |
 | [T-115](tasks/T-115-retag-all-rows.md) | Re-tag the figures filed under ALL by their heading's group, then retire ALL | research | RESEARCH | NOT FOR SONNET | no | T-056 | not piloted |
@@ -183,7 +183,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 3.7: T-112
 - Lane 3.8: T-115
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-072, T-086, T-107, T-115; a decision gate CLOSED: T-030 (OD-42), T-086 (OD-41).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-072, T-086, T-107, T-115.
 
 ## Batch 4
 
@@ -192,7 +192,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | Task | Title | Wave | Kind | Status | Reachable by Sonnet now | Hard deps | Pilot |
 |---|---|---|---|---|---|---|---|
 | [T-032](tasks/T-032-synthesis-relations.md) | Relations synthesis can record, and what a synthesis row is | 4 | TOOLING | NOT FOR SONNET | no | T-029, T-050 | not piloted |
-| [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | TOOLING | READY | after T-030 | T-029, T-030 | not piloted |
+| [T-033](tasks/T-033-synthesis-candidates.md) | Candidate relations on demand (read-only) | 4 | TOOLING | READY | yes | T-029, T-030 | not piloted |
 | [T-047](tasks/T-047-add-by-data-test.md) | A durable test that the base changes by data alone | 3 (end) | TOOLING | READY | yes | T-015, T-020, T-025, T-029 | not piloted |
 | [T-060](tasks/T-060-element-determination.md) | The specifications pass writes an element-level determination (OR-14b) | 5 (after T-029 and T-019) | TOOLING | DESIGN: T-060-design.md; NOT FOR SONNET | no | T-029 | not piloted |
 | [T-109](tasks/T-109-parameter-kinds-data.md) | Give the live parameters their quantity kind | research | RESEARCH | NOT FOR SONNET | no | T-020, T-083 | not piloted |
@@ -247,25 +247,19 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 Every register decision (`grep -o -E '^### OD-[0-9]+' REMEDIATION-WORKPLAN.md`), its state by the ledger gate (the last `OD-NN STATUS:` and `OD-NN CHECK:` lines of `references/project-standards.md`), the tasks whose section 2 names it, and every task that waits on those through the hard dependencies. A decision named in a task's 'Owner decisions' bullet opens that task only on the owner's answer; one named in its 'Delegated resolutions' bullet opens on a delegated resolution whose check is not required or confirmed. The phone-ready prompts for the CLOSED ones are in `DECISION-CLOSURE.md`.
 
-### Blocking: CLOSED, and a task's gate reads it (9)
+### Blocking: CLOSED, and a task's gate reads it (3)
 
 | Decision | Gate | Tasks it holds | Waiting on those (hard dependencies) | In batches |
 |---|---|---|---|---|
-| OD-40 | CLOSED (no status line) | T-063 | — | 1 |
-| OD-41 | CLOSED (no status line) | T-086, T-093 | — | 2, 3 |
-| OD-42 | CLOSED (no status line) | T-030 | T-033, T-110 | 3 |
-| OD-43 | CLOSED (no status line) | T-068 | — | 2 |
-| OD-44 | CLOSED (no status line) | T-070 | — | 1 |
-| OD-45 | CLOSED (no status line) | T-080, T-081 | — | 1, 2 |
-| OD-46 | CLOSED (no status line) | T-084 | T-085 | 2 |
-| OD-48 | CLOSED (no status line) | T-056 | T-115 | 2 |
-| OD-49 | CLOSED (no status line) | T-091, T-092 | — | 1, 2 |
+| OD-44 | CLOSED (REFERRED BACK TO THE OWNER) | T-070 | — | 1 |
+| OD-46 | CLOSED (REFERRED BACK TO THE OWNER) | T-084 | T-085 | 2 |
+| OD-48 | CLOSED (REFERRED BACK TO THE OWNER) | T-056 | T-115 | 2 |
 
-### Standing, blocks no task: CLOSED, and no task's gate reads it (8)
+### Standing, blocks no task: CLOSED, and no task's gate reads it (5)
 
-OD-17 (DEFERRED BY THE OWNER), OD-47 (no status line), OD-50 (no status line), OD-51 (no status line), OD-52 (no status line), OD-53 (no status line), OD-54 (no status line), OD-55 (no status line)
+OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERRED BACK TO THE OWNER), OD-52 (REFERRED BACK TO THE OWNER), OD-54 (REFERRED BACK TO THE OWNER)
 
-### Open by the ledger gate (37)
+### Open by the ledger gate (46)
 
 | Decision | Gate | Read by |
 |---|---|---|
@@ -306,6 +300,15 @@ OD-17 (DEFERRED BY THE OWNER), OD-47 (no status line), OD-50 (no status line), O
 | OD-37 | OPEN (owner) | T-054, T-102, T-114 |
 | OD-38 | OPEN (owner) | T-028 |
 | OD-39 | OPEN (owner) | no task gate |
+| OD-40 | OPEN (delegated; confirmed with corrections applied) | T-063 |
+| OD-41 | OPEN (delegated; confirmed with corrections applied) | T-086, T-093 |
+| OD-42 | OPEN (delegated; confirmed with corrections applied) | T-030 |
+| OD-43 | OPEN (delegated; confirmed with corrections applied) | T-068 |
+| OD-45 | OPEN (delegated; confirmed with corrections applied) | T-080, T-081 |
+| OD-49 | OPEN (delegated; confirmed with corrections applied) | T-091, T-092 |
+| OD-50 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-53 | OPEN (delegated; confirmed with corrections applied) | no task gate |
+| OD-55 | OPEN (delegated; confirmed with corrections applied) | no task gate |
 
 ## NOT FOR SONNET
 
@@ -319,19 +322,18 @@ OD-17 (DEFERRED BY THE OWNER), OD-47 (no status line), OD-50 (no status line), O
 | [T-053](tasks/T-053-engine-conflict-between-groups.md) | Conflict between groups in the engine | 5 | OD-19, OD-36 / — |
 | [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, | 1 | — / — |
 | [T-060](tasks/T-060-element-determination.md) | The specifications pass writes an element-level determination (OR-14b) | 4 | — / — |
-| [T-063](tasks/T-063-derive-extraction-repair.md) | `derive-extraction` can write a derived figure honestly | 1 | OD-40 / — |
-| [T-068](tasks/T-068-convergent-counts-roots.md) | A cell is convergent only on two or more independent roots | 2 | OD-43 / — |
+| [T-068](tasks/T-068-convergent-counts-roots.md) | A cell is convergent only on two or more independent roots | 2 | — / OD-43 |
 | [T-069](tasks/T-069-promote-adjudicated-observations.md) | Promote the adjudicated non-English observations to forms of their terms | 2 | — / — |
 | [T-070](tasks/T-070-blind-double-extraction.md) | Blind double extraction: do two readers, and do model and effort, record the sam | 1 | OD-44 / — |
 | [T-071](tasks/T-071-regrade-roots.md) | Give every value-supplying figure its root | 2 | — / — |
 | [T-072](tasks/T-072-seed-quantities-from-codes.md) | Seed the list of quantities from the phrases the held codes use | 3 | — / — |
 | [T-078](tasks/T-078-figure-retires-in-place.md) | A figure retires in place | 1 | — / — |
-| [T-081](tasks/T-081-classify-zero-result-searches.md) | Each stored zero-result search states its cause | 2 | OD-45 / — |
+| [T-081](tasks/T-081-classify-zero-result-searches.md) | Each stored zero-result search states its cause | 2 | — / OD-45 |
 | [T-082](tasks/T-082-comparator-on-two-stored-figures.md) | The two stored numerical claims with no comparator get one from their source | 1 | — / — |
-| [T-086](tasks/T-086-bare-ratio-rows.md) | The stored gradients whose unit says only `ratio` | 3 | OD-41 / — |
+| [T-086](tasks/T-086-bare-ratio-rows.md) | The stored gradients whose unit says only `ratio` | 3 | — / OD-41 |
 | [T-087](tasks/T-087-edmonton-checklist-batch.md) | Ship the Edmonton checklist digest as a research batch | 2 | — / — |
-| [T-091](tasks/T-091-typed-circumstance-carrier.md) | A figure's circumstance (building use, new or existing, interior or exterior) in | 1 | OD-49 / — |
-| [T-092](tasks/T-092-retag-circumstances.md) | Re-tag each stored figure's circumstance from its free-text setting | 2 | OD-49 / — |
+| [T-091](tasks/T-091-typed-circumstance-carrier.md) | A figure's circumstance (building use, new or existing, interior or exterior) in | 1 | — / OD-49 |
+| [T-092](tasks/T-092-retag-circumstances.md) | Re-tag each stored figure's circumstance from its free-text setting | 2 | — / OD-49 |
 | [T-102](tasks/T-102-mobility-split.md) | Decompose the mobility family by device, and carry the rows filed under MOB | 2 | OD-14, OD-31, OD-37 / — |
 | [T-103](tasks/T-103-medical-lens.md) | Fill the medical lens by correspondence | 1 | OD-15 / — |
 | [T-105](tasks/T-105-read-held-sources.md) | Read what is held, in full, against every parameter | 2 | — / OD-05 |

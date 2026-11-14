@@ -6281,3 +6281,283 @@ Given in the coordinating session of the Edmonton checklist digest (`session_202
 CONDITION: any session digesting a source whose figures a code also states, judging a figure's lens or comparator, deciding what `design_scale` holds, typing a figure's circumstance, minting or declining terms from a single source, building or reading the refusal register, or asked what the owner said about the Edmonton checklist.
 ACTION: (1) The statements are carried by the remediation plan (`workplan/2026-11-12-bidirectional-pipeline/`) as follows, and by nothing else: Q1 by T-035 item 2, T-071 step 3 and T-087; Q2 and Q3 by T-079's deferred-adjudication arm, T-087 and register decision OD-50; Q4 by T-029 item 2 (with T-033 as already planned); Q5 and Q8 by OD-24 as already resolved under delegation; Q6 by OD-47, OD-48 and T-056; Q7 by OD-49, T-091 and T-092; Q9 by T-060's design constraint and T-029; statements 1 to 5 by T-088 and T-089, with OD-54 holding the reading the assumption above sets aside; the instruction's "disability coverage" by T-090. (2) The adjudication's eight owner questions are register decisions OD-47 to OD-54, all open and not yet asked (`REMEDIATION-WORKPLAN.md` §8; phone-ready forms in `DECISION-CLOSURE.md` §4); this entry answers none of them. (3) Treat every [ASSUMPTION] above as unratified.
 DATE: 2026-11-13 — owner statements (questions, proposals and instructions), relayed and recorded on contact by the fold of the Edmonton case study; not owner answers.
+
+
+## Owner question 2026-11-13 — may the open decisions OD-40 to OD-55 be resolved by an Opus-class model on prior rulings, doctrine and the project's goal
+
+Given in the coordinating session of the Edmonton case study (`session_2026-11-13-edmonton-checklist-pass`; https://claude.ai/code/session_01Ub36iQaXrsGs27PBykEgY7), dated by the server clock, UTC, and recorded on contact per `CLAUDE.md` rule 0. Quoted verbatim, in the order given (the first in a user message at 2026-11-13T23:17:22Z, after "merge 231 into main."; the second queued at 2026-11-13T23:17:39Z; both found with `git grep -n -F "<the sentence>" -- transcripts/harness_5dbc61f3/main.jsonl`):
+
+> "are you sure you can't resolve these owner decisions using Opus based upon prior rulings, mission/doctrine and project goal?"
+
+> "I don't know the machinery or code"
+
+**What this records.** The owner asks whether the open register decisions OD-40 to OD-55 can be resolved by an Opus-class model on the owner's prior rulings, the mission and doctrine, and the project's goal, and says the owner cannot judge the machinery or the code. The first sentence is a question, not a ruling.
+
+**Which grant covers OD-40 to OD-55 (the recorder's reading).** Not the delegation of 2026-11-12 ("I guess opus can do it", `grep -n -F "I guess opus can do it" references/project-standards.md`): that delegation named twenty decisions by number, OD-01 to OD-30, and none of OD-40 to OD-55 is among them. The grant that reaches them is the owner's twelfth instruction of 2026-11-12, "You have permission to use Opus for judgment if appropriate here" (`git grep -n -F "You have permission to use Opus for judgment if appropriate here" references/project-standards.md`), under its own unratified [ASSUMPTION] of what "appropriate" means, as OD-33 was resolved (`grep -n -F "OD-33 resolved under the twelfth instruction" references/project-standards.md`). [ASSUMPTION: the owner's question of 2026-11-13 is read as asking that the twelfth instruction ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws be applied to OD-40 to OD-55, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it: nothing in an always-DG-NON type of `governance/decision-protocol.md` §2.4 is resolved; a resolution never overrides a standing owner ruling (condition (e)); and every resolution is checked by a second, independent Opus-class instance before it is relied on (condition (d)); each judged against the owner's three criteria in the order ratified by OI-14. Unratified.] The first pass's entries said "under the owner's delegation of 2026-11-12 ("I guess opus can do it")"; the independent check (its defect C0) corrected that authority sentence, and the entries below carry the corrected one.
+
+The pass: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md`. The independent check of condition (d): `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, which confirmed the nine resolutions with corrections (applied in the entries below) and upheld the seven referrals. The decisions referred back are put in plain words in `workplan/2026-11-12-bidirectional-pipeline/OWNER-SHEET-PLAIN.md`.
+
+CONDITION: any session asking whether OD-40 to OD-55 are answered, or relying on a resolution of one.
+ACTION: (1) Read each decision's state by the gate of the 2026-11-12 convention, never by its `OD-NN:` line. (2) Treat every resolution below as delegated under the twelfth instruction, not the owner's words, and reversible by the owner. (3) Treat the [ASSUMPTION] above as unratified.
+DATE: 2026-11-13 — owner question, quoted above; the reading of the grant is the recorder's.
+
+
+## Delegated resolution 2026-11-13 — OD-40 what a derived figure carries as its quote and its locator
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13 (entry above), with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) by a second, independent Opus-class instance (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-40): confirmed with corrections, which are applied here. Reasoning, facts and commands: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-40).
+
+OD-40: a derived figure has no quote or locator of its own; both are its inputs'
+
+**The resolution.** A derived row stores no quote and no locator; its words and its place are its two inputs', reached through its two `derived_from` edges, each carrying its input's verified quote. The writer refuses a derived row whose inputs lack a quote or a locator, and still checks the arithmetic. A figure that a source states in words is a claim row, never a derived one.
+
+**What decided it.** Criterion 1: every stored quote stays a source's own bytes, so no row is exempt from the verbatim check; an analyst's sentence in the column that means "the source's words" is the shape of the fabricated-citation failure (`CLAUDE.md` §5 (c)). The owner's 2026-08-24 ruling ("It is better to have a table cell point to another table cell than to rewrite") favours the pointer. Deleting the verb (option (c)) was rejected on criterion 1, not as overriding a ruling: a computed figure kept only in prose escapes the arithmetic check and its inputs' quotes; the owner's 2026-09-13 ruling ("Derived figures are a weighted average of their figures") says how such a figure is graded wherever it lives.
+
+**Reversal condition.** A derived figure must be shown with a sentence of its own that no input supplies, or the owner wants computed figures kept only in prose.
+
+CONDITION: any session writing, repairing or reading a derived figure.
+ACTION: (1) Store no quote or locator on a derived row; reach both through its edges. (2) Refuse a derived row whose inputs lack either. (3) Keep the arithmetic check. (4) Write a figure a source states in words as a claim row, never a derived one. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-40 STATUS: RESOLVED UNDER DELEGATION
+OD-40 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-41 the unit `ratio` changed to `rise:run ratio`
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. It is a reading of the owner's OR-3 under condition (c), resting on the prompt the owner answered. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-41): confirmed with corrections applied, the one correction being the authority sentence above. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-41).
+
+OD-41: ratio to rise:run ratio is a reformat
+
+**The resolution.** The stored rows whose unit is the bare word `ratio` are amended in place under OR-3 (same digits and quote, the old unit kept in notes). `amend-extraction` gains one branch: a new unit in the notation families is accepted when the old unit stands, on word boundaries, in the new one and the stored figure reads under it.
+
+**What decided it.** The OR-3 prompt the owner answered "Yes, reformat in place" listed, among the forms to reformat, "a unit written 'ratio' where it is 'rise:run ratio'" (`grep -n 'id: OR-3$' -A14 governance/owner-browser.yaml`). Criterion 1: both options assert the same reading; a second row would be a second live home for one statement (rule 5).
+
+**Reversal condition.** The owner says the OR-3 example did not mean these rows, or a row's source defines its ratio otherwise (rise over sloped length), which is then a new reading.
+
+CONDITION: any session amending a bare-`ratio` row or building the reformat branch.
+ACTION: (1) Amend in place under OR-3, keeping the old unit in notes. (2) Write no second row for these. (3) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-41 STATUS: RESOLVED UNDER DELEGATION
+OD-41 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-42 a figure moved between metric units
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. It reads OR-10 under condition (c). Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-42): confirmed with corrections, which are applied here (the authority sentence, and one fact of the reasoning file: no inch or foot figure is held as a claim or derived row today; one condition row is stated in feet (extraction 44, REF-01002), and one centimetre finding quotes inches beside it (extraction 220)). Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-42).
+
+OD-42: a metric-to-metric conversion is shown exactly
+
+**The resolution.** A change of metric prefix (cm to mm, m to mm) keeps the source's digits and is shown exactly. The nearest quarter inch or 5 mm, on the safe side (OR-10, OD-22), applies to a conversion between inch-foot and metric units.
+
+**What decided it.** OR-10 answered a question about "inches and feet to millimetres and metres". Criterion 1: rounding a prefix change prints digits no source stated for a figure whose exact digits are in hand; it gains nothing in legibility, and an exact minimum is never below the source's.
+
+**Reversal condition.** The owner says OR-10's rounding covers every shown converted length.
+
+CONDITION: any session converting or displaying a length.
+ACTION: (1) Show a metric prefix change exactly. (2) Round only an inch-foot and metric conversion, on the safe side. (3) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-42 STATUS: RESOLVED UNDER DELEGATION
+OD-42 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-43 when the engine may call a cell `convergent`
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. It applies a ratified definition; it makes none. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-43): confirmed with corrections, which are applied here ("the same value or the same range" in place of "the same bound"; the clinical axis as the engine counts it, Tier 1 to 3; a rationale true of the cell). Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-43).
+
+OD-43: convergent only when Tier 1 to 3 clinical evidence and Co-1 evidence agree on the parameter's value or range, their anchoring claims can all hold, and the governing figures rest on two or more independent roots
+
+**The resolution.** The engine writes `convergent` only when the cell has evidence on its clinical axis (Tier 1 to 3 clinical, as the engine counts it) and on its Co-1 axis, the two state the same value or the same range on the parameter's scale, the anchoring claims can all hold, and the governing figures rest on two or more independent roots. Otherwise the cell is `pending_assessment` (two or more axes) or `single_axis` (one), and its rationale states why in words that are true of it: no Co-1 evidence, or floors that differ but can all be met (the spread in the value note), or values not yet compared; never "queued" for a cell whose evidence cannot meet the definition. A clinical and Co-2 cell is never `convergent`. The validator checks the same conditions.
+
+**What decided it.** It applies the ratified definition ("Tier 1–3 clinical evidence and Co-1 evidence agree on the parameter value or range", `governance/evidence-methodology.md`) and its rendered sentence, which names Co-1 sources; H1 (roots, not documents); OR-6b (differing floors that can all be met are not divergent, which is not agreement). Criterion 1: the book says the evidence agrees only when it does. The looser options would extend the definition, which is new methodology and the owner's.
+
+**Reversal condition.** The owner extends `convergent` to agreement between any two tiers (as OR-6 and OR-6c extended `divergent`), or to agreement within a stated tolerance.
+
+**For the owner (from the independent check).** The owner's OR-6 and OR-6c already call a disagreement between any two tiers `divergent`, which the ratified definition does not; this resolution keeps `convergent` to the definition's words. So two clinical sources, or a clinical and a Co-2 source, can be called divergent but never convergent. That asymmetry predates this resolution and is the owner's to remove.
+
+CONDITION: any session building or reading the convergence status.
+ACTION: (1) Write `convergent` only on all four conditions. (2) Keep differing floors that can all be met `pending_assessment`, with the spread in the note. (3) Write a rationale true of the cell; never "queued" where the definition cannot be met. (4) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-43 STATUS: RESOLVED UNDER DELEGATION
+OD-43 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-45 a logged search whose request never returned results
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-45): confirmed with corrections, which are applied here. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-45).
+
+OD-45: a search not run, deferred
+
+**The resolution.** A logged search whose request returned no result list (a 403 or bot challenge, a 429, a connection reset, a stub page) is a search not run: recorded with `deferred_reason` naming the failure, with no absence class, and owed a re-run, including the Internet Archive route.
+
+**What decided it.** R14 (absence is evidence only for a well-formed query), the operative instrument ("`deferred_reason` is for searches *not run*, never a findings channel"), the principle of the owner's 2026-09-18 ruling on deferred citation mining ('deferred is okay so long as it runs eventually'), applied by analogy. Criterion 1: the book never reports absence where nothing was searched.
+
+**Reversal condition.** The owner wants a blocked request kept as a finding about a source's reachability.
+
+CONDITION: any session logging, classifying or re-running a search.
+ACTION: (1) Log a request with no result list as deferred, with its reason. (2) Give it no absence class. (3) Re-run it. (4) Read a zero-result search as a finding only where `deferred_reason` is NULL. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-45 STATUS: RESOLVED UNDER DELEGATION
+OD-45 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-49 building type, a figure's other circumstances, and where an element lives
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-49): confirmed with corrections, which are applied here (building types minted from instruments' phrases, not from the owner's examples; no within-level parent for an element; the headline measurement; the reversal stated as retirement). Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-49).
+
+OD-49: (a1); (b2)
+
+**The resolution.** (a1) Building type (use), new or existing work, and interior or exterior are each a typed circumstance on the figure, one value per cell, shown as branches within one determination per parameter and lens set. Building type points at the first of the owner's three building levels (2026-08-27). Each building type is minted from an instrument's own scope phrase, in its jurisdiction and language, in a data pull request the owner reads (OR-17, E1); the owner's examples ("eg residential, commercial") show what the level holds, and are not minted as names. "Public" is adjudicated per instrument. Before stored figures are re-tagged, the design measures how many cells' headlines OR-2 would empty and says how a circumstance shared by every figure of a cell is shown. (b2) The owner's 2026-08-27 "three tables" ruling stands; an element row, when a reader needs it, points at its term and holds no name of its own; any relation between elements is decided in that design, not here.
+
+**What decided it.** The other options override standing owner rulings: (a2) the determination key (2026-08-26, 2026-08-28); (a3) one value per cell (2026-11-06) and the building levels (2026-08-27); (b1) "5 is three" (2026-08-27), which OR-14 on element pages does not name. Criterion 1: figures for different building uses no longer compose into one headline; the key is unchanged.
+
+**Reversal condition.** The owner wants building type in the key, or elements as terms only; or the measured headlines show that branching hides a group's difference. Reversal retires the vocabulary rows and NULLs the typed cells forward; nothing written can be dropped.
+
+CONDITION: any session designing a figure's circumstance, a building-type vocabulary, or the element level.
+ACTION: (1) Type each circumstance in its own cell and branch on it. (2) Point building type at the ruled first level; mint each building type from an instrument's own scope phrase, in its jurisdiction and language, never from the owner's examples. (3) Measure, on a scratch copy, how many headlines OR-2 would empty before any stored figure is re-tagged. (4) Build element rows as pointers to terms when a reader needs them; decide any relation between elements in the design. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-49 STATUS: RESOLVED UNDER DELEGATION
+OD-49 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-50 a source that is not a code adding a parameter
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-50): confirmed with corrections, which are applied here. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-50).
+
+OD-50: any admitted source
+
+**The resolution.** Any admitted source may promote a quantity it states to a parameter in its data pull request, under the standing conditions: the source's own phrase (OR-17), minted from an observation, a quantity with a kind (T-020), the owner reading the pull request.
+
+**What decided it.** OR-13 chose between seeding from the codes held and seeding slug by slug; it does not limit later growth. The owner's stated intent of 2026-10-09, never put as a choice: "pull from the major codes, literature and advocacy from major countries". Criterion 3 also: under the other options a disabled people's organisation's document could never add a question the book asks. Criterion 1: a parameter is a question, not a value. Criterion 3: quantities codes rarely state can be asked about.
+
+**Reversal condition.** The owner wants parameters only from codes or standards, or from two independent sources. Reversal retires the parameters added under it; none is deleted.
+
+CONDITION: any session promoting a parameter from a source that is not a code or standard.
+ACTION: (1) Promote under the standing conditions, in a data pull request. (2) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-50 STATUS: RESOLVED UNDER DELEGATION
+OD-50 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-53 declining held terms in a single-source batch
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-53): confirmed with corrections, which are applied here. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-53).
+
+OD-53: any batch, for a term its own adjudications name, one stated reason per term, element or method only
+
+**The resolution.** A research batch may decline a held term that an adjudication of its own observations names, when the term is an element, a lens term or a method, with one stated reason per term, listed in its data pull request. It may not decline a quantity. T-072's catalogue pass reviews these declinations and may revoke any.
+
+**What decided it.** The research gate's own design ("A disposition is per term and corpus-wide, so that costs one call per term once"; "the rule does not hold red a batch that did its judging"); the verb takes no approval flag and approval is the data pull request (OR-17); E12 (which names functional-axis and method terms); elements are declined because the owner's 2026-08-27 ruling places them in their own building level, not among quantities, and a parameter need not belong to an element (OD-24, delegated). Criterion 1: each declination is reasoned, attributed, revocable and reviewed twice, and a gate red by construction is avoided.
+
+**Reversal condition.** Batch declinations prove inconsistent under the catalogue review, or a declined element hides a group no coverage read reports.
+
+**For the owner (from the independent check).** Declining a provision of presence (a hearing loop, a tactile indicator) as "not a quantity" is consistent with the owner's rulings, and it means no determination will ever be written for it. That coverage gap comes from OD-24's quantity kinds, not from this resolution, and has not been shown to the owner before.
+
+CONDITION: any research batch whose adjudications name held terms that are neither parameters nor declined.
+ACTION: (1) Decline only elements, lens terms and methods, one reason each. (2) List them in the pull request. (3) Leave T-072 item 6 to review them. (4) Never decline a quantity term; promote it (OD-50) or leave it for T-072. (5) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-53 STATUS: RESOLVED UNDER DELEGATION
+OD-53 CHECK: confirmed with corrections applied
+
+
+## Delegated resolution 2026-11-13 — OD-55 the stored row after a second reading of a bare-`ratio` gradient (conditional on OD-41)
+
+A resolution by an Opus-class model under the owner's twelfth instruction of 2026-11-12 ("You have permission to use Opus for judgment if appropriate here") and the line its [ASSUMPTION] draws, applied at the owner's question of 2026-11-13, with the conditions (a) to (e) of the delegation of 2026-11-12 applied to it; judged against the owner's three criteria in the order ratified by OI-14. **It is not the owner's words**, and it stands until the owner reverses it. **It is conditional on OD-41**: it is not reached while OD-41 stands as a reformat (entry above). Checked under condition (d) (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-55): confirmed with corrections applied, the one correction being the authority sentence above. Reasoning: `workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2.md` (section OD-55).
+
+OD-55: not reached while OD-41 stands as a reformat; if OD-41 is reversed, retire the stored row in place once its second reading is written, naming its successor
+
+**The resolution.** Under the resolution of OD-41 no second row is written. If OD-41 is reversed to a new reading, the stored row is retired in place with its successor named, and the note and the engine count one claim per pair.
+
+**What decided it.** The owner's "retire in place then" (2026-09-16) and rule 5 (one live home per statement).
+
+**Reversal condition.** The owner says a second reading must leave the first live.
+
+CONDITION: any session writing a second reading of a bare-`ratio` row.
+ACTION: (1) Retire the stored row in place, naming its successor. (2) Act on this only if OD-41 is reversed. (3) Read this decision through the gate; its independent check is recorded below.
+DATE: 2026-11-13 — delegated resolution under the twelfth instruction, not an owner statement.
+
+OD-55 STATUS: RESOLVED UNDER DELEGATION
+OD-55 CHECK: confirmed with corrections applied
+
+
+## Referral 2026-11-13 — OD-44 the second source for the blind double extraction
+
+Recorded in the pass under the owner's question of 2026-11-13 (entry above). **Not the owner's words.** Referred back, and the referral upheld by the independent check (`workplan/2026-11-12-bidirectional-pipeline/DELEGATED-RESOLUTIONS-2-REVIEW.md`, OD-44). **Why.** It turns on what the owner's own earlier answer (OR-15, "Yes, use batch 23's material") covered, the kind the 2026-11-12 delegation reserved (OD-04, OD-28), and T-070 needs the owner to launch the raters anyway, so the referral costs no time. A fact the first pass left out, which favours option A: the option the owner selected carried the effect "D-5 as written" (`grep -n 'id: OR-15' -A16 governance/owner-browser.yaml`), and D-5 as written picks the research source by a corpus-wide query for the T1 or T2 source with the most findings, not from batch 23. Plain question: `OWNER-SHEET-PLAIN.md`, question 1.
+
+OD-44 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-44 is answered, or preparing T-070.
+ACTION: (1) Treat OD-44 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-46 the language-map codes missing from the jurisdiction registry
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-46). **Why.** Inclusion or exclusion of jurisdictions is always DG-NON (`governance/decision-protocol.md` §2.4 item 4); the recorder of the owner's 2026-09-18 enum ruling also noted that admitting a map-only code is a scope decision. (The owner's own words in that entry are only "UK is canonical, add BE HR INT ES IT to the enum".) Plain question: `OWNER-SHEET-PLAIN.md`, question 2.
+
+OD-46 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-46 is answered, or preparing T-084 or T-085.
+ACTION: (1) Treat OD-46 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-47 the lens of a figure whose clause names no person, function or need
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-47). **Why.** It decides, for most code figures at once, which people a figure is said to serve: population taxonomy, including proxy decisions, is always DG-NON (§2.4 item 2; the owner's fourteenth statement: "The population taxonomy remains the owner's"). Option A would also put on the parameter a property that holds for every figure, a schema choice hard to reverse. A fact the first pass left out: the owner's OD-31 answer already says a provision under a general disability heading carries "no identity, only its ICF and access-need lenses"; the block today is the lens writer's warrant rule, which is code, not an owner ruling. Plain question: `OWNER-SHEET-PLAIN.md`, question 3.
+
+OD-47 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-47 is answered, or replaying the Edmonton batch's parked figures.
+ACTION: (1) Treat OD-47 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-48 what `design_scale = 'universal'` states
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-48). **Why.** Design Modes are mission doctrine, and two owner records conflict: DR-2026-07-12 item G1(a), ratified by owner directive 2026-07-13 ("T4–6-only determinations are Universal-Mode regulatory determinations"), and the OD-31 option of 2026-11-12, chosen on a premise the engine contradicts. The first Design Modes rule itself carries both readings ("Universal Mode = Universal Design / Code Compliance"). OD-31 does not name G1, and treating a ratified record as superseded by implication is the act the OD-14 correction reserved. Plain question: `OWNER-SHEET-PLAIN.md`, question 4.
+
+OD-48 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-48 is answered, or preparing T-056 or T-115.
+ACTION: (1) Treat OD-48 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-51 a municipal advisory committee's document and Co-1 standing
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-51). **Why.** Evidence-tier definitions and the Co-1 source corpus are always DG-NON (§2.4 items 3 and 6). The Co-1 row of `governance/tier-system.md` names both organisations of disabled people and "CRPD Art. 4.3 consultation outputs", and a city advisory committee may be the second kind; the second edge of OR-5b, how the soundness test applies to a document that is not a study, is open. Plain question: `OWNER-SHEET-PLAIN.md`, question 5.
+
+OD-51 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-51 is answered, or re-tiering the Edmonton checklist.
+ACTION: (1) Treat OD-51 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-52 "barrier-free path of travel" as the Edmonton checklist uses it
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-52). **Why.** The term's definition, "a circulation route through a building", is the owner's own approved words (OT-2), and catalogue terms are approved by the owner; every option either applies that definition or widens it. The source the scope note cites for the phrase (the Ontario code, REF-01013) applies it to "floors or walks", which was not before the owner when OT-2 was approved. Plain question: `OWNER-SHEET-PLAIN.md`, question 6.
+
+OD-52 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-52 is answered, or adjudicating the Edmonton path phrases.
+ACTION: (1) Treat OD-52 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
+
+
+## Referral 2026-11-13 — OD-54 writing a canonical row by hand when a writer cannot hold content
+
+Recorded in the same pass. **Not the owner's words.** Referred back, and upheld by the independent check (OD-54). **Why.** Option B sets aside `CLAUDE.md` rules 3 and 10, which only the owner can do. The eleventh set's [ASSUMPTION] already reads "by hand" as option A and acts on nothing else, and no task waits on it, so it can be asked last. Plain question: `OWNER-SHEET-PLAIN.md`, question 7.
+
+OD-54 STATUS: REFERRED BACK TO THE OWNER
+
+CONDITION: any session asking whether OD-54 is answered.
+ACTION: (1) Treat OD-54 as the owner's, CLOSED by the gate. (2) Ask it in the plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`.
+DATE: 2026-11-13 — referral, not an owner statement.
