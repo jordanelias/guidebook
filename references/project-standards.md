@@ -7113,3 +7113,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session deciding whether a value is thin.
 ACTION: do not mark a value thin because its basis is a vetted professional judgment; ask of an inference whether it was rendered and vetted as a judgment or is a bare transfer or extrapolation.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the project's own inferences are conjecture and carry the triangle
+
+**Owner's words, quoted (typed):**
+
+> "when we do cross referential analyses in synthesis and pair testing etc, we can make conjectures based on evidence about what makes sense but we aren't clinicians so it is flagged as thin"
+
+**Readings.** [ASSUMPTION: a figure or conclusion that the project itself reaches by inference (cross-referential analysis, pair testing, a synthesis step that goes beyond what any one source states) is conjecture and takes the ⚠ as thin, however sensible it is, because the project's inference is not a clinician's vetted professional judgment — basis: the statement, with the entry above that a clinician's vetted judgment is not thin]. [ASSUMPTION: this answers the question held in the previous entry for a derivation the project performs: a derivation made by the project is thin; a derivation a source itself publishes (an engineering or clinical derivation in the source) is read as that source's, and takes the marker its own source gives — basis: "we aren't clinicians"; the owner did not separately address a published derivation]. [ASSUMPTION: the project may still make the conjecture and show it, with the evidence it rests on (the guidebook shows and cites, and claims no authority); the triangle is how the reader sees that it is the project's own inference — basis: the transparency statement of the same day]. [ASSUMPTION: the existing records of a derivation (`specifications.derivation_paths`, `derivation_rationale`, `rests_on_proxy_inference` and the cross-parameter connection tables) are where this is derived from, and no new column is added — basis: rule 5; the columns exist, and what each holds has not been re-read for this entry].
+
+**What this does.** Completes the definition of thin: a basis that is indirect (a proxy), or conjecture with no vetted professional judgment behind it, including the project's own inferences.
+
+**What it does not decide.** Which records mark a value as the project's own inference in each stage; how a cell mixing a source's finding with a project inference is marked; any edit to the marker code, `CLAUDE.md` §6, the governance files or the render.
+
+CONDITION: any session writing a synthesis, a connection, a pair test or a specification that goes beyond what a source states.
+ACTION: show the inference with the evidence it rests on and mark it ⚠; do not present a project inference as a source's finding or as a professional judgment.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
