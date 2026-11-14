@@ -33,6 +33,8 @@ The generator gives the same split: a copy of `scratchpad/session_2026-11-12-pip
 
 **After the thirteenth set (2026-11-14).** You answered the four things of `OWNER-SHEET-PLAIN.md`: OD-43 (any two kinds of evidence may agree; agreement is most common practice, not best practice) and OD-44 (A) are answered by you; OD-49 is narrowed to building use and indoor or outdoor; OD-53 is overtaken for provisions that are there or not; and OD-56 is registered, open, for a delegated and independently checked resolution (prompt 18). You then answered OD-56 yourself, "b": a provision that is there or not is listed, by pointer, in the determination of the element that should carry it (prompt 18). Ledger: `grep -n -F "Owner answers 2026-11-14 (thirteenth set)" references/project-standards.md`. Re-run the generator for the blocking set; do not read it from here.
 
+**After the term-resolution fold (2026-11-14).** The term-resolution plan (`TERM-RESOLUTION-PLAN.md`, which governs this plan where they conflict) left six questions for you; they are registered as OD-57 to OD-62 and referred to you, none resolved by an assistant (ledger: `grep -n -F "## Registration 2026-11-14" references/project-standards.md`): OD-57 (apply the circle table now; holds T-117), OD-58 (what proves "worse results"; holds T-059, and through it T-068, T-110, T-117, T-118), OD-59 (the grade of a value whose sources differ; holds T-117), OD-60 (the prose register's "to be + [value]"; holds T-035), OD-61 (`.ignore` for the frozen compendium; holds T-121), OD-62 (rename best practice to ideal; optional, holds nothing; no rename if unanswered). Prompts 19 to 24 below; the plain forms are `OWNER-SHEET-PLAIN.md` questions 8 to 13. **OD-58 now sits on the path to the first live determinations** (T-059 is a dependency of T-110), so it releases the most work; re-run the generator's owner-decision queue to confirm.
+
 ## 1. Every register decision, confirmed
 
 Searches: `git grep` and `grep -r` over `references/project-standards.md`, `decisions/`, `governance/` and `sessions/` (the Grep tool cannot see `sessions/`), plus the committed transcripts where a wording was in question. Gate: the function of `REMEDIATION-WORKPLAN.md` §13. "Blocks" is read from the task files' section 2 by the generator.
@@ -256,7 +258,7 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **Referred back to you.** Asked in plain words in `OWNER-SHEET-PLAIN.md`, question 4; answer there (`OD-48: …`). The prompt below is the technical form, kept as it was put.
 **Question.** The engine writes `universal` when a determination rests on codes alone; you ruled that `ALL` leaves the identity lens, "universal being stated once, by design_scale". Today a wheelchair-keyed cell built on codes reads `universal`, and "rests on codes only" is already its own column. Which fact does `design_scale` state?
 **Why it is yours.** Your first design-mode rule defines Universal Mode as both "Universal Design" and "Code Compliance".
-**Options.** (a) Whom it is for: `universal` when the determination names no identity. *Then* "codes only" is read from its own column, the engine's line changes, and a code-only wheelchair cell reads `population` with the ○ flag. (b) What it rests on, as now. *Then* "for everyone" needs another home and is told apart only by having no identity. (c) Both, as two columns. *Then* a schema change, when one column already exists.
+**Options.** (a) Whom it is for: `universal` when the determination names no identity. *Then* "codes only" is read from its own column, the engine's line changes, and a code-only wheelchair cell reads `population` with its code marker by tier (○ for T5 or T6; ◐ for a T4-only basis once T-117 applies the table; *superseded in part by TERM-RESOLUTION-PLAN section 1, U7, 2026-11-14: this said "with the ○ flag"*). (b) What it rests on, as now. *Then* "for everyone" needs another home and is told apart only by having no identity. (c) Both, as two columns. *Then* a schema change, when one column already exists.
 **Evidence.** `grep -n 'design_scale = SCALE_UNIVERSAL' scripts/assess/assess_cell.py`; `grep -n -F 'Universal Design / Code Compliance' references/project-standards.md`; `tasks/T-056-all-leaves-identity-lens.md` §4 items 3 and 3a.
 **Answer in one line.** `OD-48: whom it is for` · `OD-48: what it rests on` · `OD-48: two columns`
 
@@ -325,6 +327,53 @@ OD-17 blocks nothing; ask it after T-022 merges. **Added 2026-11-13:** OD-40 to 
 **The choice.** (a) **Treat "there or not" as a kind of measurement.** Each provision becomes a question the book answers like any other, with its own value, evidence mark and groups it serves. *Then* the book's rules for weighing evidence, which assume one value can be more accommodating than another, have to say how they apply to a yes-or-no answer. A count (one visual alarm in every room) already fits. (b) **List the provisions on the page for a whole element or room** (a ramp, an entrance, a meeting room). *Then* a provision is marked only inside that page, a provision that belongs to no one element (a text telephone at a counter) has no home, and the element pages are not designed yet. (c) **Keep a separate list of provisions with its own mark.** *Then* it is a new part of the book with its own rules for evidence and its own way of being shown, built and checked on its own. (d) **Leave them discussed but without a value.** *Then* nothing changes, which your answer rules out; it is listed only to be set aside.
 **What happens next.** An assistant will weigh these against your three criteria and your earlier rulings, a second assistant will check that, and the result is recorded as the assistant's, reversible by you. Meanwhile no research pass marks such a provision "not a measurement".
 **To answer yourself, in one line.** "OD-56: a" · "OD-56: b" · "OD-56: c" · "OD-56: <other>"
+
+
+### 19. OD-57: apply the circle table now? (holds T-117, and through it T-118) — REFERRED TO YOU 2026-11-14
+**Question.** Your entries of 2026-11-14 built a table: ● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6; ⚠ in place of the circle for a grey, unverified or thin basis. Each entry holds its application until you say so. Apply it now, including lowering T3 clinical from ● to ◐ and replacing the ○ gloss in `CLAUDE.md` §6?
+**Why it is yours.** It changes how every evidence tier is marked: an evidence-tier definition (always yours).
+**Options.** (a) Apply. (b) Apply except one row. (c) Not yet.
+**Recommendation (the unifier's).** (a): every tier is answered, and §2.2 of the methodology already holds T3 clinical at `provisional`.
+**Evidence.** `sed -n '/^def band(/,/^def floor_mean/p' schemas/tier_derivation.py`; `tasks/T-117-marker-table-applied.md`.
+**Answer in one line.** `OD-57: apply` · `OD-57: apply except <row>` · `OD-57: not yet`
+
+### 20. OD-58: what proves "worse results"? (holds T-059, and through it T-068, T-110, T-117, T-118) — REFERRED TO YOU 2026-11-14
+**Question.** You ruled that the most accommodating value stands unless research proves it leads to worse results. What counts as that proof?
+**Why it is yours.** It decides whether a tier gates which value is shown, and the standard of proof your entry left open.
+**Options.** (a) A recorded finding from a source that measured or reported the outcome for the same group and context, at any tier, shown with that source's mark; never the project's own inference. (b) As (a), only from T1, T2, Co-1 or Co-2. (c) Any recorded finding, whatever its group.
+**Recommendation (the unifier's).** (a): the tier grades the finding, it does not gate it.
+**Evidence.** `grep -n -F 'the most accommodating value stands unless research shows' references/project-standards.md`; `tasks/T-059-wp-t4-agreement.md` §4 item 6.
+**Answer in one line.** `OD-58: a recorded finding, same group and context, any tier` · `OD-58: only from T1, T2, Co-1 or Co-2` · `OD-58: <other>`
+
+### 21. OD-59: does a showcased value carry its own source's grade, or the grade of all governing sources? (holds T-117) — REFERRED TO YOU 2026-11-14
+**Question.** Today the engine marks a cell with the floor of the mean of every governing source's mark. Does the value shown as best carry its own source's grade instead?
+**Why it is yours.** It sets what a determination's mark says; your definition includes "how to grade quality of evidence for it".
+**Options.** (a) Its own. (b) The floor mean, as now.
+**Recommendation (the unifier's).** (a).
+**Evidence.** `grep -n -A14 '^    marker = None' scripts/assess/assess_cell.py`.
+**Answer in one line.** `OD-59: its own` · `OD-59: the floor mean`
+
+### 22. OD-60: does the prose register's "to be + [value]" survive? (holds T-035) — REFERRED TO YOU 2026-11-14
+**Question.** The register writes values as "to be 1200 mm". You ruled "we gather and show". Does the subjunctive stay?
+**Why it is yours.** It is the book's voice.
+**Options.** (a) For process prose only; values stated as attributed data. (b) Keep everywhere. (c) Drop.
+**Recommendation (the unifier's).** (a).
+**Evidence.** `skills/prose-style-checker_SKILL.md`.
+**Answer in one line.** `OD-60: process prose only` · `OD-60: keep` · `OD-60: drop`
+
+### 23. OD-61: add `references/bpc/` to `.ignore`? (holds T-121) — REFERRED TO YOU 2026-11-14
+**Question.** The frozen compendium floods every search for "best practice". Hide it from agent search (git and the tools still see it)?
+**Why it is yours.** Your cold-storage record sets `.ignore`'s scope.
+**Options.** (a) Yes. (b) No.
+**Recommendation (the unifier's).** (a).
+**Evidence.** `decisions/DR-2026-08-06-cold-storage-search-scope.md`.
+**Answer in one line.** `OD-61: yes` · `OD-61: no`
+
+### 24. OD-62 (optional): rename "best practice" to "ideal"? (holds nothing; no rename if unanswered) — REFERRED TO YOU 2026-11-14
+**Question.** You ruled that best practice, ideal and most accommodating are one meaning. Should the book write "ideal"?
+**Options.** (a) No rename. (b) Rename.
+**Recommendation (the unifier's).** (a): the meaning is fixed; a rename costs a migration and a caller sweep.
+**Answer in one line.** `OD-62: no rename` · `OD-62: rename to ideal`
 
 ## 5. The mobility family (owner's thirteenth statement, 2026-11-12): facts for OD-14
 

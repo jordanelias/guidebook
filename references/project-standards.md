@@ -7255,3 +7255,39 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session reading or editing the remediation plan or its task files.
 ACTION: where a remediation-plan statement conflicts with the unified term-resolution plan, follow the unified plan and name the supersession; where either conflicts with a ledger ruling, follow the ledger.
 DATE: 2026-11-14 — owner instruction (typed words, quoted above).
+
+---
+
+## Registration 2026-11-14 — OD-57 to OD-62: the term-resolution plan's open questions, referred to the owner
+
+Recorded by the integrator folding `workplan/2026-11-12-bidirectional-pipeline/TERM-RESOLUTION-PLAN.md` into the remediation plan, under the owner instruction of 2026-11-14 above ("fold plan into remediation plan … this newest plan having priority in conflicts"). **Not the owner's words.** The term-resolution plan's section 6 lists six questions still for the owner, Q1 to Q6; each is registered here under the next free register number (derive: `grep -o -E '^### OD-[0-9]+' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md | tail -1`, which printed OD-56 before this entry) and referred to the owner. **None is resolved under delegation:** Q1 and Q3 set how an evidence tier is marked, and Q2 whether a tier gates which value is shown, which reach the evidence-tier definitions on the decision protocol's always-DG-NON list (`grep -n -F 'Evidence-tier definitions' governance/decision-protocol.md`); Q4 is the prose register, the owner's voice; Q5 is gated by the owner's own cold-storage record (`decisions/DR-2026-08-06-cold-storage-search-scope.md`); Q6 is a rename the owner asked about and left open, and is optional. Each recommendation is the unifier's, not a decision. Register entries: `grep -n -E '^### OD-(57|58|59|60|61|62)' workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`; plain questions: `OWNER-SHEET-PLAIN.md`, questions 8 to 13.
+
+- **OD-57 (the plan's Q1): apply the circle table now?** The table the owner's entries of 2026-11-14 built (● T1, T2, Co-1, Co-2; ◐ T3, T4; ○ T5, T6; ⚠ in place of the circle for a grey, unverified or thin basis), including lowering T3 clinical from ● to ◐, raising T3 grey from ○ to ◐, lowering T5 from ◐ to ○, and replacing the ○ gloss in `CLAUDE.md` §6. Recommended: yes, because every tier is now answered and `governance/evidence-methodology.md` §2.2 already holds T3 clinical at `provisional`. Holds T-117.
+
+OD-57 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-58 (Q2): what proves "worse results" under the harm test?** Recommended: a recorded finding (`source_value_extractions.harm_finding`, or an `extraction_relations` row marking `insufficient`) from a source that measured or reported the outcome for the same lens and context, at any tier, shown with that source's marker; never a project inference; the tier grades, it does not gate. The owner's harm-test entry holds the standard of proof open. Holds T-059 (selection, the plan's TT-2).
+
+OD-58 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-59 (Q3): when a cell's sources differ, does the showcased value carry the grade of its own source, or the floor of the mean of all governing sources?** Recommended: its own, because the owner's definition of determination asks "how to grade quality of evidence for it", the chosen value; ⚠ applies only where that value's basis is grey, unverified or thin. The entry "T4 only half circle" read the mixed case as the floor mean, unchanged; that reading is an [ASSUMPTION] and this question puts it. Holds T-117.
+
+OD-59 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-60 (Q4): does the prose register's "to be + [value]" survive?** Recommended: keep it for process prose; state values as attributed data. Holds T-035 (its prose-register item only, but the gate holds the task).
+
+OD-60 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-61 (Q5): add `references/bpc/` to `.ignore`?** Recommended: yes; the corpus is frozen, quarantined, and floods every search for "best practice"; `git grep` and `grep -r` still see it. Holds T-121.
+
+OD-61 STATUS: REFERRED BACK TO THE OWNER
+
+- **OD-62 (Q6, optional): rename "best practice" to "ideal"?** Recommended: no rename; the meaning is fixed ("best practice IS the same as ideal IS the same as most accommodating") and a rename costs a migration and a caller sweep. **If unanswered, the default stands: no rename.** Holds no task.
+
+OD-62 STATUS: REFERRED BACK TO THE OWNER
+
+**Resolved by default, not registered** (the term-resolution plan's section 6, from the owner's "whatever doesn't matter" and the rulings above): no aliases after a rename; the verb for the act is "states the ideal and grades its evidence"; the stage stays "specification". These are the plan's readings of the owner's words, [ASSUMPTION], and stand until the owner says otherwise.
+
+CONDITION: any session asking whether OD-57 to OD-62 are answered, or preparing T-035, T-059, T-117 or T-121.
+ACTION: (1) Treat OD-57 to OD-62 as the owner's, CLOSED by the gate. (2) Ask each in its plain form. (3) Record the owner's answer with `ANSWERED BY THE OWNER`. (4) Do not resolve any of them under delegation.
+DATE: 2026-11-14 — registration and referral, not an owner statement.

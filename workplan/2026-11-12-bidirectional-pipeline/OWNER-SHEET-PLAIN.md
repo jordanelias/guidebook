@@ -1,8 +1,10 @@
-# Four things to see (answered), and six questions only you can answer, in plain words
+# Four things to see (answered), and the questions only you can answer, in plain words
 
 _Written 2026-11-13 by an Opus-class assistant, and corrected the same day after an independent check. On 2026-11-13 you asked whether these decisions could be settled from your earlier rulings, the mission and the project's goal, and you said you don't know the machinery or the code. Nine of the sixteen open questions were settled that way. They are recorded as the assistant's decisions, not yours, and a second, independent assistant has checked each one: it confirmed all nine, with corrections, and agreed that the seven below are yours. Each of the seven either belongs to you under the project's own rules (who the book is for, what counts as lived-experience evidence, which countries are covered, the book's own vocabulary, the rule against writing records by hand), or turns on what you meant by an earlier answer. Each recommendation below is the assistant's, not a ruling. You can answer in one line._
 
 _**Updated 2026-11-14.** You answered the four things to see first, and through the second of them question 1. Your words and what was done with each are under each item below; question 1 is removed, and the other six keep their numbers. Your answers are recorded in the project's ledger, under "Owner answers 2026-11-14 (thirteenth set)". Where the assistant had to read your words a certain way, the ledger marks that reading as the assistant's, not yours._
+
+_**Updated 2026-11-14, later.** The plan written that day to settle "best practice", "most common" and "minimum" across the project (`TERM-RESOLUTION-PLAN.md`) now takes priority over the remediation plan where they disagree, as you instructed. It left six questions for you; they are questions 8 to 13 at the end (OD-57 to OD-62). None has been settled by an assistant. Two sentences above were corrected to match your later rulings: question 4's sentence about values that rest only on codes, and the note on agreement under the first of the four things._
 
 ---
 
@@ -12,7 +14,7 @@ The independent check found four things you had not been shown. You answered all
 
 **1. The book can say the evidence disagrees more often than it can say it agrees.** Your earlier answers say that whenever two kinds of evidence of different strength give different values, the book calls them in disagreement. The settled decision on agreement (OD-43) keeps to the book's written definition: the book says the evidence agrees only when controlled research (studies with measured results) and lived-experience evidence (work made with disabled people) give the same value or range. So two research studies, or a research study and a professional guideline, can be called in disagreement but never in agreement. The settled decision did not create this; it was already there. *What you can do:* leave it as it stands, or say that agreement between any two kinds of evidence also counts, as you did for disagreement (for example "OD-43: agreement between any two kinds counts").
 
-**You answered:** "yes convergence is possible too, and it helps define most common practice (which isn't same as best practice)". **What was done:** agreement between any two kinds of evidence now counts, as disagreement does, still only when the sources give the same value or range, can all hold, and rest on at least two independent sources (two sources that repeat one study count as one). Agreement is shown as the most common practice, never as best practice: best practice stays the most accommodating value found. The decision on agreement (OD-43) is now yours, and the plan's task for it was rewritten to match.
+**You answered:** "yes convergence is possible too, and it helps define most common practice (which isn't same as best practice)". **What was done:** agreement between any two kinds of evidence now counts, as disagreement does, still only when the sources give the same value or range and can all hold. *(Corrected 2026-11-14: this first said "and rest on at least two independent sources"; your later statements that day made agreement simply values coming together, across any kinds of evidence, codes included, with the number of independent sources shown beside it rather than required.)* Agreement is shown as the most common practice, never as best practice: best practice stays the most accommodating value found. The decision on agreement (OD-43) is now yours, and the plan's task for it was rewritten to match.
 
 **2. The second document for the reading test (question 1 below).** The option you chose earlier also said to run the test "as written" in the plan, and the plan picks its research study by searching the whole collection, not only batch 23 (a set of documents gathered earlier). So option A in question 1 is what that part of your answer already says. The study it finds is from 2015, not from late October: late October is when it was added to the collection. *What you can do:* answer question 1.
 
@@ -69,9 +71,9 @@ You answered this through the second of the four things above. Its text is in th
 - In July you approved a set of changes that included a rule: a value resting only on building codes is labelled "universal".
 - On 12 November you chose an answer saying "universal" is where the book states that a provision is for everyone. The question put to you then said that "universal" already meant that, which was not correct: the label was being set by the code rule above.
 
-So today a value for wheelchair users that rests only on codes would be labelled "universal", as if it were for everyone. The July rule's purpose was to stop a value resting only on codes from ever being shown as best practice. Under A that protection is kept by the separate codes-only mark, which already exists.
+So today a value for wheelchair users that rests only on codes would be labelled "universal", as if it were for everyone. The July rule's purpose was to stop a value resting only on codes from ever being shown as best practice. You have since ruled (14 November) that where the only values come from codes, the most accommodating code value is the best, shown with its mark ("the empty circle makes it clear that it's not academically or clinically derived"). So that protection is no longer needed: a codes-only best is allowed, and its mark tells readers it rests on codes. *(Corrected 2026-11-14: this sentence first said the protection is kept by the codes-only mark.)*
 
-- **A. "Universal" means for everyone.** A value for a named group is labelled "population" even when it rests only on codes. The fact that it rests only on codes is still shown with the weak-evidence mark (○), which has its own place in the records. *What it means:* the label tells readers whom the value is for. This matches the mission's statement that the strength of the evidence and the design approach are separate questions.
+- **A. "Universal" means for everyone.** A value for a named group is labelled "population" even when it rests only on codes. The fact that it rests only on codes is still shown, by the code's own mark (○ for national codes; ◐ for international standards once you apply the circle table, question 8) and by the codes-only flag, which has its own place in the records. *What it means:* the label tells readers whom the value is for. This matches the mission's statement that the strength of the evidence and the design approach are separate questions.
 - **B. "Universal" means "rests on codes only", as now.** *What it means:* readers cannot tell from the label whether a value is for everyone, and your 12 November answer needs another way to say "for everyone".
 - **C. Keep both, as two separate labels.** *What it means:* the "codes only" fact would then be recorded twice, which the project's rules discourage.
 
@@ -120,13 +122,95 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 **To answer:** "OD-54: A" or "OD-54: B, within these limits: …".
 
+
+---
+
+## 8. Should the circles now follow the table you built? (OD-57)
+
+**The situation.** On 14 November you set out which circle each kind of evidence gets: a full circle for controlled research, research reviews, lived-experience evidence (work made with disabled people) and occupational therapy guidelines; a half circle for clinical studies and international standards ("T4 only half circle"; grey studies too, but they show the triangle instead, below); an empty circle for national frameworks and building codes; and a warning triangle (⚠) instead of a circle when a value comes from grey material, from a source that could not be retrieved, or from guesswork (a value that does not directly concern the people it is shown for, including the project's own inferences). Each time you said "I think", so none of it has been applied yet.
+
+- **A. Apply it now.** *What it means:* values resting only on international standards rise to a half circle; clinical studies drop from a full to a half circle; national frameworks drop to an empty circle; grey, unretrieved and guessed values show the triangle.
+- **B. Apply it, except one row** (say which).
+- **C. Not yet.** *What it means:* the book keeps today's circles.
+
+**Assistant's recommendation (not a ruling): A.** You have answered every kind of evidence, and the project's method already treats clinical studies as able to support a provisional value but not a settled one, which matches a half circle.
+
+**To answer:** "OD-57: A", "OD-57: B, except …" or "OD-57: C".
+
+---
+
+## 9. What counts as proof that the more accommodating value gives worse results? (OD-58)
+
+**The situation.** You ruled: "does the research prove that the more accommodating value leads to worse results? if so, research wins. if no, code wins." The book needs to know what counts as that proof before it can choose a value this way.
+
+- **A. A recorded finding from a study that measured the outcome for the same group in the same situation, of any kind of evidence,** shown with that study's own circle. The project's own reasoning never counts as proof.
+- **B. As A, but only from controlled research, research reviews, lived-experience evidence or occupational therapy guidelines.**
+- **C. Any recorded finding, even one about a different group.** *What it means:* a finding about one group could change the value shown for another.
+
+**Assistant's recommendation (not a ruling): A.** It follows your rule that the kind of evidence sets the circle, not whether a value counts.
+
+**To answer:** "OD-58: A", "B" or "C". *This answer releases the most work: the first published values wait on it.*
+
+---
+
+## 10. When a value's sources differ in strength, whose circle does it carry? (OD-59)
+
+**The situation.** Today, when the value shown as best comes from a strong study but other sources for the same cell are building codes, the book averages them and rounds down, so the value shows a weaker circle than its own source has. You defined determining as choosing the ideal and "how to grade quality of evidence for it".
+
+- **A. Its own source's circle.** The triangle only if that value's own basis is grey, unretrieved or guessed.
+- **B. The rounded-down average of all the sources, as now.**
+
+**Assistant's recommendation (not a ruling): A.** "For it" points at the chosen value.
+
+**To answer:** "OD-59: A" or "OD-59: B".
+
+---
+
+## 11. Should the house style still write values as "to be 1200 mm"? (OD-60)
+
+**The situation.** The style guide writes a value as what something is "to be". You said the project gathers and shows, and does not tell anyone how to design.
+
+- **A. Keep "to be" for describing the process; write values as what a source gives** ("the Ontario code gives 1200 mm").
+- **B. Keep it everywhere.**
+- **C. Drop it.**
+
+**Assistant's recommendation (not a ruling): A.**
+
+**To answer:** "OD-60: A", "B" or "C".
+
+---
+
+## 12. Should the old best-practice notes be hidden from the assistants' searches? (OD-61)
+
+**The situation.** An old collection of best-practice notes is frozen and no longer used. Every search an assistant makes for "best practice" turns it up first, in the old meaning. It can be hidden from the assistants' search tool without deleting or moving anything; the project's own tools and its history still see it.
+
+- **A. Yes, hide it from search.**
+- **B. No.**
+
+**Assistant's recommendation (not a ruling): A.**
+
+**To answer:** "OD-61: A" or "OD-61: B".
+
+---
+
+## 13. (Optional) Should "best practice" be renamed "ideal"? (OD-62)
+
+**The situation.** You asked whether "ideal" would serve, then said best practice, ideal and most accommodating mean the same thing. If you do not answer, nothing is renamed.
+
+- **A. Keep "best practice".** *What it means:* nothing changes.
+- **B. Rename it "ideal".** *What it means:* the project's records and tools are renamed in one pass.
+
+**Assistant's recommendation (not a ruling): A.** The meaning is now fixed, and a rename is work with no gain for readers.
+
+**To answer:** "OD-62: A" or "OD-62: B", or leave it.
+
 ---
 
 _The nine decisions the assistant settled, for your information (one of them, OD-43, is now yours). Each was confirmed, with corrections, by the independent check. Any of them can be reversed with a line such as "OD-43: no, …":_
 - **OD-40:** a figure the project calculates from two source figures shows those sources' own words, never a sentence of ours. A figure a source states in words is recorded as that source's own figure, not as a calculation.
 - **OD-41:** a ramp slope written "1:12" is labelled rise over horizontal run in place. Your earlier answer on tidying stored figures already listed this exact case.
 - **OD-42:** a figure moved between metric units (centimetres to millimetres) is shown exactly. Rounding to the nearest 5 mm or quarter inch, never on the unsafe side, stays for conversions between inches or feet and metric units.
-- **OD-43:** settled by you on 2026-11-14 (the first of the four things above): any two kinds of evidence may agree, resting on at least two independent sources, and agreement is most common practice, not best practice. The assistant's earlier decision, which allowed agreement only between controlled research and lived-experience evidence, is replaced.
+- **OD-43:** settled by you on 2026-11-14 (the first of the four things above): any two kinds of evidence may agree, and agreement is most common practice, not best practice; the number of independent sources is shown beside it, not required (your later statements that day). The assistant's earlier decision, which allowed agreement only between controlled research and lived-experience evidence, is replaced.
 - **OD-45:** a search that a website blocked is recorded as not yet done and is owed again. It is never recorded as "nothing found".
 - **OD-49:** the type of building, whether the work is new or existing, and indoor or outdoor are each recorded on the figure and shown as separate cases of one value. Building types are named from the documents' own words, not invented. Your three building levels stand. (See the third of the four things above.) **Narrowed by you on 2026-11-14:** new or existing work is no longer recorded; the type of building and indoor or outdoor remain.
 - **OD-50:** any document the project admits, not only a code, may add a new measurement for the book to ask about. You still read each addition.

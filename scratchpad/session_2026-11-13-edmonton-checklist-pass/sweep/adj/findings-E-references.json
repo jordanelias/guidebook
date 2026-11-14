@@ -1,0 +1,1840 @@
+[
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 16,
+"text": "**Sharpened this session — Convergence ≠ Evidence:** Most-cited / highest-convergence indicates how many sources agree. It does not establish what is best for t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Converged value qualifies only if a T1/Co-1/T2/Co-2/T3 source supports it: eligibility gated by tier, while (c) says a source asserting the value suffices."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "'A converged value qualifies as best practice only if' a T1/Co-1/T2/Co-2/T3 source supports it: eligibility by tier, so code-only cells get no best."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Audit thesis: a converged value qualifies as best practice only if a T1/Co-1, T2/Co-2 or T3 SR source supports it; eligibility by tier"
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 24,
+"text": "If the only basis is \"N standards agree on this number,\" the value is a **code-consensus default**, not best practice. It must be relabelled as such.",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Consistent on consensus, but the qualifying list requires T1/Co-1/T2/Co-2/T3-SR support for the value to be best practice: mere assertion insufficient for eligibility"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 26,
+"text": "**Largest/most-extreme principle:** For each numerical specification, the audit identifies the source reporting the **largest / most accommodating / most extrem",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C5"
+],
+"sense": null,
+"reason": "'Largest/most-extreme principle': 'largest / most accommodating / most extreme' equated; numeric reading ignores parameters where lower is more accommodating."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 31,
+"text": "3. At each increment, accept the value as a candidate best-practice if a **Tier 3 or better** source supports it for the population. Tier 3 or better = Tier 1 (",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "QAS: a value is a candidate best practice only with Tier 3+ support; T4-T6 \"never raise the ceiling\". Excludes T4-T5 asserted values from eligibility (component c)."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "Ascending search seeks most accommodating value, but T4-T6 values 'never raise the ceiling': a code source's assertion is made insufficient for eligibility of the value, not just its marker"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6",
+"C5"
+],
+"sense": null,
+"reason": "QAS: candidate best practice only with Tier 3+ support; T4-6 'never raise the ceiling'; ascending +100mm search assumes higher = better."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6",
+"C5"
+],
+"sense": null,
+"reason": "QAS: candidate best practice only if Tier 3+ supports; T4–6 \"never raise the ceiling\"; searches ascending numerically \"for each numerical parameter\" regardless of direction."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 87,
+"text": "1. **`mobility-built-environment.md` ladder revision:** add a \"to accommodate entire sample\" tier above the current 1800 mm best-practice ceiling, citing Steinf",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "Proposes adding a more-accommodating tier above the \"1800 mm best-practice ceiling\" instead of making 2400mm the best practice; leaves best practice below most accommodating."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Proposes a 'to accommodate entire sample' tier above 'the current 1800 mm best-practice ceiling': ranks a tier of value above best practice."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Proposes a \"to accommodate entire sample\" tier above \"the current 1800 mm best-practice ceiling\" - best practice placed below a more accommodating identified value."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 221,
+"text": "> Two wheelchair users passing: ≥1525mm (ADA); ≥1800mm (UK Part M non-residential best practice; care settings standard).",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Quoted BPC text calls a code value (UK Part M 1800mm) \"best practice\"; the audit quotes it to reject it as a code-consensus default."
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 222,
+"text": "> Best practice for primary routes: 1800mm minimum…",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Quoted BPC text \"Best practice for primary routes: 1800mm minimum\" names the code/standard-consensus figure best practice; the audit rejects it."
+},
+{
+"src": "sweep1-second",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 237,
+"text": "**The 1800mm \"best practice\" is a code-consensus default, not Tier 1/Co-1 best practice.** The DEAF-population evidence base (independently corroborated: Vaughn",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Rejects 1800 consensus as best (fine) but contrasts it with 'Tier 1/Co-1 best practice', implying best practice needs those tiers."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 273,
+"text": "This is the pattern the audit calls for. **Adopt this language wherever a code-floor value appears in a best-practice synthesis.**",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "verdict, not data point: urges language rejecting code-floor values as a design baseline / \"not a permitted specification value\"; the minimum is a factual data point."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Endorses 'rejected as a design baseline ... not a permitted specification value' for code floors: project verdict, and denies the minimum as a shown data point."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 350,
+"text": "> **Cross-language convergence:** RT60 ≤ 0.4 s is the consensus best-practice target across all 14 languages and their governing standards (DIN 18041, BS 8300, ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Quoted BPC: \"RT60 <= 0.4 s is the consensus best-practice target across all 14 languages\"; the audit holds this file up as the template."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Quoted as exemplar: 'RT60 ≤ 0.4 s is the consensus best-practice target across all 14 languages and standards': consensus named best practice"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Quoted BPC 'RT60 <= 0.4 s is the consensus best-practice target' is endorsed as EXEMPLAR (rests on T1 too); 'consensus best-practice' wording is C1."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 356,
+"text": "…AND the Opus note explicitly cites Tier 1 CI-specific support and Amlani & Russo 2016 for the STI-at-furthest-seat refinement. The convergence is reported but ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Accepts a consensus-labelled best-practice target because Tier 1 evidence also exists; ties best practice to tier backing and endorses consensus phrasing, not most accommodating."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 375,
+"text": "The corpus contains contradictory best-practice values for primary corridor width:",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "Calls per-population BPC values (1800 wheelchair; 2440 Deaf) \"contradictory best-practice values\" needing one answer; component (e) puts best practice in a lens cell."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass0-2026-05-10.md",
+"line": 417,
+"text": "**Recommended doctrine update:** In `voice-style_SKILL.md` (if not already present), forbid \"aligned on best practice\" / \"consensus best practice\" without an im",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "Forbids \"aligned on / consensus best practice\" only \"without an immediate Tier 1/Co-1 citation\", so consensus-best-practice wording stays permitted when cited."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1",
+"C6"
+],
+"sense": null,
+"reason": "Forbids 'consensus best practice' only 'without an immediate Tier 1/Co-1 citation': permits consensus phrasing with T1 and ties best to tier."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Audit recommends forbidding 'consensus best practice' unless a T1/Co-1 citation follows; rejects convergence (fine) but makes best practice depend on tier"
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 20,
+"text": "> - **Code-floor values (Tier 6 — not best practice):** 915mm continuous single passage (ADA); 900mm residential single passage (DIN 18040-1, BS 8300); 1200mm n",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "verdict, not data point: proposed text keeps floor apart from best practice but says code floors are \"not permitted design specifications\"; the minimum is a factual data point."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Proposed text: code-floor values 'not best practice', 'reference baselines only ... not as permitted design specifications': verdict on design (floor kept apart is fine)."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 21,
+"text": "> - **Tier 5 standards values:** 1800mm primary route two-way passing (BS 8300, DIN 18040-1, UK Part M non-residential best practice); 1500mm comfortable single",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "acceptable is a value judgment: Tier 5 1800mm row is \"Adequate where DEAF population is not anticipated\" and labels it \"UK Part M ... best practice\", beside 2440mm best practice."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "GENERIC",
+"reason": "'Best practice' is the source label (UK Part M); passage keeps code floor apart from best practice, but ranks the T5 values 'Adequate where DEAF population is not anticipated': acceptable is a value j"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Proposed BPC text ranks Tier 5 1800mm as 'Adequate where DEAF population is not anticipated': adequate as a tier of value between floor and best."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Audit-quoted proposed text: T5 1800mm \"Adequate where DEAF population is not anticipated\" - adequate as a tier of value."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 22,
+"text": "> - **Tier Co-1 / Tier 2 / Tier 3 best practice (DEAF-inclusive primary corridors):** 2440mm primary corridors with glazed/transparent intersections (DSDG Bauma",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "acceptable is a value judgment: \"1830mm (6 ft) acceptable on secondary corridors only\"; also \"Required where signed conversation is anticipated\" (verdict). 2440 best practice is lens-scoped."
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "2440mm for DEAF-inclusive primary corridors is the accommodating value with a lens, but 'Required where signed conversation is anticipated' is a verdict, not a data point (owner add. 3)."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3",
+"C4"
+],
+"sense": null,
+"reason": "Proposed: 2440mm best practice 'Required where signed conversation is anticipated'; '1830mm acceptable on secondary corridors only': verdict plus acceptable tier."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3",
+"C4"
+],
+"sense": null,
+"reason": "Audit-proposed BPC text: 2440mm best practice \"Required where signed conversation is anticipated\"; \"1830mm acceptable on secondary corridors only\" - verdict and acceptable tier."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 36,
+"text": "> **Current:** \"Turning space ≥1800 mm diameter [Co-1/Tier 1 — IDeA Center / VA / Habinteg/RCOTSS]; 1700 mm acceptable where space-constrained...\"",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Quoted current BPC text '1700 mm acceptable where space-constrained'; quoted for replacement but the proposal keeps the acceptable tier."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 38,
+"text": "> **Proposed:** \"Turning space ≥1800 mm diameter for typical power-WC accommodation [Co-1/Tier 2 — IWA BPAG p.29; Tier 5 — BS 8300-2 Annex G]; **2400 mm where I",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Proposed text: '1925 mm acceptable ... 1700 mm acceptable where space-constrained': acceptable ranked as value tiers below the governing figure."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Proposed spec text: \"1925 mm acceptable ...\"; \"1700 mm acceptable where space-constrained\" - acceptable ranked as a tier."
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 66,
+"text": "> **Code-floor disclosure:** The 850mm door minimum is the CSA B651-23 code value for power-WC clear width (Tier 6). 900mm is the BS 8300 / DIN 18040-1 standard",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: \"900mm is sub-best-practice; specify >=1000mm\" turns the best-practice figure into an instruction."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Proposed: 'Where assistant-accompanied entry is anticipated, 900mm is sub-best-practice; specify >=1000mm': project verdict telling design what to do."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Proposed BPC insertion: 900mm 'sub-best-practice; specify >=1000mm', landings 'should provide >=1800', 'specify 1500 only as' fallback; project-authority verdicts"
+}
+]
+},
+{
+"file": "references/audits/bpc-audit-pass2-2026-05-10.md",
+"line": 80,
+"text": "> **Proposed:** \"...turning swept-envelope: 1800mm clear floor area for typical power-WC kitchen maneuver [Co-1/Tier 2 — IWA BPAG p.29; Tier 5 — BS 8300-2]; **2",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 1500mm floor \"only where space cannot be made\"; \"not Universal Mode best practice\" framed as what to specify, not figures shown."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Proposed kitchen text: 1500mm code-floor 'only where space cannot be made'; not best practice — keeps floor apart but as a design verdict."
+}
+]
+},
+{
+"file": "references/connections/application-queue.md",
+"line": 28,
+"text": "**ISW action:** Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions — C-items, zone boundaries, wayfinding items. At critical ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions' with ≥65% at critical junctions: one best-practice figure across all provisions, below a higher identified value"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "ISW action: 'Apply >=50% LRV best-practice target consistently to all contrast-dependent provisions'; guidebook recommends: directive on own authority."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C4",
+"C7"
+],
+"sense": null,
+"reason": "ISW action: apply >=50% LRV best-practice target consistently to all contrast provisions: one figure across contexts as instruction."
+}
+]
+},
+{
+"file": "references/connections/application-queue.md",
+"line": 53,
+"text": "**ISW action:** Part 7/8: document as mandatory provision — Zone 3 + environmental refuge specified as required (not recommended) in healthcare, education, and ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'document as mandatory provision… Shifts zone provision from best practice to harm prevention mandate': best practice and a mandate presented as what design must do."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "ISW action: document zone provision 'as mandatory provision ... required (not recommended)', shifting from best practice to mandate: project verdict."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "ISW action: document Zone 3 + refuge 'as mandatory provision ... required (not recommended)', shifting from best practice to mandate: project verdict."
+}
+]
+},
+{
+"file": "references/connections/bathrooms-and-wet-areas/connections.md",
+"line": 295,
+"text": "**Connection:** MOB BPC: ADA 1524mm turning circle rejected; 1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs. DEM BPC: toilet visible fro",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs': best practice named below a higher identified value, with no lens on the 1800 figure."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Connection: 1800 best practice (2100 also cited); 'spatial layout must simultaneously satisfy ... MOB turning (1800mm)... door 900mm' is a project 'must'."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C7"
+],
+"sense": null,
+"reason": "'1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs': best named below a larger identified value; fine only if read per context."
+}
+]
+},
+{
+"file": "references/connections/bathrooms-and-wet-areas/connections.md",
+"line": 354,
+"text": "**Connection:** MOB BPC: ADA 1524mm turning circle rejected; 1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs. DEM BPC: toilet visible fro",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs': best practice named below a higher identified value, with no lens on the 1800 figure (duplicate of CON-0143)."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Duplicate of CON at line 295: layout 'must simultaneously satisfy' 1800 mm turning and 900 mm door: project verdict; ADA 'rejected'."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C7"
+],
+"sense": null,
+"reason": "1800mm named best practice for MOB with no context while a more accommodating 2100mm is cited beside it for power chairs; best may not be the most accommodating identified value"
+}
+]
+},
+{
+"file": "references/connections/bathrooms-and-wet-areas/connections.md",
+"line": 560,
+"text": "**ISW action:** G-03: add DBL population note — bilateral grab bars serve dual function (support + tactile wayfinding). Consistent positioning across all bathro",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "GENERIC",
+"reason": "verdict, not data point: 'Consistent positioning… is a DBL requirement, not just a best practice': best practice and requirement presented as verdicts on design."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "ISW action: consistent grab-bar positioning 'is a DBL requirement, not just a best practice': reads as project-imposed requirement."
+}
+]
+},
+{
+"file": "references/connections/controls-and-hardware/connections.md",
+"line": 32,
+"text": "**Action required:** Create Universal Mode companion-width specification: primary routes ≥1500mm clear (best practice 2440mm where DEAF primary). Unifies siloed",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'Create Universal Mode companion-width specification: primary routes ≥1500mm clear (best practice 2440mm…)': an instruction to specify, not a figure the research shows."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action: create a companion-width specification 'primary routes >=1500mm clear' (project-set value); best practice 2440 scoped to DEAF lens is consistent."
+}
+]
+},
+{
+"file": "references/connections/cross-cutting/connections.md",
+"line": 101,
+"text": "**Action required:** Part 7/8: document as mandatory provision — Zone 3 + environmental refuge specified as required (not recommended) in healthcare, education,",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'document as mandatory provision… Shifts zone provision from best practice to harm prevention mandate': best practice and a mandate presented as what design must do."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action required: zone provision 'specified as required (not recommended)'; 'shifts zone provision from best practice to harm prevention mandate': project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action: document Zone 3 + refuge as \"mandatory provision ... required (not recommended)\"; \"shifts zone provision from best practice to harm prevention mandate\" - project verdict."
+}
+]
+},
+{
+"file": "references/connections/entrances-and-circulation/connections.md",
+"line": 1036,
+"text": "Additionally: automatic door openers (specified as \"best practice\" for entrance doors) should be elevated to MANDATORY for all doors on primary circulation rout",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'automatic door openers (specified as \"best practice\")… should be elevated to MANDATORY': best practice and mandate presented as what design must do."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Automatic door openers 'specified as best practice' 'should be elevated to MANDATORY' on primary routes: project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Automatic door openers specified as best practice 'should be elevated to MANDATORY' for primary routes; project verdict, not a data point"
+}
+]
+},
+{
+"file": "references/connections/entrances-and-circulation/connections.md",
+"line": 1040,
+"text": "**Action required:** (1) Add OFS and PAIN as co-populations for door force specification (E-01, H-01). (2) Elevate automatic door openers from \"best practice\" t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'Elevate automatic door openers from \"best practice\" to \"mandatory on primary circulation routes\"': a verdict on design, not a data point."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action: 'Elevate automatic door openers from best practice to mandatory on primary circulation routes': project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action: elevate automatic door openers from 'best practice' to 'mandatory on primary circulation routes': project-authority mandate, verdict not data point."
+}
+]
+},
+{
+"file": "references/connections/entrances-and-circulation/connections.md",
+"line": 1118,
+"text": "Additionally: automatic door openers (specified as \"best practice\" for entrance doors) should be elevated to MANDATORY for all doors on primary circulation rout",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'automatic door openers (specified as \"best practice\")… should be elevated to MANDATORY': best practice and mandate presented as what design must do."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Duplicate: automatic door openers 'should be elevated to MANDATORY': project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Says automatic door openers 'should be elevated to MANDATORY' for primary routes: a verdict on the project's own authority."
+}
+]
+},
+{
+"file": "references/connections/entrances-and-circulation/connections.md",
+"line": 1122,
+"text": "**Action required:** (1) Add OFS and PAIN as co-populations for door force specification (E-01, H-01). (2) Elevate automatic door openers from \"best practice\" t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'Elevate automatic door openers from \"best practice\" to \"mandatory on primary circulation routes\"': a verdict on design, not a data point."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Duplicate action: elevate automatic door openers from best practice to mandatory: project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action item: elevate automatic door openers from \"best practice\" to \"mandatory on primary circulation routes\" for OFS/PAIN; project verdict (mandatory), best practice ranked below a mandate."
+}
+]
+},
+{
+"file": "references/connections/entrances-and-circulation/connections.md",
+"line": 1379,
+"text": "**Connection:** C-04 (LRV contrast) and E-09 (TGSI/tactile walking surface indicators) share a visual-tactile detection requirement at hazard locations. LRV ≥50",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'LRV ≥50 best practice (C-04) applies to TGSI colour selection' at hazard locations while the passage cites 30% as poorly visible at severe VI and 65% exists elsewhere; one figure, no lens."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C7"
+],
+"sense": null,
+"reason": "'LRV >=50 best practice (C-04) applies to TGSI colour selection': one guidebook best figure carried across elements without lens/context."
+}
+]
+},
+{
+"file": "references/connections/opus-bpc-crossref-scan-batch3-2026-04-09.md",
+"line": 168,
+"text": "Additionally: automatic door openers (specified as \"best practice\" for entrance doors) should be elevated to MANDATORY for all doors on primary circulation rout",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'automatic door openers (specified as \"best practice\")… should be elevated to MANDATORY': best practice and mandate presented as what design must do."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Duplicate: automatic door openers 'should be elevated to MANDATORY': project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Automatic door openers \"(specified as best practice)\" should be elevated to MANDATORY on primary routes - project verdict, best practice ranked below a mandate."
+}
+]
+},
+{
+"file": "references/connections/opus-bpc-crossref-scan-batch3-2026-04-09.md",
+"line": 172,
+"text": "**Action required:** (1) Add OFS and PAIN as co-populations for door force specification (E-01, H-01). (2) Elevate automatic door openers from \"best practice\" t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'Elevate automatic door openers from \"best practice\" to \"mandatory on primary circulation routes\"': a verdict on design, not a data point."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Duplicate action: elevate automatic door openers from best practice to mandatory: project mandate."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Same action as connections.md CON-0155: elevate automatic openers from 'best practice' to 'mandatory': project-authority verdict."
+}
+]
+},
+{
+"file": "references/connections/opus-context-synthesis-batch4-2026-04-09.md",
+"line": 85,
+"text": "**Connection:** MOB BPC: ADA 1524mm turning circle rejected; 1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs. DEM BPC: toilet visible fro",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'1800mm best practice; CSA B651 2100mm for 95th-percentile power chairs': best practice named below a higher identified value, with no lens on the 1800 figure."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Duplicate of bathroom CON: layout 'must simultaneously satisfy' 1800 mm turning and 900 mm door: project verdict."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C7"
+],
+"sense": null,
+"reason": "1800mm named best practice for MOB with no context while a more accommodating 2100mm is cited beside it for power chairs; best may not be the most accommodating identified value"
+}
+]
+},
+{
+"file": "references/connections/wayfinding-and-signage/connections.md",
+"line": 842,
+"text": "**Connection:** The `luminance-contrast-lrv-evidence-base` BPC documents that the universal 30% LRV threshold has no empirical basis — it is a regulatory floor ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'guidebook recommends ≥50% LRV as best practice for C-items' beside 'Severe VI needs ≥65% Michelson': one best-practice figure for all C-items below a higher identified value."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "'The guidebook recommends >=50% LRV as best practice for C-items': guidebook's own recommendation, below the 65% Michelson identified for severe VI."
+}
+]
+},
+{
+"file": "references/connections/wayfinding-and-signage/connections.md",
+"line": 844,
+"text": "The inconsistency: the `detectable-gradient-protocol-sensory-zones` BPC specifies ≥30 LRV change at zone boundaries — inheriting the unvalidated threshold. Cogn",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'The guidebook's own ≥50% best-practice target is not propagated to zone boundaries': a single best-practice contrast figure across cells, while ≥65% is identified for severe VI."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "'The guidebook's own >=50% best-practice target is not propagated': best practice framed as guidebook-authored target."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "'The guidebook recommends >=50% LRV as best practice' and calls it the guidebook's own target, while >=65% for severe VI is cited; project recommendation, not most accommodating"
+}
+]
+},
+{
+"file": "references/connections/wayfinding-and-signage/connections.md",
+"line": 854,
+"text": "**Action required:** Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions — C-items, zone boundaries, wayfinding items. At crit",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "'Apply ≥50% LRV best-practice target consistently to all contrast-dependent provisions'; keeps 30% as floor, but one figure across all provisions sits below the identified ≥65%; also verdict, not data"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Action: apply >=50% LRV best-practice target consistently to all provisions; 'the guidebook already established the right position': verdict on own authority."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C4",
+"C7"
+],
+"sense": null,
+"reason": "Action: apply >=50% LRV best-practice target to all contrast provisions: one figure across contexts as an instruction; 30% kept as minimum (apart, fine)."
+}
+]
+},
+{
+"file": "references/effort-guide.md",
+"line": 24,
+"text": "/effort 150  Synthesise best-practice guidance for tactile wayfinding across AU, UK, and EU jurisdictions.",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "PROCESS",
+"reason": "Example command 'Synthesise best-practice guidance for tactile wayfinding across AU, UK, and EU jurisdictions': best practice framed as a synthesis across jurisdictions' guidance, inviting a code-agre"
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/fdr/reach-range-and-accessible-controls.md",
+"line": 78,
+"text": "**Clinical reasoning note (Petito case):** Community OT/wheelchair specialist documents that WC assessment must include home environment measurement — counter h",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "verdict, not data point: 'why adjustable worktops are best practice, not optional': best practice presented as an obligation on design rather than a figure found."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Clinical note: 'adjustable worktops are best practice, not optional': reads as a project mandate."
+}
+]
+},
+{
+"file": "references/methodology-evidence-hierarchy-mapping.md",
+"line": 33,
+"text": "| Tier 6 | Statutory codes | Legally enforceable accessibility codes. **Code-baseline citations only** — the regulatory floor, never a best-practice anchor |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Tier 6 row: 'Code-baseline citations only — the regulatory floor, never a best-practice anchor': code-only values barred from best practice, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Tier 6 row: \"Code-baseline citations only — the regulatory floor, never a best-practice anchor\" - code-only values barred from best practice."
+}
+]
+},
+{
+"file": "references/methodology-evidence-hierarchy-mapping.md",
+"line": 39,
+"text": "- **Tiers 4–6 are the regulatory stratum,** walled off from best-practice anchoring: convergence of standards/codes is convergence-not-evidence (`tier-system.md",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "'A T4/T5 source can support a best-practice claim only where its own evidence basis is traceable to T1/T2': can be read as making a standard's assertion insufficient for value eligibility, not only fo"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Tiers 4-6 'walled off from best-practice anchoring'; T4/T5 supports best practice only if traceable to T1/T2: eligibility by tier."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "T4–6 \"walled off from best-practice anchoring\"; T4/T5 support best practice only where traceable to T1/T2 - eligibility by tier."
+}
+]
+},
+{
+"file": "references/methodology-evidence-hierarchy-mapping.md",
+"line": 58,
+"text": "| Tiers 4–6 | Not classifiable | Not classifiable | GRADE does not rate consensus standards; the project classifies them explicitly — as a regulatory stratum, n",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Tiers 4-6 classified 'as a regulatory stratum, not as best-practice evidence': eligibility by tier."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Tiers 4-6 classified 'as a regulatory stratum, not as best-practice evidence'; reads as code tiers ineligible for best practice"
+}
+]
+},
+{
+"file": "references/methodology-evidence-hierarchy-mapping.md",
+"line": 165,
+"text": "v1's two-marker system is superseded: it allowed \"Tier 4–6 only → ●\" with the rationale that \"code compliance is inherently evidence-based (the evidence being t",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "A T4-6-only basis carries 'never best-practice language' (I3): a rendering rule, but it reads as barring a standard-asserted value from being best practice at all, beyond setting its marker."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "T4-6-only basis 'never best-practice language (invariant I3)': goes beyond a weaker marker to barring the label, against ruling 4."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Under v2 a T4-6-only basis carries regulatory-stratum language 'never best-practice language (invariant I3)'; code-only value barred from best practice"
+}
+]
+},
+{
+"file": "references/methodology-evidence-hierarchy-mapping.md",
+"line": 182,
+"text": "| Standards/codes | Not addressed | Not addressed | Not addressed | Explicit regulatory stratum (T4–6), walled off from best-practice anchoring |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Standards/codes row: 'walled off from best-practice anchoring': eligibility by tier."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Summary table: regulatory stratum T4–6 \"walled off from best-practice anchoring\" - code-based values made ineligible as best practice, against ruling 4."
+}
+]
+},
+{
+"file": "references/methodology/economics-methodology-core.md",
+"line": 22,
+"text": "- Tier 1 findings → \"[Evidence tier] evidence supports [value]\" or \"Best practice based on [N] jurisdictions and [tier] evidence is [value]\"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Voice template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': names the best-practice value by a count of agreeing jurisdictions (most common)."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Voice template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' names the best-practice value by a count of agreeing jurisdictions."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' derives best practice by counting jurisdictions."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Live methodology voice template \"Best practice based on [N] jurisdictions and [tier] evidence is [value]\" - best practice by jurisdiction count."
+}
+]
+},
+{
+"file": "references/methodology/economics-research-methodology-v1.9-archived.md",
+"line": 64,
+"text": "- Tier 1 findings → \"[Evidence tier] evidence supports [value]\" or \"Best practice based on [N] jurisdictions and [tier] evidence is [value]\"",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Archived voice template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': names the best-practice value by a count of agreeing jurisdictions (most common)."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "'Best practice based on [N] jurisdictions and [tier] evidence is [value]': jurisdiction count names the value (archived file)"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Archived methodology template 'Best practice based on [N] jurisdictions ...' derives best practice by counting jurisdictions."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Voice template \"Best practice based on [N] jurisdictions and [tier] evidence is [value]\" derives best practice by counting jurisdictions. File is the archived v1.9 methodology."
+}
+]
+},
+{
+"file": "references/methodology/value-genealogy-worked-example-corridor-width.md",
+"line": 15,
+"text": "| **2440mm** primary corridors (with 2400mm sibling) | Best practice | **Two independent measurement/participatory roots + one untraced regulatory convergence:*",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "2440mm corridor 'Best practice' graded by counting independent roots/convergence; one figure for primary corridors without a lens, though roots are DEAF signing-pair and wheelchair-sample specific."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Genealogy table: 2440 'Best practice' classed by root count ('two-root anchor... strongest genealogical position'); describes the claim, but invites best-by-convergence reading."
+}
+]
+},
+{
+"file": "references/methodology/value-genealogy-worked-example-corridor-width.md",
+"line": 87,
+"text": "2. **Four coexisting \"Guidebook values\" for E-08:** tier-system §3 canon (2440 best practice) · item-jurisdiction-divergence-matrix (target 1800, no 2440 row) ·",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "Reports 'tier-system §3 canon (2440 best practice)' as one of four coexisting E-08 values: one best-practice figure for a parameter with no lens or context."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 17,
+"text": "RULE: Evidence hierarchy is seven tiers, per governance/tier-system.md (OPERATIVE 2026-05-25, owner directive \"t2>t3 this is enshrined\"; DR-2026-05-29 ACCEPTED ",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "'The evidence hierarchy determines what constitutes best practice. Where higher-tier evidence exists, it governs': value chosen by tier rank, not by which identified value is most accommodating."
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "RULE: Tiers 4-6 'walled off from best-practice anchoring'; 'evidence hierarchy determines what constitutes best practice': eligibility by tier."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Core Doctrine RULE: Tiers 4–6 \"walled off from best-practice anchoring\"; \"The evidence hierarchy determines what constitutes best practice\" - eligibility by tier."
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 20,
+"text": "RULE: Best practice means the most accommodating, thoughtful, respectful, dignified, and usable condition achievable for the disabled person. Best practice is d",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "Defines best practice as most accommodating and not code consensus, then lets a value derived solely from code consensus be a weak-band 'best practice as currently known': best practice used for the m"
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "MIXED",
+"reason": "Defines best practice as most accommodating, then says a code-consensus-derived synthesis is a valid weak-band best-practice claim; tiers also gate eligibility"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C1",
+"C6"
+],
+"sense": null,
+"reason": "RULE: code-consensus-derived best practice allowed only weak-band with convergence flag; accepts consensus as source of a best value and treats code as floor not aspiration."
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 21,
+"text": "DATE: 2026-04-24 23:46 — replaces and supersedes prior \"best practice is not determined by code\" rule",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "NOT-COMMON",
+"reason": "DATE line: the rule 'replaces and supersedes prior \"best practice is not determined by code\" rule'; the replacement admits code-consensus values as weak-band best practice."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 26,
+"text": "RULE: Evidence specification markers, per governance/tier-system.md §5. ● = confirmed evidence base (T1, T2 both streams, T3-clinical, Co-1, Co-2). ◐ = policy/s",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "Marker rule; 'A T4-6-only basis never renders best-practice language' reads as barring a standard-asserted value from best practice (eligibility), not only setting its marker; also contradicts line 20"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Marker RULE: 'A T4-6-only basis never renders best-practice language in any register': bars the label by tier, not just weaker marker."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Locked RULE: a T4-6-only basis never renders best-practice language in any register; code-only value barred from being called best practice, against ruling 4"
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 172,
+"text": "RULE: Specification language is tier-appropriate and does not claim authority the project does not have. The guidebook is an advocacy project (see Core Doctrine",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Population Mode construction 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': best-practice value tied to a count of agreeing jurisdictions (most common)."
+},
+{
+"src": "sweep1-second",
+"flag": "CONFLICT",
+"tests": [],
+"sense": "COMMON",
+"reason": "Voice template 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': a count of jurisdictions names the best-practice value"
+},
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "RULE: Population Mode construction 'Best practice based on [N] jurisdictions and [tier] evidence is [value]': best practice by jurisdiction count."
+},
+{
+"src": "sweep2-second",
+"flag": "CONFLICT",
+"tests": [
+"C1"
+],
+"sense": null,
+"reason": "Rule's Population Mode construction 'Best practice based on [N] jurisdictions and [tier] evidence is [value]' derives best practice by counting jurisdictions."
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 355,
+"text": "RULE: Thermoregulation-impaired populations require a narrower ambient temperature range than general accessible building standards. Working target: 18–22°C. Fl",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "RULE: populations 'require' 18-22 C; above 24 C 'not acceptable': project-authored requirement and acceptability judgment."
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 3611,
+"text": "to change level, so the design question is the MAXIMUM ACCEPTABLE gradient, and that needs a",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "CONFLICT",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Reframes the ramp design question as 'the MAXIMUM ACCEPTABLE gradient' needing a 'threshold of acceptability': acceptable as a value tier, against ruling 3."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Frames the ramp design question as a 'maximum acceptable gradient' needing a threshold of acceptability; acceptability is the value judgment ruling 3 sets aside"
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 3944,
+"text": "the guidebook uses to say *this is best practice today*. Historical distance is not a defect in the",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "'the anchoring band (T1/Co-1/T2/Co-2) is the band the guidebook uses to say this is best practice today': implies lower tiers cannot be best practice."
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 4689,
+"text": "3. **OR-4.** The prompt's recommended option: within T1, Co-1, T2 and Co-2 the most accommodating value wins, whichever of them stated it. The 2026-07-21 rule a",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "OR-4: most accommodating value wins 'within T1, Co-1, T2 and Co-2'; restricting the selection to anchoring tiers may exclude more accommodating lower-tier values."
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 4691,
+"text": "5. **OR-7.** The prompt's recommended option: a determination resting only on a regulation (T6, `code_floor_only = 1`) appears in the best-practice view, flagge",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "EVIDENCE-GRADED",
+"reason": "OR-7: a determination resting only on a regulation (T6, code_floor_only=1) appears in the best-practice view flagged ○: consistent when the floor is the only value found, but puts the floor under the "
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 4706,
+"text": "ACTION: (1) Build T-6b steps 4 and 5 with a bucket member as a jurisdiction-and-language pair that points at `lang_jur_map`. (2) Let an ALL figure reach only an",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "ACTION (3) lets the most accommodating value win (consistent); (5) shows a regulation-only determination in the best-practice view flagged ○, putting a code floor under the best-practice name."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "ACTION (3) 'most accommodating anchoring value win': selection limited to anchoring tiers; (5) code-only shown flagged is consistent."
+},
+{
+"src": "sweep2-second",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+},
+{
+"file": "references/project-standards.md",
+"line": 4991,
+"text": "specifications: must be able to review all evidence and syntheses of evidence to determine what best practice is, which explicitly means the most accommodating/",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": ""
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C6"
+],
+"sense": null,
+"reason": "Owner 2026-11-06 words: 'code is a floor unless backed up directly by high value evidence'; read alone bars code-only best practice (next line and ruling 4 say otherwise)."
+}
+]
+},
+{
+"file": "references/systematic-reviews/dd1-ndv-qualitative-dd7-umbrella.md",
+"line": 49,
+"text": "| A-16 ≥8m² minimum | UNCONFIRMED — no primary study validates this dimension | No change; maintain as best-practice above NCC 3m² floor |",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "none",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": ""
+},
+{
+"src": "sweep1-second",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "A-16 ≥8m² called both 'minimum' and best-practice above NCC 3m² floor; 'maintain' is a verdict on an old item code, not a data point"
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C4"
+],
+"sense": null,
+"reason": "Spec table: unconfirmed A-16 >=8m2 ('no primary study validates') kept 'as best-practice above NCC 3m2 floor' - a maintained spec, not a value research identified; reads as verdict."
+}
+]
+},
+{
+"file": "references/website/data/populations.json",
+"line": 29,
+"text": "\"value\": \"\\u22651800mm (power); \\u22651700mm (best practice); \\u22651500mm (code min)\",",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "turning_space '≥1800mm (power); ≥1700mm (best practice); ≥1500mm (code min)': best practice is a middle rung below the 1800 identified in the same value; lens for 1700 left implicit."
+},
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "Card lists >=1800 (power), >=1700 'best practice', >=1500 code min: best practice sits below a more accommodating figure, reading as a separate tier rather than the most accommodating."
+},
+{
+"src": "sweep2-second",
+"flag": "TENSION",
+"tests": [
+"C7"
+],
+"sense": null,
+"reason": "Website data: '>=1800mm (power); >=1700mm (best practice); >=1500mm (code min)'; best practice given without lens/context and below a more accommodating figure"
+}
+]
+},
+{
+"file": "references/website/data/populations.json",
+"line": 34,
+"text": "\"value\": \"\\u22641:20 ideal; \\u22641:16 intermediate; \\u22641:12 code min\",",
+"votes": [
+{
+"src": "sweep2-first",
+"flag": "TENSION",
+"tests": [
+"C3"
+],
+"sense": null,
+"reason": "'1:20 ideal; 1:16 intermediate; 1:12 code min' - an 'intermediate' value tier between ideal and floor, uncited; invites a graded-tier reading."
+}
+]
+},
+{
+"file": "references/website/data/populations.json",
+"line": 39,
+"text": "\"value\": \"900mm best practice; 850mm minimum\",",
+"votes": [
+{
+"src": "sweep1-first",
+"flag": "TENSION",
+"tests": [],
+"sense": "ACCOMMODATING",
+"reason": "door_clear_opening '900mm best practice; 850mm minimum': floor kept apart, but one best-practice figure with no lens or context (value traces to CSA/BS/DIN consensus in the mobility BPC)."
+},
+{
+"src": "sweep2-first",
+"flag": "none",
+"tests": [],
+"sense": null,
+"reason": ""
+}
+]
+}
+]
