@@ -7015,3 +7015,17 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session rendering, deriving or auditing a marker, or admitting a grey, thin or unretrievable source.
 ACTION: admit such a source; do not exclude it; mark it with the warning once the rule is written; keep the circle by tier.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — the warning glyph is ⚠️
+
+**Owner's words, quoted (typed), answering the glyph left open in the entry above:**
+
+> "⚠️"
+
+**Readings.** [ASSUMPTION: ⚠️ is the glyph of the triangle warning for grey, thin and unverified sources — basis: it follows the entry that asks for a "triangle warning" and names no glyph]. Where it is shown, what causes it for thin, and any edit to the render remain held, as in the entry above.
+
+CONDITION: any session rendering or describing the warning for a grey, thin or unverified source.
+ACTION: name the warning ⚠️; do not add another glyph for it.
+DATE: 2026-11-14 — owner statement (typed glyph, quoted above).
