@@ -6934,3 +6934,32 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session writing or checking the meaning of ○, or admitting a grey, thin or unretrievable source.
 ACTION: keep the present gloss until the owner rules; say which reading a passage assumes.
 DATE: 2026-11-14 — owner statement (typed words, quoted above), tentative.
+
+---
+
+## Owner proposal 2026-11-14 (last) — the three circles by tier: empty for code, half for tiers 3 and 4, full for tiers 1 and 2
+
+**Owner's words, quoted (typed):**
+
+> "i think empty for code, half for tier 3/4 as 4 is above jurisdiction code, full for tier 1/2?"
+
+**Readings.** [ASSUMPTION: a proposal ("i think", closed with a question mark), not a ruling — basis: the wording]. [ASSUMPTION: "code" is T6, the statutory code; "tier 4 is above jurisdiction code" refers to T4 international standards sitting above the national and sub-national codes of T6 — basis: `governance/tier-system.md` §1]. The proposal against the present `band()` in `schemas/tier_derivation.py` (derive: `sed -n 100,115p schemas/tier_derivation.py`):
+
+| Tier | Present band | Proposal | Change |
+|---|---|---|---|
+| T1, T2 | ● | ● | none |
+| T3 clinical | ● | ◐ | lowered |
+| T3 grey | ○ | ◐ | raised |
+| T4 | ◐ | ◐ | none |
+| T6 (code) | ○ | ○ | none |
+| T5, Co-1, Co-2 | ◐, ●, ● | not named | open |
+
+[ASSUMPTION: Co-1 stays ● (co-primary with T1 under CRPD Art. 4.3, a ruled position), and Co-2 and T5 are not read into the proposal — basis: the proposal names only T1–T4 and code; the owner's earlier statement on the gloss of ○ ("grey, thin or unverified maybe shouldn't be included") agrees with moving T3 grey off ○, and it agrees with ○ meaning "not academically or clinically derived"].
+
+**What this does.** Records the proposal and the table. It changes no code, schema or governance file; `band()`, `tier-system.md` §5 and the evidence-tier definitions are not edited, since evidence-tier definitions are on the decision-protocol's reserved list and the proposal is tentative.
+
+**What it does not decide.** The bands of T5, Co-1 and Co-2; where an unretrievable (`UNVERIFIED`) source sits; whether lowering T3 clinical to ◐ is intended, since `evidence-methodology.md` §2.2's threshold treats T3 clinical as able to carry a `provisional` state and not a `stated` one, which the proposal would agree with.
+
+CONDITION: any session deriving, rendering or auditing an evidence marker.
+ACTION: keep `band()` as it is until the owner rules; say which table a passage assumes.
+DATE: 2026-11-14 — owner proposal (typed words, quoted above).
