@@ -1,0 +1,145 @@
+# T-126  A code value's lens is assigned by contextual judgment when its row is recorded, with its warrant (the writer)
+
+_One task, one pull request. Read `CLAUDE.md` first; beyond it this file is self-contained. Index, order and the owner decision register: `workplan/2026-11-12-bidirectional-pipeline/REMEDIATION-WORKPLAN.md`. Source: the owner's instruction of 2026-11-14 (sixteenth set) and the four owner statements that follow it in the ledger (`grep -n -F "Owner instruction 2026-11-14 (sixteenth set)" references/project-standards.md`; `grep -n -F "(sixteenth set, later" references/project-standards.md`); it resolves `OPEN-ITEMS-PLAN.md` OI-72 with T-127. Every number in this file was read on 2026-11-14 and is given with the command that produces it: re-run the command; do not trust the number._
+
+**Pilot status.** Not piloted. Authored 2026-11-14 by the integrator of the sixteenth set. Expect to find a defect in this file, and report it rather than work around it.
+
+## 1. Identity
+
+| | |
+|---|---|
+| Task | T-126 |
+| Title | A code value's lens is assigned by contextual judgment when its row is recorded, with its warrant (the writer) |
+| Wave | 1 (now) |
+| Layer (CLAUDE.md §3) | 1-2 |
+| Kind | **TOOLING** (a schema migration, a writer change and skill text; CLAUDE.md rule 10: the stored rows are T-127's, in their own pull request) |
+| Executor | NOT FOR SONNET: Opus-class. It writes the recording session's guidance from the owner's words (the worked defaults below) and chooses the warrant's shape |
+| Traces to | OD-65 (`grep -E '^OD-65:' references/project-standards.md | tail -1`); the sixteenth set (`grep -n -F "Owner instruction 2026-11-14 (sixteenth set)" references/project-standards.md`); "at the moment of recording the row" (`grep -n -F 'at the moment of recording the row is when you will have best idea of context' references/project-standards.md`); mounting height (`grep -n -F 'typically anything to do concerning mounting height will concern wheelchair users' references/project-standards.md`); clearance (`grep -n -F 'same with clearance height' references/project-standards.md`; `grep -n -F '"or clearance"' references/project-standards.md`); OI-72; OD-31 and OD-47 (register) |
+
+## 2. Preconditions
+
+- **The integration base.** `origin/main` once the workplan's pull request is merged, otherwise the remote branch carrying the newest commit to this folder (the set-up block's first line finds it). Every command uses `$BASE`.
+- **Tasks that must be merged to the integration base first:** none (T-018, whose table this task extends, and T-019, which gathers through its view, are merged: `git log "$BASE" --format=%s | grep -c -E 'task/t-018-link-table|^T-018:|execute workplan T-018'` and the same with `t-019-lens-gather`/`T-019` print at least 1).
+- **Owner decisions:** none as a gate. OD-65 is answered ("all code values will have a lens even if it's not explicitly stated. use contextual judgment"), and the sixteenth set places the assignment for code values in the evidence stage at the moment the row is recorded. **OD-47 stays open** (what lens a clause naming no person, function or need carries); it is not this task's gate, because the task builds a default derived from OD-31 (section 4 item 5) that a later answer replaces link by link.
+- **Delegated resolutions this task rests on:** none.
+- **Tests that must be red before you start:** `T126-01`, `T126-02`, `T126-03` (section 6): today `context` is outside the `basis` CHECK, so the parser's `choices=` refuses it.
+- **Set-up.**
+
+```
+cd /home/user/guidebook
+bash .claude/hooks/ensure-deps.sh && python3 -c "import pydantic, jsonschema, yaml"
+git fetch origin
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1); echo "BASE=$BASE"
+git switch -c task/t-126-code-value-lens-at-recording "$BASE"         # real execution only
+sha256sum data/guidebook.db                                           # record it
+export SCRATCH="${TMPDIR:-/tmp}/guidebook-t-126" && mkdir -p "$SCRATCH" && cp data/guidebook.db "$SCRATCH/t.db"
+```
+- Shell variables do not survive between tool calls: begin every later block with the `W=…; BASE=…` and `export SCRATCH=…` lines. **Real execution:** `/session-open` first. **Pilot:** no `/session-open`, stay on the given branch, stop after section 7.
+
+## 3. The problem, in the guidebook's terms
+
+The owner ruled that every code value has a lens even where the code does not state one, assigned by contextual judgment (OD-65), by the session that records the row, when it has the clause and its context in front of it ("at the moment of recording the row is when you will have best idea of context"). Codes rarely name the people a clause serves: a mounting height or a knee clearance is written for everyone and serves wheelchair users. Today the writer has no way to record that judgment honestly. A lens link's warrant (`extraction_lens_links.basis`) admits only that the figure's own words name the group, that its heading does, or that a study's participants are the group (or `carried`, which only migration 131 writes), and `_require_lens_warrant` refuses any warrant whose words are not found in the place the basis names. So a session recording a code value either files it under words that do not name the group (a false warrant), or under `ALL`, which OD-31 removes from the identity lens; and every stored code value still carries only the warrant-less `carried` links migration 131 moved. The determination then compares a code value against research for a group as if the code had addressed that group, or cannot compare it at all.
+
+**Evidence commands** (read-only):
+
+```
+python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select sql from sqlite_master where name='extraction_lens_links'\").fetchone()[0])" | grep -n -A2 'basis  '
+grep -n -A12 'def _require_lens_warrant' scripts/db.py | head -16
+grep -n -F 'Moving it earlier needs a ruling' skills/run-pipeline_SKILL.md
+python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print(c.execute(\"select e.tier, k.basis, count(distinct k.extraction_id) from v_live_lens_links k join source_value_extractions s using(extraction_id) join evidence_sources e using(ref_id) group by 1,2\").fetchall())"
+```
+
+**Output on 2026-11-14:** the CHECK lists `named_in_text`, `heading`, `study_participants`, `carried`; the function's three branches; the skill's note that moving the crossing earlier "needs a ruling and a `stage-map.yaml` change"; every live link of every tier is `carried`. If a context warrant already exists, the ground has moved: stop (section 9).
+
+## 4. The change
+
+Order of preference, from CLAUDE.md §8: do nothing and say why; change a rule or convention; reuse what exists; delete the cause; only then add the smallest code that closes the defect. **Doing nothing fails:** the existing bases would record a false warrant. **Reusing `named_in_text` fails** for the same reason: its meaning is that the source's words name the group, and a later reader (render, which may show an assigned lens as an assignment; the adjudicating judgment stage) must tell a judged lens from a stated one by its warrant, not by reading prose (rule 8: the answer and its warrant in named columns).
+
+1. **The stage question, settled by the ledger and recorded in the pull request.** The owner's ruling of 2026-08-27 made the crossing judgment's output (harvest at evidence, adjudicate at judgment; CLAUDE.md §6). The sixteenth set places the lens assignment **for code values** in the evidence stage and its later statement fixes the moment: when the row is recorded. That supersedes the 2026-08-27 ruling for code values only (CLAUDE.md rule 0); for research figures the crossing stays judgment's. **Where it is written:** in the same `add-extraction` call that records the figure (its lens flags already write `extraction_lens_links` rows in one transaction with the figure), and, for a figure already stored, by `add-lens-link`. **No second home (rule 5):** `extraction_lens_links` stays the one table that holds a figure's lens; the stage map keeps it under `judgment` (`grep -n 'extraction_lens_links' governance/stage-map.yaml`), since a table has one stage and its rows are the same kind of fact whoever writes them. The judgment stage's later adjudication meets the recording session's link on the same table: it confirms it (nothing to write), or replaces it (`add-lens-link` with its own warrant, then `retire-lens-link` on the context link with its reason). It never copies a lens elsewhere. The skill's note (step 4) is rewritten to say this; `governance/stage-map.yaml` gains one comment line under the existing 2026-11-13 comment on `extraction_lens_links` citing the sixteenth set, and no mapping changes.
+
+2. **Schema migration (this task has one).** Never type a migration number. Derive it at execution time: `ls scripts/migrations | grep -E '^[0-9]{3}_' | sort | tail -1` gives the highest; yours is that plus one, zero-padded, in `scripts/migrations/NNN_<slug>.sql`, and it ends by setting `PRAGMA user_version` to the same number. Run `python3 scripts/audit/joined_cells_census.py` before and after and keep its output for the pull request. SQLite cannot alter a CHECK in place, so the migration rebuilds `extraction_lens_links` (create new, copy every row, drop, rename), recreating its indexes (`select name, sql from sqlite_master where tbl_name='extraction_lens_links'`) and every view that reads it (`select name from sqlite_master where type='view' and sql like '%extraction_lens_links%'`: a view is a caller, rule 4; on 2026-11-14 that printed `v_live_lens_links`). The new table differs only in:
+   - `basis` admits one more value, **`context`**: the clause's context (what it is for, where it applies: a mounting height, a clearance, the building type or use, the user group or access need the clause or its section serves, its applicability) warrants the lens, by the recording session's judgment.
+   - one new column, **`basis_reason TEXT`**: the session's judgment in its own words (for the worked default, `typically concerns wheelchair users`), with `CHECK ((basis = 'context') = (basis_reason IS NOT NULL))` and `CHECK (basis_reason IS NULL OR length(trim(basis_reason)) > 0)`. `basis_text` keeps its meaning (the words the source holds, verified): for a context link, the words of the clause, its heading or its source's scope or application clause that state the context (for the worked default, `mounting height`). So the owner's warrant "mounting height; typically concerns wheelchair users" is two cells, the source's words and the judgment, each in the cell that names it (CLAUDE.md §4, one value per cell), and neither is a prefix of the other.
+   - `v_live_lens_links` is recreated with `basis_reason` added after `basis_text` (readers: T-019's gather selects named columns, `grep -n 'v_live_lens_links' scripts/assess/assess_cell.py`; render, which may show a context link as an assignment).
+   **Rebuild.** Read migration 131's `-- AFTER_DATA:` marker and `grep -n 'AFTER_DATA' scripts/migrate_db.py` before writing: rows reach this table from data migrations, so a rebuild that applies this schema migration before them must still reproduce the database; carry the marker if the rebuild needs it (precedent: 131). `python3 scripts/migrate_db.py --rebuild "$SCRATCH/rebuilt.db"` must exit 0 and reproduce every row (`python3 scripts/audit/migration_reproducibility.py --deep`).
+
+3. **The writer, in `scripts/db.py`** (locate by symbol, never by line):
+   - `_require_lens_warrant` gains a `context` branch: the words of `basis_text` must be found, on word boundaries, in the figure's `claim_text`, its `source_section`, or a file saved for its source (the scope, application or purpose clause, through the retrieval log's scoped `locate_quote`, as `named_in_text` already searches), and `basis_reason` must be non-blank and hold a letter. A `basis_reason` given with any other basis is refused (it would be a cell with no meaning). **Scope by tier, read from the source as R3 does** (`evidence_sources.tier >= 4`, the regulatory stratum of CLAUDE.md §6): `context` is refused for a source below tier 4, naming the sixteenth set, because the owner moved the assignment for code values only; a research figure's lens stays the judgment stage's crossing with a stated warrant. The vocabulary is never listed in code: `_lens_basis_choices()` already reads the CHECK, so `context` appears in both parsers by the migration alone.
+   - `_add_lens_flags` gains `--lens-basis-reason` (shared by `add-extraction` and `derive-extraction`); `add-lens-link` gains `--basis-reason`; `_write_lens_link` writes the column. **No new refusal for a missing lens:** `insert_extraction` already refuses a figure stated in no lens (D-0182; `grep -n -F 'an extraction must be stated in at least one lens' scripts/db.py`), for code rows as for every row; this task keeps that refusal and its test green. `carried` stays unwritable by any verb.
+   - The refusal text for a warrant not found names `context` and where it looks.
+
+4. **The recording session's guidance, in `skills/run-pipeline_SKILL.md`** (the judgment section where `add-extraction` and its lens flags are taught: `grep -n -F 'add-extraction` per stated' skills/run-pipeline_SKILL.md`; and the note above it, `grep -n -F 'Moving it earlier needs a ruling' skills/run-pipeline_SKILL.md`, which the owner's ruling now answers for code values). Replace the note with two sentences (the stage question, item 1, pointing to the ledger entries), and add one paragraph, **guidance for the session's judgment, not a lookup any code consults** (the owner's "typically"; rule 8):
+   - *When you record a value from a code (a tier 4 to 6 source), give it its lens in the same call, from the clause and its context, with its warrant.* If the clause names the users, the function or the need, use `named_in_text`; if its heading names the group, `heading` (OD-31); otherwise `context`, with `--lens-basis-text` the source's words that state the context and `--lens-basis-reason` your judgment. Read the context from what the session already holds: the clause and its heading (`--claim-text`, `--source-section`), the source's scope, application or purpose clause (the saved file), the building type or use and interior or exterior (the figure's `setting`, or T-091's typed circumstance once merged), and the jurisdiction (`evidence_sources.jurisdiction`; it locates the code, it gives no lens).
+   - **Worked defaults (the owner's, 2026-11-14).** A value that concerns a **mounting height** (a control, a counter, a fixture, a mirror) or **any clearance** (height, width, depth, clear floor space, turning space; knee and toe clearance) takes, by default, **the wheelchair-user lens**, with `--lens-basis context`, `--lens-basis-text` the clause's own words for the quantity (for example `mounting height`, `knee clearance`), and `--lens-basis-reason` `typically concerns wheelchair users` (the owner's warrant, "mounting height; typically concerns wheelchair users", in its two cells). **Overridden where the clause names another group:** an overhead or protruding-object clearance (headroom, a protruding object's projection) whose clause concerns people who are blind or have low vision takes that group, by `named_in_text` or `heading`. The codes are derived from the live registries at recording, never typed into the skill (rule 8): the identity, `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select identity_code, display_name, parent_code from base_taxonomy_identity where status='active' and lower(coalesce(display_name,'')||' '||coalesce(description,'')) like '%wheelchair%'\").fetchall())"` (the most specific live code it prints: a child of the mobility family once T-102 has minted one, else the family; on 2026-11-14 it printed the family alone); the ICF code, `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select icf_code, title from base_icf where lower(coalesce(title,'')) like '%hand and arm%' or lower(coalesce(title,'')) like '%reach%' or lower(coalesce(title,'')) like '%moving around%'\").fetchall())"` (reach for a mounting height; moving around, or moving around using equipment, for a clearance); the access need, `python3 -I -c "import sqlite3;print(sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True).execute(\"select need_code, substr(design_obligation,1,90) from access_needs where lower(coalesce(design_obligation,'')) like '%reach%' or lower(coalesce(design_obligation,'')) like '%seated%' or lower(coalesce(design_obligation,'')) like '%turning%'\").fetchall())"`. Each lens is its own link (one code per row), all with the same warrant.
+   - **A clause whose context names no group and no worked default applies** (the case OD-47 asks about, still open): the default, derived from OD-31 ("a general disability heading, or none, gives no identity"; ALL leaves the identity lens), is **no identity link**, and the ICF and access-need links of the function the clause serves, by `context` with the reason stated. Never `ALL`. When the owner answers OD-47 otherwise, the links are replaced through `add-lens-link` and `retire-lens-link`, not edited.
+   - One sentence: the judgment stage may later confirm or replace a context link (item 1); it never copies it.
+
+**What reads what this task adds:** every session recording a code value (the skill and both parsers); the engine's gather through `v_live_lens_links` (T-019) and so T-059's selection, whose premise "every code value carries a lens" (OD-65) this makes true for new rows; T-127, which gives the stored code rows their judged links with these verbs; render, which can tell an assigned lens by its basis. **What wrong thing reaches the guidebook without it:** a code value is compared against research for a group under a warrant that says the code named that group, or under `ALL`, or not compared at all. **What it makes deletable:** nothing yet; the `carried` value leaves the CHECK only when no live row holds it (after T-127 and T-115), in a later migration, which T-127 reports.
+
+**Code size.** Measure and report: `git diff --shortstat "$(git merge-base HEAD "$BASE")" -- scripts schemas .github skills ':!scripts/migrations'`. The writer change is one branch, one flag on two parsers and one column in one INSERT.
+
+## 5. Caller sweep
+
+Rule 4: the table, its view and the vocabulary are renamed nowhere, but a rebuilt table and a new CHECK value have callers. Sweep, and repair each caller that lists the bases or reads the view's columns by position:
+
+```
+git grep -n -E "named_in_text|study_participants|'carried'|basis_text|v_live_lens_links|extraction_lens_links" -- scripts skills governance .claude ':!scripts/migrations'
+python3 -I -c "import sqlite3;c=sqlite3.connect('file:data/guidebook.db?mode=ro',uri=True);print([n for (n,) in c.execute(\"select name from sqlite_master where sql like '%extraction_lens_links%' or sql like '%v_live_lens_links%'\")])"
+```
+A test fixture that INSERTs a link with an explicit column list (`git grep -n -F "'carried'" -- scripts/tests scripts/audit`) keeps working; one that INSERTs by position is repaired. Prose callers that state the bases (rule 7a): `git grep -n -E 'named_in_text.{0,40}heading.{0,40}study_participants' -- governance references architecture skills workplan/2026-11-12-bidirectional-pipeline/tasks`.
+
+## 6. Verification
+
+**Step 1, the before-run.**
+```
+CHECKS="schema_reference_audit migration_reproducibility claude_skills_loadable"
+for c in $CHECKS; do cmd=$(python3 -c "import yaml,sys,shlex;print(shlex.join(next(x['cmd'] for x in yaml.safe_load(open('governance/check-registry.yaml'))['checks'] if x['id']==sys.argv[1])))" $c); $cmd > "$SCRATCH/before-$c.txt" 2>&1; echo "$c rc=$?"; done
+python3 scripts/tests/test_db_amend_writers.py > "$SCRATCH/before-tests.txt" 2>&1; echo "rc=$?"
+```
+**Step 2: red before, green after.** Add the cases to `scripts/tests/test_db_amend_writers.py` beside T-018's `T018-*` cases, on fixtures in a scratch copy (a fixture source of tier 4 or above and one below, each with a saved file holding the clause; the fixture ids never collide with the retrieval log, T-073):
+- `T126-01` **mounting height, the owner's worked default.** A code row whose clause states a mounting height and names no group (`--claim-text` "Controls shall be mounted at a height of not more than 1200 mm", `--source-section` naming no group) is recorded with the wheelchair-user lens (the identity, ICF and need codes the commands of section 4 item 4 print, one link each), `--lens-basis context --lens-basis-text "mounted at a height" --lens-basis-reason "typically concerns wheelchair users"`: accepted; each link reads `basis='context'`, the words and the reason in their two cells; red before (the parser refuses `context`).
+- `T126-02` **knee clearance, the owner's second default.** A code row stating a knee clearance under a counter, naming no group, with `--lens-basis-text "knee clearance"` and the same reason: accepted with the wheelchair-user lens; red before.
+- `T126-03` **the override.** A code row on a protruding-object or headroom clearance whose clause names people who are blind or have low vision: recorded with that group by `named_in_text`; the test asserts the session's guidance (the skill paragraph) names the override, and that the writer accepts the row with no wheelchair link (no code chooses the lens; the case documents the judgment).
+- `T126-04` `context` on a tier 1 to 3 source: refused, the refusal naming the sixteenth set; nothing written.
+- `T126-05` `context` with a blank or missing reason: refused; a reason given with `named_in_text`, `heading` or `study_participants`: refused; nothing written.
+- `T126-06` `context` whose words are in neither the clause, the heading nor a file saved for the source: refused (the words of a file saved for another source do not count).
+- `T126-07` a code row with no lens flag at all: refused (D-0182), green before and after.
+- `T126-08` `add-lens-link --basis context --basis-reason …` on a stored code figure holding only a `carried` link: accepted; `retire-lens-link` then retires the `carried` one (the T-127 sequence).
+- `T126-09` the migrated scratch copy holds every link the base held, unchanged, with `basis_reason` NULL; `v_live_lens_links` returns the same rows plus the column; the rebuild reproduces the database.
+- `T126-10` `grep -c -F 'typically concerns wheelchair users' skills/run-pipeline_SKILL.md` prints at least 1, and `grep -c -F 'Moving it earlier needs a ruling' skills/run-pipeline_SKILL.md` prints 0.
+
+**Step 3: after-run**, as step 1 with `after-`. A check green before and red after is a stop.
+
+**Step 4: the gate, once.**
+```
+W=$(git log --remotes --format=%H -1 -- workplan/2026-11-12-bidirectional-pipeline); BASE=$(git branch -r --contains "$W" --format='%(refname:short)' | grep -x origin/main || git branch -r --contains "$W" --format='%(refname:short)' | head -1)
+scripts/preflight.sh --base "$BASE" --explain > "$SCRATCH/gate.txt" 2>&1; echo "rc=$?"; grep -E '^(RESULT|PREFLIGHT|SELFTEST)|FAIL|NOTHING-IN-SCOPE' "$SCRATCH/gate.txt"
+```
+`data/guidebook.db` moves only by the schema migration applied with `scripts/migrate_db.py`; no data migration is in this pull request.
+
+## 7. Commit
+
+```
+git add -A . ':!transcripts' ':!*commands.jsonl'
+git commit -m "governance: a code value's lens by context when its row is recorded (basis context, basis_reason) [$(date -u '+%Y-%m-%d %H:%M')]" -m "<body: the migration and its rebuild; the writer branch and flags; the skill paragraph; tests before and after; the code-size line>" -m "<the attribution trailers your own session instructions give>"
+```
+
+## 8. What you must NOT do
+
+- Do not write research rows: the stored code rows are T-127's, in their own pull request after this one merges (rule 10). Do not retire `carried` links here, and do not drop `carried` from the CHECK while live rows hold it.
+- Do not encode the worked defaults as a table, a mapping or a lookup in code: they are guidance for the session's judgment (the owner's "typically"). Do not type a lens code into the skill: write the commands that print them.
+- Do not accept `context` for a source below tier 4. Do not create a second table or column that holds a figure's lens (rule 5).
+- Do not decide OD-47: build the default derived from OD-31 and say it is a default.
+- Do not write `data/guidebook.db` directly. Do not run `run_checks.py --all`, `bootstrap.sh` or `pip install -r requirements.txt`. Do not push to `main`, rebase or force-push; do not subscribe to pull-request activity.
+
+## 9. Stop conditions
+
+Stop and report when: the evidence output differs (a context warrant exists already, or links other than `carried` exist with a basis this file does not know); the rebuild does not reproduce the database; a check green before is red after; a caller reads the view by position and cannot be repaired without a change section 4 does not name; the registries print no code for the wheelchair-user identity, a reach or moving-around ICF code, or a reach or seated-use need (a registry gap: file it, do not mint).
+
+## 10. Rollback
+
+Before merge: close the pull request, delete the branch. After merge: a schema migration is append-only; a defect is corrected by a compensating migration, never by editing the committed file.
+
+## 11. Adversarial pass and pull request
+
+Real execution only. `/adversarial` once; `/batch-done`; push; open the pull request last, once, against the integration base; call `unsubscribe_pr_activity` for it immediately; push nothing afterwards except a deliberate change, never `[skip ci]` on the final push. If another task's pull request merged while you worked, take it with `git merge "$BASE"` after `git fetch origin` (never rebase) and derive the migration number again by the rule in section 4 item 2.

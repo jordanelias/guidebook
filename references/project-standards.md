@@ -7433,3 +7433,86 @@ OD-66 STATUS: REFERRED BACK TO THE OWNER
 CONDITION: any session preparing or running T-037, T-059, T-068, T-117 or T-124, or asking whether OD-63 to OD-66 are answered.
 ACTION: (1) OD-63, OD-64 and OD-65 are answered; read the gate lines. (2) T-068 uses 2% in one constant, applied around the converging value, no chaining; the 5% is withdrawn. (3) T-117 shows the triangle for every grey basis and no circle. (4) T-059 treats every code value as carrying a lens. (5) T-124 and T-037 follow OD-63. (6) OD-66 (c) and (d) remain with the owner.
 DATE: 2026-11-14 — owner answers (typed words, quoted above).
+
+---
+
+## Owner instruction 2026-11-14 (sixteenth set) — the convergence and render details are not the owner's to decide; lenses for code values are assigned in the evidence stage
+
+**Owner's words, quoted (typed):**
+
+> "just ignore the 2% and convergence because it doesn't matter enough. you can just choose colour placeholders. these aren't real decisions that you're asking of me aside from task assigning lenses to code values by context"
+>
+> "that should be done in evidence stage"
+
+**Readings.** [ASSUMPTION: the parts of OD-66 still open, (c) grouping by "the same" or by "consistent" and (d) Q-T068b, and the details of the render's colour code, are not questions the owner needs to answer; the assistant is to take the registered recommendations as defaults and choose placeholder colours, and is not to put them to the owner again — basis: "ignore … because it doesn't matter enough", "you can just choose colour placeholders", "these aren't real decisions"]. [ASSUMPTION: "ignore the 2%" does not withdraw the 2%: it is kept as the working tolerance set in the fifteenth set, and the owner means only that no further question on it is wanted — basis: the owner's "2%" answer one message earlier, and "ignore" used for not asking; if the owner meant the tolerance itself is dropped, convergence would have no tolerance and the cluster step would group exact matches only]. [ASSUMPTION: the one real decision is that a task assigns lenses to code values by context, which the owner places in the **evidence stage**, not the judgment stage — basis: the statement; this supersedes, for code values, the owner's ruling of 2026-08-27 that the crossing is judgment's output (harvest at evidence, adjudicate at judgment), and the earlier reading in the fifteenth set that the lens is assigned "by the judgment stage's lens links": a live owner statement supersedes a ratified record on contact (CLAUDE.md rule 0)].
+
+**What this does.** Closes OD-66 by default (parts (c) and (d) take the registered recommendations); permits the render's colour code to use placeholder colours with a non-colour carrier for each figure, the final palette being a render design choice; asks for a task, in the evidence stage, that gives every code value a lens by contextual judgment (the context a code states: the building type, the user group or access need its clause serves, the jurisdiction and applicability), with its warrant recorded.
+
+**What it does not decide.** The task's design (where the warrant is recorded: the lens link's `basis` and `basis_text` do not accept a context warrant today, `scripts/db.py` `_require_lens_warrant`; whether the evidence stage writes the link or a pointer the judgment stage reads); OD-47 (what lens a clause naming no one carries) stays open; how the new task and T-018's link table meet.
+
+OD-66: take the registered recommendations for parts (c) and (d); keep the 2% and no chaining; choose placeholder colours
+OD-66 STATUS: ANSWERED BY THE OWNER
+
+CONDITION: any session preparing or running T-068, T-037, T-059 or the task that assigns lenses to code values, or asking whether OD-66 is answered.
+ACTION: (1) OD-66 is closed: (c) the same, with consistency reported beside it; (d) the registered recommendation; no further question to the owner on the tolerance or the colour. (2) Add a task in the evidence stage that assigns a lens to each code value by context, before T-059 and T-110. (3) Colours in T-037 are placeholders with a non-colour carrier.
+DATE: 2026-11-14 — owner instruction (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (sixteenth set, later) — the lens of a code value is assigned when its row is recorded
+
+**Owner's words, quoted (typed), on the task of assigning lenses to code values:**
+
+> "at the moment of recording the row is when you will have best idea of context"
+
+**Readings.** [ASSUMPTION: the lens of a code value is assigned by the session that records the extraction row, at the moment of recording (the `add-extraction` step), because that session has the clause and its context in front of it; it is not assigned afterwards by a separate pass over stored rows — basis: the statement, with "that should be done in evidence stage" one message earlier]. [ASSUMPTION: this makes the lens link a part of recording a code value, with the warrant (the context the clause states) recorded in the same step; a code row recorded without a lens is therefore refused or flagged by the writer, as other missing links are — basis: the writer's existing refusals; the design is for the task].
+
+**What it does not decide.** The writer's design; how already-stored code rows are given lenses (a one-time data migration, separate from the writer under rule 10).
+
+CONDITION: any session recording a code extraction, or building the task that assigns lenses to code values.
+ACTION: assign the lens and record its warrant in the same step as the extraction; do not leave it for a later pass.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (sixteenth set, later still) — a worked example of the contextual lens: mounting height
+
+**Owner's words, quoted (typed):**
+
+> "typically anything to do concerning mounting height will concern wheelchair users"
+
+**Readings.** [ASSUMPTION: a rule of thumb for the contextual judgment that assigns a lens to a code value: where a code's value concerns a mounting height (of a control, a counter, a mirror, a fixture), the lens it carries is that of wheelchair users (the mobility identity with its reach and seated-use access needs); it is a default that the recording session applies unless the clause itself names another group, not a closed list and not a rule to be coded as a table — basis: "typically", and the instruction to use contextual judgment]. [ASSUMPTION: this is guidance for the recording session's judgment (rule 8: where judgment is required the script asks for it and records the answer and its warrant), so it belongs in the writer's prompt or the skill's guidance for the evidence-stage task, with the warrant "mounting height; typically concerns wheelchair users", and not in a lookup the code consults — basis: rule 8].
+
+**What it does not decide.** Which lens columns carry it (the identity, the ICF reach code, the access need): the task derives them from the live registries; other typical mappings (the owner gave one example).
+
+CONDITION: any session recording a code extraction whose clause concerns a mounting height.
+ACTION: assign the wheelchair-user lens by default, with the warrant recorded; override only where the clause names another group.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (sixteenth set, later still) — clearance height takes the same default lens
+
+**Owner's words, quoted (typed):**
+
+> "same with clearance height"
+
+**Readings.** [ASSUMPTION: the default lens for a code value that concerns a clearance height is also wheelchair users, with the warrant recorded, overridable where the clause names another group — basis: the statement, following the entry on mounting height]. [ASSUMPTION: "clearance height" is read as a clearance a seated user needs (knee and toe clearance under a counter, sink or table, the height of a usable opening); an overhead clearance whose clause concerns a protruding object or headroom is not covered by this default if its clause names people who are blind or have low vision, since the override applies where the clause names another group — basis: "typically", and the override in the previous entry; not stated by the owner].
+
+CONDITION: any session recording a code extraction whose clause concerns a clearance height.
+ACTION: as for mounting height: default to the wheelchair-user lens with its warrant; override where the clause names another group.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (sixteenth set, later still) — clearance of any dimension takes the default lens
+
+**Owner's words, quoted (typed):**
+
+> "or clearance"
+
+**Readings.** [ASSUMPTION: the default lens of the two entries above (wheelchair users, with the warrant recorded, overridden where the clause names another group) applies to a code value concerning any clearance, whatever its dimension (height, width, depth, the clear floor or turning space a user needs beside or in front of an element), and not only a clearance height — basis: the statement, "or clearance", following "same with clearance height"]. [ASSUMPTION: the override stays: an overhead or protruding-object clearance whose clause concerns people who are blind or have low vision, or a clearance a clause ties to another group, takes that group's lens — basis: "typically" in the first entry; not stated again here].
+
+CONDITION: any session recording a code extraction whose clause concerns a clearance.
+ACTION: as for mounting height: default to the wheelchair-user lens with its warrant; override where the clause names another group.
+DATE: 2026-11-14 — owner statement (typed words, quoted above).

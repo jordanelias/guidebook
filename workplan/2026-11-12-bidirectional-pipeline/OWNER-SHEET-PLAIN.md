@@ -12,6 +12,8 @@ _**Updated 2026-11-14, last.** Four independent checks of the plan found four mo
 
 _**Updated 2026-11-14, after your fifteenth set.** You answered questions 14, 15 and 16, and parts (a) and (b) of question 17; each is marked answered below with your words, and the question is kept as it was put. Your answers are in the ledger under "Owner answers 2026-11-14 (fifteenth set)". **Still open:** question 17 parts (c) and (d), question 13 (optional), and the earlier open ones. One tension is noted for you, not settled: your render answer ("on the render page itself, we just have the minimum, mode, median and maximum") and your transparency statement ("presents all values … for comparative purposes"); the plan builds the render answer and keeps every value cited._
 
+_**Updated 2026-11-14, after your sixteenth set.** You said the convergence details and the colours are not decisions for you ("just ignore the 2% and convergence because it doesn't matter enough. you can just choose colour placeholders"). So question 17 is **closed by your instruction** and no longer asked: the plan takes the recommendation for (c) and (d) and keeps the 2%; the colours on the render page are placeholders the plan chose, each with a text label and a symbol so colour is never the only way to read them. The one decision you kept, giving every code figure a group by its context when its row is recorded (mounting heights and clearances default to wheelchair users unless the clause names another group), is now two pieces of work, not a question. **Still open:** question 13 (optional), question 3 (OD-47; until you answer it, a code figure whose clause and context name no group gets no group, only the function and the need the clause serves, as your earlier answer on headings implies), and the earlier open ones._
+
 ---
 
 ## Four things to see first (answered 2026-11-14)
@@ -270,9 +272,11 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 17. Agreement: four details you left open (OD-66) — (a) and (b) answered 2026-11-14; (c) and (d) still open
+## 17. Agreement: four details you left open (OD-66) — (a) and (b) answered 2026-11-14; (c) and (d) closed by your instruction the same day; not asked again
 
-**Your answer:** "okay. well, let's drop it down to 2% and apply everywhere"; "2% is a tolerance. it applies to whatever is converging. I don't have to specify a minimum or maximum"; "if values are drifting apart, then they aren't converging …". Read as: 2%, one tolerance for every kind of measurement, measured around the value the evidence comes together on, so "larger or smaller" does not arise; and values that drift apart step by step are not one group. The 5% is withdrawn. **Still yours:** (c) and (d) below. To answer: "OD-66: (c) the same, (d) as before", or name what you want otherwise.
+**Your answer:** "okay. well, let's drop it down to 2% and apply everywhere"; "2% is a tolerance. it applies to whatever is converging. I don't have to specify a minimum or maximum"; "if values are drifting apart, then they aren't converging …". Read as: 2%, one tolerance for every kind of measurement, measured around the value the evidence comes together on, so "larger or smaller" does not arise; and values that drift apart step by step are not one group. The 5% is withdrawn.
+
+**Closed by your instruction (sixteenth set):** "just ignore the 2% and convergence because it doesn't matter enough … these aren't real decisions". So (c) and (d) take the recommendation below: (c) the same, with "able to both hold" shown beside it; (d) as your earlier answer, with the case flagged for a look. The 2% stays. Nothing here is asked of you any more; the question is kept as it was put.
 
 **The situation.** You said values "within 5%, I think" count as the same, and that ranges count. You did not say: (a) 5% of the larger value or of the smaller; (b) whether 5% suits every kind of measurement (5% of a 1:20 slope and 5% of a 2 m width differ); (c) whether two values must be the same to group, or only able to both hold; (d) whether two groups of evidence on different minimums that can both be met (one at 1500 mm, one at 1800 mm) are called a disagreement, or left as your earlier answer says (not a disagreement, the spread printed). *(An earlier prompt told you "values within 5% count as the same" as if settled; these four details were not.)*
 
@@ -283,7 +287,7 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 **Assistant's recommendation (not a ruling):** (a) larger; (b) one, until the first measurement on real data shows a kind it groups wrongly; (c) the same, with "able to both hold" shown beside it; (d) as your earlier answer, with the case flagged for a look.
 
-**To answer:** "OD-66: (a) larger, (b) one, (c) the same, (d) as before", or name the parts you want otherwise. *This holds nothing: the plan builds the recommendation and changes it if you answer otherwise.*
+~~**To answer:** "OD-66: (a) larger, (b) one, (c) the same, (d) as before"~~ *Closed (above); nothing to answer.*
 
 ---
 
