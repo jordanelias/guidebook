@@ -7167,3 +7167,21 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session writing a value that combines a finding with an inference.
 ACTION: show the findings with their circles; mark the combined value ⚠; do not give a mixed value the circle of its best source.
 DATE: 2026-11-14 — owner answer (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — the most accommodating value stands unless research shows it leads to worse results
+
+**Owner's words, quoted (typed), answering the question raised by the adjudication of the sweeps (a code value more accommodating than every research value; and OR-4 and OR-6c against the definition of best):**
+
+> "does the research prove that the more accommodating value leads to worse results? if so, research wins. if no, code wins"
+
+**Readings.** [ASSUMPTION: the test for which value is shown as the best, where a code value and a research value differ and the code value is the more accommodating, is whether research shows the more accommodating value leads to worse results for the same lens and context: if it does, the research value is the best; if it does not, the more accommodating value is the best, and it is the code value — basis: the statement]. [ASSUMPTION: the test is general, not only for code against research: it states the one condition under which the most accommodating identified value is not the best, namely identified evidence of worse results from it — basis: the definition of best as the most accommodating identified value, with this single exception]. [ASSUMPTION: "worse results" is harm, failure or inadequacy for the people the cell concerns, the kind of finding the research contract already requires to be captured as first-class (R7), and the project already records a finding of that kind on an extraction (`harm_finding`) and as an `insufficient` relation between extractions; no new record is drawn here — basis: R7 and the existing columns, which are named from memory of this session's digest work and were not re-read for this entry]. [ASSUMPTION: "prove" is read as a recorded finding from a source that measured or reported the outcome; whether any tier suffices, or a stated tier is needed, is not stated and is held — basis: the word, and no stated threshold].
+
+**What this does.** Resolves, for the adjudication, the question of OR-4 (the best chosen only from T1, Co-1, T2 and Co-2 values) and of OR-6c (the higher tier states the value): neither the tier nor the stratum of a value decides which value is best; the exception is evidence of worse results. The tier still sets the marker.
+
+**What it does not decide.** The standard of proof; how two research values with opposing outcomes are shown (both are shown with their citations, as the transparency statement requires); any edit to OR-4, OR-6c or the engine, which follow the adjudication through this ledger and a tooling PR.
+
+CONDITION: any session choosing the best value of a cell where a code value and a research value differ.
+ACTION: take the most accommodating value as the best; replace it only with a recorded finding of worse results for the same lens and context, and show both with their citations.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
