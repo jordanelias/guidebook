@@ -6979,3 +6979,19 @@ DATE: 2026-11-14 — owner proposal (typed words, quoted above).
 CONDITION: as for the proposal above.
 ACTION: as for the proposal above.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — Co-1 and Co-2 take the full circle
+
+**Owner's words, quoted (typed), answering the question left open by the circles-by-tier entries above:**
+
+> "Co-1 stays full, Co-2 full too"
+
+**Readings.** [ASSUMPTION: the full table reads: ● for T1, T2, Co-1 and Co-2; ◐ for T3 and T4; ○ for T5 and T6 — basis: this answer with the two entries above; Co-1 and Co-2 are unchanged from the present `band()`]. [ASSUMPTION: the table remains the owner's working view and the code and governance files are not changed by it, as the proposal that opened it was put with "i think"; a later "yes" or an instruction to apply would end the hold — basis: no instruction to change `band()`].
+
+**What this does not decide.** Where an unretrievable (`UNVERIFIED`) source sits; the sources between T3 clinical and T3 grey (the proposal puts both at ◐); any edit to `band()`, `tier-system.md` §5, `CLAUDE.md` §6 or the evidence-auditor skill, which are held.
+
+CONDITION: as for the circles entries above.
+ACTION: as for the circles entries above.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
