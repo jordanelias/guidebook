@@ -6916,3 +6916,21 @@ DATE: 2026-11-14 — owner statement (typed words, quoted above).
 CONDITION: any session writing, rendering or reviewing a best-practice sentence or its marker.
 ACTION: let the marker carry the provenance; do not drop the marker, and do not use ● for a value resting only on code.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner statement 2026-11-14 (last) — "grey, thin or unverified" may not belong in the empty circle's meaning
+
+**Owner's words, quoted (typed):**
+
+> "grey thin or unverified maybe shouldn't be included"
+
+**Readings.** [ASSUMPTION: the statement is about the gloss of ○ in `CLAUDE.md` §6 and the governance files ("grey, thin or unverified (the source could not be retrieved)"), following the owner's reading of ○ as "not academically or clinically derived"; it is read as a tentative proposal ("maybe"), not a ruling — basis: the wording, and that the preceding statement defined ○ by derivation, not by retrievability]. [ASSUMPTION, the other reading, held open: the owner means such sources (grey literature, thin base, unretrievable) should not be admitted at all — basis: the sentence is ambiguous between a gloss and an admission rule; it is not taken as a ruling on admission, which would reach the research contract and the tier system, both on the decision-protocol's reserved list].
+
+**What this does.** Records the proposal and its two readings. Nothing in `CLAUDE.md`, the governance files, `skills/evidence-auditor_SKILL.md` or `scripts/audit/research_batch_dod.py` is changed by it. The gloss of ○ is stated in `CLAUDE.md` §6, `governance/mission-and-epistemics.md`, `governance/owner-browser.yaml`, `governance/tier-system.md` (which also puts T6 code-floor at ○) and the evidence-auditor skill (derive: `git grep -n -E '○.{0,40}(grey|thin|unverified)' -- CLAUDE.md governance skills scripts`).
+
+**What it does not decide.** Whether ○ means "not academically or clinically derived" (code, consensus, grey), with unverifiability marked some other way (the source's verification status already records it); or the marker keeps its present meaning; or such sources are not admitted. Held for the owner.
+
+CONDITION: any session writing or checking the meaning of ○, or admitting a grey, thin or unretrievable source.
+ACTION: keep the present gloss until the owner rules; say which reading a passage assumes.
+DATE: 2026-11-14 — owner statement (typed words, quoted above), tentative.
