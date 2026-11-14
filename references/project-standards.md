@@ -7043,3 +7043,21 @@ DATE: 2026-11-14 — owner statement (typed glyph, quoted above).
 CONDITION: any session writing or rendering the warning for a grey, thin or unverified source.
 ACTION: write U+26A0 with no U+FE0F after it; if a renderer draws it as an emoji, say so and do not switch glyph.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner correction 2026-11-14 (last) — the warning triangle replaces the circle for a value from a grey or unverified source
+
+**Owner's words, quoted (typed), correcting the reading recorded above that the warning sits beside the circle:**
+
+> "no, triangle instead if the value is coming from grey or unverified"
+
+**Readings.** [CORRECTION: the entry on the warning triangle read the warning as shown beside the circle, not instead of it. That reading is withdrawn. The ⚠ takes the circle's place where the value comes from a grey or an unverified source — basis: the statement]. [ASSUMPTION: the triangle is therefore a fourth state of the marker (●, ◐, ○, ⚠): a marker that says the value rests on a grey or unverified source, so that no circle claims a derivation the source cannot bear — basis: "instead"]. [ASSUMPTION: "thin" is not named in this statement; it is read as no longer a cause of the triangle until the owner says otherwise, and is held with the question of what counts as thin — basis: the statement names only grey and unverified]. [ASSUMPTION: "the value is coming from" a grey or unverified source means the figure's governing source (the source its extraction rests on), as the engine already reads the governing sources of a cell; where a cell rests on both grey and other sources, how the triangle and the circle combine is not stated — basis: the wording].
+
+**What this does.** Replaces the earlier arrangement (circle by tier plus a beside-warning) with: circle by tier, triangle instead of circle for a grey or unverified source. The earlier entry's other points stand: such sources are kept; the glyph is the plain Unicode U+26A0.
+
+**What it does not decide.** How a cell resting on a grey or unverified source together with others is marked (the triangle, the circle of the others, or the floor of the two); the place of "thin"; any edit to `band()`, `CLAUDE.md` §6, the governance files or the render, which are held with the circle table.
+
+CONDITION: any session deriving, rendering or auditing a marker.
+ACTION: a figure whose governing source is grey or unverified carries ⚠ and no circle; do not write both.
+DATE: 2026-11-14 — owner correction (typed words, quoted above).
