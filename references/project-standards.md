@@ -7131,3 +7131,21 @@ DATE: 2026-11-14 — owner answer (typed words, quoted above).
 CONDITION: any session writing a synthesis, a connection, a pair test or a specification that goes beyond what a source states.
 ACTION: show the inference with the evidence it rests on and mark it ⚠; do not present a project inference as a source's finding or as a professional judgment.
 DATE: 2026-11-14 — owner statement (typed words, quoted above).
+
+---
+
+## Owner answer 2026-11-14 (last) — a derivation by a clinician or an academic is not thin
+
+**Owner's words, quoted (typed), answering the question held in the entries on thin:**
+
+> "derivation by a clinician or academic counts"
+
+**Readings.** [ASSUMPTION: "counts" means counts as direct evidence, as a clinician's vetted judgment does: a derivation made and published by a clinician or an academic is not conjecture and does not make a value thin — basis: the statement set against the entries on thin, where a vetted clinical judgment "is not thin" and the project's own inference is]. [ASSUMPTION: a derivation the project itself performs stays thin, as the previous entry says, because the project is neither clinician nor academic — basis: "we aren't clinicians"]. [ASSUMPTION: the source's tier and marker still apply to the derivation; "not thin" removes only the triangle's thin cause, and a derivation in a grey or unverified source still takes ⚠ for that cause — basis: the three causes of the triangle are separate].
+
+**What this does.** Closes the question of whether a derivation counts: by who made it, not by whether it is a derivation.
+
+**What it does not decide.** How the author's standing (clinician or academic) is recorded or derived; the single unvetted opinion of the earlier entry; whether an academic's derivation needs the vetting a clinician's judgment is said to have (publication in a peer-reviewed venue is the nearest existing record).
+
+CONDITION: any session deciding whether a value is thin.
+ACTION: do not mark a value thin because it rests on a clinician's or an academic's derivation; do mark the project's own.
+DATE: 2026-11-14 — owner answer (typed words, quoted above).
