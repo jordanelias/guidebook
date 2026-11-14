@@ -10,6 +10,8 @@ _**Updated 2026-11-14, latest.** You answered questions 8 to 12 (OD-57 to OD-61)
 
 _**Updated 2026-11-14, last.** Four independent checks of the plan found four more questions your own rulings leave to you, or where two of your rulings pull against each other; they are questions 14 to 17 at the end (OD-63 to OD-66). None has been settled by an assistant. Questions 14, 15 and 16 each hold up work; question 17 holds nothing (the plan builds the recommended answer and changes it if you answer otherwise)._
 
+_**Updated 2026-11-14, after your fifteenth set.** You answered questions 14, 15 and 16, and parts (a) and (b) of question 17; each is marked answered below with your words, and the question is kept as it was put. Your answers are in the ledger under "Owner answers 2026-11-14 (fifteenth set)". **Still open:** question 17 parts (c) and (d), question 13 (optional), and the earlier open ones. One tension is noted for you, not settled: your render answer ("on the render page itself, we just have the minimum, mode, median and maximum") and your transparency statement ("presents all values … for comparative purposes"); the plan builds the render answer and keeps every value cited._
+
 ---
 
 ## Four things to see first (answered 2026-11-14)
@@ -221,7 +223,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 14. Over which values are the highest, most common and middle figures taken? (OD-63)
+## 14. Over which values are the highest, most common and middle figures taken? (OD-63) — answered 2026-11-14
+
+**Your answer:** "good point. all values when synthesizing and making determinations, but on the render page itself, we just have the minimum, mode, median and maximum colour coding the jurisdiction code bodies that we surveyed for comparison purposes". Read as: the figures are worked out from every value found; the page shows only the four, as colours on the code bodies surveyed. The page will also say each figure in words or a symbol, so a reader who cannot rely on colour reads the same thing (how is for the page-building work to design).
 
 **The situation.** You said the book shows four figures for each cell: minimum, mode (most common), median (middle) and maximum, and that the minimum comes from the codes unless there are none. You left the other three to yourself ("leave the maximum, mode and median scopes to the owner", in the ledger's words). The plan had wrongly left them to the page-building step.
 
@@ -235,7 +239,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 15. A value from grey literature: half circle or triangle? (OD-64)
+## 15. A value from grey literature: half circle or triangle? (OD-64) — answered 2026-11-14
+
+**Your answer:** "triangle for all". Read as A, for every grey value: the triangle and no circle; the half circle for grey is removed from the table.
 
 **The situation.** Your circle table, which you applied, gives grey literature the half circle (◐). Later the same day you said "triangle instead if the value is coming from grey or unverified". Taken together, a grey value always shows the triangle, so the half circle for grey can never appear.
 
@@ -248,7 +254,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 16. A code figure that names no group, beside research for that group: can it be shown as the best? (OD-65)
+## 16. A code figure that names no group, beside research for that group: can it be shown as the best? (OD-65) — answered 2026-11-14
+
+**Your answer:** "all code values will have a lens even if it's not explicitly stated. use contextual judgment". Read as: none of A, B or C is needed, because every code figure is given a group by judgment, and is then compared like any value for that group. Question 3 (OD-47) stays yours: your answer covers code figures and says judgment decides, but not which of question 3's ways it uses.
 
 **The situation.** Codes usually state a figure for everyone, without naming a group. The plan said such a figure is always shown but never chosen as the best when there is research for the group the cell is about. You said a figure without a group "is incomplete, not wrong", and "if no, code wins". You have not yet said what group such a figure carries (question 3 above, OD-47, still open).
 
@@ -262,7 +270,9 @@ So today a value for wheelchair users that rests only on codes would be labelled
 
 ---
 
-## 17. Agreement: four details you left open (OD-66)
+## 17. Agreement: four details you left open (OD-66) — (a) and (b) answered 2026-11-14; (c) and (d) still open
+
+**Your answer:** "okay. well, let's drop it down to 2% and apply everywhere"; "2% is a tolerance. it applies to whatever is converging. I don't have to specify a minimum or maximum"; "if values are drifting apart, then they aren't converging …". Read as: 2%, one tolerance for every kind of measurement, measured around the value the evidence comes together on, so "larger or smaller" does not arise; and values that drift apart step by step are not one group. The 5% is withdrawn. **Still yours:** (c) and (d) below. To answer: "OD-66: (c) the same, (d) as before", or name what you want otherwise.
 
 **The situation.** You said values "within 5%, I think" count as the same, and that ranges count. You did not say: (a) 5% of the larger value or of the smaller; (b) whether 5% suits every kind of measurement (5% of a 1:20 slope and 5% of a 2 m width differ); (c) whether two values must be the same to group, or only able to both hold; (d) whether two groups of evidence on different minimums that can both be met (one at 1500 mm, one at 1800 mm) are called a disagreement, or left as your earlier answer says (not a disagreement, the spread printed). *(An earlier prompt told you "values within 5% count as the same" as if settled; these four details were not.)*
 

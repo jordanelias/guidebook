@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-14 18:50 UTC from the 112 task files (102 open, 10 merged) at commit b3d914f3 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-14 19:05 UTC from the 112 task files (102 open, 10 merged) at commit c75c1f15 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -20,9 +20,9 @@ _Generated 2026-11-14 18:50 UTC from the 112 task files (102 open, 10 merged) at
 |---|---|---|---|---|---|---|---|
 | 1 | 49 | 39 | 0 | 1 | 10 | 41 / 8 | 18 |
 | 2 | 21 | 12 | 2 | 0 | 7 | 10 / 11 | 13 |
-| 3 | 15 | 8 | 1 | 0 | 7 | 9 / 6 | 8 |
+| 3 | 15 | 8 | 0 | 0 | 7 | 9 / 6 | 8 |
 | 4 | 7 | 2 | 0 | 1 | 5 | 6 / 1 | 6 |
-| 5 | 4 | 1 | 2 | 0 | 3 | 4 / 0 | 3 |
+| 5 | 4 | 1 | 0 | 0 | 3 | 4 / 0 | 3 |
 | 6 | 3 | 1 | 0 | 0 | 2 | 2 / 1 | 2 |
 | 7 | 1 | 0 | 0 | 0 | 1 | 1 / 0 | 1 |
 | 8 | 2 | 1 | 0 | 0 | 1 | 2 / 0 | 2 |
@@ -31,7 +31,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 **Merged** (a merge commit on HEAD names the task's branch, or a squash commit's subject begins `T-nnn:` or says `execute workplan T-nnn` and ends `(#N)`; out of the batches below, and a dependency on one is satisfied; re-derive: `git log --merges --format=%s HEAD | grep -o 'task/t-[0-9a-z-]*'` and `git log --no-merges --format=%s HEAD | grep -E '^T-[0-9]+:|execute workplan T-[0-9]+' | grep -E '\(#[0-9]+\)$'`): [T-008](tasks/T-008-claimed-number-check.md), [T-012](tasks/T-012-follow-up-reasons.md), [T-013](tasks/T-013-typed-gaps.md), [T-014](tasks/T-014-stress-harness-and-probes.md), [T-016](tasks/T-016-wp-t1a-reading.md), [T-017](tasks/T-017-wp-t2-conditions.md), [T-018](tasks/T-018-link-table.md), [T-019](tasks/T-019-lens-gather.md), [T-024](tasks/T-024-jurisdiction-registry.md), [T-026](tasks/T-026-alias-attestation.md).
 
-**Longest dependency chain (8 tasks):** T-119 (NOT FOR SONNET) → T-120 (NOT FOR SONNET) → T-059 (OWNER: OD-65 (REFERRED BACK TO THE OWNER); NOT FOR SONNET) → T-068 (NOT FOR SONNET) → T-124 (OWNER: OD-63 (REFERRED BACK TO THE OWNER); NOT FOR SONNET) → T-122 (NOT FOR SONNET) → T-037 (NOT FOR SONNET) → T-038 (READY).
+**Longest dependency chain (8 tasks):** T-119 (NOT FOR SONNET) → T-120 (NOT FOR SONNET) → T-059 (NOT FOR SONNET) → T-068 (NOT FOR SONNET) → T-117 (NOT FOR SONNET) → T-122 (NOT FOR SONNET) → T-037 (NOT FOR SONNET) → T-038 (READY).
 
 ## Batch 1
 
@@ -169,7 +169,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-035](tasks/T-035-skills-repair.md) | Skills that describe the database that exists | 4 | TOOLING | NOT FOR SONNET | no | T-120 | not piloted |
 | [T-036](tasks/T-036-jurisdiction-comparison-view.md) | The jurisdiction comparison as a view | 5 | TOOLING | READY | yes | T-101 | not piloted |
 | [T-058](tasks/T-058-upl-prose-callers.md) | UPL reinstated for upper limb: the retired crosswalk and the prose that names LMB or UPL | 3 | TOOLING | READY | yes | T-116 | not piloted |
-| [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragi | 1 (chain, after T-019) | TOOLING | OWNER: OD-65 (REFERRED BACK TO THE OWNER); NOT FOR SONNET | no | T-120 | not piloted |
+| [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, the fragi | 1 (chain, after T-019) | TOOLING | NOT FOR SONNET | no | T-120 | not piloted |
 | [T-062](tasks/T-062-verified-reading-blocking.md) | A `verified` figure with no full reading is refused at rest, not only at write (the prior  | 5 | TOOLING | READY | after T-031, T-105 | T-105 | not piloted |
 | [T-072](tasks/T-072-seed-quantities-from-codes.md) | Seed the list of quantities from the phrases the held codes use | research | RESEARCH | NOT FOR SONNET | no | T-020, T-028, T-101, T-105 | not piloted |
 | [T-083](tasks/T-083-set-kind-on-existing-parameter.md) | A verb sets the quantity kind and its warrant on an existing parameter | 1 | TOOLING | READY | yes | T-020 | not piloted |
@@ -191,7 +191,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 3.7: T-112
 - Lane 3.8: T-115
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-035, T-059, T-072, T-086, T-087, T-107, T-115; a decision gate CLOSED: T-059 (OD-65).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-035, T-059, T-072, T-086, T-087, T-107, T-115.
 
 ## Batch 4
 
@@ -226,8 +226,8 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 |---|---|---|---|---|---|---|---|
 | [T-040](tasks/T-040-deletion-candidates-sweep.md) | Caller sweep for the deletion candidates | 5 | TOOLING | READY | after T-032 | T-032 | not piloted |
 | [T-053](tasks/T-053-engine-conflict-between-groups.md) | Conflict between groups in the engine | 4 | TOOLING | NOT FOR SONNET | no | T-032 | not piloted |
-| [T-117](tasks/T-117-marker-table-applied.md) | The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unverified or | 6 (after the term-resolution doctrine) | TOOLING | OWNER: OD-64 (REFERRED BACK TO THE OWNER); NOT FOR SONNET | no | T-068, T-102, T-119, T-120 | not piloted |
-| [T-124](tasks/T-124-four-figures-of-a-cell.md) | The four figures of a cell (minimum, mode, median, maximum), computed once at the specific | 6 (after the term-resolution tooling) | TOOLING | OWNER: OD-63 (REFERRED BACK TO THE OWNER); NOT FOR SONNET | no | T-059, T-068 | not piloted |
+| [T-117](tasks/T-117-marker-table-applied.md) | The marker table applied: a circle by tier, and ⚠ in place of it for a grey, unverified or | 6 (after the term-resolution doctrine) | TOOLING | NOT FOR SONNET | no | T-068, T-102, T-119, T-120 | not piloted |
+| [T-124](tasks/T-124-four-figures-of-a-cell.md) | The four figures of a cell (minimum, mode, median, maximum), computed once at the specific | 6 (after the term-resolution tooling) | TOOLING | NOT FOR SONNET | no | T-059, T-068 | not piloted |
 
 **Lanes** (parallel across, serial within; the shared file is the reason):
 
@@ -235,7 +235,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 - Lane 5.2: T-053
 - Lane 5.3: T-117 → T-124 — share `scripts/assess/assess_cell.py`
 
-**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-053, T-117, T-124; a decision gate CLOSED: T-117 (OD-64), T-124 (OD-63).
+**Exit:** every READY task above is merged and its section 6 after-test is green on `$BASE`; `scripts/preflight.sh --base "$BASE" --explain` is green on `$BASE`. **Stops in this batch:** not for Sonnet: T-053, T-117, T-124.
 
 ## Batch 6
 
@@ -288,21 +288,18 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 
 Every register decision (`grep -o -E '^### OD-[0-9]+' REMEDIATION-WORKPLAN.md`), its state by the ledger gate (the last `OD-NN STATUS:` and `OD-NN CHECK:` lines of `references/project-standards.md`), the tasks whose section 2 names it, and every task that waits on those through the hard dependencies. A decision named in a task's 'Owner decisions' bullet opens that task only on the owner's answer; one named in its 'Delegated resolutions' bullet opens on a delegated resolution whose check is not required or confirmed. The phone-ready prompts for the CLOSED ones are in `DECISION-CLOSURE.md`.
 
-### Blocking: CLOSED, and a task's gate reads it (5)
+### Blocking: CLOSED, and a task's gate reads it (2)
 
 | Decision | Gate | Tasks it holds | Waiting on those (hard dependencies) | In batches |
 |---|---|---|---|---|
 | OD-46 | CLOSED (REFERRED BACK TO THE OWNER) | T-084 | T-085 | 2 |
 | OD-48 | CLOSED (REFERRED BACK TO THE OWNER) | T-056 | T-115 | 2 |
-| OD-63 | CLOSED (REFERRED BACK TO THE OWNER) | T-124 | T-037, T-038, T-039, T-122 | 5 |
-| OD-64 | CLOSED (REFERRED BACK TO THE OWNER) | T-117 | T-037, T-038, T-039, T-110, T-118, T-122 | 5 |
-| OD-65 | CLOSED (REFERRED BACK TO THE OWNER) | T-059 | T-037, T-038, T-039, T-068, T-110, T-117, T-118, T-122, T-124, T-125 | 3 |
 
 ### Standing, blocks no task: CLOSED, and no task's gate reads it (7)
 
 OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERRED BACK TO THE OWNER), OD-52 (REFERRED BACK TO THE OWNER), OD-54 (REFERRED BACK TO THE OWNER), OD-62 (REFERRED BACK TO THE OWNER), OD-66 (REFERRED BACK TO THE OWNER)
 
-### Open by the ledger gate (53)
+### Open by the ledger gate (56)
 
 | Decision | Gate | Read by |
 |---|---|---|
@@ -359,6 +356,9 @@ OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERR
 | OD-59 | OPEN (owner) | T-117, T-119, T-120 |
 | OD-60 | OPEN (owner) | T-035 |
 | OD-61 | OPEN (owner) | T-121 |
+| OD-63 | OPEN (owner) | T-124 |
+| OD-64 | OPEN (owner) | T-117 |
+| OD-65 | OPEN (owner) | T-059 |
 
 ## NOT FOR SONNET
 
