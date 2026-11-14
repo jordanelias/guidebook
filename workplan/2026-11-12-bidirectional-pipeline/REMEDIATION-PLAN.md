@@ -1,6 +1,6 @@
 # Remediation plan, in batches by dependency
 
-_Generated 2026-11-14 03:30 UTC from the 103 task files (93 open, 10 merged) at commit 0cd10349 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
+_Generated 2026-11-14 04:36 UTC from the 103 task files (93 open, 10 merged) at commit cf5e6028 by `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`. Nothing below is typed in: re-run the generator (`python3 -I scratchpad/session_2026-11-12-pipeline-bidirectional-audit/build_batches.py`) after any task file changes, and trust the generator over this text (CLAUDE.md rule 7a)._
 
 **What this is.** The entry document for a Sonnet executor. `REMEDIATION-WORKPLAN.md` is the index (why, owner decision register, Definition of Done); `tasks/T-<id>-*.md` is the one self-contained file per task; this file says **in what order, in what groups, and where to stop.** Evidence base: `01-handshake-ledger.md` and the audit in `scratchpad/session_2026-11-12-pipeline-bidirectional-audit/audit/`.
 
@@ -119,7 +119,7 @@ Counts are derived; the commands that check them: `ls workplan/2026-11-12-bidire
 | [T-050](tasks/T-050-retire-admission-edges-and-connections.md) | Admission edges and connections retire in place instead of being deleted | 2 | TOOLING | READY | yes | T-006 | not piloted |
 | [T-056](tasks/T-056-all-leaves-identity-lens.md) | ALL leaves the identity lens: universal is stated once, by design_scale | 2 | TOOLING | OWNER: OD-48 (REFERRED BACK TO THE OWNER) | no | T-054 | not piloted |
 | [T-057](tasks/T-057-base-coverage-view.md) | The base coverage view: one state per concept and in-scope pair | 3 | TOOLING | READY | after T-028 | T-028 | not piloted |
-| [T-068](tasks/T-068-convergent-counts-roots.md) | A cell is convergent only on two or more independent roots | 2 | TOOLING | NOT FOR SONNET | no | T-059 | not piloted |
+| [T-068](tasks/T-068-convergent-counts-roots.md) | A convergent cell states its sources, their tiers and its independent roots | 2 | TOOLING | NOT FOR SONNET | no | T-059 | not piloted |
 | [T-069](tasks/T-069-promote-adjudicated-observations.md) | Promote the adjudicated non-English observations to forms of their terms | research | RESEARCH | NOT FOR SONNET | no | T-028 | not piloted |
 | [T-071](tasks/T-071-regrade-roots.md) | Give every value-supplying figure its root | research | RESEARCH | NOT FOR SONNET | no | T-048 | not piloted |
 | [T-081](tasks/T-081-classify-zero-result-searches.md) | Each stored zero-result search states its cause | research | RESEARCH | NOT FOR SONNET | no | T-080 | not piloted |
@@ -323,7 +323,7 @@ OD-17 (DEFERRED BY THE OWNER), OD-47 (REFERRED BACK TO THE OWNER), OD-51 (REFERR
 | [T-053](tasks/T-053-engine-conflict-between-groups.md) | Conflict between groups in the engine | 5 | OD-19, OD-36 / — |
 | [T-059](tasks/T-059-wp-t4-agreement.md) | The prior workplan's T-4: agreement (true exclusion causes, recorded divergence, | 1 | — / — |
 | [T-060](tasks/T-060-element-determination.md) | The specifications pass writes an element-level determination (OR-14b) | 4 | OD-56 / — |
-| [T-068](tasks/T-068-convergent-counts-roots.md) | A cell is convergent only on two or more independent roots | 2 | OD-43 / — |
+| [T-068](tasks/T-068-convergent-counts-roots.md) | A convergent cell states its sources, their tiers and its independent roots | 2 | OD-43 / — |
 | [T-069](tasks/T-069-promote-adjudicated-observations.md) | Promote the adjudicated non-English observations to forms of their terms | 2 | — / — |
 | [T-070](tasks/T-070-blind-double-extraction.md) | Blind double extraction: do two readers, and do model and effort, record the sam | 1 | OD-44 / — |
 | [T-071](tasks/T-071-regrade-roots.md) | Give every value-supplying figure its root | 2 | — / — |

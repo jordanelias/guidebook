@@ -184,7 +184,7 @@ crossing is judgment's output. Moving it earlier needs a ruling and a `stage-map
   name the group) are required; a code with a different warrant, or a judged one that replaces a carried link, is
   `add-lens-link`, and `retire-lens-link` retires one (never the last). Value and unit (a number the source writes in words, or with an ambiguous
   mark, is entered as a numeral in `--claimed-value` with the source's own wording in `--value-as-written`;
-  `--comparator` for a numerical figure, `=` for a point), `--claim-text`
+  `--comparator` for a numerical figure, `=` for a point; the comparator is read from what the wording says about direction, owner 2026-11-14: "at most" and "maximum" are a ceiling, `<=`; "minimum" and "at least" a floor, `>=`; "within" followed by two figures is both ends, `between`, and followed by one figure is a ceiling on that figure's own quantity, `<=` (a deviation: "within 5 mm"); this is a starting list, not a vocabulary, so map any other wording by the same test (a ceiling, a floor, both ends, a point, a deviation), and where the wording does not make the direction clear, keep it in `--value-as-written` and `--claim-text`, guess no comparator, and let the writer's refusal of a value-supplying numerical row without one stop it (raise the question as a gap); ledger: `grep -n -F "Owner statement 2026-11-14 — convergence means values coming together" references/project-standards.md`), `--claim-text`
   verbatim, locator, `--figure-role`,
   `--claim-type`, and `--relation` (**required**; `none` for an absolute figure). `add-extraction --help` prints every
   vocabulary, each read from its own column: `claim_type`, `extraction_method`, `extraction_status`, `root_type`,
